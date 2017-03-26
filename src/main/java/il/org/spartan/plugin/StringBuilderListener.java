@@ -14,7 +14,7 @@ public class StringBuilderListener implements Listener {
   private static final Tab tab = new Tab();
   private final StringBuilder $ = new StringBuilder();
 
-   public String $() {
+  public String $() {
     return $ + "";
   }
 

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -20,7 +21,7 @@ public class SpartanAnalyzer extends AgileSpartanizer {
 
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the gUIBatchLaconizer. */
-   private SpartanAnalyzer addNanoPatterns() {
+  private SpartanAnalyzer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
         new SuppressException(), //
@@ -77,7 +78,7 @@ public class SpartanAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-   public SpartanAnalyzer addRejected() {
+  public SpartanAnalyzer addRejected() {
     add(CatchClause.class, //
         new ReturnOnException(), // R.I.P
         new PercolateException(), // R.I.P
@@ -127,7 +128,7 @@ public class SpartanAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-   private SpartanAnalyzer addMethodPatterns() {
+  private SpartanAnalyzer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
         new ArgumentsTuple(), //
@@ -151,7 +152,7 @@ public class SpartanAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-   protected SpartanAnalyzer addCharacteristicMethodPatterns() {
+  protected SpartanAnalyzer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
         new HashCodeMethod(), // Not Counted, actually skipped
@@ -163,13 +164,13 @@ public class SpartanAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  @Override public String fixedPoint( final ASTNode ¢) {
+  @Override public String fixedPoint(final ASTNode ¢) {
     ¢.accept(new AnnotationCleanerVisitor());
     return super.fixedPoint(¢);
   }
 
-   public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
-     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
+  public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
+    final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
     toolbox.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
   }

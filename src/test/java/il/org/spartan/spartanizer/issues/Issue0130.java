@@ -38,7 +38,7 @@ public final class Issue0130 {
 
   @Test public void A$05() {
     trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢){doSomething();if(done())break;}return something();")//
-        ;
+    ;
   }
 
   @Test public void A$06() {

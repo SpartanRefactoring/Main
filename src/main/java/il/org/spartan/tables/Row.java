@@ -18,27 +18,27 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     reset();
   }
 
-  public Self col( final Accumulator ¢) {
+  public Self col(final Accumulator ¢) {
     return col(¢.name(), ¢.value());
   }
 
-   public Self col(final Accumulator... ¢) {
+  public Self col(final Accumulator... ¢) {
     as.list(¢).forEach(this::col);
     return self();
   }
 
-   public Self col(final Enum<?> key, final int value) {
+  public Self col(final Enum<?> key, final int value) {
     return col(key + "", value + "");
   }
 
-   public Self col(final Enum<?> key, final String value) {
+  public Self col(final Enum<?> key, final String value) {
     return col(key + "", value);
   }
 
   /** Add a key without a value to this instance.
    * @param key The key to be added; must not be {@code null
    * @return {@code this} */
-   public final Self col(final String key) {
+  public final Self col(final String key) {
     return col(key, "");
   }
 
@@ -46,7 +46,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    * @param key The key to be added; must not be {@code null
    * @param value The value associated with the key
    * @return {@code this} */
-   public final Self col(final String key, final char value) {
+  public final Self col(final String key, final char value) {
     return col(key, value + "");
   }
 
@@ -71,7 +71,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    *        {@code null
    * @param value The value associated with the key
    * @return {@code this} */
-   public final Self col(final String key,  final Integer value) {
+  public final Self col(final String key, final Integer value) {
     return value == null ? col(key) : col(key, value.intValue());
   }
 
@@ -79,7 +79,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    * @param key The key to be added; must not be {@code null
    * @param value The value associated with the key
    * @return {@code this} */
-   public Self col(final String key, final long value) {
+  public Self col(final String key, final long value) {
     return col(key, value + "");
   }
 
@@ -88,18 +88,18 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    *        {@code null
    * @param value The value associated with the key
    * @return {@code this} */
-   public final Self col(final String key,  final Object value) {
+  public final Self col(final String key, final Object value) {
     if (value == null)
       return col(key);
     super.put(key, value);
     return self();
   }
 
-   public final Self col(final String key,  final Object[] a, final int i) {
+  public final Self col(final String key, final Object[] a, final int i) {
     return col(key, a == null || i < 0 || i >= a.length ? null : a[i]);
   }
 
-   public final Self col(final String key,  final Object... os) {
+  public final Self col(final String key, final Object... os) {
     return col(key, os == null || os.length == 0 ? null : (Object) os);
   }
 
@@ -107,7 +107,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    * @param key The key to be added; must not be {@code null
    * @param value The value associated with the key
    * @return {@code this} */
-   public final Self col(final String key, final String value) {
+  public final Self col(final String key, final String value) {
     super.put(key, value);
     return self();
   }
@@ -121,9 +121,9 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
     return $;
   }
 
-   protected abstract Self reset();
+  protected abstract Self reset();
 
-   protected abstract Self self();
+  protected abstract Self self();
 
   public static final String ARRAY_SEPARATOR = "; ";
 }

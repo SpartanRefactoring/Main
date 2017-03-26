@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -30,7 +31,7 @@ public class DeflaterProvider extends OperationsProvider {
     return toolbox.firstTipper(¢);
   }
 
-  @Override  public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
+  @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
     return λ -> Collections.singletonList(last(λ));
   }
 }

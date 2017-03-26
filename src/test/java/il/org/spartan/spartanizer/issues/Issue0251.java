@@ -120,7 +120,7 @@ public class Issue0251 {
   }
 
   @Test public void t17() {
-     final String variable = "while(b==q){if(tipper==q()){int i;}}";
+    final String variable = "while(b==q){if(tipper==q()){int i;}}";
     assert !sideEffects.free(into.s(variable));
     trimmingOf(variable)//
         .gives("while(b==q)if(tipper==q()){int i;}")//

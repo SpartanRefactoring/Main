@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,37 +32,37 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
     ;
   }
 
-   static Statement next(final IfStatement ¢) {
+  static Statement next(final IfStatement ¢) {
     return extract.nextStatement(¢);
   }
 
-  @Override  public Tip pattern( final IfStatement ¢) {
+  @Override public Tip pattern(final IfStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
-         final Statement next = next(¢);
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        final Statement next = next(¢);
         r.remove(next, g);
         r.replace(¢, extract.singleStatement(ast("notNull(" + separate.these(nullCheckees(¢)).by(",") + ").get(" + returnee(next) + ");")), g);
       }
     };
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Safety;
   }
 
-  @Override  public String description() {
+  @Override public String description() {
     return description;
   }
 
-  @Override  public String technicalName() {
+  @Override public String technicalName() {
     return "IfXIsNullThrowElseReturnY";
   }
 
-  @Override  public String example() {
+  @Override public String example() {
     return "if(X == null) throw new RuntimeException(); return Y;";
   }
 
-  @Override  public String symbolycReplacement() {
+  @Override public String symbolycReplacement() {
     return "notNull(X).get(Y);";
   }
 }

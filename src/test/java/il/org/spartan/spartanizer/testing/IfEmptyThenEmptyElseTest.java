@@ -50,10 +50,10 @@ public final class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void runGo() throws Exception {
-     final String input = WrapIntoComilationUnit.Statement.on(INPUT + "");
-     final IDocument d = new Document(input);
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
-     final IfStatement s = findFirst.ifStatement(u);
+    final String input = WrapIntoComilationUnit.Statement.on(INPUT + "");
+    final IDocument d = new Document(input);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
+    final IfStatement s = findFirst.ifStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     TIPPER.tip(s).go(r, null);

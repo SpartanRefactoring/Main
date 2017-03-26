@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
@@ -26,18 +27,18 @@ public interface scope {
     return null;
   }
 
-   static List<ASTNode> of(final SingleVariableDeclaration x) {
-     final List<ASTNode> $ = new ArrayList<>();
+  static List<ASTNode> of(final SingleVariableDeclaration x) {
+    final List<ASTNode> $ = new ArrayList<>();
     $.add(x);
     return $;
   }
 
-  static List<? extends ASTNode> of( final VariableDeclarationFragment ¢) {
+  static List<? extends ASTNode> of(final VariableDeclarationFragment ¢) {
     return scope.of(¢.getName());
   }
 
-   static List<? extends ASTNode> of(final SimpleName ¢) {
-     final List<? extends ASTNode> $ = definition.scope(¢);
+  static List<? extends ASTNode> of(final SimpleName ¢) {
+    final List<? extends ASTNode> $ = definition.scope(¢);
     assert $ != null : fault.dump() + //
         "\n\t n=" + ¢ + //
         "\n\t definition.kind() = " + definition.kind(¢) + //
@@ -45,30 +46,30 @@ public interface scope {
     return $;
   }
 
-   static Block getBlock(final ASTNode ¢) {
+  static Block getBlock(final ASTNode ¢) {
     return az.block(delimiter(¢));
   }
 
   /** Bug in ternary spartanizing, do not remove the suppress
    * [[SuppressWarningsSpartan]] */
-   static Namespace getScopeNamespace(final ASTNode ¢) {
-     final ASTNode $ = delimiter(¢);
+  static Namespace getScopeNamespace(final ASTNode ¢) {
+    final ASTNode $ = delimiter(¢);
     return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
   }
 
-   static String newName(final ASTNode ¢, final Type t) {
-     final ASTNode b = delimiter(¢);
-     final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
-     final String $ = n.generateName(t);
+  static String newName(final ASTNode ¢, final Type t) {
+    final ASTNode b = delimiter(¢);
+    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
+    final String $ = n.generateName(t);
     n.addNewName($, t);
     b.setProperty("Namespace", n);
     return $;
   }
 
-   static String newName(final ASTNode ¢, final Type t, final String s) {
-     final ASTNode b = delimiter(¢);
-     final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
-     final String $ = n.generateName(s);
+  static String newName(final ASTNode ¢, final Type t, final String s) {
+    final ASTNode b = delimiter(¢);
+    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
+    final String $ = n.generateName(s);
     n.addNewName($, t);
     b.setProperty("Namespace", n);
     return $;

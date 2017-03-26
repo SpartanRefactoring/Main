@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -21,11 +22,11 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -6638105215049141624L;
 
-  @Override  public String description( final CatchClause ¢) {
+  @Override public String description(final CatchClause ¢) {
     return "Rename exception " + system.className(¢.getException()) + " caught in catch clause here to ¢";
   }
 
-  @Override  public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { //
         convert("try {f();} catch (Exception e) {e.printStackTrace();}") //
             .to("try {f();} catch (Exception ¢) {¢.printStackTrace();}"), //
@@ -33,14 +34,14 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
         Example.ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") };
   }
 
-  @Override public Tip tip( final CatchClause c,  final ExclusionManager m) {
+  @Override public Tip tip(final CatchClause c, final ExclusionManager m) {
     final SingleVariableDeclaration parameter = c.getException();
     if (!JohnDoe.property(parameter))
       return null;
     final SimpleName $ = parameter.getName();
     if (namer.isSpecial($))
       return null;
-     final Block b = body(c);
+    final Block b = body(c);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)

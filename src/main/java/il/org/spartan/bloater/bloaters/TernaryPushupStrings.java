@@ -5,6 +5,7 @@ import static il.org.spartan.utils.Example.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -25,15 +26,15 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -5602484588967209664L;
 
-  @Override  public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { convert("s = \"abc\" + (condition ? \"123\" : \"456\");").to("s = condition ? \"abc123\" : \"abc456\";") };
   }
 
-  @Override public ASTNode replacement( final InfixExpression x) {
+  @Override public ASTNode replacement(final InfixExpression x) {
     final AST ast = x.getAST();
     final InfixExpression nn = copy.of(x);
-     final StringLiteral l;
-     final ConditionalExpression r;
+    final StringLiteral l;
+    final ConditionalExpression r;
     if (iz.stringLiteral(left(nn))) {
       l = az.stringLiteral(left(nn));
       r = az.conditionalExpression(expression(right(nn)));
@@ -43,7 +44,7 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     }
     final ConditionalExpression $ = ast.newConditionalExpression();
     $.setExpression(copy.of(r.getExpression()));
-     final StringLiteral l1 = az.stringLiteral(then(r)), l2 = az.stringLiteral(elze(r)), n1 = copy.of(l1), n2 = copy.of(l2);
+    final StringLiteral l1 = az.stringLiteral(then(r)), l2 = az.stringLiteral(elze(r)), n1 = copy.of(l1), n2 = copy.of(l2);
     if (iz.stringLiteral(left(nn))) {
       n1.setLiteralValue(l.getLiteralValue() + l1.getLiteralValue());
       n2.setLiteralValue(l.getLiteralValue() + l2.getLiteralValue());
@@ -68,11 +69,11 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     final Expression r = expression(x);
     if (!iz.conditionalExpression(r))
       return false;
-     final ConditionalExpression $ = az.conditionalExpression(r);
+    final ConditionalExpression $ = az.conditionalExpression(r);
     return iz.stringLiteral(then($)) && iz.stringLiteral(elze($));
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }
 }

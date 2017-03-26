@@ -73,17 +73,17 @@ public final class WrapTest {
   }
 
   @Test public void intoCompilationUnit() {
-     final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
-     final String codeFragment = "a + b * c";
-     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
+    final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
+    final String codeFragment = "a + b * c";
+    final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     assert u != null;
     azzert.that(w.off(u + ""), containsString(codeFragment));
   }
 
   @Test public void intoDocument() {
-     final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
-     final String codeFragment = "a + b * c";
-     final Document d = w.intoDocument(codeFragment);
+    final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
+    final String codeFragment = "a + b * c";
+    final Document d = w.intoDocument(codeFragment);
     assert d != null;
     azzert.that(w.off(d.get()), containsString(codeFragment));
   }
@@ -100,7 +100,7 @@ public final class WrapTest {
     similar(trivia.removeComments("if (b) {\n /* empty */} else {\n throw new Exception();\n}"), "if (b) {} else { throw new Exception(); }");
   }
 
-  private void similar( final String s1,  final String s2) {
+  private void similar(final String s1, final String s2) {
     azzert.that(trivia.essence(s2), is(trivia.essence(s1)));
   }
 

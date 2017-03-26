@@ -6,7 +6,7 @@ import java.util.*;
  * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-19 */
 public abstract class ReduceCollectionsAdd<T, C extends Collection<T>> extends Reduce<C> {
-  @Override  public final C reduce( final C c1,  final C c2) {
+  @Override public final C reduce(final C c1, final C c2) {
     c1.addAll(c2);
     return c1;
   }

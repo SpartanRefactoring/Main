@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -19,14 +20,14 @@ public final class ModifierFinalTryResourceRedundant extends RemovingTipper<Modi
     return "Remove redundant final modifier of try resource";
   }
 
-  @Override  public String description(final Modifier ¢) {
+  @Override public String description(final Modifier ¢) {
     return description() + ": '" + az.variableDeclarationExpression(parent(¢)) + "'";
   }
 
-  @Override public boolean prerequisite( final Modifier $) {
+  @Override public boolean prerequisite(final Modifier $) {
     if (!$.isFinal())
       return false;
-     final VariableDeclarationExpression x = az.variableDeclarationExpression(parent($));
+    final VariableDeclarationExpression x = az.variableDeclarationExpression(parent($));
     return x != null && az.tryStatement(parent(x)) != null;
   }
 }

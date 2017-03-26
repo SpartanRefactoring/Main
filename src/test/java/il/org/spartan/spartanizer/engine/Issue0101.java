@@ -30,7 +30,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_13() {
-     final Expression ¢ = into.e("56");
+    final Expression ¢ = into.e("56");
     new Recurser<>(¢, 0).postVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("99");
@@ -43,7 +43,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_15() {
-     final Expression ¢ = into.e("56+87");
+    final Expression ¢ = into.e("56+87");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("99");
@@ -52,7 +52,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_16() {
-     final Expression ¢ = into.e("b==true ? 67 : 7");
+    final Expression ¢ = into.e("b==true ? 67 : 7");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("56");
@@ -61,7 +61,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_17() {
-     final Expression ¢ = into.e("b==true ? 67 : 7");
+    final Expression ¢ = into.e("b==true ? 67 : 7");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.BOOLEAN_LITERAL)
         ((BooleanLiteral) λ.getRoot()).setBooleanValue(false);
@@ -70,7 +70,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_18() {
-     final Expression ¢ = into.e("b==true ? 67 : 7");
+    final Expression ¢ = into.e("b==true ? 67 : 7");
     new Recurser<>(¢, 0).postVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.BOOLEAN_LITERAL)
         ((BooleanLiteral) λ.getRoot()).setBooleanValue(false);
@@ -79,7 +79,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_19() {
-     final Expression ¢ = into.e("56+87*234+21l");
+    final Expression ¢ = into.e("56+87*234+21l");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("99");
@@ -116,7 +116,7 @@ public final class Issue0101 {
   }
 
   @Test public void a_9() {
-     final Expression ¢ = into.e("56");
+    final Expression ¢ = into.e("56");
     new Recurser<>(¢, 0).preVisit(λ -> {
       if (λ.getRoot().getNodeType() == ASTNode.NUMBER_LITERAL)
         ((NumberLiteral) λ.getRoot()).setToken("99");

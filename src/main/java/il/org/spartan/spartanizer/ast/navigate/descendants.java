@@ -14,21 +14,21 @@ public abstract class descendants<N extends ASTNode> {
   /** Factory method, returning an instance which can search by a node class
    * @param pattern JD
    * @return a newly created instance */
-   public static <N extends ASTNode> descendants<N> whoseClassIs(final Class<N> ¢) {
+  public static <N extends ASTNode> descendants<N> whoseClassIs(final Class<N> ¢) {
     return new whoseClassIs<>(¢);
   }
 
   /** @param n JD
    * @return descendants whose type matches the given type. */
-   public abstract List<N> from(ASTNode n);
+  public abstract List<N> from(ASTNode n);
 
   /** @param n JD
    * @return descendants whose type matches the given type. */
-   public abstract List<N> inclusiveFrom(ASTNode n);
+  public abstract List<N> inclusiveFrom(ASTNode n);
 
   /** @param ¢ JD
    * @return add predicate to filter elements */
-   public abstract descendants<N> suchThat(Predicate<N> ¢);
+  public abstract descendants<N> suchThat(Predicate<N> ¢);
 
   static class whoseClassIs<N extends ASTNode> extends descendants<N> {
     final Class<N> clazz;
@@ -38,15 +38,15 @@ public abstract class descendants<N extends ASTNode> {
       this.clazz = clazz;
     }
 
-    @Override  public whoseClassIs<N> suchThat(final Predicate<N> ¢) {
+    @Override public whoseClassIs<N> suchThat(final Predicate<N> ¢) {
       p = ¢;
       return this;
     }
 
-    @Override  public List<N> from( final ASTNode n) {
-       final List<N> $ = new ArrayList<>();
+    @Override public List<N> from(final ASTNode n) {
+      final List<N> $ = new ArrayList<>();
       n.accept(new ASTVisitor(true) {
-        @Override public void preVisit( final ASTNode ¢) {
+        @Override public void preVisit(final ASTNode ¢) {
           if (n != ¢ && clazz.isAssignableFrom(¢.getClass()) && p.test(clazz.cast(¢)))
             $.add(clazz.cast(¢));
         }
@@ -54,12 +54,12 @@ public abstract class descendants<N extends ASTNode> {
       return $;
     }
 
-    @Override  public List<N> inclusiveFrom( final ASTNode n) {
-       final List<N> $ = new ArrayList<>();
+    @Override public List<N> inclusiveFrom(final ASTNode n) {
+      final List<N> $ = new ArrayList<>();
       if (n == null)
         return $;
       n.accept(new ASTVisitor(true) {
-        @Override public void preVisit( final ASTNode ¢) {
+        @Override public void preVisit(final ASTNode ¢) {
           if (clazz.isAssignableFrom(¢.getClass()) && p.test(clazz.cast(¢)))
             $.add(clazz.cast(¢));
         }
@@ -68,8 +68,8 @@ public abstract class descendants<N extends ASTNode> {
     }
   }
 
-   public static List<ASTNode> of( final ASTNode n) {
-     final List<ASTNode> $ = new ArrayList<>();
+  public static List<ASTNode> of(final ASTNode n) {
+    final List<ASTNode> $ = new ArrayList<>();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         $.add(¢);
@@ -78,7 +78,7 @@ public abstract class descendants<N extends ASTNode> {
     return $;
   }
 
-  public static Stream<ASTNode> streamOf( final ASTNode ¢) {
+  public static Stream<ASTNode> streamOf(final ASTNode ¢) {
     return descendants.of(¢).stream();
   }
 }

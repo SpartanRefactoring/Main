@@ -32,7 +32,7 @@ public final class Issue0131 {
   @Test public void a$040() {
     trimmingOf("for(int ¢=4 ; ¢<s.length() ; ++¢)if(tipper=4)return x;return x;")
         .gives("for(int ¢=4 ; ¢<s.length() ; ++¢)if(tipper=4)break;return x;")//
-        ;
+    ;
   }
 
   @Test public void a$050() {

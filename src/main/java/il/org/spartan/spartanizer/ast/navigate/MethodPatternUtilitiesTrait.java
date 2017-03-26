@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -43,7 +44,7 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() >= 2;
   }
 
-   default Collection<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
+  default Collection<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
     return descendants.whoseClassIs(ReturnStatement.class).from(¢);
   }
 
@@ -75,7 +76,7 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.constructor(¢);
   }
 
-  default boolean notStatic( final MethodDeclaration ¢) {
+  default boolean notStatic(final MethodDeclaration ¢) {
     return !iz.static¢(¢);
   }
 
@@ -83,15 +84,15 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.voidType(returnType(¢));
   }
 
-  default boolean returnTypeSameAsParameter( final MethodDeclaration ¢) {
+  default boolean returnTypeSameAsParameter(final MethodDeclaration ¢) {
     return ¢ != null && (type(onlyParameter(¢)) + "").equals(returnType(¢) + "");
   }
 
-  default boolean returnTypeSameAs( final MethodDeclaration ¢,  final Type t) {
+  default boolean returnTypeSameAs(final MethodDeclaration ¢, final Type t) {
     return ¢ != null && t != null && (t + "").equals(returnType(¢) + "");
   }
 
-  default boolean same( final ASTNode n,  final ASTNode b) {
+  default boolean same(final ASTNode n, final ASTNode b) {
     return n != null && b != null && (n + "").equals(b + "");
   }
 
@@ -123,7 +124,7 @@ public interface MethodPatternUtilitiesTrait {
     return second(statements(¢));
   }
 
-  default boolean safeEquals( final Object o1,  final Object o2) {
+  default boolean safeEquals(final Object o1, final Object o2) {
     return o1 != null && o2 != null && o1.equals(o2);
   }
 
@@ -139,12 +140,12 @@ public interface MethodPatternUtilitiesTrait {
   ;
 
   default boolean setter(final MethodDeclaration ¢) {
-     final List<String> $ = parametersNames(¢);
+    final List<String> $ = parametersNames(¢);
     return statements(¢).stream()
         .allMatch(λ -> setterTippers.canTip(expression(λ)) && isRightSideParameterOrLiteral(right(az.assignment(expression(λ))), $));
   }
 
-  default boolean isRightSideParameterOrLiteral(final Expression $,  final Collection<String> paramNames) {
+  default boolean isRightSideParameterOrLiteral(final Expression $, final Collection<String> paramNames) {
     return iz.literal($) || paramNames.contains(identifier(az.name($)));
   }
 

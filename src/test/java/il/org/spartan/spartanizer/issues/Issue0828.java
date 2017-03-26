@@ -18,7 +18,7 @@ public class Issue0828 {
   ForStatement simpleFor, trueFor, trueStatementFor, obviouseTrueStatement, numEqualTrueStatement, strEqualTrueStatement, falseFor;
   ForTrueConditionRemove forTrueConditionRemove;
 
-   String description() {
+  String description() {
     return forTrueConditionRemove.description();
   }
 

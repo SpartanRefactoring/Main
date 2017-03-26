@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -23,17 +24,17 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x4501859892D5B1C9L;
 
-  @Override  public String description(@SuppressWarnings("unused") final Assignment __) {
+  @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "use simple assignment with binary operation";
   }
 
-  @Override protected boolean prerequisite( final Assignment ¢) {
+  @Override protected boolean prerequisite(final Assignment ¢) {
     return ¢.getAST().hasResolvedBindings() && validTypes(¢) && wizard.convertToInfix(¢.getOperator()) != null;
   }
 
-  @Override  public Tip tip( final Assignment ¢) {
+  @Override public Tip tip(final Assignment ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         // TODO Ori Roth: use class subject
         final InfixExpression e = ¢.getAST().newInfixExpression();
         e.setLeftOperand(copy.of(left(¢)));

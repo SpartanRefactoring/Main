@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -33,17 +34,16 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     private static final long serialVersionUID = 0x212B679E43F623F7L;
 
     @Override public boolean prerequisite(final VariableDeclarationFragment f) {
-       final Statement nextStatement = extract.nextStatement(f);
-       final VariableDeclarationStatement $ = az.variableDeclarationStatement(parent(f));
+      final Statement nextStatement = extract.nextStatement(f);
+      final VariableDeclarationStatement $ = az.variableDeclarationStatement(parent(f));
       return preDelegation(f, nextStatement) && $ != null && fragments($).size() == 1 && noFurtherUsage(name(f), nextStatement)
           && initializer(f) != null;
     }
 
-    @Override  protected ASTRewrite go( final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement,
-        final TextEditGroup g) {
-       final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
-       final Expression initializer = initializer(f);
-       final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+    @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+      final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
+      final Expression initializer = initializer(f);
+      final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
         e = Inliner.protect(e, pp);
@@ -54,7 +54,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     }
 
     private static boolean noFurtherUsage(final SimpleName n, final Statement nextStatement) {
-       final List<SimpleName> $ = collect.forAllOccurencesExcludingDefinitions(n).in(parent(nextStatement));
+      final List<SimpleName> $ = collect.forAllOccurencesExcludingDefinitions(n).in(parent(nextStatement));
       $.remove(n);
       $.removeAll(collect.forAllOccurencesExcludingDefinitions(n).in(nextStatement));
       return $.isEmpty();
@@ -69,12 +69,12 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return !collect.usesOf(name(f)).in(nextStatement).isEmpty();
     }
 
-    @Override  public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
+    @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
       return "inline me!";
     }
   }
 
-  @Override  protected Tip pattern(final VariableDeclarationFragment ¢) {
+  @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
     return letInliner.tip(¢);
   }
 

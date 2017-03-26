@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.*;
@@ -34,7 +35,7 @@ public class SuperDelegator extends Delegator {
         && parametersNames(¢).containsAll(analyze.dependencies(arguments(findFirst.instanceOf(SuperMethodInvocation.class).in(s))));
   }
 
-  @Override  public String nanoName() {
+  @Override public String nanoName() {
     return Delegator.class.getSimpleName();
   }
 }

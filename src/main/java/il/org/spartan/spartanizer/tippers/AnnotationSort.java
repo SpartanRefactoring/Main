@@ -9,6 +9,7 @@ import java.util.concurrent.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -46,7 +47,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
 
   private static int rankAnnotation(final String annotationName) {
     int $ = 0;
-    for ( final HashSet<String> ¢ : rankTable) {
+    for (final HashSet<String> ¢ : rankTable) {
       ++$;
       if (¢.contains(annotationName))
         return $;
@@ -57,7 +58,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
   private static final Comparator<IExtendedModifier> comp = (m1, m2) -> rankAnnotation(m1) - rankAnnotation(m2) == 0 ? (m1 + "").compareTo(m2 + "")
       : rankAnnotation(m1) - rankAnnotation(m2);
 
-  public static int compare( final String annotation1,  final String annotation2) {
+  public static int compare(final String annotation1, final String annotation2) {
     return rankAnnotation(annotation1) - rankAnnotation(annotation2) == 0 ? annotation1.compareTo(annotation2)
         : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
@@ -67,7 +68,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     return λ -> $.putIfAbsent(keyExtractor.apply(λ), Boolean.TRUE) == null;
   }
 
-  private static List<? extends IExtendedModifier> sort( final Collection<? extends IExtendedModifier> ¢) {
+  private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
     return ¢.stream().filter(distinctByKey(λ -> identifier(typeName(az.annotation(λ))))).sorted(comp).collect(toList());
   }
 
@@ -80,17 +81,15 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     return !wizard.same($, d) ? $ : null;
   }
 
-  /* @Override  public Tip tip( final N n) { final
-   * List<Annotation> $ = extract.annotations(n); if ($ == null || $.isEmpty())
-   * return null;
+  /* @Override public Tip tip( final N n) { final List<Annotation> $ =
+   * extract.annotations(n); if ($ == null || $.isEmpty()) return null;
    *
-   *  List<Annotation> myCopy = (List<Annotation>) sort(new
-   * ArrayList<>($));
+   * List<Annotation> myCopy = (List<Annotation>) sort(new ArrayList<>($));
    *
    * return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
    *
-   * @Override public void go( final ASTRewrite r, final TextEditGroup
-   * g) { final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
+   * @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+   * final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
    *
    * for (int i = 0; i < $.size(); ++i) { List<Annotation> sorted =
    * (List<Annotation>) copy.of(myCopy); final ASTNode oldNode ; final ASTNode
@@ -104,7 +103,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
    *
    *
    * } } }; } */
-  @Override  public String description( final N ¢) {
+  @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
   }

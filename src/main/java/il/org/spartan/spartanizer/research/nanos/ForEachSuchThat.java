@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -28,15 +29,15 @@ public class ForEachSuchThat extends ForEach {
         && nonTips(rivals, ¢);
   }
 
-  @Override  public Tip pattern(final EnhancedForStatement ¢) {
+  @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override  public String description() {
+  @Override public String description() {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @Override  public String nanoName() {
+  @Override public String nanoName() {
     return ForEach.class.getSimpleName();
   }
 }
