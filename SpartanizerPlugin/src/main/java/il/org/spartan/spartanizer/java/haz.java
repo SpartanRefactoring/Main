@@ -30,10 +30,16 @@ public enum haz {
         return haz.annotation((VariableDeclarationExpression) $);
       case ASTNode.VARIABLE_DECLARATION_STATEMENT:
         return haz.annotation((VariableDeclarationStatement) $);
+      case ASTNode.LAMBDA_EXPRESSION:
+        return haz.annotation((LambdaExpression) $);
       default:
         assert fault.unreachable() : fault.specifically("Unexpected node type", $, f);
         return false;
     }
+  }
+
+  private static boolean annotation(LambdaExpression $) {
+    return false;
   }
 
   private static boolean annotation(VariableDeclarationExpression x) {
