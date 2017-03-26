@@ -11,8 +11,6 @@ import java.text.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -50,25 +48,25 @@ public enum Analyze {
     summarizeMethodStatistics(outputDir);
   }
 
-  @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
+   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
 
-  @Nullable public static CSVStatistics openNPSummaryFile(final String outputDir) {
+   public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
 
-  public static CSVStatistics openSummaryFile(@NotNull final String $) {
+  public static CSVStatistics openSummaryFile( final String $) {
     try {
       return new CSVStatistics($, "property");
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       monitor.infoIOException(¢, "opening report file");
       return null;
     }
   }
 
   private static void summarizeMethodStatistics(final String outputDir) {
-    @Nullable final CSVStatistics report = openMethodSummaryFile(outputDir);
+     final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
       return;
     double sumSratio = 0, sumEratio = 0;
@@ -122,20 +120,20 @@ public enum Analyze {
 
   /** THE analysis */
   private static void spartanizeMethodsAndSort() {
-    @NotNull final List<MethodDeclaration> methods = new ArrayList<>();
-    for (@NotNull final File f : inputFiles()) {
-      @Nullable final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+     final List<MethodDeclaration> methods = new ArrayList<>();
+    for ( final File f : inputFiles()) {
+       final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);
       types(cu).stream().filter(haz::methods).forEach(t -> {
         Logger.logType(t);
         for (final MethodDeclaration ¢ : methods(t).stream().filter(λ -> !excludeMethod(λ)).collect(toList()))
           try {
             Count.before(¢);
-            @NotNull final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
+             final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
                 .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
-          } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
+          } catch ( @SuppressWarnings("unused") final AssertionError __) {
             //
           }
         Logger.finishedType();
@@ -167,14 +165,14 @@ public enum Analyze {
   private static void analyze() {
     AnalyzerOptions.setVerbose();
     deleteOutputFile();
-    for (@NotNull final File ¢ : inputFiles()) {
+    for ( final File ¢ : inputFiles()) {
       System.out.println("\nnow: " + ¢.getPath());
-      @NotNull final ASTNode cu = compilationUnit(¢);
+       final ASTNode cu = compilationUnit(¢);
       Logger.logCompilationUnit(az.compilationUnit(cu));
       Logger.logFile(¢.getName());
       try {
         appendFile(new File(outputDir() + "/after.java"), spartanize(cu));
-      } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
+      } catch ( @SuppressWarnings("unused") final AssertionError __) {
         //
       }
       // @author matteo append also before */
@@ -201,7 +199,7 @@ public enum Analyze {
                   try {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)
                         .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))))));
-                  } catch (@NotNull final AssertionError __) {
+                  } catch ( final AssertionError __) {
                     ___.unused(__);
                     //
                   }

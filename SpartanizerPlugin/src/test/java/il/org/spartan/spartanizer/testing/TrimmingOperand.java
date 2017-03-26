@@ -4,8 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -22,9 +20,9 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-12 */
 public class TrimmingOperand extends Wrapper<String> {
-  protected static final String QUICK = "Quick fix by MARK, COPY, PASTE, and REFORMAT is:\n";
-  protected static final String NEW_UNIT_TEST = "A COPY & PASTE @Test method:\n";
-  @NotNull private final Trimmer trimmer;
+  protected static final String QUICK = "Quick fix: MARK, COPY, PASTE, and REFORMAT is:\n";
+  protected static final String NEW_UNIT_TEST = "Quick fix: COPY & PASTE Junit @Test method:\n\n";
+   private final Trimmer trimmer;
   private static int rerunsLeft = 5;
 
   public TrimmingOperand(final String inner) {
@@ -32,9 +30,9 @@ public class TrimmingOperand extends Wrapper<String> {
     trimmer = new Trimmer();
   }
 
-  void checkExpected(@NotNull final String expected) {
-    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(new Trimmer(), wrap);
+  void checkExpected( final String expected) {
+     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
+     final String wrap = w.on(get()), unpeeled = trim.apply(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
     final String peeled = w.off(unpeeled);
@@ -48,7 +46,7 @@ public class TrimmingOperand extends Wrapper<String> {
   public void doesNotCrash() {
     try {
       apply();
-    } catch (@NotNull final Throwable ¢) {
+    } catch ( final Throwable ¢) {
       System.err.println("*** Test crashed with " + ¢.getClass().getSimpleName());
       System.err.println("*** Test crashed with " + ¢.getMessage());
       System.err.println("*** Test crashed rerunning ");
@@ -62,9 +60,9 @@ public class TrimmingOperand extends Wrapper<String> {
     return trim.apply(trimmer, WrapIntoComilationUnit.find(get()).on(get()));
   }
 
-  @Nullable public TrimmingOperand gives(@NotNull final String $) {
-    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
+   public TrimmingOperand gives( final String $) {
+     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
+     final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
       copyPasteReformat("  .stays()//\n  ;\n");
       azzert.fail("Nothing done on " + get());
@@ -93,10 +91,10 @@ public class TrimmingOperand extends Wrapper<String> {
    * @return Operand
    * @author Dor Ma'ayan
    * @since 09-12-2016 */
-  @Nullable public TrimmingOperand givesEither(@NotNull final String... options) {
+   public TrimmingOperand givesEither( final String... options) {
     assert options != null;
-    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
+     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
+     final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
     final String peeled = w.off(unpeeled);
@@ -104,7 +102,7 @@ public class TrimmingOperand extends Wrapper<String> {
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-    for (@NotNull final String $ : options)
+    for ( final String $ : options)
       if (trivia.essence($).equals(trivia.essence(peeled)))
         return new TrimmingOperand($);
     azzert.fail("Expects: " + peeled + " But none of the given options match");
@@ -112,8 +110,8 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   public void stays() {
-    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
+     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
+     final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       return;
     final String peeled = w.off(unpeeled);
@@ -141,12 +139,12 @@ public class TrimmingOperand extends Wrapper<String> {
     System.err.printf("*** %d reruns left \n ", box.it(--rerunsLeft));
   }
 
-  @NotNull public <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N> ¢) {
+   public <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N> ¢) {
     trimmer.fix(c, ¢);
     return this;
   }
 
-  @SafeVarargs @NotNull public final <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs  public final <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N>... ts) {
     as.list(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
     return this;
   }

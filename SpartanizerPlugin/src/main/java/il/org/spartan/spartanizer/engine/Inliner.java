@@ -11,8 +11,6 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -24,7 +22,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 13, 2016 */
 public final class Inliner {
-  @NotNull static Wrapper<ASTNode>[] wrap(@NotNull final ASTNode... ¢) {
+   static Wrapper<ASTNode>[] wrap( final ASTNode... ¢) {
     return Stream.of(¢).map(Wrapper<ASTNode>::new).toArray((IntFunction<Wrapper<ASTNode>[]>) Wrapper[]::new);
   }
 
@@ -42,7 +40,7 @@ public final class Inliner {
     this.editGroup = editGroup;
   }
 
-  @NotNull public InlinerWithValue byValue(final Expression replacement) {
+   public InlinerWithValue byValue(final Expression replacement) {
     return new InlinerWithValue(replacement);
   }
 
@@ -54,17 +52,17 @@ public final class Inliner {
     return az.stream(yieldAncestors.until(s).ancestors(n)).anyMatch(λ -> iz.nodeTypeIn(λ, TRY_STATEMENT, SYNCHRONIZED_STATEMENT, LAMBDA_EXPRESSION));
   }
 
-  public static boolean isArrayInitWithUnmatchingTypes(@NotNull final VariableDeclarationFragment f) {
+  public static boolean isArrayInitWithUnmatchingTypes( final VariableDeclarationFragment f) {
     if (!(f.getParent() instanceof VariableDeclarationStatement))
       return false;
-    @Nullable final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
+     final String $ = getElTypeNameFromArrayType(az.variableDeclarationStatement(f.getParent()).getType());
     if (!(f.getInitializer() instanceof ArrayCreation))
       return false;
-    @Nullable final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
+     final String initializerElementTypeName = getElTypeNameFromArrayType(((ArrayCreation) f.getInitializer()).getType());
     return $ != null && initializerElementTypeName != null && !$.equals(initializerElementTypeName);
   }
 
-  @Nullable public static String getElTypeNameFromArrayType(final Type t) {
+   public static String getElTypeNameFromArrayType(final Type t) {
     if (!(t instanceof ArrayType))
       return null;
     final Type et = ((ArrayType) t).getElementType();
@@ -74,7 +72,7 @@ public final class Inliner {
     return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
   }
 
-  public static Expression protect(@NotNull final Expression initializer, final VariableDeclarationStatement currentStatement) {
+  public static Expression protect( final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
@@ -94,12 +92,12 @@ public final class Inliner {
     return !collect.usesOf(n).in(condition(s), body(s)).isEmpty() || !collect.usesOf(n).in(updaters(s)).isEmpty();
   }
 
-  public static boolean variableNotUsedAfterStatement(@NotNull final Statement s, final SimpleName n) {
-    @Nullable final Block b = az.block(s.getParent());
+  public static boolean variableNotUsedAfterStatement( final Statement s, final SimpleName n) {
+     final Block b = az.block(s.getParent());
     assert b != null : "For loop's parent is not a block";
-    @NotNull final List<Statement> statements = statements(b);
+     final List<Statement> statements = statements(b);
     boolean passedFor = false;
-    for (@NotNull final Statement ¢ : statements) {
+    for ( final Statement ¢ : statements) {
       if (passedFor && !collect.usesOf(n).in(¢).isEmpty())
         return false;
       if (¢.equals(s))
@@ -148,28 +146,24 @@ public final class Inliner {
       Stream.of(¢).forEach(this::inlineIntoSingleton);
     }
 
-    private void inlineIntoSingleton(@NotNull final Wrapper<ASTNode> n) {
+    private void inlineIntoSingleton( final Wrapper<ASTNode> n) {
       assert n != null;
       final ASTNode oldExpression = n.get(), newExpression = copy.of(oldExpression);
       assert oldExpression != null;
       final Expression replacement = get();
       assert rewriter != null;
       assert replacement != null;
-      try {
-        rewriter.replace(oldExpression, newExpression, editGroup);
-      } catch (final NullPointerException ¢) {
-        System.out.println(¢);
-      }
+      rewriter.replace(oldExpression, newExpression, editGroup);
       collect.usesOf(name).in(newExpression).stream().filter(Objects::nonNull)
           .forEach(λ -> rewriter.replace(λ, make.plant(replacement).into(λ.getParent()), editGroup));
       n.set(newExpression);
     }
 
-    @Nullable private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {
+     private Collection<SimpleName> unsafeUses(final ASTNode... ¢) {
       return collect.unsafeUsesOf(name).in(¢);
     }
 
-    @Nullable private Collection<SimpleName> uses(final ASTNode... ¢) {
+     private Collection<SimpleName> uses(final ASTNode... ¢) {
       return collect.usesOf(name).in(¢);
     }
   }

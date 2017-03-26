@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -20,14 +18,14 @@ public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x38C70470EE42ECEBL;
 
-  @Override @Nullable public ASTNode replacement(@Nullable final EnhancedForStatement s) {
+  @Override  public ASTNode replacement( final EnhancedForStatement s) {
     if (s == null)
       return null;
     // TODO: Raviv please use class subject
     final EnhancedForStatement $ = copy.of(s);
     final Block b = $.getAST().newBlock();
     statements(b).add(copy.of(body(s)));
-    @NotNull final Collection<Boolean> cc = new ArrayList<>();
+     final Collection<Boolean> cc = new ArrayList<>();
     // noinspection SameReturnValue
     body(s).accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
@@ -41,7 +39,7 @@ public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement
     return $;
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
     return "expand to block";
   }
 }

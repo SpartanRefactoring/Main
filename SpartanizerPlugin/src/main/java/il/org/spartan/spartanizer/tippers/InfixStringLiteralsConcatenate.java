@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -22,17 +20,17 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     implements TipperCategory.NOP {
   private static final long serialVersionUID = -4282740939895750794L;
 
-  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
-    @Nullable final List<Expression> es = hop.operands(x);
+  @Override public ASTNode replacement( final InfixExpression x) {
+     final List<Expression> es = hop.operands(x);
     Expression prev = copy.of(lisp.first(es));
-    @Nullable final CompilationUnit u = az.compilationUnit(x.getRoot());
-    @NotNull final List<Expression> es2 = new LinkedList<>();
-    for (@NotNull final Expression e : lisp.rest(es))
+     final CompilationUnit u = az.compilationUnit(x.getRoot());
+     final List<Expression> es2 = new LinkedList<>();
+    for ( final Expression e : lisp.rest(es))
       if (u.getLineNumber(prev.getStartPosition()) != u.getLineNumber(e.getStartPosition()) || !iz.stringLiteral(prev) || !iz.stringLiteral(e)) {
         es2.add(prev);
         prev = copy.of(e);
       } else {
-        @Nullable final StringLiteral l = az.stringLiteral(prev);
+         final StringLiteral l = az.stringLiteral(prev);
         l.setLiteralValue(l.getLiteralValue() + az.stringLiteral(e).getLiteralValue());
       }
     es2.add(prev);
@@ -43,15 +41,15 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     return $;
   }
 
-  @Override protected boolean prerequisite(@NotNull final InfixExpression x) {
+  @Override protected boolean prerequisite( final InfixExpression x) {
     if (operator(x) != wizard.PLUS2)
       return false;
-    @Nullable final List<Expression> es = hop.operands(x);
+     final List<Expression> es = hop.operands(x);
     Expression prev = lisp.first(es);
     if (!iz.compilationUnit(x.getRoot()))
       return false;
-    @Nullable final CompilationUnit u = az.compilationUnit(x.getRoot());
-    for (@NotNull final Expression ¢ : lisp.rest(es)) {
+     final CompilationUnit u = az.compilationUnit(x.getRoot());
+    for ( final Expression ¢ : lisp.rest(es)) {
       if (u.getLineNumber(prev.getStartPosition()) == u.getLineNumber(¢.getStartPosition()) && iz.stringLiteral(prev) && iz.stringLiteral(¢))
         return true;
       prev = ¢;

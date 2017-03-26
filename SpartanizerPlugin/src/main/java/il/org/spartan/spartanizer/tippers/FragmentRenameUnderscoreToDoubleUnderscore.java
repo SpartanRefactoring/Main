@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -16,15 +14,15 @@ public final class FragmentRenameUnderscoreToDoubleUnderscore<N extends Variable
     implements TipperCategory.Annonimization {
   private static final long serialVersionUID = 0x28D6776DBEFFA844L;
 
-  @Override @NotNull public String description(final N ¢) {
+  @Override  public String description(final N ¢) {
     return "Use double underscore instead of " + trivia.gist(¢);
   }
 
-  @Override protected boolean change(@NotNull final N ¢) {
+  @Override protected boolean change( final N ¢) {
     return "_".equals(¢.getName() + "");
   }
 
-  @Override protected SimpleName replacement(@NotNull final N ¢) {
+  @Override protected SimpleName replacement( final N ¢) {
     return ¢.getAST().newSimpleName("__");
   }
 }

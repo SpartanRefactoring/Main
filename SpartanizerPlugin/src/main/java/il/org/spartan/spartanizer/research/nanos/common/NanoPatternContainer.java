@@ -5,8 +5,6 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
@@ -20,22 +18,22 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     addAll(Arrays.asList(ts));
   }
 
-  @NotNull public NanoPatternContainer<N> add(@NotNull final String pattern) {
+   public NanoPatternContainer<N> add( final String pattern) {
     return add(pattern, "", "");
   }
 
-  @NotNull public NanoPatternContainer<N> add(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
+   public NanoPatternContainer<N> add( final String pattern,  final String replacement,  final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }
 
-  @NotNull public NanoPatternContainer<N> statementPattern(@NotNull final String pattern, @NotNull final String replacement,
-      @NotNull final String description) {
+   public NanoPatternContainer<N> statementPattern( final String pattern,  final String replacement,
+       final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }
 
-  public boolean canTip(@Nullable final N ¢) {
+  public boolean canTip( final N ¢) {
     return ¢ != null//
         && stream().anyMatch(λ -> λ.check(¢));
   }
@@ -44,11 +42,11 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     return !canTip(¢);
   }
 
-  @Nullable public Tip firstTip(final N ¢) {
+   public Tip firstTip(final N ¢) {
     return firstTipper(¢).tip(¢);
   }
 
-  @NotNull public UserDefinedTipper<N> firstTipper(final N ¢) {
+   public UserDefinedTipper<N> firstTipper(final N ¢) {
     return stream().filter(λ -> λ.check(¢)).findFirst().get();
   }
 

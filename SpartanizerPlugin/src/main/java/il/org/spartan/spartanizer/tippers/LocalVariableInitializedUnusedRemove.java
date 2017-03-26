@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -28,7 +26,7 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
     return "Remove unused, uninitialized variable";
   }
 
-  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
+  @Override  public String description(final VariableDeclarationFragment ¢) {
     return "Remove unused variable: " + trivia.gist(¢);
   }
 

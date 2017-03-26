@@ -11,8 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -25,7 +23,7 @@ import il.org.spartan.utils.*;
  * @since 2015-07-17 */
 public enum Tricks {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-  public static void addAllReplacing(final Collection<Statement> to, @NotNull final Iterable<Statement> from, final Statement substitute,
+  public static void addAllReplacing(final Collection<Statement> to,  final Iterable<Statement> from, final Statement substitute,
       final Statement by1, final Iterable<Statement> by2) {
     for (final Statement ¢ : from)
       if (¢ != substitute)
@@ -36,7 +34,7 @@ public enum Tricks {
       }
   }
 
-  public static IfStatement blockIfNeeded(final IfStatement s, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  public static IfStatement blockIfNeeded(final IfStatement s,  final ASTRewrite r, final TextEditGroup g) {
     if (!iz.blockRequired(s))
       return s;
     final Block $ = subject.statement(s).toBlock();
@@ -44,8 +42,8 @@ public enum Tricks {
     return (IfStatement) first(statements($));
   }
 
-  public static Expression eliminateLiteral(@NotNull final InfixExpression x, final boolean b) {
-    @Nullable final List<Expression> $ = extract.allOperands(x);
+  public static Expression eliminateLiteral( final InfixExpression x, final boolean b) {
+     final List<Expression> $ = extract.allOperands(x);
     wizard.removeAll(b, $);
     switch ($.size()) {
       case 1:
@@ -57,7 +55,7 @@ public enum Tricks {
     }
   }
 
-  public static ListRewrite insertAfter(@NotNull final Statement where, @NotNull final List<Statement> what, @NotNull final ASTRewrite r,
+  public static ListRewrite insertAfter( final Statement where,  final List<Statement> what,  final ASTRewrite r,
       final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (int ¢ = what.size() - 1;; $.insertAfter(what.get(¢--), where, g))
@@ -65,15 +63,15 @@ public enum Tricks {
         return $;
   }
 
-  public static ListRewrite insertBefore(final Statement where, @NotNull final Iterable<Statement> what, @NotNull final ASTRewrite r,
+  public static ListRewrite insertBefore(final Statement where,  final Iterable<Statement> what,  final ASTRewrite r,
       final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
     what.forEach(λ -> $.insertBefore(λ, where, g));
     return $;
   }
 
-  public static IfStatement makeShorterIf(@NotNull final IfStatement s) {
-    @NotNull final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
+  public static IfStatement makeShorterIf( final IfStatement s) {
+     final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
     final IfStatement $ = wizard.invert(s);
     if (then.isEmpty())
       return $;
@@ -84,7 +82,7 @@ public enum Tricks {
     return rankElse > rankThen || rankThen == rankElse && !Tricks.thenIsShorter(s) ? $ : main;
   }
 
-  public static boolean mixedLiteralKind(@NotNull final Collection<Expression> xs) {
+  public static boolean mixedLiteralKind( final Collection<Expression> xs) {
     if (xs.size() <= 2)
       return false;
     int previousKind = -1;
@@ -104,10 +102,10 @@ public enum Tricks {
     new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));
   }
 
-  @NotNull public static ASTRewrite replaceTwoStatements(@NotNull final ASTRewrite r, @NotNull final Statement what, final Statement by,
+   public static ASTRewrite replaceTwoStatements( final ASTRewrite r,  final Statement what, final Statement by,
       final TextEditGroup g) {
-    @Nullable final Block parent = az.block(what.getParent());
-    @NotNull final List<Statement> siblings = extract.statements(parent);
+     final Block parent = az.block(what.getParent());
+     final List<Statement> siblings = extract.statements(parent);
     final int i = siblings.indexOf(what);
     siblings.remove(i);
     siblings.remove(i);
@@ -118,13 +116,13 @@ public enum Tricks {
     return r;
   }
 
-  public static boolean shoudlInvert(@NotNull final IfStatement s) {
+  public static boolean shoudlInvert( final IfStatement s) {
     final int $ = sequencerRank(hop.lastStatement(then(s))), rankElse = sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !Tricks.thenIsShorter(s);
   }
 
-  public static boolean thenIsShorter(@NotNull final IfStatement s) {
-    @NotNull final Statement then = then(s), elze = elze(s);
+  public static boolean thenIsShorter( final IfStatement s) {
+     final Statement then = then(s), elze = elze(s);
     if (elze == null)
       return true;
     final int s1 = count.lines(then), s2 = count.lines(elze);
@@ -143,11 +141,11 @@ public enum Tricks {
     return positivePrefixLength($) >= positivePrefixLength(wizard.invert($));
   }
 
-  private static int positivePrefixLength(@NotNull final IfStatement $) {
+  private static int positivePrefixLength( final IfStatement $) {
     return metrics.length($.getExpression(), then($));
   }
 
-  private static int sequencerRank(@NotNull final ASTNode ¢) {
+  private static int sequencerRank( final ASTNode ¢) {
     return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 }

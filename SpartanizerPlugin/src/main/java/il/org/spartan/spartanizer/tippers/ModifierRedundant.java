@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -22,7 +20,7 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x131323DBCDA3200DL;
 
-  @Override @NotNull public String description(final Modifier ¢) {
+  @Override  public String description(final Modifier ¢) {
     return "Remove redundant [" + ¢ + "] modifier";
   }
 
@@ -30,9 +28,9 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     return "Remove redundant modifier";
   }
 
-  @Override @NotNull public Tip tip(@NotNull final Modifier ¢) {
+  @Override  public Tip tip( final Modifier ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.getListRewrite(parent(¢), az.bodyDeclaration(parent(¢)).getModifiersProperty()).remove(¢, g);
       }
     };
