@@ -9,7 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -41,7 +40,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     assert n == object();
     return new Tip(description(), object(), myClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        AbstractPattern.this.go(r, g);
+        go(r, g);
       }
     };
   }
