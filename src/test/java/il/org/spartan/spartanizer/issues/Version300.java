@@ -32,6 +32,54 @@ public final class Version300 {
     );
   }
 
+  @FunctionalInterface
+  interface Find {
+    //@formatter:off
+    default Find prerequisite() { return null; };
+    void find();
+    default boolean B(@SuppressWarnings("unused") final int i) { throw new RuntimeException(); }
+    default boolean B(@SuppressWarnings("unused") final Object ... __) { throw new RuntimeException(); }
+    default void S(@SuppressWarnings("unused") final int i) { throw new RuntimeException(); }
+    default void S(@SuppressWarnings("unused") final Object ... __) { throw new RuntimeException(); }
+    default void andAlso(@SuppressWarnings("unused") final Find find){}
+    default void butNot(@SuppressWarnings("unused") final Find find){}
+    default void orElse(@SuppressWarnings("unused") final Find find){}
+    default void andIs(@SuppressWarnings("unused") final Runnable __1, final Runnable __2){}
+    //@formatter:on
+  }
+
+  interface Replace extends Find {
+    void replace();
+  }
+  
+ 
+
+  Replace xxx = new Replace() {
+    {
+      andAlso(() -> {});
+      andIs(() -> S(1), () -> {
+        if (B(1))
+          S(1);
+        else if (B(2))
+          S(new Object());
+      });
+    }
+
+    @Override public void find() {
+      if (B(0))
+        S(1);
+      else
+        S(1);
+    }
+
+    @Override public void replace() {
+      if (B(0))
+        S();
+      else
+        S(1);
+    }
+  };
+
   @Test public void abcd() {
     trimmingOf("a = !(b ? c : d)") //
         .using(PrefixExpression.class, new PrefixNotPushdown()) //
