@@ -288,8 +288,8 @@ public final class Version300 {
   }
 
   @Test public void x() {
-    trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) break; return i; }")//
-        .gives("int f(int ¢){for(;¢<100;¢=¢+1)if(false)break;return ¢;}") //
+    trimmingOf("int f(int i) { for(;i<100;i=i+1) if(false) return; return i; }")//
+        .gives("int f(int ¢){for(;¢<100;¢=¢+1)if(false)return;return ¢;}") //
         .gives("int f(int ¢){for(;¢<100;¢+=1){}return ¢;}");
   }
 

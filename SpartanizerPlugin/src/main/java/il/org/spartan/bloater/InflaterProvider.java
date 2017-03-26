@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** holds the new toolbox for the expanders and returns them
@@ -70,7 +71,8 @@ public class InflaterProvider extends OperationsProvider {
         .add(EnhancedForStatement.class, //
             new ForEachBlockBloater()) //
         .add(ForStatement.class, //
-            new ForBlockBloater()) //
+            new ForBlockBloater() //
+            ) //
         .add(WhileStatement.class, //
             new WhileBlockBloater()) //
         .add(IfStatement.class, //
