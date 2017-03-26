@@ -22,8 +22,8 @@ public class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
     @Nullable final Namespace n = Environment.of(¢);
     if (!n.isNumeric(¢.getLeftHandSide() + ""))
       return null;
-    return ¢.getOperator() != Operator.PLUS_ASSIGN || !¢.getLeftHandSide().resolveTypeBinding().isPrimitive()
-        || !iz.numberLiteral(¢.getRightHandSide()) || !"1".equals(az.numberLiteral(¢.getRightHandSide()).getToken()) ? null
+    return ¢.getOperator() != Operator.PLUS_ASSIGN || !iz.numberLiteral(¢.getRightHandSide())
+        || !"1".equals(az.numberLiteral(¢.getRightHandSide()).getToken()) ? null
             : subject.operand(¢.getLeftHandSide()).to(PostfixExpression.Operator.INCREMENT);
   }
 
