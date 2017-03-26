@@ -192,8 +192,7 @@ public final class Version230 {
 
   @Test public void booleanChangeValueOfToConstant() {
     trimmingOf("Boolean b=Boolean.valueOf(true);")//
-        .gives("Boolean b=Boolean.TRUE;");
-    trimmingOf("Boolean b=Boolean.valueOf(false);")//
+    .gives("Boolean.valueOf(true);")//
         .gives("Boolean b=Boolean.FALSE;");
   }
 
