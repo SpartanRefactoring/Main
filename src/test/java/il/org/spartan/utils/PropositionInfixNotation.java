@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
-import org.jetbrains.annotations.*;
-
 /** TODO
  * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-19 */
@@ -12,35 +10,35 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
     super(new ReduceStringConcatenate());
   }
 
-  @Override @NotNull protected final String ante(@NotNull final Proposition.Not ¢) {
-    return negation() + (¢.inner instanceof Proposition.C ? open() : empty());
+  @Override  protected final String ante( final Proposition.Not ¢) {
+    return negation() + (¢.inner instanceof Proposition.Some ? open() : empty());
   }
 
-  @Override @NotNull protected final String ante(@NotNull final Proposition.P ¢) {
-    return ¢.inner instanceof Proposition.C ? open() : empty();
+  @Override  protected final String ante( final Proposition.Singleton ¢) {
+    return ¢.inner instanceof Proposition.Some ? open() : empty();
   }
 
-  @NotNull protected abstract String close();
+   protected abstract String close();
 
-  @NotNull protected abstract String empty();
+   protected abstract String empty();
 
-  @Override @NotNull protected abstract String inter(Proposition.And a);
+  @Override  protected abstract String inter(Proposition.And a);
 
-  @Override @NotNull protected abstract String inter(Proposition.Or o);
+  @Override  protected abstract String inter(Proposition.Or o);
 
-  @Override @NotNull protected String map(final BooleanSupplier ¢) {
+  @Override  protected String map(final BooleanSupplier ¢) {
     return ¢ + "";
   }
 
-  @NotNull protected abstract String negation();
+   protected abstract String negation();
 
-  @NotNull protected abstract String open();
+   protected abstract String open();
 
-  @Override @NotNull protected final String post(@NotNull final Proposition.Not ¢) {
-    return ¢.inner instanceof Proposition.C ? close() : empty();
+  @Override  protected final String post( final Proposition.Not ¢) {
+    return ¢.inner instanceof Proposition.Some ? close() : empty();
   }
 
-  @Override @NotNull protected String post(@NotNull final Proposition.P ¢) {
-    return ¢.inner instanceof Proposition.C ? close() : empty();
+  @Override  protected String post( final Proposition.Singleton ¢) {
+    return ¢.inner instanceof Proposition.Some ? close() : empty();
   }
 }
