@@ -12,6 +12,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.jetbrains.annotations.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -205,6 +206,20 @@ public class Trimmer extends AbstractGUIApplicator {
       toolbox = new Toolbox();
     }
     toolbox.add(c, ts);
+    return this;
+  }
+
+  // Does not require node class --or
+  @SafeVarargs @NotNull public final Trimmer fix(final Tipper<?>... ts) {
+    final List<Tipper<?>> tss = as.list(ts);
+    if (!firstAddition)
+      tss.addAll(toolbox.getAllTippers());
+    else
+      toolbox = Toolbox.freshCopyOfAllTippers();
+    firstAddition = false;
+    for (List<Tipper<? extends ASTNode>> ¢ : toolbox.implementation)
+      if (¢ != null)
+        ¢.retainAll(tss);
     return this;
   }
 
