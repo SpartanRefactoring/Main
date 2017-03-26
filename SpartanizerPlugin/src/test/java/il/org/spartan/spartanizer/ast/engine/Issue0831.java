@@ -25,7 +25,7 @@ public class Issue0831 {
   @Nullable final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
 
   @Test public void fourStatementInScanner() {
-    @NotNull String body = "";
+     String body = "";
     for (final Statement iter : new MethodScannerIExt(fourStatMethod).statements()) // NANO
       body += iter + "";
     azzert.that(body, is("int a;\nint b;\nint c;\nint d;\n"));
@@ -34,7 +34,7 @@ public class Issue0831 {
   @Test public void givenNullinsteadMethodAssertionFailure() {
     try {
       new MethodScannerIExt(null).hashCode();
-    } catch (@NotNull final Error ¢) {
+    } catch ( final Error ¢) {
       ¢.getClass();
       return;
     }
@@ -54,7 +54,7 @@ public class Issue0831 {
   }
 
   protected static class MethodScannerIExt extends MethodScanner {
-    public MethodScannerIExt(@NotNull final MethodDeclaration method) {
+    public MethodScannerIExt( final MethodDeclaration method) {
       super(method);
     }
 

@@ -23,12 +23,12 @@ public class Generic$Applicator {
   private static List<String> selectedTipperGroups;
   protected static List<Class<? extends ASTNode>> selectedNodeTypes = setAllNodeTypes();
 
-  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes(@NotNull final String... ss) {
-    @NotNull final Collection<Class<? extends ASTNode>> $ = new ArrayList<>();
+  @SuppressWarnings("unchecked") private static List<Class<? extends ASTNode>> setSelectedNodeTypes( final String... ss) {
+     final Collection<Class<? extends ASTNode>> $ = new ArrayList<>();
     try {
       for (final String ¢ : ss) // NANO - but throws...
         $.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));
-    } catch (@NotNull final ClassNotFoundException ¢) {
+    } catch ( final ClassNotFoundException ¢) {
       ¢.printStackTrace();
     }
     return as.list($); // useless?
@@ -97,8 +97,8 @@ public class Generic$Applicator {
     setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
 
-  @NotNull private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
-    @NotNull final Collection<String> $ = new ArrayList<>();
+   private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
+     final Collection<String> $ = new ArrayList<>();
     Collections.addAll($, ¢);
     return $;
   }

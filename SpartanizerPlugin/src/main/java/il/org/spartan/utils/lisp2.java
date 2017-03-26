@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.utils.range.*;
 
@@ -11,15 +9,15 @@ import il.org.spartan.utils.range.*;
  * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-19 */
 public interface lisp2 extends lisp {
-  @NotNull static String nth(final int i, @NotNull final Collection<?> os) {
+   static String nth(final int i,  final Collection<?> os) {
     return lisp2.nth(i, os.size());
   }
 
-  @NotNull static String nth(final int i, final int n) {
+   static String nth(final int i, final int n) {
     return nth(i + "", n + "");
   }
 
-  @NotNull static String nth(final String s, final String n) {
+   static String nth(final String s, final String n) {
     return " #" + s + "/" + n;
   }
 
@@ -28,7 +26,7 @@ public interface lisp2 extends lisp {
    * @param i1 the index of the first element
    * @param i2 the index of the second element
    * @return the list after swapping the elements */
-  @NotNull static <T> List<T> swap(@NotNull final List<T> $, final int i1, final int i2) {
+   static <T> List<T> swap( final List<T> $, final int i1, final int i2) {
     if (i1 >= $.size() || i2 >= $.size())
       return $;
     final T t = $.get(i1);
@@ -37,7 +35,7 @@ public interface lisp2 extends lisp {
     return $;
   }
 
-  @SuppressWarnings("boxing") static int index(final int i, @NotNull final int... is) {
+  @SuppressWarnings("boxing") static int index(final int i,  final int... is) {
     for (final Integer $ : range.from(0).to(is.length))
       if (is[$] == i)
         return $;

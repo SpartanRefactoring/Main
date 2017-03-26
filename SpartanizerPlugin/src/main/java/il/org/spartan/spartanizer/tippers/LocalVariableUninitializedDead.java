@@ -22,6 +22,7 @@ import il.org.spartan.utils.*;
 /** See {@link #examples()}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
+@SuppressWarnings("unused")
 public final class LocalVariableUninitializedDead extends LocalVariableUninitialized implements TipperCategory.Deadcode {
   private static final long serialVersionUID = 0x14812B0904DFB002L;
 
@@ -29,7 +30,7 @@ public final class LocalVariableUninitializedDead extends LocalVariableUninitial
     andAlso(Proposition.of("Local variable is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty()));
   }
 
-  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override  public String description( final VariableDeclarationFragment ¢) {
     return "Remove unused local variable " + trivia.gist(¢.getName());
   }
 

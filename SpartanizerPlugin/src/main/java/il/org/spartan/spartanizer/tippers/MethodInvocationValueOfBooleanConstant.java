@@ -19,7 +19,7 @@ public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrent
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -875185107180196417L;
 
-  @NotNull private static String asString(@NotNull final BooleanLiteral ¢) {
+   private static String asString( final BooleanLiteral ¢) {
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }
 
@@ -31,7 +31,7 @@ public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrent
     return x == null || !"Boolean".equals(x + "") ? null : replacement(x, az.booleanLiteral($));
   }
 
-  @Override @NotNull public String description(final MethodInvocation ¢) {
+  @Override  public String description(final MethodInvocation ¢) {
     return "Replace valueOf (" + onlyArgument(¢) + ") with Boolean." + asString(az.booleanLiteral(onlyArgument(¢)));
   }
 

@@ -37,14 +37,14 @@ public final class IfFooSequencerIfFooSameSequencer extends GoToNextStatement<If
     return "Consolidate two 'if' statements with identical body";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite r, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go( final ASTRewrite r,  final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
     @Nullable final IfStatement $ = az.ifStatement(nextStatement);
     if ($ == null || !iz.vacuousElse($))
       return null;
-    @NotNull final Statement then = then(s);
-    @NotNull final List<Statement> ss1 = extract.statements(then);
+     final Statement then = then(s);
+     final List<Statement> ss1 = extract.statements(then);
     return !wizard.same(ss1, extract.statements(then($))) || !iz.sequencer(last(ss1)) ? null
         : Tricks.replaceTwoStatements(r, s,
             make.ifWithoutElse(BlockSimplify.reorganizeNestedStatement(then), subject.pair(s.getExpression(), $.getExpression()).to(CONDITIONAL_OR)),

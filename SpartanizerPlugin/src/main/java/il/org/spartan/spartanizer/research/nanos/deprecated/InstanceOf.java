@@ -30,9 +30,9 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
 
-  @Override @NotNull public Tip pattern(@NotNull final InstanceofExpression ¢) {
+  @Override  public Tip pattern( final InstanceofExpression ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(izMethodName(¢) + "(" + step.left(¢) + ")"), g);
         if (!izMethodExist(¢))
           addizMethod(¢, r, g);
@@ -40,7 +40,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     };
   }
 
-  @NotNull static String izMethodName(final InstanceofExpression ¢) {
+   static String izMethodName(final InstanceofExpression ¢) {
     return "iz" + type(¢);
   }
 
@@ -53,7 +53,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return "boolean".equals(returnType + "");
   }
 
-  static void addizMethod(final InstanceofExpression ¢, @NotNull final ASTRewrite r, final TextEditGroup g) {
+  static void addizMethod(final InstanceofExpression ¢,  final ASTRewrite r, final TextEditGroup g) {
     wizard.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
   }
 
@@ -67,7 +67,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     return yieldAncestors.untilContainingType().from(¢);
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
+  @Override  public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
     return "replace instanceof with iz()";
   }
 }

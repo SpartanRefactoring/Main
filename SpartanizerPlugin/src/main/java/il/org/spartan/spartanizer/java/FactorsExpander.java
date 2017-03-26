@@ -20,20 +20,20 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @since 2016-08 */
 enum FactorsExpander {
   ;
-  @NotNull public static Expression simplify(final InfixExpression ¢) {
+   public static Expression simplify(final InfixExpression ¢) {
     return base(new FactorsCollector(¢));
   }
 
-  private static InfixExpression appendDivide(final InfixExpression $, @NotNull final Factor ¢) {
+  private static InfixExpression appendDivide(final InfixExpression $,  final Factor ¢) {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
   }
 
-  private static InfixExpression appendTimes(final InfixExpression $, @NotNull final Factor f) {
+  private static InfixExpression appendTimes(final InfixExpression $,  final Factor f) {
     final Expression ¢ = copy.of(f.expression);
     return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
   }
 
-  private static InfixExpression base(@NotNull final Factor t1, @NotNull final Factor t2) {
+  private static InfixExpression base( final Factor t1,  final Factor t2) {
     if (t1.multiplier())
       return subject.pair(t1.expression, t2.expression).to(t2.multiplier() ? TIMES : DIVIDE);
     assert t1.divider();
@@ -46,11 +46,11 @@ enum FactorsExpander {
     ).to(DIVIDE);
   }
 
-  @NotNull private static Expression base(@NotNull final FactorsCollector ¢) {
+   private static Expression base( final FactorsCollector ¢) {
     return base(¢.all());
   }
 
-  @NotNull private static Expression base(@NotNull final List<Factor> fs) {
+   private static Expression base( final List<Factor> fs) {
     assert fs != null;
     assert !fs.isEmpty();
     final Factor first = first(fs);
@@ -67,7 +67,7 @@ enum FactorsExpander {
    * @param fs a list
    * @return the $ parameter, after all elements of the list parameter are added
    *         to it */
-  @NotNull private static Expression recurse(@NotNull final Expression $, @Nullable final List<Factor> fs) {
+   private static Expression recurse( final Expression $, @Nullable final List<Factor> fs) {
     assert $ != null;
     if (fs == null || fs.isEmpty())
       return $;
@@ -75,7 +75,7 @@ enum FactorsExpander {
     return recurse((InfixExpression) $, fs);
   }
 
-  @NotNull private static Expression recurse(@NotNull final InfixExpression $, @Nullable final List<Factor> fs) {
+   private static Expression recurse( final InfixExpression $, @Nullable final List<Factor> fs) {
     assert $ != null;
     if (fs == null || fs.isEmpty())
       return $;
@@ -89,7 +89,7 @@ enum FactorsExpander {
     return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), chop(fs));
   }
 
-  @NotNull private static Expression step(@NotNull final Expression $, @NotNull final List<Factor> ¢) {
+   private static Expression step( final Expression $,  final List<Factor> ¢) {
     assert ¢ != null;
     return ¢.isEmpty() ? $ : recurse($, ¢);
   }

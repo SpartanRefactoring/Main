@@ -49,11 +49,11 @@ public final class ForLoop {
       return firstTip(tippers, az.block(parent($)));
     }
 
-    @Override @NotNull public String nanoName() {
+    @Override  public String nanoName() {
       return "FirstSuchThat";
     }
 
-    @Override @NotNull public String description() {
+    @Override  public String description() {
       return "Iterate a collection for the first element matching some predicate";
     }
   }

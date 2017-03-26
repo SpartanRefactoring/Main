@@ -18,7 +18,7 @@ public class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
     implements TipperCategory.Arithmetic {
   private static final long serialVersionUID = 0x1F5C3A50D08EA75BL;
 
-  @Override @Nullable public ASTNode replacement(@NotNull final Assignment ¢) {
+  @Override @Nullable public ASTNode replacement( final Assignment ¢) {
     @Nullable final Namespace n = Environment.of(¢);
     if (!n.isNumeric(¢.getLeftHandSide() + ""))
       return null;

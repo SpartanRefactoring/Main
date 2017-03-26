@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -22,16 +20,16 @@ public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypePar
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -8887752937006192444L;
 
-  @Override @NotNull public String description(final TypeParameter ¢) {
+  @Override  public String description(final TypeParameter ¢) {
     return "Trim implicit extends " + trivia.gist(¢);
   }
 
   @Override public TypeParameter replacement(final TypeParameter p) {
     final TypeParameter $ = copy.of(p);
-    @NotNull final List<Type> ts = typeBounds($);
+     final List<Type> ts = typeBounds($);
     if (!haz.hasObject(ts))
       return null;
-    for (@NotNull final Iterator<Type> ¢ = ts.iterator(); ¢.hasNext();)
+    for ( final Iterator<Type> ¢ = ts.iterator(); ¢.hasNext();)
       if (isObject(¢.next()))
         ¢.remove();
     return $;

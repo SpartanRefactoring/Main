@@ -4,7 +4,6 @@ import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -74,17 +73,17 @@ public final class WrapTest {
   }
 
   @Test public void intoCompilationUnit() {
-    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
-    @NotNull final String codeFragment = "a + b * c";
-    @NotNull final CompilationUnit u = w.intoCompilationUnit(codeFragment);
+     final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
+     final String codeFragment = "a + b * c";
+     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     assert u != null;
     azzert.that(w.off(u + ""), containsString(codeFragment));
   }
 
   @Test public void intoDocument() {
-    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
-    @NotNull final String codeFragment = "a + b * c";
-    @NotNull final Document d = w.intoDocument(codeFragment);
+     final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
+     final String codeFragment = "a + b * c";
+     final Document d = w.intoDocument(codeFragment);
     assert d != null;
     azzert.that(w.off(d.get()), containsString(codeFragment));
   }
@@ -101,7 +100,7 @@ public final class WrapTest {
     similar(trivia.removeComments("if (b) {\n /* empty */} else {\n throw new Exception();\n}"), "if (b) {} else { throw new Exception(); }");
   }
 
-  private void similar(@NotNull final String s1, @NotNull final String s2) {
+  private void similar( final String s1,  final String s2) {
     azzert.that(trivia.essence(s2), is(trivia.essence(s1)));
   }
 

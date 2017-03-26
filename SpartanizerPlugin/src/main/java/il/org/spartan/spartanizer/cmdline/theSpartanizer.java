@@ -20,8 +20,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 public interface theSpartanizer {
-  static Tipper<?> firstTipper(@NotNull final String from) {
-    @NotNull final Wrapper<Tipper<?>> $ = new Wrapper<>();
+  static Tipper<?> firstTipper( final String from) {
+     final Wrapper<Tipper<?>> $ = new Wrapper<>();
     @Nullable final ASTNode n = wizard.ast(from);
     if (n != null)
       n.accept(new DispatchingVisitor() {
@@ -45,13 +45,13 @@ public interface theSpartanizer {
    * @param from what to process
    * @return trimmed text, or null in case of error or no more applicable
    *         tippers */
-  @SuppressWarnings("hiding") static String once(@NotNull final String from) {
-    @NotNull final Trimmer trimmer = new Trimmer(toolbox);
-    @NotNull final IDocument $ = new Document(from);
+  @SuppressWarnings("hiding") static String once( final String from) {
+     final Trimmer trimmer = new Trimmer(toolbox);
+     final IDocument $ = new Document(from);
     @Nullable final ASTNode root = wizard.ast(from);
     if (root != null)
       root.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go(@NotNull final N n) {
+        @Override protected <N extends ASTNode> boolean go( final N n) {
           if (!searching)
             return false;
           @Nullable final Tipper<N> t = safeFirstTipper(n);
@@ -64,13 +64,13 @@ public interface theSpartanizer {
           return searching = false;
         }
 
-        <N extends ASTNode> void apply(@NotNull final Tip t, @NotNull final N n) {
+        <N extends ASTNode> void apply( final Tip t,  final N n) {
           final ASTRewrite r = ASTRewrite.create(n.getAST());
           t.go(r, null);
           final TextEdit e = r.rewriteAST($, null);
           try {
             e.apply($);
-          } catch (@NotNull final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+          } catch ( final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
             monitor.logEvaluationError(trimmer, ¢);
           }
         }
@@ -92,7 +92,7 @@ public interface theSpartanizer {
   @Nullable static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
       return toolbox.firstTipper($);
-    } catch (@NotNull final Exception ¢) {
+    } catch ( final Exception ¢) {
       return monitor.logProbableBug(¢);
     }
   }
@@ -101,11 +101,11 @@ public interface theSpartanizer {
     return s1 == null || s2 == null || s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
   }
 
-  static String thrice(@NotNull final String javaCode) {
+  static String thrice( final String javaCode) {
     return once(twice(javaCode));
   }
 
-  static String twice(@NotNull final String javaCode) {
+  static String twice( final String javaCode) {
     return once(once(javaCode));
   }
 

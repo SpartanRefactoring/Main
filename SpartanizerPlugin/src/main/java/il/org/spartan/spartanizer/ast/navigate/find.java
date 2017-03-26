@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2016-12-22 */
 public enum find {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-  @NotNull public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
+   public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
     return new Operand<N>() {
       @Override public N under(final ASTNode ¢) {
         return lisp.first(descendants.whoseClassIs(c).from(¢));
@@ -35,7 +35,7 @@ public enum find {
     public abstract N under(ASTNode n);
   }
 
-  public static <N extends ASTNode> Expression singleExpressionDifference(@NotNull final List<N> ns) {
+  public static <N extends ASTNode> Expression singleExpressionDifference( final List<N> ns) {
     @Nullable final Expression $;
     if (ns.size() < 2 || ($ = singleExpressionDifference(lisp.first(ns), ns.get(1))) == null)
       return null;
@@ -67,14 +67,14 @@ public enum find {
     return $;
   }
 
-  @NotNull public static <N extends ASTNode> List<String> singleAtomicDifferences(@NotNull final List<N> ¢) {
-    @NotNull final List<String> $ = new ArrayList<>();
+   public static <N extends ASTNode> List<String> singleAtomicDifferences( final List<N> ¢) {
+     final List<String> $ = new ArrayList<>();
     ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleAtomicDifference(λ, lisp.first(¢)) : singleAtomicDifference(lisp.first(¢), second(¢))));
     return $;
   }
 
-  @NotNull public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(@NotNull final List<N> ¢) {
-    @NotNull final List<Expression> $ = new ArrayList<>();
+   public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences( final List<N> ¢) {
+     final List<Expression> $ = new ArrayList<>();
     ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleExpressionDifference(λ, lisp.first(¢)) : singleExpressionDifference(lisp.first(¢), second(¢))));
     return $;
   }
@@ -112,7 +112,7 @@ public enum find {
   /** like the other one but for a list
    * @param ns
    * @return */
-  public static <N extends ASTNode> String singleAtomicDifference(@NotNull final List<N> ns) {
+  public static <N extends ASTNode> String singleAtomicDifference( final List<N> ns) {
     if (ns.size() < 2)
       return null;
     @Nullable String $ = singleAtomicDifference(lisp.first(ns), second(ns));

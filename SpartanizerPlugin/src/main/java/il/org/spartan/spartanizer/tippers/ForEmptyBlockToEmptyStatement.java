@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.utils.Example.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -25,12 +23,12 @@ public class ForEmptyBlockToEmptyStatement extends ReplaceCurrentNode<ForStateme
     return $;
   }
 
-  @Override protected boolean prerequisite(@NotNull final ForStatement ¢) {
+  @Override protected boolean prerequisite( final ForStatement ¢) {
     final Statement $ = ¢.getBody();
     return iz.block($) && iz.emptyBlock(az.block($));
   }
 
-  @Override @NotNull public Example[] examples() {
+  @Override  public Example[] examples() {
     return new Example[] {
         convert("for(x();y();z()){}")//
             .to("for(x();y();z());"), //
@@ -39,7 +37,7 @@ public class ForEmptyBlockToEmptyStatement extends ReplaceCurrentNode<ForStateme
     };
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "replaces a for statment followed by an empty block with a for statment followed by a semicolon";
   }
 }

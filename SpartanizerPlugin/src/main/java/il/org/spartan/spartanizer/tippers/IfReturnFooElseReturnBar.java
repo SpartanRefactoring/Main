@@ -33,8 +33,8 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @Override public Statement replacement(@NotNull final IfStatement s) {
-    @NotNull final Expression then = extract.returnExpression(then(s)), elze = extract.returnExpression(elze(s));
+  @Override public Statement replacement( final IfStatement s) {
+     final Expression then = extract.returnExpression(then(s)), elze = extract.returnExpression(elze(s));
     return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(s.getExpression())).toReturn();
   }
 }

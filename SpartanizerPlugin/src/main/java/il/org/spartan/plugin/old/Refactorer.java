@@ -138,20 +138,20 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     @Nullable final AbstractGUIApplicator applicator = either(getApplicator(e), getApplicator(m));
     if (!valid(selection, applicator) || selection.inner.isEmpty())
       return null;
-    @NotNull final Map<attribute, Object> attributes = unknowns();
+     final Map<attribute, Object> attributes = unknowns();
     put(attributes, attribute.EVENT, e);
     put(attributes, attribute.MARKER, m);
     put(attributes, attribute.CU, selection.inner);
     put(attributes, attribute.APPLICATOR, applicator);
     doWork(initialWork(applicator, selection.getCompilationUnits(), attributes), eclipse.progressMonitorDialog(hasDisplay()));
-    @NotNull final ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
-    @NotNull final IRunnableWithProgress r = runnable(selection, applicator, attributes);
+     final ProgressMonitorDialog progressMonitorDialog = eclipse.progressMonitorDialog(hasDisplay());
+     final IRunnableWithProgress r = runnable(selection, applicator, attributes);
     @Nullable final MessageDialog initialDialog = show(getOpeningMessage(attributes));
     if (hasDisplay())
       initializeProgressDialog(progressMonitorDialog);
     try {
       progressMonitorDialog.run(true, true, r);
-    } catch (@NotNull InterruptedException | InvocationTargetException ¢) {
+    } catch ( InterruptedException | InvocationTargetException ¢) {
       monitor.log(¢);
       return null;
     }
@@ -161,40 +161,40 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return null;
   }
 
-  @NotNull private Map<attribute, Object> unknowns() {
-    @NotNull final Map<attribute, Object> $ = new HashMap<>();
+   private Map<attribute, Object> unknowns() {
+     final Map<attribute, Object> $ = new HashMap<>();
     Stream.of(attribute.values()).forEach(λ -> $.put(λ, unknown));
     return $;
   }
 
-  private boolean doWork(@Nullable final IRunnableWithProgress p, @NotNull final IRunnableContext d) {
+  private boolean doWork(@Nullable final IRunnableWithProgress p,  final IRunnableContext d) {
     if (p != null)
       try {
         d.run(true, true, p);
-      } catch (@NotNull final InvocationTargetException ¢) {
+      } catch ( final InvocationTargetException ¢) {
         monitor.logProbableBug(¢);
         return false;
-      } catch (@NotNull final InterruptedException ¢) {
+      } catch ( final InterruptedException ¢) {
         monitor.logCancellationRequest(this, ¢);
         return false;
       }
     return true;
   }
 
-  private IRunnableWithProgress runnable(@NotNull final Selection s, @NotNull final AbstractGUIApplicator a,
-      @NotNull final Map<attribute, Object> m) {
+  private IRunnableWithProgress runnable( final Selection s,  final AbstractGUIApplicator a,
+       final Map<attribute, Object> m) {
     return pm -> {
       final int $ = passesCount();
       int pass, totalTips = 0;
-      @NotNull final Collection<ICompilationUnit> doneCompilationUnits = new ArrayList<>(), modifiedCompilationUnits = new HashSet<>();
+       final Collection<ICompilationUnit> doneCompilationUnits = new ArrayList<>(), modifiedCompilationUnits = new HashSet<>();
       for (pass = 0; pass < $ && !finish(pm); ++pass) {
         pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
-        @NotNull final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);
+         final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);
         if (currentCompilationUnits.isEmpty()) {
           finish(pm);
           break;
         }
-        for (@NotNull final ICompilationUnit u : currentCompilationUnits) {
+        for ( final ICompilationUnit u : currentCompilationUnits) {
           if (pm.isCanceled())
             break;
           pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
@@ -215,7 +215,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return t1 != null ? t1 : t2;
   }
 
-  private static void put(@NotNull final Map<attribute, Object> m, final attribute a, @Nullable final Object o) {
+  private static void put( final Map<attribute, Object> m, final attribute a, @Nullable final Object o) {
     if (o != null)
       m.put(a, o);
   }
@@ -223,7 +223,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   @Nullable private static MessageDialog show(@Nullable final String ¢) {
     if (¢ == null)
       return null;
-    @NotNull final MessageDialog $ = eclipse.announceNonBusy(¢);
+     final MessageDialog $ = eclipse.announceNonBusy(¢);
     $.open();
     return $;
   }
@@ -233,15 +233,15 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       initialDialog.close();
   }
 
-  private static boolean finish(@NotNull final IProgressMonitor pm) {
+  private static boolean finish( final IProgressMonitor pm) {
     final boolean $ = pm.isCanceled();
     pm.done();
     return $;
   }
 
-  @NotNull private static List<ICompilationUnit> currentCompilationUnits(@NotNull final Collection<ICompilationUnit> us,
-      @NotNull final Collection<ICompilationUnit> ds) {
-    @NotNull final List<ICompilationUnit> $ = new ArrayList<>(us);
+   private static List<ICompilationUnit> currentCompilationUnits( final Collection<ICompilationUnit> us,
+       final Collection<ICompilationUnit> ds) {
+     final List<ICompilationUnit> $ = new ArrayList<>(us);
     $.removeAll(ds);
     return $;
   }
@@ -250,7 +250,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return Stream.of(¢).allMatch(Objects::nonNull);
   }
 
-  private static void initializeProgressDialog(@NotNull final ProgressMonitorDialog d) {
+  private static void initializeProgressDialog( final ProgressMonitorDialog d) {
     d.open();
     final Shell s = d.getShell();
     if (s == null)

@@ -51,7 +51,7 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @Override @NotNull public String technicalName() {
+  @Override  public String technicalName() {
     return "foreach C [s.t. P(·)] do S(·)";
   }
 

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.meta.*;
 
 /** Unit tests for {@link
@@ -16,7 +14,7 @@ public class Issue1090 extends MetaFixture {
     int intField;
     long longField;
     short shortField;
-    @NotNull AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
+     AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
       /** [[SuppressWarningsSpartan]] */
       @Override protected void startingWith() {
         intField = 0;
@@ -27,7 +25,7 @@ public class Issue1090 extends MetaFixture {
         intField = charField = 0;
       }
     };
-    @NotNull AlphabeticallySortedSentence case2 = new AlphabeticallySortedSentence() {
+     AlphabeticallySortedSentence case2 = new AlphabeticallySortedSentence() {
       /** [[SuppressWarningsSpartan]] */
       @Override protected void startingWith() {
         intField++;

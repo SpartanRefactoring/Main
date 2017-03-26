@@ -28,11 +28,11 @@ public final class PrefixIncrementDecrementReturn extends GoToNextStatement<Pref
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -7169963565517331905L;
 
-  @Override @NotNull public String description(final PrefixExpression ¢) {
+  @Override  public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final PrefixExpression x, final Statement nextStatement,
+  @Override protected ASTRewrite go( final ASTRewrite $,  final PrefixExpression x, final Statement nextStatement,
       final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;

@@ -29,11 +29,11 @@ public final class FragmentNoInitializerAssignment extends $FragmentAndStatement
     return $;
   }
 
-  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override  public String description( final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, @NotNull final SimpleName n,
+  @Override @Nullable protected ASTRewrite go( final ASTRewrite $, final VariableDeclarationFragment f,  final SimpleName n,
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
       return null;

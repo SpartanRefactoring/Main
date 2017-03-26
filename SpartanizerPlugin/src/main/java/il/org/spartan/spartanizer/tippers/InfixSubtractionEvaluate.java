@@ -8,8 +8,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
@@ -32,7 +30,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     double $ = 0;
     try {
       $ = az.throwing.double¢(first(xs)) - az.stream(rest(xs)).mapToDouble(az.throwing::double¢).sum();
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch ( final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -42,12 +40,12 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     int $ = 0;
     try {
       $ = az.throwing.int¢(first(xs));
-      for (@NotNull final Expression ¢ : rest(xs)) {
+      for ( final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
         $ -= az.throwing.int¢(¢);
       }
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch ( final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;
@@ -57,12 +55,12 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     long $ = 0;
     try {
       $ = az.throwing.long¢(first(xs));
-      for (@NotNull final Expression ¢ : rest(xs)) {
+      for ( final Expression ¢ : rest(xs)) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();
         $ -= az.throwing.long¢(¢);
       }
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch ( final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return $;

@@ -22,17 +22,17 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -774288757243201042L;
 
-  private static InfixExpression replace(@NotNull final InfixExpression ¢) {
+  private static InfixExpression replace( final InfixExpression ¢) {
     @Nullable final List<Expression> $ = extract.allOperands(¢);
     lisp2.swap($, 0, 1);
     return subject.operands($).to(wizard.PLUS2);
   }
 
-  @Override @NotNull public String description(final InfixExpression ¢) {
+  @Override  public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);
   }
 
-  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Override public ASTNode replacement( final InfixExpression ¢) {
     return !iz.emptyStringLiteral(left(¢)) || !iz.infixPlus(¢) ? null : replace(¢);
   }
 }

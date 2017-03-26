@@ -25,19 +25,19 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 @SuppressWarnings("InfiniteRecursion")
 public interface namer {
-  @NotNull static String[] components(final Name ¢) {
+   static String[] components(final Name ¢) {
     return components(¢);
   }
 
-  static String[] components(@NotNull final QualifiedType ¢) {
+  static String[] components( final QualifiedType ¢) {
     return components(¢.getName());
   }
 
-  static String[] components(@NotNull final SimpleType ¢) {
+  static String[] components( final SimpleType ¢) {
     return components(¢.getName());
   }
 
-  static String[] components(@NotNull final String javaName) {
+  static String[] components( final String javaName) {
     return javaName.split(JAVA_CAMEL_CASE_SEPARATOR);
   }
 
@@ -45,24 +45,24 @@ public interface namer {
     return usefulTypeName(¢ + "") && (!iz.wildcardType(¢) || az.wildcardType(¢).getBound() != null);
   }
 
-  static boolean isSpecial(@NotNull final SimpleName $) {
+  static boolean isSpecial( final SimpleName $) {
     return in($.getIdentifier(), specials);
   }
 
-  static SimpleName newCurrent(@NotNull final ASTNode ¢) {
+  static SimpleName newCurrent( final ASTNode ¢) {
     return make.from(¢).identifier(it);
   }
 
-  @NotNull static String shorten(@NotNull final ArrayType ¢) {
+   static String shorten( final ArrayType ¢) {
     return shorten(¢.getElementType()) + English.repeat(¢.getDimensions(), 's');
   }
 
-  @NotNull static String shorten(final IntersectionType ¢) {
+   static String shorten(final IntersectionType ¢) {
     assert fault.unreachable() : fault.specifically("Should not shorten intersection type", ¢);
     return ¢ + "";
   }
 
-  static String shorten(@NotNull final List<Type> ¢) {
+  static String shorten( final List<Type> ¢) {
     return ¢.stream().filter(namer::interestingType).map(namer::shorten).findFirst().orElse(null);
   }
 
@@ -72,11 +72,11 @@ public interface namer {
             : null;
   }
 
-  static String shorten(@NotNull final NameQualifiedType ¢) {
+  static String shorten( final NameQualifiedType ¢) {
     return shorten(¢.getName());
   }
 
-  static String shorten(@NotNull final ParameterizedType ¢) {
+  static String shorten( final ParameterizedType ¢) {
     if (yielding.contains(¢))
       return shorten(first(typeArguments(¢)));
     if (pluralizing.contains(¢))
@@ -87,15 +87,15 @@ public interface namer {
     return $ != null ? $ : shorten(¢.getType());
   }
 
-  static String shorten(@NotNull final PrimitiveType ¢) {
+  static String shorten( final PrimitiveType ¢) {
     return (¢.getPrimitiveTypeCode() + "").substring(0, 1);
   }
 
-  static String shorten(@NotNull final QualifiedType ¢) {
+  static String shorten( final QualifiedType ¢) {
     return shorten(¢.getName());
   }
 
-  static String shorten(@NotNull final SimpleType ¢) {
+  static String shorten( final SimpleType ¢) {
     return shorten(¢.getName());
   }
 
@@ -119,22 +119,22 @@ public interface namer {
     return null;
   }
 
-  @NotNull static String shortName(@NotNull final WildcardType ¢) {
+   static String shortName( final WildcardType ¢) {
     return ¢.getBound() == null ? "o" : shorten(¢.getBound());
   }
 
-  @NotNull static String signature(final String code) {
+   static String signature(final String code) {
     String $ = code;
-    for (@NotNull final String keyword : wizard.keywords)
+    for ( final String keyword : wizard.keywords)
       $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
     return lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
   }
 
-  static boolean usefulTypeName(@NotNull final String typeName) {
+  static boolean usefulTypeName( final String typeName) {
     return typeName.length() > 1 || !Character.isUpperCase(first(typeName));
   }
 
-  static String variableName(@NotNull final SimpleType t) {
+  static String variableName( final SimpleType t) {
     final List<String> ss = as.list(components(t));
     String $ = first(ss).toLowerCase();
     for (final String ¢ : lisp.rest(ss))
@@ -162,10 +162,10 @@ public interface namer {
       set = new LinkedHashSet<>(as.list(names));
     }
 
-    public boolean contains(@NotNull final ParameterizedType ¢) {
+    public boolean contains( final ParameterizedType ¢) {
       return set.contains(¢.getType() + "");
     }
 
-    @NotNull public final Set<String> set;
+     public final Set<String> set;
   }
 }

@@ -28,7 +28,7 @@ public final class IfAssignToFooElseAssignToFoo extends ReplaceCurrentNode<IfSta
     return "Consolidate assignments to " + to(extract.assignment(then(¢)));
   }
 
-  @Override public Statement replacement(@NotNull final IfStatement s) {
+  @Override public Statement replacement( final IfStatement s) {
     @Nullable final Assignment $ = extract.assignment(then(s)), elze = extract.assignment(elze(s));
     return !wizard.compatible($, elze) ? null
         : subject.pair(to($), subject.pair(from($), from(elze)).toCondition(s.getExpression())).toStatement($.getOperator());

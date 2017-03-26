@@ -28,13 +28,13 @@ public interface scope {
     return null;
   }
 
-  @NotNull static List<ASTNode> of(final SingleVariableDeclaration x) {
-    @NotNull final List<ASTNode> $ = new ArrayList<>();
+   static List<ASTNode> of(final SingleVariableDeclaration x) {
+     final List<ASTNode> $ = new ArrayList<>();
     $.add(x);
     return $;
   }
 
-  static List<? extends ASTNode> of(@NotNull final VariableDeclarationFragment ¢) {
+  static List<? extends ASTNode> of( final VariableDeclarationFragment ¢) {
     return scope.of(¢.getName());
   }
 
@@ -58,19 +58,19 @@ public interface scope {
     return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
   }
 
-  @NotNull static String newName(final ASTNode ¢, final Type t) {
+   static String newName(final ASTNode ¢, final Type t) {
     @Nullable final ASTNode b = delimiter(¢);
     @Nullable final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
-    @NotNull final String $ = n.generateName(t);
+     final String $ = n.generateName(t);
     n.addNewName($, t);
     b.setProperty("Namespace", n);
     return $;
   }
 
-  @NotNull static String newName(final ASTNode ¢, final Type t, final String s) {
+   static String newName(final ASTNode ¢, final Type t, final String s) {
     @Nullable final ASTNode b = delimiter(¢);
     @Nullable final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
-    @NotNull final String $ = n.generateName(s);
+     final String $ = n.generateName(s);
     n.addNewName($, t);
     b.setProperty("Namespace", n);
     return $;

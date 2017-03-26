@@ -29,7 +29,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   public static boolean suppressing(final SingleVariableDeclaration ¢) {
-    for (@NotNull final Annotation $ : annotations(¢)) {
+    for ( final Annotation $ : annotations(¢)) {
       if (!"SuppressWarnings".equals($.getTypeName() + ""))
         continue;
       if (iz.singleMemberAnnotation($))
@@ -40,7 +40,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return false;
   }
 
-  static MethodDeclaration getMethod(@NotNull final SingleVariableDeclaration ¢) {
+  static MethodDeclaration getMethod( final SingleVariableDeclaration ¢) {
     final ASTNode $ = ¢.getParent();
     return !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
@@ -49,7 +49,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return iz.literal("unused", ¢);
   }
 
-  private static ASTNode replace(@NotNull final SingleVariableDeclaration ¢) {
+  private static ASTNode replace( final SingleVariableDeclaration ¢) {
     final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
     $.setName(¢.getAST().newSimpleName(unusedVariableName()));
     $.setFlags($.getFlags());
@@ -72,7 +72,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return a != null && values(a).stream().anyMatch(λ -> iz.identifier("value", λ.getName()) && isUnused(λ.getValue()));
   }
 
-  private static boolean suppresssing(@NotNull final SingleMemberAnnotation ¢) {
+  private static boolean suppresssing( final SingleMemberAnnotation ¢) {
     return suppressing(¢.getValue());
   }
 
@@ -80,19 +80,19 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return "__";
   }
 
-  @Override @NotNull public String description(@NotNull final SingleVariableDeclaration ¢) {
+  @Override  public String description( final SingleVariableDeclaration ¢) {
     return "Rename unused variable " + ¢.getName().getIdentifier() + " to " + unusedVariableName();
   }
 
-  @Override @Nullable public ASTNode replacement(@NotNull final SingleVariableDeclaration ¢) {
+  @Override @Nullable public ASTNode replacement( final SingleVariableDeclaration ¢) {
     return replacement(¢, null);
   }
 
-  @Override @SuppressWarnings("unused") public ASTNode replacement(@NotNull final SingleVariableDeclaration $, @Nullable final ExclusionManager m) {
+  @Override @SuppressWarnings("unused") public ASTNode replacement( final SingleVariableDeclaration $, @Nullable final ExclusionManager m) {
     @Nullable final MethodDeclaration method = getMethod($);
     if (method == null || body(method) == null)
       return null;
-    for (@NotNull final SingleVariableDeclaration ¢ : parameters(method))
+    for ( final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
     if (BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()))

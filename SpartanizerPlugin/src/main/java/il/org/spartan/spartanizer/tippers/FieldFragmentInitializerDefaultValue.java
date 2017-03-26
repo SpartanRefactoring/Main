@@ -25,11 +25,11 @@ public final class FieldFragmentInitializerDefaultValue extends ReplaceCurrentNo
     return "Remove default values initiliazing field";
   }
 
-  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override  public String description( final VariableDeclarationFragment ¢) {
     return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
   }
 
-  @Override public VariableDeclarationFragment replacement(@NotNull final VariableDeclarationFragment f) {
+  @Override public VariableDeclarationFragment replacement( final VariableDeclarationFragment f) {
     @Nullable final FieldDeclaration parent = az.fieldDeclaration(parent(f));
     if (parent == null || Modifier.isFinal(parent.getModifiers()))
       return null;

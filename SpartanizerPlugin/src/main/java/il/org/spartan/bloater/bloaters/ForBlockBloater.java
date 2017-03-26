@@ -27,7 +27,7 @@ public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
     // TODO: Raviv please use class subject --yg
     final Block b = $.getAST().newBlock();
     statements(b).add(copy.of(body(s)));
-    @NotNull final Collection<Boolean> cc = new ArrayList<>();
+     final Collection<Boolean> cc = new ArrayList<>();
     // noinspection SameReturnValue
     body(s).accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final Block node) {
@@ -41,7 +41,7 @@ public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
     return $;
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "expand to block";
   }
 }

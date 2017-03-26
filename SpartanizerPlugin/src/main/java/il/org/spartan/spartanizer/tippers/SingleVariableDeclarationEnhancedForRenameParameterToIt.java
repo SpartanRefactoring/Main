@@ -29,17 +29,17 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToIt exten
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 0x477D0D92045512DL;
 
-  @Override @NotNull public String description(final SingleVariableDeclaration ¢) {
+  @Override  public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }
 
-  @Override public Tip tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final SingleVariableDeclaration d, @Nullable final ExclusionManager m) {
     @Nullable final EnhancedForStatement $ = az.enhancedFor(parent(d));
     if ($ == null)
       return null;
     @Nullable final ASTNode p1 = yieldAncestors.untilClass(MethodDeclaration.class).from($);
     if (p1 instanceof MethodDeclaration)
-      for (@NotNull final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
+      for ( final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
         final SimpleName sn = x.getName();
         assert sn != null;
         if (in(sn.getIdentifier(), namer.it))
@@ -66,7 +66,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToIt exten
     };
   }
 
-  private static boolean isNameDefined(@NotNull final Statement s, final SimpleName n) {
+  private static boolean isNameDefined( final Statement s, final SimpleName n) {
     @Nullable final Statement $ = az.statement(s.getParent());
     return Environment
         .of($ == null ? s : iz.block($) ? last(statements(az.block($))) : iz.switchStatement($) ? last(statements(az.switchStatement($))) : s)

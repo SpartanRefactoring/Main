@@ -28,7 +28,7 @@ public final class BlockSingleton extends ReplaceCurrentNode<Block>//
   }
 
   @Override public Statement replacement(final Block ¢) {
-    @NotNull final ASTNode $ = parent(¢);
+     final ASTNode $ = parent(¢);
     return !($ instanceof Statement) || iz.nodeTypeIn($, ASTNode.TRY_STATEMENT, ASTNode.SYNCHRONIZED_STATEMENT) ? null
         : replacement(onlyOne(statements(¢)));
   }

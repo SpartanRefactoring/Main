@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.dispatch.Tricks.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -24,7 +22,7 @@ public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
     return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
   }
 
-  @Override public Statement replacement(@NotNull final IfStatement ¢) {
+  @Override public Statement replacement( final IfStatement ¢) {
     return thenIsShorter(¢) ? null : wizard.invert(¢);
   }
 }

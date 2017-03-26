@@ -19,15 +19,15 @@ interface FactorsReorganizer {
     return build(new FactorsCollector(¢));
   }
 
-  @Nullable static Expression build(@NotNull final FactorsCollector ¢) {
+  @Nullable static Expression build( final FactorsCollector ¢) {
     return build(¢.multipliers(), ¢.dividers());
   }
 
-  @Nullable static Expression build(@NotNull final List<Expression> multipliers, @NotNull final List<Expression> dividers) {
+  @Nullable static Expression build( final List<Expression> multipliers,  final List<Expression> dividers) {
     return buildDividers(buildMultipliers(multipliers), dividers);
   }
 
-  @Nullable static Expression buildDividers(@Nullable final Expression first, @NotNull final List<Expression> rest) {
+  @Nullable static Expression buildDividers(@Nullable final Expression first,  final List<Expression> rest) {
     if (first == null)
       return buildDividers(rest);
     if (rest.isEmpty())
@@ -36,7 +36,7 @@ interface FactorsReorganizer {
     return subject.operands(rest).to(DIVIDE);
   }
 
-  static Expression buildDividers(@NotNull final List<Expression> ¢) {
+  static Expression buildDividers( final List<Expression> ¢) {
     final Expression $ = subject.pair(first(¢).getAST().newNumberLiteral("1"), first(¢)).to(DIVIDE);
     if (¢.size() == 1)
       return $;
@@ -45,7 +45,7 @@ interface FactorsReorganizer {
     return subject.operands(¢).to(DIVIDE);
   }
 
-  static Expression buildMultipliers(@NotNull final List<Expression> ¢) {
+  static Expression buildMultipliers( final List<Expression> ¢) {
     switch (¢.size()) {
       case 0:
         return null;

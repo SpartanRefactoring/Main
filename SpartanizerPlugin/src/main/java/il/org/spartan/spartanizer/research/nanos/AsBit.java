@@ -31,11 +31,11 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return firstTipper(tippers, ¢).tip(¢);
   }
 
-  @Override @NotNull public String description() {
+  @Override  public String description() {
     return "Casting a boolean into an int";
   }
 
-  @Override @NotNull public String technicalName() {
+  @Override  public String technicalName() {
     return "CastXFromBooleanToInt";
   }
 
@@ -47,7 +47,7 @@ public class AsBit extends NanoPatternTipper<ConditionalExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Functional;
   }
 }

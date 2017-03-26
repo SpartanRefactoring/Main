@@ -67,7 +67,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return $ != null ? $ : az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
   }
 
-  private static boolean isInfiniteLoop(@NotNull final ForStatement ¢) {
+  private static boolean isInfiniteLoop( final ForStatement ¢) {
     return iz.booleanLiteral(¢) && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
@@ -75,7 +75,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return "Convert the return inside the loop to break";
   }
 
-  @Override @NotNull public String description(final ForStatement ¢) {
+  @Override  public String description(final ForStatement ¢) {
     return "Convert the return inside " + ¢ + " to break";
   }
 
@@ -83,16 +83,16 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(@NotNull final ForStatement s, @Nullable final ExclusionManager exclude) {
+  @Override public Tip tip( final ForStatement s, @Nullable final ExclusionManager exclude) {
     @Nullable final ReturnStatement nextReturn = extract.nextReturn(s);
     if (nextReturn == null || isInfiniteLoop(s))
       return null;
-    @NotNull final Statement body = body(s), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+     final Statement body = body(s), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
     if (exclude != null)
       exclude.exclude(s);
     return $ == null ? null : new Tip(description(), s, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.replace($, first(statements(az.block(into.s("break;")))), g);
       }
     };

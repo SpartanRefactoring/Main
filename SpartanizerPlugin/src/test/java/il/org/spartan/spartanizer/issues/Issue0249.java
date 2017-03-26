@@ -44,7 +44,7 @@ public class Issue0249 {
   }
 
   @Test public void a06() {
-    @NotNull final Statement s = into.s("{}");
+     final Statement s = into.s("{}");
     assert s != null;
     azzert.that(s, instanceOf(Block.class));
     @Nullable final Block b = az.block(s);

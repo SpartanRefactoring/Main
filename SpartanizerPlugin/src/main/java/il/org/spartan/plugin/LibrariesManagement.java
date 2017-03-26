@@ -21,14 +21,14 @@ public enum LibrariesManagement {
   /** Absolute path of the spartan feature. */
   public static final IPath FEATURE_PATH;
   /** Eclipse's installation outputFolder absolute path. */
-  @NotNull public static final IPath INSTALLATION_FOLDER;
+   public static final IPath INSTALLATION_FOLDER;
   /** Library name, as seen by the user. */
   public static final String LIBRARY_NAME = "Spartan Library";
   /** The libraries qualified name, based upon folders hierarchy in the
    * SpartanFeature project. */
   public static final String LIBRARY_QULIFIED_NAME = "spartan.libraries";
   /** The class path container for our library. */
-  @NotNull public static final IClasspathContainer LIBRARY_PATH_CONTAINER;
+   public static final IClasspathContainer LIBRARY_PATH_CONTAINER;
   static {
     INSTALLATION_FOLDER = new Path(Platform.getInstallLocation().getURL().getPath());
     // TODO: Ori Roth: update version 2.6.3 upon release. DO NOT remove this
@@ -44,11 +44,11 @@ public enum LibrariesManagement {
         return K_APPLICATION;
       }
 
-      @Override @NotNull public String getDescription() {
+      @Override  public String getDescription() {
         return LIBRARY_NAME;
       }
 
-      @Override @NotNull public IClasspathEntry[] getClasspathEntries() {
+      @Override  public IClasspathEntry[] getClasspathEntries() {
         return new IClasspathEntry[] { JavaCore.newLibraryEntry(FEATURE_PATH, null, null) };
       }
     };
@@ -68,7 +68,7 @@ public enum LibrariesManagement {
     try {
       if (Stream.of(p.getRawClasspath()).anyMatch(λ -> LIBRARY_PATH_CONTAINER.getPath().equals(λ.getPath())))
         return true;
-    } catch (@NotNull final JavaModelException ¢) {
+    } catch ( final JavaModelException ¢) {
       monitor.log(¢);
     }
     return false;
@@ -83,17 +83,17 @@ public enum LibrariesManagement {
     final IClasspathEntry[] es;
     try {
       es = p.getRawClasspath();
-    } catch (@NotNull final JavaModelException ¢) {
+    } catch ( final JavaModelException ¢) {
       monitor.log(¢);
       return false;
     }
-    @NotNull final List<IClasspathEntry> nes = new ArrayList<>();
+     final List<IClasspathEntry> nes = new ArrayList<>();
     if (es != null)
       nes.addAll(as.list(es));
     nes.add(JavaCore.newContainerEntry(LIBRARY_PATH_CONTAINER.getPath(), null, null, false));
     try {
       p.setRawClasspath(nes.toArray(new IClasspathEntry[nes.size()]), null);
-    } catch (@NotNull final JavaModelException ¢) {
+    } catch ( final JavaModelException ¢) {
       monitor.log(¢);
       return false;
     }

@@ -34,11 +34,11 @@ public final class Infix {
       return firstTip(tippers, ¢);
     }
 
-    @Override @NotNull public Category category() {
+    @Override  public Category category() {
       return Category.Safety;
     }
 
-    @Override @NotNull public String description() {
+    @Override  public String description() {
       return "A field access or an invocation where the callee is checked to be non-null and if is, evaluates to a default value";
     }
 

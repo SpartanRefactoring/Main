@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.util.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0552 {
-  @Nullable static ASTNode ast(@NotNull final String ¢) {
+  @Nullable static ASTNode ast( final String ¢) {
     return wizard.ast(¢);
   }
 

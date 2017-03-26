@@ -34,7 +34,7 @@ public class Binding {
     self = null;
   }
 
-  @Override @NotNull public String toString() {
+  @Override  public String toString() {
     return type + "";
   }
 
@@ -66,7 +66,7 @@ public class Binding {
     return type.isNumeric();
   }
 
-  private boolean equals(@NotNull final Binding ¢) {
+  private boolean equals( final Binding ¢) {
     return eq(hiding, ¢.hiding) && eq(type, ¢.type) && eq(self, ¢.self);
   }
 

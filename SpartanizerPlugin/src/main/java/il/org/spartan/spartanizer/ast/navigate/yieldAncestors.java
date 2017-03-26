@@ -98,7 +98,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
     }
   }
 
-  @NotNull public static Until until(final ASTNode ¢) {
+   public static Until until(final ASTNode ¢) {
     return new Until(¢);
   }
 
@@ -106,23 +106,23 @@ public abstract class yieldAncestors<N extends ASTNode> {
    * @param pattern JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-  @NotNull public static <N extends ASTNode> yieldAncestors<N> untilClass(final Class<N> ¢) {
+   public static <N extends ASTNode> yieldAncestors<N> untilClass(final Class<N> ¢) {
     return new ByNodeClass<>(¢);
   }
 
-  @NotNull public static yieldAncestors<CompilationUnit> untilContainingCompilationUnit() {
+   public static yieldAncestors<CompilationUnit> untilContainingCompilationUnit() {
     return new ByNodeClass<>(CompilationUnit.class);
   }
 
-  @NotNull public static yieldAncestors<MethodDeclaration> untilContainingMethod() {
+   public static yieldAncestors<MethodDeclaration> untilContainingMethod() {
     return new ByNodeClass<>(MethodDeclaration.class);
   }
 
-  @NotNull public static yieldAncestors<AbstractTypeDeclaration> untilContainingType() {
+   public static yieldAncestors<AbstractTypeDeclaration> untilContainingType() {
     return new ByNodeClass<>(AbstractTypeDeclaration.class);
   }
 
-  @NotNull public static yieldAncestors<Block> untilContainingBlock() {
+   public static yieldAncestors<Block> untilContainingBlock() {
     return new ByNodeClass<>(Block.class);
   }
 
@@ -130,7 +130,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
    * instances.
    * @param pattern JD
    * @return a newly created instance */
-  @NotNull @SuppressWarnings({ "unchecked", "rawtypes" }) //
+   @SuppressWarnings({ "unchecked", "rawtypes" }) //
   public static <N extends ASTNode> yieldAncestors untilNode(final N... ¢) {
     return new ByNodeInstances<>(as.list(¢));
   }
@@ -140,7 +140,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
    * @param type JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-  @NotNull public static yieldAncestors<ASTNode> untilNodeType(final int type) {
+   public static yieldAncestors<ASTNode> untilNodeType(final int type) {
     return new ByNodeType(type);
   }
 
@@ -148,7 +148,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
    * instances.
    * @param pattern JD
    * @return a newly created instance */
-  @NotNull public static <N extends ASTNode> yieldAncestors<N> untilOneOf(final List<N> ¢) {
+   public static <N extends ASTNode> yieldAncestors<N> untilOneOf(final List<N> ¢) {
     return new ByNodeInstances<>(¢);
   }
 

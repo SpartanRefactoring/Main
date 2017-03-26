@@ -29,7 +29,7 @@ public final class stepTest {
   }
 
   @Test public void imports() {
-    @NotNull final List<ImportDeclaration> li = step.importDeclarations(cu("import a.b.c; class c{}"));
+     final List<ImportDeclaration> li = step.importDeclarations(cu("import a.b.c; class c{}"));
     azzert.that(li.size(), is(1));
     azzert.that(first(li).getName() + "", is("a.b.c"));
   }

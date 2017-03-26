@@ -33,15 +33,15 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x6416089F84E63B0EL;
 
-  @Override @NotNull public String description(final VariableDeclarationStatement ¢) {
+  @Override  public String description(final VariableDeclarationStatement ¢) {
     return ¢ + "";
   }
 
-  @Override @SuppressWarnings("unused") @Nullable public Tip tip(@NotNull final VariableDeclarationStatement s, final ExclusionManager __) {
+  @Override @SuppressWarnings("unused") @Nullable public Tip tip( final VariableDeclarationStatement s, final ExclusionManager __) {
     assert s != null;
     try {
-      @NotNull final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
-      for (@NotNull final Object v : make.variableDeclarationExpression(s).fragments()) {
+       final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+      for ( final Object v : make.variableDeclarationExpression(s).fragments()) {
         final SimpleName $ = ((VariableDeclaration) v).getName();
         if (!in($.getIdentifier(), namer.specials) && $.getIdentifier().length() > 1)
           return null;
@@ -65,7 +65,7 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
           }
         }
       };
-    } catch (@NotNull final Exception ¢) {
+    } catch ( final Exception ¢) {
       return monitor.logProbableBug(this, ¢);
     }
   }
