@@ -6,13 +6,12 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.java.namespace.definition.*;
 import il.org.spartan.utils.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
@@ -26,23 +25,23 @@ public enum haz {
     final ASTNode $ = parent(f);
     switch ($.getNodeType()) {
       case ASTNode.FIELD_DECLARATION:
-        return haz.annotation((FieldDeclaration)$); 
+        return haz.annotation((FieldDeclaration) $);
       case ASTNode.VARIABLE_DECLARATION_EXPRESSION:
         return haz.annotation((VariableDeclarationExpression) $);
       case ASTNode.VARIABLE_DECLARATION_STATEMENT:
         return haz.annotation((VariableDeclarationStatement) $);
-        default:
-          assert fault.unreachable(): fault.specifically("Unexpected node type", $,f);
-    return false; 
+      default:
+        assert fault.unreachable() : fault.specifically("Unexpected node type", $, f);
+        return false;
     }
   }
 
   private static boolean annotation(VariableDeclarationExpression x) {
-    return extract.annotations(x).isEmpty(); 
+    return extract.annotations(x).isEmpty();
   }
 
   private static boolean annotation(FieldDeclaration f) {
-    return false; 
+    return false;
   }
 
   public static boolean annotation(final VariableDeclarationStatement ¢) {
