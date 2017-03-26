@@ -29,7 +29,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
   @Nullable NumberLiteral initializer;
   long replacement;
 
-  @Override @NotNull public Example[] examples() {
+  @Override  public Example[] examples() {
     return new Example[] { //
         convert("private static long " + SERIAL_VERSION_UID + " = 12345677899L;")//
             .to("private static long " + SERIAL_VERSION_UID + " = 1234567799;"),
@@ -47,7 +47,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     canTip(¢);
     assert ¢ == fragment.getParent();
     return new Tip(description(), initializer, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         final NumberLiteral $ = copy.of(initializer);
         $.setToken(asLiteral());
         r.replace(initializer, $, g);
@@ -69,7 +69,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
       token = system.chopLast(token);
     try {
       replacement = Long.parseLong(token);
-    } catch (@NotNull final NumberFormatException ¢) {
+    } catch ( final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;
     }

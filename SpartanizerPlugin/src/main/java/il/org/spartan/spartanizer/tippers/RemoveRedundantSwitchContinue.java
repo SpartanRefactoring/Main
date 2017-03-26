@@ -34,8 +34,8 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
         return null;
     } else if (!iz.loop(b.getParent()) || last(statements(b)) != s)
       return null;
-    @NotNull final List<switchBranch> $ = switchBranch.intoBranches(s);
-    for (@NotNull final switchBranch ¢ : $)
+     final List<switchBranch> $ = switchBranch.intoBranches(s);
+    for ( final switchBranch ¢ : $)
       if (¢.hasDefault() && ¢.statements.size() == 1 && iz.continueStatement(first(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());
@@ -43,7 +43,7 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     return null;
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }
 }

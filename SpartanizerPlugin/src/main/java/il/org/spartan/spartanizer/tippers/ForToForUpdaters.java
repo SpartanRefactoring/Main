@@ -23,7 +23,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -5815591308727978558L;
 
-  @NotNull private static ForStatement buildForWhithoutFirstLastStatement(@NotNull final ForStatement $) {
+   private static ForStatement buildForWhithoutFirstLastStatement( final ForStatement $) {
     setUpdaters($);
     $.setBody(minus.lastStatement(dupForBody($)));
     return $;
@@ -49,7 +49,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
       return false;
     @Nullable final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
     assert updater != null : "updater is not expressionStatement";
-    @NotNull final Expression e = expression(updater);
+     final Expression e = expression(updater);
     final PrefixExpression $ = az.prefixExpression(e);
     final PostfixExpression post = az.postfixExpression(e);
     @Nullable final Assignment a = az.assignment(e);
@@ -57,7 +57,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
         $ != null ? az.simpleName(operand($)) : post != null ? az.simpleName(operand(post)) : a != null ? az.simpleName(left(a)) : null);
   }
 
-  public static boolean bodyDeclaresElementsOf(@NotNull final ASTNode n) {
+  public static boolean bodyDeclaresElementsOf( final ASTNode n) {
     @Nullable final Block $ = az.block(n.getParent());
     return $ != null && extract.fragments($).stream().anyMatch(λ -> !collect.usesOf(λ.getName()).in(n).isEmpty());
   }
@@ -67,7 +67,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static void setUpdaters(final ForStatement $) {
-    @NotNull final Collection<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
+     final Collection<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
     updaters($).clear();
     updaters($).add(updaterFromBody($));
     updaters($).addAll(oldUpdaters);
@@ -81,7 +81,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     return copy.of(expression(az.expressionStatement(lastStatement(¢))));
   }
 
-  @Override @NotNull public String description(final ForStatement ¢) {
+  @Override  public String description(final ForStatement ¢) {
     return "Convert loop: 'for(?;" + expression(¢) + ";?)' to something else (buggy)";
   }
 

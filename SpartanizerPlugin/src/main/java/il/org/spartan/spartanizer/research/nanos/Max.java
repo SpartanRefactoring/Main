@@ -29,7 +29,7 @@ public final class Max extends NanoPatternTipper<ConditionalExpression> {
     return firstTip(tippers, ¢);
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Safety;
   }
 

@@ -31,7 +31,7 @@ public final class PercolateException extends NanoPatternTipper<CatchClause> {
     return firstTip(tippers, parentAsTryStatement(¢));
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Exception;
   }
 

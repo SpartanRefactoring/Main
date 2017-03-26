@@ -30,7 +30,7 @@ public final class IfReturnNoElseReturn extends GoToNextStatement<IfStatement>//
     return "Consolidate into a single 'return'";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite r, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go( final ASTRewrite r,  final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
     @Nullable final ReturnStatement r1 = extract.returnStatement(then(s));

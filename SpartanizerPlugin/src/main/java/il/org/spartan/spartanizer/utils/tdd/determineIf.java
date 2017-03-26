@@ -26,7 +26,7 @@ public enum determineIf {
   public static boolean loaded(@Nullable final MethodDeclaration d) {
     if (d == null)
       return false;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     $.inner = 0;
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
@@ -48,7 +48,7 @@ public enum determineIf {
   public static boolean hasManyStatements(@Nullable final MethodDeclaration d) {
     if (d == null)
       return false;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     $.inner = 0;
     d.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
@@ -81,7 +81,7 @@ public enum determineIf {
   public static boolean definesManyVariables(@Nullable final MethodDeclaration d, final int x) {
     if (d == null)
       return false;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
@@ -115,7 +115,7 @@ public enum determineIf {
   public static boolean returnsNull(@Nullable final MethodDeclaration mDec) {
     if (mDec == null)
       return false;
-    @NotNull final Collection<ReturnStatement> $ = new ArrayList<>();
+     final Collection<ReturnStatement> $ = new ArrayList<>();
     // noinspection
     // SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue
     mDec.accept(new ASTVisitor(true) {
@@ -150,20 +150,20 @@ public enum determineIf {
   public static boolean uses(@Nullable final ASTNode n, final String name) {
     if (n == null)
       return false;
-    @NotNull final Bool $ = new Bool();
+     final Bool $ = new Bool();
     $.inner = false;
     n.accept(new ASTVisitor(true) {
-      void innerVisit(@NotNull final Name node) {
+      void innerVisit( final Name node) {
         $.inner = node.getFullyQualifiedName().equals(name);
       }
 
-      @Override public boolean visit(@NotNull final QualifiedName node) {
+      @Override public boolean visit( final QualifiedName node) {
         if (!$.inner)
           innerVisit(node);
         return !$.inner;
       }
 
-      @Override public boolean visit(@NotNull final SimpleName node) {
+      @Override public boolean visit( final SimpleName node) {
         if (!$.inner)
           innerVisit(node);
         return !$.inner;

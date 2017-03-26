@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -18,7 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 public interface findFirst {
   /** @param ¢ JD
    * @return */
-  @NotNull static AbstractTypeDeclaration abstractTypeDeclaration(final ASTNode ¢) {
+   static AbstractTypeDeclaration abstractTypeDeclaration(final ASTNode ¢) {
     return instanceOf(AbstractTypeDeclaration.class).in(¢);
   }
 
@@ -27,19 +25,19 @@ public interface findFirst {
    * @param pattern JD
    * @return first {@link AssertStatement} found in an {@link ASTNode n}, or
    *         {@code null if there is no such statement. */
-  @NotNull static AssertStatement assertStatement(final ASTNode ¢) {
+   static AssertStatement assertStatement(final ASTNode ¢) {
     return instanceOf(AssertStatement.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
-  @NotNull static ASTNode assignment(final ASTNode ¢) {
+   static ASTNode assignment(final ASTNode ¢) {
     return instanceOf(Assignment.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
-  @NotNull static ASTNode castExpression(final ASTNode ¢) {
+   static ASTNode castExpression(final ASTNode ¢) {
     return instanceOf(CastExpression.class).in(¢);
   }
 
@@ -49,8 +47,8 @@ public interface findFirst {
    * @return first {@link ConditionalExpression} representing an addition under
    *         the parameter given node, or {@code null if no such
    *         value could be found. */
-  static ConditionalExpression conditionalExpression(@NotNull final ASTNode n) {
-    @NotNull final Wrapper<ConditionalExpression> $ = new Wrapper<>();
+  static ConditionalExpression conditionalExpression( final ASTNode n) {
+     final Wrapper<ConditionalExpression> $ = new Wrapper<>();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final ConditionalExpression ¢) {
@@ -65,7 +63,7 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  @NotNull static ASTNode enhancedForStatement(final ASTNode ¢) {
+   static ASTNode enhancedForStatement(final ASTNode ¢) {
     return instanceOf(EnhancedForStatement.class).in(¢);
   }
 
@@ -73,7 +71,7 @@ public interface findFirst {
    * @param pattern JD
    * @return first {@link Expression} found in an {@link ASTNode n}, or
    *         {@code null if there is no such statement. */
-  @NotNull static Expression expression(final ASTNode ¢) {
+   static Expression expression(final ASTNode ¢) {
     return findFirst.instanceOf(Expression.class).in(¢);
   }
 
@@ -82,7 +80,7 @@ public interface findFirst {
    * @param pattern JD
    * @return first {@link ForStatement} found in an {@link ASTNode n}, or
    *         {@code null if there is no such statement. */
-  @NotNull static ForStatement forStatement(final ASTNode ¢) {
+   static ForStatement forStatement(final ASTNode ¢) {
     return instanceOf(ForStatement.class).in(¢);
   }
 
@@ -91,7 +89,7 @@ public interface findFirst {
    * @param pattern JD
    * @return first {@link IfStatement} found in an {@link ASTNode n}, or
    *         {@code null if there is no such statement. */
-  @NotNull static IfStatement ifStatement(final ASTNode ¢) {
+   static IfStatement ifStatement(final ASTNode ¢) {
     return instanceOf(IfStatement.class).in(¢);
   }
 
@@ -101,10 +99,10 @@ public interface findFirst {
    * @return first {@link InfixExpression} representing an addition under the
    *         parameter given node, or {@code null if no such value
    *         could be found. */
-  static InfixExpression infixPlus(@NotNull final ASTNode n) {
-    @NotNull final Wrapper<InfixExpression> $ = new Wrapper<>();
+  static InfixExpression infixPlus( final ASTNode n) {
+     final Wrapper<InfixExpression> $ = new Wrapper<>();
     n.accept(new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final InfixExpression ¢) {
+      @Override public boolean visit( final InfixExpression ¢) {
         if ($.get() != null)
           return false;
         if (¢.getOperator() != PLUS2)
@@ -118,16 +116,16 @@ public interface findFirst {
 
   @FunctionalInterface
   interface In<N extends ASTNode> {
-    @NotNull N in(ASTNode n);
+     N in(ASTNode n);
   }
 
-  static <N extends ASTNode> In<N> instanceOf(@NotNull final Class<N> c) {
+  static <N extends ASTNode> In<N> instanceOf( final Class<N> c) {
     return n -> {
       if (n == null)
         return null;
-      @NotNull final Wrapper<N> $ = new Wrapper<>();
+       final Wrapper<N> $ = new Wrapper<>();
       n.accept(new ASTVisitor(true) {
-        @Override @SuppressWarnings("unchecked") public boolean preVisit2(@NotNull final ASTNode ¢) {
+        @Override @SuppressWarnings("unchecked") public boolean preVisit2( final ASTNode ¢) {
           if ($.get() != null)
             return false;
           if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
@@ -143,7 +141,7 @@ public interface findFirst {
 
   /** @param ¢ JD
    * @return */
-  @NotNull static TypeDeclaration typeDeclaration(final ASTNode ¢) {
+   static TypeDeclaration typeDeclaration(final ASTNode ¢) {
     return instanceOf(TypeDeclaration.class).in(¢);
   }
 
@@ -152,7 +150,7 @@ public interface findFirst {
    * @param pattern JD
    * @return first such node encountered in a visit of the tree rooted a the
    *         parameter, or {@code null */
-  @NotNull static VariableDeclarationFragment variableDeclarationFragment(final ASTNode ¢) {
+   static VariableDeclarationFragment variableDeclarationFragment(final ASTNode ¢) {
     return instanceOf(VariableDeclarationFragment.class).in(¢);
   }
 
@@ -161,51 +159,51 @@ public interface findFirst {
    * @param pattern JD
    * @return first {@link WhileStatement} found in an {@link ASTNode n}, or
    *         {@code null if there is no such statement. */
-  @NotNull static WhileStatement whileStatement(final ASTNode ¢) {
+   static WhileStatement whileStatement(final ASTNode ¢) {
     return instanceOf(WhileStatement.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
-  @NotNull static ExpressionStatement expressionStatement(final ASTNode ¢) {
+   static ExpressionStatement expressionStatement(final ASTNode ¢) {
     return instanceOf(ExpressionStatement.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
-  @NotNull static Block block(final ASTNode ¢) {
+   static Block block(final ASTNode ¢) {
     return instanceOf(Block.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
-  @NotNull static InfixExpression infixExpression(final ASTNode ¢) {
+   static InfixExpression infixExpression(final ASTNode ¢) {
     return instanceOf(InfixExpression.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
-  @NotNull static TryStatement tryStatement(final ASTNode ¢) {
+   static TryStatement tryStatement(final ASTNode ¢) {
     return instanceOf(TryStatement.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
-  @NotNull static BooleanLiteral booleanLiteral(final ASTNode ¢) {
+   static BooleanLiteral booleanLiteral(final ASTNode ¢) {
     return instanceOf(BooleanLiteral.class).in(¢);
   }
 
   /** @param ¢ JD
    * @return */
-  @NotNull static FieldAccess fieldAccess(final ASTNode ¢) {
+   static FieldAccess fieldAccess(final ASTNode ¢) {
     return instanceOf(FieldAccess.class).in(¢);
   }
 
-  @NotNull static Name name(final ASTNode ¢) {
+   static Name name(final ASTNode ¢) {
     return instanceOf(Name.class).in(¢);
   }
 
-  @NotNull static VariableDeclarationStatement variableDeclarationStatement(final ASTNode ¢) {
+   static VariableDeclarationStatement variableDeclarationStatement(final ASTNode ¢) {
     return instanceOf(VariableDeclarationStatement.class).in(¢);
   }
 

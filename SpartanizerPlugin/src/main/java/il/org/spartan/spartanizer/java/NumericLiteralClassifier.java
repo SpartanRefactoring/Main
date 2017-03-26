@@ -23,7 +23,7 @@ public final class NumericLiteralClassifier {
 
   /** @return the type of this literal.
    * @see PrudentType */
-  @NotNull public Primitive.Certain type() {
+   public Primitive.Certain type() {
     if (inner.charAt(0) == '\'')
       return Primitive.Certain.CHAR;
     switch (inner.charAt(inner.length() - 1)) {

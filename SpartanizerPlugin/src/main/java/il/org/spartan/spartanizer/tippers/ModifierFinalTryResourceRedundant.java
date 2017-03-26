@@ -21,11 +21,11 @@ public final class ModifierFinalTryResourceRedundant extends RemovingTipper<Modi
     return "Remove redundant final modifier of try resource";
   }
 
-  @Override @NotNull public String description(final Modifier ¢) {
+  @Override  public String description(final Modifier ¢) {
     return description() + ": '" + az.variableDeclarationExpression(parent(¢)) + "'";
   }
 
-  @Override public boolean prerequisite(@NotNull final Modifier $) {
+  @Override public boolean prerequisite( final Modifier $) {
     if (!$.isFinal())
       return false;
     @Nullable final VariableDeclarationExpression x = az.variableDeclarationExpression(parent($));

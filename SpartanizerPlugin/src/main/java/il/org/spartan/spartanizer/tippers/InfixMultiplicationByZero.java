@@ -20,19 +20,19 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     implements TipperCategory.NOP.onNumbers {
   private static final long serialVersionUID = 0x5511953EBF0A7FD5L;
 
-  private static boolean containsZero(@NotNull final InfixExpression x) {
+  private static boolean containsZero( final InfixExpression x) {
     return extract.allOperands(x).stream().anyMatch(λ -> iz.numberLiteral(λ) && "0".equals(az.numberLiteral(λ).getToken()));
   }
 
-  private static boolean isContainsSideEffect(@NotNull final InfixExpression x) {
+  private static boolean isContainsSideEffect( final InfixExpression x) {
     return extract.allOperands(x).stream().anyMatch(λ -> !sideEffects.free(λ));
   }
 
-  @Override @NotNull public String description(final InfixExpression ¢) {
+  @Override  public String description(final InfixExpression ¢) {
     return "Convert" + ¢ + " to 0";
   }
 
-  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Override @Nullable public ASTNode replacement( final InfixExpression ¢) {
     if (¢.getOperator() != TIMES || !containsZero(¢) || isContainsSideEffect(¢))
       return null;
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();

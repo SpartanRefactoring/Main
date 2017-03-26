@@ -17,13 +17,13 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x6F38EBD99BF2A49EL;
 
-  private static ASTNode innerThrowReplacement(final Expression x, @NotNull final Statement s) {
+  private static ASTNode innerThrowReplacement(final Expression x,  final Statement s) {
     @Nullable final ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
     else {
       // TODO Doron Meshulam: Use extract.core --yg
-      @NotNull final Expression unpar = expression(az.parenthesizedExpression(x));
+       final Expression unpar = expression(az.parenthesizedExpression(x));
       if (!(unpar instanceof ConditionalExpression))
         return null;
       ¢ = az.conditionalExpression(unpar);
@@ -41,17 +41,17 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     return $;
   }
 
-  private static ASTNode replaceReturn(@NotNull final Statement ¢) {
+  private static ASTNode replaceReturn( final Statement ¢) {
     @Nullable final ThrowStatement $ = az.throwStatement(¢);
     return $ == null || !(expression($) instanceof ConditionalExpression) && !(expression($) instanceof ParenthesizedExpression) ? null
         : innerThrowReplacement(expression($), ¢);
   }
 
-  @Override @Nullable public ASTNode replacement(@NotNull final ThrowStatement ¢) {
+  @Override @Nullable public ASTNode replacement( final ThrowStatement ¢) {
     return replaceReturn(¢);
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ThrowStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final ThrowStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }
 }

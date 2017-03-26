@@ -24,13 +24,13 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     implements TipperCategory, Serializable {
   private static final long serialVersionUID = -2252675511987504571L;
 
-  @NotNull @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
+   @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
     return (Class<Tipper<N>>) getClass();
   }
 
   private Class<N> myOperandsClass;
 
-  @Override @NotNull public String[] akas() {
+  @Override  public String[] akas() {
     return new String[] { nanoName() };
   }
 
@@ -46,7 +46,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return !check(¢);
   }
 
-  @NotNull @SuppressWarnings("unchecked") private Class<N> castClass(@NotNull final Class<?> c2) {
+   @SuppressWarnings("unchecked") private Class<N> castClass( final Class<?> c2) {
     return (Class<N>) c2;
   }
 
@@ -56,11 +56,11 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
 
   @Nullable public abstract String description(N n);
 
-  @Override public boolean equals(@NotNull final Object ¢) {
+  @Override public boolean equals( final Object ¢) {
     return getClass().equals(¢.getClass());
   }
 
-  @Override @NotNull public Example[] examples() {
+  @Override  public Example[] examples() {
     return new Example[] {};
   }
 
@@ -68,34 +68,34 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return tip(object());
   }
 
-  @NotNull private Class<N> initializeMyOperandsClass() {
+   private Class<N> initializeMyOperandsClass() {
     @Nullable Class<N> $ = null;
-    for (@NotNull final Method ¢ : getClass().getMethods())
+    for ( final Method ¢ : getClass().getMethods())
       if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
         $ = lowest($, ¢.getParameterTypes()[0]);
     return $ != null ? $ : castClass(ASTNode.class);
   }
 
-  private boolean isDefinedHere(@NotNull final Method ¢) {
+  private boolean isDefinedHere( final Method ¢) {
     return ¢.getDeclaringClass() == getClass();
   }
 
-  @NotNull private Class<N> lowest(@Nullable final Class<N> c1, @Nullable final Class<?> c2) {
+   private Class<N> lowest(@Nullable final Class<N> c1, @Nullable final Class<?> c2) {
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
-  @NotNull public final Class<N> myAbstractOperandsClass() {
+   public final Class<N> myAbstractOperandsClass() {
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
 
   @Nullable public Class<N> myActualOperandsClass() {
-    @NotNull final Class<N> $ = myAbstractOperandsClass();
+     final Class<N> $ = myAbstractOperandsClass();
     return !isAbstract($.getModifiers()) ? $ : null;
   }
 
-  @NotNull public String nanoName() {
+   public String nanoName() {
     return getClass().getSimpleName();
   }
 
@@ -117,7 +117,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
-  @NotNull public String className() {
+   public String className() {
     return system.className(this);
   }
 }

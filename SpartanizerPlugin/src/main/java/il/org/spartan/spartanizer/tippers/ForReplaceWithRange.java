@@ -54,7 +54,7 @@ public final class ForReplaceWithRange extends Tipper<ForStatement>//
   }
 
   @Override public boolean canTip(final ForStatement s) {
-    for (@NotNull final UserDefinedTipper<ForStatement> ¢ : tippers)
+    for ( final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.check(s)) {
         final SimpleName n = az.simpleName(¢.getMatching(s, "$N"));
         if (n == null)
@@ -68,8 +68,8 @@ public final class ForReplaceWithRange extends Tipper<ForStatement>//
     return false;
   }
 
-  private static boolean ChangedInBlock(final String id, @NotNull final Block b) {
-    @NotNull final Bool $ = new Bool();
+  private static boolean ChangedInBlock(final String id,  final Block b) {
+     final Bool $ = new Bool();
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     b.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
@@ -78,7 +78,7 @@ public final class ForReplaceWithRange extends Tipper<ForStatement>//
         return true;
       }
 
-      @Override public boolean visit(@NotNull final PrefixExpression ¢) {
+      @Override public boolean visit( final PrefixExpression ¢) {
         if (iz.updater(¢) && iz.simpleName(operand(¢)) && identifier(az.simpleName(operand(¢))).equals(id))
           $.inner = true;
         return true;

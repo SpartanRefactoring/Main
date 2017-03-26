@@ -34,14 +34,14 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
    * test engine itself.
    * @param ¢ - Node that will be searched for suitable annotations.
    * @param es - Set to compare against. */
-  public EnvFlatHandler(final ASTNode ¢, @NotNull final LinkedHashSet<Entry<String, Binding>> es) {
+  public EnvFlatHandler(final ASTNode ¢,  final LinkedHashSet<Entry<String, Binding>> es) {
     assert es != null : "The provided Set for manual testing is null!";
     userProvidedSet = es;
     n = ¢;
     runTest();
   }
 
-  public EnvFlatHandler(@NotNull final String ¢) {
+  public EnvFlatHandler( final String ¢) {
     userProvidedSet = null;
     n = getCompilationUnit(¢);
     runTest();
@@ -52,7 +52,7 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
    * test engine itself.
    * @param ¢
    * @param es */
-  public EnvFlatHandler(@NotNull final String ¢, @NotNull final LinkedHashSet<Entry<String, Binding>> es) {
+  public EnvFlatHandler( final String ¢,  final LinkedHashSet<Entry<String, Binding>> es) {
     assert es != null : "The provided Set for manual testing is null!";
     userProvidedSet = es;
     n = getCompilationUnit(¢);
@@ -76,7 +76,7 @@ public final class EnvFlatHandler extends ENVTestEngineAbstract {
     foundTestedAnnotation = true;
     // noinspection SameReturnValue
     a.accept(new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final NormalAnnotation ¢) {
+      @Override public boolean visit( final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
           addTestSet(step.values(¢));
         return true;

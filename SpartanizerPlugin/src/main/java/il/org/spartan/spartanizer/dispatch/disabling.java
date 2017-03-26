@@ -36,7 +36,7 @@ public interface disabling {
    * @param n an {@link ASTNode}
    * @author Ori Roth
    * @since 2016/05/13 */
-  static void scan(@NotNull final ASTNode n) {
+  static void scan( final ASTNode n) {
     n.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         @Nullable final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
@@ -51,7 +51,7 @@ public interface disabling {
   /** The recursive disabling process. Returns to {@link disabledScan} upon
    * reaching an enabler.
    * @param d disabled {@link BodyDeclaration} */
-  static void disable(@NotNull final BodyDeclaration d) {
+  static void disable( final BodyDeclaration d) {
     d.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         if (¢ instanceof BodyDeclaration && disabling.specificallyEnabled((BodyDeclaration) ¢)) {
@@ -89,7 +89,7 @@ public interface disabling {
         .orElse(Boolean.FALSE).booleanValue();
   }
 
-  static boolean contains(@NotNull final String s, final String... ids) {
+  static boolean contains( final String s, final String... ids) {
     return Stream.of(ids).anyMatch(s::contains);
   }
 

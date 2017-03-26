@@ -23,12 +23,12 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -4185849867633961690L;
 
-  @Override @NotNull public Tip tip(@NotNull final ReturnStatement x) {
+  @Override  public Tip tip( final ReturnStatement x) {
     return new Tip(description(x), x, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        @NotNull final Expression ee = expression(x);
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+         final Expression ee = expression(x);
         @Nullable final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));
-        @NotNull final Expression cond = expression(e);
+         final Expression cond = expression(e);
         final AST a = x.getAST();
         final ReturnStatement whenTrue = a.newReturnStatement(), whenFalse = a.newReturnStatement();
         whenTrue.setExpression(copy.of(then(e)));
@@ -48,12 +48,12 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     if ($ == null)
       return false;
     // TODO Raviv Rachmiel: use extract.core --yg
-    @NotNull final Expression e = expression($);
+     final Expression e = expression($);
     return (iz.block($.getParent()) || iz.switchStatement($.getParent()))
         && (iz.conditionalExpression(e) || iz.parenthesizedExpression(e) && iz.conditionalExpression(expression(az.parenthesizedExpression(e))));
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ReturnStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }
 }

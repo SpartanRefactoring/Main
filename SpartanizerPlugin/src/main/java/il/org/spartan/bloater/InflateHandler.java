@@ -38,7 +38,7 @@ public class InflateHandler extends AbstractHandler {
   private static final IPartListener pageListener = pageListener();
 
   @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    @NotNull final Selection $ = Selection.Util.current().setUseBinding();
+     final Selection $ = Selection.Util.current().setUseBinding();
     return $.isTextSelection ? goWheelAction() : goAggressiveAction($);
   }
 
@@ -62,8 +62,8 @@ public class InflateHandler extends AbstractHandler {
     return null;
   }
 
-  @NotNull protected static List<Listener> getListeners(@Nullable final StyledText t) {
-    @NotNull final List<Listener> $ = new ArrayList<>();
+   protected static List<Listener> getListeners(@Nullable final StyledText t) {
+     final List<Listener> $ = new ArrayList<>();
     if (t == null)
       return $;
     final List<Listener> ls = as.list(t.getListeners(SWT.MouseWheel));
@@ -98,7 +98,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   protected static ITextEditor getTextEditor() {
-    @NotNull final IEditorPart $ = getEditorPart();
+     final IEditorPart $ = getEditorPart();
     return !($ instanceof ITextEditor) ? null : (ITextEditor) $;
   }
 
@@ -109,10 +109,10 @@ public class InflateHandler extends AbstractHandler {
     return !($ instanceof StyledText) ? null : (StyledText) $;
   }
 
-  @NotNull public static GUIBatchLaconizer applicator() {
+   public static GUIBatchLaconizer applicator() {
     return (GUIBatchLaconizer) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
         ¢ -> Integer.valueOf(as.bit(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider() {
-          @Override @NotNull public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
+          @Override  public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return λ -> λ;
           }
         }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null)))).name(OPERATION_ACTIVITY.getIng())
@@ -127,7 +127,7 @@ public class InflateHandler extends AbstractHandler {
     return $ == null ? null : $.getPartService();
   }
 
-  @NotNull @SuppressWarnings("unused") private static IPartListener pageListener() {
+   @SuppressWarnings("unused") private static IPartListener pageListener() {
     return new IPartListener() {
       @Override public void partActivated(final IWorkbenchPart __) {
         //
@@ -151,7 +151,7 @@ public class InflateHandler extends AbstractHandler {
     };
   }
 
-  private static void removePageListener(@NotNull final IPartService ¢) {
+  private static void removePageListener( final IPartService ¢) {
     ¢.removePartListener(pageListener);
     getOpenedEditors().forEach(InflateHandler::removeListener);
   }
@@ -161,7 +161,7 @@ public class InflateHandler extends AbstractHandler {
       addListener((ITextEditor) ¢);
   }
 
-  private static void addListener(@NotNull final ITextEditor ¢) {
+  private static void addListener( final ITextEditor ¢) {
     @Nullable final StyledText text = getText(¢);
     if (text == null)
       return;
@@ -171,7 +171,7 @@ public class InflateHandler extends AbstractHandler {
     final IFile f = ((IFileEditorInput) i).getFile();
     if (f == null)
       return;
-    @NotNull final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
+     final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
     text.addMouseWheelListener(l);
     text.addKeyListener(l);
   }
@@ -180,7 +180,7 @@ public class InflateHandler extends AbstractHandler {
     @Nullable final StyledText text = getText(e);
     if (text == null)
       return;
-    @NotNull final List<Listener> ls = getListeners(text);
+     final List<Listener> ls = getListeners(text);
     ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener).findFirst()
         .ifPresent(λ -> ((InflaterListener) ((TypedListener) λ).getEventListener()).finilize());
     // TODO: Ori Roth seems to be a bug --yg
@@ -188,7 +188,7 @@ public class InflateHandler extends AbstractHandler {
     ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
   }
 
-  @NotNull private static Iterable<ITextEditor> getOpenedEditors() {
+   private static Iterable<ITextEditor> getOpenedEditors() {
     @Nullable final IWorkbenchPage $ = getPage();
     return $ == null ? new ArrayList<>()
         : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)

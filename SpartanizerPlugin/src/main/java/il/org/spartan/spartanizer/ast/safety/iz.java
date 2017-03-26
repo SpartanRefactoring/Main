@@ -33,7 +33,7 @@ import il.org.spartan.utils.*;
  * @since 2015-07-16 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public interface iz {
-  static boolean abstract¢(@NotNull final BodyDeclaration ¢) {
+  static boolean abstract¢( final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
 
@@ -57,7 +57,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, ANONYMOUS_CLASS_DECLARATION);
   }
 
-  static boolean anyOperator(@NotNull final ASTNode ¢) {
+  static boolean anyOperator( final ASTNode ¢) {
     return as.list(new Class<?>[] { InfixExpression.Operator.class, PrefixExpression.Operator.class, PostfixExpression.Operator.class,
         Assignment.Operator.class }).contains(¢.getClass());
   }
@@ -211,7 +211,7 @@ public interface iz {
    * @param x JD
    * @return whether the parameter is an expression whose operator is
    *         {@link InfixExpression.Operator#CONDITIONAL_AND} */
-  static boolean conditionalAnd(@NotNull final InfixExpression ¢) {
+  static boolean conditionalAnd( final InfixExpression ¢) {
     return ¢.getOperator() == CONDITIONAL_AND;
   }
 
@@ -246,14 +246,14 @@ public interface iz {
    * {@code this} or literal.
    * @param x JD
    * @return whether the parameter is a "specific" */
-  static boolean constant(@NotNull final Expression ¢) {
+  static boolean constant( final Expression ¢) {
     return iz.nodeTypeIn(¢, CHARACTER_LITERAL, NUMBER_LITERAL, NULL_LITERAL, THIS_EXPRESSION)
         || iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.constant(extract.core(((PrefixExpression) ¢).getOperand()));
   }
 
   /** @param ¢ JD
    * @return is public static final */
-  static boolean constant(@NotNull final FieldDeclaration ¢) {
+  static boolean constant( final FieldDeclaration ¢) {
     return iz.public¢(¢) && iz.static¢(¢) && iz.final¢(¢);
   }
 
@@ -289,7 +289,7 @@ public interface iz {
     return ¢ instanceof ContinueStatement;
   }
 
-  static boolean default¢(@NotNull final BodyDeclaration node) {
+  static boolean default¢( final BodyDeclaration node) {
     return (Modifier.DEFAULT & node.getModifiers()) != 0;
   }
 
@@ -297,10 +297,10 @@ public interface iz {
     return defaultValues.contains(¢ + "");
   }
 
-  static boolean definiteLoop(@NotNull final ASTNode n) {
+  static boolean definiteLoop( final ASTNode n) {
     if (!iz.loop(n))
       return false;
-    @NotNull final Bool $ = new Bool(true);
+     final Bool $ = new Bool(true);
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final BreakStatement ¢) {
@@ -343,7 +343,7 @@ public interface iz {
     return in(¢, CONDITIONAL_AND, CONDITIONAL_OR);
   }
 
-  static boolean deterministic(@NotNull final ArrayAccess $) {
+  static boolean deterministic( final ArrayAccess $) {
     return iz.deterministic($.getArray(), $.getIndex());
   }
 
@@ -351,7 +351,7 @@ public interface iz {
     return iz.deterministic(to($), from($));
   }
 
-  static boolean deterministic(@NotNull final Collection<Expression> ¢) {
+  static boolean deterministic( final Collection<Expression> ¢) {
     return deterministic(¢.stream());
   }
 
@@ -363,7 +363,7 @@ public interface iz {
     return deterministic(Stream.of(¢));
   }
 
-  static boolean deterministic(@NotNull final Expression ¢) {
+  static boolean deterministic( final Expression ¢) {
     if (haz.sideEffects(¢))
       return false;
     switch (¢.getNodeType()) {
@@ -396,20 +396,20 @@ public interface iz {
     }
   }
 
-  static boolean deterministic(@NotNull final List<Expression> ¢) {
+  static boolean deterministic( final List<Expression> ¢) {
     return deterministic(¢.stream());
   }
 
-  static boolean deterministic(@NotNull final MethodInvocation ¢) {
+  static boolean deterministic( final MethodInvocation ¢) {
     return Utils.in(guessName.of(¢.getName() + ""), guessName.GETTER_METHOD, guessName.IS_METHOD) && //
         iz.deterministic(arguments(¢));
   }
 
-  static boolean deterministic(@NotNull final PrefixExpression ¢) {
+  static boolean deterministic( final PrefixExpression ¢) {
     return !in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE) && deterministic(¢.getOperand());
   }
 
-  static boolean deterministic(@NotNull final Stream<Expression> ¢) {
+  static boolean deterministic( final Stream<Expression> ¢) {
     return ¢.allMatch(iz::deterministic);
   }
 
@@ -421,7 +421,7 @@ public interface iz {
     return ¢ instanceof DoStatement;
   }
 
-  static boolean doubleType(@NotNull final Expression ¢) {
+  static boolean doubleType( final Expression ¢) {
     return type.of(¢) == DOUBLE;
   }
 
@@ -433,7 +433,7 @@ public interface iz {
     return fragments(e).stream().allMatch(λ -> λ == null || λ instanceof SimpleName || !(λ instanceof TextElement) || iz.empty((TextElement) λ));
   }
 
-  static boolean empty(@NotNull final TextElement ¢) {
+  static boolean empty( final TextElement ¢) {
     return ¢.getText().replaceAll("[\\s*]", "").isEmpty();
   }
 
@@ -508,7 +508,7 @@ public interface iz {
   /** Determine whether a declaration is final or not
    * @param ¢ JD
    * @return whetherdeclaration is final */
-  static boolean final¢(@NotNull final BodyDeclaration ¢) {
+  static boolean final¢( final BodyDeclaration ¢) {
     return (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
@@ -519,7 +519,7 @@ public interface iz {
     return ¢ != null && (Modifier.FINAL & ¢.getModifiers()) != 0;
   }
 
-  static int findRadix(@NotNull final String $) {
+  static int findRadix( final String $) {
     return $.matches("[+-]?0[xX].*") ? 16 : $.matches("[+-]?0[bB].*") ? 2 : $.matches("[+-]?0.*") ? 8 : 10;
   }
 
@@ -545,12 +545,12 @@ public interface iz {
     return false;
   }
 
-  static boolean identifier(@NotNull final String identifier, @NotNull final Name typeName) {
+  static boolean identifier( final String identifier,  final Name typeName) {
     return typeName.isQualifiedName() ? identifier(identifier, ((QualifiedName) typeName).getName())
         : simpleName(typeName) && identifier(identifier, az.simpleName(typeName));
   }
 
-  static boolean identifier(@NotNull final String identifier, @NotNull final SimpleName n) {
+  static boolean identifier( final String identifier,  final SimpleName n) {
     return identifier.equals(n.getIdentifier());
   }
 
@@ -646,7 +646,7 @@ public interface iz {
 
   /** @param ¢ JD
    * @return whether the given node is an interface or false otherwise */
-  static boolean interface¢(@NotNull final ASTNode ¢) {
+  static boolean interface¢( final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, TYPE_DECLARATION) && ((TypeDeclaration) ¢).isInterface();
   }
 
@@ -677,7 +677,7 @@ public interface iz {
     return ¢ != null && ¢.getOperator() == MINUS_ASSIGN;
   }
 
-  static boolean isOneOf(final int i, @NotNull final int... is) {
+  static boolean isOneOf(final int i,  final int... is) {
     return Arrays.stream(is).filter(λ -> i == λ).findAny().isPresent();
   }
 
@@ -700,17 +700,17 @@ public interface iz {
     return iz.nodeTypeEquals(¢, VARIABLE_DECLARATION_STATEMENT);
   }
 
-  @NotNull static iz izParser(@NotNull final String name) {
+   static iz izParser( final String name) {
     return new iz() {
-      @Override @NotNull public String toString() {
+      @Override  public String toString() {
         return name;
       }
     };
   }
 
-  @NotNull static iz izParser(@NotNull final Throwable ¢) {
+   static iz izParser( final Throwable ¢) {
     return new iz() {
-      @Override @NotNull public String toString() {
+      @Override  public String toString() {
         return Arrays.toString(¢.getStackTrace());
       }
     };
@@ -731,7 +731,7 @@ public interface iz {
    * @param ts a list
    * @return whether the item is found in the list and it is the last one in
    *         it. */
-  static <T> boolean last(final T t, @NotNull final List<T> ts) {
+  static <T> boolean last(final T t,  final List<T> ts) {
     return ts.indexOf(t) == ts.size() - 1;
   }
 
@@ -743,7 +743,7 @@ public interface iz {
     return last(¢, statements($)) && iz.methodDeclaration(parent($));
   }
 
-  static boolean leftOfAssignment(@NotNull final Expression ¢) {
+  static boolean leftOfAssignment( final Expression ¢) {
     return left(az.assignment(¢.getParent())).equals(¢);
   }
 
@@ -815,7 +815,7 @@ public interface iz {
     return literal(¢, 1);
   }
 
-  static boolean longType(@NotNull final Expression ¢) {
+  static boolean longType( final Expression ¢) {
     return type.of(¢) == LONG;
   }
 
@@ -853,7 +853,7 @@ public interface iz {
     return ¢ instanceof Name;
   }
 
-  static boolean native¢(@NotNull final BodyDeclaration node) {
+  static boolean native¢( final BodyDeclaration node) {
     return (Modifier.NATIVE & node.getModifiers()) != 0;
   }
 
@@ -905,7 +905,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, NULL_LITERAL);
   }
 
-  static boolean number(@NotNull final Expression ¢) {
+  static boolean number( final Expression ¢) {
     return iz.numberLiteral(¢) && (type.isInt(¢) || type.isDouble(¢) || type.isLong(¢));
   }
 
@@ -928,12 +928,12 @@ public interface iz {
     return iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION);
   }
 
-  static int parseInt(@NotNull final String token) {
+  static int parseInt( final String token) {
     final String $ = token.replaceAll("[\\s_]", "");
     return Integer.parseInt($.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix($));
   }
 
-  static long parseLong(@NotNull final String token) {
+  static long parseLong( final String token) {
     final String $ = token.replaceAll("[\\s_Ll]", "");
     return Long.parseLong($.replaceFirst("0[xX]", "").replaceAll("0[bB]", ""), findRadix($));
   }
@@ -967,19 +967,19 @@ public interface iz {
   /** Determine whether a declaration is private
    * @param ¢ JD
    * @return whetherdeclaration is private */
-  static boolean private¢(@NotNull final BodyDeclaration ¢) {
+  static boolean private¢( final BodyDeclaration ¢) {
     return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
   }
 
-  static boolean protected¢(@NotNull final BodyDeclaration ¢) {
+  static boolean protected¢( final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.PROTECTED) != 0;
   }
 
-  static boolean pseudoNumber(@NotNull final Expression ¢) {
+  static boolean pseudoNumber( final Expression ¢) {
     return number(¢) || iz.prefixMinus(¢) && iz.number(az.prefixExpression(¢).getOperand());
   }
 
-  static boolean public¢(@NotNull final BodyDeclaration ¢) {
+  static boolean public¢( final BodyDeclaration ¢) {
     return (Modifier.PUBLIC & ¢.getModifiers()) != 0;
   }
 
@@ -1009,7 +1009,7 @@ public interface iz {
     return iz.nodeTypeIn(¢, sequencerTypes);
   }
 
-  static boolean sequencer(@NotNull final ASTNode ¢, final int type) {
+  static boolean sequencer( final ASTNode ¢, final int type) {
     assert sequencerTypes[0] == type || sequencerTypes[1] == type || sequencerTypes[2] == type || sequencerTypes[3] == type;
     return ¢.getNodeType() == type;
   }
@@ -1033,7 +1033,7 @@ public interface iz {
         // when adding support for loops, switches etc.
         return statements((Block) ¢).stream().anyMatch(iz::sequencerComplex);
       case IF_STATEMENT:
-        @NotNull final IfStatement $ = (IfStatement) ¢;
+         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement()) && sequencerComplex($.getElseStatement());
       default:
         return sequencer(¢);
@@ -1051,7 +1051,7 @@ public interface iz {
       return false;
     switch (¢.getNodeType()) {
       case IF_STATEMENT:
-        @NotNull final IfStatement $ = (IfStatement) ¢;
+         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement(), type) || sequencerComplex($.getElseStatement(), type);
       case BLOCK:
         return statements(az.block(¢)).stream().anyMatch(s -> sequencerComplex(s, type));
@@ -1116,7 +1116,7 @@ public interface iz {
   /** Determine whether a declaration is static or not
    * @param ¢ JD
    * @return whetherdeclaration is static */
-  static boolean static¢(@NotNull final BodyDeclaration ¢) {
+  static boolean static¢( final BodyDeclaration ¢) {
     return (Modifier.STATIC & ¢.getModifiers()) != 0;
   }
 
@@ -1147,7 +1147,7 @@ public interface iz {
     return ¢ != null && ¢.getNodeType() == SWITCH_STATEMENT;
   }
 
-  static boolean synchronized¢(@NotNull final BodyDeclaration node) {
+  static boolean synchronized¢( final BodyDeclaration node) {
     return (node.getModifiers() & Modifier.SYNCHRONIZED) != 0;
   }
 
@@ -1201,7 +1201,7 @@ public interface iz {
     return ¢ != null && iz.nodeTypeEquals(¢, UNION_TYPE);
   }
 
-  static boolean updater(@NotNull final PrefixExpression ¢) {
+  static boolean updater( final PrefixExpression ¢) {
     return in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE);
   }
 
@@ -1209,7 +1209,7 @@ public interface iz {
    * @return whether the statement is side effect and updating an initializer
    *         from the for initializers. returns false if the parent is not a for
    *         loop. */
-  static boolean usingForInitializer(@NotNull final Statement ¢) {
+  static boolean usingForInitializer( final Statement ¢) {
     return az.forStatement(¢.getParent()) != null;
   }
 
@@ -1237,7 +1237,7 @@ public interface iz {
     return iz.vacuous(then(¢));
   }
 
-  static boolean validForEvaluation(@NotNull final InfixExpression ¢) {
+  static boolean validForEvaluation( final InfixExpression ¢) {
     return extract.allOperands(¢).stream().allMatch(iz::pseudoNumber);
   }
 
@@ -1274,31 +1274,31 @@ public interface iz {
 
   /** @param ¢ JD
    * @return whether the given node is a literal or false otherwise */
-  default boolean parsesTo(@NotNull final String $, final double d) {
+  default boolean parsesTo( final String $, final double d) {
     try {
       return Double.parseDouble($) == d;
-    } catch (@NotNull final IllegalArgumentException ¢) {
+    } catch ( final IllegalArgumentException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;
     }
   }
 
-  default boolean parsesTo(@NotNull final String $, final int i) {
+  default boolean parsesTo( final String $, final int i) {
     try {
       return iz.parseInt($) == i;
-    } catch (@NotNull final NumberFormatException __) {
+    } catch ( final NumberFormatException __) {
       ___.unused(__);
       return false;
-    } catch (@NotNull final IllegalArgumentException ¢) {
+    } catch ( final IllegalArgumentException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;
     }
   }
 
-  default boolean parsesTo(@NotNull final String $, final long l) {
+  default boolean parsesTo( final String $, final long l) {
     try {
       return iz.parseLong($) == l;
-    } catch (@NotNull final IllegalArgumentException ¢) {
+    } catch ( final IllegalArgumentException ¢) {
       monitor.logEvaluationError(box(l), ¢);
       return false;
     }

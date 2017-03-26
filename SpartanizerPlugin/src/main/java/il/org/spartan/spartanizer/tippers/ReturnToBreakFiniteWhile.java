@@ -69,7 +69,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return $ != null ? $ : az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
   }
 
-  private static boolean isInfiniteLoop(@NotNull final WhileStatement ¢) {
+  private static boolean isInfiniteLoop( final WhileStatement ¢) {
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
@@ -77,7 +77,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return "Convert the return inside the loop to break";
   }
 
-  @Override @NotNull public String description(final WhileStatement b) {
+  @Override  public String description(final WhileStatement b) {
     return "Convert the return inside " + b + " to break";
   }
 
@@ -89,12 +89,12 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     @Nullable final ReturnStatement nextReturn = extract.nextReturn(b);
     if (b == null || isInfiniteLoop(b) || nextReturn == null)
       return null;
-    @NotNull final Statement body = body(b), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+     final Statement body = body(b), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
     if (exclude != null)
       exclude.exclude(b);
     return $ == null ? null : new Tip(description(), b, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.replace($, az.astNode(first(statements(az.block(into.s("break;"))))), g);
       }
     };

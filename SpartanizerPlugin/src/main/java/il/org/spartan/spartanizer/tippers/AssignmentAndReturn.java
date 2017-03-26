@@ -27,11 +27,11 @@ public final class AssignmentAndReturn extends GoToNextStatement<Assignment>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -1263526923784459386L;
 
-  @Override @NotNull public String description(final Assignment ¢) {
+  @Override  public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into its subsequent 'return'";
   }
 
-  @Override public ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+  @Override public ASTRewrite go( final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     @Nullable final Statement parent = az.statement(parent(a));
     if (parent == null || iz.forStatement(parent))
       return null;

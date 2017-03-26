@@ -32,7 +32,7 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
    * @param ¢ JD */
-  private void consider(@NotNull final TypeDeclaration ¢) {
+  private void consider( final TypeDeclaration ¢) {
     dotter.click();
     writer //
         .put("File", presentFile) //
@@ -68,7 +68,7 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
     writer.nl();
   }
 
-  @Override public void endVisit(@NotNull final TypeDeclaration node) {
+  @Override public void endVisit( final TypeDeclaration node) {
     --classNesting;
     consider(node);
     super.endVisit(node);

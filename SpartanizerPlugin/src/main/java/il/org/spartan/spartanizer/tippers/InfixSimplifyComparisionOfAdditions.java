@@ -28,7 +28,7 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
     if (!isLegalOperation(x) || !iz.infixExpression(left(x)) || az.infixExpression(left(x)).hasExtendedOperands()
         || iz.numberLiteral(az.infixExpression(left(x)).getLeftOperand()) || !iz.numberLiteral(right(az.infixExpression(left(x)))))
       return null;
-    @NotNull final Expression $ = left(az.infixExpression(left(x))), right;
+     final Expression $ = left(az.infixExpression(left(x))), right;
     if (iz.infixPlus(left(x)))
       right = subject.pair(right(x), right(az.infixExpression(left(x)))).to(Operator.MINUS);
     else {
@@ -44,12 +44,12 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
 
-  @Override public boolean prerequisite(@NotNull final InfixExpression ¢) {
+  @Override public boolean prerequisite( final InfixExpression ¢) {
     return new specificity().compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
 
-  @Override @NotNull public String description(final InfixExpression ¢) {
+  @Override  public String description(final InfixExpression ¢) {
     return "Simplify the comparison expression: " + ¢;
   }
 }

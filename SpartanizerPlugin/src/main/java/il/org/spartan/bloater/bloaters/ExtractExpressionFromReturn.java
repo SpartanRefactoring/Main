@@ -20,13 +20,13 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>/
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -7033611208498626020L;
 
-  @Override @NotNull public String description(final ReturnStatement ¢) {
+  @Override  public String description(final ReturnStatement ¢) {
     return "Extract expression from " + ¢ + " statement";
   }
 
-  @Override @Nullable public Tip tip(@NotNull final ReturnStatement s) {
+  @Override @Nullable public Tip tip( final ReturnStatement s) {
     return expression(s) == null || !iz.assignment(expression(s)) || !iz.block(s.getParent()) ? null : new Tip(description(s), s, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         @Nullable final Assignment a = az.assignment(expression(s));
         // TODO Doron Meshulam: use class subject --yg
         final ExpressionStatement exp = r.getAST().newExpressionStatement(copy.of(expression(s)));

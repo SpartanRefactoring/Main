@@ -34,11 +34,11 @@ public class ForEachSuchThat extends ForEach {
     return firstTip(tippers, ¢);
   }
 
-  @Override @NotNull public String description() {
+  @Override  public String description() {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @Override @NotNull public String nanoName() {
+  @Override  public String nanoName() {
     return ForEach.class.getSimpleName();
   }
 }

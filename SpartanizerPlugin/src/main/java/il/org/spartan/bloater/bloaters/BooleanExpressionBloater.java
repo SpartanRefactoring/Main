@@ -25,12 +25,12 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x6593D58F0DEFC96AL;
 
-  @Override protected boolean prerequisite(@NotNull final InfixExpression ¢) {
+  @Override protected boolean prerequisite( final InfixExpression ¢) {
     return ¢.getOperator() == Operator.CONDITIONAL_AND || ¢.getOperator() == Operator.AND || ¢.getOperator() == Operator.OR
         || ¢.getOperator() == Operator.CONDITIONAL_OR;
   }
 
-  @Override @NotNull public Tip tip(@NotNull final InfixExpression ¢) {
+  @Override  public Tip tip( final InfixExpression ¢) {
     subject.pair(getSeperate(¢.getLeftOperand()).getName(), getSeperate(¢.getRightOperand()).getName()).to(¢.getOperator());
     return new Tip(description(¢), ¢, getClass()) {
       @Override @SuppressWarnings("unused") public void go(final ASTRewrite __, final TextEditGroup g) {
@@ -43,7 +43,7 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     };
   }
 
-  private static SingleVariableDeclaration getSeperate(@NotNull final Expression x) {
+  private static SingleVariableDeclaration getSeperate( final Expression x) {
     final SingleVariableDeclaration $ = x.getAST().newSingleVariableDeclaration();
     $.setInitializer(copy.of(x));
     final PrimitiveType t = x.getAST().newPrimitiveType(PrimitiveType.BOOLEAN);

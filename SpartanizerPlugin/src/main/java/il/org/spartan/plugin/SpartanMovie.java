@@ -35,7 +35,7 @@ public class SpartanMovie extends AbstractHandler {
     @Nullable final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
     @Nullable final IWorkbenchPage page = window == null ? null : window.getActivePage();
     @Nullable final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
-    @NotNull final Trimmer trimmer = new Trimmer();
+     final Trimmer trimmer = new Trimmer();
     if (compilationUnits == null || page == null || progressService == null)
       return null;
     try {
@@ -45,7 +45,7 @@ public class SpartanMovie extends AbstractHandler {
         int changes = 0, filesModified = 0;
         // TODO Ori Roth: this function is much much too large. Try to break it
         // --yg
-        for (@NotNull final ICompilationUnit currentCompilationUnit : compilationUnits) {
+        for ( final ICompilationUnit currentCompilationUnit : compilationUnits) {
           mightNotBeSlick(page);
           final IResource file = currentCompilationUnit.getResource();
           try {
@@ -66,7 +66,7 @@ public class SpartanMovie extends AbstractHandler {
               refresh(page);
               sleep(SLEEP_BETWEEN);
             }
-          } catch (@NotNull final CoreException ¢) {
+          } catch ( final CoreException ¢) {
             monitor.log(¢);
           }
         }
@@ -74,7 +74,7 @@ public class SpartanMovie extends AbstractHandler {
         sleep(SLEEP_END);
         pm.done();
       });
-    } catch (@NotNull InvocationTargetException | InterruptedException ¢) {
+    } catch ( InvocationTargetException | InterruptedException ¢) {
       monitor.log(¢);
       ¢.printStackTrace();
     }
@@ -90,14 +90,14 @@ public class SpartanMovie extends AbstractHandler {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @param ¢ JD */
   // sure this is the right behavior
-  public static void mightNotBeSlick(@NotNull final IWorkbenchPage ¢) {
+  public static void mightNotBeSlick( final IWorkbenchPage ¢) {
     close(¢);
   }
 
-  private static IMarker[] getMarkers(@NotNull final IResource $) {
+  private static IMarker[] getMarkers( final IResource $) {
     try {
       return $.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
-    } catch (@NotNull final CoreException m) {
+    } catch ( final CoreException m) {
       monitor.log(m);
       return new IMarker[0];
     }
@@ -106,7 +106,7 @@ public class SpartanMovie extends AbstractHandler {
   private static List<ICompilationUnit> getCompilationUnits() {
     try {
       return eclipse.compilationUnits(eclipse.currentCompilationUnit(), wizard.nullProgressMonitor);
-    } catch (@NotNull final JavaModelException ¢) {
+    } catch ( final JavaModelException ¢) {
       monitor.log(¢);
       return new ArrayList<>();
     }
@@ -115,14 +115,14 @@ public class SpartanMovie extends AbstractHandler {
   static boolean focus(final IWorkbenchPage p, final IFile f) {
     try {
       IDE.openEditor(p, f, true);
-    } catch (@NotNull final PartInitException ¢) {
+    } catch ( final PartInitException ¢) {
       monitor.log(¢);
       return false;
     }
     return true;
   }
 
-  static void close(@NotNull final IWorkbenchPage ¢) {
+  static void close( final IWorkbenchPage ¢) {
     ¢.closeAllEditors(true);
   }
 
@@ -135,12 +135,12 @@ public class SpartanMovie extends AbstractHandler {
     try {
       Thread.sleep((int) (1000 * howMuch));
       return true;
-    } catch (@NotNull @SuppressWarnings("unused") final InterruptedException __) {
+    } catch ( @SuppressWarnings("unused") final InterruptedException __) {
       return false;
     }
   }
 
-  static void refresh(@NotNull final IWorkbenchPage ¢) {
+  static void refresh( final IWorkbenchPage ¢) {
     ¢.getWorkbenchWindow().getShell().update();
     ¢.getWorkbenchWindow().getShell().layout(true);
   }
@@ -156,13 +156,13 @@ public class SpartanMovie extends AbstractHandler {
    * "CHAR_START" attribute is not something I have added, but an existing and
    * well maintained marker attribute.
    * @author Ori Roth */
-  @SuppressWarnings("boxing") static IMarker getFirstMarker(@NotNull final IMarker[] ms) {
+  @SuppressWarnings("boxing") static IMarker getFirstMarker( final IMarker[] ms) {
     int $ = 0;
     for (final Integer i : range.from(0).to(ms.length))
       try {
         if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ms[$].getAttribute(IMarker.CHAR_START)).intValue())
           $ = i;
-      } catch (@NotNull final CoreException ¢) {
+      } catch ( final CoreException ¢) {
         monitor.log(¢);
         break;
       }

@@ -33,7 +33,7 @@ public class Issue0822 {
     @Nullable StringBuilder sb = null;
     try {
       sb = makeAST.STATEMENTS.builder(null);
-    } catch (@NotNull final Exception ¢) {
+    } catch ( final Exception ¢) {
       fail(¢.getMessage());
     }
     assert sb != null;

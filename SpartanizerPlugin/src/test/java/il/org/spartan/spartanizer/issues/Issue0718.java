@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Amir Sagiv
  * @since 16-11-03 */
 public class Issue0718 {
-  @Nullable private static ASTNode methodDeclarationFromString(@NotNull final String ¢) {
+  @Nullable private static ASTNode methodDeclarationFromString( final String ¢) {
     return wizard.ast(¢);
   }
 

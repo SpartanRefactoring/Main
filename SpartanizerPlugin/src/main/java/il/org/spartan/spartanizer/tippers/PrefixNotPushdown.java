@@ -30,11 +30,11 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
    * top most parameter is logical negation.
    * @param x JD
    * @return simplified parameter */
-  @Nullable public static Expression simplifyNot(@NotNull final PrefixExpression ¢) {
+  @Nullable public static Expression simplifyNot( final PrefixExpression ¢) {
     return pushdownNot(az.not(core(¢)));
   }
 
-  static Expression notOfLiteral(@NotNull final BooleanLiteral ¢) {
+  static Expression notOfLiteral( final BooleanLiteral ¢) {
     final BooleanLiteral $ = copy.of(¢);
     $.setBooleanValue(!¢.booleanValue());
     return $;
@@ -67,7 +67,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return count.nodes($) < count.nodes($2) ? $ : $2;
   }
 
-  private static Expression comparison(@NotNull final InfixExpression ¢) {
+  private static Expression comparison( final InfixExpression ¢) {
     return pair(left(¢), right(¢)).to(wizard.negate(¢.getOperator()));
   }
 
@@ -121,7 +121,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     return ¢ != null && az.not(¢) != null && hasOpportunity(az.not(¢));
   }
 
-  @Override @Nullable public Expression replacement(@NotNull final PrefixExpression ¢) {
+  @Override @Nullable public Expression replacement( final PrefixExpression ¢) {
     return simplifyNot(¢);
   }
 }

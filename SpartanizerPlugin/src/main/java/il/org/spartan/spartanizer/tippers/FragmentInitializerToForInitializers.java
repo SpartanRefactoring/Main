@@ -26,7 +26,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -8610595251612382642L;
 
-  private static boolean fitting(@NotNull final VariableDeclarationStatement s, @NotNull final ForStatement ¢) {
+  private static boolean fitting( final VariableDeclarationStatement s,  final ForStatement ¢) {
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToIt(¢);
   }
 
@@ -36,14 +36,14 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
    * @param s
    * @param x
    * @return whether initializer's and declaration's modifiers are mergable. */
-  private static boolean fittingModifiers(final VariableDeclarationStatement s, @NotNull final VariableDeclarationExpression x) {
-    @NotNull final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
+  private static boolean fittingModifiers(final VariableDeclarationStatement s,  final VariableDeclarationExpression x) {
+     final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
     return $.isEmpty() && initializerModifiers.isEmpty() || haz.final¢($) && haz.final¢(initializerModifiers);
   }
 
   // TODO: now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
-  private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, @NotNull final ForStatement s) {
+  private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds,  final ForStatement s) {
     return fragments(vds).stream().allMatch(λ -> Inliner.variableUsedInFor(s, name(λ)) && Inliner.variableNotUsedAfterStatement(s, name(λ)));
   }
 
@@ -53,7 +53,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     return copy.of(left(from));
   }
 
-  @NotNull public static Expression handleParenthesizedCondition(@NotNull final ParenthesizedExpression from, final VariableDeclarationStatement s) {
+   public static Expression handleParenthesizedCondition( final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     @Nullable final Assignment $ = az.assignment(from.getExpression());
     @Nullable final InfixExpression e = az.infixExpression(extract.core(from));
     return $ != null ? handleAssignmentCondition($, s) : e != null ? wizard.goInfix(e, s) : from;
@@ -69,8 +69,8 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
         : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
   }
 
-  private static boolean sameTypeAndModifiers(@NotNull final VariableDeclarationStatement s, final ForStatement ¢) {
-    @NotNull final List<Expression> initializers = initializers(¢);
+  private static boolean sameTypeAndModifiers( final VariableDeclarationStatement s, final ForStatement ¢) {
+     final List<Expression> initializers = initializers(¢);
     if (initializers.isEmpty())
       return true;
     if (!iz.variableDeclarationExpression(first(initializers)))
@@ -87,7 +87,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     fragments(az.variableDeclarationExpression(first(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
 
-  @Override @NotNull public String description(final VariableDeclarationFragment ¢) {
+  @Override  public String description(final VariableDeclarationFragment ¢) {
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
 

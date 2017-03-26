@@ -22,12 +22,12 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     implements TipperCategory.NOP {
   private static final long serialVersionUID = -4282740939895750794L;
 
-  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
+  @Override public ASTNode replacement( final InfixExpression x) {
     @Nullable final List<Expression> es = hop.operands(x);
     Expression prev = copy.of(lisp.first(es));
     @Nullable final CompilationUnit u = az.compilationUnit(x.getRoot());
-    @NotNull final List<Expression> es2 = new LinkedList<>();
-    for (@NotNull final Expression e : lisp.rest(es))
+     final List<Expression> es2 = new LinkedList<>();
+    for ( final Expression e : lisp.rest(es))
       if (u.getLineNumber(prev.getStartPosition()) != u.getLineNumber(e.getStartPosition()) || !iz.stringLiteral(prev) || !iz.stringLiteral(e)) {
         es2.add(prev);
         prev = copy.of(e);
@@ -43,7 +43,7 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     return $;
   }
 
-  @Override protected boolean prerequisite(@NotNull final InfixExpression x) {
+  @Override protected boolean prerequisite( final InfixExpression x) {
     if (operator(x) != wizard.PLUS2)
       return false;
     @Nullable final List<Expression> es = hop.operands(x);
@@ -51,7 +51,7 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     if (!iz.compilationUnit(x.getRoot()))
       return false;
     @Nullable final CompilationUnit u = az.compilationUnit(x.getRoot());
-    for (@NotNull final Expression ¢ : lisp.rest(es)) {
+    for ( final Expression ¢ : lisp.rest(es)) {
       if (u.getLineNumber(prev.getStartPosition()) == u.getLineNumber(¢.getStartPosition()) && iz.stringLiteral(prev) && iz.stringLiteral(¢))
         return true;
       prev = ¢;

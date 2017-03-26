@@ -22,14 +22,14 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNe
     implements TipperCategory.EarlyReturn {
   private static final long serialVersionUID = -9215176071220857924L;
 
-  @Override @NotNull public String description(@NotNull final IfStatement ¢) {
+  @Override  public String description( final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go( final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
-    @NotNull final Statement then = then(s);
+     final Statement then = then(s);
     @Nullable final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;

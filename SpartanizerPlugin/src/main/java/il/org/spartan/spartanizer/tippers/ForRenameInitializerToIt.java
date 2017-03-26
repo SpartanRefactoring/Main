@@ -33,11 +33,11 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3634676628162924936L;
 
-  @Override @NotNull public String description(final VariableDeclarationExpression ¢) {
+  @Override  public String description(final VariableDeclarationExpression ¢) {
     return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
   }
 
-  @Override public Tip tip(@NotNull final VariableDeclarationExpression x, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final VariableDeclarationExpression x, @Nullable final ExclusionManager m) {
     @Nullable final ForStatement $ = az.forStatement(parent(x));
     if ($ == null)
       return null;

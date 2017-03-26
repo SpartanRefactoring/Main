@@ -20,8 +20,8 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public enum analyze {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-  @NotNull public static Collection<String> dependencies(@NotNull final ASTNode n) {
-    @NotNull final Collection<String> $ = new HashSet<>();
+   public static Collection<String> dependencies( final ASTNode n) {
+     final Collection<String> $ = new HashSet<>();
     // noinspection SameReturnValue,SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName node) {
@@ -44,8 +44,8 @@ public enum analyze {
     return $;
   }
 
-  public static Collection<String> dependencies(@NotNull final Iterable<Expression> arguments) {
-    @NotNull final Set<String> $ = new HashSet<>();
+  public static Collection<String> dependencies( final Iterable<Expression> arguments) {
+     final Set<String> $ = new HashSet<>();
     for (final Expression ¢ : arguments) {
       $.addAll(analyze.dependencies(¢));
       if (iz.name(¢))
@@ -70,8 +70,8 @@ public enum analyze {
     return null;
   }
 
-  @Nullable private static String findDeclarationInMethod(final Name n, @NotNull final MethodDeclaration d) {
-    @NotNull final Str $ = new Str();
+  @Nullable private static String findDeclarationInMethod(final Name n,  final MethodDeclaration d) {
+     final Str $ = new Str();
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
         if ($.notEmpty() || !identifier(¢).equals(n + ""))

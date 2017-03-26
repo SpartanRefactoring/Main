@@ -28,14 +28,14 @@ public final class EnvNestedHandler extends ENVTestEngineAbstract {
    * test engine itself.
    * @param ¢ - Node that will be searched for suitable annotations.
    * @param es - Set to compare against. */
-  public EnvNestedHandler(final ASTNode ¢, @NotNull final LinkedHashSet<Entry<String, Binding>> es) {
+  public EnvNestedHandler(final ASTNode ¢,  final LinkedHashSet<Entry<String, Binding>> es) {
     assert es != null : "The provided Set for manual testing is null!";
     userProvidedSet = es;
     n = ¢;
     runTest();
   }
 
-  public EnvNestedHandler(@NotNull final String ¢) {
+  public EnvNestedHandler( final String ¢) {
     userProvidedSet = null;
     n = getCompilationUnit(¢);
     testSet = generateSet();
@@ -47,7 +47,7 @@ public final class EnvNestedHandler extends ENVTestEngineAbstract {
    * test engine itself.
    * @param ¢
    * @param es */
-  public EnvNestedHandler(@NotNull final String ¢, @NotNull final LinkedHashSet<Entry<String, Binding>> es) {
+  public EnvNestedHandler( final String ¢,  final LinkedHashSet<Entry<String, Binding>> es) {
     assert es != null : "The provided Set for manual testing is null!";
     userProvidedSet = es;
     n = getCompilationUnit(¢);
@@ -71,11 +71,11 @@ public final class EnvNestedHandler extends ENVTestEngineAbstract {
     foundTestedAnnotation = true;
     // noinspection SameReturnValue
     a.accept(new ASTVisitor(true) {
-      @SuppressWarnings("unchecked") List<MemberValuePair> values(@NotNull final NormalAnnotation ¢) {
+      @SuppressWarnings("unchecked") List<MemberValuePair> values( final NormalAnnotation ¢) {
         return ¢.values();
       }
 
-      @Override public boolean visit(@NotNull final NormalAnnotation ¢) {
+      @Override public boolean visit( final NormalAnnotation ¢) {
         if (isNameId(¢.getTypeName()))
           addTestSet(values(¢));
         return true;

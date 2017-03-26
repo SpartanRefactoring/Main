@@ -30,11 +30,11 @@ public class Augmenter implements Application {
   private final IProgressMonitor npm = new NullProgressMonitor();
   private static final int MIN_STATEMENTS_COUNT = 2;
 
-  @Override public Integer commitChanges(@NotNull final WrappedCompilationUnit u, @NotNull final AbstractSelection<?> s) {
+  @Override public Integer commitChanges( final WrappedCompilationUnit u,  final AbstractSelection<?> s) {
     if (!checkServiceAvailableBeforeCalculation())
       return Integer.valueOf(0);
     try {
-      @NotNull final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+       final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
       textChange.setTextType("java");
       final ASTRewrite r = ASTRewrite.create(u.compilationUnit.getAST());
       if (!rewrite(r, getSelection(u.compilationUnit, getTextSelection(u.compilationUnit, s.textSelection)), null)
@@ -45,7 +45,7 @@ public class Augmenter implements Application {
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(npm);
       return Integer.valueOf(0);
-    } catch (@NotNull final CoreException ¢) {
+    } catch ( final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return Integer.valueOf(0);
@@ -53,8 +53,8 @@ public class Augmenter implements Application {
 
   /** @param u JD
    * @return selection as list of lists of statements */
-  @NotNull private static List<List<Statement>> getSelection(@NotNull final CompilationUnit u, final ITextSelection s) {
-    @NotNull final List<List<Statement>> $ = new ArrayList<>();
+   private static List<List<Statement>> getSelection( final CompilationUnit u, final ITextSelection s) {
+     final List<List<Statement>> $ = new ArrayList<>();
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Block b) {
@@ -63,7 +63,7 @@ public class Augmenter implements Application {
         if (inRange(b, s))
           $.add(statements(b));
         else {
-          @NotNull final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
+           final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
           if (!discardOptimization(l))
             $.add(l);
         }
@@ -79,7 +79,7 @@ public class Augmenter implements Application {
    * @param sss selection as list of lists of statements
    * @param textEditGroup JD
    * @return true iff rewrite object should be applied */
-  private static boolean rewrite(@NotNull final ASTRewrite r, @NotNull final List<List<Statement>> sss,
+  private static boolean rewrite( final ASTRewrite r,  final List<List<Statement>> sss,
       @SuppressWarnings("unused") final TextEditGroup __) {
     if (sss.isEmpty() || first(sss).isEmpty())
       return false;
@@ -104,7 +104,7 @@ public class Augmenter implements Application {
   private static void addCollateralImport(@Nullable final ASTRewrite r, @Nullable final CompilationUnit u, final TextEditGroup g) {
     if (u == null || r == null)
       return;
-    @NotNull final String i = LibrariesManagement.LIBRARY_QULIFIED_NAME + ".Collateral.₡";
+     final String i = LibrariesManagement.LIBRARY_QULIFIED_NAME + ".Collateral.₡";
     if (hasImportIncluded(u, i))
       return;
     final ListRewrite l = r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY);
@@ -127,7 +127,7 @@ public class Augmenter implements Application {
    * allow several projects within selection (?)
    * @param ¢ JD
    * @return true iff service is available */
-  private static boolean checkServiceAvailableAfterCalculation(@NotNull final AbstractSelection<?> ¢) {
+  private static boolean checkServiceAvailableAfterCalculation( final AbstractSelection<?> ¢) {
     return LibrariesManagement.checkLibrary(first(¢.inner).descriptor.getJavaProject());
   }
 
@@ -171,7 +171,7 @@ public class Augmenter implements Application {
    * @param u JD
    * @param s JD
    * @return absolute text selection */
-  @NotNull private static ITextSelection getTextSelection(@NotNull final CompilationUnit u, @Nullable final ITextSelection s) {
+   private static ITextSelection getTextSelection( final CompilationUnit u, @Nullable final ITextSelection s) {
     return s != null ? s : new TextSelection(0, u.getLength());
   }
 }

@@ -41,7 +41,7 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     return replaceAssignment(¢);
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Expanding a ternary operator to a full if-else statement";
   }
 }

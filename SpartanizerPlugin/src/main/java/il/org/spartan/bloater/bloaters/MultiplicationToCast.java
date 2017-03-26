@@ -26,7 +26,7 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x57EAC7C1A6BFDD34L;
 
-  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression x) {
+  @Override @Nullable public ASTNode replacement( final InfixExpression x) {
     if (x.getOperator() != Operator.TIMES)
       return null;
     int i = 0;

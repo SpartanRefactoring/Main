@@ -16,11 +16,11 @@ public class EliminateConditionalContinueInWhile extends EagerTipper<WhileStatem
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -2214012312380722330L;
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final WhileStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "Eliminate conditional continue before last statement in the for loop";
   }
 
-  @Override @Nullable public Tip tip(@NotNull final WhileStatement ¢) {
+  @Override @Nullable public Tip tip( final WhileStatement ¢) {
     return ContinueInConditionalEliminateAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

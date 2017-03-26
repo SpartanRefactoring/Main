@@ -22,7 +22,7 @@ public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
     return "Remove redundant return statement";
   }
 
-  @Override public boolean prerequisite(@NotNull final ReturnStatement ¢) {
+  @Override public boolean prerequisite( final ReturnStatement ¢) {
     if (¢.getExpression() != null)
       return false;
     @Nullable final Block $ = az.block(¢.getParent());

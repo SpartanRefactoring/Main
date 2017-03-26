@@ -28,11 +28,11 @@ public final class FragmentInitializerStatementTerminatingScope extends $Fragmen
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -221763355000543721L;
 
-  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override  public String description( final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
-  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @Nullable final VariableDeclarationFragment f, final SimpleName n,
+  @Override @Nullable protected ASTRewrite go( final ASTRewrite $, @Nullable final VariableDeclarationFragment f, final SimpleName n,
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
@@ -42,7 +42,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Fragmen
       return null;
     @Nullable final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
     boolean searching = true;
-    for (@NotNull final VariableDeclarationFragment ff : fragments(currentStatement))
+    for ( final VariableDeclarationFragment ff : fragments(currentStatement))
       if (searching)
         searching = ff != f;
       else if (!collect.usesOf(n).in(ff.getInitializer()).isEmpty())
@@ -50,7 +50,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Fragmen
     @Nullable final Block parent = az.block(currentStatement.getParent());
     if (parent == null)
       return null;
-    @NotNull final List<Statement> ss = statements(parent);
+     final List<Statement> ss = statements(parent);
     if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
     final List<SimpleName> uses = collect.usesOf(n).in(nextStatement);
@@ -63,7 +63,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Fragmen
       if (Inliner.never(use, nextStatement) || Inliner.isPresentOnAnonymous(use, nextStatement))
         return null;
     final Expression v = Inliner.protect(initializer, currentStatement);
-    @NotNull final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
+     final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
     final Statement newStatement = copy.of(nextStatement);
     if (i.addedSize(newStatement) - removalSaving(f) > 0)
       return null;
