@@ -26,12 +26,13 @@ public class WhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<WhileSta
   }
 
   @Override protected boolean prerequisite(@NotNull final WhileStatement ¢) {
-    final Statement $ = ¢.getBody();
-    return iz.block($) && iz.emptyBlock(az.block($));
+    final Block $ = az.block(¢.getBody());
+    return $ != null && iz.emptyBlock($);
   }
 
   @Override @NotNull public Example[] examples() {
-    return new Example[] { convert("while(x()){}").to("while(x());"), //
+    return new Example[] { //
+        convert("while(x()){}").to("while(x());"), //
         ignores("while(x()){y();z();}")//
     };
   }

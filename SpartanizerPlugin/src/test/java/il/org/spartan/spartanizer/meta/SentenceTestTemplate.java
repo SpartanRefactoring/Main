@@ -42,7 +42,6 @@ public enum SentenceTestTemplate {
    * it has n-1 phrases.
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-01-18 */
-  @Ignore
   @RunWith(Parameterized.class)
   public static class Changes {
     @NotNull @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
