@@ -36,18 +36,18 @@ public class ExamplesTests {
     Stream.of(tipper.examples()).filter(Ignores.class::isInstance).map(Ignores.class::cast).forEachOrdered(this::ignores);
   }
 
-  private void ignores( final Ignores ¢) {
-    wrap(() -> trimmingOf(¢.get()).stays());
+  private void ignores(final Ignores ¢) {
+    wrap(() -> trimmingOf(¢.get()).using(tipper).stays());
   }
 
-  private void converts( final Converts ¢) {
-    wrap(() -> trimmingOf(¢.from()).gives(¢.to()));
+  private void converts(final Converts ¢) {
+    wrap(() -> trimmingOf(¢.from()).using(tipper).gives(¢.to()));
   }
 
-  private void wrap( final Runnable test) {
+  private void wrap(final Runnable test) {
     try {
       test.run();
-    } catch ( final AssertionError x) {
+    } catch (final AssertionError x) {
       throw new AssertionError("Example failure at " + tipper.nanoName() + ":\n" + x.getMessage().trim(), x.getCause());
     }
   }
