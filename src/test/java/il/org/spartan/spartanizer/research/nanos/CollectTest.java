@@ -21,6 +21,7 @@ public class CollectTest {
     trimmingOf("L<SimpleName> $ = new A<>();  for (VariableDeclarationFragment λ : fs) if(iLikeTo(a))  $.add(λ.getName());")//
         .using(EnhancedForStatement.class, new ForEachSuchThat(), new ForEach(), new Collect())//
         .gives("L<SimpleName>$=(fs).stream().filter(λ->iLikeTo(a)).map(λ->λ.getName()).collect(toList());")//
+        .gives("(fs).stream().filter(λ->iLikeTo(a)).map(λ->λ.getName()).collect(toList());")//
         .gives("fs.stream().filter(λ->iLikeTo(a)).map(λ->λ.getName()).collect(toList());")//
         .stays();
   }
@@ -29,6 +30,7 @@ public class CollectTest {
     trimmingOf("L<SimpleName> $ = new A<>();  for (VariableDeclarationFragment λ : fs) if(iLikeTo(a))  $.add(λ);")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("L<SimpleName>$=(fs).stream().filter(λ->iLikeTo(a)).collect(toList());")//
+        .gives("(fs).stream().filter(λ->iLikeTo(a)).collect(toList());")//
         .gives("fs.stream().filter(λ->iLikeTo(a)).collect(toList());")//
         .stays();
   }
@@ -37,7 +39,8 @@ public class CollectTest {
     trimmingOf("L<SimpleName> $ = new A<>();  for (VariableDeclarationFragment λ : fs) $.add(λ);")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("L<SimpleName>$=(fs).stream().collect(toList());")//
-        .gives("L<SimpleName>$=fs.stream().collect(toList());")//
+        .gives("(fs).stream().collect(toList());")//
+        .gives("fs.stream().collect(toList());")//
         .stays();
   }
 
@@ -60,7 +63,8 @@ public class CollectTest {
     trimmingOf("Set<Modifier> $ = new H<>(); for (IExtendedModifier λ : ms)  if (test(λ, ps))   $.add((Modifier) λ);")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("Set<Modifier>$=(ms).stream().filter(λ->test(λ,ps)).map(λ->(Modifier)λ).collect(toList());")//
-        .gives("Set<Modifier>$=ms.stream().filter(λ->test(λ,ps)).map(λ->(Modifier)λ).collect(toList());")//
+        .gives("(ms).stream().filter(λ->test(λ,ps)).map(λ->(Modifier)λ).collect(toList());")//
+        .gives("ms.stream().filter(λ->test(λ,ps)).map(λ->(Modifier)λ).collect(toList());")//
         .stays();
   }
 
