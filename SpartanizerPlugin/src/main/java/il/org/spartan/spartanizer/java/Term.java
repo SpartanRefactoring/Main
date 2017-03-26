@@ -1,19 +1,17 @@
 package il.org.spartan.spartanizer.java;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An additive term, which might be either negative or positive
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 class Term {
-  @NotNull static Term minus(final Expression ¢) {
+   static Term minus(final Expression ¢) {
     return new Term(true, ¢);
   }
 
-  @NotNull static Term plus(final Expression ¢) {
+   static Term plus(final Expression ¢) {
     return new Term(false, ¢);
   }
 

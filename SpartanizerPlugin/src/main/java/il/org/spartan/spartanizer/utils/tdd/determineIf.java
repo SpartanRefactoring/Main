@@ -6,8 +6,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
@@ -23,10 +21,10 @@ public enum determineIf {
    * @param d
    * @return true iff the method have at least 3 parameters and defines more
    *         than 5 variables */
-  public static boolean loaded(@Nullable final MethodDeclaration d) {
+  public static boolean loaded( final MethodDeclaration d) {
     if (d == null)
       return false;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     $.inner = 0;
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
@@ -45,10 +43,10 @@ public enum determineIf {
    * @since 16-11-02
    * @param d
    * @return true iff the method has at least 10 statements */
-  public static boolean hasManyStatements(@Nullable final MethodDeclaration d) {
+  public static boolean hasManyStatements( final MethodDeclaration d) {
     if (d == null)
       return false;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     $.inner = 0;
     d.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
@@ -66,7 +64,7 @@ public enum determineIf {
    * @since 16-11-02
    * @param m
    * @return true iff the class contains only final fields */
-  public static boolean isImmutable(@Nullable final TypeDeclaration m) {
+  public static boolean isImmutable( final TypeDeclaration m) {
     return m == null || Stream.of(fields(m)).allMatch(f -> modifiers(f).stream().anyMatch(λ -> ((Modifier) λ).isFinal()));
   }
 
@@ -78,10 +76,10 @@ public enum determineIf {
    * @param d
    * @param x
    * @return true iff the method defines at least x variables. */
-  public static boolean definesManyVariables(@Nullable final MethodDeclaration d, final int x) {
+  public static boolean definesManyVariables( final MethodDeclaration d, final int x) {
     if (d == null)
       return false;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
@@ -101,7 +99,7 @@ public enum determineIf {
    * @param d
    * @return true iff the method has an inner block containing at least 5
    *         statements. */
-  public static boolean hasBigBlock(@Nullable final MethodDeclaration ¢) {
+  public static boolean hasBigBlock( final MethodDeclaration ¢) {
     return ¢ != null && ¢.getBody() != null && statements(body(¢)).size() >= 5;
   }
 
@@ -112,10 +110,10 @@ public enum determineIf {
    * @since 16-11-06
    * @param d
    * @return returns true iff the method contains a return null statement . */
-  public static boolean returnsNull(@Nullable final MethodDeclaration mDec) {
+  public static boolean returnsNull( final MethodDeclaration mDec) {
     if (mDec == null)
       return false;
-    @NotNull final Collection<ReturnStatement> $ = new ArrayList<>();
+     final Collection<ReturnStatement> $ = new ArrayList<>();
     // noinspection
     // SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue
     mDec.accept(new ASTVisitor(true) {
@@ -147,23 +145,23 @@ public enum determineIf {
    * @param n
    * @param name
    * @return returns true iff the name is used in the node as a Name. */
-  public static boolean uses(@Nullable final ASTNode n, final String name) {
+  public static boolean uses( final ASTNode n, final String name) {
     if (n == null)
       return false;
-    @NotNull final Bool $ = new Bool();
+     final Bool $ = new Bool();
     $.inner = false;
     n.accept(new ASTVisitor(true) {
-      void innerVisit(@NotNull final Name node) {
+      void innerVisit( final Name node) {
         $.inner = node.getFullyQualifiedName().equals(name);
       }
 
-      @Override public boolean visit(@NotNull final QualifiedName node) {
+      @Override public boolean visit( final QualifiedName node) {
         if (!$.inner)
           innerVisit(node);
         return !$.inner;
       }
 
-      @Override public boolean visit(@NotNull final SimpleName node) {
+      @Override public boolean visit( final SimpleName node) {
         if (!$.inner)
           innerVisit(node);
         return !$.inner;

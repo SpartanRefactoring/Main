@@ -5,7 +5,6 @@ import java.util.*;
 
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
-import org.jetbrains.annotations.*;
 
 /** Eclipse common utilities.
  * @author Ori Roth {@code ori.rothh@gmail.com}
@@ -25,7 +24,7 @@ public class Eclipse {
   // TODO Roth: switch from system date to eclipse template date
   /** @param format date format
    * @return current date */
-  public static String date(@NotNull final String format) {
+  public static String date( final String format) {
     return new SimpleDateFormat(format).format(new Date());
   }
 

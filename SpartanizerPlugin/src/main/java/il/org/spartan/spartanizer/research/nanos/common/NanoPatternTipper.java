@@ -7,8 +7,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -21,21 +19,21 @@ import il.org.spartan.spartanizer.tipping.*;
 public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     implements TipperCategory.Nanos {
   private static final long serialVersionUID = 0x6FF9DBFD3D10CF83L;
-  @Nullable public final N nodeTypeHolder = null;
+   public final N nodeTypeHolder = null;
 
-  protected static <N extends ASTNode> boolean anyTips(@NotNull final Collection<UserDefinedTipper<N>> ts, @Nullable final N n) {
+  protected static <N extends ASTNode> boolean anyTips( final Collection<UserDefinedTipper<N>> ts,  final N n) {
     return n != null && ts.stream().anyMatch(λ -> λ.check(n));
   }
 
-  protected static <N extends ASTNode> boolean nonTips(@NotNull final Collection<NanoPatternTipper<N>> ts, @Nullable final N n) {
+  protected static <N extends ASTNode> boolean nonTips( final Collection<NanoPatternTipper<N>> ts,  final N n) {
     return n == null || ts.stream().allMatch(λ -> λ.cantTip(n));
   }
 
-  protected static <N extends ASTNode> UserDefinedTipper<N> firstTipper(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
+  protected static <N extends ASTNode> UserDefinedTipper<N> firstTipper( final Collection<UserDefinedTipper<N>> ts, final N n) {
     return ts.stream().filter(λ -> λ.check(n)).findFirst().get();
   }
 
-  @Nullable public static <N extends ASTNode> Tip firstTip(@NotNull final Collection<UserDefinedTipper<N>> ts, final N n) {
+   public static <N extends ASTNode> Tip firstTip( final Collection<UserDefinedTipper<N>> ts, final N n) {
     return firstTipper(ts, n).tip(n);
   }
 
@@ -51,12 +49,12 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return first(¢);
   }
 
-  @Nullable protected static Block containingBlock(final ASTNode ¢) {
+   protected static Block containingBlock(final ASTNode ¢) {
     return yieldAncestors.untilContainingBlock().from(¢);
   }
 
-  @Override @NotNull public final Tip tip(@NotNull final N ¢) {
-    @Nullable final Tip $ = pattern(¢);
+  @Override  public final Tip tip( final N ¢) {
+     final Tip $ = pattern(¢);
     return new Tip($.description, ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         Logger.logNP(¢, nanoName());
@@ -65,15 +63,15 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     };
   }
 
-  @Override @Nullable public String description(@SuppressWarnings("unused") final N __) {
+  @Override  public String description(@SuppressWarnings("unused") final N __) {
     return "";
   }
 
-  @Override @Nullable public String technicalName() {
+  @Override  public String technicalName() {
     return nanoName();
   }
 
-  @SuppressWarnings("static-method") @Nullable public String example() {
+  @SuppressWarnings("static-method")  public String example() {
     return null;
   }
 
@@ -81,24 +79,24 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return "";
   }
 
-  @Override @NotNull public String[] akas() {
+  @Override  public String[] akas() {
     return new String[] { nanoName() };
   }
 
-  @Nullable protected abstract Tip pattern(N ¢);
+   protected abstract Tip pattern(N ¢);
 
-  @SuppressWarnings("static-method") @Nullable public Category category() {
+  @SuppressWarnings("static-method")  public Category category() {
     return null;
   }
 
   public enum Category {
     Iterative, Field, Conditional, Exception, Safety, MethodBody {
-      @Override @NotNull public String toString() {
+      @Override  public String toString() {
         return "Method Body";
       }
     },
     Quantifier, Functional, Default;
-    public static String pretty(@NotNull final String name) {
+    public static String pretty( final String name) {
       if (name.startsWith("Lisp"))
         return name.replaceAll("^Lisp", "");
       switch (name) {

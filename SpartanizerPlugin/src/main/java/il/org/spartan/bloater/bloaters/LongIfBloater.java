@@ -5,8 +5,6 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,10 +20,10 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1472927802038098123L;
 
-  @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
+  @Override  public ASTNode replacement( final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
-    @Nullable final InfixExpression $ = az.infixExpression(¢.getExpression());
+     final InfixExpression $ = az.infixExpression(¢.getExpression());
     final IfStatement newThen = subject.pair(then(¢), null).toIf(!$.hasExtendedOperands() ? $.getRightOperand() : getReducedIEFromIEWithExtOp($));
     final Statement oldElse = ¢.getElseStatement();
     if (oldElse == null)
@@ -34,11 +32,11 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     return subject.pair(newThen, copy.of(oldElse)).toIf($.getLeftOperand());
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace an if statement that contains && with two ifs";
   }
 
-  private static Expression getReducedIEFromIEWithExtOp(@NotNull final InfixExpression ¢) {
+  private static Expression getReducedIEFromIEWithExtOp( final InfixExpression ¢) {
     final InfixExpression $ = subject.pair(¢.getRightOperand(), first(extendedOperands(¢))).to(¢.getOperator());
     subject.append($, step.extendedOperands(¢));
     if (!$.extendedOperands().isEmpty())
@@ -46,7 +44,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  private static boolean shouldTip(@NotNull final IfStatement ¢) {
+  private static boolean shouldTip( final IfStatement ¢) {
     return iz.infixExpression(¢.getExpression()) && iz.conditionalAnd(az.infixExpression(¢.getExpression()));
   }
 }

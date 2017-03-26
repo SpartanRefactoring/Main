@@ -5,8 +5,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -17,8 +15,8 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class AbstractVariableDeclarationChangeName<N extends VariableDeclaration> extends MultipleReplaceCurrentNode<N> {
   private static final long serialVersionUID = 0x40EF70CFBDCE85D7L;
 
-  @Override @Nullable public ASTRewrite go(final ASTRewrite r, @NotNull final N n, @SuppressWarnings("unused") final TextEditGroup __,
-      @NotNull final List<ASTNode> uses, @NotNull final List<ASTNode> replacement) {
+  @Override  public ASTRewrite go(final ASTRewrite r,  final N n, @SuppressWarnings("unused") final TextEditGroup __,
+       final List<ASTNode> uses,  final List<ASTNode> replacement) {
     if (!change(n))
       return null;
     uses.addAll(collect.usesOf(n.getName()).in(containing.typeDeclaration(n)));

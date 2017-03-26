@@ -7,7 +7,6 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -37,18 +36,18 @@ public class ExamplesTests {
     Stream.of(tipper.examples()).filter(Ignores.class::isInstance).map(Ignores.class::cast).forEachOrdered(this::ignores);
   }
 
-  private void ignores(@NotNull final Ignores ¢) {
+  private void ignores( final Ignores ¢) {
     wrap(() -> trimmingOf(¢.get()).stays());
   }
 
-  private void converts(@NotNull final Converts ¢) {
+  private void converts( final Converts ¢) {
     wrap(() -> trimmingOf(¢.from()).gives(¢.to()));
   }
 
-  private void wrap(@NotNull final Runnable test) {
+  private void wrap( final Runnable test) {
     try {
       test.run();
-    } catch (@NotNull final AssertionError x) {
+    } catch ( final AssertionError x) {
       throw new AssertionError("Example failure at " + tipper.nanoName() + ":\n" + x.getMessage().trim(), x.getCause());
     }
   }

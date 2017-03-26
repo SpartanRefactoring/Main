@@ -9,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -23,7 +22,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since Nov 8, 2016 */
 public class Issue0782 {
   @Test @SuppressWarnings("static-method") public void check2PrivatesName() {
-    @NotNull final List<String> names = getAll
+     final List<String> names = getAll
         .privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class twoPrivates{private int x; private int y;}")))));
     azzert.that(first(names), is("x"));
     azzert.that(names.get(1), is("y"));
@@ -40,14 +39,14 @@ public class Issue0782 {
   }
 
   @Test @SuppressWarnings("static-method") public void checkFieldsInsideMethods() {
-    @NotNull final List<String> names = getAll.privateFields(
+     final List<String> names = getAll.privateFields(
         (TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class twoPrivates{private int x; public void foo(int z){ int y; } }")))));
     azzert.that(first(names), is("x"));
     azzert.that(names.size(), is(1));
   }
 
   @Test @SuppressWarnings("static-method") public void checkMultiDeclarationsInOneLine() {
-    @NotNull final List<String> names = getAll
+     final List<String> names = getAll
         .privateFields((TypeDeclaration) first(types(az.compilationUnit(wizard.ast("public class onePrivate{private int a,b,c,y;}")))));
     azzert.that(first(names), is("a"));
     azzert.that(names.get(1), is("b"));

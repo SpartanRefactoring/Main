@@ -6,8 +6,6 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -22,17 +20,17 @@ public final class CastToLong2Multiply1L extends ReplaceCurrentNode<CastExpressi
     implements TipperCategory.NOP {
   private static final long serialVersionUID = -7695643321354565364L;
 
-  private static NumberLiteral literal(@NotNull final Expression ¢) {
+  private static NumberLiteral literal( final Expression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1L");
     return $;
   }
 
-  private static InfixExpression replacement(@NotNull final Expression $) {
+  private static InfixExpression replacement( final Expression $) {
     return subject.pair(literal($), $).to(TIMES);
   }
 
-  @Override @NotNull public String description(final CastExpression ¢) {
+  @Override  public String description(final CastExpression ¢) {
     return "Use 1L*" + expression(¢) + " instead of (long)" + expression(¢);
   }
 

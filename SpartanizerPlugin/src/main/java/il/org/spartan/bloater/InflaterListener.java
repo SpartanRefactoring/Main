@@ -15,8 +15,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
@@ -32,10 +30,10 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   private static final Integer[] wheelEvents = { Integer.valueOf(SWT.MouseHorizontalWheel), Integer.valueOf(SWT.MouseVerticalWheel),
       Integer.valueOf(SWT.MouseWheel) };
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
-  @NotNull final StyledText text;
+   final StyledText text;
   final ITextEditor editor;
-  @NotNull final Map<Integer, List<Listener>> externalListeners;
-  @NotNull final Cursor activeCursor;
+   final Map<Integer, List<Listener>> externalListeners;
+   final Cursor activeCursor;
   final Cursor inactiveCursor;
   final Selection selection;
   boolean active;
@@ -43,7 +41,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
   WindowInformation windowInformation;
   private final Color originalBackground;
 
-  public InflaterListener(@NotNull final StyledText text, final ITextEditor editor, final Selection selection) {
+  public InflaterListener( final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
     this.editor = editor;
     this.selection = selection;
@@ -55,7 +53,7 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     originalBackground = text.getSelectionBackground();
   }
 
-  @Override public void mouseScrolled(@NotNull final MouseEvent ¢) {
+  @Override public void mouseScrolled( final MouseEvent ¢) {
     if (!active || working.get())
       return;
     windowInformation = WindowInformation.of(text);
@@ -74,24 +72,24 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   private void inflate() {
     text.setSelectionBackground(INFLATE_COLOR.apply(Display.getCurrent()));
-    @NotNull final WrappedCompilationUnit wcu = first(selection.inner).build();
+     final WrappedCompilationUnit wcu = first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation);
   }
 
   private void deflate() {
     text.setSelectionBackground(DEFLATE_COLOR.apply(Display.getCurrent()));
-    @NotNull final WrappedCompilationUnit wcu = first(selection.inner).build();
+     final WrappedCompilationUnit wcu = first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation);
   }
 
-  @Override public void keyPressed(@NotNull final KeyEvent ¢) {
+  @Override public void keyPressed( final KeyEvent ¢) {
     if (¢.keyCode == SWT.CTRL && !active)
       activate();
   }
 
-  @Override public void keyReleased(@NotNull final KeyEvent ¢) {
+  @Override public void keyReleased( final KeyEvent ¢) {
     if (¢.keyCode == SWT.CTRL && active)
       deactivate();
   }
@@ -119,15 +117,15 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   private void updateListeners() {
     externalListeners.clear();
-    for (@NotNull final Integer i : wheelEvents) {
+    for ( final Integer i : wheelEvents) {
       final List<Listener> l = as.list(text.getListeners(i.intValue()));
       l.remove(find(l));
       externalListeners.put(i, l);
     }
   }
 
-  @Nullable public Listener find(@NotNull final Iterable<Listener> ls) {
-    @Nullable TypedListener $ = null;
+   public Listener find( final Iterable<Listener> ls) {
+     TypedListener $ = null;
     for (final Listener ¢ : ls)
       if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))
         $ = (TypedListener) ¢;

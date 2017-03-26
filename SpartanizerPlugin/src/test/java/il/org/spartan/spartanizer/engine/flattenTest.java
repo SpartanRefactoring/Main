@@ -11,7 +11,6 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -27,7 +26,7 @@ public final class flattenTest {
   }
 
   @Test public void flattenIsDistinct() {
-    @NotNull final InfixExpression e = i("1+2");
+     final InfixExpression e = i("1+2");
     azzert.that(flatten.of(e), is(not(e)));
   }
 
@@ -36,7 +35,7 @@ public final class flattenTest {
   }
 
   @Test public void flattenIsSame() {
-    @NotNull final InfixExpression e = i("1+2");
+     final InfixExpression e = i("1+2");
     azzert.that(flatten.of(e) + "", is(e + ""));
   }
 
