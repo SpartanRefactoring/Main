@@ -379,6 +379,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.AthensInflate" name="Athens Inflater handler" />
      <command id="il.org.spartan.PreferencesChooser" name="Preferences" />
      <command id="il.org.spartan.CharacterShortcut" name="Character Shortcut" />
+     <command id="il.org.spartan.Widget" name="Spartan Widget"/>
 </extension>
 
 <!-- Handlers of commands: which class to activate for each command id -->
@@ -397,6 +398,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.bloater.InflateHandler" />
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
    <handler commandId="il.org.spartan.CharacterShortcut" class="il.org.spartan.plugin.CharacterShortcut" />
+   <handler commandId="il.org.spartan.Widget" class="il.org.spartan.bloater.SpartanWidgetHandler"/>
 </extension>
 
 <!-- Menus -->
@@ -548,6 +550,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+Q"
 		commandId="il.org.spartan.PreferencesChooser"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+Alt+W"
+		commandId="il.org.spartan.Widget"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 <extension
