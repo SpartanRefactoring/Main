@@ -24,7 +24,7 @@ public final class TernaryEliminate extends ReplaceCurrentNode<ConditionalExpres
     return ¢ != null && wizard.same(¢.getThenExpression(), ¢.getElseExpression()) && sideEffects.free(¢.getExpression());
   }
 
-  @Override public Expression replacement(@NotNull final ConditionalExpression ¢) {
+  @Override public Expression replacement( final ConditionalExpression ¢) {
     return make.plant(extract.core(¢.getThenExpression())).into(¢.getParent());
   }
 }

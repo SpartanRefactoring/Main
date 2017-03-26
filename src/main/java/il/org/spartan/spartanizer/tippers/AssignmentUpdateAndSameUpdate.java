@@ -36,14 +36,14 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -1157844982389320057L;
 
-  @Override @NotNull public String description(final Assignment ¢) {
+  @Override  public String description(final Assignment ¢) {
     return "Consolidate update assignment to " + to(¢) + " with subsequent similar assignment";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go( final ASTRewrite $,  final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (in(a1.getOperator(), ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN))
       return null;
-    @NotNull final ASTNode parent = parent(a1);
+     final ASTNode parent = parent(a1);
     if (!iz.statement(parent))
       return null;
     @Nullable final Assignment a2 = extract.assignment(nextStatement);
@@ -57,7 +57,7 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
     return $;
   }
 
-  private static Operator unifying(@NotNull final Assignment ¢) {
+  private static Operator unifying( final Assignment ¢) {
     final Operator $ = wizard.assign2infix(¢.getOperator());
     return $ == MINUS2 ? PLUS2 : $ == DIVIDE ? TIMES : $;
   }

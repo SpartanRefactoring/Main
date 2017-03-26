@@ -15,11 +15,11 @@ public class IfDeadRemove extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.EmptyCycles {
   private static final long serialVersionUID = -4773914669041733973L;
 
-  @Override @NotNull public String description(final IfStatement ¢) {
+  @Override  public String description(final IfStatement ¢) {
     return "Remove :" + ¢;
   }
 
-  @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
+  @Override @Nullable public ASTNode replacement( final IfStatement ¢) {
     return !sideEffects.free(¢) ? null : ¢.getAST().newBlock();
   }
 }

@@ -29,7 +29,7 @@ public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInv
   @Override @Nullable public ASTNode replacement(@Nullable final MethodInvocation n) {
     if (n == null || iz.lambdaExpression(n.getParent()))
       return null;
-    @NotNull final List<Expression> l = arguments(n);
+     final List<Expression> l = arguments(n);
     if (l.isEmpty())
       return null;
     // TODO Yuval Simon: move into loop --yg
@@ -51,7 +51,7 @@ public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInv
     return null;
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final MethodInvocation __) {
+  @Override  public String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "";
   }
 }

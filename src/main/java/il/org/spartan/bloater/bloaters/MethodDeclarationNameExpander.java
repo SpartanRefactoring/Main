@@ -34,16 +34,16 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3829131163900046060L;
 
-  @Override @NotNull public String description(@NotNull final MethodDeclaration ¢) {
+  @Override  public String description( final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override @SuppressWarnings("unused") @Nullable public Tip tip(@NotNull final MethodDeclaration d, final ExclusionManager __) {
+  @Override @SuppressWarnings("unused") @Nullable public Tip tip( final MethodDeclaration d, final ExclusionManager __) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    @NotNull final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
-    for (@NotNull final SingleVariableDeclaration parameter : parameters(d)) {
+     final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+    for ( final SingleVariableDeclaration parameter : parameters(d)) {
       final SimpleName $ = parameter.getName();
       assert $ != null;
       if (in($.getIdentifier(), "$")) {

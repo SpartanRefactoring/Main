@@ -6,7 +6,6 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -66,48 +65,48 @@ public class idiomaticTest {
     azzert.isNull(idiomatic.take(null).unless(false));
   }
 
-  @NotNull String mapper(final String ¢) {
+   String mapper(final String ¢) {
     return ¢ + ¢;
   }
 
-  @NotNull String mapper(final Integer ¢) {
+   String mapper(final Integer ¢) {
     return ¢ + "";
   }
 
   @Test public void useMapper() {
-    @NotNull final List<String> before = new ArrayList<>();
+     final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
-    @NotNull final List<String> after = idiomatic.on(before).map(this::mapper);
+     final List<String> after = idiomatic.on(before).map(this::mapper);
     azzert.that(first(after), is("11"));
     azzert.that(after.get(1), is("22"));
     azzert.that(after.get(2), is("33"));
   }
 
   @Test @SuppressWarnings("boxing") public void useMapper2() {
-    @NotNull final List<Integer> before = new ArrayList<>();
+     final List<Integer> before = new ArrayList<>();
     before.add(1);
     before.add(2);
     before.add(3);
-    @NotNull final List<String> after = idiomatic.on(before).map(this::mapper);
+     final List<String> after = idiomatic.on(before).map(this::mapper);
     azzert.that(first(after), is("1"));
     azzert.that(after.get(1), is("2"));
     azzert.that(after.get(2), is("3"));
   }
 
   @Test @SuppressWarnings("boxing") public void useFilter() {
-    @NotNull final List<Integer> before = new ArrayList<>();
+     final List<Integer> before = new ArrayList<>();
     before.add(1);
     before.add(2);
     before.add(3);
-    @NotNull final List<Integer> after = idiomatic.on(before).filter(λ -> λ % 2 == 1);
+     final List<Integer> after = idiomatic.on(before).filter(λ -> λ % 2 == 1);
     azzert.that(first(after).intValue(), is(1));
     azzert.that(after.get(1).intValue(), is(3));
   }
 
   @Test public void useReduce() {
-    @NotNull final List<String> before = new ArrayList<>();
+     final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -115,7 +114,7 @@ public class idiomaticTest {
   }
 
   @Test public void useMax() {
-    @NotNull final List<String> before = new ArrayList<>();
+     final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -123,7 +122,7 @@ public class idiomaticTest {
   }
 
   @Test public void useMin() {
-    @NotNull final List<String> before = new ArrayList<>();
+     final List<String> before = new ArrayList<>();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -131,7 +130,7 @@ public class idiomaticTest {
   }
 
   @Test public void whenNullsEval() {
-    @NotNull final Object o = new Object();
+     final Object o = new Object();
     idiomatic.when(o).nulls().eval(o::hashCode).elze(o::hashCode);
   }
 }

@@ -48,7 +48,7 @@ public interface hop {
   @Nullable static List<ASTNode> descendants(@Nullable final ASTNode root) {
     if (root == null)
       return null;
-    @NotNull final List<ASTNode> $ = new ArrayList<>();
+     final List<ASTNode> $ = new ArrayList<>();
     root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         $.add(¢);
@@ -58,12 +58,12 @@ public interface hop {
     return $;
   }
 
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, @NotNull final SimpleName n) {
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s,  final SimpleName n) {
     return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
 
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(@NotNull final List<VariableDeclarationFragment> fs,
-      @NotNull final SimpleName ¢) {
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment( final List<VariableDeclarationFragment> fs,
+       final SimpleName ¢) {
     return fs.stream().filter(λ -> wizard.same(¢, λ.getName())).findFirst().orElse(null);
   }
 
@@ -84,7 +84,7 @@ public interface hop {
     return last(extract.statements(¢));
   }
 
-  static Name name(@NotNull final Type ¢) {
+  static Name name( final Type ¢) {
     return ¢.isSimpleType() ? ((SimpleType) ¢).getName()
         : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
   }
@@ -126,7 +126,7 @@ public interface hop {
     return first(fragments(az.variableDeclrationStatement(previousStatementInBody(¢))));
   }
 
-  @Nullable static SimpleName simpleName(@NotNull final Type ¢) {
+  @Nullable static SimpleName simpleName( final Type ¢) {
     return lastComponent(hop.name(¢));
   }
 }

@@ -20,17 +20,17 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     addAll(Arrays.asList(ts));
   }
 
-  @NotNull public NanoPatternContainer<N> add(@NotNull final String pattern) {
+   public NanoPatternContainer<N> add( final String pattern) {
     return add(pattern, "", "");
   }
 
-  @NotNull public NanoPatternContainer<N> add(@NotNull final String pattern, @NotNull final String replacement, @NotNull final String description) {
+   public NanoPatternContainer<N> add( final String pattern,  final String replacement,  final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }
 
-  @NotNull public NanoPatternContainer<N> statementPattern(@NotNull final String pattern, @NotNull final String replacement,
-      @NotNull final String description) {
+   public NanoPatternContainer<N> statementPattern( final String pattern,  final String replacement,
+       final String description) {
     add(TipperFactory.patternTipper(pattern, replacement, description));
     return this;
   }
@@ -48,7 +48,7 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     return firstTipper(¢).tip(¢);
   }
 
-  @NotNull public UserDefinedTipper<N> firstTipper(final N ¢) {
+   public UserDefinedTipper<N> firstTipper(final N ¢) {
     return stream().filter(λ -> λ.check(¢)).findFirst().get();
   }
 

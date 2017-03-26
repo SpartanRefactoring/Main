@@ -20,7 +20,7 @@ public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "ForEach: conevrt to fluent API";
   }
 

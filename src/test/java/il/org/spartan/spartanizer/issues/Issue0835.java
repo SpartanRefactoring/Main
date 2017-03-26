@@ -1,11 +1,7 @@
-/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
- *
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- *
- * @since Jan 6, 2017 */
 package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -18,48 +14,59 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
+/** Various tests upgraded from an old class replaced by
+ * {@link LocalVariableUninitializedDead}
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2017-03-26 */
+@SuppressWarnings("static-method")
 public class Issue0835 {
-  final Tipper<Block> t = new BlockSingletonVariableDeclarationStatementRemoveBuggy();
+  final Tipper<VariableDeclarationFragment> tipper = new LocalVariableUninitializedDead();
 
   @Test public void descriptionNotNull() {
-    assert t.description() != null;
+    assert tipper.description() != null;
   }
 
-  @Test public void descriptionPrintBlockNotNull() {
-    assert t.description(az.block(wizard.ast("{int x;}"))) != null;
-  }
-
-  @Test @SuppressWarnings("static-method") public void emptyBlock1() {
+  @Test public void emptyBlock1() {
     azzert.that(0, is(statements(az.block(wizard.ast("{}"))).size()));
   }
 
-  @Test @SuppressWarnings("static-method") public void emptyBlock2() {
+  @Test public void emptyBlock2() {
     azzert.that(0, is(statements(az.block(wizard.ast("\n{\n}\n"))).size()));
   }
 
-  @Test @SuppressWarnings("static-method") public void emptyBlock3() {
+  @Test public void emptyBlock3() {
     azzert.that(1, is(statements(az.block(wizard.ast("\n{int a;}\n"))).size()));
   }
 
   @Test public void returnNotNullNonEmptyBlock() {
-    assert t.tip(az.block(wizard.ast("{int x;}"))) != null;
+    trimmingOf("{int x;}")//
+        .gives("int x;")//
+        .gives("")//
+        .stays();
   }
 
-  @Test public void returnNullIfBlockIfNotSingleVarDef() {
-    azzert.isNull(t.tip(az.block(wizard.ast("{while(true){}}"))));
+  /** Introduced by Yossi on Sun-Mar-26-18:52:18-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_whileTrue() {
+    trimmingOf("{ while (true) { } }") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("while(true){}") //
+        .using(WhileStatement.class, new WhileDeadRemove()) //
+        .gives("{}") //
+        .gives("") //
+        .stays() //
+    ;
   }
 
   @Test public void returnNullIfBlockIfNotSingleVarDef2() {
-    azzert.isNull(t.tip(az.block(wizard.ast("{return 1;}"))));
+    trimmingOf("{return 1;}").gives("return 1;").stays();
   }
 
-  // use t.tip instead of trimmer cause tip is probably unused by the
-  // spartanizer at the moment
   @Test public void returnNullOnEmptyBlock1() {
-    azzert.isNull(t.tip(az.block(wizard.ast("{}"))));
+    trimmingOf("{}").gives("");
   }
 
   @Test public void returnNullOnEmptyBlock2() {
-    azzert.isNull(t.tip(az.block(wizard.ast("\n{}\n"))));
+    trimmingOf("\n{}\n").gives("");
   }
 }

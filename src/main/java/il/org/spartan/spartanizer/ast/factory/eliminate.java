@@ -31,18 +31,18 @@ public enum eliminate {
    * @param ¢ JD {@code null if not such sideEffects exists.
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
-  public static Statement lastStatement(@NotNull final Statement $) {
+  public static Statement lastStatement( final Statement $) {
     @Nullable final Block b = az.block($);
     if (b == null)
       return make.emptyStatement($);
-    @NotNull final List<Statement> ss = step.statements(b);
+     final List<Statement> ss = step.statements(b);
     if (ss.isEmpty())
       return make.emptyStatement($);
     ss.remove(ss.size() - 1);
     return $;
   }
 
-  @SuppressWarnings("boxing") public static int level(@NotNull final Collection<Expression> xs) {
+  @SuppressWarnings("boxing") public static int level( final Collection<Expression> xs) {
     return xs.stream().map(eliminate::level).reduce((x, y) -> x + y).get();
   }
 
@@ -54,11 +54,11 @@ public enum eliminate {
                     : 0;
   }
 
-  public static int level(@NotNull final InfixExpression ¢) {
+  public static int level( final InfixExpression ¢) {
     return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
-  @NotNull public static Expression peel(final Expression $) {
+   public static Expression peel(final Expression $) {
     return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
             : iz.nodeTypeEquals($, INFIX_EXPRESSION) ? peel((InfixExpression) $) //
@@ -66,23 +66,23 @@ public enum eliminate {
                     : $;
   }
 
-  @NotNull public static Expression peel(@NotNull final InfixExpression ¢) {
+   public static Expression peel( final InfixExpression ¢) {
     return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
-  @NotNull public static Expression peel(@NotNull final NumberLiteral $) {
+   public static Expression peel( final NumberLiteral $) {
     return !$.getToken().startsWith("-") && !$.getToken().startsWith("+") ? $ : $.getAST().newNumberLiteral($.getToken().substring(1));
   }
 
-  @NotNull public static Expression peel(@NotNull final PrefixExpression $) {
+   public static Expression peel( final PrefixExpression $) {
     return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
   }
 
-  private static int level(@NotNull final PrefixExpression ¢) {
+  private static int level( final PrefixExpression ¢) {
     return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
   }
 
-  private static List<Expression> peel(@NotNull final Collection<Expression> ¢) {
+  private static List<Expression> peel( final Collection<Expression> ¢) {
     return ¢.stream().map(eliminate::peel).collect(toList());
   }
 }

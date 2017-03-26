@@ -90,11 +90,11 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  @Nullable protected T map(@NotNull final ArrayAccess ¢) {
+  @Nullable protected T map( final ArrayAccess ¢) {
     return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
 
-  @Nullable protected T map(@NotNull final ArrayCreation ¢) {
+  @Nullable protected T map( final ArrayCreation ¢) {
     return reduce(reduceExpressions(dimensions(¢)), map(¢.getInitializer()));
   }
 
@@ -106,15 +106,15 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  @Nullable protected T map(@NotNull final ClassInstanceCreation ¢) {
+  @Nullable protected T map( final ClassInstanceCreation ¢) {
     return reduce(map(¢.getExpression()), reduceExpressions(arguments(¢)));
   }
 
-  @Nullable protected T map(@NotNull final ConditionalExpression ¢) {
+  @Nullable protected T map( final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
-  protected T map(@NotNull final InstanceofExpression ¢) {
+  protected T map( final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
 
@@ -134,7 +134,7 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return map(expression(¢));
   }
 
-  protected T map(@NotNull final ThisExpression ¢) {
+  protected T map( final ThisExpression ¢) {
     return map(¢.getQualifier());
   }
 
@@ -142,7 +142,7 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  @Nullable protected T map(@NotNull final QualifiedName ¢) {
+  @Nullable protected T map( final QualifiedName ¢) {
     return reduce(map(¢.getQualifier()), map(¢.getName()));
   }
 }

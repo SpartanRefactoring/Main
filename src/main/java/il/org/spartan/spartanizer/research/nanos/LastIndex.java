@@ -31,7 +31,7 @@ public final class LastIndex extends NanoPatternTipper<InfixExpression> {
     return firstTip(tippers, ¢);
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Functional;
   }
 

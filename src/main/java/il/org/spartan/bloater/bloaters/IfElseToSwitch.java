@@ -22,15 +22,15 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x62C675CD2B1FCA22L;
 
-  @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
-    @NotNull final List<Expression> xs = getAllExpressions(¢);
+  @Override @Nullable public ASTNode replacement( final IfStatement ¢) {
+     final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
       return null;
     final AST create = ¢.getAST();
     final SwitchStatement $ = create.newSwitchStatement();
     $.setExpression(copy.of(az.simpleName(left(az.comparison(first(xs))))));
-    @NotNull final List<Statement> ss = statements($);
-    @NotNull final List<Block> bs = getAllBlocks(¢);
+     final List<Statement> ss = statements($);
+     final List<Block> bs = getAllBlocks(¢);
     int i = 0;
     for (final Expression x : xs) {
       final SwitchCase sc = create.newSwitchCase();
@@ -70,15 +70,15 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return true;
   }
 
-  @NotNull private static List<Expression> getAllExpressions(final IfStatement s) {
-    @NotNull final List<Expression> $ = new ArrayList<>();
+   private static List<Expression> getAllExpressions(final IfStatement s) {
+     final List<Expression> $ = new ArrayList<>();
     for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
       $.add(expression(az.ifStatement(p)));
     return $;
   }
 
-  @NotNull private static List<Block> getAllBlocks(@NotNull final IfStatement s) {
-    @NotNull final List<Block> $ = new ArrayList<>();
+   private static List<Block> getAllBlocks( final IfStatement s) {
+     final List<Block> $ = new ArrayList<>();
     final Statement p = addAllBlocks(s, $);
     if (p == null)
       return $;
@@ -93,7 +93,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  private static Statement addAllBlocks(@NotNull final IfStatement s, @NotNull final Collection<Block> collectInto) {
+  private static Statement addAllBlocks( final IfStatement s,  final Collection<Block> collectInto) {
     Statement $ = s;
     for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
       final Statement then = copy.of(then(az.ifStatement($)));
@@ -107,7 +107,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  @Override @NotNull public String description(final IfStatement __) {
+  @Override  public String description(final IfStatement __) {
     return "Replace if-else statement with one parameter into switch-case";
   }
 }

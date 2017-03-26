@@ -29,17 +29,17 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x3B6B528C232B5CC8L;
 
-  @Override @NotNull public Example[] examples() {
+  @Override  public Example[] examples() {
     return new Example[] { //
         convert("s=s.f();s=s.g();").to("s=s.f().g()"), //
     };
   }
 
-  @Override @NotNull public String description(final Assignment ¢) {
+  @Override  public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into subsequent assignment";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go( final ASTRewrite $,  final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
     @Nullable final Assignment a2 = extract.assignment(nextStatement);
@@ -61,7 +61,7 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
     }
   }
 
-  @NotNull private static ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to,
+   private static ASTRewrite go( final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to,
       final Expression from1, final Expression from2) {
     $.remove(a1, g);
     final Expression newFrom = copy.of(from2);

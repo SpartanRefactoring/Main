@@ -6,8 +6,6 @@ import java.io.*;
 import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -22,21 +20,21 @@ public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
   private static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   private static final File out = new File(system.tmp + File.separator + "loops.txt");
 
-  public static void main(@NotNull final String[] args)
+  public static void main( final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = FalloutsCollector_loops.class;
     blank(out);
     DeprecatedFolderASTVisitor.main(args);
   }
 
-  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+  @Override public boolean visit( final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     try {
       descendants.whoseClassIs(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))).stream().filter(iz::simpleLoop)
           .forEach(λ -> appendFile(out, λ + ""));
-    } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
+    } catch ( @SuppressWarnings("unused") final AssertionError __) {
       System.err.print("X");
-    } catch (@NotNull @SuppressWarnings("unused") final IllegalArgumentException __) {
+    } catch ( @SuppressWarnings("unused") final IllegalArgumentException __) {
       System.err.print("I");
     }
     return true;

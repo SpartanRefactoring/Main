@@ -38,7 +38,7 @@ public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
     return firstReplacement(tippers);
   }
 
-  @Override @NotNull public NanoPatternTipper.Category category() {
+  @Override  public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }
 }

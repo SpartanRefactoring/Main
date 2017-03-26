@@ -113,7 +113,7 @@ public enum precedence {
     return precedence.of(o) == precedence.of(x);
   }
 
-  private static int of(@NotNull final Assignment ¢) {
+  private static int of( final Assignment ¢) {
     return of(¢.getOperator());
   }
 
@@ -124,7 +124,7 @@ public enum precedence {
     return of(¢ + "");
   }
 
-  private static int of(@NotNull final InfixExpression ¢) {
+  private static int of( final InfixExpression ¢) {
     return of(¢.getOperator());
   }
 

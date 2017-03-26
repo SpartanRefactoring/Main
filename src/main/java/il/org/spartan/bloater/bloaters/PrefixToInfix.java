@@ -28,11 +28,11 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x3465E06532ABDE60L;
 
-  @Override @NotNull public Example[] examples() {
+  @Override  public Example[] examples() {
     return new Example[] { convert("++i;").to("i += 1;"), convert("--i;").to("i -= 1"), };
   }
 
-  @Override public ASTNode replacement(@NotNull final PrefixExpression ¢) {
+  @Override public ASTNode replacement( final PrefixExpression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1");
     return subject.pair(step.operand(¢), $)
@@ -40,7 +40,7 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
   }
 
   @Override protected boolean prerequisite(final PrefixExpression ¢) {
-    @NotNull final ASTNode $ = parent(¢);
+     final ASTNode $ = parent(¢);
     return (step.operator(¢) == PrefixExpression.Operator.INCREMENT || step.operator(¢) == PrefixExpression.Operator.DECREMENT)
         && (iz.expressionStatement($) || iz.forStatement($));
   }

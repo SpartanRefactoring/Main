@@ -19,15 +19,15 @@ public enum TermsReorganizer {
     return build(new TermsCollector(¢));
   }
 
-  @Nullable private static Expression build(@NotNull final List<Expression> plus, @NotNull final List<Expression> minus) {
+  @Nullable private static Expression build( final List<Expression> plus,  final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
 
-  @Nullable private static Expression build(@NotNull final TermsCollector ¢) {
+  @Nullable private static Expression build( final TermsCollector ¢) {
     return build(¢.plus(), ¢.minus());
   }
 
-  @Nullable private static Expression buildMinus(@Nullable final Expression first, @NotNull final List<Expression> rest) {
+  @Nullable private static Expression buildMinus(@Nullable final Expression first,  final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);
     if (rest.isEmpty())
@@ -36,7 +36,7 @@ public enum TermsReorganizer {
     return subject.operands(rest).to(wizard.MINUS2);
   }
 
-  private static Expression buildMinus(@NotNull final List<Expression> ¢) {
+  private static Expression buildMinus( final List<Expression> ¢) {
     final Expression $ = subject.operand(first(¢)).to(wizard.MINUS1);
     if (¢.size() == 1)
       return $;
@@ -45,7 +45,7 @@ public enum TermsReorganizer {
     return subject.operands(¢).to(wizard.MINUS2);
   }
 
-  private static Expression buildPlus(@NotNull final List<Expression> ¢) {
+  private static Expression buildPlus( final List<Expression> ¢) {
     switch (¢.size()) {
       case 0:
         return null;

@@ -45,7 +45,7 @@ public interface MethodPatternUtilitiesTrait {
     return statements(¢) != null && statements(¢).size() >= 2;
   }
 
-  @NotNull default Collection<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
+   default Collection<ReturnStatement> returnStatements(final MethodDeclaration ¢) {
     return descendants.whoseClassIs(ReturnStatement.class).from(¢);
   }
 
@@ -77,7 +77,7 @@ public interface MethodPatternUtilitiesTrait {
     return !iz.constructor(¢);
   }
 
-  default boolean notStatic(@NotNull final MethodDeclaration ¢) {
+  default boolean notStatic( final MethodDeclaration ¢) {
     return !iz.static¢(¢);
   }
 
@@ -146,7 +146,7 @@ public interface MethodPatternUtilitiesTrait {
         .allMatch(λ -> setterTippers.canTip(expression(λ)) && isRightSideParameterOrLiteral(right(az.assignment(expression(λ))), $));
   }
 
-  default boolean isRightSideParameterOrLiteral(final Expression $, @NotNull final Collection<String> paramNames) {
+  default boolean isRightSideParameterOrLiteral(final Expression $,  final Collection<String> paramNames) {
     return iz.literal($) || paramNames.contains(identifier(az.name($)));
   }
 

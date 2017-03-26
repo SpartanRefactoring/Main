@@ -27,11 +27,11 @@ public final class FragmentInitializerIfUpdateAssignment extends $FragmentAndSta
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x32344BE2ADA42ED4L;
 
-  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override  public String description( final VariableDeclarationFragment ¢) {
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 
-  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, @NotNull final SimpleName n,
+  @Override @Nullable protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final SimpleName n,
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
@@ -44,7 +44,7 @@ public final class FragmentInitializerIfUpdateAssignment extends $FragmentAndSta
     if (a == null || !wizard.same(to(a), n) || doesUseForbiddenSiblings(f, condition, from(a)) || a.getOperator() == Assignment.Operator.ASSIGN)
       return null;
     final ConditionalExpression newInitializer = subject.pair(make.assignmentAsExpression(a), initializer).toCondition(condition);
-    @NotNull final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);

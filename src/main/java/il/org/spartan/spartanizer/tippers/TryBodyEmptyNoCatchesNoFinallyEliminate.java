@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -17,12 +15,12 @@ public final class TryBodyEmptyNoCatchesNoFinallyEliminate extends RemovingTippe
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -8358212771965020073L;
 
-  @Override public boolean prerequisite(@NotNull final TryStatement ¢) {
+  @Override public boolean prerequisite( final TryStatement ¢) {
     final Block $ = ¢.getFinally();
     return statements(body(¢)).isEmpty() && ¢.catchClauses().isEmpty() && ($ == null || statements($).isEmpty());
   }
 
-  @Override @NotNull public String description(@NotNull final TryStatement ¢) {
+  @Override  public String description( final TryStatement ¢) {
     return "Eliminate this no-op try block " + trivia.gist(¢.getBody());
   }
 }

@@ -36,7 +36,7 @@ public class InfixLessToLessEquals extends ReplaceCurrentNode<InfixExpression>//
     return iz.infixLess(¢);
   }
 
-  @Override @NotNull public String description(final InfixExpression ¢) {
+  @Override  public String description(final InfixExpression ¢) {
     return "Convert Less Equals Operator to Less " + ¢;
   }
 }

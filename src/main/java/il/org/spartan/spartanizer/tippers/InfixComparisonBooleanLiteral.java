@@ -35,23 +35,23 @@ public final class InfixComparisonBooleanLiteral extends ReplaceCurrentNode<Infi
     return iz.booleanLiteral(core(right(¢)));
   }
 
-  private static boolean negating(@NotNull final InfixExpression x, @NotNull final BooleanLiteral l) {
+  private static boolean negating( final InfixExpression x,  final BooleanLiteral l) {
     return l.booleanValue() != (x.getOperator() == EQUALS);
   }
 
-  @NotNull private static Expression nonLiteral(final InfixExpression ¢) {
+   private static Expression nonLiteral(final InfixExpression ¢) {
     return literalOnLeft(¢) ? right(¢) : left(¢);
   }
 
-  @Override @NotNull public String description(final InfixExpression ¢) {
+  @Override  public String description(final InfixExpression ¢) {
     return "Omit redundant comparison with '" + literal(¢) + "'";
   }
 
-  @Override public boolean prerequisite(@NotNull final InfixExpression ¢) {
+  @Override public boolean prerequisite( final InfixExpression ¢) {
     return !¢.hasExtendedOperands() && in(¢.getOperator(), EQUALS, NOT_EQUALS) && (literalOnLeft(¢) || literalOnRight(¢));
   }
 
-  @Override public Expression replacement(@NotNull final InfixExpression x) {
+  @Override public Expression replacement( final InfixExpression x) {
     @Nullable final BooleanLiteral $ = literal(x);
     @Nullable final Expression nonliteral = core(nonLiteral(x));
     return make.plant(!negating(x, $) ? nonliteral : make.notOf(nonliteral)).into(x.getParent());

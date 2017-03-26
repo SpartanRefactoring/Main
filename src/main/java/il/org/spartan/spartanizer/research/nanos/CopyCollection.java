@@ -29,7 +29,7 @@ public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreatio
     return tippers.firstTip(az.block(parent(parent(parent(x)))));
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Iterative;
   }
 

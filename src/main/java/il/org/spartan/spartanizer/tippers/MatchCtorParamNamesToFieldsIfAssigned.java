@@ -34,30 +34,30 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return false;
   }
 
-  @Override @NotNull public String description(final MethodDeclaration ¢) {
+  @Override  public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
-  @Override @Nullable public Tip tip(@NotNull final MethodDeclaration d) {
+  @Override @Nullable public Tip tip( final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(toList());
     @Nullable final List<Statement> bodyStatements = statements(d);
-    @NotNull final Collection<String> definedLocals = new ArrayList<>();
-    @NotNull final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
+     final Collection<String> definedLocals = new ArrayList<>();
+     final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {
         if (iz.variableDeclarationStatement(s))
           definedLocals.addAll(fragments(az.variableDeclarationStatement(s)).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
         continue;
       }
-      @NotNull final Expression e = expression(az.expressionStatement(s));
+       final Expression e = expression(az.expressionStatement(s));
       if (!iz.assignment(e))
         continue;
       @Nullable final Assignment a = az.assignment(e);
       if (!iz.fieldAccess(left(a)) || !iz.thisExpression(expression(az.fieldAccess(left(a)))))
         continue;
-      @NotNull final SimpleName fieldName = name(az.fieldAccess(left(a)));
+       final SimpleName fieldName = name(az.fieldAccess(left(a)));
       if (!iz.simpleName(right(a)))
         continue;
       final SimpleName paramName = az.simpleName(right(a));

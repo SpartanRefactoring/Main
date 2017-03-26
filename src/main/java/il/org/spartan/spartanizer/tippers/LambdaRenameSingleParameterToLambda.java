@@ -26,11 +26,11 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3240064673505742343L;
 
-  @Override @NotNull public String description(final LambdaExpression ¢) {
+  @Override  public String description(final LambdaExpression ¢) {
     return "Rename lambda parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
   }
 
-  @Override public Tip tip(@NotNull final LambdaExpression x, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final LambdaExpression x, @Nullable final ExclusionManager m) {
     @Nullable final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
     if (f == null)
       return null;

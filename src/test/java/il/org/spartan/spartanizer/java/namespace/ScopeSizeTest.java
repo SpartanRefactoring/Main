@@ -23,8 +23,8 @@ import il.org.spartan.spartanizer.meta.*;
 public class ScopeSizeTest extends MetaFixture {
   static final String SCOPE_SIZE = ScopeSize.class.getSimpleName() + "";
 
-  @NotNull @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
-    @NotNull final Collection<Object[]> $ = new ArrayList<>();
+   @Parameters(name = "{index} {0}/{2}={1}") public static Collection<Object[]> data() {
+     final Collection<Object[]> $ = new ArrayList<>();
     for (final Annotation a : new definitionTest().annotations()) {
       @Nullable final SingleMemberAnnotation sma = az.singleMemberAnnotation(a);
       if (sma != null && (sma.getTypeName() + "").equals(SCOPE_SIZE)) {
@@ -39,11 +39,11 @@ public class ScopeSizeTest extends MetaFixture {
     return $;
   }
 
-  @NotNull private final SimpleName name;
-  @NotNull private final Integer scopeSize;
+   private final SimpleName name;
+   private final Integer scopeSize;
   private final definition.Kind kind;
 
-  public ScopeSizeTest(@NotNull final SimpleName name, @NotNull final Integer ScopeSize, final definition.Kind kind) {
+  public ScopeSizeTest( final SimpleName name,  final Integer ScopeSize, final definition.Kind kind) {
     assert name != null;
     assert ScopeSize != null;
     this.name = name;

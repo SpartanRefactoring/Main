@@ -39,7 +39,7 @@ public enum guessName {
   @Nullable public static guessName of(@Nullable final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.isEmpty())
       return null;
-    for (@NotNull final guessName $ : guessName.values())
+    for ( final guessName $ : guessName.values())
       if ($.special(nameOfSomething))
         return $;
     if (nameOfSomething.matches("[_]+")) //

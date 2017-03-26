@@ -30,7 +30,7 @@ public final class GroupFieldEditor extends FieldEditor {
   private static final int GROUP_PADDING = 8;
   private int numColumns;
   private final Collection<FieldEditor> members = new ArrayList<>();
-  @NotNull private final Group group;
+   private final Group group;
   private final Composite parent;
   private boolean initialized;
 
@@ -40,7 +40,7 @@ public final class GroupFieldEditor extends FieldEditor {
    * @param fieldEditorParent the widget's parent, usually
    *        {@link FieldEditorPreferencePage#getFieldEditorParent()} */
   public GroupFieldEditor(@Nullable final String labelText, final Composite fieldEditorParent) {
-    @NotNull final String title = labelText == null ? "" : labelText;
+     final String title = labelText == null ? "" : labelText;
     parent = fieldEditorParent;
     numColumns = 0;
     group = new Group(parent, SWT.SHADOW_OUT);
@@ -58,7 +58,7 @@ public final class GroupFieldEditor extends FieldEditor {
   /** Returns the parent for all the FieldEditors inside of this group. In this
    * class, the actual {@link Group} object is returned
    * @return parent {@link Composite} object */
-  @NotNull public Composite getFieldEditor() {
+   public Composite getFieldEditor() {
     return group;
   }
 
@@ -106,11 +106,11 @@ public final class GroupFieldEditor extends FieldEditor {
 
   /* (non-Javadoc) Method declared on FieldEditor. */
   protected void doFillintoGrid(final Composite parentParam, @SuppressWarnings("hiding") final int numColumns) {
-    @NotNull final Int c = new Int(numColumns);
+     final Int c = new Int(numColumns);
     if (members == null || members.isEmpty())
       return;
     if (c.inner == 0)
-      for (@NotNull final FieldEditor ¢ : members) // NANO?
+      for ( final FieldEditor ¢ : members) // NANO?
         c.inner = Math.max(c.inner, ¢.getNumberOfControls());
     gridData(c.inner);
     gridLayout(c.inner);
@@ -136,7 +136,7 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   private void gridData(final int i) {
-    @NotNull final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
+     final GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
     data.horizontalIndent = 2;
     data.verticalIndent = GROUP_PADDING;
     data.horizontalSpan = i;
@@ -144,7 +144,7 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   private void gridLayout(final int i) {
-    @NotNull final GridLayout groupLayout = new GridLayout();
+     final GridLayout groupLayout = new GridLayout();
     groupLayout.marginWidth = groupLayout.marginHeight = GROUP_PADDING;
     groupLayout.numColumns = i;
     group.setLayout(groupLayout);

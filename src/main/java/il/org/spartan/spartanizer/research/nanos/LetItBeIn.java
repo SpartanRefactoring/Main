@@ -41,10 +41,10 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
           && initializer(f) != null;
     }
 
-    @Override @NotNull protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement,
+    @Override  protected ASTRewrite go( final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement,
         final TextEditGroup g) {
       @Nullable final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
-      @NotNull final Expression initializer = initializer(f);
+       final Expression initializer = initializer(f);
       @Nullable final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
       Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
       if (pp != null)
@@ -71,7 +71,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       return !collect.usesOf(name(f)).in(nextStatement).isEmpty();
     }
 
-    @Override @NotNull public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
+    @Override  public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
       return "inline me!";
     }
   }

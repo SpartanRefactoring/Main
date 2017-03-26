@@ -20,18 +20,18 @@ public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTip
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -1582058371478921273L;
 
-  private static boolean shouldRemove(@NotNull final MethodDeclaration $, @NotNull final SuperMethodInvocation i) {
+  private static boolean shouldRemove( final MethodDeclaration $,  final SuperMethodInvocation i) {
     for (final Object m : $.modifiers())
       if (m instanceof MarkerAnnotation && (((Annotation) m).getTypeName() + "").contains("Deprecated"))
         return false;
     return (i.getName() + "").equals($.getName() + "") && arguments(i).size() == parameters($).size();
   }
 
-  @Override @NotNull public String description(@NotNull final MethodDeclaration ¢) {
+  @Override  public String description( final MethodDeclaration ¢) {
     return "Remove vacous '" + ¢.getName() + "' overriding method";
   }
 
-  @Override protected boolean prerequisite(@NotNull final MethodDeclaration ¢) {
+  @Override protected boolean prerequisite( final MethodDeclaration ¢) {
     @Nullable final ExpressionStatement $ = extract.expressionStatement(¢);
     return $ != null && $.getExpression() instanceof SuperMethodInvocation && shouldRemove(¢, (SuperMethodInvocation) $.getExpression());
   }

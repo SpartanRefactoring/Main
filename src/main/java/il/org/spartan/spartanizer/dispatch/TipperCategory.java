@@ -154,7 +154,7 @@ public interface TipperCategory {
   interface ScopeReduction extends Structural {
     String toString = "Scope reduction";
 
-    @Override @NotNull default String description() {
+    @Override  default String description() {
       return toString;
     }
   }

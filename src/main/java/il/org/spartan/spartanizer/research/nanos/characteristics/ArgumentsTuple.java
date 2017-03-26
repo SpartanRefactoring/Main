@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -20,8 +18,8 @@ public class ArgumentsTuple extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (!hazAtLeastTwoParameters(d))
       return false;
-    @NotNull final String $ = stringify(d);
-    @NotNull final List<MethodInvocation> invocations = descendants.whoseClassIs(MethodInvocation.class).from(d);
+     final String $ = stringify(d);
+     final List<MethodInvocation> invocations = descendants.whoseClassIs(MethodInvocation.class).from(d);
     return invocations.stream()//
         .map(ArgumentsTuple::stringify)
         .allMatch(λ -> λ != null//
@@ -29,11 +27,11 @@ public class ArgumentsTuple extends JavadocMarkerNanoPattern {
         && !invocations.isEmpty();
   }
 
-  @NotNull private static String stringify(final MethodDeclaration ¢) {
+   private static String stringify(final MethodDeclaration ¢) {
     return "," + separate.these(parametersNames(¢)).by(",") + ",";
   }
 
-  @NotNull private static String stringify(final MethodInvocation ¢) {
+   private static String stringify(final MethodInvocation ¢) {
     return "," + separate.these(arguments(¢)).by(",") + ",";
   }
 }
