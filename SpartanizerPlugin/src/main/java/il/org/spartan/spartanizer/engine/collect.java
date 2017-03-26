@@ -447,6 +447,16 @@ public enum collect {
 
   abstract ASTVisitor[] collectors(SimpleName n, List<SimpleName> into);
 
+  /** Determines whether a specific SimpleName was used in a
+   * {@link ForStatement}.
+   * @param s JD
+   * @param n JD
+   * @return whether the SimpleName is used in a ForStatement's condition,
+   *         updaters, or body. */
+  public static boolean variableUsedInWhile(final WhileStatement s, final SimpleName n) {
+    return !usesOf(n).in(condition(s), body(s)).isEmpty();
+  }
+
   /** An abstract class to carry out the collection process. Should not be
    * instantiated or used directly by clients, other than the use as part of
    * fluent API.

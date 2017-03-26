@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.dispatch.Tippers.*;
+import static il.org.spartan.spartanizer.dispatch.Tricks.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -26,13 +26,18 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
   private static final long serialVersionUID = -5423686618924537619L;
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Invert conditional and use next statement)";
+    return "Invert conditional and use next statement";
   }
 
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
-    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement) || !wizard.endsWithSequencer(then(s)))
+    if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement))
       return null;
-    final IfStatement asVirtualIf = subject.pair(then(s), nextStatement).toIf(s.getExpression());
+    final Statement thenS = then(s);
+    if (!iz.sequencer(thenS) && !iz.block(thenS))
+      return null;
+    final IfStatement asVirtualIf = normalized(thenS, nextStatement, s.getExpression());
+    if (asVirtualIf == null)
+      return null;
     if (wizard.same(then(asVirtualIf), elze(asVirtualIf))) {
       $.replace(s, then(asVirtualIf), g);
       $.remove(nextStatement, g);
@@ -40,7 +45,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
     }
     if (!shoudlInvert(asVirtualIf))
       return null;
-    final IfStatement canonicalIf = invert(asVirtualIf);
+    final IfStatement canonicalIf = wizard.invert(asVirtualIf);
     @NotNull final List<Statement> ss = extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
     if (!iz.block(s.getParent())) {
@@ -53,5 +58,13 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
       lr.remove(nextStatement, g);
     }
     return $;
+  }
+
+  private static IfStatement normalized(final Statement $, final Statement nextStatement, final Expression x) {
+    if (!iz.block($) || wizard.endsWithSequencer($))
+      return subject.pair($, nextStatement).toIf(x);
+    final List<Statement> ss = extract.statements($);
+    return ss.size() < 2 ? null : //
+        subject.pair(subject.ss(ss).add(copy.of(nextStatement)).toBlock(), nextStatement).toIf(x);
   }
 }

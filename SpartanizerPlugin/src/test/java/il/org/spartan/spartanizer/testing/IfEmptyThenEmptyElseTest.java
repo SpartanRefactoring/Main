@@ -51,7 +51,7 @@ public final class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void runGo() throws Exception {
-    @NotNull final String input = Wrap.Statement.on(INPUT + "");
+    @NotNull final String input = WrapIntoComilationUnit.Statement.on(INPUT + "");
     @NotNull final IDocument d = new Document(input);
     @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
     @NotNull final IfStatement s = findFirst.ifStatement(u);

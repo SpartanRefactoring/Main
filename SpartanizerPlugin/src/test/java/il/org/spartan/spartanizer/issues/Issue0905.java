@@ -29,9 +29,12 @@ public class Issue0905 {
   @Test public void t15() {
     trimmingOf("if(b==q()){int i;}")//
         .gives("if(b==q()){}")//
-        .stays();
+        .gives("q();")//
+        .stays() //
+    ;
   }
 
+  // TODO Niv Shalmon --yg
   @Test public void t17() {
     trimmingOf("while(b==q){if(tipper==q()){int i;}}")//
         .gives("while(b==q)if(tipper==q()){int i;}")//

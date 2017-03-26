@@ -33,7 +33,7 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   void checkExpected(@NotNull final String expected) {
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(new Trimmer(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
@@ -59,11 +59,11 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   String apply() {
-    return trim.apply(trimmer, Wrap.find(get()).on(get()));
+    return trim.apply(trimmer, WrapIntoComilationUnit.find(get()).on(get()));
   }
 
   @Nullable public TrimmingOperand gives(@NotNull final String $) {
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
       copyPasteReformat("  .stays()//\n  ;\n");
@@ -74,19 +74,18 @@ public class TrimmingOperand extends Wrapper<String> {
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-    if (!$.equals(peeled) && !trivia.essence(peeled).equals(trivia.essence($))) {
-      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
-          trivia.escapeQuotes(trivia.essence(peeled)), //
-          trivia.escapeQuotes(trivia.essence($)));
-      azzert.that(trivia.essence(peeled), is(trivia.essence($)));
-    }
+    if ($.equals(peeled) || trivia.essence(peeled).equals(trivia.essence($)))
+      return new TrimmingOperand($);
+    copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", trivia.escapeQuotes(trivia.essence(peeled)),
+        trivia.escapeQuotes(trivia.essence($)));
+    azzert.that(trivia.essence(peeled), is(trivia.essence($)));
     return new TrimmingOperand($);
   }
 
   protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
-    System.err.println(NEW_UNIT_TEST + anonymize.makeTipperUnitTest(get()));
+    System.err.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeTipperUnitTest(get()));
   }
 
   /** Check whether one of the code options is correct
@@ -96,7 +95,7 @@ public class TrimmingOperand extends Wrapper<String> {
    * @since 09-12-2016 */
   @Nullable public TrimmingOperand givesEither(@NotNull final String... options) {
     assert options != null;
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
@@ -113,7 +112,7 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   public void stays() {
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       return;

@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** This is a unit test for {@link SwitchWithOneCaseToIf}
  * @author Yuval Simon
  * @since 2016-12-18 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue0916 {
   @Test public void c() {

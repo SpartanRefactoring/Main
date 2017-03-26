@@ -31,7 +31,7 @@ public class XMLSpartan {
   private static final String CURRENT_VERSION = "2.0";
   private static final String BASE = "spartan";
   private static final String VERSION = "version";
-  private static final String FILE_NAME = "spartan.xml";
+  private static final String FILE_NAME = "spartanizer.xml";
   private static final String TIPPER = "tipper";
   private static final String ENABLED = "enabled";
   private static final String TIPPER_ID = "id";
@@ -39,18 +39,18 @@ public class XMLSpartan {
   private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   static {
     Collections.addAll(NON_CORE, //
-        CatchClauseRenameParameterToCent.class, //
-        EnhancedForParameterRenameToCent.class, //
-        ForRenameInitializerToCent.class, //
+        CatchClauseRenameParameterToIt.class, //
+        EnhancedForParameterRenameToIt.class, //
+        ForRenameInitializerToIt.class, //
         ForToForUpdaters.class, //
         InfixExpressionConcatentateCompileTime.class, //
         LambdaRenameSingleParameterToLambda.class, //
         MethodDeclarationRenameReturnToDollar.class, //
-        MethodDeclarationRenameSingleParameterToCent.class, //
+        MethodDeclarationRenameSingleParameterToIt.class, //
         MethodInvocationToStringToEmptyStringAddition.class, //
         ModifierRedundant.class, //
         SingelVariableDeclarationUnderscoreDoubled.class, //
-        SingleVariableDeclarationEnhancedForRenameParameterToCent.class //
+        SingleVariableDeclarationEnhancedForRenameParameterToIt.class //
     );
   }
 
@@ -132,7 +132,6 @@ public class XMLSpartan {
       return getFileInner($);
     } catch (@NotNull final ParserConfigurationException | CoreException | SAXException | IOException ¢) {
       monitor.log(¢);
-      ¢.printStackTrace();
       return null;
     }
   }
@@ -162,7 +161,7 @@ public class XMLSpartan {
       @Nullable final Document i = initialize(b.newDocument());
       if (i == null)
         return null;
-      fl.create(new ByteArrayInputStream("".getBytes()), false, new NullProgressMonitor());
+      fl.create(new ByteArrayInputStream("".getBytes()), true, new NullProgressMonitor());
       if (!commit(fl, i) || !fl.exists())
         return null;
     }
@@ -174,10 +173,10 @@ public class XMLSpartan {
       return null;
     e.normalize();
     final NodeList bs = $.getElementsByTagName(BASE);
-    if (bs == null || bs.getLength() != 1 || !validate($, ((Element) bs.item(0)).getAttribute(VERSION))) {
-      $ = initialize(b.newDocument());
-      commit(fl, $);
-    }
+    if (bs != null && bs.getLength() == 1 && validate($, ((Element) bs.item(0)).getAttribute(VERSION)))
+      return $;
+    $ = initialize(b.newDocument());
+    commit(fl, $);
     return $;
   }
 

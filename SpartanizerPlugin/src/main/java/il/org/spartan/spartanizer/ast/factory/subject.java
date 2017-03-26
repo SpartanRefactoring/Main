@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Oct 7, 2016 */
 public enum subject {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static InfixExpression append(final InfixExpression base, final Expression add) {
     final InfixExpression $ = copy.of(base);
     extendedOperands($).add(make.plant(copy.of(add)).into($));
@@ -370,6 +370,13 @@ public enum subject {
         default:
           return toBlock();
       }
+    }
+
+    /** Adds a statement to these statements.
+     * @return these several statements */
+    public SeveralStatements add(final Statement ¢) {
+      inner.add(¢);
+      return this;
     }
   }
 

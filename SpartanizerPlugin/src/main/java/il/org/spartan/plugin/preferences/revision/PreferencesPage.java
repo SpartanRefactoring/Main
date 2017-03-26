@@ -73,9 +73,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     return $;
   }
 
-  /* (non-Javadoc)
-   *
-   * @see org.eclipse.jface.preference.PreferencePage#performApply() */
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(TipperGroup.store());
     setDescription(PAGE_DESCRIPTION);
@@ -250,7 +247,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     }
 
-    @Override @NotNull protected Object clone() {
+    @Override @NotNull @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException") protected Changes clone() {
       @NotNull final Changes $ = new Changes();
       $.preferences1.putAll(preferences1);
       $.preferences2.putAll(preferences2);
@@ -287,7 +284,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
 
     public synchronized void commit() {
-      ((Changes) clone()).commitSelf();
+      clone().commitSelf();
       for (final IProject ¢ : preferences1.keySet()) {
         preferences1.put(¢, null);
         preferences2.put(¢, null);

@@ -31,9 +31,9 @@ import junit.framework.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
-  @External(alias = "o", value = "output folder") @NotNull protected String outputFolder = system.tmp;
-  @External(alias = "i", value = "input folder") @NotNull protected String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "c", value = "corpus name") @NotNull protected String corpus = "";
+  @External(alias = "o", value = "output folder") @NotNull @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
+  @External(alias = "i", value = "input folder") @NotNull @SuppressWarnings("CanBeFinal") protected String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "c", value = "corpus name") @NotNull @SuppressWarnings("CanBeFinal") protected String corpus = "";
   @External(alias = "s", value = "silent") protected boolean silent;
   protected static final String[] defaultArguments = as.array("..");
   @Nullable static BufferedWriter out;
@@ -52,10 +52,10 @@ public class ASTInFilesVisitor {
     @NotNull final Bool $ = new Bool();
     cu.accept(new ASTTrotter() {
       @Override public boolean visit(final MethodDeclaration node) {
-        if (extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + ""))) {
-          startFolding();
-          $.set();
-        }
+        if (!extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
+          return true;
+        startFolding();
+        $.set();
         return true;
       }
     });

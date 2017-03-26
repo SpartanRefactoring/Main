@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.research.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-13 */
 public class BlockNanoPatternContainer extends NanoPatternContainer<Block> {
-
   private static final long serialVersionUID = 0x539A0A2C3A6717BDL;
 
   @SafeVarargs public BlockNanoPatternContainer(final UserDefinedTipper<Block>... ts) {

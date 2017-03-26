@@ -27,11 +27,11 @@ public class Issue0810 {
   }
 
   @Test public void test1() {
-    @NotNull final Collection<SimpleName> lst = new ArrayList<>();
-    lst.add(az.simpleName(wizard.ast("abc")));
-    assert !haz.dollar(lst);
-    lst.add(az.simpleName(wizard.ast("$")));
-    assert haz.dollar(lst);
+    @NotNull final Collection<SimpleName> xs = new ArrayList<>();
+    xs.add(az.simpleName(wizard.ast("abc")));
+    assert !haz.dollar(xs);
+    xs.add(az.simpleName(wizard.ast("$")));
+    assert haz.dollar(xs);
   }
 
   @Test public void test2() {

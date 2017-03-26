@@ -6,8 +6,8 @@
 package il.org.spartan.spartanizer.ast.safety;
 
 public enum safe {
-  ;
-  /** Divide but if b == 0 return 1.
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
+  /** Divide but if denominator 0 return 1
    * @param a
    * @param d
    * @return */

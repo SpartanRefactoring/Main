@@ -30,7 +30,7 @@ import il.org.spartan.utils.range.*;
  * @since 2015-07-28 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public enum extract {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Retrieve all operands, including parenthesized ones, under an expression
    * @param x JD
    * @return a {@link List} of all operands to the parameter */
@@ -111,7 +111,7 @@ public enum extract {
   }
 
   @Nullable public static List<String> usedNames(final Expression x) {
-    return new ExpressionBottomUp<List<String>>() {
+    return new ExpressionMapReducer<List<String>>() {
       @Override @NotNull public List<String> reduce() {
         return new ArrayList<>();
       }
@@ -521,7 +521,7 @@ public enum extract {
   }
 
   @NotNull public static List<ASTNode> updatedVariables(final Expression x) {
-    @Nullable final List<ASTNode> $ = new ExpressionBottomUp<List<ASTNode>>() {
+    @Nullable final List<ASTNode> $ = new ExpressionMapReducer<List<ASTNode>>() {
       @Override @NotNull public List<ASTNode> reduce() {
         return new LinkedList<>();
       }

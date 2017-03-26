@@ -30,7 +30,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Raviv Rachmiel {@code  raviv.rachmiel@gmail.com }
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO: Raviv Rachmiel take care of single var declaration, tests
-public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
+public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3829131163900046060L;
 
@@ -59,7 +59,7 @@ public class RenameShortNamesMethodDec extends EagerTipper<MethodDeclaration>//
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int counter = 0;
         for (final SimpleName ¢ : prev) {
-          Tippers.rename(¢, after.get(counter), d, r, g);
+          Tricks.rename(¢, after.get(counter), d, r, g);
           ++counter;
         }
       }

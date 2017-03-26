@@ -16,13 +16,14 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** convert {@code switch (x) { case a: } switch(x) { default: (some commands) }
  * } into {@code
  * (some commands)
- * } . Tested in {@link Issue233}
+ * } . Tested in {@link Issue0233}
  * @author Yuval Simon
  * @since 2016-11-20 */
 public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//

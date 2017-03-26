@@ -331,7 +331,7 @@ public enum make {
      *         parenthesis, depending on the relative precedences of the
      *         expression and its host. */
     public Expression into(final ASTNode host) {
-      return noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || simple(inner) ? inner : parenthesize(inner);
+      return host == null || noParenthesisRequiredIn(host) || stringConcatingSafeIn(host) || simple(inner) ? inner : parenthesize(inner);
     }
 
     public Expression intoLeft(final InfixExpression host) {

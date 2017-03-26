@@ -46,7 +46,7 @@ public class TrimmerLogTest {
 
   @Test public void test02() {
     @NotNull final TrimmingOperand o = trimmingOf("new Integer(3)");
-    @NotNull final String wrap = Wrap.find(o.get()).on(o.get());
+    @NotNull final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     @NotNull final IDocument d = new Document(wrap);
@@ -69,7 +69,7 @@ public class TrimmerLogTest {
 
   @Test public void test03() {
     @NotNull final TrimmingOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
-    @NotNull final String wrap = Wrap.find(o.get()).on(o.get());
+    @NotNull final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     @NotNull final IDocument d = new Document(wrap);
@@ -92,7 +92,7 @@ public class TrimmerLogTest {
 
   @Test public void test04() {
     @NotNull final TrimmingOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
-    @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find(o.get()).on(o.get()));
+    @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find(o.get()).on(o.get()));
     assert u != null;
     assert u.getJavaElement() == null;
   }

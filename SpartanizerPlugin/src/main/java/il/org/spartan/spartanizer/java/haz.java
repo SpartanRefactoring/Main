@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-09-12 */
 public enum haz {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static boolean annotation(@NotNull final VariableDeclarationFragment ¢) {
     return annotation((VariableDeclarationStatement) ¢.getParent());
   }

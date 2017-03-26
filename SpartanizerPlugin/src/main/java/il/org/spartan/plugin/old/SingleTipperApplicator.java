@@ -201,11 +201,11 @@ public final class SingleTipperApplicator {
             return true;
           Toolbox.defaultInstance();
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
-          if (x != null) {
-            @Nullable final Tip make = x.tip(n, exclude);
-            if (make != null)
-              make.go(rewrite, null);
-          }
+          if (x == null)
+            return true;
+          @Nullable final Tip make = x.tip(n, exclude);
+          if (make != null)
+            make.go(rewrite, null);
           return true;
         }
 
