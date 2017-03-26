@@ -21,6 +21,7 @@ public class Issue1147 {
   @Test public void t2() {
     trimmingOf("switch (digits(round3(¢))) {" + "case 0:" + "case 1:" + "return \"%.3f\";" + "case -1:" + "return \"%.2f\";" + "case 2:"
         + "return \"%.1f\";" + "default:" + "return \"%.0f\";" + "}")
+            .using(new SwitchBranchSort())
             .gives("switch (digits(round3(¢))) {" + "case -1:" + "return \"%.2f\";" + "case 0:" + "case 1:" + "return \"%.3f\";" + "case 2:"
                 + "return \"%.1f\";" + "default:" + "return \"%.0f\";" + "}")
             .stays();

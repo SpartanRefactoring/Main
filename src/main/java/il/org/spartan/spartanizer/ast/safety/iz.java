@@ -270,12 +270,11 @@ public interface iz {
         && new Recurser<>(¢, 0).postVisit(λ -> λ.getRoot().getNodeType() != CONTINUE_STATEMENT ? λ.getCurrent() : λ.getCurrent() + 1) > 0;
   }
 
-  /** @param n ASTNode that contains the identifier
-   * @param x Expression to search the identifier in it
+  /** @param n root node to search the identifier in it
+   * @param x the identifier to search for
    * @return true if x contains the identifier of n */
   static boolean containsName(final SimpleName n, final ASTNode x) {
-    return n != null
-        && !descendants.whoseClassIs(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).isEmpty();
+    return extract.countNameInSubtree(n,x) != 0;
   }
 
   static boolean containsOperator(final ASTNode ¢) {
