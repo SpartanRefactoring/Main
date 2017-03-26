@@ -5,8 +5,6 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,11 +21,11 @@ public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<Cl
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 0x578B2D093DF1DBD5L;
 
-  @Override @NotNull public String description(@NotNull final ClassInstanceCreation ¢) {
+  @Override  public String description( final ClassInstanceCreation ¢) {
     return "Use factory method " + hop.simpleName(¢.getType()) + ".valueOf() instead of new ";
   }
 
-  @Override public ASTNode replacement(@NotNull final ClassInstanceCreation c) {
+  @Override public ASTNode replacement( final ClassInstanceCreation c) {
     if (!iz.statement(c.getParent()))
       return null;
     final Expression e = onlyOne(arguments(c));

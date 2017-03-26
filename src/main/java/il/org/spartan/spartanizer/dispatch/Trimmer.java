@@ -159,7 +159,7 @@ public class Trimmer extends AbstractGUIApplicator {
         if (w != null)
           progressMonitor.worked(5);
         try {
-          return w == null || w.cantTip(n) || prune(w.tip(n, exclude), $);
+          return w == null /* || w.cantTip(n) [probably bug --or] */ || prune(w.tip(n, exclude), $);
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());

@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -18,7 +16,7 @@ public final class TryFinallyEmptyRemove extends ReplaceCurrentNode<TryStatement
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x2D910A689FB05A35L;
 
-  @Override public boolean prerequisite(@NotNull final TryStatement ¢) {
+  @Override public boolean prerequisite( final TryStatement ¢) {
     return !statements(body(¢)).isEmpty() && ¢.getFinally() != null && statements(¢.getFinally()).isEmpty() && !¢.catchClauses().isEmpty();
   }
 

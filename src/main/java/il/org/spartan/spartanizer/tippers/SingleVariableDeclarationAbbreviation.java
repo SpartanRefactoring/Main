@@ -9,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -32,14 +30,14 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   private static final long serialVersionUID = -2709826205107840171L;
   private static String[] shortNames = { "lst", "integer", "list" };
 
-  static void fixJavadoc(@NotNull final MethodDeclaration d, @NotNull final SimpleName oldName, final String newName, @NotNull final ASTRewrite r,
+  static void fixJavadoc( final MethodDeclaration d,  final SimpleName oldName, final String newName,  final ASTRewrite r,
       final TextEditGroup g) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
       return;
-    @NotNull final List<TagElement> ts = tags(j);
+     final List<TagElement> ts = tags(j);
     if (ts != null)
-      for (@NotNull final TagElement t : ts)
+      for ( final TagElement t : ts)
         if (TagElement.TAG_PARAM.equals(t.getTagName()))
           for (final Object ¢ : fragments(t))
             if (¢ instanceof SimpleName && wizard.same((ASTNode) ¢, oldName)) {
@@ -48,14 +46,14 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
             }
   }
 
-  @NotNull private static String getExtraDimensions(final SingleVariableDeclaration d) {
-    @NotNull String $ = "";
-    for (@NotNull String ¢ = d + ""; ¢.endsWith("[]"); ¢ = ¢.substring(0, ¢.length() - 2))
+   private static String getExtraDimensions(final SingleVariableDeclaration d) {
+     String $ = "";
+    for ( String ¢ = d + ""; ¢.endsWith("[]"); ¢ = ¢.substring(0, ¢.length() - 2))
       $ += "s";
     return $;
   }
 
-  private static boolean isShort(@NotNull final SingleVariableDeclaration ¢) {
+  private static boolean isShort( final SingleVariableDeclaration ¢) {
     final String identifier = ¢.getName().getIdentifier();
     if (iz.in(identifier, shortNames))
       return true;
@@ -63,7 +61,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return $ != null && ($ + pluralVariadic(¢)).equals(identifier);
   }
 
-  private static boolean legal(@NotNull final SingleVariableDeclaration $, @NotNull final MethodDeclaration d) {
+  private static boolean legal( final SingleVariableDeclaration $,  final MethodDeclaration d) {
     final List<SimpleName> localVariables = new MethodExplorer(d).localVariables();
     final String shortName = namer.shorten($.getType());
     return shortName != null && localVariables.stream().noneMatch(λ -> λ.getIdentifier().equals(shortName + pluralVariadic($)))
@@ -71,28 +69,28 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
         && !d.getName().getIdentifier().equalsIgnoreCase(shortName + pluralVariadic($));
   }
 
-  @NotNull private static String pluralVariadic(@NotNull final SingleVariableDeclaration ¢) {
+   private static String pluralVariadic( final SingleVariableDeclaration ¢) {
     return ¢.isVarargs() ? "s" : getExtraDimensions(¢);
   }
 
-  private static boolean suitable(@NotNull final SingleVariableDeclaration ¢) {
+  private static boolean suitable( final SingleVariableDeclaration ¢) {
     return JavaTypeNameParser.make(¢.getType() + "").isGenericVariation(¢.getName().getIdentifier()) && !isShort(¢);
   }
 
-  @Override @NotNull public String description(@NotNull final SingleVariableDeclaration ¢) {
+  @Override  public String description( final SingleVariableDeclaration ¢) {
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(@NotNull final SingleVariableDeclaration d, @Nullable final ExclusionManager exclude) {
-    @Nullable final MethodDeclaration $ = az.methodDeclaration(parent(d));
+  @Override public Tip tip( final SingleVariableDeclaration d,  final ExclusionManager exclude) {
+     final MethodDeclaration $ = az.methodDeclaration(parent(d));
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
     if (exclude != null)
       exclude.exclude($);
     final SimpleName oldName = d.getName();
-    @NotNull final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
+     final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
     return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), d, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, make.from(d).identifier(newName), $, r, g);
         fixJavadoc($, oldName, newName, r, g);
       }

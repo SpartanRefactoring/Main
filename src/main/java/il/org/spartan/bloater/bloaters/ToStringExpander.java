@@ -2,8 +2,6 @@ package il.org.spartan.bloater.bloaters;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -21,7 +19,7 @@ public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x1F5C3A50D08EA75BL;
 
-  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Override  public ASTNode replacement( final InfixExpression ¢) {
     if (¢.getOperator() != Operator.PLUS || ¢.getLeftOperand().resolveTypeBinding() == null || ¢.getRightOperand().resolveTypeBinding() == null
         || extract.allOperands(¢).size() != 2)
       return null;
@@ -37,7 +35,7 @@ public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//
     return $;
   }
 
-  @Override @SuppressWarnings("unused") @Nullable public String description(final InfixExpression __) {
+  @Override @SuppressWarnings("unused")  public String description(final InfixExpression __) {
     return null;
   }
 }

@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.issues;
 
+import static il.org.spartan.utils.monitor.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
@@ -35,16 +36,16 @@ public final class Version300 {
   @FunctionalInterface
   interface Find {
     //@formatter:off
-    default Find prerequisite() { return null; };
+    default Find prerequisite() { return null; }
     void find();
-    default boolean B(@SuppressWarnings("unused") final int i) { throw new RuntimeException(); }
-    default boolean B(@SuppressWarnings("unused") final Object ... __) { throw new RuntimeException(); }
-    default void S(@SuppressWarnings("unused") final int i) { throw new RuntimeException(); }
-    default void S(@SuppressWarnings("unused") final Object ... __) { throw new RuntimeException(); }
-    default void andAlso(@SuppressWarnings("unused") final Find find){}
-    default void butNot(@SuppressWarnings("unused") final Find find){}
-    default void orElse(@SuppressWarnings("unused") final Find find){}
-    default void andIs(@SuppressWarnings("unused") final Runnable __1, final Runnable __2){}
+    default boolean B(final int i) { return fault.bool(bug(box.it(i))); }
+    default boolean B(final Object ... __) { return fault.bool(bug(__)); } 
+    default void S(final int i) { bug(box.it(i)); } 
+    default void S(final Object ... __) { bug(__); } 
+    default void andAlso(final Find f){bug(f);}
+    default void butNot(final Find f){bug(f);}
+    default void orElse(final Find f){bug(f);}
+    default void andIs(final Runnable __1, final Runnable __2){bug(__1); bug(__2);}
     //@formatter:on
   }
 
@@ -226,8 +227,8 @@ public final class Version300 {
     return findFirst.instanceOf(VariableDeclarationFragment.class).in(s(statement)).getInitializer();
   }
 
-  @Test public void myClassName() {
-    azzert.that(system.callingClassFullName(), is(getClass().getCanonicalName()));
+  @Test public void myClassNameTest() {
+    azzert.that(system.myFullClassName(), is(getClass().getCanonicalName()));
   }
 
   // @Ignore("Unignore one by one")

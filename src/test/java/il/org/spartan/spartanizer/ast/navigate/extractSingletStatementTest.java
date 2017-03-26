@@ -11,7 +11,6 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -72,7 +71,7 @@ public final class extractSingletStatementTest {
   @Test public void peelIf() {
     final ASTNode n = makeAST.STATEMENTS.from("{if (a) return b; else return c;}");
     assert n != null;
-    @NotNull final List<Statement> ss = extract.statements(n);
+     final List<Statement> ss = extract.statements(n);
     assert ss != null;
     azzert.that(ss.size(), is(1));
     assert extract.singleStatement(n) != null;
@@ -81,7 +80,7 @@ public final class extractSingletStatementTest {
   @Test public void peelIPlusPlus() {
     final ASTNode n = makeAST.STATEMENTS.from("{i++;}");
     assert n != null;
-    @NotNull final List<Statement> ss = extract.statements(n);
+     final List<Statement> ss = extract.statements(n);
     assert ss != null;
     azzert.that(ss.size(), is(1));
     assert extract.singleStatement(n) != null;

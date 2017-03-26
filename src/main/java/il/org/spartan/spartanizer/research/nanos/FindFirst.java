@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -48,7 +46,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     ;
   }
 
-  @Override @Nullable public Tip pattern(final EnhancedForStatement $) {
+  @Override  public Tip pattern(final EnhancedForStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
 
@@ -56,7 +54,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     return "Iterate a collection for the first element matching some predicate";
   }
 
-  @Override @NotNull public String nanoName() {
+  @Override  public String nanoName() {
     return "FirstSuchThat";
   }
 }

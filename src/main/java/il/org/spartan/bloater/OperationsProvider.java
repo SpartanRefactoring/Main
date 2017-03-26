@@ -4,8 +4,6 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -19,5 +17,5 @@ public abstract class OperationsProvider {
 
   /** @return a function from list<Op<?> to <Op<?>> which should mean to help us
    *         choose which tipper we would like to use */
-  @NotNull public abstract Function<List<Operation<?>>, List<Operation<?>>> getFunction();
+   public abstract Function<List<Operation<?>>, List<Operation<?>>> getFunction();
 }
