@@ -151,14 +151,15 @@ public final class Issue0223 {
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimmingOf("Integer x = new Integer(1 + 9);")//
-        .gives("Integer x = Integer.valueOf(1+9);")//
-        .gives("Integer x = Integer.valueOf(10);")//
+        .gives(" Integer.valueOf(1+9);")//
+        .gives(" Integer.valueOf(10);")//
         .stays();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
     trimmingOf("String x = new String(f());")//
-        .gives("String x = String.valueOf(f());");
+        .gives("new String(f());") 
+        .gives("String.valueOf(f());");
   }
 
   @Test public void vanilla() {

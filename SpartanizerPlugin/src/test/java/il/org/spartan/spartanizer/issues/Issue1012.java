@@ -12,8 +12,9 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1012 {
   @Test public void a() {
-    trimmingOf("int a = 0;int b = 1;int c = 2;f();g();")//
-        .gives("int a = 0, b = 1;int c = 2;f();g();").gives("int a = 0, b = 1, c = 2;f();g();");
+    trimmingOf("int a = 0;int b = 1;int c = 2;f(a,b,c);g(c,b,a);")//
+        .gives("int a = 0, b = 1;int c = 2;f(a,b,c);g(c,b,a);")//
+        .gives("int a = 0, b = 1, c = 2;f(a,b,c);g(c,b,a);");
   }
 
   @Test public void b() {
@@ -28,22 +29,25 @@ public class Issue1012 {
   }
 
   @Test public void d() {
-    trimmingOf("final S[] ps={null};final S[] t=C.s(C.c(ps));f(ps);g();")//
-        .gives("final S[] ps={null}, t=C.s(C.c(ps));f(ps);g();")//
+    trimmingOf("final S[] ps={null};final S[] t=C.s(C.c(ps));f(ps);g(ps,tc,t,p);")//
+        .gives("final S[] ps={null}, t=C.s(C.c(ps));f(ps);g(ps,tc,t,p);")//
         .stays();
   }
 
   @Test public void e() {
-    trimmingOf("final int a[] = P.r(10000);int c = 0;").stays();
+    trimmingOf("final int a[] = P.r(10000);int c = 0;f(c,a,c,a,c);")//
+    .gives("final int a[] = P.r(10000);f(0,a,0,a,0);")//
+        .stays();
   }
 
   @Test public void f() {
-    trimmingOf("final int a = 0;int b = 8;f();g();").stays();
+    trimmingOf("final int a = 0;int b = 8;f(a,b,a,a);g(a,b,a,a);")//
+        .stays();
   }
 
   @Test public void g() {
-    trimmingOf("final int a = 0;final int b = 8;f();g();")//
-        .gives("final int a = 0, b = 8;f();g();")//
+    trimmingOf("final int a = 0;final int b = 8;f(a,b,a,a,b);g(a,b,a,a,b);")//
+        .gives("final int a = 0, b = 8;f(a,b,a,a,b);g(a,b,a,a,b);")//
         .stays();
   }
 }
