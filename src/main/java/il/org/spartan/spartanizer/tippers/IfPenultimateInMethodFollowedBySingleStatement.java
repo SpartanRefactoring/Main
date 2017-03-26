@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,13 +28,13 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNe
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;
      final Statement then = then(s);
-    @Nullable final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
+     final ReturnStatement deleteMe = az.returnStatement(hop.lastStatement(then));
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     $.replace(deleteMe, make.emptyStatement(deleteMe), g);
     wizard.remove($, nextStatement, g);
     final IfStatement newIf = copy.of(s);
-    @Nullable final Block block = az.block(then(newIf));
+     final Block block = az.block(then(newIf));
     if (block != null)
       wizard.removeLast(statements(block));
     else

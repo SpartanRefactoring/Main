@@ -10,8 +10,6 @@ import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -43,7 +41,7 @@ public interface Environment {
   /** Get full path of the current this instance (all scope hierarchy). Used for
    * full names of the variables. */
    default String fullName() {
-    @Nullable final String $ = nest() == null || nest() == NULL ? null : nest().fullName();
+     final String $ = nest() == null || nest() == NULL ? null : nest().fullName();
     return ($ == null ? "" : $ + ".") + name().replaceAll("  .*$", "");
   }
 
@@ -60,7 +58,7 @@ public interface Environment {
   }
 
   /** @return null iff the name is not in use in the this instance */
-  @Nullable Binding get(String name);
+   Binding get(String name);
 
   /** Answer the question whether the name is in use in the current this
    * instance */
@@ -68,7 +66,7 @@ public interface Environment {
 
   /** @return null iff the name is not hiding anything from outer scopes,
    *         otherwise Information about hided instance (with same name) */
-  @Nullable default Binding hiding(final String name) {
+   default Binding hiding(final String name) {
     return nest() == null ? null : nest().get(name);
   }
 
@@ -79,13 +77,13 @@ public interface Environment {
 
   /** @return null at the most outer block. This method is similar to the
    *         'next()' method in a linked list. */
-  @Nullable Environment nest();
+   Environment nest();
 
   /** Should return the hidden entry, or null if no entry hidden by this one.
    * Note: you will have to assume multiple definitions in the same block, this
    * is a compilation error, but nevertheless, let a later entry with of a
    * certain name to "hide" a former entry with the same name. */
-  @Nullable default Binding put(final String name, final Binding b) {
+   default Binding put(final String name, final Binding b) {
     throw new IllegalArgumentException(name + "/" + b);
   }
 
@@ -96,7 +94,7 @@ public interface Environment {
 
   /** The Environment structure is in some like a Linked list, where EMPTY is
    * like the NULL at the end. */
-  @Nullable Environment NULL = new Environment() {
+   Environment NULL = new Environment() {
     @Override public boolean empty() {
       return true;
     }
@@ -105,7 +103,7 @@ public interface Environment {
       return Collections.emptyList();
     }
 
-    @Override @Nullable public Binding get(@SuppressWarnings("unused") final String name) {
+    @Override  public Binding get(@SuppressWarnings("unused") final String name) {
       return null;
     }
 
@@ -170,12 +168,12 @@ public interface Environment {
 
   /** Gets declarations made in ASTNode's Ancestors */
    static LinkedHashSet<Entry<String, Binding>> declaresUp( final ASTNode n) {
-    for (@Nullable Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
+    for ( Block PB = getParentBlock(n); PB != null; PB = getParentBlock(PB))
       statements(PB).forEach(λ -> upEnv.addAll(declarationsOf(λ)));
     return upEnv;
   }
 
-   static String fullName(@Nullable final ASTNode ¢) {
+   static String fullName( final ASTNode ¢) {
     return ¢ == null ? "" : fullName(¢.getParent()) + name(¢);
   }
 
@@ -198,11 +196,11 @@ public interface Environment {
     return null;
   }
 
-  @Nullable static Block getParentBlock( final ASTNode ¢) {
+   static Block getParentBlock( final ASTNode ¢) {
     return az.block(¢.getParent());
   }
 
-  @Nullable static Binding makeBinding( final VariableDeclarationFragment ¢, final type t) {
+   static Binding makeBinding( final VariableDeclarationFragment ¢, final type t) {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
   }
 
@@ -229,7 +227,7 @@ public interface Environment {
     return null;
   }
 
-   static String parentNameScope(@Nullable final String ¢) {
+   static String parentNameScope( final String ¢) {
     return ¢ == null || ¢.isEmpty() ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
 

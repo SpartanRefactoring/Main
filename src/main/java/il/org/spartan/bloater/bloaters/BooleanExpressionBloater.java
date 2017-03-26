@@ -4,8 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -52,7 +50,7 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     return $;
   }
 
-  @Override @Nullable public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override  public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }
 }

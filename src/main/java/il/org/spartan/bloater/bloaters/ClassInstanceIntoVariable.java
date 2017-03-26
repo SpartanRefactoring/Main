@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,10 +24,10 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
     return "Split assignment statement";
   }
 
-  @Override @Nullable public Tip tip( final ExpressionStatement ¢) {
+  @Override  public Tip tip( final ExpressionStatement ¢) {
     return !iz.classInstanceCreation(expression(¢)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
-        @Nullable final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
+         final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
         final Type t = cic.getType();
         r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY).replace(¢,
             make.variableDeclarationStatement(copy.of(t), scope.newName(cic, t), copy.of(cic)), g);

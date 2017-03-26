@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,18 +29,18 @@ public final class FragmentInitializerIfAssignment extends $FragmentAndStatement
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 
-  @Override @Nullable protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final SimpleName n,
-      @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final SimpleName n,
+       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
-    @Nullable final IfStatement s = az.ifStatement(nextStatement);
+     final IfStatement s = az.ifStatement(nextStatement);
     if (s == null || !iz.vacuousElse(s))
       return null;
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
     if (condition == null)
       return null;
-    @Nullable final Assignment a = extract.assignment(then(s));
+     final Assignment a = extract.assignment(then(s));
     if (a == null || !wizard.same(to(a), n) || a.getOperator() != Assignment.Operator.ASSIGN || doesUseForbiddenSiblings(f, condition, from(a)))
       return null;
      final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);

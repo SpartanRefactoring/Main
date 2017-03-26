@@ -13,8 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -62,7 +60,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
     assert undoEdit != null;
   }
 
-  @Nullable String aboutTheSame( final String s1,  final String s2) {
+   String aboutTheSame( final String s1,  final String s2) {
     assert s1 != null;
     assert s2 != null;
     if (s1.equals(s2)) // Highly unlikely, but what the hack
@@ -76,7 +74,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
     return tide.eq($, g2b) || tide.eq(s1, g2b) || tide.eq($, g2a) ? g2b : null;
   }
 
-  @Nullable String common( final String expected) {
+   String common( final String expected) {
     return aboutTheSame(expected, document.get());
   }
 
@@ -110,7 +108,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
         final Tipper<N> w = trimmer().toolbox.firstTipper(n);
         if (w == null)
           return true;
-        @Nullable final Tip make = w.tip(n, exclude);
+         final Tip make = w.tip(n, exclude);
         if (make != null)
           make.go(r, null);
         return true;
@@ -177,7 +175,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
               + "\n    as '" + codeFragment + "---the original"//
               + "\n snippet.");
     }
-    @Nullable final String difference = common(codeFragment);
+     final String difference = common(codeFragment);
     if (difference != null)
       azzert.fail(//
           "something ELSE:\n" //
@@ -190,7 +188,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   }
 
   public void stays() {
-    @Nullable final String difference = common(codeFragment);
+     final String difference = common(codeFragment);
     if (difference != null)
       azzert.fail(//
           "Should not change" //

@@ -9,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -83,8 +81,8 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip( final SingleVariableDeclaration d, @Nullable final ExclusionManager exclude) {
-    @Nullable final MethodDeclaration $ = az.methodDeclaration(parent(d));
+  @Override public Tip tip( final SingleVariableDeclaration d,  final ExclusionManager exclude) {
+     final MethodDeclaration $ = az.methodDeclaration(parent(d));
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
     if (exclude != null)

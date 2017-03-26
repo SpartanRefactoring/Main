@@ -3,8 +3,6 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.function.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.utils.*;
 
 /** A {@link Listener} that listen to {@link event}s. Maps both the recorders
@@ -99,9 +97,9 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
      * {@link EventFunctor#domain} has been initialized. */
     boolean initialized;
     /** Initialization value for {@link EventMapper#eventMap}. */
-    @Nullable P initialization;
+     P initialization;
     /** Initialization supplier for {@link EventMapper#eventMap}. */
-    @Nullable Supplier<P> initializationSupplier;
+     Supplier<P> initializationSupplier;
 
     /** Creates a functor for a specific event.
      * @param domain the event covered by this functor. */
@@ -113,10 +111,10 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     /** @return initialization value for this functor, either from
      *         {@link EventFunctor#initialization} or from
      *         {@link EventFunctor#initializationSupplier}. */
-    @Nullable Object initializeValue() {
+     Object initializeValue() {
       assert !initialized;
       initialized = true;
-      @Nullable final Object $;
+       final Object $;
       if (initializationSupplier == null) {
         $ = initialization;
         initialization = null;
@@ -149,10 +147,10 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
    * @author Ori Roth
    * @since 2.6 */
   public static class EventMapperFunctor<E, P, O> extends EventFunctor<E, P, O> {
-    @Nullable BiConsumer<P, O> biConsumer;
-    @Nullable Consumer<P> consumer;
-    @Nullable BiFunction<P, O, P> biFunction;
-    @Nullable Function<P, O> function;
+     BiConsumer<P, O> biConsumer;
+     Consumer<P> consumer;
+     BiFunction<P, O, P> biFunction;
+     Function<P, O> function;
 
     public EventMapperFunctor(final E domain) {
       super(domain);
@@ -292,9 +290,9 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
   static class SimpleMapper extends EventMapper<none> {
     /** Factory method.
      * @return empty simple mapper */
-    @Nullable public static SimpleMapper get() {
+     public static SimpleMapper get() {
       return new SimpleMapper(none.class) {
-        @Override public void tick(@Nullable final Object... ¢) {
+        @Override public void tick( final Object... ¢) {
           if (¢ != null)
             if (¢.length == 0)
               tick(none.X);

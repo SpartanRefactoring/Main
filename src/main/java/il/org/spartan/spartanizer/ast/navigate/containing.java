@@ -5,8 +5,6 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** An empty {@code interface} for fluent programming. The name should say it
@@ -15,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface containing {
-  @Nullable static CompilationUnit compilationUnit(final ASTNode ¢) {
+   static CompilationUnit compilationUnit(final ASTNode ¢) {
     return az.compilationUnit(yieldAncestors.untilNodeType(COMPILATION_UNIT).from(¢));
   }
 
@@ -36,7 +34,7 @@ public interface containing {
         )).findFirst().orElse(null);
   }
 
-  @Nullable static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
+   static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
     return yieldAncestors.untilClass(BodyDeclaration.class).from(¢);
   }
 

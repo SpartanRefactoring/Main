@@ -10,8 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -38,7 +36,7 @@ import il.org.spartan.utils.*;
 public class Trimmer extends AbstractGUIApplicator {
   public static boolean silent;
 
-  public static boolean prune(@Nullable final Tip r,  final List<Tip> rs) {
+  public static boolean prune( final Tip r,  final List<Tip> rs) {
     if (r == null)
       return true;
     r.pruneIncluders(rs);
@@ -67,7 +65,7 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   @Override public void consolidateTips(final ASTRewrite r,  final CompilationUnit u, final IMarker m,  final Int i) {
-    @Nullable final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
+     final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
      final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go( final N n) {
@@ -75,7 +73,7 @@ public class Trimmer extends AbstractGUIApplicator {
         TrimmerLog.visitation(n);
         if (!check(n) || !inRange(m, n) || disabling.on(n))
           return true;
-        @Nullable Tipper<N> w = null;
+         Tipper<N> w = null;
         try {
           w = getTipper(t, n);
         } catch ( final IllegalArgumentException ¢) {
@@ -83,7 +81,7 @@ public class Trimmer extends AbstractGUIApplicator {
         }
         if (w == null)
           return true;
-        @Nullable Tip s = null;
+         Tip s = null;
         try {
           s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
@@ -138,10 +136,10 @@ public class Trimmer extends AbstractGUIApplicator {
     return e;
   }
 
-  @Override @Nullable protected ASTVisitor makeTipsCollector( final List<Tip> $) {
+  @Override  protected ASTVisitor makeTipsCollector( final List<Tip> $) {
     Toolbox.refresh(this);
     return new DispatchingVisitor() {
-      @Nullable Toolbox t;
+       Toolbox t;
 
       @Override protected <N extends ASTNode> boolean go( final N n) {
          final String fileName = English.unknownIfNull(az.compilationUnit(n.getRoot()),
@@ -149,7 +147,7 @@ public class Trimmer extends AbstractGUIApplicator {
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;
-        @Nullable Tipper<N> w = null;
+         Tipper<N> w = null;
         try {
           w = getTipper(t, n);
         } catch ( final Exception ¢) {
@@ -210,7 +208,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   /** @param u JD
    * @return {@link Toolbox} by project's preferences */
-  @Nullable Toolbox getToolboxByPreferences(@Nullable final CompilationUnit u) {
+   Toolbox getToolboxByPreferences( final CompilationUnit u) {
     if (u == null)
       return null;
     final ITypeRoot r = u.getTypeRoot();

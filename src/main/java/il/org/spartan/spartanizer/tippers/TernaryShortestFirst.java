@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -47,7 +45,7 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
       return null;
     if (iz.conditionalExpression(then) && !iz.conditionalExpression(elze))
       return $;
-    @Nullable final ConditionalExpression parent = az.conditionalExpression(x.getParent());
+     final ConditionalExpression parent = az.conditionalExpression(x.getParent());
     if (parent != null && parent.getElseExpression() == x && compatibleCondition(parent.getExpression(), x.getExpression())) {
       final Expression alignTo = parent.getThenExpression();
       final double a1 = align(elze, alignTo), a2 = align(then, alignTo);

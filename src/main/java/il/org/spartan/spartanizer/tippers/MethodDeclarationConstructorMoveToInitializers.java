@@ -5,8 +5,6 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -39,7 +37,7 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
   }
 
   private static Tip tip(final Statement s) {
-    @Nullable final Assignment x = az.assignment(expression(az.expressionStatement(s)));
+     final Assignment x = az.assignment(expression(az.expressionStatement(s)));
     assert fault.unreachable() || !fault.unreachable() : fault.specifically(Environment.of(to(x)).description(), to(x), from(x));
     return null;
   }

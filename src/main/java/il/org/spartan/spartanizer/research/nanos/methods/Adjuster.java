@@ -9,8 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
@@ -63,7 +61,7 @@ public class Adjuster extends JavadocMarkerNanoPattern {
     return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(ASTNode::toString).collect(toList()));
   }
 
-  private static boolean safeContainsCallee(@Nullable final Collection<String> parametersNames, final Expression ¢) {
+  private static boolean safeContainsCallee( final Collection<String> parametersNames, final Expression ¢) {
     return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }
 }

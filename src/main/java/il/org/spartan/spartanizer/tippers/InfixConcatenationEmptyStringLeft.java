@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,7 +21,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
   private static final long serialVersionUID = -774288757243201042L;
 
   private static InfixExpression replace( final InfixExpression ¢) {
-    @Nullable final List<Expression> $ = extract.allOperands(¢);
+     final List<Expression> $ = extract.allOperands(¢);
     lisp2.swap($, 0, 1);
     return subject.operands($).to(wizard.PLUS2);
   }

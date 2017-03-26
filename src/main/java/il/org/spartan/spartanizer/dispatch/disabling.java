@@ -4,8 +4,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -39,7 +37,7 @@ public interface disabling {
   static void scan( final ASTNode n) {
     n.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
-        @Nullable final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
+         final BodyDeclaration ¢2 = az.bodyDeclaration(¢);
         if (!disabling.specificallyDisabled(¢2))
           return true;
         disabling.disable(¢2);
@@ -77,7 +75,7 @@ public interface disabling {
     return !disabling.ByComment.specificallyDisabled(¢) && disabling.ByComment.specificallyEnabled(¢);
   }
 
-  static boolean hasJavaDocIdentifier(@Nullable final BodyDeclaration d, final String... ids) {
+  static boolean hasJavaDocIdentifier( final BodyDeclaration d, final String... ids) {
     return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
 

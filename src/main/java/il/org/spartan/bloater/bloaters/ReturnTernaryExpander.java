@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -27,7 +25,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     return new Tip(description(x), x, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
          final Expression ee = expression(x);
-        @Nullable final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));
+         final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));
          final Expression cond = expression(e);
         final AST a = x.getAST();
         final ReturnStatement whenTrue = a.newReturnStatement(), whenFalse = a.newReturnStatement();
@@ -44,7 +42,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     };
   }
 
-  @Override protected boolean prerequisite(@Nullable final ReturnStatement $) {
+  @Override protected boolean prerequisite( final ReturnStatement $) {
     if ($ == null)
       return false;
     // TODO Raviv Rachmiel: use extract.core --yg

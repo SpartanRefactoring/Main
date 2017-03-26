@@ -9,8 +9,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -37,7 +35,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   }
 
   private static int indexForRightEvaluation( final InfixExpression x) {
-    @Nullable final List<Expression> es = extract.allOperands(x);
+     final List<Expression> es = extract.allOperands(x);
     for (int $ = 0, ¢ = es.size() - 1; ¢ >= 0; --¢, ++$)
       if (!iz.number(es.get(¢)))
         return $ > 1 ? $ : 0;
@@ -59,7 +57,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
   @Override public final ASTNode replacement( final InfixExpression x) {
     try {
       if (iz.validForEvaluation(x)) {
-        @Nullable final String $ = opportunisticReplacement(x);
+         final String $ = opportunisticReplacement(x);
         if ($ != null && $.length() < (x + "").length())
           return x.getAST().newNumberLiteral($);
       }
@@ -68,7 +66,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         final InfixExpression cuttedExpression = subject.operands(extract.allOperands(x).subList(0, index)).to(operator());
          final List<Expression> afterExpressionOperands = extract.allOperands(x).subList(index, extract.allOperands(x).size());
         if (iz.validForEvaluation(cuttedExpression)) {
-          @Nullable final String str = opportunisticReplacement(cuttedExpression);
+           final String str = opportunisticReplacement(cuttedExpression);
           if (str != null)
             return subject
                 .pair(az.expression(x.getAST().newNumberLiteral(str)),
@@ -82,7 +80,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
             .operands(extract.allOperands(x).subList(extract.allOperands(x).size() - index, extract.allOperands(x).size())).to(operator());
          final List<Expression> beforeExpressionOperands = extract.allOperands(x).subList(0, extract.allOperands(x).size() - index);
         if (iz.validForEvaluation(cuttedExpression)) {
-          @Nullable final String s = opportunisticReplacement(cuttedExpression);
+           final String s = opportunisticReplacement(cuttedExpression);
           if (s != null)
             return subject.pair(
                 beforeExpressionOperands.size() == 1 ? first(beforeExpressionOperands) : subject.operands(beforeExpressionOperands).to(operator()),

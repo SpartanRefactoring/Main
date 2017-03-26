@@ -6,8 +6,6 @@ import java.nio.file.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -37,7 +35,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   @Override public boolean canTip(final CastExpression ¢) {
     if (!(step.type(¢) instanceof SimpleType))
       return false;
-    @Nullable final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
+     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
   }
@@ -72,7 +70,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     }
   }
 
-  @Nullable private static String fileAzFilePath() {
+   private static String fileAzFilePath() {
     return getProperty(API_FILE);
   }
 
@@ -90,7 +88,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static void addAzMethodToType( final CastExpression ¢,  final ASTRewrite r, final TextEditGroup g) {
-    @Nullable final AbstractTypeDeclaration t = containingType(¢);
+     final AbstractTypeDeclaration t = containingType(¢);
     wizard.addMethodToType(t, az.methodDeclaration(ASTNode.copySubtree(t.getAST(), createAzMethod(¢))), r, g);
   }
 
@@ -98,7 +96,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     wizard.addMethodToFile(path, az.methodDeclaration(createAzMethod(¢)));
   }
 
-  @Nullable private static MethodDeclaration createAzMethod( final CastExpression ¢) {
+   private static MethodDeclaration createAzMethod( final CastExpression ¢) {
     return az.methodDeclaration(ASTNode.copySubtree(¢.getAST(),
         az.methodDeclaration(wizard.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
   }
@@ -144,7 +142,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
         step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
   }
 
-  @Nullable private static String getProperty(final String property) {
+   private static String getProperty(final String property) {
     return AnalyzerOptions.get(Coercion.class.getSimpleName(), property);
   }
 

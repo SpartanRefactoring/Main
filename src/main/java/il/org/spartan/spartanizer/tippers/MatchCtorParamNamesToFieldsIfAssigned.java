@@ -38,11 +38,11 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
-  @Override @Nullable public Tip tip( final MethodDeclaration d) {
+  @Override  public Tip tip( final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(toList());
-    @Nullable final List<Statement> bodyStatements = statements(d);
+     final List<Statement> bodyStatements = statements(d);
      final Collection<String> definedLocals = new ArrayList<>();
      final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
     for (final Statement s : bodyStatements) {
@@ -54,7 +54,7 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
        final Expression e = expression(az.expressionStatement(s));
       if (!iz.assignment(e))
         continue;
-      @Nullable final Assignment a = az.assignment(e);
+       final Assignment a = az.assignment(e);
       if (!iz.fieldAccess(left(a)) || !iz.thisExpression(expression(az.fieldAccess(left(a)))))
         continue;
        final SimpleName fieldName = name(az.fieldAccess(left(a)));

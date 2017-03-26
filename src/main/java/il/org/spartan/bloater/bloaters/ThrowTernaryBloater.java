@@ -3,8 +3,6 @@ package il.org.spartan.bloater.bloaters;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,7 +16,7 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
   private static final long serialVersionUID = 0x6F38EBD99BF2A49EL;
 
   private static ASTNode innerThrowReplacement(final Expression x,  final Statement s) {
-    @Nullable final ConditionalExpression ¢;
+     final ConditionalExpression ¢;
     if (!(x instanceof ParenthesizedExpression))
       ¢ = az.conditionalExpression(x);
     else {
@@ -42,12 +40,12 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
   }
 
   private static ASTNode replaceReturn( final Statement ¢) {
-    @Nullable final ThrowStatement $ = az.throwStatement(¢);
+     final ThrowStatement $ = az.throwStatement(¢);
     return $ == null || !(expression($) instanceof ConditionalExpression) && !(expression($) instanceof ParenthesizedExpression) ? null
         : innerThrowReplacement(expression($), ¢);
   }
 
-  @Override @Nullable public ASTNode replacement( final ThrowStatement ¢) {
+  @Override  public ASTNode replacement( final ThrowStatement ¢) {
     return replaceReturn(¢);
   }
 

@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,7 +24,7 @@ public final class FragmentInitializerReturnExpression extends $FragmentAndState
       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (forbidden(f, initializer) || usedInSubsequentInitializers(f, n))
       return null;
-    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
+     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
     final Expression newReturnValue = s.getExpression();

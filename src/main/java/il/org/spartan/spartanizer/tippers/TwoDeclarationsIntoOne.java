@@ -10,8 +10,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -33,7 +31,7 @@ public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclaratio
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -401300117746539825L;
 
-  @Override @Nullable protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationStatement s,
+  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationStatement s,
       final Statement nextStatement, final TextEditGroup g) {
     if (!canTip(s, nextStatement))
       return null;
@@ -61,7 +59,7 @@ public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclaratio
   }
 
   private static boolean canTip( final VariableDeclarationStatement $, final Statement nextStatement) {
-    @Nullable final Block parent = az.block(parent($));
+     final Block parent = az.block(parent($));
     return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
         && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
         && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()

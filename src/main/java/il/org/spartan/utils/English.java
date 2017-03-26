@@ -9,8 +9,6 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
@@ -43,7 +41,7 @@ public interface English {
   /** Constructs linguistic list of items: [i1, i2, i3] --> "i1, i2 and i3"
    * @param ¢ list of items
    * @return a linguistic list of the items */
-   static String list(@Nullable final List<String> ¢) {
+   static String list( final List<String> ¢) {
     return ¢ == null || ¢.isEmpty() ? "nothing"
         : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + last(¢);
   }
@@ -68,7 +66,7 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-   static String plurales(final String s, @Nullable final Int i) {
+   static String plurales(final String s,  final Int i) {
     return i == null ? UNKNOWN + " " + s + "es" : i.get() != 1 ? i + " " + s + "es" : "one " + s;
   }
 
@@ -76,7 +74,7 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-   static String plurales(final String s, @Nullable final Integer i) {
+   static String plurales(final String s,  final Integer i) {
     return i == null ? UNKNOWN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
   }
 
@@ -92,7 +90,7 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-   static String plurals(final String s, @Nullable final Int i) {
+   static String plurals(final String s,  final Int i) {
     return i == null ? UNKNOWN + " " + s + "s" : i.get() != 1 ? i + " " + s + "s" : "one " + s;
   }
 
@@ -100,7 +98,7 @@ public interface English {
    * @param s string to be pluralize
    * @param i count
    * @return fixed string */
-   static String plurals(final String s, @Nullable final Integer i) {
+   static String plurals(final String s,  final Integer i) {
     return i == null ? UNKNOWN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
   }
 
@@ -185,21 +183,21 @@ public interface English {
    * @param l JD
    * @param x replacement suffix string
    * @return cut string */
-   static String trimAbsolute(@Nullable final String s, final int l,  final String x) {
+   static String trimAbsolute( final String s, final int l,  final String x) {
     assert l - x.length() >= 0;
     return s == null || s.length() <= l ? s : s.substring(0, l - x.length()) + x;
   }
 
   /** @param ¢ something
    * @return printable {@link String} for it */
-   static <X> String unknownIfNull(@Nullable final X ¢) {
+   static <X> String unknownIfNull( final X ¢) {
     return ¢ != null ? ¢ + "" : UNKNOWN;
   }
 
   /** @param x something
    * @param f function to be conducted on x in case it is not null
    * @return printable {@link String} for f(x) */
-   static <X> String unknownIfNull(@Nullable final X x,  final Function<X, ?> f) {
+   static <X> String unknownIfNull( final X x,  final Function<X, ?> f) {
     return x == null ? UNKNOWN : f.apply(x) + "";
   }
 

@@ -17,8 +17,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -123,7 +121,7 @@ public enum make {
     return parser(text.toCharArray());
   }
 
-  @Nullable public static VariableDeclarationExpression variableDeclarationExpression(@Nullable final VariableDeclarationStatement ¢) {
+   public static VariableDeclarationExpression variableDeclarationExpression( final VariableDeclarationStatement ¢) {
     if (¢ == null)
       return null;
     final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(first(fragments(copy.of(¢)))));
@@ -145,7 +143,7 @@ public enum make {
         return $;
   }
 
-  public static Expression minus(final Expression x, @Nullable final NumberLiteral l) {
+  public static Expression minus(final Expression x,  final NumberLiteral l) {
     return l == null ? minusOf(x) //
         : newLiteral(l, iz.literal0(l) ? "0" : signAdjust(l.getToken())) //
     ;
@@ -246,7 +244,7 @@ public enum make {
     assert ¢ != null;
     final PrefixExpression $ = subject.operand(¢).to(NOT);
     assert $ != null;
-    @Nullable final Expression $$ = PrefixNotPushdown.simplifyNot($);
+     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
   }
 
@@ -356,7 +354,7 @@ public enum make {
     private boolean stringConcatingSafeIn(final ASTNode host) {
       if (!infixExpression(host))
         return false;
-      @Nullable final InfixExpression $ = az.infixExpression(host);
+       final InfixExpression $ = az.infixExpression(host);
       return ($.getOperator() != wizard.PLUS2 || !type.isNotString($)) && isStringConactingSafe(inner);
     }
   }
@@ -369,7 +367,7 @@ public enum make {
     }
 
     public void intoThen( final IfStatement s) {
-      @Nullable final IfStatement plant = az.ifStatement(inner);
+       final IfStatement plant = az.ifStatement(inner);
       s.setThenStatement(plant == null || plant.getElseStatement() != null ? inner : subject.statements(inner).toBlock());
     }
   }

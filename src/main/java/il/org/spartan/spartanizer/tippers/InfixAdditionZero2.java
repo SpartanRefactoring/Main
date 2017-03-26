@@ -16,8 +16,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -39,14 +37,14 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     implements TipperCategory.NOP.onNumbers {
   private static final long serialVersionUID = -8635256643058136983L;
 
-  @Override @SuppressWarnings("boxing") @Nullable public ASTNode replacement( final InfixExpression x) {
+  @Override @SuppressWarnings("boxing")  public ASTNode replacement( final InfixExpression x) {
     gather(x, new ArrayList<>());
     x.getOperator();
     allOperands(x);
     allOperators(x);
-    @Nullable final List<Expression> ops = allOperands(x),
+     final List<Expression> ops = allOperands(x),
         ops2 = range.to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(toList());
-    @Nullable InfixExpression $ = null;
+     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : first(ops2);
@@ -60,16 +58,16 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return allOperators(x).stream().anyMatch(λ -> λ == Operator.PLUS);
   }
 
-  @SuppressWarnings("boxing") @Nullable public static ASTNode replacement2( final InfixExpression x) {
-    @Nullable final List<Expression> ops = allOperands(x),
+  @SuppressWarnings("boxing")  public static ASTNode replacement2( final InfixExpression x) {
+     final List<Expression> ops = allOperands(x),
         ops2 = range.from(0).to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(toList());
-    @Nullable InfixExpression $ = null;
+     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : first(ops2);
   }
 
-  @Override public boolean prerequisite(@Nullable final InfixExpression $) {
+  @Override public boolean prerequisite( final InfixExpression $) {
     return $ != null && iz.infixPlus($) && containsZeroOperand($) && containsPlusOperator($);
   }
 
@@ -80,7 +78,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     return $;
   }
 
-   private static List<Expression> gather(@Nullable final InfixExpression x,  final List<Expression> $) {
+   private static List<Expression> gather( final InfixExpression x,  final List<Expression> $) {
     if (x == null)
       return $;
     if (!in(x.getOperator(), PLUS, MINUS)) {

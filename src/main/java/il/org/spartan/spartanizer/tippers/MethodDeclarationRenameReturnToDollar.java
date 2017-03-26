@@ -9,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -32,11 +30,11 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip( final MethodDeclaration d, @Nullable final ExclusionManager exclude) {
+  @Override public Tip tip( final MethodDeclaration d,  final ExclusionManager exclude) {
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
-    @Nullable final SimpleName $ = new Conservative(d).selectReturnVariable();
+     final SimpleName $ = new Conservative(d).selectReturnVariable();
     if ($ == null)
       return null;
     if (exclude != null)
@@ -71,7 +69,7 @@ abstract class AbstractRenamePolicy {
   private final MethodDeclaration inner;
    final List<SimpleName> localVariables;
    final List<SingleVariableDeclaration> parameters;
-  @Nullable final List<ReturnStatement> returnStatements;
+   final List<ReturnStatement> returnStatements;
 
   AbstractRenamePolicy(final MethodDeclaration inner) {
      final MethodExplorer explorer = new MethodExplorer(this.inner = inner);
@@ -80,7 +78,7 @@ abstract class AbstractRenamePolicy {
     returnStatements = prune(explorer.returnStatements());
   }
 
-  @Nullable abstract SimpleName innerSelectReturnVariable();
+   abstract SimpleName innerSelectReturnVariable();
 
   final SimpleName selectReturnVariable() {
     return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
@@ -114,7 +112,7 @@ class Aggressive extends AbstractRenamePolicy {
     super(inner);
   }
 
-  @Override @Nullable SimpleName innerSelectReturnVariable() {
+  @Override  SimpleName innerSelectReturnVariable() {
     return bestCandidate(localVariables, returnStatements);
   }
 }

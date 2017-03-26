@@ -6,8 +6,6 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty {@code enum} with a variety of {@code public
@@ -26,8 +24,8 @@ public interface idiomatic {
     }
   };
   /** an ignoring trigger */
-  @Nullable Trigger tIgnore = new Trigger() {
-    @Override @Nullable public <T> T eval(@SuppressWarnings("unused") final Supplier<T> __) {
+   Trigger tIgnore = new Trigger() {
+    @Override  public <T> T eval(@SuppressWarnings("unused") final Supplier<T> __) {
       return null;
     }
   };
@@ -55,7 +53,7 @@ public interface idiomatic {
    * @param condition
    * @param t JD
    * @return T */
-  @Nullable static <T> T incase(final boolean condition, final T t) {
+   static <T> T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
 
@@ -77,7 +75,7 @@ public interface idiomatic {
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
-   static String quote(@Nullable final String $) {
+   static String quote( final String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
 
@@ -91,7 +89,7 @@ public interface idiomatic {
     return new Storer<>(¢);
   }
 
-  @Nullable static Trigger unless(final boolean condition) {
+   static Trigger unless(final boolean condition) {
     return vhen(!condition);
   }
 
@@ -100,7 +98,7 @@ public interface idiomatic {
    * @param t JD
    * @return non-boolean parameter, in case the boolean parameter is true, or
    *         null, otherwise */
-  @Nullable static <T> T unless(final boolean condition, final T t) {
+   static <T> T unless(final boolean condition, final T t) {
     return incase(!condition, t);
   }
 
@@ -111,7 +109,7 @@ public interface idiomatic {
       this.t = t;
     }
 
-    @Nullable public ConditionHolder nulls() {
+     public ConditionHolder nulls() {
       return new ConditionHolder(t == null);
     }
   }
@@ -152,7 +150,7 @@ public interface idiomatic {
 
   /** @param condition JD
    * @return */
-  @Nullable static Trigger vhen(final boolean condition) {
+   static Trigger vhen(final boolean condition) {
     return condition ? eval : tIgnore;
   }
 
@@ -188,7 +186,7 @@ public interface idiomatic {
      * @param unless condition on which value is returned
      * @return {@link #get()} when the parameter is {@code true} , otherwise
      *         {@code null. */
-    @Nullable default T unless(final boolean unless) {
+     default T unless(final boolean unless) {
       return when(!unless);
     }
 
@@ -196,7 +194,7 @@ public interface idiomatic {
      * @return {@link #get()} when the parameter is {@code true} , otherwise
      *         {@code null.
      * @param when condition on which value is returned */
-    @Nullable default T when(final boolean when) {
+     default T when(final boolean when) {
       return when ? get() : null;
     }
 
@@ -272,12 +270,12 @@ public interface idiomatic {
     /** @param <T> JD
      * @param t JD
      * @return */
-    @Nullable <T> T eval(Supplier<T> t);
+     <T> T eval(Supplier<T> t);
 
     /** @param <T> JD
      * @param $ JD
      * @return */
-    @Nullable default <T> T eval(final T $) {
+     default <T> T eval(final T $) {
       return eval(() -> $);
     }
   }
@@ -370,7 +368,7 @@ public interface idiomatic {
       return λ -> (Collection<R>) λ;
     }
 
-    @Override @SuppressWarnings("unchecked") @Nullable public Supplier<Collection<R>> supplier() {
+    @Override @SuppressWarnings("unchecked")  public Supplier<Collection<R>> supplier() {
       return () -> {
         try {
           return cls.getConstructor().newInstance();

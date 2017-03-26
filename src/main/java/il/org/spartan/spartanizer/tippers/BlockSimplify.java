@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -55,7 +53,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
      final List<Statement> ss = extract.statements(b);
     if (identical(ss, statements(b)) || haz.hidings(ss))
       return null;
-    @Nullable final ASTNode parent = az.statement(parent(b));
+     final ASTNode parent = az.statement(parent(b));
     if (parent == null || iz.tryStatement(parent))
       return reorganizeStatement(b);
     switch (ss.size()) {

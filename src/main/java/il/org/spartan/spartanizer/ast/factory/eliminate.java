@@ -12,8 +12,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -32,7 +30,7 @@ public enum eliminate {
    * @return Given {@link Statement} without the last inner statement, if ¢ is
    *         empty or has only one statement return empty statement. */
   public static Statement lastStatement( final Statement $) {
-    @Nullable final Block b = az.block($);
+     final Block b = az.block($);
     if (b == null)
       return make.emptyStatement($);
      final List<Statement> ss = step.statements(b);

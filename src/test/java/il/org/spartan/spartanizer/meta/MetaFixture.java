@@ -12,8 +12,6 @@ import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -34,7 +32,7 @@ public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
-  @Nullable protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+   protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
       new FixtureFinally(), //
@@ -62,7 +60,7 @@ public abstract class MetaFixture {
    * @return a collection of arrays as described */
    protected static Collection<Object[]> collect(final String annotationName,  final MetaFixture... fs) {
      @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
-    for (@Nullable @knows({ "t", "ts", "$" }) final MetaFixture t : fs)
+    for ( @knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
         for ( @knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
           if ((a.getTypeName() + "").equals(annotationName))
@@ -138,7 +136,7 @@ public abstract class MetaFixture {
    * @param $ an expression
    * @return a string array as described if $ is a string literal or an array
    *         initializer, otherwise an empty string array */
-   private static String[] values(@Nullable final Expression $) {
+   private static String[] values( final Expression $) {
     return $ == null ? new String[0] : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
         iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[0];
   }

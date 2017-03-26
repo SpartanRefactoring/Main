@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tipping;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
@@ -17,7 +15,7 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
 
   @Override public final Tip tip( final N n, final ExclusionManager m) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n m = " + m + fault.done();
-    @Nullable final ASTNode $ = replacement(n, m);
+     final ASTNode $ = replacement(n, m);
     return $ == null ? null : new Tip(description(n), n, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);
@@ -29,5 +27,5 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
     return true;
   }
 
-  @Nullable protected abstract ASTNode replacement(N n, ExclusionManager m);
+   protected abstract ASTNode replacement(N n, ExclusionManager m);
 }

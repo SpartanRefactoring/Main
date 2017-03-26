@@ -10,8 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -77,12 +75,12 @@ public enum JUnitTestMethodFacotry {
 
   public static String shortenIdentifiers( final String javaFragment) {
      final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
-    @Nullable final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
+     final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());
      final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
-    @Nullable final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
+     final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
     if (n == null)
       return javaFragment;
     final ASTRewrite r = ASTRewrite.create(ast);

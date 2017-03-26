@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -23,7 +21,7 @@ public enum Files {
       dir.mkdir();
   }
 
-  @SuppressWarnings("deprecation") @Nullable public static String getProperty(final String ¢) {
+  @SuppressWarnings("deprecation")  public static String getProperty(final String ¢) {
     return AnalyzerOptions.get(Analyze.class.getSimpleName(), ¢);
   }
 
@@ -31,7 +29,7 @@ public enum Files {
     AnalyzerOptions.set(key, value);
   }
 
-  @Nullable public static String outputDir() {
+   public static String outputDir() {
     return getProperty("outputDir");
   }
 
@@ -114,7 +112,7 @@ public enum Files {
    * Heuristically, we ignore test files.
    * @param directory to search in
    * @return All java files nested inside the outputFolder */
-   private static Collection<File> getJavaFiles(@Nullable final File directory) {
+   private static Collection<File> getJavaFiles( final File directory) {
      final Collection<File> $ = new HashSet<>();
     if (directory == null || directory.listFiles() == null)
       return $;

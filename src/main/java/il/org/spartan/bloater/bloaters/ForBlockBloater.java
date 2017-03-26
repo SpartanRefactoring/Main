@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -20,7 +18,7 @@ public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -2414682418747217785L;
 
-  @Override @Nullable public ASTNode replacement(@Nullable final ForStatement s) {
+  @Override  public ASTNode replacement( final ForStatement s) {
     if (s == null)
       return null;
     final ForStatement $ = copy.of(s);

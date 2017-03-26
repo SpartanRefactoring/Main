@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** A utility class used to scan statements of a {@link MethodDeclaration}.
@@ -16,8 +14,8 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2016 */
 public abstract class MethodScanner {
    protected final MethodDeclaration method;
-  @Nullable protected final List<Statement> statements;
-  @Nullable protected Statement currentStatement;
+   protected final List<Statement> statements;
+   protected Statement currentStatement;
   protected int currentIndex;
 
   public MethodScanner( final MethodDeclaration method) {
@@ -34,7 +32,7 @@ public abstract class MethodScanner {
   }
 
   /** @return List of available statements from the method to be scanned. */
-  @Nullable protected abstract List<Statement> availableStatements();
+   protected abstract List<Statement> availableStatements();
 
   /** @return List of available statements. Updates the current statement and
    *         the current index while looping. */

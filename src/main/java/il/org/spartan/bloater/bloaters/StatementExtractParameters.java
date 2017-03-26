@@ -13,8 +13,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -43,7 +41,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return "Extract complex parameter from statement";
   }
 
-  @Override @Nullable public Tip tip( final Statement s) {
+  @Override  public Tip tip( final Statement s) {
     final ASTNode root = s.getRoot();
     if (!s.getAST().hasResolvedBindings() || !(root instanceof CompilationUnit)
         || !(((CompilationUnit) root).getTypeRoot() instanceof ICompilationUnit))
@@ -54,7 +52,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final ITypeBinding binding = $.resolveTypeBinding();
     if (binding == null)
       return null;
-    @Nullable final CompilationUnit u = az.compilationUnit(root);
+     final CompilationUnit u = az.compilationUnit(root);
     if (u == null)
       return null;
     // TODO Ori Roth: use library code
@@ -68,7 +66,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return t == null || $ instanceof Assignment ? null : new Tip(description(s), s, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
-        @Nullable final Type tt = fixWildCardType(t);
+         final Type tt = fixWildCardType(t);
         final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
          final String nn = scope.newName(s, tt);
         f.setName(make.from(s).identifier(nn));
@@ -200,7 +198,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * {@link ArrayType} rather than {@link WildcardType}!
    * @param tipper
    * @return */
-  @Nullable static Type fixWildCardType(@Nullable final Type $) {
+   static Type fixWildCardType( final Type $) {
     if ($ == null)
       return null;
     if ($ instanceof WildcardType)

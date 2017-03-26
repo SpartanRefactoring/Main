@@ -6,7 +6,6 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -17,7 +16,7 @@ import il.org.spartan.spartanizer.research.util.*;
  * @author michalcohen
  * @since Nov 14, 2016 */
 public class CleanerVisitorTest {
-  @Nullable private static ASTNode createAST( final String ¢) {
+   private static ASTNode createAST( final String ¢) {
     return wizard.ast(¢);
   }
 

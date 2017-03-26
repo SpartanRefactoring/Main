@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -26,7 +24,7 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
     return $;
   }
 
-  private static boolean fitting(@Nullable final WhileStatement ¢) {
+  private static boolean fitting( final WhileStatement ¢) {
     return ¢ != null && !iz.containsContinueStatement(body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢)
         && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢);
   }
@@ -40,11 +38,11 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
-  @Override public boolean prerequisite(@Nullable final WhileStatement ¢) {
+  @Override public boolean prerequisite( final WhileStatement ¢) {
     return ¢ != null && fitting(¢);
   }
 
-  @Override @Nullable public ASTNode replacement( final WhileStatement ¢) {
+  @Override  public ASTNode replacement( final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢);
   }
 }

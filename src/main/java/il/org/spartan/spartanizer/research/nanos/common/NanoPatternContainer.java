@@ -5,8 +5,6 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
@@ -35,7 +33,7 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     return this;
   }
 
-  public boolean canTip(@Nullable final N ¢) {
+  public boolean canTip( final N ¢) {
     return ¢ != null//
         && stream().anyMatch(λ -> λ.check(¢));
   }
@@ -44,7 +42,7 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     return !canTip(¢);
   }
 
-  @Nullable public Tip firstTip(final N ¢) {
+   public Tip firstTip(final N ¢) {
     return firstTipper(¢).tip(¢);
   }
 

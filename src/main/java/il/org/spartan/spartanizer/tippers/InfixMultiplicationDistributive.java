@@ -11,8 +11,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -50,7 +48,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return "Apply the distributive rule to " + ¢;
   }
 
-  @Override public boolean prerequisite(@Nullable final InfixExpression $) {
+  @Override public boolean prerequisite( final InfixExpression $) {
     return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
   }
 
@@ -82,9 +80,9 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   private ASTNode replacement( final InfixExpression e1,  final InfixExpression e2) {
     assert e1 != null;
     assert e2 != null;
-    @Nullable final List<Expression> es1 = extract.allOperands(e1);
+     final List<Expression> es1 = extract.allOperands(e1);
     assert es1 != null;
-    @Nullable final List<Expression> es2 = extract.allOperands(e2);
+     final List<Expression> es2 = extract.allOperands(e2);
     assert es2 != null;
      final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
     for ( final Expression ¢ : es1) {
@@ -132,7 +130,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
         removeElFromList(different, $);
       }
     }
-    @Nullable Expression addition = null;
+     Expression addition = null;
     for (final Integer ¢ : range.from(0).to(different.size() - 1))
       addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(PLUS2);
     if ($.isEmpty())
@@ -141,7 +139,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       return subject.pair(first($), addition).to(TIMES);
     if ($.size() <= 1)
       return null;
-    @Nullable Expression multiplication = null;
+     Expression multiplication = null;
     for (int ¢ = 0; ¢ < $.size() - 1;) {
       ++¢;
       multiplication = (multiplication == null ? subject.pair($.get(¢), $.get(¢ + 1)) : subject.pair(multiplication, different.get(¢ + 1))).to(TIMES);

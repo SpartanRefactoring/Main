@@ -13,8 +13,6 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
@@ -36,7 +34,7 @@ public class ASTInFilesVisitor {
   @External(alias = "c", value = "corpus name")  @SuppressWarnings("CanBeFinal") protected String corpus = "";
   @External(alias = "s", value = "silent") protected boolean silent;
   protected static final String[] defaultArguments = as.array("..");
-  @Nullable static BufferedWriter out;
+   static BufferedWriter out;
   static {
     TrimmerLog.off();
     Trimmer.silent = true;
@@ -100,11 +98,11 @@ public class ASTInFilesVisitor {
     this(null);
   }
 
-  public ASTInFilesVisitor(@Nullable final String[] args) {
+  public ASTInFilesVisitor( final String[] args) {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
 
-  private void collect(@Nullable final CompilationUnit ¢) {
+  private void collect( final CompilationUnit ¢) {
     if (¢ != null)
       ¢.accept(astVisitor);
   }
@@ -165,7 +163,7 @@ public class ASTInFilesVisitor {
           silent = true;
         }
       }.fire(new ASTTrotter() {
-        boolean interesting(@Nullable final List<Statement> ¢) {
+        boolean interesting( final List<Statement> ¢) {
           return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
         }
 
@@ -205,7 +203,7 @@ public class ASTInFilesVisitor {
       }.fire(new ASTTrotter() {
         {
           hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
-            @Override @Nullable public Void fire() {
+            @Override  public Void fire() {
               return null;
             }
 

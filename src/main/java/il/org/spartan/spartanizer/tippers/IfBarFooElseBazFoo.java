@@ -11,8 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -65,7 +63,7 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
     }
     return $.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
-        @Nullable final IfStatement newIf = replacement();
+         final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {
           final ListRewrite lr = insertAfter(s, commmonSuffix, r, g);
           lr.insertAfter(newIf, s, g);
@@ -77,12 +75,12 @@ public final class IfBarFooElseBazFoo extends EagerTipper<IfStatement>//
         }
       }
 
-      @Nullable IfStatement replacement() {
+       IfStatement replacement() {
         return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
 
-      @Nullable IfStatement replacement( final Expression condition, @Nullable final Statement trimmedThen,
-          @Nullable final Statement trimmedElse) {
+       IfStatement replacement( final Expression condition,  final Statement trimmedThen,
+           final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
             : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
       }

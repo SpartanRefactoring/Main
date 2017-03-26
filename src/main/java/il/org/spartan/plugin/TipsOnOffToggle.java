@@ -5,8 +5,6 @@ import static il.org.spartan.Utils.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
 
@@ -51,7 +49,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
   /** the main method of the command handler, runs when the command is
    * called. */
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    @Nullable final IProject p = getProject();
+     final IProject p = getProject();
     if (p == null)
       return null;
     try {
@@ -63,7 +61,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
   }
 
   private static IProject getProject() {
-    @Nullable final IProject $ = Selection.Util.project();
+     final IProject $ = Selection.Util.project();
     return $ != null ? $ : null;
   }
 }

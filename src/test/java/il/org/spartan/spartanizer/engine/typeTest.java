@@ -441,7 +441,7 @@ public final class typeTest {
     }
 
     @Test public void basticExpression29() {
-      @Nullable final InfixExpression e = az.infixExpression(into.e("null+3"));
+       final InfixExpression e = az.infixExpression(into.e("null+3"));
       azzert.that(of(e.getLeftOperand()), is(NULL));
       azzert.that(of(e.getRightOperand()), is(INT));
       azzert.that(of(e), is(STRING));
@@ -705,49 +705,49 @@ public final class typeTest {
     }
 
     @Test public void context12() {
-      @Nullable final InfixExpression e = az.infixExpression(into.e("x <7"));
+       final InfixExpression e = az.infixExpression(into.e("x <7"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(INT));
     }
 
     @Test public void context13() {
-      @Nullable final InfixExpression e = az.infixExpression(into.e("x == (byte)7"));
+       final InfixExpression e = az.infixExpression(into.e("x == (byte)7"));
       azzert.that(of(e.getLeftOperand()), is(NOTHING));
       azzert.that(of(e.getRightOperand()), is(BYTE));
     }
 
     @Test public void context14() {
-      @Nullable final InfixExpression e = az.infixExpression(into.e("x != 'c'"));
+       final InfixExpression e = az.infixExpression(into.e("x != 'c'"));
       azzert.that(of(e.getLeftOperand()), is(NOTHING));
       azzert.that(of(e.getRightOperand()), is(CHAR));
     }
 
     @Test public void context15() {
-      @Nullable final InfixExpression e = az.infixExpression(into.e("y> 7.3"));
+       final InfixExpression e = az.infixExpression(into.e("y> 7.3"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(DOUBLE));
     }
 
     @Test public void context16() {
-      @Nullable final InfixExpression e = az.infixExpression(into.e("x | 7l"));
+       final InfixExpression e = az.infixExpression(into.e("x | 7l"));
       azzert.that(of(e.getLeftOperand()), is(BOOLEANINTEGRAL));
       azzert.that(of(e.getRightOperand()), is(LONG));
     }
 
     @Test public void context17() {
-      @Nullable final InfixExpression e = az.infixExpression(into.e("x & y"));
+       final InfixExpression e = az.infixExpression(into.e("x & y"));
       azzert.that(of(e.getLeftOperand()), is(BOOLEANINTEGRAL));
       azzert.that(of(e.getRightOperand()), is(BOOLEANINTEGRAL));
     }
 
     @Test public void context18() {
-      @Nullable final InfixExpression e = az.infixExpression(into.e("x + \"y\""));
+       final InfixExpression e = az.infixExpression(into.e("x + \"y\""));
       azzert.that(of(e.getLeftOperand()), is(ALPHANUMERIC));
       azzert.that(of(e.getRightOperand()), is(STRING));
     }
 
     @Test public void context19() {
-      @Nullable final InfixExpression e = az.infixExpression(into.e("x - 9f"));
+       final InfixExpression e = az.infixExpression(into.e("x - 9f"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(FLOAT));
     }

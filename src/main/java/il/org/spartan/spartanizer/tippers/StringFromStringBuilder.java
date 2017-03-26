@@ -10,8 +10,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -83,10 +81,10 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     if (!"toString".equals(i.getName() + ""))
       return null;
      final List<Expression> $ = new ArrayList<>();
-    @Nullable MethodInvocation r = i;
+     MethodInvocation r = i;
     for (boolean hs = false;;) {
       final Expression e = r.getExpression();
-      @Nullable final ClassInstanceCreation c = az.classInstanceCreation(e);
+       final ClassInstanceCreation c = az.classInstanceCreation(e);
       if (c != null) {
          final String t = c.getType() + "";
         if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
@@ -102,7 +100,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
           $.add(0, make.makeEmptyString(e));
         break;
       }
-      @Nullable final MethodInvocation mi = az.methodInvocation(e);
+       final MethodInvocation mi = az.methodInvocation(e);
       if (mi == null || !"append".equals(mi.getName() + "") || mi.arguments().isEmpty())
         return null;
       final Expression a = onlyOne(arguments(mi));

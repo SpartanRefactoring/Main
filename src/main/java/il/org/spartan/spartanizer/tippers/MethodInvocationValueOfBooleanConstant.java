@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,11 +21,11 @@ public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrent
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }
 
-  @Nullable private static Expression replacement(final Expression x, @Nullable final BooleanLiteral l) {
+   private static Expression replacement(final Expression x,  final BooleanLiteral l) {
     return l == null ? null : subject.operand(x).toQualifier(asString(l));
   }
 
-  @Nullable private static Expression replacement(@Nullable final Expression x, final Expression $) {
+   private static Expression replacement( final Expression x, final Expression $) {
     return x == null || !"Boolean".equals(x + "") ? null : replacement(x, az.booleanLiteral($));
   }
 

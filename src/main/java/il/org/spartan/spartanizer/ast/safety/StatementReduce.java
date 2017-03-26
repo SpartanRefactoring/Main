@@ -5,8 +5,6 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
@@ -22,14 +20,14 @@ public abstract class StatementReduce<T> {
     return reduce(reduce(dimensions(¢)), map(¢.getInitializer()));
   }
 
-  @Nullable private T reduce( final Iterable<Expression> xs) {
-    @Nullable T $ = neutralElement();
+   private T reduce( final Iterable<Expression> xs) {
+     T $ = neutralElement();
     for ( final Expression ¢ : xs)
       $ = reduce($, map(¢));
     return $;
   }
 
-  @Nullable protected T map(final AssertStatement ¢) {
+   protected T map(final AssertStatement ¢) {
     return mapAtomic(¢);
   }
 
@@ -37,14 +35,14 @@ public abstract class StatementReduce<T> {
     return reduce(map(to(¢)), map(from(¢)));
   }
 
-  @Nullable protected T map(final Block b) {
-    @Nullable T $ = neutralElement();
+   protected T map(final Block b) {
+     T $ = neutralElement();
     for ( final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
   }
 
-  @Nullable protected T map(final BreakStatement ¢) {
+   protected T map(final BreakStatement ¢) {
     return mapAtomic(¢);
   }
 
@@ -56,11 +54,11 @@ public abstract class StatementReduce<T> {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
-  @Nullable protected T map(final ConstructorInvocation ¢) {
+   protected T map(final ConstructorInvocation ¢) {
     return mapAtomic(¢);
   }
 
-  @Nullable protected T map(final ContinueStatement ¢) {
+   protected T map(final ContinueStatement ¢) {
     return mapAtomic(¢);
   }
 
@@ -68,7 +66,7 @@ public abstract class StatementReduce<T> {
     return map(¢.getBody());
   }
 
-  @Nullable protected T map(final EmptyStatement ¢) {
+   protected T map(final EmptyStatement ¢) {
     return mapAtomic(¢);
   }
 
@@ -76,7 +74,7 @@ public abstract class StatementReduce<T> {
     return map(¢.getBody());
   }
 
-  @Nullable T map( final Expression ¢) {
+   T map( final Expression ¢) {
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
         return map((PrefixExpression) ¢);
@@ -113,7 +111,7 @@ public abstract class StatementReduce<T> {
     return map(¢.getLeftOperand());
   }
 
-  @Nullable protected T map(final ExpressionStatement ¢) {
+   protected T map(final ExpressionStatement ¢) {
     return mapAtomic(¢);
   }
 
@@ -129,15 +127,15 @@ public abstract class StatementReduce<T> {
     return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
 
-  @Nullable protected T map(final PostfixExpression ¢) {
+   protected T map(final PostfixExpression ¢) {
     return map(expression(¢));
   }
 
-  @Nullable protected T map(final PrefixExpression ¢) {
+   protected T map(final PrefixExpression ¢) {
     return map(expression(¢));
   }
 
-  @Nullable protected T map(final ReturnStatement ¢) {
+   protected T map(final ReturnStatement ¢) {
     return mapAtomic(¢);
   }
 
@@ -183,12 +181,12 @@ public abstract class StatementReduce<T> {
     return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
 
-  @Nullable protected T mapAtomic(final Statement i) {
+   protected T mapAtomic(final Statement i) {
     ___.______unused(i);
     return neutralElement();
   }
 
-  @Nullable protected T neutralElement() {
+   protected T neutralElement() {
     return null;
   }
 

@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
@@ -54,9 +52,9 @@ public enum analyze {
     return new ArrayList<>($).stream().collect(toList());
   }
 
-  @Nullable public static String type(final Name n) {
-    @Nullable final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
-    @Nullable final String $ = m == null ? null : findDeclarationInMethod(n, m);
+   public static String type(final Name n) {
+     final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
+     final String $ = m == null ? null : findDeclarationInMethod(n, m);
     return $ != null ? $ : findDeclarationInType(n, yieldAncestors.untilContainingType().from(n));
   }
 
@@ -70,7 +68,7 @@ public enum analyze {
     return null;
   }
 
-  @Nullable private static String findDeclarationInMethod(final Name n,  final MethodDeclaration d) {
+   private static String findDeclarationInMethod(final Name n,  final MethodDeclaration d) {
      final Str $ = new Str();
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {

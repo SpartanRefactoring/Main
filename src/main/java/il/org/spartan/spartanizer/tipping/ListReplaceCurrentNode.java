@@ -5,8 +5,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.engine.*;
 
 /** Used to replace a node with multiple replacements, taking its place in the
@@ -19,7 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 0x7E4CC9A1D3ABAECCL;
 
-  @Nullable public abstract List<ASTNode> go(ASTRewrite r, N n, TextEditGroup g);
+   public abstract List<ASTNode> go(ASTRewrite r, N n, TextEditGroup g);
 
   /** @return child list property descriptor of the parent of the node we are
    *         replacing */

@@ -7,8 +7,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.java.*;
 import il.org.spartan.java.Token.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -42,7 +40,7 @@ public interface metrics {
 
   /** @param n JD
    * @return The total number of distinct kind of nodes in the AST */
-  @SuppressWarnings("boxing") static int dexterity(@Nullable final ASTNode n) {
+  @SuppressWarnings("boxing") static int dexterity( final ASTNode n) {
     if (n == null)
       return 0;
      final Recurser<Integer> $ = new Recurser<>(n, 0);
@@ -67,11 +65,11 @@ public interface metrics {
     return $;
   }
 
-  @SuppressWarnings("boxing") static int horizontalComplexity(final int base, @Nullable final List<Statement> ss) {
+  @SuppressWarnings("boxing") static int horizontalComplexity(final int base,  final List<Statement> ss) {
     return ss == null ? 0 : ss.stream().map(λ -> base + horizontalComplexity(λ)).reduce((x, y) -> x + y).get();
   }
 
-  static int horizontalComplexity(final int base, @Nullable final Statement s) {
+  static int horizontalComplexity(final int base,  final Statement s) {
     return s == null ? 0 : iz.emptyStatement(s) ? 1 : !iz.block(s) ? 13443 : 2 + metrics.horizontalComplexity(base + 1, statements(az.block(s)));
   }
 
@@ -118,7 +116,7 @@ public interface metrics {
 
   /** @param n JD
    * @return The total number of internal nodes in the AST */
-  @SuppressWarnings("boxing") static int internals(@Nullable final ASTNode n) {
+  @SuppressWarnings("boxing") static int internals( final ASTNode n) {
     return n == null ? 0 : new Recurser<>(n, 0).preVisit(λ -> Recurser.children(λ.getRoot()).isEmpty() ? λ.getCurrent() : λ.getCurrent() + 1);
   }
 
@@ -160,7 +158,7 @@ public interface metrics {
 
   /** @param n JD
    * @return The total number of nodes in the AST */
-  @SuppressWarnings("boxing") static int nodes(@Nullable final ASTNode n) {
+  @SuppressWarnings("boxing") static int nodes( final ASTNode n) {
     return n == null ? 0 : new Recurser<>(n, 0).preVisit(λ -> (1 + λ.getCurrent()));
   }
 

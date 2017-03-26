@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -19,7 +17,7 @@ public class IfDeadRemove extends ReplaceCurrentNode<IfStatement>//
     return "Remove :" + ¢;
   }
 
-  @Override @Nullable public ASTNode replacement( final IfStatement ¢) {
+  @Override  public ASTNode replacement( final IfStatement ¢) {
     return !sideEffects.free(¢) ? null : ¢.getAST().newBlock();
   }
 }

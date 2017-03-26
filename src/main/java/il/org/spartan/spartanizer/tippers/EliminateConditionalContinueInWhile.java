@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -20,7 +18,7 @@ public class EliminateConditionalContinueInWhile extends EagerTipper<WhileStatem
     return "Eliminate conditional continue before last statement in the for loop";
   }
 
-  @Override @Nullable public Tip tip( final WhileStatement ¢) {
+  @Override  public Tip tip( final WhileStatement ¢) {
     return ContinueInConditionalEliminateAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
   }
 }

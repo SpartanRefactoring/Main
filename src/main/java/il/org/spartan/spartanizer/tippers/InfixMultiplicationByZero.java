@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -32,7 +30,7 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
     return "Convert" + ¢ + " to 0";
   }
 
-  @Override @Nullable public ASTNode replacement( final InfixExpression ¢) {
+  @Override  public ASTNode replacement( final InfixExpression ¢) {
     if (¢.getOperator() != TIMES || !containsZero(¢) || isContainsSideEffect(¢))
       return null;
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();

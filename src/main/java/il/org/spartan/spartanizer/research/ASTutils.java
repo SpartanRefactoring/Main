@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.research;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -60,7 +58,7 @@ public enum ASTutils {
     }
   }
 
-  @Nullable private static <N extends ASTNode> N findSecond( final Class<?> c, @Nullable final ASTNode n) {
+   private static <N extends ASTNode> N findSecond( final Class<?> c,  final ASTNode n) {
     if (n == null)
       return null;
      final Wrapper<Boolean> foundFirst = new Wrapper<>();
