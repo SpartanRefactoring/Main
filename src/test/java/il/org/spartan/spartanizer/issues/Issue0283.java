@@ -35,6 +35,7 @@ public class Issue0283 {
         .stays() //
     ;
   }
+
   @Test public void duplication() {
     trimmingOf("@A @D1(3)@E @D({3})@E @F public void a(){}") //
         .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
@@ -44,35 +45,36 @@ public class Issue0283 {
         .stays() //
     ;
   }
-  /** Introduced by Yogi on Thu-Mar-23-19:55:44-IST-2017 
-  (code automatically generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java')*/
+
+  /** Introduced by Yogi on Thu-Mar-23-19:55:44-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_aBClassCAD3EF3GPublicVoida() {
-     trimmingOf("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
-   .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
-   .gives("@A @B class C{@A @D(3)@E @F(3)@G public void a(){}}") //
-    .stays() //
+    trimmingOf("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
+        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
+        .gives("@A @B class C{@A @D(3)@E @F(3)@G public void a(){}}") //
+        .stays() //
     ;
   }
-
 
   /** Automatically generated */
   @Test public void err4() {
     trimmingOf("@A @B class C{@A @D1(3)@E @D({3})@F public void a(){}}") //
-    .gives("@A @B class C{@A @D({3})@D1(3)@D(3)@F public void a(){}}") // 
-    .gives("@A @B class C{@A @D(3)@D({3})@D1(3)@F public void a(){}}") // 
-    .gives("@A @B class C{@A @D(3)@D(3)@D1(3)@F public void a(){}}") //   
-    .stays();
-    ;
+        .gives("@A @B class C{@A @D({3})@D1(3)@D(3)@F public void a(){}}") //
+        .gives("@A @B class C{@A @D(3)@D({3})@D1(3)@F public void a(){}}") //
+        .gives("@A @B class C{@A @D(3)@D(3)@D1(3)@F public void a(){}}") //
+        .stays();
   }
-  /** Introduced by Yogi on Thu-Mar-23-20:04:01-IST-2017 
-  (code automatically generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java')*/
+
+  /** Introduced by Yogi on Thu-Mar-23-20:04:01-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_BClassCAD3EF3GPublicVoida() {
-     trimmingOf("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
-   .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
-   .gives("@A @B class C{@A @D(3)@E @F(3)@G public void a(){}}") //
-    .stays() //
+    trimmingOf("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
+        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
+        .gives("@A @B class C{@A @D(3)@E @F(3)@G public void a(){}}") //
+        .stays() //
     ;
   }
+
   @Test public void test0() {
     trimmingOf("@SuppressWarnings(\"unused\") " //
         + "@Deprecated " //
@@ -82,6 +84,8 @@ public class Issue0283 {
                 + " void myMethod() { }")//
             .stays();
   }
+
+ 
 
   @Test public void test1() {
     azzert.that(AnnotationSort.compare("Override", "Override"), is(0));
@@ -95,6 +99,7 @@ public class Issue0283 {
     azzert.that(AnnotationSort.compare("NonNull", "Nullable"), lessThan(0));
     azzert.that(AnnotationSort.compare("SomeUserDefinedA", "SomeUserDefinedB"), lessThan(0));
     azzert.that(AnnotationSort.compare("SupportedSourceVersion", "WebServiceProvider"), lessThan(0));
+    int a = 0;
   }
 
   @Test public void test2() {
@@ -119,11 +124,12 @@ public class Issue0283 {
         .gives("@Ignore class Test123{@Deprecated @Test @SuppressWarnings(3) @SuppressWarnings(3) @NonNull public void test0(){}}") //
         .stays();
   }
-  /** Introduced by Yogi on Thu-Mar-23-20:01:54-IST-2017 
-  (code automatically generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java')*/
+
+  /** Introduced by Yogi on Thu-Mar-23-20:01:54-IST-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_aClassBCDE3E3FPublicVoida() {
-     trimmingOf("@A class B{@C @D @E(3)@E(3)@F public void a(){}}") //
-    .stays() //
+    trimmingOf("@A class B{@C @D @E(3)@E(3)@F public void a(){}}") //
+        .stays() //
     ;
   }
 

@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-04 */
 public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Object> {
-  private static final long serialVersionUID = 429192337773634368L;
+  private static final long serialVersionUID = 0x5F4CC2841512340L;
 
   public Row() {
     reset();
