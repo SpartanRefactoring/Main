@@ -15,9 +15,9 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0310 {
   @Test public void OrisCode_k() {
-    trimmingOf("void foo(){int i=0;for(;i<10;++i)if(i=5)break;}")//
-        .gives("void foo(){for(int i=0;i<10;++i)if(i=5)break;}")//
-        .gives("void foo(){for(int ¢=0;¢<10;++¢)if(¢=5)break;}")//
+    trimmingOf("void foo(){int i=0;for(;i<10;++i)if(i=5)return;}")//
+        .gives("void foo(){for(int i=0;i<10;++i)if(i=5)return;}")//
+        .gives("void foo(){for(int ¢=0;¢<10;++¢)if(¢=5)return;}")//
         .stays();
   }
 
