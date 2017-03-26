@@ -443,6 +443,15 @@ public enum extract {
   public static SimpleName simpleName(final PrefixExpression $) {
     return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
   }
+  
+  /** @param n root node to search the identifier in it
+   * @param x the identifier to search for
+   * @return number of times x appears in n */
+  public static int countNameInSubtree(final SimpleName n, final ASTNode x) {
+    if(n == null || x == null)
+      return 0;
+    return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).size();
+  }
 
   /** Finds the single statement in the {@code else} branch of an
    * {@link IfStatement}

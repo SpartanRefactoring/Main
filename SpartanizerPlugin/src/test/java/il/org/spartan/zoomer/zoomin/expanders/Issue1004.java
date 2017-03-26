@@ -54,4 +54,27 @@ public class Issue1004 {
     bloatingOf("a[+x] = 1;")//
         .stays();
   }
+  
+  @Test public void t10() {
+    bloatingOf("x = arr[i--];")//
+    .gives("x = arr[i]; i--;");
+  }
+  
+
+  @Test public void t11() {
+    bloatingOf("i = arr[i];").stays();
+  }
+  
+
+  @Test public void t12() {
+    bloatingOf("f(arr[i++]);").gives("f(arr[i]);i++;");
+  }
+  
+  @Test public void t13() {
+    bloatingOf("f(arr[i++],arr[i++]);").stays();
+  }
+  
+  @Test public void t14() {
+    bloatingOf("for(;;a[i++]=1){}").stays();
+  }
 }
