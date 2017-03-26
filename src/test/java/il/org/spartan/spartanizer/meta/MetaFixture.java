@@ -12,8 +12,6 @@ import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -34,7 +32,7 @@ public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");
   private static final Map<Class<? extends MetaFixture>, CompilationUnit> classToASTCompilationUnit = new LinkedHashMap<>();
   private static final Map<Class<? extends MetaFixture>, String> classToText = new LinkedHashMap<>();
-  @Nullable protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
+   protected static final MetaFixture[] fixtures = { new FixtureBlock(), new FixtureEnhancedFor(), //
       new FixturePlainFor(), //
       new FixtureCatchBlock(), //
       new FixtureFinally(), //
@@ -48,7 +46,7 @@ public abstract class MetaFixture {
    * @param n AST node
    * @return a string as described */
   public static String ancestry(final ASTNode n) {
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
   }
@@ -60,14 +58,14 @@ public abstract class MetaFixture {
    * @param annotationName the wanted annotation
    * @param fs the metafixtures to search
    * @return a collection of arrays as described */
-  @NotNull protected static Collection<Object[]> collect(final String annotationName, @NotNull final MetaFixture... fs) {
-    @NotNull @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
-    for (@Nullable @knows({ "t", "ts", "$" }) final MetaFixture t : fs)
+   protected static Collection<Object[]> collect(final String annotationName,  final MetaFixture... fs) {
+     @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
+    for ( @knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
-        for (@NotNull @knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
+        for ( @knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())
           if ((a.getTypeName() + "").equals(annotationName))
             for (@knows({ "t", "a", "s" }) final String s : values(a))
-              for (@NotNull @knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
+              for ( @knows({ "t", "a", "s", "¢" }) final SimpleName ¢ : annotees.of(a))
                 $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
     return $;
   }
@@ -75,7 +73,7 @@ public abstract class MetaFixture {
   /** Returns the path of ¢'s src directory.
    * @param ¢ a File
    * @return the path of its source directory */
-  private static IPath getSrcPath(@NotNull final File ¢) {
+  private static IPath getSrcPath( final File ¢) {
     IPath $ = new Path(¢.getAbsolutePath());
     while (!$.isEmpty() && !"src".equals($.lastSegment()))
       $ = $.removeLastSegments(1);
@@ -86,8 +84,8 @@ public abstract class MetaFixture {
    * content
    * @param fileName the name of the wanted file
    * @return the created cu or null if the wanted file wasn't found */
-  private static CompilationUnit loadAST(@NotNull final String fileName) {
-    for (@NotNull final File $ : new FilesGenerator(".java").from("."))
+  private static CompilationUnit loadAST( final String fileName) {
+    for ( final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName)) {
         final ASTParser p = make.COMPILATION_UNIT.parser(makeAST.string($));
         p.setResolveBindings(true);
@@ -102,8 +100,8 @@ public abstract class MetaFixture {
    * contains its content
    * @param fileName the wanted file
    * @return a string of this file's content */
-  private static String loadText(@NotNull final String fileName) {
-    for (@NotNull final File $ : new FilesGenerator(".java").from("."))
+  private static String loadText( final String fileName) {
+    for ( final File $ : new FilesGenerator(".java").from("."))
       if ($.getAbsolutePath().endsWith(fileName))
         return makeAST.string($);
     return null;
@@ -113,7 +111,7 @@ public abstract class MetaFixture {
    * @param ¢ the single member annotation
    * @return the value in the parameter, if the value isn't an integer an
    *         exception will be raised */
-  public static int value(@NotNull final SingleMemberAnnotation ¢) {
+  public static int value( final SingleMemberAnnotation ¢) {
     return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
   }
 
@@ -129,7 +127,7 @@ public abstract class MetaFixture {
    * strings
    * @param xs a collection of expressions
    * @return a string array with the expressions as strings */
-  private static String[] values(@NotNull final Collection<Expression> xs) {
+  private static String[] values( final Collection<Expression> xs) {
     return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
 
@@ -138,7 +136,7 @@ public abstract class MetaFixture {
    * @param $ an expression
    * @return a string array as described if $ is a string literal or an array
    *         initializer, otherwise an empty string array */
-  @NotNull private static String[] values(@Nullable final Expression $) {
+   private static String[] values( final Expression $) {
     return $ == null ? new String[0] : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
         iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[0];
   }
@@ -147,7 +145,7 @@ public abstract class MetaFixture {
    * value
    * @param ¢ a single member annotation
    * @return a string array as described */
-  protected static String[] values(@NotNull final SingleMemberAnnotation ¢) {
+  protected static String[] values( final SingleMemberAnnotation ¢) {
     return values(¢.getValue());
   }
 
@@ -155,13 +153,13 @@ public abstract class MetaFixture {
    * string
    * @param ¢ a string literal
    * @return an array as described */
-  private static String[] values(@NotNull final StringLiteral ¢) {
+  private static String[] values( final StringLiteral ¢) {
     return as.array(¢.getLiteralValue());
   }
 
   /** Gets all the annotations from current runtime class's cu
    * @return an iterable of these annotations */
-  @NotNull public Iterable<Annotation> annotations() {
+   public Iterable<Annotation> annotations() {
     return descendants.whoseClassIs(Annotation.class).from(reflectedCompilationUnit());
   }
 
@@ -169,9 +167,9 @@ public abstract class MetaFixture {
    * strings are the name of the method and the number of parameters it gets
    * @param cd anonymous class declaration
    * @return a vocabulary as described */
-  @NotNull public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
+   public Vocabulary asVocabulary(final AnonymousClassDeclaration cd) {
     final String name = name();
-    @NotNull final Vocabulary $ = new Vocabulary();
+     final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration ¢ : bodyDeclarations(cd)) {
       assert ¢ instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(¢), ¢);
       $.put(name + "::" + mangle((MethodDeclaration) ¢), (MethodDeclaration) ¢);
@@ -219,7 +217,7 @@ public abstract class MetaFixture {
 
   /** Gets all the single member annotations from current runtime class's cu
    * @return an iterable of these annotations */
-  @NotNull public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
+   public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {
     return descendants.whoseClassIs(SingleMemberAnnotation.class).from(reflectedCompilationUnit());
   }
 }

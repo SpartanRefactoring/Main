@@ -8,12 +8,11 @@ package il.org.spartan.spartanizer.tipping;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 abstract class InfixExpressionSorting extends ReplaceCurrentNode<InfixExpression> {
   private static final long serialVersionUID = 0x2668E59207E2D70CL;
 
-  @Override @NotNull public final String description(@NotNull final InfixExpression ¢) {
+  @Override  public final String description( final InfixExpression ¢) {
     return "Reorder operands of " + ¢.getOperator();
   }
 

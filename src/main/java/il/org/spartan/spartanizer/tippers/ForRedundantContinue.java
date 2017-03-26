@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,18 +19,18 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 0x1DA2D2D1173F3165L;
 
-  @Override @NotNull public String description(final ForStatement ¢) {
+  @Override  public String description(final ForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);
   }
 
-  @Override @NotNull public String description() {
+  @Override  public String description() {
     return "Prune redundant continue";
   }
 
-  @Override @Nullable public Tip tip(@NotNull final ForStatement ¢) {
+  @Override  public Tip tip( final ForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        @Nullable final Block b = az.block(body(¢));
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+         final Block b = az.block(body(¢));
         if (b == null)
           r.replace(extract.lastStatement(¢), make.emptyStatement(¢), g);
         else {
@@ -45,11 +43,11 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     };
   }
 
-  @Override public boolean prerequisite(@NotNull final ForStatement ¢) {
+  @Override public boolean prerequisite( final ForStatement ¢) {
     final Statement s = extract.lastStatement(¢);
     if (!iz.continueStatement(s))
       return false;
-    @NotNull final SimpleName $ = label(az.continueStatement(s));
+     final SimpleName $ = label(az.continueStatement(s));
     return $ == null || iz.labeledStatement(parent(¢)) && $.getIdentifier().equals(((LabeledStatement) ¢.getParent()).getLabel().getIdentifier());
   }
 }

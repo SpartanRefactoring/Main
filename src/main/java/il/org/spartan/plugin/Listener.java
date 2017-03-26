@@ -3,8 +3,6 @@ package il.org.spartan.plugin;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 
-import org.jetbrains.annotations.*;
-
 /** An abstract listener taking events that may have any number of parameters of
  * any kind; default implementation is empty, override to specialize, or use
  * {@link Listener.S}
@@ -27,7 +25,7 @@ public interface Listener {
     return eventId.incrementAndGet();
   }
 
-  @NotNull default Listener asListener() {
+   default Listener asListener() {
     return this;
   }
 
@@ -61,13 +59,13 @@ public interface Listener {
                                                                  <b>public final</b> {@link Listener}  listeners = .
                                                      * </code>
      * @return an empty new instance */
-    @NotNull public static Listener.S empty() {
+     public static Listener.S empty() {
       return new Listener.S();
     }
 
     /** To be used in the nano found in {@link ConfigurableObjectTemplate}
      * @return {@code this} */
-    @NotNull public Listener listeners() {
+     public Listener listeners() {
       return this;
     }
 

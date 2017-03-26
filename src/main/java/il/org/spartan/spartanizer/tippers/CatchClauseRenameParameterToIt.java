@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -23,7 +21,7 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -6638105215049141624L;
 
-  @Override @NotNull public String description(@NotNull final CatchClause ¢) {
+  @Override  public String description( final CatchClause ¢) {
     return String.format("Rename caught %s (%s) to %s", //
         ¢.getException().getName(), //
         ¢.getException().getType(), //
@@ -31,7 +29,7 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     );
   }
 
-  @Override @NotNull public Example[] examples() {
+  @Override  public Example[] examples() {
     return new Example[] { //
         convert("try {f();} catch (Exception e) {e.printStackTrace();}") //
             .to("try {f();} catch (Exception ¢) {¢.printStackTrace();}"), //
@@ -39,14 +37,14 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
         ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") };
   }
 
-  @Override public Tip tip(@NotNull final CatchClause c, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final CatchClause c,  final ExclusionManager m) {
     final SingleVariableDeclaration d = c.getException();
     if (!JohnDoe.property(d))
       return null;
     final SimpleName $ = d.getName();
     if (namer.isSpecial($))
       return null;
-    @NotNull final Block b = body(c);
+     final Block b = body(c);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)

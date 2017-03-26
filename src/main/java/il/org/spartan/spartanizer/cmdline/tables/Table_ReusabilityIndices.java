@@ -4,8 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -24,15 +22,15 @@ public class Table_ReusabilityIndices {
 
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
-      @Override protected void done(@NotNull final String path) {
+      @Override protected void done( final String path) {
         dotter.end();
         addMissingKeys();
         initializeWriter();
         writer.col("Project", presentSourceName);
-        try (@NotNull Table t = new Table("rindices")) {
+        try ( Table t = new Table("rindices")) {
           for (final String category : usage.keySet()) {
             final Map<String, Integer> map = usage.get(category);
-            @NotNull final Int n = new Int(), m = new Int();
+             final Int n = new Int(), m = new Int();
             map.keySet()
                 .forEach(λ -> t//
                     .col("N", ++n.inner)//
@@ -62,31 +60,31 @@ public class Table_ReusabilityIndices {
       super(true);
     }
 
-    @Override public void preVisit(@NotNull final ASTNode ¢) {
+    @Override public void preVisit( final ASTNode ¢) {
       increment("NODE-TYPE", Vocabulary.mangle(¢.getClass()));
     }
 
-    @Override public boolean visit(@NotNull final Assignment ¢) {
+    @Override public boolean visit( final Assignment ¢) {
       return increment("ASSIGNMENT", Vocabulary.mangle(¢));
     }
 
-    @Override public boolean visit(@NotNull final InfixExpression ¢) {
+    @Override public boolean visit( final InfixExpression ¢) {
       return increment("INFIX", key(¢));
     }
 
-    @Override public boolean visit(@NotNull final MethodDeclaration ¢) {
+    @Override public boolean visit( final MethodDeclaration ¢) {
       return defined.add(Vocabulary.mangle(¢));
     }
 
-    @Override public boolean visit(@NotNull final MethodInvocation ¢) {
+    @Override public boolean visit( final MethodInvocation ¢) {
       return increment("METHOD", Vocabulary.mangle(¢));
     }
 
-    @Override public boolean visit(@NotNull final PostfixExpression ¢) {
+    @Override public boolean visit( final PostfixExpression ¢) {
       return increment("POSTFIX", Vocabulary.mangle(¢));
     }
 
-    @Override public boolean visit(@NotNull final PrefixExpression ¢) {
+    @Override public boolean visit( final PrefixExpression ¢) {
       return increment("PREFIX", Vocabulary.mangle(¢));
     }
 
@@ -96,19 +94,19 @@ public class Table_ReusabilityIndices {
     }
   }
 
-  public static boolean increment(@NotNull final Map<String, Integer> category, final String key) {
+  public static boolean increment( final Map<String, Integer> category, final String key) {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
     return true;
   }
 
-  @NotNull static int[] ranks(@NotNull final Map<?, Integer> m) {
-    @NotNull final Int n = new Int();
-    @NotNull final int[] $ = new int[m.size()];
+   static int[] ranks( final Map<?, Integer> m) {
+     final Int n = new Int();
+     final int[] $ = new int[m.size()];
     m.values().forEach(λ -> $[n.inner++] = λ.intValue());
     return $;
   }
 
-  public static int rindex(@NotNull final int... ranks) {
+  public static int rindex( final int... ranks) {
     Arrays.sort(ranks);
     int $ = 0;
     for (int ¢ = 0; ¢ < ranks.length; ++¢)
@@ -124,7 +122,7 @@ public class Table_ReusabilityIndices {
     return $;
   }
 
-  static void addLineToGlobalStatistcs(@NotNull final String path) {
+  static void addLineToGlobalStatistcs( final String path) {
     writer.col("Project", getProjectName(path));
     if (usage.get("METHOD") == null)
       return;
@@ -136,7 +134,7 @@ public class Table_ReusabilityIndices {
     ;
   }
 
-  private static String getProjectName(@NotNull final String ¢) {
+  private static String getProjectName( final String ¢) {
     return ¢.substring(¢.lastIndexOf('-') + 1);
   }
 
@@ -154,23 +152,23 @@ public class Table_ReusabilityIndices {
     return increment(addIfNecessary(category, key), key);
   }
 
-  static String key(@NotNull final InfixExpression ¢) {
+  static String key( final InfixExpression ¢) {
     return key(¢, extract.arity(¢));
   }
 
-  private static String key(@NotNull final InfixExpression ¢, final int arity) {
+  private static String key( final InfixExpression ¢, final int arity) {
     maxArity = Math.max(arity, maxArity);
     return Vocabulary.mangle(¢.getOperator(), arity);
   }
 
   protected static int rExternal() {
-    @NotNull final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
+     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
     defined.forEach($::remove);
     return rindex(ranks($));
   }
 
   protected static int rInternal() {
-    @NotNull final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
+     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
     new ArrayList<>($.keySet()).stream().filter(λ -> !defined.contains(λ)).forEach($::remove);
     return rindex(ranks($));
   }

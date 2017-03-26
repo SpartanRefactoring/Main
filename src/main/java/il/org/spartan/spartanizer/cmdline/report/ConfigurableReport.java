@@ -6,8 +6,6 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -60,7 +58,7 @@ public interface ConfigurableReport {
       return outputList;
     }
 
-    @NotNull static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
 
@@ -87,7 +85,7 @@ public interface ConfigurableReport {
     private ASTNode output;
     private boolean robustMode;
 
-    @NotNull public Action getAction() {
+     public Action getAction() {
       return new Action();
     }
 
@@ -131,10 +129,10 @@ public interface ConfigurableReport {
       this.outputFolder = outputFolder;
     }
 
-    public void setReport(@NotNull final String reportFilename, final String header) {
+    public void setReport( final String reportFilename, final String header) {
       try {
         report = new CSVStatistics(reportFilename, header);
-      } catch (@NotNull final IOException ¢) {
+      } catch ( final IOException ¢) {
         monitor.infoIOException(¢, header);
       }
     }
@@ -196,12 +194,12 @@ public interface ConfigurableReport {
       public void initialize() {
         try {
           report = new CSVStatistics(getFileName(), getHeader());
-        } catch (@NotNull final IOException ¢) {
+        } catch ( final IOException ¢) {
           monitor.infoIOException(¢);
         }
       }
 
-      private void name(@NotNull final ASTNode i) {
+      private void name( final ASTNode i) {
         report().put("name", extract.name(i));
         report().put("category", extract.category(i));
       }
@@ -212,14 +210,14 @@ public interface ConfigurableReport {
 
       // running report
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void write(final ASTNode i, final ASTNode n) {
-        for (@NotNull final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+        for ( final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
           report().put(¢.name() + "1", ¢.function().run(i));
           report().put(¢.name() + "2", ¢.function().run(n));
         }
       }
 
-      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, @Nullable final String id,
-          @Nullable final BiFunction<Integer, Integer> bf) {
+      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n,  final String id,
+           final BiFunction<Integer, Integer> bf) {
         if (bf == null && id == null) {
           write(i, n);
           return;
@@ -231,7 +229,7 @@ public interface ConfigurableReport {
 
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
         String a; // TODO Matteo: to be converted to double or float? -- Matteo
-        for (@NotNull final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+        for ( final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
           a = Utils.p(¢.function().run(n1), ¢.function().run(n2));
           report().put(id + ¢.name() + " %", a);
         }

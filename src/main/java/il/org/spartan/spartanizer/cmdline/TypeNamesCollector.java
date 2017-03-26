@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -22,11 +20,11 @@ public enum TypeNamesCollector {
   static final Map<String, Integer> longNames = new TreeMap<>();
   static final Map<String, Set<String>> shortToFull = new TreeMap<>();
 
-  public static void main(@NotNull final String[] where) throws IOException {
+  public static void main( final String[] where) throws IOException {
     collect(where.length != 0 ? where : as.array("."));
-    @NotNull final CSVStatistics w = new CSVStatistics("types.csv", "property");
+     final CSVStatistics w = new CSVStatistics("types.csv", "property");
     for (final String s : longNames.keySet()) {
-      @NotNull final String shortName = namer.shorten(s);
+       final String shortName = namer.shorten(s);
       w.put("Count", longNames.get(s).intValue());
       w.put("Log(Count)", Math.log(longNames.get(s).intValue()));
       w.put("Sqrt(Count)", Math.sqrt(longNames.get(s).intValue()));
@@ -38,10 +36,10 @@ public enum TypeNamesCollector {
     System.err.println("Look for your output here: " + w.close());
   }
 
-  private static void collect(@NotNull final CompilationUnit u) {
+  private static void collect( final CompilationUnit u) {
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
-      @Override public boolean visit(@NotNull final SimpleType ¢) {
+      @Override public boolean visit( final SimpleType ¢) {
         record(hop.simpleName(¢) + "");
         return true;
       }
@@ -49,22 +47,22 @@ public enum TypeNamesCollector {
       void record(final String longName) {
         longNames.putIfAbsent(longName, Integer.valueOf(0));
         longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
-        @NotNull final String shortName = namer.shorten(longName);
+         final String shortName = namer.shorten(longName);
         shortToFull.putIfAbsent(shortName, new HashSet<>());
         shortToFull.get(shortName).add(longName);
       }
     });
   }
 
-  private static void collect(@NotNull final File f) {
+  private static void collect( final File f) {
     try {
       collect(FileUtils.read(f));
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
 
-  private static void collect(@NotNull final String javaCode) {
+  private static void collect( final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
