@@ -10,8 +10,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** An empty {@code enum} with a variety of {@code public
@@ -50,7 +48,7 @@ public enum copy {
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
-  @SuppressWarnings("unchecked") @Nullable public static <¢ extends ASTNode> ¢ of(@Nullable final ¢ ¢) {
+  @SuppressWarnings("unchecked")  public static <¢ extends ASTNode> ¢ of( final ¢ ¢) {
     return ¢ == null ? null : (¢) copySubtree(¢.getAST(), ¢);
   }
 

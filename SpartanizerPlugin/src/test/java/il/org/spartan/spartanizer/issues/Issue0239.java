@@ -10,7 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -82,7 +81,7 @@ public class Issue0239 {
   }
 
   @Test public void a$04() {
-    @Nullable final Block block = az.block(into.s( //
+     final Block block = az.block(into.s( //
         "  final int i2 = Integer.valueOf(2);\n" + //
             "  f1(i1,i2);\n"//
     )); //
@@ -95,7 +94,7 @@ public class Issue0239 {
     assert lastIn(nextStatement, statements);
      final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class).in(block);
     assert f != null;
-    @Nullable final Statement currentStatement = extract.containingStatement(f);
+     final Statement currentStatement = extract.containingStatement(f);
     assert currentStatement != null;
     assert penultimateIn(currentStatement, statements);
     final SimpleName name = f.getName();

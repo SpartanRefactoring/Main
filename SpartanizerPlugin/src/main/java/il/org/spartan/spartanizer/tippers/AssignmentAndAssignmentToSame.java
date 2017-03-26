@@ -8,8 +8,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -42,13 +40,13 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
   @Override protected ASTRewrite go( final ASTRewrite $,  final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
-    @Nullable final Assignment a2 = extract.assignment(nextStatement);
+     final Assignment a2 = extract.assignment(nextStatement);
     if (operator(a2) != ASSIGN)
       return null;
     final SimpleName to = az.simpleName(to(a1));
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
-    @Nullable final Expression from1 = from(a1), from2 = from(a2);
+     final Expression from1 = from(a1), from2 = from(a2);
     switch (collect.usesOf(to).in(from2).size()) {
       case 0:
         return null;

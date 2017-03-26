@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,10 +29,10 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<I
   }
 
   @Override public Tip tip( final IfStatement s) {
-    @Nullable final Block b = az.block(s.getParent());
+     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
       return null;
-    @Nullable final ReturnStatement $ = az.returnStatement(hop.lastStatement(elze(s)));
+     final ReturnStatement $ = az.returnStatement(hop.lastStatement(elze(s)));
     return $ == null || $.getExpression() != null ? null : new Tip(description(s), s, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.replace($, make.emptyStatement(s), g);

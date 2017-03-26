@@ -9,8 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -30,14 +28,14 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     return "Rename lambda parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
   }
 
-  @Override public Tip tip( final LambdaExpression x, @Nullable final ExclusionManager m) {
-    @Nullable final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
+  @Override public Tip tip( final LambdaExpression x,  final ExclusionManager m) {
+     final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
     if (f == null)
       return null;
     final SimpleName $ = f.getName();
     if (in($.getIdentifier(), namer.lambda, namer.anonymous, namer.forbidden))
       return null;
-    @Nullable final Namespace n = Environment.of(x);
+     final Namespace n = Environment.of(x);
     if (n.has(namer.lambda) || n.hasChildren())
       return null;
     if (m != null)

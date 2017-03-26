@@ -6,8 +6,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -19,51 +17,51 @@ import il.org.spartan.utils.*;
 public interface definition {
   enum Kind {
     annotation {
-      @Override @Nullable public List<? extends ASTNode> specificScope(final SimpleName ¢) {
+      @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
          final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     annotationMemberDeclaration {
-      @Override @Nullable public List<? extends ASTNode> specificScope(final SimpleName ¢) {
+      @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         return members.of(parent(parent(¢)));
       }
     },
     catch¢ {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        @Nullable final CatchClause $ = az.catchClause(parent(parent(¢)));
+         final CatchClause $ = az.catchClause(parent(parent(¢)));
         return as.list($.getBody());
       }
     },
     class¢ {
-      @Override @Nullable public List<? extends ASTNode> specificScope(final SimpleName ¢) {
+      @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
          final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     enum¢ {
-      @Override @Nullable public List<? extends ASTNode> specificScope(final SimpleName ¢) {
+      @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
          final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     enumConstant {
-      @Override @Nullable public List<? extends ASTNode> specificScope(final SimpleName ¢) {
+      @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         return members.of(parent(parent(¢)));
       }
     },
     field {
-      @Override @Nullable public List<? extends ASTNode> specificScope(final SimpleName ¢) {
+      @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         return members.of(parent(parent(parent(¢))));
       }
     },
     for¢ {
       @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        @Nullable final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
+         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
         assert f != null;
-        @Nullable final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
+         final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
         assert e != null;
-        @Nullable final ForStatement s = az.forStatement(parent(e));
+         final ForStatement s = az.forStatement(parent(e));
         assert s != null;
          final List<ASTNode> $ = new ArrayList<>();
         wizard.addRest($, f, fragments(e));
@@ -76,21 +74,21 @@ public interface definition {
     },
     foreach {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        @Nullable final EnhancedForStatement $ = az.enhancedFor(parent(parent(¢)));
+         final EnhancedForStatement $ = az.enhancedFor(parent(parent(¢)));
         return as.list($.getBody());
       }
     },
     interface¢ {
-      @Override @Nullable public List<? extends ASTNode> specificScope(final SimpleName ¢) {
+      @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
          final ASTNode $ = parent(parent(¢));
         return !iz.compilationUnit($) ? members.of($) : step.types(az.compilationUnit($));
       }
     },
     lambda {
       @Override public List<? extends ASTNode> specificScope(final SimpleName n) {
-        @Nullable final SingleVariableDeclaration d = az.singleVariableDeclaration(parent(n));
+         final SingleVariableDeclaration d = az.singleVariableDeclaration(parent(n));
         assert d != null;
-        @Nullable final LambdaExpression $ = az.lambdaExpression(parent(d));
+         final LambdaExpression $ = az.lambdaExpression(parent(d));
         assert $ != null : d;
         return as.list($);
       }
@@ -98,10 +96,10 @@ public interface definition {
     local {
       @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
          final List<ASTNode> $ = new ArrayList<>();
-        @Nullable final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
+         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
         if (f.getInitializer() != null)
           $.add(f.getInitializer());
-        @Nullable final VariableDeclarationStatement s = az.variableDeclarationStatement(parent(f));
+         final VariableDeclarationStatement s = az.variableDeclarationStatement(parent(f));
         assert s != null : fault.dump() + //
         "\n\t ¢ = " + ¢ + //
         "\n\t f = " + f + //
@@ -111,26 +109,26 @@ public interface definition {
          final List<VariableDeclarationFragment> fs = fragments(s);
         assert fs != null;
         wizard.addRest($, f, fs);
-        @Nullable final Block b = az.block(parent(s));
+         final Block b = az.block(parent(s));
         assert b != null;
         return wizard.addRest($, s, statements(b));
       }
     },
     method {
-      @Override @Nullable public List<? extends ASTNode> specificScope(final SimpleName ¢) {
+      @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         return members.of(parent(parent(¢)));
       }
     },
     parameter {
       @Override  public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        @Nullable final MethodDeclaration $ = az.methodDeclaration(parent(parent(¢)));
+         final MethodDeclaration $ = az.methodDeclaration(parent(parent(¢)));
         return $.getBody() == null ? new ArrayList<>() : as.list($.getBody());
       }
     },
     try¢ {
       @Override  public List<? extends ASTNode> specificScope(final SimpleName n) {
-        @Nullable final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(n));
-        @Nullable final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
+         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(n));
+         final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
          final List<VariableDeclarationFragment> fs = fragments(e);
         final TryStatement s = az.tryStatement(parent(e));
          final List<VariableDeclarationExpression> rs = resources(s);
@@ -142,8 +140,8 @@ public interface definition {
         return $;
       }
     };
-    @Nullable public List<? extends ASTNode> scope(final SimpleName ¢) {
-      @Nullable final List<? extends ASTNode> $ = specificScope(¢);
+     public List<? extends ASTNode> scope(final SimpleName ¢) {
+       final List<? extends ASTNode> $ = specificScope(¢);
       assert $ != null : fault.dump() + //
           "\n\t this = " + this + //
           "\n\t n=" + ¢ + //
@@ -155,11 +153,11 @@ public interface definition {
       return $;
     }
 
-    @SuppressWarnings("static-method") @Nullable List<? extends ASTNode> specificScope(final SimpleName ¢) {
+    @SuppressWarnings("static-method")  List<? extends ASTNode> specificScope(final SimpleName ¢) {
       return members.of(parent(parent(¢)));
     }
 
-    public static boolean has(@Nullable final String name) {
+    public static boolean has( final String name) {
       return name != null && Stream.of(values()).anyMatch(λ -> name.equals(λ + ""));
     }
   }
@@ -238,7 +236,7 @@ public interface definition {
     }
   }
 
-  @Nullable static List<? extends ASTNode> scope(final SimpleName ¢) {
+   static List<? extends ASTNode> scope(final SimpleName ¢) {
     return kind(¢).scope(¢);
   }
 

@@ -10,8 +10,6 @@ import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.*;
 
 /** TODO Ori Roth: document class
@@ -24,7 +22,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static final String IMAGE_ID = "widget";
   static final AtomicBoolean active = new AtomicBoolean(false);
 
-  @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override  public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     if (active.get())
       return null;
     active.set(true);
@@ -113,8 +111,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
   }
 
   static void setMovable( final Display d,  final Control source,  final Shell target) {
-    @Nullable final Listener l = new Listener() {
-      @Nullable Point origin;
+     final Listener l = new Listener() {
+       Point origin;
 
       @Override public void handleEvent( final Event e) {
         switch (e.type) {
@@ -152,7 +150,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     return $;
   }
 
-  static void expandControl(@Nullable final Control c,  final Point minimalButtonSize) {
+  static void expandControl( final Control c,  final Point minimalButtonSize) {
     if (c == null)
       return;
     final Point s = c.getSize();

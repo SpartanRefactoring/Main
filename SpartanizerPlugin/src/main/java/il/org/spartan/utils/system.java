@@ -4,8 +4,6 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.cmdline.*;
 
@@ -163,7 +161,7 @@ public interface system {
         : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
   }
 
-  @Nullable static Process shellEssenceMetrics(final String fileName) {
+   static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
 
@@ -186,7 +184,7 @@ public interface system {
    * are separated by at least one whitespace.
    * @param $ the string its words are being counted
    * @return the number of words the given string contains */
-  static int wc(@Nullable final String $) {
+  static int wc( final String $) {
     return $ == null || $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
 

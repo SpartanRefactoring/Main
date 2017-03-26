@@ -9,8 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -98,11 +96,11 @@ public enum subject {
   }
 
   public static class Claimer {
-    @Nullable protected final AST ast;
+     protected final AST ast;
 
     /** Assign to ast the AST that owns the node n (the parameter)
      * @param n an AST node */
-    public Claimer(@Nullable final ASTNode n) {
+    public Claimer( final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
 
@@ -120,8 +118,8 @@ public enum subject {
      * @return a copy of the statement s if it is'nt null, else returns null
      * @see rebase
      * @see copy */
-    @Nullable Statement claim(final Statement ¢) {
-      @Nullable final Statement $ = extract.core(¢);
+     Statement claim(final Statement ¢) {
+       final Statement $ = extract.core(¢);
       return $ == null ? null : wizard.rebase(copy.of($), ast);
     }
   }
@@ -348,7 +346,7 @@ public enum subject {
 
     /** Transform the inner into a block if it's possible
      * @return a Block statement {@code or} a {@code null} */
-    @Nullable public Statement toOneStatementOrNull() {
+     public Statement toOneStatementOrNull() {
       return inner.isEmpty() ? null : toOptionalBlock();
     }
 
@@ -382,8 +380,8 @@ public enum subject {
 
   /** A pair of sideEffects */
   public static class StatementPair extends Claimer {
-    @Nullable private final Statement elze;
-    @Nullable private final Statement then;
+     private final Statement elze;
+     private final Statement then;
 
     /** assign then and elze to the matching fields the then operand is the
      * owner

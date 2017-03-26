@@ -31,8 +31,6 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -187,7 +185,7 @@ public interface wizard {
       }
     }
   };
-  @SuppressWarnings("unchecked") @Nullable Map<Class<? extends ASTNode>, Integer> //
+  @SuppressWarnings("unchecked")  Map<Class<? extends ASTNode>, Integer> //
   classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
     static final long serialVersionUID = -4723718477559082865L;
     {
@@ -258,7 +256,7 @@ public interface wizard {
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
   }
 
-   static <N extends ASTNode> List<? extends ASTNode> addRest( final List<ASTNode> $, final N n, @Nullable final List<N> ns) {
+   static <N extends ASTNode> List<? extends ASTNode> addRest( final List<ASTNode> $, final N n,  final List<N> ns) {
     if (ns == null)
       return $;
     boolean add = false;
@@ -386,7 +384,7 @@ public interface wizard {
    * @return whetherone of the nodes is an Expression Statement of type Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
    *         if the given parameter is null. */
-  static boolean containIncOrDecExp(@Nullable final ASTNode... ns) {
+  static boolean containIncOrDecExp( final ASTNode... ns) {
     return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.updating(λ));
   }
 
@@ -455,7 +453,7 @@ public interface wizard {
    * @param ¢ JD
    * @return true <b>iff</b> the Statement can be verified to end with a
    *         sequencer. */
-  static boolean endsWithSequencer(@Nullable final Statement ¢) {
+  static boolean endsWithSequencer( final Statement ¢) {
     if (¢ == null)
       return false;
     final Statement $ = hop.lastStatement(¢);
@@ -512,7 +510,7 @@ public interface wizard {
       return false;
      final ExpressionStatement x = (ExpressionStatement) nextStatement;
     if (iz.methodInvocation(x.getExpression())) {
-      @Nullable final Expression $ = core(expression(x.getExpression()));
+       final Expression $ = core(expression(x.getExpression()));
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
     if (!iz.fieldAccess(x.getExpression()))
@@ -526,7 +524,7 @@ public interface wizard {
       return false;
      final ExpressionStatement x = (ExpressionStatement) nextStatement;
     if (iz.methodInvocation(x.getExpression())) {
-      @Nullable final Expression $ = core(expression(x.getExpression()));
+       final Expression $ = core(expression(x.getExpression()));
       return iz.simpleName($) && ((SimpleName) $).getIdentifier().equals(f.getName().getIdentifier());
     }
     if (!iz.fieldAccess(x.getExpression()))
@@ -549,10 +547,10 @@ public interface wizard {
   }
 
   static Expression goInfix( final InfixExpression from, final VariableDeclarationStatement s) {
-    @Nullable final List<Expression> $ = hop.operands(from);
+     final List<Expression> $ = hop.operands(from);
     // TODO Raviv Rachmiel: use extract.core
     $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(az.parenthesizedExpression(λ).getExpression())).forEachOrdered(x -> {
-      @Nullable final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
+       final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
       final SimpleName var = az.simpleName(left(a));
       fragments(s).stream().filter(λ -> (name(λ) + "").equals(var + "")).forEach(λ -> {
         λ.setInitializer(copy.of(right(a)));
@@ -606,7 +604,7 @@ public interface wizard {
     return !iz.nullLiteral(¢) && !iz.literal0(¢) && !literal.false¢(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
   }
 
-  static boolean isObject(@Nullable final Type ¢) {
+  static boolean isObject( final Type ¢) {
     if (¢ == null)
       return false;
     switch (¢ + "") {
@@ -628,7 +626,7 @@ public interface wizard {
     return in(¢, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
 
-  static boolean isString(@Nullable final String typeName) {
+  static boolean isString( final String typeName) {
     if (typeName == null)
       return false;
     switch (typeName) {
@@ -688,7 +686,7 @@ public interface wizard {
                                 : ¢.equals(LESS) ? GREATER_EQUALS : null;
   }
 
-   static String nodeName(@Nullable final ASTNode ¢) {
+   static String nodeName( final ASTNode ¢) {
     return ¢ == null ? "???" : nodeName(¢.getClass());
   }
 
@@ -709,7 +707,7 @@ public interface wizard {
     return nonAssociative(az.infixExpression(¢));
   }
 
-  static boolean nonAssociative(@Nullable final InfixExpression ¢) {
+  static boolean nonAssociative( final InfixExpression ¢) {
     return ¢ != null && (in(¢.getOperator(), MINUS2, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED)
         || iz.infixPlus(¢) && !type.isNotString(¢));
   }
@@ -732,7 +730,7 @@ public interface wizard {
     return $;
   }
 
-  @Nullable static <T> T previous(final T t, @Nullable final List<T> ts) {
+   static <T> T previous(final T t,  final List<T> ts) {
     if (ts == null)
       return null;
     final int $ = ts.indexOf(t);
@@ -858,7 +856,7 @@ public interface wizard {
    * @param n1 JD
    * @param n2 JD
    * @return {@code true} if the parameters are the same. */
-  static boolean same(@Nullable final ASTNode n1, @Nullable final ASTNode n2) {
+  static boolean same( final ASTNode n1,  final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && trivia.cleanForm(n1).equals(trivia.cleanForm(n2));
   }
 
@@ -873,7 +871,7 @@ public interface wizard {
    * @return {@code true} if the parameters are the same.
    * @author matteo
    * @since 15/3/2017 */
-  static boolean same2(@Nullable final ASTNode n1, @Nullable final ASTNode n2) {
+  static boolean same2( final ASTNode n1,  final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType()
         && tide.clean(trivia.cleanForm(n1) + "").equals(tide.clean(trivia.cleanForm(n2) + ""));
   }

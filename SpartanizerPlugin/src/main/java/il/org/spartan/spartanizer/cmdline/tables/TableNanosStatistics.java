@@ -6,8 +6,6 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -92,7 +90,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
         .forEach(λ -> pWriter.col(λ, 0));
   }
 
-  private static boolean anyTips( final Collection<JavadocMarkerNanoPattern> ps, @Nullable final MethodDeclaration d) {
+  private static boolean anyTips( final Collection<JavadocMarkerNanoPattern> ps,  final MethodDeclaration d) {
     return d != null && ps.stream().anyMatch(λ -> λ.check(d));
   }
 }

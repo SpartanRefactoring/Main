@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
@@ -27,7 +25,7 @@ public enum AnalyzerOptions {
     options.get(cls).put(property, value);
   }
 
-  @Nullable public static String get(final String property) {
+   public static String get(final String property) {
     return get(Analyze.class.getSimpleName(), property);
   }
 

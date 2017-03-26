@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -32,7 +30,7 @@ public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTip
   }
 
   @Override protected boolean prerequisite( final MethodDeclaration ¢) {
-    @Nullable final ExpressionStatement $ = extract.expressionStatement(¢);
+     final ExpressionStatement $ = extract.expressionStatement(¢);
     return $ != null && $.getExpression() instanceof SuperMethodInvocation && shouldRemove(¢, (SuperMethodInvocation) $.getExpression());
   }
 }

@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -29,10 +27,10 @@ public class ForRedundantContinue extends CarefulTipper<ForStatement>//
     return "Prune redundant continue";
   }
 
-  @Override @Nullable public Tip tip( final ForStatement ¢) {
+  @Override  public Tip tip( final ForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
-        @Nullable final Block b = az.block(body(¢));
+         final Block b = az.block(body(¢));
         if (b == null)
           r.replace(extract.lastStatement(¢), make.emptyStatement(¢), g);
         else {

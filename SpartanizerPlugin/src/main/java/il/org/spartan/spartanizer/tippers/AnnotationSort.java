@@ -80,7 +80,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     return !wizard.same($, d) ? $ : null;
   }
 
-  /* @Override @Nullable public Tip tip( final N n) { final
+  /* @Override  public Tip tip( final N n) { final
    * List<Annotation> $ = extract.annotations(n); if ($ == null || $.isEmpty())
    * return null;
    *

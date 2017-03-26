@@ -16,7 +16,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -126,7 +125,7 @@ public final class subjectTest {
 
   @Test public void refitWithSort() {
      final InfixExpression e = i("1 + 2 * 3");
-    @Nullable final List<Expression> operands = hop.operands(flatten.of(e));
+     final List<Expression> operands = hop.operands(flatten.of(e));
     azzert.that(operands.size(), is(2));
     azzert.that(first(operands) + "", is("1"));
     azzert.that(second(operands) + "", is("2 * 3"));
@@ -147,14 +146,14 @@ public final class subjectTest {
     assert type.isNotString(e);
     final InfixExpression plus = findFirst.infixPlus(e);
     assert type.isNotString(plus);
-    @Nullable final List<Expression> operands = hop.operands(flatten.of(plus));
+     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
     assert ExpressionComparator.ADDITION.sort(operands);
     azzert.that(subject.operands(operands).to(plus.getOperator()), iz("a +2"));
   }
 
   @Test public void subjectOperandsDoesNotIntroduceList() {
-    @Nullable final List<Expression> operands = hop.operands(copy.of(i("a*b")));
+     final List<Expression> operands = hop.operands(copy.of(i("a*b")));
     azzert.that(operands.size(), is(2));
     final InfixExpression refit = subject.operands(operands).to(i("1+2").getOperator());
     assert !refit.hasExtendedOperands();
@@ -174,7 +173,7 @@ public final class subjectTest {
     assert type.isNotString(e);
     final InfixExpression plus = findFirst.infixPlus(e);
     assert type.isNotString(plus);
-    @Nullable final List<Expression> operands = hop.operands(flatten.of(plus));
+     final List<Expression> operands = hop.operands(flatten.of(plus));
     azzert.that(operands.size(), is(2));
     assert ExpressionComparator.ADDITION.sort(operands);
     azzert.that(subject.operands(operands).to(plus.getOperator()), iz("a +2"));

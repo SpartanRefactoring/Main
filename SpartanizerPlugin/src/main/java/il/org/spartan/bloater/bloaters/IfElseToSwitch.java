@@ -22,7 +22,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x62C675CD2B1FCA22L;
 
-  @Override @Nullable public ASTNode replacement( final IfStatement ¢) {
+  @Override  public ASTNode replacement( final IfStatement ¢) {
      final List<Expression> xs = getAllExpressions(¢);
     if (!isMyCase(xs))
       return null;
@@ -50,20 +50,20 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  private static boolean isMyCase(@Nullable final List<Expression> xs) {
+  private static boolean isMyCase( final List<Expression> xs) {
     if (xs == null || xs.isEmpty() || !iz.infixEquals(first(xs)))
       return false;
-    @Nullable InfixExpression px = az.comparison(first(xs));
+     InfixExpression px = az.comparison(first(xs));
     if (!iz.infixEquals(px))
       return false;
-    @Nullable final SimpleName switchVariable = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
+     final SimpleName switchVariable = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
     if (switchVariable == null)
       return false;
     for (final Expression e : xs) {
       px = az.comparison(e);
       if (!iz.infixEquals(px))
         return false;
-      @Nullable final SimpleName currName = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
+       final SimpleName currName = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
       if (currName == null || !currName.getIdentifier().equals(switchVariable.getIdentifier()))
         return false;
     }
@@ -97,7 +97,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     Statement $ = s;
     for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
       final Statement then = copy.of(then(az.ifStatement($)));
-      @Nullable Block b = az.block(then);
+       Block b = az.block(then);
       if (b == null) {
         b = s.getAST().newBlock();
         statements(b).add(az.statement(then));

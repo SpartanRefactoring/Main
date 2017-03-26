@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.research.nanos;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
@@ -18,7 +16,7 @@ public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
     return tippers.canTip(¢);
   }
 
-  @Override @Nullable public Tip pattern(final InfixExpression ¢) {
+  @Override  public Tip pattern(final InfixExpression ¢) {
     return tippers.firstTip(¢);
   }
 

@@ -5,8 +5,6 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
@@ -15,19 +13,19 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2016 */
 public enum TermsReorganizer {
   ;
-  @Nullable public static Expression simplify(final InfixExpression ¢) {
+   public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }
 
-  @Nullable private static Expression build( final List<Expression> plus,  final List<Expression> minus) {
+   private static Expression build( final List<Expression> plus,  final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
 
-  @Nullable private static Expression build( final TermsCollector ¢) {
+   private static Expression build( final TermsCollector ¢) {
     return build(¢.plus(), ¢.minus());
   }
 
-  @Nullable private static Expression buildMinus(@Nullable final Expression first,  final List<Expression> rest) {
+   private static Expression buildMinus( final Expression first,  final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);
     if (rest.isEmpty())

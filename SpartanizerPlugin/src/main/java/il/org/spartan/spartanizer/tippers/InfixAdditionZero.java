@@ -15,8 +15,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -51,7 +49,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     return gather(¢, new ArrayList<>());
   }
 
-   private static List<Expression> gather(@Nullable final InfixExpression x,  final List<Expression> $) {
+   private static List<Expression> gather( final InfixExpression x,  final List<Expression> $) {
     if (x == null)
       return $;
     if (!in(operator(x), PLUS, MINUS)) {
@@ -78,7 +76,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     return "Remove noop of adding 0 in " + trivia.gist(¢);
   }
 
-  @Override public Tip tip( final InfixExpression x, @Nullable final ExclusionManager exclude) {
+  @Override public Tip tip( final InfixExpression x,  final ExclusionManager exclude) {
      final List<Expression> $ = gather(x);
     if ($.size() < 2)
       return null;
@@ -89,7 +87,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
       exclude.exclude(x);
     return new Tip(description(x), x, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
-        @Nullable final Expression first = n % 2 == 0 ? null : first($);
+         final Expression first = n % 2 == 0 ? null : first($);
         $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
             .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)

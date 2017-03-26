@@ -11,8 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -85,9 +83,9 @@ public class OperandBloating extends TrimmingOperand {
     return null;
   }
 
-  @Nullable public OperandBloating givesWithBinding( final String $) {
+   public OperandBloating givesWithBinding( final String $) {
     assert $ != null;
-    @Nullable final CompilationUnit u = az.compilationUnit(ast);
+     final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
@@ -111,9 +109,9 @@ public class OperandBloating extends TrimmingOperand {
   /** @param $ java code
    * @param f tested method name. expanders will be applied only for this method
    * @return */
-  @Nullable public OperandBloating givesWithBinding( final String $, final String f) {
+   public OperandBloating givesWithBinding( final String $, final String f) {
     assert $ != null;
-    @Nullable final CompilationUnit u = az.compilationUnit(ast);
+     final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     MethodDeclaration m = getMethod(u, f);
@@ -143,7 +141,7 @@ public class OperandBloating extends TrimmingOperand {
    * @since 19-01-2017
    * @param b
    * @return */
-  @Nullable private static CompilationUnit rename(@Nullable final CompilationUnit u) {
+   private static CompilationUnit rename( final CompilationUnit u) {
     if (u == null)
       return null;
     TestUtilsBloating.counter = 0;
@@ -167,7 +165,7 @@ public class OperandBloating extends TrimmingOperand {
     return first($);
   }
 
-  @Nullable private static CompilationUnit createCUWithBinding( final String text) {
+   private static CompilationUnit createCUWithBinding( final String text) {
     final ASTParser $ = make.COMPILATION_UNIT.parser(text);
     $.setResolveBindings(true);
     return az.compilationUnit($.createAST(null));
@@ -198,7 +196,7 @@ public class OperandBloating extends TrimmingOperand {
 
   private void checkSameWithBinding() {
     final String wrap = get();
-    @Nullable final CompilationUnit u = az.compilationUnit(ast);
+     final CompilationUnit u = az.compilationUnit(ast);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {

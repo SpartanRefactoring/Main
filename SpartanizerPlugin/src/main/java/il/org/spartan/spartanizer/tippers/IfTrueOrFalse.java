@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -22,7 +20,7 @@ public final class IfTrueOrFalse extends ReplaceCurrentNode<IfStatement>//
     return "if the condition is 'true'  convert to 'then' statement, if the condition is 'false' convert to 'else' statement";
   }
 
-  @Override public boolean prerequisite(@Nullable final IfStatement ¢) {
+  @Override public boolean prerequisite( final IfStatement ¢) {
     return ¢ != null && (literal.true¢(expression(¢)) || literal.false¢(expression(¢)));
   }
 

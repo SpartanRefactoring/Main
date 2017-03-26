@@ -9,8 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
@@ -63,12 +61,12 @@ public class CommandLine$Applicator extends Generic$Applicator {
     return removeExcludedNanoPatterns(removeExcludedTippers(tipperGroups, excludedTipperGroups), excludedNanoPatterns);
   }
 
-  private static String[] removeExcludedNanoPatterns(@Nullable final String[] tipperGroups, final String... excludedNanoPatterns) {
+  private static String[] removeExcludedNanoPatterns( final String[] tipperGroups, final String... excludedNanoPatterns) {
     return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[0]))
         .filter(λ -> !as.list(excludedNanoPatterns).contains(λ)).collect(toList()).toArray(new String[0]);
   }
 
-  private static String[] removeExcludedTippers(@Nullable final String[] tipperGroups, final String... excludedTipperGroups) {
+  private static String[] removeExcludedTippers( final String[] tipperGroups, final String... excludedTipperGroups) {
     return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[0]))
         .filter(λ -> !as.list(excludedTipperGroups).contains(λ)).collect(toList()).toArray(new String[0]);
   }
@@ -189,7 +187,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
-        @Nullable Tipper<N> tipper = null;
+         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
         } catch ( final Exception ¢) {
@@ -197,7 +195,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        @Nullable Tip s = null;
+         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
         } catch ( final Exception ¢) {
@@ -206,11 +204,11 @@ public class CommandLine$Applicator extends Generic$Applicator {
         if (s == null)
           return true;
         ++tippersAppliedOnCurrentObject;
-        @Nullable final AbstractTypeDeclaration includingClass = yieldAncestors.untilContainingType().from(n);
+         final AbstractTypeDeclaration includingClass = yieldAncestors.untilContainingType().from(n);
         ReportGenerator.report("tips").put("including Class", includingClass.getName());
         ReportGenerator.report("tips").put("Class LOC", count.lines(includingClass));
         ReportGenerator.report("tips").put("Class Tokens", metrics.tokens(includingClass + ""));
-        @Nullable final MethodDeclaration includingMethod = yieldAncestors.untilContainingMethod().from(n);
+         final MethodDeclaration includingMethod = yieldAncestors.untilContainingMethod().from(n);
         ReportGenerator.report("tips").put("including Method", includingMethod == null ? "not in method" : includingMethod.getName());
         ReportGenerator.report("tips").put("Method LOC", includingMethod == null ? "not applicable" : count.lines(includingMethod));
         ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : metrics.tokens(includingMethod + ""));
@@ -236,7 +234,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         TrimmerLog.visitation(n);
         if (disabling.on(n))
           return true;
-        @Nullable Tipper<N> tipper = null;
+         Tipper<N> tipper = null;
         try {
           tipper = getTipper(n);
         } catch ( final Exception ¢) {
@@ -244,7 +242,7 @@ public class CommandLine$Applicator extends Generic$Applicator {
         }
         if (tipper == null)
           return true;
-        @Nullable Tip s = null;
+         Tip s = null;
         try {
           s = tipper.tip(n, exclude);
           tick(n, tipper);

@@ -12,8 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,7 +29,7 @@ import il.org.spartan.utils.*;
 public enum leonidasSays {
   ;
   static void azzertEquals( final String s,  final IDocument d) {
-    @Nullable String actual = null;
+     String actual = null;
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -72,7 +70,7 @@ public enum leonidasSays {
     return statements == null || statements.size() != 1 ? $ : first(statements);
   }
 
-  @Nullable static <N extends ASTNode> N findSecond( final Class<?> c, @Nullable final ASTNode n) {
+   static <N extends ASTNode> N findSecond( final Class<?> c,  final ASTNode n) {
     if (n == null)
       return null;
      final Wrapper<Boolean> foundFirst = new Wrapper<>();
@@ -141,7 +139,7 @@ public enum leonidasSays {
     }
 
     public void into( final String rrr) {
-      @Nullable final IDocument document = new Document(wrapCode(string));
+       final IDocument document = new Document(wrapCode(string));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setSource(document.get().toCharArray());
        final CompilationUnit cu = (CompilationUnit) parser.createAST(null);

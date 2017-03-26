@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,7 +29,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
   private static final long serialVersionUID = -2589593872356482061L;
 
   static void collapse( final IfStatement s,  final ASTRewrite r, final TextEditGroup g) {
-    @Nullable final IfStatement then = az.ifStatement(extract.singleThen(s));
+     final IfStatement then = az.ifStatement(extract.singleThen(s));
     r.replace(s.getExpression(), subject.pair(s.getExpression(), then.getExpression()).to(CONDITIONAL_AND), g);
     r.replace(then, copy.of(then(then)), g);
   }
@@ -40,14 +38,14 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
     return "Merge conditionals of nested if staement";
   }
 
-  @Override @Nullable public Tip tip( final IfStatement ¢) {
+  @Override  public Tip tip( final IfStatement ¢) {
     return tip(¢, null);
   }
 
-  @Override public Tip tip( final IfStatement $, @Nullable final ExclusionManager exclude) {
+  @Override public Tip tip( final IfStatement $,  final ExclusionManager exclude) {
     if (!iz.vacuousElse($))
       return null;
-    @Nullable final IfStatement then = az.ifStatement(extract.singleThen($));
+     final IfStatement then = az.ifStatement(extract.singleThen($));
     if (then == null || !iz.vacuousElse(then))
       return null;
     if (exclude != null)

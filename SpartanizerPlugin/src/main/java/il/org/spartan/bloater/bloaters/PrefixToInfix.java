@@ -6,8 +6,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -45,7 +43,7 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
         && (iz.expressionStatement($) || iz.forStatement($));
   }
 
-  @Override @SuppressWarnings("unused") @Nullable public String description(final PrefixExpression __) {
+  @Override @SuppressWarnings("unused")  public String description(final PrefixExpression __) {
     return null;
   }
 }

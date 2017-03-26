@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -33,11 +31,11 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
         .allMatch(λ -> collect.variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
-  @Nullable public static Expression Initializers(final VariableDeclarationFragment ¢) {
+   public static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
   }
 
-  @Nullable public static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+   public static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
@@ -52,14 +50,14 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Override @Nullable protected ASTRewrite go(@Nullable final ASTRewrite $, @Nullable final VariableDeclarationFragment f,
-      @Nullable final Statement nextStatement, final TextEditGroup g, @Nullable final ExclusionManager exclude) {
+  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,
+       final Statement nextStatement, final TextEditGroup g,  final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
-    @Nullable final VariableDeclarationStatement vds = parent(f);
+     final VariableDeclarationStatement vds = parent(f);
     if (vds == null)
       return null;
-    @Nullable final WhileStatement s = az.whileStatement(nextStatement);
+     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null || !fragmentsUseFitting(vds, s))
       return null;
     exclude.excludeAll(fragments(vds));

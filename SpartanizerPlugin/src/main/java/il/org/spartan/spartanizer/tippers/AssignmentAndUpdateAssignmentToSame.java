@@ -10,8 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -48,11 +46,11 @@ public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement
   @Override protected ASTRewrite go( final ASTRewrite $,  final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
-    @Nullable final Assignment a2 = extract.assignment(nextStatement);
+     final Assignment a2 = extract.assignment(nextStatement);
     final Assignment.Operator o = a2.getOperator();
     if (o == ASSIGN)
       return null;
-    @Nullable final Expression to = to(a1);
+     final Expression to = to(a1);
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
     $.replace(from(a1), subject.operands(from(a1), from(a2)).to(assign2infix(o)), g);

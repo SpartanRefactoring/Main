@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,15 +21,15 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
   private static final long serialVersionUID = -534365936521275928L;
 
   private static Expression collapse( final ConditionalExpression ¢) {
-    @Nullable Expression $;
+     Expression $;
     return ($ = collapseOnElse(¢)) != null || ($ = collaspeOnThen(¢)) != null ? $ : null;
   }
 
   private static Expression collapseOnElse( final ConditionalExpression x) {
-    @Nullable final ConditionalExpression $ = az.conditionalExpression(core(x.getElseExpression()));
+     final ConditionalExpression $ = az.conditionalExpression(core(x.getElseExpression()));
     if ($ == null)
       return null;
-    @Nullable final Expression then = core(x.getThenExpression()), elseThen = core(then($)), elseElse = core(elze($));
+     final Expression then = core(x.getThenExpression()), elseThen = core(then($)), elseElse = core(elze($));
     return !wizard.same(then, elseElse) && !wizard.same(then, elseThen) ? null
         : wizard.same(then, elseElse)
             ? subject.pair(elseThen, then).toCondition(subject.pair(make.notOf(x.getExpression()), $.getExpression()).to(CONDITIONAL_AND))
@@ -40,10 +38,10 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
   }
 
   private static Expression collaspeOnThen( final ConditionalExpression x) {
-    @Nullable final ConditionalExpression $ = az.conditionalExpression(core(x.getThenExpression()));
+     final ConditionalExpression $ = az.conditionalExpression(core(x.getThenExpression()));
     if ($ == null)
       return null;
-    @Nullable final Expression elze = core(x.getElseExpression()), thenThen = core(then($)), thenElse = core(elze($));
+     final Expression elze = core(x.getElseExpression()), thenThen = core(then($)), thenElse = core(elze($));
     return wizard.same(thenElse, elze)
         ? subject.pair(thenThen, elze).toCondition(subject.pair(x.getExpression(), $.getExpression()).to(CONDITIONAL_AND))
         : wizard.same(thenThen, elze)
@@ -54,7 +52,7 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     return "Eliminate nested conditional expression";
   }
 
-  @Override @Nullable public Expression replacement( final ConditionalExpression ¢) {
+  @Override  public Expression replacement( final ConditionalExpression ¢) {
     return collapse(¢);
   }
 }

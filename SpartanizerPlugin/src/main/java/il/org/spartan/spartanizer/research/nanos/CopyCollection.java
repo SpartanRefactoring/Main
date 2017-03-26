@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.research.nanos;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -25,7 +23,7 @@ public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreatio
     return tippers.canTip(az.block(parent(parent(parent(x)))));
   }
 
-  @Override @Nullable public Tip pattern(final ClassInstanceCreation x) {
+  @Override  public Tip pattern(final ClassInstanceCreation x) {
     return tippers.firstTip(az.block(parent(parent(parent(x)))));
   }
 

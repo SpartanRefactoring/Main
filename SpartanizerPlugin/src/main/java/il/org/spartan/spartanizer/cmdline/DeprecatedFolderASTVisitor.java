@@ -13,8 +13,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.collections.*;
@@ -174,7 +172,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       return ¢.noneMatch(BucketMethods::leaking);
     }
 
-    private static boolean interesting(@Nullable final List<Statement> ¢) {
+    private static boolean interesting( final List<Statement> ¢) {
       return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
     }
 

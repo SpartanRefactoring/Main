@@ -12,8 +12,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -48,13 +46,13 @@ final class FactorsCollector {
     return multipliers;
   }
 
-   FactorsCollector collect(@Nullable final InfixExpression ¢) {
+   FactorsCollector collect( final InfixExpression ¢) {
     if (¢ != null && !isLeafFactor(¢))
       collectTimesNonLeaf(¢);
     return this;
   }
 
-  @Nullable Void collectTimesNonLeaf( final InfixExpression ¢) {
+   Void collectTimesNonLeaf( final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     assert iz.infixTimes(¢) || iz.infixDivide(¢);
@@ -62,11 +60,11 @@ final class FactorsCollector {
         : collectTimesPrefixDivdeExpression(¢);
   }
 
-  @Nullable private Void collectTimesPrefixDivdeExpression( final InfixExpression ¢) {
+   private Void collectTimesPrefixDivdeExpression( final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     assert iz.infixDivide(¢);
-    @Nullable final List<Expression> $ = hop.operands(¢);
+     final List<Expression> $ = hop.operands(¢);
     addMultiplierFactor(core(first($)));
     return collectDividersFactors(rest($));
   }
@@ -79,12 +77,12 @@ final class FactorsCollector {
     return null;
   }
 
-  @Nullable private Void addDivideFactor( final Expression ¢) {
+   private Void addDivideFactor( final Expression ¢) {
     assert ¢ != null;
     return collectDividePrefix(¢);
   }
 
-  @Nullable private Void addMultiplierFactor( final Expression ¢) {
+   private Void addMultiplierFactor( final Expression ¢) {
     return isLeafFactor(¢) ? addTimesFactor(¢) : collectTimesNonLeaf(az.infixExpression(¢));
   }
 
@@ -96,37 +94,37 @@ final class FactorsCollector {
     return null;
   }
 
-  @Nullable private Void addTimesFactor( final Expression ¢) {
+   private Void addTimesFactor( final Expression ¢) {
     assert ¢ != null;
     return collectTimesPrefix(¢);
   }
 
-  @Nullable private Void collectDividePrefix( final Expression ¢) {
+   private Void collectDividePrefix( final Expression ¢) {
     assert ¢ != null;
     return isLeafFactor(¢) ? addDivide(¢) : collectDividePrefix(az.infixExpression(¢));
   }
 
-  @Nullable private Void collectDividePrefix( final InfixExpression ¢) {
+   private Void collectDividePrefix( final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     return iz.infixTimes(¢) ? collectDividePrefixTimesExpression(¢) : collectDividePrefixDivideExprssion(¢);
   }
 
-  @Nullable private Void collectDividePrefixDivideExprssion( final InfixExpression ¢) {
+   private Void collectDividePrefixDivideExprssion( final InfixExpression ¢) {
     assert ¢ != null;
-    @Nullable final List<Expression> $ = hop.operands(¢);
+     final List<Expression> $ = hop.operands(¢);
     collectDividerFactor(core(first($)));
     return collectMultiplierFactors(rest($));
   }
 
-  @Nullable private Void collectDividePrefixTimesExpression( final InfixExpression ¢) {
+   private Void collectDividePrefixTimesExpression( final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     assert iz.infixTimes(¢);
     return collectDividersFactors(hop.operands(¢));
   }
 
-  @Nullable private Void collectDividerFactor( final Expression ¢) {
+   private Void collectDividerFactor( final Expression ¢) {
     assert ¢ != null;
     return isLeafFactor(¢) ? addDivideFactor(¢) : collectDividePrefix(az.infixExpression(¢));
   }
@@ -143,12 +141,12 @@ final class FactorsCollector {
     return null;
   }
 
-  @Nullable private Void collectTimesPrefix( final Expression ¢) {
+   private Void collectTimesPrefix( final Expression ¢) {
     assert ¢ != null;
     return isLeafFactor(¢) ? addTimes(¢) : collectTimesNonLeaf(az.infixExpression(¢));
   }
 
-  @Nullable private Void collectTimesPrefixTimesExpression( final InfixExpression ¢) {
+   private Void collectTimesPrefixTimesExpression( final InfixExpression ¢) {
     assert ¢ != null;
     assert !isLeafFactor(¢);
     assert iz.infixTimes(¢);

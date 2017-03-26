@@ -14,8 +14,6 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.swt.custom.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.texteditor.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
@@ -89,7 +87,7 @@ public final class SingleFlater {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
         if (!inWindow(n) || usesDisabling && disabling.on(n))
           return true;
-        @Nullable Tipper<N> w = null;
+         Tipper<N> w = null;
         try {
           w = operationsProvider.getTipper(n);
         } catch ( final Exception ¢) {
@@ -149,8 +147,8 @@ public final class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  private static boolean changeNFocus(@Nullable final ITextEditor e, @Nullable final StyledText t,  final TextFileChange tc,
-      @Nullable final WindowInformation i) throws CoreException {
+  private static boolean changeNFocus( final ITextEditor e,  final StyledText t,  final TextFileChange tc,
+       final WindowInformation i) throws CoreException {
     if (i == null || t == null || e == null) {
       tc.perform(new NullProgressMonitor());
       return true;
@@ -162,7 +160,7 @@ public final class SingleFlater {
     return false;
   }
 
-  private boolean inWindow(@Nullable final ASTNode ¢) {
+  private boolean inWindow( final ASTNode ¢) {
     return windowInformation == null || windowInformation.invalid()
         || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar;
   }

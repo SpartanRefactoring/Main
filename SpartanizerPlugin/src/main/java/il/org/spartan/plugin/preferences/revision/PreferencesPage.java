@@ -21,8 +21,6 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
@@ -91,7 +89,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     /* (non-Javadoc)
      *
      * @see org.eclipse.jface.preference.PreferencePage#performApply() */
-    @Override public void propertyChange(@Nullable final PropertyChangeEvent ¢) {
+    @Override public void propertyChange( final PropertyChangeEvent ¢) {
       if (¢ != null && ¢.getProperty() != null && ¢.getProperty().startsWith(TIPPER_CATEGORY_PREFIX))
         refreshNeeded.set();
       else if (¢ != null && ¢.getProperty() != null && ¢.getProperty().equals(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID) && ¢.getNewValue() != null
@@ -110,8 +108,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   static class ListSelectionEditor extends ListEditor {
     static final String DELIMETER = ",";
      final List<Map.Entry<String, Object>> elements;
-    @Nullable Button configureButton;
-    @Nullable Button ableButton;
+     Button configureButton;
+     Button ableButton;
 
     ListSelectionEditor(final String name, final String labelText,  final Composite parent,
          final List<Map.Entry<String, Object>> elements,  final Consumer<Object> onConfigure,
@@ -203,11 +201,11 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       getButtonBoxControl(parent).dispose();
     }
 
-    @Override  protected String[] parseString(@Nullable final String stringList) {
+    @Override  protected String[] parseString( final String stringList) {
       return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : elements.stream().map(Entry::getKey).toArray(String[]::new);
     }
 
-    @Override @Nullable protected String getNewInputObject() {
+    @Override  protected String getNewInputObject() {
       return null;
     }
 
@@ -275,7 +273,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       enabled.put(p, able);
     }
 
-    @Nullable public Void update(final IProject p,  final Set<String> preference) {
+     public Void update(final IProject p,  final Set<String> preference) {
       preferences2.put(p, preference);
       for ( final SpartanTipper[] ts : preferences1.get(p).values())
         for ( final SpartanTipper ¢ : ts)

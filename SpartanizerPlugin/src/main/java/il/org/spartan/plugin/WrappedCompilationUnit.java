@@ -8,8 +8,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.utils.*;
 
@@ -18,7 +16,7 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public class WrappedCompilationUnit {
   public ICompilationUnit descriptor;
-  @Nullable public CompilationUnit compilationUnit;
+   public CompilationUnit compilationUnit;
   public String fileName;
   public String filePath;
   public boolean useBinding;
@@ -65,7 +63,7 @@ public class WrappedCompilationUnit {
     return this;
   }
 
-  @Nullable public String name() {
+   public String name() {
     return descriptor == null ? null : descriptor.getElementName();
   }
 

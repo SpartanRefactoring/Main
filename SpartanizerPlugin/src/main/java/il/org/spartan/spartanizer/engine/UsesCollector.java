@@ -13,8 +13,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.name;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 abstract class HidingDepth extends ScopeManager {
@@ -216,7 +214,7 @@ class UsesCollector extends HidingDepth {
     return recurse($.getBody());
   }
 
-  boolean recurse(@Nullable final ASTNode ¢) {
+  boolean recurse( final ASTNode ¢) {
     if (¢ != null && !hidden())
       ¢.accept(clone());
     return false;
@@ -381,7 +379,7 @@ class StringCollector extends HidingDepth {
     return recurse($.getBody());
   }
 
-  boolean recurse(@Nullable final ASTNode ¢) {
+  boolean recurse( final ASTNode ¢) {
     if (¢ != null && !hidden())
       ¢.accept(clone());
     return false;

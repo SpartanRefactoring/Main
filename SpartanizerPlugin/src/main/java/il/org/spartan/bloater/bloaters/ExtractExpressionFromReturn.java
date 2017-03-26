@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -24,10 +22,10 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>/
     return "Extract expression from " + ¢ + " statement";
   }
 
-  @Override @Nullable public Tip tip( final ReturnStatement s) {
+  @Override  public Tip tip( final ReturnStatement s) {
     return expression(s) == null || !iz.assignment(expression(s)) || !iz.block(s.getParent()) ? null : new Tip(description(s), s, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
-        @Nullable final Assignment a = az.assignment(expression(s));
+         final Assignment a = az.assignment(expression(s));
         // TODO Doron Meshulam: use class subject --yg
         final ExpressionStatement exp = r.getAST().newExpressionStatement(copy.of(expression(s)));
         final ReturnStatement retNoExp = subject.operand(expression(exp)).toReturn();

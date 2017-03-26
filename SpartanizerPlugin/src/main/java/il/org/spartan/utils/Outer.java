@@ -1,25 +1,23 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.*;
-
 /** TODO Yossi Gil: document class
  * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-21 */
 public abstract class Outer<Inner> {
-  @Nullable public final Inner inner;
+   public final Inner inner;
 
-  public Outer(@Nullable final Inner inner) {
+  public Outer( final Inner inner) {
     this.inner = inner;
     if (inner == null || inner == this)
       throw new IllegalArgumentException();
   }
 
-  @Override public boolean equals(@Nullable final Object ¢) {
+  @Override public boolean equals( final Object ¢) {
     if (¢ == this)
       return true;
     if (¢ == null || getClass() != ¢.getClass())
       return false;
-    @Nullable @SuppressWarnings("unchecked") final Outer<Inner> $ = (Outer<Inner>) ¢;
+     @SuppressWarnings("unchecked") final Outer<Inner> $ = (Outer<Inner>) ¢;
     return equals($);
   }
 

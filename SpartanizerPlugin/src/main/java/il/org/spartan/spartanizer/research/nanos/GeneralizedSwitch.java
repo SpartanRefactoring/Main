@@ -15,8 +15,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -86,7 +84,7 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @Nullable Collection<? extends ASTNode> branchesWrapper(final N ¢) {
+   Collection<? extends ASTNode> branchesWrapper(final N ¢) {
     return !iz.conditionalExpression(¢) ? extract.branches(az.ifStatement(¢)) : extract.branches(az.conditionalExpression(¢));
   }
 

@@ -6,8 +6,6 @@ import java.util.function.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
@@ -51,7 +49,7 @@ public class GUIBatchLaconizer extends Applicator {
         listener().push(message.run_pass.get(pass));
         if (!shouldRun())
           break;
-        @Nullable final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), done = new ArrayList<>();
+         final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), done = new ArrayList<>();
         for ( final WrappedCompilationUnit ¢ : alive) {
           final int tipsInvoked = runAction().apply(¢.build()).intValue();
           if (tipsInvoked <= 0)

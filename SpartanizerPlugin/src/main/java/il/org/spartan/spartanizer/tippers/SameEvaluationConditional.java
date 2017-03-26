@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,7 +20,7 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
   }
 
   @Override protected boolean prerequisite( final ConditionalExpression x) {
-    @Nullable final InfixExpression $ = az.infixExpression(x.getExpression());
+     final InfixExpression $ = az.infixExpression(x.getExpression());
     if (!iz.infixEquals($))
       return false;
     final Expression left = $.getLeftOperand();

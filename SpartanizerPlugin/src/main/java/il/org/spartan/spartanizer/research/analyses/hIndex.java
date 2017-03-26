@@ -10,8 +10,6 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -33,7 +31,7 @@ public interface hIndex {
   static void analyze() {
      final Map<String, Pair<String, Int>> ranking = new HashMap<>();
     for ( final File f : inputFiles()) {
-      @Nullable final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
+       final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       descendants.whoseClassIs(MethodInvocation.class).from(cu).forEach(m -> {
          final String key = declarationFile(cu, identifier(name(m)), f.getName()) + name(m) + "(" + arguments(m).size() + " params)";
         ranking.putIfAbsent(key, new Pair<>(key, new Int()));

@@ -7,8 +7,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -22,12 +20,12 @@ public final class Reduction extends NanoPatternTipper<MethodInvocation> {
   private static final long serialVersionUID = 0x3866DF4DC20EF00CL;
 
   @Override public boolean canTip(final MethodInvocation ¢) {
-    @Nullable final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
+     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     return $ != null && identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢));
   }
 
-  private static boolean sameSize(@Nullable final Collection<SingleVariableDeclaration> parameters,
-      @Nullable final Collection<Expression> arguments) {
+  private static boolean sameSize( final Collection<SingleVariableDeclaration> parameters,
+       final Collection<Expression> arguments) {
     return arguments != null //
         && parameters != null //
         && arguments.size() != parameters.size();

@@ -6,8 +6,6 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.collections.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -20,7 +18,7 @@ import il.org.spartan.utils.*;
 public final class CommandLineSelection extends AbstractSelection<CommandLineSelection> {
   private List<WrappedCompilationUnit> compilationUnits;
 
-  private CommandLineSelection(@Nullable final List<WrappedCompilationUnit> compilationUnits, final String name) {
+  private CommandLineSelection( final List<WrappedCompilationUnit> compilationUnits, final String name) {
     inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
     this.name = name;
   }
@@ -29,13 +27,13 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     return inner.stream().map(λ -> λ.compilationUnit).collect(toList());
   }
 
-  @Nullable public List<WrappedCompilationUnit> get() {
+   public List<WrappedCompilationUnit> get() {
     return inner;
   }
 
   /** Factory method for empty selection
    * @return empty selection */
-  @Nullable public static CommandLineSelection empty() {
+   public static CommandLineSelection empty() {
     return new CommandLineSelection(null, null);
   }
 
@@ -52,7 +50,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     }
 
     /** @return CommandLineSelection */
-    @Nullable public static CommandLineSelection getAllCompilationUnits() {
+     public static CommandLineSelection getAllCompilationUnits() {
       return getSelection();
     }
 

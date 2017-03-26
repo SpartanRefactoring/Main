@@ -6,8 +6,6 @@ import java.util.stream.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.internal.core.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
@@ -62,7 +60,7 @@ public enum LibrariesManagement {
 
   /** @param p JD
    * @return true iff the project uses the spartan library. */
-  public static boolean hasLibrary(@Nullable final IJavaProject p) {
+  public static boolean hasLibrary( final IJavaProject p) {
     if (p == null)
       return false;
     try {
@@ -77,7 +75,7 @@ public enum LibrariesManagement {
   /** Adding the spartan library to a project.
    * @param p JD
    * @return true upon success */
-  public static boolean addLibrary(@Nullable final IJavaProject p) {
+  public static boolean addLibrary( final IJavaProject p) {
     if (p == null)
       return false;
     final IClasspathEntry[] es;
@@ -103,7 +101,7 @@ public enum LibrariesManagement {
   /** If the project does not make use of the spartan library, we try to add it.
    * @param ¢ JD
    * @return true iff the project uses the spartan library */
-  public static boolean checkLibrary(@Nullable final IJavaProject ¢) {
+  public static boolean checkLibrary( final IJavaProject ¢) {
     return ¢ != null && (hasLibrary(¢) || addLibrary(¢));
   }
 

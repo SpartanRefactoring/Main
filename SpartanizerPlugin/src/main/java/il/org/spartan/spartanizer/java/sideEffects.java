@@ -13,8 +13,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
@@ -86,7 +84,7 @@ public enum sideEffects {
     return free(dimensions(¢)) && free(expressions(¢.getInitializer()));
   }
 
-  public static boolean free(@Nullable final ASTNode ¢) {
+  public static boolean free( final ASTNode ¢) {
     return ¢ == null || (iz.expression(¢) ? free(az.expression(¢))
         : iz.expressionStatement(¢) ? free(az.expressionStatement(¢))
             : iz.ifStatement(¢) ? free(az.ifStatement(¢))
@@ -114,7 +112,7 @@ public enum sideEffects {
    static final int[] STRICT_SIDE_EFFECT = { METHOD_INVOCATION, SUPER_CONSTRUCTOR_INVOCATION, CONSTRUCTOR_INVOCATION, CLASS_INSTANCE_CREATION,
       ASSIGNMENT, POSTFIX_EXPRESSION };
 
-  public static boolean free(@Nullable final Expression ¢) {
+  public static boolean free( final Expression ¢) {
     if (¢ == null || iz.nodeTypeIn(¢, alwaysFree))
       return true;
     if (iz.nodeTypeIn(¢, alwaysHave))
@@ -150,7 +148,7 @@ public enum sideEffects {
     return Stream.of(¢).allMatch(sideEffects::free);
   }
 
-  public static boolean free(@Nullable final Iterable<? extends Expression> xs) {
+  public static boolean free( final Iterable<? extends Expression> xs) {
     return xs == null || az.stream(xs).allMatch(λ -> sideEffects.free(az.expression(λ)));
   }
 

@@ -6,8 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.internal.corext.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Some useful utility functions used for binding manipulations.
@@ -37,7 +35,7 @@ public enum BindingUtils {
    *        order to determine the context in which the method is being used
    * @param u current {@link CompilationUnit}
    * @return method's binding if it is visible from context, else null */
-  @Nullable public static IMethodBinding getVisibleMethod(@Nullable final ITypeBinding b, final String methodName, final ITypeBinding[] bs,
+   public static IMethodBinding getVisibleMethod( final ITypeBinding b, final String methodName, final ITypeBinding[] bs,
       final ASTNode n,  final CompilationUnit u) {
     if (b == null)
       return null;

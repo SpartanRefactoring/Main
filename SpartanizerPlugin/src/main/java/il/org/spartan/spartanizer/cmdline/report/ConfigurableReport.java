@@ -6,8 +6,6 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -218,8 +216,8 @@ public interface ConfigurableReport {
         }
       }
 
-      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, @Nullable final String id,
-          @Nullable final BiFunction<Integer, Integer> bf) {
+      @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n,  final String id,
+           final BiFunction<Integer, Integer> bf) {
         if (bf == null && id == null) {
           write(i, n);
           return;

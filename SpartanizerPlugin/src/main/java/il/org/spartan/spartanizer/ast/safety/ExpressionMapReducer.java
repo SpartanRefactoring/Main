@@ -5,8 +5,6 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
@@ -15,7 +13,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
 public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
-  @Override @Nullable public T map(@Nullable final Expression ¢) {
+  @Override  public T map( final Expression ¢) {
     if (¢ == null)
       return reduce();
     switch (¢.getNodeType()) {
@@ -78,7 +76,7 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return map(x.getExpression());
   }
 
-  @Nullable private T map(final ArrayInitializer ¢) {
+   private T map(final ArrayInitializer ¢) {
     return reduceExpressions(expressions(¢));
   }
 
@@ -90,15 +88,15 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  @Nullable protected T map( final ArrayAccess ¢) {
+   protected T map( final ArrayAccess ¢) {
     return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
 
-  @Nullable protected T map( final ArrayCreation ¢) {
+   protected T map( final ArrayCreation ¢) {
     return reduce(reduceExpressions(dimensions(¢)), map(¢.getInitializer()));
   }
 
-  @Nullable protected T map(final Assignment ¢) {
+   protected T map(final Assignment ¢) {
     return reduce(map(to(¢)), map(from(¢)));
   }
 
@@ -106,11 +104,11 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  @Nullable protected T map( final ClassInstanceCreation ¢) {
+   protected T map( final ClassInstanceCreation ¢) {
     return reduce(map(¢.getExpression()), reduceExpressions(arguments(¢)));
   }
 
-  @Nullable protected T map( final ConditionalExpression ¢) {
+   protected T map( final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
@@ -118,7 +116,7 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return map(¢.getLeftOperand());
   }
 
-  @Nullable protected T map(final MethodInvocation ¢) {
+   protected T map(final MethodInvocation ¢) {
     return reduce(map(expression(¢)), reduceExpressions(arguments(¢)));
   }
 
@@ -126,11 +124,11 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  @Nullable protected T map(final PostfixExpression ¢) {
+   protected T map(final PostfixExpression ¢) {
     return map(expression(¢));
   }
 
-  @Nullable protected T map(final PrefixExpression ¢) {
+   protected T map(final PrefixExpression ¢) {
     return map(expression(¢));
   }
 
@@ -142,7 +140,7 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
     return reduce();
   }
 
-  @Nullable protected T map( final QualifiedName ¢) {
+   protected T map( final QualifiedName ¢) {
     return reduce(map(¢.getQualifier()), map(¢.getName()));
   }
 }

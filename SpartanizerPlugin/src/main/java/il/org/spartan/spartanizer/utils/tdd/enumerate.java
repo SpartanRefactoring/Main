@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.utils.tdd;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
@@ -18,7 +16,7 @@ public enum enumerate {
   /** @author Ori Marcovitch
    * @param n node
    * @since Oct 28, 2016 */
-  public static int expressions(@Nullable final ASTNode n) {
+  public static int expressions( final ASTNode n) {
     if (n == null)
       return 0;
      final Int $ = new Int();
@@ -36,7 +34,7 @@ public enum enumerate {
    * @author Noam Yefet
    * @param ¢
    * @since Nov 1, 2016 */
-  public static int statements(@Nullable final ASTNode n) {
+  public static int statements( final ASTNode n) {
     if (n == null)
       return 0;
      final Int $ = new Int();
@@ -54,7 +52,7 @@ public enum enumerate {
    * @param ¢ the CompilationUnit its methods are counted
    * @return the amount of methods the given CompilationUnit has
    * @since Nov 2, 2016 */
-  public static int methods(@Nullable final CompilationUnit ¢) {
+  public static int methods( final CompilationUnit ¢) {
     if (¢ == null)
       return 0;
      final Int $ = new Int();
@@ -71,7 +69,7 @@ public enum enumerate {
   /** @author Ori Marcovitch
    * @param ¢
    * @return */
-  public static int methodsWithBody(@Nullable final ASTNode ¢) {
+  public static int methodsWithBody( final ASTNode ¢) {
     if (¢ == null)
       return 0;
      final Int $ = new Int();
@@ -129,7 +127,7 @@ public enum enumerate {
   }
   // For you to implement! Let's TDD and get it on!
 
-  public static int ifStatements(@Nullable final ASTNode ¢) {
+  public static int ifStatements( final ASTNode ¢) {
     if (¢ == null)
       return 0;
      final Int $ = new Int();
@@ -143,7 +141,7 @@ public enum enumerate {
     return $.inner;
   }
 
-  public static int loops(@Nullable final ASTNode n) {
+  public static int loops( final ASTNode n) {
     if (n == null)
       return 0;
      final Int $ = new Int();
@@ -173,7 +171,7 @@ public enum enumerate {
     return $.inner;
   }
 
-  public static int ternaries(@Nullable final ASTNode ¢) {
+  public static int ternaries( final ASTNode ¢) {
     if (¢ == null)
       return 0;
      final Int $ = new Int();

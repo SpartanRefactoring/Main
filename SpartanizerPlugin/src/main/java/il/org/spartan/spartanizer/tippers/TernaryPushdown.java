@@ -12,8 +12,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -29,10 +27,10 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -8630038787651083003L;
 
-  @Nullable static Expression pushdown(@Nullable final ConditionalExpression x) {
+   static Expression pushdown( final ConditionalExpression x) {
     if (x == null)
       return null;
-    @Nullable final Expression $ = core(then(x)), elze = core(elze(x));
+     final Expression $ = core(then(x)), elze = core(elze(x));
     return same($, elze) ? null : pushdown(x, $, elze);
   }
 
@@ -92,14 +90,14 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   private static Expression pushdown(final ConditionalExpression x, final InfixExpression e1, final InfixExpression e2) {
     if (operator(e1) != operator(e2))
       return null;
-    @Nullable final List<Expression> es1 = hop.operands(e1), es2 = hop.operands(e2);
+     final List<Expression> es1 = hop.operands(e1), es2 = hop.operands(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
     final InfixExpression $ = copy.of(e1);
-    @Nullable final List<Expression> operands = hop.operands($);
+     final List<Expression> operands = hop.operands($);
     operands.remove(i);
     operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x))));
     return p(x, subject.operands(operands).to($.getOperator()));
@@ -149,7 +147,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return "Pushdown ?: into expression";
   }
 
-  @Override @Nullable public Expression replacement(final ConditionalExpression ¢) {
+  @Override  public Expression replacement(final ConditionalExpression ¢) {
     return pushdown(¢);
   }
 }

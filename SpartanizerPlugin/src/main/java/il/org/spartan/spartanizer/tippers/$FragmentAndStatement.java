@@ -7,8 +7,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDeclarationFragment> {
   private static final long serialVersionUID = 0x1B70489B1D1340L;
 
-  @Override public boolean prerequisite(@Nullable final VariableDeclarationFragment ¢) {
+  @Override public boolean prerequisite( final VariableDeclarationFragment ¢) {
     return super.prerequisite(¢) && ¢ != null;
   }
 
@@ -45,7 +43,7 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
     return $ - metrics.size(newParent);
   }
 
-  protected static boolean forbidden( final VariableDeclarationFragment f, @Nullable final Expression initializer) {
+  protected static boolean forbidden( final VariableDeclarationFragment f,  final Expression initializer) {
     return initializer == null || haz.annotation(f);
   }
 
@@ -94,7 +92,7 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
     return false;
   }
 
-  @Nullable protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer,
+   protected abstract ASTRewrite go(ASTRewrite r, VariableDeclarationFragment f, SimpleName n, Expression initializer,
       Statement nextStatement, TextEditGroup g);
 
   @Override protected final ASTRewrite go(final ASTRewrite r,  final VariableDeclarationFragment f, final Statement nextStatement,
@@ -105,8 +103,8 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
     return $ == null ? null : go(r, f, $, f.getInitializer(), nextStatement, g);
   }
 
-  @Override public final Tip tip( final VariableDeclarationFragment f, @Nullable final ExclusionManager exclude) {
-    @Nullable final Tip $ = super.tip(f, exclude);
+  @Override public final Tip tip( final VariableDeclarationFragment f,  final ExclusionManager exclude) {
+     final Tip $ = super.tip(f, exclude);
     if ($ != null && exclude != null)
       exclude.exclude(f.getParent());
     return $;

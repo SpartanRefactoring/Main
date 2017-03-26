@@ -9,8 +9,6 @@ import java.util.*;
 import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
@@ -54,7 +52,7 @@ public final class EnvNestedHandler extends ENVTestEngineAbstract {
     runTest();
   }
 
-  @Override @Nullable protected LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
+  @Override  protected LinkedHashSet<Entry<String, Binding>> buildEnvironmentSet(@SuppressWarnings("unused") final BodyDeclaration __) {
     return null;
   }
 
@@ -65,7 +63,7 @@ public final class EnvNestedHandler extends ENVTestEngineAbstract {
   /** Parse the outer annotation to get the inner ones. Add to the flat Set.
    * Compare uses() and declares() output to the flat Set.
    * @param whatThisGlobalStaticVariableDoing JD */
-  private void handler(@Nullable final SingleMemberAnnotation a) {
+  private void handler( final SingleMemberAnnotation a) {
     if (a == null || !"OutOfOrderflatENV".equals(a.getTypeName() + ""))
       return;
     foundTestedAnnotation = true;

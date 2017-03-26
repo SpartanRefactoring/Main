@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,13 +24,13 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
   }
 
   // TODO Doron - I spartanized your code. --yg
-  @Override @Nullable public Tip tip( final ExpressionStatement ¢) {
-    @Nullable final Assignment $ = az.assignment(expression(¢));
+  @Override  public Tip tip( final ExpressionStatement ¢) {
+     final Assignment $ = az.assignment(expression(¢));
     return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         // TODO Doron Meshulam: use class subject --yg
-        @Nullable final Assignment newTail = copy.of($), p = rightMost(newTail), newHead = copy.of(az.assignment(right(p)));
+         final Assignment newTail = copy.of($), p = rightMost(newTail), newHead = copy.of(az.assignment(right(p)));
         p.setRightHandSide(copy.of(left(newHead)));
         final ExpressionStatement head = create.newExpressionStatement(newHead), tail = create.newExpressionStatement(newTail);
         final ListRewrite l = r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY);
@@ -41,8 +39,8 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
         l.remove(¢, g);
       }
 
-      @Nullable public Assignment rightMost(final Assignment newTail) {
-        for (@Nullable @SuppressWarnings("hiding") Assignment $ = newTail;; $ = az.assignment(right($)))
+       public Assignment rightMost(final Assignment newTail) {
+        for ( @SuppressWarnings("hiding") Assignment $ = newTail;; $ = az.assignment(right($)))
           if (!iz.assignment(right(az.assignment(right($)))))
             return $;
       }
