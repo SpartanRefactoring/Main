@@ -46,6 +46,7 @@ public class Issue0310 {
         .gives("for(int i=0;i<10;){i+=1;}")//
         .gives("for(int ¢=0;¢<10;){¢+=1;}")//
         .gives("for(int ¢=0;¢<10;)¢+=1;")//
+        .gives("for(int ¢=0;¢<10;)¢++;")//
         .stays();
   }
 

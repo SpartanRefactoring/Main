@@ -64,6 +64,7 @@ public final class Issue0107 {
 
   @Test public void o() {
     trimmingOf("for(int a ; a<3 ; a+=1);")//
+    .gives("for(int a ; a<3 ; a++);")//
         .stays();
   }
 
