@@ -12,13 +12,13 @@ import org.junit.*;
 public class Issue0902 {
   @Test public void a() {
     trimmingOf("void f(){int x; int y;return;}")//
-        .gives("void f(){}")//
+        .gives("void f(){int x, y;}")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("void f(){int x; return;}")//
-        .gives("void f(){}")//
+        .gives("void f(){int x;}")//
         .stays();
   }
 

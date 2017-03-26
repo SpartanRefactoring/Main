@@ -29,7 +29,7 @@ public class Issue0895 {
     )//
         .gives("public final class A {" + //
             " public static void a(final B b) {" + //
-            "   C c = new C() {" + //
+            "   new C() {" + //
             "     @D" + //
             "     public void d() {" + //
             "       try {" + //

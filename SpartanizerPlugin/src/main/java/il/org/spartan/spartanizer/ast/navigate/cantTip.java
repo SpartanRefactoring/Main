@@ -27,11 +27,11 @@ public enum cantTip {
   }
 
   public static boolean declarationRedundantInitializer(final ForStatement s) {
-    return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().check(λ));
+    return extract.fragments(body(s)).stream().noneMatch(λ -> new FieldFragmentInitializerDefaultValue().check(λ));
   }
 
   public static boolean declarationRedundantInitializer(final WhileStatement s) {
-    return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().check(λ));
+    return extract.fragments(body(s)).stream().noneMatch(λ -> new FieldFragmentInitializerDefaultValue().check(λ));
   }
 
   public static boolean forRenameInitializerToIt(final ForStatement ¢) {
