@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,15 +27,15 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x47C7172BFCDFA467L;
 
-  @Override  public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
   }
 
-  @Override  public Tip tip( final SwitchStatement s) {
-     final List<Statement> $ = getAdditionalStatements(statements(s), caseWithNoSequencer(s));
-     final Statement n = (Statement) s.statements().get(s.statements().indexOf(first($)) - 1);
+  @Override public Tip tip(final SwitchStatement s) {
+    final List<Statement> $ = getAdditionalStatements(statements(s), caseWithNoSequencer(s));
+    final Statement n = (Statement) s.statements().get(s.statements().indexOf(first($)) - 1);
     return new Tip(description(s), s, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
         $.forEach(λ -> l.insertBefore(copy.of(λ), n, g));
         if (!iz.sequencerComplex(last($)))
@@ -48,7 +49,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
 
   private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
-     SwitchCase $ = null;
+    SwitchCase $ = null;
     for (final Statement ¢ : statements(x)) // TOUGH
       if (iz.sequencerComplex(¢))
         $ = null;
@@ -60,8 +61,8 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     return null;
   }
 
-   private static List<Statement> getAdditionalStatements( final List<Statement> ss, final SwitchCase c) {
-     final List<Statement> $ = new ArrayList<>();
+  private static List<Statement> getAdditionalStatements(final List<Statement> ss, final SwitchCase c) {
+    final List<Statement> $ = new ArrayList<>();
     boolean additionalStatements = false;
     for (final Statement ¢ : ss.subList(ss.indexOf(c) + 1, ss.size())) {
       if (¢ instanceof SwitchCase)

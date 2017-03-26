@@ -4,7 +4,7 @@ package il.org.spartan.utils;
  * @author Ori Marcovitch
  * @since Oct 18, 2016 */
 public final class Str {
-   public String inner;
+  public String inner;
 
   public Str() {
     inner = null;
@@ -18,7 +18,7 @@ public final class Str {
     inner = ¢ + "";
   }
 
-   public String inner() {
+  public String inner() {
     return inner;
   }
 

@@ -8,6 +8,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -47,17 +48,17 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
       try {
         npStatistics.logNode(findFirst.instanceOf(MethodDeclaration.class)
             .in(ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""))))));
-      } catch ( @SuppressWarnings("unused") final AssertionError __) {
+      } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
-      } catch ( @SuppressWarnings("unused") final NullPointerException ¢) {
+      } catch (@SuppressWarnings("unused") final NullPointerException ¢) {
         System.err.print("N");
-      } catch ( @SuppressWarnings("unused") final IllegalArgumentException ¢) {
+      } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
         System.err.print("I");
       }
     return super.visit($);
   }
 
-  @Override public boolean visit( final CompilationUnit ¢) {
+  @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(cleanerVisitor);
     return true;
   }
@@ -72,7 +73,7 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
   }
 
   public static void summarize(final String path) {
-    for ( final Integer boxedType : npStatistics.keySet()) {
+    for (final Integer boxedType : npStatistics.keySet()) {
       if (!writers.containsKey(boxedType))
         initializeWriter(boxedType.intValue());
       @SuppressWarnings("resource") final Table writer = writers.get(boxedType);

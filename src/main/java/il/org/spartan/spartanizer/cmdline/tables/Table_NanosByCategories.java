@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -21,17 +22,17 @@ public class Table_NanosByCategories {
 
   public void go() {
     final List<Tipper<? extends ASTNode>>[] implementation = new SpartanAnalyzer().toolbox.implementation;
-     final Map<String, Set<String>> categories = new TreeMap<>();
+    final Map<String, Set<String>> categories = new TreeMap<>();
     for (int i = 0; i < implementation.length; ++i)
       if (implementation[i] != null)
         for (final Tipper<?> ¢ : implementation[i])
           if (¢ instanceof NanoPatternTipper) {
-             final NanoPatternTipper<? extends ASTNode> np = (NanoPatternTipper<? extends ASTNode>) ¢;
+            final NanoPatternTipper<? extends ASTNode> np = (NanoPatternTipper<? extends ASTNode>) ¢;
             final String category = Category.pretty(np.category() != null ? np.category() + "" : Toolbox.intToClassName(i));
             categories.putIfAbsent(category, new TreeSet<>());
             categories.get(category).add(np.className());
           }
-    try ( Table t = new Table(this)) {
+    try (Table t = new Table(this)) {
       t.noStatistics().add(Statistic.Σ);
       categories.keySet()
           .forEach(λ -> t//

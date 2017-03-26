@@ -17,66 +17,66 @@ public class Table extends Row<Table> implements Closeable {
   private static final long serialVersionUID = 0x4AA7BE471985E874L;
   String path;
 
-  public Table( final Object o) {
+  public Table(final Object o) {
     this(o.getClass());
   }
 
-  public Table( final Class<?> c) {
+  public Table(final Class<?> c) {
     this(classToNormalizedFileName(c));
   }
 
-  public Table( final String name) {
+  public Table(final String name) {
     this(name, TableRenderer.builtin.values());
   }
 
-  @SuppressWarnings("resource") public Table( final String name, final TableRenderer... rs) {
+  @SuppressWarnings("resource") public Table(final String name, final TableRenderer... rs) {
     this.name = name.toLowerCase();
     as.list(rs).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
-      } catch ( final IOException ¢) {
+      } catch (final IOException ¢) {
         close();
         throw new RuntimeException(¢);
       }
     });
   }
 
-  @SuppressWarnings("resource") public Table( final String name,  final String outputFolder) {
+  @SuppressWarnings("resource") public Table(final String name, final String outputFolder) {
     this.name = name.toLowerCase();
     path = outputFolder.lastIndexOf('/') == outputFolder.length() ? outputFolder : outputFolder + System.getProperty("file.separator", "/");
     as.list(TableRenderer.builtin.values()).forEach(r -> {
       try {
         writers.add(new RecordWriter(r, path()));
-      } catch ( final IOException ¢) {
+      } catch (final IOException ¢) {
         close();
         throw new RuntimeException(¢);
       }
     });
   }
 
-  public Table( final Class<?> c,  final String outputFolder) {
+  public Table(final Class<?> c, final String outputFolder) {
     this(classToNormalizedFileName(c), outputFolder);
   }
 
   private int length;
-   public final String name;
+  public final String name;
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
   private final List<RecordWriter> writers = new ArrayList<>();
 
-   public String baseName() {
+  public String baseName() {
     return system.tmp + name + ".*";
   }
 
   @Override public void close() {
     if (!stats.isEmpty())
-      for ( final Statistic s : statisics) {
+      for (final Statistic s : statisics) {
         for (final String key : keySet()) {
           final RealStatistics r = getRealStatistics(key);
           put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
         }
-         final String key = lastEmptyColumn();
-        for ( final RecordWriter ¢ : writers) {
+        final String key = lastEmptyColumn();
+        for (final RecordWriter ¢ : writers) {
           put(key, ¢.renderer.render(s));
           ¢.writeFooter(this);
         }
@@ -84,8 +84,8 @@ public class Table extends Row<Table> implements Closeable {
     writers.forEach(RecordWriter::close);
   }
 
-   private String lastEmptyColumn() {
-     String $ = null;
+  private String lastEmptyColumn() {
+    String $ = null;
     for (final String key : keySet()) {
       final RealStatistics r = getRealStatistics(key);
       if (r != null && r.n() != 0)
@@ -105,19 +105,19 @@ public class Table extends Row<Table> implements Closeable {
     return super.col(key, value);
   }
 
-  @Override  public Table col(final String key, final long value) {
+  @Override public Table col(final String key, final long value) {
     getRealStatistics(key).record(value);
     super.col(key, value);
     return this;
   }
 
-   public String description() {
-     String $ = "Table named " + name + " produced in " + writers.size() + " formats (versions) in " + baseName() + "\n" + //
+  public String description() {
+    String $ = "Table named " + name + " produced in " + writers.size() + " formats (versions) in " + baseName() + "\n" + //
         "The table has " + length() + " data rows, each consisting of " + size() + " columns.\n" + //
         "Table header is  " + keySet() + "\n"; //
     if (!stats.isEmpty())
       $ += "The table consists of " + stats.size() + " numerical columns: " + stats.keySet() + "\n";
-     final Int n = new Int();
+    final Int n = new Int();
     return $ + writers.stream().map(λ -> "\t " + ++n.inner + ". " + λ.fileName + "\n").reduce((x, y) -> x + y).get();
   }
 
@@ -135,51 +135,51 @@ public class Table extends Row<Table> implements Closeable {
     reset();
   }
 
-   private String path() {
+  private String path() {
     return (path != null ? path : system.tmp) + name;
   }
 
-   public Table noStatistics() {
+  public Table noStatistics() {
     statisics = new Statistic[0];
     return this;
   }
 
-   public Table remove(final Statistic... ¢) {
+  public Table remove(final Statistic... ¢) {
     final List<Statistic> $ = as.list(statisics);
     $.removeAll(as.list(¢));
     return set($);
   }
 
-   public Table add(final Statistic... ¢) {
+  public Table add(final Statistic... ¢) {
     final List<Statistic> $ = as.list(statisics);
     $.addAll(as.list(¢));
     return set($);
   }
 
-  @Override  protected Table reset() {
+  @Override protected Table reset() {
     keySet().forEach(λ -> put(λ, ""));
     put(null, ++length + "");
     return this;
   }
 
   /* @formatter:off*/ @Override
-  
+
    protected Table self() { return this; } /*@formatter:on*/
 
-   private Table set( final List<Statistic> ¢) {
+  private Table set(final List<Statistic> ¢) {
     return set(¢.toArray(new Statistic[¢.size()]));
   }
 
-   Table set(final Statistic... ¢) {
+  Table set(final Statistic... ¢) {
     statisics = ¢;
     return this;
   }
 
-  public static String classToNormalizedFileName( final Class<?> ¢) {
+  public static String classToNormalizedFileName(final Class<?> ¢) {
     return classToNormalizedFileName(¢.getSimpleName());
   }
 
-  static String classToNormalizedFileName( final String className) {
+  static String classToNormalizedFileName(final String className) {
     return separate.these(lisp.rest(as.iterable(namer.components(className)))).by('-').toLowerCase();
   }
 }

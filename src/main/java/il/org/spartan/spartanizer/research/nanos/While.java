@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -25,15 +26,15 @@ public class While {
       return anyTips(tippers, ¢);
     }
 
-    @Override  public Tip pattern(final WhileStatement ¢) {
+    @Override public Tip pattern(final WhileStatement ¢) {
       return firstTip(tippers, ¢);
     }
 
-    @Override  public String description() {
+    @Override public String description() {
       return "Count elements in collection that satisfy some predicate";
     }
 
-    @Override  public String nanoName() {
+    @Override public String nanoName() {
       return Aggregate.class.getSimpleName();
     }
   }

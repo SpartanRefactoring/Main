@@ -4,5 +4,5 @@ package il.org.spartan.spartanizer.annotation;
  * @author Alex Kopakzon
  * @since 2016 */
 public @interface NestedENV {
-   String[] value();
+  String[] value();
 }

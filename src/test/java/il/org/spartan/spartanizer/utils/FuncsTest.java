@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class FuncsTest {
   @Test public void arrayOfInts() {
-     final Type t = t("int[][] __;");
+    final Type t = t("int[][] __;");
     assert t != null;
     azzert.that(namer.shorten(t), equalTo("iss"));
   }
@@ -93,7 +93,7 @@ public final class FuncsTest {
     assert iz.deMorgan(CONDITIONAL_OR);
   }
 
-   private Type t( final String codeFragment) {
+  private Type t(final String codeFragment) {
     return findFirst.instanceOf(Type.class).in(s(codeFragment));
   }
 }

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -49,11 +50,11 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     }
    * </ol>
   */
-  private static Expression simplifyTernary( final ConditionalExpression ¢) {
+  private static Expression simplifyTernary(final ConditionalExpression ¢) {
     return simplifyTernary(¢.getThenExpression(), ¢.getElseExpression(), copy.of(¢.getExpression()));
   }
 
-  private static Expression simplifyTernary(final Expression then, final Expression elze,  final Expression main) {
+  private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean $ = !iz.booleanLiteral(then);
     final Expression other = $ ? then : elze;
     final boolean literal = az.booleanLiteral($ ? elze : then).booleanValue();
@@ -64,11 +65,11 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
     return "Convert conditional expression into logical expression";
   }
 
-  @Override public boolean prerequisite( final ConditionalExpression ¢) {
+  @Override public boolean prerequisite(final ConditionalExpression ¢) {
     return have.booleanLiteral(¢.getThenExpression(), ¢.getElseExpression());
   }
 
-  @Override public Expression replacement( final ConditionalExpression ¢) {
+  @Override public Expression replacement(final ConditionalExpression ¢) {
     return simplifyTernary(¢);
   }
 }

@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,15 +19,15 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 0x5DE07AE5A0DF8047L;
 
-  @Override  public String description(final MethodInvocation ¢) {
-     final Expression $ = receiver(¢);
+  @Override public String description(final MethodInvocation ¢) {
+    final Expression $ = receiver(¢);
     return "Prepend \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }
 
-  @Override public ASTNode replacement( final MethodInvocation i) {
+  @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(name(i).getIdentifier()) || !arguments(i).isEmpty() || iz.expressionStatement(parent(i)))
       return null;
-     final Expression receiver = receiver(i);
+    final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
     final InfixExpression $ = subject.pair(make.makeEmptyString(i), receiver).to(PLUS2);

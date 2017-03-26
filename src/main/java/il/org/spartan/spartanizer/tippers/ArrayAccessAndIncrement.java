@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -29,7 +30,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     return "Inline the prefix expression after the access to the array";
   }
 
-  @Override  public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { //
         convert("array[i] = 1; ++i;") //
             .to("array[i++] = 1;"), //
@@ -37,9 +38,9 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
         ignores("f(array[i]); ++i;") };
   }
 
-  @Override public Tip tip( final ArrayAccess a) {
+  @Override public Tip tip(final ArrayAccess a) {
     return checkInput(a) || !prerequisite(a) ? null : new Tip(description(a), a, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final PostfixExpression newpost = a.getAST().newPostfixExpression();
         newpost.setOperand(copy.of(a.getIndex()));
         newpost.setOperator(Operator.INCREMENT);
@@ -49,7 +50,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     };
   }
 
-  private static boolean checkInput( final ArrayAccess a) {
+  private static boolean checkInput(final ArrayAccess a) {
     if (a == null || extract.nextPrefix(a) == null || extract.nextPrefix(a).getOperand() == null
         || !wizard.same(extract.nextPrefix(a).getOperand(), a.getIndex()))
       return true;
@@ -59,18 +60,18 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
           return true;
     if (!iz.infixExpression(a.getParent()) || !iz.assignment(a.getParent().getParent()))
       return false;
-     final Int $ = new Int();
-     final List<Expression> xs = extract.allOperands(az.infixExpression(a.getParent()));
+    final Int $ = new Int();
+    final List<Expression> xs = extract.allOperands(az.infixExpression(a.getParent()));
     xs.add(az.assignment(a.getParent().getParent()).getLeftHandSide());
     xs.stream().filter(iz::arrayAccess).forEach(λ -> ++$.inner);
     return $.inner != 1;
   }
 
-  protected static boolean prerequisite( final ArrayAccess a) {
+  protected static boolean prerequisite(final ArrayAccess a) {
     if (a == null)
       return false;
     final SimpleName $ = az.simpleName(a.getIndex());
-     final Expression bb = az.expression(a.getParent());
+    final Expression bb = az.expression(a.getParent());
     return bb != null && $ != null && (iz.assignment(bb) && (!left(az.assignment(bb)).equals(a) || !iz.containsName($, right(az.assignment(bb))))
         || iz.infixExpression(bb) && (!left(az.infixExpression(bb)).equals(a) || !iz.containsName($, right(az.infixExpression(bb)))));
   }

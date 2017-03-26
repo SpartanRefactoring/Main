@@ -14,7 +14,7 @@ import il.org.spartan.utils.range.*;
 @SuppressWarnings({ "boxing", "static-method" })
 public class rangeTest {
   @Test public void test0() {
-     final Int s = new Int();
+    final Int s = new Int();
     range.to(5).forEach(λ -> ++s.inner);
     assert s.inner == 5;
   }

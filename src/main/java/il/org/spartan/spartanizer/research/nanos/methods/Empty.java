@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Method with empty body
@@ -13,7 +14,7 @@ public class Empty extends JavadocMarkerNanoPattern {
     return empty(¢);
   }
 
-  @Override  public String nanoName() {
+  @Override public String nanoName() {
     return Default.class.getSimpleName();
   }
 }

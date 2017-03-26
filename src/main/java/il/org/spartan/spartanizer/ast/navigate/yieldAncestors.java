@@ -5,6 +5,7 @@ import static il.org.spartan.idiomatic.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 
 /** A class to search in the ancestry line of a given node.
@@ -19,7 +20,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
       this.clazz = clazz;
     }
 
-    @Override @SuppressWarnings("unchecked")  public N from( final ASTNode ¢) {
+    @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if ($.getClass().equals(clazz) || clazz.isAssignableFrom($.getClass()))
@@ -27,7 +28,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
       return null;
     }
 
-    @Override  public ASTNode inclusiveFrom( final ASTNode ¢) {
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
       return ¢ != null && (¢.getClass().equals(clazz) || clazz.isAssignableFrom(¢.getClass())) ? ¢ : from(¢);
     }
   }
@@ -39,7 +40,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
       this.instances = instances;
     }
 
-    @Override @SuppressWarnings("unchecked")  public N from( final ASTNode ¢) {
+    @Override @SuppressWarnings("unchecked") public N from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if (instances.contains($))
@@ -47,7 +48,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
       return null;
     }
 
-    @Override  public ASTNode inclusiveFrom( final ASTNode ¢) {
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
       return ¢ != null && instances.contains(¢) ? ¢ : from(¢);
     }
   }
@@ -59,7 +60,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
       this.type = type;
     }
 
-    @Override  public ASTNode from( final ASTNode ¢) {
+    @Override public ASTNode from(final ASTNode ¢) {
       if (¢ != null)
         for (ASTNode $ = ¢.getParent(); $ != null; $ = $.getParent())
           if (type == $.getNodeType())
@@ -67,7 +68,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
       return null;
     }
 
-    @Override  public ASTNode inclusiveFrom( final ASTNode ¢) {
+    @Override public ASTNode inclusiveFrom(final ASTNode ¢) {
       return ¢ != null && type == ¢.getNodeType() ? ¢ : from(¢);
     }
   }
@@ -79,7 +80,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
       this.until = until;
     }
 
-     public Iterable<ASTNode> ancestors(final SimpleName n) {
+    public Iterable<ASTNode> ancestors(final SimpleName n) {
       return () -> new Iterator<ASTNode>() {
         ASTNode next = n;
 
@@ -96,7 +97,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
     }
   }
 
-   public static Until until(final ASTNode ¢) {
+  public static Until until(final ASTNode ¢) {
     return new Until(¢);
   }
 
@@ -104,23 +105,23 @@ public abstract class yieldAncestors<N extends ASTNode> {
    * @param pattern JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-   public static <N extends ASTNode> yieldAncestors<N> untilClass(final Class<N> ¢) {
+  public static <N extends ASTNode> yieldAncestors<N> untilClass(final Class<N> ¢) {
     return new ByNodeClass<>(¢);
   }
 
-   public static yieldAncestors<CompilationUnit> untilContainingCompilationUnit() {
+  public static yieldAncestors<CompilationUnit> untilContainingCompilationUnit() {
     return new ByNodeClass<>(CompilationUnit.class);
   }
 
-   public static yieldAncestors<MethodDeclaration> untilContainingMethod() {
+  public static yieldAncestors<MethodDeclaration> untilContainingMethod() {
     return new ByNodeClass<>(MethodDeclaration.class);
   }
 
-   public static yieldAncestors<AbstractTypeDeclaration> untilContainingType() {
+  public static yieldAncestors<AbstractTypeDeclaration> untilContainingType() {
     return new ByNodeClass<>(AbstractTypeDeclaration.class);
   }
 
-   public static yieldAncestors<Block> untilContainingBlock() {
+  public static yieldAncestors<Block> untilContainingBlock() {
     return new ByNodeClass<>(Block.class);
   }
 
@@ -128,7 +129,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
    * instances.
    * @param pattern JD
    * @return a newly created instance */
-   @SuppressWarnings({ "unchecked", "rawtypes" }) //
+  @SuppressWarnings({ "unchecked", "rawtypes" }) //
   public static <N extends ASTNode> yieldAncestors untilNode(final N... ¢) {
     return new ByNodeInstances<>(as.list(¢));
   }
@@ -138,7 +139,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
    * @param type JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
-   public static yieldAncestors<ASTNode> untilNodeType(final int type) {
+  public static yieldAncestors<ASTNode> untilNodeType(final int type) {
     return new ByNodeType(type);
   }
 
@@ -146,33 +147,33 @@ public abstract class yieldAncestors<N extends ASTNode> {
    * instances.
    * @param pattern JD
    * @return a newly created instance */
-   public static <N extends ASTNode> yieldAncestors<N> untilOneOf(final List<N> ¢) {
+  public static <N extends ASTNode> yieldAncestors<N> untilOneOf(final List<N> ¢) {
     return new ByNodeInstances<>(¢);
   }
 
   /** @param n JD
    * @return closest ancestor whose type matches the given type. */
-   public abstract N from(ASTNode n);
+  public abstract N from(ASTNode n);
 
   /** @param n JD
    * @return closest ancestor whose type matches the given type. */
-   public abstract ASTNode inclusiveFrom(ASTNode n);
+  public abstract ASTNode inclusiveFrom(ASTNode n);
 
   /** @param ¢ JD
    * @return furtherest ancestor whose type matches the given type. */
-   public ASTNode inclusiveLastFrom(final ASTNode ¢) {
-    for ( ASTNode $ = inclusiveFrom(¢), p = $;; $ = p, p = from(p.getParent()))
+  public ASTNode inclusiveLastFrom(final ASTNode ¢) {
+    for (ASTNode $ = inclusiveFrom(¢), p = $;; $ = p, p = from(p.getParent()))
       if (p == null)
         return $;
   }
 
   /** @param n JD
    * @return furtherest ancestor whose type matches the given type. */
-   public ASTNode lastFrom(final ASTNode n) {
+  public ASTNode lastFrom(final ASTNode n) {
     // TODO Alex: Polish this loop manually and add a test case for future
     // generations
-     ASTNode $ = from(n);
-    for ( ASTNode p = $; p != null; p = from(p))
+    ASTNode $ = from(n);
+    for (ASTNode p = $; p != null; p = from(p))
       $ = p;
     return $;
   }

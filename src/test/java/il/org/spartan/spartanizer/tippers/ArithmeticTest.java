@@ -100,7 +100,7 @@ final class ArithmeticTest {
     }
 
     @Test public void issue201_1() {
-      trimmingOf("private long l = (long) (1L * ++d * f--);")//
+      trimmingOf("(long) (1L * ++d * f--)")//
           .stays();
     }
 

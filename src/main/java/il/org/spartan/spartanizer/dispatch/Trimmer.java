@@ -217,7 +217,7 @@ public class Trimmer extends AbstractGUIApplicator {
     else
       toolbox = Toolbox.freshCopyOfAllTippers();
     firstAddition = false;
-    for (List<Tipper<? extends ASTNode>> ¢ : toolbox.implementation)
+    for (final List<Tipper<? extends ASTNode>> ¢ : toolbox.implementation)
       if (¢ != null)
         ¢.retainAll(tss);
     return this;

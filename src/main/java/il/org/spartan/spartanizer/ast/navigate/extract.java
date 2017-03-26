@@ -14,6 +14,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -52,7 +53,7 @@ public enum extract {
     return annotations(extendedModifiers(¢));
   }
 
-  public static List<Annotation> annotations(VariableDeclarationExpression x) {
+  public static List<Annotation> annotations(final VariableDeclarationExpression x) {
     return extract.annotations(extendedModifiers(x));
   }
 

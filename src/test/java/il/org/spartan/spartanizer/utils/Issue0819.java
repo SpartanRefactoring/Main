@@ -22,7 +22,7 @@ public class Issue0819 {
   }
 
   @Test public void str_test2() {
-     final Str s = new Str();
+    final Str s = new Str();
     s.set("Hamadia");
     azzert.that(s.inner(), is("Hamadia"));
   }

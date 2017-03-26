@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
@@ -19,9 +20,18 @@ public class Issue0905 {
     ;
   }
 
-  @Test public void t12() {
-    trimmingOf("if(b==true){int i=5,q=g();}")//
-        .gives("if(b){int i=5,q=g();}")//
+  /** Introduced by Yogi on Mon-Mar-27-00:35:21-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_ifaTrueIntb5cd() {
+    trimmingOf("if (a == true) { int b = 5, c = d(); }") //
+        .using(InfixExpression.class, new InfixComparisonBooleanLiteral()) //
+        .gives("if(a){int b=5,c=d();}") //
+        .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+        .gives("if(a){int c=d();}") //
+        .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+        .gives("if(a){d();}") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("if(a)d();") //
         .stays() //
     ;
   }
@@ -34,7 +44,7 @@ public class Issue0905 {
     ;
   }
 
-  // TODO Niv Shalmon --yg
+  // TODO Niv Shalmon it is a tough bug to crack --yg
   @Test public void t17() {
     trimmingOf("while(b==q){if(tipper==q()){int i;}}")//
         .gives("while(b==q)if(tipper==q()){int i;}")//

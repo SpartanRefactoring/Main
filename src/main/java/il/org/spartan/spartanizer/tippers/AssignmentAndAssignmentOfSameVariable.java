@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
@@ -23,15 +24,15 @@ public class AssignmentAndAssignmentOfSameVariable extends GoToNextStatement<Ass
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -2175075259560385549L;
 
-  @Override  public String description(@SuppressWarnings("unused") final Assignment __) {
+  @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return description();
   }
 
-  @Override  public String description() {
+  @Override public String description() {
     return "eliminate redundant assignment";
   }
 
-  @Override  public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { //
         convert("x = 1; x = 2;") //
             .to("x = 2;"), //
@@ -42,18 +43,17 @@ public class AssignmentAndAssignmentOfSameVariable extends GoToNextStatement<Ass
     };
   }
 
-  @Override  protected ASTRewrite go( final ASTRewrite $,  final Assignment a,  final Statement nextStatement,
-      final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Assignment nextAssignment = Optional.of(nextStatement) //
         .map(λ -> az.expressionStatement(λ)) //
         .map(λ -> az.assignment(λ.getExpression())).orElse(null);
     if (nextAssignment == null || !Operator.ASSIGN.equals(a.getOperator()) || !Operator.ASSIGN.equals(nextAssignment.getOperator()))
       return null;
-     final Name left1 = az.name(a.getLeftHandSide());
+    final Name left1 = az.name(a.getLeftHandSide());
     final Expression right1 = a.getRightHandSide();
     if (left1 == null || right1 == null)
       return null;
-     final Name left2 = az.name(nextAssignment.getLeftHandSide());
+    final Name left2 = az.name(nextAssignment.getLeftHandSide());
     if (left2 == null //
         || !left1.getFullyQualifiedName().equals(left2.getFullyQualifiedName()) //
         || !sideEffects.sink(right1))

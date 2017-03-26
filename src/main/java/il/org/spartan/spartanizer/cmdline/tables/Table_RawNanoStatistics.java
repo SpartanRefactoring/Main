@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -56,11 +57,11 @@ public class Table_RawNanoStatistics extends NanoTable {
         }
       }
     }.fire(new ASTVisitor(true) {
-      @Override public boolean visit( final CompilationUnit $) {
+      @Override public boolean visit(final CompilationUnit $) {
         try {
           $.accept(new AnnotationCleanerVisitor());
           spartanalyzer.fixedPoint(spartanizer.fixedPoint($));
-        } catch ( final IllegalArgumentException | AssertionError __) {
+        } catch (final IllegalArgumentException | AssertionError __) {
           ___.unused(__);
         }
         return super.visit($);

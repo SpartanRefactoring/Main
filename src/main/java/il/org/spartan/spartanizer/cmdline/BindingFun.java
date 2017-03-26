@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.utils.*;
@@ -17,9 +18,9 @@ import il.org.spartan.utils.*;
 final class BindingFun implements IApplication {
   private static final String C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS = "C:\\Users\\sorimar\\workspace\\testAddComments";
 
-  private static void iterateMethodInvocations( final CompilationUnit u) {
+  private static void iterateMethodInvocations(final CompilationUnit u) {
     u.accept(new ASTVisitor(true) {
-      @Override public boolean visit( final MethodInvocation ¢) {
+      @Override public boolean visit(final MethodInvocation ¢) {
         assert ¢.getAST().hasResolvedBindings();
         System.out.println(¢.resolveMethodBinding());
         return super.visit(¢);
@@ -27,18 +28,18 @@ final class BindingFun implements IApplication {
     });
   }
 
-  private static String getPackageNameFromSource( final String source) {
+  private static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource($.createAST(null));
   }
 
-  private static String getPackageNameFromSource( final ASTNode n) {
-     final Wrapper<String> $ = new Wrapper<>("");
+  private static String getPackageNameFromSource(final ASTNode n) {
+    final Wrapper<String> $ = new Wrapper<>("");
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
-      @Override public boolean visit( final PackageDeclaration ¢) {
+      @Override public boolean visit(final PackageDeclaration ¢) {
         $.set(¢.getName() + "");
         return false;
       }
@@ -54,22 +55,22 @@ final class BindingFun implements IApplication {
     ___.unused(arg0);
     try {
       prepareTempIJavaProject();
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       System.err.println(¢.getMessage());
       return IApplication.EXIT_OK;
     }
-    for ( final File f : new FilesGenerator(".java", ".JAVA").from(C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS))
+    for (final File f : new FilesGenerator(".java", ".JAVA").from(C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS))
       try {
         final ICompilationUnit u = openCompilationUnit(f);
         final ASTParser parser = ASTParser.newParser(AST.JLS8);
         parser.setResolveBindings(true);
         parser.setSource(u);
-         final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+        final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
         ___.______unused();
         iterateMethodInvocations(cu);
-      } catch ( final IOException ¢) {
+      } catch (final IOException ¢) {
         monitor.infoIOException(¢, f + "");
-      } catch ( final JavaModelException ¢) {
+      } catch (final JavaModelException ¢) {
         monitor.logProbableBug(this, ¢);
       }
     return IApplication.EXIT_OK;
@@ -81,11 +82,11 @@ final class BindingFun implements IApplication {
 
   /** Discard compilation unit u
    * @param u */
-  void discardCompilationUnit( final ICompilationUnit u) {
+  void discardCompilationUnit(final ICompilationUnit u) {
     try {
       u.close();
       u.delete(true, null);
-    } catch ( final NullPointerException | JavaModelException ¢) {
+    } catch (final NullPointerException | JavaModelException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
   }
@@ -94,13 +95,13 @@ final class BindingFun implements IApplication {
     try {
       javaProject.close();
       javaProject.getProject().delete(true, null);
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       ¢.printStackTrace();
     }
   }
 
-  private ICompilationUnit openCompilationUnit( final File ¢) throws JavaModelException, IOException {
-     final String $ = FileUtils.read(¢);
+  private ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
+    final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
@@ -120,7 +121,7 @@ final class BindingFun implements IApplication {
     binFolder.create(false, true, null);
     sourceFolder.create(false, true, null);
     javaProject.setOutputLocation(binFolder.getFullPath(), null);
-     final IClasspathEntry[] buildPath = new IClasspathEntry[1];
+    final IClasspathEntry[] buildPath = new IClasspathEntry[1];
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }

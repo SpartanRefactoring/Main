@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
 @SuppressWarnings("static-method")
 public class IntTest {
   @Test public void testInner() {
-     final Int $ = new Int();
+    final Int $ = new Int();
     $.inner = 4;
     assert $.inner() == Integer.valueOf(4);
     $.inner += 3;
