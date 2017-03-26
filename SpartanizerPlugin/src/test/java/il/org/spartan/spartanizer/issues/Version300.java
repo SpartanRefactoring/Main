@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
-import static il.org.spartan.utils.English.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -24,12 +23,165 @@ import il.org.spartan.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Version300 {
-  // @Ignore("Unignore one by one")
-  @Test public void negationPushdownTernary() {
-    trimmingOf("a = !(b ? c: d)")//
-        .using(PrefixExpression.class, new PrefixNotPushdown())//
+  @Test public void a() {
+    azzert.that(
+        theSpartanizer.once(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c? true : false; }") //
+    );
+  }
+
+  @FunctionalInterface
+  interface Find {
+    //@formatter:off
+    default Find prerequisite() { return null; };
+    void find();
+    default boolean B(@SuppressWarnings("unused") final int i) { throw new RuntimeException(); }
+    default boolean B(@SuppressWarnings("unused") final Object ... __) { throw new RuntimeException(); }
+    default void S(@SuppressWarnings("unused") final int i) { throw new RuntimeException(); }
+    default void S(@SuppressWarnings("unused") final Object ... __) { throw new RuntimeException(); }
+    default void andAlso(@SuppressWarnings("unused") final Find find){}
+    default void butNot(@SuppressWarnings("unused") final Find find){}
+    default void orElse(@SuppressWarnings("unused") final Find find){}
+    default void andIs(@SuppressWarnings("unused") final Runnable __1, final Runnable __2){}
+    //@formatter:on
+  }
+
+  interface Replace extends Find {
+    void replace();
+  }
+
+  Replace xxx = new Replace() {
+    {
+      andAlso(() -> {});
+      andIs(() -> S(1), () -> {
+        if (B(1))
+          S(1);
+        else if (B(2))
+          S(new Object());
+      });
+    }
+
+    @Override public void find() {
+      if (B(0))
+        S(1);
+      else
+        S(1);
+    }
+
+    @Override public void replace() {
+      if (B(0))
+        S();
+      else
+        S(1);
+    }
+  };
+
+  @Test public void abcd() {
+    trimmingOf("a = !(b ? c : d)") //
+        .using(PrefixExpression.class, new PrefixNotPushdown()) //
         .gives("a=b?!c:!d") //
+        .stays() //
     ;
+  }
+
+  @Test public void b() {
+    azzert.that(
+        theSpartanizer.twice(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c || false; }") //
+    );
+  }
+
+  @Test public void c() {
+    azzert.that(
+        theSpartanizer.thrice(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c; }") //
+    );
+  }
+
+  @Test public void d() {
+    azzert.that(
+        theSpartanizer.repetitively(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c; }") //
+    );
+  }
+
+  /** Automatically generated on Thu-Mar-16-08:26:53-IST-2017, copied by
+   * Yossi */
+  @Test public void genererated13() {
+    trimmingOf("{}") //
+        .gives("") //
+        .stays() //
+    ;
+  }
+
+  /** Automatically generated on Thu-Mar-16-08:15:41-IST-2017, copied by
+   * Yossi */
+  @Test public void ifaAb() {
+    trimmingOf("if (a) { A b; }") //
+        .using(IfStatement.class, new IfDeadRemove()) //
+        .gives("{}") //
+        .gives("") //
+        .stays() //
+    ;
+  }
+
+  @Ignore @Test public void ifab() {
+    trimmingOf("if (a++ == b++) { }") //
+        .using(IfStatement.class, new IfEmptyThenEmptyElse()) //
+        .gives("a++;b++;") //
+        .stays() //
+    ;
+  }
+
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
+    trimmingOf("if(a) { int i = 3; }")//
+        .gives("{}") //
+        .gives("") //
+        .stays();
+  }
+
+  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
+    trimmingOf("if(a) { Object o; }")//
+        .gives("{}") //
+        .gives("") //
+        .stays();
+  }
+
+  @Ignore @Test public void inlineArrayInitialization1() {
+    trimmingOf("public void multiDimensionalIntArraysAreEqual(){ " //
+        + " int[][] int1={{1, 2, 3}, {4, 5, 6}}; " //
+        + " int[][] int2={{1, 2, 3}, {4, 5, 6}}; " //
+        + " assertArrayEquals(int1, int2); " //
+        + "}")
+            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
+                + " int[][] int1={{1, 2, 3}, {4, 5, 6}}" //
+                + " , int2={{1, 2, 3}, {4, 5, 6}}; " //
+                + " assertArrayEquals(int1, int2); " //
+                + "}")
+            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
+                + " assertArrayEquals(new int[][]{{1,2,3},{4,5,6}},new int[][]{{1,2,3},{4,5,6}}); " //
+                + "}");
+  }
+
+  @Test public void intaIntbForb100bb1IfFalseBreakReturnb() {
+    trimmingOf("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
+        .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
+        .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
+        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .gives("int a(int b){for(;b<100;b+=1){}return b;}")//
+    ;
+  }
+
+  public void kill(final String from, final String to) {
+    azzert.that(kill(make(from)), iz(to));
   }
 
   @Test public void killer() {
@@ -67,128 +219,26 @@ public final class Version300 {
     kill("int _ = new A(){};", "{new A(){};}");
     kill("int _ = super.f();", "{super.f();}");
     kill("int _ = new int[2];", "{new int[2];}");
-  }
-
-  public void kill(final String from, final String to) {
-    azzert.that(kill(make(from)), iz(to));
-  }
-
-  @UnderConstruction("") private Block kill(final Expression ¢) {
-    final Block $ = ¢.getAST().newBlock();
-    statements($).addAll(wizard.decompose(¢));
-    return $;
+    kill("A _ =  ((a=b)*i++)+f(g())*((a=b)*i++) + ++j;", "{a=b; i++; f(g());a=b;i++; ++j;}");
   }
 
   public Expression make(final String statement) {
     return findFirst.instanceOf(VariableDeclarationFragment.class).in(s(statement)).getInitializer();
   }
 
-  @Ignore @Test public void inlineArrayInitialization1() {
-    trimmingOf("public void multiDimensionalIntArraysAreEqual(){ " //
-        + " int[][] int1={{1, 2, 3}, {4, 5, 6}}; " //
-        + " int[][] int2={{1, 2, 3}, {4, 5, 6}}; " //
-        + " assertArrayEquals(int1, int2); " //
-        + "}")
-            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
-                + " int[][] int1={{1, 2, 3}, {4, 5, 6}}" //
-                + " , int2={{1, 2, 3}, {4, 5, 6}}; " //
-                + " assertArrayEquals(int1, int2); " //
-                + "}")
-            .gives("public void multiDimensionalIntArraysAreEqual(){ " //
-                + " assertArrayEquals(new int[][]{{1,2,3},{4,5,6}},new int[][]{{1,2,3},{4,5,6}}); " //
-                + "}");
-  }
-
-  /** trimmer wraps with void method so it is tipped by
-   * {@link RemoveRedundantSwitchReturn} */
-  @Ignore("Yuval Simon") @Test public void switchSimplifyCaseAfterDefault1() {
-    trimmingOf("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;case RETURN_STATEMENT:return 2;"
-        + "case THROW_STATEMENT:return 3;default:return-1;}")//
-            .stays();
-  }
-
   @Test public void myClassName() {
     azzert.that(system.callingClassFullName(), is(getClass().getCanonicalName()));
   }
 
-  @Test public void abcd() {
-    trimmingOf("a = !(b ? c : d)") //
-        .using(PrefixExpression.class, new PrefixNotPushdown()) //
+  // @Ignore("Unignore one by one")
+  @Test public void negationPushdownTernary() {
+    trimmingOf("a = !(b ? c: d)")//
+        .using(PrefixExpression.class, new PrefixNotPushdown())//
         .gives("a=b?!c:!d") //
-        .stays() //
     ;
   }
 
-  @Ignore @Test public void ifab() {
-    trimmingOf("if (a++ == b++) { }") //
-        .using(IfStatement.class, new IfEmptyThenEmptyElse()) //
-        .gives("a++;b++;") //
-        .stays() //
-    ;
-  }
-
-  /** Automatically generated on Thu-Mar-16-08:15:41-IST-2017, copied by
-   * Yossi */
-  @Test public void ifaAb() {
-    trimmingOf("if (a) { A b; }") //
-        .using(IfStatement.class, new IfDeadRemove()) //
-        .gives("{}") //
-        .gives("") //
-        .stays() //
-    ;
-  }
-
-  /** Automatically generated on Thu-Mar-16-08:26:53-IST-2017, copied by
-   * Yossi */
-  @Test public void genererated13() {
-    trimmingOf("{}") //
-        .gives("") //
-        .stays() //
-    ;
-  }
-
-  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
-    trimmingOf("if(a) { int i = 3; }")//
-        .gives("{}") //
-        .gives("") //
-        .stays();
-  }
-
-  @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
-    trimmingOf("if(a) { Object o; }")//
-        .gives("{}") //
-        .gives("") //
-        .stays();
-  }
-
-  @Test public void a() {
-    azzert.that(
-        theSpartanizer.once(//
-            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
-        iz(//
-            "boolean a(int[] b, int c){ return d == c? true : false; }") //
-    );
-  }
-
-  @Test public void b() {
-    azzert.that(
-        theSpartanizer.twice(//
-            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
-        iz(//
-            "boolean a(int[] b, int c){ return d == c || false; }") //
-    );
-  }
-
-  @Test public void c() {
-    azzert.that(
-        theSpartanizer.thrice(//
-            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
-        iz(//
-            "boolean a(int[] b, int c){ return d == c; }") //
-    );
-  }
-
-  @Test public void d() {
+  @Test public void stA() {
     azzert.that(
         theSpartanizer.repetitively(//
             "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
@@ -204,15 +254,6 @@ public final class Version300 {
         .gives("boolean a(int[] b, int c){ return d == c; }") //
         .stays() //
     ;
-  }
-
-  @Test public void stA() {
-    azzert.that(
-        theSpartanizer.repetitively(//
-            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
-        iz(//
-            "boolean a(int[] b, int c){ return d == c; }") //
-    );
   }
 
   @Test public void stB() {
@@ -237,11 +278,12 @@ public final class Version300 {
             "A a(A b) throws B { return b; }"));
   }
 
-  @Test public void lowerUpperNamer() {
-    azzert.that(lowerFirstLetter("Hello"), is("hello"));
-    azzert.that(upperFirstLetter("Hello"), is("Hello"));
-    azzert.that(lowerFirstLetter("hello"), is("hello"));
-    azzert.that(upperFirstLetter("hello"), is("Hello"));
+  /** trimmer wraps with void method so it is tipped by
+   * {@link RemoveRedundantSwitchReturn} */
+  @Ignore("Yuval Simon") @Test public void switchSimplifyCaseAfterDefault1() {
+    trimmingOf("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;case RETURN_STATEMENT:return 2;"
+        + "case THROW_STATEMENT:return 3;default:return-1;}")//
+            .stays();
   }
 
   @Test public void x() {
@@ -260,12 +302,9 @@ public final class Version300 {
         .gives("int a(int b){for(;b<100;b+=1){}return b;}");
   }
 
-  @Test public void intaIntbForb100bb1IfFalseBreakReturnb() {
-    trimmingOf("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
-        .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
-        .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
-        .gives("int a(int b){for(;b<100;b+=1){}return b;}")//
-    ;
+  @UnderConstruction("") private Block kill(final Expression ¢) {
+    final Block $ = ¢.getAST().newBlock();
+    statements($).addAll(wizard.decompose(¢));
+    return $;
   }
 }
