@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
@@ -28,12 +26,12 @@ public abstract class AvgMetricalAnalyzer extends MetricalAnalyzer<List<Int>> {
     System.out.println("****************   Finito  ***************");
   }
 
-  private static Collection<Int> getSafe(@NotNull final Map<Integer, List<Int>> m, final Integer i) {
+  private static Collection<Int> getSafe( final Map<Integer, List<Int>> m, final Integer i) {
     m.putIfAbsent(i, new ArrayList<>());
     return m.get(i);
   }
 
-  @Override protected double enumElement(@NotNull final List<Int> is) {
+  @Override protected double enumElement( final List<Int> is) {
     return 1.0 * is.stream().reduce((x, y) -> Int.valueOf(x.inner + y.inner)).get().inner / is.size();
   }
 }

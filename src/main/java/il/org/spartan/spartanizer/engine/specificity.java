@@ -5,8 +5,6 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
@@ -49,12 +47,12 @@ public final class specificity implements Comparator<Expression> {
       }
     },
     CONSTANT {
-      @Override boolean includes(@NotNull final ASTNode ¢) {
+      @Override boolean includes( final ASTNode ¢) {
         return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) && iz.literal(extract.core(((PrefixExpression) ¢).getOperand()));
       }
     },
     CLASS_CONSTANT {
-      @Override boolean includes(@NotNull final ASTNode ¢) {
+      @Override boolean includes( final ASTNode ¢) {
         return iz.nodeTypeEquals(¢, SIMPLE_NAME) && ((SimpleName) ¢).getIdentifier().matches("[A-Z_0-9]+");
       }
     },
@@ -107,7 +105,7 @@ public final class specificity implements Comparator<Expression> {
     }
 
     private static int ofCore(final Expression ¢) {
-      for (@NotNull final Level $ : values())
+      for ( final Level $ : values())
         if ($.includes(¢))
           return $.ordinal();
       return values().length;

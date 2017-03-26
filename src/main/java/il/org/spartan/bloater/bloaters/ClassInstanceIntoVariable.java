@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -22,14 +20,14 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x1445C0CE75E59B1BL;
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
 
-  @Override @Nullable public Tip tip(@NotNull final ExpressionStatement ¢) {
+  @Override  public Tip tip( final ExpressionStatement ¢) {
     return !iz.classInstanceCreation(expression(¢)) ? null : new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        @Nullable final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+         final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
         final Type t = cic.getType();
         r.getListRewrite(¢.getParent(), Block.STATEMENTS_PROPERTY).replace(¢,
             make.variableDeclarationStatement(copy.of(t), scope.newName(cic, t), copy.of(cic)), g);

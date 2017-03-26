@@ -6,8 +6,6 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -46,18 +44,18 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
     DeprecatedFolderASTVisitor.main(args);
   }
 
-  @Override public boolean visit(@NotNull final MethodDeclaration ¢) {
+  @Override public boolean visit( final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
     try {
       final Integer key = Integer.valueOf(measure.commands(¢));
       statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
-      @NotNull final MethodRecord m = new MethodRecord(¢);
+       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
       findFirst.instanceOf(MethodDeclaration.class)
           .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
-    } catch (@NotNull final AssertionError __) {
+    } catch ( final AssertionError __) {
       ___.unused(__);
     }
     return true;
@@ -68,7 +66,7 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
       scope.pop();
   }
 
-  @Override public boolean visit(@NotNull final CompilationUnit ¢) {
+  @Override public boolean visit( final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
@@ -84,7 +82,7 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
     return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
 
-  private static void logNanoContainingMethodInfo(@NotNull final ASTNode n, final String np) {
+  private static void logNanoContainingMethodInfo( final ASTNode n, final String np) {
     if (!containedInInstanceCreation(n))
       scope.peek().markNP(n, np);
   }
@@ -125,24 +123,24 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
     }
   }
 
-  @SuppressWarnings("boxing") private static double avgCoverage(@NotNull final Collection<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double avgCoverage( final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
 
-  private static double fractionOfMethodsTouched(@NotNull final Collection<MethodRecord> rs) {
+  private static double fractionOfMethodsTouched( final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().filter(λ -> λ.numNPStatements() > 0 || λ.numNPExpressions() > 0).count(), rs.size());
   }
 
-  private static double fractionOfStatements(final int statementsTotal, @NotNull final Integer numStatements,
-      @NotNull final Collection<MethodRecord> rs) {
+  private static double fractionOfStatements(final int statementsTotal,  final Integer numStatements,
+       final Collection<MethodRecord> rs) {
     return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
   }
 
-  private static double fractionOfMethods(final int methodsTotal, @NotNull final Collection<MethodRecord> rs) {
+  private static double fractionOfMethods(final int methodsTotal,  final Collection<MethodRecord> rs) {
     return safe.div(rs.size(), methodsTotal);
   }
 
-  @SuppressWarnings("boxing") private static double totalStatementsCovered(@NotNull final Collection<MethodRecord> rs) {
+  @SuppressWarnings("boxing") private static double totalStatementsCovered( final Collection<MethodRecord> rs) {
     return rs.stream().map(MethodRecord::numNPStatements).reduce((x, y) -> x + y).get();
   }
 

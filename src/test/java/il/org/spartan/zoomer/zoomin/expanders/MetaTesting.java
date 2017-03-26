@@ -13,7 +13,7 @@
 // @SuppressWarnings("static-method")
 // public class MetaTesting {
 // @Test public void test() {
-// @NotNull AlphabeticallySortedSentence case1 = new
+//  AlphabeticallySortedSentence case1 = new
 // AlphabeticallySortedSentence() {
 // /** [[SuppressWarningsSpartan]] */
 // @Override @SuppressWarnings("All") protected void startingWith() {/***/

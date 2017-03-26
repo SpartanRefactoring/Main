@@ -24,6 +24,8 @@ public enum haz {
   public static boolean annotation(final VariableDeclarationFragment f) {
     final ASTNode $ = parent(f);
     switch ($.getNodeType()) {
+      case ASTNode.SINGLE_VARIABLE_DECLARATION:
+        return haz.annotation((SingleVariableDeclaration) $);
       case ASTNode.FIELD_DECLARATION:
         return haz.annotation((FieldDeclaration) $);
       case ASTNode.VARIABLE_DECLARATION_EXPRESSION:
@@ -38,7 +40,11 @@ public enum haz {
     }
   }
 
-  private static boolean annotation(LambdaExpression $) {
+  private static boolean annotation(SingleVariableDeclaration $) {
+    return !extract.annotations($).isEmpty();
+  }
+
+  private static boolean annotation(@SuppressWarnings("unused") LambdaExpression $) {
     return false;
   }
 
