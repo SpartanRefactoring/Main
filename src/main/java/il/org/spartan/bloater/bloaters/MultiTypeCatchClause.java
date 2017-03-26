@@ -21,8 +21,8 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1007971487834999855L;
 
-  @Override @Nullable public ASTNode replacement(@NotNull final TryStatement s) {
-    @NotNull final List<CatchClause> catches = step.catchClauses(s);
+  @Override @Nullable public ASTNode replacement( final TryStatement s) {
+     final List<CatchClause> catches = step.catchClauses(s);
     @Nullable CatchClause multiTypeCatch = null;
     int i = 0;
     // TODO: Ori Roth, this is a perfect example for extract method, which would
@@ -34,7 +34,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
       }
     if (multiTypeCatch == null)
       return null;
-    @NotNull final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
+     final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
     final Block commonBody = step.catchClauses(s).get(i).getBody();
     final SimpleName commonName = multiTypeCatch.getException().getName();
     final TryStatement $ = copy.of(s);

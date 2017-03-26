@@ -311,8 +311,8 @@ public enum az {
     return !iz.modifier($) ? null : (Modifier) $;
   }
 
-  @NotNull public static Collection<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
-    @NotNull final Collection<IExtendedModifier> $ = new ArrayList<>();
+   public static Collection<IExtendedModifier> modifiersOf(final VariableDeclarationStatement ¢) {
+     final Collection<IExtendedModifier> $ = new ArrayList<>();
     copy.modifiers(extendedModifiers(¢), $);
     return $;
   }
@@ -422,7 +422,7 @@ public enum az {
     return !iz.statement($) ? null : (Statement) $;
   }
 
-  public static <N> Stream<N> stream(@NotNull final Iterable<N> ¢) {
+  public static <N> Stream<N> stream( final Iterable<N> ¢) {
     return StreamSupport.stream(¢.spliterator(), false);
   }
 
@@ -542,32 +542,32 @@ public enum az {
    * minus.
    * @author Yossi Gil */
   public interface throwing {
-    static double double¢(@NotNull final Expression ¢) throws NumberFormatException {
+    static double double¢( final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
           : iz.numberLiteral(¢) ? double¢(system.chopLast(token(az.numberLiteral(¢)))) : -double¢(system.chopLast(token(az.prefixExpression(¢))));
     }
 
-    static double double¢(@NotNull final String token) throws NumberFormatException {
+    static double double¢( final String token) throws NumberFormatException {
       return Double.parseDouble(token);
     }
 
-    static int int¢(@NotNull final Expression ¢) throws NumberFormatException {
+    static int int¢( final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
     }
 
-    static int int¢(@NotNull final String token) throws NumberFormatException {
+    static int int¢( final String token) throws NumberFormatException {
       return Integer.parseInt(token);
     }
 
-    static long long¢(@NotNull final Expression ¢) throws NumberFormatException {
+    static long long¢( final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
           : !iz.numberLiteral(¢) ? -long¢(system.chopLast(token(¢))) : long¢(iz.intType(¢) ? token(¢) : system.chopLast(token(¢)));
     }
 
-    static long long¢(@NotNull final String token) throws NumberFormatException {
+    static long long¢( final String token) throws NumberFormatException {
       return Long.parseLong(token);
     }
 
@@ -583,7 +583,7 @@ public enum az {
       return iz.numberLiteral(¢) ? token(az.numberLiteral(¢)) : iz.prefixExpression(¢) ? token(prefixExpression(¢)) : null;
     }
 
-    static String token(@NotNull final NumberLiteral ¢) {
+    static String token( final NumberLiteral ¢) {
       return ¢.getToken();
     }
 

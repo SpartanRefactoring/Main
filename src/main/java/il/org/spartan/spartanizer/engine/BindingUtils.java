@@ -25,7 +25,7 @@ public enum BindingUtils {
 
   /** @param compilationUnit current compilation unit
    * @return current package */
-  private static IPackageBinding getPackage(@NotNull final CompilationUnit ¢) {
+  private static IPackageBinding getPackage( final CompilationUnit ¢) {
     return ¢.getPackage().resolveBinding();
   }
 
@@ -38,7 +38,7 @@ public enum BindingUtils {
    * @param u current {@link CompilationUnit}
    * @return method's binding if it is visible from context, else null */
   @Nullable public static IMethodBinding getVisibleMethod(@Nullable final ITypeBinding b, final String methodName, final ITypeBinding[] bs,
-      final ASTNode n, @NotNull final CompilationUnit u) {
+      final ASTNode n,  final CompilationUnit u) {
     if (b == null)
       return null;
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, methodName, bs);
@@ -51,7 +51,7 @@ public enum BindingUtils {
    * @param n the context in which the method is invoked
    * @param u current {@link CompilationUnit}
    * @return whether method is visible from its context */
-  private static boolean isVisible(@NotNull final IMethodBinding b, final ASTNode n, @NotNull final CompilationUnit u) {
+  private static boolean isVisible( final IMethodBinding b, final ASTNode n,  final CompilationUnit u) {
     final int ms = b.getModifiers();
     if (Modifier.isPublic(ms))
       return true;

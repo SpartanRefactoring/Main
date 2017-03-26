@@ -48,7 +48,7 @@ public enum extract {
     return annotations(extendedModifiers(¢));
   }
 
-  public static Iterable<Annotation> annotations(final SingleVariableDeclaration ¢) {
+  public static List<Annotation> annotations(final SingleVariableDeclaration ¢) {
     return annotations(extendedModifiers(¢));
   }
 

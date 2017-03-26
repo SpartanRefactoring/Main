@@ -27,7 +27,7 @@ import il.org.spartan.utils.*;
 // TODO OriRoth can we eliminate some of these many fields? --yg
 @SuppressWarnings("unused")
 public final class QuickFixer implements IMarkerResolutionGenerator {
-  @Override @NotNull public IMarkerResolution[] getResolutions(final IMarker __) {
+  @Override  public IMarkerResolution[] getResolutions(final IMarker __) {
     return new IMarkerResolution[] { //
         apply, //
         // applyPreview, //
@@ -50,11 +50,11 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   /** Apply spartanization to marked code with a preview. */
   private final IMarkerResolution applyPreview = quickFix("Apply after preview", ¢ -> {
     @Nullable final AbstractGUIApplicator g = getSpartanizer(¢);
-    @NotNull final Applicator a = new GUIBatchLaconizer().defaultSettings().passes(1).selection(Selection.Util.by(¢));
+     final Applicator a = new GUIBatchLaconizer().defaultSettings().passes(1).selection(Selection.Util.by(¢));
     a.setRunAction(u -> {
       try {
         new RefactoringWizardOpenOperation(new Wizard(g)).run(Display.getCurrent().getActiveShell(), "Laconization: " + g);
-      } catch (@NotNull final InterruptedException ¢¢) {
+      } catch ( final InterruptedException ¢¢) {
         monitor.logCancellationRequest(this, ¢¢);
       }
       return Integer.valueOf(0);
@@ -93,22 +93,22 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
    * @param name resolution's name
    * @param solution resolution's solution
    * @return marker resolution */
-  @NotNull private static IMarkerResolution quickFix(@NotNull final String name, @NotNull final Consumer<IMarker> solution) {
+   private static IMarkerResolution quickFix( final String name,  final Consumer<IMarker> solution) {
     return new IMarkerResolution() {
       @Override public void run(final IMarker ¢) {
         solution.accept(¢);
       }
 
-      @Override @NotNull public String getLabel() {
+      @Override  public String getLabel() {
         return name;
       }
     };
   }
 
-  static AbstractGUIApplicator getSpartanizer(@NotNull final IMarker $) {
+  static AbstractGUIApplicator getSpartanizer( final IMarker $) {
     try {
       return Tips.get((String) $.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
-    } catch (@NotNull final CoreException ¢) {
+    } catch ( final CoreException ¢) {
       monitor.log(¢);
     }
     return null;
@@ -118,36 +118,36 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
    * @author Ori Roth
    * @since 2016 */
   private static class SingleTipper<N extends ASTNode> extends Trimmer {
-    @NotNull final Tipper<N> tipper;
+     final Tipper<N> tipper;
 
-    SingleTipper(@NotNull final Tipper<N> tipper) {
+    SingleTipper( final Tipper<N> tipper) {
       this.tipper = tipper;
       name = "Applying " + tipper.technicalName();
     }
 
-    @Override protected boolean check(@NotNull final ASTNode ¢) {
+    @Override protected boolean check( final ASTNode ¢) {
       return tipper != null && Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
     }
 
-    @Override @SuppressWarnings("unchecked") @Nullable protected Tipper<N> getTipper(final Toolbox __, @NotNull final ASTNode ¢) {
+    @Override @SuppressWarnings("unchecked") @Nullable protected Tipper<N> getTipper(final Toolbox __,  final ASTNode ¢) {
       assert check(¢);
       return !tipper.check((N) ¢) ? null : tipper;
     }
 
-    @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator(@NotNull final IMarker $) {
+    @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator( final IMarker $) {
       try {
         assert $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         return $.getResource() == null ? null : getSingleTipper((Class<? extends Tipper<?>>) $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
-      } catch (@NotNull final CoreException ¢) {
+      } catch ( final CoreException ¢) {
         monitor.log(¢);
       }
       return null;
     }
 
-    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper(@NotNull final Class<T> $) {
+    private static <X extends ASTNode, T extends Tipper<X>> SingleTipper<X> getSingleTipper( final Class<T> $) {
       try {
         return new SingleTipper<>($.newInstance());
-      } catch (@NotNull InstantiationException | IllegalAccessException ¢) {
+      } catch ( InstantiationException | IllegalAccessException ¢) {
         monitor.log(¢);
       }
       return null;
@@ -165,10 +165,10 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           return label;
         }
 
-        @Override public void run(@NotNull final IMarker m) {
+        @Override public void run( final IMarker m) {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
-          } catch (@NotNull IllegalArgumentException | CoreException ¢) {
+          } catch ( IllegalArgumentException | CoreException ¢) {
             monitor.logEvaluationError(this, ¢);
           }
         }
@@ -203,17 +203,17 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       return toggle(SuppressWarningsLaconicOnOff.ByAnnotation, SuppressWarningsLaconicOnOff.Type.CLASS, "Class under construction");
     }
 
-    @Nullable static IMarkerResolution toggle(@NotNull final SuppressWarningsLaconicOnOff disabler,
-        @NotNull final SuppressWarningsLaconicOnOff.Type t, final String label) {
+    @Nullable static IMarkerResolution toggle( final SuppressWarningsLaconicOnOff disabler,
+         final SuppressWarningsLaconicOnOff.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;
         }
 
-        @Override public void run(@NotNull final IMarker m) {
+        @Override public void run( final IMarker m) {
           try {
             disabler.deactivate(nullProgressMonitor, m, t);
-          } catch (@NotNull IllegalArgumentException | CoreException ¢) {
+          } catch ( IllegalArgumentException | CoreException ¢) {
             monitor.logEvaluationError(this, ¢);
           }
         }

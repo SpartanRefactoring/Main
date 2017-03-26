@@ -8,8 +8,6 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
@@ -23,7 +21,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
 public final class Logger {
   public static int numMethods;
   private static String currentFile;
-  @NotNull private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
+   private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
   private static final Collection<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
 
   private Logger() {}
@@ -37,7 +35,7 @@ public final class Logger {
 
   public static final Map<Integer, MethodRecord> methodsStatistics = new HashMap<>();
 
-  private static void logMethodInfo(@NotNull final MethodDeclaration ¢) {
+  private static void logMethodInfo( final MethodDeclaration ¢) {
     methodsStatistics.putIfAbsent(hashMethod(¢), new MethodRecord(¢));
   }
 
@@ -54,7 +52,7 @@ public final class Logger {
     return Integer.valueOf((currentFile + "." + getType() + name(¢) + parametersTypes(¢)).hashCode());
   }
 
-  @NotNull private static String getType() {
+   private static String getType() {
     return currentType == null || currentType.isEmpty() ? "" : currentType.peek() + "";
   }
 

@@ -28,7 +28,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
   private static final long serialVersionUID = -2855334552468199138L;
 
   // building a replacement
-  private static ASTNode replacement(@NotNull final MethodInvocation i, @NotNull final List<Expression> xs) {
+  private static ASTNode replacement( final MethodInvocation i,  final List<Expression> xs) {
     if (xs.isEmpty())
       return make.makeEmptyString(i);
     if (xs.size() == 1)
@@ -55,7 +55,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
    * @param x an Expression
    * @return e itself if no parenthesis needed, otherwise a
    *         ParenthesisExpression containing e */
-  private Expression addParenthesisIfNeeded(@NotNull final Expression x) {
+  private Expression addParenthesisIfNeeded( final Expression x) {
     final AST a = x.getAST();
     if (!isParethesisNeeded(x))
       return x;
@@ -79,16 +79,16 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
     return Stream.of(np).anyMatch(λ -> λ.isInstance(x));
   }
 
-  @Override public ASTNode replacement(@NotNull final MethodInvocation i) {
+  @Override public ASTNode replacement( final MethodInvocation i) {
     if (!"toString".equals(i.getName() + ""))
       return null;
-    @NotNull final List<Expression> $ = new ArrayList<>();
+     final List<Expression> $ = new ArrayList<>();
     @Nullable MethodInvocation r = i;
     for (boolean hs = false;;) {
       final Expression e = r.getExpression();
       @Nullable final ClassInstanceCreation c = az.classInstanceCreation(e);
       if (c != null) {
-        @NotNull final String t = c.getType() + "";
+         final String t = c.getType() + "";
         if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
           return null;
         if (!c.arguments().isEmpty() && "StringBuilder".equals(t)) {

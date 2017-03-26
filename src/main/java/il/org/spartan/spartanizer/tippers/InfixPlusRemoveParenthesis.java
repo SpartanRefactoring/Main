@@ -33,7 +33,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
    * removed in an InfixExpression that is String concatenation.
    * @param ¢ an InfixExpression that's inside parenthesis
    * @return whether the parenthesis can be removed and false otherwise */
-  private static boolean canRemove(@NotNull final InfixExpression x) {
+  private static boolean canRemove( final InfixExpression x) {
     return in(operator(x), TIMES, DIVIDE)
         || operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(λ -> type.of(λ) == type.Primitive.Certain.STRING);
   }
@@ -42,21 +42,21 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return "Remove redundant parenthesis";
   }
 
-  @Override @NotNull public String description(final InfixExpression ¢) {
+  @Override  public String description(final InfixExpression ¢) {
     return description() + " around " + trivia.gist(¢);
   }
 
-  @Override public Expression replacement(@NotNull final InfixExpression x) {
+  @Override public Expression replacement( final InfixExpression x) {
     if (operator(x) != wizard.PLUS2)
       return null;
     @Nullable final List<Expression> es = hop.operands(x);
     boolean isString = false;
-    for (@NotNull final Integer i : range.to(es.size())) {
+    for ( final Integer i : range.to(es.size())) {
       final int ii = i.intValue();
       final boolean b = isString;
       isString |= !type.isNotString(es.get(ii));
       if (iz.parenthesizedExpression(es.get(ii))) {
-        @NotNull Expression ¢ = extract.core(es.get(ii));
+         Expression ¢ = extract.core(es.get(ii));
         for (; iz.parenthesizedExpression(¢); replace(es, ¢, ii))
           ¢ = expression(az.parenthesizedExpression(¢));
         if (iz.infixExpression(¢) && ii != 0 && b && !canRemove(az.infixExpression(¢)) || iz.conditionalExpression(¢) || iz.lambdaExpression(¢))

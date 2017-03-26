@@ -43,7 +43,7 @@ public abstract class ENVTestEngineAbstract {
   /** Check if the testSet is contained in the generated or provided (manual
    * mode) Set. First checks in unordered fashion, and then checks inorder.
    * @param ¢ */
-  static void compare(@NotNull final Collection<Entry<String, Binding>> ¢) {
+  static void compare( final Collection<Entry<String, Binding>> ¢) {
     compareOutOfOrder(¢, testSet);
     compareInOrder(¢, testSet);
   }
@@ -53,12 +53,12 @@ public abstract class ENVTestEngineAbstract {
    * contained in the same order in the provided set.
    * @param contains JD
    * @return whether the sets specified, are equally the same. */
-  private static void compareInOrder(@NotNull final Iterable<Entry<String, Binding>> contains,
-      @NotNull final Iterable<Entry<String, Binding>> contained) {
+  private static void compareInOrder( final Iterable<Entry<String, Binding>> contains,
+       final Iterable<Entry<String, Binding>> contained) {
     assert contained != null;
     assert contains != null;
     final Iterator<Entry<String, Binding>> s = contains.iterator();
-    for (@NotNull final Entry<String, Binding> ¢ : contained) {
+    for ( final Entry<String, Binding> ¢ : contained) {
       boolean notFound = true;
       while (s.hasNext())
         if (¢.equals(s.next())) {
@@ -79,8 +79,8 @@ public abstract class ENVTestEngineAbstract {
    * contained in the provided set.
    * @param contains JD
    * @return whether the specified {@link LinkedHashSet} contains testSet. */
-  private static void compareOutOfOrder(@NotNull final Collection<Entry<String, Binding>> contains,
-      @NotNull final Collection<Entry<String, Binding>> contained) {
+  private static void compareOutOfOrder( final Collection<Entry<String, Binding>> contains,
+       final Collection<Entry<String, Binding>> contained) {
     assert contains != null;
     assert contained != null;
     if (contains.containsAll(contained))
@@ -91,16 +91,16 @@ public abstract class ENVTestEngineAbstract {
     assert false : "some entry not found out of order!";
   }
 
-  @NotNull protected static LinkedHashSet<Entry<String, Binding>> generateSet() {
+   protected static LinkedHashSet<Entry<String, Binding>> generateSet() {
     return new LinkedHashSet<>();
   }
 
   /** @param from - file path
    * @return CompilationUnit of the code written in the file specified. */
-  protected static ASTNode getCompilationUnit(@NotNull final String from) {
+  protected static ASTNode getCompilationUnit( final String from) {
     assert from != null;
     assert rOOT != null;
-    @NotNull final File f = new File(rOOT + from);
+     final File f = new File(rOOT + from);
     assert f != null;
     assert f.exists() : f;
     final ASTNode $ = makeAST.COMPILATION_UNIT.from(f);
@@ -155,7 +155,7 @@ public abstract class ENVTestEngineAbstract {
     n.accept(new ASTVisitor(true) {
       /** Iterate over outer annotations of the current declaration and dispatch
        * them to handlers. otherwise */
-      void checkAnnotations(@NotNull final Iterable<Annotation> as) {
+      void checkAnnotations( final Iterable<Annotation> as) {
         as.forEach(λ -> handler(λ));
       }
 

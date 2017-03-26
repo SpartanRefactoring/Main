@@ -30,11 +30,11 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
     return firstTip(tippers, ¢);
   }
 
-  @Override @NotNull public String description() {
+  @Override  public String description() {
     return "Count elements in collection that satisfy some predicate";
   }
 
-  @Override @NotNull public String nanoName() {
+  @Override  public String nanoName() {
     return Aggregate.class.getSimpleName();
   }
 }

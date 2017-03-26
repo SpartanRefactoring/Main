@@ -6,8 +6,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -16,7 +14,7 @@ public class fluentTrimmer extends Trimmer {
     super(Toolbox.make(clazz, ws));
   }
 
-  public fluentTrimmerApplication of(@NotNull final String codeFragment) {
+  public fluentTrimmerApplication of( final String codeFragment) {
     return new fluentTrimmerApplication(this, codeFragment);
   }
 }

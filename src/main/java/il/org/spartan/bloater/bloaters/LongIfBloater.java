@@ -22,7 +22,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1472927802038098123L;
 
-  @Override @Nullable public ASTNode replacement(@NotNull final IfStatement ¢) {
+  @Override @Nullable public ASTNode replacement( final IfStatement ¢) {
     if (!shouldTip(¢))
       return null;
     @Nullable final InfixExpression $ = az.infixExpression(¢.getExpression());
@@ -34,11 +34,11 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     return subject.pair(newThen, copy.of(oldElse)).toIf($.getLeftOperand());
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace an if statement that contains && with two ifs";
   }
 
-  private static Expression getReducedIEFromIEWithExtOp(@NotNull final InfixExpression ¢) {
+  private static Expression getReducedIEFromIEWithExtOp( final InfixExpression ¢) {
     final InfixExpression $ = subject.pair(¢.getRightOperand(), first(extendedOperands(¢))).to(¢.getOperator());
     subject.append($, step.extendedOperands(¢));
     if (!$.extendedOperands().isEmpty())
@@ -46,7 +46,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  private static boolean shouldTip(@NotNull final IfStatement ¢) {
+  private static boolean shouldTip( final IfStatement ¢) {
     return iz.infixExpression(¢.getExpression()) && iz.conditionalAnd(az.infixExpression(¢.getExpression()));
   }
 }

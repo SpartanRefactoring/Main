@@ -31,7 +31,7 @@ public class SuperConstructor extends JavadocMarkerNanoPattern {
     return true;
   }
 
-  @Override @NotNull public String nanoName() {
+  @Override  public String nanoName() {
     return "Super";
   }
 }

@@ -31,7 +31,7 @@ abstract class BaseHandler extends AbstractHandler {
   @Override @Nullable public Void execute(final ExecutionEvent $) throws ExecutionException {
     try {
       return execute(HandlerUtil.getCurrentSelection($));
-    } catch (@NotNull final InterruptedException ¢) {
+    } catch ( final InterruptedException ¢) {
       throw new ExecutionException(¢.getMessage());
     }
   }
@@ -52,12 +52,12 @@ abstract class BaseHandler extends AbstractHandler {
     return execute(new RefactoringWizardOpenOperation(getWizard(¢, eclipse.currentCompilationUnit())));
   }
 
-  private Void execute(@NotNull final RefactoringWizardOpenOperation wop) throws InterruptedException {
+  private Void execute( final RefactoringWizardOpenOperation wop) throws InterruptedException {
     wop.run(eclipse.currentWorkbenchWindow().getShell(), getDialogTitle());
     return null;
   }
 
-  @NotNull private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit u) {
+   private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit u) {
     final AbstractGUIApplicator $ = getRefactoring();
     $.setSelection(s);
     $.setICompilationUnit(u);

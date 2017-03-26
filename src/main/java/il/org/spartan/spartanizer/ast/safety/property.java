@@ -15,10 +15,10 @@ public enum property {
 
   @FunctionalInterface
   public interface Obtainer<N> {
-    @NotNull N from(ASTNode n);
+     N from(ASTNode n);
   }
 
-  public static Attached attach(@NotNull final Object o) {
+  public static Attached attach( final Object o) {
     return λ -> λ.setProperty(key(o.getClass()), o);
   }
 
@@ -39,11 +39,11 @@ public enum property {
     return n != null && n.properties().keySet().contains(key);
   }
 
-  static <N> String key(@NotNull final Class<N> ¢) {
+  static <N> String key( final Class<N> ¢) {
     return ¢.getCanonicalName();
   }
 
-  @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain(@NotNull final Class<N> c) {
+  @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain( final Class<N> c) {
     return λ -> (N) λ.getProperty(key(c));
   }
 

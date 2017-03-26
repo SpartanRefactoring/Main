@@ -60,10 +60,10 @@ public enum sideEffects {
       POSTFIX_EXPRESSION, //
   };
 
-  public static boolean deterministic(@NotNull final Expression x) {
+  public static boolean deterministic( final Expression x) {
     if (!sideEffects.free(x))
       return false;
-    @NotNull final Bool $ = new Bool(true);
+     final Bool $ = new Bool(true);
     // noinspection SameReturnValue
     x.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final ArrayCreation __) {
@@ -74,15 +74,15 @@ public enum sideEffects {
     return $.get();
   }
 
-  public static boolean free(@NotNull final IfStatement ¢) {
+  public static boolean free( final IfStatement ¢) {
     return free(¢.getExpression()) && free(then(¢)) && free(elze(¢));
   }
 
-  public static boolean free(@NotNull final ExpressionStatement ¢) {
+  public static boolean free( final ExpressionStatement ¢) {
     return free(¢.getExpression());
   }
 
-  private static boolean free(@NotNull final ArrayCreation ¢) {
+  private static boolean free( final ArrayCreation ¢) {
     return free(dimensions(¢)) && free(expressions(¢.getInitializer()));
   }
 
@@ -95,7 +95,7 @@ public enum sideEffects {
                         : iz.isVariableDeclarationStatement(¢) ? free(az.variableDeclrationStatement(¢)) : iz.block(¢) && free(az.block(¢)));
   }
 
-  public static boolean free(@NotNull final ForStatement ¢) {
+  public static boolean free( final ForStatement ¢) {
     return free(initializers(¢)) && free(¢.getExpression()) && free(updaters(¢)) && free(body(¢));
   }
 
@@ -107,11 +107,11 @@ public enum sideEffects {
     return free(expression(¢), then(¢), elze(¢));
   }
 
-  public static boolean sink(@NotNull final Expression x) {
+  public static boolean sink( final Expression x) {
     return descendants.of(x).stream().mapToInt(λ -> λ.getNodeType()).noneMatch(λ -> intIsIn(λ, STRICT_SIDE_EFFECT));
   }
 
-  @NotNull static final int[] STRICT_SIDE_EFFECT = { METHOD_INVOCATION, SUPER_CONSTRUCTOR_INVOCATION, CONSTRUCTOR_INVOCATION, CLASS_INSTANCE_CREATION,
+   static final int[] STRICT_SIDE_EFFECT = { METHOD_INVOCATION, SUPER_CONSTRUCTOR_INVOCATION, CONSTRUCTOR_INVOCATION, CLASS_INSTANCE_CREATION,
       ASSIGNMENT, POSTFIX_EXPRESSION };
 
   public static boolean free(@Nullable final Expression ¢) {
@@ -154,11 +154,11 @@ public enum sideEffects {
     return xs == null || az.stream(xs).allMatch(λ -> sideEffects.free(az.expression(λ)));
   }
 
-  public static boolean free(@NotNull final MethodDeclaration ¢) {
+  public static boolean free( final MethodDeclaration ¢) {
     return sideEffects.free(¢.getBody());
   }
 
-  private static boolean free(@NotNull final PrefixExpression ¢) {
+  private static boolean free( final PrefixExpression ¢) {
     return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && sideEffects.free(operand(¢));
   }
 
@@ -170,7 +170,7 @@ public enum sideEffects {
     return fragments(s).stream().allMatch(λ -> sideEffects.free(initializer(λ)));
   }
 
-  public static boolean free(@NotNull final WhileStatement ¢) {
+  public static boolean free( final WhileStatement ¢) {
     return free(¢.getExpression()) && free(¢.getBody());
   }
 }

@@ -23,14 +23,14 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -6339897616387193324L;
 
-  @Override protected boolean prerequisite(@NotNull final MethodDeclaration ¢) {
+  @Override protected boolean prerequisite( final MethodDeclaration ¢) {
     if (!¢.isConstructor() || !¢.parameters().isEmpty())
       return false;
     final ASTNode $ = containing.typeDeclaration(¢);
     return constructors($).size() == 1 && initializersInstance($).isEmpty();
   }
 
-  @Override @NotNull public String description(final MethodDeclaration ¢) {
+  @Override  public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 

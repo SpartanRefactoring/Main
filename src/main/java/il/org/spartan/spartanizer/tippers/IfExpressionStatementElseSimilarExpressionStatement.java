@@ -30,11 +30,11 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends R
     return "Consolidate two branches of 'if' into a ternary exrpession";
   }
 
-  @Override public Statement replacement(@NotNull final IfStatement s) {
-    @NotNull final Expression then = expression(extract.expressionStatement(then(s)));
+  @Override public Statement replacement( final IfStatement s) {
+     final Expression then = expression(extract.expressionStatement(then(s)));
     if (then == null)
       return null;
-    @NotNull final Expression elze = expression(extract.expressionStatement(elze(s)));
+     final Expression elze = expression(extract.expressionStatement(elze(s)));
     if (elze == null)
       return null;
     @Nullable final Expression $ = pushdown(subject.pair(then, elze).toCondition(s.getExpression()));

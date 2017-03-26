@@ -21,15 +21,15 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x1AF05236BEDFD45L;
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
 
   // TODO Doron - I spartanized your code. --yg
-  @Override @Nullable public Tip tip(@NotNull final ExpressionStatement ¢) {
+  @Override @Nullable public Tip tip( final ExpressionStatement ¢) {
     @Nullable final Assignment $ = az.assignment(expression(¢));
     return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         final AST create = ¢.getAST();
         // TODO Doron Meshulam: use class subject --yg
         @Nullable final Assignment newTail = copy.of($), p = rightMost(newTail), newHead = copy.of(az.assignment(right(p)));

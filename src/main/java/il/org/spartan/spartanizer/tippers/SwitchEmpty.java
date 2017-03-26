@@ -9,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,10 +28,10 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x26848136FD202ECEL;
 
-  @Override @NotNull public Tip tip(@NotNull final SwitchStatement s) {
+  @Override  public Tip tip( final SwitchStatement s) {
     return new Tip(description(s), s, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        @NotNull final List<Statement> ll = statements(s);
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+         final List<Statement> ll = statements(s);
         final ExpressionStatement ss = s.getAST().newExpressionStatement(copy.of(expression(s)));
         if (noSideEffectCommands(s)) {
           r.remove(s, g);
@@ -49,8 +47,8 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
     };
   }
 
-  @NotNull static String statementsToString(@NotNull final Iterable<Statement> ¢) {
-    @NotNull final StringBuilder $ = new StringBuilder();
+   static String statementsToString( final Iterable<Statement> ¢) {
+     final StringBuilder $ = new StringBuilder();
     ¢.forEach($::append);
     return $ + "";
   }

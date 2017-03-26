@@ -32,7 +32,7 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
     return "Concat the string literals to a single string";
   }
 
-  @Override public ASTNode replacement(@NotNull final InfixExpression x) {
+  @Override public ASTNode replacement( final InfixExpression x) {
     if (x.getOperator() != wizard.PLUS2)
       return null;
     @Nullable final List<Expression> $ = extract.allOperands(x);

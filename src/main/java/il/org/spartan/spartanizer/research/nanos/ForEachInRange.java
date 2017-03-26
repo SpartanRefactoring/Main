@@ -28,11 +28,11 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return firstTip(tippers, ¢);
   }
 
-  @Override @NotNull public String description() {
+  @Override  public String description() {
     return "Iterate through a range of indexes and apply a statement for each index";
   }
 
-  @Override @NotNull public String nanoName() {
+  @Override  public String nanoName() {
     return "ForFromTo";
   }
 }

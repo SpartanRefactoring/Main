@@ -29,18 +29,18 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -1245089074484114122L;
 
-  @NotNull private static List<Expression> gather(final Expression x, @NotNull final List<Expression> $) {
+   private static List<Expression> gather(final Expression x,  final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
     $.add(x);
     return $;
   }
 
-  @NotNull private static List<Expression> gather(final InfixExpression ¢) {
+   private static List<Expression> gather(final InfixExpression ¢) {
     return gather(¢, new ArrayList<>());
   }
 
-  @NotNull private static List<Expression> gather(@Nullable final InfixExpression x, @NotNull final List<Expression> $) {
+   private static List<Expression> gather(@Nullable final InfixExpression x,  final List<Expression> $) {
     if (x == null)
       return $;
     if (!in(x.getOperator(), TIMES, DIVIDE)) {
@@ -54,17 +54,17 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     return $;
   }
 
-  @NotNull private static List<Expression> gather(@NotNull final Iterable<Expression> xs, @NotNull final List<Expression> $) {
+   private static List<Expression> gather( final Iterable<Expression> xs,  final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }
 
-  @Override @NotNull public String description(@NotNull final InfixExpression ¢) {
+  @Override  public String description( final InfixExpression ¢) {
     return "Use at most one arithmetical negation, for first factor of " + ¢.getOperator();
   }
 
-  @Override public Tip tip(@NotNull final InfixExpression x, @Nullable final ExclusionManager exclude) {
-    @NotNull final List<Expression> $ = gather(x);
+  @Override public Tip tip( final InfixExpression x, @Nullable final ExclusionManager exclude) {
+     final List<Expression> $ = gather(x);
     if ($.size() < 2)
       return null;
     final int totalNegation = minus.level(x);
@@ -73,7 +73,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     if (exclude != null)
       exclude.exclude(x);
     return new Tip(description(x), x, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         @Nullable final Expression first = totalNegation % 2 == 0 ? null : first($);
         $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
             .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));

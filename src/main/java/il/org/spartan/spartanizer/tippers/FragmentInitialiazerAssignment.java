@@ -25,7 +25,7 @@ public final class FragmentInitialiazerAssignment extends $FragmentAndStatement/
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x14812B0904DFB002L;
 
-  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override  public String description( final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
   }
 
@@ -35,7 +35,7 @@ public final class FragmentInitialiazerAssignment extends $FragmentAndStatement/
             .to("int a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);") };
   }
 
-  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, @NotNull final SimpleName n,
+  @Override @Nullable protected ASTRewrite go( final ASTRewrite $, final VariableDeclarationFragment f,  final SimpleName n,
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)
       return null;
@@ -45,7 +45,7 @@ public final class FragmentInitialiazerAssignment extends $FragmentAndStatement/
     final Expression newInitializer = copy.of(from(a));
     if (doesUseForbiddenSiblings(f, newInitializer))
       return null;
-    @NotNull final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);

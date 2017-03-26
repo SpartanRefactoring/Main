@@ -21,7 +21,7 @@ public enum enumerate {
   public static int expressions(@Nullable final ASTNode n) {
     if (n == null)
       return 0;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     $.inner = 0;
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
@@ -39,7 +39,7 @@ public enum enumerate {
   public static int statements(@Nullable final ASTNode n) {
     if (n == null)
       return 0;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof Statement)
@@ -57,7 +57,7 @@ public enum enumerate {
   public static int methods(@Nullable final CompilationUnit ¢) {
     if (¢ == null)
       return 0;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unused") public boolean visit(final MethodDeclaration node) {
@@ -74,7 +74,7 @@ public enum enumerate {
   public static int methodsWithBody(@Nullable final ASTNode ¢) {
     if (¢ == null)
       return 0;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration node) {
@@ -91,8 +91,8 @@ public enum enumerate {
    * @author Osher Hajaj
    * @since 16-11-07 */
   @SuppressWarnings("boxing") public static int blockTypes(final MethodDeclaration d) {
-    @NotNull final List<?> l = step.statements(step.body(d));
-    @NotNull final boolean[] arr = new boolean[10];
+     final List<?> l = step.statements(step.body(d));
+     final boolean[] arr = new boolean[10];
     range.to(arr.length).forEach(λ -> arr[λ] = false);
     int $ = 0;
     final int LAMBDA = 7, TRY = 7, SYNC = 6, DOSTATE = 5, SWITCHSTATE = 4, WHILESTATE = 3, FORSTATE = 2, IFSTATE = 1, BLOCK = 0;
@@ -132,7 +132,7 @@ public enum enumerate {
   public static int ifStatements(@Nullable final ASTNode ¢) {
     if (¢ == null)
       return 0;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final IfStatement __) {
@@ -146,7 +146,7 @@ public enum enumerate {
   public static int loops(@Nullable final ASTNode n) {
     if (n == null)
       return 0;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final WhileStatement ¢) {
@@ -176,7 +176,7 @@ public enum enumerate {
   public static int ternaries(@Nullable final ASTNode ¢) {
     if (¢ == null)
       return 0;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     // noinspection SameReturnValue
     ¢.accept(new ASTVisitor(true) {
       @Override public boolean visit(@SuppressWarnings("unused") final ConditionalExpression __) {

@@ -2,8 +2,6 @@ package il.org.spartan.plugin;
 
 import java.util.function.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.utils.*;
 
@@ -52,7 +50,7 @@ public abstract class Applicator {
   /** Determines run context for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  @NotNull public Applicator runContext(final Consumer<Runnable> ¢) {
+   public Applicator runContext(final Consumer<Runnable> ¢) {
     runContext = ¢;
     return this;
   }
@@ -65,7 +63,7 @@ public abstract class Applicator {
   /** Determines run action for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  @NotNull public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
+   public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
     runAction = ¢;
     return this;
   }
@@ -78,7 +76,7 @@ public abstract class Applicator {
   /** Determines number of iterations for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  @NotNull public Applicator passes(final int ¢) {
+   public Applicator passes(final int ¢) {
     passes = ¢;
     return this;
   }
@@ -91,7 +89,7 @@ public abstract class Applicator {
   /** Initialize the listener of this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  @NotNull public Applicator listener(final Listener ¢) {
+   public Applicator listener(final Listener ¢) {
     listener = ¢;
     return this;
   }
@@ -104,7 +102,7 @@ public abstract class Applicator {
   /** Initialize the selection of this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  @NotNull public Applicator selection(final Selection ¢) {
+   public Applicator selection(final Selection ¢) {
     selection = ¢;
     return this;
   }
@@ -113,7 +111,7 @@ public abstract class Applicator {
    * @param ¢ JD
    * @author Matteo Orru'
    * @return {@code this} applicator */
-  @NotNull protected Applicator selection(final AbstractSelection<?> ¢) {
+   protected Applicator selection(final AbstractSelection<?> ¢) {
     selection = ¢;
     return this;
   }
@@ -126,7 +124,7 @@ public abstract class Applicator {
   /** Name this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  @NotNull public Applicator name(final String ¢) {
+   public Applicator name(final String ¢) {
     name = ¢;
     return this;
   }
@@ -139,7 +137,7 @@ public abstract class Applicator {
   /** Name this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  @NotNull public Applicator operationName(final English.Activity ¢) {
+   public Applicator operationName(final English.Activity ¢) {
     operationName = ¢;
     return this;
   }
@@ -147,15 +145,15 @@ public abstract class Applicator {
   /** Main operation of this applicator. */
   public abstract void go();
 
-  @NotNull public Applicator defaultListenerNoisy() {
+   public Applicator defaultListenerNoisy() {
     return this;
   }
 
-  @NotNull public Applicator defaultSelection(@SuppressWarnings("unused") final AbstractSelection<?> of) {
+   public Applicator defaultSelection(@SuppressWarnings("unused") final AbstractSelection<?> of) {
     return this;
   }
 
-  @NotNull @SuppressWarnings("unused") public Applicator defaultRunAction(final CommandLine$Applicator __) {
+   @SuppressWarnings("unused") public Applicator defaultRunAction(final CommandLine$Applicator __) {
     return this;
   }
 }

@@ -32,16 +32,16 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
     return "[\"\"+foo]->foo";
   }
 
-  @Override @NotNull public String description(final InfixExpression ¢) {
+  @Override  public String description(final InfixExpression ¢) {
     return "Omit concatentation of \"\" to" + (iz.emptyStringLiteral(right(¢)) ? left(¢) : right(¢));
   }
 
-  @Override @SuppressWarnings("boxing") public Expression replacement(@NotNull final InfixExpression x) {
+  @Override @SuppressWarnings("boxing") public Expression replacement( final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
     @Nullable final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
-    @NotNull final List<Expression> $ = new ArrayList<>();
+     final List<Expression> $ = new ArrayList<>();
     boolean isArithmetic = true;
     for (final Integer i : range.from(0).to(es.size())) {
       final Expression e = es.get(i);

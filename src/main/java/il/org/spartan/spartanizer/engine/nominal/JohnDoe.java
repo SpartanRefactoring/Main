@@ -13,7 +13,7 @@ public interface JohnDoe {
     return ¢ != null && property(type(¢), name(¢));
   }
 
-  static boolean property(final String typeName, @NotNull final String variableName) {
+  static boolean property(final String typeName,  final String variableName) {
     return JavaTypeNameParser.make(typeName).isGenericVariation(variableName);
   }
 

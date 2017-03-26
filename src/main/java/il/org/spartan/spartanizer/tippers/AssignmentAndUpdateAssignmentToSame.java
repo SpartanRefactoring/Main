@@ -35,17 +35,17 @@ public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x5D0C16C013FC1AA3L;
 
-  @Override @NotNull public Example[] examples() {
+  @Override  public Example[] examples() {
     return new Example[] { //
         convert("a+=3;b=6;").to("a+=3+6"), //
     };
   }
 
-  @Override @NotNull public String description(final Assignment ¢) {
+  @Override  public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent update assignment";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go( final ASTRewrite $,  final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
     @Nullable final Assignment a2 = extract.assignment(nextStatement);

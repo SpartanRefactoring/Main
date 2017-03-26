@@ -39,7 +39,7 @@ public class CharacterShortcut extends AbstractHandler {
     final Object $ = e.getTrigger();
     if (!($ instanceof Event))
       return null;
-    @NotNull final ISelection is = Selection.Util.getSelection();
+     final ISelection is = Selection.Util.getSelection();
     @Nullable final Selection s = Selection.Util.getCurrentCompilationUnit();
     return !(is instanceof ITextSelection) || s == null || s.isEmpty() ? null
         : insertCharacter(shortcutsMap.get(getCharacter((Event) $)), s.setTextSelection((ITextSelection) is));
@@ -62,12 +62,12 @@ public class CharacterShortcut extends AbstractHandler {
     if (us == null || us.size() != 1)
       return null;
     final ICompilationUnit u = us.get(0);
-    @NotNull final MultiTextEdit m = new MultiTextEdit();
+     final MultiTextEdit m = new MultiTextEdit();
     m.addChild(new DeleteEdit(s.textSelection.getOffset(), s.textSelection.getLength()));
     m.addChild(new InsertEdit(s.textSelection.getOffset(), c + ""));
     try {
       u.applyTextEdit(m, new NullProgressMonitor());
-    } catch (@NotNull final JavaModelException x) {
+    } catch ( final JavaModelException x) {
       monitor.log(x);
       return null;
     }
@@ -82,7 +82,7 @@ public class CharacterShortcut extends AbstractHandler {
     @Nullable final IEditorPart p = Selection.Util.getEditorPart();
     if (!(p instanceof ITextEditor))
       return null;
-    @NotNull final ITextEditor e = (ITextEditor) p;
+     final ITextEditor e = (ITextEditor) p;
     e.getSelectionProvider().setSelection(new TextSelection(i, 0));
     return null;
   }

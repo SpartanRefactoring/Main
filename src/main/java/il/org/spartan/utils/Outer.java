@@ -23,7 +23,7 @@ public abstract class Outer<Inner> {
     return equals($);
   }
 
-  protected boolean equals(@NotNull final Outer<Inner> other) {
+  protected boolean equals( final Outer<Inner> other) {
     if (inner == null) {
       if (other.inner != null)
         return false;

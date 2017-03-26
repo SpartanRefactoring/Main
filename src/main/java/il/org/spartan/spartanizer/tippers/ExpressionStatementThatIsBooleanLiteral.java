@@ -27,7 +27,7 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   @Nullable private BooleanLiteral booleanLiteral;
   private ExpressionStatement expressionStatement;
 
-  @Override @NotNull public String description(final ExpressionStatement ¢) {
+  @Override  public String description(final ExpressionStatement ¢) {
     return "Rewrite '" + expression(¢) + "' as assert command";
   }
 

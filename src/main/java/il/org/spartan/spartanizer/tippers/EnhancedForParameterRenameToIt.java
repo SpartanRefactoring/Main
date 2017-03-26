@@ -27,11 +27,11 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3945693304397811549L;
 
-  @Override @NotNull public String description(@NotNull final EnhancedForStatement ¢) {
+  @Override  public String description( final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  @Override public Tip tip(@NotNull final EnhancedForStatement s, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final EnhancedForStatement s, @Nullable final ExclusionManager m) {
     @Nullable final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
@@ -42,7 +42,7 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     final SimpleName $ = d.getName();
     if (namer.isSpecial($) || !JohnDoe.property(d))
       return null;
-    @NotNull final Statement body = body(s);
+     final Statement body = body(s);
     if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf($).in(body).isEmpty())
       return null;
     final SimpleName ¢ = newCurrent(s);
@@ -55,7 +55,7 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     };
   }
 
-  public static SimpleName newCurrent(@NotNull final EnhancedForStatement ¢) {
+  public static SimpleName newCurrent( final EnhancedForStatement ¢) {
     return ¢.getAST().newSimpleName(namer.it);
   }
 }

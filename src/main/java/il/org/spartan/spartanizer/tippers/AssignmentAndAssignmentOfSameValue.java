@@ -26,7 +26,7 @@ public final class AssignmentAndAssignmentOfSameValue extends GoToNextStatement<
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 0x69CDEE55CA481121L;
 
-  @Override @NotNull public Example[] examples() {
+  @Override  public Example[] examples() {
     return new Example[] { //
         convert("a=3;b=3;").to("b=a=3;"), //
         convert("a=c;b=c;").to("b=a=c;"), //
@@ -42,12 +42,12 @@ public final class AssignmentAndAssignmentOfSameValue extends GoToNextStatement<
     return operator(¢) != ASSIGN ? null : extractRight(¢);
   }
 
-  @Override @NotNull public String description(final Assignment ¢) {
+  @Override  public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent similar assignment";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-    @NotNull final ASTNode parent = parent(a);
+  @Override protected ASTRewrite go( final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+     final ASTNode parent = parent(a);
     if (!iz.statement(parent))
       return null;
     @Nullable final Expression right = getRight(a);

@@ -753,14 +753,14 @@ public final class typeTest {
     }
 
     @Test @SuppressWarnings("unchecked") public void context20() {
-      @NotNull final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
+       final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(of(fs.getExpression()), is(BOOLEAN));
       azzert.that(of((Expression) first(fs.initializers())), is(INT));
       azzert.that(of((Expression) first(fs.updaters())), is(NUMERIC));
     }
 
     @Test public void context22() {
-      @NotNull final AssertStatement as = findFirst.assertStatement(into.s("assert x : \"message\";"));
+       final AssertStatement as = findFirst.assertStatement(into.s("assert x : \"message\";"));
       azzert.that(of(as.getExpression()), is(BOOLEAN));
       azzert.that(of(as.getMessage()), is(STRING));
     }

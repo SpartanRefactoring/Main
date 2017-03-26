@@ -18,7 +18,7 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -382828224028857273L;
 
-  private static ForStatement buildForWhithoutLastStatement(@NotNull final WhileStatement ¢) {
+  private static ForStatement buildForWhithoutLastStatement( final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setExpression(copy.of(¢.getExpression()));
     updaters($).add(copy.of(az.expressionStatement(hop.lastStatement(body(¢))).getExpression()));
@@ -36,7 +36,7 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
         && !ForToForUpdaters.bodyDeclaresElementsOf(hop.lastStatement(body(¢)));
   }
 
-  @Override @NotNull public String description(@NotNull final WhileStatement ¢) {
+  @Override  public String description( final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
 
@@ -44,7 +44,7 @@ public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//
     return ¢ != null && fitting(¢);
   }
 
-  @Override @Nullable public ASTNode replacement(@NotNull final WhileStatement ¢) {
+  @Override @Nullable public ASTNode replacement( final WhileStatement ¢) {
     return !fitting(¢) ? null : buildForWhithoutLastStatement(¢);
   }
 }

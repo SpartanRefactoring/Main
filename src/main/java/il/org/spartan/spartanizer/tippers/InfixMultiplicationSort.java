@@ -7,8 +7,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -22,11 +20,11 @@ public final class InfixMultiplicationSort extends InfixExpressionSortingFull//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -5781572853977619886L;
 
-  @Override protected boolean sort(@NotNull final List<Expression> ¢) {
+  @Override protected boolean sort( final List<Expression> ¢) {
     return ExpressionComparator.MULTIPLICATION.sort(¢);
   }
 
-  @Override protected boolean suitable(@NotNull final InfixExpression ¢) {
+  @Override protected boolean suitable( final InfixExpression ¢) {
     return in(¢.getOperator(), TIMES);
   }
 }

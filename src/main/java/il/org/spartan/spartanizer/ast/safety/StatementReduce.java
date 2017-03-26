@@ -14,17 +14,17 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
 public abstract class StatementReduce<T> {
-  @NotNull protected T map(@NotNull final ArrayAccess ¢) {
+   protected T map( final ArrayAccess ¢) {
     return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
 
-  @NotNull protected T map(@NotNull final ArrayCreation ¢) {
+   protected T map( final ArrayCreation ¢) {
     return reduce(reduce(dimensions(¢)), map(¢.getInitializer()));
   }
 
-  @Nullable private T reduce(@NotNull final Iterable<Expression> xs) {
+  @Nullable private T reduce( final Iterable<Expression> xs) {
     @Nullable T $ = neutralElement();
-    for (@NotNull final Expression ¢ : xs)
+    for ( final Expression ¢ : xs)
       $ = reduce($, map(¢));
     return $;
   }
@@ -33,13 +33,13 @@ public abstract class StatementReduce<T> {
     return mapAtomic(¢);
   }
 
-  @NotNull protected T map(final Assignment ¢) {
+   protected T map(final Assignment ¢) {
     return reduce(map(to(¢)), map(from(¢)));
   }
 
   @Nullable protected T map(final Block b) {
     @Nullable T $ = neutralElement();
-    for (@NotNull final Statement ¢ : statements(b))
+    for ( final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
   }
@@ -48,11 +48,11 @@ public abstract class StatementReduce<T> {
     return mapAtomic(¢);
   }
 
-  @NotNull protected T map(@NotNull final ClassInstanceCreation ¢) {
+   protected T map( final ClassInstanceCreation ¢) {
     return reduce(map(¢.getExpression()), reduce(arguments(¢)));
   }
 
-  @NotNull protected T map(@NotNull final ConditionalExpression ¢) {
+   protected T map( final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
 
@@ -64,7 +64,7 @@ public abstract class StatementReduce<T> {
     return mapAtomic(¢);
   }
 
-  protected T map(@NotNull final DoStatement ¢) {
+  protected T map( final DoStatement ¢) {
     return map(¢.getBody());
   }
 
@@ -72,11 +72,11 @@ public abstract class StatementReduce<T> {
     return mapAtomic(¢);
   }
 
-  protected T map(@NotNull final EnhancedForStatement ¢) {
+  protected T map( final EnhancedForStatement ¢) {
     return map(¢.getBody());
   }
 
-  @Nullable T map(@NotNull final Expression ¢) {
+  @Nullable T map( final Expression ¢) {
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
         return map((PrefixExpression) ¢);
@@ -109,7 +109,7 @@ public abstract class StatementReduce<T> {
     }
   }
 
-  protected T map(@NotNull final InstanceofExpression ¢) {
+  protected T map( final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
 
@@ -117,15 +117,15 @@ public abstract class StatementReduce<T> {
     return mapAtomic(¢);
   }
 
-  @NotNull protected T map(final IfStatement ¢) {
+   protected T map(final IfStatement ¢) {
     return reduceIfStatement(expression(¢), then(¢), elze(¢));
   }
 
-  protected T map(@NotNull final LabeledStatement ¢) {
+  protected T map( final LabeledStatement ¢) {
     return map(¢.getBody());
   }
 
-  @NotNull protected T map(final MethodInvocation ¢) {
+   protected T map(final MethodInvocation ¢) {
     return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
 
@@ -141,7 +141,7 @@ public abstract class StatementReduce<T> {
     return mapAtomic(¢);
   }
 
-  public final T map(@NotNull final Statement ¢) {
+  public final T map( final Statement ¢) {
     switch (¢.getNodeType()) {
       case ASSERT_STATEMENT:
         return map((AssertStatement) ¢);
@@ -175,11 +175,11 @@ public abstract class StatementReduce<T> {
     }
   }
 
-  @NotNull protected T map(@NotNull final SuperConstructorInvocation ¢) {
+   protected T map( final SuperConstructorInvocation ¢) {
     return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
 
-  @NotNull protected T map(final SuperMethodInvocation ¢) {
+   protected T map(final SuperMethodInvocation ¢) {
     return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
 
@@ -192,16 +192,16 @@ public abstract class StatementReduce<T> {
     return null;
   }
 
-  @NotNull protected abstract T reduce(T t1, T t2);
+   protected abstract T reduce(T t1, T t2);
 
-  @SafeVarargs @NotNull protected final T reduce(final T t1, final T t2, @NotNull final T... ts) {
-    @NotNull T $ = reduce(t1, t2);
+  @SafeVarargs  protected final T reduce(final T t1, final T t2,  final T... ts) {
+     T $ = reduce(t1, t2);
     for (final T ¢ : ts)
       $ = reduce($, ¢);
     return $;
   }
 
-  @NotNull protected T reduceIfStatement(@NotNull final Expression x, @NotNull final Statement then, @NotNull final Statement elze) {
+   protected T reduceIfStatement( final Expression x,  final Statement then,  final Statement elze) {
     return reduce(map(x), reduce(map(then), map(elze)));
   }
 }

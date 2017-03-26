@@ -44,7 +44,7 @@ public class Adjuster extends JavadocMarkerNanoPattern {
     ;
   }
 
-  private static boolean arePseudoAtomic(@NotNull final Collection<Expression> arguments, @NotNull final Collection<String> parametersNames) {
+  private static boolean arePseudoAtomic( final Collection<Expression> arguments,  final Collection<String> parametersNames) {
     return arguments.stream()
         .allMatch(λ -> iz.name(λ)//
             || iz.methodInvocation(λ)//
@@ -53,13 +53,13 @@ public class Adjuster extends JavadocMarkerNanoPattern {
     ) && arguments.stream().anyMatch(λ -> helps(parametersNames, λ));
   }
 
-  private static boolean helps(@NotNull final Collection<String> parametersNames, final Expression ¢) {
+  private static boolean helps( final Collection<String> parametersNames, final Expression ¢) {
     return arguments(az.methodInvocation(¢)) != null//
         && !arguments(az.methodInvocation(¢)).isEmpty()//
         && parametersContainAllArguments(parametersNames, ¢);
   }
 
-  private static boolean parametersContainAllArguments(@NotNull final Collection<String> parametersNames, final Expression ¢) {
+  private static boolean parametersContainAllArguments( final Collection<String> parametersNames, final Expression ¢) {
     return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(ASTNode::toString).collect(toList()));
   }
 

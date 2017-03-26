@@ -31,7 +31,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     return "Inline the prefix expression after the access to the array";
   }
 
-  @Override @NotNull public Example[] examples() {
+  @Override  public Example[] examples() {
     return new Example[] { //
         convert("array[i] = 1; ++i;") //
             .to("array[i++] = 1;"), //
@@ -39,9 +39,9 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
         ignores("f(array[i]); ++i;") };
   }
 
-  @Override public Tip tip(@NotNull final ArrayAccess a) {
+  @Override public Tip tip( final ArrayAccess a) {
     return checkInput(a) || !prerequisite(a) ? null : new Tip(description(a), a, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         final PostfixExpression newpost = a.getAST().newPostfixExpression();
         newpost.setOperand(copy.of(a.getIndex()));
         newpost.setOperator(Operator.INCREMENT);
@@ -61,7 +61,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
           return true;
     if (!iz.infixExpression(a.getParent()) || !iz.assignment(a.getParent().getParent()))
       return false;
-    @NotNull final Int $ = new Int();
+     final Int $ = new Int();
     @Nullable final List<Expression> xs = extract.allOperands(az.infixExpression(a.getParent()));
     xs.add(az.assignment(a.getParent().getParent()).getLeftHandSide());
     xs.stream().filter(iz::arrayAccess).forEach(λ -> ++$.inner);

@@ -32,7 +32,7 @@ public class Selection extends AbstractSelection<Selection> {
     this.name = name;
   }
 
-  @NotNull public Selection buildAll() {
+   public Selection buildAll() {
     inner.forEach(WrappedCompilationUnit::build);
     return this;
   }
@@ -50,7 +50,7 @@ public class Selection extends AbstractSelection<Selection> {
   /** Factory method.
    * @param ¢ JD
    * @return selection by compilation units */
-  @NotNull public static Selection of(@NotNull final List<ICompilationUnit> ¢) {
+   public static Selection of( final List<ICompilationUnit> ¢) {
     return new Selection(WrappedCompilationUnit.of(¢), null, getName(¢));
   }
 
@@ -58,7 +58,7 @@ public class Selection extends AbstractSelection<Selection> {
    * @param ¢ JD
    * @return selection by compilation unit */
   @Nullable public static Selection of(@Nullable final ICompilationUnit ¢) {
-    @NotNull final List<WrappedCompilationUnit> $ = new ArrayList<>();
+     final List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (¢ != null)
       $.add(WrappedCompilationUnit.of(¢));
     return new Selection($, null, getName(¢));
@@ -67,8 +67,8 @@ public class Selection extends AbstractSelection<Selection> {
   /** Factory method.
    * @param ¢ JD
    * @return selection by compilation unit and text selection */
-  @NotNull public static Selection of(@Nullable final ICompilationUnit u, final ITextSelection s) {
-    @NotNull final List<WrappedCompilationUnit> $ = new ArrayList<>();
+   public static Selection of(@Nullable final ICompilationUnit u, final ITextSelection s) {
+     final List<WrappedCompilationUnit> $ = new ArrayList<>();
     if (u != null)
       $.add(WrappedCompilationUnit.of(u));
     return new Selection($, s, getName(u));
@@ -77,7 +77,7 @@ public class Selection extends AbstractSelection<Selection> {
   /** Factory method.
    * @param ¢ JD
    * @return selection by compilation units */
-  @NotNull public static Selection of(final ICompilationUnit[] ¢) {
+   public static Selection of(final ICompilationUnit[] ¢) {
     final List<ICompilationUnit> $ = as.list(¢);
     return new Selection(WrappedCompilationUnit.of($), null, getName($));
   }
@@ -97,7 +97,7 @@ public class Selection extends AbstractSelection<Selection> {
 
   /** Extends text selection to include overlapping markers.
    * @return {@code this} selection */
-  @NotNull public Selection fixTextSelection() {
+   public Selection fixTextSelection() {
     if (inner == null || inner.size() != 1 || textSelection == null)
       return this;
     final IResource r = first(inner).descriptor.getResource();
@@ -111,7 +111,7 @@ public class Selection extends AbstractSelection<Selection> {
       for (; i < ms.length; ++i) {
         if (ms[i] == null)
           continue;
-        @NotNull final Integer ics = (Integer) ms[i].getAttribute(IMarker.CHAR_START), ice = (Integer) ms[i].getAttribute(IMarker.CHAR_END);
+         final Integer ics = (Integer) ms[i].getAttribute(IMarker.CHAR_START), ice = (Integer) ms[i].getAttribute(IMarker.CHAR_END);
         if (ics == null || ice == null)
           continue;
         final int cs = ics.intValue();
@@ -132,7 +132,7 @@ public class Selection extends AbstractSelection<Selection> {
       }
       if (changed)
         textSelection = new TextSelection(no, nl - no);
-    } catch (@NotNull final CoreException ¢) {
+    } catch ( final CoreException ¢) {
       monitor.log(¢);
       return this;
     }
@@ -140,14 +140,14 @@ public class Selection extends AbstractSelection<Selection> {
   }
 
   // TODO Ori Roth: apply to newly added WCU as well
-  @NotNull public Selection setUseBinding() {
+   public Selection setUseBinding() {
     if (inner != null)
-      for (@NotNull final WrappedCompilationUnit ¢ : inner) // NANO?
+      for ( final WrappedCompilationUnit ¢ : inner) // NANO?
         ¢.useBinding = true;
     return this;
   }
 
-  @Override @NotNull public String toString() {
+  @Override  public String toString() {
     if (isEmpty())
       return "{empty}";
     final int $ = inner == null ? 0 : inner.size();
@@ -157,7 +157,7 @@ public class Selection extends AbstractSelection<Selection> {
 
   /** @param ¢ JD
    * @return printable string describing the text selection */
-  @NotNull private static String printable(@NotNull final ITextSelection ¢) {
+   private static String printable( final ITextSelection ¢) {
     return "(" + ¢.getOffset() + "," + ¢.getLength() + ")";
   }
 
@@ -178,7 +178,7 @@ public class Selection extends AbstractSelection<Selection> {
 
     /** @param ¢ JD
      * @return selection of current compilation unit by marker */
-    @Nullable public static Selection getCurrentCompilationUnit(@NotNull final IMarker ¢) {
+    @Nullable public static Selection getCurrentCompilationUnit( final IMarker ¢) {
       if (!¢.exists())
         return empty();
       final IResource $ = ¢.getResource();
@@ -187,7 +187,7 @@ public class Selection extends AbstractSelection<Selection> {
 
     /** @param ¢ JD
      * @return selection of all compilation units in project by marker */
-    @Nullable public static Selection getAllCompilationUnit(@NotNull final IMarker ¢) {
+    @Nullable public static Selection getAllCompilationUnit( final IMarker ¢) {
       if (!¢.exists())
         return empty();
       final IResource $ = ¢.getResource();
@@ -195,20 +195,20 @@ public class Selection extends AbstractSelection<Selection> {
     }
 
     @Nullable public static Selection getAllCompilationUnits() {
-      @NotNull final IJavaProject $ = getJavaProject();
+       final IJavaProject $ = getJavaProject();
       return $ == null ? empty() : by($).setTextSelection(null).setName($.getElementName());
     }
 
     /** @return current user selection */
     @Nullable public static Selection current() {
-      @NotNull final ISelection $ = getSelection();
+       final ISelection $ = getSelection();
       return $ == null ? empty()
           : $ instanceof ITextSelection ? by((ITextSelection) $) : $ instanceof ITreeSelection ? by((IStructuredSelection) $) : empty();
     }
 
     /** @return current project */
     @Nullable public static IProject project() {
-      @NotNull final ISelection s = getSelection();
+       final ISelection s = getSelection();
       if (s == null || s instanceof ITextSelection || !(s instanceof ITreeSelection))
         return getProject();
       final Object $ = ((IStructuredSelection) s).getFirstElement();
@@ -236,7 +236,7 @@ public class Selection extends AbstractSelection<Selection> {
       final ICompilationUnit u = JavaCore.createCompilationUnitFrom((IFile) m.getResource());
       if (u == null)
         return empty();
-      @NotNull final WrappedCompilationUnit $ = WrappedCompilationUnit.of(u);
+       final WrappedCompilationUnit $ = WrappedCompilationUnit.of(u);
       @Nullable final ASTNode n = getNodeByMarker($, m);
       if (n == null)
         return empty();
@@ -316,7 +316,7 @@ public class Selection extends AbstractSelection<Selection> {
 
     /** @param ¢ JD
      * @return selection by text selection */
-    private static Selection by(@NotNull final ITextSelection ¢) {
+    private static Selection by( final ITextSelection ¢) {
       @Nullable final Selection $ = getCompilationUnit();
       return $ == null || $.inner == null || $.inner.isEmpty() ? null
           : (¢.getOffset() == 0 && ¢.getLength() == first($.inner).build().compilationUnit.getLength() ? $ : $.setTextSelection(¢).fixTextSelection())
@@ -344,7 +344,7 @@ public class Selection extends AbstractSelection<Selection> {
 
     /** @param s JD
      * @return selection by tree selection */
-    @Nullable private static Selection by(@NotNull final IStructuredSelection s) {
+    @Nullable private static Selection by( final IStructuredSelection s) {
       final List<?> ss = s.toList();
       if (ss.size() == 1) {
         final Object o = first(ss);
@@ -357,12 +357,12 @@ public class Selection extends AbstractSelection<Selection> {
                                 : !(o instanceof IMember) ? empty() : by((IMember) o);
       }
       @Nullable final Selection $ = Selection.empty();
-      @NotNull final Collection<MarkerItem> is = new ArrayList<>();
-      @NotNull final Collection<IJavaProject> ps = new ArrayList<>();
-      @NotNull final Collection<IPackageFragmentRoot> rs = new ArrayList<>();
-      @NotNull final Collection<IPackageFragment> hs = new ArrayList<>();
-      @NotNull final Collection<ICompilationUnit> cs = new ArrayList<>();
-      @NotNull final Collection<IMember> ms = new ArrayList<>();
+       final Collection<MarkerItem> is = new ArrayList<>();
+       final Collection<IJavaProject> ps = new ArrayList<>();
+       final Collection<IPackageFragmentRoot> rs = new ArrayList<>();
+       final Collection<IPackageFragment> hs = new ArrayList<>();
+       final Collection<ICompilationUnit> cs = new ArrayList<>();
+       final Collection<IMember> ms = new ArrayList<>();
       for (@Nullable final Object ¢ : ss) {
         $.unify(¢ == null ? null
             : ¢ instanceof MarkerItem ? by((MarkerItem) ¢)
@@ -395,7 +395,7 @@ public class Selection extends AbstractSelection<Selection> {
       final IPackageFragmentRoot[] rs;
       try {
         rs = p.getPackageFragmentRoots();
-      } catch (@NotNull final JavaModelException ¢) {
+      } catch ( final JavaModelException ¢) {
         monitor.log(¢);
         return empty();
       }
@@ -405,11 +405,11 @@ public class Selection extends AbstractSelection<Selection> {
 
     /** @param r JD
      * @return selection by package root */
-    @Nullable private static Selection by(@NotNull final IPackageFragmentRoot r) {
+    @Nullable private static Selection by( final IPackageFragmentRoot r) {
       @Nullable final Selection $ = empty();
       try {
         Stream.of(r.getChildren()).filter(λ -> λ.getElementType() == IJavaElement.PACKAGE_FRAGMENT).forEach(λ -> $.unify(by((IPackageFragment) λ)));
-      } catch (@NotNull final JavaModelException ¢) {
+      } catch ( final JavaModelException ¢) {
         monitor.log(¢);
         return empty();
       }
@@ -423,7 +423,7 @@ public class Selection extends AbstractSelection<Selection> {
         return $ == null ? empty()
             : Selection.of($.getCompilationUnits())
                 .setName($.getElementName() != null && !$.getElementName().isEmpty() ? $.getElementName() : DEFAULT_PACKAGE_NAME);
-      } catch (@NotNull final JavaModelException ¢) {
+      } catch ( final JavaModelException ¢) {
         monitor.log(¢);
         return empty();
       }
@@ -431,15 +431,15 @@ public class Selection extends AbstractSelection<Selection> {
 
     /** @param ¢ JD
      * @return selection by member */
-    @Nullable private static Selection by(@NotNull final IMember ¢) {
+    @Nullable private static Selection by( final IMember ¢) {
       @Nullable final ISourceRange $ = makertToRange(¢);
       return $ == null ? empty() : Selection.of(¢.getCompilationUnit(), new TextSelection($.getOffset(), $.getLength())).setName(¢.getElementName());
     }
 
-    public static ISourceRange makertToRange(@NotNull final ISourceReference $) {
+    public static ISourceRange makertToRange( final ISourceReference $) {
       try {
         return $.getSourceRange();
-      } catch (@NotNull final JavaModelException ¢) {
+      } catch ( final JavaModelException ¢) {
         monitor.log(¢);
         return null;
       }
@@ -447,11 +447,11 @@ public class Selection extends AbstractSelection<Selection> {
 
     /** @param m JD
      * @return text selection by marker */
-    private static ITextSelection getTextSelection(@NotNull final IMarker m) {
+    private static ITextSelection getTextSelection( final IMarker m) {
       try {
         final int $ = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         return new TextSelection($, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - $);
-      } catch (@NotNull final CoreException ¢) {
+      } catch ( final CoreException ¢) {
         monitor.log(¢);
         return null;
       }
@@ -460,11 +460,11 @@ public class Selection extends AbstractSelection<Selection> {
     /** @param u JD
      * @param m JD
      * @return node marked by marker */
-    private static ASTNode getNodeByMarker(@NotNull final WrappedCompilationUnit u, @NotNull final IMarker m) {
+    private static ASTNode getNodeByMarker( final WrappedCompilationUnit u,  final IMarker m) {
       try {
         final int $ = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         return new NodeFinder(u.build().compilationUnit, $, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - $).getCoveredNode();
-      } catch (@NotNull final CoreException ¢) {
+      } catch ( final CoreException ¢) {
         monitor.logEvaluationError(¢);
         return null;
       }
@@ -477,10 +477,10 @@ public class Selection extends AbstractSelection<Selection> {
      * @param us list of files in selection
      * @param ms list of members in selection
      * @return name for the selection */
-    @NotNull private static String getMultiSelectionName(@NotNull final Collection<MarkerItem> is, @NotNull final Iterable<IJavaProject> ps,
-        @NotNull final Collection<IPackageFragmentRoot> rs, @NotNull final Collection<IPackageFragment> hs,
-        @NotNull final Collection<ICompilationUnit> us, @NotNull final Collection<IMember> ms) {
-      @NotNull final List<String> $ = new ArrayList<>();
+     private static String getMultiSelectionName( final Collection<MarkerItem> is,  final Iterable<IJavaProject> ps,
+         final Collection<IPackageFragmentRoot> rs,  final Collection<IPackageFragment> hs,
+         final Collection<ICompilationUnit> us,  final Collection<IMember> ms) {
+       final List<String> $ = new ArrayList<>();
       ps.forEach(λ -> $.add(λ.getElementName()));
       if (!rs.isEmpty())
         $.add(English.plurals("root package", rs.size()));

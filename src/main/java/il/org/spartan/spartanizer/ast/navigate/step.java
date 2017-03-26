@@ -40,7 +40,7 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  @SuppressWarnings("unchecked") public static Iterable<Expression> arguments(@NotNull final SuperConstructorInvocation ¢) {
+  @SuppressWarnings("unchecked") public static Iterable<Expression> arguments( final SuperConstructorInvocation ¢) {
     return ¢.arguments();
   }
 
@@ -51,9 +51,9 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  private static boolean balanced(@NotNull final CharSequence s) {
+  private static boolean balanced( final CharSequence s) {
     int $ = 0;
-    for (@NotNull final Integer ¢ : range.from(0).to(s.length()))
+    for ( final Integer ¢ : range.from(0).to(s.length()))
       if (s.charAt(¢.intValue()) == '<')
         ++$;
       else if (s.charAt(¢.intValue()) == '>')
@@ -301,7 +301,7 @@ public enum step {
     return ¢ == null ? null : ¢.modifiers();
   }
 
-  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers(@NotNull final VariableDeclarationExpression ¢) {
+  @SuppressWarnings("unchecked") public static List<IExtendedModifier> extendedModifiers( final VariableDeclarationExpression ¢) {
     assert ¢ != null;
     return ¢.modifiers();
   }
@@ -353,7 +353,7 @@ public enum step {
   /** Expose the list of fragments in a {@link VariableDeclarationExpression}
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
-  @NotNull @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(@Nullable final VariableDeclarationExpression ¢) {
+   @SuppressWarnings("unchecked") public static List<VariableDeclarationFragment> fragments(@Nullable final VariableDeclarationExpression ¢) {
     return ¢ != null ? ¢.fragments() : new ArrayList<>();
   }
 
@@ -371,7 +371,7 @@ public enum step {
     return ¢ == null ? null : right(¢);
   }
 
-  @NotNull public static String identifier(@NotNull final AnnotationTypeDeclaration ¢) {
+   public static String identifier( final AnnotationTypeDeclaration ¢) {
     return ¢.getName() + "";
   }
 
@@ -480,8 +480,8 @@ public enum step {
     return ¢ == null ? null : ¢.getLeftOperand();
   }
 
-  @NotNull public static List<ASTNode> marchingList(@NotNull final ASTNode ¢) {
-    @NotNull final List<ASTNode> $ = new ArrayList<>();
+   public static List<ASTNode> marchingList( final ASTNode ¢) {
+     final List<ASTNode> $ = new ArrayList<>();
     for (final Object s : ¢.structuralPropertiesForType()) {
       final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
       if (iz.astNode(child))
@@ -499,7 +499,7 @@ public enum step {
   @Nullable public static Collection<String> methodNames(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
-    @NotNull final List<String> $ = new ArrayList<>();
+     final List<String> $ = new ArrayList<>();
     types(u).forEach(λ -> $.addAll(methodNames(λ)));
     return $;
   }
@@ -525,7 +525,7 @@ public enum step {
   @Nullable public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
     if (u == null)
       return null;
-    @NotNull final List<MethodDeclaration> $ = new ArrayList<>();
+     final List<MethodDeclaration> $ = new ArrayList<>();
     types(u).forEach(λ -> $.addAll(methods(λ)));
     return $;
   }
@@ -652,7 +652,7 @@ public enum step {
   /** Expose the list of parameters types in a {@link MethodDeclaration}
    * @param ¢ JD
    * @return */
-  @NotNull public static List<Type> parametersTypes(final MethodDeclaration ¢) {
+   public static List<Type> parametersTypes(final MethodDeclaration ¢) {
     return new ArrayList<>(step.parameters(¢).stream().map(step::type).collect(toList()));
   }
 
@@ -768,7 +768,7 @@ public enum step {
   @Nullable public static Type type(@Nullable final AbstractTypeDeclaration d) {
     if (d == null)
       return null;
-    @NotNull String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
+     String typeType = iz.typeDeclaration(d) ? "class" : iz.enumDeclaration(d) ? "enum" : "annotation";
     if (!(d + "").contains(typeType) && iz.typeDeclaration(d))
       typeType = "interface";
     String $ = (d + "").substring((d + "").indexOf(typeType));

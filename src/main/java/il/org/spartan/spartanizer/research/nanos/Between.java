@@ -34,7 +34,7 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
   }
 
   @Override public boolean canTip(final InfixExpression $) {
-    @NotNull final List<Expression> os = extendedOperands($);
+     final List<Expression> os = extendedOperands($);
     return os.isEmpty() ? between(left($), right($)) : IntStream.range(0, os.size() - 1).anyMatch(λ -> between(os.get(λ), os.get(λ + 1)));
   }
 

@@ -19,7 +19,7 @@ public interface containing {
     return az.compilationUnit(yieldAncestors.untilNodeType(COMPILATION_UNIT).from(¢));
   }
 
-  @NotNull static String package¢(final CastExpression ¢) {
+   static String package¢(final CastExpression ¢) {
     return yieldAncestors.untilContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }
 

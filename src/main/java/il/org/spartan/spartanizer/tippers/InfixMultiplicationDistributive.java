@@ -32,12 +32,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     implements TipperCategory.Arithmetic, TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -4040103682801205377L;
 
-  private static boolean IsSimpleMultiplication(@NotNull final Expression $) {
+  private static boolean IsSimpleMultiplication( final Expression $) {
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
   }
 
-  @NotNull private static List<Expression> removeFirstElement(@NotNull final List<Expression> ¢) {
-    @NotNull final List<Expression> $ = new ArrayList<>(¢);
+   private static List<Expression> removeFirstElement( final List<Expression> ¢) {
+     final List<Expression> $ = new ArrayList<>(¢);
     $.remove(first($));// remove first
     return $;
   }
@@ -46,7 +46,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return "a*b + a*c => a * (b + c)";
   }
 
-  @Override @NotNull public String description(final InfixExpression ¢) {
+  @Override  public String description(final InfixExpression ¢) {
     return "Apply the distributive rule to " + ¢;
   }
 
@@ -54,44 +54,44 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     return $ != null && iz.infixPlus($) && IsSimpleMultiplication(left($)) && IsSimpleMultiplication(right($));
   }
 
-  @Override public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Override public ASTNode replacement( final InfixExpression ¢) {
     return ¢.getOperator() != PLUS ? null : replacement(extract.allOperands(¢));
   }
 
-  private void addCommon(@NotNull final Expression op, @NotNull final Collection<Expression> common) {
+  private void addCommon( final Expression op,  final Collection<Expression> common) {
     addNewInList(op, common);
   }
 
-  private void addDifferent(@NotNull final Expression op, @NotNull final Collection<Expression> different) {
+  private void addDifferent( final Expression op,  final Collection<Expression> different) {
     addNewInList(op, different);
   }
 
-  private void addNewInList(@NotNull final Expression item, @NotNull final Collection<Expression> xs) {
+  private void addNewInList( final Expression item,  final Collection<Expression> xs) {
     if (!isIn(item, xs))
       xs.add(item);
   }
 
-  @SuppressWarnings("static-method") private boolean isIn(@NotNull final Expression op, @NotNull final Collection<Expression> allOperands) {
+  @SuppressWarnings("static-method") private boolean isIn( final Expression op,  final Collection<Expression> allOperands) {
     return allOperands.stream().anyMatch(λ -> wizard.same(op, λ));
   }
 
-  @SuppressWarnings("static-method") private void removeElFromList(@NotNull final Iterable<Expression> items, @NotNull final List<Expression> from) {
+  @SuppressWarnings("static-method") private void removeElFromList( final Iterable<Expression> items,  final List<Expression> from) {
     items.forEach(from::remove);
   }
 
-  private ASTNode replacement(@NotNull final InfixExpression e1, @NotNull final InfixExpression e2) {
+  private ASTNode replacement( final InfixExpression e1,  final InfixExpression e2) {
     assert e1 != null;
     assert e2 != null;
     @Nullable final List<Expression> es1 = extract.allOperands(e1);
     assert es1 != null;
     @Nullable final List<Expression> es2 = extract.allOperands(e2);
     assert es2 != null;
-    @NotNull final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
-    for (@NotNull final Expression ¢ : es1) {
+     final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
+    for ( final Expression ¢ : es1) {
       assert ¢ != null;
       (isIn(¢, es2) ? $ : different).add(¢);
     }
-    for (@NotNull final Expression ¢ : es2) { // [a c]
+    for ( final Expression ¢ : es2) { // [a c]
       assert ¢ != null;
       if (!isIn(¢, $))
         different.add(¢);
@@ -112,16 +112,16 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     );
   }
 
-  @SuppressWarnings("boxing") private ASTNode replacement(@NotNull final List<Expression> xs) {
+  @SuppressWarnings("boxing") private ASTNode replacement( final List<Expression> xs) {
     if (xs.size() == 1)
       return az.infixExpression(first(xs)).getOperator() != TIMES ? null : first(xs);
     if (xs.size() == 2)
       return replacement(az.infixExpression(first(xs)), az.infixExpression(second(xs)));
-    @NotNull final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
-    @NotNull List<Expression> temp = new ArrayList<>(xs);
+     final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
+     List<Expression> temp = new ArrayList<>(xs);
     for (final Integer i : range.from(0).to(xs.size())) {
       temp = removeFirstElement(temp);
-      for (@NotNull final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
+      for ( final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
             addCommon(op, $);

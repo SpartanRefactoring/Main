@@ -24,11 +24,11 @@ public final class FragmentInitializerReturnAssignment extends $FragmentAndState
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x1283F5075F4BE6FFL;
 
-  @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
+  @Override  public String description( final VariableDeclarationFragment ¢) {
     return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
 
-  @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final VariableDeclarationFragment f, @NotNull final SimpleName n,
+  @Override @Nullable protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final SimpleName n,
       @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
@@ -36,7 +36,7 @@ public final class FragmentInitializerReturnAssignment extends $FragmentAndState
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newReturnValue = copy.of(from(a));
-    @NotNull final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);

@@ -51,7 +51,7 @@ public final class SafeNavigation extends NanoPatternTipper<ConditionalExpressio
     return firstReplacement(tippers);
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Safety;
   }
 }

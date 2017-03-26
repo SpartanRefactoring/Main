@@ -28,7 +28,7 @@ public class Reduce extends NanoPatternTipper<ForStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override  public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Reduce: conevrt to fluent API";
   }
 

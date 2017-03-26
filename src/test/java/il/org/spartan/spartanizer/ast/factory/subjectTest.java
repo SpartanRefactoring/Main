@@ -33,13 +33,13 @@ public final class subjectTest {
   }
 
   @Test public void conditionalExtract() {
-    @NotNull final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
+     final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
     assert pair != null;
     azzert.that(pair.toCondition(e("(x)")), iz("x ? a-B : c-d"));
   }
 
   @Test public void conditionalSimple() {
-    @NotNull final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
+     final Pair pair = subject.pair(e("a-B"), e("(c-d)"));
     assert pair != null;
     azzert.that(pair.toCondition(e("x")), iz("x ? a-B : c-d"));
   }
@@ -57,13 +57,13 @@ public final class subjectTest {
   }
 
   @Test public void makeIfNotStatement() {
-    @NotNull final Statement s = s("s();");
+     final Statement s = s("s();");
     azzert.that(s, iz("{s();}"));
     azzert.that(subject.pair(s, s("f();")).toNot(e("a")), iz("if(!a)s(); else f();"));
   }
 
   @Test public void makeIfStatement() {
-    @NotNull final Statement s = s("s();");
+     final Statement s = s("s();");
     azzert.that(s, iz("{s();}"));
     azzert.that(subject.pair(s, s("f();")).toIf(e("a")), iz("if(a)s(); else f();"));
   }
@@ -115,8 +115,8 @@ public final class subjectTest {
   }
 
   @Test public void refitPreservesOrder() {
-    @NotNull final InfixExpression e = i("1 + 2 * 3");
-    @NotNull final List<Expression> operands = new ArrayList<>();
+     final InfixExpression e = i("1 + 2 * 3");
+     final List<Expression> operands = new ArrayList<>();
     operands.add(copy.of(e("3*4")));
     operands.add(copy.of(e("5")));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
@@ -125,7 +125,7 @@ public final class subjectTest {
   }
 
   @Test public void refitWithSort() {
-    @NotNull final InfixExpression e = i("1 + 2 * 3");
+     final InfixExpression e = i("1 + 2 * 3");
     @Nullable final List<Expression> operands = hop.operands(flatten.of(e));
     azzert.that(operands.size(), is(2));
     azzert.that(first(operands) + "", is("1"));
@@ -143,7 +143,7 @@ public final class subjectTest {
   }
 
   @Test public void subjectOperands() {
-    @NotNull final Expression e = into.e("2 + a <b");
+     final Expression e = into.e("2 + a <b");
     assert type.isNotString(e);
     final InfixExpression plus = findFirst.infixPlus(e);
     assert type.isNotString(plus);
@@ -170,7 +170,7 @@ public final class subjectTest {
   }
 
   @Test public void subjectOperandsWithParenthesis() {
-    @NotNull final Expression e = into.e("(2 + a) * b");
+     final Expression e = into.e("(2 + a) * b");
     assert type.isNotString(e);
     final InfixExpression plus = findFirst.infixPlus(e);
     assert type.isNotString(plus);

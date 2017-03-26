@@ -28,13 +28,13 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    @NotNull final GUIBatchLaconizer a = applicator().defaultSelection();
+     final GUIBatchLaconizer a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
   }
 
-  @Override @NotNull public String getLabel() {
+  @Override  public String getLabel() {
     return "Apply";
   }
 
@@ -42,22 +42,22 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     applicator().passes(1).selection(Selection.Util.by(¢)).go();
   }
 
-  @NotNull public static GUIBatchLaconizer applicator() {
+   public static GUIBatchLaconizer applicator() {
     return applicator(OPERATION_ACTIVITY);
   }
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  @NotNull public static GUIBatchLaconizer applicator(@NotNull final English.Activity activityNamer) {
-    @NotNull final GUIBatchLaconizer $ = new GUIBatchLaconizer();
-    @NotNull final Trimmer t = new Trimmer();
-    @NotNull final ProgressMonitorDialog d = Dialogs.progress(false);
+   public static GUIBatchLaconizer applicator( final English.Activity activityNamer) {
+     final GUIBatchLaconizer $ = new GUIBatchLaconizer();
+     final Trimmer t = new Trimmer();
+     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
-      } catch (@NotNull final InvocationTargetException ¢) {
+      } catch ( final InvocationTargetException ¢) {
         monitor.logProbableBug(¢);
-      } catch (@NotNull final InterruptedException ¢) {
+      } catch ( final InterruptedException ¢) {
         monitor.logCancellationRequest(¢);
       }
     });
@@ -128,11 +128,11 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  @Deprecated @NotNull @SuppressWarnings("deprecation") public static GUIBatchLaconizer applicatorMapper() {
-    @NotNull final GUIBatchLaconizer $ = new GUIBatchLaconizer();
-    @NotNull final Trimmer t = new Trimmer();
-    @NotNull final ProgressMonitorDialog d = Dialogs.progress(false);
-    @NotNull final Bool openDialog = new Bool();
+  @Deprecated  @SuppressWarnings("deprecation") public static GUIBatchLaconizer applicatorMapper() {
+     final GUIBatchLaconizer $ = new GUIBatchLaconizer();
+     final Trimmer t = new Trimmer();
+     final ProgressMonitorDialog d = Dialogs.progress(false);
+     final Bool openDialog = new Bool();
     $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
       if (openDialog.get())
         runAsynchronouslyInUIThread(() -> {
@@ -171,9 +171,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
-      } catch (@NotNull final InvocationTargetException ¢) {
+      } catch ( final InvocationTargetException ¢) {
         monitor.logProbableBug(¢);
-      } catch (@NotNull final InterruptedException ¢) {
+      } catch ( final InterruptedException ¢) {
         monitor.logCancellationRequest(¢);
       }
     });
@@ -196,7 +196,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       this.printing = printing;
     }
 
-    public String get(@NotNull final Object... ¢) {
+    public String get( final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);
     }

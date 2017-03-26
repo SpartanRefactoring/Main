@@ -29,11 +29,11 @@ public class Exhaust extends NanoPatternTipper<WhileStatement> {
     return firstTip(tippers, ¢);
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Iterative;
   }
 
-  @Override @NotNull public String description() {
+  @Override  public String description() {
     return "Move an Iterable to its end using getNext() != null";
   }
 }

@@ -35,8 +35,8 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -5372157375600285659L;
 
-  @NotNull private static List<Statement> commonPrefix(@NotNull final List<Statement> ss1, @NotNull final List<Statement> ss2) {
-    @NotNull final List<Statement> $ = new ArrayList<>();
+   private static List<Statement> commonPrefix( final List<Statement> ss1,  final List<Statement> ss2) {
+     final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(0)) {
       final Statement s1 = first(ss1);
       if (!wizard.same(s1, first(ss2)))
@@ -51,18 +51,18 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
     return "Condolidate commmon prefix of then and else branches to just before if statement";
   }
 
-  @Override public Tip tip(@NotNull final IfStatement s) {
-    @NotNull final List<Statement> $ = extract.statements(then(s));
+  @Override public Tip tip( final IfStatement s) {
+     final List<Statement> $ = extract.statements(then(s));
     if ($.isEmpty())
       return null;
-    @NotNull final List<Statement> elze = extract.statements(elze(s));
+     final List<Statement> elze = extract.statements(elze(s));
     if (elze.isEmpty())
       return null;
     final int thenSize = $.size(), elzeSize = elze.size();
-    @NotNull final List<Statement> commonPrefix = commonPrefix($, elze);
+     final List<Statement> commonPrefix = commonPrefix($, elze);
     return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()) ? null
         : new Tip(description(s), s, getClass()) {
-          @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+          @Override public void go( final ASTRewrite r, final TextEditGroup g) {
             @Nullable final IfStatement newIf = replacement();
             if (!iz.block(s.getParent())) {
               if (newIf != null)
@@ -80,7 +80,7 @@ public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
             return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
           }
 
-          @Nullable IfStatement replacement(@NotNull final Expression condition, @Nullable final Statement trimmedThen,
+          @Nullable IfStatement replacement( final Expression condition, @Nullable final Statement trimmedThen,
               @Nullable final Statement trimmedElse) {
             return trimmedThen == null && trimmedElse == null ? null
                 : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);

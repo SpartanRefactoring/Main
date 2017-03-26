@@ -88,12 +88,12 @@ public class Issue0239 {
     )); //
     assert block != null;
     assert count.nodes(block) > 10;
-    @NotNull final List<Statement> statements = statements(block);
+     final List<Statement> statements = statements(block);
     assert statements != null;
     assert statements.size() == 2;
-    @NotNull final ExpressionStatement nextStatement = findFirst.instanceOf(ExpressionStatement.class).in(block);
+     final ExpressionStatement nextStatement = findFirst.instanceOf(ExpressionStatement.class).in(block);
     assert lastIn(nextStatement, statements);
-    @NotNull final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class).in(block);
+     final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class).in(block);
     assert f != null;
     @Nullable final Statement currentStatement = extract.containingStatement(f);
     assert currentStatement != null;

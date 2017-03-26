@@ -68,7 +68,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return handleIf(az.ifStatement(s), nextReturn);
   }
 
-  private static boolean isInfiniteLoop(@NotNull final ForStatement ¢) {
+  private static boolean isInfiniteLoop( final ForStatement ¢) {
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
@@ -76,7 +76,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return "Convert the break inside 'for(;;)' to 'return'";
   }
 
-  @Override @NotNull public String description(@NotNull final ForStatement ¢) {
+  @Override  public String description( final ForStatement ¢) {
     return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
 
@@ -85,7 +85,7 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     if (exclude != null)
       exclude.exclude(vor);
     return $ == null ? null : new Tip(description(), vor, getClass(), nextReturn) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
       }
