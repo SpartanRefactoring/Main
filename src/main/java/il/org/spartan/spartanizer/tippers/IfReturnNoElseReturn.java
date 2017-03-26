@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,16 +28,16 @@ public final class IfReturnNoElseReturn extends GoToNextStatement<IfStatement>//
     return "Consolidate into a single 'return'";
   }
 
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite r, @NotNull final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go( final ASTRewrite r,  final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;
-    @Nullable final ReturnStatement r1 = extract.returnStatement(then(s));
+     final ReturnStatement r1 = extract.returnStatement(then(s));
     if (r1 == null)
       return null;
     final Expression $ = extract.core(r1.getExpression());
     if ($ == null)
       return null;
-    @Nullable final ReturnStatement r2 = extract.returnStatement(nextStatement);
+     final ReturnStatement r2 = extract.returnStatement(nextStatement);
     if (r2 == null)
       return null;
     final Expression e2 = extract.core(r2.getExpression());

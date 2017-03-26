@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -48,7 +46,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
   public static class defender extends NanoPatternTipper<EnhancedForStatement> {
     private static final long serialVersionUID = -1531336007723130062L;
 
-    @Override @Nullable protected Tip pattern(final EnhancedForStatement ¢) {
+    @Override  protected Tip pattern(final EnhancedForStatement ¢) {
       return firstTip(tippers, ¢);
     }
 
@@ -62,19 +60,19 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
         || anyTips(tippers, ¢);
   }
 
-  @Override @Nullable public Tip pattern(final EnhancedForStatement $) {
+  @Override  public Tip pattern(final EnhancedForStatement $) {
     try {
       return firstTip(blockTippers, az.block(parent($)));
-    } catch (@NotNull @SuppressWarnings("unused") final NoSuchElementException __) {
+    } catch ( @SuppressWarnings("unused") final NoSuchElementException __) {
       return firstTip(tippers, $);
     }
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Iterative;
   }
 
-  @Override @NotNull public String nanoName() {
+  @Override  public String nanoName() {
     return "SelectBy";
   }
 }

@@ -3,8 +3,6 @@ package il.org.spartan.plugin.preferences.revision;
 import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -31,7 +29,7 @@ public enum PreferencesResources {
                                                                         // SAFE
   public static final Bool NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new Bool(true);
 
-  @NotNull public static String getLabel(@NotNull final Class<? extends ExpanderCategory> $) {
+   public static String getLabel( final Class<? extends ExpanderCategory> $) {
     return system.className($);
   }
 
@@ -62,7 +60,7 @@ public enum PreferencesResources {
     NOOPOnStrings(TipperCategory.NOP.onStrings.class), //
     NOOPOnNumbers(TipperCategory.NOP.onNumbers.class), //
     ;
-    public static TipperGroup find(@NotNull final TipperCategory ¢) {
+    public static TipperGroup find( final TipperCategory ¢) {
       return find(¢.getClass());
     }
 
@@ -70,15 +68,15 @@ public enum PreferencesResources {
       return Plugin.plugin().getPreferenceStore();
     }
 
-    private static TipperGroup find(@NotNull final Class<? extends TipperCategory> ¢) {
+    private static TipperGroup find( final Class<? extends TipperCategory> ¢) {
       return Stream.of(TipperGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
-    @NotNull private final Class<? extends TipperCategory> clazz;
+     private final Class<? extends TipperCategory> clazz;
     public final String id;
-    @NotNull public final String label;
+     public final String label;
 
-    TipperGroup(@NotNull final Class<? extends TipperCategory> clazz) {
+    TipperGroup( final Class<? extends TipperCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
       label = clazz.getSimpleName();

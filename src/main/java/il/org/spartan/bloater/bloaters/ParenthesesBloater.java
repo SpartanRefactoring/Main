@@ -1,8 +1,6 @@
 package il.org.spartan.bloater.bloaters;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -20,7 +18,7 @@ public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x3B51DC170DB9CF0DL;
 
-  @Override @Nullable public ASTNode replacement(@NotNull final InfixExpression ¢) {
+  @Override  public ASTNode replacement( final InfixExpression ¢) {
     if (iz.parenthesizedExpression(¢) || !iz.infixExpression(¢.getParent()))
       return null;
     final ParenthesizedExpression $ = ¢.getAST().newParenthesizedExpression();
@@ -28,7 +26,7 @@ public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     return $;
   }
 
-  @Override @NotNull public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override  public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Add parentheses to InfixExpression who's parent is also InfixExpression";
   }
 }

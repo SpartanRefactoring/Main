@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.meta.*;
@@ -16,14 +15,14 @@ import il.org.spartan.spartanizer.meta.*;
 public class Issue0965 {
   @Test public void test0() {
     bloatingOf(new TestClass()) //
-        .givesWithBinding("@NotNull public String check1(){return lst.toString();}", "check1")//
+        .givesWithBinding(" public String check1(){return lst.toString();}", "check1")//
         .staysWithBinding();
   }
 
   static class TestClass extends MetaFixture {
     final List<Integer> is = new ArrayList<>();
 
-    @NotNull public String check1() {
+     public String check1() {
       return is + "";
     }
 

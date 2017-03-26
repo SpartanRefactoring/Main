@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -20,11 +18,11 @@ public class TableTippers {
   }
 
   public void go() {
-    try (@NotNull Table t = new Table(this)) {
+    try ( Table t = new Table(this)) {
       final List<Tipper<? extends ASTNode>>[] implementation = Toolbox.defaultInstance().implementation;
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
-          for (@Nullable final Tipper<?> ¢ : implementation[i])
+          for ( final Tipper<?> ¢ : implementation[i])
             if (¢ != null)
               t//
                   .col("Category", ¢.tipperGroup())//
