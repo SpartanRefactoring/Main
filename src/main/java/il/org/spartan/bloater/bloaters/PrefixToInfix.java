@@ -29,12 +29,9 @@ public class PrefixToInfix extends ReplaceCurrentNode<PrefixExpression>//
   private static final long serialVersionUID = 0x3465E06532ABDE60L;
 
   @Override @NotNull public Example[] examples() {
-    return new Example[] { 
-        convert("++i;").to("i += 1;"),
-        convert("--i;").to("i -= 1"),
-    };
+    return new Example[] { convert("++i;").to("i += 1;"), convert("--i;").to("i -= 1"), };
   }
-  
+
   @Override public ASTNode replacement(@NotNull final PrefixExpression ¢) {
     final NumberLiteral $ = ¢.getAST().newNumberLiteral();
     $.setToken("1");
