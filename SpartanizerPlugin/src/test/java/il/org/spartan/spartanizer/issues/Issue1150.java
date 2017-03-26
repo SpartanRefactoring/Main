@@ -42,8 +42,8 @@ public class Issue1150 {
   }
 
   @Test public void f() {
-    trimmingOf("String x = \"a\"+\"b\"+f()+\"c\"+\n\"d\"+5;")//
-        .gives("String x = \"ab\"+f()+\"c\"+\n\"d\"+5;")//
+    trimmingOf("String x = \"a\"+\"b\"+f()+\"c\"+\n\"d\"+5;f(x); g(x);")//
+        .gives("String x = \"ab\"+f()+\"c\"+\n\"d\"+5;f(x); g(x);")//
         .stays();
   }
 }
