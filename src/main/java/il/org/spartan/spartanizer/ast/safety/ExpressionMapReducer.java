@@ -59,10 +59,23 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
         return map((SuperMethodInvocation) ¢);
       case BOOLEAN_LITERAL: 
         return map((BooleanLiteral) ¢);
+      case CAST_EXPRESSION:
+        return map((CastExpression) ¢);
+      case LAMBDA_EXPRESSION:
+        return map((LambdaExpression) ¢);
+        
       default:
         assert fault.unreachable() : fault.specifically("Unrecognized type", ¢.getClass(), ¢,box.it(¢.getNodeType()));
         return null;
     }
+  }
+
+  private T map(LambdaExpression x) {
+    return reduce();
+  }
+
+  private T map(CastExpression x) {
+    return map(x.getExpression());
   }
 
   @Nullable private T map(final ArrayInitializer ¢) {
