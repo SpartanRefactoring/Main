@@ -98,7 +98,7 @@ public final class ExpressionComparatorTest {
     azzert.that(cs("for (;;) { i++; }"), is(7));
   }
 
-  private int cs( final String statement) {
+  private int cs(final String statement) {
     return count.lines(s(statement));
   }
 

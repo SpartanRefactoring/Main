@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
@@ -19,11 +20,11 @@ public interface NanoPatternUtil {
         || anyTips(NanoPatternsConfiguration.skipped, ¢);
   }
 
-  static boolean anyTips( final Collection<JavadocMarkerNanoPattern> ps,  final MethodDeclaration d) {
+  static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
     return d != null && ps.stream().anyMatch(λ -> λ.check(d));
   }
 
-  static <N extends ASTNode> boolean anyTips( final Collection<UserDefinedTipper<N>> ts,  final N n) {
+  static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ts, final N n) {
     return n != null && ts.stream().anyMatch(λ -> λ.check(n));
   }
 
@@ -54,9 +55,9 @@ public interface NanoPatternUtil {
     return returns.getMatching(¢, "$X");
   }
 
-   static Iterable<String> nullCheckees(final IfStatement ¢) {
-     Expression e = expression(¢);
-     final Collection<String> $ = new ArrayList<>();
+  static Iterable<String> nullCheckees(final IfStatement ¢) {
+    Expression e = expression(¢);
+    final Collection<String> $ = new ArrayList<>();
     for (; nullComparisonIncremental(e); e = right(az.infixExpression(e)))
       $.add(left(az.infixExpression(left(az.infixExpression(e)))) + "");
     $.add(left(az.infixExpression(e)) + "");

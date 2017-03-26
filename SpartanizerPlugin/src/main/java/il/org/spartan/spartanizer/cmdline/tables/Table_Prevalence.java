@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -20,13 +21,13 @@ class Table_Prevalence extends NanoTable {
   static {
     Logger.subscribe(npStatistics::logNPInfo);
   }
-   static final RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
-    @Override public boolean visit( final CompilationUnit $) {
+  static final RIndicesVisitor visitor = new Table_ReusabilityIndices.RIndicesVisitor() {
+    @Override public boolean visit(final CompilationUnit $) {
       try {
         $.accept(new AnnotationCleanerVisitor());
         statistics.logCompilationUnit($);
         analyze.apply(spartanizer.fixedPoint($));
-      } catch ( final AssertionError | MalformedTreeException | IllegalArgumentException __) {
+      } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
         ___.unused(__);
       }
       return super.visit($);

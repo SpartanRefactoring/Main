@@ -14,7 +14,7 @@ public class Issue1090 extends MetaFixture {
     int intField;
     long longField;
     short shortField;
-     AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
+    AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
       /** [[SuppressWarningsSpartan]] */
       @Override protected void startingWith() {
         intField = 0;
@@ -25,7 +25,7 @@ public class Issue1090 extends MetaFixture {
         intField = charField = 0;
       }
     };
-     AlphabeticallySortedSentence case2 = new AlphabeticallySortedSentence() {
+    AlphabeticallySortedSentence case2 = new AlphabeticallySortedSentence() {
       /** [[SuppressWarningsSpartan]] */
       @Override protected void startingWith() {
         intField++;

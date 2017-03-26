@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
@@ -12,14 +13,14 @@ public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<Inf
     implements TipperCategory.Arithmetic {
   private static final long serialVersionUID = 0x79DF7EAA1B654B6DL;
 
-  @Override  public String description(final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return "Expand additive terms in " + ¢;
   }
 
-  @Override public Expression replacement( final InfixExpression ¢) {
+  @Override public Expression replacement(final InfixExpression ¢) {
     if (TermsCollector.isLeafTerm(¢))
       return null;
-     final Expression $ = TermsExpander.simplify(¢);
+    final Expression $ = TermsExpander.simplify(¢);
     return !wizard.same2($, ¢) ? $ : null;
   }
 

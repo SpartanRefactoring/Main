@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.java;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -10,11 +11,11 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-02-02 */
 class Factor {
-   static Factor divide(final Expression ¢) {
+  static Factor divide(final Expression ¢) {
     return new Factor(true, ¢);
   }
 
-   static Factor times(final Expression ¢) {
+  static Factor times(final Expression ¢) {
     return new Factor(false, ¢);
   }
 

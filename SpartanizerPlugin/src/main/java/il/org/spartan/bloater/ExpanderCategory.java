@@ -3,6 +3,7 @@ package il.org.spartan.bloater;
 import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
+
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 
@@ -11,7 +12,7 @@ import il.org.spartan.utils.*;
  * @since 24-12-16 */
 @FunctionalInterface
 public interface ExpanderCategory {
-   String description();
+  String description();
 
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
@@ -26,7 +27,7 @@ public interface ExpanderCategory {
     return ExpanderGroup.find(this);
   }
 
-   static String getLabel( final Class<? extends ExpanderCategory> ¢) {
+  static String getLabel(final Class<? extends ExpanderCategory> ¢) {
     return system.className(¢);
   }
 
@@ -39,7 +40,7 @@ public interface ExpanderCategory {
   interface Clearification extends Nominal {
     String label = "adding brackets or some chars which might make the code clearer";
 
-    @Override  default String description() {
+    @Override default String description() {
       return label;
     }
   }
@@ -47,7 +48,7 @@ public interface ExpanderCategory {
   interface Explanation extends Nominal {
     String label = "expanding a statement to clearer information, though longer";
 
-    @Override  default String description() {
+    @Override default String description() {
       return label;
     }
   }
@@ -55,7 +56,7 @@ public interface ExpanderCategory {
   interface Ternarization extends Nominal {
     String label = "ternary arguments";
 
-    @Override  default String description() {
+    @Override default String description() {
       return label;
     }
   }
@@ -67,7 +68,7 @@ public interface ExpanderCategory {
     Explanation(ExpanderCategory.Explanation.class), //
     Ternarization(ExpanderCategory.Ternarization.class), //
     ;
-    public static ExpanderGroup find( final ExpanderCategory ¢) {
+    public static ExpanderGroup find(final ExpanderCategory ¢) {
       return find(¢.getClass());
     }
 
@@ -75,15 +76,15 @@ public interface ExpanderCategory {
       return Plugin.plugin().getPreferenceStore();
     }
 
-    private static ExpanderGroup find( final Class<? extends ExpanderCategory> ¢) {
+    private static ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
       return Stream.of(ExpanderGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
-     private final Class<? extends ExpanderCategory> clazz;
+    private final Class<? extends ExpanderCategory> clazz;
     final String id;
-     final String label;
+    final String label;
 
-    ExpanderGroup( final Class<? extends ExpanderCategory> clazz) {
+    ExpanderGroup(final Class<? extends ExpanderCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
       label = ExpanderCategory.getLabel(clazz);

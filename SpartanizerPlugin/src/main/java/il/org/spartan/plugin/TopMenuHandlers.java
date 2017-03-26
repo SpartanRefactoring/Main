@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.core.commands.*;
+
 import il.org.spartan.bloater.*;
 import il.org.spartan.utils.*;
 
@@ -14,7 +15,7 @@ public class TopMenuHandlers extends AbstractHandler {
   @SuppressWarnings("serial") public static final Map<String, Consumer<ExecutionEvent>> handlers = new HashMap<String, Consumer<ExecutionEvent>>() {
     {
       put("il.org.spartan.LaconizeSelection", e -> {
-         final Selection s = Selection.Util.current();
+        final Selection s = Selection.Util.current();
         SpartanizationHandler.applicator().passes(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
       });
       put("il.org.spartan.LaconizeCurrent",
@@ -26,7 +27,7 @@ public class TopMenuHandlers extends AbstractHandler {
           InflateHandler.goWheelAction();
       });
       put("il.org.spartan.ZoomSelection", e -> {
-         final Selection s = Selection.Util.current().setUseBinding();
+        final Selection s = Selection.Util.current().setUseBinding();
         if (!s.isTextSelection)
           InflateHandler.applicator().passes(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
         else if (InflateHandler.active.get() || showZoomToolMessage())
@@ -37,7 +38,7 @@ public class TopMenuHandlers extends AbstractHandler {
     }
   };
 
-  @Override  public Object execute( final ExecutionEvent ¢) {
+  @Override public Object execute(final ExecutionEvent ¢) {
     final String id = ¢.getCommand().getId();
     if (!handlers.containsKey(id)) {
       monitor.now().info("Handler " + id + " is not registered in " + getClass().getName());

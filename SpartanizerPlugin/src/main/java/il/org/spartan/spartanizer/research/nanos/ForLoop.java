@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -43,15 +44,15 @@ public final class ForLoop {
       ;
     }
 
-    @Override  public Tip pattern(final ForStatement $) {
+    @Override public Tip pattern(final ForStatement $) {
       return firstTip(tippers, az.block(parent($)));
     }
 
-    @Override  public String nanoName() {
+    @Override public String nanoName() {
       return "FirstSuchThat";
     }
 
-    @Override  public String description() {
+    @Override public String description() {
       return "Iterate a collection for the first element matching some predicate";
     }
   }

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -21,23 +22,23 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -1674967177889976551L;
 
-  @Override  public Tip tip( final SwitchCase n,  final ExclusionManager exclude) {
-     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+  @Override public Tip tip(final SwitchCase n, final ExclusionManager exclude) {
+    final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement(n.getParent()), n));
     return new Tip(description(n), n, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove($.isDefault() ? n : $, g);
       }
     };
   }
 
-  @Override protected boolean prerequisite( final SwitchCase n) {
-     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+  @Override protected boolean prerequisite(final SwitchCase n) {
+    final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     return $ != null && ($.isDefault() || n.isDefault());
   }
 
-  @Override  @SuppressWarnings("unused") public String description(final SwitchCase n) {
+  @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
     return "remove redundant switch case";
   }
 }

@@ -19,13 +19,13 @@ public interface ConfigurableObjectTemplate {
     /* (extending our */ Some fields;
     /* current class) */ May be;
     /* may then write */
-    
+
     final If changes = null;
     /* or read any of */ Other might, assume, the, form, of;
     /* the Settings's */ static When its, appropriate;
     /* fields without */ Or even;
     /* any setters or */
-    
+
     static final If particular = null;
     /* any getters... */ Or these, occassions, in, which,it, makes, sense;
 

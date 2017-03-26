@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.issues.*;
@@ -18,8 +19,8 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x6463F526A06F20A9L;
 
-  @Override  public ASTNode replacement( final SwitchStatement s) {
-     final List<switchBranch> $ = switchBranch.intoBranches(s);
+  @Override public ASTNode replacement(final SwitchStatement s) {
+    final List<switchBranch> $ = switchBranch.intoBranches(s);
     if ($.size() > switchBranch.MAX_CASES_FOR_SPARTANIZATION)
       return null;
     for (int i = 0; i < $.size(); ++i)
@@ -32,7 +33,7 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
     return null;
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Merge branches with same code";
   }
 }

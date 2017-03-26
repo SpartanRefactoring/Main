@@ -29,10 +29,10 @@ public class Issue0822 {
   }
 
   @Test public void testBuilderException() {
-     StringBuilder sb = null;
+    StringBuilder sb = null;
     try {
       sb = makeAST.STATEMENTS.builder(null);
-    } catch ( final Exception ¢) {
+    } catch (final Exception ¢) {
       fail(¢.getMessage());
     }
     assert sb != null;

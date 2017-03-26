@@ -6,6 +6,7 @@ import java.util.stream.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.internal.core.*;
+
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
@@ -19,14 +20,14 @@ public enum LibrariesManagement {
   /** Absolute path of the spartan feature. */
   public static final IPath FEATURE_PATH;
   /** Eclipse's installation outputFolder absolute path. */
-   public static final IPath INSTALLATION_FOLDER;
+  public static final IPath INSTALLATION_FOLDER;
   /** Library name, as seen by the user. */
   public static final String LIBRARY_NAME = "Spartan Library";
   /** The libraries qualified name, based upon folders hierarchy in the
    * SpartanFeature project. */
   public static final String LIBRARY_QULIFIED_NAME = "spartan.libraries";
   /** The class path container for our library. */
-   public static final IClasspathContainer LIBRARY_PATH_CONTAINER;
+  public static final IClasspathContainer LIBRARY_PATH_CONTAINER;
   static {
     INSTALLATION_FOLDER = new Path(Platform.getInstallLocation().getURL().getPath());
     // TODO: Ori Roth: update version 2.6.3 upon release. DO NOT remove this
@@ -42,11 +43,11 @@ public enum LibrariesManagement {
         return K_APPLICATION;
       }
 
-      @Override  public String getDescription() {
+      @Override public String getDescription() {
         return LIBRARY_NAME;
       }
 
-      @Override  public IClasspathEntry[] getClasspathEntries() {
+      @Override public IClasspathEntry[] getClasspathEntries() {
         return new IClasspathEntry[] { JavaCore.newLibraryEntry(FEATURE_PATH, null, null) };
       }
     };
@@ -60,13 +61,13 @@ public enum LibrariesManagement {
 
   /** @param p JD
    * @return true iff the project uses the spartan library. */
-  public static boolean hasLibrary( final IJavaProject p) {
+  public static boolean hasLibrary(final IJavaProject p) {
     if (p == null)
       return false;
     try {
       if (Stream.of(p.getRawClasspath()).anyMatch(λ -> LIBRARY_PATH_CONTAINER.getPath().equals(λ.getPath())))
         return true;
-    } catch ( final JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       monitor.log(¢);
     }
     return false;
@@ -75,23 +76,23 @@ public enum LibrariesManagement {
   /** Adding the spartan library to a project.
    * @param p JD
    * @return true upon success */
-  public static boolean addLibrary( final IJavaProject p) {
+  public static boolean addLibrary(final IJavaProject p) {
     if (p == null)
       return false;
     final IClasspathEntry[] es;
     try {
       es = p.getRawClasspath();
-    } catch ( final JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       monitor.log(¢);
       return false;
     }
-     final List<IClasspathEntry> nes = new ArrayList<>();
+    final List<IClasspathEntry> nes = new ArrayList<>();
     if (es != null)
       nes.addAll(as.list(es));
     nes.add(JavaCore.newContainerEntry(LIBRARY_PATH_CONTAINER.getPath(), null, null, false));
     try {
       p.setRawClasspath(nes.toArray(new IClasspathEntry[nes.size()]), null);
-    } catch ( final JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       monitor.log(¢);
       return false;
     }
@@ -101,7 +102,7 @@ public enum LibrariesManagement {
   /** If the project does not make use of the spartan library, we try to add it.
    * @param ¢ JD
    * @return true iff the project uses the spartan library */
-  public static boolean checkLibrary( final IJavaProject ¢) {
+  public static boolean checkLibrary(final IJavaProject ¢) {
     return ¢ != null && (hasLibrary(¢) || addLibrary(¢));
   }
 

@@ -217,17 +217,17 @@ public final class GuessedContextTest {
   }
 
   @Test public void intoCompilationUnit() {
-     final GuessedContext w = EXPRESSION_LOOK_ALIKE;
-     final String codeFragment = "a + b * c";
-     final CompilationUnit u = w.intoCompilationUnit(codeFragment);
+    final GuessedContext w = EXPRESSION_LOOK_ALIKE;
+    final String codeFragment = "a + b * c";
+    final CompilationUnit u = w.intoCompilationUnit(codeFragment);
     assert u != null;
     azzert.that(w.off(u + ""), containsString(codeFragment));
   }
 
   @Test public void intoDocument() {
-     final GuessedContext w = EXPRESSION_LOOK_ALIKE;
-     final String codeFragment = "a + b * c";
-     final Document d = w.intoDocument(codeFragment);
+    final GuessedContext w = EXPRESSION_LOOK_ALIKE;
+    final String codeFragment = "a + b * c";
+    final Document d = w.intoDocument(codeFragment);
     assert d != null;
     azzert.that(w.off(d.get()), containsString(codeFragment));
   }

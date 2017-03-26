@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 
 /** Expands terms of * or / expressions without reordering.
@@ -18,20 +19,20 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @since 2016-08 */
 enum FactorsExpander {
   ;
-   public static Expression simplify(final InfixExpression ¢) {
+  public static Expression simplify(final InfixExpression ¢) {
     return base(new FactorsCollector(¢));
   }
 
-  private static InfixExpression appendDivide(final InfixExpression $,  final Factor ¢) {
+  private static InfixExpression appendDivide(final InfixExpression $, final Factor ¢) {
     return ¢.divider() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(TIMES);
   }
 
-  private static InfixExpression appendTimes(final InfixExpression $,  final Factor f) {
+  private static InfixExpression appendTimes(final InfixExpression $, final Factor f) {
     final Expression ¢ = copy.of(f.expression);
     return f.multiplier() ? subject.append($, ¢) : subject.pair($, ¢).to(DIVIDE);
   }
 
-  private static InfixExpression base( final Factor t1,  final Factor t2) {
+  private static InfixExpression base(final Factor t1, final Factor t2) {
     if (t1.multiplier())
       return subject.pair(t1.expression, t2.expression).to(t2.multiplier() ? TIMES : DIVIDE);
     assert t1.divider();
@@ -44,11 +45,11 @@ enum FactorsExpander {
     ).to(DIVIDE);
   }
 
-   private static Expression base( final FactorsCollector ¢) {
+  private static Expression base(final FactorsCollector ¢) {
     return base(¢.all());
   }
 
-   private static Expression base( final List<Factor> fs) {
+  private static Expression base(final List<Factor> fs) {
     assert fs != null;
     assert !fs.isEmpty();
     final Factor first = first(fs);
@@ -65,7 +66,7 @@ enum FactorsExpander {
    * @param fs a list
    * @return the $ parameter, after all elements of the list parameter are added
    *         to it */
-   private static Expression recurse( final Expression $,  final List<Factor> fs) {
+  private static Expression recurse(final Expression $, final List<Factor> fs) {
     assert $ != null;
     if (fs == null || fs.isEmpty())
       return $;
@@ -73,7 +74,7 @@ enum FactorsExpander {
     return recurse((InfixExpression) $, fs);
   }
 
-   private static Expression recurse( final InfixExpression $,  final List<Factor> fs) {
+  private static Expression recurse(final InfixExpression $, final List<Factor> fs) {
     assert $ != null;
     if (fs == null || fs.isEmpty())
       return $;
@@ -87,7 +88,7 @@ enum FactorsExpander {
     return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), chop(fs));
   }
 
-   private static Expression step( final Expression $,  final List<Factor> ¢) {
+  private static Expression step(final Expression $, final List<Factor> ¢) {
     assert ¢ != null;
     return ¢.isEmpty() ? $ : recurse($, ¢);
   }

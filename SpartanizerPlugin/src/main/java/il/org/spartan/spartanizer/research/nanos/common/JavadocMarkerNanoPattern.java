@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -16,7 +17,7 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
   private static final long serialVersionUID = -3476158475903575781L;
 
   @Override public final boolean canTip(final MethodDeclaration ¢) {
-     final Javadoc $ = javadoc(¢);
+    final Javadoc $ = javadoc(¢);
     return ($ == null || !($ + "").contains(tag()))//
         && prerequisites(¢)//
     ;
@@ -28,19 +29,19 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<MethodD
 
   protected abstract boolean prerequisites(MethodDeclaration ¢);
 
-  @Override  public final Tip pattern( final MethodDeclaration d) {
+  @Override public final Tip pattern(final MethodDeclaration d) {
     return new Tip(description(d), d, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         wizard.addJavaDoc(d, r, g, tag());
       }
     };
   }
 
-  @Override  public final String description(final MethodDeclaration ¢) {
+  @Override public final String description(final MethodDeclaration ¢) {
     return name(¢) + " is a " + getClass().getSimpleName() + " method";
   }
 
-   public final String tag() {
+  public final String tag() {
     return "[[" + getClass().getSimpleName() + "]]";
   }
 }
