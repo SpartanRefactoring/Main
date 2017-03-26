@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -63,10 +62,8 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
 
   @NotNull private static ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to,
       final Expression from1, final Expression from2) {
-    $.remove(a1, g);
-    final Expression newFrom = copy.of(from2);
-    new Inliner(to, $, g).byValue(from1).inlineInto(newFrom);
-    $.replace(from2, newFrom, g);
+    new Inliner(to, $, g).byValue(from1).inlineInto(from2);
+    $.remove(a1.getParent(), g);
     return $;
   }
 }

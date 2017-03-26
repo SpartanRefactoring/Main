@@ -743,6 +743,30 @@ public interface iz {
     return last(¢, statements($)) && iz.methodDeclaration(parent($));
   }
 
+  /** Determines whether a statement is logically the last statement in its
+   * containing method/lambda expression.
+   * @param ¢ JD
+   * @return whether the parameter is a statement which is logically last in its
+   *         method/lambda expression */
+  static boolean lastExecutedInSequence(final Statement ¢) {
+    if (¢ == null)
+      return false;
+    for (ASTNode ancestor : ancestors.of(¢))
+      switch (ancestor.getNodeType()) {
+        case LAMBDA_EXPRESSION:
+        case METHOD_DECLARATION:
+          return true;
+        case DO_STATEMENT:
+        case ENHANCED_FOR_STATEMENT:
+        case FOR_STATEMENT:
+        case WHILE_STATEMENT:
+          return false;
+        default:
+          break;
+      }
+    return false;
+  }
+
   static boolean leftOfAssignment(@NotNull final Expression ¢) {
     return left(az.assignment(¢.getParent())).equals(¢);
   }

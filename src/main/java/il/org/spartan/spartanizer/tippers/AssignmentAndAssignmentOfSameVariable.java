@@ -49,7 +49,7 @@ public class AssignmentAndAssignmentOfSameVariable extends GoToNextStatement<Ass
     final Assignment nextAssignment = Optional.of(nextStatement) //
         .map(λ -> az.expressionStatement(λ)) //
         .map(λ -> az.assignment(λ.getExpression())).orElse(null);
-    if (nextAssignment == null || nextAssignment.getOperator() != Operator.ASSIGN)
+    if (nextAssignment == null || !Operator.ASSIGN.equals(a.getOperator()) || !Operator.ASSIGN.equals(nextAssignment.getOperator()))
       return null;
     @Nullable final Name left1 = az.name(a.getLeftHandSide());
     final Expression right1 = a.getRightHandSide();
