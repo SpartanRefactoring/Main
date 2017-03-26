@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Example.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -15,13 +16,9 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.utils.*;
 
-/** convert {@code
- * int a;
- * a = 3;
- * } into {@code
- * int a = 3;
- * }
+/** See {@link #examples()}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
 public final class FragmentInitialiazerAssignment extends $FragmentAndStatement//
@@ -30,6 +27,12 @@ public final class FragmentInitialiazerAssignment extends $FragmentAndStatement/
 
   @Override @NotNull public String description(@NotNull final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
+  }
+
+  @Override public Example[] examples() {
+    return new Example[] { //
+        convert("int a; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
+            .to("int a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);") };
   }
 
   @Override @Nullable protected ASTRewrite go(@NotNull final ASTRewrite $, final VariableDeclarationFragment f, @NotNull final SimpleName n,
