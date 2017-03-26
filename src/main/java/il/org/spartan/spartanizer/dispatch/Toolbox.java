@@ -159,6 +159,7 @@ public class Toolbox {
             new ForAndReturnToFor(), //
             new ForRedundantContinue(), //
             new ForEmptyBlockToEmptyStatement(), //
+            new ForWithEndingBreakToDoWhile(), //
             null)//
         .add(WhileStatement.class, //
             new EliminateConditionalContinueInWhile(), //
