@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-07 */
 public class Table_Nodes_Coverage {
   static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  protected static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  protected static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   private static Table writer;
   protected static Function<String, String> analyze = spartanalyzer::fixedPoint;

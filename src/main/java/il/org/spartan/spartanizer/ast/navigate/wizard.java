@@ -41,6 +41,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
 
@@ -386,7 +387,7 @@ public interface wizard {
    *         Pre Expression with ++ or -- operator. false if none of them are or
    *         if the given parameter is null. */
   static boolean containIncOrDecExp(@Nullable final ASTNode... ns) {
-    return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.incrementOrDecrement(λ));
+    return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.updating(λ));
   }
 
   static InfixExpression.Operator convertToInfix(final Operator ¢) {
@@ -930,5 +931,77 @@ public interface wizard {
       return "???";
     @NotNull final Int $ = new Int();
     return Stream.of(v).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
+  }
+
+  static ForStatement buildForStatement(final VariableDeclarationFragment f, @NotNull final WhileStatement ¢) {
+    final ForStatement $ = ¢.getAST().newForStatement();
+    $.setBody(copy.of(body(¢)));
+    $.setExpression(FragmentInitializerWhile.pullInitializersFromExpression(copy.ofWhileExpression(¢), FragmentInitializerWhile.parent(f)));
+    initializers($).add(FragmentInitializerWhile.Initializers(f));
+    return $;
+  }
+
+  static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
+    final ForStatement $ = copy.of(¢);
+    $.setExpression(FragmentInitializerToForInitializers.removeInitializersFromExpression(copy.of(expression(¢)), s));
+    FragmentInitializerToForInitializers.setInitializers($, copy.of(s));
+    return $;
+  }
+
+  static IfStatement invert(@NotNull final IfStatement ¢) {
+    return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
+  }
+
+  static void remove(@NotNull final ASTRewrite r, final Statement s, final TextEditGroup g) {
+    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
+  }
+
+  static <T> void removeLast(@NotNull final List<T> ¢) {
+    ¢.remove(¢.size() - 1);
+  }
+
+  static List<Statement> pack(final Expression ¢) {
+    return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
+  }
+
+  static List<Statement> decompose(final Expression x) {
+    return new ExpressionMapReducer<List<Statement>>() {
+      @Override protected List<Statement> map(final Assignment ¢) {
+        return pack(¢);
+      }
+
+      @Override protected List<Statement> map(final PostfixExpression ¢) {
+        return pack(¢);
+      }
+
+      @Override protected List<Statement> map(final PrefixExpression ¢) {
+        return iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? pack(¢) : reduce();
+      }
+
+      @Override protected List<Statement> map(final ArrayCreation ¢) {
+        return pack(¢);
+      }
+
+      @Override protected List<Statement> map(final ClassInstanceCreation ¢) {
+        return pack(¢);
+      }
+
+      @Override protected List<Statement> map(final SuperMethodInvocation ¢) {
+        return pack(¢);
+      }
+
+      @Override protected List<Statement> map(final MethodInvocation ¢) {
+        return pack(¢);
+      }
+
+      @Override public List<Statement> reduce() {
+        return new ArrayList<>();
+      }
+
+      @Override public List<Statement> reduce(final List<Statement> $, final List<Statement> ss) {
+        $.addAll(ss);
+        return $;
+      }
+    }.map(x);
   }
 }

@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 20, 2016 */
 public enum TypeNamesCollector {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   static final Map<String, Integer> longNames = new TreeMap<>();
   static final Map<String, Set<String>> shortToFull = new TreeMap<>();
 

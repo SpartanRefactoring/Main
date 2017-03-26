@@ -29,8 +29,9 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 14, 2016 */
 public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
-  @External(alias = "i", value = "input folder") @NotNull protected static String inputFolder = system.windows() ? "" : ".";
-  @External(alias = "o", value = "output folder") @NotNull protected static String outputFolder = "/tmp";
+  @External(alias = "i", value = "input folder") @NotNull @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.windows() ? ""
+      : ".";
+  @External(alias = "o", value = "output folder") @NotNull @SuppressWarnings("CanBeFinal") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array("..");
   protected static Class<? extends DeprecatedFolderASTVisitor> clazz;
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor;
@@ -152,15 +153,15 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
 
     @Override @SuppressWarnings("boxing") public boolean visit(@NotNull final MethodDeclaration d) {
       ++total;
-      if (interesting(d)) {
-        ++interesting;
-        @NotNull final String summary = squeeze(theSpartanizer.repetitively(removeComments(anonymize.code(d + "")))) + "\n";
-        System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
-        try {
-          out.write(summary);
-        } catch (@NotNull final IOException ¢) {
-          System.err.println("Error: " + ¢.getMessage());
-        }
+      if (!interesting(d))
+        return true;
+      ++interesting;
+      @NotNull final String summary = squeeze(theSpartanizer.repetitively(removeComments(JUnitTestMethodFacotry.code(d + "")))) + "\n";
+      System.out.printf("%d/%d=%5.2f%% %s", interesting, total, 100. * interesting / total, summary);
+      try {
+        out.write(summary);
+      } catch (@NotNull final IOException ¢) {
+        System.err.println("Error: " + ¢.getMessage());
       }
       return true;
     }

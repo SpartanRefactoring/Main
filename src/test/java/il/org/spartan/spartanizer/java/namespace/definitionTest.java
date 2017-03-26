@@ -41,6 +41,7 @@ public class definitionTest extends MetaFixture {
     {
       put("@Test", null);
       put("@NotNull", null);
+      put("@Nullable", null);
       put("@Ignore", null);
       put("@Override", null);
       put("@annotation", null);

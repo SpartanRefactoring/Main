@@ -5,24 +5,24 @@ import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO: kobybs please add a description
  * @author kobybs
  * @author Dan Abramovich
  * @since 20-11-2016 */
-public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
+public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNode<N>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -3384979771292763464L;
   private static final HashSet<String>[] rankTable = as.array(//
@@ -64,28 +64,48 @@ public class AnnotationSort<N extends BodyDeclaration> extends EagerTipper<N>//
         : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
 
+  public static <T> Predicate<T> distinctByKey(final Function<? super T, Object> keyExtractor) {
+    final Map<Object, Boolean> $ = new ConcurrentHashMap<>();
+    return λ -> $.putIfAbsent(keyExtractor.apply(λ), Boolean.TRUE) == null;
+  }
+
   private static List<? extends IExtendedModifier> sort(@NotNull final Collection<? extends IExtendedModifier> ¢) {
-    return ¢.stream().sorted(comp).collect(toList());
+    return ¢.stream().filter(distinctByKey(λ -> identifier(typeName(az.annotation(λ))))).sorted(comp).collect(toList());
   }
 
-  @Override @Nullable public Tip tip(@NotNull final N n) {
-    final List<Annotation> $ = extract.annotations(n);
-    if ($ == null || $.isEmpty())
-      return null;
-    @NotNull final List<Annotation> myCopy = new ArrayList<>($);
-    myCopy.sort(comp);
-    return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
-      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
-        for (int i = 0; i < $.size(); ++i) {
-          final ASTNode oldNode = $.get(i), newNode = myCopy.get(i);
-          if (oldNode != newNode)
-            l.replace(oldNode, r.createMoveTarget(newNode), g);
-        }
-      }
-    };
+  @Override public ASTNode replacement(final N d) {
+    final N $ = copy.of(d);
+    final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($))), ms = new ArrayList<>(extract.modifiers($));
+    extendedModifiers($).clear();
+    extendedModifiers($).addAll(as);
+    extendedModifiers($).addAll(ms);
+    return !wizard.same($, d) ? $ : null;
   }
 
+  /* @Override @Nullable public Tip tip(@NotNull final N n) { final
+   * List<Annotation> $ = extract.annotations(n); if ($ == null || $.isEmpty())
+   * return null;
+   *
+   * @NotNull List<Annotation> myCopy = (List<Annotation>) sort(new
+   * ArrayList<>($));
+   *
+   * return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
+   *
+   * @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup
+   * g) { final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
+   *
+   * for (int i = 0; i < $.size(); ++i) { List<Annotation> sorted =
+   * (List<Annotation>) copy.of(myCopy); final ASTNode oldNode ; final ASTNode
+   * newNode ;
+   *
+   * oldNode = $.get(i); if(i < myCopy.size()){ newNode = sorted.get(i); if
+   * (!wizard.same(oldNode,newNode)) { l.replace(oldNode, newNode, g); } } else{
+   * l.remove(oldNode, g);
+   *
+   * }
+   *
+   *
+   * } } }; } */
   @Override @NotNull public String description(@NotNull final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";

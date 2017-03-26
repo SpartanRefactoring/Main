@@ -16,6 +16,7 @@ public class Issue0904 {
         .stays();
   }
 
+  @Ignore // TODO Niv Shalmon
   @Test public void c() {
     trimmingOf("int i,j=1;j++;")//
         .gives("int j=1;++j;")//

@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public enum LibrariesManagement {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Absolute path of the spartan feature. */
   public static final IPath FEATURE_PATH;
   /** Eclipse's installation outputFolder absolute path. */

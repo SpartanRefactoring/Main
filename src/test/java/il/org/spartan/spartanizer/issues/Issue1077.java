@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** test case for bug in
- * {@link SingleVariableDeclarationEnhancedForRenameParameterToCent}
+ * {@link SingleVariableDeclarationEnhancedForRenameParameterToIt}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-17 */
 @SuppressWarnings("static-method")

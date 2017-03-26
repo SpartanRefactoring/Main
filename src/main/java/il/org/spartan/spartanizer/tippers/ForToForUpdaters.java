@@ -38,15 +38,14 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
         && !iz.containsContinueStatement(step.body(¢))//
         && hasFittingUpdater(¢)//
         && cantTip.declarationInitializerStatementTerminatingScope(¢)//
-        && cantTip.forRenameInitializerToCent(¢)//
+        && cantTip.forRenameInitializerToIt(¢)//
         && cantTip.declarationRedundantInitializer(¢)//
         && cantTip.remvoeRedundantIf(¢);
   }
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {
     @Nullable final Block bodyBlock = az.block(step.body(¢));
-    if (!iz.incrementOrDecrement(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2
-        || bodyDeclaresElementsOf(lastStatement(¢)))
+    if (!iz.updating(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2 || bodyDeclaresElementsOf(lastStatement(¢)))
       return false;
     @Nullable final ExpressionStatement updater = az.expressionStatement(lastStatement(¢));
     assert updater != null : "updater is not expressionStatement";

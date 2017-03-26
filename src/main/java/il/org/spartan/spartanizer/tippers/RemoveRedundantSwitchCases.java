@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * case d: break; } switch (x) { case a: case b: x = 5; break; default: } } into
  * {@code
 * (some commands)
- * } . Tested in {@link Issue0880}
+ * } . Tested in {@link Issue0880} and {@link Issue0913}
  * @author Yuval Simon
  * @since 2016-11-27 */
 public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//

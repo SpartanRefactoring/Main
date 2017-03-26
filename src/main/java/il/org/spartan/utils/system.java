@@ -33,7 +33,7 @@ public interface system {
   }
 
   /** @return the name of the class from which this method was called. */
-  static String callingClassName() {
+  static String callingClassFullName() {
     final StackTraceElement[] $ = new Throwable().getStackTrace();
     for (int ¢ = 1; ¢ < $.length; ++¢)
       if (!$[¢].getClassName().equals($[0].getClassName()))
@@ -102,7 +102,7 @@ public interface system {
 
   static BufferedWriter callingClassUniqueWriter() {
     try {
-      return new BufferedWriter(new FileWriter(ephemeral(callingClassName()).dot("txt")));
+      return new BufferedWriter(new FileWriter(ephemeral(callingClassFullName()).dot("txt")));
     } catch (@NotNull final IOException ¢) {
       monitor.infoIOException(¢);
     }
@@ -175,7 +175,36 @@ public interface system {
     return System.getProperty("os.name").contains("indows");
   }
 
+  @SuppressWarnings({ "boxing", "incomplete-switch" }) static boolean isBalanced(final String s) {
+    final Stack<Character> $ = new Stack<>();
+    for (final char ¢ : s.toCharArray())
+      switch (¢) {
+        case '(':
+        case '[':
+        case '{':
+          $.push(¢);
+          continue;
+        case ')':
+          if ($.isEmpty() || $.pop() != '(')
+            return false;
+          continue;
+        case ']':
+          if ($.isEmpty() || $.pop() != '[')
+            return false;
+          continue;
+        case '}':
+          if ($.isEmpty() || $.pop() != '{')
+            return false;
+          continue;
+      }
+    return $.isEmpty();
+  }
+
   interface Extension {
     @NotNull File dot(String extentsion);
+  }
+
+  static String callinClassLastName() {
+    return callingClassFullName().replaceAll("[a-z0-9A-Z]*\\.", "");
   }
 }

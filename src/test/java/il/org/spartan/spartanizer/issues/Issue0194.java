@@ -4,11 +4,17 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+import il.org.spartan.spartanizer.tippers.*;
+
+/** Test for {@link IfCommandsSequencerNoElseSingletonSequencer}. Examine cases
+ * where the last statement in the if statement then section is not an immediate
+ * sequencer, or not a sequencer at all.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- * @since Jan 6, 2017 */
+ * @author Ori Roth
+ * @since Jan 6, 2017 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
 public final class Issue0194 {
+  // TODO Ori convert to java doc --yg
   // Couple of tests to check that the tipper is safe with empty values, etc.
   // Empty "then".
   // There is some tipper that eliminates the empty "then", so the result is not
@@ -23,14 +29,22 @@ public final class Issue0194 {
         + "return g();" //
         + "}" //
         + "return h();")
-            .gives("if(b1){"//
+            .gives("if(!b1)"//
+                + "return h();" //
+                + "x=13.5;"//
+                + "if(b2){}\n"//
+                + "else\n"//
+                + "return g();" //
+                + "return h();")
+            .gives("if(!b1)"//
+                + "return h();" //
                 + "x=13.5;"//
                 + "if(!b2)\n"//
                 + "return g();" //
-                + "}" //
                 + "return h();");
   }
 
+  // TODO Ori convert to java doc --yg
   // Empty "else".
   // Similar to test01().
   @Test public void test02() {
@@ -41,18 +55,32 @@ public final class Issue0194 {
         + "else{}"//
         + "}" //
         + "return h();")
-            .gives("if(b1){"//
+            .gives("if(!b1)"//
+                + "return h();" //
                 + "x=13.5;"//
                 + "if(b2)\n"//
                 + "return g();"//
-                + "}" //
-                + "return h();");
+                + "else{}"//
+                + "return h();")
+            .givesEither(
+                "if(!b1)"//
+                    + "return h();" //
+                    + "x=13.5;"//
+                    + "if(b2)\n"//
+                    + "return g();"//
+                    + "return h();", //
+                "if(!b1)"//
+                    + "return h();" //
+                    + "x=13.5;"//
+                    + "return b2 ? g() : h();");
   }
 
+  // TODO Ori convert to java doc --yg
   // Empty Block.
   // Similar to test01() and test02().
   @Test public void test03() {
-    trimmingOf("if(b1){"//
+    trimmingOf("" //
+        + "if(b1){"//
         + "x=13.5;"//
         + "{}"//
         + "}" //
@@ -62,6 +90,7 @@ public final class Issue0194 {
                 + "return h();");
   }
 
+  // TODO Ori convert to java doc --yg
   // Don'tipper do anything if there is more than return sideEffects after the
   // ifstatement.
   @Test public void test04() {
@@ -288,5 +317,28 @@ public final class Issue0194 {
                 + "y=7;"//
                 + "return g();" //
                 + "}");
+  }
+
+  @Test public void test15() {
+    trimmingOf("" //
+        + "if (a != null) {\n" //
+        + "  final X a = f();\n" //
+        + "  if (g())\n" //
+        + "    return f();\n" //
+        + "  if (f() && g())  {\n" //
+        + "    return a;\n" //
+        + "  }\n" //
+        + "}\n" //
+        + "return null;")
+            .gives("" //
+                + "if (a == null)\n" //
+                + "  return null;\n" //
+                + "final X a = f();\n" //
+                + "if (g())\n" //
+                + "  return f();\n" //
+                + "if (f() && g())  {\n" //
+                + "  return a;\n" //
+                + "}\n" //
+                + "return null;");
   }
 }

@@ -23,10 +23,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-03-22 */
 abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
-  public $Fragment() {
-    System.err.println("Constructing " + myClass());
-  }
 
+  public $Fragment() {}
 
   @Override public boolean prerequisite(@NotNull final VariableDeclarationFragment ¢) {
     if (haz.annotation(¢) || ¢ == null)
@@ -105,10 +103,7 @@ abstract class $Fragment extends CarefulTipper<VariableDeclarationFragment> {
   }
 
   protected boolean usedInSubsequentInitializers() {
-    for (@NotNull final VariableDeclarationFragment ¢ : youngerSiblings())
-      if (!collect.usesOf(name()).in(¢.getInitializer()).isEmpty())
-        return true;
-    return false;
+    return youngerSiblings().stream().anyMatch(λ -> !collect.usesOf(name()).in(λ.getInitializer()).isEmpty());
   }
 
   @NotNull protected final Collection<VariableDeclarationFragment> youngerSiblings() {

@@ -43,7 +43,7 @@ public class FindFirstTest {
   }
 
   @Test public void f() {
-    trimmingOf(" for (final G $ : G.values()) if ($.clazz.isA(¢)) return $; return null;")//
+    trimmingOf("for (final G $ : G.values()) if ($.clazz.isA(¢)) return $; return null;")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("return G.values().stream().filter($->$.clazz.isA(¢)).findFirst().orElse(null);");
   }

@@ -12,7 +12,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
-    trimmingOf(" @SuppressWarnings() int $ = (Class<T>) findClass(className);\n")//
+    trimmingOf("@SuppressWarnings() int $ = (Class<T>) findClass(className);\n")//
         .stays();
   }
 
@@ -25,27 +25,27 @@ public final class IgnoredTrimmerTest {
 
   @Test public void inlineSingleUse01() {
     trimmingOf("/* * This is a comment */ int i = y(0); int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
-        .gives(" /* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + (y(0))); ");
+        .gives("/* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + (y(0))); ");
   }
 
   @Test public void inlineSingleUse02() {
     trimmingOf("/* * This is a comment */ int i = 5,j=3; int k = j+2; int m = k + j -19 +i; y(k); ")
-        .gives(" /* * This is a comment */ int j=3; int k = j+2; int m = k + j -19 +(5); y(k); ");
+        .gives("/* * This is a comment */ int j=3; int k = j+2; int m = k + j -19 +(5); y(k); ");
   }
 
   @Test public void inlineSingleUse03() {
     trimmingOf("/* * This is a comment */ int i = 5; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
-        .gives(" /* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + (5)); ");
+        .gives("/* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + (5)); ");
   }
 
   @Test public void inlineSingleUse04() {
     trimmingOf("int x = 6; final C b = new C(x); int y = 2+b.j; y(y-b.j); y(y*2); ")
-        .gives(" final C b = new C((6)); int y = 2+b.j; y(y-b.j); y(y*2); ");
+        .gives("final C b = new C((6)); int y = 2+b.j; y(y-b.j); y(y*2); ");
   }
 
   @Test public void inlineSingleUse05() {
     trimmingOf("int x = 6; final C b = new C(x); int y = 2+b.j; y(y+x); y(y*x); ")//
-        .gives(" int x = 6; int y = 2+(new C(x)).j; y(y+x); y(y*x); ");
+        .gives("int x = 6; int y = 2+(new C(x)).j; y(y+x); y(y*x); ");
   }
 
   @Test public void inlineSingleUse09() {
@@ -61,8 +61,8 @@ public final class IgnoredTrimmerTest {
   }
 
   @Test public void reanmeReturnVariableToDollar01() {
-    trimmingOf(" public C(int i) { j = 2*i; public final int j; public C yada6() { final C res = new C(6); S.x.f(res.j); return res; ")
-        .gives(" public C(int i) { j = 2*i; public final int j; public C yada6() { final C $ = new C(6); S.x.f($.j); return $; ");
+    trimmingOf("public C(int i) { j = 2*i; public final int j; public C yada6() { final C res = new C(6); S.x.f(res.j); return res; ")
+        .gives("public C(int i) { j = 2*i; public final int j; public C yada6() { final C $ = new C(6); S.x.f($.j); return $; ");
   }
 
   @Test public void reanmeReturnVariableToDollar02() {

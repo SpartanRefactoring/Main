@@ -13,8 +13,9 @@ import il.org.spartan.spartanizer.engine.*;
  * function that deal with trivia in many ways.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-19 */
-public interface trivia {
-  static String accurateEssence(@NotNull final String codeFragment) {
+public enum trivia {
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
+  public static String accurateEssence(@NotNull final String codeFragment) {
     return trivia.fixTideClean(trivia.removeComments(into.cu(codeFragment)) + "");
   }
 
@@ -25,7 +26,7 @@ public interface trivia {
     return removeWhites(trivia.cleanForm(¢));
   }
 
-  static String cleanForm(final ASTNode ¢) {
+  public static String cleanForm(final ASTNode ¢) {
     return fixTideClean(¢ + "");
   }
 
@@ -33,18 +34,18 @@ public interface trivia {
    * condensed version is barely readable and impossible for parsers.
    * @param ¢ JD
    * @return textual representation of the parameter, */
-  static String condense(final ASTNode ¢) {
+  public static String condense(final ASTNode ¢) {
     return (¢ + "").replaceAll("\\s+", "");
   }
 
   /** escapes all "s
    * @param ¢
    * @return */
-  static String escapeQuotes(@NotNull final String ¢) {
+  public static String escapeQuotes(@NotNull final String ¢) {
     return ¢.replace("\"", "\\\"");
   }
 
-  static String essence(@NotNull final String codeFragment) {
+  public static String essence(@NotNull final String codeFragment) {
     return trivia.fixTideClean(tide.clean(trivia.removeComments(codeFragment)));
   }
 
@@ -60,7 +61,7 @@ public interface trivia {
     return gist(accurateEssence(removeComments(¢) + ""));
   }
 
-  @NotNull static String gist(@Nullable final Object ¢) {
+  @NotNull public static String gist(@Nullable final Object ¢) {
     return ¢ == null ? "null" : gist(¢ + "");
   }
 
@@ -91,12 +92,12 @@ public interface trivia {
     return n;
   }
 
-  static String removeComments(@NotNull final String codeFragment) {
+  public static String removeComments(@NotNull final String codeFragment) {
     return codeFragment.replaceAll("//.*?\n", "\n")//
         .replaceAll("/\\*(?=(?:(?!\\*/)[\\s\\S])*?)(?:(?!\\*/)[\\s\\S])*\\*/", "");
   }
 
-  static String squeeze(@NotNull final String ¢) {
+  public static String squeeze(@NotNull final String ¢) {
     return ¢.trim().replaceAll("\\s+", " ");
   }
 }

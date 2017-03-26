@@ -15,7 +15,7 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> implemen
 
   private static boolean notClaimedByOthers(final ForStatement ¢) {
     return cantTip.declarationInitializerStatementTerminatingScope(¢)//
-        && cantTip.forRenameInitializerToCent(¢) //
+        && cantTip.forRenameInitializerToIt(¢) //
         && cantTip.declarationRedundantInitializer(¢)//
         && cantTip.remvoeRedundantIf(¢);
   }

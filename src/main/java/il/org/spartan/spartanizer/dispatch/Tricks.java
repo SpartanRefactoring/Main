@@ -23,8 +23,8 @@ import il.org.spartan.utils.*;
 /** A number of utility functions common to all tippers.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
-public enum Tippers {
-  ;
+public enum Tricks {
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static void addAllReplacing(final Collection<Statement> to, @NotNull final Iterable<Statement> from, final Statement substitute,
       final Statement by1, final Iterable<Statement> by2) {
     for (final Statement ¢ : from)
@@ -72,20 +72,16 @@ public enum Tippers {
     return $;
   }
 
-  public static IfStatement invert(@NotNull final IfStatement ¢) {
-    return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
-  }
-
   public static IfStatement makeShorterIf(@NotNull final IfStatement s) {
     @NotNull final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
-    final IfStatement $ = invert(s);
+    final IfStatement $ = wizard.invert(s);
     if (then.isEmpty())
       return $;
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = Tippers.sequencerRank(last(then)), rankElse = Tippers.sequencerRank(last(elze));
-    return rankElse > rankThen || rankThen == rankElse && !Tippers.thenIsShorter(s) ? $ : main;
+    final int rankThen = Tricks.sequencerRank(last(then)), rankElse = Tricks.sequencerRank(last(elze));
+    return rankElse > rankThen || rankThen == rankElse && !Tricks.thenIsShorter(s) ? $ : main;
   }
 
   public static boolean mixedLiteralKind(@NotNull final Collection<Expression> xs) {
@@ -104,9 +100,8 @@ public enum Tippers {
     return false;
   }
 
-  public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode region, final ASTRewrite r, final TextEditGroup g) {
-    new Inliner(oldName, r, g).byValue(newName)//
-        .inlineInto(collect.usesOf(oldName).in(region).toArray(new Expression[0]));
+  public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode where, final ASTRewrite r, final TextEditGroup g) {
+    new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));
   }
 
   @NotNull public static ASTRewrite replaceTwoStatements(@NotNull final ASTRewrite r, @NotNull final Statement what, final Statement by,
@@ -125,7 +120,7 @@ public enum Tippers {
 
   public static boolean shoudlInvert(@NotNull final IfStatement s) {
     final int $ = sequencerRank(hop.lastStatement(then(s))), rankElse = sequencerRank(hop.lastStatement(elze(s)));
-    return rankElse > $ || $ == rankElse && !Tippers.thenIsShorter(s);
+    return rankElse > $ || $ == rankElse && !Tricks.thenIsShorter(s);
   }
 
   public static boolean thenIsShorter(@NotNull final IfStatement s) {
@@ -144,8 +139,8 @@ public enum Tippers {
     if (n1 > n2)
       return false;
     assert n1 == n2;
-    final IfStatement $ = invert(s);
-    return positivePrefixLength($) >= positivePrefixLength(invert($));
+    final IfStatement $ = wizard.invert(s);
+    return positivePrefixLength($) >= positivePrefixLength(wizard.invert($));
   }
 
   private static int positivePrefixLength(@NotNull final IfStatement $) {
@@ -154,13 +149,5 @@ public enum Tippers {
 
   private static int sequencerRank(@NotNull final ASTNode ¢) {
     return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
-  }
-
-  public static void remove(@NotNull final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
-  }
-
-  public static <T> void removeLast(@NotNull final List<T> ¢) {
-    ¢.remove(¢.size() - 1);
   }
 }
