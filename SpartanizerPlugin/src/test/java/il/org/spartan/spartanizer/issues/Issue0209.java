@@ -38,10 +38,12 @@ public final class Issue0209 {
   }
 
   @Test public void issue209_02() {
+    new Integer(3).toString();
     trimmingOf("new Integer(3).toString();")//
         .gives("Integer.valueOf(3).toString();")//
         .stays();
   }
+  
 
   @Test public void issue54_01() {
     trimmingOf("(x.toString())")//
@@ -84,9 +86,13 @@ public final class Issue0209 {
   @Test public void issue54_2() {
     trimmingOf("String s = f() + o.toString();")//
         .gives("f();o.toString();")//
-        .gives("f();\"\" + o;")//
         .stays();
   }
+@Test public void issue54_3() {
+    trimmingOf("o.toString();")//
+        .stays();
+  }
+
 
   @Test public void reorderTest() {
     trimmingOf("\"\" + foo(x.toString())")//

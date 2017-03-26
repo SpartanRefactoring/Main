@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -25,15 +23,15 @@ public class Exhaust extends NanoPatternTipper<WhileStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override @Nullable public Tip pattern(final WhileStatement ¢) {
+  @Override  public Tip pattern(final WhileStatement ¢) {
     return firstTip(tippers, ¢);
   }
 
-  @Override @NotNull public Category category() {
+  @Override  public Category category() {
     return Category.Iterative;
   }
 
-  @Override @NotNull public String description() {
+  @Override  public String description() {
     return "Move an Iterable to its end using getNext() != null";
   }
 }

@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,8 +16,8 @@ public class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
     implements TipperCategory.Arithmetic {
   private static final long serialVersionUID = 0x1F5C3A50D08EA75BL;
 
-  @Override @Nullable public ASTNode replacement(@NotNull final Assignment ¢) {
-    @Nullable final Namespace n = Environment.of(¢);
+  @Override  public ASTNode replacement( final Assignment ¢) {
+     final Namespace n = Environment.of(¢);
     if (!n.isNumeric(¢.getLeftHandSide() + ""))
       return null;
     return ¢.getOperator() != Operator.PLUS_ASSIGN || !iz.numberLiteral(¢.getRightHandSide())

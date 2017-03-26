@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import java.lang.annotation.*;
 
-import org.jetbrains.annotations.*;
-
 /** To say that a certain name is recognized in a certain definition.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-01 */
@@ -16,5 +14,5 @@ import org.jetbrains.annotations.*;
     ElementType.CONSTRUCTOR, //
     ElementType.TYPE, })
 public @interface knows {
-  @NotNull String[] value();
+   String[] value();
 }

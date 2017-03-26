@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.research.nanos.methods;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
@@ -17,7 +15,7 @@ public class SelfCaster extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     if (!hazOneStatement(¢) || hazParameters(¢))
       return false;
-    @Nullable final CastExpression $ = az.castExpression(expression(az.returnStatement(onlyStatement(¢))));
+     final CastExpression $ = az.castExpression(expression(az.returnStatement(onlyStatement(¢))));
     return returnTypeSameAs(¢, type($))//
         && iz.thisExpression(expression($));
   }

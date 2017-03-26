@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.cmdline;
 import static il.org.spartan.tide.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -30,7 +28,7 @@ public class ASTNodeMetrics {
     tokens = metrics.tokens(node + "");
     nodes = count.nodes(node);
     body = metrics.bodySize(node);
-    @Nullable final MethodDeclaration methodDeclaration = az.methodDeclaration(node);
+     final MethodDeclaration methodDeclaration = az.methodDeclaration(node);
     statements = methodDeclaration == null ? -1 : extract.statements(step.body(methodDeclaration)).size();
     // extract.statements(az.
     // methodDeclaration(node)

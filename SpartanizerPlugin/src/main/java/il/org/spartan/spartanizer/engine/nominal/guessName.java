@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
@@ -28,7 +26,7 @@ public enum guessName {
   WEIRDO, //
   UNKNOWN, //
   ;
-  public static boolean isClassName(@Nullable final ASTNode ¢) {
+  public static boolean isClassName( final ASTNode ¢) {
     return ¢ != null && isClassName(hop.lastComponent(az.name(¢)) + "");
   }
 
@@ -36,10 +34,10 @@ public enum guessName {
     return of(e) == CLASS_NAME;
   }
 
-  @Nullable public static guessName of(@Nullable final String nameOfSomething) {
+   public static guessName of( final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.isEmpty())
       return null;
-    for (@NotNull final guessName $ : guessName.values())
+    for ( final guessName $ : guessName.values())
       if ($.special(nameOfSomething))
         return $;
     if (nameOfSomething.matches("[_]+")) //

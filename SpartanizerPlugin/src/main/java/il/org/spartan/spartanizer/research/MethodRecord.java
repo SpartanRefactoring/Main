@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
@@ -15,8 +13,8 @@ import il.org.spartan.spartanizer.research.util.*;
 /** Collects statistics for a method in which a nano was found.
  * @author Ori Marcovitch */
 public class MethodRecord {
-  @NotNull public final String methodName;
-  @NotNull public final String methodClassName;
+   public final String methodName;
+   public final String methodClassName;
   private int numNPStatements;
   private int numNPNodes;
   int numNPExpressions;
@@ -25,11 +23,11 @@ public class MethodRecord {
   public final int numStatements;
   public final int numExpressions;
   public final int numNodes;
-  @NotNull public final MethodDeclaration before;
+   public final MethodDeclaration before;
   public MethodDeclaration after;
   private boolean fullyMatched;
 
-  public MethodRecord(@NotNull final MethodDeclaration d) {
+  public MethodRecord( final MethodDeclaration d) {
     before = d;
     methodName = identifier(name(d));
     methodClassName = findTypeAncestor(d);
@@ -63,7 +61,7 @@ public class MethodRecord {
     return Math.min(numNPNodes, numNodes);
   }
 
-  public void markNP(@NotNull final ASTNode n, final String np) {
+  public void markNP( final ASTNode n, final String np) {
     if (excluded(np)) {
       numNPExpressions += 1;
       numNPNodes += 1;
@@ -92,7 +90,7 @@ public class MethodRecord {
 
   static String findTypeAncestor(final ASTNode ¢) {
     ASTNode n = ¢;
-    @NotNull String $ = "";
+     String $ = "";
     for (; n != null; n = parent(n)) {
       while (!iz.abstractTypeDeclaration(n) && n != null)
         n = parent(n);

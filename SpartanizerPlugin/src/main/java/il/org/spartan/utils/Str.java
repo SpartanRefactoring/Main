@@ -1,12 +1,10 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.*;
-
 /** A poor man's approximation of a mutable String.
  * @author Ori Marcovitch
  * @since Oct 18, 2016 */
 public final class Str {
-  @Nullable public String inner;
+   public String inner;
 
   public Str() {
     inner = null;
@@ -20,7 +18,7 @@ public final class Str {
     inner = ¢ + "";
   }
 
-  @Nullable public String inner() {
+   public String inner() {
     return inner;
   }
 

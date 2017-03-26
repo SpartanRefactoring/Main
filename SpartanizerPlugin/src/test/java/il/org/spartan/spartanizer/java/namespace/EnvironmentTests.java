@@ -25,7 +25,7 @@ public final class EnvironmentTests {
   }
 
   void EX1() {
-    @NotNull @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
+     @NestedENV({}) @OutOfOrderFlatENV({}) final String s = "a";
     "a".equals(s);
     "a".equals(s);
     out.print("a");
@@ -47,7 +47,7 @@ public final class EnvironmentTests {
       }
 
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void g() {
-        @NotNull final List<String> tmp = new ArrayList<>();
+         final List<String> tmp = new ArrayList<>();
         tmp.add("a");
         tmp.forEach(λ -> y = λ);
       }
@@ -67,13 +67,13 @@ public final class EnvironmentTests {
         try {
           s = "onoes";
           dangerousFunc("yay".equals(s));
-        } catch (@NotNull final UnsupportedOperationException e) {}
+        } catch ( final UnsupportedOperationException e) {}
       }
 
       void foo() {
         try {
           dangerousFunc("yay".equals("onoes"));
-        } catch (@NotNull final UnsupportedOperationException e) {}
+        } catch ( final UnsupportedOperationException e) {}
       }
     }
   }
@@ -131,9 +131,9 @@ public final class EnvironmentTests {
     static void func() {
       @Begin
       class Q {}
-      @NotNull final EX3 top = new EX3();
-      @NotNull final x_hiding X = new x_hiding();
-      @NotNull @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) final x_hiding.y_hiding Y = X.new y_hiding();
+       final EX3 top = new EX3();
+       final x_hiding X = new x_hiding();
+       @InOrderFlatENV({ "x", "y" }) @OutOfOrderFlatENV({ "y", "x" }) final x_hiding.y_hiding Y = X.new y_hiding();
       top.x = 3;
       x_hiding.x = 4;
       X.xsy.y = 5;
@@ -198,9 +198,9 @@ public final class EnvironmentTests {
     void func() {
       @Begin
       class Q {}
-      @NotNull @OutOfOrderFlatENV("x") final Parent p = new Parent();
-      @NotNull @OutOfOrderFlatENV({ "x", "p" }) final Child1 c1 = new Child1();
-      @NotNull @NestedENV({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" }) @InOrderFlatENV({ "x", "p", "c1" }) @OutOfOrderFlatENV({ "p", "c1",
+       @OutOfOrderFlatENV("x") final Parent p = new Parent();
+       @OutOfOrderFlatENV({ "x", "p" }) final Child1 c1 = new Child1();
+       @NestedENV({ "EX4.x#int", "EX4.p#Parent", "EX4.c1#C1" }) @InOrderFlatENV({ "x", "p", "c1" }) @OutOfOrderFlatENV({ "p", "c1",
           "x" }) final Child2 c2 = new Child2();
       p.set_x();
       c1.set_x();
@@ -344,7 +344,7 @@ public final class EnvironmentTests {
         final Outer outer = Outer.this;
 
         /** [[SuppressWarningsSpartan]] */
-        @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" }) void func(@NotNull final Inner p) {
+        @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" }) void func( final Inner p) {
           @Begin
           class m {}
           x = 0;
@@ -366,7 +366,7 @@ public final class EnvironmentTests {
         final Outer2 outer2 = Outer2.this;
 
         @NestedENV({ "EX6.Outer2.x#int", "EX6.Outer2.Inner2.x#int", "EX6.Outer2.Inner2.outer2#Outer2" }) @OutOfOrderFlatENV({ "x",
-            "outer2" }) void func(@NotNull final Inner2 p) {
+            "outer2" }) void func( final Inner2 p) {
           @Begin
           class A {}
           x = 0;
@@ -384,7 +384,7 @@ public final class EnvironmentTests {
       return n1;
     }
 
-    @NotNull Integer x = 1;
+     Integer x = 1;
     Integer o = func(x, "Alex&Dan", new Complex());
 
     class Complex {
@@ -395,7 +395,7 @@ public final class EnvironmentTests {
 
   public static class EX8 {
     class Arr {
-      @NotNull String[] arr = new String[13];
+       String[] arr = new String[13];
 
       @NestedENV("EX8.Arr.arr#String[]") @OutOfOrderFlatENV("arr") void foo() {
         @Begin
@@ -423,7 +423,7 @@ public final class EnvironmentTests {
           /**/}
       }
 
-      @Override @Nullable public Iterator<Type> iterator() {
+      @Override  public Iterator<Type> iterator() {
         return new Iterator<Type>() {
           @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex;
 
@@ -458,7 +458,7 @@ public final class EnvironmentTests {
         l: for (;;)
           for (;;)
             if (new Oompa_Loompa(l) {
-              @Override Oompa_Loompa Oompa_Loompa(@Nullable final Oompa_Loompa ¢) {
+              @Override Oompa_Loompa Oompa_Loompa( final Oompa_Loompa ¢) {
                 return ¢ != null ? super.Oompa_Loompa(¢) : Oompa_Loompa.this.Oompa_Loompa(¢);
               }
             }.Oompa_Loompa(l) != null)
