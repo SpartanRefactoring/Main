@@ -83,7 +83,8 @@ public final class Issue0209 {
 
   @Test public void issue54_2() {
     trimmingOf("String s = f() + o.toString();")//
-        .gives("String s = f() + \"\" + o;")//
+        .gives("f();o.toString();")//
+        .gives("f();\"\" + o;")//
         .stays();
   }
 

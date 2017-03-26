@@ -340,7 +340,7 @@ public class Toolbox {
             new FragmentInitializerWhile(), //
             new FragmentInitializerToForInitializers(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
-            new FragmentVariablleInitializedRemoveUnused(), //
+            new LocalVariableInitializedUnusedRemove(), //
             null) //
     ;
   }
