@@ -274,6 +274,7 @@ public class Toolbox {
             new IfDegenerateElse(), //
             new IfEmptyThen(), //
             new IfShortestFirst(), //
+            new IfFooElseIfBarElseFoo(),//
             // new PutIfAbsent(), //
             null)//
         .add(PrefixExpression.class, //
