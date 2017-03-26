@@ -54,10 +54,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param p JD
    * @return null */
   public static Object execute(@NotNull final IProject p) {
-    @Nullable final SpartanPreferencesDialog d = getDialog(p);
+    final Map<SpartanCategory, SpartanTipper[]> m = XMLSpartan.getTippersByCategories(p);
+    @Nullable final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    @Nullable final Set<String> $ = getPreferencesChanges(d);
+    @Nullable final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
     return $ == null ? null : commit(p, $);
   }
 
@@ -73,7 +74,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     @Nullable final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    @Nullable final Set<String> $ = getPreferencesChanges(d);
+    @Nullable final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
     return $ == null ? null : commit.apply(p, $);
   }
 
@@ -93,23 +94,19 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   }
 
   /** @param ¢ dialog
+   * @param initialPreferences preferences at the start of the process
    * @return dialog's result: either enabled tippers, or null if the operation
-   *         has been cancled by the user */
-  public static Set<String> getPreferencesChanges(@NotNull final SpartanPreferencesDialog ¢) {
+   *         has been canceled by the user or nothing has been changed */
+  public static Set<String> getPreferencesChanges(@NotNull final SpartanPreferencesDialog ¢, final Set<String> initialPreferences) {
     ¢.open();
-    final Object[] $ = ¢.getResult();
-    return $ == null || ¢.getReturnCode() != Window.OK ? null
-        : Stream.of($)//
+    final Object[] changes = ¢.getResult();
+    Set<String> $ = changes == null || ¢.getReturnCode() != Window.OK ? null
+        : Stream.of(changes)//
             .filter(SpartanTipper.class::isInstance)//
             .map(SpartanTipper.class::cast)//
             .map(SpartanTipper::name)//
             .collect(toSet());
-  }
-
-  /** @param ¢ JD
-   * @return preferences configuration dialog for project */
-  @Nullable private static SpartanPreferencesDialog getDialog(final IProject ¢) {
-    return getDialog(XMLSpartan.getTippersByCategories(¢));
+    return $ == null || $.containsAll(initialPreferences) && initialPreferences.containsAll($) ? null : $;
   }
 
   /** @param m enabled tippers collection
@@ -352,5 +349,15 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       monitor.log(¢);
     }
     return $.get();
+  }
+
+  private static Set<String> toEnabledSet(final Map<SpartanCategory, SpartanTipper[]> m) {
+    return m.values().stream().reduce(new HashSet<String>(), (s, a) -> {
+      s.addAll(Arrays.stream(a).filter(λ -> λ.enabled()).map(λ -> λ.name()).collect(Collectors.toList()));
+      return s;
+    }, (s1, s2) -> {
+      s1.addAll(s2);
+      return s1;
+    });
   }
 }
