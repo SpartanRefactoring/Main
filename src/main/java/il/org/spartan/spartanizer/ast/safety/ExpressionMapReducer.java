@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
@@ -56,8 +57,10 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
         return map((MethodInvocation) ¢);
       case SUPER_METHOD_INVOCATION:
         return map((SuperMethodInvocation) ¢);
+      case BOOLEAN_LITERAL: 
+        return map((BooleanLiteral) ¢);
       default:
-        assert fault.unreachable() : fault.specifically("Unrecognized type", ¢);
+        assert fault.unreachable() : fault.specifically("Unrecognized type", ¢.getClass(), ¢,box.it(¢.getNodeType()));
         return null;
     }
   }

@@ -18,6 +18,7 @@ public class Issue0359 {
 
   @Test public void d() {
     trimmingOf("int i=f();")//
+        .gives("f();")//
         .stays();
   }
 
