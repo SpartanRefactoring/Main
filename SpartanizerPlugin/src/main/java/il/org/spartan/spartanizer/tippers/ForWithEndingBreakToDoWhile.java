@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** TODO Doron Mehsulam: document class
+/** {@link{Issue1122}
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-03-26 */
 public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Unite {
