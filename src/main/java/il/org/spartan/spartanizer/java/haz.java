@@ -43,7 +43,7 @@ public enum haz {
   }
 
   private static boolean annotation(VariableDeclarationExpression x) {
-    return extract.annotations(x).isEmpty();
+    return !extract.annotations(x).isEmpty();
   }
 
   private static boolean annotation(FieldDeclaration f) {

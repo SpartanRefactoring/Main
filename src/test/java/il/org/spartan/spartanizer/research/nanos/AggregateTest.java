@@ -32,6 +32,7 @@ public class AggregateTest {
         .gives("int $ = 0; $+=bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .gives("int $ = 0 + bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .gives("bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
+        .gives("bs.stream().map(λ->f()).reduce((x,y)->x+y).get();")//
         .stays();
     ;
   }

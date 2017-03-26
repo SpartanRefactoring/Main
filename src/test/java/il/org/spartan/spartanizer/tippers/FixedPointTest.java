@@ -202,8 +202,8 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void ternarize17() {
-    assertConvertsTo(" int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = r();\n else b = a; else if (b == 3) b = r(); else b = a;",
-        "int b=5!=3?3:r();");
+    assertConvertsTo("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = r();\n else b = a; else if (b == 3) b = r(); else b = a;",
+        "r();");
   }
 
   @Test(timeout = 2000) public void ternarize18() {
