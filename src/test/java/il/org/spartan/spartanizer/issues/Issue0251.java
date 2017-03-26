@@ -85,7 +85,7 @@ public class Issue0251 {
 
   @Test public void t12() {
     trimmingOf("if(b==true){int i=5,q=g();}")//
-        .gives("if(b){int i=5,q=g();}")//
+        .gives("if(b){g(); int i=5;}")//
         .stays() //
     ;
   }
