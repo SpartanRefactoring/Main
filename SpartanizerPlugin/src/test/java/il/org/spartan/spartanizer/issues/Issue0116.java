@@ -32,7 +32,6 @@ public final class Issue0116 {
 
   @Test public void issue116_04() {
     trimmingOf("String s = \"\" + x.foo();")//
-        .gives("String s = x.foo() + \"\";")//
         .gives("x.foo();")//
         .stays();
   }

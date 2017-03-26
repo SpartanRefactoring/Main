@@ -202,8 +202,7 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void ternarize17() {
-    assertConvertsTo("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = r();\n else b = a; else if (b == 3) b = r(); else b = a;",
-        "r();");
+    assertConvertsTo("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = r();\n else b = a; else if (b == 3) b = r(); else b = a;", "r();");
   }
 
   @Test(timeout = 2000) public void ternarize18() {
@@ -212,11 +211,11 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void ternarize23() {
-    assertConvertsTo("int a=0;if (s.equals(532)) a+=y(2)+10;else a+=r(3)-6;", "int a= (s.equals(532)?y(2)+10:r(3)-6);");
+    assertConvertsTo("int a=0;if (s.equals(532)) a+=y(2)+10;else a+=r(3)-6;", "s.equals(532);y(2);r(3);");
   }
 
   @Test(timeout = 2000) public void ternarize24() {
-    assertConvertsTo("boolean c;if (s.equals(532)) c=false;else c=true;", "boolean c=!s.equals(532);");
+    assertConvertsTo("boolean c;if (s.equals(532)) c=false;else c=true;", "s.equals(532);");
   }
 
   @Test(timeout = 2000) public void ternarize40() {
