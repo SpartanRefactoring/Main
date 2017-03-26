@@ -6,8 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -38,8 +36,8 @@ public enum flatten {
   }
 
    private static List<Expression> into(final Operator o, final Expression x,  final List<Expression> $) {
-    @Nullable final Expression core = core(x);
-    @Nullable final InfixExpression inner = az.infixExpression(core);
+     final Expression core = core(x);
+     final InfixExpression inner = az.infixExpression(core);
     return inner == null || inner.getOperator() != o ? add(!iz.noParenthesisRequired(core) ? x : core, $)
         : flatten.into(o, copy.adjust(o, hop.operands(inner)), $);
   }

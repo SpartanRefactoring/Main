@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -25,10 +23,10 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -3105580838354601588L;
 
-  @Override @Nullable public ASTNode replacement(@Nullable final SwitchStatement s) {
+  @Override  public ASTNode replacement( final SwitchStatement s) {
     if (s == null)
       return null;
-    @Nullable final Block b = az.block(s.getParent());
+     final Block b = az.block(s.getParent());
     if (b == null) {
       if (!iz.loop(s.getParent()))
         return null;

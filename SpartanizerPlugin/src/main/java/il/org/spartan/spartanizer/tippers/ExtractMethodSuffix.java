@@ -11,8 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -35,7 +33,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     return "Split " + ¢.getName() + " into two logical parts";
   }
 
-  @Override @Nullable public List<ASTNode> go( final ASTRewrite r,  final MethodDeclaration d,
+  @Override  public List<ASTNode> go( final ASTRewrite r,  final MethodDeclaration d,
       @SuppressWarnings("unused") final TextEditGroup __) {
     if (!isValid(d))
       return null;
@@ -122,7 +120,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         parameters(d2).add(copy.of((SingleVariableDeclaration) v));
       else {
         final SingleVariableDeclaration sv = d.getAST().newSingleVariableDeclaration();
-        @Nullable final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
+         final VariableDeclarationStatement p = az.variableDeclrationStatement(v.getParent());
         sv.setName(copy.of(v.getName()));
         sv.setType(copy.of(p.getType()));
         extendedModifiers(p).forEach(λ -> extendedModifiers(sv).add((IExtendedModifier) copy.of((ASTNode) λ)));
@@ -238,7 +236,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
 
   static class NaturalVariablesOrder implements Comparator<VariableDeclaration> {
      final List<SingleVariableDeclaration> ps;
-    @Nullable final List<Statement> ss;
+     final List<Statement> ss;
 
     NaturalVariablesOrder( final MethodDeclaration method) {
       assert method != null;

@@ -10,8 +10,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -66,7 +64,7 @@ public enum TermsExpander {
    *        optimally
    * @return the $ parameter, after all elements of the list parameter are added
    *         to it */
-   private static Expression recurse(@Nullable final List<Term> ts,  final Expression $) {
+   private static Expression recurse( final List<Term> ts,  final Expression $) {
     assert $ != null;
     if (ts == null || ts.isEmpty())
       return $;
@@ -74,7 +72,7 @@ public enum TermsExpander {
     return recurse(ts, (InfixExpression) $);
   }
 
-   private static Expression recurse(@Nullable final List<Term> ts,  final InfixExpression $) {
+   private static Expression recurse( final List<Term> ts,  final InfixExpression $) {
     assert $ != null;
     if (ts == null || ts.isEmpty())
       return $;

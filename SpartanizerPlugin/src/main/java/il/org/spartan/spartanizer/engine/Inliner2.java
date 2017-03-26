@@ -11,8 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -154,11 +152,11 @@ public final class Inliner2 {
       return new Inner().go(g, r);
     }
 
-    @Nullable static Inner in(final ASTNode... ¢) {
+     static Inner in(final ASTNode... ¢) {
       return new Inner().in(¢);
     }
 
-    @Nullable static Inner of(final SimpleName ¢) {
+     static Inner of(final SimpleName ¢) {
       return new Inner().of(¢);
     }
 
@@ -177,7 +175,7 @@ public final class Inliner2 {
       private SimpleName name;
       private ASTNode[] range;
       private Expression with;
-      @Nullable private List<SimpleName> occurrences;
+       private List<SimpleName> occurrences;
 
        ASTRewrite go(final TextEditGroup g,  final ASTRewrite $) {
         occurrences.forEach(λ -> $.replace(λ, !iz.expression(λ) ? copy.of(with) : make.plant(with).into(λ.getParent()), g));
@@ -230,12 +228,12 @@ public final class Inliner2 {
         return collect.definitionsOf(name).in().isEmpty();
       }
 
-      @Nullable public Inner in(final ASTNode[] ¢) {
+       public Inner in(final ASTNode[] ¢) {
         occurrences = collect.usesOf(name).in(range = ¢);
         return null;
       }
 
-      @Nullable public Inner of(final SimpleName ¢) {
+       public Inner of(final SimpleName ¢) {
         occurrences = collect.usesOf(name = ¢).in(range);
         return null;
       }

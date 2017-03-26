@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.engine.nominal;
 import static il.org.spartan.Utils.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -61,7 +59,7 @@ public enum trivia {
     return gist(accurateEssence(removeComments(¢) + ""));
   }
 
-   public static String gist(@Nullable final Object ¢) {
+   public static String gist( final Object ¢) {
     return ¢ == null ? "null" : gist(¢ + "");
   }
 

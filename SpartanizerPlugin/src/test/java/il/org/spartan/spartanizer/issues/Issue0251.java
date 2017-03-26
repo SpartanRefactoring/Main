@@ -88,6 +88,8 @@ public class Issue0251 {
         .gives("if(b){g(); int i=5;}")//
         .gives("if(!b)return;g(); int i=5;")//
         .gives("if(!b)return;g();")//
+        .gives("if(!b);else g();")//
+        .gives("if(b)g();")//
         .stays() //
     ;
   }

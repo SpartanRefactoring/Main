@@ -49,7 +49,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       λ -> new GUIBatchLaconizer().defaultSettings().defaultRunAction(getSpartanizer(λ)).passes(1).selection(Selection.Util.by(λ)).go());
   /** Apply spartanization to marked code with a preview. */
   private final IMarkerResolution applyPreview = quickFix("Apply after preview", ¢ -> {
-    @Nullable final AbstractGUIApplicator g = getSpartanizer(¢);
+     final AbstractGUIApplicator g = getSpartanizer(¢);
      final Applicator a = new GUIBatchLaconizer().defaultSettings().passes(1).selection(Selection.Util.by(¢));
     a.setRunAction(u -> {
       try {
@@ -81,13 +81,13 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   private final IMarkerResolution singleTipperProject = quickFix("Apply to entire project", λ -> SpartanizationHandler.applicator()
       .defaultRunAction(SingleTipper.getApplicator(λ)).defaultPassesMany().selection(Selection.Util.getAllCompilationUnit(λ)).go());
   /** Disable spartanization in function. */
-  @Nullable private final IMarkerResolution disableFunction = fixers.disableFunctionFix();
+   private final IMarkerResolution disableFunction = fixers.disableFunctionFix();
   /** Disable spartanization in class. */
-  @Nullable private final IMarkerResolution disableClass = fixers.disableClassFix();
+   private final IMarkerResolution disableClass = fixers.disableClassFix();
   /** Disable spartanization in file. */
-  @Nullable private final IMarkerResolution disableFile = fixers.disableFileFix();
+   private final IMarkerResolution disableFile = fixers.disableFileFix();
   /** Disable spartanization in class by annotation. */
-  @Nullable private final IMarkerResolution disableClassByAnnotation = fixers.disableClassAnnotationFix();
+   private final IMarkerResolution disableClassByAnnotation = fixers.disableClassAnnotationFix();
 
   /** Factory method for {@link IMarkerResolution}s.
    * @param name resolution's name
@@ -129,7 +129,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       return tipper != null && Toolbox.defaultInstance().get(¢.getNodeType()).contains(tipper);
     }
 
-    @Override @SuppressWarnings("unchecked") @Nullable protected Tipper<N> getTipper(final Toolbox __,  final ASTNode ¢) {
+    @Override @SuppressWarnings("unchecked")  protected Tipper<N> getTipper(final Toolbox __,  final ASTNode ¢) {
       assert check(¢);
       return !tipper.check((N) ¢) ? null : tipper;
     }
@@ -159,7 +159,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     String APPLY_TO_FUNCTION = "Apply to enclosing function";
     String APPLY_TO_PROJECT = "Apply to entire project";
 
-    @Nullable static IMarkerResolution apply(final SingleTipperApplicator.Type t, final String label) {
+     static IMarkerResolution apply(final SingleTipperApplicator.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;
@@ -175,35 +175,35 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       };
     }
 
-    @Nullable static IMarkerResolution applyFile() {
+     static IMarkerResolution applyFile() {
       return apply(SingleTipperApplicator.Type.FILE, APPLY_TO_FILE);
     }
 
-    @Nullable static IMarkerResolution applyFunction() {
+     static IMarkerResolution applyFunction() {
       return apply(SingleTipperApplicator.Type.DECLARATION, APPLY_TO_FUNCTION);
     }
 
-    @Nullable static IMarkerResolution applyProject() {
+     static IMarkerResolution applyProject() {
       return apply(SingleTipperApplicator.Type.PROJECT, APPLY_TO_PROJECT);
     }
 
-    @Nullable static IMarkerResolution disableClassFix() {
+     static IMarkerResolution disableClassFix() {
       return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.CLASS, "Suppress spartanization tips on class");
     }
 
-    @Nullable static IMarkerResolution disableFileFix() {
+     static IMarkerResolution disableFileFix() {
       return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.FILE, "Suppress spartanization tips on out most class");
     }
 
-    @Nullable static IMarkerResolution disableFunctionFix() {
+     static IMarkerResolution disableFunctionFix() {
       return toggle(SuppressWarningsLaconicOnOff.ByComment, SuppressWarningsLaconicOnOff.Type.FUNCTION, "Suppress spartanization tips on function");
     }
 
-    @Nullable static IMarkerResolution disableClassAnnotationFix() {
+     static IMarkerResolution disableClassAnnotationFix() {
       return toggle(SuppressWarningsLaconicOnOff.ByAnnotation, SuppressWarningsLaconicOnOff.Type.CLASS, "Class under construction");
     }
 
-    @Nullable static IMarkerResolution toggle( final SuppressWarningsLaconicOnOff disabler,
+     static IMarkerResolution toggle( final SuppressWarningsLaconicOnOff disabler,
          final SuppressWarningsLaconicOnOff.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {

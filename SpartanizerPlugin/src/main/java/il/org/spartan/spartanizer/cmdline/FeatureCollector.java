@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.cmdline;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 /** Interface that implements useful methods for {@link MethodFeatureCollector}
  * {@link TypeFeatureCollector}, etc.
@@ -16,7 +15,7 @@ public interface FeatureCollector<T> {
 
   NamedFunction<ASTNode, T>[] functions();
 
-  @Nullable NamedFunction<ASTNode, T>[] functions(String id);
+   NamedFunction<ASTNode, T>[] functions(String id);
 
   @SuppressWarnings("hiding")
   class NamedFunction<ASTNode, T> {

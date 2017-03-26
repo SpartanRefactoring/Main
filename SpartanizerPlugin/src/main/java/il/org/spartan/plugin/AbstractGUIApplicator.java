@@ -19,8 +19,6 @@ import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -38,8 +36,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   private final Collection<TextFileChange> changes = new ArrayList<>();
   private CompilationUnit compilationUnit;
   private ICompilationUnit iCompilationUnit;
-  @Nullable private IMarker marker;
-  @Nullable protected String name;
+   private IMarker marker;
+   protected String name;
   private ITextSelection selection;
   private final List<Tip> tips = new ArrayList<>();
   private int totalChanges;
@@ -54,7 +52,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return apply(cu, new Range(0, 0));
   }
 
-  private boolean apply( final ICompilationUnit cu, @Nullable final Range r) {
+  private boolean apply( final ICompilationUnit cu,  final Range r) {
     return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())) > 0;
   }
 
@@ -152,7 +150,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-  public int fuzzyImplementationApply( final ICompilationUnit $, @Nullable final ITextSelection s) {
+  public int fuzzyImplementationApply( final ICompilationUnit $,  final ITextSelection s) {
     try {
       setICompilationUnit($);
       setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
@@ -167,9 +165,9 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
    * @since 2013/07/01
    * @return a quick fix for this instance */
-  @Nullable public IMarkerResolution getFix() {
+   public IMarkerResolution getFix() {
     return new IMarkerResolution() {
-      @Override @Nullable public String getLabel() {
+      @Override  public String getLabel() {
         return getName();
       }
 
@@ -184,13 +182,13 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** @return a quick fix with a preview for this instance. */
-  @Nullable public IMarkerResolution getFixWithPreview() {
+   public IMarkerResolution getFixWithPreview() {
     return getFixWithPreview(getName());
   }
 
   /** @param s Text for the preview dialog
    * @return a quickfix which opens a refactoring wizard with the tipper */
-  @Nullable private IMarkerResolution getFixWithPreview(final String s) {
+   private IMarkerResolution getFixWithPreview(final String s) {
     return new IMarkerResolution() {
       /** a quickfix which opens a refactoring wizard with the tipper
        * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
@@ -216,7 +214,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return iCompilationUnit;
   }
 
-  @Override @Nullable public final String getName() {
+  @Override  public final String getName() {
     return name;
   }
 
@@ -252,7 +250,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   /** @param m marker which represents the range to apply the tipper within
    * @param n the node which needs to be within the range of {@code m}
    * @return whether the node is within range */
-  public final boolean inRange(@Nullable final IMarker m,  final ASTNode n) {
+  public final boolean inRange( final IMarker m,  final ASTNode n) {
     return m == null ? !isTextSelected() || !isNotSelected(n) : !eclipse.facade.isNodeOutsideMarker(n, m);
   }
 
@@ -314,7 +312,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return tips.size();
   }
 
-  @Override @Nullable public String toString() {
+  @Override  public String toString() {
     return name;
   }
 
@@ -331,7 +329,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
-  @Nullable protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
+   protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
 
   public void parse() {
     compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
@@ -439,7 +437,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return selection != null && !selection.isEmpty();
   }
 
-  public int apply( final WrappedCompilationUnit $, @Nullable final AbstractSelection<?> s) {
+  public int apply( final WrappedCompilationUnit $,  final AbstractSelection<?> s) {
     if (s != null && s.textSelection != null)
       setSelection(s.textSelection);
     if (s instanceof TrackerSelection)
@@ -457,7 +455,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     assert textChange != null;
      final Int $ = new Int();
      final WrappedCompilationUnit u1 = u.build();
-    @Nullable final CompilationUnit u2 = u1.compilationUnit;
+     final CompilationUnit u2 = u1.compilationUnit;
     final ASTRewrite r = createRewrite(u2, $);
     try {
       textChange.setEdit(r.rewriteAST());
@@ -490,7 +488,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return $;
   }
 
-  private int apply( final WrappedCompilationUnit u, @Nullable final TrackerSelection s) {
+  private int apply( final WrappedCompilationUnit u,  final TrackerSelection s) {
     try {
        final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);

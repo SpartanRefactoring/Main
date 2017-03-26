@@ -8,8 +8,6 @@ import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
@@ -173,7 +171,7 @@ class CompilationUnitRecord {
   }
 
   public void markNP( final ASTNode n,  final String np) {
-    @Nullable final MethodDeclaration $ = ancestorMethod(n);
+     final MethodDeclaration $ = ancestorMethod(n);
     if ($ == null)
       markRegular(n);
     else

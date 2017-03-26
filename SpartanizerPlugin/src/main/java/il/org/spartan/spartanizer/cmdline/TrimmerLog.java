@@ -6,8 +6,6 @@ import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -127,7 +125,7 @@ public enum TrimmerLog {
       System.out.println("Stopped logging visitations");
   }
 
-  @Nullable private static CSVStatistics init() {
+   private static CSVStatistics init() {
     try {
       return output = new CSVStatistics(outputDir, "Tips");
     } catch ( final IOException $) {

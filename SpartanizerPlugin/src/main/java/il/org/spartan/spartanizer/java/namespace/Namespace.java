@@ -8,8 +8,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -67,14 +65,14 @@ public final class Namespace implements Environment {
 
   private Iterable<Environment> ancestors() {
     return () -> new Iterator<Environment>() {
-      @Nullable Environment next = Namespace.this;
+       Environment next = Namespace.this;
 
       @Override public boolean hasNext() {
         return next != null;
       }
 
-      @Override @Nullable public Environment next() {
-        @Nullable final Environment $ = next;
+      @Override  public Environment next() {
+         final Environment $ = next;
         next = next.nest();
         return $;
       }
@@ -115,16 +113,16 @@ public final class Namespace implements Environment {
     return flat.containsKey(identifier) || nest.has(identifier);
   }
 
-   static Namespace spawnFor( final Namespace $, @Nullable final ForStatement s) {
+   static Namespace spawnFor( final Namespace $,  final ForStatement s) {
     final VariableDeclarationExpression x = az.variableDeclarationExpression(s);
     return s == null || x == null ? $ : $.spawn(for¢).put(x);
   }
 
-   static Namespace spawnEnhancedFor( final Namespace n, @Nullable final EnhancedForStatement s) {
+   static Namespace spawnEnhancedFor( final Namespace n,  final EnhancedForStatement s) {
     return s == null ? n : n.spawn(foreach).put(s.getParameter());
   }
 
-  boolean fillScope(@Nullable final ASTNode root) {
+  boolean fillScope( final ASTNode root) {
     if (root == null)
       return false;
     property.attach(this).to(root);
@@ -154,11 +152,11 @@ public final class Namespace implements Environment {
             continue;
           }
           if (iz.typeDeclaration(s)) {
-            @Nullable final TypeDeclaration d = az.typeDeclaration(s);
+             final TypeDeclaration d = az.typeDeclaration(s);
             n.spawn(definition.kind(d)).put(d).fillScope(s);
           }
           if (iz.variableDeclarationStatement(s)) {
-            @Nullable final VariableDeclarationStatement vds = az.variableDeclarationStatement(s);
+             final VariableDeclarationStatement vds = az.variableDeclarationStatement(s);
             n = n.spawn(local);
             for (final VariableDeclarationFragment ¢ : fragments(vds))
               n.put(step.name(¢), type(vds));
@@ -226,7 +224,7 @@ public final class Namespace implements Environment {
     return false;
   }
 
-  static Namespace spawnAndFill( final Namespace n, @Nullable final TryStatement s) {
+  static Namespace spawnAndFill( final Namespace n,  final TryStatement s) {
     if (s == null)
       return n;
     catchClauses(s).forEach(λ -> n.spawn(catch¢).put(exception(λ)).fillScope(λ));
@@ -305,7 +303,7 @@ public final class Namespace implements Environment {
   }
 
   /** Add name to the current scope in the {@link Environment} . */
-  @Override @Nullable public Binding put(final String identifier, final Binding value) {
+  @Override  public Binding put(final String identifier, final Binding value) {
     flat.put(identifier, value);
     assert !flat.isEmpty();
     return hiding(identifier);

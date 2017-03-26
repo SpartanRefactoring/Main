@@ -11,8 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -45,7 +43,7 @@ public enum Tricks {
   }
 
   public static Expression eliminateLiteral( final InfixExpression x, final boolean b) {
-    @Nullable final List<Expression> $ = extract.allOperands(x);
+     final List<Expression> $ = extract.allOperands(x);
     wizard.removeAll(b, $);
     switch ($.size()) {
       case 1:
@@ -106,7 +104,7 @@ public enum Tricks {
 
    public static ASTRewrite replaceTwoStatements( final ASTRewrite r,  final Statement what, final Statement by,
       final TextEditGroup g) {
-    @Nullable final Block parent = az.block(what.getParent());
+     final Block parent = az.block(what.getParent());
      final List<Statement> siblings = extract.statements(parent);
     final int i = siblings.indexOf(what);
     siblings.remove(i);

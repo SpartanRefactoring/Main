@@ -5,8 +5,6 @@ import static il.org.spartan.tide.*;
 import java.lang.reflect.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -108,7 +106,7 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
         m("static", λ -> iz.static¢((BodyDeclaration) λ)));
   }
 
-  @Override @Nullable public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
+  @Override  public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
     // TODO Auto-generated method stub
     return null;
   }

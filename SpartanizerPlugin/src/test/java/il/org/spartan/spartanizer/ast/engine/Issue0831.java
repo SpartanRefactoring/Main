@@ -7,7 +7,6 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -21,8 +20,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 16-11-14 */
 @SuppressWarnings("static-method")
 public class Issue0831 {
-  @Nullable final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
-  @Nullable final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
+   final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
+   final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
 
   @Test public void fourStatementInScanner() {
      String body = "";
@@ -58,7 +57,7 @@ public class Issue0831 {
       super(method);
     }
 
-    @Override @Nullable protected List<Statement> availableStatements() {
+    @Override  protected List<Statement> availableStatements() {
       return statements;
     }
   }

@@ -9,8 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -29,7 +27,7 @@ public final class MethodDeclarationRenameSingleParameterToIt extends EagerTippe
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip( final MethodDeclaration d, @Nullable final ExclusionManager m) {
+  @Override public Tip tip( final MethodDeclaration d,  final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;

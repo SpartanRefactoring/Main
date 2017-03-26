@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -59,7 +57,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
         final SimpleName n = az.simpleName(¢.getMatching(s, "$N"));
         if (n == null)
           continue;
-        @Nullable final Block b = az.block(¢.getMatching(s, "$B"));
+         final Block b = az.block(¢.getMatching(s, "$B"));
         if (b == null)
           continue;
         if (!ChangedInBlock(identifier(n), b))

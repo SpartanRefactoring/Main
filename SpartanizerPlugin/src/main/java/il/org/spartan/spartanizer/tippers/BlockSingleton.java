@@ -5,8 +5,6 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -19,7 +17,7 @@ public final class BlockSingleton extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x9FD71EDA4C3056AL;
 
-  private static Statement replacement(@Nullable final Statement $) {
+  private static Statement replacement( final Statement $) {
     return $ == null || iz.blockEssential($) || iz.isVariableDeclarationStatement($) ? null : copy.of($);
   }
 

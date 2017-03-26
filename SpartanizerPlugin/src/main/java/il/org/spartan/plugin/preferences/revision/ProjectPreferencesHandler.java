@@ -26,8 +26,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.dialogs.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.utils.*;
@@ -45,7 +43,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    *
    * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
    * ExecutionEvent) */
-  @Override @Nullable public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override  public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     return execute(Selection.Util.project());
   }
 
@@ -55,10 +53,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @return null */
   public static Object execute( final IProject p) {
     final Map<SpartanCategory, SpartanTipper[]> m = XMLSpartan.getTippersByCategories(p);
-    @Nullable final SpartanPreferencesDialog d = getDialog(m);
+     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    @Nullable final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
+     final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
     return $ == null ? null : commit(p, $);
   }
 
@@ -71,10 +69,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @return null */
   public static Object execute(final IProject p, final Map<SpartanCategory, SpartanTipper[]> m,
        final BiFunction<IProject, Set<String>, Void> commit) {
-    @Nullable final SpartanPreferencesDialog d = getDialog(m);
+     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
-    @Nullable final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
+     final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
     return $ == null ? null : commit.apply(p, $);
   }
 
@@ -112,7 +110,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   /** @param m enabled tippers collection
    * @return preferences configuration dialog for project, using given enabled
    *         tippers */
-  private static SpartanPreferencesDialog getDialog(@Nullable final Map<SpartanCategory, SpartanTipper[]> m) {
+  private static SpartanPreferencesDialog getDialog( final Map<SpartanCategory, SpartanTipper[]> m) {
     if (Display.getCurrent().getActiveShell() == null || m == null)
       return null;
      final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
@@ -133,11 +131,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         //
       }
 
-      @Override  public String getText(@Nullable final Object ¢) {
+      @Override  public String getText( final Object ¢) {
         return ¢ == null ? "" : !(¢ instanceof SpartanElement) ? ¢ + "" : ((SpartanElement) ¢).name();
       }
 
-      @Override @Nullable public Image getImage(final Object ¢) {
+      @Override  public Image getImage(final Object ¢) {
         return ¢ instanceof SpartanTipper ? Dialogs.image(Dialogs.ICON) : ¢ instanceof SpartanCategory ? Dialogs.image(Dialogs.CATEGORY) : null;
       }
     }, new ITreeContentProvider() {
@@ -145,7 +143,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         return ¢ instanceof SpartanCategory && ((SpartanElement) ¢).hasChildren();
       }
 
-      @Override @Nullable public Object getParent(final Object ¢) {
+      @Override  public Object getParent(final Object ¢) {
         return !(¢ instanceof SpartanTipper) ? null : ((SpartanTipper) ¢).parent();
       }
 
@@ -153,7 +151,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         return es;
       }
 
-      @Override @Nullable public Object[] getChildren(final Object parentElement) {
+      @Override  public Object[] getChildren(final Object parentElement) {
         return !(parentElement instanceof SpartanCategory) ? null : m.get(parentElement);
       }
     });
@@ -198,7 +196,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
        final Map<SpartanTipper, ToolTip> tooltips = new HashMap<>();
        final Map<ToolTip, Rectangle> bounds = new HashMap<>();
       $.getTree().addListener(SWT.MouseHover, new Listener() {
-        @Override public void handleEvent(@Nullable final Event e) {
+        @Override public void handleEvent( final Event e) {
           if (e == null)
             return;
           final Widget w = e.widget;
@@ -249,11 +247,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (!(o instanceof SpartanTipper))
             return;
            final SpartanTipper st = (SpartanTipper) o;
-          @Nullable final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts),
+           final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts),
               λ -> prettify(((Converts) λ).from()));
            final IDocument d = new Document(before);
           try {
-            @Nullable final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts),
+             final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts),
                 λ -> prettify(((Converts) λ).to()));
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
@@ -261,7 +259,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
               }
 
               @Override  public Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm) throws OperationCanceledException {
-                @Nullable @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
+                 @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
                 $.setEdit(new ReplaceEdit(0, before.length(), after));
                 return $;
               }
@@ -291,7 +289,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @throws CoreException
    * @throws InvocationTargetException
    * @throws InterruptedException */
-  private static void refreshProject(@Nullable final IProject p) throws CoreException, InvocationTargetException, InterruptedException {
+  private static void refreshProject( final IProject p) throws CoreException, InvocationTargetException, InterruptedException {
     if (p != null && p.isOpen() && p.getNature(Nature.NATURE_ID) != null)
       if (!REFRESH_OPENS_DIALOG)
         new Job("Refreshing " + p.getName()) {
@@ -327,7 +325,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param filter examples filter
    * @param converter Example --> String converter
    * @return unified examples string */
-  @Nullable static String getPreviewString(@Nullable final Example[] preview,  final Function<Example, Boolean> filter,
+   static String getPreviewString( final Example[] preview,  final Function<Example, Boolean> filter,
        final Function<Example, String> converter) {
     if (preview == null)
       return null;

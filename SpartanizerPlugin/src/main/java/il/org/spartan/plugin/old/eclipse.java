@@ -22,8 +22,6 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -37,9 +35,9 @@ import il.org.spartan.utils.*;
 public enum eclipse {
   facade;
   static ImageIcon icon;
-  @Nullable static org.eclipse.swt.graphics.Image iconNonBusy;
+   static org.eclipse.swt.graphics.Image iconNonBusy;
   static final String NAME = "Laconic";
-  @Nullable static final Shell parent = null;
+   static final Shell parent = null;
   static final boolean persistLocation = false;
   static final boolean persistSize = false;
   static final int shellStyle = SWT.TOOL;
@@ -66,7 +64,7 @@ public enum eclipse {
    *        operation times use {@link wizard#nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
-  public static List<ICompilationUnit> compilationUnits(@Nullable final IJavaElement u,  final IProgressMonitor m) throws JavaModelException {
+  public static List<ICompilationUnit> compilationUnits( final IJavaElement u,  final IProgressMonitor m) throws JavaModelException {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
      final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null)
@@ -129,11 +127,11 @@ public enum eclipse {
     };
   }
 
-  @Nullable static ICompilationUnit compilationUnit(@Nullable final IEditorPart ep) {
+   static ICompilationUnit compilationUnit( final IEditorPart ep) {
     return ep == null ? null : compilationUnit((IResource) resources(ep));
   }
 
-  static ICompilationUnit compilationUnit(@Nullable final IResource ¢) {
+  static ICompilationUnit compilationUnit( final IResource ¢) {
     return ¢ == null ? null : JavaCore.createCompilationUnitFrom((IFile) ¢);
   }
 
@@ -182,7 +180,7 @@ public enum eclipse {
     return icon;
   }
 
-  @Nullable static org.eclipse.swt.graphics.Image iconNonBusy() {
+   static org.eclipse.swt.graphics.Image iconNonBusy() {
     if (!iconNotBusyInvalid)
       return iconNonBusy;
     iconNotBusyInvalid = false;

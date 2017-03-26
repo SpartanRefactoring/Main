@@ -4,8 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -62,7 +60,7 @@ public class TrimmingOperand extends Wrapper<String> {
     return trim.apply(trimmer, WrapIntoComilationUnit.find(get()).on(get()));
   }
 
-  @Nullable public TrimmingOperand gives( final String $) {
+   public TrimmingOperand gives( final String $) {
      final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
      final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
@@ -93,7 +91,7 @@ public class TrimmingOperand extends Wrapper<String> {
    * @return Operand
    * @author Dor Ma'ayan
    * @since 09-12-2016 */
-  @Nullable public TrimmingOperand givesEither( final String... options) {
+   public TrimmingOperand givesEither( final String... options) {
     assert options != null;
      final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
      final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);

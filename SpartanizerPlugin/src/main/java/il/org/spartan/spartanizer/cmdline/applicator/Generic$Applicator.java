@@ -6,8 +6,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -38,7 +36,7 @@ public class Generic$Applicator {
     selectedNodeTypes = setAllNodeTypes();
   }
 
-  public Generic$Applicator(@Nullable final String... classes) {
+  public Generic$Applicator( final String... classes) {
     System.out.println("classes:" + Arrays.toString(classes));
     if (classes == null) {
       selectedNodeTypes = setAllNodeTypes();
@@ -49,7 +47,7 @@ public class Generic$Applicator {
     }
   }
 
-  public Generic$Applicator(final String[] classes, @Nullable final String... tipperGroups) {
+  public Generic$Applicator(final String[] classes,  final String... tipperGroups) {
     this(classes);
     selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
   }
@@ -103,7 +101,7 @@ public class Generic$Applicator {
     return $;
   }
 
-  @Nullable <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
+   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     final Tipper<N> $ = toolbox.firstTipper(¢);
     final TipperGroup g = $.tipperGroup();
     if (!selectedTipperGroups.contains(g.name()))

@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -28,7 +26,7 @@ public enum getAll {
    * @author Ward Mattar
    * @param ¢ is a MethodInvocation
    * @return List of the names of the methods */
-  @Nullable public static Set<String> invocations(@Nullable final MethodInvocation ¢) {
+   public static Set<String> invocations( final MethodInvocation ¢) {
     if (¢ == null)
       return null;
      final Set<String> $ = new TreeSet<>();
@@ -48,7 +46,7 @@ public enum getAll {
    * @author Dor Ma'ayan
    * @param d JD
    * @return List of the names of the methods */
-  @Nullable public static Set<String> invocations(@Nullable final MethodDeclaration ¢) {
+   public static Set<String> invocations( final MethodDeclaration ¢) {
     if (¢ == null)
       return null;
      final Set<String> $ = new TreeSet<>();
@@ -69,7 +67,7 @@ public enum getAll {
    * @author Kfir Marx
    * @param ¢ Block
    * @return List of the names in the block */
-  @Nullable public static List<Name> names(@Nullable final Block b) {
+   public static List<Name> names( final Block b) {
     if (b == null)
       return null;
      final List<Name> $ = new ArrayList<>();
@@ -87,7 +85,7 @@ public enum getAll {
    * @author Koby Ben Shimol
    * @author Yuval Simon
    * @since 16-11-01 */
-  @Nullable public static List<InstanceofExpression> instanceofs(@Nullable final MethodDeclaration d) {
+   public static List<InstanceofExpression> instanceofs( final MethodDeclaration d) {
     if (d == null)
       return null;
      final List<InstanceofExpression> $ = new ArrayList<>();
@@ -107,7 +105,7 @@ public enum getAll {
    * @author Inbal Matityahu
    * @author Or Troyaner
    * @author Tom Nof */
-  @Nullable public static Collection<CastExpression> casts(@Nullable final MethodDeclaration d) {
+   public static Collection<CastExpression> casts( final MethodDeclaration d) {
     if (d == null)
       return null;
      final Collection<CastExpression> $ = new ArrayList<>();
@@ -126,7 +124,7 @@ public enum getAll {
    * @param d a MethodDeclaration
    * @author Alexander Kaplan
    * @author Ariel Kolikant */
-  @Nullable public static List<VariableDeclaration> stringVariables(@Nullable final MethodDeclaration d) {
+   public static List<VariableDeclaration> stringVariables( final MethodDeclaration d) {
     if (d == null)
       return null;
      final List<VariableDeclaration> $ = new ArrayList<>();
@@ -145,7 +143,7 @@ public enum getAll {
    * @param ¢ TypeDecleration
    * @author Inbal Zukerman
    * @author Elia Traore */
-  @Nullable public static List<String> publicFields(@Nullable final TypeDeclaration ¢) {
+   public static List<String> publicFields( final TypeDeclaration ¢) {
     if (¢ == null)
       return null;
      final List<String> $ = new ArrayList<>();
@@ -169,7 +167,7 @@ public enum getAll {
    * @param CompilationUnit
    * @author RoeiRaz
    * @author RoeyMaor */
-  @Nullable public static List<MethodDeclaration> methods(@Nullable final CompilationUnit u) {
+   public static List<MethodDeclaration> methods( final CompilationUnit u) {
     if (u == null)
       return null;
      final List<MethodDeclaration> $ = new ArrayList<>();
@@ -188,7 +186,7 @@ public enum getAll {
    * @author yonzarecki
    * @author rodedzats
    * @author zivizhar */
-   public static List<String> privateFields(@Nullable final TypeDeclaration d) {
+   public static List<String> privateFields( final TypeDeclaration d) {
      final List<String> $ = new ArrayList<>();
     if (d == null)
       return $;

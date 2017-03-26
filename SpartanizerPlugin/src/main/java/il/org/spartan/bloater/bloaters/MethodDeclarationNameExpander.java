@@ -9,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -38,7 +36,7 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
     return ¢.getName() + "";
   }
 
-  @Override @SuppressWarnings("unused") @Nullable public Tip tip( final MethodDeclaration d, final ExclusionManager __) {
+  @Override @SuppressWarnings("unused")  public Tip tip( final MethodDeclaration d, final ExclusionManager __) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;

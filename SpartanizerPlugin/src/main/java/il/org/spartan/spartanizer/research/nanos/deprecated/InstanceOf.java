@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -25,7 +23,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   @Override public boolean canTip(final InstanceofExpression ¢) {
     if (!(type(¢) instanceof SimpleType))
       return false;
-    @Nullable final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
+     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     final Javadoc j = $.getJavadoc();
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
@@ -57,11 +55,11 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     wizard.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
   }
 
-  @Nullable private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
+   private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
     return az.methodDeclaration(wizard.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + type(¢) + ";}"));
   }
 
-  @Nullable private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
+   private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
     // smaybe in the future change to iz.java in package which will
     // be created automatically...
     return yieldAncestors.untilContainingType().from(¢);

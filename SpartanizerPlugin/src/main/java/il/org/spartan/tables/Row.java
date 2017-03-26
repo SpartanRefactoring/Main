@@ -3,8 +3,6 @@ package il.org.spartan.tables;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
@@ -73,7 +71,7 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    *        {@code null
    * @param value The value associated with the key
    * @return {@code this} */
-   public final Self col(final String key, @Nullable final Integer value) {
+   public final Self col(final String key,  final Integer value) {
     return value == null ? col(key) : col(key, value.intValue());
   }
 
@@ -90,18 +88,18 @@ public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Obj
    *        {@code null
    * @param value The value associated with the key
    * @return {@code this} */
-   public final Self col(final String key, @Nullable final Object value) {
+   public final Self col(final String key,  final Object value) {
     if (value == null)
       return col(key);
     super.put(key, value);
     return self();
   }
 
-   public final Self col(final String key, @Nullable final Object[] a, final int i) {
+   public final Self col(final String key,  final Object[] a, final int i) {
     return col(key, a == null || i < 0 || i >= a.length ? null : a[i]);
   }
 
-   public final Self col(final String key, @Nullable final Object... os) {
+   public final Self col(final String key,  final Object... os) {
     return col(key, os == null || os.length == 0 ? null : (Object) os);
   }
 

@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,12 +19,12 @@ import il.org.spartan.spartanizer.tipping.*;
 public class IfStatementBlockSequencerBlockSameSequencer extends CarefulTipper<IfStatement> implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 0x6F3B3E10E4F678DFL;
 
-  @Override @Nullable public Tip tip( final IfStatement s) {
+  @Override  public Tip tip( final IfStatement s) {
     return new Tip(description(s), s, IfStatementBlockSequencerBlockSameSequencer.class) {
       @Override public void go( final ASTRewrite r, final TextEditGroup g) {
         final IfStatement $ = copy.of(s);
         r.getListRewrite(then($), Block.STATEMENTS_PROPERTY).remove(extract.lastStatement(then($)), g);
-        @Nullable final Block b = az.block(parent(s));
+         final Block b = az.block(parent(s));
         final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
         // This is buggy
         lr.remove(b, g);

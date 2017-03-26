@@ -13,8 +13,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -46,17 +44,17 @@ public final class SingleTipperApplicator {
        final IMarker m, //
       final Type t, //
       final Tipper<?> w, //
-      @Nullable final IFile f) {
+       final IFile f) {
     return createRewrite(pm, (CompilationUnit) (f != null ? makeAST.COMPILATION_UNIT.from(f) : makeAST.COMPILATION_UNIT.from(m, pm)), m, t, w);
   }
 
-  @Nullable private static Tipper<?> fillRewrite(final ASTRewrite $, //
+   private static Tipper<?> fillRewrite(final ASTRewrite $, //
        final CompilationUnit u, //
       final IMarker m, //
       final Type t, //
-      @Nullable final Tipper<?> w) {
+       final Tipper<?> w) {
     Toolbox.refresh();
-    @Nullable final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
+     final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)
       u.accept(v);
     else
@@ -71,7 +69,7 @@ public final class SingleTipperApplicator {
     }
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
      final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    @Nullable final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
+     final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.SEARCH_TIPPER, null);
     if (w == null)
       return;
     pm.beginTask("Applying " + w.description() + " tip to " + u.getElementName(), IProgressMonitor.UNKNOWN);
@@ -88,12 +86,12 @@ public final class SingleTipperApplicator {
     final ICompilationUnit cu = eclipse.currentCompilationUnit();
     if (cu == null)
       return;
-    @Nullable final List<ICompilationUnit> todo = eclipse.facade.compilationUnits();
+     final List<ICompilationUnit> todo = eclipse.facade.compilationUnits();
     assert todo != null;
     pm.beginTask("Spartanizing project", todo.size());
     final IJavaProject jp = cu.getJavaProject();
     // XXX Roth: find a better way to get tipper from marker
-    @Nullable final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
+     final Tipper<?> w = fillRewrite(null, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, Type.PROJECT, null);
     if (w == null) {
       pm.done();
       return;
@@ -155,7 +153,7 @@ public final class SingleTipperApplicator {
     final ASTRewrite rewrite;
     final Type type;
     final CompilationUnit compilationUnit;
-    @Nullable Tipper<?> tipper;
+     Tipper<?> tipper;
     /** A boolean flag indicating end of traversal. Set true after required
      * operation has been made. */
     boolean doneTraversing;
@@ -203,7 +201,7 @@ public final class SingleTipperApplicator {
           @SuppressWarnings("unchecked") final Tipper<N> x = Toolbox.findTipper(n, w);
           if (x == null)
             return true;
-          @Nullable final Tip make = x.tip(n, exclude);
+           final Tip make = x.tip(n, exclude);
           if (make != null)
             make.go(rewrite, null);
           return true;

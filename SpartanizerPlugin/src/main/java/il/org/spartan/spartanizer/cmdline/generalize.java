@@ -6,8 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.utils.*;
 
@@ -39,7 +37,7 @@ public enum generalize {
     parser.setSource(d.get().toCharArray());
      final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
-    @Nullable final ASTNode n = ASTutils.extractASTNode(s, cu);
+     final ASTNode n = ASTutils.extractASTNode(s, cu);
     final ASTRewrite r = ASTRewrite.create(ast);
      final Map<String, String> renaming = new HashMap<>();
     // noinspection SameReturnValue,SameReturnValue

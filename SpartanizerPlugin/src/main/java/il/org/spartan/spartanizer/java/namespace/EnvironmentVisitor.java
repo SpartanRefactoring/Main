@@ -84,7 +84,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(trivia.condense(¢.getType())));
   }
 
-  @Nullable Binding createInformation( final VariableDeclarationFragment ¢, final type t) {
+   Binding createInformation( final VariableDeclarationFragment ¢, final type t) {
     // VariableDeclarationFragment, that comes from either FieldDeclaration,
     // VariableDeclarationStatement or VariableDeclarationExpression,
     // does not contain its type. Hence, the type is sent from the parent in
@@ -202,7 +202,7 @@ final class EnvironmentVisitor extends ASTVisitor {
     return $;
   }
 
-   static String parentNameScope(@Nullable final String ¢) {
+   static String parentNameScope( final String ¢) {
     return ¢ == null || ¢.isEmpty() ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
 

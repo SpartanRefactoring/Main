@@ -3,8 +3,6 @@ package il.org.spartan.tables;
 import java.io.*;
 import java.util.*;
 
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.statistics.*;
@@ -77,7 +75,7 @@ public class Table extends Row<Table> implements Closeable {
           final RealStatistics r = getRealStatistics(key);
           put(key, r == null || r.n() == 0 ? "" : box.it(s.of(r)));
         }
-        @Nullable final String key = lastEmptyColumn();
+         final String key = lastEmptyColumn();
         for ( final RecordWriter ¢ : writers) {
           put(key, ¢.renderer.render(s));
           ¢.writeFooter(this);
@@ -86,8 +84,8 @@ public class Table extends Row<Table> implements Closeable {
     writers.forEach(RecordWriter::close);
   }
 
-  @Nullable private String lastEmptyColumn() {
-    @Nullable String $ = null;
+   private String lastEmptyColumn() {
+     String $ = null;
     for (final String key : keySet()) {
       final RealStatistics r = getRealStatistics(key);
       if (r != null && r.n() != 0)

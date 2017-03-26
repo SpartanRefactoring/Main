@@ -7,27 +7,25 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 
 /** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 7, 2016 */
 interface FactorsReorganizer {
-  @Nullable static Expression simplify(final InfixExpression ¢) {
+   static Expression simplify(final InfixExpression ¢) {
     return build(new FactorsCollector(¢));
   }
 
-  @Nullable static Expression build( final FactorsCollector ¢) {
+   static Expression build( final FactorsCollector ¢) {
     return build(¢.multipliers(), ¢.dividers());
   }
 
-  @Nullable static Expression build( final List<Expression> multipliers,  final List<Expression> dividers) {
+   static Expression build( final List<Expression> multipliers,  final List<Expression> dividers) {
     return buildDividers(buildMultipliers(multipliers), dividers);
   }
 
-  @Nullable static Expression buildDividers(@Nullable final Expression first,  final List<Expression> rest) {
+   static Expression buildDividers( final Expression first,  final List<Expression> rest) {
     if (first == null)
       return buildDividers(rest);
     if (rest.isEmpty())

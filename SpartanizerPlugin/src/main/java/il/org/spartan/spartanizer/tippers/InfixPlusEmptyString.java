@@ -9,8 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -39,7 +37,7 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
   @Override @SuppressWarnings("boxing") public Expression replacement( final InfixExpression x) {
     if (type.of(x) != Certain.STRING)
       return null;
-    @Nullable final List<Expression> es = hop.operands(x);
+     final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
      final List<Expression> $ = new ArrayList<>();
     boolean isArithmetic = true;

@@ -10,8 +10,6 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
@@ -56,7 +54,7 @@ public final class SpartanizeProject extends BaseHandler {
     return $.get();
   }
 
-  @Override @Nullable public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+  @Override  public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     status.setLength(0);
     todo.clear();
     done.clear();
@@ -64,7 +62,7 @@ public final class SpartanizeProject extends BaseHandler {
     return go();
   }
 
-  @Nullable public Void go() {
+   public Void go() {
     start();
     if (initialCount == 0)
       return eclipse.announce(status + "No tips found.");

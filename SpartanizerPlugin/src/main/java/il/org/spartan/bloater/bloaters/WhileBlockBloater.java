@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -19,7 +17,7 @@ public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -2161530114677301355L;
 
-  @Override @Nullable public ASTNode replacement(@Nullable final WhileStatement s) {
+  @Override  public ASTNode replacement( final WhileStatement s) {
     if (s == null)
       return null;
     final WhileStatement $ = copy.of(s);

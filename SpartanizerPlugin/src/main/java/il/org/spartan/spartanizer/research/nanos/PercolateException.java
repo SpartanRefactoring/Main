@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -27,7 +25,7 @@ public final class PercolateException extends NanoPatternTipper<CatchClause> {
     return anyTips(tippers, parentAsTryStatement(¢));
   }
 
-  @Override @Nullable public Tip pattern(final CatchClause ¢) {
+  @Override  public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parentAsTryStatement(¢));
   }
 

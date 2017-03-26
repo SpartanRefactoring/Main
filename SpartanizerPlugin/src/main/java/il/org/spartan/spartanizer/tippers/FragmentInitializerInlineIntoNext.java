@@ -9,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -58,7 +56,7 @@ public final class FragmentInitializerInlineIntoNext extends GoToNextStatement<V
      final Expression initializer = initializer(f);
     if (initializer == null)
       return null;
-    @Nullable final Statement parent = az.statement(parent(f));
+     final Statement parent = az.statement(parent(f));
     if (parent == null//
         || iz.forStatement(parent))
       return null;
@@ -69,7 +67,7 @@ public final class FragmentInitializerInlineIntoNext extends GoToNextStatement<V
         || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
-    @Nullable final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
       e = Inliner.protect(e, pp);
     if (pp == null//

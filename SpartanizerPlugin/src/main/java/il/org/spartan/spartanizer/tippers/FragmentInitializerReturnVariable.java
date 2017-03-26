@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -29,11 +27,11 @@ public final class FragmentInitializerReturnVariable extends $FragmentAndStateme
     return "Eliminate temporary " + ¢.getName() + " and return its value";
   }
 
-  @Override @Nullable protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final SimpleName n,
-      @Nullable final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final SimpleName n,
+       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f) || initializer instanceof ArrayInitializer)
       return null;
-    @Nullable final ReturnStatement s = az.returnStatement(nextStatement);
+     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
      final Expression returnValue = expression(s);

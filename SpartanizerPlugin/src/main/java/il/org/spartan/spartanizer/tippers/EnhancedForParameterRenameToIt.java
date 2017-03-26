@@ -10,8 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.name;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -31,8 +29,8 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  @Override public Tip tip( final EnhancedForStatement s, @Nullable final ExclusionManager m) {
-    @Nullable final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
+  @Override public Tip tip( final EnhancedForStatement s,  final ExclusionManager m) {
+     final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
     final SimpleName sn = name(onlyOne(parameters(p)));

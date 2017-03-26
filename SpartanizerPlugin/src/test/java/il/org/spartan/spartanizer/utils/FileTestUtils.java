@@ -107,9 +107,9 @@ public class FileTestUtils {
   }
 
    static AbstractGUIApplicator makeLaconizationObject(final String folderForClass) {
-    @Nullable final Class<?> c = asClass(folderForClass);
+     final Class<?> c = asClass(folderForClass);
     assert c != null;
-    @Nullable final Object $ = getInstance(c);
+     final Object $ = getInstance(c);
     assert $ != null;
     return (AbstractGUIApplicator) $;
   }
@@ -150,7 +150,7 @@ public class FileTestUtils {
    * @since 2014/05/24 */
   public abstract static class Files extends FileTestUtils.Traverse {
     @Override public void go( final List<Object[]> $,  final File d) {
-      for (@Nullable final File f : d.listFiles()) // NANO
+      for ( final File f : d.listFiles()) // NANO
         if (f != null && f.isFile() && f.exists()) {
            final Object[] c = makeCase(makeLaconizationObject(d), d, f, f.getName());
           if (c != null)

@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,7 +24,7 @@ public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInv
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -2446197092801176661L;
 
-  @Override @Nullable public ASTNode replacement(@Nullable final MethodInvocation n) {
+  @Override  public ASTNode replacement( final MethodInvocation n) {
     if (n == null || iz.lambdaExpression(n.getParent()))
       return null;
      final List<Expression> l = arguments(n);
@@ -34,7 +32,7 @@ public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInv
       return null;
     // TODO Yuval Simon: move into loop --yg
     for (int i = 0; i < l.size(); ++i) {
-      @Nullable final ConditionalExpression $;
+       final ConditionalExpression $;
       if (($ = az.conditionalExpression(l.get(i))) != null) {
         if (iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))
           return null;

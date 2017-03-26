@@ -7,8 +7,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -26,8 +24,8 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = 0x3FBC0D3028B5DF0L;
 
-  @Override  public Tip tip( final SwitchCase n, @Nullable final ExclusionManager exclude) {
-    @Nullable final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+  @Override  public Tip tip( final SwitchCase n,  final ExclusionManager exclude) {
+     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement($.getParent()), n));
     return new Tip(description(n), n, getClass()) {
@@ -39,8 +37,8 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
   }
 
   @Override protected boolean prerequisite( final SwitchCase n) {
-    @Nullable final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
-    @Nullable final List<SwitchCase> cases = extract.casesOnSameBranch(az.switchStatement(parent(n)), n);
+     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
+     final List<SwitchCase> cases = extract.casesOnSameBranch(az.switchStatement(parent(n)), n);
     return cases.size() <= switchBranch.MAX_CASES_FOR_SPARTANIZATION && cases.stream().noneMatch(SwitchCase::isDefault) && $ != null && !$.isDefault()
         && !n.isDefault() && (iz.intType(expression(n)) || (expression(n) + "").compareTo(expression($) + "") > 0)
         && (!iz.intType(expression(n)) || Integer.parseInt(expression(n) + "") > Integer.parseInt(expression($) + ""));

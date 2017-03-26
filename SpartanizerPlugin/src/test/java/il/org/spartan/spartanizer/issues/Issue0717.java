@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.issues;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,9 +19,9 @@ public class Issue0717 {
   private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   private static final int MAX_NAME_SIZE = 100;
   private static final int MAX_STAT_AMOUNT = 100;
-  @Nullable final MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
-  @Nullable final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
-  @Nullable final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
+   final MethodDeclaration fiveStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; int e;}");
+   final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
+   final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; ; ; ; }");
 
   @Test public void bigBlockWithAnnotationReturnsTrue() {
     assert determineIf.hasBigBlock((MethodDeclaration) wizard.ast("@Override public int f(){;;;;;}"));

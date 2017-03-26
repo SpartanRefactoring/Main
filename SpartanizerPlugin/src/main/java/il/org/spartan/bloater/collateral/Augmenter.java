@@ -15,8 +15,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
@@ -93,7 +91,7 @@ public class Augmenter implements Application {
    * as list of lists of statements.
    * @param ss statements to be collateralized
    * @return collateralization output as list of lists of statements */
-  @Nullable public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
+   public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
     return null;
   }
 
@@ -101,7 +99,7 @@ public class Augmenter implements Application {
    * @param r JD
    * @param u JD
    * @param g JD */
-  private static void addCollateralImport(@Nullable final ASTRewrite r, @Nullable final CompilationUnit u, final TextEditGroup g) {
+  private static void addCollateralImport( final ASTRewrite r,  final CompilationUnit u, final TextEditGroup g) {
     if (u == null || r == null)
       return;
      final String i = LibrariesManagement.LIBRARY_QULIFIED_NAME + ".Collateral.₡";
@@ -144,7 +142,7 @@ public class Augmenter implements Application {
   /** @param n JD
    * @param s JD
    * @return true iff node is inside selection */
-  static boolean inRange(@Nullable final ASTNode n, @Nullable final ITextSelection s) {
+  static boolean inRange( final ASTNode n,  final ITextSelection s) {
     if (n == null || s == null)
       return false;
     final int $ = n.getStartPosition();
@@ -155,7 +153,7 @@ public class Augmenter implements Application {
    * less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
    * @param ¢ JD
    * @return true iff block should be discarded */
-  static boolean discardOptimization(@Nullable final Block ¢) {
+  static boolean discardOptimization( final Block ¢) {
     return ¢ == null || statements(¢) == null || statements(¢).size() < MIN_STATEMENTS_COUNT;
   }
 
@@ -163,7 +161,7 @@ public class Augmenter implements Application {
    * when it has less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
    * @param ¢ JD
    * @return true iff list of statements should be discarded */
-  static boolean discardOptimization(@Nullable final Collection<Statement> ¢) {
+  static boolean discardOptimization( final Collection<Statement> ¢) {
     return ¢ == null || ¢.size() < MIN_STATEMENTS_COUNT;
   }
 
@@ -171,7 +169,7 @@ public class Augmenter implements Application {
    * @param u JD
    * @param s JD
    * @return absolute text selection */
-   private static ITextSelection getTextSelection( final CompilationUnit u, @Nullable final ITextSelection s) {
+   private static ITextSelection getTextSelection( final CompilationUnit u,  final ITextSelection s) {
     return s != null ? s : new TextSelection(0, u.getLength());
   }
 }

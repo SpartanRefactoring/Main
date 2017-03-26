@@ -8,8 +8,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
-import org.jetbrains.annotations.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,11 +29,11 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -4217296742524813844L;
 
-   private static String description(@Nullable final Expression ¢) {
+   private static String description( final Expression ¢) {
     return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");
   }
 
-  @Nullable private static ASTNode replacement(final Operator o,  final Expression receiver, final int threshold) {
+   private static ASTNode replacement(final Operator o,  final Expression receiver, final int threshold) {
     assert receiver != null : fault.dump() + //
         "\n threshold='" + threshold + //
         "\n receiver ='" + receiver + //
@@ -67,7 +65,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     return null;
   }
 
-  @Nullable private static ASTNode replacement(final Operator o, final int sign,  final NumberLiteral l,  final Expression receiver) {
+   private static ASTNode replacement(final Operator o, final int sign,  final NumberLiteral l,  final Expression receiver) {
     return replacement(o, receiver, sign * Integer.parseInt(l.getToken()));
   }
 
@@ -75,7 +73,7 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     if (!"size".equals(name(i).getIdentifier()))
       return null;
     int $ = -1;
-    @Nullable NumberLiteral l = az.throwing.negativeLiteral(x);
+     NumberLiteral l = az.throwing.negativeLiteral(x);
     if (l == null) {
       l = az.numberLiteral(x);
       if (l == null)
@@ -87,10 +85,10 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
       return null;
     if (!i.getAST().hasResolvedBindings())
       return replacement(o, $, l, receiver);
-    @Nullable final CompilationUnit u = containing.compilationUnit(x);
+     final CompilationUnit u = containing.compilationUnit(x);
     if (u == null)
       return null;
-    @Nullable final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty", null, x, u);
+     final IMethodBinding b = BindingUtils.getVisibleMethod(receiver.resolveTypeBinding(), "isEmpty", null, x, u);
     if (b == null)
       return null;
     final ITypeBinding t = b.getReturnType();
