@@ -31,6 +31,7 @@ public final class Version300 {
             "boolean a(int[] b, int c){ return d == c? true : false; }") //
     );
   }
+
   @Test public void abcd() {
     trimmingOf("a = !(b ? c : d)") //
         .using(PrefixExpression.class, new PrefixNotPushdown()) //
@@ -38,14 +39,16 @@ public final class Version300 {
         .stays() //
     ;
   }
-@Test public void b() {
-  azzert.that(
-      theSpartanizer.twice(//
-          "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
-      iz(//
-          "boolean a(int[] b, int c){ return d == c || false; }") //
-  );
-}
+
+  @Test public void b() {
+    azzert.that(
+        theSpartanizer.twice(//
+            "boolean a(int[] b, int c){ if (d == c) return true; return false; }"), //
+        iz(//
+            "boolean a(int[] b, int c){ return d == c || false; }") //
+    );
+  }
+
   @Test public void c() {
     azzert.that(
         theSpartanizer.thrice(//
@@ -170,7 +173,7 @@ public final class Version300 {
     kill("int _ = new A(){};", "{new A(){};}");
     kill("int _ = super.f();", "{super.f();}");
     kill("int _ = new int[2];", "{new int[2];}");
-    kill("A _ =  ((a=b)*i++)+f(g())*((a=b)*i++) + ++j;","{a=b; i++; f(g());a=b;i++; ++j;}");
+    kill("A _ =  ((a=b)*i++)+f(g())*((a=b)*i++) + ++j;", "{a=b; i++; f(g());a=b;i++; ++j;}");
   }
 
   public Expression make(final String statement) {
@@ -258,5 +261,4 @@ public final class Version300 {
     statements($).addAll(wizard.decompose(¢));
     return $;
   }
-
 }
