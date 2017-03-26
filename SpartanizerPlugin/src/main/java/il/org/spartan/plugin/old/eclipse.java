@@ -169,29 +169,28 @@ public enum eclipse {
   }
 
   static ImageIcon icon() {
-    if (iconInvalid) {
-      iconInvalid = false;
-      try {
-        final Image i = Toolkit.getDefaultToolkit().getImage(new URL(iconAddress));
-        if (i != null)
-          icon = new ImageIcon(
-              i/* .getScaledInstance(128, 128, Image.SCALE_SMOOTH) */);
-      } catch (@NotNull final MalformedURLException ¢) {
-        monitor.logProbableBug(¢);
-      }
+    if (!iconInvalid)
+      return icon;
+    iconInvalid = false;
+    try {
+      final Image i = Toolkit.getDefaultToolkit().getImage(new URL(iconAddress));
+      if (i != null)
+        icon = new ImageIcon(i);
+    } catch (@NotNull final MalformedURLException ¢) {
+      monitor.logProbableBug(¢);
     }
     return icon;
   }
 
   @Nullable static org.eclipse.swt.graphics.Image iconNonBusy() {
-    if (iconNotBusyInvalid) {
-      iconNotBusyInvalid = false;
-      try {
-        iconNonBusy = new org.eclipse.swt.graphics.Image(null,
-            ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif")).getImageData());
-      } catch (@NotNull final MalformedURLException ¢) {
-        monitor.log(¢);
-      }
+    if (!iconNotBusyInvalid)
+      return iconNonBusy;
+    iconNotBusyInvalid = false;
+    try {
+      iconNonBusy = new org.eclipse.swt.graphics.Image(null,
+          ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif")).getImageData());
+    } catch (@NotNull final MalformedURLException ¢) {
+      monitor.log(¢);
     }
     return iconNonBusy;
   }

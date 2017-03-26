@@ -152,7 +152,6 @@ public interface ConfigurableReport {
       private static final long serialVersionUID = 0x7C6A72AC052B852FL;
 
       /** real serialVersionUID comes much later in production code */
-
       public void close() {
         report().close();
       }

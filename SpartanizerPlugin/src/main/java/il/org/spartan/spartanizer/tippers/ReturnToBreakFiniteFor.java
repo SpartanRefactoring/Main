@@ -46,29 +46,25 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
       return null;
     @Nullable final IfStatement ifStatement = az.ifStatement(s);
     final Statement then = ifStatement.getThenStatement(), elze = ifStatement.getElseStatement();
-    if (then != null) {
-      if (compareReturnStatements(az.returnStatement(then), nextReturn))
-        return then;
-      if (iz.block(then)) {
-        @Nullable final Statement $ = handleBlock((Block) then, nextReturn);
-        if ($ != null)
-          return $;
-      }
-      if (az.ifStatement(then) != null)
-        return handleIf(then, nextReturn);
-      if (elze != null) {
-        if (compareReturnStatements(az.returnStatement(elze), nextReturn))
-          return elze;
-        if (iz.block(elze)) {
-          @Nullable final Statement $ = handleBlock((Block) elze, nextReturn);
-          if ($ != null)
-            return $;
-        }
-        if (az.ifStatement(elze) != null)
-          return handleIf(elze, nextReturn);
-      }
+    if (then == null)
+      return null;
+    if (compareReturnStatements(az.returnStatement(then), nextReturn))
+      return then;
+    if (iz.block(then)) {
+      @Nullable final Statement $ = handleBlock((Block) then, nextReturn);
+      if ($ != null)
+        return $;
     }
-    return null;
+    if (az.ifStatement(then) != null)
+      return handleIf(then, nextReturn);
+    if (elze == null)
+      return null;
+    if (compareReturnStatements(az.returnStatement(elze), nextReturn))
+      return elze;
+    if (!iz.block(elze))
+      return az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
+    @Nullable final Statement $ = handleBlock((Block) elze, nextReturn);
+    return $ != null ? $ : az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
   }
 
   private static boolean isInfiniteLoop(@NotNull final ForStatement ¢) {

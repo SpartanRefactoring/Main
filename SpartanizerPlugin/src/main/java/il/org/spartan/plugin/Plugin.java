@@ -39,18 +39,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
 
   /** Called whenever the plugin is first loaded into the workbench */
   @Override public void earlyStartup() {
-    try {
-      monitor.debug("EARLY STATRTUP: gUIBatchLaconizer");
-      startSpartan();
-    } catch (@NotNull final IllegalStateException ¢) {
-      monitor.log(¢);
-      return;
-    }
-    try {
-      LibrariesManagement.initializeUserLibraries();
-    } catch (@NotNull final CoreException ¢) {
-      monitor.log(¢);
-    }
+    //
   }
 
   @Override public void start(final BundleContext c) throws Exception {
@@ -100,14 +89,10 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
           if (d == null || d.getResource() == null || !(d.getResource() instanceof IProject))
             return true;
           @NotNull final IProject p = (IProject) d.getResource();
-          if (d.getKind() == IResourceDelta.ADDED) {
-            mp.p = p;
-            mp.type = NEW_PROJECT;
-          }
-          // else if (d.getKind() == IResourceDelta.CHANGED && p.isOpen()) {
-          // mp.p = p;
-          // mp.type = OPENED_PROJECT;
-          // }
+          if (d.getKind() != IResourceDelta.ADDED)
+            return true;
+          mp.p = p;
+          mp.type = NEW_PROJECT;
           return true;
         });
         // TODO Ori Roth: please clean this up

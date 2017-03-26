@@ -26,15 +26,8 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -8610595251612382642L;
 
-  private static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
-    final ForStatement $ = copy.of(¢);
-    $.setExpression(removeInitializersFromExpression(copy.of(expression(¢)), s));
-    setInitializers($, copy.of(s));
-    return $;
-  }
-
   private static boolean fitting(@NotNull final VariableDeclarationStatement s, @NotNull final ForStatement ¢) {
-    return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToCent(¢);
+    return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToIt(¢);
   }
 
   /** final modifier is the only legal modifier inside a for loop, thus we push
@@ -46,10 +39,6 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   private static boolean fittingModifiers(final VariableDeclarationStatement s, @NotNull final VariableDeclarationExpression x) {
     @NotNull final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
     return $.isEmpty() && initializerModifiers.isEmpty() || haz.final¢($) && haz.final¢(initializerModifiers);
-  }
-
-  private static boolean fittingType(@NotNull final VariableDeclarationStatement s, @NotNull final VariableDeclarationExpression x) {
-    return (x.getType() + "").equals(s.getType() + "");
   }
 
   // TODO: now fitting returns true iff all fragments fitting. We
@@ -75,7 +64,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
-  private static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+  public static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s)
         : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
   }
@@ -88,10 +77,10 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
       return false;
     final VariableDeclarationExpression $ = az.variableDeclarationExpression(first(initializers));
     assert $ != null : "FragmentToForInitializers -> for initializer is null and not empty?!?";
-    return fittingType(s, $) && fittingModifiers(s, $);
+    return wizard.same(s.getType(), $.getType()) && fittingModifiers(s, $);
   }
 
-  private static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
+  public static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
     final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(first(initializers($)));
     initializers($).clear();
     initializers($).add(make.variableDeclarationExpression(s));
@@ -115,7 +104,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     exclude.excludeAll(fragments(declarationStatement));
     $.remove(declarationStatement, g);
     // TODO Ori Roth: use list rewriter; talk to Ori Roth
-    $.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
+    $.replace(forStatement, wizard.buildForStatement(declarationStatement, forStatement), g);
     return $;
   }
 }

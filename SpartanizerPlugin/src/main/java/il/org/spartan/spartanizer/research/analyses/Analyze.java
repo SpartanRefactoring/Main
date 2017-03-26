@@ -50,10 +50,6 @@ public enum Analyze {
     summarizeMethodStatistics(outputDir);
   }
 
-  private static double min(final double a, final double d) {
-    return a < d ? a : d;
-  }
-
   @Nullable public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
@@ -82,16 +78,16 @@ public enum Analyze {
           .put("Name", m.methodClassName + "~" + m.methodName) //
           .put("#Statement", m.numStatements) //
           .put("#NP Statements", m.numNPStatements()) //
-          .put("Statement ratio", m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements(), m.numStatements))) //
+          .put("Statement ratio", m.numStatements == 0 ? 1 : Math.min(1, safe.div(m.numNPStatements(), m.numStatements))) //
           .put("#Expressions", m.numExpressions) //
           .put("#NP expressions", m.numNPExpressions()) //
-          .put("Expression ratio", m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions(), m.numExpressions))) //
+          .put("Expression ratio", m.numExpressions == 0 ? 1 : Math.min(1, safe.div(m.numNPExpressions(), m.numExpressions))) //
           .put("#Parameters", m.numParameters) //
           .put("#NP", m.nps.size()) //
       ;
       report.nl();
-      sumSratio += m.numStatements == 0 ? 1 : min(1, safe.div(m.numNPStatements(), m.numStatements));
-      sumEratio += m.numExpressions == 0 ? 1 : min(1, safe.div(m.numNPExpressions(), m.numExpressions));
+      sumSratio += m.numStatements == 0 ? 1 : Math.min(1, safe.div(m.numNPStatements(), m.numStatements));
+      sumEratio += m.numExpressions == 0 ? 1 : Math.min(1, safe.div(m.numNPExpressions(), m.numExpressions));
     }
     System.out.println("Total methods: " + Logger.numMethods);
     System.out.println("Average statement ratio: " + safe.div(sumSratio, Logger.numMethods));
@@ -136,7 +132,7 @@ public enum Analyze {
           try {
             Count.before(¢);
             @NotNull final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
-                .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))));
+                .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
           } catch (@NotNull @SuppressWarnings("unused") final AssertionError __) {
@@ -159,7 +155,7 @@ public enum Analyze {
   }
 
   private static void initializeSpartanizer() {
-    spartanizer = new SpartAnalyzer();
+    spartanizer = new SpartanAnalyzer();
   }
 
   /** run an interactive classifier to classify nanos! */
@@ -204,7 +200,7 @@ public enum Analyze {
                 .forEach(¢ -> {
                   try {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)
-                        .in(wizard.ast(Wrap.Method.off(spartanizer.fixedPoint(Wrap.Method.on(¢ + "")))))));
+                        .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))))));
                   } catch (@NotNull final AssertionError __) {
                     ___.unused(__);
                     //

@@ -316,6 +316,10 @@ public final class Namespace implements Environment {
     return this;
   }
 
+  @NotNull public boolean isNumeric(final String identifier) {
+    return flat.get(identifier) != null && flat.get(identifier).isNumeric();
+  }
+
   @NotNull protected Namespace put(@NotNull final TypeDeclaration ¢) {
     @NotNull @knows("¢") final String key = "type " + step.name(¢);
     put(key, new Binding(key, type.baptize(step.name(¢) + "", !iz.interface¢(¢) ? "class" : "interface")));

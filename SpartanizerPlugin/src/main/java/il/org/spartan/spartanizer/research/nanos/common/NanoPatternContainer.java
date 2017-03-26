@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.research.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-12 */
 public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefinedTipper<N>> {
-
   private static final long serialVersionUID = 0x58B3F750F70F92FCL;
 
   @SafeVarargs public NanoPatternContainer(final UserDefinedTipper<N>... ts) {

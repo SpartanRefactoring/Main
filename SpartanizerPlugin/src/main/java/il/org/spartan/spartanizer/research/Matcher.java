@@ -287,19 +287,12 @@ public final class Matcher {
 
   private static boolean sameName(final ASTNode p, final ASTNode n, @NotNull final Map<String, String> ids) {
     @NotNull final String $ = p + "";
-    if ($.startsWith("$")) {
-      if ($.startsWith($M))
-        return iz.methodInvocation(n) && consistent(ids, $, n);
-      if ($.startsWith($SN))
-        return iz.simpleName(n) && consistent(ids, $, n);
-      if ($.startsWith($N))
-        return iz.name(n) && consistent(ids, $, n);
-      if ($.startsWith($L))
-        return iz.literal(n) && consistent(ids, $, n);
-      if ($.startsWith($D))
-        return iz.defaultLiteral(n) && consistent(ids, $, n);
-    }
-    return iz.name(n) && $.equals(identifier(az.name(n)));
+    return !$.startsWith("$") ? iz.name(n) && $.equals(identifier(az.name(n)))
+        : $.startsWith($M) ? iz.methodInvocation(n) && consistent(ids, $, n)
+            : $.startsWith($SN) ? iz.simpleName(n) && consistent(ids, $, n)
+                : $.startsWith($N) ? iz.name(n) && consistent(ids, $, n)
+                    : $.startsWith($L) ? iz.literal(n) && consistent(ids, $, n)
+                        : $.startsWith($D) ? iz.defaultLiteral(n) && consistent(ids, $, n) : iz.name(n) && $.equals(identifier(az.name(n)));
   }
 
   /** Pairs variables from a pattern <b>p</b> with their corresponding

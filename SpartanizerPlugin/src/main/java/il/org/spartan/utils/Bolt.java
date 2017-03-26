@@ -4,7 +4,7 @@ import java.util.stream.*;
 
 import org.jetbrains.annotations.*;
 
-public interface Streamer<@¢ T> {
+public interface Bolt<T> {
   @Nullable default T self() {
     return null;
   }
@@ -21,14 +21,14 @@ public interface Streamer<@¢ T> {
     return Stream.empty();
   }
 
-  interface Atomic<@¢ T> extends Streamer<T> {
+  interface Atomic<@¢ T> extends Bolt<T> {
     @Override @NotNull default Stream<T> stream() {
       return streamSelf();
     }
   }
 
-  interface Compound<@¢ T> extends Streamer<T> {
-    @NotNull Iterable<? extends Streamer<T>> next();
+  interface Compound<@¢ T> extends Bolt<T> {
+    @NotNull Iterable<? extends Bolt<T>> next();
 
     @Override default Stream<T> stream() {
       return compounder().compound(self(), next());
@@ -37,14 +37,10 @@ public interface Streamer<@¢ T> {
 
   @FunctionalInterface
   interface Compounder<T> {
-    @NotNull Stream<T> compound(T self, Iterable<? extends Streamer<T>> others);
+    @NotNull Stream<T> compound(T self, Iterable<? extends Bolt<T>> others);
 
     @NotNull static <T> Compounder<T> empty() {
-      return new Compounder<T>() {
-        @Override @NotNull @SuppressWarnings("unused") public Stream<T> compound(final T self, final Iterable<? extends Streamer<T>> others) {
-          return Stream.empty();
-        }
-      };
+      return (self, others) -> Stream.empty();
     }
   }
 }

@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Doron Meshulam
  * @since 2016-09 */
-public final class EnhancedForParameterRenameToCent extends EagerTipper<EnhancedForStatement>//
+public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedForStatement>//
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3945693304397811549L;
 
@@ -50,7 +50,7 @@ public final class EnhancedForParameterRenameToCent extends EagerTipper<Enhanced
       m.exclude(s);
     return new Tip(description(s), s, getClass(), body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename($, ¢, s, r, g);
+        Tricks.rename($, ¢, s, r, g);
       }
     };
   }

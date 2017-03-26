@@ -22,6 +22,6 @@ public class Issue0117 {
 
   @Test public void issue54ForPlainUseInInitializer() {
     trimmingOf("int a  = f(); for (int ¢ = a; ¢ <100; ++¢) b[¢] = 3;")//
-        .gives(" for (int ¢ = f(); ¢ <100; ++¢) b[¢] = 3;");
+        .gives("for (int ¢ = f(); ¢ <100; ++¢) b[¢] = 3;");
   }
 }

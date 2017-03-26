@@ -39,11 +39,11 @@ public class OperandBloating extends TrimmingOperand {
   @Override protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
-    System.err.println(NEW_UNIT_TEST + anonymize.makeBloaterUnitTest(get()));
+    System.err.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeBloaterUnitTest(get()));
   }
 
   public static String bloat(@NotNull final String source) {
-    @NotNull final Wrap w = Wrap.find(source);
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(source);
     @NotNull final String wrap = w.on(source);
     @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -59,7 +59,7 @@ public class OperandBloating extends TrimmingOperand {
 
   @Override public OperandBloating gives(final String $) {
     assert $ != null;
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get());
     @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -67,18 +67,17 @@ public class OperandBloating extends TrimmingOperand {
     try {
       @NotNull final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      @NotNull final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
+      @NotNull final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
       final String peeled1 = w.off(rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc.get())) + "");
       if (peeled1.equals(get()))
         azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
       if (tide.clean(peeled1).equals(tide.clean(get())))
         azzert.that("Bloatong of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled1))));
-      if (!$1.equals(peeled1) && !trivia.essence(peeled1).equals(trivia.essence($1))) {
-        copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", //
-            trivia.escapeQuotes(trivia.essence(peeled1)), //
-            trivia.escapeQuotes(trivia.essence($1)));
-        azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
-      }
+      if ($1.equals(peeled1) || trivia.essence(peeled1).equals(trivia.essence($1)))
+        return new OperandBloating($1);
+      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", trivia.escapeQuotes(trivia.essence(peeled1)),
+          trivia.escapeQuotes(trivia.essence($1)));
+      azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
       return new OperandBloating($1);
     } catch (@NotNull MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
@@ -93,7 +92,7 @@ public class OperandBloating extends TrimmingOperand {
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-      @NotNull final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(Wrap.find($).on($))) + "";
+      @NotNull final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
       @NotNull final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       @NotNull final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
@@ -177,7 +176,7 @@ public class OperandBloating extends TrimmingOperand {
   private void checkSame() {
     if (get().isEmpty())
       return;
-    @NotNull final Wrap w = Wrap.find(get());
+    @NotNull final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     @NotNull final String wrap = w.on(get());
     @NotNull final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());

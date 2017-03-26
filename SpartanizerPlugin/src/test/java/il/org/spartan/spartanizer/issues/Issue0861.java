@@ -12,19 +12,23 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0861 {
   @Test public void t1() {
-    trimmingOf("switch(x) {case 1:x=2;y=1;z=3;break;case 2:y=1;break;case 3:y=2;throw new Exception();case 4:y=3;continue;case 5:y=1+x+y+z;break;")
-        .gives("switch(x) {case 2:y=1;break;case 1:x=2;y=1;z=3;break;case 3:y=2;throw new Exception();case 4:y=3;continue;case 5:y=1+x+y+z;break;")
-        .gives("switch(x) {case 2:y=1;break;case 3:y=2;throw new Exception();case 1:x=2;y=1;z=3;break;case 4:y=3;continue;case 5:y=1+x+y+z;break;")
-        .gives("switch(x) {case 3:y=2;throw new Exception();case 2:y=1;break;case 1:x=2;y=1;z=3;break;case 4:y=3;continue;case 5:y=1+x+y+z;break;")
-        .gives("switch(x) {case 3:y=2;throw new Exception();case 2:y=1;break;case 1:x=2;y=1;z=3;break;case 5:y=1+x+y+z;break;case 4:y=3;continue;")
+    trimmingOf("switch(x) {case a:x=2;y=1;z=3;break;case b:y=1;break;case c:y=2;throw new Exception();case d:y=3;continue;case e:y=1+x+y+z;break;")
+        .gives("switch(x) {case b:y=1;break;case a:x=2;y=1;z=3;break;case c:y=2;throw new Exception();case d:y=3;continue;case e:y=1+x+y+z;break;")
+        .gives("switch(x) {case b:y=1;break;case c:y=2;throw new Exception();case a:x=2;y=1;z=3;break;case d:y=3;continue;case e:y=1+x+y+z;break;")
+        .gives("switch(x) {case c:y=2;throw new Exception();case b:y=1;break;case a:x=2;y=1;z=3;break;case d:y=3;continue;case e:y=1+x+y+z;break;")
+        .gives("switch(x) {case c:y=2;throw new Exception();case b:y=1;break;case a:x=2;y=1;z=3;break;case e:y=1+x+y+z;break;case d:y=3;continue;")
         .stays();
   }
 
   @Test public void t2() {
-    trimmingOf("switch(x) {default:y=4;break;case 6:case 7:x=7;break;case 8:x=2;break;case 9:y=9;case 10:x=5;break;")
-        .gives("switch(x) {case 6:case 7:x=7;break;default:y=4;break;case 8:x=2;break;case 9:y=9;case 10:x=5;break;")
-        .gives("switch(x) {case 6:case 7:x=7;break;case 8:x=2;break;default:y=4;break;case 9:y=9;case 10:x=5;break;")
-        .gives("switch(x) {case 8:x=2;break;case 6:case 7:x=7;break;default:y=4;break;case 9:y=9;case 10:x=5;break;")
-        .gives("switch(x) {case 8:x=2;break;case 6:case 7:x=7;break;case 9:y=9;case 10:x=5;break;default:y=4;break;").stays();
+    trimmingOf("switch(x) {default:y=4;break;case a:case b:x=7;break;case c:x=2;break;case d:y=9;case e:x=5;break;")
+        .gives("switch(x) {case a:case b:x=7;break;default:y=4;break;case c:x=2;break;case d:y=9;case e:x=5;break;")
+        .gives("switch(x) {case a:case b:x=7;break;case c:x=2;break;default:y=4;break;case d:y=9;case e:x=5;break;")
+        .gives("switch(x) {case c:x=2;break;case a:case b:x=7;break;default:y=4;break;case d:y=9;case e:x=5;break;")
+        .gives("switch(x) {case c:x=2;break;case a:case b:x=7;break;case d:y=9;case e:x=5;break;default:y=4;break;").stays();
+  }
+
+  @Test public void t3() {
+    trimmingOf("switch (state) {case DONE:return false;case READY:return true;default:}").stays();
   }
 }

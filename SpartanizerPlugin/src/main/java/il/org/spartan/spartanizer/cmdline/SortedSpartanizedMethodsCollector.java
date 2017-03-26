@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
  * @since Dec 14, 2016 */
 @Deprecated
 public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisitor {
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   private final Stack<MethodRecord> scope = new Stack<>();
   private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(Integer::compareTo);
   static {
@@ -52,7 +52,7 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
       scope.push(m);
       methods.get(key).add(m);
       @NotNull final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
-          .in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+          .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
     } catch (@NotNull final AssertionError __) {

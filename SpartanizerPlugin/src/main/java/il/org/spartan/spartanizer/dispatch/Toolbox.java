@@ -115,14 +115,14 @@ public class Toolbox {
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
         .add(ParenthesizedExpression.class, new ParenthesizedRemoveExtraParenthesis()) //
-        .add(CatchClause.class, new CatchClauseRenameParameterToCent()) //
+        .add(CatchClause.class, new CatchClauseRenameParameterToIt()) //
         .add(Javadoc.class, new JavadocEmptyRemove()) //
         .add(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()).add(ThrowStatement.class, new SequencerNotLastInBlock<>()) //
         .add(BreakStatement.class, new SequencerNotLastInBlock<>()) //
         .add(ContinueStatement.class, new SequencerNotLastInBlock<>()) //
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
-        .add(VariableDeclarationExpression.class, new ForRenameInitializerToCent()) //
+        .add(VariableDeclarationExpression.class, new ForRenameInitializerToIt()) //
         .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse(), new ExpressionStatementThatIsBooleanLiteral(), null) //
@@ -131,7 +131,7 @@ public class Toolbox {
         .add(EnhancedForStatement.class, //
             new EnhancedForRedundantContinue(), //
             new EnhancedForEliminateConditionalContinue(), //
-            new EnhancedForParameterRenameToCent(), //
+            new EnhancedForParameterRenameToIt(), //
             null)//
         .add(LambdaExpression.class, //
             new LambdaRemoveRedundantCurlyBraces(), //
@@ -147,8 +147,9 @@ public class Toolbox {
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
-            new SingleVariableDeclarationEnhancedForRenameParameterToCent(), null)//
+            new SingleVariableDeclarationEnhancedForRenameParameterToIt(), null)//
         .add(ForStatement.class, //
+            new ForNoUpdatersNoInitializerToWhile(), //
             new ForDeadRemove(), //
             new ContinueCoditinalInForEliminate(), //
             new BlockBreakToReturnInfiniteFor(), //
@@ -173,14 +174,10 @@ public class Toolbox {
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
             new MergeSwitchBranches(), //
-            new RemoveRedundantSwitchReturn(), //
-            new RemoveRedundantSwitchContinue(), //
-            new SwitchWithOneCaseToIf(), //
             new SwitchBranchSort(), //
             null)
         .add(SwitchCase.class, //
             new RemoveRedundantSwitchCases(), //
-            new SwitchCaseLocalSort(), //
             null)
         .add(Assignment.class, //
             new AssignmentAndAssignmentOfSameValue(), //
@@ -190,6 +187,7 @@ public class Toolbox {
             new AssignmentToPrefixIncrement(), //
             new AssignmentUpdateAndSameUpdate(), //
             new AssignmentAndAssignmentOfSameVariable(), //
+            new PlusAssignToPostfix(),
             null) //
         .add(Block.class, //
             new BlockSimplify(), //
@@ -237,7 +235,7 @@ public class Toolbox {
             new AnnotationSort<>(), //
             new MethodDeclarationRenameReturnToDollar(), //
             new BodyDeclarationModifiersSort<>(), //
-            new MethodDeclarationRenameSingleParameterToCent(), //
+            new MethodDeclarationRenameSingleParameterToIt(), //
             new MethodDeclarationConstructorMoveToInitializers(), //
             // new MatchCtorParamNamesToFieldsIfAssigned(),
             // v 2.7 // This is a new // tipper // #20

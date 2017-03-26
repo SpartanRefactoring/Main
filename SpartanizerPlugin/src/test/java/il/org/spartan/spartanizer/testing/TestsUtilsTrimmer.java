@@ -33,9 +33,9 @@ public enum TestsUtilsTrimmer {
 
     private N findNode(@NotNull final Rule<N, Tip> t) {
       assert t != null;
-      @NotNull final Wrap wrap = Wrap.find(get());
-      assert wrap != null;
-      @NotNull final CompilationUnit u = wrap.intoCompilationUnit(get());
+      @NotNull final WrapIntoComilationUnit wrapIntoComilationUnit = WrapIntoComilationUnit.find(get());
+      assert wrapIntoComilationUnit != null;
+      @NotNull final CompilationUnit u = wrapIntoComilationUnit.intoCompilationUnit(get());
       assert u != null;
       final N $ = firstInstance(u);
       assert $ != null;

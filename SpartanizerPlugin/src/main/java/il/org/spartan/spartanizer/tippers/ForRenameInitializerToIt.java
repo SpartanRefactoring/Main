@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-09 */
-public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclarationExpression>//
+public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarationExpression>//
     implements TipperCategory.Centification {
   private static final long serialVersionUID = -3634676628162924936L;
 
@@ -54,7 +54,7 @@ public final class ForRenameInitializerToCent extends EagerTipper<VariableDeclar
     final SimpleName ¢ = namer.newCurrent(x);
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tippers.rename(n, ¢, $, r, g);
+        Tricks.rename(n, ¢, $, r, g);
       }
     };
   }

@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
  * @since 2015-07-16 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public enum az {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Down-cast, if possible, to {@link AbstractTypeDeclaration}
    * @param $ result
    * @return parameter down-casted to the returned type, or

@@ -18,19 +18,24 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
+/** See {@link #examples()} for documentation
+ * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @since 2017-03-24 */
 public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
+  private static final long serialVersionUID = -8591656423892977180L;
   private static final String SERIAL_VERSION_UID = "serialVersionUID";
-  private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
-  private VariableDeclarationFragment fragment;
-  NumberLiteral initializer;
+  // private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
+  @Nullable private VariableDeclarationFragment fragment;
+  @Nullable NumberLiteral initializer;
   long replacement;
 
   @Override @NotNull public Example[] examples() {
     return new Example[] { //
-        convert("private long " + SERIAL_VERSION_UID + " = 1234567799L;")//
-            .to("private long " + SERIAL_VERSION_UID + " = 1234567799;"),
-        ignores("private long int a = 3;"), //
-        ignores("long int a = 3;"), //
+        convert("private static long " + SERIAL_VERSION_UID + " = 12345677899L;")//
+            .to("private static long " + SERIAL_VERSION_UID + " = 1234567799;"),
+        ignores("private long a = 3;"), //
+        ignores("private static long a = 3;"), //
+        ignores("long a = 3;"), //
     };
   }
 
@@ -42,7 +47,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     canTip(¢);
     assert ¢ == fragment.getParent();
     return new Tip(description(), initializer, getClass()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
         final NumberLiteral $ = copy.of(initializer);
         $.setToken(asLiteral());
         r.replace(initializer, $, g);
@@ -50,11 +55,8 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     };
   }
 
-  static VariableDeclarationFragment findFragment(final FieldDeclaration d) {
-    for (final VariableDeclarationFragment f : fragments(d))
-      if (f.getName().toString().equals(SERIAL_VERSION_UID))
-        return f;
-    return null;
+  static VariableDeclarationFragment findFragment(final FieldDeclaration ¢) {
+    return fragments(¢).stream().filter(λ -> (λ.getName() + "").equals(SERIAL_VERSION_UID)).findFirst().orElse(null);
   }
 
   @Override public boolean canTip(final FieldDeclaration d) {
@@ -67,8 +69,8 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
       token = system.chopLast(token);
     try {
       replacement = Long.parseLong(token);
-    } catch (final NumberFormatException x) {
-      monitor.logEvaluationError(this, x);
+    } catch (@NotNull final NumberFormatException ¢) {
+      monitor.logEvaluationError(this, ¢);
       return false;
     }
     return true;
@@ -82,7 +84,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
         Long.valueOf(replacement));
   }
 
-  @Override public String description(@SuppressWarnings("unused") final FieldDeclaration d) {
+  @Override public String description(@SuppressWarnings("unused") final FieldDeclaration __) {
     return description();
   }
 }

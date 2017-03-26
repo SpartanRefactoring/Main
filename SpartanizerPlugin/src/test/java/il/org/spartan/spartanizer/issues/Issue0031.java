@@ -12,33 +12,33 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0031 {
   @Test public void a() {
-    trimmingOf(" static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n      return hasAnnotation(now.modifiers());\n    }")
-        .gives(" static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
+    trimmingOf("static boolean hasAnnotation(final VariableDeclarationStatement n, int abcd) {\n      return hasAnnotation(now.modifiers());\n    }")
+        .gives("static boolean hasAnnotation(final VariableDeclarationStatement s, int abcd) {\n"
             + "      return hasAnnotation(now.modifiers());\n    }");
   }
 
   @Test public void b() {
-    trimmingOf(" void f(final VariableDeclarationStatement n, int abc) {}")//
+    trimmingOf("void f(final VariableDeclarationStatement n, int abc) {}")//
         .gives("void f(final VariableDeclarationStatement s, int abc) {}");
   }
 
   @Test public void c() {
-    trimmingOf(" void f(final VariableDeclarationAtatement n, int abc) {}")//
+    trimmingOf("void f(final VariableDeclarationAtatement n, int abc) {}")//
         .gives("void f(final VariableDeclarationAtatement a, int abc) {}");
   }
 
   @Test public void d() {
-    trimmingOf(" void f(final Expression n) {}")//
+    trimmingOf("void f(final Expression n) {}")//
         .gives("void f(final Expression x) {}");
   }
 
   @Test public void e() {
-    trimmingOf(" void f(final Exception n) {}")//
+    trimmingOf("void f(final Exception n) {}")//
         .gives("void f(final Exception x) {}");
   }
 
   @Test public void f() {
-    trimmingOf(" void f(final Exception exception, Expression expression) {}")//
+    trimmingOf("void f(final Exception exception, Expression expression) {}")//
         .gives("void f(final Exception x, Expression expression) {}");
   }
 
@@ -49,12 +49,12 @@ public class Issue0031 {
   }
 
   @Test public void h() {
-    trimmingOf(" void f(final Exception n) {}")//
+    trimmingOf("void f(final Exception n) {}")//
         .gives("void f(final Exception x) {}");
   }
 
   @Test public void i() {
-    trimmingOf(" void f(final Exception n) {}")//
+    trimmingOf("void f(final Exception n) {}")//
         .gives("void f(final Exception x) {}");
   }
 
