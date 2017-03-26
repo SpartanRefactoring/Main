@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
 public class Table_Iteratives extends DeprecatedFolderASTVisitor {
   private static final int ENHANCED = ASTNode.ENHANCED_FOR_STATEMENT;
   private static final int WHILE = ASTNode.WHILE_STATEMENT;
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   static final LoopsStatistics all = new LoopsStatistics();
   static final LoopsStatistics simple = new LoopsStatistics();
   static final LoopsStatistics definites = new LoopsStatistics();
@@ -83,7 +83,7 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
   }
 
   private static String spartanalyze(final String ¢) {
-    return spartanalyzer.fixedPoint(Wrap.Method.on(¢));
+    return spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢));
   }
 
   @Override protected void done(final String path) {

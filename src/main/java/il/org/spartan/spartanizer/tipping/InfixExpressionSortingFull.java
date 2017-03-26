@@ -21,7 +21,7 @@ public abstract class InfixExpressionSortingFull extends InfixExpressionSorting 
     if (!suitable(¢))
       return false;
     @Nullable final List<Expression> $ = extract.allOperands(¢);
-    return !Tippers.mixedLiteralKind($) && sort($);
+    return !Tricks.mixedLiteralKind($) && sort($);
   }
 
   @Override @Nullable public Expression replacement(@NotNull final InfixExpression ¢) {

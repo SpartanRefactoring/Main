@@ -54,7 +54,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
       exclude.exclude(then);
     return new Tip(description($), $, getClass()) {
       @Override public void go(@NotNull final ASTRewrite r, final TextEditGroup g) {
-        collapse(Tippers.blockIfNeeded($, r, g), r, g);
+        collapse(Tricks.blockIfNeeded($, r, g), r, g);
       }
     };
   }

@@ -29,11 +29,11 @@ public interface lisp2 extends lisp {
    * @param i2 the index of the second element
    * @return the list after swapping the elements */
   @NotNull static <T> List<T> swap(@NotNull final List<T> $, final int i1, final int i2) {
-    if (i1 < $.size() && i2 < $.size()) {
-      final T t = $.get(i1);
-      lisp.replace($, $.get(i2), i1);
-      lisp.replace($, t, i2);
-    }
+    if (i1 >= $.size() || i2 >= $.size())
+      return $;
+    final T t = $.get(i1);
+    lisp.replace($, $.get(i2), i1);
+    lisp.replace($, t, i2);
     return $;
   }
 

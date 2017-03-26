@@ -29,7 +29,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Raviv Rachmiel {@code  raviv.rachmiel@gmail.com }
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO: Raviv Rachmiel take care of single var decleration, tests
-public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationStatement>//
+public class VariableDeclarationStatementExpand extends EagerTipper<VariableDeclarationStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x6416089F84E63B0EL;
 
@@ -60,7 +60,7 @@ public class RenameShortNamesVarDec extends EagerTipper<VariableDeclarationState
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           int counter = 0;
           for (final SimpleName ¢ : prev) {
-            Tippers.rename(¢, after.get(counter), s.getParent(), r, g);
+            Tricks.rename(¢, after.get(counter), s.getParent(), r, g);
             ++counter;
           }
         }

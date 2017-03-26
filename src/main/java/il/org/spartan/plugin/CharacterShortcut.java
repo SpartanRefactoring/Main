@@ -42,7 +42,12 @@ public class CharacterShortcut extends AbstractHandler {
     @NotNull final ISelection is = Selection.Util.getSelection();
     @Nullable final Selection s = Selection.Util.getCurrentCompilationUnit();
     return !(is instanceof ITextSelection) || s == null || s.isEmpty() ? null
-        : insertCharacter(shortcutsMap.get(((Event) $).character), s.setTextSelection((ITextSelection) is));
+        : insertCharacter(shortcutsMap.get(getCharacter((Event) $)), s.setTextSelection((ITextSelection) is));
+  }
+
+  private static char getCharacter(final Event $) {
+    System.out.println($.type);
+    return $.type != 13 ? $.character : key.apply('c'); // Hack, obviously
   }
 
   /** Insert a character at the given location. If the text selection contains a

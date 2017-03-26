@@ -4,6 +4,8 @@ import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.lisp.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -27,11 +29,40 @@ public class switchBranch {
   private int depth;
   private int sequencerLevel;
   public static final int MAX_CASES_FOR_SPARTANIZATION = 10;
+  final Comparator<switchBranch>[] priorityOrder = as.array(Comparators.byDefault, Comparators.byNumericOrder, Comparators.bySequencerLevel,
+      Comparators.byDepth, Comparators.byStatementsNum, Comparators.byNodesNum, Comparators.byCasesNum);
+
+  static final class Comparators {
+    private static final Comparator<Expression> numericOrder = (e1, e2) -> e1 == null ? 1
+        : e2 == null ? -1 : !iz.intType(e1) ? iz.intType(e2) ? 1 : 0 : !iz.intType(e2) ? -1 : Integer.parseInt(e1 + "") - Integer.parseInt(e2 + "");
+    static final Comparator<switchBranch> byDefault = (final switchBranch o1, final switchBranch o2) -> o1.hasDefault() ? 1
+        : o2.hasDefault() ? -1 : 0;
+    static final Comparator<switchBranch> bySequencerLevel = (final switchBranch o1,
+        final switchBranch o2) -> o1.sequencerLevel() == 0 || o2.sequencerLevel() == 0 ? 0 : o1.sequencerLevel() - o2.sequencerLevel();
+    static final Comparator<switchBranch> byDepth = (final switchBranch o1, final switchBranch o2) -> o1.depth() - o2.depth();
+    static final Comparator<switchBranch> byStatementsNum = (final switchBranch o1, final switchBranch o2) -> o1.statementsNum() - o2.statementsNum();
+    static final Comparator<switchBranch> byNodesNum = (final switchBranch o1, final switchBranch o2) -> o1.nodesNum() - o2.nodesNum();
+    static final Comparator<switchBranch> byCasesNum = (final switchBranch o1, final switchBranch o2) -> o1.casesNum() - o2.casesNum();
+    static final Comparator<switchBranch> byNumericOrder = (final switchBranch o1, final switchBranch o2) -> numericOrder
+        .compare(lowestLexicoCase(o1), lowestLexicoCase(o2));
+
+    private static Expression lowestLexicoCase(final switchBranch b) {
+      Expression $ = expression(first(b.cases()));
+      for (final SwitchCase ¢ : b.cases())
+        if (numericOrder.compare(expression(¢), $) < 0)
+          $ = expression(¢);
+      return $;
+    }
+  }
 
   public switchBranch(final List<SwitchCase> cases, final List<Statement> statements) {
     this.cases = cases;
     this.statements = statements;
     hasDefault = numOfNodes = numOfStatements = depth = sequencerLevel = -1;
+  }
+
+  public List<SwitchCase> cases() {
+    return cases;
   }
 
   @SuppressWarnings("boxing") public boolean hasDefault() {
@@ -42,7 +73,7 @@ public class switchBranch {
 
   public int depth() {
     if (depth < 0)
-      depth = metrics.height(statements, 0);
+      depth = metrics.depth(statements);
     return depth;
   }
 
@@ -63,32 +94,26 @@ public class switchBranch {
   }
 
   public int sequencerLevel() {
-    if (sequencerLevel < 0) {
-      final int th = metrics.countStatementsOfType(statements, ASTNode.THROW_STATEMENT),
-          re = metrics.countStatementsOfType(statements, ASTNode.RETURN_STATEMENT),
-          br = metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT),
-          co = metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT), sum = th + re + br + co;
-      assert sum > 0;
-      sequencerLevel = sum > th && sum > re && sum > br && sum > co ? 0 : th > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
-    }
-    return sequencerLevel;
+    if (sequencerLevel >= 0)
+      return sequencerLevel;
+    final int $ = metrics.countStatementsOfType(statements, ASTNode.THROW_STATEMENT),
+        re = metrics.countStatementsOfType(statements, ASTNode.RETURN_STATEMENT),
+        br = metrics.countStatementsOfType(statements, ASTNode.BREAK_STATEMENT),
+        co = metrics.countStatementsOfType(statements, ASTNode.CONTINUE_STATEMENT), sum = $ + re + br + co;
+    assert sum > 0;
+    return sequencerLevel = sum > $ && sum > re && sum > br && sum > co ? 0 : $ > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
   }
 
   /** @param ¢
    * @return returns 1 if _this_ has better metrics than b (i.e should come
    *         before b in the switch), -1 otherwise */
   private boolean compare(@NotNull final switchBranch ¢) {
-    if (hasDefault())
-      return false;
-    if (¢.hasDefault())
-      return true;
-    if (sequencerLevel() > 0 && ¢.sequencerLevel() > 0) {
-      if (sequencerLevel() > ¢.sequencerLevel())
-        return false;
-      if (sequencerLevel() < ¢.sequencerLevel())
-        return true;
+    for (final Comparator<switchBranch> c : priorityOrder) {
+      final int $ = c.compare(this, ¢);
+      if ($ != 0)
+        return $ < 0;
     }
-    return depth() < ¢.depth() || statementsNum() < ¢.statementsNum() || nodesNum() < ¢.nodesNum() || casesNum() < ¢.casesNum();
+    return false;
   }
 
   public boolean compareTo(@NotNull final switchBranch ¢) {
@@ -112,6 +137,8 @@ public class switchBranch {
     return $;
   }
 
+  // TODO: Yuval Simon: please simplify this code. It is, to be honest, crappy
+  // --yg
   @NotNull @SuppressWarnings("null") public static List<switchBranch> intoBranches(@NotNull final SwitchStatement n) {
     @NotNull final List<Statement> l = step.statements(n);
     assert iz.switchCase(first(l));
@@ -125,6 +152,7 @@ public class switchBranch {
         s = new ArrayList<>();
         $.add(new switchBranch(c, s));
         nextBranch = false;
+        // TODO: Yuval = make this into a decent for loop --yg
         while (iz.switchCase(l.get(¢)) && ¢ < l.size() - 1)
           c.add(az.switchCase(l.get(¢++)));
         if (¢ >= l.size() - 1)
@@ -139,9 +167,12 @@ public class switchBranch {
       if (!iz.sequencerComplex(lisp.last(l)))
         s.add(n.getAST().newBreakStatement());
     } else {
-      if (!s.isEmpty())
-        $.add(new switchBranch(new ArrayList<>(), new ArrayList<>()));
-      c.add(az.switchCase(lisp.last(l)));
+      if (!nextBranch)
+        s.add(lisp.last(l));
+      else {
+        $.add(new switchBranch(c = new ArrayList<>(), s = new ArrayList<>()));
+        c.add(az.switchCase(lisp.last(l)));
+      }
       s.add(n.getAST().newBreakStatement());
     }
     return $;
@@ -162,26 +193,29 @@ public class switchBranch {
     return statements.stream().anyMatch(iz::switchCase);
   }
 
-  @Nullable public static Statement removeBreakSequencer(@NotNull final Statement s) {
+  @Nullable public static Statement removeBreakSequencer(@Nullable final Statement s) {
+    if (s == null)
+      return null;
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
       return copy.of(s);
-    final AST $ = s.getAST();
+    final AST a = s.getAST();
+    @Nullable Statement $ = null;
     if (iz.ifStatement(s)) {
-      @Nullable final IfStatement t = az.ifStatement(s), f = $.newIfStatement();
-      f.setExpression(copy.of(step.expression(t)));
-      f.setThenStatement(removeBreakSequencer(step.then(t)));
-      f.setElseStatement(removeBreakSequencer(step.elze(t)));
-      return f;
+      @Nullable final IfStatement t = az.ifStatement(s);
+      $ = subject.pair(removeBreakSequencer(step.then(t)), removeBreakSequencer(step.elze(t))).toIf(copy.of(step.expression(t)));
+    } else if (!iz.block(s)) {
+      if (iz.breakStatement(s) && iz.block(s.getParent()))
+        $ = a.newEmptyStatement();
+    } else {
+      final Block b = subject.ss(removeBreakSequencer(statements(az.block(s)))).toBlock();
+      statements(b).addAll(removeBreakSequencer(statements(az.block(s))));
+      $ = b;
     }
-    if (!iz.block(s))
-      return !iz.breakStatement(s) || !iz.block(s.getParent()) ? null : $.newEmptyStatement();
-    final Block b = $.newBlock();
-    step.statements(b).addAll(removeBreakSequencer(step.statements(az.block(s))));
-    return b;
+    return $;
   }
 
-  @NotNull public static Collection<Statement> removeBreakSequencer(@NotNull final Iterable<Statement> ss) {
-    @NotNull final Collection<Statement> $ = new ArrayList<>();
+  @NotNull public static List<Statement> removeBreakSequencer(@NotNull final Iterable<Statement> ss) {
+    @NotNull final List<Statement> $ = new ArrayList<>();
     for (@NotNull final Statement ¢ : ss) {
       @Nullable final Statement s = removeBreakSequencer(¢);
       if (s != null)

@@ -110,11 +110,6 @@ public class Issue0311 {
         .stays();
   }
 
-  @Test public void for_4() {
-    trimmingOf("c(N i){N p=i;int a=5;++a;for(;p<10;)p=p.e();return false;}")//
-        .stays();
-  }
-
   @Test public void for_5() {
     trimmingOf("c(int i){int p=i;for(int k=2;p<10;){++nE;++p;}return false;}").gives("c(int i){for(int p=i,k=2;p<10;){++nE;++p;}return false;}")
         .gives("c(int i){for(int p=i,k=2;p<10;++p){++nE;}return false;}").gives("c(int i){for(int p=i,k=2;p<10;++p)++nE;return false;}")//
@@ -214,11 +209,6 @@ public class Issue0311 {
         .gives("S t(S g){B $=new B(g);int l=$.l();for(int i=0;i<l;++i)if($.t(i)=='.')$.s(i,'/');return $+\"\";")
         .gives("S t(S g){B $=new B(g);int l=$.l();for(int ¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+\"\";")
         .gives("S t(S g){B $=new B(g);for(int l=$.l(),¢=0;¢<l;++¢)if($.t(¢)=='.')$.s(¢,'/');return $+\"\";")//
-        .stays();
-  }
-
-  @Test public void t03b() {
-    trimmingOf("S t(S g){int $=0,one=1;for(;$<one;){if($==0)$=7;++$;}return $;}")//
         .stays();
   }
 

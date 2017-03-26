@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,11 +27,11 @@ public class Issue1153 {
   }
 
   @Test public void b2() {
-    final Class<FieldDeclaration> c = FieldDeclaration.class;
+    @NotNull final Class<FieldDeclaration> c = FieldDeclaration.class;
     assert c != null;
-    final FieldSerialVersionUIDToHexadecimal x = new FieldSerialVersionUIDToHexadecimal();
+    @NotNull final FieldSerialVersionUIDToHexadecimal x = new FieldSerialVersionUIDToHexadecimal();
     assert x != null;
-    final Toolbox toolbox = new Toolbox();
+    @NotNull final Toolbox toolbox = new Toolbox();
     assert toolbox != null;
     toolbox.add(c, x);
   }
@@ -79,5 +80,19 @@ public class Issue1153 {
   @Test public void j() {
     trimmingOf("class A { private static final long serialVersionUID = 0XDeadL;}")//
         .stays();
+  }
+
+  @Test public void k() {
+    trimmingOf("class A { private long serialVersionUID = 12345677899L;}")//
+        .gives("class A { private long serialVersionUID = 0x2DFDC184BL;}")//
+        .stays();
+  }
+
+  /** Introduced by Yossi on Fri-Mar-24-13:58:53-IDT-2017 (code automatically
+   * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
+  @Test public void test_classAPrivateLonga12345677899L() {
+    trimmingOf("class A { private long a = 12345677899L; }") //
+        .stays() //
+    ;
   }
 }

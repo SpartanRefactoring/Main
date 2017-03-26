@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Alex Kopzon
  * @since 2.5 */
 public enum cantTip {
-  ;
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
     @Nullable final VariableDeclarationFragment $ = hop.penultimateFragment(¢);
     return $ == null || new FragmentInitializerStatementTerminatingScope().cantTip($);
@@ -34,9 +34,9 @@ public enum cantTip {
     return extract.fragments(body(s)).stream().noneMatch(λ -> new FragmentInitializerDead().check(λ));
   }
 
-  public static boolean forRenameInitializerToCent(final ForStatement ¢) {
+  public static boolean forRenameInitializerToIt(final ForStatement ¢) {
     final VariableDeclarationExpression $ = az.variableDeclarationExpression(¢);
-    return $ == null || new ForRenameInitializerToCent().cantTip($);
+    return $ == null || new ForRenameInitializerToIt().cantTip($);
   }
 
   public static boolean remvoeRedundantIf(final ForStatement s) {

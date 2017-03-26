@@ -10,13 +10,14 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.utils.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
  * sentence phrase.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-16 */
-public enum Wrap {
+public enum WrapIntoComilationUnit {
   OUTER("package p; // BEGIN PACKAGE \n", "\n// END PACKAGE\n"),
   /** Algorithm for wrapping/unwrapping a method */
   Method("package p;\npublic final class CXXX23xyZ {\n", "} // END p\n"), //
@@ -31,16 +32,18 @@ public enum Wrap {
   ), //
   //
   ;
-  public static final Wrap[] WRAPS = { Statement, Expression, Method, OUTER };
+  public static final WrapIntoComilationUnit[] WRAPS = { Statement, Expression, Method, OUTER };
 
   /** Finds the most appropriate Wrap for a given code fragment
    * @param codeFragment JD
    * @return most appropriate Wrap, or null, if the parameter could not be
    *         parsed appropriately. */
-  @NotNull public static Wrap find(@NotNull final String codeFragment) {
-    for (@NotNull final Wrap $ : WRAPS) // NANO
+  @NotNull public static WrapIntoComilationUnit find(@NotNull final String codeFragment) {
+    for (@NotNull final WrapIntoComilationUnit $ : WRAPS) // NANO
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment))
         return $;
+    if (!system.isBalanced(codeFragment))
+      azzert.fail("Input \n'" + codeFragment + "'\n is not parenthesis balanced; cannot compile it");
     azzert.fail("Cannot parse '\n" + codeFragment + "\n W********* I tried the following options:" + options(codeFragment));
     throw new RuntimeException();
   }
@@ -48,7 +51,7 @@ public enum Wrap {
   @NotNull private static String options(final String codeFragment) {
     @NotNull final StringBuilder $ = new StringBuilder();
     int i = 0;
-    for (@NotNull final Wrap w : Wrap.WRAPS) {
+    for (@NotNull final WrapIntoComilationUnit w : WrapIntoComilationUnit.WRAPS) {
       @NotNull final String on = w.on(codeFragment);
       final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
       $.append("\n* Attempt ").append(++i).append(": ").append(w);
@@ -66,7 +69,7 @@ public enum Wrap {
   private final String before;
   private final String after;
 
-  Wrap(final String before, final String after) {
+  WrapIntoComilationUnit(final String before, final String after) {
     this.before = before;
     this.after = after;
   }

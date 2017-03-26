@@ -86,11 +86,11 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
    * @param ¢ JD
    * @return {@code this} selection */
   @NotNull Self unify(@Nullable final Self ¢) {
-    if (¢ != null && ¢.inner != null) {
-      if (inner == null)
-        inner = new ArrayList<>();
-      inner.addAll(¢.inner);
-    }
+    if (¢ == null || ¢.inner == null)
+      return self();
+    if (inner == null)
+      inner = new ArrayList<>();
+    inner.addAll(¢.inner);
     return self();
   }
 

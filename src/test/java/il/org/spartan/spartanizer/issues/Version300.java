@@ -1,14 +1,19 @@
 package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.azzert.*;
+import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import static il.org.spartan.utils.English.*;
+import static org.hamcrest.collection.IsEmptyCollection.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
@@ -25,6 +30,57 @@ public final class Version300 {
         .using(PrefixExpression.class, new PrefixNotPushdown())//
         .gives("a=b?!c:!d") //
     ;
+  }
+
+  @Test public void killer() {
+    {
+      final Expression e = make("int i = 3;");
+      kill(e);
+      (kill(e) + "").hashCode();
+      azzert.that(kill(e), instanceOf(Block.class));
+      assert kill(e) != null;
+      assert kill(e).statements() != null;
+      assert statements(kill(e)) != null;
+      azzert.that(statements(kill(e)), is(empty()));
+    }
+    {
+      final Expression e = make("int i = f();");
+      kill(e);
+      (kill(e) + "").hashCode();
+      azzert.that(kill(e), instanceOf(Block.class));
+      assert kill(e) != null;
+      assert kill(e).statements() != null;
+      azzert.that(statements(kill(e)), not(empty()));
+      assert statements(kill(e)) != null;
+    }
+    kill("int _ = f();", "{f();}");
+    kill("int _ = 3 + f();", "{f();}");
+    kill("int _ = g() + f();", "{g();f();}");
+    kill("int _ = i++ + f();", "{i++;f();}");
+    kill("int _ = i++ + i--;", "{i++;i--;}");
+    kill("int _ = ++i + i--;", "{++i;i--;}");
+    kill("int _ = -i + i--;", "{i--;}");
+    kill("int _ = b==q();", "{q();}");
+    kill("int _ = (a=b);", "{a=b;}");
+    kill("int _ = (a=b++);", "{a=b++;}");
+    kill("int _ = new A();", "{new A();}");
+    kill("int _ = new A(){};", "{new A(){};}");
+    kill("int _ = super.f();", "{super.f();}");
+    kill("int _ = new int[2];", "{new int[2];}");
+  }
+
+  public void kill(final String from, final String to) {
+    azzert.that(kill(make(from)), iz(to));
+  }
+
+  @UnderConstruction("") private Block kill(final Expression ¢) {
+    final Block $ = ¢.getAST().newBlock();
+    statements($).addAll(wizard.decompose(¢));
+    return $;
+  }
+
+  public Expression make(final String statement) {
+    return findFirst.instanceOf(VariableDeclarationFragment.class).in(s(statement)).getInitializer();
   }
 
   @Ignore @Test public void inlineArrayInitialization1() {
@@ -52,7 +108,7 @@ public final class Version300 {
   }
 
   @Test public void myClassName() {
-    azzert.that(system.callingClassName(), is(getClass().getCanonicalName()));
+    azzert.that(system.callingClassFullName(), is(getClass().getCanonicalName()));
   }
 
   @Test public void abcd() {

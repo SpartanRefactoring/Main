@@ -9,7 +9,7 @@ import org.junit.*;
  * @since 2017-03-22 */
 @SuppressWarnings("static-method")
 public class Issue0292 {
-  @Test public void stringfFinalStringBuffersbNewStringBufferStringlineForlinereaderreadLineNullsbappendlineReturnsb() {
+  @Test public void imporant() {
     trimmingOf( //
         "A a() {" + //
             " final B b = new B();" + //
@@ -20,13 +20,30 @@ public class Issue0292 {
             "}"//
     ).gives( //
         "A a() {" + //
-            " final B b = new B();" + //
-            " for (A c; (c = d.e()) != null; b.f(c))" + //
+            " final B $ = new B();" + //
+            " A c;" + //
+            " for (; (c = d.e()) != null; $.f(c))" + //
             "   ;" + //
-            " return b + \"\";" + //
+            " return $ + \"\";" + //
+            "}"//
+    //
+    ).gives( //
+        "A a() {" + //
+            " final B $ = new B();" + //
+            " for (A c = d.e(); c != null; $.f(c))" + //
+            "   ;" + //
+            " return $ + \"\";" + //
             "}"//
     //
     )//
+        .gives( //
+            "A a() {" + //
+                " final B $ = new B();" + //
+                " for (A c = d.e();;$.f(c))" + //
+                "   if (c == null)" + //
+                "     return $ + \"\";" + //
+                "}"//
+        )//
         .stays();
   }
 }

@@ -177,7 +177,6 @@ public class Table extends Row<Table> implements Closeable {
     return this;
   }
 
-
   public static String classToNormalizedFileName(@NotNull final Class<?> ¢) {
     return classToNormalizedFileName(¢.getSimpleName());
   }

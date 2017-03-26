@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
  * @since 2016-12-27 */
 @Deprecated
 public class Table1To3Statements extends DeprecatedFolderASTVisitor {
-  static final SpartAnalyzer spartanalyzer = new SpartAnalyzer();
+  static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
   protected static final int MIN_STATEMENTS_REPORTED = 1;
   protected static final int MAX_STATEMENTS_REPORTED = 3;
   private static final Stack<MethodRecord> scope = new Stack<>();
@@ -55,7 +55,8 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
       @NotNull final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      findFirst.instanceOf(MethodDeclaration.class).in(wizard.ast(Wrap.Method.off(spartanalyzer.fixedPoint(Wrap.Method.on(¢ + "")))));
+      findFirst.instanceOf(MethodDeclaration.class)
+          .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
     } catch (@NotNull final AssertionError __) {
       ___.unused(__);
     }
