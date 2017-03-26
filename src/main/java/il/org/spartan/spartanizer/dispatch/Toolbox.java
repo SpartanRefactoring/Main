@@ -174,7 +174,6 @@ public class Toolbox {
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
             new MergeSwitchBranches(), //
-            new SwitchBranchSort(), //
             null)
         .add(SwitchCase.class, //
             new RemoveRedundantSwitchCases(), //
@@ -187,8 +186,7 @@ public class Toolbox {
             new AssignmentToPrefixIncrement(), //
             new AssignmentUpdateAndSameUpdate(), //
             new AssignmentAndAssignmentOfSameVariable(), //
-            new PlusAssignToPostfix(),
-            null) //
+            new PlusAssignToPostfix(), null) //
         .add(Block.class, //
             new BlockSimplify(), //
             new BlockSingleton(), //
@@ -327,7 +325,7 @@ public class Toolbox {
             new AnnotationSort<>(), //
             null)
         .add(VariableDeclarationFragment.class, //
-            new FragmentInitializerDead(), //
+            new FieldFragmentInitializerDefaultValue(), //
             new FragmentNoInitializerAssignment(), //
             new FragmentInitialiazerUpdateAssignment(), //
             new FragmentInitializerIfAssignment(), //
@@ -342,7 +340,7 @@ public class Toolbox {
             new FragmentInitializerWhile(), //
             new FragmentInitializerToForInitializers(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
-            new FragmentNoInitializerRemoveUnused(), //
+            new LocalVariableInitializedUnusedRemove(), //
             null) //
     ;
   }

@@ -21,7 +21,7 @@ public class CollectTest {
     trimmingOf("L<SimpleName> $ = new A<>();  for (VariableDeclarationFragment λ : fs) if(iLikeTo(a))  $.add(λ.getName());")//
         .using(EnhancedForStatement.class, new ForEachSuchThat(), new ForEach(), new Collect())//
         .gives("L<SimpleName>$=(fs).stream().filter(λ->iLikeTo(a)).map(λ->λ.getName()).collect(toList());")//
-        .gives("L<SimpleName>$=fs.stream().filter(λ->iLikeTo(a)).map(λ->λ.getName()).collect(toList());")//
+        .gives("fs.stream().filter(λ->iLikeTo(a)).map(λ->λ.getName()).collect(toList());")//
         .stays();
   }
 
@@ -29,7 +29,7 @@ public class CollectTest {
     trimmingOf("L<SimpleName> $ = new A<>();  for (VariableDeclarationFragment λ : fs) if(iLikeTo(a))  $.add(λ);")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("L<SimpleName>$=(fs).stream().filter(λ->iLikeTo(a)).collect(toList());")//
-        .gives("L<SimpleName>$=fs.stream().filter(λ->iLikeTo(a)).collect(toList());")//
+        .gives("fs.stream().filter(λ->iLikeTo(a)).collect(toList());")//
         .stays();
   }
 
