@@ -13,18 +13,15 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1147 {
   @Test public void t1() {
-    trimmingOf("switch (digits(round3(¢))) {" + "case -1:" + "case 0:" + "return \"%.3f\";" + "case 1:" + "return \"%.2f\";" + "case 2:"
-        + "return \"%.1f\";" + "default:" + "return \"%.0f\";" + "}").stays();
+    trimmingOf("switch (digits(round3(¢))) {case -1:case 0:return \"%.3f\";case 1:return \"%.2f\";case 2:return \"%.1f\";default:return \"%.0f\";}").stays();
   }
 
   // TODO Yuval Simon - use "using(...)" to make sure your tipper is called even
   // if it is not in the toolbox
   @Test public void t2() {
-    trimmingOf("switch (digits(round3(¢))) {" + "case 0:" + "case 1:" + "return \"%.3f\";" + "case -1:" + "return \"%.2f\";" + "case 2:"
-        + "return \"%.1f\";" + "default:" + "return \"%.0f\";" + "}")
+    trimmingOf("switch (digits(round3(¢))) {case 0:case 1:return \"%.3f\";case -1:return \"%.2f\";case 2:return \"%.1f\";default:return \"%.0f\";}")
             .using(SwitchStatement.class,new SwitchBranchSort())
-            .gives("switch (digits(round3(¢))) {" + "case -1:" + "return \"%.2f\";" + "case 0:" + "case 1:" + "return \"%.3f\";" + "case 2:"
-                + "return \"%.1f\";" + "default:" + "return \"%.0f\";" + "}")
+            .gives("switch (digits(round3(¢))) {case -1:return \"%.2f\";case 0:case 1:return \"%.3f\";case 2:return \"%.1f\";default:return \"%.0f\";}")
             .stays();
   }
 }

@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-25 */
 public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N> {
-  private static final long serialVersionUID = 8732825589260890812L;
+  private static final long serialVersionUID = 0x79313A9ADD5632BCL;
   private Proposition prerequisite;
 
   protected AbstractPattern() {

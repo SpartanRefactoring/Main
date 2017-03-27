@@ -53,8 +53,8 @@ public enum extract {
     return annotations(extendedModifiers(¢));
   }
 
-  public static List<Annotation> annotations(final VariableDeclarationExpression x) {
-    return extract.annotations(extendedModifiers(x));
+  public static List<Annotation> annotations(final VariableDeclarationExpression ¢) {
+    return extract.annotations(extendedModifiers(¢));
   }
 
   public static List<Annotation> annotations(final VariableDeclarationStatement ¢) {
@@ -448,9 +448,8 @@ public enum extract {
    * @param x the identifier to search for
    * @return number of times x appears in n */
   public static int countNameInSubtree(final SimpleName n, final ASTNode x) {
-    if(n == null || x == null)
-      return 0;
-    return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).size();
+    return n == null || x == null ? 0
+        : descendants.whoseClassIs(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).size();
   }
 
   /** Finds the single statement in the {@code else} branch of an

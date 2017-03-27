@@ -70,12 +70,12 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
 
   /** Note: this is one of the cases which expressions interact with
    * statements */
-  private T map(@SuppressWarnings("unused") final LambdaExpression x) {
+  private T map(@SuppressWarnings("unused") final LambdaExpression __) {
     return reduce();
   }
 
-  private T map(final CastExpression x) {
-    return map(x.getExpression());
+  private T map(final CastExpression ¢) {
+    return map(¢.getExpression());
   }
 
   private T map(final ArrayInitializer ¢) {
