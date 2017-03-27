@@ -36,21 +36,21 @@ import junit.framework.*;
  * @see Atomic
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-11 */
-public interface Recursive<@¢ T> extends Bolt<T> {
+public interface Recursive< T> extends Duplo<T> {
   /** An atomic recursive structure specializing {@link Recursive}
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
-  interface Atomic<@¢ T> extends Recursive<T>, Bolt.Atomic<T> {
+  interface Atomic< T> extends Recursive<T>, Duplo.Atomic<T> {
     //
   }
 
   /** A compound recursive structure, specializing {@link Recursive}
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
-  interface Compound<@¢ T> extends Recursive<T>, Bolt.Compound<T> {
+  interface Compound< T> extends Recursive<T>, Duplo.Compound<T> {
     Iterable<Recursive<T>> children();
 
-    @Override default Iterable<? extends Bolt<T>> next() {
+    @Override default Iterable<? extends Duplo<T>> next() {
       return children();
     }
   }
@@ -59,7 +59,7 @@ public interface Recursive<@¢ T> extends Bolt<T> {
     @Override default Compounder<E> compounder() {
       return (self, others) -> {
         Stream<E> $ = Stream.empty();
-        for (final Bolt<E> ¢ : others)
+        for (final Duplo<E> ¢ : others)
           $ = Stream.concat(¢.stream(), $);
         return self == null ? $ : Stream.concat($, Stream.of(self));
       };
@@ -75,7 +75,7 @@ public interface Recursive<@¢ T> extends Bolt<T> {
     @Override default Compounder<E> compounder() {
       return (self, others) -> {
         Stream<E> $ = self == null ? Stream.empty() : Stream.of(self);
-        for (final Bolt<E> ¢ : others)
+        for (final Duplo<E> ¢ : others)
           $ = Stream.concat($, ¢.stream());
         return $;
       };
