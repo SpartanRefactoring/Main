@@ -11,11 +11,13 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** Tests class {@link Proposition}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- * @since 2017-03-08 */
-@Ignore// TODO, Oren/Dor/Ori
+/**
+ * Tests class  {@link Proposition}
+ * @author  Yossi Gil  {@code  Yossi.Gil@GMail.COM}
+ * @since  2017-03-08 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 @SuppressWarnings("static-method")
 public class PropositionTest {
   private static boolean ignoreNext() {
@@ -55,7 +57,9 @@ public class PropositionTest {
     azzert.that(B2_OR_B1.reduce(javaReducer), is(""));
   }
 
-  /** [[SuppressWarningsSpartan]] */
+  /**
+  * [[SuppressWarningsSpartan]] 
+  */
   @Test public void aa() {
     object = Proposition.T;
     assert object != null;
@@ -79,87 +83,70 @@ public class PropositionTest {
     assert !Proposition.F.getAsBoolean();
     assert Proposition.T.getAsBoolean();
     assert !Proposition.F.getAsBoolean();
-    // of() exists
     Proposition.of(Proposition.T);
     Proposition.of(Proposition.F);
     Proposition.of(Proposition.T);
     Proposition.of(Proposition.F);
-    // of() is not void
     (Proposition.of(Proposition.T) + "").hashCode();
     (Proposition.of(Proposition.F) + "").hashCode();
     (Proposition.of(Proposition.T) + "").hashCode();
     (Proposition.of(Proposition.F) + "").hashCode();
-    // of() returns not null
     assert Proposition.of(Proposition.T) != null;
     assert Proposition.of(Proposition.F) != null;
     assert Proposition.of(Proposition.T) != null;
     assert Proposition.of(Proposition.F) != null;
-    // of() returns an object
     object = Proposition.of(Proposition.T);
     object = Proposition.of(Proposition.F);
     object = Proposition.of(Proposition.T);
     object = Proposition.of(Proposition.F);
-    // of() returns not null
     assert Proposition.of(Proposition.T) != null;
     assert Proposition.of(Proposition.F) != null;
     assert Proposition.of(Proposition.T) != null;
     assert Proposition.of(Proposition.F) != null;
-    // of() is of type condition
     condition = Proposition.of(Proposition.T);
     condition = Proposition.of(Proposition.F);
     condition = Proposition.of(Proposition.T);
     condition = Proposition.of(Proposition.F);
-    // make sure that of() is reasonably behaved
     assert Proposition.of(() -> true).getAsBoolean();
     assert Proposition.of(() -> condition != null).getAsBoolean();
     assert !Proposition.of(() -> false).getAsBoolean();
     assert Proposition.of(() -> hashCode() == hashCode()).getAsBoolean();
-    // make sure that of() is also correct on our four constants:
     assert Proposition.of(Proposition.T).getAsBoolean();
     assert !Proposition.of(Proposition.F).getAsBoolean();
     assert Proposition.of(Proposition.T).getAsBoolean();
     assert !Proposition.of(Proposition.F).getAsBoolean();
-    // Force and() signature
     Proposition.AND(T, T);
     Proposition.AND(T, T);
     Proposition.AND(T, T, T);
     Proposition.AND(T, T, T, T);
     assert Proposition.AND(T, T).getAsBoolean();
-    // Force and() type
     supplier = AND(T, T);
     condition = AND(T, T);
     inner = AND(T, T);
-    // Force and() behavior
     assert Proposition.AND(T, T).getAsBoolean();
     assert !Proposition.AND(T, F).getAsBoolean();
     assert !Proposition.AND(F, T).getAsBoolean();
     assert !Proposition.AND(F, F).getAsBoolean();
-    // Force and() semantic ternary
     assert Proposition.AND(T, T, T).getAsBoolean();
     assert !Proposition.AND(T, F, T).getAsBoolean();
     assert !Proposition.AND(F, T, T).getAsBoolean();
     assert !Proposition.AND(F, F, T).getAsBoolean();
-    // Force and() short circuit
     assert Proposition.AND(T, T, T).getAsBoolean();
     assert !Proposition.AND(T, F, X).getAsBoolean();
     assert !Proposition.AND(F, X, X).getAsBoolean();
     assert !Proposition.AND(F, F, X).getAsBoolean();
-    // Force or() signature
     Proposition.OR(T, T);
     Proposition.OR(T, T);
     Proposition.OR(T, T, T);
     Proposition.OR(T, T, T, T);
     assert Proposition.OR(T, T).getAsBoolean();
-    // Force or() type
     supplier = OR(T, T);
     condition = OR(T, T);
     inner = OR(T, T);
-    // Force or() behavior
     assert Proposition.OR(T, T).getAsBoolean();
     assert Proposition.OR(T, F).getAsBoolean();
     assert Proposition.OR(F, T).getAsBoolean();
     assert !Proposition.OR(F, F).getAsBoolean();
-    // Force or() semantic ternary
     assert !Proposition.OR(F, F, F).getAsBoolean();
     assert Proposition.OR(F, F, T).getAsBoolean();
     assert Proposition.OR(F, T, F).getAsBoolean();
@@ -168,22 +155,18 @@ public class PropositionTest {
     assert Proposition.OR(T, F, T).getAsBoolean();
     assert Proposition.OR(T, T, F).getAsBoolean();
     assert Proposition.OR(T, T, T).getAsBoolean();
-    // Force or() short circuit
     assert Proposition.OR(F, T, X).getAsBoolean();
     assert Proposition.OR(T, X, X).getAsBoolean();
     assert T_OR_F_OR_X.getAsBoolean();
     assert Proposition.OR(T, X, X).getAsBoolean();
-    // Demonstrate not
     assert Proposition.NOT(F).getAsBoolean();
     assert !Proposition.NOT(T).getAsBoolean();
-    // Now some more complex expressions
     assert Proposition.NOT(F).and(NOT(F)).getAsBoolean();
     assert !Proposition.NOT(F).and(NOT(T)).getAsBoolean();
     assert Proposition.NOT(F).and(NOT(F)).or(T).getAsBoolean();
     assert Proposition.NOT(F).and(NOT(F)).or(T).eval();
     assert Proposition.NOT(F).and(NOT(F)).or(T).or(X).eval();
     assert Proposition.NOT(F).and(NOT(F)).or(T).or(X, X).eval();
-    // More fancy syntax.
     assert NOT(F).and(NOT(F)).getAsBoolean();
     assert !NOT(F).and(NOT(T)).getAsBoolean();
     assert NOT(F).and(NOT(F)).or(T).getAsBoolean();
@@ -191,9 +174,7 @@ public class PropositionTest {
     assert NOT(F).and(NOT(F)).or(T).or(X).eval();
     final Proposition or = NOT(F).and(NOT(F)).or(T).or(X, X);
     assert or.eval();
-    // Check precedence: A || B && C
     assert Proposition.of(F).or(T).and(T).eval();
-    // Check precedence: (A || B) && C
     assert OR(F, T).and(T).eval();
     assert OR(F, T).and(T).or(X).eval();
     assert !OR(F, T).and(T).and(F).eval();

@@ -23,11 +23,10 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
   @Override public ASTNode replacement(final ForStatement s) {
     final AST create = s.getAST();
     final DoStatement $ = create.newDoStatement();
-    final IfStatement i = copy.of(az.ifStatement(extract.lastStatement(s)));
-    $.setExpression(make.notOf(step.expression(i)));
+    $.setExpression(make.notOf(step.expression(copy.of(az.ifStatement(extract.lastStatement(s))))));
     final Block b = create.newBlock();
     @NotNull final List<Statement> ls = extract.statements(copy.of(step.body(s)));
-    for (int j = 0; j < ls.size() - 1; j++)
+    for (int j = 0; j < ls.size() - 1; ++j)
       step.statements(b).add(copy.of(ls.get(j)));
     $.setBody(b);
     return $;
@@ -36,8 +35,8 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
   @Override public boolean prerequisite(final ForStatement ¢) {
     if (!iz.ifStatement(extract.lastStatement(¢)))
       return false;
-    final Statement s = az.ifStatement(extract.lastStatement(¢)).getThenStatement();
-    return iz.block(s) && extract.statements(az.block(s)).size() == 1 && iz.breakStatement(extract.statements(az.block(s)).get(0))
+    final Statement $ = az.ifStatement(extract.lastStatement(¢)).getThenStatement();
+    return iz.block($) && extract.statements(az.block($)).size() == 1 && iz.breakStatement(extract.statements(az.block($)).get(0))
         || iz.breakStatement(az.ifStatement(extract.lastStatement(¢)).getThenStatement());
   }
 

@@ -34,8 +34,7 @@ public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement>//
   @Override public Tip tip(final IfStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Block b = az.block(s.getParent());
-        final ListRewrite l = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+        final ListRewrite l = r.getListRewrite(az.block(s.getParent()), Block.STATEMENTS_PROPERTY);
         for (final Statement x : wizard.decompose(s.getExpression()))
           l.insertBefore(copy.of(x), s, g);
         l.remove(s, g);

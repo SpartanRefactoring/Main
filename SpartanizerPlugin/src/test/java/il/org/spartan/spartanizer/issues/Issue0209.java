@@ -38,7 +38,7 @@ public final class Issue0209 {
   }
 
   @Test public void issue209_02() {
-    new Integer(3).toString();
+    Integer.valueOf(3).toString();
     trimmingOf("new Integer(3).toString();")//
         .gives("Integer.valueOf(3).toString();")//
         .stays();

@@ -38,13 +38,13 @@ public final class Version300 {
     //@formatter:off
     default Find prerequisite() { return null; }
     void find();
-    default boolean B(final int i) { return fault.bool(bug(box.it(i))); }
+    default boolean B(final int ¢) { return fault.bool(bug(box.it(¢))); }
     default boolean B(final Object ... __) { return fault.bool(bug(__)); }
-    default void S(final int i) { bug(box.it(i)); }
+    default void S(final int ¢) { bug(box.it(¢)); }
     default void S(final Object ... __) { bug(__); }
-    default void andAlso(final Find f){bug(f);}
-    default void butNot(final Find f){bug(f);}
-    default void orElse(final Find f){bug(f);}
+    default void andAlso(final Find ¢){bug(¢);}
+    default void butNot(final Find ¢){bug(¢);}
+    default void orElse(final Find ¢){bug(¢);}
     default void andIs(final Runnable __1, final Runnable __2){bug(__1); bug(__2);}
     //@formatter:on
   }
