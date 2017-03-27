@@ -37,7 +37,7 @@ public final class FragmentInitializerReturnExpression extends $FragmentAndState
       return null;
     $.replace(s.getExpression(), newReturnValue, g);
     i.inlineInto(newReturnValue);
-    wizard.eliminate(f, $, g);
+    wizard.removeFragment(f, $, g);
     return $;
   }
 }

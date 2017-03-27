@@ -38,7 +38,7 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
     final ListRewrite l = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
     for (final Statement s : wizard.decompose(initializer()))
       l.insertBefore(copy.of(s), parent(), g);
-    wizard.eliminate(object(), r, g);
+    wizard.removeFragment(object(), r, g);
     return r;
   }
 }
