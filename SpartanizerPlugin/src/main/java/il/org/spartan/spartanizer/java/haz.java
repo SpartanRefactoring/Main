@@ -21,8 +21,8 @@ import il.org.spartan.utils.*;
  * @since 2016-09-12 */
 public enum haz {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-  public static boolean annotation(final VariableDeclarationFragment f) {
-    final ASTNode $ = parent(f);
+  public static boolean annotation(final VariableDeclarationFragment ¢) {
+    final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
       case ASTNode.SINGLE_VARIABLE_DECLARATION:
         return haz.annotation((SingleVariableDeclaration) $);
@@ -35,7 +35,7 @@ public enum haz {
       case ASTNode.LAMBDA_EXPRESSION:
         return haz.annotation((LambdaExpression) $);
       default:
-        assert fault.unreachable() : fault.specifically("Unexpected node type", $, f);
+        assert fault.unreachable() : fault.specifically("Unexpected node type", $, ¢);
         return false;
     }
   }
@@ -48,11 +48,11 @@ public enum haz {
     return false;
   }
 
-  private static boolean annotation(final VariableDeclarationExpression x) {
-    return !extract.annotations(x).isEmpty();
+  private static boolean annotation(final VariableDeclarationExpression ¢) {
+    return !extract.annotations(¢).isEmpty();
   }
 
-  private static boolean annotation(@SuppressWarnings("unused") final FieldDeclaration f) {
+  private static boolean annotation(@SuppressWarnings("unused") final FieldDeclaration __) {
     return false;
   }
 
