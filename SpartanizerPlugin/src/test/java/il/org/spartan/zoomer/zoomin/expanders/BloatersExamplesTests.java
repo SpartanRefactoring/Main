@@ -1,7 +1,6 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
 import java.util.*;
-import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -33,11 +32,8 @@ public class BloatersExamplesTests extends ExamplesTests {
    * class, different templates).
    * @return
    * @return all tippers to be tested */
-  @SuppressWarnings("rawtypes") private static Collection<?> allTippers() {
+  private static Collection<?> allTippers() {
     return InflaterProvider.freshCopyOfAllExpanders().getAllTippers() //
-        .stream()
-        .collect(Collectors.toMap((Function<Tipper<? extends ASTNode>, ? extends Class<? extends Tipper>>) Tipper<? extends ASTNode>::getClass,
-            λ -> λ, (t1, t2) -> t1))
-        .values();
+        .stream().collect(Collectors.toMap(Tipper<? extends ASTNode>::getClass, λ -> λ, (t1, t2) -> t1)).values();
   }
 }
