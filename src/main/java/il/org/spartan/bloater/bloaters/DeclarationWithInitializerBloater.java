@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
@@ -26,15 +25,16 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * (so that no warnings would be created)
  * @author Dor Ma'ayan
  * @since 23-12-2016 */
-//public class DeclarationWithInitializerBloater extends LocalVariableInitialized implements TipperCategory.Bloater {
-//  @Override public String description(VariableDeclarationFragment f) {
-//    return null;
-//  }
+// public class DeclarationWithInitializerBloater extends
+// LocalVariableInitialized implements TipperCategory.Bloater {
+// @Override public String description(VariableDeclarationFragment f) {
+// return null;
+// }
 //
-//  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
-//    return null;
-//  }
-//}
+// @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+// return null;
+// }
+// }
 public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDeclarationStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0xF445D29A172AE7CL;

@@ -11,11 +11,9 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/**
- * Tests class  {@link Proposition}
- * @author  Yossi Gil  {@code  Yossi.Gil@GMail.COM}
- * @since  2017-03-08 
- */
+/** Tests class {@link Proposition}
+ * @author Yossi Gil {@code  Yossi.Gil@GMail.COM}
+ * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore
 @SuppressWarnings("static-method")
@@ -57,9 +55,7 @@ public class PropositionTest {
     azzert.that(B2_OR_B1.reduce(javaReducer), is(""));
   }
 
-  /**
-  * [[SuppressWarningsSpartan]] 
-  */
+  /** [[SuppressWarningsSpartan]] */
   @Test public void aa() {
     object = Proposition.T;
     assert object != null;
