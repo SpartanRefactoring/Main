@@ -27,12 +27,12 @@ import il.org.spartan.spartanizer.engine.type.*;
 public final class typeTest {
   /** Ideally this class is empty, but still {@link Ignore} d.
    * @author Yossi Gil */
-  @Ignore
+  // @Ignore("Under construction")
   public static class NotWorkingYet {
     // All test work now
   }
 
-  @Ignore
+  // @Ignore("Under construction")
   public static class Pending {
     // No tests are pending
   }

@@ -65,8 +65,8 @@ public interface definition {
         final ForStatement s = az.forStatement(parent(e));
         assert s != null;
         final List<ASTNode> $ = new ArrayList<>();
-        wizard.addRest($, f, fragments(e));
-        wizard.addRest($, e, initializers(s));
+        lisp2.addRest($, f, fragments(e));
+        lisp2.addRest($, e, initializers(s));
         $.add(expression(s));
         $.addAll(updaters(s));
         $.add(body(s));
@@ -109,10 +109,12 @@ public interface definition {
             + fault.done();
         final List<VariableDeclarationFragment> fs = fragments(s);
         assert fs != null;
-        wizard.addRest($, f, fs);
+        lisp2.addRest($, f, fs);
+        if (parent(s) instanceof SwitchStatement)
+          return as.list(parent(s));
         final Block b = az.block(parent(s));
         assert b != null : fault.specifically("Weird type", s, parent(s));
-        return wizard.addRest($, s, statements(b));
+        return lisp2.addRest($, s, statements(b));
       }
     },
     method {
@@ -134,8 +136,8 @@ public interface definition {
         final TryStatement s = az.tryStatement(parent(e));
         final List<VariableDeclarationExpression> rs = resources(s);
         final List<ASTNode> $ = new ArrayList<>();
-        wizard.addRest($, f, fs);
-        wizard.addRest($, e, rs);
+        lisp2.addRest($, f, fs);
+        lisp2.addRest($, e, rs);
         $.add(body(s));
         $.addAll(catchClauses(s));
         return $;
