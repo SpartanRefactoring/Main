@@ -26,12 +26,16 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Dor Ma'ayan
  * @since 23-12-2016 */
 // public class DeclarationWithInitializerBloater extends
-// LocalVariableInitialized implements TipperCategory.Bloater {
-// @Override public String description(VariableDeclarationFragment f) {
-// return null;
+// SingleVariableDeclarationInitialized implements TipperCategory.Bloater {
+// @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+// final SingleVariableDeclaration $ = copy.of(object());
+// $.setInitializer(null);
+// r.replace(object(), $, g);
+// r.ne
+// return r;
 // }
 //
-// @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+// @Override public String description(SingleVariableDeclaration n) {
 // return null;
 // }
 // }
