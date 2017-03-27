@@ -14,7 +14,7 @@ public enum TestUtilsAll {
   /** A test to check that the actual output is similar to the actual value.
    * @param expected JD
    * @param actual JD */
-  public static void assertSimilar( final String expected,  final String actual) {
+  public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
       azzert.that(trivia.essence(actual), is(trivia.essence(expected)));
   }

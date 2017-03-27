@@ -27,7 +27,7 @@ public final class OccurrencesTest {
   private final SimpleName a = findFirst.variableDeclarationFragment(u).getName();
   private final VariableDeclarationStatement ab = (VariableDeclarationStatement) a.getParent().getParent();
   private final SimpleName b = ((VariableDeclaration) ab.fragments().get(1)).getName();
-   private final IfStatement s = extract.nextIfStatement(a);
+  private final IfStatement s = extract.nextIfStatement(a);
   private final InfixExpression e = (InfixExpression) s.getExpression();
 
   @Test public void correctSettings() {
@@ -43,7 +43,7 @@ public final class OccurrencesTest {
   }
 
   @Test public void lexicalUsesCollector() {
-     final Collection<SimpleName> into = new ArrayList<>();
+    final Collection<SimpleName> into = new ArrayList<>();
     a.accept(collect.lexicalUsesCollector(into, a));
     azzert.that(into.size(), is(1));
   }

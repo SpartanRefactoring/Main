@@ -48,18 +48,18 @@ public interface Recursive<@¢ T> extends Bolt<T> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   interface Compound<@¢ T> extends Recursive<T>, Bolt.Compound<T> {
-     Iterable<Recursive<T>> children();
+    Iterable<Recursive<T>> children();
 
-    @Override  default Iterable<? extends Bolt<T>> next() {
+    @Override default Iterable<? extends Bolt<T>> next() {
       return children();
     }
   }
 
   interface Postorder<E> extends Compound<E> {
-    @Override  default Compounder<E> compounder() {
+    @Override default Compounder<E> compounder() {
       return (self, others) -> {
         Stream<E> $ = Stream.empty();
-        for ( final Bolt<E> ¢ : others)
+        for (final Bolt<E> ¢ : others)
           $ = Stream.concat(¢.stream(), $);
         return self == null ? $ : Stream.concat($, Stream.of(self));
       };
@@ -72,10 +72,10 @@ public interface Recursive<@¢ T> extends Bolt<T> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   interface Preorder<E> extends Compound<E> {
-    @Override  default Compounder<E> compounder() {
+    @Override default Compounder<E> compounder() {
       return (self, others) -> {
         Stream<E> $ = self == null ? Stream.empty() : Stream.of(self);
-        for ( final Bolt<E> ¢ : others)
+        for (final Bolt<E> ¢ : others)
           $ = Stream.concat($, ¢.stream());
         return $;
       };

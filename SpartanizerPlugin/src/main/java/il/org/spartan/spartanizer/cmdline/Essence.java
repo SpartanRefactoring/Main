@@ -8,13 +8,13 @@ import java.util.*;
 public enum Essence {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static void main(final String[] args) {
-    for ( final Scanner ¢ = new Scanner(System.in);;) {
+    for (final Scanner ¢ = new Scanner(System.in);;) {
       System.out.print("Enter some code: ");
       System.out.println(Essence.of(¢.nextLine()));
     }
   }
 
-  public static String of( final String codeFragment) {
+  public static String of(final String codeFragment) {
     return codeFragment//
         .replaceAll("\\r\\n", "\n") // DOS Junk
         .replaceAll("\\n\\r", "\n") // Mac Junk
@@ -36,7 +36,7 @@ public enum Essence {
     ;
   }
 
-  public static String stringRemove( final String $) {
+  public static String stringRemove(final String $) {
     return $
         // Unquoted double quote by two consecutive double quotes
         .replaceAll("([^\"])\"", "$1\"\"")

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.nanos.common;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.research.*;
 
 /** List that can contain {@link NanoPatternTipper<Block>}
@@ -15,8 +16,7 @@ public class BlockNanoPatternContainer extends NanoPatternContainer<Block> {
     addAll(Arrays.asList(ts));
   }
 
-   public BlockNanoPatternContainer statementsPattern( final String pattern,  final String replacement,
-       final String description) {
+  public BlockNanoPatternContainer statementsPattern(final String pattern, final String replacement, final String description) {
     add(TipperFactory.statementsPattern(pattern, replacement, description));
     return this;
   }

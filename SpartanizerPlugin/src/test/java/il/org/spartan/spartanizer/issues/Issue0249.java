@@ -43,10 +43,10 @@ public class Issue0249 {
   }
 
   @Test public void a06() {
-     final Statement s = into.s("{}");
+    final Statement s = into.s("{}");
     assert s != null;
     azzert.that(s, instanceOf(Block.class));
-     final Block b = az.block(s);
+    final Block b = az.block(s);
     assert b != null;
     assert statements(b) != null;
     azzert.that(statements(b).size(), is(0));
@@ -64,7 +64,7 @@ public class Issue0249 {
     azzert.that(az.block(into.s("{}")), iz("{}"));
   }
 
-  public int metricUnderTest( final String javaStatements) {
+  public int metricUnderTest(final String javaStatements) {
     return metrics.horizontalComplexity(javaStatements == null ? null : into.s(javaStatements));
   }
 }

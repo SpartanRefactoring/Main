@@ -3,6 +3,7 @@ package il.org.spartan.bloater.bloaters;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -19,9 +20,9 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -1007971487834999855L;
 
-  @Override  public ASTNode replacement( final TryStatement s) {
-     final List<CatchClause> catches = step.catchClauses(s);
-     CatchClause multiTypeCatch = null;
+  @Override public ASTNode replacement(final TryStatement s) {
+    final List<CatchClause> catches = step.catchClauses(s);
+    CatchClause multiTypeCatch = null;
     int i = 0;
     // TODO: Ori Roth, this is a perfect example for extract method, which would
     // simpify the code
@@ -32,7 +33,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
       }
     if (multiTypeCatch == null)
       return null;
-     final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
+    final List<Type> types = step.types(az.UnionType(multiTypeCatch.getException().getType()));
     final Block commonBody = step.catchClauses(s).get(i).getBody();
     final SimpleName commonName = multiTypeCatch.getException().getName();
     final TryStatement $ = copy.of(s);
@@ -50,7 +51,7 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     return $;
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final TryStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
     return null;
   }
 }

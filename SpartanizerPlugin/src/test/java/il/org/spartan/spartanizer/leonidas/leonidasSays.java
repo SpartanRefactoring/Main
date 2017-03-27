@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -28,8 +29,8 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public enum leonidasSays {
   ;
-  static void azzertEquals( final String s,  final IDocument d) {
-     String actual = null;
+  static void azzertEquals(final String s, final IDocument d) {
+    String actual = null;
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -49,7 +50,7 @@ public enum leonidasSays {
     }
   }
 
-  static ASTNode extractASTNode( final String s, final CompilationUnit u) {
+  static ASTNode extractASTNode(final String s, final CompilationUnit u) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -66,18 +67,18 @@ public enum leonidasSays {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode $) {
-     final List<Statement> statements = statements(az.block($));
+    final List<Statement> statements = statements(az.block($));
     return statements == null || statements.size() != 1 ? $ : first(statements);
   }
 
-   static <N extends ASTNode> N findSecond( final Class<?> c,  final ASTNode n) {
+  static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
     if (n == null)
       return null;
-     final Wrapper<Boolean> foundFirst = new Wrapper<>();
+    final Wrapper<Boolean> foundFirst = new Wrapper<>();
     foundFirst.set(Boolean.FALSE);
-     final Wrapper<ASTNode> $ = new Wrapper<>();
+    final Wrapper<ASTNode> $ = new Wrapper<>();
     n.accept(new ASTVisitor(true) {
-      @Override public boolean preVisit2( final ASTNode ¢) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
         if ($.get() != null)
           return false;
         if (¢.getClass() != c && !c.isAssignableFrom(¢.getClass()))
@@ -91,27 +92,27 @@ public enum leonidasSays {
         return true;
       }
     });
-     @SuppressWarnings("unchecked") final N $$ = (N) $.get();
+    @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
   }
 
-   public static statementsTipper statementsTipper( final String p,  final String s,  final String d) {
+  public static statementsTipper statementsTipper(final String p, final String s, final String d) {
     return new statementsTipper(TipperFactory.statementsPattern(p, s, d));
   }
 
-   public static expression that(final String ¢) {
+  public static expression that(final String ¢) {
     return new expression(¢);
   }
 
-   public static tipper tipper( final String p,  final String s,  final String d) {
+  public static tipper tipper(final String p, final String s, final String d) {
     return new tipper(p, s, d);
   }
 
-   public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
+  public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
     return new tipper(¢);
   }
 
-  static String wrapCode( final String ¢) {
+  static String wrapCode(final String ¢) {
     switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
       case OUTER_TYPE_LOOKALIKE:
@@ -138,14 +139,14 @@ public enum leonidasSays {
       string = _s;
     }
 
-    public void into( final String rrr) {
-       final IDocument document = new Document(wrapCode(string));
+    public void into(final String rrr) {
+      final IDocument document = new Document(wrapCode(string));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setSource(document.get().toCharArray());
-       final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+      final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
       final ASTRewrite r = ASTRewrite.create(cu.getAST());
       final ASTNode n = extractStatementIfOne(extractASTNode(string, cu));
-       final Bool tipped = new Bool();
+      final Bool tipped = new Bool();
       // noinspection SameReturnValue
       n.accept(new ASTVisitor(true) {
         @Override public boolean visit(final Block ¢) {
@@ -160,7 +161,7 @@ public enum leonidasSays {
       final TextEdit edits = r.rewriteAST(document, null);
       try {
         edits.apply(document);
-      } catch ( MalformedTreeException | BadLocationException ¢) {
+      } catch (MalformedTreeException | BadLocationException ¢) {
         monitor.logEvaluationError(this, ¢);
       }
       azzertEquals(rrr, document);
@@ -168,7 +169,7 @@ public enum leonidasSays {
   }
 
   static class expression {
-    private static ASTNode ast( final String s2) {
+    private static ASTNode ast(final String s2) {
       return extractStatementIfOne(wizard.ast(s2));
     }
 
@@ -178,11 +179,11 @@ public enum leonidasSays {
       this.s = s;
     }
 
-    public void matches( final String s2) {
+    public void matches(final String s2) {
       assert Matcher.patternMatcher(s, "").matches(ast(s2));
     }
 
-    public void notmatches( final String s2) {
+    public void notmatches(final String s2) {
       assert !Matcher.patternMatcher(s, "").matches(ast(s2));
     }
   }
@@ -190,11 +191,11 @@ public enum leonidasSays {
   public static class statementsTipper {
     private final Tipper<Block> tipper;
 
-    public statementsTipper( final String pattern,  final String replacement) {
+    public statementsTipper(final String pattern, final String replacement) {
       tipper = TipperFactory.patternTipper(pattern, replacement);
     }
 
-    public statementsTipper( final String pattern,  final String replacement,  final String description) {
+    public statementsTipper(final String pattern, final String replacement, final String description) {
       tipper = TipperFactory.patternTipper(pattern, replacement, description);
     }
 
@@ -202,15 +203,15 @@ public enum leonidasSays {
       this.tipper = tipper;
     }
 
-    public void nottips( final String ¢) {
+    public void nottips(final String ¢) {
       assert !tipper.check(az.block(wizard.ast(¢)));
     }
 
-    public void tips( final String ¢) {
+    public void tips(final String ¢) {
       assert tipper.check(az.block(wizard.ast(¢)));
     }
 
-     public blockTurns turns(final String ¢) {
+    public blockTurns turns(final String ¢) {
       return new blockTurns(tipper, ¢);
     }
   }
@@ -218,11 +219,11 @@ public enum leonidasSays {
   public static class tipper {
     private final UserDefinedTipper<ASTNode> tipper;
 
-    public tipper( final String pattern,  final String replacement) {
+    public tipper(final String pattern, final String replacement) {
       tipper = TipperFactory.patternTipper(pattern, replacement);
     }
 
-    public tipper( final String pattern,  final String replacement,  final String description) {
+    public tipper(final String pattern, final String replacement, final String description) {
       tipper = TipperFactory.patternTipper(pattern, replacement, description);
     }
 
@@ -230,15 +231,15 @@ public enum leonidasSays {
       this.tipper = tipper;
     }
 
-    public void nottips( final String ¢) {
+    public void nottips(final String ¢) {
       assert !tipper.check(wizard.ast(¢));
     }
 
-    public void tips( final String ¢) {
+    public void tips(final String ¢) {
       assert tipper.check(extractStatementIfOne(wizard.ast(¢)));
     }
 
-     public turns turns(final String ¢) {
+    public turns turns(final String ¢) {
       return new turns(tipper, ¢);
     }
   }
@@ -252,14 +253,14 @@ public enum leonidasSays {
       string = _s;
     }
 
-    public void into( final String expected) {
-       final IDocument document = new Document(wrapCode(string));
+    public void into(final String expected) {
+      final IDocument document = new Document(wrapCode(string));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
       parser.setSource(document.get().toCharArray());
-       final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+      final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
       final ASTRewrite r = ASTRewrite.create(cu.getAST());
       final ASTNode n = extractStatementIfOne(extractASTNode(string, cu));
-       final Bool tipped = new Bool();
+      final Bool tipped = new Bool();
       n.accept(new ASTVisitor(true) {
         @Override public void preVisit(final ASTNode ¢) {
           if (!tipper.check(¢))
@@ -272,7 +273,7 @@ public enum leonidasSays {
       final TextEdit edits = r.rewriteAST(document, null);
       try {
         edits.apply(document);
-      } catch ( MalformedTreeException | BadLocationException ¢) {
+      } catch (MalformedTreeException | BadLocationException ¢) {
         monitor.logEvaluationError(this, ¢);
       }
       azzertEquals(expected, document);

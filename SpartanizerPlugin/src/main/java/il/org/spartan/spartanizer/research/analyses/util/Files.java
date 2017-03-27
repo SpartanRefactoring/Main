@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -16,12 +17,12 @@ import il.org.spartan.utils.*;
 public enum Files {
   ;
   public static void createOutputDirIfNeeded() {
-     final File dir = new File(outputDir());
+    final File dir = new File(outputDir());
     if (!dir.exists())
       dir.mkdir();
   }
 
-  @SuppressWarnings("deprecation")  public static String getProperty(final String ¢) {
+  @SuppressWarnings("deprecation") public static String getProperty(final String ¢) {
     return AnalyzerOptions.get(Analyze.class.getSimpleName(), ¢);
   }
 
@@ -29,11 +30,11 @@ public enum Files {
     AnalyzerOptions.set(key, value);
   }
 
-   public static String outputDir() {
+  public static String outputDir() {
     return getProperty("outputDir");
   }
 
-   public static Collection<File> inputFiles() {
+  public static Collection<File> inputFiles() {
     return getJavaFiles(getProperty("inputDir"));
   }
 
@@ -41,18 +42,18 @@ public enum Files {
     new File(outputDir() + "/after.java").delete();
   }
 
-  public static void blank( final String s) {
-    try ( PrintWriter p = new PrintWriter(s)) {
+  public static void blank(final String s) {
+    try (PrintWriter p = new PrintWriter(s)) {
       p.close();
-    } catch ( final FileNotFoundException ¢) {
+    } catch (final FileNotFoundException ¢) {
       ¢.printStackTrace();
     }
   }
 
-  public static void blank( final File f) {
-    try ( PrintWriter p = new PrintWriter(f)) {
+  public static void blank(final File f) {
+    try (PrintWriter p = new PrintWriter(f)) {
       p.close();
-    } catch ( final FileNotFoundException ¢) {
+    } catch (final FileNotFoundException ¢) {
       ¢.printStackTrace();
     }
   }
@@ -60,10 +61,10 @@ public enum Files {
   /** Append String to file.
    * @param f file
    * @param s string */
-  public static void appendFile( final File f,  final String s) {
-    try ( FileWriter w = new FileWriter(f, true)) {
+  public static void appendFile(final File f, final String s) {
+    try (FileWriter w = new FileWriter(f, true)) {
       w.write(s);
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, "append");
     }
   }
@@ -71,10 +72,10 @@ public enum Files {
   /** Write String to file.
    * @param f file
    * @param s string */
-  public static void writeFile( final File f,  final String s) {
-    try ( FileWriter w = new FileWriter(f, false)) {
+  public static void writeFile(final File f, final String s) {
+    try (FileWriter w = new FileWriter(f, false)) {
       w.write(s);
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, "write");
     }
   }
@@ -83,20 +84,20 @@ public enum Files {
    * packageDeclarations and FieldDeclarations.
    * @param cu
    * @return */
-   private static ASTNode clean( final ASTNode cu) {
+  private static ASTNode clean(final ASTNode cu) {
     cu.accept(new CleanerVisitor());
     return cu;
   }
 
   /** @param ¢ file
    * @return compilation unit out of file */
-  private static ASTNode getCompilationUnit( final File ¢) {
+  private static ASTNode getCompilationUnit(final File ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
   /** @param ¢ string
    * @return compilation unit out of string */
-  public static ASTNode getCompilationUnit( final String ¢) {
+  public static ASTNode getCompilationUnit(final String ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
 
@@ -104,7 +105,7 @@ public enum Files {
    * Heuristically, we ignore test files.
    * @param dirName name of directory to search in
    * @return All java files nested inside the outputFolder */
-   private static Collection<File> getJavaFiles( final String dirName) {
+  private static Collection<File> getJavaFiles(final String dirName) {
     return getJavaFiles(new File(dirName));
   }
 
@@ -112,11 +113,11 @@ public enum Files {
    * Heuristically, we ignore test files.
    * @param directory to search in
    * @return All java files nested inside the outputFolder */
-   private static Collection<File> getJavaFiles( final File directory) {
-     final Collection<File> $ = new HashSet<>();
+  private static Collection<File> getJavaFiles(final File directory) {
+    final Collection<File> $ = new HashSet<>();
     if (directory == null || directory.listFiles() == null)
       return $;
-    for ( final File entry : directory.listFiles())
+    for (final File entry : directory.listFiles())
       if (javaFile(entry) && notTest(entry))
         $.add(entry);
       else
@@ -124,23 +125,23 @@ public enum Files {
     return $;
   }
 
-  private static boolean javaFile( final File entry) {
+  private static boolean javaFile(final File entry) {
     return entry.isFile() && entry.getPath().endsWith(".java");
   }
 
-  private static boolean notTest( final File entry) {
+  private static boolean notTest(final File entry) {
     return !entry.getPath().contains("src\\test") && !entry.getPath().contains("src/test") && !entry.getName().contains("Test");
   }
 
-   public static ASTNode compilationUnit( final File ¢) {
+  public static ASTNode compilationUnit(final File ¢) {
     return clean(getCompilationUnit(¢));
   }
 
-   public static ASTNode compilationUnitWithBinding( final File ¢) {
+  public static ASTNode compilationUnitWithBinding(final File ¢) {
     return clean(getCompilationUnitWithBinding(¢));
   }
 
-   private static ASTNode getCompilationUnitWithBinding( final File ¢) {
+  private static ASTNode getCompilationUnitWithBinding(final File ¢) {
     return wizard.compilationUnitWithBinding(¢);
   }
 }

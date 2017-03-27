@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.utils.*;
 
@@ -19,7 +20,7 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
         && !rival.get().matches(¢);
   }
 
-  @Override  public String nanoName() {
+  @Override public String nanoName() {
     return "ConstantValue";
   }
 }

@@ -48,7 +48,7 @@ public final class Tips {
 
   /** @param name the name of the applicator
    * @return an instance of the class */
-  public static AbstractGUIApplicator get( final String name) {
+  public static AbstractGUIApplicator get(final String name) {
     assert name != null;
     return map.get(name);
   }

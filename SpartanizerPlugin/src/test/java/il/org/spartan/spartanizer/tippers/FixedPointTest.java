@@ -20,16 +20,16 @@ import il.org.spartan.spartanizer.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class FixedPointTest {
-  private static void assertConvertsTo( final String from,  final String expected) {
+  private static void assertConvertsTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, WrapIntoComilationUnit.Statement);
   }
 
-  private static void assertSimplifiesTo( final String from,  final String expected) {
+  private static void assertSimplifiesTo(final String from, final String expected) {
     assertWrappedTranslation(from, expected, WrapIntoComilationUnit.Expression);
   }
 
-  private static void assertWrappedTranslation( final String from,  final String expected,  final WrapIntoComilationUnit u) {
-     final String wrap = u.on(from);
+  private static void assertWrappedTranslation(final String from, final String expected, final WrapIntoComilationUnit u) {
+    final String wrap = u.on(from);
     azzert.that(u.off(wrap), is(from));
     final String unpeeled = new InteractiveSpartanizer().fixedPoint(wrap);
     if (wrap.equals(unpeeled))

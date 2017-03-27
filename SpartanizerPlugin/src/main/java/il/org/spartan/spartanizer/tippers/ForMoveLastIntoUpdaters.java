@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,11 +19,11 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> implemen
         && cantTip.remvoeRedundantIf(¢);
   }
 
-  @Override  public String description( final ForStatement ¢) {
+  @Override public String description(final ForStatement ¢) {
     return "Convert loop: 'for(?;" + ¢.getExpression() + ";?)' to something else (buggy)";
   }
 
-  @Override public boolean prerequisite( final ForStatement ¢) {
+  @Override public boolean prerequisite(final ForStatement ¢) {
     fillUp(¢.getBody());
     return validUpdater() && notClaimedByOthers(¢);
   }

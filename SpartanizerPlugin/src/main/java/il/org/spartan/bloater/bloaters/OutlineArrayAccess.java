@@ -62,7 +62,8 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     final SimpleName n = iz.prefixExpression(e) ? extract.simpleName(az.prefixExpression(e)) : extract.simpleName(az.postfixExpression(e));
     if (n == null)
       return false;
-     final Assignment $ = az.assignment(expression(az.expressionStatement(b)));
-    return $ != null && left($).equals(a) && iz.plainAssignment($) && !iz.containsName(n, right($));
+    if(extract.countNameInSubtree(n, b) == 1)
+      return true;
+    return false;
   }
 }

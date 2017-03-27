@@ -11,6 +11,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -53,18 +54,18 @@ public final class Inliner2 {
     }
   }
 
-  private static boolean isLeftValue( final SimpleName ¢) {
-     final ASTNode $ = parent(¢);
+  private static boolean isLeftValue(final SimpleName ¢) {
+    final ASTNode $ = parent(¢);
     return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
   }
 
-   public ASTRewrite fire( final ASTRewrite $, final TextEditGroup g) {
+  public ASTRewrite fire(final ASTRewrite $, final TextEditGroup g) {
     for (final SimpleName ¢ : spots)
       $.replace(¢, copy.of(replacement), g);
     return $;
   }
 
-  private Inliner2(final SimpleName what,  final Expression replacement, final List<? extends ASTNode> where) {
+  private Inliner2(final SimpleName what, final Expression replacement, final List<? extends ASTNode> where) {
     this.replacement = protect(replacement);
     spots = collect.usesOf(this.what = what).in(this.where = where);
   }
@@ -95,7 +96,7 @@ public final class Inliner2 {
     return sideEffects.sink(replacement);
   }
 
-  public static Expression protect( final Expression initializer, final VariableDeclarationStatement currentStatement) {
+  public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
@@ -105,8 +106,8 @@ public final class Inliner2 {
     return $;
   }
 
-  public static boolean leftSide( final Statement nextStatement, final String id) {
-     final Bool $ = new Bool();
+  public static boolean leftSide(final Statement nextStatement, final String id) {
+    final Bool $ = new Bool();
     // noinspection SameReturnValue
     nextStatement.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
@@ -118,7 +119,7 @@ public final class Inliner2 {
     return $.inner;
   }
 
-  public static Expression protect( final Expression ¢) {
+  public static Expression protect(final Expression ¢) {
     switch (¢.getNodeType()) {
       case ARRAY_CREATION:
       case CAST_EXPRESSION:
@@ -132,14 +133,14 @@ public final class Inliner2 {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-16 */
   public interface Of {
-     By by(Expression by);
+    By by(Expression by);
   }
 
   /** FAPI factory chain
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-16 */
   public interface By {
-     Inliner2 in(List<? extends ASTNode> ns);
+    Inliner2 in(List<? extends ASTNode> ns);
   }
 
   /** Replace an occurrence of a {@link SimpleName} with an {@link Expression}
@@ -148,25 +149,25 @@ public final class Inliner2 {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since Sep 13, 2016 */
   public interface replaceAll {
-     static ASTRewrite go(final TextEditGroup g,  final ASTRewrite r) {
+    static ASTRewrite go(final TextEditGroup g, final ASTRewrite r) {
       return new Inner().go(g, r);
     }
 
-     static Inner in(final ASTNode... ¢) {
+    static Inner in(final ASTNode... ¢) {
       return new Inner().in(¢);
     }
 
-     static Inner of(final SimpleName ¢) {
+    static Inner of(final SimpleName ¢) {
       return new Inner().of(¢);
     }
 
-     static Inner with(final Expression ¢) {
+    static Inner with(final Expression ¢) {
       return new Inner().with(¢);
     }
 
-     static Wrapper<ASTNode>[] wrap( final ASTNode[] ns) {
-       @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
-       final Int i = new Int();
+    static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
+      @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
+      final Int i = new Int();
       as.list(ns).forEach(λ -> $[i.next()] = new Wrapper<>(λ));
       return $;
     }
@@ -175,9 +176,9 @@ public final class Inliner2 {
       private SimpleName name;
       private ASTNode[] range;
       private Expression with;
-       private List<SimpleName> occurrences;
+      private List<SimpleName> occurrences;
 
-       ASTRewrite go(final TextEditGroup g,  final ASTRewrite $) {
+      ASTRewrite go(final TextEditGroup g, final ASTRewrite $) {
         occurrences.forEach(λ -> $.replace(λ, !iz.expression(λ) ? copy.of(with) : make.plant(with).into(λ.getParent()), g));
         return $;
       }
@@ -228,12 +229,12 @@ public final class Inliner2 {
         return collect.definitionsOf(name).in().isEmpty();
       }
 
-       public Inner in(final ASTNode[] ¢) {
+      public Inner in(final ASTNode[] ¢) {
         occurrences = collect.usesOf(name).in(range = ¢);
         return null;
       }
 
-       public Inner of(final SimpleName ¢) {
+      public Inner of(final SimpleName ¢) {
         occurrences = collect.usesOf(name = ¢).in(range);
         return null;
       }
@@ -246,7 +247,7 @@ public final class Inliner2 {
         return metrics.size(range) + occurrences.size() * (metrics.size(get()) - 1);
       }
 
-       public Inner with(final Expression ¢) {
+      public Inner with(final Expression ¢) {
         with = ¢;
         return this;
       }

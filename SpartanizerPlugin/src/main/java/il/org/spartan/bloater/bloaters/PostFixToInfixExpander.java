@@ -2,6 +2,7 @@ package il.org.spartan.bloater.bloaters;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,10 +22,10 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x2039A31D98B2AA4CL;
 
-  @Override  public ASTNode replacement( final PostfixExpression x) {
+  @Override public ASTNode replacement(final PostfixExpression x) {
     if (x.getOperator() != Operator.INCREMENT && x.getOperator() != Operator.DECREMENT)
       return null;
-     final Expression one = az.expression(wizard.ast("1"));
+    final Expression one = az.expression(wizard.ast("1"));
     final Assignment $ = subject
         .pair(x.getOperand(),
             x.getOperator() == Operator.DECREMENT ? subject.pair(x.getOperand(), one).to(InfixExpression.Operator.MINUS)
@@ -33,12 +34,12 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
     return !needWrap(x) ? $ : subject.operand($).parenthesis();
   }
 
-  private static boolean needWrap( final PostfixExpression ¢) {
+  private static boolean needWrap(final PostfixExpression ¢) {
     final ASTNode $ = ¢.getParent();
     return iz.infixExpression($) || iz.prefixExpression($) || iz.postfixExpression($);
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final PostfixExpression __) {
+  @Override public String description(@SuppressWarnings("unused") final PostfixExpression __) {
     return null;
   }
 }

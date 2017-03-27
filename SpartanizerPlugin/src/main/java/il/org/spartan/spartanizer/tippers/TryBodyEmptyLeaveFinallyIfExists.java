@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -17,14 +18,14 @@ public final class TryBodyEmptyLeaveFinallyIfExists extends CarefulTipper<TrySta
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x4B682E357EA0DBEL;
 
-  @Override public boolean prerequisite( final TryStatement ¢) {
+  @Override public boolean prerequisite(final TryStatement ¢) {
     final Block $ = ¢.getBody();
     return $ != null && statements($).isEmpty();
   }
 
-  @Override  public Tip tip( final TryStatement s) {
+  @Override public Tip tip(final TryStatement s) {
     return new Tip(description(s), s, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Block finallyBlock = s.getFinally();
         if (finallyBlock == null || statements(finallyBlock).isEmpty())
           r.remove(s, g);

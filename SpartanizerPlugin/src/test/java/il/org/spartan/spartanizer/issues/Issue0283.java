@@ -15,10 +15,9 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0283 {
   @Test public void a() {
-    trimmingOf(
-        "@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings( 3 ) @Inherited  @Deprecated public void test0() { }}")
-            .gives("@Ignore class Test123{@Deprecated @Inherited @Test @WebEndpoint @WebFault @SuppressWarnings(3)  public void test0(){}}") //
-            .stays();
+    trimmingOf("@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings( 3 ) @Inherited  @Deprecated public void test0() { }}")
+        .gives("@Ignore class Test123{@Deprecated @Inherited @Test @WebEndpoint @WebFault @SuppressWarnings(3)  public void test0(){}}") //
+        .stays();
   }
 
   /** Automatically generated on Sun-Mar-12-18:46:48-IST-2017, copied by
@@ -106,8 +105,7 @@ public class Issue0283 {
   }
 
   @Test public void test31() {
-    trimmingOf("class Test123 {@Test  @Deprecated public void test0() { }}")
-        .gives("class Test123 {@Deprecated @Test  public void test0() { }}");
+    trimmingOf("class Test123 {@Test  @Deprecated public void test0() { }}").gives("class Test123 {@Deprecated @Test  public void test0() { }}");
   }
 
   @Test public void test32() {

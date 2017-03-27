@@ -57,18 +57,18 @@ public class XMLSpartan {
    * occur (such as a corrupted XML file), an empty map is returned.
    * @param p JD
    * @return enabled tippers for the project */
-   public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p) {
-     final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
-     final Document d = getFile(p);
+  public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p) {
+    final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
+    final Document d = getFile(p);
     if (d == null)
       return $;
     final NodeList ns = d.getElementsByTagName(TIPPER);
     if (ns == null)
       return $;
-     final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
-     final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
+    final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
+    final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
     for (int i = 0; i < ns.getLength(); ++i) {
-       final Element e = (Element) ns.item(i);
+      final Element e = (Element) ns.item(i);
       final Class<?> tc = Toolbox.Tables.TipperIDClassTranslationTable.get(e.getAttribute(TIPPER_ID));
       if (tc == null)
         continue;
@@ -79,7 +79,7 @@ public class XMLSpartan {
         tgs.put(g, new ArrayList<>());
         tcs.put(g, new SpartanCategory(g.name(), false));
       }
-       final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(e.getAttribute(ENABLED)), tcs.get(g),
+      final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(e.getAttribute(ENABLED)), tcs.get(g),
           description != null ? description : "No description available", preview != null && preview.length > 0 ? preview : EMPTY_PREVIEW);
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
@@ -92,12 +92,12 @@ public class XMLSpartan {
    * corrupted XML file), full tippers collection is returned.
    * @param p JD
    * @return enabled tippers for project */
-  @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers( final IProject p) {
+  @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
     final Set<Class<Tipper<? extends ASTNode>>> $ = Toolbox.freshCopyOfAllTippers().getAllTippers().stream()
         .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(toSet());
     if (p == null)
       return $;
-     final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p);
+    final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p);
     if (m == null)
       return $;
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
@@ -108,15 +108,15 @@ public class XMLSpartan {
   /** Updates the project's XML file to enable given tippers.
    * @param p JD
    * @param ss enabled tippers by name */
-  public static void updateEnabledTippers( final IProject p,  final Collection<String> ss) {
-     final Document d = getFile(p);
+  public static void updateEnabledTippers(final IProject p, final Collection<String> ss) {
+    final Document d = getFile(p);
     if (d == null)
       return;
     final NodeList l = d.getElementsByTagName(TIPPER);
     if (l == null)
       return;
     for (int i = 0; i < l.getLength(); ++i) {
-       final Element e = (Element) l.item(i);
+      final Element e = (Element) l.item(i);
       final String nameByID = Toolbox.Tables.TipperIDNameTranslationTable.get(e.getAttribute(TIPPER_ID));
       e.setAttribute(ENABLED, nameByID != null && ss.contains(nameByID) ? "true" : "false");
     }
@@ -129,7 +129,7 @@ public class XMLSpartan {
   private static Document getFile(final IProject $) {
     try {
       return getFileInner($);
-    } catch ( final ParserConfigurationException | CoreException | SAXException | IOException ¢) {
+    } catch (final ParserConfigurationException | CoreException | SAXException | IOException ¢) {
       monitor.log(¢);
       return null;
     }
@@ -143,8 +143,7 @@ public class XMLSpartan {
    * @throws IOException
    * @throws CoreException
    * @return XML file for project */
-   private static Document getFileInner( final IProject p)
-      throws CoreException, ParserConfigurationException, SAXException, IOException {
+  private static Document getFileInner(final IProject p) throws CoreException, ParserConfigurationException, SAXException, IOException {
     if (p == null || !p.exists() || !p.isOpen())
       return null;
     final IFile fl = p.getFile(FILE_NAME);
@@ -157,14 +156,14 @@ public class XMLSpartan {
     if (b == null)
       return null;
     if (!fl.exists()) {
-       final Document i = initialize(b.newDocument());
+      final Document i = initialize(b.newDocument());
       if (i == null)
         return null;
       fl.create(new ByteArrayInputStream("".getBytes()), true, new NullProgressMonitor());
       if (!commit(fl, i) || !fl.exists())
         return null;
     }
-     Document $ = b.parse(fl.getContents());
+    Document $ = b.parse(fl.getContents());
     if ($ == null)
       return null;
     final Element e = $.getDocumentElement();
@@ -183,14 +182,14 @@ public class XMLSpartan {
    * tippers.
    * @param d JD
    * @return given document */
-   private static Document initialize( final Document $) {
+  private static Document initialize(final Document $) {
     if ($ == null)
       return null;
     if ($.getElementById(BASE) != null)
       return $;
     final Element e = $.createElement("spartan");
     e.setAttribute(VERSION, CURRENT_VERSION);
-     final Collection<String> seen = new HashSet<>();
+    final Collection<String> seen = new HashSet<>();
     Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
     $.appendChild(e);
     $.setXmlStandalone(true); // TODO Roth: does not seem to work
@@ -203,11 +202,10 @@ public class XMLSpartan {
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Toolbox}, so we should avoid duplications
    * @param e base element "spartan" */
-  private static void createEnabledNodeChild( final Document d,  final Tipper<?> t,  final Collection<String> seen,
-       final Node e) {
+  private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Collection<String> seen, final Node e) {
     if (d == null || t == null || seen == null || e == null)
       return;
-     final String n = t.nanoName();
+    final String n = t.nanoName();
     if (seen.contains(n))
       return;
     final Element $ = d.createElement(TIPPER);
@@ -223,10 +221,10 @@ public class XMLSpartan {
    * @param f JD
    * @param d JD
    * @return true iff the operation has been completed successfully */
-  private static boolean commit( final IFile f, final Document d) {
-     final Source domSource = new DOMSource(d);
-     final StringWriter writer = new StringWriter();
-     final Result result = new StreamResult(writer);
+  private static boolean commit(final IFile f, final Document d) {
+    final Source domSource = new DOMSource(d);
+    final StringWriter writer = new StringWriter();
+    final Result result = new StreamResult(writer);
     final TransformerFactory tf = TransformerFactory.newInstance();
     try {
       final Transformer t = tf.newTransformer();
@@ -239,7 +237,7 @@ public class XMLSpartan {
       t.transform(domSource, result);
       f.setContents(new ByteArrayInputStream((writer + "").getBytes()), false, false, new NullProgressMonitor());
       return true;
-    } catch ( CoreException | TransformerException ¢) {
+    } catch (CoreException | TransformerException ¢) {
       monitor.log(¢);
       return false;
     }
@@ -249,7 +247,7 @@ public class XMLSpartan {
    * @param p JD
    * @param d JD
    * @return true iff the operation has been completed successfully */
-  private static boolean commit( final IProject p, final Document d) {
+  private static boolean commit(final IProject p, final Document d) {
     final IFile $ = p.getFile(FILE_NAME);
     return $ != null && $.exists() && commit($, d);
   }
@@ -292,7 +290,7 @@ public class XMLSpartan {
       return false;
     }
 
-     @SuppressWarnings("static-method") public SpartanElement[] getChildren() {
+    @SuppressWarnings("static-method") public SpartanElement[] getChildren() {
       return EMPTY;
     }
   }
@@ -331,7 +329,7 @@ public class XMLSpartan {
    * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-02-25 */
   public static class SpartanCategory extends SpartanElement {
-     private final List<SpartanElement> children;
+    private final List<SpartanElement> children;
 
     public SpartanCategory(final String name, final boolean enabled) {
       super(name, enabled);
@@ -356,7 +354,7 @@ public class XMLSpartan {
      * @see
      * il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler.
      * SpartanElement#getChildren() */
-    @Override  public SpartanElement[] getChildren() {
+    @Override public SpartanElement[] getChildren() {
       return children.toArray(new SpartanElement[children.size()]);
     }
   }

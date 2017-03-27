@@ -9,6 +9,7 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,16 +23,16 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
     implements TipperCategory.NOP.onNumbers {
   private static final long serialVersionUID = 0x7AAE85AAEB6D72C8L;
 
-  private static ASTNode replacement( final List<Expression> ¢) {
-     final List<Expression> $ = new ArrayList<>(¢.stream().filter(λ -> !iz.literal1(λ)).collect(toList()));
+  private static ASTNode replacement(final List<Expression> ¢) {
+    final List<Expression> $ = new ArrayList<>(¢.stream().filter(λ -> !iz.literal1(λ)).collect(toList()));
     return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(first(¢)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(TIMES);
   }
 
-  @Override  public String description(final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return "Remove all multiplications by 1 from " + ¢;
   }
 
-  @Override public ASTNode replacement( final InfixExpression ¢) {
+  @Override public ASTNode replacement(final InfixExpression ¢) {
     return ¢.getOperator() != TIMES ? null : replacement(extract.allOperands(¢));
   }
 }

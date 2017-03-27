@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,8 +31,8 @@ public final class FragmentInitializerNewAddAll extends GoToNextStatement<Variab
     implements TipperCategory.Inlining {
   @SuppressWarnings({ "unused", "FieldCanBeLocal" }) private Type type;
 
-  @Override public boolean prerequisite( final VariableDeclarationFragment f) {
-     final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
+  @Override public boolean prerequisite(final VariableDeclarationFragment f) {
+    final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
     if (instanceCreation == null)
       return false;
     type = instanceCreation.getType();
@@ -40,12 +41,11 @@ public final class FragmentInitializerNewAddAll extends GoToNextStatement<Variab
 
   private static final long serialVersionUID = -228096256168103399L;
 
-  @Override  public String description(final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline variable '" + name(¢) + "' into next statement";
   }
 
-  @Override protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final Statement nextStatement,
-      final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
         || wizard.forbiddenOpOnPrimitive(f, nextStatement))
       return null;
@@ -64,21 +64,21 @@ public final class FragmentInitializerNewAddAll extends GoToNextStatement<Variab
         if (containsLambda(nextStatement))
           return null;
     }
-     final Expression initializer = initializer(f);
+    final Expression initializer = initializer(f);
     if (initializer == null)
       return null;
-     final Statement parent = az.statement(parent(f));
+    final Statement parent = az.statement(parent(f));
     if (parent == null//
         || iz.forStatement(parent))
       return null;
-     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
+    final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//
         || anyFurtherUsage(parent, nextStatement, identifier(n))//
         || leftSide(nextStatement, identifier(n))//
         || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
-     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+    final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
       e = Inliner.protect(e, pp);
     if (pp == null//
@@ -88,7 +88,7 @@ public final class FragmentInitializerNewAddAll extends GoToNextStatement<Variab
       if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
         return null;
       final VariableDeclarationStatement pn = copy.of(pp);
-       final List<VariableDeclarationFragment> l = fragments(pp);
+      final List<VariableDeclarationFragment> l = fragments(pp);
       for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
         if (l.get(¢).equals(f)) {
           fragments(pn).remove(¢);
@@ -108,7 +108,7 @@ public final class FragmentInitializerNewAddAll extends GoToNextStatement<Variab
   }
 
   private static boolean preOrPostfix(final SimpleName id) {
-     final ASTNode $ = parent(id);
+    final ASTNode $ = parent(id);
     return iz.prefixExpression($)//
         || iz.postfixExpression($);
   }
@@ -118,10 +118,10 @@ public final class FragmentInitializerNewAddAll extends GoToNextStatement<Variab
   }
 
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
-     final Bool $ = new Bool();
-     final ASTNode parent = parent(nextStatement);
+    final Bool $ = new Bool();
+    final ASTNode parent = parent(nextStatement);
     parent.accept(new ASTVisitor(true) {
-      @Override public boolean preVisit2( final ASTNode ¢) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
         if (parent.equals(¢))
           return true;
         if (!¢.equals(nextStatement)//
@@ -135,8 +135,8 @@ public final class FragmentInitializerNewAddAll extends GoToNextStatement<Variab
     return $.inner;
   }
 
-  private static boolean leftSide( final Statement nextStatement, final String id) {
-     final Bool $ = new Bool();
+  private static boolean leftSide(final Statement nextStatement, final String id) {
+    final Bool $ = new Bool();
     // noinspection SameReturnValue
     nextStatement.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
@@ -150,11 +150,11 @@ public final class FragmentInitializerNewAddAll extends GoToNextStatement<Variab
   }
 
   private static SimpleName peelIdentifier(final Statement s, final String id) {
-     final List<SimpleName> $ = occurencesOf(s, id);
+    final List<SimpleName> $ = occurencesOf(s, id);
     return $.size() != 1 ? null : first($);
   }
 
-   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+  static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

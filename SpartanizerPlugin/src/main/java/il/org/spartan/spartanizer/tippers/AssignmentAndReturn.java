@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -25,15 +26,15 @@ public final class AssignmentAndReturn extends GoToNextStatement<Assignment>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -1263526923784459386L;
 
-  @Override  public String description(final Assignment ¢) {
+  @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into its subsequent 'return'";
   }
 
-  @Override public ASTRewrite go( final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
-     final Statement parent = az.statement(parent(a));
+  @Override public ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
+    final Statement parent = az.statement(parent(a));
     if (parent == null || iz.forStatement(parent))
       return null;
-     final ReturnStatement s = az.returnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null || !wizard.same(to(a), core(expression(s))))
       return null;
     $.remove(parent, g);

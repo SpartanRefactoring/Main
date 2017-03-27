@@ -23,10 +23,10 @@ public class Issue1036 {
 
   static class TestClass extends MetaFixture {
     final List<Integer> children1 = new ArrayList<>();
-     List<Integer> children2 = new ArrayList<>();
-     String $ = "";
+    List<Integer> children2 = new ArrayList<>();
+    String $ = "";
 
-     public String check1() {
+    public String check1() {
       return "";
     }
   }
