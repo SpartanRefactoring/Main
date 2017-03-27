@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -14,7 +15,7 @@ public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForSta
   private static final long serialVersionUID = -8750113331278505320L;
   Expression condition;
 
-  @Override  public String description() {
+  @Override public String description() {
     final String $ = condition == null ? "C" : trivia.gist(condition);
     return String.format("Convert 'for(;%s;)' to 'while(%s)'", $, $);
   }
@@ -27,7 +28,7 @@ public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForSta
     };
   }
 
-  @Override  public String description(final ForStatement ¢) {
+  @Override public String description(final ForStatement ¢) {
     condition = ¢.getExpression();
     return description();
   }
@@ -37,7 +38,7 @@ public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForSta
     return ¢.initializers().isEmpty() && ¢.updaters().isEmpty() && (condition = ¢.getExpression()) != null;
   }
 
-  @Override  public WhileStatement replacement(final ForStatement ¢) {
+  @Override public WhileStatement replacement(final ForStatement ¢) {
     final WhileStatement $ = ¢.getAST().newWhileStatement();
     $.setExpression(copy.of(¢.getExpression()));
     $.setBody(copy.of(¢.getBody()));

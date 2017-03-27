@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
@@ -17,11 +18,11 @@ public class Table_Tippers {
   }
 
   public void go() {
-    try ( Table t = new Table(this)) {
+    try (Table t = new Table(this)) {
       final List<Tipper<? extends ASTNode>>[] implementation = Toolbox.defaultInstance().implementation;
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
-          for ( final Tipper<?> ¢ : implementation[i])
+          for (final Tipper<?> ¢ : implementation[i])
             if (¢ != null && !(¢ instanceof TipperCategory.Bloater))
               t //
                   .col("Category", ¢.tipperGroup())//
@@ -35,7 +36,7 @@ public class Table_Tippers {
     }
   }
 
-   public static String name( final Class<?> ¢) {
+  public static String name(final Class<?> ¢) {
     return ¢ == null ? "???" : ¢.getSimpleName();
   }
 }

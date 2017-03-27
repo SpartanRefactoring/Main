@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.utils.monitor.*;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
+import static il.org.spartan.utils.monitor.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -39,9 +39,9 @@ public final class Version300 {
     default Find prerequisite() { return null; }
     void find();
     default boolean B(final int i) { return fault.bool(bug(box.it(i))); }
-    default boolean B(final Object ... __) { return fault.bool(bug(__)); } 
-    default void S(final int i) { bug(box.it(i)); } 
-    default void S(final Object ... __) { bug(__); } 
+    default boolean B(final Object ... __) { return fault.bool(bug(__)); }
+    default void S(final int i) { bug(box.it(i)); }
+    default void S(final Object ... __) { bug(__); }
     default void andAlso(final Find f){bug(f);}
     default void butNot(final Find f){bug(f);}
     default void orElse(final Find f){bug(f);}
@@ -55,7 +55,7 @@ public final class Version300 {
 
   Replace xxx = new Replace() {
     {
-      andAlso(() -> {});
+      andAlso(() -> {/**/});
       andIs(() -> S(1), () -> {
         if (B(1))
           S(1);
@@ -134,10 +134,11 @@ public final class Version300 {
     ;
   }
 
-  @Ignore @Test public void ifab() {
+  @Test public void ifab() {
     trimmingOf("if (a++ == b++) { }") //
         .using(IfStatement.class, new IfEmptyThenEmptyElse()) //
         .gives("a++;b++;") //
+        .gives("++a;++b;") //
         .stays() //
     ;
   }

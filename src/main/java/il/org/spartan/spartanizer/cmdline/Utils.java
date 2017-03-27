@@ -23,7 +23,7 @@ public interface Utils {
     return $ < 0 ? 0 : (int) $ + 1;
   }
 
-   static String format2(final double ¢) {
+  static String format2(final double ¢) {
     if (¢ < 0)
       return "-" + format2(-¢);
     final double $ = 100 * ¢;
@@ -46,15 +46,15 @@ public interface Utils {
     }
   }
 
-  static boolean isProductionCode( final File ¢) {
+  static boolean isProductionCode(final File ¢) {
     return !Utils.isTestSourceFile(¢.getName());
   }
 
-  static boolean isTestFile( final File ¢) {
+  static boolean isTestFile(final File ¢) {
     return Utils.isTestSourceFile(¢.getName());
   }
 
-  static boolean isTestSourceFile( final String fileName) {
+  static boolean isTestSourceFile(final String fileName) {
     return fileName.contains("/test/") || fileName.matches("[\\/A-Za-z0-9]*[\\/]test[\\/A-Za-z0-9]*")
         || fileName.matches("[A-Za-z0-9_-]*[Tt]est[A-Za-z0-9_-]*.java$");
   }

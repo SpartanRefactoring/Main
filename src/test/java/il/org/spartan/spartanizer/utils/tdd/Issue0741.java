@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 16-11-3 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0741 {
-   static TypeDeclaration getTypeDeclaration( final String td) {
+  static TypeDeclaration getTypeDeclaration(final String td) {
     return findFirst.typeDeclaration(wizard.ast(td));
   }
 
@@ -46,7 +46,7 @@ public class Issue0741 {
   }
 
   @Test public void publicFields_test6() {
-     final List<String> pFields = getAll2
+    final List<String> pFields = getAll2
         .publicFields(getTypeDeclaration("public class A { private int x; public static char y; public static void f(){}}"));
     assert pFields.contains("y");
     assert !pFields.contains("x");
@@ -54,13 +54,13 @@ public class Issue0741 {
   }
 
   @Test public void publicFields_test7() {
-     final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public int x; class B { public int y; } }"));
+    final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public int x; class B { public int y; } }"));
     assert pFields.contains("x");
     assert !pFields.contains("y");
   }
 
   @Test public void publicFields_test8() {
-     final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public class B { public int x; } }"));
+    final List<String> pFields = getAll2.publicFields(getTypeDeclaration("public class A { public class B { public int x; } }"));
     assert !pFields.contains("B");
     assert !pFields.contains("x");
   }

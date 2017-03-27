@@ -21,8 +21,8 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0072 {
   @Test public void ma() {
-     final String s = "0-x";
-     final InfixExpression i = into.i(s);
+    final String s = "0-x";
+    final InfixExpression i = into.i(s);
     azzert.that(i, iz(s));
     azzert.that(left(i), iz("0"));
     azzert.that(right(i), iz("x"));

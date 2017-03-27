@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.java.namespace.Vocabulary.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,7 +27,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-17 */
 public class AlphabeticallySortedSentence extends MetaFixture {
-   public static final AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
+  public static final AlphabeticallySortedSentence instance = new AlphabeticallySortedSentence(null);
   public static final AbstractTypeDeclaration reflection = types(instance.reflectedCompilationUnit()).stream()
       .filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get();
   @SuppressWarnings("serial") public static final Vocabulary stencil = new Vocabulary() {
@@ -36,16 +37,16 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     }
   };
 
-   public static Vocabulary reify(final AnonymousClassDeclaration cd) {
-     final Vocabulary $ = new Vocabulary();
+  public static Vocabulary reify(final AnonymousClassDeclaration cd) {
+    final Vocabulary $ = new Vocabulary();
     for (final BodyDeclaration bd : bodyDeclarations(cd)) {
       assert bd instanceof MethodDeclaration : fault.specifically("Unexpected " + extract.name(bd), bd);
-       final MethodDeclaration md = (MethodDeclaration) bd;
+      final MethodDeclaration md = (MethodDeclaration) bd;
       final String mangle = mangle(md), model = extract.name(reflection);
       assert stencil.containsKey(mangle) //
       : fault.specifically("Method " + mangle + " does not override a non-private non-static non-final method defined in " + model//
           , md, stencil);
-       final String javaDoc = " have JavaDoc /** " + disabling.ByComment.disabler + "*/, just like the overrriden version in " + model;
+      final String javaDoc = " have JavaDoc /** " + disabling.ByComment.disabler + "*/, just like the overrriden version in " + model;
       if (disabling.specificallyDisabled(md))
         assert disabling.specificallyDisabled(md) //
         : fault.specifically("Method " + mangle + " must " + javaDoc, md, stencil);
@@ -57,7 +58,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     return $;
   }
 
-  public static Vocabulary reify( final ClassInstanceCreation ¢) {
+  public static Vocabulary reify(final ClassInstanceCreation ¢) {
     final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
     return $ == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify($);
   }

@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.cmdline.tables.Table_Tippers.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -22,7 +23,7 @@ public class Table_Nanos {
   }
 
   public void go() {
-    try ( Table t = new Table(this)) {
+    try (Table t = new Table(this)) {
       final List<Tipper<? extends ASTNode>>[] implementation = new SpartanAnalyzer().toolbox.implementation;
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)

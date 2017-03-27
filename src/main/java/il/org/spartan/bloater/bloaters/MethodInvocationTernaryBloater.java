@@ -3,6 +3,7 @@ package il.org.spartan.bloater.bloaters;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -18,8 +19,8 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -373710981362225466L;
 
-  @Override  public ASTNode replacement( final ExpressionStatement s) {
-     final MethodInvocation i = az.methodInvocation(s.getExpression());
+  @Override public ASTNode replacement(final ExpressionStatement s) {
+    final MethodInvocation i = az.methodInvocation(s.getExpression());
     if (i == null)
       return null;
     final ConditionalExpression $ = findFirst.conditionalArgument(i);
@@ -34,7 +35,7 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     return subject.pair(subject.operand(mThen).toStatement(), subject.operand(mElse).toStatement()).toIf(copy.of($.getExpression()));
   }
 
-  @Override  @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
+  @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
     return "replace ternary with if in method invocation parameters";
   }
 }

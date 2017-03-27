@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
@@ -18,8 +19,8 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public enum analyze {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-   public static Collection<String> dependencies( final ASTNode n) {
-     final Collection<String> $ = new HashSet<>();
+  public static Collection<String> dependencies(final ASTNode n) {
+    final Collection<String> $ = new HashSet<>();
     // noinspection SameReturnValue,SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName node) {
@@ -42,8 +43,8 @@ public enum analyze {
     return $;
   }
 
-  public static Collection<String> dependencies( final Iterable<Expression> arguments) {
-     final Set<String> $ = new HashSet<>();
+  public static Collection<String> dependencies(final Iterable<Expression> arguments) {
+    final Set<String> $ = new HashSet<>();
     for (final Expression ¢ : arguments) {
       $.addAll(analyze.dependencies(¢));
       if (iz.name(¢))
@@ -52,9 +53,9 @@ public enum analyze {
     return new ArrayList<>($).stream().collect(toList());
   }
 
-   public static String type(final Name n) {
-     final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
-     final String $ = m == null ? null : findDeclarationInMethod(n, m);
+  public static String type(final Name n) {
+    final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
+    final String $ = m == null ? null : findDeclarationInMethod(n, m);
     return $ != null ? $ : findDeclarationInType(n, yieldAncestors.untilContainingType().from(n));
   }
 
@@ -68,8 +69,8 @@ public enum analyze {
     return null;
   }
 
-   private static String findDeclarationInMethod(final Name n,  final MethodDeclaration d) {
-     final Str $ = new Str();
+  private static String findDeclarationInMethod(final Name n, final MethodDeclaration d) {
+    final Str $ = new Str();
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
         if ($.notEmpty() || !identifier(¢).equals(n + ""))

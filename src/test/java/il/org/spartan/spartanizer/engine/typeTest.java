@@ -9,7 +9,6 @@ import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
 import static il.org.spartan.lisp.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -28,12 +27,12 @@ import il.org.spartan.spartanizer.engine.type.*;
 public final class typeTest {
   /** Ideally this class is empty, but still {@link Ignore} d.
    * @author Yossi Gil */
-  @Ignore
+  // @Ignore("Under construction")
   public static class NotWorkingYet {
     // All test work now
   }
 
-  @Ignore
+  // @Ignore("Under construction")
   public static class Pending {
     // No tests are pending
   }
@@ -441,7 +440,7 @@ public final class typeTest {
     }
 
     @Test public void basticExpression29() {
-       final InfixExpression e = az.infixExpression(into.e("null+3"));
+      final InfixExpression e = az.infixExpression(into.e("null+3"));
       azzert.that(of(e.getLeftOperand()), is(NULL));
       azzert.that(of(e.getRightOperand()), is(INT));
       azzert.that(of(e), is(STRING));
@@ -705,62 +704,62 @@ public final class typeTest {
     }
 
     @Test public void context12() {
-       final InfixExpression e = az.infixExpression(into.e("x <7"));
+      final InfixExpression e = az.infixExpression(into.e("x <7"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(INT));
     }
 
     @Test public void context13() {
-       final InfixExpression e = az.infixExpression(into.e("x == (byte)7"));
+      final InfixExpression e = az.infixExpression(into.e("x == (byte)7"));
       azzert.that(of(e.getLeftOperand()), is(NOTHING));
       azzert.that(of(e.getRightOperand()), is(BYTE));
     }
 
     @Test public void context14() {
-       final InfixExpression e = az.infixExpression(into.e("x != 'c'"));
+      final InfixExpression e = az.infixExpression(into.e("x != 'c'"));
       azzert.that(of(e.getLeftOperand()), is(NOTHING));
       azzert.that(of(e.getRightOperand()), is(CHAR));
     }
 
     @Test public void context15() {
-       final InfixExpression e = az.infixExpression(into.e("y> 7.3"));
+      final InfixExpression e = az.infixExpression(into.e("y> 7.3"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(DOUBLE));
     }
 
     @Test public void context16() {
-       final InfixExpression e = az.infixExpression(into.e("x | 7l"));
+      final InfixExpression e = az.infixExpression(into.e("x | 7l"));
       azzert.that(of(e.getLeftOperand()), is(BOOLEANINTEGRAL));
       azzert.that(of(e.getRightOperand()), is(LONG));
     }
 
     @Test public void context17() {
-       final InfixExpression e = az.infixExpression(into.e("x & y"));
+      final InfixExpression e = az.infixExpression(into.e("x & y"));
       azzert.that(of(e.getLeftOperand()), is(BOOLEANINTEGRAL));
       azzert.that(of(e.getRightOperand()), is(BOOLEANINTEGRAL));
     }
 
     @Test public void context18() {
-       final InfixExpression e = az.infixExpression(into.e("x + \"y\""));
+      final InfixExpression e = az.infixExpression(into.e("x + \"y\""));
       azzert.that(of(e.getLeftOperand()), is(ALPHANUMERIC));
       azzert.that(of(e.getRightOperand()), is(STRING));
     }
 
     @Test public void context19() {
-       final InfixExpression e = az.infixExpression(into.e("x - 9f"));
+      final InfixExpression e = az.infixExpression(into.e("x - 9f"));
       azzert.that(of(e.getLeftOperand()), is(NUMERIC));
       azzert.that(of(e.getRightOperand()), is(FLOAT));
     }
 
     @Test @SuppressWarnings("unchecked") public void context20() {
-       final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
+      final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(of(fs.getExpression()), is(BOOLEAN));
       azzert.that(of((Expression) first(fs.initializers())), is(INT));
       azzert.that(of((Expression) first(fs.updaters())), is(NUMERIC));
     }
 
     @Test public void context22() {
-       final AssertStatement as = findFirst.assertStatement(into.s("assert x : \"message\";"));
+      final AssertStatement as = findFirst.assertStatement(into.s("assert x : \"message\";"));
       azzert.that(of(as.getExpression()), is(BOOLEAN));
       azzert.that(of(as.getMessage()), is(STRING));
     }

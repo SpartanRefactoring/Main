@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -34,20 +35,20 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -1157844982389320057L;
 
-  @Override  public String description(final Assignment ¢) {
+  @Override public String description(final Assignment ¢) {
     return "Consolidate update assignment to " + to(¢) + " with subsequent similar assignment";
   }
 
-  @Override protected ASTRewrite go( final ASTRewrite $,  final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (in(a1.getOperator(), ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN))
       return null;
-     final ASTNode parent = parent(a1);
+    final ASTNode parent = parent(a1);
     if (!iz.statement(parent))
       return null;
-     final Assignment a2 = extract.assignment(nextStatement);
+    final Assignment a2 = extract.assignment(nextStatement);
     if (operator(a1) != operator(a2))
       return null;
-     final Expression to = to(a1);
+    final Expression to = to(a1);
     if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
       return null;
     $.remove(parent, g);
@@ -55,7 +56,7 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
     return $;
   }
 
-  private static Operator unifying( final Assignment ¢) {
+  private static Operator unifying(final Assignment ¢) {
     final Operator $ = wizard.assign2infix(¢.getOperator());
     return $ == MINUS2 ? PLUS2 : $ == DIVIDE ? TIMES : $;
   }

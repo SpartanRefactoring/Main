@@ -20,11 +20,11 @@ import il.org.spartan.utils.*;
  * @since 2.6 (Updated - apply nature to newly opened projects) */
 public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static final String NEW_PROJECT = "new_project";
-   private static Plugin plugin;
+  private static Plugin plugin;
   private static boolean listening;
   private static final int SAFETY_DELAY = 100;
 
-   public static AbstractUIPlugin plugin() {
+  public static AbstractUIPlugin plugin() {
     return plugin;
   }
 
@@ -47,7 +47,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     try {
       startSpartan();
       addPartListener();
-    } catch ( final IllegalStateException ¢) {
+    } catch (final IllegalStateException ¢) {
       monitor.log(¢);
     }
   }
@@ -83,11 +83,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       if (e == null || e.getDelta() == null || !PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.get())
         return;
       try {
-         final MProject mp = new MProject();
+        final MProject mp = new MProject();
         e.getDelta().accept(d -> {
           if (d == null || d.getResource() == null || !(d.getResource() instanceof IProject))
             return true;
-           final IProject p = (IProject) d.getResource();
+          final IProject p = (IProject) d.getResource();
           if (d.getKind() != IResourceDelta.ADDED)
             return true;
           mp.p = p;
@@ -102,11 +102,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
                 eclipse.addNature(mp.p);
                 mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
               }
-            } catch ( final Exception ¢) {
+            } catch (final Exception ¢) {
               monitor.log(¢);
             }
           }).schedule(SAFETY_DELAY);
-      } catch ( final CoreException ¢) {
+      } catch (final CoreException ¢) {
         monitor.log(¢);
       }
     });

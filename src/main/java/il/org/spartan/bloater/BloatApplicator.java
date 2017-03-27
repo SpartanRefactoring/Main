@@ -6,7 +6,7 @@ import il.org.spartan.plugin.*;
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public class BloatApplicator extends GUIBatchLaconizer {
-   public static BloatApplicator defaultApplicator() {
+  public static BloatApplicator defaultApplicator() {
     return (BloatApplicator) new BloatApplicator().defaultListenerSilent().defaultRunContext().passes(1);
   }
 }

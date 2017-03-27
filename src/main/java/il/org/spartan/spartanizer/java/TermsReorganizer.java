@@ -5,6 +5,7 @@ import static il.org.spartan.lisp.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
@@ -13,19 +14,19 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2016 */
 public enum TermsReorganizer {
   ;
-   public static Expression simplify(final InfixExpression ¢) {
+  public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }
 
-   private static Expression build( final List<Expression> plus,  final List<Expression> minus) {
+  private static Expression build(final List<Expression> plus, final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
 
-   private static Expression build( final TermsCollector ¢) {
+  private static Expression build(final TermsCollector ¢) {
     return build(¢.plus(), ¢.minus());
   }
 
-   private static Expression buildMinus( final Expression first,  final List<Expression> rest) {
+  private static Expression buildMinus(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);
     if (rest.isEmpty())
@@ -34,7 +35,7 @@ public enum TermsReorganizer {
     return subject.operands(rest).to(wizard.MINUS2);
   }
 
-  private static Expression buildMinus( final List<Expression> ¢) {
+  private static Expression buildMinus(final List<Expression> ¢) {
     final Expression $ = subject.operand(first(¢)).to(wizard.MINUS1);
     if (¢.size() == 1)
       return $;
@@ -43,7 +44,7 @@ public enum TermsReorganizer {
     return subject.operands(¢).to(wizard.MINUS2);
   }
 
-  private static Expression buildPlus( final List<Expression> ¢) {
+  private static Expression buildPlus(final List<Expression> ¢) {
     switch (¢.size()) {
       case 0:
         return null;

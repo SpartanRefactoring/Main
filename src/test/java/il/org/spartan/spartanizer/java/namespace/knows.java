@@ -14,5 +14,5 @@ import java.lang.annotation.*;
     ElementType.CONSTRUCTOR, //
     ElementType.TYPE, })
 public @interface knows {
-   String[] value();
+  String[] value();
 }

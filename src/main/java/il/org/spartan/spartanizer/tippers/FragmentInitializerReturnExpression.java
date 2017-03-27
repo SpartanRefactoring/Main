@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -16,27 +17,27 @@ public final class FragmentInitializerReturnExpression extends $FragmentAndState
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0xECFC7713ABB0D4AL;
 
-  @Override  public String description( final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate local " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
   }
 
-  @Override protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final SimpleName n,
-      final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (forbidden(f, initializer) || usedInSubsequentInitializers(f, n))
       return null;
-     final ReturnStatement s = az.returnStatement(nextStatement);
+    final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;
     final Expression newReturnValue = s.getExpression();
     if (newReturnValue == null)
       return null;
-     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (wizard.same(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
         || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(s.getExpression(), newReturnValue, g);
     i.inlineInto(newReturnValue);
-    wizard.eliminate(f, $, g);
+    wizard.removeFragment(f, $, g);
     return $;
   }
 }

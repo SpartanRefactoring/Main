@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -15,13 +16,13 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015/07/25 */
 public final class TipperApplicator extends AbstractGUIApplicator {
-   final Tipper<ASTNode> tipper;
-   final Class<? extends ASTNode> clazz;
+  final Tipper<ASTNode> tipper;
+  final Class<? extends ASTNode> clazz;
 
   /** Instantiates this class
    * @param statementsTipper The tipper we wish to convert
    * @param name The title of the refactoring */
-  @SuppressWarnings("unchecked") public TipperApplicator( final Tipper<? extends ASTNode> w) {
+  @SuppressWarnings("unchecked") public TipperApplicator(final Tipper<? extends ASTNode> w) {
     super(w.technicalName());
     tipper = (Tipper<ASTNode>) w;
     clazz = w.myActualOperandsClass();
@@ -29,10 +30,9 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     // w.technicalName();
   }
 
-  @Override protected void consolidateTips(final ASTRewrite r,  final CompilationUnit u, final IMarker m,
-      @SuppressWarnings("unused") final Int __) {
+  @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, @SuppressWarnings("unused") final Int __) {
     u.accept(new ASTVisitor(true) {
-      @Override public void preVisit( final ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
         if (¢.getClass() == clazz || tipper.check(¢) || inRange(m, ¢))
           tipper.tip(¢).go(r, null);
@@ -40,9 +40,9 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     });
   }
 
-  @Override  protected ASTVisitor makeTipsCollector( final List<Tip> $) {
+  @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {
     return new ASTVisitor(true) {
-      @Override public void preVisit( final ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
         progressMonitor.worked(1);
         if (¢.getClass() == clazz)

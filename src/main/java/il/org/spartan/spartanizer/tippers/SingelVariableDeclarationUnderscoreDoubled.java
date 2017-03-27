@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -27,7 +28,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   public static boolean suppressing(final SingleVariableDeclaration ¢) {
-    for ( final Annotation $ : annotations(¢)) {
+    for (final Annotation $ : annotations(¢)) {
       if (!"SuppressWarnings".equals($.getTypeName() + ""))
         continue;
       if (iz.singleMemberAnnotation($))
@@ -38,7 +39,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return false;
   }
 
-  static MethodDeclaration getMethod( final SingleVariableDeclaration ¢) {
+  static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {
     final ASTNode $ = ¢.getParent();
     return !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
@@ -47,7 +48,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return iz.literal("unused", ¢);
   }
 
-  private static ASTNode replace( final SingleVariableDeclaration ¢) {
+  private static ASTNode replace(final SingleVariableDeclaration ¢) {
     final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
     $.setName(¢.getAST().newSimpleName(unusedVariableName()));
     $.setFlags($.getFlags());
@@ -66,11 +67,11 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return iz.literal("unused", ¢) || iz.arrayInitializer(¢) && suppressing(az.arrayInitializer(¢));
   }
 
-  private static boolean suppressing( final NormalAnnotation a) {
+  private static boolean suppressing(final NormalAnnotation a) {
     return a != null && values(a).stream().anyMatch(λ -> iz.identifier("value", λ.getName()) && isUnused(λ.getValue()));
   }
 
-  private static boolean suppresssing( final SingleMemberAnnotation ¢) {
+  private static boolean suppresssing(final SingleMemberAnnotation ¢) {
     return suppressing(¢.getValue());
   }
 
@@ -78,19 +79,19 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
     return "__";
   }
 
-  @Override  public String description( final SingleVariableDeclaration ¢) {
+  @Override public String description(final SingleVariableDeclaration ¢) {
     return "Rename unused variable " + ¢.getName().getIdentifier() + " to " + unusedVariableName();
   }
 
-  @Override  public ASTNode replacement( final SingleVariableDeclaration ¢) {
+  @Override public ASTNode replacement(final SingleVariableDeclaration ¢) {
     return replacement(¢, null);
   }
 
-  @Override @SuppressWarnings("unused") public ASTNode replacement( final SingleVariableDeclaration $,  final ExclusionManager m) {
-     final MethodDeclaration method = getMethod($);
+  @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration $, final ExclusionManager m) {
+    final MethodDeclaration method = getMethod($);
     if (method == null || body(method) == null)
       return null;
-    for ( final SingleVariableDeclaration ¢ : parameters(method))
+    for (final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
     if (BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()))

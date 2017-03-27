@@ -4,5 +4,5 @@ package il.org.spartan.spartanizer.issues;
  * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-22 */
 public @interface UnderConstruction {
-   String value() default "";
+  String value() default "";
 }

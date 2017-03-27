@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -23,11 +24,11 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
   private static final long serialVersionUID = -8591656423892977180L;
   private static final String SERIAL_VERSION_UID = "serialVersionUID";
   // private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
-   private VariableDeclarationFragment fragment;
-   NumberLiteral initializer;
+  private VariableDeclarationFragment fragment;
+  NumberLiteral initializer;
   long replacement;
 
-  @Override  public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { //
         convert("private static long " + SERIAL_VERSION_UID + " = 12345677899L;")//
             .to("private static long " + SERIAL_VERSION_UID + " = 1234567799;"),
@@ -45,7 +46,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     canTip(¢);
     assert ¢ == fragment.getParent();
     return new Tip(description(), initializer, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final NumberLiteral $ = copy.of(initializer);
         $.setToken(asLiteral());
         r.replace(initializer, $, g);
@@ -67,7 +68,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
       token = system.chopLast(token);
     try {
       replacement = Long.parseLong(token);
-    } catch ( final NumberFormatException ¢) {
+    } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;
     }

@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
-import org.junit.*;
-
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
+
+import org.junit.*;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

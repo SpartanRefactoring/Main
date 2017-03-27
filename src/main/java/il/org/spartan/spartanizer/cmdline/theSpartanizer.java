@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -18,16 +19,16 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 public interface theSpartanizer {
-  static Tipper<?> firstTipper( final String from) {
-     final Wrapper<Tipper<?>> $ = new Wrapper<>();
-     final ASTNode n = wizard.ast(from);
+  static Tipper<?> firstTipper(final String from) {
+    final Wrapper<Tipper<?>> $ = new Wrapper<>();
+    final ASTNode n = wizard.ast(from);
     if (n != null)
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
           return searching && go(toolbox.firstTipper(¢));
         }
 
-        <N extends ASTNode> boolean go( final Tipper<N> ¢) {
+        <N extends ASTNode> boolean go(final Tipper<N> ¢) {
           if (¢ == null)
             return true;
           $.set(¢);
@@ -43,32 +44,32 @@ public interface theSpartanizer {
    * @param from what to process
    * @return trimmed text, or null in case of error or no more applicable
    *         tippers */
-  @SuppressWarnings("hiding") static String once( final String from) {
-     final Trimmer trimmer = new Trimmer(toolbox);
-     final IDocument $ = new Document(from);
-     final ASTNode root = wizard.ast(from);
+  @SuppressWarnings("hiding") static String once(final String from) {
+    final Trimmer trimmer = new Trimmer(toolbox);
+    final IDocument $ = new Document(from);
+    final ASTNode root = wizard.ast(from);
     if (root != null)
       root.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go( final N n) {
+        @Override protected <N extends ASTNode> boolean go(final N n) {
           if (!searching)
             return false;
-           final Tipper<N> t = safeFirstTipper(n);
+          final Tipper<N> t = safeFirstTipper(n);
           if (t == null)
             return true;
-           final Tip $ = t.tip(n);
+          final Tip $ = t.tip(n);
           if ($ == null)
             return true;
           apply($, n);
           return searching = false;
         }
 
-        <N extends ASTNode> void apply( final Tip t,  final N n) {
+        <N extends ASTNode> void apply(final Tip t, final N n) {
           final ASTRewrite r = ASTRewrite.create(n.getAST());
           t.go(r, null);
           final TextEdit e = r.rewriteAST($, null);
           try {
             e.apply($);
-          } catch ( final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+          } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
             monitor.logEvaluationError(trimmer, ¢);
           }
         }
@@ -87,23 +88,23 @@ public interface theSpartanizer {
     }
   }
 
-   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
+  static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
       return toolbox.firstTipper($);
-    } catch ( final Exception ¢) {
+    } catch (final Exception ¢) {
       return monitor.logProbableBug(¢);
     }
   }
 
-  static boolean same( final String s1,  final String s2) {
+  static boolean same(final String s1, final String s2) {
     return s1 == null || s2 == null || s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
   }
 
-  static String thrice( final String javaCode) {
+  static String thrice(final String javaCode) {
     return once(twice(javaCode));
   }
 
-  static String twice( final String javaCode) {
+  static String twice(final String javaCode) {
     return once(once(javaCode));
   }
 

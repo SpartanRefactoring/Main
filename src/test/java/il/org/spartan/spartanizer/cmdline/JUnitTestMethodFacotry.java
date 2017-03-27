@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -24,15 +25,15 @@ import il.org.spartan.utils.*;
  * @since 2017-03-24 */
 public enum JUnitTestMethodFacotry {
   ;
-  static String from(final String name,  final String raw) {
+  static String from(final String name, final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
-   public static String unWrapedTestCase( final String raw) {
+  public static String unWrapedTestCase(final String raw) {
     return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
 
-  public static String code( final String raw) {
+  public static String code(final String raw) {
     return format.code(shortenIdentifiers(raw));
   }
 
@@ -46,7 +47,7 @@ public enum JUnitTestMethodFacotry {
 
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
    * and A, B, C, ..., Z, X1, X2, ... for upper case identifiers */
-   static String renderIdentifier( final String old) {
+  static String renderIdentifier(final String old) {
     switch (old) {
       case "START":
         return "A";
@@ -64,29 +65,29 @@ public enum JUnitTestMethodFacotry {
   /** Separate the string to lines
    * @param ¢ string to linify
    * @return */
-   private static String linify( final String ¢) {
-     String $ = "";
-    try ( Scanner scanner = new Scanner(¢)) {
+  private static String linify(final String ¢) {
+    String $ = "";
+    try (Scanner scanner = new Scanner(¢)) {
       while (scanner.hasNextLine())
         $ += "\"" + scanner.nextLine() + "\"" + (!scanner.hasNextLine() ? "" : " + ") + "//\n";
     }
     return $;
   }
 
-  public static String shortenIdentifiers( final String javaFragment) {
-     final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
-     final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
+  public static String shortenIdentifiers(final String javaFragment) {
+    final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
+    final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
     final ASTParser parser = ASTParser.newParser(AST.JLS8);
     parser.setSource($.get().toCharArray());
-     final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
+    final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
     final AST ast = cu.getAST();
-     final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
+    final ASTNode n = ASTutils.extractASTNode(javaFragment, cu);
     if (n == null)
       return javaFragment;
     final ASTRewrite r = ASTRewrite.create(ast);
-     final Map<String, String> renaming = new HashMap<>();
+    final Map<String, String> renaming = new HashMap<>();
     n.accept(new ASTVisitor(true) {
-      @Override public void preVisit( final ASTNode ¢) {
+      @Override public void preVisit(final ASTNode ¢) {
         if (!iz.simpleName(¢) && !iz.qualifiedName(¢))
           return;
         final String name = ((Name) ¢).getFullyQualifiedName();
@@ -105,18 +106,18 @@ public enum JUnitTestMethodFacotry {
     return ASTutils.extractCode(javaFragment, $);
   }
 
-  private static void applyChanges(final IDocument d,  final ASTRewrite r) {
+  private static void applyChanges(final IDocument d, final ASTRewrite r) {
     try {
       r.rewriteAST(d, null).apply(d);
-    } catch ( MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       ¢.printStackTrace();
     }
   }
 
   public static void main(final String[] args) {
     System.out.println("enter whatever:");
-    try ( Scanner reader = new Scanner(System.in)) {
-       String s = "";
+    try (Scanner reader = new Scanner(System.in)) {
+      String s = "";
       while (reader.hasNext())
         s += "\n" + reader.nextLine();
       System.out.println("1s tipper: " + theSpartanizer.firstTipper(s));
@@ -128,12 +129,12 @@ public enum JUnitTestMethodFacotry {
     }
   }
 
-   public static String makeTipperUnitTest( final String codeFragment) {
+  public static String makeTipperUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("  @Test public void test_%s() {\n %s\n}\n", signature($), tipperBody($));
   }
 
-   public static String makeBloaterUnitTest( final String codeFragment) {
+  public static String makeBloaterUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), bloaterBody($));
   }
@@ -147,7 +148,7 @@ public enum JUnitTestMethodFacotry {
         system.callinClassLastName());
   }
 
-   static String tipperBody(final String input) {
+  static String tipperBody(final String input) {
     for (String $ = format("    trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
       if (theSpartanizer.same(to, from))
@@ -165,7 +166,7 @@ public enum JUnitTestMethodFacotry {
     }
   }
 
-   static String bloaterBody(final String input) {
+  static String bloaterBody(final String input) {
     for (String $ = format("  bloatingOf(\"%s\") //\n", input), from = input;;) {
       final String to = OperandBloating.bloat(from);
       if (to.equals(from))
@@ -175,11 +176,11 @@ public enum JUnitTestMethodFacotry {
     }
   }
 
-  private static String operandClass( final Tipper<?> ¢) {
+  private static String operandClass(final Tipper<?> ¢) {
     return system.className(¢.object());
   }
 
-   private static String tipperClass( final Tipper<?> ¢) {
+  private static String tipperClass(final Tipper<?> ¢) {
     return ¢.nanoName() + format(¢.getClass().getTypeParameters().length <= 0 ? "" : "<%s>", operandClass(¢));
   }
 }

@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -26,7 +27,7 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   private static final long serialVersionUID = 0x1E2EC405AA0EA6F0L;
   private static final Comparator<IExtendedModifier> comp = Comparator.comparingInt(IExtendedModifiersRank::rank);
 
-  private static boolean isSortedAndDistinct( final Iterable<? extends IExtendedModifier> ms) {
+  private static boolean isSortedAndDistinct(final Iterable<? extends IExtendedModifier> ms) {
     int previousRank = -1;
     for (final IExtendedModifier current : ms) {
       final int currentRank = rank(current);
@@ -37,18 +38,18 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
     return true;
   }
 
-   private static List<? extends IExtendedModifier> sort( final Collection<? extends IExtendedModifier> ¢) {
+  private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
     return pruneDuplicates(¢.stream().sorted(comp).collect(toList()));
   }
 
-   private static List<? extends IExtendedModifier> pruneDuplicates( final List<? extends IExtendedModifier> $) {
+  private static List<? extends IExtendedModifier> pruneDuplicates(final List<? extends IExtendedModifier> $) {
     for (int ¢ = 0; ¢ < $.size(); ++¢)
       while (¢ < $.size() - 1 && comp.compare($.get(¢), $.get(¢ + 1)) == 0)
         $.remove(¢ + 1);
     return $;
   }
 
-  @Override  public String description( final N ¢) {
+  @Override public String description(final N ¢) {
     return "Sort modifiers of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.modifiers(¢) + "->" + sort(extract.modifiers(¢)) + ")";
   }
 
@@ -61,14 +62,14 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private N go(final N $) {
-     final Collection<IExtendedModifier> as = new ArrayList<>(extract.annotations($)), ms = new ArrayList<>(sortedModifiers($));
+    final Collection<IExtendedModifier> as = new ArrayList<>(extract.annotations($)), ms = new ArrayList<>(sortedModifiers($));
     extendedModifiers($).clear();
     extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);
     return $;
   }
 
-   private List<? extends IExtendedModifier> sortedModifiers(final N $) {
+  private List<? extends IExtendedModifier> sortedModifiers(final N $) {
     return sort(extract.modifiers($));
   }
 }

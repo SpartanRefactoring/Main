@@ -4,7 +4,7 @@ import java.util.function.*;
 
 public interface Example {
   interface Converts extends Example {
-     String from();
+    String from();
 
     String to();
   }
@@ -13,12 +13,12 @@ public interface Example {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-07 */
   interface Converter {
-     Converts to(String to);
+    Converts to(String to);
   }
 
-  static Converter convert( final String from) {
+  static Converter convert(final String from) {
     return to -> new Converts() {
-      @Override  public String from() {
+      @Override public String from() {
         return from;
       }
 

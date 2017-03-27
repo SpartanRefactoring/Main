@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -18,19 +19,19 @@ public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTip
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -1582058371478921273L;
 
-  private static boolean shouldRemove( final MethodDeclaration $,  final SuperMethodInvocation i) {
+  private static boolean shouldRemove(final MethodDeclaration $, final SuperMethodInvocation i) {
     for (final Object m : $.modifiers())
       if (m instanceof MarkerAnnotation && (((Annotation) m).getTypeName() + "").contains("Deprecated"))
         return false;
     return (i.getName() + "").equals($.getName() + "") && arguments(i).size() == parameters($).size();
   }
 
-  @Override  public String description( final MethodDeclaration ¢) {
+  @Override public String description(final MethodDeclaration ¢) {
     return "Remove vacous '" + ¢.getName() + "' overriding method";
   }
 
-  @Override protected boolean prerequisite( final MethodDeclaration ¢) {
-     final ExpressionStatement $ = extract.expressionStatement(¢);
+  @Override protected boolean prerequisite(final MethodDeclaration ¢) {
+    final ExpressionStatement $ = extract.expressionStatement(¢);
     return $ != null && $.getExpression() instanceof SuperMethodInvocation && shouldRemove(¢, (SuperMethodInvocation) $.getExpression());
   }
 }

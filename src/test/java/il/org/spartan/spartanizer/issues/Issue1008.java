@@ -6,7 +6,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-17 */
 public class Issue1008 extends MetaFixture {
-   AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
+  AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
     /** [[SuppressWarningsSpartan]] */
     @Override @SuppressWarnings("All") protected void startingWith() {/***/
     }

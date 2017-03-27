@@ -39,8 +39,6 @@ public class definitionTest extends MetaFixture {
     @field static final long serialVersionUID = 1;
     {
       put("@Test", null);
-      put("", null);
-      put("", null);
       put("@Ignore", null);
       put("@Override", null);
       put("@annotation", null);
@@ -445,9 +443,9 @@ class ZZZ___Fixture_ModelClass {
       final int lemon = hashCode();
       try (
           /** First resource */
-           @ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
+          @ScopeSize(4) @try¢ FileReader myFirstFileReader = new FileReader("a");
           /** Second resource */
-           @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding()))
+          @ScopeSize(3) @try¢ FileReader resourceInTry = new FileReader("b" + myFirstFileReader.getEncoding()))
       /* Try body */
       {
         @knows({ "myFirstFileReader", "lemon" }) @local int localVariableInTryBlock = myFirstFileReader.read();
@@ -457,8 +455,8 @@ class ZZZ___Fixture_ModelClass {
           @ScopeSize(4) @field int anotherFieldInAnonymousClass;
 
           @Override @ScopeSize(4) @method public int hashCode() {
-             @local final Function<Object, String> $ = ( @ScopeSize(1) @lambda final Object ¢) -> ¢ + "",
-                something = ( @ScopeSize(1) @lambda final Object ¢) -> {
+            @local final Function<Object, String> $ = (@ScopeSize(1) @lambda final Object ¢) -> ¢ + "",
+                something = (@ScopeSize(1) @lambda final Object ¢) -> {
                   ¢.getClass();
                   return ¢ + "";
                 };
@@ -482,7 +480,7 @@ class ZZZ___Fixture_ModelClass {
         c8 = ++raisin;
         if (localVariableInTryBlock == c8 * localVariableNewClass)
           throw new CloneNotSupportedException(c0 * raisin + "");
-      } catch ( @knows("myIgnoredException") @ScopeSize(1) @catch¢ final FileNotFoundException myIgnoredException) {
+      } catch (@knows("myIgnoredException") @ScopeSize(1) @catch¢ final FileNotFoundException myIgnoredException) {
         for (@foreign("resourceInTry") @knows({ "myIgnoredException", "water" }) @ScopeSize(3) @for¢ int water = 0; water < 10; --water) {
           @knows({ "water", "myIgnoredException", "fig" }) @local @ScopeSize(2) final int fig = 2 * water + hashCode();
           q(fig * fig + water * hashCode());
@@ -515,7 +513,7 @@ class ZZZ___Fixture_ModelClass {
           q(pear + anotherVariableInAnotherPlainFor);
         }
         myIgnoredException.printStackTrace();
-      } catch ( @catch¢ final IOException | CloneNotSupportedException ¢) {
+      } catch (@catch¢ final IOException | CloneNotSupportedException ¢) {
         monitor.infoIOException(¢);
       }
       @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) final int a = hashCode();
@@ -543,7 +541,7 @@ class ZZZ___Fixture_ModelClass {
       abra, @ScopeSize(3)
       @enumConstant
       cadabra;
-       @knows({ "cadabra", "vaz/0", "abra" }) Bar vaz() {
+      @knows({ "cadabra", "vaz/0", "abra" }) Bar vaz() {
         return vaz();
       }
     }

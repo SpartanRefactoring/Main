@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -27,7 +28,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
     return "Invert conditional and use next statement";
   }
 
-  @Override protected ASTRewrite go( final ASTRewrite $,  final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s) || !iz.sequencer(nextStatement))
       return null;
     final Statement thenS = then(s);
@@ -44,7 +45,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
     if (!shoudlInvert(asVirtualIf))
       return null;
     final IfStatement canonicalIf = wizard.invert(asVirtualIf);
-     final List<Statement> ss = extract.statements(elze(canonicalIf));
+    final List<Statement> ss = extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
     if (!iz.block(s.getParent())) {
       ss.add(0, canonicalIf);

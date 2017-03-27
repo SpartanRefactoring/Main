@@ -12,6 +12,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -27,26 +28,26 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -8630038787651083003L;
 
-   static Expression pushdown( final ConditionalExpression x) {
+  static Expression pushdown(final ConditionalExpression x) {
     if (x == null)
       return null;
-     final Expression $ = core(then(x)), elze = core(elze(x));
+    final Expression $ = core(then(x)), elze = core(elze(x));
     return same($, elze) ? null : pushdown(x, $, elze);
   }
 
-  static Expression pushdown( final ConditionalExpression x, final Assignment a1, final Assignment a2) {
+  static Expression pushdown(final ConditionalExpression x, final Assignment a1, final Assignment a2) {
     return operator(a1) != operator(a2) || !same(to(a1), to(a2)) ? null
         : make.plant(subject.pair(to(a1), subject.pair(right(a1), right(a2)).toCondition(expression(x))).to(operator(a1))).into(x.getParent());
   }
 
-   @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n,  final T $) {
+  @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
     return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) parenthesize($);
   }
 
   private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
     if (!same(type(e1), type(e2)) || !same(expression(e1), expression(e2)))
       return null;
-     final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
+    final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
@@ -58,7 +59,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return $;
   }
 
-  private static Expression pushdown( final ConditionalExpression x,  final Expression e1,  final Expression e2) {
+  private static Expression pushdown(final ConditionalExpression x, final Expression e1, final Expression e2) {
     if (e1.getNodeType() != e2.getNodeType())
       return null;
     switch (e1.getNodeType()) {
@@ -90,24 +91,24 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   private static Expression pushdown(final ConditionalExpression x, final InfixExpression e1, final InfixExpression e2) {
     if (operator(e1) != operator(e2))
       return null;
-     final List<Expression> es1 = hop.operands(e1), es2 = hop.operands(e2);
+    final List<Expression> es1 = hop.operands(e1), es2 = hop.operands(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
     if (i < 0)
       return null;
     final InfixExpression $ = copy.of(e1);
-     final List<Expression> operands = hop.operands($);
+    final List<Expression> operands = hop.operands($);
     operands.remove(i);
     operands.add(i, p($, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x))));
     return p(x, subject.operands(operands).to($.getOperator()));
   }
 
-  private static Expression pushdown(final ConditionalExpression x,  final MethodInvocation e1,  final MethodInvocation e2) {
+  private static Expression pushdown(final ConditionalExpression x, final MethodInvocation e1, final MethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
       return null;
-     final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
-     final Expression receiver1 = expression(e1), receiver2 = expression(e2);
+    final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
+    final Expression receiver1 = expression(e1), receiver2 = expression(e2);
     if (!same(receiver1, receiver2)) {
       if (receiver1 == null || receiver2 == null || !same(es1, es2) || guessName.isClassName(receiver1) || guessName.isClassName(receiver2))
         return null;
@@ -127,11 +128,10 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return $;
   }
 
-  private static Expression pushdown(final ConditionalExpression x,  final SuperMethodInvocation e1,
-       final SuperMethodInvocation e2) {
+  private static Expression pushdown(final ConditionalExpression x, final SuperMethodInvocation e1, final SuperMethodInvocation e2) {
     if (!same(e1.getName(), e2.getName()))
       return null;
-     final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
+    final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
     if (es1.size() != es2.size())
       return null;
     final int i = findSingleDifference(es1, es2);
@@ -147,7 +147,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     return "Pushdown ?: into expression";
   }
 
-  @Override  public Expression replacement(final ConditionalExpression ¢) {
+  @Override public Expression replacement(final ConditionalExpression ¢) {
     return pushdown(¢);
   }
 }
