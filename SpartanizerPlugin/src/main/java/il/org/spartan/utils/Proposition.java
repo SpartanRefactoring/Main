@@ -208,6 +208,10 @@ public interface Proposition extends BooleanSupplier {
     @Override public Proposition or(final BooleanSupplier s, final BooleanSupplier... cs) {
       return new Or(this, s, cs);
     }
+
+    @Override public Proposition self() {
+      return null;
+    }
   }
 
   interface Operator1 extends Function<BooleanSupplier, BooleanSupplier> {

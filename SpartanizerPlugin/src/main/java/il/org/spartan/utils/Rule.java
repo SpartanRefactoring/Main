@@ -53,7 +53,11 @@ import java.util.stream.*;
  * @param <R> type of result of applying this rule
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
-public interface Rule<@¢ T, @¢ R> extends Function<T, R>, Recursive<Rule<T, R>> {
+public interface Rule< T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
+  @Override default Rule<T, R> self() {
+    return this;
+  }
+
   static <T, R> OnApplicator<T, R> on(final Predicate<T> p) {
     return c -> new Rule.Stateful<T, R>() {
       @Override public R fire() {

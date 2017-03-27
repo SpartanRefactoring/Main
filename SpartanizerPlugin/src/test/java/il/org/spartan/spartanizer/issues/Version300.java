@@ -220,7 +220,9 @@ public final class Version300 {
     kill("int _ = new A();", "{new A();}");
     kill("int _ = new A(){};", "{new A(){};}");
     kill("int _ = super.f();", "{super.f();}");
-    kill("int _ = new int[2];", "{new int[2];}");
+    kill("int _ = new int[++i * j--];", "{++i; j--;}");
+    kill("A __ = new A(f(),i++);", "{new A(f(),i++);}");
+    kill("A __ = new A[q()] ={ f(), g(), h(),++i };", "{q(); f(); g(); h(); ++i;}");
     kill("A _ =  ((a=b)*i++)+f(g())*((a=b)*i++) + ++j;", "{a=b; i++; f(g());a=b;i++; ++j;}");
   }
 
