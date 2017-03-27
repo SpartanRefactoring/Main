@@ -24,7 +24,7 @@ import il.org.spartan.utils.Example.*;
 @RunWith(Parameterized.class)
 public class ExamplesTests {
   /** Current tipper, loaded dynamically. */
-  private final Tipper<? extends ASTNode> tipper;
+  protected final Tipper<? extends ASTNode> tipper;
 
   /** Redirects examples to tests according to type */
   @Test public void converts() {

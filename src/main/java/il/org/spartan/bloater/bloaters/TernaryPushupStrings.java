@@ -27,7 +27,10 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
   private static final long serialVersionUID = -5602484588967209664L;
 
   @Override public Example[] examples() {
-    return new Example[] { convert("s = \"abc\" + (condition ? \"123\" : \"456\");").to("s = condition ? \"abc123\" : \"abc456\";") };
+    return new Example[] { //
+        convert("s = \"abc\" + (condition ? \"123\" : \"456\");") //
+            .to("s = condition ? \"abc123\" : \"abc456\";") //
+    };
   }
 
   @Override public ASTNode replacement(final InfixExpression x) {
