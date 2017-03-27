@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,33 +32,33 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
         .allMatch(λ -> collect.variableUsedInWhile(s, name(λ)) && Inliner.variableNotUsedAfterStatement(az.statement(s), λ.getName()));
   }
 
-   public static Expression Initializers(final VariableDeclarationFragment ¢) {
+  public static Expression Initializers(final VariableDeclarationFragment ¢) {
     return make.variableDeclarationExpression(fragmentParent(¢));
   }
 
-   public static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
+  public static VariableDeclarationStatement parent(final VariableDeclarationFragment ¢) {
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
-   public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+  public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from)
                 ? FragmentInitializerToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
 
-  @Override  public String description(final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,
-       final Statement nextStatement, final TextEditGroup g,  final ExclusionManager exclude) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
+      final ExclusionManager exclude) {
     if (f == null || $ == null || nextStatement == null || exclude == null)
       return null;
-     final VariableDeclarationStatement vds = parent(f);
+    final VariableDeclarationStatement vds = parent(f);
     if (vds == null)
       return null;
-     final WhileStatement s = az.whileStatement(nextStatement);
+    final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null || !fragmentsUseFitting(vds, s))
       return null;
     exclude.excludeAll(fragments(vds));

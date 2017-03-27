@@ -36,7 +36,7 @@ public class Issue1012 {
 
   @Test public void e() {
     trimmingOf("final int a[] = P.r(10000);int c = 0;f(c,a,c,a,c);")//
-    .gives("final int a[] = P.r(10000);f(0,a,0,a,0);")//
+        .gives("final int a[] = P.r(10000);f(0,a,0,a,0);")//
         .stays();
   }
 

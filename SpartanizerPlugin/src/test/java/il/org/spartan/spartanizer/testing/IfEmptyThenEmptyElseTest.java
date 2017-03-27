@@ -1,8 +1,3 @@
-/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
- *
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- *
- * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.testing;
 
 import static il.org.spartan.azzert.*;
@@ -22,6 +17,9 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.utils.*;
 
+/** Unit tests for {@link IfEmptyThenEmptyElse}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @since Sep 25, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class IfEmptyThenEmptyElseTest {
@@ -50,10 +48,10 @@ public final class IfEmptyThenEmptyElseTest {
   }
 
   @Test public void runGo() throws Exception {
-     final String input = WrapIntoComilationUnit.Statement.on(INPUT + "");
-     final IDocument d = new Document(input);
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
-     final IfStatement s = findFirst.ifStatement(u);
+    final String input = WrapIntoComilationUnit.Statement.on(INPUT + "");
+    final IDocument d = new Document(input);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get());
+    final IfStatement s = findFirst.ifStatement(u);
     azzert.that(s, iz("if(b);else;"));
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     TIPPER.tip(s).go(r, null);

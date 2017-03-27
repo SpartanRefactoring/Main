@@ -8,7 +8,7 @@ import java.util.stream.*;
  * @since Nov 25, 2016 */
 enum Collateral {
   ;
-  public static void ₡( final Runnable... collateralStatements) {
+  public static void ₡(final Runnable... collateralStatements) {
     if (collateralStatements == null)
       throw new IllegalArgumentException();
     Stream.of(collateralStatements).forEach(Runnable::run);

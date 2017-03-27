@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -20,8 +21,8 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -6223876197494261787L;
 
-   private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
-     Statement $ = null;
+  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+    Statement $ = null;
     for (final Statement ¢ : statements(body)) {
       if (iz.ifStatement(¢))
         $ = handleIf(az.ifStatement(¢), nextReturn);
@@ -34,7 +35,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
   }
 
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
-     final IfStatement ifStatement = az.ifStatement(s);
+    final IfStatement ifStatement = az.ifStatement(s);
     if (ifStatement == null)
       return null;
     final Statement then = ifStatement.getThenStatement(), elze = ifStatement.getElseStatement();
@@ -43,7 +44,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     if (iz.breakStatement(then))
       return then;
     if (iz.block(then)) {
-       final Statement $ = handleBlock((Block) then, nextReturn);
+      final Statement $ = handleBlock((Block) then, nextReturn);
       if ($ != null)
         return $;
     }
@@ -55,11 +56,11 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
       return elze;
     if (!iz.block(elze))
       return !iz.ifStatement(elze) ? null : handleIf(az.ifStatement(elze), nextReturn);
-     final Statement $ = handleBlock((Block) elze, nextReturn);
+    final Statement $ = handleBlock((Block) elze, nextReturn);
     return $ != null ? $ : !iz.ifStatement(elze) ? null : handleIf(az.ifStatement(elze), nextReturn);
   }
 
-  private static boolean isInfiniteLoop( final WhileStatement ¢) {
+  private static boolean isInfiniteLoop(final WhileStatement ¢) {
     return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
@@ -67,26 +68,26 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return "Convert the break inside 'while()' loop to 'return'";
   }
 
-  @Override  public String description( final WhileStatement ¢) {
+  @Override public String description(final WhileStatement ¢) {
     return "Convert the break inside 'while(" + ¢.getExpression() + ")' to return";
   }
 
-  @Override public boolean prerequisite( final WhileStatement ¢) {
+  @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip( final WhileStatement s,  final ExclusionManager exclude) {
-     final ReturnStatement nextReturn = extract.nextReturn(s);
+  @Override public Tip tip(final WhileStatement s, final ExclusionManager exclude) {
+    final ReturnStatement nextReturn = extract.nextReturn(s);
     if (s == null || !isInfiniteLoop(s) || nextReturn == null)
       return null;
-     final Statement body = body(s), //
+    final Statement body = body(s), //
         $ = iz.ifStatement(body) ? handleIf(az.ifStatement(body), nextReturn) //
             : iz.block(body) ? handleBlock(az.block(body), nextReturn) //
                 : iz.breakStatement(body) ? body : null;
     if (exclude != null)
       exclude.exclude(s);
     return $ == null ? null : new Tip(description(s), s.getExpression(), getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
       }

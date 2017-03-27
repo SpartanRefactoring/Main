@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -22,7 +23,7 @@ public final class ThrowOnNull extends NanoPatternTipper<IfStatement> {
     return anyTips(tippers, ¢);
   }
 
-  @Override  public Tip pattern(final IfStatement ¢) {
+  @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

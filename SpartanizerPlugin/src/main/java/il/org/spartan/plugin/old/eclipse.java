@@ -22,6 +22,7 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -35,9 +36,9 @@ import il.org.spartan.utils.*;
 public enum eclipse {
   facade;
   static ImageIcon icon;
-   static org.eclipse.swt.graphics.Image iconNonBusy;
+  static org.eclipse.swt.graphics.Image iconNonBusy;
   static final String NAME = "Laconic";
-   static final Shell parent = null;
+  static final Shell parent = null;
   static final boolean persistLocation = false;
   static final boolean persistSize = false;
   static final int shellStyle = SWT.TOOL;
@@ -48,7 +49,7 @@ public enum eclipse {
   private static boolean iconNotBusyInvalid = true;
 
   /** Add nature to one project */
-  public static void addNature( final IProject p) throws CoreException {
+  public static void addNature(final IProject p) throws CoreException {
     final IProjectDescription d = p.getDescription();
     final String[] natures = d.getNatureIds();
     if (as.list(natures).contains(Nature.NATURE_ID))
@@ -64,9 +65,9 @@ public enum eclipse {
    *        operation times use {@link wizard#nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
-  public static List<ICompilationUnit> compilationUnits( final IJavaElement u,  final IProgressMonitor m) throws JavaModelException {
+  public static List<ICompilationUnit> compilationUnits(final IJavaElement u, final IProgressMonitor m) throws JavaModelException {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
-     final List<ICompilationUnit> $ = new ArrayList<>();
+    final List<ICompilationUnit> $ = new ArrayList<>();
     if (u == null)
       return done(m, $, "Cannot find current compilation unit " + null);
     final IJavaProject javaProject = u.getJavaProject();
@@ -77,18 +78,18 @@ public enum eclipse {
     final IPackageFragmentRoot[] rs = javaProject.getPackageFragmentRoots();
     if (rs == null)
       return done(m, $, "Cannot find roots of " + javaProject);
-    for ( final IPackageFragmentRoot ¢ : rs) // NANO - can't, throws
+    for (final IPackageFragmentRoot ¢ : rs) // NANO - can't, throws
       compilationUnits(m, $, ¢);
     return done(m, $, "Found " + rs.length + " package roots, and " + $.size() + " packages");
   }
 
-  private static int compilationUnits( final IProgressMonitor m,  final Collection<ICompilationUnit> us,
-       final IPackageFragmentRoot r) throws JavaModelException {
+  private static int compilationUnits(final IProgressMonitor m, final Collection<ICompilationUnit> us, final IPackageFragmentRoot r)
+      throws JavaModelException {
     m.worked(1);
     if (r.getKind() == IPackageFragmentRoot.K_SOURCE)
       m.worked(1);
     int $ = 0;
-    for ( final IJavaElement ¢ : r.getChildren()) {
+    for (final IJavaElement ¢ : r.getChildren()) {
       m.worked(1);
       if (¢.getElementType() == IJavaElement.PACKAGE_FRAGMENT && az.true¢(++$)) {
         ++$;
@@ -104,13 +105,13 @@ public enum eclipse {
     return compilationUnit(currentWorkbenchWindow().getActivePage().getActiveEditor());
   }
 
-  private static List<ICompilationUnit> done( final IProgressMonitor pm, final List<ICompilationUnit> $, final String message) {
+  private static List<ICompilationUnit> done(final IProgressMonitor pm, final List<ICompilationUnit> $, final String message) {
     pm.done();
     announce(message);
     return $;
   }
 
-   @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
+  @SuppressWarnings("deprecation") public static IProgressMonitor newSubMonitor(final IProgressMonitor ¢) {
     return new SubProgressMonitor(¢, 1, SubProgressMonitor.PREPEND_MAIN_LABEL_TO_SUBTASK);
   }
 
@@ -119,7 +120,7 @@ public enum eclipse {
     return null;
   }
 
-   static MessageDialog announceNonBusy(final String message) {
+  static MessageDialog announceNonBusy(final String message) {
     return new MessageDialog(null, NAME, iconNonBusy(), message, MessageDialog.INFORMATION, new String[] { "OK" }, 0) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP);
@@ -127,11 +128,11 @@ public enum eclipse {
     };
   }
 
-   static ICompilationUnit compilationUnit( final IEditorPart ep) {
+  static ICompilationUnit compilationUnit(final IEditorPart ep) {
     return ep == null ? null : compilationUnit((IResource) resources(ep));
   }
 
-  static ICompilationUnit compilationUnit( final IResource ¢) {
+  static ICompilationUnit compilationUnit(final IResource ¢) {
     return ¢ == null ? null : JavaCore.createCompilationUnitFrom((IFile) ¢);
   }
 
@@ -145,10 +146,10 @@ public enum eclipse {
   /** @param u JD
    * @param m JD
    * @return node marked by the marker in the compilation unit */
-  static ASTNode getNodeByMarker(final ICompilationUnit $,  final IMarker m) {
+  static ASTNode getNodeByMarker(final ICompilationUnit $, final IMarker m) {
     try {
       return find($, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.logEvaluationError(¢);
     }
     return null;
@@ -162,7 +163,7 @@ public enum eclipse {
     return make.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
   }
 
-  private static int int¢( final IMarker m, final String name) throws CoreException {
+  private static int int¢(final IMarker m, final String name) throws CoreException {
     return az.int¢(m.getAttribute(name));
   }
 
@@ -174,27 +175,27 @@ public enum eclipse {
       final Image i = Toolkit.getDefaultToolkit().getImage(new URL(iconAddress));
       if (i != null)
         icon = new ImageIcon(i);
-    } catch ( final MalformedURLException ¢) {
+    } catch (final MalformedURLException ¢) {
       monitor.logProbableBug(¢);
     }
     return icon;
   }
 
-   static org.eclipse.swt.graphics.Image iconNonBusy() {
+  static org.eclipse.swt.graphics.Image iconNonBusy() {
     if (!iconNotBusyInvalid)
       return iconNonBusy;
     iconNotBusyInvalid = false;
     try {
       iconNonBusy = new org.eclipse.swt.graphics.Image(null,
           ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif")).getImageData());
-    } catch ( final MalformedURLException ¢) {
+    } catch (final MalformedURLException ¢) {
       monitor.log(¢);
     }
     return iconNonBusy;
   }
 
-   static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
-     final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
+  static ProgressMonitorDialog progressMonitorDialog(final boolean openOnRun) {
+    final ProgressMonitorDialog $ = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell()) {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);
       }
@@ -205,7 +206,7 @@ public enum eclipse {
     return $;
   }
 
-  static Object resources( final IEditorPart ep) {
+  static Object resources(final IEditorPart ep) {
     return ep.getEditorInput().getAdapter(IResource.class);
   }
 
@@ -215,11 +216,11 @@ public enum eclipse {
     return !($ instanceof ITextSelection) ? null : (ITextSelection) $;
   }
 
-  public boolean isNodeOutsideMarker( final ASTNode $,  final IMarker m) {
+  public boolean isNodeOutsideMarker(final ASTNode $, final IMarker m) {
     try {
       return $.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || $.getLength() + $.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch ( final CoreException ¢) {
+    } catch (final CoreException ¢) {
       monitor.logEvaluationError(this, ¢);
       return true;
     }
@@ -229,7 +230,7 @@ public enum eclipse {
   List<ICompilationUnit> compilationUnits() {
     try {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
-    } catch ( final JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       monitor.logEvaluationError(this, ¢);
     }
     return null;
@@ -238,7 +239,7 @@ public enum eclipse {
   Collection<ICompilationUnit> compilationUnits(final IJavaElement $) {
     try {
       return compilationUnits($, nullProgressMonitor);
-    } catch ( final JavaModelException ¢) {
+    } catch (final JavaModelException ¢) {
       monitor.logEvaluationError(this, ¢);
       return null;
     }

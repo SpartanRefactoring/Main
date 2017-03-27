@@ -40,19 +40,19 @@ public enum haz {
     }
   }
 
-  private static boolean annotation(SingleVariableDeclaration $) {
+  private static boolean annotation(final SingleVariableDeclaration $) {
     return !extract.annotations($).isEmpty();
   }
 
-  private static boolean annotation(@SuppressWarnings("unused") LambdaExpression $) {
+  private static boolean annotation(@SuppressWarnings("unused") final LambdaExpression $) {
     return false;
   }
 
-  private static boolean annotation(VariableDeclarationExpression x) {
+  private static boolean annotation(final VariableDeclarationExpression x) {
     return !extract.annotations(x).isEmpty();
   }
 
-  private static boolean annotation(FieldDeclaration f) {
+  private static boolean annotation(@SuppressWarnings("unused") final FieldDeclaration f) {
     return false;
   }
 

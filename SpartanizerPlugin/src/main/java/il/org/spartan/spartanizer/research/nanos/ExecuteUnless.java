@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -51,11 +52,11 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
   private static boolean throwing(final Statement ¢) {
     if (yieldAncestors.untilClass(TryStatement.class).from(¢) != null)
       return true;
-     final MethodDeclaration $ = az.methodDeclaration(yieldAncestors.untilClass(MethodDeclaration.class).from(¢));
+    final MethodDeclaration $ = az.methodDeclaration(yieldAncestors.untilClass(MethodDeclaration.class).from(¢));
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
 
-  @Override  public Tip pattern(final IfStatement ¢) {
+  @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
 

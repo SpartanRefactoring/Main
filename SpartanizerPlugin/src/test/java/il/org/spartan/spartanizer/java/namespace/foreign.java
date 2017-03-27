@@ -6,5 +6,5 @@ import java.lang.annotation.*;
     ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, //
     ElementType.METHOD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.TYPE, })
 @interface foreign {
-   String[] value();
+  String[] value();
 }

@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -31,15 +32,15 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x6416089F84E63B0EL;
 
-  @Override  public String description(final VariableDeclarationStatement ¢) {
+  @Override public String description(final VariableDeclarationStatement ¢) {
     return ¢ + "";
   }
 
-  @Override @SuppressWarnings("unused")  public Tip tip( final VariableDeclarationStatement s, final ExclusionManager __) {
+  @Override @SuppressWarnings("unused") public Tip tip(final VariableDeclarationStatement s, final ExclusionManager __) {
     assert s != null;
     try {
-       final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
-      for ( final Object v : make.variableDeclarationExpression(s).fragments()) {
+      final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
+      for (final Object v : make.variableDeclarationExpression(s).fragments()) {
         final SimpleName $ = ((VariableDeclaration) v).getName();
         if (!in($.getIdentifier(), namer.specials) && $.getIdentifier().length() > 1)
           return null;
@@ -63,7 +64,7 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
           }
         }
       };
-    } catch ( final Exception ¢) {
+    } catch (final Exception ¢) {
       return monitor.logProbableBug(this, ¢);
     }
   }

@@ -26,7 +26,7 @@ public final class flattenTest {
   }
 
   @Test public void flattenIsDistinct() {
-     final InfixExpression e = i("1+2");
+    final InfixExpression e = i("1+2");
     azzert.that(flatten.of(e), is(not(e)));
   }
 
@@ -35,7 +35,7 @@ public final class flattenTest {
   }
 
   @Test public void flattenIsSame() {
-     final InfixExpression e = i("1+2");
+    final InfixExpression e = i("1+2");
     azzert.that(flatten.of(e) + "", is(e + ""));
   }
 

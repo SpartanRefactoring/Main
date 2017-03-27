@@ -11,5 +11,5 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 @Target({ ElementType.PARAMETER, ElementType.TYPE_PARAMETER })
 public @interface ¢ {
   /** Add here brief documentation if you like; return type may change though */
-   String value() default "J(ohn)|(ane) Doe";
+  String value() default "J(ohn)|(ane) Doe";
 }

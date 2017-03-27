@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tipping;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.engine.*;
 
 /** An abstract tipping strategy that removes a node if
@@ -13,9 +14,9 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class RemovingTipper<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 0x18DC32CA162FC537L;
 
-  @Override  public final Tip tip( final N n) {
+  @Override public final Tip tip(final N n) {
     return new Tip(description(n), n, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(n, g);
       }
     };

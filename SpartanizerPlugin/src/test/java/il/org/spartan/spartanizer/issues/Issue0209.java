@@ -43,7 +43,6 @@ public final class Issue0209 {
         .gives("Integer.valueOf(3).toString();")//
         .stays();
   }
-  
 
   @Test public void issue54_01() {
     trimmingOf("(x.toString())")//
@@ -88,11 +87,11 @@ public final class Issue0209 {
         .gives("f();o.toString();")//
         .stays();
   }
-@Test public void issue54_3() {
+
+  @Test public void issue54_3() {
     trimmingOf("o.toString();")//
         .stays();
   }
-
 
   @Test public void reorderTest() {
     trimmingOf("\"\" + foo(x.toString())")//

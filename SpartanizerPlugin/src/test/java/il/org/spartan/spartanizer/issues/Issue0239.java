@@ -81,20 +81,20 @@ public class Issue0239 {
   }
 
   @Test public void a$04() {
-     final Block block = az.block(into.s( //
+    final Block block = az.block(into.s( //
         "  final int i2 = Integer.valueOf(2);\n" + //
             "  f1(i1,i2);\n"//
     )); //
     assert block != null;
     assert count.nodes(block) > 10;
-     final List<Statement> statements = statements(block);
+    final List<Statement> statements = statements(block);
     assert statements != null;
     assert statements.size() == 2;
-     final ExpressionStatement nextStatement = findFirst.instanceOf(ExpressionStatement.class).in(block);
+    final ExpressionStatement nextStatement = findFirst.instanceOf(ExpressionStatement.class).in(block);
     assert lastIn(nextStatement, statements);
-     final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class).in(block);
+    final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class).in(block);
     assert f != null;
-     final Statement currentStatement = extract.containingStatement(f);
+    final Statement currentStatement = extract.containingStatement(f);
     assert currentStatement != null;
     assert penultimateIn(currentStatement, statements);
     final SimpleName name = f.getName();

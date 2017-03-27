@@ -27,25 +27,25 @@ public enum LogToTest {
       System.out.println("First create a package named il.org.spartan.automatic under src/test/java.");
       return;
     }
-     final File d = new File("logs");
+    final File d = new File("logs");
     if (!d.exists()) {
       System.out.println("First create a 'logs' directory and run some tests to create a log file.");
       return;
     }
-     final File[] fs = d.listFiles();
-     final Int fc = new Int();
+    final File[] fs = d.listFiles();
+    final Int fc = new Int();
     Stream.of(fs).filter(λ -> λ.isFile() && λ.getName().startsWith("log_spartan")).forEach(λ -> ++fc.inner);
     if (fc.inner == 0) {
       System.out.println("First run some tests to create a log file.");
       return;
     }
     System.out.println("Creating test cases...");
-     final Collection<String> xs = new HashSet<>();
-     final List<String> ts = new ArrayList<>();
-     final Map<String, Integer> nu = new HashMap<>();
-    for ( final File f : fs)
-      try ( BufferedReader r = new BufferedReader(new FileReader(f))) {
-         final List<String> es = new ArrayList<>();
+    final Collection<String> xs = new HashSet<>();
+    final List<String> ts = new ArrayList<>();
+    final Map<String, Integer> nu = new HashMap<>();
+    for (final File f : fs)
+      try (BufferedReader r = new BufferedReader(new FileReader(f))) {
+        final List<String> es = new ArrayList<>();
         es.add("");
         for (String l = r.readLine(); l != null; l = r.readLine())
           if (l.equals(monitor.FILE_SEPARATOR.trim())) {
@@ -56,30 +56,29 @@ public enum LogToTest {
             es.add("");
           else
             es.set(es.size() - 1, last(es) + "\n" + l);
-      } catch ( final IOException ¢) {
+      } catch (final IOException ¢) {
         monitor.infoIOException(¢, f + "");
         return;
       }
     System.out.println("Creating test file...");
     final String fileName = TEST_NAMER.get();
-    try ( Writer w = new BufferedWriter(
+    try (Writer w = new BufferedWriter(
         new OutputStreamWriter(new FileOutputStream(TESTS_FOLDER + File.separator + fileName + ".java", true), "utf-8"))) {
       w.write(wrap(ts, fileName));
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢);
       return;
     }
     System.out.println("Done! Written " + ts.size() + " tests to " + fileName + ".java");
   }
 
-  private static void analyze( final Collection<String> xs,  final Collection<String> ts,  final Map<String, Integer> nu,
-       final List<String> ss) {
+  private static void analyze(final Collection<String> xs, final Collection<String> ts, final Map<String, Integer> nu, final List<String> ss) {
     final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1],
         errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
     if (xs.contains(errorLocationFile))
       return;
     xs.add(errorLocationFile);
-     final String[] s = errorLocationFile.split("\\.");
+    final String[] s = errorLocationFile.split("\\.");
     String errorLocationFileClean = s[s.length - 1];
     if (!nu.containsKey(errorLocationFileClean))
       nu.put(errorLocationFileClean, Integer.valueOf(1));
@@ -91,21 +90,21 @@ public enum LogToTest {
         ss.get(2).trim().equals(English.UNKNOWN) ? "some test file" : ss.get(2).trim(), ss.get(3), ss.get(4), errorLocationFile);
   }
 
-  private static void buildTest( final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,
-      final String errorName, final String fileName, final String errorCode,  final String rawCode, final String errorLocationFileUnclean) {
+  private static void buildTest(final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,
+      final String errorName, final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
     ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, JUnitTestMethodFacotry.unWrapedTestCase(rawCode),
         errorLocationFileUnclean));
   }
 
-   private static String wrap(final String errorLocationFileClean, final String errorLocationLine, final String errorName,
-      final String fileName, @SuppressWarnings("unused") final String errorCode, final String code, final String errorLocationFileUnclean) {
+  private static String wrap(final String errorLocationFileClean, final String errorLocationLine, final String errorName, final String fileName,
+      @SuppressWarnings("unused") final String errorCode, final String code, final String errorLocationFileUnclean) {
     return "/** Test created automatically due to " + errorName + " thrown while testing " + fileName + ".\nOriginated at " + errorLocationFileUnclean
         + "\n at line #" + errorLocationLine + ".\n\n*/\n@Test public void " + errorLocationFileClean + "Test() {\ntrimmingOf(" + code
         + ").doesNotCrash();\n}";
   }
 
-  private static String wrap( final Iterable<String> ss, final String fileName) {
-     final StringBuilder $ = new StringBuilder(
+  private static String wrap(final Iterable<String> ss, final String fileName) {
+    final StringBuilder $ = new StringBuilder(
         "package il.org.spartan.automatic;\n\nimport static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
             + "import org.junit.*;\n\n/** @author Ori Roth\n* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
             + "@SuppressWarnings(\"static-method\")\n" //

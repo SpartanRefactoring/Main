@@ -5,6 +5,7 @@ import java.io.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -20,36 +21,36 @@ enum CollectClassMetrics {
   private static final String OUTPUT = "/tmp/commons-lang-halstead.CSV";
   private static final CSVStatistics output = init();
 
-  public static void main( final String[] where) {
+  public static void main(final String[] where) {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
 
-   static CompilationUnit spartanize( final CompilationUnit before) {
-     final Trimmer tr = new Trimmer();
+  static CompilationUnit spartanize(final CompilationUnit before) {
+    final Trimmer tr = new Trimmer();
     assert tr != null;
-     final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
+    final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
     tr.setICompilationUnit($);
     assert $ != null;
     try {
       tr.checkAllConditions(null);
-    } catch ( OperationCanceledException | CoreException ¢) {
+    } catch (OperationCanceledException | CoreException ¢) {
       ¢.printStackTrace();
     }
     return before;
   }
 
-  private static void go( final File f) {
+  private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
       output.put("File", f.getName());
       go(FileUtils.read(f));
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       System.err.println(¢.getMessage());
     }
   }
 
-  private static void go( final String javaCode) {
+  private static void go(final String javaCode) {
     output.put("Characters", javaCode.length());
     report("Before-", (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
@@ -58,10 +59,10 @@ enum CollectClassMetrics {
     new FilesGenerator(".java").from(where).forEach(CollectClassMetrics::go);
   }
 
-   private static CSVStatistics init() {
+  private static CSVStatistics init() {
     try {
       return new CSVStatistics(OUTPUT, "property");
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       throw new RuntimeException(OUTPUT, ¢);
     }
   }
@@ -72,7 +73,7 @@ enum CollectClassMetrics {
    * these. Note that you have to print the file name which is common to all
    * classes. Turn this if you like into a documentation
    * @param string */
-  private static void report(final String prefix,  final CompilationUnit ¢) {
+  private static void report(final String prefix, final CompilationUnit ¢) {
     // TODO Matteo: make sure that the counting does not include comments.
     // Do
     // this by adding stuff to the metrics suite.

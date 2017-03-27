@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -22,12 +23,12 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -3493773208955099533L;
 
-  private static boolean compareReturnStatements( final ReturnStatement r1,  final ReturnStatement r2) {
+  private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
   }
 
-   private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
-     Statement $ = null;
+  private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {
+    Statement $ = null;
     for (final Statement ¢ : statements(body)) {
       if (az.ifStatement(¢) != null)
         $ = handleIf(¢, nextReturn);
@@ -42,14 +43,14 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     if (!iz.ifStatement(s))
       return null;
-     final IfStatement ifStatement = az.ifStatement(s);
+    final IfStatement ifStatement = az.ifStatement(s);
     final Statement then = ifStatement.getThenStatement(), elze = ifStatement.getElseStatement();
     if (then == null)
       return null;
     if (compareReturnStatements(az.returnStatement(then), nextReturn))
       return then;
     if (iz.block(then)) {
-       final Statement $ = handleBlock((Block) then, nextReturn);
+      final Statement $ = handleBlock((Block) then, nextReturn);
       if ($ != null)
         return $;
     }
@@ -61,11 +62,11 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
       return elze;
     if (!iz.block(elze))
       return az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
-     final Statement $ = handleBlock((Block) elze, nextReturn);
+    final Statement $ = handleBlock((Block) elze, nextReturn);
     return $ != null ? $ : az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
   }
 
-  private static boolean isInfiniteLoop( final ForStatement ¢) {
+  private static boolean isInfiniteLoop(final ForStatement ¢) {
     return iz.booleanLiteral(¢) && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
@@ -73,24 +74,24 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     return "Convert the return inside the loop to break";
   }
 
-  @Override  public String description(final ForStatement ¢) {
+  @Override public String description(final ForStatement ¢) {
     return "Convert the return inside " + ¢ + " to break";
   }
 
-  @Override public boolean prerequisite( final ForStatement ¢) {
+  @Override public boolean prerequisite(final ForStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip( final ForStatement s,  final ExclusionManager exclude) {
-     final ReturnStatement nextReturn = extract.nextReturn(s);
+  @Override public Tip tip(final ForStatement s, final ExclusionManager exclude) {
+    final ReturnStatement nextReturn = extract.nextReturn(s);
     if (nextReturn == null || isInfiniteLoop(s))
       return null;
-     final Statement body = body(s), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    final Statement body = body(s), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;
     if (exclude != null)
       exclude.exclude(s);
     return $ == null ? null : new Tip(description(), s, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, first(statements(az.block(into.s("break;")))), g);
       }
     };
