@@ -14,6 +14,7 @@ import il.org.spartan.*;
 /** Tests class {@link Proposition}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
+@Ignore// TODO, Oren/Dor/Ori
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
 public class PropositionTest {
