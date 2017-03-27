@@ -31,14 +31,14 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
     return "Remove unused variable: " + trivia.gist(¢);
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Block b = az.block(parent().getParent());
     if (b == null)
-      return r;
-    final ListRewrite l = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
-    for (final Statement s : wizard.decompose(initializer()))
-      l.insertBefore(copy.of(s), parent(), g);
-    wizard.removeFragment(object(), r, g);
-    return r;
+      return $;
+    final ListRewrite l = $.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+    for (final Statement ¢ : wizard.decompose(initializer()))
+      l.insertBefore(copy.of(¢), parent(), g);
+    wizard.removeFragment(object(), $, g);
+    return $;
   }
 }

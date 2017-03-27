@@ -48,13 +48,13 @@ public class IfFooElseIfBarElseFoo extends ReplaceCurrentNode<IfStatement> //
     return !b ? $ : subject.statement($).toBlock();
   }
 
-  @Override protected boolean prerequisite(final IfStatement s) {
-    final IfStatement s2 = az.ifStatement(s.getElseStatement());
-    return s2 != null && wizard.same(s.getThenStatement(), s2.getElseStatement()) //
-        && sideEffects.free(s2.getExpression());
+  @Override protected boolean prerequisite(final IfStatement ¢) {
+    final IfStatement $ = az.ifStatement(¢.getElseStatement());
+    return $ != null && wizard.same(¢.getThenStatement(), $.getElseStatement()) //
+        && sideEffects.free($.getExpression());
   }
 
-  @Override public String description(@SuppressWarnings("unused") final IfStatement n) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Merges if and else blocks when they are the same and there is an else if clause.";
   }
 }
