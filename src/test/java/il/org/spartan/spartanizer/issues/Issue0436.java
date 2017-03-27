@@ -13,10 +13,12 @@ import il.org.spartan.spartanizer.leonidas.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue0436 {
   @Test public void testRenamingWithQualified() {
-    azzert.that(JUnitTestMethodFacotry.shortenIdentifiers("if(omg == Val) return oomph(omg, Dear.foo());"), is("if(a == A) return b(a, B());"));
+    azzert.that(
+        JUnitTestMethodFacotry.shortenIdentifiers(//
+            "if(omg == Val) return oomph(omg, Dear.foo());"), //
+        is("if(a == A) return b(a, B.c());"));
   }
 }
