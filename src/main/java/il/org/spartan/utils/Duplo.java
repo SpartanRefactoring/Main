@@ -2,14 +2,14 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
-/** @author Dor Ma'ayan <tt>dor.d.ma@gmail.com</tt>
- * @author Ori Roth
- * @author Oren Afek
+/** encapsulates elements of the type parameter, to be organizable in a
+ * hierarchical structure
+ * @param <T> Type stored in each element
+ * @author Yossi Gil
  * @since 2017-03-27 */
-public interface Bolt<T> {
-  default T self() {
-    return null;
-  }
+public interface Duplo<T> {
+  /** return the element stored in this instance; */
+  T self();
 
   default Compounder<T> compounder() {
     return Compounder.empty();
@@ -23,14 +23,14 @@ public interface Bolt<T> {
     return Stream.empty();
   }
 
-  interface Atomic<@¢ T> extends Bolt<T> {
+  interface Atomic< T> extends Duplo<T> {
     @Override default Stream<T> stream() {
       return streamSelf();
     }
   }
 
-  interface Compound<@¢ T> extends Bolt<T> {
-    Iterable<? extends Bolt<T>> next();
+  interface Compound< T> extends Duplo<T> {
+    Iterable<? extends Duplo<T>> next();
 
     @Override default Stream<T> stream() {
       return compounder().compound(self(), next());
@@ -39,7 +39,7 @@ public interface Bolt<T> {
 
   @FunctionalInterface
   interface Compounder<T> {
-    Stream<T> compound(T self, Iterable<? extends Bolt<T>> others);
+    Stream<T> compound(T self, Iterable<? extends Duplo<T>> others);
 
     static <T> Compounder<T> empty() {
       return (self, others) -> Stream.empty();

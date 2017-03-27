@@ -961,10 +961,6 @@ public interface wizard {
         return iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? listMe(¢) : reduce();
       }
 
-      @Override protected List<Statement> map(final ArrayCreation ¢) {
-        return listMe(¢);
-      }
-
       @Override protected List<Statement> map(final ClassInstanceCreation ¢) {
         return listMe(¢);
       }

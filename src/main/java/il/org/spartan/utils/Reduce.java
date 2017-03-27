@@ -7,7 +7,7 @@ import java.util.stream.*;
  * operation. This operation must also have a neutral element (#{@link Reduce}).
  * @param <R>
  * @since 2017-01-29 */
-public abstract class Reduce<@¢ R> {
+public abstract class Reduce< R> {
   public abstract R reduce();
 
   public final R reduce(final R ¢) {
