@@ -32,7 +32,7 @@ public final class Issue0121 {
                 + "}");
   }
 
-  // That is a true renaming bug, and a true Environment issue.
+  // TODO DOR That is a true renaming bug, and a true Environment issue.
   @Ignore @Test public void test02() {
     trimmingOf("class A{"//
         + "class B{"//

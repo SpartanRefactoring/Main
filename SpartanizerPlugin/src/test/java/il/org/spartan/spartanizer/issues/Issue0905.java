@@ -27,7 +27,7 @@ public class Issue0905 {
         .using(InfixExpression.class, new InfixComparisonBooleanLiteral()) //
         .gives("if(a){int b=5,c=d();}") //
         .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
-        .gives("if(a){int c=d();}") //
+        .gives("if(a){d(); int b=5;}") //
         .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
         .gives("if(a){d();}") //
         .using(Block.class, new BlockSingleton()) //
