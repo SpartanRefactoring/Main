@@ -274,7 +274,7 @@ public interface iz {
    * @param x the identifier to search for
    * @return true if x contains the identifier of n */
   static boolean containsName(final SimpleName n, final ASTNode x) {
-    return extract.countNameInSubtree(n,x) != 0;
+    return extract.countNameInSubtree(n, x) != 0;
   }
 
   static boolean containsOperator(final ASTNode ¢) {

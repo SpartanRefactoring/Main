@@ -16,11 +16,9 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
-/**
- * TODO dormaayn: document class 
+/** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
- * @since 2017-03-27
- */
+ * @since 2017-03-27 */
 public abstract class LocalVariable extends Fragment {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
   private Statement nextStatement;

@@ -21,7 +21,6 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     final ConditionalExpression ¢ = az.conditionalExpression(extract.core(x));
     if (¢ == null)
       return null;
-
     final IfStatement $ = s.getAST().newIfStatement();
     $.setExpression(copy.of(expression(¢)));
     final ThrowStatement then = ¢.getAST().newThrowStatement();

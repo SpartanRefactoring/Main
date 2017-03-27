@@ -23,13 +23,13 @@ public interface Duplo<T> {
     return Stream.empty();
   }
 
-  interface Atomic< T> extends Duplo<T> {
+  interface Atomic<T> extends Duplo<T> {
     @Override default Stream<T> stream() {
       return streamSelf();
     }
   }
 
-  interface Compound< T> extends Duplo<T> {
+  interface Compound<T> extends Duplo<T> {
     Iterable<? extends Duplo<T>> next();
 
     @Override default Stream<T> stream() {

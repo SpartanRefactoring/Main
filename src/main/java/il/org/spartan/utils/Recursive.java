@@ -36,18 +36,18 @@ import junit.framework.*;
  * @see Atomic
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-11 */
-public interface Recursive< T> extends Duplo<T> {
+public interface Recursive<T> extends Duplo<T> {
   /** An atomic recursive structure specializing {@link Recursive}
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
-  interface Atomic< T> extends Recursive<T>, Duplo.Atomic<T> {
+  interface Atomic<T> extends Recursive<T>, Duplo.Atomic<T> {
     //
   }
 
   /** A compound recursive structure, specializing {@link Recursive}
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
-  interface Compound< T> extends Recursive<T>, Duplo.Compound<T> {
+  interface Compound<T> extends Recursive<T>, Duplo.Compound<T> {
     Iterable<Recursive<T>> children();
 
     @Override default Iterable<? extends Duplo<T>> next() {

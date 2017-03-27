@@ -52,9 +52,9 @@ public class Issue0147 {
   @Test public void notEligible() {
     assert !TIPPER.check(FOR1);
   }
-    @Test public void a() {
-      trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
-          .gives("for(int ¢=0; ¢<5;++¢)++¢;");//
-    }
 
+  @Test public void a() {
+    trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
+        .gives("for(int ¢=0; ¢<5;++¢)++¢;");//
   }
+}
