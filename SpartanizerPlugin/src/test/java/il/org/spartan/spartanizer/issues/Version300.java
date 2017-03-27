@@ -134,10 +134,11 @@ public final class Version300 {
     ;
   }
 
-  @Ignore @Test public void ifab() {
+  @Test public void ifab() {
     trimmingOf("if (a++ == b++) { }") //
         .using(IfStatement.class, new IfEmptyThenEmptyElse()) //
         .gives("a++;b++;") //
+        .gives("++a;++b;") //
         .stays() //
     ;
   }

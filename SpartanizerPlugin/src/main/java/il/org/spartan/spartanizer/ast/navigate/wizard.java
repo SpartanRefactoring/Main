@@ -255,18 +255,6 @@ public interface wizard {
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
   }
 
-  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
-    if (ns == null)
-      return $;
-    boolean add = false;
-    for (final ASTNode x : ns)
-      if (add)
-        $.add(x);
-      else
-        add = x == n;
-    return $;
-  }
-
   /** @param d JD
    * @param s JD
    * @param r rewriter
@@ -433,7 +421,7 @@ public interface wizard {
    * @param f
    * @param r
    * @param g */
-  static void eliminate(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+  static void removeFragment(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     final List<VariableDeclarationFragment> live = live(f, fragments(parent));
     if (live.isEmpty()) {
