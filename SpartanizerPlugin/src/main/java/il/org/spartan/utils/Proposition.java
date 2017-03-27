@@ -217,4 +217,5 @@ public interface Proposition extends BooleanSupplier {
   interface Operator1 extends Function<BooleanSupplier, BooleanSupplier> {
     /** */
   }
+
 }
