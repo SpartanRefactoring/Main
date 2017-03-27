@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.ast.safety;
 
+import static il.org.spartan.utils.monitor.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -63,8 +64,7 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
       case LAMBDA_EXPRESSION:
         return map((LambdaExpression) ¢);
       default:
-        assert fault.unreachable() : fault.specifically("Unrecognized type", ¢.getClass(), ¢, box.it(¢.getNodeType()));
-        return null;
+        return bug("Unrecognized type %s NodeType= %d", ¢.getClass(), ¢, box.it(¢.getNodeType()));
     }
   }
 
