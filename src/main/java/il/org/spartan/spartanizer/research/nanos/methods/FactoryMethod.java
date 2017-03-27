@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.research.TipperFactory.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -25,7 +26,7 @@ public class FactoryMethod extends JavadocMarkerNanoPattern {
         && anyTips(tippers.get(), onlyStatement(¢));
   }
 
-  @Override  public String nanoName() {
+  @Override public String nanoName() {
     return "Factory";
   }
 }

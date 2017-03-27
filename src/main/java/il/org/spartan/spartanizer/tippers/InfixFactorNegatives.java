@@ -14,6 +14,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -27,18 +28,18 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     implements TipperCategory.Sorting {
   private static final long serialVersionUID = -1245089074484114122L;
 
-   private static List<Expression> gather(final Expression x,  final List<Expression> $) {
+  private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
     $.add(x);
     return $;
   }
 
-   private static List<Expression> gather(final InfixExpression ¢) {
+  private static List<Expression> gather(final InfixExpression ¢) {
     return gather(¢, new ArrayList<>());
   }
 
-   private static List<Expression> gather( final InfixExpression x,  final List<Expression> $) {
+  private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
     if (!in(x.getOperator(), TIMES, DIVIDE)) {
@@ -52,17 +53,17 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     return $;
   }
 
-   private static List<Expression> gather( final Iterable<Expression> xs,  final List<Expression> $) {
+  private static List<Expression> gather(final Iterable<Expression> xs, final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }
 
-  @Override  public String description( final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return "Use at most one arithmetical negation, for first factor of " + ¢.getOperator();
   }
 
-  @Override public Tip tip( final InfixExpression x,  final ExclusionManager exclude) {
-     final List<Expression> $ = gather(x);
+  @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
+    final List<Expression> $ = gather(x);
     if ($.size() < 2)
       return null;
     final int totalNegation = minus.level(x);
@@ -71,8 +72,8 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     if (exclude != null)
       exclude.exclude(x);
     return new Tip(description(x), x, getClass()) {
-      @Override public void go( final ASTRewrite r, final TextEditGroup g) {
-         final Expression first = totalNegation % 2 == 0 ? null : first($);
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        final Expression first = totalNegation % 2 == 0 ? null : first($);
         $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
             .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)

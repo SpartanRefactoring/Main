@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.research.nanos;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -28,7 +29,7 @@ public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
         || tippers2.canTip(x);
   }
 
-  @Override  public Tip pattern(final EnhancedForStatement x) {
+  @Override public Tip pattern(final EnhancedForStatement x) {
     return !tippers.canTip(az.block(parent(x))) ? tippers2.firstTip(x) : tippers.firstTip(az.block(parent(x)));
   }
 

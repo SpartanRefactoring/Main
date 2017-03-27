@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline.nanos;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.research.analyses.util.*;
 
 /** Map containing data about nano patterns occurences
@@ -11,7 +12,7 @@ import il.org.spartan.spartanizer.research.analyses.util.*;
 public class NanoPatternsOccurencesStatisticsLight extends HashMap<String, NanoPatternRecord> {
   private static final long serialVersionUID = -3261626496017748486L;
 
-  public void logNPInfo( final ASTNode n, final String np) {
+  public void logNPInfo(final ASTNode n, final String np) {
     if (!containsKey(np))
       put(np, new NanoPatternRecord(np, n.getClass()));
     get(np).markNP(n);

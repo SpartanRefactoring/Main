@@ -6,22 +6,22 @@ import org.eclipse.jdt.core.dom.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class CleanerVisitor extends ASTVisitor {
-  @Override public boolean visit( final Javadoc ¢) {
+  @Override public boolean visit(final Javadoc ¢) {
     ¢.delete();
     return true;
   }
 
-  @Override public boolean visit( final LineComment ¢) {
+  @Override public boolean visit(final LineComment ¢) {
     ¢.delete();
     return true;
   }
 
-  @Override public boolean visit( final BlockComment ¢) {
+  @Override public boolean visit(final BlockComment ¢) {
     ¢.delete();
     return true;
   }
 
-  @Override public boolean visit( final ImportDeclaration ¢) {
+  @Override public boolean visit(final ImportDeclaration ¢) {
     ¢.delete();
     return true;
   }

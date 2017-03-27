@@ -4,11 +4,11 @@ package il.org.spartan.utils;
  * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-19 */
 public class ReduceStringConcatenate extends Reduce<String> {
-  @Override  public String reduce(final String s1, final String s2) {
+  @Override public String reduce(final String s1, final String s2) {
     return s1 + s2;
   }
 
-  @Override  public String reduce() {
+  @Override public String reduce() {
     return "";
   }
 }

@@ -140,12 +140,20 @@ public class Issue0455 {
         .stays();
   }
 
+  @Test public void singleNonReturnStatement0() {
+    trimmingOf("(x) -> {System.out.println(x);}") //
+        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .gives("(x) -> System.out.println(x)") //
+        .gives("x -> System.out.println(x)") //
+        .gives("λ -> System.out.println(λ)") //
+        .stays();
+  }
+
   @Test public void singleNonReturnStatement() {
     trimmingOf("Consumer<Integer> x = (x) -> {System.out.println(x);};") //
         .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
         .gives("Consumer<Integer> x = (x) -> System.out.println(x);") //
-        .gives("Consumer<Integer> x = x -> System.out.println(x);") //
-        .gives("Consumer<Integer> x = λ -> System.out.println(λ);") //
+        .gives("") //
         .stays();
   }
 

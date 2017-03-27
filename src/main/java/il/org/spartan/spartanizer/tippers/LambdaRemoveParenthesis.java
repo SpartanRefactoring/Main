@@ -5,6 +5,7 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -16,11 +17,11 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpression> implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x42F7485AF333D006L;
 
-  @Override protected boolean prerequisite( final LambdaExpression ¢) {
+  @Override protected boolean prerequisite(final LambdaExpression ¢) {
     return ¢.hasParentheses() && az.variableDeclrationFragment(onlyOne(parameters(¢))) != null;
   }
 
-  @Override  public String description(final LambdaExpression ¢) {
+  @Override public String description(final LambdaExpression ¢) {
     return "Remove parenthesis around " + onlyOne(parameters(¢)) + " paramter";
   }
 

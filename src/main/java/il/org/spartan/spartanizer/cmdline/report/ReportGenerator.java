@@ -14,6 +14,7 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -36,7 +37,7 @@ public class ReportGenerator implements ConfigurableReport {
   protected static final Map<String, PrintWriter> files = new HashMap<>();
   @SuppressWarnings("rawtypes") protected static final HashMap<String, NamedFunction[]> metricsMap = Util.initialize();
 
-   @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> metricsMap() {
+  @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> metricsMap() {
     return metricsMap;
   }
 
@@ -49,8 +50,8 @@ public class ReportGenerator implements ConfigurableReport {
           m("tide" + id, λ -> clean(λ + "").length()));//
     }
 
-     @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
-       final HashMap<String, NamedFunction[]> $ = new HashMap<>();
+    @SuppressWarnings("rawtypes") public static HashMap<String, NamedFunction[]> initialize() {
+      final HashMap<String, NamedFunction[]> $ = new HashMap<>();
       $.put("metrics", functions(""));
       $.put("methods",
           as.array(m("N. of Nodes", count::nodes), //
@@ -65,11 +66,11 @@ public class ReportGenerator implements ConfigurableReport {
       return $;
     }
 
-     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
+    static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
 
-    static CSVStatistics report( final String ¢) {
+    static CSVStatistics report(final String ¢) {
       assert ¢ != null;
       return reports.get(¢);
     }
@@ -80,8 +81,8 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   // running report
-  @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2,  final String id) {
-    for ( final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
+  @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writeMetrics(final ASTNode n1, final ASTNode n2, final String id) {
+    for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
       ReportGenerator.Util.report(id).put(¢.name() + "1", ¢.function().run(n1));
       ReportGenerator.Util.report(id).put(¢.name() + "2", ¢.function().run(n2));
     }
@@ -109,36 +110,36 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   @SuppressWarnings({ "boxing", "unchecked" }) public static void write(final ASTNode input, final ASTNode output, final String id,
-       final BiFunction<Integer, Integer> i) {
+      final BiFunction<Integer, Integer> i) {
     as.list(ReportGenerator.Util.functions(""))
         .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), i.apply(λ.function().run(input), λ.function().run(output))));
   }
 
   @SuppressWarnings({ "boxing", "unchecked" }) public static void writeDiff(final ASTNode n1, final ASTNode n2, final String id,
-       final BiFunction<Integer, Integer> i) {
+      final BiFunction<Integer, Integer> i) {
     as.list(ReportGenerator.Util.functions(""))
         .forEach(λ -> ReportGenerator.Util.report("metrics").put(id + λ.name(), (int) i.apply(λ.function().run(n1), λ.function().run(n2))));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writeDelta(final ASTNode n1, final ASTNode n2, final String id,
-       final BiFunction<Integer, Integer> i) {
-    for ( final NamedFunction ¢ : Util.functions(""))
+      final BiFunction<Integer, Integer> i) {
+    for (final NamedFunction ¢ : Util.functions(""))
       ReportGenerator.Util.report("metrics").put(id + ¢.name(), i.apply(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "boxing", "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id,
-       final BiFunction<Integer, Integer> i) {
-    for ( final NamedFunction ¢ : Util.functions(""))
+      final BiFunction<Integer, Integer> i) {
+    for (final NamedFunction ¢ : Util.functions(""))
       Util.report("metrics").put(id + ¢.name() + " %", i.apply(¢.function().run(n1), ¢.function().run(n2)) + "");
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" }) public static void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
-    for ( final NamedFunction ¢ : Util.functions(""))
+    for (final NamedFunction ¢ : Util.functions(""))
       Util.report("metrics").put(id + ¢.name() + " %", Utils.p(¢.function().run(n1), ¢.function().run(n2)));
   }
 
   @SuppressWarnings({ "unused", "boxing" }) public static void writeRatio(final ASTNode n1, final ASTNode __, final String id,
-       final BiFunction<Integer, Integer> i) {
+      final BiFunction<Integer, Integer> i) {
     final int ess = Util.find("essence").function().run(n1), tide = Util.find("tide").function().run(n1), body = Util.find("body").function().run(n1),
         nodes = Util.find("nodes").function().run(n1);
     Util.report("metrics").put("R(E/L)", i.apply(Util.find("length").function().run(n1), ess));
@@ -169,14 +170,14 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  @SuppressWarnings("resource") public static void initializeFile( final String fileName, final String id) throws IOException {
+  @SuppressWarnings("resource") public static void initializeFile(final String fileName, final String id) throws IOException {
     files.put(id, new PrintWriter(new FileWriter(fileName)));
   }
 
-  public static void initializeReport( final String reportFileName, final String id) {
+  public static void initializeReport(final String reportFileName, final String id) {
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       monitor.infoIOException(¢, id);
     }
   }
@@ -189,7 +190,7 @@ public class ReportGenerator implements ConfigurableReport {
     return files.get(key);
   }
 
-  public static void reportMetrics( final ASTNodeMetrics nm, final String id, final String key) {
+  public static void reportMetrics(final ASTNodeMetrics nm, final String id, final String key) {
     report(key)//
         .put("Nodes" + id, nm.nodes())//
         .put("Body" + id, nm.body())//
@@ -200,7 +201,7 @@ public class ReportGenerator implements ConfigurableReport {
         .put("Statements" + id, nm.statements());//
   }
 
-  public static void reportDifferences( final ASTNodeMetrics nm1,  final ASTNodeMetrics nm2, final String key) {
+  public static void reportDifferences(final ASTNodeMetrics nm1, final ASTNodeMetrics nm2, final String key) {
     report(key) //
         .put("Δ Nodes", nm1.nodes() - nm2.nodes())//
         .put("δ Nodes", Utils.d(nm1.nodes(), nm2.nodes()))//
@@ -225,7 +226,7 @@ public class ReportGenerator implements ConfigurableReport {
         .put("% Statement", Utils.p(nm1.statements(), nm2.statements()));//
   }
 
-  public static void reportRatio( final ASTNodeMetrics nm, final String id, final String key) {
+  public static void reportRatio(final ASTNodeMetrics nm, final String id, final String key) {
     report(key) //
         // .put("Words)", wordCount).put("R(T/L)", system.ratio(length, tide))
         // //
@@ -246,7 +247,7 @@ public class ReportGenerator implements ConfigurableReport {
     report(key).nl();
   }
 
-  public static void printFile( final String input, final String key) {
+  public static void printFile(final String input, final String key) {
     assert input != null;
     files(key).print(input);
   }
@@ -256,21 +257,21 @@ public class ReportGenerator implements ConfigurableReport {
     files(key).close();
   }
 
-   public static HashMap<String, CSVStatistics> reports() {
+  public static HashMap<String, CSVStatistics> reports() {
     return reports;
   }
 
-  public static void name( final ASTNode input) {
+  public static void name(final ASTNode input) {
     report("metrics").put("name", extract.name(input));
     report("metrics").put("category", extract.category(input));
   }
 
-  public static void name( final ASTNode input, final String reportName) {
+  public static void name(final ASTNode input, final String reportName) {
     report(reportName).put("node", extract.name(input));
     report(reportName).put("category", extract.category(input));
   }
 
-  public static void tip( final Tip ¢) {
+  public static void tip(final Tip ¢) {
     report("tips").put("FileName", CommandLine$Applicator.presentFileName);
     report("tips").put("Path", CommandLine$Applicator.presentFilePath);
     report("tips").put("tipName", ¢.getClass());
@@ -286,7 +287,7 @@ public class ReportGenerator implements ConfigurableReport {
     report("tips").put("lastTimeDiff", time - CommandLine$Applicator.lastTime);
   }
 
-  public static void writeTipsLine(@SuppressWarnings("unused") final ASTNode __,  final Tip t, final String reportName) {
+  public static void writeTipsLine(@SuppressWarnings("unused") final ASTNode __, final Tip t, final String reportName) {
     // name(n, reportName);
     tip(t);
     report(reportName).nl();
@@ -298,7 +299,7 @@ public class ReportGenerator implements ConfigurableReport {
     }
   }
 
-  @SuppressWarnings("unchecked") public static <T> void writeLine( final Consumer<T> ¢) {
+  @SuppressWarnings("unchecked") public static <T> void writeLine(final Consumer<T> ¢) {
     ¢.accept((T) ¢);
   }
 
@@ -320,9 +321,8 @@ public class ReportGenerator implements ConfigurableReport {
     report("tips").put("lastTimeDiff", "");
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) public static void writeMethodMetrics(final ASTNode input, final ASTNode output,
-       final String id) {
-    for ( final NamedFunction ¢ : metricsMap().get(id)) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) public static void writeMethodMetrics(final ASTNode input, final ASTNode output, final String id) {
+    for (final NamedFunction ¢ : metricsMap().get(id)) {
       Util.report(id).put(¢.name() + "1", ¢.function().run(input));
       Util.report(id).put(¢.name() + "2", ¢.function().run(output));
     }

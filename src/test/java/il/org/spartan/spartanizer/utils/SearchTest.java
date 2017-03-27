@@ -257,10 +257,10 @@ public final class SearchTest {
   }
 
   @Test public void delarationAndDoLoopInMethod() {
-     final String input = "void f() { int b = 3; do ; while(b != 0);  }";
-     final MethodDeclaration d = d(input);
+    final String input = "void f() { int b = 3; do ; while(b != 0);  }";
+    final MethodDeclaration d = d(input);
     azzert.that(d, iz(input));
-     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(d);
+    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(d);
     assert f != null;
     final SimpleName b = f.getName();
     azzert.that(b, iz("b"));
@@ -268,10 +268,10 @@ public final class SearchTest {
   }
 
   @Test public void delarationAndDoLoopInMethodWithoutTheDo() {
-     final String input = "void f() { int b = 3;   }";
-     final MethodDeclaration d = d(input);
+    final String input = "void f() { int b = 3;   }";
+    final MethodDeclaration d = d(input);
     azzert.that(d, iz(input));
-     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(d);
+    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(d);
     assert f != null;
     final SimpleName b = f.getName();
     azzert.that(b, iz("b"));
@@ -311,14 +311,14 @@ public final class SearchTest {
   }
 
   @Test public void forEnhancedAsParemeter() {
-     final Statement s = s("for (int a: as) return a; ");
+    final Statement s = s("for (int a: as) return a; ");
     final SimpleName a = ((EnhancedForStatement) first(statements((Block) s))).getParameter().getName();
     azzert.that(a, iz("a"));
     azzert.that(collect.usesOf(a).in(s).size(), is(2));
   }
 
   @Test public void forEnhancedAsParemeterInMethod() {
-     final MethodDeclaration d = d("int f() { for (int a: as) return a;}");
+    final MethodDeclaration d = d("int f() { for (int a: as) return a;}");
     final SimpleName a = ((EnhancedForStatement) first(statements(d))).getParameter().getName();
     azzert.that(a, iz("a"));
     azzert.that(collect.usesOf(a).in(d).size(), is(2));
@@ -404,7 +404,7 @@ public final class SearchTest {
     azzert.that(collect.forAllOccurencesExcludingDefinitions(n).in(s("--n;")).size(), is(0));
   }
 
-  private int nCount( final String statement) {
+  private int nCount(final String statement) {
     return searcher().in(s(statement)).size();
   }
 
@@ -416,7 +416,7 @@ public final class SearchTest {
     azzert.that(collect.forAllOccurencesExcludingDefinitions(n).in(s("++n;")).size(), is(0));
   }
 
-   private Collector searcher() {
+  private Collector searcher() {
     return collect.usesOf(n);
   }
 
@@ -437,7 +437,7 @@ public final class SearchTest {
   }
 
   @Test public void vanilla() {
-     final Collector findUses = searcher();
+    final Collector findUses = searcher();
     assert findUses != null;
     azzert.that(findUses.in(s("b = n;")).size(), is(1));
   }

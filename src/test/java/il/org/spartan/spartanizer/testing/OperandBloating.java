@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -40,32 +41,32 @@ public class OperandBloating extends TrimmingOperand {
     System.err.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeBloaterUnitTest(get()));
   }
 
-  public static String bloat( final String source) {
-     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(source);
-     final String wrap = w.on(source);
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+  public static String bloat(final String source) {
+    final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(source);
+    final String wrap = w.on(source);
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-       final IDocument $ = new Document(wrap);
+      final IDocument $ = new Document(wrap);
       r.rewriteAST($, null).apply($);
       return w.off($.get());
-    } catch ( @SuppressWarnings("unused") MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (@SuppressWarnings("unused") MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       return "Error";
     }
   }
 
   @Override public OperandBloating gives(final String $) {
     assert $ != null;
-     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-     final String wrap = w.on(get());
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
+    final String wrap = w.on(get());
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-       final IDocument doc = new Document(wrap);
+      final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-       final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
+      final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
       final String peeled1 = w.off(rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc.get())) + "");
       if (peeled1.equals(get()))
         azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
@@ -77,30 +78,30 @@ public class OperandBloating extends TrimmingOperand {
           trivia.escapeQuotes(trivia.essence($1)));
       azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
       return new OperandBloating($1);
-    } catch ( MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
     return null;
   }
 
-   public OperandBloating givesWithBinding( final String $) {
+  public OperandBloating givesWithBinding(final String $) {
     assert $ != null;
-     final CompilationUnit u = az.compilationUnit(ast);
+    final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-       final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
-       final IDocument doc = new Document(wrap);
+      final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
+      final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-       final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
+      final String unpeeled = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc)) + "";
       if (wrap.equals(unpeeled))
         azzert.fail("Nothing done on " + get());
       if (unpeeled.equals(get()))
         azzert.that("No trimming of " + get(), unpeeled, is(not(get())));
       assertSimilar($1, unpeeled);
       return new OperandBloating(createCUWithBinding(unpeeled), unpeeled);
-    } catch ( MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(¢);
     }
     return null;
@@ -109,15 +110,15 @@ public class OperandBloating extends TrimmingOperand {
   /** @param $ java code
    * @param f tested method name. expanders will be applied only for this method
    * @return */
-   public OperandBloating givesWithBinding( final String $, final String f) {
+  public OperandBloating givesWithBinding(final String $, final String f) {
     assert $ != null;
-     final CompilationUnit u = az.compilationUnit(ast);
+    final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     MethodDeclaration m = getMethod(u, f);
     SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-       final IDocument doc = new Document(wrap);
+      final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get();
       if (wrap.equals(unpeeled))
@@ -129,7 +130,7 @@ public class OperandBloating extends TrimmingOperand {
       final ASTParser p = make.COMPILATION_UNIT.parser(unpeeled);
       p.setResolveBindings(true);
       return new OperandBloating(az.compilationUnit(p.createAST(null)), unpeeled);
-    } catch ( MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
     return null;
@@ -141,7 +142,7 @@ public class OperandBloating extends TrimmingOperand {
    * @since 19-01-2017
    * @param b
    * @return */
-   private static CompilationUnit rename( final CompilationUnit u) {
+  private static CompilationUnit rename(final CompilationUnit u) {
     if (u == null)
       return null;
     TestUtilsBloating.counter = 0;
@@ -158,14 +159,13 @@ public class OperandBloating extends TrimmingOperand {
   }
 
   private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
-     final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f))
-        .from(u);
+    final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f)).from(u);
     if ($.isEmpty())
       azzert.fail("No such method Exists");
     return first($);
   }
 
-   private static CompilationUnit createCUWithBinding( final String text) {
+  private static CompilationUnit createCUWithBinding(final String text) {
     final ASTParser $ = make.COMPILATION_UNIT.parser(text);
     $.setResolveBindings(true);
     return az.compilationUnit($.createAST(null));
@@ -174,13 +174,13 @@ public class OperandBloating extends TrimmingOperand {
   private void checkSame() {
     if (get().isEmpty())
       return;
-     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-     final String wrap = w.on(get());
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
+    final String wrap = w.on(get());
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-       final IDocument doc = new Document(wrap);
+      final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get(), peeled = w.off(unpeeled);
       if (wrap.equals(peeled) || trivia.essence(get()).equals(trivia.essence(peeled)))
@@ -189,25 +189,25 @@ public class OperandBloating extends TrimmingOperand {
           trivia.escapeQuotes(trivia.essence(peeled)), //
           trivia.escapeQuotes(trivia.essence(get())));
       azzert.that(trivia.essence(peeled), is(trivia.essence(get())));
-    } catch ( MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
   }
 
   private void checkSameWithBinding() {
     final String wrap = get();
-     final CompilationUnit u = az.compilationUnit(ast);
+    final CompilationUnit u = az.compilationUnit(ast);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
-       final IDocument doc = new Document(wrap);
+      final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get();
       if (wrap.equals(unpeeled) || trivia.essence(get()).equals(trivia.essence(unpeeled)))
         return;
       if (!unpeeled.equals(get()) && unpeeled.equals(get()))
         assertSimilar(get(), unpeeled);
-    } catch ( MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       monitor.logProbableBug(this, ¢);
     }
   }

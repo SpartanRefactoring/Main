@@ -5,7 +5,7 @@ package il.org.spartan.utils;
  * @author Ori Marcovitch
  * @since Oct 16, 2016 */
 public final class Bool {
-   public static Bool valueOf(final boolean ¢) {
+  public static Bool valueOf(final boolean ¢) {
     return new Bool(¢);
   }
 
@@ -17,7 +17,7 @@ public final class Bool {
     inner = b;
   }
 
-   public Bool clear() {
+  public Bool clear() {
     return set(false);
   }
 
@@ -30,11 +30,11 @@ public final class Bool {
     return Boolean.valueOf(inner);
   }
 
-   public Bool set() {
+  public Bool set() {
     return set(true);
   }
 
-   public Bool set(final boolean ¢) {
+  public Bool set(final boolean ¢) {
     inner = ¢;
     return this;
   }

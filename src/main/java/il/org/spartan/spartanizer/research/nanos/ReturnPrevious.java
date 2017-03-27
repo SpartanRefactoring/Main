@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -25,11 +26,11 @@ public final class ReturnPrevious extends NanoPatternTipper<ReturnStatement> {
     return anyTips(tippers, az.block(parent(x)));
   }
 
-  @Override  public Tip pattern(final ReturnStatement $) {
+  @Override public Tip pattern(final ReturnStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
 
-  @Override  public Category category() {
+  @Override public Category category() {
     return Category.Field;
   }
 

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.utils.Example.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -23,19 +24,19 @@ public class WhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<WhileSta
     return $;
   }
 
-  @Override protected boolean prerequisite( final WhileStatement ¢) {
+  @Override protected boolean prerequisite(final WhileStatement ¢) {
     final Block $ = az.block(¢.getBody());
     return $ != null && iz.emptyBlock($);
   }
 
-  @Override  public Example[] examples() {
+  @Override public Example[] examples() {
     return new Example[] { //
         convert("while(x()){}").to("while(x());"), //
         ignores("while(x()){y();z();}")//
     };
   }
 
-  @Override  public String description(@SuppressWarnings("unused") final WhileStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "replaces a for statment followed by an empty block with a for statment followed by a semicolon";
   }
 }

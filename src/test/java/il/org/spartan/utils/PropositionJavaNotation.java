@@ -6,27 +6,27 @@ import il.org.spartan.utils.Proposition.*;
  * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-19 */
 public class PropositionJavaNotation extends PropositionInfixNotation {
-  @Override  protected String close() {
+  @Override protected String close() {
     return ")";
   }
 
-  @Override  protected String empty() {
+  @Override protected String empty() {
     return "";
   }
 
-  @Override  protected String inter(@SuppressWarnings("unused") final And __) {
+  @Override protected String inter(@SuppressWarnings("unused") final And __) {
     return " && ";
   }
 
-  @Override  protected String inter(@SuppressWarnings("unused") final Or __) {
+  @Override protected String inter(@SuppressWarnings("unused") final Or __) {
     return " || ";
   }
 
-  @Override  protected String negation() {
+  @Override protected String negation() {
     return "!";
   }
 
-  @Override  protected String open() {
+  @Override protected String open() {
     return "(";
   }
 }

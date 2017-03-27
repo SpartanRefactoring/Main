@@ -30,8 +30,8 @@ import il.org.spartan.spartanizer.java.*;
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public final class TippersTest {
   @Test public void countInEnhancedFor() {
-     final String input = "int f() { for (int a: as) return a; }";
-     final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class)
+    final String input = "int f() { for (int a: as) return a; }";
+    final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class)
         .in(makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.Method.intoDocument(input)));
     azzert.that(m, iz(input));
     final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(body(m)))).getParameter();
@@ -44,7 +44,7 @@ public final class TippersTest {
 
   @Test public void inlineExpressionWithSideEffect() {
     assert !sideEffects.free(e("f()"));
-     final VariableDeclarationFragment f = findFirst
+    final VariableDeclarationFragment f = findFirst
         .variableDeclarationFragment(WrapIntoComilationUnit.Statement.intoCompilationUnit("int a = f(); return a += 2 * a;"));
     azzert.that(f, iz("a=f()"));
     final SimpleName n = f.getName();
@@ -56,9 +56,9 @@ public final class TippersTest {
     azzert.that(parent, iz("int a = f();"));
     final ASTNode block = parent.getParent();
     azzert.that(block, iz("{int a = f(); return a += 2*a;}"));
-     final ReturnStatement returnStatement = (ReturnStatement) statements((Block) block).get(1);
+    final ReturnStatement returnStatement = (ReturnStatement) statements((Block) block).get(1);
     azzert.that(returnStatement, iz("return a += 2 *a;"));
-     final Assignment a = (Assignment) returnStatement.getExpression();
+    final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
     azzert.that(o, iz("+="));
     final InfixExpression alternateInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
@@ -85,11 +85,11 @@ public final class TippersTest {
   }
 
   @Test public void renameInEnhancedFor() throws Exception {
-     final String input = "int f() { for (int a: as) return a; }";
-     final Document d = WrapIntoComilationUnit.Method.intoDocument(input);
-     final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
+    final String input = "int f() { for (int a: as) return a; }";
+    final Document d = WrapIntoComilationUnit.Method.intoDocument(input);
+    final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
-     final Block b = body(m);
+    final Block b = body(m);
     final SingleVariableDeclaration p = ((EnhancedForStatement) first(statements(b))).getParameter();
     assert p != null;
     final SimpleName n = p.getName();
@@ -102,11 +102,11 @@ public final class TippersTest {
   }
 
   @Test public void renameintoDoWhile() throws Exception {
-     final String input = "void f() { int b = 3; do ; while(b != 0); }";
-     final Document d = WrapIntoComilationUnit.Method.intoDocument(input);
-     final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
+    final String input = "void f() { int b = 3; do ; while(b != 0); }";
+    final Document d = WrapIntoComilationUnit.Method.intoDocument(input);
+    final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
-     final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
+    final VariableDeclarationFragment f = findFirst.variableDeclarationFragment(m);
     assert f != null;
     final SimpleName b = f.getName();
     azzert.that(collect.usesOf(b).in(m).size(), is(2));

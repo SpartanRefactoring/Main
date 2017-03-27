@@ -48,13 +48,12 @@ public interface system {
     int i = 0;
     for (; i < trace.length; ++i) {
       if (trace[i].getClassName().equals(trace[0].getClassName()))
-        continue; 
+        continue;
       break;
     }
-    for (int $ = i; $ < trace.length; ++$) {
-        if (!trace[$].getClassName().equals(trace[i].getClassName()))
-          return trace[$].getClassName();
-    }
+    for (int $ = i; $ < trace.length; ++$)
+      if (!trace[$].getClassName().equals(trace[i].getClassName()))
+        return trace[$].getClassName();
     return new Object().getClass().getEnclosingClass().getCanonicalName();
   }
 
@@ -161,7 +160,7 @@ public interface system {
         : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
   }
 
-   static Process shellEssenceMetrics(final String fileName) {
+  static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
 
@@ -184,7 +183,7 @@ public interface system {
    * are separated by at least one whitespace.
    * @param $ the string its words are being counted
    * @return the number of words the given string contains */
-  static int wc( final String $) {
+  static int wc(final String $) {
     return $ == null || $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
 

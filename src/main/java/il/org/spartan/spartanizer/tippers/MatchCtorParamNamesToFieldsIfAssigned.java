@@ -11,7 +11,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -34,30 +33,30 @@ public class MatchCtorParamNamesToFieldsIfAssigned extends CarefulTipper<MethodD
     return false;
   }
 
-  @Override  public String description(final MethodDeclaration ¢) {
+  @Override public String description(final MethodDeclaration ¢) {
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
 
-  @Override  public Tip tip( final MethodDeclaration d) {
+  @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
     final List<String> params = parameters(d).stream().map(λ -> λ.getName().getIdentifier()).collect(toList());
-     final List<Statement> bodyStatements = statements(d);
-     final Collection<String> definedLocals = new ArrayList<>();
-     final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
+    final List<Statement> bodyStatements = statements(d);
+    final Collection<String> definedLocals = new ArrayList<>();
+    final List<SimpleName> $ = new ArrayList<>(), newNames = new ArrayList<>();
     for (final Statement s : bodyStatements) {
       if (!iz.expressionStatement(s)) {
         if (iz.variableDeclarationStatement(s))
           definedLocals.addAll(fragments(az.variableDeclarationStatement(s)).stream().map(λ -> λ.getName().getIdentifier()).collect(toList()));
         continue;
       }
-       final Expression e = expression(az.expressionStatement(s));
+      final Expression e = expression(az.expressionStatement(s));
       if (!iz.assignment(e))
         continue;
-       final Assignment a = az.assignment(e);
+      final Assignment a = az.assignment(e);
       if (!iz.fieldAccess(left(a)) || !iz.thisExpression(expression(az.fieldAccess(left(a)))))
         continue;
-       final SimpleName fieldName = name(az.fieldAccess(left(a)));
+      final SimpleName fieldName = name(az.fieldAccess(left(a)));
       if (!iz.simpleName(right(a)))
         continue;
       final SimpleName paramName = az.simpleName(right(a));

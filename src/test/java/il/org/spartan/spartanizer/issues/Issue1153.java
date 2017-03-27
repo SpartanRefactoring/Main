@@ -26,11 +26,11 @@ public class Issue1153 {
   }
 
   @Test public void b2() {
-     final Class<FieldDeclaration> c = FieldDeclaration.class;
+    final Class<FieldDeclaration> c = FieldDeclaration.class;
     assert c != null;
-     final FieldSerialVersionUIDToHexadecimal x = new FieldSerialVersionUIDToHexadecimal();
+    final FieldSerialVersionUIDToHexadecimal x = new FieldSerialVersionUIDToHexadecimal();
     assert x != null;
-     final Toolbox toolbox = new Toolbox();
+    final Toolbox toolbox = new Toolbox();
     assert toolbox != null;
     toolbox.add(c, x);
   }

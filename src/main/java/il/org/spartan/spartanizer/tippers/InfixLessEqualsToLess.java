@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -22,7 +23,7 @@ public class InfixLessEqualsToLess extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x33256C45179502ABL;
 
-  @Override  public ASTNode replacement( final InfixExpression ¢) {
+  @Override public ASTNode replacement(final InfixExpression ¢) {
     return !isLegalOperation(¢)//
         || !iz.infixMinus(right(¢))//
         || !"1".equals(token(az.numberLiteral(right(az.infixExpression(right(¢)))))) || type.isDouble(¢.getLeftOperand()) ? null
@@ -33,7 +34,7 @@ public class InfixLessEqualsToLess extends ReplaceCurrentNode<InfixExpression>//
     return iz.infixLessEquals(¢);
   }
 
-  @Override  public String description(final InfixExpression ¢) {
+  @Override public String description(final InfixExpression ¢) {
     return "Convert Less Equals Operator to Less " + ¢;
   }
 }

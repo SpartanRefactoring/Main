@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.*;
@@ -25,12 +26,12 @@ public class JDPattern extends JavadocMarkerNanoPattern {
       patternTipper("null == $X", "", "") //
   );
 
-  @Override protected boolean prerequisites( final MethodDeclaration d) {
+  @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (hazNoParameters(d))
       return false;
-     final Collection<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
+    final Collection<String> ps = new HashSet<>(parametersNames(d)), set = new HashSet<>(ps);
     set.addAll(getInfluenced(d, ps));
-     final Bool $ = new Bool();
+    final Bool $ = new Bool();
     $.inner = true;
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
@@ -58,7 +59,7 @@ public class JDPattern extends JavadocMarkerNanoPattern {
         return checkContainsParameter(expression(¢));
       }
 
-      boolean checkContainsParameter( final ASTNode ¢) {
+      boolean checkContainsParameter(final ASTNode ¢) {
         if (containsParameter(¢, set))
           $.inner = false;
         return false;
@@ -74,8 +75,8 @@ public class JDPattern extends JavadocMarkerNanoPattern {
   /** @param root node to search in
    * @param ss variable names which are influenced by parameters
    * @return */
-  static boolean containsParameter( final ASTNode root,  final Collection<String> ss) {
-     final Bool $ = new Bool();
+  static boolean containsParameter(final ASTNode root, final Collection<String> ss) {
+    final Bool $ = new Bool();
     $.inner = false;
     // noinspection SameReturnValue
     root.accept(new ASTVisitor(true) {
@@ -87,8 +88,8 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     return $.inner;
   }
 
-   static Collection<String> getInfluenced(final MethodDeclaration root,  final Collection<String> ps) {
-     final Collection<String> $ = new HashSet<>(ps);
+  static Collection<String> getInfluenced(final MethodDeclaration root, final Collection<String> ps) {
+    final Collection<String> $ = new HashSet<>(ps);
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     body(root).accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment ¢) {
@@ -112,8 +113,8 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     return $;
   }
 
-   protected static String extractName( final Expression root) {
-     final StringBuilder $ = new StringBuilder();
+  protected static String extractName(final Expression root) {
+    final StringBuilder $ = new StringBuilder();
     // noinspection SameReturnValue
     root.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢) {

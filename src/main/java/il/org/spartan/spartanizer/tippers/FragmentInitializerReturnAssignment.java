@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,24 +23,24 @@ public final class FragmentInitializerReturnAssignment extends $FragmentAndState
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x1283F5075F4BE6FFL;
 
-  @Override  public String description( final VariableDeclarationFragment ¢) {
+  @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
 
-  @Override  protected ASTRewrite go( final ASTRewrite $,  final VariableDeclarationFragment f,  final SimpleName n,
-       final Expression initializer, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))
       return null;
-     final Assignment a = az.assignment(expression(az.returnStatement(nextStatement)));
+    final Assignment a = az.assignment(expression(az.returnStatement(nextStatement)));
     if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newReturnValue = copy.of(from(a));
-     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);
-    wizard.eliminate(f, $, g);
+    wizard.removeFragment(f, $, g);
     return $;
   }
 }

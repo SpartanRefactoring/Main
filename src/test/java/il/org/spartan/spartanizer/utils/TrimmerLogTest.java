@@ -44,21 +44,21 @@ public class TrimmerLogTest {
   }
 
   @Test public void test02() {
-     final TrimmingOperand o = trimmingOf("new Integer(3)");
-     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final TrimmingOperand o = trimmingOf("new Integer(3)");
+    final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
-     final IDocument d = new Document(wrap);
+    final IDocument d = new Document(wrap);
     assert d != null;
-     final Trimmer a = new Trimmer();
+    final Trimmer a = new Trimmer();
     try {
-       final IProgressMonitor pm = wizard.nullProgressMonitor;
+      final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
       a.consolidateTips($, u, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch ( MalformedTreeException | BadLocationException ¢) {
+    } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;
@@ -67,21 +67,21 @@ public class TrimmerLogTest {
   }
 
   @Test public void test03() {
-     final TrimmingOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
-     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final TrimmingOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
+    final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
-     final IDocument d = new Document(wrap);
+    final IDocument d = new Document(wrap);
     assert d != null;
-     final Trimmer a = new Trimmer();
+    final Trimmer a = new Trimmer();
     try {
-       final IProgressMonitor pm = wizard.nullProgressMonitor;
+      final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
       a.consolidateTips($, u, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
-    } catch ( MalformedTreeException | BadLocationException ¢) {
+    } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
     assert d != null;
@@ -90,8 +90,8 @@ public class TrimmerLogTest {
   }
 
   @Test public void test04() {
-     final TrimmingOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
-     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find(o.get()).on(o.get()));
+    final TrimmingOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find(o.get()).on(o.get()));
     assert u != null;
     assert u.getJavaElement() == null;
   }
