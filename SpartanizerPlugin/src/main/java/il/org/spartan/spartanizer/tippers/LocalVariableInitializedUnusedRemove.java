@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.refactoringMechanism.*;
 import il.org.spartan.utils.*;
 
 /** Remove unused variable
