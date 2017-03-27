@@ -40,7 +40,6 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
         || iz.breakStatement(az.ifStatement(extract.lastStatement(¢)).getThenStatement());
   }
 
-
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Replace for {... if(e) break;} loop by do{...} while(!e) loop";
   }

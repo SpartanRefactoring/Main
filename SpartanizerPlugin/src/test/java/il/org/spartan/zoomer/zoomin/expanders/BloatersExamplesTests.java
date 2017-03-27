@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-27 */
 @RunWith(Parameterized.class)
 public class BloatersExamplesTests extends ExamplesTests {
-  public BloatersExamplesTests(Tipper<? extends ASTNode> tipper, String name) {
+  public BloatersExamplesTests(final Tipper<? extends ASTNode> tipper, final String name) {
     super(tipper, name);
   }
 

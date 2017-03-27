@@ -6,11 +6,9 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/**
- * Test case for  {@link SwitchBranchSort}
- * @author  YuvalSimon  {@code  yuvaltechnion@gmail.com}
- * @since  2017-01-14 
- */
+/** Test case for {@link SwitchBranchSort}
+ * @author YuvalSimon {@code  yuvaltechnion@gmail.com}
+ * @since 2017-01-14 */
 @Ignore("Yuval Simon")
 @SuppressWarnings("static-method")
 public class Issue0861 {
