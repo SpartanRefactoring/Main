@@ -20,13 +20,13 @@ import java.util.*;
 public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Unite {
   private static final long serialVersionUID = -5286073381265258638L;
 
-  @Override public ASTNode replacement(ForStatement n) {
-    AST create = n.getAST();
+  @Override public ASTNode replacement(ForStatement s) {
+    AST create = s.getAST();
     DoStatement $ = create.newDoStatement();
-    IfStatement i = copy.of(az.ifStatement(extract.lastStatement(n)));
+    IfStatement i = copy.of(az.ifStatement(extract.lastStatement(s)));
     $.setExpression(make.notOf(step.expression(i)));
     Block b = create.newBlock();
-    @NotNull final List<Statement> ls = extract.statements(copy.of(step.body(n)));
+    @NotNull final List<Statement> ls = extract.statements(copy.of(step.body(s)));
     for(int j = 0; j<ls.size()-1; j++) {
       step.statements(b).add(copy.of(ls.get(j)));
     }
@@ -42,7 +42,7 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
         || iz.breakStatement(az.ifStatement(extract.lastStatement(¢)).getThenStatement());
   }
 
-  @Override public String description(ForStatement n) {
+  @Override public String description(ForStatement s) {
     return "Replace for {... if(e) break;} loop by do{...} while(!e) loop";
   }
 
