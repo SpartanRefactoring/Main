@@ -13,7 +13,7 @@ import java.util.function.*;
  * above
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-10 */
-public interface lazy< T> extends Supplier<T> {
+public interface lazy<T> extends Supplier<T> {
   static <T> lazy<T> get(@¢ final Supplier<T> ¢) {
     return new lazy<T>() {
       /** Cached value; invalid cache if {@code null} */

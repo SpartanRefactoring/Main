@@ -443,7 +443,7 @@ public enum extract {
   public static SimpleName simpleName(final PrefixExpression $) {
     return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
   }
-  
+
   /** @param n root node to search the identifier in it
    * @param x the identifier to search for
    * @return number of times x appears in n */
