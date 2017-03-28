@@ -67,7 +67,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
   public final R reduce(final BooleanSupplier ¢) {
     return //
     ¢ instanceof Not ? reduce((Not) ¢) //
-        : ¢ instanceof Singleton ? reduce((Singleton) ¢) //
+        //: ¢ instanceof Singleton ? reduce((Singleton) ¢) //
             : ¢ instanceof And ? reduce((And) ¢) //
                 : ¢ instanceof Or ? reduce((Or) ¢) //
                     : map(¢);
