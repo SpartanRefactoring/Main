@@ -33,7 +33,7 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNe
     if (deleteMe == null || deleteMe.getExpression() != null)
       return null;
     $.replace(deleteMe, make.emptyStatement(deleteMe), g);
-    wizard.remove($, nextStatement, g);
+    trick.remove($, nextStatement, g);
     final IfStatement newIf = copy.of(s);
     final Block block = az.block(then(newIf));
     if (block != null)
@@ -42,7 +42,7 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNe
       newIf.setThenStatement(make.emptyStatement(newIf));
     newIf.setElseStatement(copy.of(nextStatement));
     $.replace(s, newIf, g);
-    wizard.remove($, nextStatement, g);
+    trick.remove($, nextStatement, g);
     return $;
   }
 }
