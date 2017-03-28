@@ -54,12 +54,12 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     };
   }
 
-  /** [[SuppressWarningsSpartan]] */
   @Override protected boolean prerequisite(final ArrayAccess a) {
     final Expression e = a.getIndex();
     final Statement $ = extract.containingStatement(a);
-    final SimpleName n = iz.prefixExpression(e) ? extract.simpleName(az.prefixExpression(e)) : extract.simpleName(az.postfixExpression(e));
-    return iz.expressionStatement($) && iz.block(parent($)) && iz.updating(e) && !iz.assignment(e) && n != null
+    final SimpleName n = iz.prefixExpression(e) ? extract.simpleName(az.prefixExpression(e))
+        : iz.postfixExpression(e) ? extract.simpleName(az.postfixExpression(e)) : null;
+    return n != null && iz.expressionStatement($) && iz.block(parent($)) && iz.updating(e) && !iz.assignment(e)
         && extract.countNameInSubtree(n, $) == 1;
   }
 }
