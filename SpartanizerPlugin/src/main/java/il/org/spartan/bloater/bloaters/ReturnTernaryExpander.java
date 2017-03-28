@@ -45,7 +45,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
   }
 
   @Override protected boolean prerequisite(final ReturnStatement $) {
-    return $ != null && (iz.block($.getParent()) || iz.switchStatement($.getParent())) && (iz.conditionalExpression(extract.core(expression($))));
+    return $ != null && (iz.block($.getParent()) || iz.switchStatement($.getParent())) && iz.conditionalExpression(extract.core(expression($)));
   }
 
   @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {

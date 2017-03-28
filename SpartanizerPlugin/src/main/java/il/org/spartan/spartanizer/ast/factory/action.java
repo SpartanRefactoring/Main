@@ -118,7 +118,6 @@ public enum action {
     r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
 
-
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
    * Still, if the containing node is left empty, it is removed as well.
@@ -320,8 +319,7 @@ public enum action {
    * @return a duplicate of the parameter, downcasted to the returned type.
    * @see ASTNode#copySubtree
    * @see ASTRewrite */
-  @SuppressWarnings("unchecked")
-  public static <N extends ASTNode> N rebase(final N n, final AST t) {
+  @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
 

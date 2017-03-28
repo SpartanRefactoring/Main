@@ -67,17 +67,19 @@ public class Issue0775 {
   }
 
   @Test public void m() {
-    azzert.that(
-        type(az.typeDeclaration(
-            findFirst.typeDeclaration(make.ast("@GwtIncompatible private static final class C<D extends Comparable> implements Serializable {}")))) + "",
-        is("C<D>"));
+    azzert
+        .that(
+            type(az.typeDeclaration(findFirst
+                .typeDeclaration(make.ast("@GwtIncompatible private static final class C<D extends Comparable> implements Serializable {}")))) + "",
+            is("C<D>"));
   }
 
   @Test public void n() {
-    azzert.that(
-        type(az.typeDeclaration(
-            findFirst.typeDeclaration(make.ast("@GwtIncompatible private static final class C<D extends Comparable,E> implements Serializable {}")))) + "",
-        is("C<D,E>"));
+    azzert
+        .that(
+            type(az.typeDeclaration(findFirst
+                .typeDeclaration(make.ast("@GwtIncompatible private static final class C<D extends Comparable,E> implements Serializable {}")))) + "",
+            is("C<D,E>"));
   }
 
   @Test public void o() {

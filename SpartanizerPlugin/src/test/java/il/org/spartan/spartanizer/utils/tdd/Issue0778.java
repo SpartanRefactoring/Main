@@ -41,11 +41,11 @@ public class Issue0778 {
   }
 
   @Test @SuppressWarnings("static-method") public void test5() {
-    azzert
-        .that(3,
-            is(getAll2.methods(
+    azzert.that(3,
+        is(getAll2
+            .methods(
                 az.compilationUnit(make.ast("public class Dog {public  int foo0() {return 1;} private  void foo1() {}protected  void foo2() {}}")))
-                .size()));
+            .size()));
   }
 
   @Test @SuppressWarnings("static-method") public void test6() {

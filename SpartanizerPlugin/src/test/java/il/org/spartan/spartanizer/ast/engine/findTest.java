@@ -48,7 +48,8 @@ public final class findTest {
   }
 
   @Test public void e4() {
-    azzert.that(singleExpressionDifference(as.list(make.ast("x(f,g + 1) == a + b"), make.ast("y == x(f,g + 1) + b"))) + "", is("x(f,g + 1) == a + b"));
+    azzert.that(singleExpressionDifference(as.list(make.ast("x(f,g + 1) == a + b"), make.ast("y == x(f,g + 1) + b"))) + "",
+        is("x(f,g + 1) == a + b"));
   }
 
   @Test public void e5() {

@@ -1,18 +1,14 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static java.util.stream.Collectors.*;
-
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -60,13 +56,6 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
   }
 
   private List<Statement> statements;
-
-  @SuppressWarnings("unused") private List<Statement> functionalCommands() {
-    final List<Statement> $ = IntStream.range(0, statements.size() - 1).mapToObj(statements::get).collect(toList());
-    if (!iz.breakStatement(lisp.last(statements)))
-      $.add(lisp.last(statements));
-    return $;
-  }
 
   public boolean hasFallThrough() {
     return statements.stream().anyMatch(iz::switchCase);
