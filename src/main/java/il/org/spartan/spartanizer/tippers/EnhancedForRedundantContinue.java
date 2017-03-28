@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -30,16 +29,12 @@ public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForState
   @Override public Tip tip(final EnhancedForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        remove(r, extract.lastStatement(¢), g);
+        trick.remove(r, extract.lastStatement(¢), g);
       }
     };
   }
 
   @Override public boolean prerequisite(final EnhancedForStatement ¢) {
     return iz.continueStatement(extract.lastStatement(¢));
-  }
-
-  static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
 }
