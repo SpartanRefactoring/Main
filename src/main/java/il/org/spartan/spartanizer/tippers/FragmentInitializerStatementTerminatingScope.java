@@ -68,7 +68,7 @@ public final class FragmentInitializerStatementTerminatingScope extends $Fragmen
       return null;
     $.replace(nextStatement, newStatement, g);
     i.inlineInto(newStatement);
-    remove(f, $, g);
+    action.remove(f, $, g);
     return $;
   }
 }

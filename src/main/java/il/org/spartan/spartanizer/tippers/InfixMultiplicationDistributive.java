@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
 
 /** Apply the distributive rule to multiplication: {@code
@@ -33,12 +34,6 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
 
   private static boolean IsSimpleMultiplication(final Expression $) {
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;
-  }
-
-  private static List<Expression> removeFirstElement(final List<Expression> ¢) {
-    final List<Expression> $ = new ArrayList<>(¢);
-    $.remove(first($));// remove first
-    return $;
   }
 
   @Override public String description() {
@@ -72,10 +67,6 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
 
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final Collection<Expression> allOperands) {
     return allOperands.stream().anyMatch(λ -> wizard.same(op, λ));
-  }
-
-  @SuppressWarnings("static-method") private void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
-    items.forEach(from::remove);
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {
@@ -119,7 +110,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(xs);
     for (final Integer i : range.from(0).to(xs.size())) {
-      temp = removeFirstElement(temp);
+      temp = lisp2.removeFirstElement(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
@@ -128,7 +119,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
             addDifferent(op, different);
         if (temp.size() == 1)
           extract.allOperands(az.infixExpression(first(temp))).stream().filter(λ -> !isIn(λ, $)).forEach(λ -> addDifferent(λ, different));
-        removeElFromList(different, $);
+        lisp2.removeElFromList(different, $);
       }
     }
     Expression addition = null;

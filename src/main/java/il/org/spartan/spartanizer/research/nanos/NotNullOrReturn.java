@@ -4,13 +4,12 @@ import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -35,7 +34,7 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   @Override public Tip pattern(final IfStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(¢, extract.singleStatement(ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
+        r.replace(¢, extract.singleStatement(make.ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
       }
     };
   }

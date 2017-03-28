@@ -8,13 +8,13 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit tests for {@link Tricks#ADDITION_SORTER} .
+/** Unit tests for {@link action#ADDITION_SORTER} .
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2014-07-13 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
