@@ -29,8 +29,7 @@ public class Issue0782 {
   }
 
   @Test @SuppressWarnings("static-method") public void checkAnotherPrivateName() {
-    azzert.that(
-        first(getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(make.ast("public class onePrivate{private int y;}")))))),
+    azzert.that(first(getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(make.ast("public class onePrivate{private int y;}")))))),
         is("y"));
   }
 
@@ -55,8 +54,7 @@ public class Issue0782 {
   }
 
   @Test @SuppressWarnings("static-method") public void checkOnePrivateName() {
-    azzert.that(
-        first(getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(make.ast("public class onePrivate{private int x;}")))))),
+    azzert.that(first(getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(make.ast("public class onePrivate{private int x;}")))))),
         is("x"));
   }
 
@@ -65,17 +63,14 @@ public class Issue0782 {
   }
 
   @Test @SuppressWarnings("static-method") public void onePrivateFieldReturnOneElementList() {
-    azzert.that(
-        getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(make.ast("public class onePrivate{private int x;}"))))).size(),
+    azzert.that(getAll.privateFields((TypeDeclaration) first(types(az.compilationUnit(make.ast("public class onePrivate{private int x;}"))))).size(),
         is(1));
   }
 
   @Test @SuppressWarnings("static-method") public void onePublicFieldAndOnePrivateFieldReturnOneElementList() {
-    azzert
-        .that(getAll
-            .privateFields(
-                (TypeDeclaration) first(types(az.compilationUnit(make.ast("public class onePublicOnePrivate{public int x; private int y;}")))))
-            .size(), is(1));
+    azzert.that(getAll
+        .privateFields((TypeDeclaration) first(types(az.compilationUnit(make.ast("public class onePublicOnePrivate{public int x; private int y;}")))))
+        .size(), is(1));
   }
 
   @Test @SuppressWarnings("static-method") public void onePublicFieldReturnEmptyList() {

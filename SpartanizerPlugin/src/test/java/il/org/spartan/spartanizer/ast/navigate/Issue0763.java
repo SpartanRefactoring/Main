@@ -25,8 +25,8 @@ public class Issue0763 {
 
   @Test public void b() {
     azzert.that(
-        analyze.type(first(
-            descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(){Map x; print(x);}}")))),
+        analyze.type(
+            first(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(){Map x; print(x);}}")))),
         is("Map"));
   }
 

@@ -115,7 +115,6 @@ public enum trick {
     r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
 
-
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
    * Still, if the containing node is left empty, it is removed as well.

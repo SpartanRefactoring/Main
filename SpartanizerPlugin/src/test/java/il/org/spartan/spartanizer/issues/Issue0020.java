@@ -21,7 +21,8 @@ public class Issue0020 {
   @Test public void constructorParameterRenaming_01() {
     trimmingOf("class A {int x;int z;A(int y, int k) {this.x = y;this.z = k;}}")
         .gives("class A {int x;int z;A(int x, int k) {this.x = x;this.z = k;}}")
-        //.gives("class A {int x;int z;A(int x, int z) {this.x = x;this.z = z;}}")//
+        // .gives("class A {int x;int z;A(int x, int z) {this.x = x;this.z =
+        // z;}}")//
         .stays();
   }
 

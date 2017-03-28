@@ -75,8 +75,8 @@ public final class analyzeTest {
   }
 
   @Test public void testFindDeclarationInMethod1() {
-    azzert.that("int", is(analyze.type(
-        descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{public void m(){ int x,y,z;} ")).get(1).getName())));
+    azzert.that("int", is(analyze
+        .type(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{public void m(){ int x,y,z;} ")).get(1).getName())));
   }
 
   @Test public void testFindDeclarationInType0() {
@@ -84,13 +84,13 @@ public final class analyzeTest {
   }
 
   @Test public void testFindDeclarationInType1() {
-    azzert.that("int", is(analyze.type(
-        first(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{int x;public void m(){ x=5;}} "))).getName())));
+    azzert.that("int", is(analyze
+        .type(first(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{int x;public void m(){ x=5;}} "))).getName())));
   }
 
   @Test public void testFindDeclarationInType2() {
-    azzert.that("int", is(
-        analyze.type(first(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(int y){ int z = 5; }"))).getName())));
+    azzert.that("int",
+        is(analyze.type(first(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(int y){ int z = 5; }"))).getName())));
   }
 
   @Test public void testType0() {

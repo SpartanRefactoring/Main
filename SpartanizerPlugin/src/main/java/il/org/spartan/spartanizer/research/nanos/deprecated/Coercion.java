@@ -98,8 +98,8 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
-    return az.methodDeclaration(ASTNode.copySubtree(¢.getAST(),
-        az.methodDeclaration(make.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
+    return az.methodDeclaration(
+        ASTNode.copySubtree(¢.getAST(), az.methodDeclaration(make.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
   }
 
   private static String azMethodModifier() {

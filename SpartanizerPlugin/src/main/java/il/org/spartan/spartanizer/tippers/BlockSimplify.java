@@ -33,7 +33,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
         Example.ignores("g();"), //
     };
   }
-  
+
   static Statement reorganizeNestedStatement(final Statement ¢) {
     final List<Statement> $ = extract.statements(¢);
     switch ($.size()) {
@@ -45,7 +45,6 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
         return reorganizeStatement(¢);
     }
   }
-  
 
   @SuppressWarnings("boxing") private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
     return os1.size() == os2.size() && range.to(os1.size()).stream().allMatch(λ -> os1.get(λ) == os2.get(λ));
