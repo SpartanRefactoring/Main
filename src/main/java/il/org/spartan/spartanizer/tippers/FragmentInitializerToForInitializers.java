@@ -58,16 +58,6 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
     return $ != null ? handleAssignmentCondition($, s) : e != null ? wizard.goInfix(e, s) : from;
   }
 
-  /** @param t JD
-   * @param from JD (already duplicated)
-   * @param to is the list that will contain the pulled out initializations from
-   *        the given expression.
-   * @return expression to the new for loop, without the initializers. */
-  public static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s)
-        : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
-  }
-
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {
     final List<Expression> initializers = initializers(¢);
     if (initializers.isEmpty())

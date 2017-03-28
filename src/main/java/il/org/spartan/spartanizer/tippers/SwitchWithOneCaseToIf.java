@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.switchBranch.*;
-
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -49,9 +47,9 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     final AST a = s.getAST();
     final Block b1 = a.newBlock(), b2 = a.newBlock();
     final switchBranch switchBranch = first.hasDefault() ? first : last(bs);
-    statements(b2).addAll(removeBreakSequencer(switchBranch.statements));
+    statements(b2).addAll(trick.removeBreakSequencer(switchBranch.statements));
     final il.org.spartan.spartanizer.ast.navigate.switchBranch branch = !first.hasDefault() ? first : last(bs);
-    statements(b1).addAll(removeBreakSequencer(branch.statements));
+    statements(b1).addAll(trick.removeBreakSequencer(branch.statements));
     final Block $ = a.newBlock();
     statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, branch.cases)));
     return $;
