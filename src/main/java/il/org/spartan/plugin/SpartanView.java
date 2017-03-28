@@ -81,11 +81,11 @@ public class SpartanView extends ViewPart {
       if (ti == null)
         return;
       final SpartanViewSection svs = Optional.of(ti) //
-          .map(λ1 -> λ1.getData()).filter(λ2 -> λ2 instanceof SpartanViewSection) //
+          .map(λ -> λ.getData()).filter(λ -> λ instanceof SpartanViewSection) //
           .map(SpartanViewSection.class::cast).orElse(null);
       if (svs == null)
         return;
-      tooltips.values().forEach(λ3 -> λ3.setVisible(false));
+      tooltips.values().forEach(λ -> λ.setVisible(false));
       if (!tooltips.containsKey(svs)) {
         final ToolTip tt1 = new ToolTip(viewer.getControl().getShell(), SWT.ICON_INFORMATION);
         tt1.setMessage(svs.tooltip);
