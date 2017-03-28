@@ -23,6 +23,6 @@ public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
   }
 
   @Override public Statement replacement(final IfStatement ¢) {
-    return wizard.thenIsShorter(¢) ? null : trick.invert(¢);
+    return wizard.thenIsShorter(¢) ? null : action.invert(¢);
   }
 }

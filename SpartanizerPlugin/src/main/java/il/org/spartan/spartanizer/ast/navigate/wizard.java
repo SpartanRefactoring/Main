@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -28,19 +27,14 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.compiler.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
-import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.ast.safety.iz.*;
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
 
@@ -66,12 +60,12 @@ public interface wizard {
     if (n1 > n2)
       return false;
     assert n1 == n2;
-    final IfStatement $ = trick.invert(s);
-    return trick.positivePrefixLength($) >= trick.positivePrefixLength(trick.invert($));
+    final IfStatement $ = action.invert(s);
+    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(action.invert($));
   }
 
   static boolean shoudlInvert(final IfStatement s) {
-    final int $ = trick.sequencerRank(hop.lastStatement(then(s))), rankElse = trick.sequencerRank(hop.lastStatement(elze(s)));
+    final int $ = action.sequencerRank(hop.lastStatement(then(s))), rankElse = action.sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !thenIsShorter(s);
   }
 
@@ -156,12 +150,6 @@ public interface wizard {
       put(RIGHT_SHIFT_UNSIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED);
     }
   };
-  Predicate<Modifier> isAbstract = Modifier::isAbstract;
-  Predicate<Modifier> isFinal = Modifier::isFinal;
-  Predicate<Modifier> isPrivate = Modifier::isPrivate;
-  Predicate<Modifier> isProtected = Modifier::isProtected;
-  Predicate<Modifier> isPublic = Modifier::isPublic;
-  Predicate<Modifier> isStatic = Modifier::isStatic;
   Set<String> boxedTypes = new LinkedHashSet<String>() {
     static final long serialVersionUID = -1241764483314529440L;
     {
@@ -200,7 +188,6 @@ public interface wizard {
       put(CONDITIONAL_OR, BIT_OR_ASSIGN);
     }
   };
-  List<Predicate<Modifier>> visibilityModifiers = as.list(isPublic, isPrivate, isProtected);
   IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
   Collection<String> valueTypes = new LinkedHashSet<String>(boxedTypes) {
     static final long serialVersionUID = -1388399450885860704L;
@@ -237,57 +224,6 @@ public interface wizard {
   PostfixExpression.Operator[] postfixOperators = { INCREMENT_POST, DECREMENT_POST };
   Bool resolveBinding = Bool.valueOf(false);
 
-  static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
-    r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
-  }
-
-  static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
-    final Javadoc j = n.getJavadoc();
-    if (j == null)
-      r.replace(n,
-          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
-          g);
-    else
-      r.replace(j,
-          r.createStringPlaceholder(
-              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
-              ASTNode.JAVADOC),
-          g);
-  }
-
-  /** Adds method m to the first type in file.
-   * @param fileName
-   * @param m */
-  static void addMethodToFile(final String fileName, final MethodDeclaration m) {
-    try {
-      final String str = readFromFile(fileName);
-      final IDocument d = new Document(str);
-      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
-      final ASTRewrite r = ASTRewrite.create(t.getAST());
-      wizard.addMethodToType(t, m, r, null);
-      r.rewriteAST(d, null).apply(d);
-      writeToFile(fileName, d.get());
-    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
-      x2.printStackTrace();
-    }
-  }
-
-  /** @param d JD
-   * @param m JD
-   * @param r rewriter
-   * @param g edit group, usually null */
-  static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
-  }
-
-  /** @param d JD
-   * @param s JD
-   * @param r rewriter
-   * @param g edit group, usually null */
-  static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(step.body(d), Block.STATEMENTS_PROPERTY).insertLast(s, g);
-  }
-
   static Expression applyDeMorgan(final InfixExpression $) {
     return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(toList())).to(wizard.negate(operator($)));
   }
@@ -296,41 +232,8 @@ public interface wizard {
     return assign2infix.get(¢.getOperator());
   }
 
-  static InfixExpression.Operator assign2infix(final Assignment.Operator ¢) {
+  static InfixExpression.Operator assignToInfix(final Assignment.Operator ¢) {
     return assign2infix.get(¢);
-  }
-
-  /** Converts a string into an AST, depending on it's form, as determined
-   * by @link{GuessedContext.find}.
-   * @param javaSnippet string to convert
-   * @return AST, if string is not a valid AST according to any form, then
-   *         null */
-  static ASTNode ast(final String javaSnippet) {
-    switch (GuessedContext.find(javaSnippet)) {
-      case COMPILATION_UNIT_LOOK_ALIKE:
-        return into.cu(javaSnippet);
-      case EXPRESSION_LOOK_ALIKE:
-        return into.e(javaSnippet);
-      case METHOD_LOOK_ALIKE:
-        return into.m(javaSnippet);
-      case OUTER_TYPE_LOOKALIKE:
-        return into.t(javaSnippet);
-      case STATEMENTS_LOOK_ALIKE:
-        return into.s(javaSnippet);
-      case BLOCK_LOOK_ALIKE:
-        return az.astNode(first(statements(az.block(into.s(javaSnippet)))));
-      default:
-        for (final int guess : as.intArray(ASTParser.K_EXPRESSION, ASTParser.K_STATEMENTS, ASTParser.K_CLASS_BODY_DECLARATIONS,
-            ASTParser.K_COMPILATION_UNIT)) {
-          final ASTParser p = wizard.parser(guess);
-          p.setSource(javaSnippet.toCharArray());
-          final ASTNode $ = p.createAST(wizard.nullProgressMonitor);
-          if (valid($))
-            return $;
-        }
-        assert fault.unreachable() : fault.specifically("Snippet cannot be parsed", javaSnippet);
-        return null;
-    }
   }
 
   static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
@@ -391,28 +294,6 @@ public interface wizard {
   static InfixExpression.Operator conjugate(final InfixExpression.Operator ¢) {
     return !wizard.conjugate.containsKey(¢) ? ¢ : wizard.conjugate.get(¢);
   }
-
-  /** @param ns unknown number of nodes to check
-   * @return whetherone of the nodes is an Expression Statement of type Post or
-   *         Pre Expression with ++ or -- operator. false if none of them are or
-   *         if the given parameter is null. */
-  static boolean containIncOrDecExp(final ASTNode... ns) {
-    return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.updating(λ));
-  }
-
-  static InfixExpression.Operator convertToInfix(final Operator ¢) {
-    return ¢ == Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
-        : ¢ == Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
-            : ¢ == Operator.BIT_XOR_ASSIGN ? InfixExpression.Operator.XOR
-                : ¢ == Operator.DIVIDE_ASSIGN ? InfixExpression.Operator.DIVIDE
-                    : ¢ == Operator.LEFT_SHIFT_ASSIGN ? InfixExpression.Operator.LEFT_SHIFT
-                        : ¢ == Operator.MINUS_ASSIGN ? InfixExpression.Operator.MINUS
-                            : ¢ == Operator.PLUS_ASSIGN ? InfixExpression.Operator.PLUS
-                                : ¢ == Operator.REMAINDER_ASSIGN ? InfixExpression.Operator.REMAINDER
-                                    : ¢ == Operator.RIGHT_SHIFT_SIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_SIGNED
-                                        : ¢ == Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
-  }
-
   /** Compute the "de Morgan" conjugate of the operator present on an
    * {@link InfixExpression}.
    * @param x an expression whose operator is either
@@ -648,11 +529,11 @@ public interface wizard {
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(Modifier.class::cast).collect(toCollection(LinkedHashSet::new));
+    return extendedModifiers(d).stream().filter(λ -> ModifiersRedundancy.test(λ, ms)).map(Modifier.class::cast).collect(toCollection(LinkedHashSet::new));
   }
 
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
-    return ms.stream().filter(λ -> test(λ, ps)).map(Modifier.class::cast).collect(toSet());
+    return ms.stream().filter(λ -> ModifiersRedundancy.test(λ, ps)).map(Modifier.class::cast).collect(toSet());
   }
 
   static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
@@ -702,14 +583,6 @@ public interface wizard {
         || iz.infixPlus(¢) && !type.isNotString(¢));
   }
 
-  /** Parenthesize an expression (if necessary).
-   * @param x JD
-   * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
-   *         parenthesis. */
-  static Expression parenthesize(final Expression ¢) {
-    return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
-  }
-
   static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
     setBinding($);
@@ -718,99 +591,6 @@ public interface wizard {
     options.put(JavaCore.COMPILER_SOURCE, JavaCore.VERSION_1_8);
     $.setCompilerOptions(options);
     return $;
-  }
-
-  static <T> T previous(final T t, final List<T> ts) {
-    if (ts == null)
-      return null;
-    final int $ = ts.indexOf(t);
-    return $ < 1 ? null : ts.get($ - 1);
-  }
-
-  static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
-    for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
-      if (test(¢.next(), ms))
-        ¢.remove();
-    return $;
-  }
-
-  /** Make a duplicate, suitable for tree rewrite, of the parameter
-   * @param ¢ JD
-   * @param ¢ JD
-   * @return a duplicate of the parameter, downcasted to the returned type.
-   * @see ASTNode#copySubtree
-   * @see ASTRewrite */
-  @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
-    return (N) copySubtree(t, n);
-  }
-
-  static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
-    final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
-    if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
-      return $;
-    if (iz.enumDeclaration(¢))
-      $.addAll(as.list(isStatic, isAbstract, isFinal));
-    if (iz.enumConstantDeclaration(¢)) {
-      $.addAll(visibilityModifiers);
-      if (iz.isMethodDeclaration(¢))
-        $.addAll(as.list(isFinal, isStatic, isAbstract));
-    }
-    if (iz.interface¢(¢) || ¢ instanceof AnnotationTypeDeclaration)
-      $.addAll(as.list(isStatic, isAbstract, isFinal));
-    if (iz.isMethodDeclaration(¢) && (iz.private¢(¢) || iz.static¢(¢)))
-      $.add(isFinal);
-    if (iz.methodDeclaration(¢) && haz.hasSafeVarags(az.methodDeclaration(¢)))
-      $.remove(isFinal);
-    final ASTNode container = containing.typeDeclaration(¢);
-    if (container == null)
-      return $;
-    if (iz.annotationTypeDeclaration(container))
-      $.add(isFinal);
-    if (iz.abstractTypeDeclaration(container) && iz.final¢(az.abstractTypeDeclaration(container)) && iz.isMethodDeclaration(¢))
-      $.add(isFinal);
-    if (iz.enumDeclaration(container)) {
-      $.add(isProtected);
-      if (iz.constructor(¢))
-        $.addAll(visibilityModifiers);
-      if (iz.isMethodDeclaration(¢))
-        $.add(isFinal);
-    }
-    if (iz.interface¢(container)) {
-      $.addAll(visibilityModifiers);
-      if (iz.isMethodDeclaration(¢)) {
-        $.add(isAbstract);
-        $.add(isFinal);
-      }
-      if (iz.fieldDeclaration(¢)) {
-        $.add(isStatic);
-        $.add(isFinal);
-      }
-      if (iz.abstractTypeDeclaration(¢))
-        $.add(isStatic);
-    }
-    if (iz.anonymousClassDeclaration(container)) {
-      if (iz.fieldDeclaration(¢))
-        $.addAll(visibilityModifiers);
-      $.add(isPrivate);
-      if (iz.isMethodDeclaration(¢))
-        $.add(isFinal);
-      if (iz.enumConstantDeclaration(containing.typeDeclaration(container)))
-        $.add(isProtected);
-    }
-    if (iz.methodDeclaration(¢) && haz.hasSafeVarags(az.methodDeclaration(¢)))
-      $.remove(isFinal);
-    return $;
-  }
-
-  static Set<Modifier> redundants(final BodyDeclaration ¢) {
-    return matches(¢, redundancies(¢));
-  }
-
-  /** replaces an ASTNode with another
-   * @param n
-   * @param with */
-  static <N extends ASTNode> void replace(final N n, final N with, final ASTRewrite r) {
-    r.replace(n, with, null);
   }
 
   /** Determine whether two nodes are the same, in the sense that their textual
@@ -868,10 +648,6 @@ public interface wizard {
     resolveBinding.inner = true;
   }
 
-  static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
-    return m instanceof Modifier && test((Modifier) m, ms);
-  }
-
   static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
     return ms.stream().anyMatch(λ -> λ.test(m));
   }
@@ -896,49 +672,30 @@ public interface wizard {
     return Stream.of(v).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
 
-  static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    final ForStatement $ = ¢.getAST().newForStatement();
-    $.setBody(copy.of(body(¢)));
-    $.setExpression(FragmentInitializerWhile.pullInitializersFromExpression(copy.ofWhileExpression(¢), FragmentInitializerWhile.parent(f)));
-    initializers($).add(FragmentInitializerWhile.Initializers(f));
-    return $;
-  }
-
-  static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
-    final ForStatement $ = copy.of(¢);
-    $.setExpression(trick.removeInitializersFromExpression(copy.of(expression(¢)), s));
-    FragmentInitializerToForInitializers.setInitializers($, copy.of(s));
-    return $;
-  }
-
-  static List<Statement> listMe(final Expression ¢) {
-    return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
-  }
-
   static List<Statement> decompose(final Expression x) {
     return new ExpressionMapReducer<List<Statement>>() {
       @Override protected List<Statement> map(final Assignment ¢) {
-        return listMe(¢);
+        return make.listMe(¢);
       }
 
       @Override protected List<Statement> map(final PostfixExpression ¢) {
-        return listMe(¢);
+        return make.listMe(¢);
       }
 
       @Override protected List<Statement> map(final PrefixExpression ¢) {
-        return iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? listMe(¢) : reduce();
+        return iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? make.listMe(¢) : reduce();
       }
 
       @Override protected List<Statement> map(final ClassInstanceCreation ¢) {
-        return listMe(¢);
+        return make.listMe(¢);
       }
 
       @Override protected List<Statement> map(final SuperMethodInvocation ¢) {
-        return listMe(¢);
+        return make.listMe(¢);
       }
 
       @Override protected List<Statement> map(final MethodInvocation ¢) {
-        return listMe(¢);
+        return make.listMe(¢);
       }
 
       @Override public List<Statement> reduce() {
@@ -950,5 +707,9 @@ public interface wizard {
         return $;
       }
     }.map(x);
+  }
+
+  static int positivePrefixLength(final IfStatement $) {
+    return metrics.length($.getExpression(), then($));
   }
 }

@@ -29,7 +29,7 @@ public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForState
   @Override public Tip tip(final EnhancedForStatement ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        trick.remove(r, extract.lastStatement(¢), g);
+        action.remove(r, extract.lastStatement(¢), g);
       }
     };
   }

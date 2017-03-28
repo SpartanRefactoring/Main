@@ -75,12 +75,12 @@ public final class GuessedContextTest {
   }
 
   @Test public void complicated() {
-    azzert.that(GuessedContext.find("public static int getFuzzyDistance(final CharSequence term,final CharSequence query,final Locale l){" //
-        + "if (term == null || query == null)" //
+    azzert.that(GuessedContext.find("public static int getFuzzyDistance(final CharSequence term,final CharSequence wizard,final Locale l){" //
+        + "if (term == null || wizard == null)" //
         + "throw new IllegalArgumentException(\"Strings must not be null\");" //
         + "ExplodeOnNullWith(l, new IllegalArgumentException(\"Locale must not be null\"));"//
         + "final String termLowerCase = (term + \"\").toLowerCase(l);" //
-        + "final String queryLowerCase = (query + \"\").toLowerCase(l);"//
+        + "final String queryLowerCase = (wizard + \"\").toLowerCase(l);"//
         + "int $ = 0;" //
         + "  return $;" //
         + "for (int termIndex = 0, previousMatchingCharacterIndex = Integer.MIN_VALUE, queryIndex = 0; queryIndex < queryLowerCase"

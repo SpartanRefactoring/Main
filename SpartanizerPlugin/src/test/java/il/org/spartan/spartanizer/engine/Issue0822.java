@@ -12,7 +12,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Tests for makeAST, see issue #822 for more details
  * @author Amit Ohayon
@@ -49,19 +48,19 @@ public class Issue0822 {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Collections.singletonList("a + b"));
     final ASTNode ast = makeAST.EXPRESSION.from(p.toFile());
-    azzert.that(ast + "", is(wizard.ast("a+b") + ""));
+    azzert.that(ast + "", is(make.ast("a+b") + ""));
     azzert.that(ast, instanceOf(Expression.class));
   }
 
   @Test public void testStatementsFromDocument() {
-    azzert.that(wizard.ast("a = b + c + d;") + "", is(makeAST.STATEMENTS.from(new Document("a = b + c + d;")) + ""));
+    azzert.that(make.ast("a = b + c + d;") + "", is(makeAST.STATEMENTS.from(new Document("a = b + c + d;")) + ""));
   }
 
   @Test public void testStatementsFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Collections.singletonList("a = a + b;"));
     final ASTNode ast = makeAST.STATEMENTS.from(p.toFile());
-    azzert.that(ast + "", is(wizard.ast("a = a + b;") + ""));
+    azzert.that(ast + "", is(make.ast("a = a + b;") + ""));
     azzert.that(ast, instanceOf(Statement.class));
   }
 }

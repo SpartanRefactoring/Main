@@ -2,13 +2,12 @@ package il.org.spartan.spartanizer.research.nanos;
 
 import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -41,7 +40,7 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Statement next = next(¢);
         r.remove(next, g);
-        r.replace(¢, extract.singleStatement(ast("notNull(" + separate.these(nullCheckees(¢)).by(",") + ").get(" + returnee(next) + ");")), g);
+        r.replace(¢, extract.singleStatement(make.ast("notNull(" + separate.these(nullCheckees(¢)).by(",") + ").get(" + returnee(next) + ");")), g);
       }
     };
   }
