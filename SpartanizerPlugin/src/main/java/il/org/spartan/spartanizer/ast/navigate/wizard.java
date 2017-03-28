@@ -739,16 +739,6 @@ public interface wizard {
     return (N) copySubtree(t, n);
   }
 
-  /** As {@link elze(ConditionalExpression)} but returns the last else statement
-   * in "if - else if - ... - else" statement
-   * @param ¢ JD
-   * @return last nested else statement */
-  static Statement recursiveElze(final IfStatement ¢) {
-    for (Statement $ = ¢.getElseStatement();; $ = ((IfStatement) $).getElseStatement())
-      if (!($ instanceof IfStatement))
-        return $;
-  }
-
   static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
@@ -929,14 +919,6 @@ public interface wizard {
     $.setExpression(FragmentInitializerToForInitializers.removeInitializersFromExpression(copy.of(expression(¢)), s));
     FragmentInitializerToForInitializers.setInitializers($, copy.of(s));
     return $;
-  }
-
-  static IfStatement invert(final IfStatement ¢) {
-    return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
-  }
-
-  static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
 
   static <T> void removeLast(final List<T> ¢) {
