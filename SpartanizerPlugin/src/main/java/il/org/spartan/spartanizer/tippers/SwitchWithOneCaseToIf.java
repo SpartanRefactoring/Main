@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.lisp.*;
@@ -59,7 +60,8 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
   }
 
   private List<Statement> statements;
-  private List<Statement> functionalCommands() {
+
+  @SuppressWarnings("unused") private List<Statement> functionalCommands() {
     final List<Statement> $ = IntStream.range(0, statements.size() - 1).mapToObj(statements::get).collect(toList());
     if (!iz.breakStatement(lisp.last(statements)))
       $.add(lisp.last(statements));
