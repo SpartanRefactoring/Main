@@ -13,14 +13,14 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class wizardTest {
   @Test public void astExpression() {
-    assert iz.expression(wizard.ast("x + y"));
+    assert iz.expression(make.ast("x + y"));
   }
 
   @Test public void sameOfNullAndSomething() {

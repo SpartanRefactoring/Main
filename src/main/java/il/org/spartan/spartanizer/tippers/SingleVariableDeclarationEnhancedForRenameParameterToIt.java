@@ -61,7 +61,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToIt exten
     final SimpleName ¢ = namer.newCurrent(d);
     return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        trick.rename(n, ¢, $, r, g);
+        action.rename(n, ¢, $, r, g);
       }
     };
   }

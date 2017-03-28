@@ -59,7 +59,7 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           int counter = 0;
           for (final SimpleName ¢ : prev) {
-            trick.rename(¢, after.get(counter), s.getParent(), r, g);
+            action.rename(¢, after.get(counter), s.getParent(), r, g);
             ++counter;
           }
         }

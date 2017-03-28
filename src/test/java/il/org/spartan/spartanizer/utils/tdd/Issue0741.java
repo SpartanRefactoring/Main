@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** TODO: Shimon Azulay please add a description
@@ -17,7 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0741 {
   static TypeDeclaration getTypeDeclaration(final String td) {
-    return findFirst.typeDeclaration(wizard.ast(td));
+    return findFirst.typeDeclaration(make.ast(td));
   }
 
   @Test public void publicFields_test0() {

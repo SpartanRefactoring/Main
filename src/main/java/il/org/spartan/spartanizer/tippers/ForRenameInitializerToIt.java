@@ -54,7 +54,7 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     final SimpleName ¢ = namer.newCurrent(x);
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        trick.rename(n, ¢, $, r, g);
+        action.rename(n, ¢, $, r, g);
       }
     };
   }

@@ -110,10 +110,10 @@ public interface iz {
     final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
         || !same(s, az.astNode(first(statements(az.block(elze($))))))//
-        || trick.recursiveElse(s) != null//
+        || action.recursiveElse(s) != null//
         || elze($) == null)//
-        && $ != null && (elze($) == null || trick.recursiveElse(s) == null)
-        && (elze($) != null || trick.recursiveElse(s) != null || blockRequiredInReplacement($, s));
+        && $ != null && (elze($) == null || action.recursiveElse(s) == null)
+        && (elze($) != null || action.recursiveElse(s) != null || blockRequiredInReplacement($, s));
   }
 
   /** @param subject JD

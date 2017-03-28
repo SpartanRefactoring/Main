@@ -21,10 +21,12 @@ import org.eclipse.jface.text.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.utils.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -122,6 +124,51 @@ public enum make {
     return parser(text.toCharArray());
   }
 
+  public static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
+    final ForStatement $ = ¢.getAST().newForStatement();
+    $.setBody(copy.of(body(¢)));
+    $.setExpression(action.pullInitializersFromExpression(copy.ofWhileExpression(¢), FragmentInitializerWhile.parent(f)));
+    initializers($).add(FragmentInitializerWhile.Initializers(f));
+    return $;
+  }
+
+  /** Converts a string into an AST, depending on it's form, as determined
+   * by @link{GuessedContext.find}.
+   * @param javaSnippet string to convert
+   * @return AST, if string is not a valid AST according to any form, then
+   *         null */
+  public static ASTNode ast(final String javaSnippet) {
+    switch (GuessedContext.find(javaSnippet)) {
+      case COMPILATION_UNIT_LOOK_ALIKE:
+        return into.cu(javaSnippet);
+      case EXPRESSION_LOOK_ALIKE:
+        return into.e(javaSnippet);
+      case METHOD_LOOK_ALIKE:
+        return into.m(javaSnippet);
+      case OUTER_TYPE_LOOKALIKE:
+        return into.t(javaSnippet);
+      case STATEMENTS_LOOK_ALIKE:
+        return into.s(javaSnippet);
+      case BLOCK_LOOK_ALIKE:
+        return az.astNode(first(statements(az.block(into.s(javaSnippet)))));
+      default:
+        for (final int guess : as.intArray(ASTParser.K_EXPRESSION, ASTParser.K_STATEMENTS, ASTParser.K_CLASS_BODY_DECLARATIONS,
+            ASTParser.K_COMPILATION_UNIT)) {
+          final ASTParser p = wizard.parser(guess);
+          p.setSource(javaSnippet.toCharArray());
+          final ASTNode $ = p.createAST(wizard.nullProgressMonitor);
+          if (wizard.valid($))
+            return $;
+        }
+        assert fault.unreachable() : fault.specifically("Snippet cannot be parsed", javaSnippet);
+        return null;
+    }
+  }
+
+  public static List<Statement> listMe(final Expression ¢) {
+    return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
+  }
+
   public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
     if (¢ == null)
       return null;
@@ -174,7 +221,7 @@ public enum make {
 
   public static Expression assignmentAsExpression(final Assignment ¢) {
     final Operator $ = ¢.getOperator();
-    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
+    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assignToInfix($));
   }
 
   /** Swap the order of the left and right operands to an expression, changing

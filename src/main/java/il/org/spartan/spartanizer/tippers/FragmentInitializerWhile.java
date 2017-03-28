@@ -40,13 +40,6 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
     return az.variableDeclrationStatement(step.parent(¢));
   }
 
-  public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
-            : iz.parenthesizedExpression(from)
-                ? FragmentInitializerToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
-  }
-
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
@@ -63,7 +56,7 @@ public final class FragmentInitializerWhile extends ReplaceToNextStatementExclud
       return null;
     exclude.excludeAll(fragments(vds));
     $.remove(vds, g);
-    $.replace(s, wizard.buildForStatement(f, s), g);
+    $.replace(s, make.buildForStatement(f, s), g);
     return $;
   }
 }

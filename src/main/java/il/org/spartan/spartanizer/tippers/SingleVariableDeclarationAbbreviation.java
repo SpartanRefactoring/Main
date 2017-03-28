@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.factory.trick.*;
+import static il.org.spartan.spartanizer.ast.factory.action.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 

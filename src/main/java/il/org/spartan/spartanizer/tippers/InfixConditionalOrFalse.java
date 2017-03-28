@@ -28,6 +28,6 @@ public final class InfixConditionalOrFalse extends ReplaceCurrentNode<InfixExpre
   }
 
   @Override public Expression replacement(final InfixExpression ¢) {
-    return trick.eliminateLiteral(¢, false);
+    return action.eliminateLiteral(¢, false);
   }
 }

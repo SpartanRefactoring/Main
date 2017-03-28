@@ -40,7 +40,7 @@ public final class FragmentInitializerReturnAssignment extends $FragmentAndState
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);
-    trick.removeDeadFragment(f, $, g);
+    action.removeDeadFragment(f, $, g);
     return $;
   }
 }

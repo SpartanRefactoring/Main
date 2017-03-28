@@ -48,7 +48,7 @@ public final class MethodDeclarationRenameSingleParameterToIt extends EagerTippe
     final SimpleName ¢ = namer.newCurrent(d);
     return new Tip("Rename paraemter " + $ + " to ¢ ", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        trick.rename($, ¢, d, r, g);
+        action.rename($, ¢, d, r, g);
         SingleVariableDeclarationAbbreviation.fixJavadoc(d, $, ¢ + "", r, g);
       }
     };

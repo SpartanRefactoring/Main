@@ -67,4 +67,15 @@ public interface lisp2 extends lisp {
   public static void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
     items.forEach(from::remove);
   }
+
+  static <T> void removeLast(final List<T> ¢) {
+    ¢.remove(¢.size() - 1);
+  }
+
+  static <T> T previous(final T t, final List<T> ts) {
+    if (ts == null)
+      return null;
+    final int $ = ts.indexOf(t);
+    return $ < 1 ? null : ts.get($ - 1);
+  }
 }

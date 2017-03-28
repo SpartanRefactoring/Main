@@ -10,7 +10,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -67,7 +67,7 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
   }
 
   private static MethodInvocation replacementAux(final InfixExpression lower, final InfixExpression upper) {
-    return az.methodInvocation(wizard.ast("between(" + firstTipper(inEqualities, lower).getMatching(lower, "$X1") + ", "
+    return az.methodInvocation(make.ast("between(" + firstTipper(inEqualities, lower).getMatching(lower, "$X1") + ", "
         + firstTipper(inEqualities, upper).getMatching(upper, "$X2") + ")"));
   }
 
