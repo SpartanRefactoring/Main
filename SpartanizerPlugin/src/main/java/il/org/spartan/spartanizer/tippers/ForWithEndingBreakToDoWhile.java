@@ -23,7 +23,7 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
   @Override public ASTNode replacement(final ForStatement s) {
     final AST create = s.getAST();
     final DoStatement $ = create.newDoStatement();
-    $.setExpression(make.notOf(step.expression(copy.of(az.ifStatement(extract.lastStatement(s))))));
+    $.setExpression(make.notOf(step.expression(az.ifStatement(extract.lastStatement(s)))));
     final Block b = create.newBlock();
     @NotNull final List<Statement> ls = extract.statements(copy.of(step.body(s)));
     for (int j = 0; j < ls.size() - 1; ++j)
@@ -45,6 +45,9 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
   }
 
   @Override public Example[] examples() {
-    return new Example[] { convert("for(int i=0;i<10;i++){x = x+5; if(i > 5 && i < 9) break;}").to("do{x = x+5;} while(i <= 5 || i>=9);") };
+    return new Example[] { //
+        convert("for(int i=0;i<10;i++){x = x+5; if(i > 5 && i < 9) break;}") //
+            .to("do{x = x+5;} while(i <= 5 || i>=9);") //
+    };
   }
 }
