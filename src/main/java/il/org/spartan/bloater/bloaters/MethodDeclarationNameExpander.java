@@ -58,7 +58,7 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int counter = 0;
         for (final SimpleName ¢ : prev) {
-          Tricks.rename(¢, after.get(counter), d, r, g);
+          trick.rename(¢, after.get(counter), d, r, g);
           ++counter;
         }
       }

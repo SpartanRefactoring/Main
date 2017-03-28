@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -49,7 +50,7 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
       m.exclude(s);
     return new Tip(description(s), s, getClass(), body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tricks.rename($, ¢, s, r, g);
+        trick.rename($, ¢, s, r, g);
       }
     };
   }
