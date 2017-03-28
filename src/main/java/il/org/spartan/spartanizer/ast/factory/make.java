@@ -221,7 +221,7 @@ public enum make {
 
   public static Expression assignmentAsExpression(final Assignment ¢) {
     final Operator $ = ¢.getOperator();
-    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assignToInfix($));
+    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
   }
 
   /** Swap the order of the left and right operands to an expression, changing
