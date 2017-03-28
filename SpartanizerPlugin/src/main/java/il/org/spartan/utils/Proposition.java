@@ -1,7 +1,5 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.Proposition.*;
-
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -114,7 +112,7 @@ public interface Proposition extends BooleanSupplier {
     }
 
     @Override public final String toString() {
-      return inner instanceof Aggregate ? inner + "/**/" //
+      return inner instanceof Aggregate ? inner + "" //
           : toString != null ? toString : super.toString();
     }
   }
