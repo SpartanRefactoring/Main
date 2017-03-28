@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.refactoringMechanism;
+package il.org.spartan.spartanizer.patterns;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
