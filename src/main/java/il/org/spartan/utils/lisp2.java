@@ -58,13 +58,13 @@ public interface lisp2 extends lisp {
     return $;
   }
 
-  public static List<Expression> removeFirstElement(final List<Expression> ¢) {
+  static List<Expression> removeFirstElement(final List<Expression> ¢) {
     final List<Expression> $ = new ArrayList<>(¢);
     $.remove(first($));// remove first
     return $;
   }
 
-  public static void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
+  static void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
     items.forEach(from::remove);
   }
 
