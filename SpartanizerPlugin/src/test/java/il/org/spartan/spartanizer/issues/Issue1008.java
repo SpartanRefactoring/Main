@@ -7,7 +7,6 @@ import il.org.spartan.spartanizer.meta.*;
  * @since 2017-01-17 */
 public class Issue1008 extends MetaFixture {
   AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
-    /** [[SuppressWarningsSpartan]] */
     @Override @SuppressWarnings("All") protected void startingWith() {/***/
     }
 

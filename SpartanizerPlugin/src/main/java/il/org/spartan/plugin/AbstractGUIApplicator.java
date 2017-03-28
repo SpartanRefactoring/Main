@@ -378,7 +378,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   /** Creates a change from each compilation unit and stores it in the changes
    * list
    * @throws IllegalArgumentException
-   * @throws CoreException [[SuppressWarningsSpartan]] */
+   * @throws CoreException */
   private void scanCompilationUnits(final Collection<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
     progressMonitor.beginTask("Iterating over eligible compilation units...", us.size());
     for (final ICompilationUnit ¢ : us) // NANO - can't, throws...
