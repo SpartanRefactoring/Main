@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** TODO: Vivian Shehadeh please add a description
@@ -22,11 +22,11 @@ public class Issue0692 {
   }
 
   @Test public void test1() {
-    azzert.that(0, is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,3)"))).size()));
+    azzert.that(0, is(getAll.invocations(az.methodInvocation(make.ast("example(1,2,3)"))).size()));
   }
 
   @Test public void test2() {
-    azzert.that(1, is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,2,i)"))).size()));
+    azzert.that(1, is(getAll.invocations(az.methodInvocation(make.ast("example(1,2,i)"))).size()));
   }
 
   @Test public void test3() {
@@ -35,18 +35,18 @@ public class Issue0692 {
     final Set<String> tmp = new TreeSet<>();
     tmp.add("j");
     tmp.add("i");
-    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,j),i)")))));
+    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(make.ast("example(1,foo(2,j),i)")))));
   }
 
   @Test public void test4() {
     final Set<String> tmp = new TreeSet<>();
     tmp.add("j");
     tmp.add("i");
-    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(j)),i)")))));
+    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(make.ast("example(1,foo(2,m(j)),i)")))));
   }
 
   @Test public void test5() {
-    azzert.that(new TreeSet<>(), is(getAll.invocations(az.methodInvocation(wizard.ast("example(1,foo(2,m(1)),2)")))));
+    azzert.that(new TreeSet<>(), is(getAll.invocations(az.methodInvocation(make.ast("example(1,foo(2,m(1)),2)")))));
   }
 
   @Test public void test6() {
@@ -57,6 +57,6 @@ public class Issue0692 {
     tmp.add("h");
     tmp.add("fizz");
     tmp.add("x");
-    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(wizard.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))")))));
+    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(make.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))")))));
   }
 }

@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.azzert.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
@@ -29,7 +27,7 @@ public class Issue0777 {
     final IDocument $ = new Document(type);
     final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
     final ASTRewrite r = ASTRewrite.create(d.getAST());
-    wizard.addMethodToType(d, az.methodDeclaration(ast(method)), r, null);
+    action.addMethodToType(d, az.methodDeclaration(make.ast(method)), r, null);
     r.rewriteAST($, null).apply($);
     return $.get();
   }

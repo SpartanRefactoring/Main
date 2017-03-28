@@ -29,7 +29,7 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
   }
 
   @Override protected boolean prerequisite(final Assignment ¢) {
-    return ¢.getAST().hasResolvedBindings() && validTypes(¢) && wizard.convertToInfix(¢.getOperator()) != null;
+    return ¢.getAST().hasResolvedBindings() && validTypes(¢) && wizard.assignToInfix(¢.getOperator()) != null;
   }
 
   @Override public Tip tip(final Assignment ¢) {
@@ -39,7 +39,7 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
         final InfixExpression e = ¢.getAST().newInfixExpression();
         e.setLeftOperand(copy.of(left(¢)));
         e.setRightOperand(make.plant(copy.of(right(¢))).into(e));
-        e.setOperator(wizard.convertToInfix(¢.getOperator()));
+        e.setOperator(wizard.assignToInfix(¢.getOperator()));
         final Assignment a = ¢.getAST().newAssignment();
         a.setLeftHandSide(copy.of(left(¢)));
         a.setRightHandSide(e);

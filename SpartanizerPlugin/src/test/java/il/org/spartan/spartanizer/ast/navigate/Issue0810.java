@@ -27,35 +27,35 @@ public class Issue0810 {
 
   @Test public void test1() {
     final Collection<SimpleName> xs = new ArrayList<>();
-    xs.add(az.simpleName(wizard.ast("abc")));
+    xs.add(az.simpleName(make.ast("abc")));
     assert !haz.dollar(xs);
-    xs.add(az.simpleName(wizard.ast("$")));
+    xs.add(az.simpleName(make.ast("$")));
     assert haz.dollar(xs);
   }
 
   @Test public void test2() {
-    assert haz.hasNoModifiers(az.bodyDeclaration(wizard.ast("public void foo(){ int a=1; return;}")));
+    assert haz.hasNoModifiers(az.bodyDeclaration(make.ast("public void foo(){ int a=1; return;}")));
   }
 
   @Test public void test3() {
-    assert !sideEffects.free(az.methodDeclaration(wizard.ast("public void foo(){ int a=1; return;}")));
+    assert !sideEffects.free(az.methodDeclaration(make.ast("public void foo(){ int a=1; return;}")));
   }
 
   @Test public void test4() {
-    assert !haz.unknownNumberOfEvaluations((MethodDeclaration) wizard.ast("public int foo(int x){}"));
+    assert !haz.unknownNumberOfEvaluations((MethodDeclaration) make.ast("public int foo(int x){}"));
   }
 
   @Test public void test5() {
-    assert !haz.cent(wizard.ast("{int a;}"));
+    assert !haz.cent(make.ast("{int a;}"));
   }
 
   @Test public void test6() {
-    assert !haz.dollar(wizard.ast("{int a;}"));
-    assert haz.dollar(wizard.ast("$"));
+    assert !haz.dollar(make.ast("{int a;}"));
+    assert haz.dollar(make.ast("$"));
   }
 
   @Test public void test7() {
-    assert haz.booleanReturnType((MethodDeclaration) wizard.ast("public boolean foo();"));
-    assert !haz.booleanReturnType((MethodDeclaration) wizard.ast("public int foo();"));
+    assert haz.booleanReturnType((MethodDeclaration) make.ast("public boolean foo();"));
+    assert !haz.booleanReturnType((MethodDeclaration) make.ast("public int foo();"));
   }
 }

@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** see Issue #831 for more details
@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 16-11-14 */
 @SuppressWarnings("static-method")
 public class Issue0831 {
-  final MethodDeclaration oneStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; }");
-  final MethodDeclaration fourStatMethod = (MethodDeclaration) wizard.ast("public void foo() {int a; int b; int c; int d; }");
+  final MethodDeclaration oneStatMethod = (MethodDeclaration) make.ast("public void foo() {int a; }");
+  final MethodDeclaration fourStatMethod = (MethodDeclaration) make.ast("public void foo() {int a; int b; int c; int d; }");
 
   @Test public void fourStatementInScanner() {
     String body = "";
@@ -41,7 +41,7 @@ public class Issue0831 {
   }
 
   @Test public void noStatementsInScannerWhenMethodHasEmptyBody() {
-    assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a){}")).availableStatements().isEmpty();
+    assert new MethodScannerIExt((MethodDeclaration) make.ast("public int a(String a){}")).availableStatements().isEmpty();
   }
 
   @Test public void oneStatementInScanner() {
@@ -49,7 +49,7 @@ public class Issue0831 {
   }
 
   @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {
-    assert new MethodScannerIExt((MethodDeclaration) wizard.ast("public int a(String a);")).availableStatements() == null;
+    assert new MethodScannerIExt((MethodDeclaration) make.ast("public int a(String a);")).availableStatements() == null;
   }
 
   protected static class MethodScannerIExt extends MethodScanner {

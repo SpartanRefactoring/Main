@@ -19,7 +19,7 @@ public abstract class InfixExpressionSortingFull extends InfixExpressionSorting 
     if (!suitable(¢))
       return false;
     final List<Expression> $ = extract.allOperands(¢);
-    return !trick.mixedLiteralKind($) && sort($);
+    return !action.mixedLiteralKind($) && sort($);
   }
 
   @Override public Expression replacement(final InfixExpression ¢) {

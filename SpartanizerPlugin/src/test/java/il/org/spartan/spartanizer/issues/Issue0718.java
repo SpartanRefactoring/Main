@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.issues;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** see issue #718 for more details
@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @since 16-11-03 */
 public class Issue0718 {
   private static ASTNode methodDeclarationFromString(final String ¢) {
-    return wizard.ast(¢);
+    return make.ast(¢);
   }
 
   final MethodDeclaration loaded = (MethodDeclaration) methodDeclarationFromString("public void f(int x, int y, int z){ String a, b, c, d, e, f;}");

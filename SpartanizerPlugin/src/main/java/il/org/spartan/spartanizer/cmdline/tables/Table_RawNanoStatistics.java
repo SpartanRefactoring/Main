@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -68,7 +67,7 @@ public class Table_RawNanoStatistics extends NanoTable {
       }
 
       @Override public boolean visit(final FieldDeclaration ¢) {
-        spartanalyzer.fixedPoint(ast(¢ + ""));
+        spartanalyzer.fixedPoint(make.ast(¢ + ""));
         return true;
       }
     });

@@ -2,13 +2,12 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -47,7 +46,7 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
     if (!excludeMethod($))
       try {
         npStatistics.logNode(findFirst.instanceOf(MethodDeclaration.class)
-            .in(ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""))))));
+            .in(make.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""))))));
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
       } catch (@SuppressWarnings("unused") final NullPointerException ¢) {

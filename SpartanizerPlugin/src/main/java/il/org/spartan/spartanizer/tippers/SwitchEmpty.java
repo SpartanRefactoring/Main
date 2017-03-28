@@ -43,7 +43,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
         if (iz.breakStatement(last(ll)))
           ll.remove(ll.size() - 1);
         ll.remove(0);
-        r.replace(s, wizard.ast((sideEffects.free(expression(s)) ? "" : ss + "") + statementsToString(ll)), g);
+        r.replace(s, make.ast((sideEffects.free(expression(s)) ? "" : ss + "") + statementsToString(ll)), g);
       }
     };
   }

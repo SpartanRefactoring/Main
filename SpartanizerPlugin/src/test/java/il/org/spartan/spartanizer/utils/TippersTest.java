@@ -6,7 +6,7 @@
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.ast.factory.trick.*;
+import static il.org.spartan.spartanizer.ast.factory.action.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import static il.org.spartan.lisp.*;
@@ -61,7 +61,7 @@ public final class TippersTest {
     final Assignment a = (Assignment) returnStatement.getExpression();
     final Operator o = a.getOperator();
     azzert.that(o, iz("+="));
-    final InfixExpression alternateInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
+    final InfixExpression alternateInitializer = subject.pair(to(a), from(a)).to(wizard.assignToInfix(o));
     azzert.that(alternateInitializer, iz("a + 2 * a"));
     assert !sideEffects.free(initializer);
     azzert.that(collect.usesOf(n).in(alternateInitializer).size(), is(2));
