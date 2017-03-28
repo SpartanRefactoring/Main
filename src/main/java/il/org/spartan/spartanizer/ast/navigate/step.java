@@ -7,7 +7,9 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
@@ -793,7 +795,7 @@ public enum step {
         }
       }
     $ = $.replaceAll("implements [^{]+", "").replaceAll("extends [^{]+", "");
-    return findFirst.instanceOf(Type.class).in(wizard.ast("class d{" + $.replaceAll("extends .+", "") + " x; }"));
+    return findFirst.instanceOf(Type.class).in(make.ast("class d{" + $.replaceAll("extends .+", "") + " x; }"));
   }
 
   /** Shorthand for {@link CastExpression#getType()}
@@ -890,7 +892,7 @@ public enum step {
    *         parent is not {@link Block} return null, if n is first
    *         {@link Statement} also null. */
   public static Statement previousStatementInBody(final Statement ¢) {
-    return wizard.previous(¢, statements(az.block(parent(¢))));
+    return lisp2.previous(¢, statements(az.block(parent(¢))));
   }
 
   public static Expression value(final SingleMemberAnnotation ¢) {

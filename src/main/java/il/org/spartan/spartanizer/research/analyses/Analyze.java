@@ -13,6 +13,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -131,7 +132,7 @@ public enum Analyze {
           try {
             Count.before(¢);
             final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
-                .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
+                .in(make.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
             Count.after(after);
             methods.add(after);
           } catch (@SuppressWarnings("unused") final AssertionError __) {
@@ -199,7 +200,7 @@ public enum Analyze {
                 .forEach(¢ -> {
                   try {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)
-                        .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))))));
+                        .in(make.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))))));
                   } catch (final AssertionError __) {
                     ___.unused(__);
                     //

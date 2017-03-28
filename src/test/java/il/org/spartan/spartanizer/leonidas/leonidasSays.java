@@ -14,6 +14,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -43,7 +44,7 @@ public enum leonidasSays {
         actual = d.get().substring(9, d.get().length() - 2);
         break;
       case STATEMENTS_LOOK_ALIKE:
-        actual = extractStatementIfOne(findFirst.instanceOf(Statement.class).in(wizard.ast(d.get()))) + "";
+        actual = extractStatementIfOne(findFirst.instanceOf(Statement.class).in(make.ast(d.get()))) + "";
         break;
       default:
         azzert.that(Essence.of(actual).replaceAll(" ", ""), is(Essence.of(s).replaceAll(" ", "")));
@@ -170,7 +171,7 @@ public enum leonidasSays {
 
   static class expression {
     private static ASTNode ast(final String s2) {
-      return extractStatementIfOne(wizard.ast(s2));
+      return extractStatementIfOne(make.ast(s2));
     }
 
     final String s;
@@ -204,11 +205,11 @@ public enum leonidasSays {
     }
 
     public void nottips(final String ¢) {
-      assert !tipper.check(az.block(wizard.ast(¢)));
+      assert !tipper.check(az.block(make.ast(¢)));
     }
 
     public void tips(final String ¢) {
-      assert tipper.check(az.block(wizard.ast(¢)));
+      assert tipper.check(az.block(make.ast(¢)));
     }
 
     public blockTurns turns(final String ¢) {
@@ -232,11 +233,11 @@ public enum leonidasSays {
     }
 
     public void nottips(final String ¢) {
-      assert !tipper.check(wizard.ast(¢));
+      assert !tipper.check(make.ast(¢));
     }
 
     public void tips(final String ¢) {
-      assert tipper.check(extractStatementIfOne(wizard.ast(¢)));
+      assert tipper.check(extractStatementIfOne(make.ast(¢)));
     }
 
     public turns turns(final String ¢) {

@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -109,10 +110,10 @@ public interface iz {
     final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
         || !same(s, az.astNode(first(statements(az.block(elze($))))))//
-        || recursiveElze(s) != null//
+        || trick.recursiveElse(s) != null//
         || elze($) == null)//
-        && $ != null && (elze($) == null || recursiveElze(s) == null)
-        && (elze($) != null || recursiveElze(s) != null || blockRequiredInReplacement($, s));
+        && $ != null && (elze($) == null || trick.recursiveElse(s) == null)
+        && (elze($) != null || trick.recursiveElse(s) != null || blockRequiredInReplacement($, s));
   }
 
   /** @param subject JD
