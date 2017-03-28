@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.dispatch;
+package il.org.spartan.spartanizer.ast.factory;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -22,7 +21,7 @@ import il.org.spartan.utils.*;
 /** A number of utility functions common to all tippers.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-17 */
-public enum Tricks {
+public enum trick {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static void addAllReplacing(final Collection<Statement> to, final Iterable<Statement> from, final Statement substitute, final Statement by1,
       final Iterable<Statement> by2) {
@@ -71,14 +70,14 @@ public enum Tricks {
 
   public static IfStatement makeShorterIf(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
-    final IfStatement $ = wizard.invert(s);
+    final IfStatement $ = trick.invert(s);
     if (then.isEmpty())
       return $;
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = Tricks.sequencerRank(last(then)), rankElse = Tricks.sequencerRank(last(elze));
-    return rankElse > rankThen || rankThen == rankElse && !Tricks.thenIsShorter(s) ? $ : main;
+    final int rankThen = trick.sequencerRank(last(then)), rankElse = trick.sequencerRank(last(elze));
+    return rankElse > rankThen || rankThen == rankElse && !trick.thenIsShorter(s) ? $ : main;
   }
 
   public static boolean mixedLiteralKind(final Collection<Expression> xs) {
@@ -116,7 +115,7 @@ public enum Tricks {
 
   public static boolean shoudlInvert(final IfStatement s) {
     final int $ = sequencerRank(hop.lastStatement(then(s))), rankElse = sequencerRank(hop.lastStatement(elze(s)));
-    return rankElse > $ || $ == rankElse && !Tricks.thenIsShorter(s);
+    return rankElse > $ || $ == rankElse && !trick.thenIsShorter(s);
   }
 
   public static boolean thenIsShorter(final IfStatement s) {
@@ -135,8 +134,8 @@ public enum Tricks {
     if (n1 > n2)
       return false;
     assert n1 == n2;
-    final IfStatement $ = wizard.invert(s);
-    return positivePrefixLength($) >= positivePrefixLength(wizard.invert($));
+    final IfStatement $ = trick.invert(s);
+    return positivePrefixLength($) >= positivePrefixLength(trick.invert($));
   }
 
   private static int positivePrefixLength(final IfStatement $) {
@@ -145,5 +144,23 @@ public enum Tricks {
 
   private static int sequencerRank(final ASTNode ¢) {
     return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
+  }
+
+  public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
+    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
+  }
+
+  public static IfStatement invert(final IfStatement ¢) {
+    return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
+  }
+
+  /** As {@link elze(ConditionalExpression)} but returns the last else statement
+   * in "if - else if - ... - else" statement
+   * @param ¢ JD
+   * @return last nested else statement */
+  public static Statement recursiveElze(final IfStatement ¢) {
+    for (Statement $ = ¢.getElseStatement();; $ = ((IfStatement) $).getElseStatement())
+      if (!($ instanceof IfStatement))
+        return $;
   }
 }
