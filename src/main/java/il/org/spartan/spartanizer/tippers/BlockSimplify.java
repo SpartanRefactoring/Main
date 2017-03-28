@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Example.*;
+
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -14,6 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
 
 /** convert {@code { ; ; g(); {} { ; { ; { ; } } ; } } } into {@code g();}
@@ -23,6 +26,14 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x5231A5575D7AB4B4L;
 
+  @Override public Example[] examples() {
+    return new Example[] { //
+        convert("{ ; ; g(); {} { ; { ; { ; } } ; } } ") //
+            .to("g();"), //
+        Example.ignores("g();"), //
+    };
+  }
+  
   static Statement reorganizeNestedStatement(final Statement ¢) {
     final List<Statement> $ = extract.statements(¢);
     switch ($.size()) {
@@ -34,6 +45,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
         return reorganizeStatement(¢);
     }
   }
+  
 
   @SuppressWarnings("boxing") private static boolean identical(final List<Statement> os1, final List<Statement> os2) {
     return os1.size() == os2.size() && range.to(os1.size()).stream().allMatch(λ -> os1.get(λ) == os2.get(λ));
