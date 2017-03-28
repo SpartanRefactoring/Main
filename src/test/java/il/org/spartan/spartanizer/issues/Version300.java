@@ -97,7 +97,7 @@ public final class Version300 {
   }
 
   @Test public void overridePublicStatementreplacementNotNullFinalBlockbNotNullFinalListStatementssextractstatementsbIfidenticalssstatementsbhazhidingsssReturnNullNullableFinalASTNodeparentazstatementparentbIfparentNulliztryStatementparentReturnreorganizeStatementbSwitchsssizeCase0ReturnmakeemptyStatementbCase1FinalStatementfirstssIfizblockEssentialReturnsubjectstatementtoBlockReturncopyofDefaultReturnreorganizeNestedStatementb() {
-    trimmingOf("" + //
+    trimmingOf("/**/" + //
         "@A public B a(@C final D b) {" + //
         "    @C final E<B> c = d.e(b);" + //
         "    if (f(c, e(b)) || g.h(c)) {" + //
@@ -122,7 +122,7 @@ public final class Version300 {
         "  }"//
     ).gives(
         // Edit this to reflect your expectation
-        "" + //
+        "/**/" + //
             "@A public B a(@C final D b) {" + //
             "    @C final E<B> c = d.e(b);" + //
             "    if (f(c, e(b)) || g.h(c)) {" + //
@@ -149,19 +149,25 @@ public final class Version300 {
     )//
         .stays();
   }
-  /** Introduced by Yogi on Tue-Mar-28-02:39:50-IDT-2017 
-  (code automatically in class 'JUnitTestMethodFacotry')*/
-    @Test public void test_aPublicBaCFinalDbCFinalEBcdebIffcebghcReturnNullFFinalGijkibIfiNulllmiReturnnbSwitchcoCase0ReturnpqbCase1FinalBrrscIfltrReturnukrvReturnwxrDefaultReturnyb() {
-       trimmingOf("@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c)){return null;}@F final G i=j.k(i(b));if((i==null)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:final B r;r=s(c);if(l.t(r))return u.k(r).v();return w.x(r);default:return y(b);}}") //
-           .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
-           .gives("@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c)){return null;}@F final G i=j.k(i(b));if((i==null)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:final B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
-           .using(Block.class, new BlockSingleton()) //
-           .gives("@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c))return null;@F final G i=j.k(i(b));if((i==null)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:final B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
-           .using(Block.class, new BlockSingleton()) //
-           .gives("@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c))return null;@F final G i=j.k(i(b));if((i==null)||l.m(i))return n(b);switch(c.o()){case 0:return p.q(b);case 1:final B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
-           .stays() //
+
+  /** Introduced by Yogi on Tue-Mar-28-02:39:50-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_aPublicBaCFinalDbCFinalEBcdebIffcebghcReturnNullFFinalGijkibIfiNulllmiReturnnbSwitchcoCase0ReturnpqbCase1FinalBrrscIfltrReturnukrvReturnwxrDefaultReturnyb() {
+    trimmingOf(
+        "@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c)){return null;}@F final G i=j.k(i(b));if((i==null)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:final B r;r=s(c);if(l.t(r))return u.k(r).v();return w.x(r);default:return y(b);}}") //
+            .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+            .gives(
+                "@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c)){return null;}@F final G i=j.k(i(b));if((i==null)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:final B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
+            .using(Block.class, new BlockSingleton()) //
+            .gives(
+                "@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c))return null;@F final G i=j.k(i(b));if((i==null)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:final B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
+            .using(Block.class, new BlockSingleton()) //
+            .gives(
+                "@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c))return null;@F final G i=j.k(i(b));if((i==null)||l.m(i))return n(b);switch(c.o()){case 0:return p.q(b);case 1:final B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
+            .stays() //
     ;
   }
+
   @Test public void c() {
     azzert.that(
         theSpartanizer.thrice(//

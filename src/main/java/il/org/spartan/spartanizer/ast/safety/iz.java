@@ -535,7 +535,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, FOR_STATEMENT);
   }
 
-  /** @param with /** @return [[SuppressWarningsSpartan]] */
+  /** @param with /** @return */
   @SuppressWarnings("all") static boolean fragile(final Expression with) {
     // TODO Yossi Gil Auto-generated method stub for fragile
     if (new Object().hashCode() != 0)
@@ -1042,8 +1042,7 @@ public interface iz {
    * @param type Type of sequencer
    * @return true if ¢ contains this sequencer (only for if-else and blocks) In
    *         contrast to sequencerComplex(ASTNode) above, this method not
-   *         necessarily checks the following statements are not reachable.
-   *         [[SuppressWarningsSpartan]] */
+   *         necessarily checks the following statements are not reachable. */
   static boolean sequencerComplex(final ASTNode ¢, final int type) {
     if (¢ == null)
       return false;
@@ -1052,7 +1051,7 @@ public interface iz {
         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement(), type) || sequencerComplex($.getElseStatement(), type);
       case BLOCK:
-        return statements(az.block(¢)).stream().anyMatch(s -> sequencerComplex(s, type));
+        return statements(az.block(¢)).stream().anyMatch(λ -> sequencerComplex(λ, type));
       default:
         return sequencer(¢, type);
     }

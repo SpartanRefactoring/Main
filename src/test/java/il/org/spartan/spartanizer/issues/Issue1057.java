@@ -9,11 +9,11 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Test class for issue #1057, see
  * {@link FragmentInitializerToForInitializers}.
  * @author Ori Roth {@code ori.rothh@gmail.com}
- * @since 2017-01-16 [[SuppressWarningsSpartan]] */
+ * @since 2017-01-16 */
 @SuppressWarnings("static-method")
 public class Issue1057 {
   @Test public void a() {
-    trimmingOf("" //
+    trimmingOf("/**/" //
         + "void f() {\n" //
         + "  int a = 1;" //
         + "  x();" //
@@ -24,7 +24,7 @@ public class Issue1057 {
   }
 
   @Test public void b() {
-    trimmingOf("" //
+    trimmingOf("/**/" //
         + "private static int nsBranchBreakOrRetInd(final SwitchStatement s, int i) {\n" //
         + "  final List<Statement> l = statements(az.switchStatement(s));\n" //
         + "  int $;\n" //

@@ -31,9 +31,8 @@ public final class IfReturnFooElseReturnBar extends ReplaceCurrentNode<IfStateme
     return ¢ != null && extract.returnExpression(then(¢)) != null && extract.returnExpression(elze(¢)) != null;
   }
 
-  /** [[SuppressWarningsSpartan]] */
   @Override public Statement replacement(final IfStatement s) {
-    final Expression then = extract.returnExpression(then(s)), elze = extract.returnExpression(elze(s));
-    return then == null || elze == null ? null : subject.operand(subject.pair(then, elze).toCondition(s.getExpression())).toReturn();
+    final Expression $ = extract.returnExpression(then(s)), elze = extract.returnExpression(elze(s));
+    return $ == null || elze == null ? null : subject.operand(subject.pair($, elze).toCondition(s.getExpression())).toReturn();
   }
 }

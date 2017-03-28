@@ -57,14 +57,9 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
   /** [[SuppressWarningsSpartan]] */
   @Override protected boolean prerequisite(final ArrayAccess a) {
     final Expression e = a.getIndex();
-    final Statement b = extract.containingStatement(a);
-    if (!iz.expressionStatement(b) || !iz.block(parent(b)) || !iz.updating(e) || iz.assignment(e))
-      return false;
+    final Statement $ = extract.containingStatement(a);
     final SimpleName n = iz.prefixExpression(e) ? extract.simpleName(az.prefixExpression(e)) : extract.simpleName(az.postfixExpression(e));
-    if (n == null)
-      return false;
-    if (extract.countNameInSubtree(n, b) == 1)
-      return true;
-    return false;
+    return iz.expressionStatement($) && iz.block(parent($)) && iz.updating(e) && !iz.assignment(e) && n != null
+        && extract.countNameInSubtree(n, $) == 1;
   }
 }
