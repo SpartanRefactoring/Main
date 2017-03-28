@@ -50,6 +50,31 @@ import il.org.spartan.utils.range.*;
  * @since 2014 */
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
+  static boolean thenIsShorter(final IfStatement s) {
+    final Statement then = then(s), elze = elze(s);
+    if (elze == null)
+      return true;
+    final int s1 = count.lines(then), s2 = count.lines(elze);
+    if (s1 < s2)
+      return true;
+    if (s1 > s2)
+      return false;
+    assert s1 == s2;
+    final int n2 = extract.statements(elze).size(), n1 = extract.statements(then).size();
+    if (n1 < n2)
+      return true;
+    if (n1 > n2)
+      return false;
+    assert n1 == n2;
+    final IfStatement $ = trick.invert(s);
+    return trick.positivePrefixLength($) >= trick.positivePrefixLength(trick.invert($));
+  }
+
+  static boolean shoudlInvert(final IfStatement s) {
+    final int $ = trick.sequencerRank(hop.lastStatement(then(s))), rankElse = trick.sequencerRank(hop.lastStatement(elze(s)));
+    return rankElse > $ || $ == rankElse && !thenIsShorter(s);
+  }
+
   PostfixExpression.Operator DECREMENT_POST = PostfixExpression.Operator.DECREMENT;
   PrefixExpression.Operator DECREMENT_PRE = PrefixExpression.Operator.DECREMENT;
   PostfixExpression.Operator INCREMENT_POST = PostfixExpression.Operator.INCREMENT;
@@ -414,26 +439,6 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
-   * fragments which are not live in the containing
-   * {@link VariabelDeclarationStatement}. If no fragments are left, then this
-   * containing node is eliminated as well.
-   * @param f
-   * @param r
-   * @param g */
-  static void removeFragment(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
-    if (live.isEmpty()) {
-      r.remove(parent, g);
-      return;
-    }
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    fragments(newParent).clear();
-    fragments(newParent).addAll(live);
-    r.replace(parent, newParent, g);
-  }
-
   /** Determines if we can be certain that a {@link Statement} ends with a
    * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
    * {@link BreakStatement}, {@link ContinueStatement}).
@@ -739,16 +744,6 @@ public interface wizard {
     return (N) copySubtree(t, n);
   }
 
-  /** As {@link elze(ConditionalExpression)} but returns the last else statement
-   * in "if - else if - ... - else" statement
-   * @param ¢ JD
-   * @return last nested else statement */
-  static Statement recursiveElze(final IfStatement ¢) {
-    for (Statement $ = ¢.getElseStatement();; $ = ((IfStatement) $).getElseStatement())
-      if (!($ instanceof IfStatement))
-        return $;
-  }
-
   static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
@@ -809,21 +804,6 @@ public interface wizard {
 
   static Set<Modifier> redundants(final BodyDeclaration ¢) {
     return matches(¢, redundancies(¢));
-  }
-
-  /** Remove all occurrences of a boolean literal from a list of
-   * {@link Expression}¢
-   * <p>
-   * @param ¢ JD
-   * @param xs JD */
-  static void removeAll(final boolean ¢, final List<Expression> xs) {
-    // noinspection ForLoopReplaceableByWhile
-    for (;;) {
-      final Expression x = find(¢, xs);
-      if (x == null)
-        return;
-      xs.remove(x);
-    }
   }
 
   /** replaces an ASTNode with another
@@ -926,21 +906,9 @@ public interface wizard {
 
   static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
-    $.setExpression(FragmentInitializerToForInitializers.removeInitializersFromExpression(copy.of(expression(¢)), s));
+    $.setExpression(trick.removeInitializersFromExpression(copy.of(expression(¢)), s));
     FragmentInitializerToForInitializers.setInitializers($, copy.of(s));
     return $;
-  }
-
-  static IfStatement invert(final IfStatement ¢) {
-    return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
-  }
-
-  static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
-  }
-
-  static <T> void removeLast(final List<T> ¢) {
-    ¢.remove(¢.size() - 1);
   }
 
   static List<Statement> listMe(final Expression ¢) {

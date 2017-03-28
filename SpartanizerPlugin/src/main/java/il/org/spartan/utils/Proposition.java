@@ -9,7 +9,6 @@ import java.util.stream.*;
 import il.org.spartan.*;
 
 /*** <p>
- * TODO second lecture
  * <ol>
  * <li>discuss asString()
  * <li>discuss fullEval() *

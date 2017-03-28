@@ -9,18 +9,18 @@ public class B {
   static Map<B, Set<B>> better = new HashMap<>();
 
   @Override public int hashCode() {
-    return 31 * (((left == null) ? 3 : left.hashCode()) + 31) + ((right == null) ? 13 : right.hashCode());
+    return 31 * ((left == null ? 3 : left.hashCode()) + 31) + (right == null ? 13 : right.hashCode());
   }
 
-  public boolean eq(B b1, B b2) {
+  public boolean eq(final B b1, final B b2) {
     return b1 == null && b2 == null || b1 != null && b2 != null && eq(b1.left, b2.left) && eq(b1.right, b2.right);
   }
 
-  @Override public boolean equals(Object ¢) {
-    return ¢ == this || (getClass() == ¢.getClass() && eq(this, (B) ¢));
+  @Override public boolean equals(final Object ¢) {
+    return ¢ == this || getClass() == ¢.getClass() && eq(this, (B) ¢);
   }
 
-  public B(B left, B right) {
+  public B(final B left, final B right) {
     this.left = left;
     this.right = right;
   }
@@ -29,26 +29,26 @@ public class B {
     return String.format("(%s,%s)", s(left), s(right));
   }
 
-  private static String s(B ¢) {
+  private static String s(final B ¢) {
     return ¢ == null ? "." : ¢ + "";
   }
 
   B left, right;
 
-  static List<B> enumerate(int n) {
-    List<B> $ = new ArrayList<>();
+  static List<B> enumerate(final int n) {
+    final List<B> $ = new ArrayList<>();
     if (n <= 0) {
       $.add(null);
       return $;
     }
     for (int i = 0; i < n; ++i)
-      for (B left : enumerate(i))
-        for (B right : enumerate(n - i - 1))
+      for (final B left : enumerate(i))
+        for (final B right : enumerate(n - i - 1))
           $.add(new B(left, right));
     return $;
   }
 
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     System.out.println(enumerate(0).size());
     System.out.println(enumerate(1).size());
     System.out.println(enumerate(2).size());
