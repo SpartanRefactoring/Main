@@ -41,6 +41,6 @@ public final class IfThrowNoElseThrow extends GoToNextStatement<IfStatement>//
     if ($ == null)
       return null;
     final Expression e2 = getThrowExpression(nextStatement);
-    return e2 == null ? null : trick.replaceTwoStatements(r, s, subject.operand(subject.pair($, e2).toCondition(s.getExpression())).toThrow(), g);
+    return e2 == null ? null : action.replaceTwoStatements(r, s, subject.operand(subject.pair($, e2).toCondition(s.getExpression())).toThrow(), g);
   }
 }

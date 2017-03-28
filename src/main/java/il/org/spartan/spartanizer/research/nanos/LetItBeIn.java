@@ -48,7 +48,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       if (pp != null)
         e = Inliner.protect(e, pp);
       $.remove(parent, g);
-      $.replace(nextStatement, wizard.ast((!iz.returnStatement(nextStatement) ? "" : "return ") + "let(()->" + initializer + ").in(" + name(f) + "->"
+      $.replace(nextStatement, make.ast((!iz.returnStatement(nextStatement) ? "" : "return ") + "let(()->" + initializer + ").in(" + name(f) + "->"
           + expression(nextStatement) + ");"), g);
       return $;
     }

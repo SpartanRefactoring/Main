@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -27,15 +27,15 @@ public class Issue0835 {
   }
 
   @Test public void emptyBlock1() {
-    azzert.that(0, is(statements(az.block(wizard.ast("{}"))).size()));
+    azzert.that(0, is(statements(az.block(make.ast("{}"))).size()));
   }
 
   @Test public void emptyBlock2() {
-    azzert.that(0, is(statements(az.block(wizard.ast("\n{\n}\n"))).size()));
+    azzert.that(0, is(statements(az.block(make.ast("\n{\n}\n"))).size()));
   }
 
   @Test public void emptyBlock3() {
-    azzert.that(1, is(statements(az.block(wizard.ast("\n{int a;}\n"))).size()));
+    azzert.that(1, is(statements(az.block(make.ast("\n{int a;}\n"))).size()));
   }
 
   @Test public void returnNotNullNonEmptyBlock() {

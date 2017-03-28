@@ -11,6 +11,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -52,7 +53,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
       scope.push(m);
       methods.get(key).add(m);
       final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
-          .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
+          .in(make.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
     } catch (final AssertionError __) {
