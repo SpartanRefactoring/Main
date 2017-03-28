@@ -26,7 +26,7 @@ public final class AssignmentToPrefixIncrement extends ReplaceCurrentNode<Assign
   }
 
   private static boolean provablyNotString(final Assignment ¢) {
-    return type.isNotString(subject.pair(left(¢), right(¢)).to(wizard.assignToInfix(¢.getOperator())));
+    return type.isNotString(subject.pair(left(¢), right(¢)).to(wizard.assign2infix(¢.getOperator())));
   }
 
   private static ASTNode replace(final Assignment ¢) {

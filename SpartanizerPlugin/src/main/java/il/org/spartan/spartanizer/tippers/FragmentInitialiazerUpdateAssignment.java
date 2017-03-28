@@ -45,7 +45,7 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragmentAndStat
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
-    final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assignToInfix(o));
+    final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
