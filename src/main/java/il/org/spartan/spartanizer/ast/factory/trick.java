@@ -82,7 +82,7 @@ public enum trick {
     if (elze.isEmpty())
       return main;
     final int rankThen = trick.sequencerRank(last(then)), rankElse = trick.sequencerRank(last(elze));
-    return rankElse > rankThen || rankThen == rankElse && !wizard.thenIsShorter(s) ? $ : main;
+    return rankElse > rankThen || rankThen == rankElse && !trick.thenIsShorter(s) ? $ : main;
   }
 
   public static boolean mixedLiteralKind(final Collection<Expression> xs) {
@@ -114,6 +114,7 @@ public enum trick {
   public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
     r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
+
 
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
@@ -223,7 +224,32 @@ public enum trick {
     return r;
   }
 
-  public static int positivePrefixLength(final IfStatement $) {
+  public static boolean shoudlInvert(final IfStatement s) {
+    final int $ = sequencerRank(hop.lastStatement(then(s))), rankElse = sequencerRank(hop.lastStatement(elze(s)));
+    return rankElse > $ || $ == rankElse && !trick.thenIsShorter(s);
+  }
+
+  public static boolean thenIsShorter(final IfStatement s) {
+    final Statement then = then(s), elze = elze(s);
+    if (elze == null)
+      return true;
+    final int s1 = count.lines(then), s2 = count.lines(elze);
+    if (s1 < s2)
+      return true;
+    if (s1 > s2)
+      return false;
+    assert s1 == s2;
+    final int n2 = extract.statements(elze).size(), n1 = extract.statements(then).size();
+    if (n1 < n2)
+      return true;
+    if (n1 > n2)
+      return false;
+    assert n1 == n2;
+    final IfStatement $ = trick.invert(s);
+    return positivePrefixLength($) >= positivePrefixLength(trick.invert($));
+  }
+
+  private static int positivePrefixLength(final IfStatement $) {
     return metrics.length($.getExpression(), then($));
   }
 

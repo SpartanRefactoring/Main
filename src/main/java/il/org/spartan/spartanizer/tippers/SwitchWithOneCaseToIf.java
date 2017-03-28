@@ -1,14 +1,17 @@
 package il.org.spartan.spartanizer.tippers;
+import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -47,11 +50,54 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     final AST a = s.getAST();
     final Block b1 = a.newBlock(), b2 = a.newBlock();
     final switchBranch switchBranch = first.hasDefault() ? first : last(bs);
-    statements(b2).addAll(trick.removeBreakSequencer(switchBranch.statements));
+    statements(b2).addAll(removeBreakSequencer(switchBranch.statements));
     final il.org.spartan.spartanizer.ast.navigate.switchBranch branch = !first.hasDefault() ? first : last(bs);
-    statements(b1).addAll(trick.removeBreakSequencer(branch.statements));
+    statements(b1).addAll(removeBreakSequencer(branch.statements));
     final Block $ = a.newBlock();
     statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, branch.cases)));
+    return $;
+  }
+
+  private List<Statement> statements;
+  private List<Statement> functionalCommands() {
+    final List<Statement> $ = IntStream.range(0, statements.size() - 1).mapToObj(statements::get).collect(toList());
+    if (!iz.breakStatement(lisp.last(statements)))
+      $.add(lisp.last(statements));
+    return $;
+  }
+
+  public boolean hasFallThrough() {
+    return statements.stream().anyMatch(iz::switchCase);
+  }
+
+  public static Statement removeBreakSequencer(final Statement s) {
+    if (s == null)
+      return null;
+    if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
+      return copy.of(s);
+    final AST a = s.getAST();
+    Statement $ = null;
+    if (iz.ifStatement(s)) {
+      final IfStatement t = az.ifStatement(s);
+      $ = subject.pair(removeBreakSequencer(step.then(t)), removeBreakSequencer(step.elze(t))).toIf(copy.of(step.expression(t)));
+    } else if (!iz.block(s)) {
+      if (iz.breakStatement(s) && iz.block(s.getParent()))
+        $ = a.newEmptyStatement();
+    } else {
+      final Block b = subject.ss(removeBreakSequencer(statements(az.block(s)))).toBlock();
+      statements(b).addAll(removeBreakSequencer(statements(az.block(s))));
+      $ = b;
+    }
+    return $;
+  }
+
+  public static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
+    final List<Statement> $ = new ArrayList<>();
+    for (final Statement ¢ : ss) {
+      final Statement s = removeBreakSequencer(¢);
+      if (s != null)
+        $.add(s);
+    }
     return $;
   }
 
