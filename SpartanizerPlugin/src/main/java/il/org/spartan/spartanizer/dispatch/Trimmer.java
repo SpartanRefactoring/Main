@@ -13,6 +13,7 @@ import org.eclipse.text.edits.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -209,13 +210,21 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 
+  @SafeVarargs @NotNull public final Trimmer fixTipper(final Tipper<?>... ¢) {
+    return fix(Toolbox.freshCopyOfAllTippers(), ¢);
+  }
+
+  @SafeVarargs @NotNull public final Trimmer fixBloater(final Tipper<?>... ¢) {
+    return fix(InflaterProvider.freshCopyOfAllExpanders(), ¢);
+  }
+
   // Does not require node class --or
-  @SafeVarargs @NotNull public final Trimmer fix(final Tipper<?>... ts) {
+  @NotNull private Trimmer fix(final Toolbox all, final Tipper<?>... ts) {
     final List<Tipper<?>> tss = as.list(ts);
     if (!firstAddition)
       tss.addAll(toolbox.getAllTippers());
     firstAddition = false;
-    toolbox = Toolbox.freshCopyOfAllTippers();
+    toolbox = all;
     for (final List<Tipper<? extends ASTNode>> ¢ : toolbox.implementation)
       if (¢ != null)
         ¢.retainAll(tss);

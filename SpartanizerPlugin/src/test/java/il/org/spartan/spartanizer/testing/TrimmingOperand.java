@@ -150,8 +150,13 @@ public class TrimmingOperand extends Wrapper<String> {
     return this;
   }
 
-  @SafeVarargs public final TrimmingOperand using(final Tipper<?>... ¢) {
-    trimmer.fix(¢);
+  @SafeVarargs public final TrimmingOperand usingTipper(final Tipper<?>... ¢) {
+    trimmer.fixTipper(¢);
+    return this;
+  }
+
+  @SafeVarargs public final TrimmingOperand usingBloater(final Tipper<?>... ¢) {
+    trimmer.fixBloater(¢);
     return this;
   }
 }
