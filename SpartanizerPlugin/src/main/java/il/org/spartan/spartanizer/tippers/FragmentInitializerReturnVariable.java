@@ -38,7 +38,7 @@ public final class FragmentInitializerReturnVariable extends $FragmentAndStateme
     final Expression returnValue = expression(s);
     if (returnValue == null || !wizard.same(n, returnValue))
       return null;
-    wizard.removeFragment(f, $, g);
+    trick.removeDeadFragment(f, $, g);
     $.replace(s, subject.operand(initializer).toReturn(), g);
     return $;
   }

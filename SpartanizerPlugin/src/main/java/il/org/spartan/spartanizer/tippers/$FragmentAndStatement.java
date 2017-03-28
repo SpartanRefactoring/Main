@@ -72,17 +72,6 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
     return $ - metrics.size(newParent);
   }
 
-  /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
-   * fragment fragments in the containing {@link VariabelDeclarationStatement} .
-   * Still, if the containing node is left empty, it is removed as well.
-   * @param f
-   * @param r
-   * @param g */
-  static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    r.remove(parent.fragments().size() > 1 ? f : parent, g);
-  }
-
   static boolean usedInSubsequentInitializers(final VariableDeclarationFragment f, final SimpleName n) {
     boolean searching = true;
     for (final VariableDeclarationFragment ff : fragments(az.variableDeclrationStatement(f.getParent())))
