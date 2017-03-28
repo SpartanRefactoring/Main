@@ -15,7 +15,6 @@ import il.org.spartan.*;
  * @author Yossi Gil {@code  Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings("static-method")
 public class PropositionTest {
   private static boolean ignoreNext() {
@@ -275,7 +274,7 @@ public class PropositionTest {
   }
 
   @Test public void e() {
-    azzert.that(T_AND_F_AND_X.reduce(javaReducer), is("T || F || X"));
+    azzert.that(T_AND_F_AND_X.reduce(javaReducer), is("T && F && X"));
   }
 
   @Test public void f() {
