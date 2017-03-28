@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -44,7 +45,7 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     final SimpleName ¢ = x.getAST().newSimpleName(namer.lambda);
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tricks.rename($, ¢, x, r, g);
+        action.rename($, ¢, x, r, g);
       }
     };
   }

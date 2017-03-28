@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -250,5 +251,13 @@ public enum haz {
 
   public static boolean hasSafeVarags(final MethodDeclaration d) {
     return extract.annotations(d).stream().anyMatch(λ -> iz.identifier("SafeVarargs", λ.getTypeName()));
+  }
+
+  /** @param ns unknown number of nodes to check
+   * @return whetherone of the nodes is an Expression Statement of type Post or
+   *         Pre Expression with ++ or -- operator. false if none of them are or
+   *         if the given parameter is null. */
+  public static boolean containIncOrDecExp(final ASTNode... ns) {
+    return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.updating(λ));
   }
 }

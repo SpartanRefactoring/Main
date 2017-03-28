@@ -35,15 +35,15 @@ public class ExamplesTests {
     Stream.of(tipper.examples()).filter(Ignores.class::isInstance).map(Ignores.class::cast).forEachOrdered(this::ignores);
   }
 
-  private void ignores(final Ignores ¢) {
-    wrap(() -> trimmingOf(¢.get()).using(tipper).stays());
+  protected void ignores(final Ignores ¢) {
+    wrap(() -> trimmingOf(¢.get()).usingTipper(tipper).stays());
   }
 
-  private void converts(final Converts ¢) {
-    wrap(() -> trimmingOf(¢.from()).using(tipper).gives(¢.to()));
+  protected void converts(final Converts ¢) {
+    wrap(() -> trimmingOf(¢.from()).usingTipper(tipper).gives(¢.to()));
   }
 
-  private void wrap(final Runnable test) {
+  protected void wrap(final Runnable test) {
     try {
       test.run();
     } catch (final AssertionError x) {

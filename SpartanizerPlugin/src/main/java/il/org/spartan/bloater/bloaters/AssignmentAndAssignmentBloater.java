@@ -52,6 +52,6 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
   }
 
   @Override public Example[] examples() {
-    return new Example[] { convert("a=b=5;").to("b=5; a=b"), convert("a+=b+=3;").to("b += 3; a += b;") };
+    return new Example[] { convert("a=b=5;").to("b=5; a=b;"), convert("a+=b+=3;").to("b += 3; a += b;") };
   }
 }

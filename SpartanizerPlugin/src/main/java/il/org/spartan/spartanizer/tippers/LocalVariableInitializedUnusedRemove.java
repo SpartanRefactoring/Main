@@ -39,7 +39,7 @@ public final class LocalVariableInitializedUnusedRemove extends VariableFragment
     final ListRewrite l = $.getListRewrite(b, Block.STATEMENTS_PROPERTY);
     for (final Statement ¢ : wizard.decompose(initializer()))
       l.insertBefore(copy.of(¢), parent(), g);
-    wizard.removeFragment(object(), $, g);
+    action.removeDeadFragment(object(), $, g);
     return $;
   }
 }
