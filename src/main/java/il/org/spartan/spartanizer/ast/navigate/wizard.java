@@ -67,7 +67,7 @@ public interface wizard {
       return false;
     assert n1 == n2;
     final IfStatement $ = trick.invert(s);
-    return trick.positivePrefixLength($) >= trick.positivePrefixLength(trick.invert($));
+    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(trick.invert($));
   }
 
   static boolean shoudlInvert(final IfStatement s) {
@@ -904,12 +904,7 @@ public interface wizard {
     return $;
   }
 
-  static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
-    final ForStatement $ = copy.of(¢);
-    $.setExpression(trick.removeInitializersFromExpression(copy.of(expression(¢)), s));
-    FragmentInitializerToForInitializers.setInitializers($, copy.of(s));
-    return $;
-  }
+
 
   static List<Statement> listMe(final Expression ¢) {
     return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
@@ -950,5 +945,9 @@ public interface wizard {
         return $;
       }
     }.map(x);
+  }
+
+  static int positivePrefixLength(final IfStatement $) {
+    return metrics.length($.getExpression(), then($));
   }
 }
