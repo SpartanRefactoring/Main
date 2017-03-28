@@ -33,8 +33,8 @@ public class RenameConstructorParameters extends EagerTipper<MethodDeclaration> 
           return alreadyDefined(to1, d) ? null : new Tip(description(d), d, getClass()) {
             @Override public void go(final ASTRewrite r, final TextEditGroup g) {
               for (SingleVariableDeclaration q : step.parameters(d))
-                Tricks.rename(from1, to1, q, r, g);
-              Tricks.rename(from1, to1, d.getBody(), r, g);
+                action.rename(from1, to1, q, r, g);
+              action.rename(from1, to1, d.getBody(), r, g);
             }
           };
         }
