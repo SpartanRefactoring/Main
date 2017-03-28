@@ -1,15 +1,17 @@
 package il.org.spartan.utils;
+
 import java.util.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-27 */
 public class B {
-  static Map<B, Set<B>> better = new HashMap<>(); 
+  static Map<B, Set<B>> better = new HashMap<>();
 
   @Override public int hashCode() {
     return 31 * (((left == null) ? 3 : left.hashCode()) + 31) + ((right == null) ? 13 : right.hashCode());
   }
+
   public boolean eq(B b1, B b2) {
     return b1 == null && b2 == null || b1 != null && b2 != null && eq(b1.left, b2.left) && eq(b1.right, b2.right);
   }

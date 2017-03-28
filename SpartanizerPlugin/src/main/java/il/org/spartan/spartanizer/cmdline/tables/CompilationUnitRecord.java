@@ -69,13 +69,12 @@ public class CompilationUnitRecord {
    * @param f
    * @return
    *         <p>
-   *         [[SuppressWarningsSpartan]] */
+  */
   static boolean containsTestAnnotation(final File f) {
     try {
-      final String javaCode = FileUtils.read(f);
-      containsTestAnnotation(javaCode);
-    } catch (final IOException x) {
-      monitor.infoIOException(x, "File = " + f);
+      containsTestAnnotation(FileUtils.read(f));
+    } catch (final IOException ¢) {
+      monitor.infoIOException(¢, "File = " + f);
     }
     return hasTestAnnotation;
   }

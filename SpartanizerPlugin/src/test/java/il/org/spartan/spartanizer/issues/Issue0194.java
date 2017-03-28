@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * sequencer, or not a sequencer at all.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Ori Roth
- * @since Jan 6, 2017 [[SuppressWarningsSpartan]] */
+ * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")
 public final class Issue0194 {
   // TODO Ori convert to java doc --yg
@@ -79,7 +79,7 @@ public final class Issue0194 {
   // Empty Block.
   // Similar to test01() and test02().
   @Test public void test03() {
-    trimmingOf("" //
+    trimmingOf("/**/" //
         + "if(b1){"//
         + "x=13.5;"//
         + "{}"//
@@ -320,7 +320,7 @@ public final class Issue0194 {
   }
 
   @Test public void test15() {
-    trimmingOf("" //
+    trimmingOf("/**/" //
         + "if (a != null) {\n" //
         + "  final X a = f();\n" //
         + "  if (g())\n" //
@@ -330,7 +330,7 @@ public final class Issue0194 {
         + "  }\n" //
         + "}\n" //
         + "return null;")
-            .gives("" //
+            .gives("/**/" //
                 + "if (a == null)\n" //
                 + "  return null;\n" //
                 + "final X a = f();\n" //
