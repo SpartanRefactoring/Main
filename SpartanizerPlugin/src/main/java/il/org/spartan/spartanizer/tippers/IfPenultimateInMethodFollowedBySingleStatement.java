@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** Convert {@code if(a){f();return;}g();} into {@code if(a){f();return;}g();}
  * f(); } provided that this {@code if} statement is the last statement in a
@@ -37,7 +38,7 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNe
     final IfStatement newIf = copy.of(s);
     final Block block = az.block(then(newIf));
     if (block != null)
-      trick.removeLast(statements(block));
+      lisp2.removeLast(statements(block));
     else
       newIf.setThenStatement(make.emptyStatement(newIf));
     newIf.setElseStatement(copy.of(nextStatement));

@@ -1,5 +1,6 @@
 package il.org.spartan.utils;
 
+
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
@@ -9,6 +10,7 @@ import java.util.stream.*;
 import il.org.spartan.*;
 
 /*** <p>
+ * TODO second lecture
  * <ol>
  * <li>discuss asString()
  * <li>discuss fullEval() *
