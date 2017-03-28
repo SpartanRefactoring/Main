@@ -235,6 +235,7 @@ public class Toolbox {
             new BodyDeclarationModifiersSort<>(), //
             new MethodDeclarationRenameSingleParameterToIt(), //
             new MethodDeclarationConstructorMoveToInitializers(), //
+            new RenameConstructorParameters(),//
             // new MatchCtorParamNamesToFieldsIfAssigned(),
             // v 2.7 // This is a new // tipper // #20
             null)
