@@ -55,12 +55,13 @@ public class PropositionTest {
     azzert.that(B2_OR_B1.reduce(javaReducer), is(""));
   }
 
-  /** [[SuppressWarningsSpartan]] */
   @Test public void aa() {
     object = Proposition.T;
     assert object != null;
     object = Proposition.F;
+    assert object != null;
     object = Proposition.N;
+    assert object != null;
     object = Proposition.X;
     assert Proposition.T != null;
     assert Proposition.T != null;
@@ -68,9 +69,13 @@ public class PropositionTest {
     assert Proposition.T != null;
     assert Proposition.F != null;
     supplier = Proposition.T;
+    assert supplier != null;
     supplier = Proposition.F;
+    assert supplier != null;
     supplier = Proposition.T;
+    assert supplier != null;
     supplier = Proposition.F;
+    assert supplier != null;
     assert ignoreNext() || Proposition.T.getAsBoolean();
     assert ignoreNext() || Proposition.F.getAsBoolean();
     assert ignoreNext() || Proposition.T.getAsBoolean();

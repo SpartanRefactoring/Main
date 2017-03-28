@@ -53,31 +53,30 @@ public class CharacterShortcut extends AbstractHandler {
    * range of characters, all of them would be replaced.
    * @param c the character to write in the file
    * @param s the file and text location selected
-   * @return null [[SuppressWarningsSpartan]] */
-  private static Object insertCharacter(final char c, final Selection s) {
-    if (s == null || s.isEmpty() || s.textSelection == null)
+   * @return null */
+  private static Void insertCharacter(final char c, final Selection $) {
+    if ($ == null || $.isEmpty() || $.textSelection == null)
       return null;
-    final List<ICompilationUnit> us = s.getCompilationUnits();
+    final List<ICompilationUnit> us = $.getCompilationUnits();
     if (us == null || us.size() != 1)
       return null;
     final ICompilationUnit u = us.get(0);
     final MultiTextEdit m = new MultiTextEdit();
-    m.addChild(new DeleteEdit(s.textSelection.getOffset(), s.textSelection.getLength()));
-    m.addChild(new InsertEdit(s.textSelection.getOffset(), c + ""));
+    m.addChild(new DeleteEdit($.textSelection.getOffset(), $.textSelection.getLength()));
+    m.addChild(new InsertEdit($.textSelection.getOffset(), c + ""));
     try {
       u.applyTextEdit(m, new NullProgressMonitor());
-    } catch (final JavaModelException x) {
-      monitor.log(x);
-      return null;
+    } catch (final JavaModelException ¢) {
+      return monitor.log(¢);
     }
-    return fixSelection(s.textSelection.getOffset() + 1);
+    return fixSelection($.textSelection.getOffset() + 1);
   }
 
   /** Change text selection to empty text selection at the end of the original
    * selection.
    * @param i text selection required location
    * @return null */
-  private static Object fixSelection(final int i) {
+  private static Void fixSelection(final int i) {
     final IEditorPart p = Selection.Util.getEditorPart();
     if (!(p instanceof ITextEditor))
       return null;
