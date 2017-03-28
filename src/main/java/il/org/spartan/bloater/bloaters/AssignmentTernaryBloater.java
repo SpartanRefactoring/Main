@@ -26,9 +26,9 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
 
   @Override public Example[] examples() {
     return new Example[] { //
-        convert("(a?b:c;)") //
-            .to("if(a) b; else c;"), //
-        Example.ignores("if(a) b; else c;") //
+        convert("temp = (a == 0 ? b:c);") //
+            .to("if(a==0) temp = b; else temp = c;"), //
+        Example.ignores("if(a==0) temp = b; else temp= c;") //
     };
   }
   
