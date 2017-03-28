@@ -46,7 +46,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         if (!azMethodExist(¢))
           addAzMethod(¢, r, g);
-        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(azMethodName(¢) + "(" + step.expression(¢) + ")"), g);
+        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), make.ast(azMethodName(¢) + "(" + step.expression(¢) + ")"), g);
       }
     };
   }
@@ -90,16 +90,16 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
 
   private static void addAzMethodToType(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
     final AbstractTypeDeclaration t = containingType(¢);
-    wizard.addMethodToType(t, az.methodDeclaration(ASTNode.copySubtree(t.getAST(), createAzMethod(¢))), r, g);
+    action.addMethodToType(t, az.methodDeclaration(ASTNode.copySubtree(t.getAST(), createAzMethod(¢))), r, g);
   }
 
   private static void addAzMethodToFile(final CastExpression ¢, final String path) {
-    wizard.addMethodToFile(path, az.methodDeclaration(createAzMethod(¢)));
+    action.addMethodToFile(path, az.methodDeclaration(createAzMethod(¢)));
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
     return az.methodDeclaration(ASTNode.copySubtree(¢.getAST(),
-        az.methodDeclaration(wizard.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
+        az.methodDeclaration(make.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
   }
 
   private static String azMethodModifier() {

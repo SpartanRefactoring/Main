@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
 
 public abstract class InfixExpressionSortingRest extends InfixExpressionSorting {
   private static final long serialVersionUID = -1229400419095554287L;
@@ -22,7 +21,7 @@ public abstract class InfixExpressionSortingRest extends InfixExpressionSorting 
     if (!suitable(¢))
       return false;
     final List<Expression> $ = extract.allOperands(¢);
-    return $.size() > 2 && !Tricks.mixedLiteralKind($) && sort(chop($));
+    return $.size() > 2 && !action.mixedLiteralKind($) && sort(chop($));
   }
 
   @Override public final Expression replacement(final InfixExpression $) {

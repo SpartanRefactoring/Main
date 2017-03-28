@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** see issue #815 and #799 for more details
@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @since 16-11-11 */
 public class Issue0815 {
   private static ASTNode ASTNodeFromString(final String ¢) {
-    return wizard.ast(¢);
+    return make.ast(¢);
   }
 
   @Test @SuppressWarnings("static-method") public void assertCoverForOfMethod() {

@@ -13,6 +13,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** TODO: Vivian Shehadeh please add a description
@@ -22,24 +23,24 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class analyzeTest {
-  private static final ASTNode AST = wizard.ast("public void m(int y){ y=5;}");
+  private static final ASTNode AST = make.ast("public void m(int y){ y=5;}");
 
   @Test public void a() {
-    final List<String> s = analyze.dependencies(wizard.ast("return x + y;")).stream().collect(toList());
+    final List<String> s = analyze.dependencies(make.ast("return x + y;")).stream().collect(toList());
     assert s.contains("x");
     assert s.contains("y");
     azzert.that(s.size(), is(2));
   }
 
   @Test public void b() {
-    final List<String> s = analyze.dependencies(wizard.ast("public void m(){return x + y;}")).stream().map(λ -> λ + "").collect(toList());
+    final List<String> s = analyze.dependencies(make.ast("public void m(){return x + y;}")).stream().map(λ -> λ + "").collect(toList());
     assert s.contains("x");
     assert s.contains("y");
     azzert.that(s.size(), is(2));
   }
 
   @Test public void c() {
-    final List<String> s = analyze.dependencies(wizard.ast("public void m(){a.b.c(x,y,\"g\");}")).stream().map(λ -> λ + "").collect(toList());
+    final List<String> s = analyze.dependencies(make.ast("public void m(){a.b.c(x,y,\"g\");}")).stream().map(λ -> λ + "").collect(toList());
     assert s.contains("x");
     assert s.contains("y");
     assert s.contains("a");
@@ -55,7 +56,7 @@ public final class analyzeTest {
   @Test public void findFirst1() {
     azzert.that(find//
         .first(SingleVariableDeclaration.class)//
-        .under(wizard.ast("public void m(int y){ y=5;}")//
+        .under(make.ast("public void m(int y){ y=5;}")//
         ).getType(), iz("int")//
     );
   }
@@ -63,19 +64,19 @@ public final class analyzeTest {
   @Test public void findFirst2() {
     azzert.that(find//
         .first(VariableDeclaration.class)//
-        .under(wizard.ast("public void m(int y){ y=5;}")//
+        .under(make.ast("public void m(int y){ y=5;}")//
         ).getName(), //
         iz("y")//
     );
   }
 
   @Test public void testFindDeclarationInMethod0() {
-    azzert.isNull(analyze.type(az.name(wizard.ast("x"))));
+    azzert.isNull(analyze.type(az.name(make.ast("x"))));
   }
 
   @Test public void testFindDeclarationInMethod1() {
     azzert.that("int", is(analyze.type(
-        descendants.whoseClassIs(VariableDeclaration.class).from(wizard.ast("public class A{public void m(){ int x,y,z;} ")).get(1).getName())));
+        descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{public void m(){ int x,y,z;} ")).get(1).getName())));
   }
 
   @Test public void testFindDeclarationInType0() {
@@ -84,21 +85,21 @@ public final class analyzeTest {
 
   @Test public void testFindDeclarationInType1() {
     azzert.that("int", is(analyze.type(
-        first(descendants.whoseClassIs(VariableDeclaration.class).from(wizard.ast("public class A{int x;public void m(){ x=5;}} "))).getName())));
+        first(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{int x;public void m(){ x=5;}} "))).getName())));
   }
 
   @Test public void testFindDeclarationInType2() {
     azzert.that("int", is(
-        analyze.type(first(descendants.whoseClassIs(VariableDeclaration.class).from(wizard.ast("public void m(int y){ int z = 5; }"))).getName())));
+        analyze.type(first(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(int y){ int z = 5; }"))).getName())));
   }
 
   @Test public void testType0() {
     azzert.that("int",
-        is(analyze.type(first(descendants.whoseClassIs(VariableDeclaration.class).from(wizard.ast("public void m(){ int x; }"))).getName())));
+        is(analyze.type(first(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(){ int x; }"))).getName())));
   }
 
   @Test public void testType1() {
     azzert.that("int",
-        is(analyze.type(first(descendants.whoseClassIs(VariableDeclaration.class).from(wizard.ast(" public class A{ int x;} "))).getName())));
+        is(analyze.type(first(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast(" public class A{ int x;} "))).getName())));
   }
 }

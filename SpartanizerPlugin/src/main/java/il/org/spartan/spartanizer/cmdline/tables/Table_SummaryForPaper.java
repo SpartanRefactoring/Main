@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
@@ -11,6 +9,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.analyses.*;
@@ -73,7 +72,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
       classRecords.push(c);
       classStatistics.get(key).add(c);
       findFirst.instanceOf(TypeDeclaration.class)
-          .in(ast(WrapIntoComilationUnit.OUTER.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.OUTER.on($ + "")))));
+          .in(make.ast(WrapIntoComilationUnit.OUTER.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.OUTER.on($ + "")))));
     } catch (final AssertionError __) {
       System.err.print("X");
     } catch (final NullPointerException __) {

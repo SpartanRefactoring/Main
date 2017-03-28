@@ -43,17 +43,18 @@ public class Eclipse {
    * @param mouseDown mouse down operation
    * @param mouseDoubleClick mouse double click operation
    * @return a {@link MouseListener} that does those actions */
-  public static MouseListener mouseListener(Consumer<MouseEvent> mouseUp, Consumer<MouseEvent> mouseDown, Consumer<MouseEvent> mouseDoubleClick) {
+  public static MouseListener mouseListener(final Consumer<MouseEvent> mouseUp, final Consumer<MouseEvent> mouseDown,
+      final Consumer<MouseEvent> mouseDoubleClick) {
     return new MouseListener() {
-      @Override public void mouseUp(MouseEvent ¢) {
+      @Override public void mouseUp(final MouseEvent ¢) {
         mouseUp.accept(¢);
       }
 
-      @Override public void mouseDown(MouseEvent ¢) {
+      @Override public void mouseDown(final MouseEvent ¢) {
         mouseDown.accept(¢);
       }
 
-      @Override public void mouseDoubleClick(MouseEvent ¢) {
+      @Override public void mouseDoubleClick(final MouseEvent ¢) {
         mouseDoubleClick.accept(¢);
       }
     };

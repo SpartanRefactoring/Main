@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.dispatch.Tricks.*;
+import static il.org.spartan.spartanizer.ast.factory.action.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -42,9 +42,9 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
       $.remove(nextStatement, g);
       return $;
     }
-    if (!shoudlInvert(asVirtualIf))
+    if (!wizard.shoudlInvert(asVirtualIf))
       return null;
-    final IfStatement canonicalIf = wizard.invert(asVirtualIf);
+    final IfStatement canonicalIf = action.invert(asVirtualIf);
     final List<Statement> ss = extract.statements(elze(canonicalIf));
     canonicalIf.setElseStatement(null);
     if (!iz.block(s.getParent())) {

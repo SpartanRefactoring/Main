@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -45,7 +46,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
         n.setReturnType2(az.type(ASTNode.copySubtree(n.getAST(), getType(yieldAncestors.untilContainingType().from(d)))));
         final ReturnStatement s = n.getAST().newReturnStatement();
         s.setExpression(n.getAST().newThisExpression());
-        wizard.addStatement(n, s, r, g);
+        action.addStatement(n, s, r, g);
         r.replace(d, n, g);
       }
     };
