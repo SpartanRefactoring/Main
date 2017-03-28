@@ -16,8 +16,7 @@ public class Issue0719 {
   }
 
   @Test @SuppressWarnings("static-method") public void checkFourDefinitionsWithAssignment() {
-    assert determineIf.definesManyVariables((MethodDeclaration) make.ast("public void methodZeroDefinition() {int x, y, z; boolean b = True;} "),
-        4);
+    assert determineIf.definesManyVariables((MethodDeclaration) make.ast("public void methodZeroDefinition() {int x, y, z; boolean b = True;} "), 4);
   }
 
   @Test @SuppressWarnings("static-method") public void checkOneDefinitions() {

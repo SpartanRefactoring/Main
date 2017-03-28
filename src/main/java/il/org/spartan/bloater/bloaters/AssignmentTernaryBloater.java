@@ -31,7 +31,7 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
         Example.ignores("if(a==0) temp = b; else temp= c;") //
     };
   }
-  
+
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
     final ConditionalExpression $ = az.conditionalExpression(core(x));
     return $ == null ? null

@@ -34,8 +34,9 @@ public class Issue0705 {
   }
 
   @Test public void d() {
-    azzert.that(getAll
-        .instanceofs((MethodDeclaration) make.ast("boolean func (){Integer obj = 5;return (obj instanceof Object) || (obj instanceof Integer); }"))
-        .size(), is(2));
+    azzert.that(
+        getAll.instanceofs(
+            (MethodDeclaration) make.ast("boolean func (){Integer obj = 5;return (obj instanceof Object) || (obj instanceof Integer); }")).size(),
+        is(2));
   }
 }

@@ -48,8 +48,8 @@ public class Issue0776 {
   }
 
   @Test public void checkWhileAndForBlocks() {
-    azzert.that(4, is(enumerate
-        .blockTypes((MethodDeclaration) make.ast("public int foo(int x){{} {} if (false) {} while(x!=0) {} for(int i=0;i<5;i++){x=7;}}"))));
+    azzert.that(4, is(
+        enumerate.blockTypes((MethodDeclaration) make.ast("public int foo(int x){{} {} if (false) {} while(x!=0) {} for(int i=0;i<5;i++){x=7;}}"))));
   }
 
   @Test public void initArrayNotBlock() {

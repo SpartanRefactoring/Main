@@ -30,7 +30,7 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
         Example.ignores("if (x) return b;"), //
     };
   }
-  
+
   static boolean degenerateElse(final IfStatement ¢) {
     return elze(¢) != null && iz.vacuousElse(¢);
   }

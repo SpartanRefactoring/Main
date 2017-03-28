@@ -11,14 +11,11 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-/**
- * TODO Yossi Gil: document class 
+/** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
- * @since 2017-03-28
- */
+ * @since 2017-03-28 */
 public enum ModifiersRedundancy {
   ;
-
   public static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
@@ -87,6 +84,7 @@ public enum ModifiersRedundancy {
   public static final Predicate<Modifier> isProtected = Modifier::isProtected;
   public static final Predicate<Modifier> isPublic = Modifier::isPublic;
   public static final Predicate<Modifier> isStatic = Modifier::isStatic;
+
   public static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
     for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
       if (ModifiersRedundancy.test(¢.next(), ms))
