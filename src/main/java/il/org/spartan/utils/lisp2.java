@@ -17,8 +17,6 @@ public interface lisp2 extends lisp {
     items.forEach(from::remove);
   }
 
-
-
   public static List<Expression> removeFirstElement(final List<Expression> ¢) {
     final List<Expression> $ = new ArrayList<>(¢);
     $.remove(first($));// remove first

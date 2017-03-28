@@ -23,16 +23,16 @@ public class RenameConstructorParameters extends EagerTipper<MethodDeclaration> 
   @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())
       return null;
-    List<String> parameterNames = step.parametersNames(d);
-    for (ASTNode s : extract.statements(d.getBody()))
+    final List<String> parameterNames = step.parametersNames(d);
+    for (final ASTNode s : extract.statements(d.getBody()))
       if (iz.expressionStatement(s) && iz.assignment(az.expressionStatement(s).getExpression())) {
-        Assignment a = az.assignment(az.expressionStatement(s).getExpression());
-        if (a.getOperator() == Operator.ASSIGN && parameterNames.contains((a.getRightHandSide() + "")) && iz.fieldAccess(a.getLeftHandSide())) {
-          SimpleName from1 = d.getAST().newSimpleName((a.getRightHandSide() + ""));
-          SimpleName to1 = d.getAST().newSimpleName(az.fieldAccess(a.getLeftHandSide()).getName().getIdentifier());
+        final Assignment a = az.assignment(az.expressionStatement(s).getExpression());
+        if (a.getOperator() == Operator.ASSIGN && parameterNames.contains(a.getRightHandSide() + "") && iz.fieldAccess(a.getLeftHandSide())) {
+          final SimpleName from1 = d.getAST().newSimpleName(a.getRightHandSide() + "");
+          final SimpleName to1 = d.getAST().newSimpleName(az.fieldAccess(a.getLeftHandSide()).getName().getIdentifier());
           return alreadyDefined(to1, d) ? null : new Tip(description(d), d, getClass()) {
             @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-              for (SingleVariableDeclaration q : step.parameters(d))
+              for (final SingleVariableDeclaration q : step.parameters(d))
                 action.rename(from1, to1, q, r, g);
               action.rename(from1, to1, d.getBody(), r, g);
             }
@@ -41,15 +41,15 @@ public class RenameConstructorParameters extends EagerTipper<MethodDeclaration> 
       }
     return null;
   }
-  
-  private static boolean alreadyDefined(SimpleName to1,MethodDeclaration d){
-    for(SingleVariableDeclaration ¢ : step.parameters(d))
-      if(¢.getName().getIdentifier().equals(to1.getIdentifier()))
+
+  private static boolean alreadyDefined(final SimpleName to1, final MethodDeclaration d) {
+    for (final SingleVariableDeclaration ¢ : step.parameters(d))
+      if (¢.getName().getIdentifier().equals(to1.getIdentifier()))
         return true;
     return false;
   }
 
-  @Override public String description(@SuppressWarnings("unused") MethodDeclaration __) {
+  @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "Rename constructor parameters to match fields names";
   }
 }

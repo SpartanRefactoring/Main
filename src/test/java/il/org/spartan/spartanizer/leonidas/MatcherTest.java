@@ -33,7 +33,8 @@ public class MatcherTest {
   }
 
   @Test public void c() {
-    azzert.that(patternMatcher("for($N1 $N2 : $X1) $B", "").getMatching(findFirst.enhancedForStatement(make.ast("for (A b : C) print();")), "$B") + "",
+    azzert.that(
+        patternMatcher("for($N1 $N2 : $X1) $B", "").getMatching(findFirst.enhancedForStatement(make.ast("for (A b : C) print();")), "$B") + "",
         is("print();\n"));
   }
 
@@ -129,7 +130,8 @@ public class MatcherTest {
   }
 
   @Test public void k12() {
-    assert patternMatcher("$SN == null ? null : $SN.$SN2.$SN3()", "").matches(findFirst.conditionalExpression(make.ast("x == null ? null : x.y.z()")));
+    assert patternMatcher("$SN == null ? null : $SN.$SN2.$SN3()", "")
+        .matches(findFirst.conditionalExpression(make.ast("x == null ? null : x.y.z()")));
   }
 
   @Test public void k13() {
@@ -290,7 +292,8 @@ public class MatcherTest {
   }
 
   @Test public void v() {
-    assert blockMatcher("for($T $N : $X1) if($X2) return $N;", "").blockMatches(findFirst.block(make.ast("for(Object i : is) if(i.isNice()) return i;")));
+    assert blockMatcher("for($T $N : $X1) if($X2) return $N;", "")
+        .blockMatches(findFirst.block(make.ast("for(Object i : is) if(i.isNice()) return i;")));
   }
 
   @Test public void w() {
