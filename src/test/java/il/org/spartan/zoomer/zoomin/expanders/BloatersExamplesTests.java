@@ -1,5 +1,7 @@
 package il.org.spartan.zoomer.zoomin.expanders;
 
+import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
+
 import java.util.*;
 import java.util.stream.*;
 
@@ -13,12 +15,21 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.Example.*;
 
 /** Examples tests for bloaters.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-03-27 */
 @RunWith(Parameterized.class)
 public class BloatersExamplesTests extends ExamplesTests {
+  @Override protected void ignores(final Ignores ¢) {
+    wrap(() -> trimmingOf(¢.get()).usingBloater(tipper).stays());
+  }
+
+  @Override protected void converts(final Converts ¢) {
+    wrap(() -> trimmingOf(¢.from()).usingBloater(tipper).gives(¢.to()));
+  }
+
   public BloatersExamplesTests(final Tipper<? extends ASTNode> tipper, final String name) {
     super(tipper, name);
   }
