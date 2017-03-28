@@ -16,6 +16,7 @@ import il.org.spartan.*;
  * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
+@Ignore
 public class PropositionTest {
   private static boolean ignoreNext() {
     return true;
