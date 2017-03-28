@@ -67,10 +67,10 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
   public final R reduce(final BooleanSupplier ¢) {
     return //
     ¢ instanceof Not ? reduce((Not) ¢) //
-        //: ¢ instanceof Singleton ? reduce((Singleton) ¢) //
-            : ¢ instanceof And ? reduce((And) ¢) //
-                : ¢ instanceof Or ? reduce((Or) ¢) //
-                    : map(¢);
+        // : ¢ instanceof Singleton ? reduce((Singleton) ¢) //
+        : ¢ instanceof And ? reduce((And) ¢) //
+            : ¢ instanceof Or ? reduce((Or) ¢) //
+                : map(¢);
   }
 
   private R reduce(final Not ¢) {
@@ -87,7 +87,7 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce($, post(o));
   }
 
-  private R reduce(final Singleton ¢) {
+  @SuppressWarnings("unused") private R reduce(final Singleton ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
 
