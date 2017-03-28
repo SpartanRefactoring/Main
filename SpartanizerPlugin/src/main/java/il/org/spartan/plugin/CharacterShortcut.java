@@ -45,7 +45,6 @@ public class CharacterShortcut extends AbstractHandler {
   }
 
   private static char getCharacter(final Event $) {
-    System.out.println($.type);
     return $.type != 13 ? $.character : key.apply('c'); // Hack, obviously
   }
 
