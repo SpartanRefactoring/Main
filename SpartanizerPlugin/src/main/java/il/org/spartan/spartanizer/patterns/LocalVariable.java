@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.refactoringMechanism;
+package il.org.spartan.spartanizer.patterns;
 
 import static java.util.stream.Collectors.*;
 
