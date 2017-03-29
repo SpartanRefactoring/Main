@@ -161,14 +161,14 @@ public final class Issue0223 {
     trimmingOf("Integer x = new Integer(a);")//
         .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
         .gives("Integer x = Integer.valueOf(a);")//
-        ;
+    ;
   }
 
   @Test public void a2() {
     trimmingOf("new Integer(a);")//
         .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
         .gives("Integer.valueOf(a);")//
-        ;
+    ;
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {

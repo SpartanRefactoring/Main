@@ -87,10 +87,6 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     return reduce($, post(o));
   }
 
-  @SuppressWarnings("unused") private R reduce(final Singleton ¢) {
-    return reduce(ante(¢), reduce(¢.inner), post(¢));
-  }
-
   @Override public R reduce(final R r1, final R r2) {
     return inner.reduce(r1, r2);
   }

@@ -87,7 +87,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   /** Disable spartanization in file. */
   private final IMarkerResolution disableFile = fixers.disableFileFix();
   /** Disables the tipper of this marker. */
-  private final IMarkerResolution disableTipper = quickFix("Disable tip", λ -> DisableTipper.disable(λ));
+  private final IMarkerResolution disableTipper = quickFix("Disable tip", DisableTipper::disable);
   /** Disable spartanization in class by annotation. */
   private final IMarkerResolution disableClassByAnnotation = fixers.disableClassAnnotationFix();
 

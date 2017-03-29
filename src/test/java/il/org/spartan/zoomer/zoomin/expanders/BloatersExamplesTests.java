@@ -1,10 +1,8 @@
 package il.org.spartan.zoomer.zoomin.expanders;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import java.util.*;
-import java.util.stream.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
@@ -36,15 +34,14 @@ public class BloatersExamplesTests extends ExamplesTests {
 
   @Parameters(name = "{index}. {1}") //
   public static Collection<Object[]> data() {
-    return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(Collectors.toList());
+    return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(toList());
   }
 
   /** Get all tippers from {@link Toolbox}. Removes duplicate tippers (same
    * class, different templates).
-   * @return
    * @return all tippers to be tested */
   private static Collection<?> allTippers() {
     return InflaterProvider.freshCopyOfAllExpanders().getAllTippers() //
-        .stream().collect(Collectors.toMap(Tipper<? extends ASTNode>::getClass, λ -> λ, (t1, t2) -> t1)).values();
+        .stream().collect(toMap(Tipper<? extends ASTNode>::getClass, λ -> λ, (t1, t2) -> t1)).values();
   }
 }
