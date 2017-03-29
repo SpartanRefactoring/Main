@@ -18,11 +18,16 @@ public class Issue0020 {
         .stays();
   }
 
+  @Test public void constructorParameterRenaming_001() {
+    trimmingOf("class A {int x;A(int y,int z) {this.x = z;}}")//
+        .gives("class A {int x;A(int y,int x) {this.x = x;}}")//
+        .stays();
+  }
+
   @Test public void constructorParameterRenaming_01() {
     trimmingOf("class A {int x;int z;A(int y, int k) {this.x = y;this.z = k;}}")
         .gives("class A {int x;int z;A(int x, int k) {this.x = x;this.z = k;}}")
-        // .gives("class A {int x;int z;A(int x, int z) {this.x = x;this.z =
-        // z;}}")//
+        .gives("class A {int x;int z;A(int x, int z) {this.x = x;this.z = z;}}")//
         .stays();
   }
 
