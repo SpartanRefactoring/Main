@@ -23,6 +23,7 @@ public abstract class LocalVariable extends Fragment {
   public static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
     return wizard.forbiddenSiblings(f).stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
   }
+
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
 
   public LocalVariable() {
@@ -34,7 +35,7 @@ public abstract class LocalVariable extends Fragment {
     }));
   }
 
-  protected  final boolean doesUseForbiddenSiblings(final ASTNode... ns) {
+  protected final boolean doesUseForbiddenSiblings(final ASTNode... ns) {
     return youngerSiblings().stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
   }
 

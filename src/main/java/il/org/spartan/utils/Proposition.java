@@ -40,7 +40,7 @@ public interface Proposition extends BooleanSupplier {
     return new And(toString, s1, s2, ss);
   }
 
-  static Proposition not(String toString, final BooleanSupplier ¢) {
+  static Proposition not(final String toString, final BooleanSupplier ¢) {
     return new Not(toString, ¢);
   }
 
@@ -154,7 +154,7 @@ public interface Proposition extends BooleanSupplier {
       super(s);
     }
 
-    public Not(String toString, BooleanSupplier s) {
+    public Not(final String toString, final BooleanSupplier s) {
       super(toString, s);
     }
 

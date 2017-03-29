@@ -28,6 +28,7 @@ import org.eclipse.jdt.core.compiler.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -62,8 +63,8 @@ public interface wizard {
     if (n1 > n2)
       return false;
     assert n1 == n2;
-    final IfStatement $ = trick.invert(s);
-    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(trick.invert($));
+    final IfStatement $ = make.invert(s);
+    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(make.invert($));
   }
 
   static boolean shoudlInvert(final IfStatement s) {
