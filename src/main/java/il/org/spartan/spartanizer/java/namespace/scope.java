@@ -50,7 +50,7 @@ public interface scope {
     return az.block(delimiter(¢));
   }
 
-  /** Bug in ternary spartanizing, do not remove the suppress
+  /** Bug in ternary spartanizing, do not remove the suppress spartanization clause
    * [[SuppressWarningsSpartan]] */
   static Namespace getScopeNamespace(final ASTNode ¢) {
     final ASTNode $ = delimiter(¢);
