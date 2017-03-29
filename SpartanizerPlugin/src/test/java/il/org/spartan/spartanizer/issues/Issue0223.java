@@ -144,8 +144,8 @@ public final class Issue0223 {
     return findFirst.instanceOf(SUBJECT_CLASS).in(c);
   }
 
-  private ClassInstanceCreationValueTypes makeTipper() {
-    return new ClassInstanceCreationValueTypes();
+  private ClassInstanceCreationBoxedValueTypes makeTipper() {
+    return new ClassInstanceCreationBoxedValueTypes();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
