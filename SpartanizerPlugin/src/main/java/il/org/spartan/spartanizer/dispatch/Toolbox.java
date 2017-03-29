@@ -122,7 +122,7 @@ public class Toolbox {
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToIt()) //
-        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
+        .add(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse(), new ExpressionStatementThatIsBooleanLiteral(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod(), //

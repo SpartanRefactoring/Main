@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** Replaces, e.g., {@code Integer x=new Integer(2);} with
  * {@code Integer x=Integer.valueOf(2);}, more generally new of of any boxed
@@ -17,12 +18,17 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@code valueOf()}
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-06 */
-public final class ClassInstanceCreationValueTypes extends ReplaceCurrentNode<ClassInstanceCreation>//
+public final class ClassInstanceCreationBoxedValueTypes extends ReplaceCurrentNode<ClassInstanceCreation>//
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 0x578B2D093DF1DBD5L;
 
   @Override public String description(final ClassInstanceCreation ¢) {
     return "Use factory method " + hop.simpleName(¢.getType()) + ".valueOf() instead of new ";
+  }
+  @Override public Example[] examples() {
+    return new Example[] {
+       Example.convert("new Integer(x)").to("Integer.valueOf(x)"), 
+    };
   }
 
   @Override public ASTNode replacement(final ClassInstanceCreation c) {
