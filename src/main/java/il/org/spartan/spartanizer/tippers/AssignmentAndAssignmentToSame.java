@@ -30,7 +30,7 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
 
   @Override @NotNull public Example[] examples() {
     return new Example[] { //
-        convert("s=s.f();s=s.g();").to("s=s.f().g()"), //
+        convert("s=s.f();s=s.g();").to("s=s.f().g();"), //
     };
   }
 
