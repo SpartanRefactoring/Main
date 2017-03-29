@@ -27,7 +27,7 @@ public final class FragmentInitializerReturnAssignment extends LocalVariableInit
     return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $,  final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final boolean doesUseForbiddenSiblings = doesUseForbiddenSiblings(az.returnStatement(nextStatement));
     if (doesUseForbiddenSiblings)
       return null;

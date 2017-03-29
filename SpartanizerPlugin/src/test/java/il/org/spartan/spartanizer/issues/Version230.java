@@ -382,6 +382,7 @@ public final class Version230 {
 
   @Test public void canonicalFragementExample1() {
     trimmingOf("int a;a=3;")//
+        .using(VariableDeclarationFragment.class, new FragmentNoInitializerAssignment()) //
         .gives("int a=3;");
   }
 

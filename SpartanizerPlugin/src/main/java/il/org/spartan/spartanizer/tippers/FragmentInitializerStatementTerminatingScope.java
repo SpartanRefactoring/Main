@@ -32,7 +32,7 @@ public final class FragmentInitializerStatementTerminatingScope extends LocalVar
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $,  final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     if (fragment == null || extract.core(fragment.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(fragment)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(name + "") && !iz.simpleName(initializer)

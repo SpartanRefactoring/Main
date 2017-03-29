@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.patterns.*;
 /** convert {@code int a = 3;return a;} into {@code return a;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerReturnExpression extends LocalVariableInitializedStatement//
+public final class LocalInitializedReturnExpression extends LocalVariableInitializedStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0xECFC7713ABB0D4AL;
 
@@ -23,7 +23,7 @@ public final class FragmentInitializerReturnExpression extends LocalVariableInit
     return "Eliminate local " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $,  final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final ReturnStatement s = az.returnStatement(nextStatement);
     if (s == null)
       return null;

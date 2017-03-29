@@ -42,7 +42,8 @@ public final class FragmentInitializerIfAssignment extends LocalVariableInitiali
     if (condition == null)
       return null;
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.same(to(a), name) || a.getOperator() != Assignment.Operator.ASSIGN || LocalVariable.doesUseForbiddenSiblings(fragment, condition, from(a)))
+    if (a == null || !wizard.same(to(a), name) || a.getOperator() != Assignment.Operator.ASSIGN
+        || LocalVariable.doesUseForbiddenSiblings(fragment, condition, from(a)))
       return null;
     final InlinerWithValue i = new Inliner(name, $, g).byValue(initializer);
     if (!i.canInlineinto(condition, from(a)))
