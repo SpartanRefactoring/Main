@@ -16,7 +16,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tippers.*;
 
 /** *
  * @author Matteo Orru'
@@ -107,6 +106,6 @@ public class Issue0239 {
     assert use != null;
     assert !Coupling.unknownNumberOfEvaluations(use, nextStatement);
     assert !Inliner.never(name, nextStatement);
-    assert $FragmentAndStatement.removalSaving(f) > 0;
+    assert wizard.removalSaving(f) > 0;
   }
 }

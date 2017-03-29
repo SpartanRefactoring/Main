@@ -1,15 +1,18 @@
 package il.org.spartan.spartanizer.ast.factory;
 
+import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
+import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -270,5 +273,40 @@ public enum trick {
    * @param g edit group, usually null */
   public static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
+  }
+
+  public static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
+    r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
+  }
+
+  public static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
+    final Javadoc j = n.getJavadoc();
+    if (j == null)
+      r.replace(n,
+          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
+          g);
+    else
+      r.replace(j,
+          r.createStringPlaceholder(
+              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
+              ASTNode.JAVADOC),
+          g);
+  }
+
+  /** Adds method m to the first type in file.
+   * @param fileName
+   * @param m */
+  public static void addMethodToFile(final String fileName, final MethodDeclaration m) {
+    try {
+      final String str = readFromFile(fileName);
+      final IDocument d = new Document(str);
+      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
+      final ASTRewrite r = ASTRewrite.create(t.getAST());
+      addMethodToType(t, m, r, null);
+      r.rewriteAST(d, null).apply(d);
+      writeToFile(fileName, d.get());
+    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
+      x2.printStackTrace();
+    }
   }
 }
