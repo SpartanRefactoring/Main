@@ -2,13 +2,12 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.utils.Example.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -22,7 +21,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-24 */
 public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -8591656423892977180L;
-  private static final String SERIAL_VERSION_UID = "serialVersionUID";
+  public static final String SERIAL_VERSION_UID = "serialVersionUID";
   // private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
   private VariableDeclarationFragment fragment;
   NumberLiteral initializer;
@@ -54,25 +53,25 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     };
   }
 
-  static VariableDeclarationFragment findFragment(final FieldDeclaration ¢) {
-    return fragments(¢).stream().filter(λ -> (λ.getName() + "").equals(SERIAL_VERSION_UID)).findFirst().orElse(null);
+  @Override public boolean canTip(final FieldDeclaration ¢) {
+    if ((fragment = wizard.findFragment(¢)) == null || (initializer = az.numberLiteral(fragment.getInitializer())) == null)
+      return false;
+    String $ = initializer.getToken();
+    if (NumericLiteralClassifier.of($) != Certain.LONG || $.matches("^0[xX]?.*"))
+      return false;
+    if ($.matches(".*[lL]$"))
+      $ = lisp2.chopLast($);
+    return parse($, $.matches("^0") || $.matches("^-0") ? 8 : 10);
   }
 
-  @Override public boolean canTip(final FieldDeclaration d) {
-    if ((fragment = findFragment(d)) == null || (initializer = az.numberLiteral(fragment.getInitializer())) == null)
-      return false;
-    String token = initializer.getToken();
-    if (NumericLiteralClassifier.of(token) != Certain.LONG || token.matches("^0[xX]?.*"))
-      return false;
-    if (token.matches(".*[lL]$"))
-      token = system.chopLast(token);
+  private boolean parse(String token, int radix) {
     try {
-      replacement = Long.parseLong(token);
+      replacement = Long.parseLong(token,radix);
+      return true;
     } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
       return false;
     }
-    return true;
   }
 
   String asLiteral() {

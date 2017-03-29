@@ -264,28 +264,12 @@ public interface wizard {
       final IDocument d = new Document(str);
       final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
       final ASTRewrite r = ASTRewrite.create(t.getAST());
-      wizard.addMethodToType(t, m, r, null);
+      trick.addMethodToType(t, m, r, null);
       r.rewriteAST(d, null).apply(d);
       writeToFile(fileName, d.get());
     } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
       x2.printStackTrace();
     }
-  }
-
-  /** @param d JD
-   * @param m JD
-   * @param r rewriter
-   * @param g edit group, usually null */
-  static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
-  }
-
-  /** @param d JD
-   * @param s JD
-   * @param r rewriter
-   * @param g edit group, usually null */
-  static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(step.body(d), Block.STATEMENTS_PROPERTY).insertLast(s, g);
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
@@ -648,11 +632,11 @@ public interface wizard {
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    return extendedModifiers(d).stream().filter(λ -> test(λ, ms)).map(Modifier.class::cast).collect(toCollection(LinkedHashSet::new));
+    return extendedModifiers(d).stream().filter(λ -> ModifiersRedundancy.test(λ, ms)).map(Modifier.class::cast).collect(toCollection(LinkedHashSet::new));
   }
 
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
-    return ms.stream().filter(λ -> test(λ, ps)).map(Modifier.class::cast).collect(toSet());
+    return ms.stream().filter(λ -> ModifiersRedundancy.test(λ, ps)).map(Modifier.class::cast).collect(toSet());
   }
 
   static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
@@ -729,7 +713,7 @@ public interface wizard {
 
   static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
     for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
-      if (test(¢.next(), ms))
+      if (ModifiersRedundancy.test(¢.next(), ms))
         ¢.remove();
     return $;
   }
@@ -868,14 +852,6 @@ public interface wizard {
     resolveBinding.inner = true;
   }
 
-  static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
-    return m instanceof Modifier && test((Modifier) m, ms);
-  }
-
-  static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
-    return ms.stream().anyMatch(λ -> λ.test(m));
-  }
-
   static Message[] getProblems(final ASTNode $) {
     return !($ instanceof CompilationUnit) ? null : ((CompilationUnit) $).getMessages();
   }
@@ -947,5 +923,9 @@ public interface wizard {
 
   static int positivePrefixLength(final IfStatement $) {
     return metrics.length($.getExpression(), then($));
+  }
+
+  static VariableDeclarationFragment findFragment(final FieldDeclaration ¢) {
+    return fragments(¢).stream().filter(λ -> (λ.getName() + "").equals(FieldSerialVersionUIDToHexadecimal.SERIAL_VERSION_UID)).findFirst().orElse(null);
   }
 }
