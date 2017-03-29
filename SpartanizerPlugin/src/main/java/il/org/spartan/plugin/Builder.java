@@ -34,6 +34,10 @@ public final class Builder extends IncrementalProjectBuilder {
   /** the key in the marker's properties map under which the type of the tipper
    * used to create the marker is stored */
   public static final String SPARTANIZATION_TIPPER_KEY = "il.org.spartan.spartanizer.spartanizationTipper";
+  /** Start of spartanization range. */
+  public static final String SPARTANIZATION_CHAR_START = "il.org.spartan.spartanizer.spartanizationCharStart";
+  /** End of spartanization range. */
+  public static final String SPARTANIZATION_CHAR_END = "il.org.spartan.spartanizer.spartanizationCharEnd";
 
   /** deletes all spartanization tip markers
    * @param function the file from which to delete the markers
@@ -69,6 +73,8 @@ public final class Builder extends IncrementalProjectBuilder {
     m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
     m.setAttribute(IMarker.CHAR_START, r.from);
     m.setAttribute(IMarker.CHAR_END, r.to);
+    m.setAttribute(SPARTANIZATION_CHAR_START, r.spartanizationCharStart);
+    m.setAttribute(SPARTANIZATION_CHAR_END, r.spartanizationCharEnd);
     m.setAttribute(IMarker.TRANSIENT, false);
     m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
   }
