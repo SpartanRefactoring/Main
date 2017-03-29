@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
-public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
+public abstract class ExpressionMapReducer<T> extends StatementMapReducer<T> {
   @Override public T map(final Expression ¢) {
     if (¢ == null)
       return reduce();
