@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.dispatch;
 import static java.util.stream.Collectors.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
@@ -225,9 +226,7 @@ public class Trimmer extends AbstractGUIApplicator {
       tss.addAll(toolbox.getAllTippers());
     firstAddition = false;
     toolbox = all;
-    for (final List<Tipper<? extends ASTNode>> ¢ : toolbox.implementation)
-      if (¢ != null)
-        ¢.retainAll(tss);
+    Stream.of(toolbox.implementation).filter(Objects::nonNull).forEachOrdered((final List<Tipper<? extends ASTNode>> ¢) -> ¢.retainAll(tss));
     return this;
   }
 
