@@ -25,10 +25,9 @@ public final class ClassInstanceCreationBoxedValueTypes extends ReplaceCurrentNo
   @Override public String description(final ClassInstanceCreation ¢) {
     return "Use factory method " + hop.simpleName(¢.getType()) + ".valueOf() instead of new ";
   }
+
   @Override public Example[] examples() {
-    return new Example[] {
-       Example.convert("new Integer(x)").to("Integer.valueOf(x)"), 
-    };
+    return new Example[] { Example.convert("new Integer(x)").to("Integer.valueOf(x)"), };
   }
 
   @Override public ASTNode replacement(final ClassInstanceCreation c) {
