@@ -16,6 +16,9 @@ public interface lisp2 extends lisp {
   static void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
     items.forEach(from::remove);
   }
+  static String rest(String ¢) {
+    return ¢.substring(1); 
+  }
 
   static List<Expression> removeFirstElement(final List<Expression> ¢) {
     final List<Expression> $ = new ArrayList<>(¢);
@@ -78,4 +81,10 @@ public interface lisp2 extends lisp {
     lisp.replace($, t, i2);
     return $;
   }
+
+  static String chopLast(final String ¢) {
+    return ¢.substring(0, ¢.length() - 1);
+  }
+
+
 }

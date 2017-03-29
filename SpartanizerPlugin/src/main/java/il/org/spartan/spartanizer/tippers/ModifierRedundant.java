@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -39,6 +37,6 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
   }
 
   @Override public boolean prerequisite(final Modifier ¢) {
-    return test(¢, ModifiersRedundancy.redundancies(az.bodyDeclaration(parent(¢))));
+    return ModifiersRedundancy.test(¢, ModifiersRedundancy.redundancies(az.bodyDeclaration(parent(¢))));
   }
 }
