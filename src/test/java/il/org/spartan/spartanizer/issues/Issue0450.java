@@ -32,7 +32,7 @@ public class Issue0450 {
 
   @Test public void test0b() {
     trimmingOf(SEPARATOR_CASE)//
-        .using(VariableDeclarationFragment.class, new LocalVariableInitializedStatementInline()).stays();
+        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext()).stays();
   }
 
   @Test public void test1() {
