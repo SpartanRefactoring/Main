@@ -101,6 +101,10 @@ public enum trick {
     return false;
   }
 
+  private static int positivePrefixLength(final IfStatement $) {
+    return metrics.length($.getExpression(), then($));
+  }
+
   /** As {@link elze(ConditionalExpression)} but returns the last else statement
    * in "if - else if - ... - else" statement
    * @param ¢ JD
@@ -223,6 +227,10 @@ public enum trick {
     return r;
   }
 
+  public static int sequencerRank(final ASTNode ¢) {
+    return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
+  }
+
   public static boolean shoudlInvert(final IfStatement s) {
     final int $ = sequencerRank(hop.lastStatement(then(s))), rankElse = sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !trick.thenIsShorter(s);
@@ -248,11 +256,19 @@ public enum trick {
     return positivePrefixLength($) >= positivePrefixLength(trick.invert($));
   }
 
-  private static int positivePrefixLength(final IfStatement $) {
-    return metrics.length($.getExpression(), then($));
+  /** @param d JD
+   * @param s JD
+   * @param r rewriter
+   * @param g edit group, usually null */
+  public static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
+    r.getListRewrite(step.body(d), Block.STATEMENTS_PROPERTY).insertLast(s, g);
   }
 
-  public static int sequencerRank(final ASTNode ¢) {
-    return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
+  /** @param d JD
+   * @param m JD
+   * @param r rewriter
+   * @param g edit group, usually null */
+  public static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
+    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
   }
 }
