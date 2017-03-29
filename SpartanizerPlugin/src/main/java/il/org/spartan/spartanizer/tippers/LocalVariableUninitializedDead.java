@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
 /** See {@link #examples()}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class LocalVariableUninitializedDead extends VariableFragmnetUninitialized implements TipperCategory.Deadcode {
+public final class LocalVariableUninitializedDead extends LocalVariableUninitialized implements TipperCategory.Deadcode {
   private static final long serialVersionUID = 0x14812B0904DFB002L;
 
   public LocalVariableUninitializedDead() {
