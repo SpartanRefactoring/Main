@@ -632,7 +632,8 @@ public interface wizard {
   }
 
   static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
-    return extendedModifiers(d).stream().filter(λ -> ModifiersRedundancy.test(λ, ms)).map(Modifier.class::cast).collect(toCollection(LinkedHashSet::new));
+    return extendedModifiers(d).stream().filter(λ -> ModifiersRedundancy.test(λ, ms)).map(Modifier.class::cast)
+        .collect(toCollection(LinkedHashSet::new));
   }
 
   static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
@@ -926,6 +927,7 @@ public interface wizard {
   }
 
   static VariableDeclarationFragment findFragment(final FieldDeclaration ¢) {
-    return fragments(¢).stream().filter(λ -> (λ.getName() + "").equals(FieldSerialVersionUIDToHexadecimal.SERIAL_VERSION_UID)).findFirst().orElse(null);
+    return fragments(¢).stream().filter(λ -> (λ.getName() + "").equals(FieldSerialVersionUIDToHexadecimal.SERIAL_VERSION_UID)).findFirst()
+        .orElse(null);
   }
 }

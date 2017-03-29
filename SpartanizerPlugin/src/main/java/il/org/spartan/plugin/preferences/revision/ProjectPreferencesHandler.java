@@ -310,7 +310,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
 
   private static Set<String> toEnabledSet(final Map<SpartanCategory, SpartanTipper[]> m) {
     return m.values().stream().reduce(new HashSet<String>(), (s, a) -> {
-      s.addAll(Arrays.stream(a).filter(λ -> λ.enabled()).map(λ -> λ.name()).collect(Collectors.toList()));
+      s.addAll(Arrays.stream(a).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toList()));
       return s;
     }, (s1, s2) -> {
       s1.addAll(s2);

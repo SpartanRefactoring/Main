@@ -17,14 +17,13 @@ import il.org.spartan.spartanizer.java.*;
 public enum ModifiersRedundancy {
   ;
   public static final Predicate<Modifier> isAbstract = Modifier::isAbstract;
-
   public static final Predicate<Modifier> isFinal = Modifier::isFinal;
-
   public static final Predicate<Modifier> isPrivate = Modifier::isPrivate;
   public static final Predicate<Modifier> isProtected = Modifier::isProtected;
   public static final Predicate<Modifier> isPublic = Modifier::isPublic;
   public static final Predicate<Modifier> isStatic = Modifier::isStatic;
   public static final List<Predicate<Modifier>> visibilityModifiers = as.list(isPublic, isPrivate, isProtected);
+
   public static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
     for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
       if (test(¢.next(), ms))
