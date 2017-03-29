@@ -21,12 +21,11 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
   private static final long serialVersionUID = -855471283048149285L;
 
   public LocalVariableInitializedUnusedRemove() {
-    andAlso(Proposition.of("Local variable is unused", //
-        () -> collect.usesOf(name).in(scope.of(name)).isEmpty()));
+    andAlso(Proposition.of("Local variable is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty()));
   }
 
   @Override public String description() {
-    return "Remove unused variable";
+    return "Remove unused, uninitialized variable";
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -34,10 +33,12 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    final Block b = az.block(statement().getParent());
+    final Block b = az.block(parent().getParent());
     if (b == null)
       return $;
-    trick.insertBefore(statement(), wizard.decompose(initializer), $, g);
+    final ListRewrite l = $.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+    for (final Statement ¢ : wizard.decompose(initializer()))
+      l.insertBefore(copy.of(¢), parent(), g);
     action.removeDeadFragment(object(), $, g);
     return $;
   }
