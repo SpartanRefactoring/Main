@@ -380,6 +380,11 @@ public class Toolbox {
     return ts.stream().filter(λ -> ((Tipper<N>) λ).check(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
   }
 
+  @SuppressWarnings("unchecked") public static <N extends ASTNode> Tip firstTip(final N n, final Collection<Tipper<?>> ts,
+      final ExclusionManager exclude) {
+    return ts.stream().filter(λ -> ((Tipper<N>) λ).check(n)).map(λ -> (Tipper<N>) λ).findFirst().map(t -> t.tip(n, exclude)).orElse(null);
+  }
+
   /** Implementation */
   @SuppressWarnings("unchecked") public final List<Tipper<? extends ASTNode>>[] implementation = //
       (List<Tipper<? extends ASTNode>>[]) new List<?>[2 * ASTNode.TYPE_METHOD_REFERENCE];
@@ -440,6 +445,14 @@ public class Toolbox {
    *         {@code null if no such {@link Tipper} is found. @ */
   public <N extends ASTNode> Tipper<N> firstTipper(final N ¢) {
     return firstTipper(¢, get(¢));
+  }
+
+  /** Find the first {@link Tip} appropriate for an {@link ASTNode}
+   * @param pattern JD
+   * @return first {@link Tip} for which the parameter is within scope, or
+   *         {@code null if no such {@link Tip} is found. @ */
+  public <N extends ASTNode> Tip firstTip(final N ¢, final ExclusionManager exclude) {
+    return firstTip(¢, get(¢), exclude);
   }
 
   public Collection<Tipper<? extends ASTNode>> get(final int ¢) {
