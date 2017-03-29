@@ -106,36 +106,27 @@ public class Selection extends AbstractSelection<Selection> {
     try {
       final IMarker[] ms = r.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
       boolean changed = false;
-      int no = o;
-      for (int i = 0; i < ms.length; ++i) {
+      int i = 0, no = o;
+      for (; i < ms.length; ++i) {
         if (ms[i] == null)
           continue;
-        final Integer ics = (Integer) ms[i].getAttribute(IMarker.CHAR_START), ice = (Integer) ms[i].getAttribute(IMarker.CHAR_END),
-            iscs = (Integer) ms[i].getAttribute(Builder.SPARTANIZATION_CHAR_START);
-        if (ics == null || ice == null || iscs == null)
+        final Integer ics = (Integer) ms[i].getAttribute(IMarker.CHAR_START), ice = (Integer) ms[i].getAttribute(IMarker.CHAR_END);
+        if (ics == null || ice == null)
           continue;
-        final int cs = ics.intValue(), ce = ice.intValue();
-        if ((cs > o || ce < o) && (cs < o || ce > l)) {
-          if (cs >= l)
-            break;
-        } else {
-          no = Math.min(no, Math.min(cs, iscs.intValue()));
+        final int cs = ics.intValue();
+        if (cs <= o && ice.intValue() >= o) {
+          no = cs;
           changed = true;
+          break;
         }
       }
       int nl = l;
-      for (int i = 0; i < ms.length; ++i) {
-        final Integer ics = (Integer) ms[i].getAttribute(IMarker.CHAR_START), ice = (Integer) ms[i].getAttribute(IMarker.CHAR_END),
-            isce = (Integer) ms[i].getAttribute(Builder.SPARTANIZATION_CHAR_END);
-        if (ics == null || ice == null || isce == null)
-          continue;
-        final int cs = ics.intValue(), ce = ice.intValue();
-        if ((ce < l || cs > l) && (ce > l || cs < o)) {
-          if (cs >= l)
-            break;
-        } else {
-          nl = Math.max(nl, Math.max(ce, isce.intValue()));
+      for (; i < ms.length; ++i) {
+        final int ce = ((Integer) ms[i].getAttribute(IMarker.CHAR_END)).intValue();
+        if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() <= l && ce >= l) {
+          nl = ce;
           changed = true;
+          break;
         }
       }
       if (changed)
@@ -440,11 +431,11 @@ public class Selection extends AbstractSelection<Selection> {
     /** @param ¢ JD
      * @return selection by member */
     private static Selection by(final IMember ¢) {
-      final ISourceRange $ = makerToRange(¢);
+      final ISourceRange $ = makertToRange(¢);
       return $ == null ? empty() : Selection.of(¢.getCompilationUnit(), new TextSelection($.getOffset(), $.getLength())).setName(¢.getElementName());
     }
 
-    public static ISourceRange makerToRange(final ISourceReference $) {
+    public static ISourceRange makertToRange(final ISourceReference $) {
       try {
         return $.getSourceRange();
       } catch (final JavaModelException ¢) {
@@ -457,8 +448,8 @@ public class Selection extends AbstractSelection<Selection> {
      * @return text selection by marker */
     private static ITextSelection getTextSelection(final IMarker m) {
       try {
-        final int $ = ((Integer) m.getAttribute(Builder.SPARTANIZATION_CHAR_START)).intValue();
-        return new TextSelection($, ((Integer) m.getAttribute(Builder.SPARTANIZATION_CHAR_END)).intValue() - $);
+        final int $ = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
+        return new TextSelection($, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - $);
       } catch (final CoreException ¢) {
         monitor.log(¢);
         return null;

@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -28,6 +29,9 @@ import org.eclipse.jdt.core.compiler.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
+import org.eclipse.text.edits.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -69,42 +73,6 @@ public interface wizard {
   static boolean shoudlInvert(final IfStatement s) {
     final int $ = trick.sequencerRank(hop.lastStatement(then(s))), rankElse = trick.sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !thenIsShorter(s);
-  }
-
-  public static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
-    final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
-    boolean collecting = false;
-    for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {
-      if (brother == f) {
-        collecting = true;
-        continue;
-      }
-      if (collecting)
-        $.add(brother);
-    }
-    return $;
-  }
-
-  static int eliminationSaving(final VariableDeclarationFragment f) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = live(f, fragments(parent));
-    final int $ = metrics.size(parent);
-    if (live.isEmpty())
-      return $;
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    fragments(newParent).clear();
-    fragments(newParent).addAll(live);
-    return $ - metrics.size(newParent);
-  }
-
-  static int removalSaving(final VariableDeclarationFragment f) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final int $ = metrics.size(parent);
-    if (parent.fragments().size() <= 1)
-      return $;
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    newParent.fragments().remove(parent.fragments().indexOf(f));
-    return $ - metrics.size(newParent);
   }
 
   PostfixExpression.Operator DECREMENT_POST = PostfixExpression.Operator.DECREMENT;
@@ -268,6 +236,41 @@ public interface wizard {
   PrefixExpression.Operator[] prefixOperators = { INCREMENT, DECREMENT, PLUS1, MINUS1, COMPLEMENT, NOT, };
   PostfixExpression.Operator[] postfixOperators = { INCREMENT_POST, DECREMENT_POST };
   Bool resolveBinding = Bool.valueOf(false);
+
+  static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
+    r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
+  }
+
+  static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
+    final Javadoc j = n.getJavadoc();
+    if (j == null)
+      r.replace(n,
+          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
+          g);
+    else
+      r.replace(j,
+          r.createStringPlaceholder(
+              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
+              ASTNode.JAVADOC),
+          g);
+  }
+
+  /** Adds method m to the first type in file.
+   * @param fileName
+   * @param m */
+  static void addMethodToFile(final String fileName, final MethodDeclaration m) {
+    try {
+      final String str = readFromFile(fileName);
+      final IDocument d = new Document(str);
+      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
+      final ASTRewrite r = ASTRewrite.create(t.getAST());
+      trick.addMethodToType(t, m, r, null);
+      r.rewriteAST(d, null).apply(d);
+      writeToFile(fileName, d.get());
+    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
+      x2.printStackTrace();
+    }
+  }
 
   static Expression applyDeMorgan(final InfixExpression $) {
     return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(toList())).to(wizard.negate(operator($)));

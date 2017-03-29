@@ -9,7 +9,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.patterns.*;
 
 /** convert {@code
  * int a;
@@ -19,12 +18,12 @@ import il.org.spartan.spartanizer.patterns.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentNoInitializerAssignment extends LocalVariableInitializedStatement//
+public final class FragmentNoInitializerAssignment extends $FragmentAndStatement//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0xCE4CF4E3910F992L;
 
-  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment fragment, final Expression x) {
-    final VariableDeclarationFragment $ = copy.of(fragment);
+  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
+    final VariableDeclarationFragment $ = copy.of(f);
     $.setInitializer(copy.of(x));
     return $;
   }
@@ -33,13 +32,14 @@ public final class FragmentNoInitializerAssignment extends LocalVariableInitiali
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $,  final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
+      final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(name, to(a)) || LocalVariable.doesUseForbiddenSiblings(fragment, from(a)))
+    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
-    $.replace(fragment, makeVariableDeclarationFragement(fragment, from(a)), g);
+    $.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
     $.remove(extract.containingStatement(a), g);
     return $;
   }
