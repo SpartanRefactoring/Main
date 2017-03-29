@@ -24,10 +24,9 @@ public final class SequencerNotLastInBlock<S extends Statement> extends GoToNext
     return "Remove dead statement after " + ¢;
   }
 
-  // TODO Roth: failing test
   @Override public Example[] examples() {
     return new Example[] { //
-        convert("{throw new Exeption(); f();}") //
+        convert("{throw new Exception(); f();}") //
             .to("{throw new Exception();}") //
     };
   }
