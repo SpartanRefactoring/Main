@@ -329,7 +329,7 @@ public class Toolbox {
         .add(VariableDeclarationFragment.class, //
             new FieldFragmentInitializerDefaultValue(), //
             new FragmentNoInitializerAssignment(), //
-            new FragmentInitialiazerUpdateAssignment(), //
+            new LocalVariableInitializedUpdateAssignment(), //
             new FragmentInitializerIfAssignment(), //
             new FragmentInitializerIfUpdateAssignment(), //
             new FragmentInitializerReturnVariable(), //
@@ -337,7 +337,7 @@ public class Toolbox {
             new FragmentInitializerReturnAssignment(), //
             new FragmentInitializerReturn(), //
             new FragmentInitializerStatementTerminatingScope(), //
-            new FragmentInitialiazerAssignment(), //
+            new LocalVariableInitialiazerAssignment(), //
             new LocalVariableUninitializedDead(), //
             new FragmentInitializerInlineIntoNext(), //
             new FragmentInitializerWhile(), //

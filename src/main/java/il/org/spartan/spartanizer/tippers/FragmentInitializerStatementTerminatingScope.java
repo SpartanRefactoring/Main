@@ -19,11 +19,12 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.patterns.*;
 
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerStatementTerminatingScope extends $FragmentAndStatement //
+public final class FragmentInitializerStatementTerminatingScope extends LocalVariableInitializedStatement //
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -221763355000543721L;
 
@@ -31,28 +32,27 @@ public final class FragmentInitializerStatementTerminatingScope extends $Fragmen
     return "Inline local " + ¢.getName() + " into subsequent statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
-    if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
+  @Override protected ASTRewrite go(final ASTRewrite $,  final TextEditGroup g) {
+    if (fragment == null || extract.core(fragment.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(fragment)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
-            && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
+            && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(name + "") && !iz.simpleName(initializer)
             && !iz.literal(initializer)
-        || wizard.frobiddenOpOnPrimitive(f, nextStatement) || Inliner.isArrayInitWithUnmatchingTypes(f))
+        || wizard.frobiddenOpOnPrimitive(fragment, nextStatement) || Inliner.isArrayInitWithUnmatchingTypes(fragment))
       return null;
-    final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(f.getParent());
+    final VariableDeclarationStatement currentStatement = az.variableDeclrationStatement(fragment.getParent());
     boolean searching = true;
     for (final VariableDeclarationFragment ff : fragments(currentStatement))
       if (searching)
-        searching = ff != f;
-      else if (!collect.usesOf(n).in(ff.getInitializer()).isEmpty())
+        searching = ff != fragment;
+      else if (!collect.usesOf(name).in(ff.getInitializer()).isEmpty())
         return null;
     final Block parent = az.block(currentStatement.getParent());
     if (parent == null)
       return null;
     final List<Statement> ss = statements(parent);
-    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !collect.definitionsOf(n).in(nextStatement).isEmpty())
+    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !collect.definitionsOf(name).in(nextStatement).isEmpty())
       return null;
-    final List<SimpleName> uses = collect.usesOf(n).in(nextStatement);
+    final List<SimpleName> uses = collect.usesOf(name).in(nextStatement);
     if (!sideEffects.free(initializer)) {
       final SimpleName use = onlyOne(uses);
       if (use == null || Coupling.unknownNumberOfEvaluations(use, nextStatement))
@@ -62,13 +62,13 @@ public final class FragmentInitializerStatementTerminatingScope extends $Fragmen
       if (Inliner.never(use, nextStatement) || Inliner.isPresentOnAnonymous(use, nextStatement))
         return null;
     final Expression v = Inliner.protect(initializer, currentStatement);
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
+    final InlinerWithValue i = new Inliner(name, $, g).byValue(v);
     final Statement newStatement = copy.of(nextStatement);
-    if (i.addedSize(newStatement) - removalSaving(f) > 0)
+    if (i.addedSize(newStatement) - wizard.removalSaving(fragment) > 0)
       return null;
     $.replace(nextStatement, newStatement, g);
     i.inlineInto(newStatement);
-    action.remove(f, $, g);
+    action.remove(fragment, $, g);
     return $;
   }
 }
