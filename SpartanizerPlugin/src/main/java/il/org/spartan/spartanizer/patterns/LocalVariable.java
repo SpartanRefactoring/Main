@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-27 */
 public abstract class LocalVariable extends Fragment {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
-  private Statement nextStatement;
+  protected Statement nextStatement;
   private VariableDeclarationStatement parent;
 
   public LocalVariable() {
