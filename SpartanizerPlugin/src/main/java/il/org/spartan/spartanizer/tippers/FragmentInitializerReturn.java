@@ -14,7 +14,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
-import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 
 /** convert {@code
  * int a = 3;
@@ -24,31 +25,32 @@ import il.org.spartan.spartanizer.java.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerReturn extends $FragmentAndStatement//
-    implements TipperCategory.Shortcircuit {
-  private static final long serialVersionUID = 0x5D2F5CEC2756BC9DL;
+public final class FragmentInitializerReturn extends LocalVariableInitializedStatement implements TipperCategory.Shortcircuit {
+  private static final long serialVersionUID = -942696098095011383L;
+  private ReturnStatement returnStatement;
+
+  public FragmentInitializerReturn() {
+    andAlso(Proposition.of("Next statement must be return ", //
+        () -> (returnStatement = az.returnStatement(nextStatement)) != null));
+  }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null || haz.annotation(f))
-      return null;
-    final ReturnStatement s = az.returnStatement(nextStatement);
-    if (s == null)
-      return null;
-    final Assignment a = az.assignment(expression(s));
-    if (a == null || !wizard.same(n, to(a)) || a.getOperator() == ASSIGN)
+  @Override protected ASTRewrite go(ASTRewrite $, TextEditGroup g) {
+    final Assignment a = az.assignment(expression(returnStatement));
+    if (a == null || !wizard.same(name, to(a)) || a.getOperator() == ASSIGN)
       return null;
     final Expression newReturnValue = make.assignmentAsExpression(a);
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
+    final InlinerWithValue i = new Inliner(name, $, g).byValue(initializer);
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving() - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);
-    action.removeDeadFragment(f, $, g);
+    action.removeDeadFragment(object(), $, g);
     return $;
   }
+
+
 }
