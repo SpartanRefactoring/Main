@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
@@ -57,7 +58,7 @@ public class ExamplesTests {
 
   @Parameters(name = "{index}. {1}") //
   public static Collection<Object[]> data() {
-    return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(Collectors.toList());
+    return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(toList());
   }
 
   /** Get all tippers from {@link Toolbox}. Removes duplicate tippers (same
@@ -66,6 +67,6 @@ public class ExamplesTests {
    * @return all tippers to be tested */
   private static Collection<?> allTippers() {
     return Toolbox.freshCopyOfAllTippers().getAllTippers() //
-        .stream().collect(Collectors.toMap(Tipper<? extends ASTNode>::getClass, λ -> λ, (t1, t2) -> t1)).values();
+        .stream().collect(toMap(Tipper<? extends ASTNode>::getClass, λ -> λ, (t1, t2) -> t1)).values();
   }
 }
