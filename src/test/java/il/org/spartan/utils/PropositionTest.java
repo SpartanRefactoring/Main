@@ -2,7 +2,6 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
-import static il.org.spartan.utils.Proposition.not;
 
 import java.util.*;
 import java.util.function.*;
@@ -160,20 +159,20 @@ public class PropositionTest {
     assert Proposition.OR(T, X, X).getAsBoolean();
     assert T_OR_F_OR_X.getAsBoolean();
     assert Proposition.OR(T, X, X).getAsBoolean();
-    assert Proposition.not(F).getAsBoolean();
-    assert !Proposition.not(T).getAsBoolean();
-    assert Proposition.not(F).and(not(F)).getAsBoolean();
-    assert !Proposition.not(F).and(not(T)).getAsBoolean();
-    assert Proposition.not(F).and(not(F)).or(T).getAsBoolean();
-    assert Proposition.not(F).and(not(F)).or(T).eval();
-    assert Proposition.not(F).and(not(F)).or(T).or(X).eval();
-    assert Proposition.not(F).and(not(F)).or(T).or(X, X).eval();
-    assert not(F).and(not(F)).getAsBoolean();
-    assert !not(F).and(not(T)).getAsBoolean();
-    assert not(F).and(not(F)).or(T).getAsBoolean();
-    assert not(F).and(not(F)).or(T).eval();
-    assert not(F).and(not(F)).or(T).or(X).eval();
-    final Proposition or = not(F).and(not(F)).or(T).or(X, X);
+    assert Proposition.NOT(F).getAsBoolean();
+    assert !Proposition.NOT(T).getAsBoolean();
+    assert Proposition.NOT(F).and(NOT(F)).getAsBoolean();
+    assert !Proposition.NOT(F).and(NOT(T)).getAsBoolean();
+    assert Proposition.NOT(F).and(NOT(F)).or(T).getAsBoolean();
+    assert Proposition.NOT(F).and(NOT(F)).or(T).eval();
+    assert Proposition.NOT(F).and(NOT(F)).or(T).or(X).eval();
+    assert Proposition.NOT(F).and(NOT(F)).or(T).or(X, X).eval();
+    assert NOT(F).and(NOT(F)).getAsBoolean();
+    assert !NOT(F).and(NOT(T)).getAsBoolean();
+    assert NOT(F).and(NOT(F)).or(T).getAsBoolean();
+    assert NOT(F).and(NOT(F)).or(T).eval();
+    assert NOT(F).and(NOT(F)).or(T).or(X).eval();
+    final Proposition or = NOT(F).and(NOT(F)).or(T).or(X, X);
     assert or.eval();
     assert Proposition.of(F).or(T).and(T).eval();
     assert OR(F, T).and(T).eval();
@@ -242,15 +241,15 @@ public class PropositionTest {
   }
 
   @Test public void b92() {
-    azzert.that(not(T).reduce(javaReducer), is("!T"));
+    azzert.that(NOT(T).reduce(javaReducer), is("!T"));
   }
 
   @Test public void b93() {
-    azzert.that(not(X).reduce(javaReducer), is("!X"));
+    azzert.that(NOT(X).reduce(javaReducer), is("!X"));
   }
 
   @Test public void b94() {
-    azzert.that(not(N).reduce(javaReducer), is("!N"));
+    azzert.that(NOT(N).reduce(javaReducer), is("!N"));
   }
 
   @Test public void b95() {
@@ -320,7 +319,7 @@ public class PropositionTest {
   @Before public void setUp() {
     B1 = T_OR_F_OR_X = Proposition.OR("T OR F OR X", T, F, X);
     B2 = T_AND_F_AND_X = Proposition.AND("T AND F AND X", T, F, X);
-    B3 = FNF_OR_X_OR_N_OR_T = not(F).and(not(F)).or(X).or(N, T);
+    B3 = FNF_OR_X_OR_N_OR_T = NOT(F).and(NOT(F)).or(X).or(N, T);
     B4 = T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T = Proposition.OR(T_OR_F_OR_X, FNF_OR_X_OR_N_OR_T);
     B5 = B1_AND_B2 = B1.and(B2);
     B6 = B2_AND_B1 = B2.and(B1);
