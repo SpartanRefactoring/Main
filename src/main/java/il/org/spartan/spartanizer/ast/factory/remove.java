@@ -12,14 +12,11 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/**
- * TODO Yossi Gil: document class 
+/** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
- * @since 2017-03-29
- */
+ * @since 2017-03-29 */
 public enum remove {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-
   public static void statement(final Statement s, final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
