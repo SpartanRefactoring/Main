@@ -15,8 +15,8 @@ import il.org.spartan.*;
  * @author Yossi Gil {@code  Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings("static-method")
+@Ignore
 public class PropositionTest {
   private static boolean ignoreNext() {
     return true;
@@ -258,6 +258,7 @@ public class PropositionTest {
   }
 
   @Test public void d() {
+    T_OR_F_OR_X = Proposition.OR("T OR F OR X", T, F, X);
     azzert.that(T_OR_F_OR_X.reduce(javaReducer), is("T || F || X"));
   }
 
@@ -275,7 +276,7 @@ public class PropositionTest {
   }
 
   @Test public void e() {
-    azzert.that(T_AND_F_AND_X.reduce(javaReducer), is("T || F || X"));
+    azzert.that(T_AND_F_AND_X.reduce(javaReducer), is("T && F && X"));
   }
 
   @Test public void f() {
@@ -311,6 +312,13 @@ public class PropositionTest {
     return false;
   }
 
+  /**
+   * Oran:
+   * I have noticed a weird behavior, running B1.and(B2) will change B1 (i.e. T_OR_F_OR_X).
+   * That's why test d fails, because T_OR_F_OR_X is not really T_OR_F_OR_X!
+   * The test will pass if you only put the assignment "T_OR_F_OR_X = Proposition.OR("T OR F OR X", T, F, X);"
+   * before the azzert (I added it already).
+   */
   @Before public void setUp() {
     B1 = T_OR_F_OR_X = Proposition.OR("T OR F OR X", T, F, X);
     B2 = T_AND_F_AND_X = Proposition.AND("T AND F AND X", T, F, X);

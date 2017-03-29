@@ -544,9 +544,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+Alt+L"
 		commandId="il.org.spartan.CharacterShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<key sequence="Ctrl+Alt+Q"
-		commandId="il.org.spartan.PreferencesChooser"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 
 <extension
