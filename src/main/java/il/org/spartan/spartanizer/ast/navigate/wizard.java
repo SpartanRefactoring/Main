@@ -66,12 +66,12 @@ public interface wizard {
     if (n1 > n2)
       return false;
     assert n1 == n2;
-    final IfStatement $ = trick.invert(s);
-    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(trick.invert($));
+    final IfStatement $ = make.invert(s);
+    return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(make.invert($));
   }
 
   static boolean shoudlInvert(final IfStatement s) {
-    final int $ = trick.sequencerRank(hop.lastStatement(then(s))), rankElse = trick.sequencerRank(hop.lastStatement(elze(s)));
+    final int $ = wizard.sequencerRank(hop.lastStatement(then(s))), rankElse = wizard.sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !thenIsShorter(s);
   }
 
@@ -929,5 +929,14 @@ public interface wizard {
   static VariableDeclarationFragment findFragment(final FieldDeclaration ¢) {
     return fragments(¢).stream().filter(λ -> (λ.getName() + "").equals(FieldSerialVersionUIDToHexadecimal.SERIAL_VERSION_UID)).findFirst()
         .orElse(null);
+  }
+
+  static int sequencerRank(final ASTNode ¢) {
+    return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
+  }
+
+  public static String signAdjust(final String token) {
+    return token.startsWith("-") ? token.substring(1) //
+        : "-" + token.substring(as.bit(token.startsWith("+")));
   }
 }
