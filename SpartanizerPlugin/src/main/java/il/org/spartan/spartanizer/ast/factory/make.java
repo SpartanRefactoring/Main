@@ -374,7 +374,6 @@ public enum make {
     return rankElse > rankThen || rankThen == rankElse && !trick.thenIsShorter(s) ? $ : main;
   }
 
-
   public static boolean thenIsShorter(final IfStatement s) {
     final Statement then = then(s), elze = elze(s);
     if (elze == null)

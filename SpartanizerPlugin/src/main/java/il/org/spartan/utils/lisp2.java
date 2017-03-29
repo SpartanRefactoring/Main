@@ -86,5 +86,4 @@ public interface lisp2 extends lisp {
   static String chopLast(final String ¢) {
     return ¢.substring(0, ¢.length() - 1);
   }
-
 }
