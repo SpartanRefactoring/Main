@@ -559,12 +559,4 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    </product>
 </extension>
 
-<extension point="org.eclipse.ui.views">
-        <view id="il.org.spartan.spartanizer.view"
-          name="Spartan"
-          class="il.org.spartan.plugin.SpartanView"
-          icon="platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif"
-          category="org.eclipse.jdt.ui.java" />
-</extension>
-
 </plugin>
