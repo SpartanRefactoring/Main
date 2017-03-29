@@ -267,11 +267,12 @@ public class PropositionTest {
   }
 
   @Test public void d1() {
+    T_OR_F_OR_X = Proposition.OR("T OR F OR X", T, F, X);
     azzert.that(T_OR_F_OR_X.reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
       @Override protected String map(final BooleanSupplier ¢) {
         return ¢ + "";
       }
-    }), is("TFXTFX"));
+    }), is("TFX"));
   }
 
   @Test public void e() {
