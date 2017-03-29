@@ -150,6 +150,8 @@ public final class Issue0223 {
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimmingOf("Integer x = new Integer(1 + 9);")//
+        .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
+        .gives("Integer x = Integer.valueOf(1+9);")//
         .gives("Integer.valueOf(1+9);")//
         .gives("Integer.valueOf(10);")//
         .stays();
@@ -159,8 +161,14 @@ public final class Issue0223 {
     trimmingOf("Integer x = new Integer(a);")//
         .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
         .gives("Integer x = Integer.valueOf(a);")//
-        .gives("Integer.valueOf(10);")//
-        .stays();
+        ;
+  }
+
+  @Test public void a2() {
+    trimmingOf("new Integer(a);")//
+        .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
+        .gives("Integer.valueOf(a);")//
+        ;
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
