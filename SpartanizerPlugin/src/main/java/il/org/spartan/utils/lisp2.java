@@ -13,11 +13,11 @@ import il.org.spartan.utils.range.*;
  * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-19 */
 public interface lisp2 extends lisp {
-  public static void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
+  static void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
     items.forEach(from::remove);
   }
 
-  public static List<Expression> removeFirstElement(final List<Expression> ¢) {
+  static List<Expression> removeFirstElement(final List<Expression> ¢) {
     final List<Expression> $ = new ArrayList<>(¢);
     $.remove(first($));// remove first
     return $;
