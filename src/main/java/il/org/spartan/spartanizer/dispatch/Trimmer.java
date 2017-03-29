@@ -81,7 +81,7 @@ public class Trimmer extends AbstractGUIApplicator {
         @Nullable Tipper<N> w = null;
         try {
           w = getTipper(t, n);
-        } catch (@NotNull final IllegalArgumentException ¢) {
+        } catch (@NotNull final Exception ¢) {
           monitor.logProbableBug(this, ¢);
         }
         if (w == null)
