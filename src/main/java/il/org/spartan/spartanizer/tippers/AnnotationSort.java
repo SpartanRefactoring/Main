@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.utils.Example.*;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -16,6 +17,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** TODO: kobybs please add a description
  * @author kobybs
@@ -106,5 +108,19 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
   @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
+  }
+
+  @Override public String description() {
+    return "Sort annotations of declaration";
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  @Override public Example[] examples() {
+    return new Example[] { //
+        convert("@NonNull @SuppressWarnings public @Override final void f() {}") //
+            .to("@Override @SuppressWarnings @NonNull public final void f() {}"), //
+        convert("@C @B @A class A {}") //
+            .to("@A @B @C class A {}"), //
+    };
   }
 }
