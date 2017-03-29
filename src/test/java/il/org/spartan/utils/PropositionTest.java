@@ -2,6 +2,7 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
+import static il.org.spartan.utils.Proposition.not;
 
 import java.util.*;
 import java.util.function.*;
@@ -15,7 +16,6 @@ import il.org.spartan.*;
  * @author Yossi Gil {@code   Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings("static-method")
 public class PropositionTest {
   private static boolean ignoreNext() {

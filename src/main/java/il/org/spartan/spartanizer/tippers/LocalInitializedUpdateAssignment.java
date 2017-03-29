@@ -14,16 +14,10 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.patterns.*;
 
-/** convert {@code
- * int a = 2;
- * if (b)
- *   a = 3;
- * } into {@code
- * int a = b ? 3 : 2;
- * }
+/** See {@link #examples()}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitializerIfUpdateAssignment extends LocalVariableInitializedStatement//
+public final class LocalInitializedUpdateAssignment extends LocalVariableInitializedStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x32344BE2ADA42ED4L;
 
@@ -31,16 +25,16 @@ public final class FragmentInitializerIfUpdateAssignment extends LocalVariableIn
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $,  final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     if (initializer == null)
       return null;
     final IfStatement s = az.ifStatement(nextStatement);
     if (s == null || !iz.vacuousElse(s))
       return null;
-    s.setElseStatement(null);
     final Expression condition = s.getExpression();
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.same(to(a), name) || LocalVariable.doesUseForbiddenSiblings(fragment, condition, from(a)) || a.getOperator() == Assignment.Operator.ASSIGN)
+    if (a == null || !wizard.same(to(a), name) || LocalVariable.doesUseForbiddenSiblings(fragment, condition, from(a))
+        || a.getOperator() == Assignment.Operator.ASSIGN)
       return null;
     final ConditionalExpression newInitializer = subject.pair(make.assignmentAsExpression(a), initializer).toCondition(condition);
     final InlinerWithValue i = new Inliner(name, $, g).byValue(initializer);

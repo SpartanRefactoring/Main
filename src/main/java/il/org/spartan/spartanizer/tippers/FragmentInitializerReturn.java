@@ -38,7 +38,7 @@ public final class FragmentInitializerReturn extends LocalVariableInitializedSta
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
 
-  @Override protected ASTRewrite go(ASTRewrite $, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Assignment a = az.assignment(expression(returnStatement));
     if (a == null || !wizard.same(name, to(a)) || a.getOperator() == ASSIGN)
       return null;
@@ -51,6 +51,4 @@ public final class FragmentInitializerReturn extends LocalVariableInitializedSta
     action.removeDeadFragment(object(), $, g);
     return $;
   }
-
-
 }

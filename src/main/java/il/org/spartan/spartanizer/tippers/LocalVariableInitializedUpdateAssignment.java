@@ -24,8 +24,7 @@ import il.org.spartan.spartanizer.patterns.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class LocalVariableInitializedUpdateAssignment extends LocalVariableInitializedStatement 
-    implements TipperCategory.Unite {
+public final class LocalVariableInitializedUpdateAssignment extends LocalVariableInitializedStatement implements TipperCategory.Unite {
   private static final long serialVersionUID = -6925930851197136485L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -38,7 +37,7 @@ public final class LocalVariableInitializedUpdateAssignment extends LocalVariabl
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(name, to(a)) || false) 
+    if (a == null || !wizard.same(name, to(a)) || false)
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)

@@ -15,7 +15,7 @@ public abstract class Fragment extends AbstractPattern<VariableDeclarationFragme
   protected VariableDeclarationFragment fragment;
 
   Fragment() {
-    andAlso(new Proposition.Singleton("Inapplicable on annotated fragments", () -> {
+    andAlso(Proposition.of("Inapplicable on annotated fragments", () -> {
       fragment = object();
       name = fragment.getName();
       initializer = fragment.getInitializer();

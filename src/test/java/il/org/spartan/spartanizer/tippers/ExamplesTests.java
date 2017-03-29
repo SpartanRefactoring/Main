@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.tippers;
-import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
+
+import static java.util.stream.Collectors.*;
 
 import java.util.*;
 import java.util.stream.*;
