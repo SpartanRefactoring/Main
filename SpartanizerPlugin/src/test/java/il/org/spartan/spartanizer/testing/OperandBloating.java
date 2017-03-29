@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import org.junit.Assert;
 
 public class OperandBloating extends TrimmingOperand {
   ASTNode ast;
@@ -178,7 +179,7 @@ public class OperandBloating extends TrimmingOperand {
     final String wrap = w.on(get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
+    SingleFlater.in(u,()->Assert.fail("Exception was thrown")).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
