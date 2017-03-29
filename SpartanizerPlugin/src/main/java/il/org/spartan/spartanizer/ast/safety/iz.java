@@ -33,6 +33,12 @@ import il.org.spartan.utils.*;
  * @since 2015-07-16 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public interface iz {
+  interface not {
+    @SafeVarargs static <T> boolean in(final T t, final T... ts) {
+      return !iz.in(t, ts);
+    }
+  }
+
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
