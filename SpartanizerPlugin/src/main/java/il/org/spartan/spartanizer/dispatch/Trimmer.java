@@ -78,18 +78,26 @@ public class Trimmer extends AbstractGUIApplicator {
         TrimmerLog.visitation(n);
         if (!check(n) || !inRange(m, n) || disabling.on(n))
           return true;
-        @Nullable Tip tip = null;
+        @Nullable Tipper<N> w = null;
         try {
-          tip = t.firstTip(n, exclude);
+          w = getTipper(t, n);
         } catch (@NotNull final IllegalArgumentException ¢) {
           monitor.logProbableBug(this, ¢);
+        }
+        if (w == null)
+          return true;
+        @Nullable Tip s = null;
+        try {
+          s = w.tip(n, exclude);
+          TrimmerLog.tip(w, n);
+        } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
         }
-        if (tip == null)
+        if (s == null)
           return true;
         i.step();
-        TrimmerLog.application(r, tip);
+        TrimmerLog.application(r, s);
         return true;
       }
 
@@ -144,17 +152,17 @@ public class Trimmer extends AbstractGUIApplicator {
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;
-        @Nullable Tip tip = null;
+        @Nullable Tipper<N> w = null;
         try {
-          tip = t.firstTip(n, exclude);
+          w = getTipper(t, n);
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
         }
-        if (tip != null)
+        if (w != null)
           progressMonitor.worked(5);
         try {
-          return tip == null || prune(tip, $);
+          return w == null /* || w.cantTip(n) [probably bug --or] */ || prune(w.tip(n, exclude), $);
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
