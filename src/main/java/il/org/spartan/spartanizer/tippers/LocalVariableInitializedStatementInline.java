@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
@@ -26,17 +26,16 @@ import il.org.spartan.utils.*;
  * }
  * @author Ori Marcovitch
  * @since 2016-11-27 */
-public final class FragmentInitializerInlineIntoNext extends GoToNextStatement<VariableDeclarationFragment>//
-    implements TipperCategory.Inlining {
+public final class LocalVariableInitializedStatementInline extends LocalVariableInitializedStatement  implements TipperCategory.Inlining {
   private static final long serialVersionUID = -228096256168103399L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline variable " + name(¢) + " into next statement";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $,  final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
-        || wizard.frobiddenOpOnPrimitive(f, nextStatement))
+        || wizard.frobiddenOpOnPrimitive(fragment, nextStatement))
       return null;
     switch (nodeType(nextStatement)) {
       case ASTNode.DO_STATEMENT:
@@ -53,40 +52,33 @@ public final class FragmentInitializerInlineIntoNext extends GoToNextStatement<V
         if (containsLambda(nextStatement))
           return null;
     }
-    final Expression initializer = initializer(f);
-    if (initializer == null)
-      return null;
-    final Statement parent = az.statement(parent(f));
-    if (parent == null//
-        || iz.forStatement(parent))
-      return null;
-    final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
+    final SimpleName n = peelIdentifier(nextStatement, name + "");
     if (n == null//
-        || anyFurtherUsage(parent, nextStatement, identifier(n))//
+        || anyFurtherUsage(declaration, nextStatement, identifier(n))//
         || leftSide(nextStatement, identifier(n))//
         || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
-    final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
+    final VariableDeclarationStatement pp = az.variableDeclarationStatement(declaration);
     if (pp != null)
       e = Inliner.protect(e, pp);
     if (pp == null//
         || fragments(pp).size() <= 1)
-      $.remove(parent, g);
+      $.remove(declaration, g);
     else {
       if (nodeType(type(pp)) == ASTNode.ARRAY_TYPE)
         return null;
       final VariableDeclarationStatement pn = copy.of(pp);
       final List<VariableDeclarationFragment> l = fragments(pp);
       for (int ¢ = l.size() - 1; ¢ >= 0; --¢) {
-        if (l.get(¢).equals(f)) {
+        if (l.get(¢).equals(fragment)) {
           fragments(pn).remove(¢);
           break;
         }
-        if (iz.containsName(name(f), initializer(l.get(¢))))
+        if (iz.containsName(name, step.initializer(l.get(¢))))
           return null;
       }
-      $.replace(parent, pn, g);
+      $.replace(declaration, pn, g);
     }
     $.replace(n, e, g);
     return $;
@@ -97,7 +89,7 @@ public final class FragmentInitializerInlineIntoNext extends GoToNextStatement<V
   }
 
   private static boolean preOrPostfix(final SimpleName id) {
-    final ASTNode $ = parent(id);
+    final ASTNode $ = step.parent(id);
     return iz.prefixExpression($)//
         || iz.postfixExpression($);
   }
@@ -108,7 +100,7 @@ public final class FragmentInitializerInlineIntoNext extends GoToNextStatement<V
 
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
-    final ASTNode parent = parent(nextStatement);
+    final ASTNode parent = step.parent(nextStatement);
     parent.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (parent.equals(¢))
