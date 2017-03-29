@@ -12,13 +12,11 @@ public abstract class Fragment extends AbstractPattern<VariableDeclarationFragme
   private static final long serialVersionUID = -6714605477414039462L;
   protected Expression initializer;
   protected SimpleName name;
-  protected VariableDeclarationFragment fragment;
 
   Fragment() {
     andAlso(new Proposition.Singleton("Inapplicable on annotated fragments", () -> {
       if (haz.annotation(object()))
         return false;
-      fragment = object();
       name = object().getName();
       initializer = object().getInitializer();
       return true;

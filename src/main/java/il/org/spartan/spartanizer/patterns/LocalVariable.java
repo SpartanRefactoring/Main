@@ -22,12 +22,12 @@ import il.org.spartan.utils.*;
 public abstract class LocalVariable extends Fragment {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
   protected Statement nextStatement;
-  protected VariableDeclarationStatement declaration;
+  private VariableDeclarationStatement parent;
 
   public LocalVariable() {
     andAlso(Proposition.of("Must be local variable", () -> {
-      declaration = az.variableDeclarationStatement(fragment.getParent());
-      if (declaration == null)
+      parent = az.variableDeclarationStatement(object().getParent());
+      if (parent == null)
         return false;
       nextStatement = extract.nextStatement(object());
       return true;
@@ -72,7 +72,7 @@ public abstract class LocalVariable extends Fragment {
   }
 
   protected VariableDeclarationStatement parent() {
-    return declaration;
+    return parent;
   }
 
   protected boolean usedInSubsequentInitializers() {
