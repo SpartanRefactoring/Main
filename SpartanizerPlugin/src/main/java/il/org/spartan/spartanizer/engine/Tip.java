@@ -39,10 +39,6 @@ public abstract class Tip extends Range {
   public int lineNumber = -1;
   /** The tipper class that supplied that tip */
   @SuppressWarnings("rawtypes") public final Class<? extends Tipper> tipperClass;
-  /** Spartanization range char start. */
-  public int spartanizationCharStart;
-  /** Spartanization range char end. */
-  public int spartanizationCharEnd;
 
   /** Instantiates this class
    * @param description a textual description of the changes described by this
@@ -53,21 +49,6 @@ public abstract class Tip extends Range {
       final ASTNode... ns) {
     this(description, range(n, ns), tipperClass);
     lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(n).getLineNumber(from);
-    spartanizationCharStart = n.getStartPosition();
-    spartanizationCharEnd = spartanizationCharStart + n.getLength();
-  }
-
-  /** Instantiates this class
-   * @param description a textual description of the changes described by this
-   *        instance
-   * @param n the node on which change is to be marked
-   * @param spartanizationRange the node on which change is to be carried out
-   * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, final ASTNode n, final ASTNode spartanizationRange,
-      @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final ASTNode... ns) {
-    this(description, n, tipperClass, ns);
-    spartanizationCharStart = spartanizationRange.getStartPosition();
-    spartanizationCharEnd = spartanizationCharStart + spartanizationRange.getLength();
   }
 
   Tip(final String description, final Range other, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
