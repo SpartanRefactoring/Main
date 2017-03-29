@@ -35,7 +35,7 @@ public final class LocalVariableInitialiazerAssignment extends LocalVariableInit
             .to("int a = 3; fragment(b); fragment(a,b);a = fragment(a,b); b= fragment(a,b);") };
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $,  final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Assignment a = extract.assignment(nextStatement);
     if (a == null || !wizard.same(name, to(a)) || a.getOperator() != ASSIGN)
       return null;
@@ -50,5 +50,4 @@ public final class LocalVariableInitialiazerAssignment extends LocalVariableInit
     $.remove(nextStatement, g);
     return $;
   }
-
 }

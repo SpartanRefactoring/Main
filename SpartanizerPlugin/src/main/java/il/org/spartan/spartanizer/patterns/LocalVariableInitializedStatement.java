@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.patterns;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -13,11 +14,10 @@ public abstract class LocalVariableInitializedStatement extends LocalVariableIni
   private static final long serialVersionUID = 0x1B70489B1D1340L;
 
   public LocalVariableInitializedStatement() {
-    this//
-        .andAlso(Proposition.of("Followed by statement", //
-            () -> (nextStatement = extract.nextStatement(statement())) != null))//
-        .andAlso(Proposition.not("Not used in subsequent initalizers", //
-            () -> collect.usesOf(name).in(youngerSiblings()).isEmpty()));
+    andAlso(Proposition.of("Followed by statement", //
+        () -> (nextStatement = extract.nextStatement(statement())) != null))//
+            .andAlso(Proposition.not("Not used in subsequent initalizers", //
+                () -> collect.usesOf(name).in(youngerSiblings()).isEmpty()));
   }
 
   @Override public abstract String description(VariableDeclarationFragment f);

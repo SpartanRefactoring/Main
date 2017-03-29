@@ -331,9 +331,9 @@ public class Toolbox {
             new FragmentNoInitializerAssignment(), //
             new LocalVariableInitializedUpdateAssignment(), //
             new FragmentInitializerIfAssignment(), //
-            new FragmentInitializerIfUpdateAssignment(), //
+            new LocalInitializedUpdateAssignment(), //
             new FragmentInitializerReturnVariable(), //
-            new FragmentInitializerReturnExpression(), //
+            new LocalInitializedReturnExpression(), //
             new FragmentInitializerReturnAssignment(), //
             new FragmentInitializerReturn(), //
             new FragmentInitializerStatementTerminatingScope(), //
