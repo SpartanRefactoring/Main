@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-09 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
-public final class Version300 {
+public class Version300 {
   @Test public void a() {
     azzert.that(
         theSpartanizer.once(//
@@ -98,12 +98,12 @@ public final class Version300 {
 
   @Test public void overridePublicStatementreplacementNotNullFinalBlockbNotNullFinalListStatementssextractstatementsbIfidenticalssstatementsbhazhidingsssReturnNullNullableFinalASTNodeparentazstatementparentbIfparentNulliztryStatementparentReturnreorganizeStatementbSwitchsssizeCase0ReturnmakeemptyStatementbCase1FinalStatementfirstssIfizblockEssentialReturnsubjectstatementtoBlockReturncopyofDefaultReturnreorganizeNestedStatementb() {
     trimmingOf("/**/" + //
-        "@A public B a(@C final D b) {" + //
-        "    @C final E<B> c = d.e(b);" + //
-        "    if (f(c, e(b)) || g.h(c)) {" + //
+        "@A public B a(@C D b) {" + //
+        "    @C E<B> c = d.x;" + //
+        "    if (f(c, x) || g.h(c)) {" + //
         "      return null;" + //
         "    }" + //
-        "    @F final G i = j.k(i(b));" + //
+        "    @F G i = j.k(i(b));" + //
         "    if ((i == null) || l.m(i)) {" + //
         "      return n(b);" + //
         "    }" + //
@@ -111,7 +111,7 @@ public final class Version300 {
         "      case 0:" + //
         "        return p.q(b);" + //
         "      case 1:" + //
-        "        final B r;" + //
+        "        B r;" + //
         "        r = s(c);" + //
         "        if (l.t(r))" + //
         "          return u.k(r).v();" + //
@@ -123,12 +123,12 @@ public final class Version300 {
     ).gives(
         // Edit this to reflect your expectation
         "/**/" + //
-            "@A public B a(@C final D b) {" + //
-            "    @C final E<B> c = d.e(b);" + //
-            "    if (f(c, e(b)) || g.h(c)) {" + //
+            "@A public B a(@C D b) {" + //
+            "    @C E<B> c = d.x;" + //
+            "    if (f(c, x) || g.h(c)) {" + //
             "      return null;" + //
             "    }" + //
-            "    @F final G i = j.k(i(b));" + //
+            "    @F G i = j.k(i(b));" + //
             "    if ((i == null) || l.m(i)) {" + //
             "      return n(b);" + //
             "    }" + //
@@ -136,17 +136,19 @@ public final class Version300 {
             "      case 0:" + //
             "        return p.q(b);" + //
             "      case 1:" + //
-            "        final B r;" + //
-            "        r = s(c);" + //
-            "        if (l.t(r))" + //
-            "          return u.k(r).v();" + //
-            "        return w.x(r);" + //
+            "        B $;" + //
+            "        $ = s(c);" + //
+            "        if (l.t($))" + //
+            "          return u.k($).v();" + //
+            "        return w.x($);" + //
             "      default:" + //
             "        return y(b);" + //
             "    }" + //
             "  }"//
     //
     )//
+        .gives(
+            "@A public B a(@C D b){@C E<B>c=d.x;if(f(c,x)||g.h(c))return null;@F G i=j.k(i(b));if((i==null)||l.m(i))return n(b);switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
         .stays();
   }
 
@@ -154,17 +156,13 @@ public final class Version300 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_aPublicBaCFinalDbCFinalEBcdebIffcebghcReturnNullFFinalGijkibIfiNulllmiReturnnbSwitchcoCase0ReturnpqbCase1FinalBrrscIfltrReturnukrvReturnwxrDefaultReturnyb() {
     trimmingOf(
-        "@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c)){return null;}@F final G i=j.k(i(b));if((i==null)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:final B r;r=s(c);if(l.t(r))return u.k(r).v();return w.x(r);default:return y(b);}}") //
+        "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c)){return n;}G i=j.k(i(b));if((i==n)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:B r;r=s(c);if(l.t(r))return u.k(r).v();return w.x(r);default:return y(b);}}") //
             .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
             .gives(
-                "@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c)){return null;}@F final G i=j.k(i(b));if((i==null)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:final B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
+                "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c)){return n;}G i=j.k(i(b));if((i==n)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
             .using(Block.class, new BlockSingleton()) //
             .gives(
-                "@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c))return null;@F final G i=j.k(i(b));if((i==null)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:final B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
-            .using(Block.class, new BlockSingleton()) //
-            .gives(
-                "@A public B a(@C final D b){@C final E<B>c=d.e(b);if(f(c,e(b))||g.h(c))return null;@F final G i=j.k(i(b));if((i==null)||l.m(i))return n(b);switch(c.o()){case 0:return p.q(b);case 1:final B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
-            .stays() //
+                "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c))return n;G i=j.k(i(b));if((i==n)||l.m(i))return n(b);switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
     ;
   }
 

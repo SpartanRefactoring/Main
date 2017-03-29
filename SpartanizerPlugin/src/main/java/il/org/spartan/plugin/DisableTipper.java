@@ -1,9 +1,7 @@
 package il.org.spartan.plugin;
-
+import static java.util.stream.Collectors.*;
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.stream.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
@@ -22,7 +20,7 @@ public class DisableTipper {
     if (m != null)
       try {
         disable((Class<? extends Tipper<?>>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY), m.getResource().getProject());
-      } catch (CoreException x) {
+      } catch (final CoreException x) {
         monitor.log(x);
       }
   }
@@ -37,7 +35,7 @@ public class DisableTipper {
     if (!enabledTippers.contains(tipperClass))
       return;
     enabledTippers.remove(tipperClass);
-    XMLSpartan.updateEnabledTippers(p, enabledTippers.stream().map(λ -> λ.getSimpleName()).collect(Collectors.toList()));
+    XMLSpartan.updateEnabledTippers(p, enabledTippers.stream().map(Class::getSimpleName).collect(toList()));
     try {
       Eclipse.refreshProject(p);
     } catch (InvocationTargetException | CoreException | InterruptedException ¢) {

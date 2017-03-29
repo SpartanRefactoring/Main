@@ -64,9 +64,9 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
     return parse($, $.matches("^0") || $.matches("^-0") ? 8 : 10);
   }
 
-  private boolean parse(String token, int radix) {
+  private boolean parse(final String token, final int radix) {
     try {
-      replacement = Long.parseLong(token,radix);
+      replacement = Long.parseLong(token, radix);
       return true;
     } catch (final NumberFormatException ¢) {
       monitor.logEvaluationError(this, ¢);
