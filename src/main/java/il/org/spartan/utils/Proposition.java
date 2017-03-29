@@ -40,8 +40,12 @@ public interface Proposition extends BooleanSupplier {
     return new And(toString, s1, s2, ss);
   }
 
-  static Proposition NOT(final BooleanSupplier ¢) {
-    return new Not(¢);
+  static Proposition not(String toString, final BooleanSupplier ¢) {
+    return new Not(toString, ¢);
+  }
+
+  static Proposition not(final BooleanSupplier ¢) {
+    return not(null, ¢);
   }
 
   static Proposition of(final BooleanSupplier ¢) {
@@ -148,6 +152,10 @@ public interface Proposition extends BooleanSupplier {
   final class Not extends Singleton {
     public Not(final BooleanSupplier s) {
       super(s);
+    }
+
+    public Not(String toString, BooleanSupplier s) {
+      super(toString, s);
     }
 
     @Override public boolean getAsBoolean() {

@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
+import il.org.spartan.spartanizer.patterns.*;
 
 /** convert {@code
  * int a;
@@ -23,7 +24,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitialiazerUpdateAssignment extends $FragmentAndStatement//
+public final class LocalVariableInitializedUpdateAssignment extends LocalVariableInitializedStatement 
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -6925930851197136485L;
 
@@ -35,18 +36,15 @@ public final class FragmentInitialiazerUpdateAssignment extends $FragmentAndStat
     return "Consolidate declaration of variable with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null)
-      return null;
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
+    if (a == null || !wizard.same(name, to(a)) || false) 
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
     final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(name, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);
