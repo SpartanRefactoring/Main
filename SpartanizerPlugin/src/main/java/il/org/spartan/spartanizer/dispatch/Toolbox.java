@@ -328,16 +328,16 @@ public class Toolbox {
             new FieldFragmentInitializerDefaultValue(), //
             new FragmentNoInitializerAssignment(), //
             new FragmentInitialiazerUpdateAssignment(), //
-            new LocalInitializedIfAssignment(), //
+            new FragmentInitializerIfAssignment(), //
             new LocalInitializedUpdateAssignment(), //
             new FragmentInitializerReturnVariable(), //
             new LocalInitializedReturnExpression(), //
             new FragmentInitializerReturnAssignment(), //
             new FragmentInitializerReturn(), //
             new FragmentInitializerStatementTerminatingScope(), //
-            new LocalInitializedAssignment(), //
+            new FragmentInitialiazerAssignment(), //
             new LocalVariableUninitializedDead(), //
-            new LocalVariableInitializedStatementInline(), //
+            new FragmentInitializerInlineIntoNext(), //
             new FragmentInitializerWhile(), //
             new FragmentInitializerToForInitializers(), //
             new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
