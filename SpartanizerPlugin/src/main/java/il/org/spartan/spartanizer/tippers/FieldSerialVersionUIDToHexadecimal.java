@@ -20,9 +20,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-24 */
 public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = -8591656423892977180L;
+  private static final long serialVersionUID = 0x2A2A1B1B2BFBD6A5L;
   public static final String SERIAL_VERSION_UID = "serialVersionUID";
-  // private static final long serialVersionUID = 0xCBDCB439E4AB73FL;
   private VariableDeclarationFragment fragment;
   NumberLiteral initializer;
   long replacement;
@@ -61,7 +60,7 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
       return false;
     if ($.matches(".*[lL]$"))
       $ = lisp2.chopLast($);
-    return parse($, $.matches("^0") || $.matches("^-0") ? 8 : 10);
+    return parse($, $.matches("^[+\\-]?0") ? 8 : 10);
   }
 
   private boolean parse(final String token, final int radix) {
