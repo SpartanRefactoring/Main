@@ -90,6 +90,6 @@ public enum remove {
    * @return expression to the new for loop, without the initializers. */
   public static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s)
-        : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s) : from;
+        : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s) : from;
   }
 }

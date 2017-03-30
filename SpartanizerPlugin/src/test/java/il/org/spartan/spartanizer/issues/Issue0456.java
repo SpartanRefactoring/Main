@@ -30,7 +30,7 @@ public class Issue0456 {
         "{ long q = (r & 1) != 0 ? d(x, r) : (x >>> 1) / (r >>> 1); long r = x - r * q; b[--i] = C.f((int) r, r); x = q; for (; x > 0; x /= r) b[--i] = C.f((int) (x % r), r); }") //
             .using(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()) //
             .gives("{long q=(r&1)!=0?d(x,r):(x>>>1)/(r>>>1),r=x-r*q;b[--i]=C.f((int)r,r);x=q;for(;x>0;x/=r)b[--i]=C.f((int)(x%r),r);}") //
-            .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext()) //
+            .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext()) //
             .gives("{long q=(r&1)!=0?d(x,r):(x>>>1)/(r>>>1);b[--i]=C.f((int)x-r*q,r);x=q;for(;x>0;x/=r)b[--i]=C.f((int)(x%r),r);}") //
             .stays() //
     ;
