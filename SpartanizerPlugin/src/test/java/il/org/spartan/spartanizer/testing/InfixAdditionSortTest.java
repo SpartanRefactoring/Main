@@ -127,8 +127,8 @@ public final class InfixAdditionSortTest {
     assert !new InfixAdditionSubtractionExpand().check(INPUT);
   }
 
-  @Ignore @Test public void test05b() {
-    assert new InfixAdditionSubtractionExpand().check(INPUT);
+  @Test public void test05b() {
+    assert new InfixAdditionSubtractionExpand().check(into.i("3*a+(b-c)-(b+c)"));
   }
 
   private final String s = "365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1";
@@ -280,9 +280,42 @@ public final class InfixAdditionSortTest {
     ;
   }
 
-  @Ignore @Test public void test16b() {
+  /** Introduced by Yogi on Thu-Mar-30-08:25:11-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_365aa4a100a400b306510c1() {
+    trimmingOf("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1") //
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("c+a*400+(b*306+5)*10+(365*a+a*4-a*100)-1") //
+        .using(InfixExpression.class, new InfixAdditionSubtractionExpand()) //
+        .gives("c+a*400+(b*306+5)*10+365*a+a*4-a*100-1") //
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("c+a*4+365*a+a*400+(b*306+5)*10-a*100-1") //
+        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .gives("c+4*a+365*a+400*a+10*(b*306+5)-100*a-1") //
+        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .gives("c+4*a+365*a+400*a+10*(306*b+5)-100*a-1") //
+        .stays() //
+    ;
+  }
+
+  /** Introduced by Yogi on Thu-Mar-30-08:30:51-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_a4b365b400b10c3065100b1() {
+    trimmingOf("a + 4 * b + 365 * b + 400 * b + 10 * (c * 306 + 5) - 100 * b - 1") //
+        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .gives("a+4*b+365*b+400*b+10*(306*c+5)-100*b-1") //
+        .stays() //
+    ;
+  }
+
+  @Test public void test16b() {
     trimmingOf("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1")//
         .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("c+a*400+(b*306+5)*10+(365*a+a*4-a*100)-1") //
+        .gives("c+a*400+(b*306+5)*10+365*a+a*4-a*100-1") //
+        .gives("c+a*4+365*a+a*400+(b*306+5)*10-100*a-1") //
+        .gives("c+4*a+365*a+400*a+10*(b*306+5)-100*a-1") //
+        .gives("c+4*a+365*a+400*a+10*(306*b+5)-100*a-1") //
         .stays();
   }
 

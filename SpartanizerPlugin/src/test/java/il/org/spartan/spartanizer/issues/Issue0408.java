@@ -12,19 +12,17 @@ import org.junit.*;
 public class Issue0408 {
   @Test public void t01() {
     trimmingOf("0+x")//
-        .gives("x")//
         .stays();
   }
 
   @Test public void t02() {
     trimmingOf("0+(0+x+y+(4))")//
-        .gives("x+y+4")//
         .stays();
   }
 
   @Test public void t02b() {
     trimmingOf("(0+x)+y")//
-        .gives("x+y")//
+        .gives("0+x+y")//
         .stays();
   }
 

@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
-public abstract class StatementBottomUp<R> extends Reduce<R> {
+public abstract class StatementMapReducer<R> extends Reduce<R> {
   protected R map(final AssertStatement ¢) {
     return atomic(¢.getExpression(), ¢.getMessage());
   }

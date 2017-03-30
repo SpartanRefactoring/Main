@@ -382,6 +382,7 @@ public final class Version230 {
 
   @Test public void canonicalFragementExample1() {
     trimmingOf("int a;a=3;")//
+        .using(VariableDeclarationFragment.class, new FragmentNoInitializerAssignment()) //
         .gives("int a=3;");
   }
 
@@ -1777,14 +1778,6 @@ public final class Version230 {
   @Test public void issue73b() {
     trimmingOf("void foo(DataOutput dataOutput){}")//
         .gives("void foo(DataOutput o){}");
-  }
-
-  @Ignore // TODO Raviv --yg
-  @Test public void issue73c() {
-    trimmingOf("int foo(Integer integer, ASTNode astn){return integer + astn.hashCode();}")//
-        .gives("int foo(Integer integer,ASTNode n){return integer+n.hashCode();}") //
-        .gives("int foo(Integer i, ASTNode n){return i + n.hashCode();}") //
-        .stays();
   }
 
   @Test public void linearTransformation() {
