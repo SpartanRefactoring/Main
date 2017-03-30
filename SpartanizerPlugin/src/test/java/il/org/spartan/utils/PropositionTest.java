@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.research.metatester.*;
  * @author Yossi Gil {@code   Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(MetaTester.class)
 @SuppressWarnings("static-method")
 public class PropositionTest {
   private static boolean ignoreNext() {
@@ -27,8 +26,8 @@ public class PropositionTest {
 
   private Proposition B1, T_OR_F_OR_X;
   private Proposition B2, T_AND_F_AND_X;
-  private Proposition B3, FNF_OR_X_OR_N_OR_T;
-  private Proposition B4, T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T;
+  private Proposition B3, NOT_F_AND_NOT_F_OR_X_OR_N_OR_T;
+  private Proposition B4, T_OR_F_OR_X_OR_NOT_F_AND_NOT_F_OR_X_OR_N_OR_T;
   private Proposition B5, B1_AND_B2;
   private Proposition B6, B2_AND_B1;
   private Proposition B7, B1_OR_B2;
@@ -44,18 +43,18 @@ public class PropositionTest {
   }
 
   @Test public void j() {
-    azzert.that(B3.reduce(javaReducer), is("!F && !F || X || N || T)"));
-    azzert.that(FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is("!F && !F || X || N || T)"));
-    azzert.that(T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is("T || F || X && !F && !F || X || N || T"));
-    azzert.that(B4.reduce(javaReducer), is(""));
-    azzert.that(B5.reduce(javaReducer), is(""));
-    azzert.that(B1_AND_B2.reduce(javaReducer), is(""));
-    azzert.that(B6.reduce(javaReducer), is(""));
-    azzert.that(B2_AND_B1.reduce(javaReducer), is(""));
-    azzert.that(B7.reduce(javaReducer), is(""));
-    azzert.that(B1_OR_B2.reduce(javaReducer), is(""));
-    azzert.that(B8.reduce(javaReducer), is(""));
-    azzert.that(B2_OR_B1.reduce(javaReducer), is(""));
+    azzert.that(B3.reduce(javaReducer), is("(((!F && !F) || X) || N || T)"));
+    azzert.that(NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("(((!F && !F) || X) || N || T)"));
+    azzert.that(T_OR_F_OR_X_OR_NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("((T || F || X) || (((!F && !F) || X) || N || T))"));
+    azzert.that(B4.reduce(javaReducer), is("((T || F || X) || (((!F && !F) || X) || N || T))"));
+    azzert.that(B5.reduce(javaReducer), is("((T || F || X) && (T && F && X))"));
+    azzert.that(B1_AND_B2.reduce(javaReducer), is("((T || F || X) && (T && F && X))"));
+    azzert.that(B6.reduce(javaReducer), is("((T && F && X) && (T || F || X))"));
+    azzert.that(B2_AND_B1.reduce(javaReducer), is("((T && F && X) && (T || F || X))"));
+    azzert.that(B7.reduce(javaReducer), is("((T || F || X) || (T && F && X))"));
+    azzert.that(B1_OR_B2.reduce(javaReducer), is("((T || F || X) || (T && F && X))"));
+    azzert.that(B8.reduce(javaReducer), is("((T && F && X) || (T || F || X))"));
+    azzert.that(B2_OR_B1.reduce(javaReducer), is("((T && F && X) || (T || F || X))"));
   }
 
   @Test public void aa() {
@@ -196,14 +195,14 @@ public class PropositionTest {
     assert T_OR_F_OR_X.eval();
   }
 
-  @Ignore("Oran") @Test public void b2a() {
-    azzert.that(OR(F, X, N).and(T).reduce(javaReducer), is("(F || X || N) && T"));
+  @Test public void b2a() {
+    azzert.that(OR(F, X, N).and(T).reduce(javaReducer), is("((F || X || N) && T)"));
   }
 
   @Test public void b2() {
     azzert.that(T_OR_F_OR_X + "", is("T OR F OR X"));
-    azzert.that(of(F).or(T).and(T).reduce(javaReducer), is("F || T && T"));
-    azzert.that(of(F).and(X).or(T).reduce(javaReducer), is("F && X || T"));
+    azzert.that(F.or(T).and(T).reduce(javaReducer), is("((F || T) && T)"));
+    azzert.that(F.and(X).or(T).reduce(javaReducer), is("((F && X) || T)"));
   }
 
   @Test public void b3() {
@@ -243,11 +242,11 @@ public class PropositionTest {
     azzert.that(X.reduce(javaReducer), instanceOf(String.class));
     azzert.that(X.reduce(javaReducer), is("X"));
     azzert.that(T.reduce(javaReducer), is("T"));
-    azzert.that(T.or(X).reduce(javaReducer), is("T || X"));
+    azzert.that(T.or(X).reduce(javaReducer), is("(T || X)"));
   }
 
   @Test public void b91() {
-    azzert.that(T.and(X).reduce(javaReducer), is("T && X"));
+    azzert.that(T.and(X).reduce(javaReducer), is("(T && X)"));
   }
 
   @Test public void b92() {
@@ -267,12 +266,12 @@ public class PropositionTest {
   }
 
   @Test public void d() {
-    azzert.that(T_OR_F_OR_X.reduce(javaReducer), is("T || F || X"));
+    azzert.that(T_OR_F_OR_X.reduce(javaReducer), is("(T || F || X)"));
   }
 
   @Test public void d0() {
     T.or(X, X).reduce(javaReducer);
-    azzert.that(T.or(X, X).reduce(javaReducer), is("T || X || X"));
+    azzert.that(T.or(X, X).reduce(javaReducer), is("(T || X || X)"));
   }
 
   @Test public void d1() {
@@ -284,11 +283,11 @@ public class PropositionTest {
   }
 
   @Test public void e() {
-    azzert.that(T_AND_F_AND_X.reduce(javaReducer), is("T && F && X"));
+    azzert.that(T_AND_F_AND_X.reduce(javaReducer), is("(T && F && X)"));
   }
 
   @Test public void f() {
-    azzert.that(FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is("!F && !F || X || N || T"));
+    azzert.that(NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("(((!F && !F) || X) || N || T)"));
   }
 
   @Test public void f0() {
@@ -299,17 +298,17 @@ public class PropositionTest {
   }
 
   @Test public void g() {
-    azzert.that(T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is("T || F || X && T && F && X || !F && !F || N || T"));
+    azzert.that(T_OR_F_OR_X_OR_NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("((T || F || X) || (((!F && !F) || X) || N || T))"));
   }
 
   @Test public void g1() {
-    azzert.that(Proposition.not(F).and(X).reduce(javaReducer), is("!F && X"));
-    azzert.that(Proposition.not(F).or(X).reduce(javaReducer), is("!F || X"));
+    azzert.that(Proposition.not(F).and(X).reduce(javaReducer), is("(!F && X)"));
+    azzert.that(Proposition.not(F).or(X).reduce(javaReducer), is("(!F || X)"));
   }
 
   @Test public void g2() {
-    azzert.that(Proposition.of(F).and(X).reduce(javaReducer), is("F && X"));
-    azzert.that(Proposition.of(F).or(X).reduce(javaReducer), is("F || X"));
+    azzert.that(Proposition.of(F).and(X).reduce(javaReducer), is("(F && X)"));
+    azzert.that(Proposition.of(F).or(X).reduce(javaReducer), is("(F || X)"));
   }
 
   private boolean hasCycles(final BooleanSupplier s) {
@@ -333,8 +332,8 @@ public class PropositionTest {
   @Before public void setUp() {
     B1 = T_OR_F_OR_X = Proposition.OR("T OR F OR X", T, F, X);
     B2 = T_AND_F_AND_X = Proposition.AND("T AND F AND X", T, F, X);
-    B3 = FNF_OR_X_OR_N_OR_T = not(F).and(not(F)).or(X).or(N, T);
-    B4 = T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T = Proposition.OR(T_OR_F_OR_X, FNF_OR_X_OR_N_OR_T);
+    B3 = NOT_F_AND_NOT_F_OR_X_OR_N_OR_T = not(F).and(not(F)).or(X).or(N, T);
+    B4 = T_OR_F_OR_X_OR_NOT_F_AND_NOT_F_OR_X_OR_N_OR_T = Proposition.OR(T_OR_F_OR_X, NOT_F_AND_NOT_F_OR_X_OR_N_OR_T);
     B5 = B1_AND_B2 = B1.and(B2);
     B6 = B2_AND_B1 = B2.and(B1);
     B7 = B1_OR_B2 = B1.or(B2);
