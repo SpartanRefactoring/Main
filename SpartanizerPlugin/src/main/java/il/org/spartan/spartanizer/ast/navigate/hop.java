@@ -131,19 +131,15 @@ public interface hop {
     return lastName(hop.name(¢));
   }
 
-  static List<Statement> subsequentStatements(final Statement s) {
-    if (parent(s) instanceof SwitchStatement)
-      return rest(s, step.statements((SwitchStatement) parent(s)));
-    if (parent(s) instanceof Block)
-      return rest(s, step.statements((Block) parent(s)));
-    return monitor.bug("Weird type", s, parent(s));
+  static List<Statement> subsequentStatements(final Statement ¢) {
+    return parent(¢) instanceof SwitchStatement ? rest(¢, step.statements((SwitchStatement) parent(¢)))
+        : parent(¢) instanceof Block ? rest(¢, step.statements((Block) parent(¢))) //
+            : new ArrayList<>();
   }
 
   static ListRewrite statementsRewriter(final ASTRewrite r, final Statement s) {
-    if (parent(s) instanceof SwitchStatement)
-      return r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY);
-    if (parent(s) instanceof Block)
-      return r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY);
-    return monitor.bug("Weird type", s, parent(s));
+    return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
+        : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
+            : monitor.bug("Weird type", s, parent(s));
   }
 }

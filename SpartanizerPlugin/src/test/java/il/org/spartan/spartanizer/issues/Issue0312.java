@@ -2,8 +2,11 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** TODO: Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -11,13 +14,39 @@ import org.junit.runners.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0312 {
-  @Test public void A$130() {
+  @Test public void a() {
     trimmingOf("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;break;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;break;}y+=15;break;}return x;")
         .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;break;}y+=15;break;}return x;")//
+        .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;} else {y+=15;} break;}return x;")//
+        .gives("for(int ¢=1;¢<7;){if(¢!=5)y+=15;else tipper+=9;break;}return x;") //
         .stays();
+  }
+
+  /** Introduced by Yogi on Fri-Mar-31-00:30:47-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void forInta1a7Ifa5b9Breakc15BreakReturnd() {
+    trimmingOf("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
+        .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
+        .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{c+=15;}break;}return d;") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("for(int a=1;a<7;){if(a==5)b+=9;else c+=15;break;}return d;") //
+        .stays() //
+    ;
+  }
+
+  /** Introduced by Yogi on Fri-Mar-31-00:39:20-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_forInta1a7Ifa5b9Breakc15BreakReturnd() {
+    trimmingOf("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
+        .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
+        .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{c+=15;}break;}return d;") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("for(int a=1;a<7;){if(a==5)b+=9;else c+=15;break;}return d;") //
+        .stays() //
+    ;
   }
 
   @Test public void bugInLastIfInMethod1() {
