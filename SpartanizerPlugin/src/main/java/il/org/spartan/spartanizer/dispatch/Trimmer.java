@@ -167,6 +167,7 @@ public class Trimmer extends AbstractGUIApplicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
+          exceptionListener.accept(¢);
         }
         if (w != null)
           progressMonitor.worked(5);
@@ -175,6 +176,7 @@ public class Trimmer extends AbstractGUIApplicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
+          exceptionListener.accept(¢);
         }
         return false;
       }
