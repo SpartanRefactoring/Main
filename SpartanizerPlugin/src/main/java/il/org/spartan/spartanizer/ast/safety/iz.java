@@ -1054,11 +1054,11 @@ public interface iz {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
+      case BLOCK:
+        return statements(az.block(¢)).stream().anyMatch(λ -> sequencerComplex(λ, type));
       case IF_STATEMENT:
         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement(), type) || sequencerComplex($.getElseStatement(), type);
-      case BLOCK:
-        return statements(az.block(¢)).stream().anyMatch(λ -> sequencerComplex(λ, type));
       default:
         return sequencer(¢, type);
     }

@@ -37,8 +37,6 @@ public class PossiblyMultipleExecution {
       if (where.contains($))
         return false;
       switch ($.getNodeType()) {
-        default:
-          continue;
         case ANONYMOUS_CLASS_DECLARATION:
         case DO_STATEMENT:
         case LAMBDA_EXPRESSION:
@@ -46,13 +44,16 @@ public class PossiblyMultipleExecution {
         case SYNCHRONIZED_STATEMENT:
         case WHILE_STATEMENT:
           return false;
+        case ENHANCED_FOR_STATEMENT:
+          if (multiple((EnhancedForStatement) $))
+            return false;
+          break;
         case FOR_STATEMENT:
           if (multiple((ForStatement) $))
             return false;
           continue;
-        case ENHANCED_FOR_STATEMENT:
-          if (multiple((EnhancedForStatement) $))
-            return false;
+        default:
+          break;
       }
     }
     assert fault.unreachable() : fault.specifically("Context does not contain current node", what, where);

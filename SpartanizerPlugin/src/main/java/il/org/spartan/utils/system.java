@@ -42,11 +42,9 @@ public interface system {
   static String myCallerFullClassName() {
     final StackTraceElement[] trace = new Throwable().getStackTrace();
     int i = 0;
-    for (; i < trace.length; ++i) {
-      if (trace[i].getClassName().equals(trace[0].getClassName()))
-        continue;
-      break;
-    }
+    for (; i < trace.length; ++i)
+      if (!trace[i].getClassName().equals(trace[0].getClassName()))
+        break;
     for (int $ = i; $ < trace.length; ++$)
       if (!trace[$].getClassName().equals(trace[i].getClassName()))
         return trace[$].getClassName();

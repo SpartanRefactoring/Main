@@ -100,7 +100,7 @@ public class InflaterListener implements KeyListener, Listener {
     if (text.isDisposed())
       return;
     text.setCursor(activeCursor);
-    Optional.ofNullable(text.getVerticalBar()).ifPresent(x -> x.setEnabled(false));
+    Optional.ofNullable(text.getVerticalBar()).ifPresent(λ -> λ.setEnabled(false));
   }
 
   private void deactivate() {
@@ -109,7 +109,7 @@ public class InflaterListener implements KeyListener, Listener {
     if (text.isDisposed())
       return;
     text.setCursor(inactiveCursor);
-    Optional.ofNullable(text.getVerticalBar()).ifPresent(x -> x.setEnabled(true));
+    Optional.ofNullable(text.getVerticalBar()).ifPresent(λ -> λ.setEnabled(true));
   }
 
   public void finilize() {

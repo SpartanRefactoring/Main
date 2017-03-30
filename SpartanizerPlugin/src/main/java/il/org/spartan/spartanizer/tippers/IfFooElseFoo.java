@@ -20,8 +20,8 @@ public final class IfFooElseFoo extends AbstractPattern<IfStatement> implements 
   public IfFooElseFoo() {
     andAlso(Proposition.of("Then and else are identical",
         () -> wizard.same(//
-            (then = object().getThenStatement()), //
-            (object().getElseStatement())//
+            then = object().getThenStatement(), //
+            object().getElseStatement()
         )));
   }
 
@@ -32,7 +32,7 @@ public final class IfFooElseFoo extends AbstractPattern<IfStatement> implements 
     return r;
   }
 
-  @Override public String description(IfStatement n) {
+  @Override public String description(@SuppressWarnings("unused") IfStatement __) {
     return "Eliminate 'if' with two identical branches";
   }
 }

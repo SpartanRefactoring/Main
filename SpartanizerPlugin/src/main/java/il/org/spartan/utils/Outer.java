@@ -31,6 +31,6 @@ public abstract class Outer<Inner> {
   }
 
   @Override public int hashCode() {
-    return 31 * 1 + (inner == null ? 0 : inner.hashCode());
+    return 31 + (inner == null ? 0 : inner.hashCode());
   }
 }
