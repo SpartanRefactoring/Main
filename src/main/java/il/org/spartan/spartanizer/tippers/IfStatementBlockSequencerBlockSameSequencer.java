@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Example.*;
+
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -52,22 +54,32 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
   }
 
   @Override public Example[] examples() {
-    return null;
+    return new Example[] { //
+        convert("if (a) {f(); g(); return;} a++; b++; return;}")//
+            .to("if (a) {f(); g(); } else {a++; b++;}  return;}"), //
+        convert("if (a) {f(); g(); throw x;} a++; b++; throw x;}")//
+            .to("if (a) {f(); g(); } else {a++; b++;}  throw x;}"), //
+        convert("if (a) {f(); g(); return x;} a++; b++; return x;}")//
+            .to("if (a) {f(); g(); } else {a++; b++; } return x;}"), //
+        convert("if (a) {f(); g(); break c;} a++; b++; break c;}")//
+            .to("if (a) {f(); g(); } else {a++; b++;}  break c;}"), //
+        convert("if (a) {f(); g(); continue c;} a++; b++; continue c;}")//
+            .to("if (a) {f(); g(); } else {a++; b++;}  continue c;}"),//
+    };
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final IfStatement $ = copy.of(current);
     r.replace(current, $, g);
-    final ListRewrite listRewrite = r.getListRewrite(az.block(then($)), Block.STATEMENTS_PROPERTY);
-    final Statement last = last(statements(az.block(then($))));
-    listRewrite.remove(last, g);
+    r.getListRewrite(az.block(then($)), Block.STATEMENTS_PROPERTY).remove(last(statements(az.block(then($)))), g);
     final Block newBlock = $.getAST().newBlock();
     $.setElseStatement(newBlock);
     final ListRewrite listRewrite2 = r.getListRewrite(newBlock, Block.STATEMENTS_PROPERTY);
-    for (final Statement x : subsequentStatements)
+    final List<Statement> move = lisp2.chopLast(subsequentStatements);
+    for (final Statement x : move)
       listRewrite2.insertLast(copy.of(x), g);
     final ListRewrite listRewrite3 = hop.statementsRewriter(r, current);
-    for (final Statement x : subsequentStatements)
+    for (final Statement x : move)
       listRewrite3.remove(x, g);
     return r;
   }

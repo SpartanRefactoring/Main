@@ -100,4 +100,11 @@ public interface lisp2 extends lisp {
   static boolean areEqual(final Object o, final Object... os) {
     return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ == o);
   }
+
+  static <T> List<T> chopLast(final List<T> ts) {
+    final List<T> $ = new ArrayList<>(ts);
+    final List<T> ¢ = $;
+    ¢.remove(¢.size() - 1);
+    return $;
+  }
 }
