@@ -16,10 +16,10 @@ public abstract class SingleVariableDeclarationUninitialized extends AbstractPat
 
   SingleVariableDeclarationUninitialized() {
     andAlso(new Proposition.Singleton("Illegal Definition", () -> {
-      if (object().getInitializer() != null)
+      if (current().getInitializer() != null)
         return false;
-      name = object().getName();
-      type = object().getType();
+      name = current().getName();
+      type = current().getType();
       return true;
     }));
   }

@@ -21,15 +21,12 @@ import il.org.spartan.utils.*;
  * @since 2017-03-27 */
 public abstract class LocalVariable extends Fragment {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
-  protected Statement nextStatement;
-  private VariableDeclarationStatement parent;
+  protected VariableDeclarationStatement declaration;
 
   public LocalVariable() {
     andAlso(Proposition.of("Must be local variable", () -> {
-      parent = az.variableDeclarationStatement(object().getParent());
-      if (parent == null)
+      if ((declaration = az.variableDeclarationStatement(current().getParent())) == null)
         return false;
-      nextStatement = extract.nextStatement(object());
       return true;
     }));
   }
@@ -42,37 +39,29 @@ public abstract class LocalVariable extends Fragment {
   protected final ASTRewrite eliminateFragment(final ASTRewrite $, final TextEditGroup g) {
     final List<VariableDeclarationFragment> live = otherSiblings();
     if (live.isEmpty()) {
-      $.remove(parent(), g);
+      $.remove(declaration, g);
       return $;
     }
-    final VariableDeclarationStatement newParent = copy.of(parent());
+    final VariableDeclarationStatement newParent = copy.of(declaration);
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
-    $.replace(parent(), newParent, g);
+    $.replace(declaration, newParent, g);
     return $;
   }
 
   protected int eliminationSaving() {
     final List<VariableDeclarationFragment> live = otherSiblings();
-    final int $ = metrics.size(parent());
+    final int $ = metrics.size(declaration);
     if (live.isEmpty())
       return $;
-    final VariableDeclarationStatement newParent = copy.of(parent());
+    final VariableDeclarationStatement newParent = copy.of(declaration);
     fragments(newParent).clear();
     fragments(newParent).addAll(live);
     return $ - metrics.size(newParent);
   }
 
-  protected final Statement nextStatement() {
-    return nextStatement;
-  }
-
   protected final List<VariableDeclarationFragment> otherSiblings() {
-    return fragments(parent()).stream().filter(λ -> λ != object()).collect(toList());
-  }
-
-  protected VariableDeclarationStatement parent() {
-    return parent;
+    return fragments(declaration).stream().filter(λ -> λ != current()).collect(toList());
   }
 
   protected boolean usedInSubsequentInitializers() {
@@ -82,8 +71,8 @@ public abstract class LocalVariable extends Fragment {
   protected final Collection<VariableDeclarationFragment> youngerSiblings() {
     final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
-    for (final VariableDeclarationFragment ¢ : fragments(parent()))
-      if (¢ == object())
+    for (final VariableDeclarationFragment ¢ : fragments(declaration))
+      if (¢ == current())
         collecting = true;
       else if (collecting)
         $.add(¢);
@@ -100,6 +89,6 @@ public abstract class LocalVariable extends Fragment {
    * @param r
    * @param g */
   void remove(final ASTRewrite r, final TextEditGroup g) {
-    r.remove(parent().fragments().size() > 1 ? object() : parent(), g);
+    r.remove(declaration.fragments().size() > 1 ? current() : declaration, g);
   }
 }

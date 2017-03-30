@@ -20,15 +20,15 @@ public final class IfFooElseFoo extends AbstractPattern<IfStatement> implements 
   public IfFooElseFoo() {
     andAlso(Proposition.of("Then and else are identical",
         () -> wizard.same(//
-            then = object().getThenStatement(), //
-            object().getElseStatement()
+            then = current().getThenStatement(), //
+            current().getElseStatement()
         )));
   }
 
   @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
-    trick.insertBefore(object(), wizard.decompose(object().getExpression()), r, g);
-    trick.insertAfter(object(), as.list(then), r, g);
-    remove.statement(object(), r, g);
+    trick.insertBefore(current(), wizard.decompose(current().getExpression()), r, g);
+    trick.insertAfter(current(), as.list(then), r, g);
+    remove.statement(current(), r, g);
     return r;
   }
 
