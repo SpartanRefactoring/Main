@@ -29,7 +29,7 @@ public class SingleParameterMethodDecleration extends AbstractPattern<MethodDecl
   }
 
   //TODO: Raviv, implement -rr
-  @SuppressWarnings({ "unused", "unused" })
+  @SuppressWarnings({ "unused" })
   @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
     return null;
   }
