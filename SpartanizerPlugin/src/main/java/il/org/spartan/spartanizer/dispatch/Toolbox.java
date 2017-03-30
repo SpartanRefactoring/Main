@@ -274,6 +274,7 @@ public class Toolbox {
             new IfEmptyThen(), //
             new IfShortestFirst(), //
             new IfFooElseIfBarElseFoo(), //
+            new IfStatementBlockSequencerBlockSameSequencer(), //
             // new PutIfAbsent(), //
             null)//
         .add(PrefixExpression.class, //
