@@ -52,8 +52,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   boolean useProjectPreferences;
   private final Map<IProject, Toolbox> toolboxes = new HashMap<>();
-  Consumer<Exception> exceptionListener = λ -> {/***/
-  };
+  Consumer<Exception> exceptionListener = λ -> {/**/};
   public Toolbox toolbox;
 
   @NotNull public Trimmer useProjectPreferences() {
