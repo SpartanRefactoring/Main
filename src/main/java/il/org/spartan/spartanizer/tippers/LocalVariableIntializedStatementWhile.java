@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@code for(int a = 3; Panic;) { ++OS.is.in.danger; } }
  * @author Alex Kopzon
  * @since 2016 */
-public final class FragmentInitializerWhile extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
+public final class LocalVariableIntializedStatementWhile extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x7B0F45FEAE8DEEA5L;
 

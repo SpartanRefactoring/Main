@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert {@code int a=3;for(;p;){++i}} to {@code for(int a=3;p;) {++i;}}
  * @author Alex Kopzon
  * @since 2016 */
-public final class FragmentInitializerToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
+public final class LocalVariableIntializedStatementToForInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -8610595251612382642L;
 
@@ -110,7 +110,7 @@ public final class FragmentInitializerToForInitializers extends ReplaceToNextSta
   static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
     $.setExpression(removeInitializersFromExpression(copy.of(expression(¢)), s));
-    FragmentInitializerToForInitializers.setInitializers($, copy.of(s));
+    LocalVariableIntializedStatementToForInitializers.setInitializers($, copy.of(s));
     return $;
   }
 }

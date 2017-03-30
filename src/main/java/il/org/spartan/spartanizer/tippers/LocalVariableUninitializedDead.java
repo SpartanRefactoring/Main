@@ -21,7 +21,8 @@ public final class LocalVariableUninitializedDead extends LocalVariableUninitial
   private static final long serialVersionUID = 0x14812B0904DFB002L;
 
   public LocalVariableUninitializedDead() {
-    andAlso(Proposition.of("Local variable is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty()));
+    butNot(Proposition.of("Local variable is used somewhere", //
+        () -> collect.usesOf(name).in(scope.of(name)).isEmpty()));
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
