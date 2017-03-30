@@ -172,8 +172,7 @@ public interface Proposition extends BooleanSupplier {
     }
 
     @Override public Proposition and(final BooleanSupplier s, final BooleanSupplier... cs) {
-      inner.set(inner.size() - 1, AND(of(last(inner)), s, cs));
-      return this;
+      return new And(this, s, cs);
     }
 
     @Override public boolean getAsBoolean() {
