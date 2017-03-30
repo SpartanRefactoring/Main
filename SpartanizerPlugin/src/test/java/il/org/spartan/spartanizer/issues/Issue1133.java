@@ -42,6 +42,13 @@ public class Issue1133 {
     ;
   }
 
+  @Test public void function() {
+    trimmingOf("a =b; a += f(c,d);")//
+        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .gives("a = b + f(c,d);")//
+    ;
+  }
+
   @Test public void plus() {
     trimmingOf("a =2; a += 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
