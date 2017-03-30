@@ -38,9 +38,10 @@ public final class SingleFlater {
    * @param ¢ JD
    * @return new */
   public static SingleFlater in(final ASTNode ¢) {
-    return in(¢,λ->{/***/});
+    return in(¢, λ -> {/***/
+    });
   }
-  
+
   public static SingleFlater in(final ASTNode ¢, final Consumer<Exception> x) {
     final SingleFlater $ = new SingleFlater();
     $.root = ¢;

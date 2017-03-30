@@ -52,7 +52,8 @@ public class Trimmer extends AbstractGUIApplicator {
 
   boolean useProjectPreferences;
   private final Map<IProject, Toolbox> toolboxes = new HashMap<>();
-  Consumer<Exception> exceptionListener = λ->{/***/};
+  Consumer<Exception> exceptionListener = λ -> {/***/
+  };
   public Toolbox toolbox;
 
   @NotNull public Trimmer useProjectPreferences() {
@@ -70,12 +71,12 @@ public class Trimmer extends AbstractGUIApplicator {
     super("Trimming");
     this.toolbox = toolbox;
   }
-  
-  public Trimmer setExceptionListener(Consumer<Exception> ¢) {
+
+  public Trimmer setExceptionListener(final Consumer<Exception> ¢) {
     exceptionListener = ¢;
     return this;
   }
-  
+
   @Override public void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m, @NotNull final Int i) {
     @Nullable final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
     @NotNull final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
