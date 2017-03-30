@@ -20,13 +20,14 @@ public final class TernaryEliminate extends AbstractPattern<ConditionalExpressio
   Expression then, elze, condition;
 
   public TernaryEliminate() {
-    andAlso(Proposition.of("Then and else are identical", 
+    andAlso(Proposition.of("Then and else are identical",
         () -> wizard.same(//
             (then = object().getThenExpression()), //
-            (elze = object().getThenExpression())//
+            (elze = object().getElseExpression())//
         )));
     andAlso(Proposition.of("Condition has no side effects", //
-        () -> sideEffects.free((condition = object().getThenExpression()))));
+        () -> sideEffects.free((condition = object().getExpression()))//
+    ));
   }
 
   private static final long serialVersionUID = -6778845891475220340L;
