@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.dispatch;
 import static java.util.stream.Collectors.*;
 
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
@@ -51,6 +52,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   boolean useProjectPreferences;
   private final Map<IProject, Toolbox> toolboxes = new HashMap<>();
+  Consumer<Exception> exceptionListener = λ->{/***/};
   public Toolbox toolbox;
 
   @NotNull public Trimmer useProjectPreferences() {
@@ -68,7 +70,12 @@ public class Trimmer extends AbstractGUIApplicator {
     super("Trimming");
     this.toolbox = toolbox;
   }
-
+  
+  public Trimmer setExceptionListener(Consumer<Exception> ¢) {
+    exceptionListener = ¢;
+    return this;
+  }
+  
   @Override public void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m, @NotNull final Int i) {
     @Nullable final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
     @NotNull final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
@@ -83,6 +90,7 @@ public class Trimmer extends AbstractGUIApplicator {
           w = getTipper(t, n);
         } catch (@NotNull final Exception ¢) {
           monitor.logProbableBug(this, ¢);
+          exceptionListener.accept(¢);
         }
         if (w == null)
           return true;
@@ -93,6 +101,7 @@ public class Trimmer extends AbstractGUIApplicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
+          exceptionListener.accept(¢);
         }
         if (s == null)
           return true;

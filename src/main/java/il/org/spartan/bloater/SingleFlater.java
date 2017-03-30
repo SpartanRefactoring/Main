@@ -30,7 +30,7 @@ public final class SingleFlater {
   @Deprecated private TextSelection textSelection;
   private boolean usesDisabling = true;
   private WindowInformation windowInformation;
-  private Runnable exceptionListener;
+  private Consumer<Exception> exceptionListener;
 
   private SingleFlater() {}
 
@@ -38,13 +38,13 @@ public final class SingleFlater {
    * @param ¢ JD
    * @return new */
   public static SingleFlater in(final ASTNode ¢) {
-    return in(¢,null);
+    return in(¢,λ->{/***/});
   }
   
-  public static SingleFlater in(final ASTNode ¢, final Runnable r) {
+  public static SingleFlater in(final ASTNode ¢, final Consumer<Exception> x) {
     final SingleFlater $ = new SingleFlater();
     $.root = ¢;
-    $.exceptionListener = r;
+    $.exceptionListener = x;
     return $;
   }
 
@@ -100,8 +100,7 @@ public final class SingleFlater {
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.log(¢);
-          if(exceptionListener != null)
-            exceptionListener.run();
+          exceptionListener.accept(¢);
         }
         if (w == null)
           return true;
@@ -116,6 +115,7 @@ public final class SingleFlater {
         o.tipper.tip(o.node).go(r, g);
       } catch (final Exception ¢) {
         monitor.debug(this, ¢);
+        exceptionListener.accept(¢);
       }
     return true;
   }
