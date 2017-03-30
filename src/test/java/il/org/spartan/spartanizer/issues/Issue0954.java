@@ -6,7 +6,8 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** A test case for {@link LocalVariableIntializedInlineIntoNext}. See issue #954.
+/** A test case for {@link LocalVariableIntializedInlineIntoNext}. See issue
+ * #954.
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-01-20 */
 @SuppressWarnings("static-method")

@@ -14,6 +14,7 @@ abstract public class IfAbstractPattern extends AbstractPattern<IfStatement> {
   private static final long serialVersionUID = 1L;
   @Property Statement then, elze;
   @Property Expression condition;
+
   public IfAbstractPattern() {
     andAlso(Proposition.of("Must be an if statement", //
         () -> {
@@ -30,5 +31,5 @@ abstract public class IfAbstractPattern extends AbstractPattern<IfStatement> {
     return elze(¢) != null && iz.vacuousElse(¢);
   }
 
-  @Override public abstract String description(final IfStatement ¢) ;
+  @Override public abstract String description(IfStatement ¢);
 }

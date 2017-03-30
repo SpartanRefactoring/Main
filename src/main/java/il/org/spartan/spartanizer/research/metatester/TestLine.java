@@ -9,6 +9,6 @@ public class TestLine extends SourceLine {
   }
 
   @SuppressWarnings("boxing") public String generateTestMethod() {
-    return String.format("\t" + "public @Test void %s_%d() {" + "\n" + "\t" + "%s" + "\n" + "\t" + "}", getTestName(), getLineNo(), getContent());
+    return String.format("\tpublic @Test void %s_%d() {\n\t%s\n\t}", getTestName(), getLineNo(), getContent());
   }
 }
