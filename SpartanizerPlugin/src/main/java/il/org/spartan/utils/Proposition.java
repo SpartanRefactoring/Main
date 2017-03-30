@@ -109,8 +109,9 @@ public interface Proposition extends BooleanSupplier {
     }
 
     @Override public final String toString() {
-      return inner instanceof Aggregate ? inner + "" //
-          : toString != null ? toString : super.toString();
+      return  toString != null ? toString 
+                   : inner instanceof Aggregate ? inner + ""
+                         : super.toString();
     }
   }
 
