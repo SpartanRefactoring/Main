@@ -107,11 +107,11 @@ public class Selection extends AbstractSelection<Selection> {
       final IMarker[] ms = r.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
       boolean changed = false;
       int no = o;
-      for (int i = 0; i < ms.length; ++i) {
-        if (ms[i] == null)
+      for (final IMarker element : ms) {
+        if (element == null)
           continue;
-        final Integer ics = (Integer) ms[i].getAttribute(IMarker.CHAR_START), ice = (Integer) ms[i].getAttribute(IMarker.CHAR_END),
-            iscs = (Integer) ms[i].getAttribute(Builder.SPARTANIZATION_CHAR_START);
+        final Integer ics = (Integer) element.getAttribute(IMarker.CHAR_START), ice = (Integer) element.getAttribute(IMarker.CHAR_END),
+            iscs = (Integer) element.getAttribute(Builder.SPARTANIZATION_CHAR_START);
         if (ics == null || ice == null || iscs == null)
           continue;
         final int cs = ics.intValue(), ce = ice.intValue();
@@ -124,9 +124,9 @@ public class Selection extends AbstractSelection<Selection> {
         }
       }
       int nl = l;
-      for (int i = 0; i < ms.length; ++i) {
-        final Integer ics = (Integer) ms[i].getAttribute(IMarker.CHAR_START), ice = (Integer) ms[i].getAttribute(IMarker.CHAR_END),
-            isce = (Integer) ms[i].getAttribute(Builder.SPARTANIZATION_CHAR_END);
+      for (final IMarker element : ms) {
+        final Integer ics = (Integer) element.getAttribute(IMarker.CHAR_START), ice = (Integer) element.getAttribute(IMarker.CHAR_END),
+            isce = (Integer) element.getAttribute(Builder.SPARTANIZATION_CHAR_END);
         if (ics == null || ice == null || isce == null)
           continue;
         final int cs = ics.intValue(), ce = ice.intValue();

@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 
 /** A {@link Tipper} to eliminate a ternary in which both branches are identical
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -20,13 +19,13 @@ public final class TernaryEliminate extends AbstractPattern<ConditionalExpressio
   Expression then, elze, condition;
 
   public TernaryEliminate() {
-    andAlso(Proposition.of("Then and else are identical",
-        () -> wizard.same(//
+    andAlso("Then and else are identical",
+        () -> wizard.eq(//
             then = current().getThenExpression(), //
-            elze = current().getElseExpression())));
-    andAlso(Proposition.of("Condition has no side effects", //
+            elze = current().getElseExpression()));
+    andAlso("Condition has no side effects", //
         () -> sideEffects.free(condition = current().getExpression())//
-    ));
+    );
   }
 
   private static final long serialVersionUID = -6778845891475220340L;
@@ -35,7 +34,7 @@ public final class TernaryEliminate extends AbstractPattern<ConditionalExpressio
     return "Eliminate conditional exprssion with identical branches";
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(current(), make.plant(then).into(current().getParent()), g);
     return r;
   }

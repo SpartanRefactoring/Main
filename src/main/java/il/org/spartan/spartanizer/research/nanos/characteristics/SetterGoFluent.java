@@ -34,7 +34,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     if (!iz.assignment(e))
       return false;
     final Assignment $ = az.assignment(e);
-    return (iz.name(left($)) || tipper.check(left($))) && wizard.same(right($), first(parameters(¢)).getName());
+    return (iz.name(left($)) || tipper.check(left($))) && wizard.eq(right($), first(parameters(¢)).getName());
   }
 
   @Override public Tip pattern(final MethodDeclaration d) {

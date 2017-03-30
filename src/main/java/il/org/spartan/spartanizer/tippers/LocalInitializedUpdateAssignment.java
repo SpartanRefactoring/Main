@@ -40,7 +40,7 @@ public final class LocalInitializedUpdateAssignment extends $FragmentAndStatemen
     s.setElseStatement(null);
     final Expression condition = s.getExpression();
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.same(to(a), n) || doesUseForbiddenSiblings(f, condition, from(a)) || a.getOperator() == Assignment.Operator.ASSIGN)
+    if (a == null || !wizard.eq(to(a), n) || doesUseForbiddenSiblings(f, condition, from(a)) || a.getOperator() == Assignment.Operator.ASSIGN)
       return null;
     final ConditionalExpression newInitializer = subject.pair(make.assignmentAsExpression(a), initializer).toCondition(condition);
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);

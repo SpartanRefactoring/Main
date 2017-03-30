@@ -50,7 +50,7 @@ public class IfFooElseIfBarElseFoo extends ReplaceCurrentNode<IfStatement> //
 
   @Override protected boolean prerequisite(final IfStatement ¢) {
     final IfStatement $ = az.ifStatement(¢.getElseStatement());
-    return $ != null && wizard.same(¢.getThenStatement(), $.getElseStatement()) //
+    return $ != null && wizard.eq(¢.getThenStatement(), $.getElseStatement()) //
         && sideEffects.free($.getExpression());
   }
 

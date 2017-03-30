@@ -23,7 +23,7 @@ public class MergeCatches extends ReplaceCurrentNode<TryStatement>//
     final List<CatchClause> cs = step.catchClauses(s);
     for (int i = 0; i < cs.size(); ++i)
       for (int j = i + 1; j < cs.size(); ++j)
-        if (wizard.same(cs.get(i).getBody(), cs.get(j).getBody())) {
+        if (wizard.eq(cs.get(i).getBody(), cs.get(j).getBody())) {
           final TryStatement $ = copy.of(s);
           final CatchClause mergedCatch = copy.of(cs.get(i));
           $.catchClauses().remove(i);

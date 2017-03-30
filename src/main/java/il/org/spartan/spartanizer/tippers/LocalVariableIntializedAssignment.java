@@ -39,7 +39,7 @@ public final class LocalVariableIntializedAssignment extends $FragmentAndStateme
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
+    if (a == null || !wizard.eq(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
     if (doesUseForbiddenSiblings(f, newInitializer))

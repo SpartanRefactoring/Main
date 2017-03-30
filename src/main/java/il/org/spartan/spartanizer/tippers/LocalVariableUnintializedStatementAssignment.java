@@ -37,10 +37,10 @@ public final class LocalVariableUnintializedStatementAssignment extends $Fragmen
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
+    if (a == null || !wizard.eq(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
     $.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
-    $.remove(extract.containingStatement(a), g);
+    $.remove(containing.statement(a), g);
     return $;
   }
 }

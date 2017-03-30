@@ -7,7 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.utils.*;
 
 /** A single parameter method declaration pattern
  * @author Raviv Rachmiel <tt>raviv.rachmiel@gmail.com</tt>
@@ -17,10 +16,10 @@ public abstract class SingleParameterMethodDeclaration extends NonEmptyMethodDec
   protected SingleVariableDeclaration parameter;
 
   public SingleParameterMethodDeclaration() {
-    andAlso(Proposition.of("Must have only one parameter", () -> {
+    andAlso("Must have only one parameter", () -> {
       parameter = onlyOne(parameters(current()));
       return JohnDoe.property(parameter);
-    }));
+    });
   }
 
   protected Type type() {

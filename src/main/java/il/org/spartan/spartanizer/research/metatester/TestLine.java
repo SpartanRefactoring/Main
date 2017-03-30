@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.research.metatester;
 /** @author Oren Afek
  * @since 3/27/2017 */
 public class TestLine extends SourceLine {
-  protected TestLine(String testName, String testClassName, String content, int lineNo) {
+  protected TestLine(final String testName, final String testClassName, final String content, final int lineNo) {
     super(testClassName, content, lineNo);
     this.testName = testName.replace("@Test", "");
   }

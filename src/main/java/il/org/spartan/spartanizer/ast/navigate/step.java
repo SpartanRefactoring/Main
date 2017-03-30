@@ -720,7 +720,7 @@ public enum step {
 
   /** Expose the list of sideEffects contained in a {@link SwitchStatement}
    * @param ¢ JD
-   * @return reference to the list of sideEffects contained in the argument */
+   * @return reference to the list of statements contained in the argument */
   @SuppressWarnings("unchecked") public static List<Statement> statements(final SwitchStatement ¢) {
     return ¢ == null ? null : ¢.statements();
   }

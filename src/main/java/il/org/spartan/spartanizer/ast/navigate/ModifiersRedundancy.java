@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.tippers.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
@@ -90,7 +91,7 @@ public enum ModifiersRedundancy {
   }
 
   public static Set<Modifier> redundants(final BodyDeclaration ¢) {
-    return wizard.matches(¢, redundancies(¢));
+    return ModifierRedundant.matches(¢, redundancies(¢));
   }
 
   public static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {

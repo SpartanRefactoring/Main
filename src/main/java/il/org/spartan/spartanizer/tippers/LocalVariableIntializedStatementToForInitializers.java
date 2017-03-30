@@ -76,7 +76,7 @@ public final class LocalVariableIntializedStatementToForInitializers extends Rep
       return false;
     final VariableDeclarationExpression $ = az.variableDeclarationExpression(first(initializers));
     assert $ != null : "FragmentToForInitializers -> for initializer is null and not empty?!?";
-    return wizard.same(s.getType(), $.getType()) && fittingModifiers(s, $);
+    return wizard.eq(s.getType(), $.getType()) && fittingModifiers(s, $);
   }
 
   public static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
