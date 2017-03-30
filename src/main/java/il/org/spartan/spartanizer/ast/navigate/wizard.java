@@ -343,13 +343,6 @@ public interface wizard {
     return infix2assign.get(o2) == o1;
   }
 
-  /** @param o the assignment operator to compare all to
-   * @param os A unknown number of assignments operators
-   * @return whether all the operator are the same or false otherwise */
-  static boolean areEqual(final Object o, final Object... os) {
-    return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ == o);
-  }
-
   static CompilationUnit compilationUnitWithBinding(final File ¢) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
@@ -536,7 +529,7 @@ public interface wizard {
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNull(a1, a2) || !areEqual(a1.getOperator(), a2.getOperator()) || !wizard.same(to(a1), to(a2));
+    return hasNull(a1, a2) || !lisp2.areEqual(a1.getOperator(), a2.getOperator()) || !wizard.same(to(a1), to(a2));
   }
 
   static Operator infix2assign(final InfixExpression.Operator ¢) {
