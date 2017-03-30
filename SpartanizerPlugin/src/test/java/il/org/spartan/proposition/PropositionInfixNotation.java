@@ -1,8 +1,8 @@
-package il.org.spartan.utils;
+package il.org.spartan.proposition;
 
 import java.util.function.*;
 
-import il.org.spartan.utils.Proposition.*;
+import il.org.spartan.utils.*;
 
 /** TODO
  * @author Yossi Gil {@code yossi.gil@gmail.com}
@@ -15,8 +15,8 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
   @Override protected final String ante(final Proposition.Singleton ¢) {
     return ¢.inner instanceof Proposition.Some ? open() : empty();
   }
-  
-  @Override protected final String ante(final Proposition.Some ¢) {
+
+  @Override protected final String ante(@SuppressWarnings("unused") final Proposition.Some ¢) {
     return open();
   }
 
@@ -40,15 +40,14 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
 
   protected abstract String open();
 
-
   @Override protected String post(final Proposition.Singleton ¢) {
     return ¢.inner instanceof Proposition.Some ? close() : empty();
   }
-  
-  @Override protected String post(final Proposition.Some ¢) {
+
+  @Override protected String post(@SuppressWarnings("unused") final Proposition.Some ¢) {
     return close();
   }
-  
+
   @Override protected final String post(final Proposition.Not ¢) {
     return ¢.inner instanceof Proposition.Some ? close() : empty();
   }
