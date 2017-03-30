@@ -13,11 +13,11 @@ public interface Nested<T> extends Duplo<T> {
     //
   }
 
-  @Override default Compounder<T> compounder() {
+  @Override default NeighborsMerger<T> neighborsMerger() {
     return (self, others) -> {
       Stream<T> $ = Stream.empty();
       for (final Duplo<T> ¢ : others)
-        $ = Stream.concat(¢.stream(), streamSelf());
+        $ = Stream.concat(¢.neighborsStream(), selfStream());
       return $;
     };
   }
@@ -25,7 +25,7 @@ public interface Nested<T> extends Duplo<T> {
   interface Compound<T> extends Nested<T>, Duplo.Compound<T> {
     Nested<T> parent();
 
-    @Override default Iterable<Duplo<T>> next() {
+    @Override default Iterable<Duplo<T>> neighbors() {
       return Arrays.asList(parent());
     }
   }

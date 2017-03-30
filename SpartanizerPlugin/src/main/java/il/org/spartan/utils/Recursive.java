@@ -50,17 +50,17 @@ public interface Recursive<T> extends Duplo<T> {
   interface Compound<T> extends Recursive<T>, Duplo.Compound<T> {
     Iterable<Recursive<T>> children();
 
-    @Override default Iterable<? extends Duplo<T>> next() {
+    @Override default Iterable<? extends Duplo<T>> neighbors() {
       return children();
     }
   }
 
   interface Postorder<E> extends Compound<E> {
-    @Override default Compounder<E> compounder() {
+    @Override default NeighborsMerger<E> neighborsMerger() {
       return (self, others) -> {
         Stream<E> $ = Stream.empty();
         for (final Duplo<E> ¢ : others)
-          $ = Stream.concat(¢.stream(), $);
+          $ = Stream.concat(¢.neighborsStream(), $);
         return self == null ? $ : Stream.concat($, Stream.of(self));
       };
     }
@@ -72,11 +72,11 @@ public interface Recursive<T> extends Duplo<T> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   interface Preorder<E> extends Compound<E> {
-    @Override default Compounder<E> compounder() {
+    @Override default NeighborsMerger<E> neighborsMerger() {
       return (self, others) -> {
         Stream<E> $ = self == null ? Stream.empty() : Stream.of(self);
         for (final Duplo<E> ¢ : others)
-          $ = Stream.concat($, ¢.stream());
+          $ = Stream.concat($, ¢.neighborsStream());
         return $;
       };
     }

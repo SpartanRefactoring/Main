@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.patterns;
 
+import static il.org.spartan.utils.Proposition.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -32,6 +33,11 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
         AbstractPattern.this.go(r, g);
       }
     };
+  }
+
+  protected AbstractPattern<N> butNot(final Proposition ¢) {
+    this.prerequisite = prerequisite.and(not(¢));
+    return this;
   }
 
   protected AbstractPattern<N> andAlso(final Proposition ¢) {
