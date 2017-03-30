@@ -1780,13 +1780,7 @@ public final class Version230 {
         .gives("void foo(DataOutput o){}");
   }
 
-  @Ignore // TODO Raviv --yg
-  @Test public void issue73c() {
-    trimmingOf("int foo(Integer integer, ASTNode astn){return integer + astn.hashCode();}")//
-        .gives("int foo(Integer integer,ASTNode n){return integer+n.hashCode();}") //
-        .gives("int foo(Integer i, ASTNode n){return i + n.hashCode();}") //
-        .stays();
-  }
+
 
   @Test public void linearTransformation() {
     trimmingOf("plain * the + kludge")//
