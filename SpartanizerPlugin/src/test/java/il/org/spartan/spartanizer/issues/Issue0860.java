@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Test case for {@link SwitchCaseLocalSort}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-09 */
-@Ignore
+@Ignore("Yuval Simon") // This is critical
 @SuppressWarnings("static-method")
 public class Issue0860 {
   @Test public void t1() {

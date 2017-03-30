@@ -7,13 +7,12 @@ import org.junit.*;
 /** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 6, 2017 */
-@Ignore // TODO Dor Ma'ayan
 @SuppressWarnings("static-method")
+@Ignore("Dor Ma'yan")
 public class Issue0849 {
   @Test public void test0() {
     trimmingOf("a-1+2")//
         .gives("a+1")//
-        .gives("a++")//
         .stays();
   }
 
@@ -32,7 +31,6 @@ public class Issue0849 {
   @Test public void test3() {
     trimmingOf("3+a+1+2")//
         .gives("a+1")//
-        .gives("a++")//
         .stays();
   }
 }

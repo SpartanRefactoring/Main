@@ -21,18 +21,32 @@ public class Issue0310 {
         .stays();
   }
 
-  @Ignore // TODO Yossi Gil
   @Test public void updaters_for_1() {
     trimmingOf("boolean k(final N n){N p=n;for(;p!=null;){if(Z.z(p))return true;p=p.f();}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;p=p.f();}return false;}")//
+        .gives("boolean k(final N n){for(N p=n;p!=null;p=p.f()){if(Z.z(p))return true;}return false;}") //
+        .gives("boolean k(final N n){for(N p=n;p!=null;p=p.f())if(Z.z(p))return true;return false;}") //
         .stays();
   }
 
-  @Ignore // TODO Yossi Gil
+  /** Introduced by Yogi on Thu-Mar-30-16:38:46-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void xooleanaFinalAbForAcbcNullIfBdcReturnTruecceReturnFalse() {
+    trimmingOf("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; c = c.e(); } return false; }") //
+        .using(ForStatement.class, new ForToForUpdaters()) //
+        .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e()){if(B.d(c))return true;}return false;}") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e())if(B.d(c))return true;return false;}") //
+        .stays() //
+    ;
+  }
+
   @Test public void updaters_for_2() {
     trimmingOf("boolean k(final N n){N p=n;for(;p!=null;){if(Z.z(p))return true;if(ens.z(p))return true;p=p.f();}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;if(ens.z(p))return true;p=p.f();}return false;}")
-        .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p)|| ens.z(p))return true;p=p.f();}return false;}")//
+        .gives("boolean k(final N n){for(N p=n;p!=null;p=p.f()){if(Z.z(p))return true;if(ens.z(p))return true;}return false;}") //
+        .gives("boolean k(final N n){for(N p=n;p!=null;p=p.f()){if(Z.z(p)||ens.z(p))return true;}return false;}") //
+        .gives("boolean k(final N n){for(N p=n;p!=null;p=p.f())if(Z.z(p)||ens.z(p))return true;return false;}") //
         .stays();
   }
 

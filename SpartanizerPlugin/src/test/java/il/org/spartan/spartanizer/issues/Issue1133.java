@@ -62,11 +62,4 @@ public class Issue1133 {
         .gives("a = 2 * 3;")//
     ;
   }
-
-  @Ignore @Test public void xor() {
-    trimmingOf("a ^= 2; a ^= 3;")//
-        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
-        .gives("a ^= 2 ^ 3;")//
-    ;
-  }
 }
