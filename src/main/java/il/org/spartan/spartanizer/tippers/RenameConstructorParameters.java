@@ -14,8 +14,8 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO Rename paramter names in constructor, to match fields, if they are assigned to them
- * for example: <br/>
+/** TODO Rename paramter names in constructor, to match fields, if they are
+ * assigned to them for example: <br/>
  * {@code class A {int x;A(int y,int z) {this.x = z;}}} <br/>
  * to: <br/>
  * {@code class A {int x;A(int y,int x) {this.x = x;}}} <br/>
