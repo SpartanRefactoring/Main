@@ -21,7 +21,7 @@ public final class LocalVariableUninitializedDead extends LocalVariableUninitial
   private static final long serialVersionUID = 0x14812B0904DFB002L;
 
   public LocalVariableUninitializedDead() {
-    butNot(Proposition.of("Local variable is used somewhere", //
+    andAlso(Proposition.of("Local variable is not used anywhere", //
         () -> collect.usesOf(name).in(scope.of(name)).isEmpty()));
   }
 
