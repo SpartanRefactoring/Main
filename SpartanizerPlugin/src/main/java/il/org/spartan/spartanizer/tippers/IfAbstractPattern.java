@@ -8,21 +8,22 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
-/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- * @since 2015-08-01 */
-abstract public class IfAbstractPattern extends AbstractPattern<IfStatement> {
+/**
+ * @author  Yossi Gil  {@code  Yossi.Gil@GMail.COM}
+ * @since  2015-08-01 
+ */
+public abstract class IfAbstractPattern extends AbstractPattern<IfStatement> {
   private static final long serialVersionUID = 1L;
   @Property Statement then, elze;
   @Property Expression condition;
 
   public IfAbstractPattern() {
-    andAlso(Proposition.of("Must be an if statement", //
-        () -> {
-          condition = current.getExpression();
-          then = current.getThenStatement();
-          elze = current.getElseStatement();
-          return true;
-        }));
+    andAlso(Proposition.of("Must be an if statement", () -> {
+      condition = current.getExpression();
+      then = current.getThenStatement();
+      elze = current.getElseStatement();
+      return true;
+    }));
   }
 
   @Override public abstract Example[] examples();
