@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-29 */
-public final class IfThenFooBarElseFooBaz extends EagerTipper<IfStatement>//
+public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -5372157375600285659L;
 

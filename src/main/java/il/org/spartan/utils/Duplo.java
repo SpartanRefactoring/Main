@@ -8,41 +8,49 @@ import java.util.stream.*;
  * @author Yossi Gil
  * @since 2017-03-27 */
 public interface Duplo<T> {
+  default NeighborsMerger<T> neighborsMerger() {
+    return NeighborsMerger.empty();
+  }
+
   /** return the element stored in this instance; */
   T self();
 
-  default Compounder<T> compounder() {
-    return Compounder.empty();
-  }
-
-  default Stream<T> streamSelf() {
+  /** do not override
+   * @return a stream representation of the element stored in this instance */
+  default Stream<T> selfStream() {
     return self() == null ? Stream.empty() : Stream.of(self());
   }
 
-  default Stream<T> stream() {
+  /** return a stream of elements encapsulated by in this instance
+   * @return a stream representation of the element stored in this instance */
+  default Stream<T> neighborsStream() {
     return Stream.empty();
   }
 
+  /** A {@link Duplo} which has no neighbors
+   * @param <T>
+   * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+   * @since 2017-03-30 */
   interface Atomic<T> extends Duplo<T> {
-    @Override default Stream<T> stream() {
-      return streamSelf();
+    @Override default Stream<T> neighborsStream() {
+      return selfStream();
     }
   }
 
   interface Compound<T> extends Duplo<T> {
-    Iterable<? extends Duplo<T>> next();
+    Iterable<? extends Duplo<T>> neighbors();
 
-    @Override default Stream<T> stream() {
-      return compounder().compound(self(), next());
+    @Override default Stream<T> neighborsStream() {
+      return neighborsMerger().append(self(), neighbors());
     }
   }
 
   @FunctionalInterface
-  interface Compounder<T> {
-    Stream<T> compound(T self, Iterable<? extends Duplo<T>> others);
-
-    static <T> Compounder<T> empty() {
+  interface NeighborsMerger<T> {
+    static <T> NeighborsMerger<T> empty() {
       return (self, others) -> Stream.empty();
     }
+
+    Stream<T> append(T self, Iterable<? extends Duplo<T>> others);
   }
 }

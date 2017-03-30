@@ -17,7 +17,6 @@ import il.org.spartan.spartanizer.meta.*;
 /** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-28 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings("javadoc")
 public class mayShortcircuitTest extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
