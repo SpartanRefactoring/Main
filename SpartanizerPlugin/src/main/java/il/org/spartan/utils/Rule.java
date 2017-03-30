@@ -61,7 +61,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
   static <T, R> OnApplicator<T, R> on(final Predicate<T> p) {
     return c -> new Rule.Stateful<T, R>() {
       @Override public R fire() {
-        c.accept(object());
+        c.accept(current());
         return null;
       }
 
@@ -140,10 +140,10 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     return new Example[0];
   }
 
-  T object();
+  T current();
 
   default boolean ready() {
-    return object() != null;
+    return current() != null;
   }
 
   /** Should not be overridden */
@@ -157,7 +157,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
   }
 
   default String verbObject() {
-    return format(verb(), object());
+    return format(verb(), current());
   }
 
   @Documented
@@ -203,8 +203,8 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
       return inner.check(¢);
     }
 
-    @Override public T object() {
-      return inner.object();
+    @Override public T current() {
+      return inner.current();
     }
 
     @Override public R apply(final T ¢) {
@@ -254,7 +254,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
    * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
    * @since 2017-03-13 */
   abstract class Stateful<T, R> implements Rule<T, R> {
-    private T object;
+    protected T current;
 
     @Override public final R apply(final T ¢) {
       if (!ready())
@@ -262,14 +262,14 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
             "Attempt to apply rule before previously checking\n" + //
                 "    Argument to rule application is: %s\n",
             ¢);
-      if (¢ != object())
+      if (¢ != current())
         return badTypeState(//
             "Argument to rule application is distinct from previous checked argument\n" + //
                 "    Previously checked arguments was: %s\n" + //
                 "    Operand to rule application is: %s\n",
-            ¢, object());
+            ¢, current());
       final R $ = fire();
-      object = null;
+      current = null;
       return $;
     }
 
@@ -287,13 +287,13 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     }
 
     @Override public final boolean check(final T ¢) {
-      return ok(object = ¢);
+      return ok(current = ¢);
     }
 
     public abstract R fire();
 
-    @Override public final T object() {
-      return object;
+    @Override public final T current() {
+      return current;
     }
 
     public abstract boolean ok(T n);

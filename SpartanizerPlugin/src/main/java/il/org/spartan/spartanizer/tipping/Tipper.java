@@ -64,7 +64,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @Override public final Tip fire() {
-    return tip(object());
+    return tip(current());
   }
 
   private Class<N> initializeMyOperandsClass() {

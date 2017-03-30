@@ -177,7 +177,7 @@ public enum JUnitTestMethodFacotry {
   }
 
   private static String operandClass(final Tipper<?> ¢) {
-    return system.className(¢.object());
+    return system.className(¢.current());
   }
 
   private static String tipperClass(final Tipper<?> ¢) {
