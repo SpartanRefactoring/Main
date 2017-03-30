@@ -1,8 +1,3 @@
-/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
- *
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- *
- * @since Dec 26, 2016 */
 package il.org.spartan.spartanizer.java.namespace;
 
 import static il.org.spartan.azzert.*;
@@ -12,6 +7,9 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
+/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @since Dec 26, 2016 */
 public final class EnvironmentTestSpawningAndManualAddition {
   private final Environment e0 = Environment.genesis();
   private final Environment e1 = e0.spawn();

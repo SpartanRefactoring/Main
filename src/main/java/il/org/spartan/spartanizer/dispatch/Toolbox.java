@@ -224,7 +224,7 @@ public class Toolbox {
             new InfixSubtractionSort(), //
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
-            new InfixIndexOfToStringContains(), // v 2.7
+            // new InfixIndexOfToStringContains(), // v 2.7
             new InfixSimplifyComparisionOfAdditions(), //
             new InfixSimplifyComparisionOfSubtractions(), //
             new InfixStringLiteralsConcatenate(), //
@@ -236,8 +236,6 @@ public class Toolbox {
             new MethodDeclarationRenameSingleParameterToIt(), //
             new MethodDeclarationConstructorMoveToInitializers(), //
             new RenameConstructorParameters(), //
-            // new MatchCtorParamNamesToFieldsIfAssigned(),
-            // v 2.7 // This is a new // tipper // #20
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -331,9 +329,9 @@ public class Toolbox {
             new FragmentNoInitializerAssignment(), //
             new FragmentInitialiazerUpdateAssignment(), //
             new FragmentInitializerIfAssignment(), //
-            new FragmentInitializerIfUpdateAssignment(), //
+            new LocalInitializedUpdateAssignment(), //
             new FragmentInitializerReturnVariable(), //
-            new FragmentInitializerReturnExpression(), //
+            new LocalInitializedReturnExpression(), //
             new FragmentInitializerReturnAssignment(), //
             new FragmentInitializerReturn(), //
             new FragmentInitializerStatementTerminatingScope(), //

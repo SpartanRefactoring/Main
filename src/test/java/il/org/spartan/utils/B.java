@@ -1,6 +1,7 @@
 package il.org.spartan.utils;
 
 import java.util.*;
+import java.util.stream.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
@@ -43,8 +44,7 @@ public class B {
     }
     for (int i = 0; i < n; ++i)
       for (final B left : enumerate(i))
-        for (final B right : enumerate(n - i - 1))
-          $.add(new B(left, right));
+        $.addAll(enumerate(n - i - 1).stream().map(right -> new B(left, right)).collect(Collectors.toList()));
     return $;
   }
 

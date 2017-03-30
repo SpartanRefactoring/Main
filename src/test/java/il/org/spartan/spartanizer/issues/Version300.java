@@ -227,6 +227,13 @@ public class Version300 {
         .stays();
   }
 
+  @Ignore @Test public void issue73c() {
+    trimmingOf("int foo(Integer integer, ASTNode astn){return integer + astn.hashCode();}")//
+        .gives("int foo(Integer integer,ASTNode n){return integer+n.hashCode();}") //
+        .gives("int foo(Integer i, ASTNode n){return i + n.hashCode();}") //
+        .stays();
+  }
+
   @Ignore @Test public void inlineArrayInitialization1() {
     trimmingOf("public void multiDimensionalIntArraysAreEqual(){ " //
         + " int[][] int1={{1, 2, 3}, {4, 5, 6}}; " //
@@ -292,8 +299,11 @@ public class Version300 {
     kill("int _ = super.f();", "{super.f();}");
     kill("int _ = new int[++i * j--];", "{++i; j--;}");
     kill("A __ = new A(f(),i++);", "{new A(f(),i++);}");
-    kill("A __ = new A[q()] ={ f(), g(), h(),++i };", "{q(); f(); g(); h(); ++i;}");
     kill("A _ =  ((a=b)*i++)+f(g())*((a=b)*i++) + ++j;", "{a=b; i++; f(g());a=b;i++; ++j;}");
+  }
+
+  @Ignore @Test public void killerArrayInitiaizer() {
+    kill("A __ = new A[q()] ={ f(), g(), h(),++i };", "{q(); f(); g(); h(); ++i;}");
   }
 
   public Expression make(final String statement) {

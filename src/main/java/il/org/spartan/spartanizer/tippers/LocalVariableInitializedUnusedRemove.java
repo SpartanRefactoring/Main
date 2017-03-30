@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Example.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -17,7 +19,7 @@ import il.org.spartan.utils.*;
 /** Remove unused variable
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-23 */
-public final class LocalVariableInitializedUnusedRemove extends VariableFragmentInitialized implements TipperCategory.Deadcode {
+public final class LocalVariableInitializedUnusedRemove extends LocalVariableInitialized implements TipperCategory.Deadcode {
   private static final long serialVersionUID = -855471283048149285L;
 
   public LocalVariableInitializedUnusedRemove() {
@@ -30,6 +32,26 @@ public final class LocalVariableInitializedUnusedRemove extends VariableFragment
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Remove unused variable: " + trivia.gist(¢);
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  @Override public Example[] examples() {
+    return new Example[] { //
+        convert("" //
+            + "int print() {\n" //
+            + "  int number = 1;\n" //
+            + "  System.out.println(\"number\");\n" //
+            + "}")
+                .to("" //
+                    + "int print() {\n" //
+                    + "  System.out.println(\"number\");\n" //
+                    + "}"), //
+        ignores("" //
+            + "int print() {\n" //
+            + "  int number = 1;\n" //
+            + "  System.out.println(number);\n" //
+            + "}"), //
+    };
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {

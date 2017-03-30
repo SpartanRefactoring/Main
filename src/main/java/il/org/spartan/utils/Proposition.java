@@ -1,7 +1,5 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -40,7 +38,7 @@ public interface Proposition extends BooleanSupplier {
     return new And(toString, s1, s2, ss);
   }
 
-  static Proposition NOT(final BooleanSupplier ¢) {
+  static Proposition not(final BooleanSupplier ¢) {
     return new Not(¢);
   }
 
@@ -172,8 +170,7 @@ public interface Proposition extends BooleanSupplier {
     }
 
     @Override public Proposition and(final BooleanSupplier s, final BooleanSupplier... cs) {
-      inner.set(inner.size() - 1, AND(of(last(inner)), s, cs));
-      return this;
+      return new And(this, s, cs);
     }
 
     @Override public boolean getAsBoolean() {
