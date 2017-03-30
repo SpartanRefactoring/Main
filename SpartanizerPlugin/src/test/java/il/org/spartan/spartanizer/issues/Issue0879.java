@@ -67,7 +67,7 @@ public class Issue0879 {
         .gives("int a(){int b=13,$=7;$=b+b;return $;}") //
         .using(VariableDeclarationFragment.class, new LocalVariableIntializedAssignment()) //
         .gives("int a(){int b=13,$=b+b;return $;}") //
-        .using(VariableDeclarationFragment.class, new FragmentInitializerReturnVariable()) //
+        .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementReturnVariable()) //
         .gives("int a(){int b=13;return b+b;}") //
         .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
         .gives("int a(){int $=13;return $+$;}") //

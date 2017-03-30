@@ -202,7 +202,7 @@ public enum action {
    * @return expression to the new for loop, without the initializers. */
   public static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s)
-        : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s) : from;
+        : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s) : from;
   }
 
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode where, final ASTRewrite r, final TextEditGroup g) {
@@ -308,9 +308,9 @@ public enum action {
 
   public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? FragmentInitializerToForInitializers.handleAssignmentCondition(az.assignment(from), s)
+        : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from)
-                ? FragmentInitializerToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
+                ? LocalVariableIntializedStatementToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter
