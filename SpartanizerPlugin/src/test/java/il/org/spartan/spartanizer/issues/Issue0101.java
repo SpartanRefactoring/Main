@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.engine;
+package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.azzert.*;
 
@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** Test Cases for Checking the Recurder Mechanism for Passing Recursively Over
  * the AST
