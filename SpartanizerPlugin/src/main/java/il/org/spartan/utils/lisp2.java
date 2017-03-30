@@ -16,34 +16,22 @@ import il.org.spartan.utils.range.*;
  * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-19 */
 public interface lisp2 extends lisp {
-  static void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
-    items.forEach(from::remove);
+
+  /** @param o the assignment operator to compare all to
+   * @param os A unknown number of assignments operators
+   * @return whether all the operator are the same or false otherwise */
+  static boolean areEqual(final Object o, final Object... os) {
+    return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ == o);
   }
 
-  static String rest(final String ¢) {
-    return ¢.substring(1);
-  }
-
-  static List<Expression> removeFirstElement(final List<Expression> ¢) {
-    final List<Expression> $ = new ArrayList<>(¢);
-    $.remove(first($));// remove first
+  static <T> List<T> chopLast(final List<T> ¢) {
+    final List<T> $ = new ArrayList<>(¢);
+    $.remove($.size() - 1);
     return $;
   }
 
-  static <T> List<T> addRest(final List<T> $, final T n, final List<T> ns) {
-    $.addAll(rest(n, ns));
-    return $;
-  }
-
-  static <T> List<T> rest(final T t, final Iterable<T> ts) {
-    boolean add = false;
-    final List<T> $ = new ArrayList<>();
-    for (final T x : ts)
-      if (add)
-        $.add(x);
-      else
-        add = x == t;
-    return $;
+  static String chopLast(final String ¢) {
+    return ¢.substring(0, ¢.length() - 1);
   }
 
   @SuppressWarnings("boxing") static int index(final int i, final int... is) {
@@ -72,8 +60,33 @@ public interface lisp2 extends lisp {
     return $ < 1 ? null : ts.get($ - 1);
   }
 
+  static void removeElFromList(final Iterable<Expression> items, final List<Expression> from) {
+    items.forEach(from::remove);
+  }
+
+  static List<Expression> removeFirstElement(final List<Expression> ¢) {
+    final List<Expression> $ = new ArrayList<>(¢);
+    $.remove(first($));// remove first
+    return $;
+  }
+
   static <T> void removeLast(final List<T> ¢) {
     ¢.remove(¢.size() - 1);
+  }
+
+  static String rest(final String ¢) {
+    return ¢.substring(1);
+  }
+
+  static <T> List<T> rest(final T t, final Iterable<T> ts) {
+    boolean add = false;
+    final List<T> $ = new ArrayList<>();
+    for (final T x : ts)
+      if (add)
+        $.add(x);
+      else
+        add = x == t;
+    return $;
   }
 
   /** swaps two elements in an indexed list in given indexes, if they are legal
@@ -87,24 +100,6 @@ public interface lisp2 extends lisp {
     final T t = $.get(i1);
     lisp.replace($, $.get(i2), i1);
     lisp.replace($, t, i2);
-    return $;
-  }
-
-  static String chopLast(final String ¢) {
-    return ¢.substring(0, ¢.length() - 1);
-  }
-
-  /** @param o the assignment operator to compare all to
-   * @param os A unknown number of assignments operators
-   * @return whether all the operator are the same or false otherwise */
-  static boolean areEqual(final Object o, final Object... os) {
-    return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ == o);
-  }
-
-  static <T> List<T> chopLast(final List<T> ts) {
-    final List<T> $ = new ArrayList<>(ts);
-    final List<T> ¢ = $;
-    ¢.remove(¢.size() - 1);
     return $;
   }
 }
