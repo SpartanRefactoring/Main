@@ -193,8 +193,14 @@ public class PropositionTest {
     assert T_OR_F_OR_X.eval();
   }
 
+  @Ignore("Oran") @Test public void b2a() {
+    azzert.that(OR(F, X, N).and(T).reduce(javaReducer), is("(F || X || N) && T"));
+  }
+
   @Test public void b2() {
     azzert.that(T_OR_F_OR_X + "", is("T OR F OR X"));
+    azzert.that(of(F).or(T).and(T).reduce(javaReducer), is("F || T && T"));
+    azzert.that(of(F).and(X).or(T).reduce(javaReducer), is("F && X || T"));
   }
 
   @Test public void b3() {

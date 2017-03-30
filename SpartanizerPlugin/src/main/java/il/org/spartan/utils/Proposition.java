@@ -6,8 +6,7 @@ import java.util.stream.*;
 
 import il.org.spartan.*;
 
-/*** <p>
- * TODO second lecture
+/*** Third lecture:
  * <ol>
  * <li>discuss asString()
  * <li>discuss fullEval() *
