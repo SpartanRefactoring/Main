@@ -1,7 +1,10 @@
 package il.org.spartan.plugin;
+
 import static java.util.stream.Collectors.*;
+
 import java.lang.reflect.*;
 import java.util.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
