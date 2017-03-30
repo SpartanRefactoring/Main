@@ -13,24 +13,10 @@ import il.org.spartan.spartanizer.testing.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings("static-method")
 public class Issue0437 {
-  @Test public void testMutation0() {
-    trimmingOf("String str; String stringy; return str.indexOf(stringy)>= 0;")//
-        .gives("String str; String stringy; return str.contains(stringy);")//
-        .stays();
-  }
-
-  @Test public void testMutation1() {
-    trimmingOf("String str; if(str.indexOf(\"stringy\")>= 0) return true;")//
-        .gives("String str; if(str.contains(\"stringy\")) return true;")//
-        .stays();
-  }
-
-  @Test public void testMutation2() {
-    trimmingOf("String str; if(str.indexOf(stringy)>= 0) return true;")//
-        .gives("String str; if(str.contains(stringy)) return true;")//
-        .stays();
+  /** Nothing to test as this issue is defunct: InfixIndexOfToStringContains */
+  @Test public void test() {
+    assert true;
   }
 }
