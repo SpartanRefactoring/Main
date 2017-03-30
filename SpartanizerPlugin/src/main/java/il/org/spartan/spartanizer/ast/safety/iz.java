@@ -299,7 +299,7 @@ public interface iz {
   }
 
   static boolean defaultLiteral(final ASTNode ¢) {
-    return defaultValues.contains(¢ + "");
+    return defaultLiterals.contains(¢ + "");
   }
 
   static boolean definiteLoop(final ASTNode n) {
@@ -1273,7 +1273,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, WILDCARD_TYPE);
   }
 
-  List<String> defaultValues = as.list("null", "0", "false", "0.", "0L");
+  List<String> defaultLiterals = as.list("null", "0", "false", "0.", "0L");
   int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
 
   /** @param ¢ JD
