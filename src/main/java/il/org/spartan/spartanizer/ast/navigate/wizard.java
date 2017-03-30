@@ -329,7 +329,7 @@ public interface wizard {
    * side(variable) and operator
    * @param base The assignment to compare all others to
    * @param as The assignments to compare
-   * @return whetherall assignments has the same left hand side and operator as
+   * @return whether all assignments has the same left hand side and operator as
    *         the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
     return !hasNull(base, as) && Stream.of(as).noneMatch(λ -> incompatible(base, λ));
@@ -345,9 +345,9 @@ public interface wizard {
 
   /** @param o the assignment operator to compare all to
    * @param os A unknown number of assignments operators
-   * @return whetherall the operator are the same or false otherwise */
-  static boolean compatibleOps(final Assignment.Operator o, final Assignment.Operator... os) {
-    return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ != null && λ == o);
+   * @return whether all the operator are the same or false otherwise */
+  static boolean areEqual(final Object o, final Object... os) {
+    return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ == o);
   }
 
   static CompilationUnit compilationUnitWithBinding(final File ¢) {
@@ -536,7 +536,7 @@ public interface wizard {
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNull(a1, a2) || !compatibleOps(a1.getOperator(), a2.getOperator()) || !wizard.same(to(a1), to(a2));
+    return hasNull(a1, a2) || !areEqual(a1.getOperator(), a2.getOperator()) || !wizard.same(to(a1), to(a2));
   }
 
   static Operator infix2assign(final InfixExpression.Operator ¢) {
@@ -829,7 +829,7 @@ public interface wizard {
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param xs SimplesNames to compare by their string value to cmpTo
-   * @return whetherall names are the same (string wise) or false otherwise */
+   * @return whether all names are the same (string wise) or false otherwise */
   static boolean same(final Expression x, final Expression... xs) {
     return Stream.of(xs).allMatch(λ -> same(λ, x));
   }
