@@ -7,8 +7,8 @@ import org.junit.*;
 /** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 6, 2017 */
-@SuppressWarnings("static-method")
 @Ignore("Dor Ma'yan")
+@SuppressWarnings("static-method")
 public class Issue0849 {
   @Test public void test0() {
     trimmingOf("a-1+2")//

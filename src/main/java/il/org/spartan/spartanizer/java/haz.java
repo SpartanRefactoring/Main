@@ -25,16 +25,16 @@ public enum haz {
   public static boolean annotation(final VariableDeclarationFragment ¢) {
     final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
-      case ASTNode.SINGLE_VARIABLE_DECLARATION:
-        return haz.annotation((SingleVariableDeclaration) $);
       case ASTNode.FIELD_DECLARATION:
         return haz.annotation((FieldDeclaration) $);
+      case ASTNode.LAMBDA_EXPRESSION:
+        return haz.annotation((LambdaExpression) $);
+      case ASTNode.SINGLE_VARIABLE_DECLARATION:
+        return haz.annotation((SingleVariableDeclaration) $);
       case ASTNode.VARIABLE_DECLARATION_EXPRESSION:
         return haz.annotation((VariableDeclarationExpression) $);
       case ASTNode.VARIABLE_DECLARATION_STATEMENT:
         return haz.annotation((VariableDeclarationStatement) $);
-      case ASTNode.LAMBDA_EXPRESSION:
-        return haz.annotation((LambdaExpression) $);
       default:
         assert fault.unreachable() : fault.specifically("Unexpected node type", $, ¢);
         return false;
