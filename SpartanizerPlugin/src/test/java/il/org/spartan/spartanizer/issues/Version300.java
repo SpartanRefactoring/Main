@@ -226,13 +226,14 @@ public class Version300 {
         .gives("") //
         .stays();
   }
-  @Ignore
-  @Test public void issue73c() {
+
+  @Ignore @Test public void issue73c() {
     trimmingOf("int foo(Integer integer, ASTNode astn){return integer + astn.hashCode();}")//
         .gives("int foo(Integer integer,ASTNode n){return integer+n.hashCode();}") //
         .gives("int foo(Integer i, ASTNode n){return i + n.hashCode();}") //
         .stays();
   }
+
   @Ignore @Test public void inlineArrayInitialization1() {
     trimmingOf("public void multiDimensionalIntArraysAreEqual(){ " //
         + " int[][] int1={{1, 2, 3}, {4, 5, 6}}; " //

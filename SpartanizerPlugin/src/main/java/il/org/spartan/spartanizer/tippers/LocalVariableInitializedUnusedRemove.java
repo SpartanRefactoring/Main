@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Example.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -13,8 +15,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
-
-import static il.org.spartan.utils.Example.*;
 
 /** Remove unused variable
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}

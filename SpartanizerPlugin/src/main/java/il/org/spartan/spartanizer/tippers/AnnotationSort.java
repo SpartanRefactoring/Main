@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Example.*;
+
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.utils.Example.*;
 
 import java.util.*;
 import java.util.concurrent.*;
