@@ -1,4 +1,4 @@
-package il.org.spartan.utils;
+package il.org.spartan.proposition;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
@@ -8,11 +8,10 @@ import java.util.*;
 import java.util.function.*;
 
 import org.junit.*;
-import org.junit.runner.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.research.metatester.*;
+import il.org.spartan.utils.*;
 
 /** Tests class {@link Proposition}
  * @author Yossi Gil {@code   Yossi.Gil@GMail.COM}
