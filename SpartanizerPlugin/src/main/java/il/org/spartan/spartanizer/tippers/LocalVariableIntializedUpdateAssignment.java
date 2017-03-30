@@ -40,7 +40,7 @@ public final class LocalVariableIntializedUpdateAssignment extends $FragmentAndS
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
+    if (a == null || !wizard.eq(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)

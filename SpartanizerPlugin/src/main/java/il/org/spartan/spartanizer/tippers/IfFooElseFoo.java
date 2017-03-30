@@ -18,18 +18,18 @@ public final class IfFooElseFoo extends IfAbstractPattern implements TipperCateg
   private static final long serialVersionUID = -1173304247743605864L;
 
   public IfFooElseFoo() {
-    andAlso(Proposition.of("Then and else are identical", //
-        () -> wizard.same(then, elze)));
+    andAlso("Then and else are identical", //
+        () -> wizard.eq(then, elze));
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     trick.insertBefore(current(), wizard.decompose(current().getExpression()), r, g);
     trick.insertAfter(current(), as.list(then), r, g);
     remove.statement(current(), r, g);
     return r;
   }
 
-  @Override public String description(@SuppressWarnings("unused") IfStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Eliminate 'if' with two identical branches";
   }
 

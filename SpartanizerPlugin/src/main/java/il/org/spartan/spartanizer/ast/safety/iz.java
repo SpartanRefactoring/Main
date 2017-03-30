@@ -37,6 +37,10 @@ public interface iz {
     @SafeVarargs static <T> boolean in(final T t, final T... ts) {
       return !iz.in(t, ts);
     }
+
+    static boolean null¢(final Object ¢) {
+      return ¢ != null;
+    }
   }
 
   static boolean abstract¢(final BodyDeclaration ¢) {
@@ -115,7 +119,7 @@ public interface iz {
       return false;
     final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
-        || !same(s, az.astNode(first(statements(az.block(elze($))))))//
+        || !eq(s, az.astNode(first(statements(az.block(elze($))))))//
         || trick.recursiveElse(s) != null//
         || elze($) == null)//
         && $ != null && (elze($) == null || trick.recursiveElse(s) == null)

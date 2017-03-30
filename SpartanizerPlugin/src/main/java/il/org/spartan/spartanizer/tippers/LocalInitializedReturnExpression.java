@@ -33,7 +33,7 @@ public final class LocalInitializedReturnExpression extends $FragmentAndStatemen
     if (newReturnValue == null)
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (wizard.same(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
+    if (wizard.eq(n, newReturnValue) || !i.canSafelyInlineinto(newReturnValue)
         || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
     $.replace(s.getExpression(), newReturnValue, g);

@@ -174,14 +174,6 @@ public enum make {
     return (IfStatement) first(statements($));
   }
 
-  public static ForStatement buildForStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
-    final ForStatement $ = ¢.getAST().newForStatement();
-    $.setBody(copy.of(body(¢)));
-    $.setExpression(action.pullInitializersFromExpression(copy.ofWhileExpression(¢), LocalVariableIntializedStatementWhile.parent(f)));
-    initializers($).add(LocalVariableIntializedStatementWhile.Initializers(f));
-    return $;
-  }
-
   /** Swap the order of the left and right operands to an expression, changing
    * the operator if necessary.
    * @param ¢ JD
@@ -200,6 +192,14 @@ public enum make {
 
   public static StringLiteral emptyString(final ASTNode ¢) {
     return make.from(¢).literal("");
+  }
+
+  public static ForStatement forStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
+    final ForStatement $ = ¢.getAST().newForStatement();
+    $.setBody(copy.of(body(¢)));
+    $.setExpression(action.pullInitializersFromExpression(copy.ofWhileExpression(¢), LocalVariableIntializedStatementWhile.parent(f)));
+    initializers($).add(LocalVariableIntializedStatementWhile.Initializers(f));
+    return $;
   }
 
   public static VariableDeclarationFragment fragment(final VariableDeclarationFragment f, final Expression x) {

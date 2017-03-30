@@ -24,8 +24,8 @@ public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<Condi
 
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
     final Expression $ = ¢.getElseExpression(), then = ¢.getThenExpression();
-    return wizard.same($, truee) && wizard.same(then, falsee) ? make.notOf(copy.of(¢.getExpression()))
-        : wizard.same($, falsee) && wizard.same(then, truee) ? copy.of(¢.getExpression()) : null;
+    return wizard.eq($, truee) && wizard.eq(then, falsee) ? make.notOf(copy.of(¢.getExpression()))
+        : wizard.eq($, falsee) && wizard.eq(then, truee) ? copy.of(¢.getExpression()) : null;
   }
 
   public static final ASTNode truee = make.ast("Boolean.TRUE"), falsee = make.ast("Boolean.FALSE");

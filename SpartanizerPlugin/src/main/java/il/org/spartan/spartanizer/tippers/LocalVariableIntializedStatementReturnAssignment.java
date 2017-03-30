@@ -32,7 +32,7 @@ public final class LocalVariableIntializedStatementReturnAssignment extends $Fra
     if (initializer == null || haz.annotation(f))
       return null;
     final Assignment a = az.assignment(expression(az.returnStatement(nextStatement)));
-    if (a == null || !wizard.same(n, to(a)) || a.getOperator() != ASSIGN)
+    if (a == null || !wizard.eq(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newReturnValue = copy.of(from(a));
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);

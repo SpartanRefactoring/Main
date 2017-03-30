@@ -30,7 +30,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
     final List<Expression> $ = new ArrayList<>(xs);
     for (final Expression ¢ : xs)
-      if (same(¢, left)) {
+      if (eq(¢, left)) {
         $.remove(¢);
         return $;
       }
@@ -38,7 +38,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   private static List<Expression> dropFirstIfSame(final Expression ¢, final List<Expression> xs) {
-    return !same(¢, first(xs)) ? null : chop(new ArrayList<>(xs));
+    return !eq(¢, first(xs)) ? null : chop(new ArrayList<>(xs));
   }
 
   private static Expression reduce(final InfixExpression x, final Expression deleteMe) {

@@ -30,15 +30,19 @@ public interface lisp2 extends lisp {
     return $;
   }
 
-  static <N extends ASTNode> List<? extends ASTNode> addRest(final List<ASTNode> $, final N n, final List<N> ns) {
-    if (ns == null)
-      return $;
+  static <T> List<T> addRest(final List<T> $, final T n, final List<T> ns) {
+    $.addAll(rest(n, ns));
+    return $;
+  }
+
+  static <T> List<T> rest(final T t, final Iterable<T> ts) {
     boolean add = false;
-    for (final ASTNode x : ns)
+    final List<T> $ = new ArrayList<>();
+    for (final T x : ts)
       if (add)
         $.add(x);
       else
-        add = x == n;
+        add = x == t;
     return $;
   }
 

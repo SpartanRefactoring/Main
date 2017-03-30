@@ -1,27 +1,20 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.factory.subject.*;
+import static il.org.spartan.utils.Example.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
-/** convert {@code
- * if (x)
- *   a += 3;
- * else
- *   a += 9;
- * } into {@code
- * a += x ? 3 : 9;
- * }
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
     implements TipperCategory.Ternarization {
@@ -29,24 +22,24 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
   private Assignment thenAssignment;
   private Assignment elzeAssignment;
   private Expression to;
-  private Operator thenOperator;
+  private Assignment.Operator thenOperator;
 
   public IfAssignToFooElseAssignToFoo() {
-    andAlso(Proposition.of("Then part is an assignment", //
-        () -> (thenAssignment = extract.assignment(then)) != null));
-    andAlso(Proposition.of("Else part is an assignment", //
-        () -> (elzeAssignment = extract.assignment(elze)) != null));
-    andAlso(Proposition.of("Both assignments are to the same target", //
-        () -> wizard.same(to = to(thenAssignment), to(elzeAssignment))));
-    andAlso(Proposition.of("Assignment operators are compatible", //
-        () -> lisp2.areEqual(thenOperator = thenAssignment.getOperator(), elzeAssignment.getOperator())));
+    andAlso("Then part is an assignment", //
+        () -> iz.not.null¢(thenAssignment = extract.assignment(then)));
+    andAlso("Else part is an assignment", //
+        () -> iz.not.null¢(elzeAssignment = extract.assignment(elze)));
+    andAlso("Both assignments are to the same target", //
+        () -> wizard.eq(to = to(thenAssignment), to(elzeAssignment)));
+    andAlso("Assignment operators are compatible", //
+        () -> lisp2.areEqual(thenOperator = thenAssignment.getOperator(), elzeAssignment.getOperator()));
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate assignments to " + to;
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(current, //
         pair(to, //
             pair(from(thenAssignment), from(elzeAssignment)).toCondition(condition)//
@@ -55,6 +48,11 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
   }
 
   @Override public Example[] examples() {
-    return null;
+    return new Example[] { //
+        convert("if(x) a += 3; else a += 9;")//
+            .to("a += x ? 3 : 9;"),
+        convert("if(x) a = 3; else a = 9;")//
+            .to("a = x ? 3 : 9;"), //
+    };
   }
 }

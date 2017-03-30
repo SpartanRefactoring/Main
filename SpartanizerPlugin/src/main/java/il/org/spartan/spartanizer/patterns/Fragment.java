@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.patterns;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.utils.*;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
@@ -14,13 +13,13 @@ public abstract class Fragment extends AbstractPattern<VariableDeclarationFragme
   protected SimpleName name;
 
   Fragment() {
-    andAlso(new Proposition.Singleton("Inapplicable on annotated fragments", () -> {
+    andAlso("Inapplicable on annotated fragments", () -> {
       if (haz.annotation(current()))
         return false;
       name = current().getName();
       initializer = current().getInitializer();
       return true;
-    }));
+    });
   }
 
   protected Expression initializer() {

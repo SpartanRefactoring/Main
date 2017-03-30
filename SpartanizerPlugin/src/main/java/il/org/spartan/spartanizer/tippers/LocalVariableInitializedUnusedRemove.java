@@ -23,7 +23,7 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
   private static final long serialVersionUID = -855471283048149285L;
 
   public LocalVariableInitializedUnusedRemove() {
-    andAlso(Proposition.of("Local variable is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty()));
+    andAlso("Local variable is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
   }
 
   @Override public String description() {

@@ -37,7 +37,7 @@ public final class LocalVariableInitializedUpdateAssignment extends LocalVariabl
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(name, to(a)))
+    if (a == null || !wizard.eq(name, to(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)

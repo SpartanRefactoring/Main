@@ -36,7 +36,7 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
 
   @Override public Tip tip(final ArrayAccess a) {
     final Expression $ = copy.of(a.getIndex());
-    final Statement s = extract.containingStatement(a);
+    final Statement s = containing.statement(a);
     final AST t = s.getAST();
     return new Tip(description(a), a, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -56,7 +56,7 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
 
   @Override protected boolean prerequisite(final ArrayAccess a) {
     final Expression e = a.getIndex();
-    final Statement $ = extract.containingStatement(a);
+    final Statement $ = containing.statement(a);
     final SimpleName n = iz.prefixExpression(e) ? extract.simpleName(az.prefixExpression(e))
         : iz.postfixExpression(e) ? extract.simpleName(az.postfixExpression(e)) : null;
     return n != null && iz.expressionStatement($) && iz.block(parent($)) && iz.updating(e) && !iz.assignment(e)

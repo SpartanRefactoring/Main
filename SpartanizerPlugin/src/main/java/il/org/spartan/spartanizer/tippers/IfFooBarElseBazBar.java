@@ -36,7 +36,7 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
     final List<Statement> $ = new ArrayList<>();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(ss2.size() - 1)) {
       final Statement s1 = last(ss1);
-      if (!wizard.same(s1, last(ss2)))
+      if (!wizard.eq(s1, last(ss2)))
         break;
       $.add(s1);
       ss1.remove(ss1.size() - 1);

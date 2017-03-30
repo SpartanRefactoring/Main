@@ -66,7 +66,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
 
   @SuppressWarnings("static-method") private boolean isIn(final Expression op, final Collection<Expression> allOperands) {
-    return allOperands.stream().anyMatch(λ -> wizard.same(op, λ));
+    return allOperands.stream().anyMatch(λ -> wizard.eq(op, λ));
   }
 
   private ASTNode replacement(final InfixExpression e1, final InfixExpression e2) {

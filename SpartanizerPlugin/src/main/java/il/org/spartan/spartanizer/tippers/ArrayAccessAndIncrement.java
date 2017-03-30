@@ -52,7 +52,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
 
   private static boolean checkInput(final ArrayAccess a) {
     if (a == null || extract.nextPrefix(a) == null || extract.nextPrefix(a).getOperand() == null
-        || !wizard.same(extract.nextPrefix(a).getOperand(), a.getIndex()))
+        || !wizard.eq(extract.nextPrefix(a).getOperand(), a.getIndex()))
       return true;
     if (iz.assignment(a.getParent()) && iz.infixExpression(az.assignment(a.getParent()).getRightHandSide()))
       for (final Expression ¢ : extract.allOperands(az.infixExpression(az.assignment(a.getParent()).getRightHandSide())))

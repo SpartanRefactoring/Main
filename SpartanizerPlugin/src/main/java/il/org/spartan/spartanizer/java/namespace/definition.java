@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java.namespace;
 
+import static il.org.spartan.utils.lisp2.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -64,9 +66,8 @@ public interface definition {
         assert e != null;
         final ForStatement s = az.forStatement(parent(e));
         assert s != null;
-        final List<ASTNode> $ = new ArrayList<>();
-        lisp2.addRest($, f, fragments(e));
-        lisp2.addRest($, e, initializers(s));
+        final List<ASTNode> $ = new ArrayList<>(rest(f, fragments(e)));
+        $.addAll(rest(e, initializers(s)));
         $.add(expression(s));
         $.addAll(updaters(s));
         $.add(body(s));
@@ -107,14 +108,10 @@ public interface definition {
         "\n\t i = " + f.getInitializer() + //
         "\n\t p = " + f.getInitializer() + parent(f) + "/" + parent(f).getClass().getSimpleName()//
             + fault.done();
-        final List<VariableDeclarationFragment> fs = fragments(s);
-        assert fs != null;
-        lisp2.addRest($, f, fs);
-        if (parent(s) instanceof SwitchStatement)
-          return as.list(parent(s));
-        final Block b = az.block(parent(s));
-        assert b != null : fault.specifically("Weird type", s, parent(s));
-        return lisp2.addRest($, s, statements(b));
+        assert fragments(s) != null;
+        $.addAll(rest(f, fragments(s)));
+        $.addAll(hop.subsequentStatements(s));
+        return $;
       }
     },
     method {
@@ -132,12 +129,10 @@ public interface definition {
       @Override public List<? extends ASTNode> specificScope(final SimpleName n) {
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(n));
         final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
-        final List<VariableDeclarationFragment> fs = fragments(e);
         final TryStatement s = az.tryStatement(parent(e));
-        final List<VariableDeclarationExpression> rs = resources(s);
         final List<ASTNode> $ = new ArrayList<>();
-        lisp2.addRest($, f, fs);
-        lisp2.addRest($, e, rs);
+        $.addAll(rest(f, fragments(e)));
+        $.addAll(rest(e, resources(s)));
         $.add(body(s));
         $.addAll(catchClauses(s));
         return $;
