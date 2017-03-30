@@ -2,6 +2,8 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
+import il.org.spartan.utils.Proposition.*;
+
 /** TODO
  * @author Yossi Gil {@code yossi.gil@gmail.com}
  * @since 2017-03-19 */
@@ -10,12 +12,16 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
     super(new ReduceStringConcatenate());
   }
 
-  @Override protected final String ante(final Proposition.Not ¢) {
-    return negation() + (¢.inner instanceof Proposition.Some ? open() : empty());
-  }
-
   @Override protected final String ante(final Proposition.Singleton ¢) {
     return ¢.inner instanceof Proposition.Some ? open() : empty();
+  }
+  
+  @Override protected final String ante(final Proposition.Some ¢) {
+    return open();
+  }
+
+  @Override protected final String ante(final Proposition.Not ¢) {
+    return negation() + (¢.inner instanceof Proposition.Some ? open() : empty());
   }
 
   protected abstract String close();
@@ -34,11 +40,16 @@ public abstract class PropositionInfixNotation extends PropositionReducer<String
 
   protected abstract String open();
 
-  @Override protected final String post(final Proposition.Not ¢) {
-    return ¢.inner instanceof Proposition.Some ? close() : empty();
-  }
 
   @Override protected String post(final Proposition.Singleton ¢) {
+    return ¢.inner instanceof Proposition.Some ? close() : empty();
+  }
+  
+  @Override protected String post(final Proposition.Some ¢) {
+    return close();
+  }
+  
+  @Override protected final String post(final Proposition.Not ¢) {
     return ¢.inner instanceof Proposition.Some ? close() : empty();
   }
 }
