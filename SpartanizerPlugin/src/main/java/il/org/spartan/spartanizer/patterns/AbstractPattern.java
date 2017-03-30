@@ -5,7 +5,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -13,22 +15,28 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-25 */
 public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N> {
-  private static final long serialVersionUID = 0x79313A9ADD5632BCL;
+  private static final long serialVersionUID = 1;
   private Proposition prerequisite;
+  @Property protected ASTNode parent;
+  @Property protected Statement nextStatement;
 
   public AbstractPattern() {
-    this.prerequisite = Proposition.T;
+    this.prerequisite = Proposition.of("Extract parent and next statement", () -> {
+      parent = current.getParent();
+      nextStatement = extract.nextStatement(current);
+      return true;
+    });
   }
 
   @Override public final boolean prerequisite(final N ¢) {
-    assert object() == ¢;
+    assert current() == ¢;
     return prerequisite.eval();
   }
 
   @Override public final Tip tip(final N n) {
     assert n != null;
-    assert n == object();
-    return new Tip(description(), object(), myClass()) {
+    assert n == current();
+    return new Tip(description(), current(), myClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         AbstractPattern.this.go(r, g);
       }

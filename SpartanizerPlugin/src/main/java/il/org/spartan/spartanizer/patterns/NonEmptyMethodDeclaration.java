@@ -18,10 +18,10 @@ public abstract class NonEmptyMethodDeclaration extends AbstractPattern<MethodDe
   
   public NonEmptyMethodDeclaration() {
     andAlso(new Proposition.Singleton("Applicable only on non empty methods", () -> {
-      if (!haz.anyStatements(object()))
+      if (!haz.anyStatements(current()))
         return false;
-      name = object().getName();
-      jdoc = object().getJavadoc();
+      name = current().getName();
+      jdoc = current().getJavadoc();
       return true;
     }));
   }

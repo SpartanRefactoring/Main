@@ -20,7 +20,7 @@ public abstract class SingleParameterMethodDeclaration extends NonEmptyMethodDec
 
   public SingleParameterMethodDeclaration() {
     andAlso(Proposition.of("Must have only one parameter", () -> {
-      parameter = onlyOne(parameters(object()));
+      parameter = onlyOne(parameters(current()));
       return JohnDoe.property(parameter);
     }));
   }

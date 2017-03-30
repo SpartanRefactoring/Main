@@ -36,7 +36,7 @@ public final class LocalVariableUninitializedDead extends LocalVariableUninitial
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
-    action.removeDeadFragment(object(), r, g);
+    action.removeDeadFragment(current(), r, g);
     return r;
   }
 }

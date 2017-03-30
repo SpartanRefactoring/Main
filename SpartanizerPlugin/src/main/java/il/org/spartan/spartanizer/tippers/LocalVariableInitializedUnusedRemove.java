@@ -55,13 +55,13 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    final Block b = az.block(parent().getParent());
+    final Block b = az.block(declaration.getParent());
     if (b == null)
       return $;
     final ListRewrite l = $.getListRewrite(b, Block.STATEMENTS_PROPERTY);
     for (final Statement ¢ : wizard.decompose(initializer()))
-      l.insertBefore(copy.of(¢), parent(), g);
-    action.removeDeadFragment(object(), $, g);
+      l.insertBefore(copy.of(¢), declaration, g);
+    action.removeDeadFragment(current(), $, g);
     return $;
   }
 }

@@ -15,10 +15,10 @@ public abstract class Fragment extends AbstractPattern<VariableDeclarationFragme
 
   Fragment() {
     andAlso(new Proposition.Singleton("Inapplicable on annotated fragments", () -> {
-      if (haz.annotation(object()))
+      if (haz.annotation(current()))
         return false;
-      name = object().getName();
-      initializer = object().getInitializer();
+      name = current().getName();
+      initializer = current().getInitializer();
       return true;
     }));
   }
