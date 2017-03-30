@@ -14,6 +14,8 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
+import static il.org.spartan.utils.Example.*;
+
 /** Remove unused variable
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-23 */
@@ -30,6 +32,26 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Remove unused variable: " + trivia.gist(¢);
+  }
+
+  /** [[SuppressWarningsSpartan]] */
+  @Override public Example[] examples() {
+    return new Example[] { //
+        convert("" //
+            + "int print() {\n" //
+            + "  int number = 1;\n" //
+            + "  System.out.println(\"number\");\n" //
+            + "}")
+                .to("" //
+                    + "int print() {\n" //
+                    + "  System.out.println(\"number\");\n" //
+                    + "}"), //
+        ignores("" //
+            + "int print() {\n" //
+            + "  int number = 1;\n" //
+            + "  System.out.println(number);\n" //
+            + "}"), //
+    };
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
