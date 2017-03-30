@@ -145,7 +145,7 @@ public class Toolbox {
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
-            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
+            new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToIt(), null)//
         .add(ForStatement.class, //
             new ForNoUpdatersNoInitializerToWhile(), //
@@ -326,7 +326,7 @@ public class Toolbox {
             null)
         .add(VariableDeclarationFragment.class, //
             new FieldFragmentInitializerDefaultValue(), //
-            new FragmentNoInitializerAssignment(), //
+            new LocalVariableUnintializedStatementAssignment(), //
             new LocalVariableIntializedUpdateAssignment(), //
             new LocalVariableIntializedIfAssignment(), //
             new LocalInitializedUpdateAssignment(), //
@@ -340,7 +340,7 @@ public class Toolbox {
             new LocalVariableIntializedInlineIntoNext(), //
             new LocalVariableIntializedStatementWhile(), //
             new LocalVariableIntializedStatementToForInitializers(), //
-            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
+            new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
             new LocalVariableInitializedUnusedRemove(), //
             null) //
     ;

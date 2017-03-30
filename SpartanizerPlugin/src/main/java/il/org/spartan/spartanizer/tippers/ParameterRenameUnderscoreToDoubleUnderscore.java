@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
  * @author Ori Roth
  * @param <N> either SingleVariableDeclaration or VariableDeclarationFragment
  * @since 2016/05/08 */
-public final class FragmentRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
+public final class ParameterRenameUnderscoreToDoubleUnderscore<N extends VariableDeclaration> //
     extends AbstractVariableDeclarationChangeName<N>//
     implements TipperCategory.Annonimization {
   private static final long serialVersionUID = 0x28D6776DBEFFA844L;
