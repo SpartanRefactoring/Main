@@ -81,7 +81,7 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     extendedModifiers($).clear();
     extendedModifiers($).addAll(as);
     extendedModifiers($).addAll(ms);
-    return !wizard.same($, d) ? $ : null;
+    return !wizard.eq($, d) ? $ : null;
   }
 
   /* @Override public Tip tip( final N n) { final List<Annotation> $ =

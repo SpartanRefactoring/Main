@@ -56,7 +56,7 @@ public final class LocalVariableIntializedStatementWhile extends ReplaceToNextSt
       return null;
     exclude.excludeAll(fragments(vds));
     $.remove(vds, g);
-    $.replace(s, make.buildForStatement(f, s), g);
+    $.replace(s, make.forStatement(f, s), g);
     return $;
   }
 }

@@ -40,7 +40,7 @@ public final class LocalVariableIntializedReturn extends $FragmentAndStatement//
     if (s == null)
       return null;
     final Assignment a = az.assignment(expression(s));
-    if (a == null || !wizard.same(n, to(a)) || a.getOperator() == ASSIGN)
+    if (a == null || !wizard.eq(n, to(a)) || a.getOperator() == ASSIGN)
       return null;
     final Expression newReturnValue = make.assignmentAsExpression(a);
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);

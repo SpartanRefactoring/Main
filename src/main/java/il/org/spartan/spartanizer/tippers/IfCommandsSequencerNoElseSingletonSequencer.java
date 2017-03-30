@@ -37,7 +37,7 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
     final IfStatement asVirtualIf = normalized(thenS, nextStatement, s.getExpression());
     if (asVirtualIf == null)
       return null;
-    if (wizard.same(then(asVirtualIf), elze(asVirtualIf))) {
+    if (wizard.eq(then(asVirtualIf), elze(asVirtualIf))) {
       $.replace(s, then(asVirtualIf), g);
       $.remove(nextStatement, g);
       return $;

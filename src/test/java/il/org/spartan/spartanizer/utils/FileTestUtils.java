@@ -5,7 +5,6 @@ import java.util.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.proposition.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.utils.*;
 

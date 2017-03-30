@@ -37,7 +37,7 @@ public final class LocalVariableInitialiazerAssignment extends LocalVariableInit
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.same(name, to(a)) || a.getOperator() != ASSIGN)
+    if (a == null || !wizard.eq(name, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
     final InlinerWithValue i = new Inliner(name, $, g).byValue(initializer);

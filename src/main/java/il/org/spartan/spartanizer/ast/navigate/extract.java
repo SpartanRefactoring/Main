@@ -103,7 +103,7 @@ public enum extract {
    * ... <br>
    * else <br>
    * <t><t> Bn <br>
-   * Retreives all If branches
+   * Retrieves all If branches
    * @param ¢ JD
    * @return */
   public static Collection<IfStatement> branches(final IfStatement ¢) {
@@ -166,17 +166,6 @@ public enum extract {
     }
   }
 
-  /** extract the {@link Statement} that contains a given node.
-   * @param pattern JD
-   * @return inner most {@link Statement} in which the parameter is nested, or
-   *         {@code null, if no such statement exists. */
-  public static Statement containingStatement(final ASTNode ¢) {
-    for (ASTNode $ = ¢; $ != null; $ = parent($))
-      if (iz.statement($))
-        return az.statement($);
-    return null;
-  }
-
   /** Peels any parenthesis that may wrap an {@Link Expression}
    * @param $ JD
    * @return the parameter if not parenthesized, or the unparenthesized this
@@ -211,6 +200,14 @@ public enum extract {
       default:
         return ¢;
     }
+  }
+
+  /** @param n root node to search the identifier in it
+   * @param x the identifier to search for
+   * @return number of times x appears in n */
+  public static int countNameInSubtree(final SimpleName n, final ASTNode x) {
+    return n == null || x == null ? 0
+        : descendants.whoseClassIs(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).size();
   }
 
   /** Convert, is possible, an {@link ASTNode} to a {@link ExpressionStatement}
@@ -391,7 +388,7 @@ public enum extract {
    * @return {@link Statement} that immediately follows the parameter, or
    *         {@code null, if no such statement exists. */
   public static Statement nextStatement(final ASTNode ¢) {
-    return nextStatement(containingStatement(¢));
+    return nextStatement(containing.statement(¢));
   }
 
   /** extract the {@link Statement} that immediately follows a given SwitchCase
@@ -442,14 +439,6 @@ public enum extract {
 
   public static SimpleName simpleName(final PrefixExpression $) {
     return eval(() -> (SimpleName) $.getOperand()).when($.getOperand() instanceof SimpleName);
-  }
-
-  /** @param n root node to search the identifier in it
-   * @param x the identifier to search for
-   * @return number of times x appears in n */
-  public static int countNameInSubtree(final SimpleName n, final ASTNode x) {
-    return n == null || x == null ? 0
-        : descendants.whoseClassIs(SimpleName.class).suchThat(λ -> step.identifier(λ).equals(step.identifier(n))).inclusiveFrom(x).size();
   }
 
   /** Finds the single statement in the {@code else} branch of an
@@ -634,7 +623,7 @@ public enum extract {
    * @return index of s in l, or -1 if not contained */
   private static int indexOf(final List<Statement> ss, final Statement s) {
     for (int $ = 0; $ < ss.size(); ++$)
-      if (wizard.same(s, ss.get($)))
+      if (wizard.eq(s, ss.get($)))
         return $;
     return -1;
   }
