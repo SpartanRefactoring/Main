@@ -27,7 +27,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-02 */
-public final class FragmentInitializerNewAddAll extends GoToNextStatement<VariableDeclarationFragment>//
+public final class LocalVariableIntializedNewAddAll extends GoToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
   @SuppressWarnings({ "unused", "FieldCanBeLocal" }) private Type type;
 

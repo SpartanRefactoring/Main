@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.engine.Inliner.*;
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class FragmentInitialiazerUpdateAssignment extends $FragmentAndStatement//
+public final class LocalVariableIntializedUpdateAssignment extends $FragmentAndStatement//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -6925930851197136485L;
 
