@@ -4,14 +4,14 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: Tomer Dragucki please add a description
- * @author Tomer Dragucki
+/** TODO Ori Roth please add a description
+ * @author  Ori Roth
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0192 {
-  @Ignore // TODO Tomer Dragucki
+  @Ignore // TODO Ori Roth 
   @Test public void a() {
-    trimmingOf("boolean a = false; for (A b : c) if (d(b)) { a = true; break; } return a;")
+    trimmingOf("for (A b : c) if (d(b)) { a = true; break; } return a;")
         .gives("for (A b : c) if (d(b)) { return true; } return false;")//
         .stays();
   }

@@ -2,20 +2,23 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
+import static il.org.spartan.utils.Proposition.not;
 
 import java.util.*;
 import java.util.function.*;
 
 import org.junit.*;
+import org.junit.runner.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.research.metatester.*;
 
 /** Tests class {@link Proposition}
  * @author Yossi Gil {@code   Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
+@RunWith(MetaTester.class)
 @SuppressWarnings("static-method")
 public class PropositionTest {
   private static boolean ignoreNext() {
@@ -40,11 +43,11 @@ public class PropositionTest {
     X.getAsBoolean();
   }
 
-  @Test public void j() {
-    azzert.that(B3.reduce(javaReducer), is(""));
-    azzert.that(FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is(""));
+  @Ignore("Oran") @Test public void j() {
+    azzert.that(B3.reduce(javaReducer), is("!F && !F || X || N || T)"));
+    azzert.that(FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is("!F && !F || X || N || T)"));
+    azzert.that(T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is("T || F || X && !F && !F || X || N || T"));
     azzert.that(B4.reduce(javaReducer), is(""));
-    azzert.that(T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is(""));
     azzert.that(B5.reduce(javaReducer), is(""));
     azzert.that(B1_AND_B2.reduce(javaReducer), is(""));
     azzert.that(B6.reduce(javaReducer), is(""));
@@ -160,20 +163,20 @@ public class PropositionTest {
     assert Proposition.OR(T, X, X).getAsBoolean();
     assert T_OR_F_OR_X.getAsBoolean();
     assert Proposition.OR(T, X, X).getAsBoolean();
-    assert Proposition.NOT(F).getAsBoolean();
-    assert !Proposition.NOT(T).getAsBoolean();
-    assert Proposition.NOT(F).and(NOT(F)).getAsBoolean();
-    assert !Proposition.NOT(F).and(NOT(T)).getAsBoolean();
-    assert Proposition.NOT(F).and(NOT(F)).or(T).getAsBoolean();
-    assert Proposition.NOT(F).and(NOT(F)).or(T).eval();
-    assert Proposition.NOT(F).and(NOT(F)).or(T).or(X).eval();
-    assert Proposition.NOT(F).and(NOT(F)).or(T).or(X, X).eval();
-    assert NOT(F).and(NOT(F)).getAsBoolean();
-    assert !NOT(F).and(NOT(T)).getAsBoolean();
-    assert NOT(F).and(NOT(F)).or(T).getAsBoolean();
-    assert NOT(F).and(NOT(F)).or(T).eval();
-    assert NOT(F).and(NOT(F)).or(T).or(X).eval();
-    final Proposition or = NOT(F).and(NOT(F)).or(T).or(X, X);
+    assert Proposition.not(F).getAsBoolean();
+    assert !Proposition.not(T).getAsBoolean();
+    assert Proposition.not(F).and(not(F)).getAsBoolean();
+    assert !Proposition.not(F).and(not(T)).getAsBoolean();
+    assert Proposition.not(F).and(not(F)).or(T).getAsBoolean();
+    assert Proposition.not(F).and(not(F)).or(T).eval();
+    assert Proposition.not(F).and(not(F)).or(T).or(X).eval();
+    assert Proposition.not(F).and(not(F)).or(T).or(X, X).eval();
+    assert not(F).and(not(F)).getAsBoolean();
+    assert !not(F).and(not(T)).getAsBoolean();
+    assert not(F).and(not(F)).or(T).getAsBoolean();
+    assert not(F).and(not(F)).or(T).eval();
+    assert not(F).and(not(F)).or(T).or(X).eval();
+    final Proposition or = not(F).and(not(F)).or(T).or(X, X);
     assert or.eval();
     assert Proposition.of(F).or(T).and(T).eval();
     assert OR(F, T).and(T).eval();
@@ -242,15 +245,15 @@ public class PropositionTest {
   }
 
   @Test public void b92() {
-    azzert.that(NOT(T).reduce(javaReducer), is("!T"));
+    azzert.that(not(T).reduce(javaReducer), is("!T"));
   }
 
   @Test public void b93() {
-    azzert.that(NOT(X).reduce(javaReducer), is("!X"));
+    azzert.that(not(X).reduce(javaReducer), is("!X"));
   }
 
   @Test public void b94() {
-    azzert.that(NOT(N).reduce(javaReducer), is("!N"));
+    azzert.that(not(N).reduce(javaReducer), is("!N"));
   }
 
   @Test public void b95() {
@@ -258,7 +261,6 @@ public class PropositionTest {
   }
 
   @Test public void d() {
-    T_OR_F_OR_X = Proposition.OR("T OR F OR X", T, F, X);
     azzert.that(T_OR_F_OR_X.reduce(javaReducer), is("T || F || X"));
   }
 
@@ -272,7 +274,7 @@ public class PropositionTest {
       @Override protected String map(final BooleanSupplier ¢) {
         return ¢ + "";
       }
-    }), is("T_OR_F_OR_X"));
+    }), is("TFX"));
   }
 
   @Test public void e() {
@@ -290,8 +292,18 @@ public class PropositionTest {
     azzert.that(X + "", is("X"));
   }
 
-  @Test public void g() {
-    azzert.that(T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is("T && F && X && (!F && !F || X || N || T)"));
+  @Ignore("Oran") @Test public void g() {
+    azzert.that(T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T.reduce(javaReducer), is("T || F || X && T && F && X || !F && !F || N || T"));
+  }
+
+  @Test public void g1() {
+    azzert.that(Proposition.not(F).and(X).reduce(javaReducer), is("!F && X"));
+    azzert.that(Proposition.not(F).or(X).reduce(javaReducer), is("!F || X"));
+  }
+
+  @Test public void g2() {
+    azzert.that(Proposition.of(F).and(X).reduce(javaReducer), is("F && X"));
+    azzert.that(Proposition.of(F).or(X).reduce(javaReducer), is("F || X"));
   }
 
   private boolean hasCycles(final BooleanSupplier s) {
@@ -312,15 +324,10 @@ public class PropositionTest {
     return false;
   }
 
-  /** Oran: I have noticed a weird behavior, running B1.and(B2) will change B1
-   * (i.e. T_OR_F_OR_X). That's why test d fails, because T_OR_F_OR_X is not
-   * really T_OR_F_OR_X! The test will pass if you only put the assignment
-   * "T_OR_F_OR_X = Proposition.OR("T OR F OR X", T, F, X);" before the azzert
-   * (I added it already). */
   @Before public void setUp() {
     B1 = T_OR_F_OR_X = Proposition.OR("T OR F OR X", T, F, X);
     B2 = T_AND_F_AND_X = Proposition.AND("T AND F AND X", T, F, X);
-    B3 = FNF_OR_X_OR_N_OR_T = NOT(F).and(NOT(F)).or(X).or(N, T);
+    B3 = FNF_OR_X_OR_N_OR_T = not(F).and(not(F)).or(X).or(N, T);
     B4 = T_OR_F_OR_X_AND_FNF_OR_X_OR_N_OR_T = Proposition.OR(T_OR_F_OR_X, FNF_OR_X_OR_N_OR_T);
     B5 = B1_AND_B2 = B1.and(B2);
     B6 = B2_AND_B1 = B2.and(B1);
