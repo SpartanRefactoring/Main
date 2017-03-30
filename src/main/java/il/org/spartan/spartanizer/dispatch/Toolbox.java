@@ -224,7 +224,7 @@ public class Toolbox {
             new InfixSubtractionSort(), //
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
-            new InfixIndexOfToStringContains(), // v 2.7
+            // new InfixIndexOfToStringContains(), // v 2.7
             new InfixSimplifyComparisionOfAdditions(), //
             new InfixSimplifyComparisionOfSubtractions(), //
             new InfixStringLiteralsConcatenate(), //
