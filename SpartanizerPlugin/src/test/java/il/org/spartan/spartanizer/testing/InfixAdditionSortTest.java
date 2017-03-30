@@ -127,8 +127,8 @@ public final class InfixAdditionSortTest {
     assert !new InfixAdditionSubtractionExpand().check(INPUT);
   }
 
-  @Ignore @Test public void test05b() {
-    assert new InfixAdditionSubtractionExpand().check(INPUT);
+  @Test public void test05b() {
+    assert new InfixAdditionSubtractionExpand().check(into.i("3*a+(b-c)-(b+c)"));
   }
 
   private final String s = "365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1";
