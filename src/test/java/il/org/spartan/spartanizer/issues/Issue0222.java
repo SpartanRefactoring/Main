@@ -30,13 +30,13 @@ public class Issue0222 {
         .stays();
   }
 
-  /** Introduced by Yogi on Thu-Mar-30-09:08:47-IDT-2017 
-  (code automatically in class 'JUnitTestMethodFacotry')*/
-    @Test public void test_aBaCbIfbNullReturnNullABcNewDcdebcdfbIfbgchijbReturnc() {
-       trimmingOf("A<B>a(C b){if(b==null)return null;A<B>c=new D<>();c.d(e(b));c.d(f(b));if(b.g())c.h(i.j(b));return c;}") //
-           .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
-           .gives("A<B>a(C b){if(b==null)return null;A<B>$=new D<>();$.d(e(b));$.d(f(b));if(b.g())$.h(i.j(b));return $;}") //
-           .stays() //
+  /** Introduced by Yogi on Thu-Mar-30-09:08:47-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_aBaCbIfbNullReturnNullABcNewDcdebcdfbIfbgchijbReturnc() {
+    trimmingOf("A<B>a(C b){if(b==null)return null;A<B>c=new D<>();c.d(e(b));c.d(f(b));if(b.g())c.h(i.j(b));return c;}") //
+        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .gives("A<B>a(C b){if(b==null)return null;A<B>$=new D<>();$.d(e(b));$.d(f(b));if(b.g())$.h(i.j(b));return $;}") //
+        .stays() //
     ;
   }
 }
