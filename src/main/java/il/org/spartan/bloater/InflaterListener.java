@@ -3,7 +3,6 @@ package il.org.spartan.bloater;
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
-import java.util.List;
 import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -16,24 +15,21 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
-import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- * @since Jan 15, 2017 */
-public class InflaterListener implements MouseWheelListener, KeyListener {
-  // TODO: Ori Roth why so many fields? --yg
+/** Listener for code inflation/deflation using mouse and CTRL key.
+ * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
+ * @since 2017-03-30 */
+public class InflaterListener implements KeyListener, Listener {
+  // XXX: Ori Roth why so many fields? --yg
+  // GUI class, all SWT look like this. --or
   private static final Function<Device, Color> INFLATE_COLOR = λ -> new Color(λ, 200, 200, 255);
   private static final Function<Device, Color> DEFLATE_COLOR = λ -> new Color(λ, 200, 255, 200);
-  private static final Integer[] wheelEvents = { Integer.valueOf(SWT.MouseHorizontalWheel), Integer.valueOf(SWT.MouseVerticalWheel),
-      Integer.valueOf(SWT.MouseWheel) };
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
   final StyledText text;
   final ITextEditor editor;
-  final Map<Integer, List<Listener>> externalListeners;
   final Cursor activeCursor;
   final Cursor inactiveCursor;
   final Selection selection;
@@ -46,25 +42,29 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
     this.text = text;
     this.editor = editor;
     this.selection = selection;
-    externalListeners = new HashMap<>();
-    updateListeners(); // not needed probably
     final Display display = PlatformUI.getWorkbench().getDisplay();
     activeCursor = new Cursor(display, CURSOR_IMAGE);
     inactiveCursor = text.getCursor();
     originalBackground = text.getSelectionBackground();
   }
 
-  @Override public void mouseScrolled(final MouseEvent ¢) {
-    if (!active || working.get())
+  @Override public void handleEvent(final Event ¢) {
+    if (¢.type != SWT.MouseWheel || !active || !text.getBounds().contains(text.toControl(Eclipse.mouseLocation())))
+      return;
+    ¢.doit = false;
+    ¢.type = SWT.NONE;
+    final int c = ¢.count;
+    ¢.count = 0;
+    if (working.get())
       return;
     windowInformation = WindowInformation.of(text);
     working.set();
-    if (¢.count > 0)
+    if (c > 0)
       SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
         inflate();
         working.clear();
       });
-    else if (¢.count < 0)
+    else if (c < 0)
       SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
         deflate();
         working.clear();
@@ -97,32 +97,24 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
 
   private void activate() {
     active = true;
-    updateListeners();
-    removeListeners();
-    if (!text.isDisposed())
-      text.setCursor(activeCursor);
+    if (text.isDisposed())
+      return;
+    text.setCursor(activeCursor);
+    Optional.ofNullable(text.getVerticalBar()).ifPresent(x -> x.setEnabled(false));
   }
 
   private void deactivate() {
     text.setSelectionBackground(originalBackground);
     active = false;
-    restoreListeners();
-    if (!text.isDisposed())
-      text.setCursor(inactiveCursor);
+    if (text.isDisposed())
+      return;
+    text.setCursor(inactiveCursor);
+    Optional.ofNullable(text.getVerticalBar()).ifPresent(x -> x.setEnabled(true));
   }
 
   public void finilize() {
     if (active)
       deactivate();
-  }
-
-  private void updateListeners() {
-    externalListeners.clear();
-    for (final Integer i : wheelEvents) {
-      final List<Listener> l = as.list(text.getListeners(i.intValue()));
-      l.remove(find(l));
-      externalListeners.put(i, l);
-    }
   }
 
   public Listener find(final Iterable<Listener> ls) {
@@ -131,13 +123,5 @@ public class InflaterListener implements MouseWheelListener, KeyListener {
       if (¢ instanceof TypedListener && equals(((TypedListener) ¢).getEventListener()))
         $ = (TypedListener) ¢;
     return $;
-  }
-
-  private void removeListeners() {
-    externalListeners.entrySet().forEach(λ -> InflateHandler.removeListeners(text, λ.getValue(), λ.getKey()));
-  }
-
-  private void restoreListeners() {
-    externalListeners.entrySet().forEach(λ -> InflateHandler.addListeners(text, λ.getValue(), λ.getKey()));
   }
 }

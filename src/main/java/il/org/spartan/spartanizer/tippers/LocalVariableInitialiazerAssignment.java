@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @since 2015-08-07 */
 public final class LocalVariableInitialiazerAssignment extends LocalVariableInitializedStatement//
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = 1758294600103038096L;
+  private static final long serialVersionUID = 0x1866B79F79A10C90L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
