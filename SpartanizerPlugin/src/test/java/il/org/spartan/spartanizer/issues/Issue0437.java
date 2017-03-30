@@ -1,11 +1,7 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
-
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.spartanizer.testing.*;
 
 /** Failing tests from {@link InfixIndexOfToStringContainsTest} The reason these
  * tests fail is because {@link type.isString()} cannot infer types of variables

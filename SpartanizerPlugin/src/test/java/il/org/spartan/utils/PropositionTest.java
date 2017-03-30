@@ -2,6 +2,7 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
+import static il.org.spartan.utils.Proposition.not;
 
 import java.util.*;
 import java.util.function.*;

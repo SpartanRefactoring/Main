@@ -1780,8 +1780,6 @@ public final class Version230 {
         .gives("void foo(DataOutput o){}");
   }
 
-
-
   @Test public void linearTransformation() {
     trimmingOf("plain * the + kludge")//
         .gives("the*plain+kludge");
