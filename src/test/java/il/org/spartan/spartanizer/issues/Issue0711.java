@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit test for {@link FragmentInitializerStatementTerminatingScope} this test
+/** Unit test for {@link LocalVariableIntializedStatementTerminatingScope} this test
  * tests whether the bug mentioned in Issue0 711 had been fixed
  * @author Dan Abramovich
  * @since 22-11-2016 */
