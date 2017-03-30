@@ -65,6 +65,8 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
             .to("if (a) {f(); g(); } else {a++; b++;}  break c;}"), //
         convert("if (a) {f(); g(); continue c;} a++; b++; continue c;}")//
             .to("if (a) {f(); g(); } else {a++; b++;}  continue c;}"),//
+        convert("if (a) {f(); g(); continue ;} a++; b++; continue ;}")//
+            .to("if (a) {f(); g(); } else {a++; b++;}  continue ;}"),//
     };
   }
 
