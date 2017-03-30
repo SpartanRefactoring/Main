@@ -39,7 +39,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
         && cantTip.declarationInitializerStatementTerminatingScope(¢)//
         && cantTip.forRenameInitializerToIt(¢)//
         && cantTip.declarationRedundantInitializer(¢)//
-        && cantTip.remvoeRedundantIf(¢);
+        && cantTip.removeRedundantIf(¢);
   }
 
   private static boolean hasFittingUpdater(final ForStatement ¢) {

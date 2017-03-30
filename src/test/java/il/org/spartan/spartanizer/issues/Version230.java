@@ -2593,12 +2593,12 @@ public final class Version230 {
 
   @Test public void pushdownTernaryIdenticalAdditionWtihParenthesis() {
     trimmingOf("a ?(b+d):(b+ d)")//
-        .gives("b+d");
+        .gives("(b+d)");
   }
 
   @Test public void pushdownTernaryIdenticalAssignment() {
     trimmingOf("a ?(b=c):(b=c)")//
-        .gives("b=c");
+        .gives("(b=c)");
   }
 
   @Test public void pushdownTernaryIdenticalAssignmentVariant() {

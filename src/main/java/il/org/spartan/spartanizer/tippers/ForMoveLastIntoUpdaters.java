@@ -16,7 +16,7 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> implemen
     return cantTip.declarationInitializerStatementTerminatingScope(¢)//
         && cantTip.forRenameInitializerToIt(¢) //
         && cantTip.declarationRedundantInitializer(¢)//
-        && cantTip.remvoeRedundantIf(¢);
+        && cantTip.removeRedundantIf(¢);
   }
 
   @Override public String description(final ForStatement ¢) {

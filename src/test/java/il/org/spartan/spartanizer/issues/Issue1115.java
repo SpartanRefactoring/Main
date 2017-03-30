@@ -25,18 +25,15 @@ public class Issue1115 {
         "    b.k(f, G).j(d, e);" + //
         "    return b;" + //
         "  }"//
-    ).gives(
-        // Edit this to reflect your expectation
-        "/**/" + //
-            "  B a() {" + //
-            "    final F f = g.h(i(c));" + //
-            "    if (f == null) {" + //
-            "      b.j(d, e);" + //
-            "      return b;" + //
-            "    }" + //
-            "    b.k(f, G).j(d, e);" + //
-            "    return b;" + //
-            "  }"//
+    ).gives("/**/" + //
+        "  B a() {" + //
+        "    final F f = g.h(i(c));" + //
+        "    if (f == null) {" + //
+        "      b.j(d, e);" + //
+        "    } else " + //
+        "    b.k(f, G).j(d, e);" + //
+        "    return b;" + //
+        "  }"//
     )//
         .stays();
   }
