@@ -39,7 +39,7 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
     andAlso(Proposition.of("Both assignments are to the same target", //
         () -> wizard.same(to = to(thenAssignment), to(elzeAssignment))));
     andAlso(Proposition.of("Assignment operators are compatible", //
-        () -> wizard.areEqual(thenOperator = thenAssignment.getOperator(), elzeAssignment.getOperator())));
+        () -> lisp2.areEqual(thenOperator = thenAssignment.getOperator(), elzeAssignment.getOperator())));
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
