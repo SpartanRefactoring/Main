@@ -259,8 +259,8 @@ public class Toolbox {
             new IfReturnFooElseReturnBar(), //
             new IfReturnNoElseReturn(), //
             new IfAssignToFooElseAssignToFoo(), //
-            new IfThenFooBarElseFooBaz(), //
-            new IfBarFooElseBazFoo(), //
+            new IfFooBarElseFooBaz(), //
+            new IfFooBarElseBazBar(), //
             new IfThrowFooElseThrowBar(), //
             new IfThrowNoElseThrow(), //
             new IfExpressionStatementElseSimilarExpressionStatement(), //

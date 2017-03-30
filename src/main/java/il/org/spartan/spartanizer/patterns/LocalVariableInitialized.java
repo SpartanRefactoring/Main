@@ -11,7 +11,9 @@ public abstract class LocalVariableInitialized extends LocalVariable {
   private static final long serialVersionUID = 0x40D2B631F771C9F4L;
 
   public LocalVariableInitialized() {
-    andAlso(Proposition.of("Fragment must be initialized", () -> initializer != null));
+    andAlso(Proposition.of(//
+        "Fragment must be initialized", //
+        () -> initializer != null));
   }
 
   @Override public abstract String description(VariableDeclarationFragment f);
