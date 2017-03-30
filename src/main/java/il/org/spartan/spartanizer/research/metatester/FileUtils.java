@@ -13,11 +13,19 @@ public class FileUtils {
     return $.substring(0, $.length() - 1);
   }
 
-  static final String testSourcePath = makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\"));
-  static final String generatedSourcePath = makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\"), "generated");
-  static final String generatedClassPath = makePath(System.getProperty("user.dir"), "target", "classes", packageName("\\\\"), "generated");
+  static String testSourcePath(Class<?> current) {
+    return makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\", current));
+  }
 
-  static String packageName(String seperator) {
-    return new TestClassGenerator().getClass().getPackage().getName().replaceAll("\\.", seperator);
+  static String generatedSourcePath(Class<?> current) {
+    return makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\", current));
+  }
+
+  static String generatedClassPath(Class<?> current) {
+    return makePath(System.getProperty("user.dir"), "target", "classes", packageName("\\\\", current));
+  }
+
+  static String packageName(String seperator, Class<?> current) {
+    return current.getPackage().getName().replaceAll("\\.", seperator);
   }
 }

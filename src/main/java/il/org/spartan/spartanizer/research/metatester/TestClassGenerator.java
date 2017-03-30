@@ -18,23 +18,26 @@ import static il.org.spartan.spartanizer.research.metatester.FileUtils.*;
 
 /** @author Oren Afek
  * @since 3/26/2017 */
+@SuppressWarnings("static-method")
 public class TestClassGenerator {
   /** C:\Users\oren.afek\git\Spartanizer\src\test\java\il\org\spartan\spartanizer\research\metatester */
-  private static final String sourcePath = makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\"), "generated");
+  private static final String JAVA_SUFFIX = ".java";
+  private Class<?> testClass;
+  private final String sourcePath;
+  public final String packageName;
 
-  private static String packageName(String seperator) {
-    return new TestClassGenerator().getClass().getPackage().getName().replaceAll("\\.", seperator);
+  public TestClassGenerator(Class<?> testClass) {
+    this.testClass = testClass;
+    sourcePath = makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\", testClass));
+    packageName = packageName("\\.", testClass);
   }
-
-  public static final String packageName = packageName("\\.") + "." + "generated";
-  public static final String JAVA_SUFFIX = ".java";
 
   public Class<?> generate(String testClassName, Collection<? extends SourceLine> ls) {
     return loadClass(testClassName, getClassString(ls.stream().filter(λ -> λ instanceof TestLine).map(λ -> (TestLine) λ).collect(Collectors.toList()),
         ls.stream().filter(λ -> λ instanceof ImportLine).map(λ -> (ImportLine) λ).collect(Collectors.toList()), testClassName));
   }
 
-  @SuppressWarnings({ "resource", "static-method" }) private void compileSourceCode(String className, String sourceCode) {
+  @SuppressWarnings("resource") private void compileSourceCode(String className, String sourceCode) {
     FileWriter writer = null;
     File sourceFile = new File(makePath(sourcePath, className + JAVA_SUFFIX));
     try {
@@ -44,7 +47,7 @@ public class TestClassGenerator {
       writer.close();
       JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
       StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
-      File classFile = new File(generatedClassPath);
+      File classFile = new File(generatedClassPath(this.testClass));
       classFile.createNewFile();
       fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Collections.singletonList(classFile));
       compiler
@@ -57,31 +60,33 @@ public class TestClassGenerator {
   @SuppressWarnings("resource") private Class<?> loadClass(String $, String sourceCode) {
     compileSourceCode($, sourceCode);
     try {
-      return new URLClassLoader(new URL[] { new File(generatedClassPath).toURI().toURL() }).loadClass(packageName + "." + $);
+      return new URLClassLoader(new URL[] { new File(generatedClassPath(this.testClass)).toURI().toURL() })
+          .loadClass(packageName("\\.", testClass) + "." + $);
     } catch (IOException | ClassNotFoundException ignore) {
       ignore.printStackTrace();
     }
     return Object.class;
   }
 
-  private static String getClassString(Collection<TestLine> testsLines, Collection<ImportLine> ls, String className) {
+  private String getClassString(Collection<TestLine> testsLines, Collection<ImportLine> ls, String className) {
     return packageHeaderString(packageName) + "\n" + importStatementString(ls) + "\n" + classHeaderString(className) + "\n" + testMethods(testsLines)
         + "\n" + "}";
   }
 
-  private static String testMethods(Collection<TestLine> testsLines) {
+  private String testMethods(Collection<TestLine> testsLines) {
     return testsLines.stream().map(TestLine::generateTestMethod).reduce((acc, s1) -> acc + "\n\n" + s1).orElse("");
   }
 
-  private static String importStatementString(Collection<ImportLine> ls) {
-    return ls.stream().filter(λ -> !"import org.junit.runner.RunWith;".equals(λ.getContent().trim())).reduce("", (s, importLine) -> s + importLine.getContent() + "\n", (s, s2) -> s + s2);
+  private String importStatementString(Collection<ImportLine> ls) {
+    return ls.stream().filter(λ -> !"import org.junit.runner.RunWith;".equals(λ.getContent().trim())).reduce("",
+        (s, importLine) -> s + importLine.getContent() + "\n", (s, s2) -> s + s2);
   }
 
-  private static String classHeaderString(String className) {
+  private String classHeaderString(String className) {
     return "@SuppressWarnings(\"static-method\")" + "\n" + "public class " + className + " { \n";
   }
 
-  private static String packageHeaderString(String packageNameString) {
+  private String packageHeaderString(String packageNameString) {
     return "package " + packageNameString + ";";
   }
 }

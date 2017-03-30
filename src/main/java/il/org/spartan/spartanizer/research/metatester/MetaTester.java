@@ -11,6 +11,8 @@ import org.junit.runners.model.TestClass;
 import org.junit.runners.parameterized.BlockJUnit4ClassRunnerWithParametersFactory;
 import org.junit.runners.parameterized.TestWithParameters;
 
+import static il.org.spartan.spartanizer.research.metatester.FileUtils.*;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -39,7 +41,7 @@ public class MetaTester extends BlockJUnit4ClassRunner {
   }
 
   @Override @SuppressWarnings("unused") protected void runChild(FrameworkMethod __, RunNotifier n) {
-    Class<?> newTestClass = new TestClassGenerator().generate(this.testClass.getSimpleName() + "_CustomTest", this.sourceLines);
+    Class<?> newTestClass = new TestClassGenerator(this.testClass).generate(this.testClass.getSimpleName() + "_CustomTest", this.sourceLines);
     TestSuite suite = new TestSuite(newTestClass);
     suite.run(new TestResult());
     try {
@@ -50,8 +52,8 @@ public class MetaTester extends BlockJUnit4ClassRunner {
     /* super.runChild(method, notifier); */
   }
 
-  private static File openSourceFile(String className) {
-    return new File(FileUtils.makePath(FileUtils.testSourcePath, className + ".java"));
+  private File openSourceFile(String className) {
+    return new File(FileUtils.makePath(testSourcePath(testClass), className + ".java"));
   }
 
   @SuppressWarnings({ "unused", "resource" }) private List<SourceLine> readAllLines(String testName1) {
