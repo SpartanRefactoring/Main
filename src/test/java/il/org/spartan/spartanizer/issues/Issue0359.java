@@ -22,12 +22,11 @@ public class Issue0359 {
         .stays();
   }
 
-  @Ignore // TODO Niv Shalmon
   @Test public void t20() {
-    trimmingOf("for(;b==q;){int i;}")//
-        .gives("while(b==q){int i;}")//
-        .gives("while(b==q){}")//
-        .gives("while(b==q);")//
+    trimmingOf("for(;b==q++;){int i;}")//
+        .gives("while(b==q++){int i;}")//
+        .gives("while(b==q++){}")//
+        .gives("while(b==q++);")//
         .stays();
   }
 }
