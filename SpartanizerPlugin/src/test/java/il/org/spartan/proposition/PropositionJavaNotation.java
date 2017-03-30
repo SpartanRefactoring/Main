@@ -1,5 +1,6 @@
-package il.org.spartan.utils;
+package il.org.spartan.proposition;
 
+import il.org.spartan.utils.*;
 import il.org.spartan.utils.Proposition.*;
 
 /** Render {@link Proposition} using Java/C/C++ notation.
