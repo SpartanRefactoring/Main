@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
  * }
  * @author Ori Marcovitch
  * @since 2016-11-27 */
-public final class FragmentInitializerInlineIntoNext extends GoToNextStatement<VariableDeclarationFragment>//
+public final class LocalVariableIntializedInlineIntoNext extends GoToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -228096256168103399L;
 

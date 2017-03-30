@@ -1746,7 +1746,7 @@ public final class Version230 {
   }
 
   @Test public void issue54WhileScopeDoesNotInclude() {
-    included("int a=f();while(c)b[i]=a;", VariableDeclarationFragment.class).notIn(new FragmentInitializerStatementTerminatingScope());
+    included("int a=f();while(c)b[i]=a;", VariableDeclarationFragment.class).notIn(new LocalVariableIntializedStatementTerminatingScope());
   }
 
   @Test public void issue62a() {
@@ -3542,7 +3542,7 @@ public final class Version230 {
         .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .using(VariableDeclarationFragment.class, new FragmentNoInitializerAssignment()) //
         .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
-        .using(VariableDeclarationFragment.class, new FragmentInitializerStatementTerminatingScope()) //
+        .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementTerminatingScope()) //
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
         .using(Assignment.class, new AssignmentAndAssignmentOfSameValue()) //
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
