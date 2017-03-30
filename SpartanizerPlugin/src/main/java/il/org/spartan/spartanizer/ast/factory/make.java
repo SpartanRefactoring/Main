@@ -202,8 +202,8 @@ public enum make {
     return make.from(¢).literal("");
   }
 
-  public static VariableDeclarationFragment fragment(final VariableDeclarationFragment fragment, final Expression x) {
-    final VariableDeclarationFragment $ = copy.of(fragment);
+  public static VariableDeclarationFragment fragment(final VariableDeclarationFragment f, final Expression x) {
+    final VariableDeclarationFragment $ = copy.of(f);
     $.setInitializer(copy.of(x));
     return $;
   }

@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.research.metatester.generated;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+
 
 @SuppressWarnings("static-method")
 public class SimpleTest_CustomTest { 
@@ -18,6 +18,6 @@ public class SimpleTest_CustomTest {
 
 	@Test
 	public void testF_23() {
-	        assertTrue(true);
+	        assert true;
 	}
 }

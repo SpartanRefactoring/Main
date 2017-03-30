@@ -935,7 +935,7 @@ public interface wizard {
     return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 
-  public static String signAdjust(final String token) {
+  static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(as.bit(token.startsWith("+")));
   }

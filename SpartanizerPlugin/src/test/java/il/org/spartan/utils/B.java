@@ -44,7 +44,7 @@ public class B {
     }
     for (int i = 0; i < n; ++i)
       for (final B left : enumerate(i))
-        $.addAll(enumerate(n - i - 1).stream().map(right -> new B(left, right)).collect(Collectors.toList()));
+        $.addAll(enumerate(n - i - 1).stream().map(λ -> new B(left, λ)).collect(Collectors.toList()));
     return $;
   }
 

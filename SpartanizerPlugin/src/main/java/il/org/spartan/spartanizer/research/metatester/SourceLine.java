@@ -23,8 +23,8 @@ public class SourceLine {
         return this.content.contains(subString);
     }
 
-    @SuppressWarnings("boxing")
     @Override
+    @SuppressWarnings("boxing")
     public String toString() {
         return String.format("%s.%s(%d): %s", testClassName, testName, lineNo, content);
     }
