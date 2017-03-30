@@ -32,14 +32,14 @@ public class RenameConstructorParameters extends EagerTipper<MethodDeclaration> 
       if (iz.expressionStatement(s) && iz.assignment(az.expressionStatement(s).getExpression())) {
         final Assignment a = az.assignment(az.expressionStatement(s).getExpression());
         if (a.getOperator() == Operator.ASSIGN && parameterNames.contains(a.getRightHandSide() + "") && iz.fieldAccess(a.getLeftHandSide())) {
-          final SimpleName from1 = d.getAST().newSimpleName(a.getRightHandSide() + "");
-          final SimpleName to1 = d.getAST().newSimpleName(az.fieldAccess(a.getLeftHandSide()).getName().getIdentifier());
+          final SimpleName $ = d.getAST().newSimpleName(a.getRightHandSide() + ""),
+              to1 = d.getAST().newSimpleName(az.fieldAccess(a.getLeftHandSide()).getName().getIdentifier());
           if (!alreadyDefined(to1, d))
             return new Tip(description(d), d, getClass()) {
               @Override public void go(final ASTRewrite r, final TextEditGroup g) {
                 for (final SingleVariableDeclaration q : step.parameters(d))
-                  action.rename(from1, to1, q, r, g);
-                action.rename(from1, to1, d.getBody(), r, g);
+                  action.rename($, to1, q, r, g);
+                action.rename($, to1, d.getBody(), r, g);
               }
             };
           continue;

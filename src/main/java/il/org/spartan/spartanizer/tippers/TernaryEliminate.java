@@ -22,11 +22,11 @@ public final class TernaryEliminate extends AbstractPattern<ConditionalExpressio
   public TernaryEliminate() {
     andAlso(Proposition.of("Then and else are identical",
         () -> wizard.same(//
-            (then = object().getThenExpression()), //
-            (elze = object().getElseExpression())//
+            then = object().getThenExpression(), //
+            elze = object().getElseExpression()
         )));
     andAlso(Proposition.of("Condition has no side effects", //
-        () -> sideEffects.free((condition = object().getExpression()))//
+        () -> sideEffects.free(condition = object().getExpression())//
     ));
   }
 
