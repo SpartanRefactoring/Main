@@ -1,8 +1,11 @@
 package il.org.spartan.utils;
 
+import static il.org.spartan.Utils.*;
+
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -85,5 +88,12 @@ public interface lisp2 extends lisp {
 
   static String chopLast(final String ¢) {
     return ¢.substring(0, ¢.length() - 1);
+  }
+
+  /** @param o the assignment operator to compare all to
+   * @param os A unknown number of assignments operators
+   * @return whether all the operator are the same or false otherwise */
+  static boolean areEqual(final Object o, final Object... os) {
+    return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ == o);
   }
 }
