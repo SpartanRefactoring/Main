@@ -14,9 +14,9 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 0x49124565B96B22A6L;
 
-  @Override public boolean prerequisite(final N n) {
-    final Statement $ = extract.nextStatement(n);
-    return $ != null && go(ASTRewrite.create(n.getAST()), n, $, null) != null;
+  @Override public boolean prerequisite(final N ¢) {
+    final Statement $ = extract.nextStatement(¢);
+    return $ != null && go(ASTRewrite.create(¢.getAST()), ¢, $, null) != null;
   }
 
   @Override public Tip tip(final N n, final ExclusionManager exclude) {

@@ -24,11 +24,7 @@ public abstract class LocalVariable extends Fragment {
   protected VariableDeclarationStatement declaration;
 
   public LocalVariable() {
-    andAlso(Proposition.of("Must be local variable", () -> {
-      if ((declaration = az.variableDeclarationStatement(current().getParent())) == null)
-        return false;
-      return true;
-    }));
+    andAlso(Proposition.of("Must be local variable", () -> (declaration = az.variableDeclarationStatement(current().getParent())) != null));
   }
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment

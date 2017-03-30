@@ -69,8 +69,7 @@ public class TestClassGenerator {
   }
 
   private String getClassString(Collection<TestLine> testsLines, Collection<ImportLine> ls, String className) {
-    return packageHeaderString(packageName) + "\n" + importStatementString(ls) + "\n" + classHeaderString(className) + "\n" + testMethods(testsLines)
-        + "\n" + "}";
+    return packageHeaderString(packageName) + "\n" + importStatementString(ls) + "\n" + classHeaderString(className) + "\n" + testMethods(testsLines) + "\n}";
   }
 
   private String testMethods(Collection<TestLine> testsLines) {
@@ -83,7 +82,7 @@ public class TestClassGenerator {
   }
 
   private String classHeaderString(String className) {
-    return "@SuppressWarnings(\"static-method\")" + "\n" + "public class " + className + " { \n";
+    return "@SuppressWarnings(\"static-method\")\npublic class " + className + " { \n";
   }
 
   private String packageHeaderString(String packageNameString) {
