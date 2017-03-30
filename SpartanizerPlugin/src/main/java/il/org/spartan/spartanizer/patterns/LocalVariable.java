@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.utils.*;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
@@ -24,7 +23,7 @@ public abstract class LocalVariable extends Fragment {
   protected VariableDeclarationStatement declaration;
 
   public LocalVariable() {
-    andAlso(Proposition.of("Must be local variable", () -> (declaration = az.variableDeclarationStatement(current().getParent())) != null));
+    andAlso("Must be local variable", () -> (declaration = az.variableDeclarationStatement(parent)) != null);
   }
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment

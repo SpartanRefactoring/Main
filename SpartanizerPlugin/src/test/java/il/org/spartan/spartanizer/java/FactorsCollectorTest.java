@@ -246,31 +246,31 @@ public final class FactorsCollectorTest {
   }
 
   @Test public void test63() {
-    assert wizard.same(new Factor(false, e("x")).asExpression(), e("x"));
+    assert wizard.eq(new Factor(false, e("x")).asExpression(), e("x"));
   }
 
   @Test public void test64() {
-    assert wizard.same(new Factor(false, e("x*3+5")).asExpression(), e("x*3+5"));
+    assert wizard.eq(new Factor(false, e("x*3+5")).asExpression(), e("x*3+5"));
   }
 
   @Test public void test65() {
-    assert wizard.same(new Factor(false, e("1/x")).asExpression(), e("1/x"));
+    assert wizard.eq(new Factor(false, e("1/x")).asExpression(), e("1/x"));
   }
 
   @Test public void test66() {
-    assert wizard.same(new Factor(false, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("17.5-x/2-3/2*(17/3/y/z)*k"));
+    assert wizard.eq(new Factor(false, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("17.5-x/2-3/2*(17/3/y/z)*k"));
   }
 
   @Test public void test67() {
-    assert wizard.same(new Factor(true, e("x")).asExpression(), e("1/x"));
+    assert wizard.eq(new Factor(true, e("x")).asExpression(), e("1/x"));
   }
 
   @Test public void test68() {
-    assert wizard.same(new Factor(true, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("1/(17.5-x/2-3/2*(17/3/y/z)*k)"));
+    assert wizard.eq(new Factor(true, e("17.5-x/2-3/2*(17/3/y/z)*k")).asExpression(), e("1/(17.5-x/2-3/2*(17/3/y/z)*k)"));
   }
 
   @Test public void test69() {
-    assert wizard.same(new Factor(true, e("u/w/x/y/z")).asExpression(), e("1/(u/w/x/y/z)"));
+    assert wizard.eq(new Factor(true, e("u/w/x/y/z")).asExpression(), e("1/(u/w/x/y/z)"));
   }
 
   @Test public void test70() {

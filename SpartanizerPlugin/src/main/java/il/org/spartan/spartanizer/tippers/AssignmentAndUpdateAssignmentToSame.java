@@ -52,7 +52,7 @@ public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement
     if (o == ASSIGN)
       return null;
     final Expression to = to(a1);
-    if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
+    if (!wizard.eq(to, to(a2)) || !sideEffects.free(to))
       return null;
     $.replace(from(a1), subject.operands(from(a1), from(a2)).to(assign2infix(o)), g);
     $.remove(nextStatement, g);

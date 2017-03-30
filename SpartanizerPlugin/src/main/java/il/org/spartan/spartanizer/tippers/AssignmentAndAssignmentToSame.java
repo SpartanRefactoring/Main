@@ -45,7 +45,7 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
     if (operator(a2) != ASSIGN)
       return null;
     final SimpleName to = az.simpleName(to(a1));
-    if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
+    if (!wizard.eq(to, to(a2)) || !sideEffects.free(to))
       return null;
     @Nullable final Expression from1 = from(a1), from2 = from(a2);
     switch (collect.usesOf(to).in(from2).size()) {

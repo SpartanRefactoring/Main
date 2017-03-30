@@ -94,7 +94,7 @@ public class Issue0239 {
     assert lastIn(nextStatement, statements);
     final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class).in(block);
     assert f != null;
-    final Statement currentStatement = extract.containingStatement(f);
+    final Statement currentStatement = containing.statement(f);
     assert currentStatement != null;
     assert penultimateIn(currentStatement, statements);
     final SimpleName name = f.getName();

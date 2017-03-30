@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.patterns;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.utils.*;
-
 /** TODO dormaayn: document class Note that Java currently does not allow
  * initializers to single varaible declarations
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
@@ -15,13 +13,13 @@ public abstract class SingleVariableDeclarationUninitialized extends AbstractPat
   protected Type type;
 
   SingleVariableDeclarationUninitialized() {
-    andAlso(new Proposition.Singleton("Illegal Definition", () -> {
+    andAlso("Illegal Definition", () -> {
       if (current().getInitializer() != null)
         return false;
       name = current().getName();
       type = current().getType();
       return true;
-    }));
+    });
   }
 
   protected Type type() {

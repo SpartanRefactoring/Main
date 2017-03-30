@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.research.metatester.generated;
 
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import org.junit.*;
 
 @SuppressWarnings("static-method")
 public class SimpleTest_CustomTest {

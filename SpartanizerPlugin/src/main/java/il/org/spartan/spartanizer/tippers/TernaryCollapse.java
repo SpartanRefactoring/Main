@@ -31,8 +31,8 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     if ($ == null)
       return null;
     final Expression then = core(x.getThenExpression()), elseThen = core(then($)), elseElse = core(elze($));
-    return !wizard.same(then, elseElse) && !wizard.same(then, elseThen) ? null
-        : wizard.same(then, elseElse)
+    return !wizard.eq(then, elseElse) && !wizard.eq(then, elseThen) ? null
+        : wizard.eq(then, elseElse)
             ? subject.pair(elseThen, then).toCondition(subject.pair(make.notOf(x.getExpression()), $.getExpression()).to(CONDITIONAL_AND))
             : subject.pair(elseElse, then)
                 .toCondition(subject.pair(make.notOf(x.getExpression()), make.notOf($.getExpression())).to(CONDITIONAL_AND));
@@ -43,9 +43,9 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     if ($ == null)
       return null;
     final Expression elze = core(x.getElseExpression()), thenThen = core(then($)), thenElse = core(elze($));
-    return wizard.same(thenElse, elze)
+    return wizard.eq(thenElse, elze)
         ? subject.pair(thenThen, elze).toCondition(subject.pair(x.getExpression(), $.getExpression()).to(CONDITIONAL_AND))
-        : wizard.same(thenThen, elze)
+        : wizard.eq(thenThen, elze)
             ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf($.getExpression())).to(CONDITIONAL_AND)) : null;
   }
 

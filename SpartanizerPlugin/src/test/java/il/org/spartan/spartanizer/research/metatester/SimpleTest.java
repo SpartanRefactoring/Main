@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.research.metatester;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.*;
+import org.junit.runner.*;
 
 /** @author Oren Afek
  * @since 3/27/2017 */

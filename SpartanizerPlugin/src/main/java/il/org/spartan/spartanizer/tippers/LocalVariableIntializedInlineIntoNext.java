@@ -36,7 +36,7 @@ public final class LocalVariableIntializedInlineIntoNext extends GoToNextStateme
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
-        || wizard.frobiddenOpOnPrimitive(f, nextStatement))
+        || wizard.forbiddenOpOnPrimitive(f, nextStatement))
       return null;
     switch (nodeType(nextStatement)) {
       case ASTNode.DO_STATEMENT:
