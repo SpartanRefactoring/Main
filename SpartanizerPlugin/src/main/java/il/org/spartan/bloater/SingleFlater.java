@@ -17,6 +17,7 @@ import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
@@ -113,6 +114,8 @@ public final class SingleFlater {
       return false;
     for (final Operation o : operationsProvider.getFunction().apply(operations))
       try {
+        if(o.tipper instanceof AbstractPattern)
+          ((AbstractPattern) o.tipper).setCurrent(o.node);
         o.tipper.tip(o.node).go(r, g);
       } catch (final Exception ¢) {
         monitor.debug(this, ¢);
