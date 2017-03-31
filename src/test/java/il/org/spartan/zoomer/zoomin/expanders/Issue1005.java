@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import org.junit.*;
 
-/** Test case for @link PrefixToPostfix}
+/** Test case for {@link PrefixToPostfix}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2016-12-24 */
 @SuppressWarnings("static-method")
@@ -78,7 +78,7 @@ public class Issue1005 {
 
   @Test public void t8() {
     bloatingOf("switch(++x){}")//
-        .stays();
+        .gives("switch(++x){default:}");
   }
 
   @Test public void t9() {
