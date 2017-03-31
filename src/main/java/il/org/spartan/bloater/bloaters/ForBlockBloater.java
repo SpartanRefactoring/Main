@@ -5,42 +5,46 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** converts for(condition)statement to for(condition){statement} Issue #975
  * {@link Issue975}
  * @author Raviv Rachmiel
+ * @author Dor Ma'ayan
  * @since 22-12-16 */
-public class ForBlockBloater extends ReplaceCurrentNode<ForStatement>//
-    implements TipperCategory.Bloater {
-  private static final long serialVersionUID = -2414682418747217785L;
+public class ForBlockBloater extends ForStatementPattern implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 1308487951289425805L;
 
-  @Override public ASTNode replacement(final ForStatement s) {
-    if (s == null)
-      return null;
-    final ForStatement $ = copy.of(s);
-    // TODO: Raviv please use class subject --yg
-    final Block b = $.getAST().newBlock();
-    statements(b).add(copy.of(body(s)));
-    final Collection<Boolean> cc = new ArrayList<>();
-    // noinspection SameReturnValue
-    body(s).accept(new ASTVisitor(true) {
-      @Override public boolean visit(@SuppressWarnings("unused") final Block node) {
-        cc.add(box.it(true));
-        return true;
-      }
+  public ForBlockBloater() {
+    andAlso("Valid not an only return", () -> {
+      final Collection<Boolean> cc = new ArrayList<>();
+      body(current).accept(new ASTVisitor(true) {
+        @Override public boolean visit(@SuppressWarnings("unused") final Block __) {
+          cc.add(box.it(true));
+          return true;
+        }
+      });
+      return cc.isEmpty();
     });
-    if (!cc.isEmpty())
-      return null;
-    $.setBody(b);
-    return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
-    return "expand to block";
+  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+    final ForStatement $ = copy.of(current);
+    final Block b = current.getAST().newBlock();
+    statements(b).add(copy.of(body(current)));
+    $.setBody(b);
+    r.replace(current, $, g);
+    return r;
+  }
+
+  @Override public String description(@SuppressWarnings("unused") ForStatement __) {
+    return "expand the single statements in the for to a block";
   }
 }
