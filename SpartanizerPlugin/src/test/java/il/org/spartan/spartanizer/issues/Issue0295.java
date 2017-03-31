@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 
-/** Unit test for {@link LocalVariableIntializedStatementTerminatingScope} for
+/** Unit test for {@link LocalInitializedStatementTerminatingScope} for
  * the case of inlining into the expression of an enhanced for
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
@@ -31,7 +31,7 @@ public class Issue0295 {
   final EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
   final BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class).in(seriesA$step1);
   EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
-  final LocalVariableIntializedStatementTerminatingScope tipper = new LocalVariableIntializedStatementTerminatingScope();
+  final LocalInitializedStatementTerminatingScope tipper = new LocalInitializedStatementTerminatingScope();
   final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class).in(input1);
 
   /** Correct way of trimming does not change */
