@@ -1,4 +1,4 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO Yossi Gil LocalVariableInitializedStatement description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *

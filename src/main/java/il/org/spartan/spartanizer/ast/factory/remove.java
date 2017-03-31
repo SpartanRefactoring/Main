@@ -17,21 +17,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2017-03-29 */
 public enum remove {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-  public static void statement(final Statement s, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
-  }
-
-  /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
-   * fragment fragments in the containing {@link VariabelDeclarationStatement} .
-   * Still, if the containing node is left empty, it is removed as well.
-   * @param f
-   * @param r
-   * @param g */
-  public static void fragment(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    r.remove(parent.fragments().size() > 1 ? f : parent, g);
-  }
-
   public static List<Statement> breakSequencer(final Iterable<Statement> ss) {
     final List<Statement> $ = new ArrayList<>();
     for (final Statement ¢ : ss) {
@@ -83,13 +68,28 @@ public enum remove {
     r.replace(parent, newParent, g);
   }
 
+  /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
+   * fragment fragments in the containing {@link VariabelDeclarationStatement} .
+   * Still, if the containing node is left empty, it is removed as well.
+   * @param f
+   * @param r
+   * @param g */
+  public static void fragment(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
+    r.remove(parent.fragments().size() > 1 ? f : parent, g);
+  }
+
   /** @param t JD
    * @param from JD (already duplicated)
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
-  public static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+  public static Expression initializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s)
         : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s) : from;
+  }
+
+  public static void statement(final Statement s, final ASTRewrite r, final TextEditGroup g) {
+    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
   }
 }
