@@ -33,14 +33,14 @@ public class PrefixToInfix extends PrefixExprezzion implements TipperCategory.Bl
     return new Example[] { convert("++i;").to("i += 1;"), convert("--i;").to("i-=1;"), };
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(ASTRewrite $, TextEditGroup g) {
     NumberLiteral one = current.getAST().newNumberLiteral();
     one.setToken("1");
     if (operator == PrefixExpression.Operator.INCREMENT)
-      r.replace(current, subject.pair(operand, one).to(Assignment.Operator.PLUS_ASSIGN), g);
+      $.replace(current, subject.pair(operand, one).to(Assignment.Operator.PLUS_ASSIGN), g);
     if (operator == PrefixExpression.Operator.DECREMENT)
-      r.replace(current, subject.pair(operand, one).to(Assignment.Operator.MINUS_ASSIGN), g);
-    return r;
+      $.replace(current, subject.pair(operand, one).to(Assignment.Operator.MINUS_ASSIGN), g);
+    return $;
   }
 
   @Override public String description(@SuppressWarnings("unused") PrefixExpression __) {
