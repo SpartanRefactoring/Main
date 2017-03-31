@@ -61,7 +61,7 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
     final ListRewrite l = $.getListRewrite(b, Block.STATEMENTS_PROPERTY);
     for (final Statement ¢ : wizard.decompose(initializer()))
       l.insertBefore(copy.of(¢), declaration, g);
-    action.removeDeadFragment(current(), $, g);
+    il.org.spartan.spartanizer.ast.factory.remove.deadFragment(current(), $, g);
     return $;
   }
 }

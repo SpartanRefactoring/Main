@@ -40,7 +40,7 @@ public final class LocalVariableIntializedStatementReturnAssignment extends $Fra
       return null;
     $.replace(a, newReturnValue, g);
     i.inlineInto(newReturnValue);
-    action.removeDeadFragment(f, $, g);
+    remove.deadFragment(f, $, g);
     return $;
   }
 }

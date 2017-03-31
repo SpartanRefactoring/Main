@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
+import il.org.spartan.spartanizer.patterns.*;
 
 /** convert {@code
  * int a;
@@ -40,7 +41,7 @@ public final class LocalVariableIntializedUpdateAssignment extends $FragmentAndS
     if (initializer == null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.eq(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
+    if (a == null || !wizard.eq(n, to(a)) || Fragment.doesUseForbiddenSiblings(f, from(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)

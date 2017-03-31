@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()}
@@ -42,7 +43,7 @@ public final class LocalVariableIntializedAssignment extends $FragmentAndStateme
     if (a == null || !wizard.eq(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
-    if (doesUseForbiddenSiblings(f, newInitializer))
+    if (Fragment.doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)

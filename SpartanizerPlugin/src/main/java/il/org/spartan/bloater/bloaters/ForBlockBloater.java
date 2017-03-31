@@ -12,7 +12,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** converts for(condition)statement to for(condition){statement} Issue #975
  * {@link Issue975}
@@ -24,14 +23,15 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
 
   public ForBlockBloater() {
     andAlso("Valid not an only return", () -> {
-      final Collection<Boolean> cc = new ArrayList<>();
+      final Collection<Boolean> bs = new ArrayList<>();
+      // TODO Raviv Use class descendants or something similar
       body(current).accept(new ASTVisitor(true) {
         @Override public boolean visit(@SuppressWarnings("unused") final Block __) {
-          cc.add(box.it(true));
+          bs.add(box.it(true));
           return true;
         }
       });
-      return cc.isEmpty();
+      return bs.isEmpty();
     });
   }
 
