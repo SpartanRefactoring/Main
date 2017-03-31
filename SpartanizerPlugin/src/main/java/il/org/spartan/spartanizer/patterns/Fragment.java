@@ -2,7 +2,9 @@ package il.org.spartan.spartanizer.patterns;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.tippers.*;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
@@ -28,5 +30,9 @@ public abstract class Fragment extends AbstractPattern<VariableDeclarationFragme
 
   final SimpleName name() {
     return name;
+  }
+
+  public static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
+    return $FragmentAndStatement.forbiddenSiblings(f).stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
   }
 }

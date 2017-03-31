@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO: Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Dec 26, 2016 */
 public final class EnvironmentTestSpawningAndManualAddition {

@@ -1,9 +1,6 @@
 package il.org.spartan.spartanizer.patterns;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.text.edits.*;
 
 /** TODO dormaayn: Pattern for For Statement
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>

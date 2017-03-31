@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
+import il.org.spartan.spartanizer.patterns.*;
 
 /** convert {@code
  * int a = 2;
@@ -42,7 +43,7 @@ public final class LocalVariableIntializedIfAssignment extends $FragmentAndState
     if (condition == null)
       return null;
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.eq(to(a), n) || a.getOperator() != Assignment.Operator.ASSIGN || doesUseForbiddenSiblings(f, condition, from(a)))
+    if (a == null || !wizard.eq(to(a), n) || a.getOperator() != Assignment.Operator.ASSIGN || Fragment.doesUseForbiddenSiblings(f, condition, from(a)))
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(condition, from(a)))

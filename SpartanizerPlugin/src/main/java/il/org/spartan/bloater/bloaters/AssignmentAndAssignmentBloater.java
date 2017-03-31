@@ -27,7 +27,6 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
     return "Split assignment statement";
   }
 
-  // TODO Doron - I spartanized your code. --yg
   @Override public Tip tip(final ExpressionStatement ¢) {
     final Assignment $ = az.assignment(expression(¢));
     return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), ¢, getClass()) {
