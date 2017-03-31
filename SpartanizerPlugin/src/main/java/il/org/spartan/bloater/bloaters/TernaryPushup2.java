@@ -21,7 +21,6 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 public final class TernaryPushup2 extends InfixExprezzion implements TipperCategory.Bloater {
   private static final long serialVersionUID = 8148439675150970356L;
   Expression condition, then, elze;
-  boolean rightIsTernary;
 
   @Override public Example[] examples() {
     return new Example[] { convert("x = a + (cond ? b : c);").to("x = cond ? a + b : a + c;"),
@@ -32,7 +31,7 @@ public final class TernaryPushup2 extends InfixExprezzion implements TipperCateg
     andAlso(Proposition.OR("Right or left operand is ternary expression", () -> {
       ConditionalExpression $;
       return ($ = az.conditionalExpression(extract.core(right))) != null && (condition = step.expression($)) != null && (then = step.then($)) != null
-          && (elze = step.elze($)) != null && (rightIsTernary = true);
+          && (elze = step.elze($)) != null;
     }, () -> {
       ConditionalExpression e;
       return (e = az.conditionalExpression(extract.core(left))) != null && (condition = step.expression(e)) != null && (then = step.then(e)) != null
@@ -42,7 +41,7 @@ public final class TernaryPushup2 extends InfixExprezzion implements TipperCateg
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
-    r.replace(current, (rightIsTernary ? pair(pair(left, then).to(operator), pair(left, elze).to(operator))
+    r.replace(current, (iz.conditionalExpression(extract.core(right)) ? pair(pair(left, then).to(operator), pair(left, elze).to(operator))
         : pair(pair(then, right).to(operator), pair(elze, right).to(operator))).toCondition(condition), g);
     return r;
   }
