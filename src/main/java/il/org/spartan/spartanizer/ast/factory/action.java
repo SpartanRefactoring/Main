@@ -175,26 +175,6 @@ public enum action {
     return $;
   }
 
-  /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
-   * fragments which are not live in the containing
-   * {@link VariabelDeclarationStatement}. If no fragments are left, then this
-   * containing node is eliminated as well.
-   * @param f
-   * @param r
-   * @param g */
-  public static void removeDeadFragment(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    final List<VariableDeclarationFragment> live = wizard.live(f, fragments(parent));
-    if (live.isEmpty()) {
-      r.remove(parent, g);
-      return;
-    }
-    final VariableDeclarationStatement newParent = copy.of(parent);
-    fragments(newParent).clear();
-    fragments(newParent).addAll(live);
-    r.replace(parent, newParent, g);
-  }
-
   /** @param t JD
    * @param from JD (already duplicated)
    * @param to is the list that will contain the pulled out initializations from

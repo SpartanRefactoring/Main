@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper<N> {

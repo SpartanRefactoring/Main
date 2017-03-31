@@ -36,7 +36,7 @@ public final class LocalVariableUninitializedDead extends LocalVariableUninitial
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
-    action.removeDeadFragment(current(), r, g);
+    il.org.spartan.spartanizer.ast.factory.remove.deadFragment(current(), r, g);
     return r;
   }
 }

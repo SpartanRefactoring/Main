@@ -38,7 +38,7 @@ public final class LocalVariableIntializedStatementReturnVariable extends $Fragm
     final Expression returnValue = expression(s);
     if (returnValue == null || !wizard.eq(n, returnValue))
       return null;
-    action.removeDeadFragment(f, $, g);
+    remove.deadFragment(f, $, g);
     $.replace(s, subject.operand(initializer).toReturn(), g);
     return $;
   }

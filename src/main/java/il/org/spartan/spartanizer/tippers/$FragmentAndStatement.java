@@ -13,10 +13,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO: Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDeclarationFragment> {
@@ -27,10 +26,6 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
   }
 
   @Override public abstract String description(VariableDeclarationFragment f);
-
-  static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
-    return forbiddenSiblings(f).stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
-  }
 
   static int eliminationSaving(final VariableDeclarationFragment f) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
@@ -44,11 +39,8 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
     return $ - metrics.size(newParent);
   }
 
-  protected static boolean forbidden(final VariableDeclarationFragment f, final Expression initializer) {
-    return initializer == null || haz.annotation(f);
-  }
 
-  private static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
+  public static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
     final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
     for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {

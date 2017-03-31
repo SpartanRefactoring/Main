@@ -9,6 +9,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.patterns.*;
 
 /** convert {@code
  * int a;
@@ -37,7 +38,7 @@ public final class LocalVariableUnintializedStatementAssignment extends $Fragmen
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.eq(n, to(a)) || doesUseForbiddenSiblings(f, from(a)))
+    if (a == null || !wizard.eq(n, to(a)) || Fragment.doesUseForbiddenSiblings(f, from(a)))
       return null;
     $.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
     $.remove(containing.statement(a), g);
