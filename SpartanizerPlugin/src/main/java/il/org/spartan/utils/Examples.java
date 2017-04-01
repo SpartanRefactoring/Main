@@ -1,0 +1,49 @@
+package il.org.spartan.utils;
+
+import java.util.*;
+
+import il.org.spartan.utils.Example.*;
+
+/** A collection of {@link Example}
+ * @author Yossi Gil
+ * @since 2017-04-01 */
+public class Examples implements Iterable<Example> {
+  private final List<Example> inner = new ArrayList<>();
+
+  public Examples add(final Example e) {
+    inner.add(e);
+    return this;
+  }
+
+  @Override public Iterator<Example> iterator() {
+    return inner.iterator();
+  }
+
+  public Converter convert(final String from) {
+    return to -> add(new Example.Converts() {
+      @Override public String from() {
+        return from;
+      }
+
+      @Override public String to() {
+        return to;
+      }
+    });
+  }
+
+  public Examples ignores(final String code) {
+    return add(new Ignores() {
+      @Override public String get() {
+        return code;
+      }
+    });
+  }
+
+  /** Auxiliary class for FAPI
+   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @since 2017-03-07 */
+  public interface Converter {
+    Examples to(String to);
+  }
+
+}

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -29,11 +27,11 @@ public class WhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<WhileSta
     return $ != null && iz.emptyBlock($);
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("while(x()){}").to("while(x());"), //
-        ignores("while(x()){y();z();}")//
-    };
+  @Override public Examples examples() {
+    return  //
+        convert("while(x()){}").to("while(x());") //
+        .ignores("while(x()){y();z();}")//
+    ;
   }
 
   @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
