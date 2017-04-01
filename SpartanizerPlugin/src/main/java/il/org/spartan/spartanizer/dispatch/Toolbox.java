@@ -327,7 +327,8 @@ public class Toolbox {
             null)
         .add(VariableDeclarationFragment.class, //
             new FieldInitializedDefaultValue(), //
-            new LocalVariableUnintializedStatementAssignment(), //
+            new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
+            new LocalUnintializedAssignmentToSame(), //
             new LocalVariableIntializedUpdateAssignment(), //
             new LocalVariableIntializedIfAssignment(), //
             new LocalInitializedUpdateAssignment(), //
@@ -341,9 +342,9 @@ public class Toolbox {
             new LocalVariableIntializedInlineIntoNext(), //
             new LocalVariableIntializedStatementWhile(), //
             new LocalVariableIntializedStatementToForInitializers(), //
-            new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
             new LocalVariableInitializedUnusedRemove(), //
             new LocalInitializedIncrementDecrementInline(), //
+//            new LocalInitializedNewAddAll(), //
             null) //
     ;
   }
