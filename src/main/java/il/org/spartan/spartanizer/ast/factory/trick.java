@@ -17,6 +17,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.*;
 
 /** A number of utility functions common to all tippers.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -34,6 +35,41 @@ public enum trick {
       }
   }
 
+  public static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
+    r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
+  }
+
+  public static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
+    final Javadoc j = n.getJavadoc();
+    if (j == null)
+      r.replace(n,
+          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
+          g);
+    else
+      r.replace(j,
+          r.createStringPlaceholder(
+              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
+              ASTNode.JAVADOC),
+          g);
+  }
+
+  /** Adds method m to the first type in file.
+   * @param fileName
+   * @param m */
+  public static void addMethodToFile(final String fileName, final MethodDeclaration m) {
+    try {
+      final String str = readFromFile(fileName);
+      final IDocument d = new Document(str);
+      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
+      final ASTRewrite r = ASTRewrite.create(t.getAST());
+      addMethodToType(t, m, r, null);
+      r.rewriteAST(d, null).apply(d);
+      writeToFile(fileName, d.get());
+    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
+      x2.printStackTrace();
+    }
+  }
+
   /** @param d JD
    * @param m JD
    * @param r rewriter
@@ -48,6 +84,24 @@ public enum trick {
    * @param g edit group, usually null */
   public static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(step.body(d), Block.STATEMENTS_PROPERTY).insertLast(s, g);
+  }
+
+  public static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
+    final Bool $ = new Bool();
+    final ASTNode parent = parent(nextStatement);
+    parent.accept(new ASTVisitor(true) {
+      @Override public boolean preVisit2(final ASTNode ¢) {
+        if (parent.equals(¢))
+          return true;
+        if (!¢.equals(nextStatement)//
+            && !¢.equals(originalStatement)//
+            && iz.statement(¢)//
+            && !find.occurencesOf(az.statement(¢), id).isEmpty())
+          $.inner = true;
+        return false;
+      }
+    });
+    return $.inner;
   }
 
   public static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
@@ -76,8 +130,23 @@ public enum trick {
     return $;
   }
 
-  static int positivePrefixLength(final IfStatement $) {
-    return metrics.length($.getExpression(), then($));
+  public static boolean leftSide(final Statement nextStatement, final String id) {
+    final Bool $ = new Bool();
+    // noinspection SameReturnValue
+    nextStatement.accept(new ASTVisitor(true) {
+      @Override public boolean visit(final Assignment ¢) {
+        if (iz.simpleName(left(¢))//
+            && identifier(az.simpleName(left(¢))).equals(id))
+          $.inner = true;
+        return true;
+      }
+    });
+    return $.inner;
+  }
+
+  public static SimpleName peelIdentifier(final Statement s, final String id) {
+    final List<SimpleName> $ = find.occurencesOf(s, id);
+    return $.size() != 1 ? null : first($);
   }
 
   /** As {@link elze(ConditionalExpression)} but returns the last else statement
@@ -147,38 +216,13 @@ public enum trick {
     return positivePrefixLength($) >= positivePrefixLength(make.invert($));
   }
 
-  public static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
-    r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
+  static int positivePrefixLength(final IfStatement $) {
+    return metrics.length($.getExpression(), then($));
   }
 
-  public static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
-    final Javadoc j = n.getJavadoc();
-    if (j == null)
-      r.replace(n,
-          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
-          g);
-    else
-      r.replace(j,
-          r.createStringPlaceholder(
-              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
-              ASTNode.JAVADOC),
-          g);
-  }
-
-  /** Adds method m to the first type in file.
-   * @param fileName
-   * @param m */
-  public static void addMethodToFile(final String fileName, final MethodDeclaration m) {
-    try {
-      final String str = readFromFile(fileName);
-      final IDocument d = new Document(str);
-      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
-      final ASTRewrite r = ASTRewrite.create(t.getAST());
-      addMethodToType(t, m, r, null);
-      r.rewriteAST(d, null).apply(d);
-      writeToFile(fileName, d.get());
-    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
-      x2.printStackTrace();
-    }
+  public static ListRewrite statementRewriter(final ASTRewrite r, final Statement s) {
+    return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
+        : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
+            : monitor.bug("Weird type", s, parent(s));
   }
 }

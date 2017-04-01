@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -10,6 +8,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
@@ -33,9 +32,9 @@ public final class IfFooElseFoo extends IfAbstractPattern implements TipperCateg
     return "Eliminate 'if' with two identical branches";
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("if(f()==g())h();else h();")//
-            .to("f();g();h();") };
+  @Override public Examples examples() {
+    return //
+    convert("if(f()==g())h();else h();")//
+        .to("f();g();h();");
   }
 }

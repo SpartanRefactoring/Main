@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -31,12 +29,13 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     );
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("try {f();} catch (Exception e) {e.printStackTrace();}") //
-            .to("try {f();} catch (Exception ¢) {¢.printStackTrace();}"), //
-        ignores("Exception ¢; try {f();} catch (Exception e) {e.printStackTrace();}"), //
-        ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") };
+  @Override public Examples examples() {
+    return //
+    convert("try {f();} catch (Exception e) {e.printStackTrace();}") //
+        .to("try {f();} catch (Exception ¢) {¢.printStackTrace();}") //
+        .ignores("Exception ¢; try {f();} catch (Exception e) {e.printStackTrace();}") //
+        .ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") //
+    ;
   }
 
   @Override public Tip tip(final CatchClause c, final ExclusionManager m) {

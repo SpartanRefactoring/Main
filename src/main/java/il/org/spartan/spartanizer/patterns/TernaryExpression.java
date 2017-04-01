@@ -13,7 +13,7 @@ public abstract class TernaryExpression extends AbstractPattern<ConditionalExpre
   protected Expression condition, then, elze;
 
   public TernaryExpression() {
-    andAlso(Proposition.of("Must be ternary expression", () -> {
+    andAlso(Proposition.that("Must be ternary expression", () -> {
       condition = step.expression(current);
       then = step.then(current);
       elze = step.elze(current);

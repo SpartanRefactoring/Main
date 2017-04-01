@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -29,10 +28,10 @@ public final class LocalVariableIntializedAssignment extends $FragmentAndStateme
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("int a; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
-            .to("int a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);") };
+  @Override public Examples examples() {
+    return //
+    convert("int a; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
+        .to("int a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
