@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: test class for renaming constructor parameters
+/** TODO test class for renaming constructor parameters
  * @author Dor Ma'ayan
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

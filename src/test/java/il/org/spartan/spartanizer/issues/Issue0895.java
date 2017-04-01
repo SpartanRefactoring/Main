@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TODO: Ori Marcovitch please add a description
+/** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
  * @since Dec 6, 2016 */
 @SuppressWarnings("static-method")

@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: Alex Kopzon please add a description
+/** TODO Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

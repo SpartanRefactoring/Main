@@ -41,7 +41,6 @@ import java.util.stream.*;
  * methods should be marked as either {@code @}{@link Apply} or
  * {@code @}{@link Check}.
  * <p>
- * TODO: <nlProposition.T>
  * <li>List of descriptive qualities requires re-thinking.
  * <li>Convert {@code @}{@link Check} and {@code @}{@link Apply} into a single
  * annotation, that takes an {@code enum} defined to include all state .
