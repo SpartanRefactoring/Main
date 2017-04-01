@@ -38,7 +38,7 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
             "Initializer has no side effects", () -> sideEffects.free(initializer)//
         ));
     andAlso("Returned expression does not modify local variable", //
-        () -> compute.updateSpots(returnValue).stream().noneMatch(x ->wizard.eq(x, name)));
+        () -> compute.updateSpots(returnValue).stream().noneMatch(λ ->wizard.eq(λ, name)));
   }
 
   @Override public Examples examples() {
