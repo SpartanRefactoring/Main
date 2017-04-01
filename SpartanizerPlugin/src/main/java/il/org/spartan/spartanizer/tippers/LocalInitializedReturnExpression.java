@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+import static il.org.spartan.utils.Proposition.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -9,7 +10,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
@@ -31,7 +31,7 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
     andAlso("Next statement returns a value return", //
         () -> iz.not.null¢(returnValue = returnStatement.getExpression()));//
     andAlso(//
-        Proposition.of("Returned value is identical to local variable", //
+        that("Returned value is identical to local variable", //
             () -> wizard.eq(name, returnValue)//
         ).or(//
             "Initializer has no side effects", () -> sideEffects.free(initializer)//
@@ -49,8 +49,7 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    InlinerWithValue i = new Inliner(name).byValue(initializer);
-    i.inlineInto(returnValue);
+    new Inliner(name).byValue(initializer).inlineInto(returnValue);
     remove.deadFragment(current, $, g);
     return $;
   }
