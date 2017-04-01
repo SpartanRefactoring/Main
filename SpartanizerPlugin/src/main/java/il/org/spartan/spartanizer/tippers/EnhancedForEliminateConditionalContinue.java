@@ -20,6 +20,6 @@ public class EnhancedForEliminateConditionalContinue extends EagerTipper<Enhance
   }
 
   @Override public Tip tip(final EnhancedForStatement ¢) {
-    return ContinueInConditionalEliminateAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
+    return ContinueInConditionalEliminateAux.actualReplacement(az.block(¢.getBody()), ¢, myClass());
   }
 }

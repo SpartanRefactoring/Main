@@ -32,7 +32,7 @@ public enum TipperFactory {
       static final long serialVersionUID = 0x428682F150219098L;
 
       @Override public Tip tip(final Block n) {
-        return new Tip(description(n), getClass(), n, $.getMatchedNodes(az.block(n))) {
+        return new Tip(description(n), myClass(), n, $.getMatchedNodes(az.block(n))) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             r.replace(n, $.blockReplacement(n), g);
           }

@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-04 */
 enum ContinueInConditionalEliminateAux {
   ;
-  @SuppressWarnings("rawtypes") public static Tip actualReplacement(final Block b, final Statement s, final Class<? extends Tipper> c) {
+  public static <N extends ASTNode> Tip actualReplacement(final Block b, final Statement s, final Class<Tipper<N>> c) {
     if (b == null || statements(b).size() < 2)
       return null;
     final List<Statement> $ = statements(b);
