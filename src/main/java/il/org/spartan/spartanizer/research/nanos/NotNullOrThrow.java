@@ -17,7 +17,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class NotNullOrThrow extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 0x1159726E51E57D02L;
   private static final List<UserDefinedTipper<IfStatement>> tippers = as.list( //
-      patternTipper("if($X1 == null) throw $X2;", "notNull($X1).orThrow(()->$X2);", "If null throw pattern"));
+      patternTipper("if($X1 == null) throw $X2;", "notNull($X1).orThrow(()->$X2);", "If null throw pattern")//
+  );
 
   @Override public boolean canTip(final IfStatement ¢) {
     return anyTips(tippers, ¢);

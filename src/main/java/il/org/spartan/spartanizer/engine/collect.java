@@ -164,7 +164,7 @@ public enum collect {
        * @return whether the identifier of the given {@SimpleName} is equal to
        *         the ASTnode's provided by the closure (n) */
       boolean add(final SimpleName ¢) {
-        if (wizard.same(¢, n))
+        if (wizard.eq(¢, n))
           into.add(¢);
         return true;
       }
@@ -234,7 +234,7 @@ public enum collect {
       }
 
       boolean add(final SimpleName candidate) {
-        if (wizard.same(candidate, n))
+        if (wizard.eq(candidate, n))
           into.add(candidate);
         return true;
       }
@@ -385,7 +385,7 @@ public enum collect {
       }
 
       void collectExpression(final SimpleName ¢) {
-        if (!wizard.same(what, ¢))
+        if (!wizard.eq(what, ¢))
           return;
         into.add(¢);
         if (repeated())

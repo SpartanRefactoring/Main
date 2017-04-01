@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -53,7 +54,7 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     final SimpleName ¢ = namer.newCurrent(x);
     return new Tip(description(x), x, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tricks.rename(n, ¢, $, r, g);
+        action.rename(n, ¢, $, r, g);
       }
     };
   }

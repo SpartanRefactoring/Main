@@ -56,7 +56,7 @@ public enum SentenceTestTemplate {
     @Parameter(1) @SuppressWarnings("CanBeFinal") public MethodDeclaration changes;
     @Parameter(0) @SuppressWarnings("CanBeFinal") public String name;
 
-    @Test public void changes() {
+    @Ignore @Test public void changes() {
       final String from = changes + "", wrap = WrapIntoComilationUnit.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
       azzert.that("Nothing done on " + name, wrap, is(not(unpeeled)));
       final String peeled = WrapIntoComilationUnit.Method.off(unpeeled);

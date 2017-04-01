@@ -6,7 +6,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
 public interface theSpartanizer {
   static Tipper<?> firstTipper(final String from) {
     final Wrapper<Tipper<?>> $ = new Wrapper<>();
-    final ASTNode n = wizard.ast(from);
+    final ASTNode n = make.ast(from);
     if (n != null)
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
@@ -47,7 +47,7 @@ public interface theSpartanizer {
   @SuppressWarnings("hiding") static String once(final String from) {
     final Trimmer trimmer = new Trimmer(toolbox);
     final IDocument $ = new Document(from);
-    final ASTNode root = wizard.ast(from);
+    final ASTNode root = make.ast(from);
     if (root != null)
       root.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {

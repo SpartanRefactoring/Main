@@ -4,7 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PostfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -25,7 +24,7 @@ public class PostFixToInfixExpander extends ReplaceCurrentNode<PostfixExpression
   @Override public ASTNode replacement(final PostfixExpression x) {
     if (x.getOperator() != Operator.INCREMENT && x.getOperator() != Operator.DECREMENT)
       return null;
-    final Expression one = az.expression(wizard.ast("1"));
+    final Expression one = az.expression(make.ast("1"));
     final Assignment $ = subject
         .pair(x.getOperand(),
             x.getOperator() == Operator.DECREMENT ? subject.pair(x.getOperand(), one).to(InfixExpression.Operator.MINUS)

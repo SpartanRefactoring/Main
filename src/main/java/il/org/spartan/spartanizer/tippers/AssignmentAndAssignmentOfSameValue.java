@@ -56,7 +56,7 @@ public final class AssignmentAndAssignmentOfSameValue extends GoToNextStatement<
     if (a1 == null)
       return null;
     final Expression right1 = getRight(a1);
-    if (right1 == null || !wizard.same(right, right1) || !sideEffects.deterministic(right))
+    if (right1 == null || !wizard.eq(right, right1) || !sideEffects.deterministic(right))
       return null;
     $.remove(parent, g);
     $.replace(right1, copy.of(a), g);

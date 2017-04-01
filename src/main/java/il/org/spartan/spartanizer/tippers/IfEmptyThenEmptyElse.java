@@ -4,6 +4,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -26,14 +28,16 @@ public final class IfEmptyThenEmptyElse extends CarefulTipper<IfStatement>//
   }
 
   @Override public boolean prerequisite(final IfStatement ¢) {
-    return iz.vacuousThen(¢) && iz.vacuousElse(¢);
+    return iz.block(¢.getParent()) && iz.vacuousThen(¢) && iz.vacuousElse(¢);
   }
 
   @Override public Tip tip(final IfStatement s) {
     return new Tip(description(s), s, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        s.setElseStatement(null);
-        r.remove(s, g);
+        final ListRewrite l = r.getListRewrite(az.block(s.getParent()), Block.STATEMENTS_PROPERTY);
+        for (final Statement x : wizard.decompose(s.getExpression()))
+          l.insertBefore(copy.of(x), s, g);
+        l.remove(s, g);
       }
     };
   }

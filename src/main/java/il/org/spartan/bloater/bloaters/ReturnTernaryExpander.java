@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -44,12 +45,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
   }
 
   @Override protected boolean prerequisite(final ReturnStatement $) {
-    if ($ == null)
-      return false;
-    // TODO Raviv Rachmiel: use extract.core --yg
-    final Expression e = expression($);
-    return (iz.block($.getParent()) || iz.switchStatement($.getParent()))
-        && (iz.conditionalExpression(e) || iz.parenthesizedExpression(e) && iz.conditionalExpression(expression(az.parenthesizedExpression(e))));
+    return $ != null && (iz.block($.getParent()) || iz.switchStatement($.getParent())) && iz.conditionalExpression(extract.core(expression($)));
   }
 
   @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {

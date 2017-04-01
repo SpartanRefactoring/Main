@@ -35,8 +35,6 @@ public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrent
   }
 
   @Override public Expression replacement(final MethodInvocation ¢) {
-    if (iz.statement(¢.getParent()))
-      return null;
-    return !"valueOf".equals(step.name(¢).getIdentifier()) ? null : replacement(step.receiver(¢), onlyArgument(¢));
+    return iz.statement(¢.getParent()) || !"valueOf".equals(step.name(¢).getIdentifier()) ? null : replacement(step.receiver(¢), onlyArgument(¢));
   }
 }

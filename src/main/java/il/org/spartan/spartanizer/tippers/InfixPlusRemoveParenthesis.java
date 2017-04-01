@@ -64,6 +64,6 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
       }
     }
     final Expression $ = subject.operands(es).to(wizard.PLUS2);
-    return !wizard.same($, x) ? $ : null;
+    return !wizard.eq($, x) ? $ : null;
   }
 }

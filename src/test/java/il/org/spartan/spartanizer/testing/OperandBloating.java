@@ -66,8 +66,8 @@ public class OperandBloating extends TrimmingOperand {
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
-      final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
-      final String peeled1 = w.off(rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc.get())) + "");
+      final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "",
+          peeled1 = w.off(rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc.get())) + "");
       if (peeled1.equals(get()))
         azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
       if (tide.clean(peeled1).equals(tide.clean(get())))
@@ -178,7 +178,7 @@ public class OperandBloating extends TrimmingOperand {
     final String wrap = w.on(get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
+    SingleFlater.in(u, λ -> fail(λ.getClass() + " was thrown")).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);

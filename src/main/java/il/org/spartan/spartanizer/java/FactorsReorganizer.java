@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO: Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 7, 2016 */
 interface FactorsReorganizer {

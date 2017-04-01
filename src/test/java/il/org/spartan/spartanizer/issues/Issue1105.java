@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -11,33 +12,17 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 22, 2017 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1105 {
-  @Test public void a() {
-    trimmingOf("/**/" + //
-        "  protected B a() {" + //
-        "    final F f = g.h(i(c));" + //
-        "    if (f == null) {" + //
-        "      b.j(d, e);" + //
-        "      return b;" + //
-        "    }" + //
-        "    b.k(f, G).j(d, e);" + //
-        "    return b;" + //
-        "  }"//
-    ).gives(
-        // Edit this to reflect your expectation
-        "/**/" + //
-            "  B a() {" + //
-            "    final F f = g.h(i(c));" + //
-            "    if (f == null) {" + //
-            "      b.j(d, e);" + //
-            "      return b;" + //
-            "    }" + //
-            "    b.k(f, G).j(d, e);" + //
-            "    return b;" + //
-            "  }"//
-    )//
-        .stays();
+  /** Introduced by Yogi on Fri-Mar-31-00:33:42-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_protectedAaFinalBbcdefIfbNullghijReturnggkbChijReturng() {
+    trimmingOf("protected A a() { final B b = c.d(e(f)); if (b == null) { g.h(i, j); return g; } g.k(b, C).h(i, j); return g; }") //
+        .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
+        .gives("protected A a(){final B b=c.d(e(f));if(b==null){g.h(i,j);}else{g.k(b,C).h(i,j);}return g;}") //
+        .using(IfStatement.class, new IfExpressionStatementElseSimilarExpressionStatement()) //
+        .gives("protected A a(){final B b=c.d(e(f));(b==null?g:g.k(b,C)).h(i,j);return g;}") //
+        .stays() //
+    ;
   }
 }

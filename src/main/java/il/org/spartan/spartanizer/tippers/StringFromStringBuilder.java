@@ -29,7 +29,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
   // building a replacement
   private static ASTNode replacement(final MethodInvocation i, final List<Expression> xs) {
     if (xs.isEmpty())
-      return make.makeEmptyString(i);
+      return make.emptyString(i);
     if (xs.size() == 1)
       return ASTNode.copySubtree(i.getAST(), first(xs));
     final InfixExpression $ = i.getAST().newInfixExpression();
@@ -98,7 +98,7 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
           hs |= iz.stringLiteral(a);
         }
         if (!hs)
-          $.add(0, make.makeEmptyString(e));
+          $.add(0, make.emptyString(e));
         break;
       }
       final MethodInvocation mi = az.methodInvocation(e);

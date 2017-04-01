@@ -8,8 +8,6 @@ import org.junit.*;
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-03-26 */
 @SuppressWarnings("static-method")
-// TODO Doron: Don't commit if there are warnings, I fixed these for you this
-// time --yg
 public class Issue1122 {
   @Test public void a() {
     trimmingOf("for(int i=0;i<10;++i){x = x+5; if(i > 5 && i < 9) break;}").gives("do{x = x+5;} while(i <= 5 || i>=9);");

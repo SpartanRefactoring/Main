@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -21,21 +22,21 @@ import il.org.spartan.utils.*;
  * @since 2016-09-12 */
 public enum haz {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-  public static boolean annotation(final VariableDeclarationFragment f) {
-    final ASTNode $ = parent(f);
+  public static boolean annotation(final VariableDeclarationFragment ¢) {
+    final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
-      case ASTNode.SINGLE_VARIABLE_DECLARATION:
-        return haz.annotation((SingleVariableDeclaration) $);
       case ASTNode.FIELD_DECLARATION:
         return haz.annotation((FieldDeclaration) $);
+      case ASTNode.LAMBDA_EXPRESSION:
+        return haz.annotation((LambdaExpression) $);
+      case ASTNode.SINGLE_VARIABLE_DECLARATION:
+        return haz.annotation((SingleVariableDeclaration) $);
       case ASTNode.VARIABLE_DECLARATION_EXPRESSION:
         return haz.annotation((VariableDeclarationExpression) $);
       case ASTNode.VARIABLE_DECLARATION_STATEMENT:
         return haz.annotation((VariableDeclarationStatement) $);
-      case ASTNode.LAMBDA_EXPRESSION:
-        return haz.annotation((LambdaExpression) $);
       default:
-        assert fault.unreachable() : fault.specifically("Unexpected node type", $, f);
+        assert fault.unreachable() : fault.specifically("Unexpected node type", $, ¢);
         return false;
     }
   }
@@ -48,11 +49,11 @@ public enum haz {
     return false;
   }
 
-  private static boolean annotation(final VariableDeclarationExpression x) {
-    return !extract.annotations(x).isEmpty();
+  private static boolean annotation(final VariableDeclarationExpression ¢) {
+    return !extract.annotations(¢).isEmpty();
   }
 
-  private static boolean annotation(@SuppressWarnings("unused") final FieldDeclaration f) {
+  private static boolean annotation(@SuppressWarnings("unused") final FieldDeclaration __) {
     return false;
   }
 
@@ -250,5 +251,13 @@ public enum haz {
 
   public static boolean hasSafeVarags(final MethodDeclaration d) {
     return extract.annotations(d).stream().anyMatch(λ -> iz.identifier("SafeVarargs", λ.getTypeName()));
+  }
+
+  /** @param ns unknown number of nodes to check
+   * @return whetherone of the nodes is an Expression Statement of type Post or
+   *         Pre Expression with ++ or -- operator. false if none of them are or
+   *         if the given parameter is null. */
+  public static boolean containIncOrDecExp(final ASTNode... ns) {
+    return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.updating(λ));
   }
 }

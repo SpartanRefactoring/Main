@@ -2,8 +2,11 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests for centification of a single parameter to a function even if it
  * defines a "$"variable
@@ -27,9 +30,13 @@ public class Issue0222 {
         .stays();
   }
 
-  @Ignore // TODO: Yossi Gil, I guess #1115 breaks this some how
-  @Test public void vanilla() {
-    trimmingOf("L<E> os(I x){if(x==null)return null;L<E> $=new A<>();$.a(l(x));$.a(r(x));if(x.h())$.d(s.es(x));return $;}")
-        .gives("L<E> os(I ¢){if(¢==null)return null;L<E> $=new A<>();$.a(l(¢));$.a(r(¢));if(¢.h())$.d(s.es(¢));return $;}").stays();
+  /** Introduced by Yogi on Thu-Mar-30-09:08:47-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_aBaCbIfbNullReturnNullABcNewDcdebcdfbIfbgchijbReturnc() {
+    trimmingOf("A<B>a(C b){if(b==null)return null;A<B>c=new D<>();c.d(e(b));c.d(f(b));if(b.g())c.h(i.j(b));return c;}") //
+        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .gives("A<B>a(C b){if(b==null)return null;A<B>$=new D<>();$.d(e(b));$.d(f(b));if(b.g())$.h(i.j(b));return $;}") //
+        .stays() //
+    ;
   }
 }

@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.java.namespace;
 
+import static il.org.spartan.utils.lisp2.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -12,7 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO: Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016-12-22 */
 public interface definition {
@@ -64,9 +66,8 @@ public interface definition {
         assert e != null;
         final ForStatement s = az.forStatement(parent(e));
         assert s != null;
-        final List<ASTNode> $ = new ArrayList<>();
-        wizard.addRest($, f, fragments(e));
-        wizard.addRest($, e, initializers(s));
+        final List<ASTNode> $ = new ArrayList<>(rest(f, fragments(e)));
+        $.addAll(rest(e, initializers(s)));
         $.add(expression(s));
         $.addAll(updaters(s));
         $.add(body(s));
@@ -107,12 +108,10 @@ public interface definition {
         "\n\t i = " + f.getInitializer() + //
         "\n\t p = " + f.getInitializer() + parent(f) + "/" + parent(f).getClass().getSimpleName()//
             + fault.done();
-        final List<VariableDeclarationFragment> fs = fragments(s);
-        assert fs != null;
-        wizard.addRest($, f, fs);
-        final Block b = az.block(parent(s));
-        assert b != null : fault.specifically("Weird type", s, parent(s));
-        return wizard.addRest($, s, statements(b));
+        assert fragments(s) != null;
+        $.addAll(rest(f, fragments(s)));
+        $.addAll(hop.subsequentStatements(s));
+        return $;
       }
     },
     method {
@@ -130,12 +129,10 @@ public interface definition {
       @Override public List<? extends ASTNode> specificScope(final SimpleName n) {
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(n));
         final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
-        final List<VariableDeclarationFragment> fs = fragments(e);
         final TryStatement s = az.tryStatement(parent(e));
-        final List<VariableDeclarationExpression> rs = resources(s);
         final List<ASTNode> $ = new ArrayList<>();
-        wizard.addRest($, f, fs);
-        wizard.addRest($, e, rs);
+        $.addAll(rest(f, fragments(e)));
+        $.addAll(rest(e, resources(s)));
         $.add(body(s));
         $.addAll(catchClauses(s));
         return $;
