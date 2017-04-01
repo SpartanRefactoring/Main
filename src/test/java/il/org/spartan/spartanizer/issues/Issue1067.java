@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1067 {
   @Test public void t1() {
-    trimmingOf("int zero = 0, result = 8 / zero;++result;").stays();
+    trimmingOf("int zero = 0, result = 8 / zero;f(++result);").stays();
     // int zero = 1, result = 8;
     // ++result;
     // int a =0, res = 8;
@@ -18,7 +18,7 @@ public class Issue1067 {
   }
 
   @Test public void t2() {
-    trimmingOf("int div = 2, result = 8/div;++result;")// //
+    trimmingOf("int div = 2, result = 8/div;f(++result);")// //
         .stays();
   }
 

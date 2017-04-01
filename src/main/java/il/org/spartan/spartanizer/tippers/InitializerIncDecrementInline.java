@@ -5,13 +5,17 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.patterns.*;
 
@@ -29,7 +33,8 @@ public class InitializerIncDecrementInline extends LocalVariableInitialized//
       PrefixExpression $ = az.prefixExpression(s.getExpression());
       return $ != null && in($.getOperator(), INCREMENT, DECREMENT) //
           && iz.simpleName($.getOperand()) //
-          && az.simpleName($.getOperand()).getIdentifier().equals(name.getIdentifier());
+          && az.simpleName($.getOperand()).getIdentifier().equals(name.getIdentifier())
+          && collect.usesOf(name).in(extract.fragments(declaration)).size() == 1;
     }
     );
   }

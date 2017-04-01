@@ -948,8 +948,8 @@ public final class Version230 {
   }
 
   @Test public void eliminateSwitch() {
-    trimmingOf("switch(a){ default: } int x=5;++x;")//
-        .gives("int x=5;++x;");
+    trimmingOf("switch(a){ default: } int x=5;f(x++);")//
+        .gives("int x=5;f(x++);");
   }
 
   @Test public void emptyElse() {
@@ -1922,22 +1922,22 @@ public final class Version230 {
   }
 
   @Test public void noinliningintoSynchronizedStatement() {
-    trimmingOf("int a=f();synchronized(this){ int b=a;++b;}")//
+    trimmingOf("int a=f();synchronized(this){ int b=a;f(++b);}")//
         .stays();
   }
 
   @Test public void noinliningintoSynchronizedStatementEvenWithoutSideEffect() {
-    trimmingOf("int a=f;synchronized(this){ int b=a;++b;}")//
+    trimmingOf("int a=f;synchronized(this){ int b=a;f(++b);}")//
         .stays();
   }
 
   @Test public void noinliningintoTryStatement() {
-    trimmingOf("int a=f();try { int b=a;++b;} catch(Exception E){}")//
+    trimmingOf("int a=f();try { int b=a;b(++b);} catch(Exception E){}")//
         .stays();
   }
 
   @Test public void noinliningintoTryStatementEvenWithoutSideEffect() {
-    trimmingOf("int a=f;try { int b=a;++b;} catch(Exception E){}")//
+    trimmingOf("int a=f;try { int b=a;f(++b);} catch(Exception E){}")//
         .stays();
   }
 
