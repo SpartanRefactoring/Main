@@ -5,42 +5,59 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+
+
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** converts foreach statement to foreach {statement} Test case
  * is{@link Issue1023}
  * @author Raviv Rachmiel
  * @since 10-01-17 */
-public class ForEachBlockBloater extends ReplaceCurrentNode<EnhancedForStatement>//
+public class ForEachBlockBloater extends ForEachStatementPattern//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x38C70470EE42ECEBL;
 
-  @Override public ASTNode replacement(final EnhancedForStatement s) {
-    if (s == null)
-      return null;
-    // TODO Raviv please use class subject
-    final EnhancedForStatement $ = copy.of(s);
-    final Block b = $.getAST().newBlock();
-    statements(b).add(copy.of(body(s)));
-    final Collection<Boolean> cc = new ArrayList<>();
-    // noinspection SameReturnValue
-    body(s).accept(new ASTVisitor(true) {
-      @Override @SuppressWarnings("boxing") public boolean visit(@SuppressWarnings("unused") final Block node) {
-        cc.add(true);
-        return true;
-      }
+  @Override public Examples examples() {
+    return 
+        convert("for(Double i : lili) a=5; b=7;").to("for(int i=0;i<5;i++){a=5;}b=7;"); 
+  }
+  
+  public ForEachBlockBloater() {
+    andAlso("Valid when not a block", () -> {
+      final Collection<Boolean> $ = new ArrayList<>();
+      // TODO Raviv Use class descendants, or yieldDescendants or something
+      // similar, what are u trying to find? --yg
+      body(current).accept(new ASTVisitor(true) {
+        @Override public boolean visit(final Block ¢) {
+          $.add(box.it(¢.hashCode() == ¢.hashCode()));
+          return true;
+        }
+      });
+      return $.isEmpty();
     });
-    if (!cc.isEmpty())
-      return null;
+  }
+ 
+
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+    final EnhancedForStatement $ = copy.of(current);
+    final Block b = current.getAST().newBlock();
+    statements(b).add(copy.of(body(current)));
     $.setBody(b);
-    return $;
+    r.replace(current, $, g);
+    return r;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
-    return "expand to block";
+  @Override public String description(@SuppressWarnings("unused") EnhancedForStatement __) {
+    return "expand the single statement in the foreach to a block";
   }
+  
+
 }
