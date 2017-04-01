@@ -28,7 +28,7 @@ public class Issue1200 {
   }
 
   @Test @SuppressWarnings("unused") public void b() {
-    azzert.that(OR(T,of("T || F",OR(T,F))).reduce(javaReducer), is("(T || (T || F))"));
+    azzert.that(OR(T,Proposition.that("T || F",OR(T,F))).reduce(javaReducer), is("(T || (T || F))"));
   }
   
   @Test @SuppressWarnings("unused") public void c() {
