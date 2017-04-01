@@ -49,7 +49,6 @@ public class Issue0971 {
 
   @Test public void test6() {
     bloatingOf("if(true)if(b==c)q();else g();")//
-        .gives("if(true){if(b==c)q();else g();}")//
-        .gives("if(true){if(b==c){q();}else {g();}}");
+        .gives("if(true){if(b==c)q();else g();}");
   }
 }
