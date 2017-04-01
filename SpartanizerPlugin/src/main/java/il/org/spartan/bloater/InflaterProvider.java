@@ -48,8 +48,7 @@ public class InflaterProvider extends OperationsProvider {
             new PrefixToInfix()) //
         // .add(PostfixExpression.class, //
         .add(SwitchStatement.class, //
-            new CasesSplit(),
-            new SwitchAddDefault())//
+            new CasesSplit(), new SwitchAddDefault())//
         .add(Assignment.class, //
             new AssignmentOperatorBloater()//
         // new PlusAssignToPostfix())//

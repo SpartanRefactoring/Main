@@ -16,7 +16,6 @@ import il.org.spartan.utils.range.*;
  * @author Yossi Gil {@code yogi@cs.technion.ac.il}
  * @since 2017-03-19 */
 public interface lisp2 extends lisp {
-
   /** @param o the assignment operator to compare all to
    * @param os A unknown number of assignments operators
    * @return whether all the operator are the same or false otherwise */
