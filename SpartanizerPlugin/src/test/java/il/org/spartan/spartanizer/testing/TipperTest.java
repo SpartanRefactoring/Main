@@ -18,21 +18,21 @@ public abstract class TipperTest {
   }
 
   // an inner class used to wrap usingTipper into gives and stays
-  public class TipperTrimmingOperand extends TrimmingOperand{
+  public class TipperTrimmingOperand extends TrimmingOperand {
     private final Tipper<?> tipper;
 
     public TipperTrimmingOperand(final String inner, final Tipper<?> tipper) {
       super(inner);
       this.tipper = tipper;
-      this.usingTipper(tipper);
+      usingTipper(tipper);
     }
-    
+
     @Override public TipperTrimmingOperand gives(final String $) {
       return new TipperTrimmingOperand(super.gives($).get(), tipper);
     }
 
     @Override public TipperTrimmingOperand givesEither(final String... options) {
-      return new TipperTrimmingOperand(super.givesEither(options).get(),tipper);
+      return new TipperTrimmingOperand(super.givesEither(options).get(), tipper);
     }
   }
 }
