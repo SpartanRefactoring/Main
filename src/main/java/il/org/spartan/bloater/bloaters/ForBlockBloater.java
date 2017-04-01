@@ -12,15 +12,22 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
+import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** converts for(condition)statement to for(condition){statement} Issue #975
- * {@link Issue975}
+ * {@link Issue0975}
  * @author Raviv Rachmiel
  * @author Dor Ma'ayan
  * @since 22-12-16 */
 public class ForBlockBloater extends ForStatementPattern implements TipperCategory.Bloater {
   private static final long serialVersionUID = 1308487951289425805L;
 
+  @Override public Examples examples() {
+    return 
+        convert("for(int i=0;i<5;++i) continue;").to("for(int i=0;i<5;++i) { continue; }"); 
+  }
+  
   public ForBlockBloater() {
     andAlso("Valid not an only return", () -> {
       final Collection<Boolean> $ = new ArrayList<>();
