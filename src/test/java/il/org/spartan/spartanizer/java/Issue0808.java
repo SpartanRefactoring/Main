@@ -9,7 +9,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO: David Cohen please add a description
+/** TODO David Cohen please add a description
  * @author David Cohen
  * @author Shahar Yair
  * @author Zahi Mizrahi

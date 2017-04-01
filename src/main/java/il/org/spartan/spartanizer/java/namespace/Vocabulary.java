@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** TODO: Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-18 */
 public class Vocabulary extends HashMap<String, MethodDeclaration> {

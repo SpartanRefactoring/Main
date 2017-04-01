@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TODO: Alex Kopzon please add a description
+/** TODO Alex Kopzon please add a description
  * @author Alex Kopzon
  * @since 2016-09-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

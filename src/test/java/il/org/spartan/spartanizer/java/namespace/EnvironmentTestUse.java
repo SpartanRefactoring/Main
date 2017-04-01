@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 
-/** TODO: Dan Greenstein please add a description
+/** TODO Dan Greenstein please add a description
  * @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */

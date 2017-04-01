@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
-/** TODO: orimarco {@code marcovitch.ori@gmail.com} please add a description
+/** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-03 */
 public class TableNanosStatistics extends DeprecatedFolderASTVisitor {

@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** TODO: Alex please add a description
+/** TODO Alex please add a description
  * @author Alex
  * @author Dan
  * @since 2016 */
