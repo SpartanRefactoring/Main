@@ -15,21 +15,21 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO: Alex Kopzon please add a description
+/** See {@link #description()}
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -5815591308727978558L;
 
-  private static ForStatement buildForWhithoutFirstLastStatement(final ForStatement $) {
+  private static ForStatement buildForWithoutLastStatement(final ForStatement $) {
     setUpdaters($);
-    $.setBody(minus.lastStatement(dupForBody($)));
+    $.setBody(minus.lastStatement(copy.of(body($))));
     return $;
   }
 
-  private static Statement dupForBody(final ForStatement ¢) {
-    return copy.of(body(¢));
+  @Override public String description() {
+    return "Move last statement of a for(;;) loop into the list of updaters";
   }
 
   private static boolean fitting(final ForStatement ¢) {
@@ -89,6 +89,6 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   @Override public ASTNode replacement(final ForStatement ¢) {
-    return !fitting(¢) ? null : buildForWhithoutFirstLastStatement(copy.of(¢));
+    return !fitting(¢) ? null : buildForWithoutLastStatement(copy.of(¢));
   }
 }

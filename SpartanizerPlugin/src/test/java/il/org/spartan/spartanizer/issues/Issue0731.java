@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: tomerdragucki {@code tomerd@campus.technion.ac.il} please add a
+/** TODO tomerdragucki {@code tomerd@campus.technion.ac.il} please add a
  * description
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-12 */

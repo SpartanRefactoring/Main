@@ -72,7 +72,7 @@ public class Augmenter implements Application {
     return $;
   }
 
-  // TODO: Ori Roth Ori Roth clear and complete
+  // TODO Ori Roth Ori Roth clear and complete
   /** Main function of the application.
    * @param r JD
    * @param sss selection as list of lists of statements
