@@ -50,7 +50,7 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
       return null;
     if (m != null)
       m.exclude(c);
-    return new Tip(description(c), getClass(), c, c.getException().getName()) {
+    return new Tip(description(c), myClass(), c, c.getException().getName()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, namer.newCurrent($), c, r, g);
       }
