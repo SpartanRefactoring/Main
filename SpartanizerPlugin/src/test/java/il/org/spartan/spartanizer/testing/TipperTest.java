@@ -1,7 +1,12 @@
 package il.org.spartan.spartanizer.testing;
 
+import static il.org.spartan.azzert.*;
+
+import il.org.spartan.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.*;
 
 /** A class used for testing a specific tipper. To use this class, inherit it
  * and override tipper() to return the tipper you want to test, then use this
@@ -18,21 +23,21 @@ public abstract class TipperTest {
   }
 
   // an inner class used to wrap usingTipper into gives and stays
-  public class TipperTrimmingOperand extends TrimmingOperand {
+  public class TipperTrimmingOperand extends TrimmingOperand{
     private final Tipper<?> tipper;
 
     public TipperTrimmingOperand(final String inner, final Tipper<?> tipper) {
       super(inner);
       this.tipper = tipper;
-      super.usingTipper(tipper);
+      this.usingTipper(tipper);
+    }
+    
+    @Override public TipperTrimmingOperand gives(final String $) {
+      return new TipperTrimmingOperand(super.gives($).get(), tipper);
     }
 
-    @Override public TrimmingOperand gives(final String $) {
-      return super.gives($).usingTipper(tipper);
-    }
-
-    @Override public TrimmingOperand givesEither(final String... options) {
-      return super.givesEither(options).usingTipper(tipper);
+    @Override public TipperTrimmingOperand givesEither(final String... options) {
+      return new TipperTrimmingOperand(super.givesEither(options).get(),tipper);
     }
   }
 }
