@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -50,9 +51,9 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
       return null;
     if (m != null)
       m.exclude(c);
-    return new Tip(description(c), c.getException().getName(), getClass()) {
+    return new Tip(description(c), c.getException().getName(), c, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tricks.rename($, namer.newCurrent($), c, r, g);
+        action.rename($, namer.newCurrent($), c, r, g);
       }
     };
   }

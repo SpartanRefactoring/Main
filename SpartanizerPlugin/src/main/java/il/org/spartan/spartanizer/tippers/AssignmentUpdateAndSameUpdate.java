@@ -49,7 +49,7 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
     if (operator(a1) != operator(a2))
       return null;
     final Expression to = to(a1);
-    if (!wizard.same(to, to(a2)) || !sideEffects.free(to))
+    if (!wizard.eq(to, to(a2)) || !sideEffects.free(to))
       return null;
     $.remove(parent, g);
     $.replace(from(a2), subject.operands(from(a1), from(a2)).to(unifying(a1)), g);

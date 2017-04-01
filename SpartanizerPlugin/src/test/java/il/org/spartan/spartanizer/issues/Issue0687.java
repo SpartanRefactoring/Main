@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** Tests for issue 687
@@ -24,12 +24,12 @@ public class Issue0687 {
   }
 
   @Test public void testCheckActualName() {
-    assert "a".equals(first(getAll.names((Block) wizard.ast("{a=1+1;}"))) + "");
+    assert "a".equals(first(getAll.names((Block) make.ast("{a=1+1;}"))) + "");
   }
 
   @Test public void testCheckNamesFineBlock() {
     // assuming we need to get all names in the block, including repetitions
-    final List<Name> n = getAll.names((Block) wizard.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
+    final List<Name> n = getAll.names((Block) make.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
     azzert.that(first(n), iz("a"));
     azzert.that(n.get(1), iz("b"));
     azzert.that(n.get(2), iz("System"));
@@ -42,12 +42,12 @@ public class Issue0687 {
   }
 
   @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
-    final List<Name> names = getAll.names((Block) wizard.ast("{aba=1+1; ima = 787-9;}"));
+    final List<Name> names = getAll.names((Block) make.ast("{aba=1+1; ima = 787-9;}"));
     assert "aba".equals(first(names) + "") && "ima".equals(names.get(1) + "");
   }
 
   @Test public void testGetEmpty() {
-    assert getAll.names((Block) wizard.ast("{}")).isEmpty();
+    assert getAll.names((Block) make.ast("{}")).isEmpty();
   }
 
   @Test public void testGetNull() {
@@ -55,14 +55,14 @@ public class Issue0687 {
   }
 
   @Test public void testGetOneNameSize() {
-    assert getAll.names((Block) wizard.ast("{a=1+1;}")).size() == 1;
+    assert getAll.names((Block) make.ast("{a=1+1;}")).size() == 1;
   }
 
   @Test public void testGetTwoNamesSize() {
-    assert getAll.names((Block) wizard.ast("{a=1+1;b=2+2;}")).size() == 2;
+    assert getAll.names((Block) make.ast("{a=1+1;b=2+2;}")).size() == 2;
   }
 
   @Test public void testReturnType() {
-    forceTypeAtCompileTime(getAll.names((Block) wizard.ast("{}")));
+    forceTypeAtCompileTime(getAll.names((Block) make.ast("{}")));
   }
 }

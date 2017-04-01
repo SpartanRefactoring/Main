@@ -82,10 +82,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default listener configuration of . Simple printing to console.
    * @return {@code this} applicator */
   @Override public GUIBatchLaconizer defaultListenerNoisy() {
-    listener(λ -> {
-      as.list(λ).forEach(System.out::print);
-      System.out.println();
-    });
+    listener(λ -> as.list(λ).forEach(System.out::print));
     return this;
   }
 

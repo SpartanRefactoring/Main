@@ -7,7 +7,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Tests of {@link measure.expressions}
@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.util.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0552 {
   static ASTNode ast(final String ¢) {
-    return wizard.ast(¢);
+    return make.ast(¢);
   }
 
   static void auxInt(@SuppressWarnings("unused") final int __) {

@@ -45,8 +45,8 @@ public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
             .to("if(f()) {g();}"),
         convert("if(f()) g(); else h();")//
             .to("if(f()) {g();} else {h();}"),
-        convert("if(x) {a();b();} else h()")//
-            .to("if(x) {a();b();} else {h()}") };
+        convert("if(x) {a();b();} else h();")//
+            .to("if(x) {a();b();} else {h();}") };
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

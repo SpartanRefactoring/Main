@@ -6,11 +6,11 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()}
@@ -20,7 +20,8 @@ public final class LocalVariableUninitializedDead extends LocalVariableUninitial
   private static final long serialVersionUID = 0x14812B0904DFB002L;
 
   public LocalVariableUninitializedDead() {
-    andAlso(Proposition.of("Local variable is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty()));
+    andAlso("Local variable is not used anywhere", //
+        () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -34,7 +35,7 @@ public final class LocalVariableUninitializedDead extends LocalVariableUninitial
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
-    wizard.eliminate(object(), r, g);
+    il.org.spartan.spartanizer.ast.factory.remove.deadFragment(current(), r, g);
     return r;
   }
 }

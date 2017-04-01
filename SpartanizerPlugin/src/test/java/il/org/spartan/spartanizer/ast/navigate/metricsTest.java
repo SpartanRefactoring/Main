@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Test class for metrics.java. for more information, please view issue #823
@@ -29,9 +30,9 @@ public final class metricsTest {
 
   @Test public void bodySizeTest() {
     azzert.that(metrics.bodySize(booleans), is(0));
-    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {}")), is(1));
-    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3;}")), is(6));
-    azzert.that(metrics.bodySize(wizard.ast("static boolean foo() {int x=3; int y=4;}")), is(11));
+    azzert.that(metrics.bodySize(make.ast("static boolean foo() {}")), is(1));
+    azzert.that(metrics.bodySize(make.ast("static boolean foo() {int x=3;}")), is(6));
+    azzert.that(metrics.bodySize(make.ast("static boolean foo() {int x=3; int y=4;}")), is(11));
   }
 
   @Test public void condensedSizeTest() {
@@ -40,7 +41,7 @@ public final class metricsTest {
   }
 
   @Test public void countMethods() {
-    azzert.that(metrics.countMethods(wizard.ast("static boolean foo() {while((boolean)1==true) return true; }")), is(1));
+    azzert.that(metrics.countMethods(make.ast("static boolean foo() {while((boolean)1==true) return true; }")), is(1));
   }
 
   @Test public void dexterityIsNull() {
@@ -62,7 +63,7 @@ public final class metricsTest {
     final List<Statement> statements = new ArrayList<>();
     statements.add(s);
     azzert.that(metrics.horizontalComplexity(0, statements), is(0));
-    statements.add(az.statement(wizard.ast("if(true) return 1;")));
+    statements.add(az.statement(make.ast("if(true) return 1;")));
     azzert.that(metrics.horizontalComplexity(0, statements), is(13446));
   }
   // horizontalComplexity
@@ -172,36 +173,36 @@ public final class metricsTest {
   }
 
   @Test public void understandability() {
-    azzert.that(metrics.nodeUnderstandability(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x;}}"))), is(1));
+    azzert.that(metrics.nodeUnderstandability(findFirst.typeDeclaration(make.ast("class C{public void m(){ int x;}}"))), is(1));
   }
 
   @Test public void understandability2() {
-    azzert.that(metrics.nodeUnderstandability(findFirst.variableDeclarationFragment(wizard.ast("class C{public void m(){ int x; int y;}}"))), is(6));
+    azzert.that(metrics.nodeUnderstandability(findFirst.variableDeclarationFragment(make.ast("class C{public void m(){ int x; int y;}}"))), is(6));
   }
 
   @Test public void understandability3() {
-    azzert.that(metrics.subtreeUnderstandability2(wizard.ast("int x;")), is(0));
+    azzert.that(metrics.subtreeUnderstandability2(make.ast("int x;")), is(0));
   }
 
   @Test public void understandability4() {
-    azzert.that(metrics.subtreeUnderstandability2(wizard.ast("{int x;}")), is(0));
+    azzert.that(metrics.subtreeUnderstandability2(make.ast("{int x;}")), is(0));
   }
 
   @Test public void understandability5() {
-    azzert.that(metrics.subtreeUnderstandability2(wizard.ast("void f(){int x;}")), is(1));
+    azzert.that(metrics.subtreeUnderstandability2(make.ast("void f(){int x;}")), is(1));
   }
 
   @Test public void understandability6() {
-    azzert.that(metrics.subtreeUnderstandability2(wizard.ast("void f(){int x; int y;}")), is(3));
+    azzert.that(metrics.subtreeUnderstandability2(make.ast("void f(){int x; int y;}")), is(3));
   }
 
   @Test public void understandability7() {
-    azzert.that(metrics.subtreeUnderstandability2(findFirst.typeDeclaration(wizard.ast("class C{public void m(){ int x; int y;}}"))), is(5));
+    azzert.that(metrics.subtreeUnderstandability2(findFirst.typeDeclaration(make.ast("class C{public void m(){ int x; int y;}}"))), is(5));
   }
 
   @Test public void understandability8() {
     azzert.that(metrics.subtreeUnderstandability2(findFirst.instanceOf(MethodDeclaration.class)
-        .in(wizard.ast(//
+        .in(make.ast(//
             "@Override public boolean containsValue( Object value){\n" + //
                 "  for (  Collection<V> collection : asMap().values()) {\n" + //
                 "    if (collection.contains(value)) {\n" + //

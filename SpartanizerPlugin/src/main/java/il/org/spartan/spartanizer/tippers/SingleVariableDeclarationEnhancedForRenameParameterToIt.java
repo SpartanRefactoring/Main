@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -60,7 +61,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToIt exten
     final SimpleName ¢ = namer.newCurrent(d);
     return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Tricks.rename(n, ¢, $, r, g);
+        action.rename(n, ¢, $, r, g);
       }
     };
   }

@@ -382,6 +382,7 @@ public final class Version230 {
 
   @Test public void canonicalFragementExample1() {
     trimmingOf("int a;a=3;")//
+        .using(VariableDeclarationFragment.class, new LocalVariableUnintializedStatementAssignment()) //
         .gives("int a=3;");
   }
 
@@ -1745,7 +1746,7 @@ public final class Version230 {
   }
 
   @Test public void issue54WhileScopeDoesNotInclude() {
-    included("int a=f();while(c)b[i]=a;", VariableDeclarationFragment.class).notIn(new FragmentInitializerStatementTerminatingScope());
+    included("int a=f();while(c)b[i]=a;", VariableDeclarationFragment.class).notIn(new LocalVariableIntializedStatementTerminatingScope());
   }
 
   @Test public void issue62a() {
@@ -1777,14 +1778,6 @@ public final class Version230 {
   @Test public void issue73b() {
     trimmingOf("void foo(DataOutput dataOutput){}")//
         .gives("void foo(DataOutput o){}");
-  }
-
-  @Ignore // TODO Raviv --yg
-  @Test public void issue73c() {
-    trimmingOf("int foo(Integer integer, ASTNode astn){return integer + astn.hashCode();}")//
-        .gives("int foo(Integer integer,ASTNode n){return integer+n.hashCode();}") //
-        .gives("int foo(Integer i, ASTNode n){return i + n.hashCode();}") //
-        .stays();
   }
 
   @Test public void linearTransformation() {
@@ -2600,12 +2593,12 @@ public final class Version230 {
 
   @Test public void pushdownTernaryIdenticalAdditionWtihParenthesis() {
     trimmingOf("a ?(b+d):(b+ d)")//
-        .gives("b+d");
+        .gives("(b+d)");
   }
 
   @Test public void pushdownTernaryIdenticalAssignment() {
     trimmingOf("a ?(b=c):(b=c)")//
-        .gives("b=c");
+        .gives("(b=c)");
   }
 
   @Test public void pushdownTernaryIdenticalAssignmentVariant() {
@@ -3545,11 +3538,11 @@ public final class Version230 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_intaba3b5Ifa4Ifb3b2Elsebab3ElseIfb3b2Elsebaab3() {
     trimmingOf("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = 2; else { b = a; b = 3; } else if (b == 3) b = 2; else { b = a * a; b = 3; }") //
-        .using(VariableDeclarationFragment.class, new FragmentNoInitializerAssignment()) //
+        .using(VariableDeclarationFragment.class, new LocalVariableUnintializedStatementAssignment()) //
         .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
-        .using(VariableDeclarationFragment.class, new FragmentNoInitializerAssignment()) //
+        .using(VariableDeclarationFragment.class, new LocalVariableUnintializedStatementAssignment()) //
         .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
-        .using(VariableDeclarationFragment.class, new FragmentInitializerStatementTerminatingScope()) //
+        .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementTerminatingScope()) //
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
         .using(Assignment.class, new AssignmentAndAssignmentOfSameValue()) //
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //

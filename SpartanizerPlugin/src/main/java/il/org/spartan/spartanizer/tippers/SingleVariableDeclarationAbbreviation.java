@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.dispatch.Tricks.*;
+import static il.org.spartan.spartanizer.ast.factory.action.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -40,7 +40,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
       for (final TagElement t : ts)
         if (TagElement.TAG_PARAM.equals(t.getTagName()))
           for (final Object ¢ : fragments(t))
-            if (¢ instanceof SimpleName && wizard.same((ASTNode) ¢, oldName)) {
+            if (¢ instanceof SimpleName && wizard.eq((ASTNode) ¢, oldName)) {
               r.replace((ASTNode) ¢, make.from(d).identifier(newName), g);
               return;
             }

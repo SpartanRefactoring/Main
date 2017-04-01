@@ -23,8 +23,22 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * a = 3;
  * } For now the expander do not expand if the declaration has some annotation
  * (so that no warnings would be created)
- * @author Tomer Dragucki
+ * @author Dor Ma'ayan
  * @since 23-12-2016 */
+// public class DeclarationWithInitializerBloater extends
+// SingleVariableDeclarationInitialized implements TipperCategory.Bloater {
+// @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+// final SingleVariableDeclaration $ = copy.of(object());
+// $.setInitializer(null);
+// r.replace(object(), $, g);
+// r.ne
+// return r;
+// }
+//
+// @Override public String description(SingleVariableDeclaration n) {
+// return null;
+// }
+// }
 public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDeclarationStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0xF445D29A172AE7CL;

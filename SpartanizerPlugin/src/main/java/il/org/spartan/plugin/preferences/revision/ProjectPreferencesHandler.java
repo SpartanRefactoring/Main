@@ -10,10 +10,8 @@ import java.util.stream.*;
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
-import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.formatter.*;
-import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.jface.window.*;
@@ -37,7 +35,6 @@ import il.org.spartan.utils.Example.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since b0a7-0b-0a */
 public class ProjectPreferencesHandler extends AbstractHandler {
-  private static final boolean REFRESH_OPENS_DIALOG = false;
   private static final lazy<CodeFormatter> formatter = lazy.get(() -> ToolFactory.createCodeFormatter(null));
 
   /* (non-Javadoc)
@@ -85,7 +82,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   public static Object commit(final IProject p, final Collection<String> pc) {
     XMLSpartan.updateEnabledTippers(p, pc);
     try {
-      refreshProject(p);
+      Eclipse.refreshProject(p);
     } catch (InvocationTargetException | CoreException | InterruptedException ¢) {
       monitor.log(¢);
     }
@@ -283,42 +280,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     }
   }
 
-  /** Refreshes project, while applying new configuration.
-   * @param p JD
-   * @throws CoreException
-   * @throws InvocationTargetException
-   * @throws InterruptedException */
-  private static void refreshProject(final IProject p) throws CoreException, InvocationTargetException, InterruptedException {
-    if (p != null && p.isOpen() && p.getNature(Nature.NATURE_ID) != null)
-      if (!REFRESH_OPENS_DIALOG)
-        new Job("Refreshing " + p.getName()) {
-          @Override protected IStatus run(final IProgressMonitor m) {
-            try {
-              p.build(IncrementalProjectBuilder.FULL_BUILD, m);
-              return Status.OK_STATUS;
-            } catch (final CoreException ¢) {
-              monitor.log(¢);
-              return Status.CANCEL_STATUS;
-            }
-          }
-        }.schedule();
-      else {
-        final ProgressMonitorDialog d = Dialogs.progress(true);
-        d.run(true, true, m -> {
-          SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
-            final Shell s = d.getShell();
-            if (s != null)
-              s.setText("Refreshing project");
-          });
-          try {
-            p.build(IncrementalProjectBuilder.FULL_BUILD, m);
-          } catch (final CoreException ¢) {
-            monitor.log(¢);
-          }
-        });
-      }
-  }
-
   /** Returns preview as a single string.
    * @param preview tipper's preview
    * @param filter examples filter
@@ -349,7 +310,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
 
   private static Set<String> toEnabledSet(final Map<SpartanCategory, SpartanTipper[]> m) {
     return m.values().stream().reduce(new HashSet<String>(), (s, a) -> {
-      s.addAll(Arrays.stream(a).filter(λ -> λ.enabled()).map(λ -> λ.name()).collect(Collectors.toList()));
+      s.addAll(Arrays.stream(a).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toList()));
       return s;
     }, (s1, s2) -> {
       s1.addAll(s2);

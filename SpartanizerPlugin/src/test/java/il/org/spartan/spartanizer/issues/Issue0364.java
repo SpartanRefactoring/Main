@@ -7,8 +7,9 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit test for {@link FragmentInitializerStatementTerminatingScope}Inlining
- * of {@link ArrayInitializer}
+/** Unit test for
+ * {@link LocalVariableIntializedStatementTerminatingScope}Inlining of
+ * {@link ArrayInitializer}
  * @author Ori Roth
  * @since 2016 */
 @SuppressWarnings("static-method")

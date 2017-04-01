@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.switchBranch.*;
-
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -54,6 +52,43 @@ public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
     statements(b1).addAll(removeBreakSequencer(branch.statements));
     final Block $ = a.newBlock();
     statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, branch.cases)));
+    return $;
+  }
+
+  private List<Statement> statements;
+
+  public boolean hasFallThrough() {
+    return statements.stream().anyMatch(iz::switchCase);
+  }
+
+  public static Statement removeBreakSequencer(final Statement s) {
+    if (s == null)
+      return null;
+    if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
+      return copy.of(s);
+    final AST a = s.getAST();
+    Statement $ = null;
+    if (iz.ifStatement(s)) {
+      final IfStatement t = az.ifStatement(s);
+      $ = subject.pair(removeBreakSequencer(step.then(t)), removeBreakSequencer(step.elze(t))).toIf(copy.of(step.expression(t)));
+    } else if (!iz.block(s)) {
+      if (iz.breakStatement(s) && iz.block(s.getParent()))
+        $ = a.newEmptyStatement();
+    } else {
+      final Block b = subject.ss(removeBreakSequencer(statements(az.block(s)))).toBlock();
+      statements(b).addAll(removeBreakSequencer(statements(az.block(s))));
+      $ = b;
+    }
+    return $;
+  }
+
+  public static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
+    final List<Statement> $ = new ArrayList<>();
+    for (final Statement ¢ : ss) {
+      final Statement s = removeBreakSequencer(¢);
+      if (s != null)
+        $.add(s);
+    }
     return $;
   }
 

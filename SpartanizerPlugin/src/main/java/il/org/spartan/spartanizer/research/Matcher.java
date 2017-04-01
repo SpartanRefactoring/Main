@@ -4,8 +4,6 @@ import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -13,6 +11,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -69,7 +68,7 @@ public final class Matcher {
   }
 
   public static Matcher patternMatcher(final String p, final String s, final Option... _options) {
-    return new Matcher(() -> extractStatementIfOne(ast(reformat(p))), s, _options);
+    return new Matcher(() -> extractStatementIfOne(make.ast(reformat(p))), s, _options);
   }
 
   public static Matcher blockMatcher(final String p, final String s) {
@@ -77,7 +76,7 @@ public final class Matcher {
   }
 
   public static Matcher blockMatcher(final String p, final String s, final Option... _options) {
-    return new Matcher(() -> wrapStatementIfOne(ast(reformat(p))), s, _options);
+    return new Matcher(() -> wrapStatementIfOne(make.ast(reformat(p))), s, _options);
   }
 
   private Matcher(final Supplier<ASTNode> _patternSupplier, final String r, final Option[] _options) {
@@ -96,7 +95,7 @@ public final class Matcher {
   }
 
   private static Block wrapStatementIfOne(final ASTNode pattern) {
-    return az.block(iz.block(pattern) ? pattern : ast("{" + pattern + "}"));
+    return az.block(iz.block(pattern) ? pattern : make.ast("{" + pattern + "}"));
   }
 
   private boolean lastInBlock(final Block ¢) {
@@ -403,7 +402,7 @@ public final class Matcher {
     $.set(replacement);
     enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
     assert replacement != null;
-    final ASTNode ast = ast(replacement);
+    final ASTNode ast = make.ast(replacement);
     assert ast != null : "Cannot parse [[ " + replacement + " ]]";
     ast.accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
@@ -413,7 +412,7 @@ public final class Matcher {
         return true;
       }
     });
-    return extractStatementIfOne(ast($.get()));
+    return extractStatementIfOne(make.ast($.get()));
   }
 
   @SuppressWarnings("boxing") public ASTNode[] getMatchedNodes(final Block b) {
@@ -427,17 +426,17 @@ public final class Matcher {
   ASTNode blockReplacement(final Block n) {
     final Pair<Integer, Integer> p = getBlockMatching(wrapStatementIfOne(pattern()), az.block(n));
     final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
-    final Map<String, String> enviroment = collectEnviroment(ast(matching), new HashMap<>());
+    final Map<String, String> enviroment = collectEnviroment(make.ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
     enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));
-    ast(replacement).accept(new ASTVisitor(true) {
+    make.ast(replacement).accept(new ASTVisitor(true) {
       @Override public boolean preVisit2(final ASTNode ¢) {
         if (iz.name(¢) && enviroment.containsKey(¢ + ""))
           $.set($.get().replaceFirst((¢ + "").replace("$", "\\$"), enviroment.get(¢ + "").replace("\\", "\\\\").replace("$", "\\$")));
         return true;
       }
     });
-    return ast(stringifySubBlock(n, 0, p.first.intValue()) + $.get() + stringifySubBlock(n, p.second.intValue()));
+    return make.ast(stringifySubBlock(n, 0, p.first.intValue()) + $.get() + stringifySubBlock(n, p.second.intValue()));
   }
 
   private static boolean needsSpecialReplacement(final String ¢) {

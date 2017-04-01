@@ -61,11 +61,11 @@ public class InflateHandler extends AbstractHandler {
     return null;
   }
 
-  protected static List<Listener> getListeners(final StyledText t) {
+  private static List<Listener> getListeners(final StyledText t) {
     final List<Listener> $ = new ArrayList<>();
     if (t == null)
       return $;
-    final List<Listener> ls = as.list(t.getListeners(SWT.MouseWheel));
+    final List<Listener> ls = as.list(t.getListeners(SWT.KeyDown));
     if (ls == null)
       return $;
     $.addAll(
@@ -73,22 +73,7 @@ public class InflateHandler extends AbstractHandler {
     return $;
   }
 
-  protected static void addListeners(final StyledText t, final Iterable<Listener> ls, final Integer... types) {
-    if (t != null && ls != null)
-      as.list(types).forEach(i -> ls.forEach(λ -> t.addListener(i.intValue(), λ)));
-  }
-
-  protected static void removeListeners(final StyledText t, final Iterable<Listener> ls, final Integer... types) {
-    if (t != null && ls != null)
-      ls.forEach(¢ -> as.list(types).forEach(λ -> t.removeListener(λ.intValue(), ¢)));
-  }
-
-  protected static IEditorPart getEditorPart() {
-    final IWorkbenchPage $ = getPage();
-    return $ == null ? null : $.getActiveEditor();
-  }
-
-  protected static IWorkbenchPage getPage() {
+  private static IWorkbenchPage getPage() {
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return null;
@@ -96,12 +81,7 @@ public class InflateHandler extends AbstractHandler {
     return $ == null ? null : $.getActivePage();
   }
 
-  protected static ITextEditor getTextEditor() {
-    final IEditorPart $ = getEditorPart();
-    return !($ instanceof ITextEditor) ? null : (ITextEditor) $;
-  }
-
-  protected static StyledText getText(final ITextEditor ¢) {
+  private static StyledText getText(final ITextEditor ¢) {
     if (¢ == null)
       return null;
     final Control $ = ¢.getAdapter(Control.class);
@@ -171,19 +151,18 @@ public class InflateHandler extends AbstractHandler {
     if (f == null)
       return;
     final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
-    text.addMouseWheelListener(l);
+    text.getDisplay().addFilter(SWT.MouseWheel, l);
     text.addKeyListener(l);
   }
 
-  @SuppressWarnings("boxing") private static void removeListener(final ITextEditor e) {
+  private static void removeListener(final ITextEditor e) {
     final StyledText text = getText(e);
     if (text == null)
       return;
     final List<Listener> ls = getListeners(text);
     ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener).findFirst()
         .ifPresent(λ -> ((InflaterListener) ((TypedListener) λ).getEventListener()).finilize());
-    // TODO: Ori Roth seems to be a bug --yg
-    removeListeners(text, ls, SWT.MouseWheel/* , SWT.KeyUp, SWT.KeyDown */);
+    ls.forEach(λ -> text.getDisplay().removeFilter(SWT.MouseWheel, (Listener) ((TypedListener) λ).getEventListener()));
     ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
   }
 

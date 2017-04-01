@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.dispatch;
 import static java.util.stream.Collectors.*;
 
 import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
@@ -13,6 +15,7 @@ import org.eclipse.text.edits.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
+import il.org.spartan.bloater.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -49,6 +52,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   boolean useProjectPreferences;
   private final Map<IProject, Toolbox> toolboxes = new HashMap<>();
+  Consumer<Exception> exceptionListener = λ -> {/**/};
   public Toolbox toolbox;
 
   @NotNull public Trimmer useProjectPreferences() {
@@ -67,6 +71,11 @@ public class Trimmer extends AbstractGUIApplicator {
     this.toolbox = toolbox;
   }
 
+  public Trimmer setExceptionListener(final Consumer<Exception> ¢) {
+    exceptionListener = ¢;
+    return this;
+  }
+
   @Override public void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m, @NotNull final Int i) {
     @Nullable final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
     @NotNull final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
@@ -79,8 +88,9 @@ public class Trimmer extends AbstractGUIApplicator {
         @Nullable Tipper<N> w = null;
         try {
           w = getTipper(t, n);
-        } catch (@NotNull final IllegalArgumentException ¢) {
+        } catch (@NotNull final Exception ¢) {
           monitor.logProbableBug(this, ¢);
+          exceptionListener.accept(¢);
         }
         if (w == null)
           return true;
@@ -91,6 +101,7 @@ public class Trimmer extends AbstractGUIApplicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
+          exceptionListener.accept(¢);
         }
         if (s == null)
           return true;
@@ -156,6 +167,7 @@ public class Trimmer extends AbstractGUIApplicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
+          exceptionListener.accept(¢);
         }
         if (w != null)
           progressMonitor.worked(5);
@@ -164,6 +176,7 @@ public class Trimmer extends AbstractGUIApplicator {
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
+          exceptionListener.accept(¢);
         }
         return false;
       }
@@ -209,16 +222,22 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 
+  @SafeVarargs @NotNull public final Trimmer fixTipper(final Tipper<?>... ¢) {
+    return fix(Toolbox.freshCopyOfAllTippers(), ¢);
+  }
+
+  @SafeVarargs @NotNull public final Trimmer fixBloater(final Tipper<?>... ¢) {
+    return fix(InflaterProvider.freshCopyOfAllExpanders(), ¢);
+  }
+
   // Does not require node class --or
-  @SafeVarargs @NotNull public final Trimmer fix(final Tipper<?>... ts) {
+  @NotNull private Trimmer fix(final Toolbox all, final Tipper<?>... ts) {
     final List<Tipper<?>> tss = as.list(ts);
     if (!firstAddition)
       tss.addAll(toolbox.getAllTippers());
     firstAddition = false;
-    toolbox = Toolbox.freshCopyOfAllTippers();
-    for (List<Tipper<? extends ASTNode>> ¢ : toolbox.implementation)
-      if (¢ != null)
-        ¢.retainAll(tss);
+    toolbox = all;
+    Stream.of(toolbox.implementation).filter(Objects::nonNull).forEachOrdered((final List<Tipper<? extends ASTNode>> ¢) -> ¢.retainAll(tss));
     return this;
   }
 
