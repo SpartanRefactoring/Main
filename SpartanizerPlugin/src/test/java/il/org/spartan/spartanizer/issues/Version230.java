@@ -3030,12 +3030,12 @@ public final class Version230 {
         .gives("int h,u,m,a,n;return b&&a+n>m-u||h>u;");
   }
 
-  @Test public void shortestOperand12() {
+  @Test public void inliningIntoReturn() {
     trimmingOf("int k=15;return 7<k;")//
         .gives("return 7<15;");
   }
 
-  @Test public void shortestOperand13() {
+  @Test public void inlining1() {
     trimmingOf("return(2> 2 + a)==true;")//
         .gives("return 2>a+2;");
   }

@@ -22,13 +22,13 @@ public class Issue1153 {
   }
 
   @Test public void b1() {
-    new FieldSerialVersionUIDToHexadecimal().hashCode();
+    new FieldInitializedSerialVersionUIDToHexadecimal().hashCode();
   }
 
   @Test public void b2() {
     final Class<FieldDeclaration> c = FieldDeclaration.class;
     assert c != null;
-    final FieldSerialVersionUIDToHexadecimal x = new FieldSerialVersionUIDToHexadecimal();
+    final FieldInitializedSerialVersionUIDToHexadecimal x = new FieldInitializedSerialVersionUIDToHexadecimal();
     assert x != null;
     final Toolbox toolbox = new Toolbox();
     assert toolbox != null;

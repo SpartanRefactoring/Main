@@ -425,7 +425,7 @@ public interface wizard {
   }
 
   static VariableDeclarationFragment findFragment(final FieldDeclaration ¢) {
-    return fragments(¢).stream().filter(λ -> (λ.getName() + "").equals(FieldSerialVersionUIDToHexadecimal.SERIAL_VERSION_UID)).findFirst()
+    return fragments(¢).stream().filter(λ -> (λ.getName() + "").equals(FieldInitializedSerialVersionUIDToHexadecimal.SERIAL_VERSION_UID)).findFirst()
         .orElse(null);
   }
 
