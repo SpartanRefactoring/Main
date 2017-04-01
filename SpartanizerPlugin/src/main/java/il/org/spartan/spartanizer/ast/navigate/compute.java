@@ -60,7 +60,7 @@ public enum compute {
           return ns;
         if (ns == null)
           return as.list(n);
-        ns.add(0,n);
+        ns.add(0, n);
         return ns;
       }
 
@@ -74,11 +74,11 @@ public enum compute {
       }
 
       @Override protected List<ASTNode> map(final Assignment ¢) {
-        return reduce((¢), super.map(¢));
+        return reduce(¢, super.map(¢));
       }
 
       @Override protected List<ASTNode> map(final PostfixExpression ¢) {
-        return reduce((¢.getOperand()), super.map(¢));
+        return reduce(¢.getOperand(), super.map(¢));
       }
 
       @Override protected List<ASTNode> map(final PrefixExpression ¢) {

@@ -49,7 +49,7 @@ public final class LocalInitializedNewAddAll extends LocalVariableInitialized //
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    ListRewrite listRewrite = $.getListRewrite(newExpression, ClassInstanceCreation.ARGUMENTS_PROPERTY);
+    final ListRewrite listRewrite = $.getListRewrite(newExpression, ClassInstanceCreation.ARGUMENTS_PROPERTY);
     listRewrite.insertFirst(copy.of(argument), g);
     remove.statement(nextStatement, $, g);
     return $;

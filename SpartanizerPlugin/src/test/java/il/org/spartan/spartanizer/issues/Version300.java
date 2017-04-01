@@ -32,10 +32,12 @@ public class Version300 {
             "boolean a(int[] b, int c){ return d == c? true : false; }") //
     );
   }
+
   @Test public void i0() {
     trimmingOf("int a=1;return a > 0;")//
         .gives("return 1>0;");
   }
+
   @Test public void i1() {
     trimmingOf("int k=1;return k > 0;")//
         .gives("return 1>0;");
@@ -45,6 +47,7 @@ public class Version300 {
     trimmingOf("int k=1;return 0<k;")//
         .gives("return 0<1;");
   }
+
   @Test public void a0() {
     trimmingOf("int a(){int $=13;return $;}") //
         .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
