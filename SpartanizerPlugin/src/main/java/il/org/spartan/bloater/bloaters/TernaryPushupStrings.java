@@ -1,7 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -26,11 +24,11 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -5602484588967209664L;
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("s = \"abc\" + (condition ? \"123\" : \"456\");") //
-            .to("s = condition ? \"abc123\" : \"abc456\";") //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("s = \"abc\" + (condition ? \"123\" : \"456\");") //
+        .to("s = condition ? \"abc123\" : \"abc456\";") //
+    ;
   }
 
   @Override public ASTNode replacement(final InfixExpression x) {

@@ -382,7 +382,7 @@ public final class Version230 {
 
   @Test public void canonicalFragementExample1() {
     trimmingOf("int a;a=3;")//
-        .using(VariableDeclarationFragment.class, new LocalVariableUnintializedStatementAssignment()) //
+        .using(VariableDeclarationFragment.class, new LocalUnintializedAssignmentToSame()) //
         .gives("int a=3;");
   }
 
@@ -739,155 +739,155 @@ public final class Version230 {
         .gives("int a=2+3+b>2+3<<b?(2+3)*7<<2+3:2+3;");
   }
 
-  @Test public void declarationAssignmentUpdateWithIncrement() {
+  @Test public void localAssignmentUpdateWithIncrement() {
     trimmingOf("int a=0;a+=++a;")//
         .stays();
   }
 
-  @Test public void declarationAssignmentUpdateWithPostIncrement() {
+  @Test public void localAssignmentUpdateWithPostIncrement() {
     trimmingOf("int a=0;a+=a++;")//
         .stays();
   }
 
-  @Test public void declarationAssignmentWithIncrement() {
+  @Test public void localAssignmentWithIncrement() {
     trimmingOf("int a=0;a=++a;")//
         .stays();
   }
 
-  @Test public void declarationAssignmentWithPostIncrement() {
+  @Test public void localAssignmentWithPostIncrement() {
     trimmingOf("int a=0;a=a++;")//
         .stays();
   }
 
-  @Test public void declarationIfAssignment() {
+  @Test public void localIfAssignment() {
     trimmingOf("String u=s;if(s.equals(y))u=s + blah;S.h(u);").gives("String u=s.equals(y)? s + blah :s;S.h(u);");
   }
 
-  @Test public void declarationIfAssignment3() {
+  @Test public void localIfAssignment3() {
     trimmingOf("int a=2;if(a !=2)a=3;")//
         .gives("int a=2 !=2 ? 3 : 2;");
   }
 
-  @Test public void declarationIfAssignment4() {
+  @Test public void localIfAssignment4() {
     trimmingOf("int a=2;if(x)a=2*a;")//
         .gives("int a=x ? 2*2: 2;");
   }
 
-  @Test public void declarationIfUpdateAssignment() {
+  @Test public void localIfUpdateAssignment() {
     trimmingOf("String u=s;if(s.equals(y))u +=s + blah;S.h(u);").gives("String u=s.equals(y)? s +(s + blah):s;S.h(u);");
   }
 
-  @Test public void declarationIfUsesLaterVariable() {
+  @Test public void localIfUsesLaterVariable() {
     trimmingOf("int a=0, b=0;if(b==3)a=4;")//
         .gives("int a=0;if(0==3)a=4;")//
         .gives("int a=0==3?4:0;");
   }
 
-  @Test public void declarationInitializeRightShift() {
+  @Test public void localInitializeRightShift() {
     trimmingOf("int a=3;a>>=2;")//
         .gives("int a=3>> 2;");
   }
 
-  @Test public void declarationInitializerReturnAssignment() {
+  @Test public void localInitializerReturnAssignment() {
     trimmingOf("int a=3;return a=2 * a;")//
         .gives("return 2 * 3;");
   }
 
-  @Test public void declarationInitializerReturnExpression() {
+  @Test public void localInitializerReturnExpression() {
     trimmingOf("String tipper=Bob + Wants + To + \"Sleep \";return(right_now + tipper);").gives("return(right_now+(Bob+Wants+To+\"Sleep \"));");
   }
 
-  @Test public void declarationInitializesRotate() {
+  @Test public void localInitializesRotate() {
     trimmingOf("int a=3;a>>>=2;")//
         .gives("int a=3>>> 2;");
   }
 
-  @Test public void declarationInitializeUpdateAnd() {
+  @Test public void localInitializeUpdateAnd() {
     trimmingOf("int a=3;a&=2;")//
         .gives("int a=3 & 2;");
   }
 
-  @Test public void declarationInitializeUpdateAssignment() {
+  @Test public void localInitializeUpdateAssignment() {
     trimmingOf("int a=3;a +=2;")//
         .gives("int a=3+2;");
   }
 
-  @Test public void declarationInitializeUpdateAssignmentFunctionCallWithReuse() {
+  @Test public void localInitializeUpdateAssignmentFunctionCallWithReuse() {
     trimmingOf("int a=f();a +=2*f();")//
         .gives("int a=f()+2*f();");
   }
 
-  @Test public void declarationInitializeUpdateAssignmentFunctionCallWIthReuse() {
+  @Test public void localInitializeUpdateAssignmentFunctionCallWIthReuse() {
     trimmingOf("int a=x;a +=a + 2*f();")//
         .gives("int a=x+(x+2*f());");
   }
 
-  @Test public void declarationInitializeUpdateAssignmentIncrement() {
+  @Test public void localInitializeUpdateAssignmentIncrement() {
     trimmingOf("int a=++i;a +=j;")//
         .gives("int a=++i + j;");
   }
 
-  @Test public void declarationInitializeUpdateAssignmentIncrementTwice() {
+  @Test public void localInitializeUpdateAssignmentIncrementTwice() {
     trimmingOf("int a=++i;a +=a + j;")//
         .stays();
   }
 
-  @Test public void declarationInitializeUpdateAssignmentWithReuse() {
+  @Test public void localInitializeUpdateAssignmentWithReuse() {
     trimmingOf("int a=3;a +=2*a;")//
         .gives("int a=3+2*3;");
   }
 
-  @Test public void declarationInitializeUpdateDividies() {
+  @Test public void localInitializeUpdateDividies() {
     trimmingOf("int a=3;a/=2;")//
         .gives("int a=3 / 2;");
   }
 
-  @Test public void declarationInitializeUpdateLeftShift() {
+  @Test public void localInitializeUpdateLeftShift() {
     trimmingOf("int a=3;a<<=2;")//
         .gives("int a=3<<2;");
   }
 
-  @Test public void declarationInitializeUpdateMinus() {
+  @Test public void localInitializeUpdateMinus() {
     trimmingOf("int a=3;a-=2;")//
         .gives("int a=3 - 2;");
   }
 
-  @Test public void declarationInitializeUpdateModulo() {
+  @Test public void localInitializeUpdateModulo() {
     trimmingOf("int a=3;a%=2;")//
         .gives("int a=3 % 2;");
   }
 
-  @Test public void declarationInitializeUpdatePlus() {
+  @Test public void localInitializeUpdatePlus() {
     trimmingOf("int a=3;a+=2;")//
         .gives("int a=3 + 2;");
   }
 
-  @Test public void declarationInitializeUpdateTimes() {
+  @Test public void localInitializeUpdateTimes() {
     trimmingOf("int a=3;a*=2;")//
         .gives("int a=3 * 2;");
   }
 
-  @Test public void declarationInitializeUpdateXor() {
+  @Test public void localInitializeUpdateXor() {
     trimmingOf("int a=3;a^=2;")//
         .gives("int a=3 ^ 2;");
   }
 
-  @Test public void declarationInitializeUpdatOr() {
+  @Test public void localInitializeUpdatOr() {
     trimmingOf("int a=3;a|=2;")//
         .gives("int a=3 | 2;");
   }
 
-  @Test public void declarationUpdateReturn() {
+  @Test public void localUpdateReturn() {
     trimmingOf("int a=3;return a +=2;")//
         .gives("return 3 + 2;");
   }
 
-  @Test public void declarationUpdateReturnNone() {
+  @Test public void localUpdateReturnNone() {
     trimmingOf("int a=f();return a +=2 * a;")//
         .stays();
   }
 
-  @Test public void declarationUpdateReturnTwice() {
+  @Test public void localUpdateReturnTwice() {
     trimmingOf("int a=3;return a +=2 * a;")//
         .gives("return 3 + 2 *3 ;");
   }
@@ -3030,12 +3030,12 @@ public final class Version230 {
         .gives("int h,u,m,a,n;return b&&a+n>m-u||h>u;");
   }
 
-  @Test public void shortestOperand12() {
+  @Test public void inliningIntoReturn() {
     trimmingOf("int k=15;return 7<k;")//
         .gives("return 7<15;");
   }
 
-  @Test public void shortestOperand13() {
+  @Test public void inlining1() {
     trimmingOf("return(2> 2 + a)==true;")//
         .gives("return 2>a+2;");
   }
@@ -3538,9 +3538,9 @@ public final class Version230 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_intaba3b5Ifa4Ifb3b2Elsebab3ElseIfb3b2Elsebaab3() {
     trimmingOf("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = 2; else { b = a; b = 3; } else if (b == 3) b = 2; else { b = a * a; b = 3; }") //
-        .using(VariableDeclarationFragment.class, new LocalVariableUnintializedStatementAssignment()) //
+        .using(VariableDeclarationFragment.class, new LocalUnintializedAssignmentToSame()) //
         .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
-        .using(VariableDeclarationFragment.class, new LocalVariableUnintializedStatementAssignment()) //
+        .using(VariableDeclarationFragment.class, new LocalUnintializedAssignmentToSame()) //
         .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementTerminatingScope()) //
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //

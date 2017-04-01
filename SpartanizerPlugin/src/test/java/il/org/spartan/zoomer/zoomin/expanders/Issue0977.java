@@ -19,19 +19,20 @@ public class Issue0977 {
         .stays();
   }
 
-  // see issue #1046
+
+  @Ignore("Issue #1046")
   @Test public void complexSequencer() {
     bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} case 2: e();}")//
         .stays();
   }
 
-  // see issue #1046
+  @Ignore("see issue #1046")
   @Test public void complexSequencerNotLast() {
     bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} f();case 2:e();}")//
         .stays();
   }
 
-  // see issue #1031
+  @Ignore("see issue #1031")
   @Test public void complexSequencerRealWorld() {
     bloatingOf("switch (a()){case 1:if (!parameters((MethodDeclaration) $).contains(¢)){return Kind.method;} else{"
         + " return Kind.parameter;} case 2:e();}")//

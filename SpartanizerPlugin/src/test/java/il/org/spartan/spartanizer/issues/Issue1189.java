@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
+import static il.org.spartan.utils.Proposition.that;
 
 import java.util.function.*;
 
@@ -21,9 +22,9 @@ public class Issue1189 {
   private static final String NL = "\n";
 
   @Test @SuppressWarnings("unused") public void a() {
-    azzert.that(AND("A:", of("B1", () -> {
+    azzert.that(AND("A:", that("B1", () -> {
       throw new AssertionError();
-    }), OR("B2:", of("C1", T), of("C2", X), AND("C3:", of("D1", X), of("D2", F))))
+    }), OR("B2:", that("C1", T), that("C2", X), AND("C3:", that("D1", X), that("D2", F))))
         .reduce(new PropositionReducer<String>(new ReduceStringConcatenate()) {
           Tab tab = new Tab();
 

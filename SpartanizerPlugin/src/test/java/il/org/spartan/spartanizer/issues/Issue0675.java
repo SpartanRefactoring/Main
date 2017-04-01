@@ -8,7 +8,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
-/** Unit tests for the GitHub issue thus numbered 
+/** Unit tests for the GitHub issue thus numbered
  * @author Aviad Cohen & Noam Yefet
  * @since 16-11-1 */
 @SuppressWarnings({ "static-method", "javadoc" }) //

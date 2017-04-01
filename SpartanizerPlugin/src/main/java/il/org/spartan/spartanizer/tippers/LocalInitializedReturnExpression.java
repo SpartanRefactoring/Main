@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Proposition.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -8,6 +10,8 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
@@ -27,13 +31,18 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
         () -> iz.not.null¢(returnStatement = az.returnStatement(nextStatement)));//
     andAlso("Next statement returns a value return", //
         () -> iz.not.null¢(returnValue = returnStatement.getExpression()));//
-    andAlso("Value returned is local variable", //
-        () -> wizard.eq(name, returnValue)//
-    );
+    andAlso(//
+        that("Returned value is identical to local variable", //
+            () -> wizard.eq(name, returnValue)//
+        ).or(//
+            "Initializer has no side effects", () -> sideEffects.free(initializer)//
+        ));
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { Example.convert("int a = 3; return a;").to("return 3;") };
+  @Override public Examples examples() {
+    return //
+    convert("int a = 3; return a;").to("return 3;"). //
+        convert("int a = 3; return 2 * a;").to("return 2 * 3;");
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -41,7 +50,7 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    $.replace(returnValue, copy.of(initializer), g);
+    new Inliner(name, $, g).byValue(initializer).inlineInto(returnValue);
     remove.deadFragment(current, $, g);
     return $;
   }

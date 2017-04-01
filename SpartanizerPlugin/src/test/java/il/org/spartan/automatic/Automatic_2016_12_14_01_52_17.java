@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** Auto generated 
+/** Auto generated
  * @author Ori Roth
  * @since 2016_12_14 */
 // @Ignore // TODO Yuval: is part of your issue --or
