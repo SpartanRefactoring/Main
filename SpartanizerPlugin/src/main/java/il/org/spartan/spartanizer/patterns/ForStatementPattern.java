@@ -20,7 +20,7 @@ public abstract class ForStatementPattern extends AbstractPattern<ForStatement> 
       return body != null && forExpression != null;
     });
   }
-  
+
   protected Statement forBody() {
     return body;
   }

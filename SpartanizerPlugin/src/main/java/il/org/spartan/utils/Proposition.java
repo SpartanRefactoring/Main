@@ -96,7 +96,6 @@ public interface Proposition extends BooleanSupplier {
     /** */
   }
 
-
   final class And extends Some {
     And(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier[] ss) {
       super(null);
@@ -135,7 +134,7 @@ public interface Proposition extends BooleanSupplier {
       return !inner.getAsBoolean();
     }
   }
-  
+
   final class Or extends Some {
     public Or(final BooleanSupplier s, final BooleanSupplier... cs) {
       super(null);
@@ -205,14 +204,10 @@ public interface Proposition extends BooleanSupplier {
     protected Stream<BooleanSupplier> stream() {
       return inner.stream();
     }
-    
-    protected void simplify()
-    {
-      List<BooleanSupplier> newInner = stream()
-          .map(λ -> !(getClass().isInstance(λ)) ? Stream.of(λ) : ((Some) λ).inner.stream())
-          .flatMap(λ -> λ)
+
+    protected void simplify() {
+      final List<BooleanSupplier> newInner = stream().map(λ -> !getClass().isInstance(λ) ? Stream.of(λ) : ((Some) λ).inner.stream()).flatMap(λ -> λ)
           .collect(Collectors.toList());
-      
       inner.clear();
       inner.addAll(newInner);
     }

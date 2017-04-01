@@ -88,7 +88,6 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
       }
-
     }.extend(nextReturn);
   }
 

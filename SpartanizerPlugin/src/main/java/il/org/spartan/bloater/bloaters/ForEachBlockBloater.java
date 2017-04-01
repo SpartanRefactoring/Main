@@ -10,8 +10,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-
-
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
@@ -26,10 +24,9 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
   private static final long serialVersionUID = 0x38C70470EE42ECEBL;
 
   @Override public Examples examples() {
-    return 
-        convert("for(Double i : lili) a=5; b=7;").to("for(int i=0;i<5;i++){a=5;}b=7;"); 
+    return convert("for(Double i : lili) a=5; b=7;").to("for(int i=0;i<5;i++){a=5;}b=7;");
   }
-  
+
   public ForEachBlockBloater() {
     andAlso("Valid when not a block", () -> {
       final Collection<Boolean> $ = new ArrayList<>();
@@ -44,7 +41,6 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
       return $.isEmpty();
     });
   }
- 
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final EnhancedForStatement $ = copy.of(current);
@@ -55,9 +51,7 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
     return r;
   }
 
-  @Override public String description(@SuppressWarnings("unused") EnhancedForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
     return "expand the single statement in the foreach to a block";
   }
-  
-
 }
