@@ -322,7 +322,7 @@ public interface wizard {
   }
 
   static List<Statement> decompose(final Expression x) {
-    return new ExpressionMapReducer<List<Statement>>() {
+    return new ASTMapReducer<List<Statement>>() {
       @Override protected List<Statement> map(final Assignment ¢) {
         return listMe(¢);
       }
