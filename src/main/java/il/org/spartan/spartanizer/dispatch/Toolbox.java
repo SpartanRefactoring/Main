@@ -343,7 +343,7 @@ public class Toolbox {
             new LocalVariableIntializedStatementToForInitializers(), //
             new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
             new LocalVariableInitializedUnusedRemove(), //
-            new InitializerIncDecrementInline(),//
+            new LocalInitializedIncrementDecrementInline(),//
             null) //
     ;
   }
