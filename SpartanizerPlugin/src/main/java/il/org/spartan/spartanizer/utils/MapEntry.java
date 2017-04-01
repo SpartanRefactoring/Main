@@ -1,4 +1,4 @@
-/* TODO: Yossi Gil LocalVariableInitializedStatement description
+/* TODO Yossi Gil LocalVariableInitializedStatement description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -7,7 +7,7 @@ package il.org.spartan.spartanizer.utils;
 
 import java.util.*;
 
-// TODO: Yossi Gil remove this class
+// TODO Yossi Gil remove this class
 public final class MapEntry<K, V> implements Map.Entry<K, V> {
   private final K key;
   private V value;

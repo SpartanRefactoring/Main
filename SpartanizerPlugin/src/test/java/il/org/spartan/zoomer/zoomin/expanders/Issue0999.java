@@ -9,7 +9,7 @@ import il.org.spartan.bloater.bloaters.*;
 /** Unit test for {@link AssignmentAndAssignmentBloater}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-26 */
-// TODO: post a link to the tested class
+// TODO post a link to the tested class
 @SuppressWarnings("static-method")
 public class Issue0999 {
   @Test public void a() {

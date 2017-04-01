@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
+/** TODO Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
  * @since Jan 21, 2017 */
 public enum SpartanizationComparator {

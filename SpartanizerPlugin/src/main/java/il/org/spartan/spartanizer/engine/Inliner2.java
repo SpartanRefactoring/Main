@@ -101,7 +101,7 @@ public final class Inliner2 {
       return initializer;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
     $.setType(az.arrayType(copy.of(type(currentStatement))));
-    // TODO: causes IllsegalArgumentException (--om)
+    // TODO causes IllsegalArgumentException (--om)
     $.setInitializer(copy.of(az.arrayInitializer(initializer)));
     return $;
   }

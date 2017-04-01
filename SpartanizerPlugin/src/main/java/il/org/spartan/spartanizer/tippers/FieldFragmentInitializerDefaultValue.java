@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO: Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 24, 2017 */
 public final class FieldFragmentInitializerDefaultValue extends ReplaceCurrentNode<VariableDeclarationFragment>
