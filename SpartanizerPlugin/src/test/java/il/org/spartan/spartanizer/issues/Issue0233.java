@@ -12,14 +12,14 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0233 {
   @Test public void a() {
-    trimmingOf("switch(x) {} int x=5; ++x;")//
-        .gives("int x=5; ++x;")//
+    trimmingOf("switch(x) {} int x=5; f(++x);")//
+        .gives("int x=5; f(++x);")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf("switch(x) {} switch(x) {}int x=5; ++x;")//
-        .gives("int x=5; ++x;")//
+    trimmingOf("switch(x) {} switch(x) {}int x=5; f(++x);")//
+        .gives("int x=5; f(++x);")//
         .stays();
   }
 
@@ -34,23 +34,23 @@ public class Issue0233 {
   }
 
   @Test public void e() {
-    trimmingOf("switch(x) {} switch(x) { case a: }int x=5; ++x;")//
-        .gives("int x=5; ++x;");
+    trimmingOf("switch(x) {} switch(x) { case a: }int x=5; f(++x);")//
+        .gives("int x=5; f(++x);");
   }
 
   @Test public void f() {
-    trimmingOf("switch(x) { case a: case b: case c: }int x=5; ++x;")//
-        .gives("int x=5; ++x;");
+    trimmingOf("switch(x) { case a: case b: case c: }int x=5; f(++x);")//
+        .gives("int x=5; f(++x);");
   }
 
   @Test public void f2() {
-    trimmingOf("switch(x) { case a: case b: case c: break;}int x=5; ++x;")//
-        .gives("int x=5; ++x;");
+    trimmingOf("switch(x) { case a: case b: case c: break;}int x=5; f(++x);")//
+        .gives("int x=5; f(++x);");
   }
 
   @Test public void f3() {
-    trimmingOf("switch(x) { case a: case b: default: case c: }int x=5; ++x;")//
-        .gives("int x=5; ++x;");
+    trimmingOf("switch(x) { case a: case b: default: case c: }int x=5; f(++x);")//
+        .gives("int x=5; f(++x);");
   }
 
   @Test public void g() {
