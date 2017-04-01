@@ -90,6 +90,6 @@ public enum remove {
   }
 
   public static void statement(final Statement s, final ASTRewrite r, final TextEditGroup g) {
-    trick.statementRewriter(r,s).remove(s, g);
+    trick.statementRewriter(r, s).remove(s, g);
   }
 }

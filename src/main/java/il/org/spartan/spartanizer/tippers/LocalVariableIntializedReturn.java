@@ -32,6 +32,7 @@ public final class LocalVariableIntializedReturn extends $FragmentAndStatement//
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
+
   @Override public Examples examples() {
     return convert("int a = 3; return a += 2;").to("return a + 5;");
   }

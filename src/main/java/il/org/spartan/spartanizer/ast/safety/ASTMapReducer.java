@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
 public abstract class ASTMapReducer<R> extends Reduce<R> {
-  public R map(ASTNode ¢) {
+  public R map(final ASTNode ¢) {
     if (iz.statement(¢))
       return map(az.statement(¢));
     if (iz.expression(¢))
@@ -29,7 +29,7 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
     return foldl(as.list(¢));
   }
 
-  protected R map(AbstractTypeDeclaration d) {
+  protected R map(final AbstractTypeDeclaration d) {
     final List<IExtendedModifier> modifiers = step.extendedModifiers(d);
     return reduce(//
         map(d.getJavadoc()), //
@@ -38,14 +38,14 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
         foldl(step.bodyDeclarations(d)));
   }
 
-  protected R foldListModifiers(List<IExtendedModifier> ms) {
+  protected R foldListModifiers(final List<IExtendedModifier> ms) {
     R $ = reduce();
-    for (IExtendedModifier m : ms)
+    for (final IExtendedModifier m : ms)
       $ = reduce($, map(m));
     return $;
   }
 
-  protected R map(@SuppressWarnings("unused") IExtendedModifier m) {
+  protected R map(@SuppressWarnings("unused") final IExtendedModifier m) {
     return reduce();
   }
 
@@ -178,15 +178,15 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
     return map(¢.getLeftOperand());
   }
 
-  protected final R foldl(Iterable<? extends ASTNode> ns) {
+  protected final R foldl(final Iterable<? extends ASTNode> ns) {
     R $ = reduce();
-    for (ASTNode n : ns)
+    for (final ASTNode n : ns)
       $ = reduce($, map(n));
     return $;
   }
 
-  protected R map(Javadoc javadoc) {
-    return step.tags(javadoc).stream().map(x->map(x)).reduce(reduce(),(x1,x2)->reduce(x1,x2));
+  protected R map(final Javadoc javadoc) {
+    return step.tags(javadoc).stream().map(x -> map(x)).reduce(reduce(), (x1, x2) -> reduce(x1, x2));
   }
 
   protected R map(final LabeledStatement ¢) {
@@ -203,9 +203,9 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
     return reduce(map(expression(¢)), foldl(arguments(¢)));
   }
 
-  protected final R mapList(List<ASTNode> ns) {
+  protected final R mapList(final List<ASTNode> ns) {
     R $ = reduce();
-    for (ASTNode n : ns)
+    for (final ASTNode n : ns)
       $ = reduce($, map(n));
     return $;
   }

@@ -1,7 +1,6 @@
 package il.org.spartan.bloater.bloaters;
 
 import org.eclipse.jdt.core.dom.*;
-
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -9,7 +8,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
-
 import il.org.spartan.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
@@ -29,7 +27,7 @@ public class PostFixToInfixExpander extends PostfixExprezzion//
   public PostFixToInfixExpander() {
     andAlso("Can be changed", () -> (iz.expressionStatement(current.getParent()) || iz.forStatement(current.getParent())));
   }
-  
+
   @Override public Examples examples() {
     return convert("i++;").to("i += 1;").convert("i--;").to("i-=1;");
   }
@@ -43,10 +41,8 @@ public class PostFixToInfixExpander extends PostfixExprezzion//
       $.replace(current, subject.pair(operand, one).to(Assignment.Operator.MINUS_ASSIGN), g);
     return $;
   }
-  
 
   @Override public String description(@SuppressWarnings("unused") final PostfixExpression __) {
     return "replace postfix with infix";
   }
-
 }

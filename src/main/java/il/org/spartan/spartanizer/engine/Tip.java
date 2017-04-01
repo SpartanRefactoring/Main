@@ -38,7 +38,7 @@ public abstract class Tip extends Range {
       final N2 hightlight) {
     super(range(hightlight));
     this.description = description;
-    this.tipperClass = class1;
+    tipperClass = class1;
     lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(hightlight).getLineNumber(from);
     spartanizationCharStart = hightlight.getStartPosition();
     spartanizationCharEnd = spartanizationCharStart + hightlight.getLength();
@@ -52,19 +52,18 @@ public abstract class Tip extends Range {
    * @param ns additional nodes, defining the scope of this action. */
   public <N1 extends ASTNode, N2 extends ASTNode> Tip(final String description, //
       final Class<Tipper<N1>> c, //
-      final N2 highlight, ASTNode... ns) {
+      final N2 highlight, final ASTNode... ns) {
     this(description, c, highlight);
     extend(ns);
   }
-
 
   /** Convert the rewrite into changes on an {@link ASTRewrite}
    * @param r where to place the changes
    * @param g to be associated with these changes @ */
   public abstract void go(ASTRewrite r, TextEditGroup g);
 
-  public Tip extend(ASTNode... ns) {
-    Range r = range(this, ns);
+  public Tip extend(final ASTNode... ns) {
+    final Range r = range(this, ns);
     spartanizationCharStart = r.from;
     spartanizationCharEnd = r.to;
     return this;
