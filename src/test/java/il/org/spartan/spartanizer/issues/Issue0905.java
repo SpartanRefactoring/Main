@@ -44,7 +44,6 @@ public class Issue0905 {
     ;
   }
 
-  // TODO Niv Shalmon it is a tough bug to crack --yg
   @Test public void t17() {
     trimmingOf("while(b==q){if(tipper==q()){int i;}}")//
         .gives("while(b==q)if(tipper==q()){int i;}")//
