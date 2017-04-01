@@ -268,12 +268,12 @@ public class Issue0311 {
   }
 
   @Test public void while_3() {
-    trimmingOf("c(int i){int p=i,a=0;++a;while(p<10)++p;return false;}")//
+    trimmingOf("c(int i){int p=i,a=0;f(++a);while(p<10)++p;return false;}")//
         .stays();
   }
 
   @Test public void while_4() {
-    trimmingOf("c(N i){N p=i;int a=5;++a;while(p<10)p=p.e();return false;}")//
+    trimmingOf("c(N i){N p=i;int a=5;f(++a);while(p<10)p=p.e();return false;}")//
         .stays();
   }
 
