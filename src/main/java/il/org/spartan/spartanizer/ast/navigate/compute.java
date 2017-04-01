@@ -48,7 +48,7 @@ public enum compute {
     }.map(x);
   }
 
-  public static List<ASTNode> updatedVariables(final Expression x) {
+  public static List<ASTNode> updateSpots(final Expression x) {
     final List<ASTNode> $ = new ExpressionMapReducer<List<ASTNode>>() {
       @Override public List<ASTNode> reduce() {
         return new LinkedList<>();
