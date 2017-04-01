@@ -44,7 +44,8 @@ public class IfFooElseIfBarElseFoo extends ReplaceCurrentNode<IfStatement> //
     final Block bl = subject.statement($).toBlock();
     IfStatement originalParent = p, newParent = copy.of(originalParent);
     newParent.setThenStatement(bl);
-    /* copies the tree as long as only IfStatements are the parents, so
+    /* copies the tree as long as only IfStatements are the parent and the current node
+     * is part of the then branch, so
      * iz.blockEssential can tell us whether the block is essential or not. */
     while (originalParent.getLocationInParent().equals(IfStatement.THEN_STATEMENT_PROPERTY)) {
       Statement child = newParent;
