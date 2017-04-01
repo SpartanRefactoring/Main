@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.eclipse.jface.text.*;
 
+import il.org.spartan.utils.*;
+
 /** An abstract selection, containing files and possible text selection.
  * @author Ori Roth
  * @since 2.6 */
@@ -31,7 +33,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
    * @param ¢ JD
    * @return {@code this} selection */
   public Self setCompilationUnits(final List<WrappedCompilationUnit> ¢) {
-    inner = ¢ != null ? ¢ : new ArrayList<>();
+    inner = ¢ != null ? ¢ : empty.list();
     return self();
   }
 

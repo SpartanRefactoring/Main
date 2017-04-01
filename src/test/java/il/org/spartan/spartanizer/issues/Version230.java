@@ -1304,6 +1304,10 @@ public final class Version230 {
         .gives("return 3 * 2 * 4;");
   }
 
+  int f() {
+    return 3 * 2 * 4;
+  }
+
   /** START OF STABLING TESTS */
   @Test public void inlineintoInstanceCreation() {
     trimmingOf("public Statement methodBlock(FrameworkMethod m){ final Statement statement=methodBlock(m); "

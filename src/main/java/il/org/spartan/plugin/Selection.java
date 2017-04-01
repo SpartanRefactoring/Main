@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
  * @since 2.6 */
 public class Selection extends AbstractSelection<Selection> {
   public Selection(final List<WrappedCompilationUnit> compilationUnits, final ITextSelection textSelection, final String name) {
-    inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
+    inner = compilationUnits == null ? empty.list() : compilationUnits;
     this.textSelection = textSelection;
     this.name = name;
   }
