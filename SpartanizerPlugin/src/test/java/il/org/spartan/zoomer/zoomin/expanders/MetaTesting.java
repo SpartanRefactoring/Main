@@ -15,7 +15,7 @@
 // @Test public void test() {
 // AlphabeticallySortedSentence case1 = new
 // AlphabeticallySortedSentence() {
-// /** [[SuppressWarningsSpartan]] */
+// /** */
 // @Override @SuppressWarnings("All") protected void startingWith() {/***/
 // }
 //

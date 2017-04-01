@@ -31,10 +31,10 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
     if (!sideEffects.free(right))
       return false;
     final Expression then = x.getThenExpression();
-    if (!wizard.same(then, left) && !wizard.same(then, right))
+    if (!wizard.eq(then, left) && !wizard.eq(then, right))
       return false;
     final Expression elze = x.getElseExpression();
-    return wizard.same(elze, left) || wizard.same(elze, right);
+    return wizard.eq(elze, left) || wizard.eq(elze, right);
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {

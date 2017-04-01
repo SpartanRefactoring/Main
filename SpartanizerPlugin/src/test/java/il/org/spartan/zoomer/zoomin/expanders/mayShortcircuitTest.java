@@ -8,6 +8,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
@@ -16,7 +17,6 @@ import il.org.spartan.spartanizer.meta.*;
 /** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-28 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore
 @SuppressWarnings("javadoc")
 public class mayShortcircuitTest extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
@@ -25,22 +25,22 @@ public class mayShortcircuitTest extends MetaFixture {
   private final Namespace classX = fixtureClass.getChild(2);
 
   @Test public void test1a() {
-    azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new Integer(5)"))))), is("i4"));
+    azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new Integer(5)"))))), is("i4"));
   }
 
   @Test public void test1b() {
-    azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new B();"))))), is("b1"));
+    azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new B();"))))), is("b1"));
   }
 
   @Test public void test2a() {
-    azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new Integer(5);"))))), is("i1"));
+    azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new Integer(5);"))))), is("i1"));
   }
 
   @Test public void test2b() {
-    azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new A();"))))), is("a2"));
+    azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new A();"))))), is("a2"));
   }
 
   @Test public void test3a() {
-    azzert.that(classX.generateName(type(az.classInstanceCreation(findFirst.expression(wizard.ast("new X();"))))), is("x3"));
+    azzert.that(classX.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new X();"))))), is("x3"));
   }
 }

@@ -19,6 +19,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -32,6 +33,16 @@ import il.org.spartan.utils.*;
  * @since 2015-07-16 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public interface iz {
+  interface not {
+    @SafeVarargs static <T> boolean in(final T t, final T... ts) {
+      return !iz.in(t, ts);
+    }
+
+    static boolean null¢(final Object ¢) {
+      return ¢ != null;
+    }
+  }
+
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
@@ -108,11 +119,11 @@ public interface iz {
       return false;
     final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
-        || !same(s, az.astNode(first(statements(az.block(elze($))))))//
-        || recursiveElze(s) != null//
+        || !eq(s, az.astNode(first(statements(az.block(elze($))))))//
+        || trick.recursiveElse(s) != null//
         || elze($) == null)//
-        && $ != null && (elze($) == null || recursiveElze(s) == null)
-        && (elze($) != null || recursiveElze(s) != null || blockRequiredInReplacement($, s));
+        && $ != null && (elze($) == null || trick.recursiveElse(s) == null)
+        && (elze($) != null || trick.recursiveElse(s) != null || blockRequiredInReplacement($, s));
   }
 
   /** @param subject JD
@@ -274,7 +285,7 @@ public interface iz {
    * @param x the identifier to search for
    * @return true if x contains the identifier of n */
   static boolean containsName(final SimpleName n, final ASTNode x) {
-    return extract.countNameInSubtree(n,x) != 0;
+    return extract.countNameInSubtree(n, x) != 0;
   }
 
   static boolean containsOperator(final ASTNode ¢) {
@@ -292,7 +303,7 @@ public interface iz {
   }
 
   static boolean defaultLiteral(final ASTNode ¢) {
-    return defaultValues.contains(¢ + "");
+    return defaultLiterals.contains(¢ + "");
   }
 
   static boolean definiteLoop(final ASTNode n) {
@@ -535,7 +546,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, FOR_STATEMENT);
   }
 
-  /** @param with /** @return [[SuppressWarningsSpartan]] */
+  /** @param with /** @return */
   @SuppressWarnings("all") static boolean fragile(final Expression with) {
     // TODO Yossi Gil Auto-generated method stub for fragile
     if (new Object().hashCode() != 0)
@@ -1042,17 +1053,16 @@ public interface iz {
    * @param type Type of sequencer
    * @return true if ¢ contains this sequencer (only for if-else and blocks) In
    *         contrast to sequencerComplex(ASTNode) above, this method not
-   *         necessarily checks the following statements are not reachable.
-   *         [[SuppressWarningsSpartan]] */
+   *         necessarily checks the following statements are not reachable. */
   static boolean sequencerComplex(final ASTNode ¢, final int type) {
     if (¢ == null)
       return false;
     switch (¢.getNodeType()) {
+      case BLOCK:
+        return statements(az.block(¢)).stream().anyMatch(λ -> sequencerComplex(λ, type));
       case IF_STATEMENT:
         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement(), type) || sequencerComplex($.getElseStatement(), type);
-      case BLOCK:
-        return statements(az.block(¢)).stream().anyMatch(s -> sequencerComplex(s, type));
       default:
         return sequencer(¢, type);
     }
@@ -1267,7 +1277,7 @@ public interface iz {
     return iz.nodeTypeEquals(¢, WILDCARD_TYPE);
   }
 
-  List<String> defaultValues = as.list("null", "0", "false", "0.", "0L");
+  List<String> defaultLiterals = as.list("null", "0", "false", "0.", "0L");
   int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
 
   /** @param ¢ JD

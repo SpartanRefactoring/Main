@@ -104,6 +104,8 @@ public enum makeAST {
    * @return {@link StringBuilder} whose content is the same as the contents of
    *         the parameter. */
   public StringBuilder builder(final File f) {
+    if (f == null)
+      return new StringBuilder();
     try (Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (final Exception ¢) {

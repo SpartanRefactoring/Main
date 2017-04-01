@@ -14,7 +14,7 @@ public class LazyInitializerTest {
     trimmingOf("¢ = ¢ != null ? ¢ : \"\";")//
         .using(ConditionalExpression.class, new DefaultsTo())//
         .using(Assignment.class, new LazyInitializer())//
-        .gives("¢ = default¢(¢).to(\"\");")//
+        .gives("¢ = defaults(¢).to(\"\");")//
         .using(ConditionalExpression.class, new DefaultsTo())//
         .using(Assignment.class, new LazyInitializer())//
         .gives("lazyInitialize(¢).with(()-> \"\");")//

@@ -341,11 +341,9 @@ public final class EnvironmentTests {
       class Inner {
         final Outer outer = Outer.this;
 
-        /** [[SuppressWarningsSpartan]] */
         @NestedENV({ "EX6.Outer.x#int", "EX6.Outer.Inner.outer#Outer" }) @OutOfOrderFlatENV({ "x", "outer" }) void func(final Inner p) {
           @Begin
           class m {}
-          x = 0;
           x = 1;
           p.outer.x = 2;
           @End("x")

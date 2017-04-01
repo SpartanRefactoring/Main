@@ -8,7 +8,7 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Tests of {@link research.util}
@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.research.util.*;
  * @since Nov 14, 2016 */
 public class CleanerVisitorTest {
   private static ASTNode createAST(final String ¢) {
-    return wizard.ast(¢);
+    return make.ast(¢);
   }
 
   private static Predicate<ASTNode> createImportPredicate() {

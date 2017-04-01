@@ -1,15 +1,12 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
 
-/*** <p>
- * TODO second lecture
+/*** Third lecture:
  * <ol>
  * <li>discuss asString()
  * <li>discuss fullEval() *
@@ -40,7 +37,7 @@ public interface Proposition extends BooleanSupplier {
     return new And(toString, s1, s2, ss);
   }
 
-  static Proposition NOT(final BooleanSupplier ¢) {
+  static Proposition not(final BooleanSupplier ¢) {
     return new Not(¢);
   }
 
@@ -112,8 +109,7 @@ public interface Proposition extends BooleanSupplier {
     }
 
     @Override public final String toString() {
-      return inner instanceof Aggregate ? inner + "" //
-          : toString != null ? toString : super.toString();
+      return toString != null ? toString : inner instanceof Aggregate ? inner + "" : super.toString();
     }
   }
 
@@ -172,8 +168,7 @@ public interface Proposition extends BooleanSupplier {
     }
 
     @Override public Proposition and(final BooleanSupplier s, final BooleanSupplier... cs) {
-      inner.set(inner.size() - 1, AND(of(last(inner)), s, cs));
-      return this;
+      return new And(this, s, cs);
     }
 
     @Override public boolean getAsBoolean() {
@@ -207,6 +202,10 @@ public interface Proposition extends BooleanSupplier {
 
     @Override public Proposition or(final BooleanSupplier s, final BooleanSupplier... cs) {
       return new Or(this, s, cs);
+    }
+
+    @Override public Proposition self() {
+      return null;
     }
   }
 

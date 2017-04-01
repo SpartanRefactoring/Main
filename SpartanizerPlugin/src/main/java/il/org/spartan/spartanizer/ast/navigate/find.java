@@ -53,13 +53,13 @@ public enum find {
     if (children1.size() != children2.size())
       return az.expression(n1);
     if (children1.isEmpty())
-      return same(n1, n2) ? null : az.expression(n1);
+      return eq(n1, n2) ? null : az.expression(n1);
     Expression $ = singleExpressionDifference(lisp.first(children1), lisp.first(children2));
     for (int i = 1; i < children1.size(); ++i) {
       final Expression diff = singleExpressionDifference(children1.get(i), children2.get(i));
       // If two children aren't the same and not with same expression, the whole
       // of n1 is the difference
-      if ($ != null && diff != null && !same($, diff))
+      if ($ != null && diff != null && !eq($, diff))
         return az.expression(n1);
       $ = $ != null ? $ : diff;
     }

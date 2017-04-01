@@ -7,6 +7,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -55,7 +56,7 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
       findFirst.instanceOf(MethodDeclaration.class)
-          .in(wizard.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
+          .in(make.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
     } catch (final AssertionError __) {
       ___.unused(__);
     }

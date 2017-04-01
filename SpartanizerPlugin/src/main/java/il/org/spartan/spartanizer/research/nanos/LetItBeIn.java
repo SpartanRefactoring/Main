@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragment> {
   private static final long serialVersionUID = -7580396559433880409L;
   private static final LetInliner letInliner = new LetInliner();
-  private static final FragmentInitializerInlineIntoNext fragmentInliner = new FragmentInitializerInlineIntoNext();
+  private static final LocalVariableIntializedInlineIntoNext fragmentInliner = new LocalVariableIntializedInlineIntoNext();
 
   @Override public boolean canTip(final VariableDeclarationFragment ¢) {
     return letInliner.canTip(¢)//
@@ -48,7 +48,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
       if (pp != null)
         e = Inliner.protect(e, pp);
       $.remove(parent, g);
-      $.replace(nextStatement, wizard.ast((!iz.returnStatement(nextStatement) ? "" : "return ") + "let(()->" + initializer + ").in(" + name(f) + "->"
+      $.replace(nextStatement, make.ast((!iz.returnStatement(nextStatement) ? "" : "return ") + "let(()->" + initializer + ").in(" + name(f) + "->"
           + expression(nextStatement) + ");"), g);
       return $;
     }

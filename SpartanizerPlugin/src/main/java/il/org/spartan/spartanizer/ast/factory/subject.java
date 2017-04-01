@@ -111,7 +111,7 @@ public enum subject {
      * @see #rebase
      * @see copy#duplicate */
     Expression claim(final Expression ¢) {
-      return wizard.rebase(copy.of(extract.core(¢)), ast);
+      return action.rebase(copy.of(extract.core(¢)), ast);
     }
 
     /** A deep copy of statement and assign it to ast, if the statement exists
@@ -121,7 +121,7 @@ public enum subject {
      * @see copy */
     Statement claim(final Statement ¢) {
       final Statement $ = extract.core(¢);
-      return $ == null ? null : wizard.rebase(copy.of($), ast);
+      return $ == null ? null : action.rebase(copy.of($), ast);
     }
   }
 

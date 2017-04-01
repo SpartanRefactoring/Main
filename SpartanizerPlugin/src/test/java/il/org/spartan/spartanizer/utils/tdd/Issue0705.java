@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.util.*;
 
 /** Tests of {@link measure.expressions}
@@ -26,16 +26,17 @@ public class Issue0705 {
   }
 
   @Test public void b() {
-    azzert.that(getAll.instanceofs((MethodDeclaration) wizard.ast("void func(){ return; }")).size(), is(0));
+    azzert.that(getAll.instanceofs((MethodDeclaration) make.ast("void func(){ return; }")).size(), is(0));
   }
 
   @Test public void c() {
-    azzert.that(getAll.instanceofs((MethodDeclaration) wizard.ast("void a () {Integer obj = 5;if(obj instanceof Object){} }")).size(), is(1));
+    azzert.that(getAll.instanceofs((MethodDeclaration) make.ast("void a () {Integer obj = 5;if(obj instanceof Object){} }")).size(), is(1));
   }
 
   @Test public void d() {
-    azzert.that(getAll
-        .instanceofs((MethodDeclaration) wizard.ast("boolean func (){Integer obj = 5;return (obj instanceof Object) || (obj instanceof Integer); }"))
-        .size(), is(2));
+    azzert.that(
+        getAll.instanceofs(
+            (MethodDeclaration) make.ast("boolean func (){Integer obj = 5;return (obj instanceof Object) || (obj instanceof Integer); }")).size(),
+        is(2));
   }
 }

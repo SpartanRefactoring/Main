@@ -35,7 +35,7 @@ public final class AssignmentAndReturn extends GoToNextStatement<Assignment>//
     if (parent == null || iz.forStatement(parent))
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
-    if (s == null || !wizard.same(to(a), core(expression(s))))
+    if (s == null || !wizard.eq(to(a), core(expression(s))))
       return null;
     $.remove(parent, g);
     $.replace(s, subject.operand(a).toReturn(), g);

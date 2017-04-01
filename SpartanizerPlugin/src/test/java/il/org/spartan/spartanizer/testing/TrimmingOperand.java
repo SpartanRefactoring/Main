@@ -112,7 +112,7 @@ public class TrimmingOperand extends Wrapper<String> {
 
   public void stays() {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
+    final String wrap = w.on(get()), unpeeled = trim.apply(trimmer.setExceptionListener(λ -> fail(λ.getClass() + " was thrown")), wrap);
     if (wrap.equals(unpeeled))
       return;
     final String peeled = w.off(unpeeled);
@@ -150,8 +150,13 @@ public class TrimmingOperand extends Wrapper<String> {
     return this;
   }
 
-  @SafeVarargs public final TrimmingOperand using(final Tipper<?>... ¢) {
-    trimmer.fix(¢);
+  @SafeVarargs public final TrimmingOperand usingTipper(final Tipper<?>... ¢) {
+    trimmer.fixTipper(¢);
+    return this;
+  }
+
+  @SafeVarargs public final TrimmingOperand usingBloater(final Tipper<?>... ¢) {
+    trimmer.fixBloater(¢);
     return this;
   }
 }

@@ -212,8 +212,8 @@ final class EnvironmentVisitor extends ASTVisitor {
   /** Order of the searched {@link Statement} in its parent {@link ASTNode},
    * among nodes of the same kind. Zero based.
    * @param s
-   * @return The nodes index, according to order of appearance, among nodes of
-   *         the same type. [[SuppressWarningsSpartan]] */
+   * @return The nodes index, according to order of appearance, among nodes
+   *         ofthe same type. [[SuppressWarningsSpartan]] */
   static int statementOrderAmongTypeInParent(final Statement s) {
     // extract.statements wouldn't work here - we need a shallow extract,
     // not a deep one.

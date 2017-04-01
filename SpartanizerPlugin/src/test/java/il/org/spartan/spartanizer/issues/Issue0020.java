@@ -5,17 +5,22 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: Yossi Gil please add a description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/** TODO: test class for renaming constructor parameters
+ * @author Dor Ma'ayan
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore // TODO: Doron Mehsulam --yg
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0020 {
   /** Correct way of trimming does not change */
   @Test public void constructorParameterRenaming_00() {
     trimmingOf("class A {int x;A(int y) {this.x = y;}}")//
         .gives("class A {int x;A(int x) {this.x = x;}}")//
+        .stays();
+  }
+
+  @Test public void constructorParameterRenaming_001() {
+    trimmingOf("class A {int x;A(int y,int z) {this.x = z;}}")//
+        .gives("class A {int x;A(int y,int x) {this.x = x;}}")//
         .stays();
   }
 
@@ -56,37 +61,17 @@ public class Issue0020 {
 
   @Test public void constructorParameterRenaming_06() {
     trimmingOf("class A {int x;A(int y, int x) {this.x = y;++x;}}")//
-        .gives("class A {int x;A(int x, int ¢) {this.x = x;++¢}}")//
         .stays();
   }
 
   @Test public void constructorParameterRenaming_06a() {
     trimmingOf("class A {int x;A(int y, int x) {this.x = y;}}")//
-        .gives("class A {int x;A(int x, int __) {this.x = x;}}")//
-        .stays();
-  }
-
-  @Test public void constructorParameterRenaming_07() {
-    trimmingOf("class A {int x;A(int y, int x) {this.x = y;}}")//
-        .gives("class A {int x;A(int x, int __) {this.x = x;}}")//
-        .stays();
-  }
-
-  @Test public void constructorParameterRenaming_07a() {
-    trimmingOf("class A {int x;A(int y, int x) {this.x = y;this.x += x}}")//
-        .gives("class A {int x;A(int x, int ¢) {this.x = x;this.x += ¢}}")//
         .stays();
   }
 
   @Test public void constructorParameterRenaming_07b() {
     trimmingOf("class A {int x;A(int y, int z) {this.x = y;this.x = z;}}")//
-        .gives("class A {int x;A(int x) {this.x = x;}}")//
-        .stays();
-  }
-
-  @Test public void constructorParameterRenaming_07c() {
-    trimmingOf("class A {int x;A(int y, int z) {this.x = y;this.x = z;}}")//
-        .gives("class A {int x;A(int x) {this.x = x;}}")//
+        .gives("class A {int x;A(int x, int z) {this.x = x;this.x = z;}}")//
         .stays();
   }
 }

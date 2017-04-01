@@ -1,4 +1,4 @@
-/* TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO: Yossi Gil LocalVariableInitializedStatement description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -6,7 +6,7 @@
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.dispatch.Tricks.*;
+import static il.org.spartan.spartanizer.ast.factory.action.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import static il.org.spartan.lisp.*;

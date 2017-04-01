@@ -28,22 +28,66 @@ import il.org.spartan.utils.*;
 @SuppressWarnings("ClassWithTooManyMethods")
 public enum az {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
+  /** A fluent API to parse numeric literals, including provisions for unary
+   * minus.
+   * @author Yossi Gil */
+  public interface throwing {
+    static double double¢(final Expression ¢) throws NumberFormatException {
+      assert iz.pseudoNumber(¢);
+      return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
+          : iz.numberLiteral(¢) ? double¢(lisp2.chopLast(token(az.numberLiteral(¢)))) : -double¢(lisp2.chopLast(token(az.prefixExpression(¢))));
+    }
+
+    static double double¢(final String token) throws NumberFormatException {
+      return Double.parseDouble(token);
+    }
+
+    static int int¢(final Expression ¢) throws NumberFormatException {
+      assert iz.pseudoNumber(¢);
+      return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
+    }
+
+    static int int¢(final String token) throws NumberFormatException {
+      return Integer.parseInt(token);
+    }
+
+    static long long¢(final Expression ¢) throws NumberFormatException {
+      assert iz.pseudoNumber(¢);
+      return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
+          : !iz.numberLiteral(¢) ? -long¢(lisp2.chopLast(token(¢))) : long¢(iz.intType(¢) ? token(¢) : lisp2.chopLast(token(¢)));
+    }
+
+    static long long¢(final String token) throws NumberFormatException {
+      return Long.parseLong(token);
+    }
+
+    static NumberLiteral negativeLiteral(final Expression ¢) {
+      return throwing.negativeLiteral(prefixExpression(¢));
+    }
+
+    static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
+      return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
+    }
+
+    static String token(final Expression ¢) {
+      return iz.numberLiteral(¢) ? token(az.numberLiteral(¢)) : iz.prefixExpression(¢) ? token(prefixExpression(¢)) : null;
+    }
+
+    static String token(final NumberLiteral ¢) {
+      return ¢.getToken();
+    }
+
+    static String token(final PrefixExpression ¢) {
+      return az.numberLiteral(operand(¢)).getToken();
+    }
+  }
+
   /** Down-cast, if possible, to {@link AbstractTypeDeclaration}
    * @param $ result
    * @return parameter down-casted to the returned type, or
    *         {@code null if no such down-casting is possible. */
   public static AbstractTypeDeclaration abstractTypeDeclaration(final ASTNode $) {
     return eval(() -> ((AbstractTypeDeclaration) $)).when($ instanceof AbstractTypeDeclaration);
-  }
-
-  /** Convert an {@link Expression} into {@link InfixExpression} whose operator
-   * is either {@link InfixExpression.Operator#AND} or
-   * {@link InfixExpression.Operator#OR}.
-   * @param $ result
-   * @return parameter thus converted, or {@code null</b> if the conversion is
-   *         not possible for it */
-  public static InfixExpression shortcircuit(final Expression $) {
-    return !iz.infixExpression($) || !iz.deMorgan(infixExpression($).getOperator()) ? null : infixExpression($);
   }
 
   /** Down-cast, if possible, to {@link Annotation}
@@ -56,10 +100,6 @@ public enum az {
 
   public static AnnotationTypeDeclaration annotationTypeDeclration(final ASTNode $) {
     return !iz.annotationTypeDeclaration($) ? null : (AnnotationTypeDeclaration) $;
-  }
-
-  public static Initializer initializer(final ASTNode $) {
-    return eval(() -> ((Initializer) $)).when($ instanceof Initializer);
   }
 
   public static AnnotationTypeMemberDeclaration annotationTypeMemberDeclaration(final BodyDeclaration ¢) {
@@ -262,6 +302,10 @@ public enum az {
     return !iz.nodeTypeEquals($, INFIX_EXPRESSION) ? null : (InfixExpression) $;
   }
 
+  public static Initializer initializer(final ASTNode $) {
+    return eval(() -> ((Initializer) $)).when($ instanceof Initializer);
+  }
+
   /** Down-cast, if possible, to {@link InstanceofExpression}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -349,6 +393,10 @@ public enum az {
     return !iz.numberLiteral($) ? null : (NumberLiteral) $;
   }
 
+  public static ParameterizedType parameterizedType(final ASTNode ¢) {
+    return !iz.parameterizedType(¢) ? null : (ParameterizedType) ¢;
+  }
+
   /** Down-cast, if possible, to {@link ParenthesizedExpression}
    * @param $ result
    * @return parameter down-casted to the returned type, or
@@ -393,6 +441,20 @@ public enum az {
     return $ == null || !iz.nodeTypeEquals($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
   }
 
+  public static Statement sequencer(final Statement ¢) {
+    return iz.sequencer(¢) ? ¢ : null;
+  }
+
+  /** Convert an {@link Expression} into {@link InfixExpression} whose operator
+   * is either {@link InfixExpression.Operator#AND} or
+   * {@link InfixExpression.Operator#OR}.
+   * @param $ result
+   * @return parameter thus converted, or {@code null</b> if the conversion is
+   *         not possible for it */
+  public static InfixExpression shortcircuit(final Expression $) {
+    return !iz.infixExpression($) || !iz.deMorgan(infixExpression($).getOperator()) ? null : infixExpression($);
+  }
+
   /** Convert, is possible, an {@link ASTNode} to a {@link SimpleName}
    * @param $ result
    * @return argument, but down-casted to a {@link SimpleName}, or
@@ -431,6 +493,10 @@ public enum az {
    *         {@code null if no such down-casting is possible. */
   public static StringLiteral stringLiteral(final ASTNode $) {
     return !iz.nodeTypeEquals($, STRING_LITERAL) ? null : (StringLiteral) $;
+  }
+
+  public static SuperConstructorInvocation superConstructorInvocation(final ASTNode ¢) {
+    return !iz.superConstructorInvocation(¢) ? null : (SuperConstructorInvocation) ¢;
   }
 
   /** @param ¢ JD
@@ -535,67 +601,5 @@ public enum az {
    *         {@code null if no such down-cast is possible.. */
   public static WildcardType wildcardType(final ASTNode $) {
     return !iz.nodeTypeEquals($, WILDCARD_TYPE) ? null : (WildcardType) $;
-  }
-
-  /** A fluent API to parse numeric literals, including provisions for unary
-   * minus.
-   * @author Yossi Gil */
-  public interface throwing {
-    static double double¢(final Expression ¢) throws NumberFormatException {
-      assert iz.pseudoNumber(¢);
-      return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
-          : iz.numberLiteral(¢) ? double¢(system.chopLast(token(az.numberLiteral(¢)))) : -double¢(system.chopLast(token(az.prefixExpression(¢))));
-    }
-
-    static double double¢(final String token) throws NumberFormatException {
-      return Double.parseDouble(token);
-    }
-
-    static int int¢(final Expression ¢) throws NumberFormatException {
-      assert iz.pseudoNumber(¢);
-      return !iz.prefixExpression(¢) ? int¢(token(¢)) : -int¢(token(¢));
-    }
-
-    static int int¢(final String token) throws NumberFormatException {
-      return Integer.parseInt(token);
-    }
-
-    static long long¢(final Expression ¢) throws NumberFormatException {
-      assert iz.pseudoNumber(¢);
-      return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
-          : !iz.numberLiteral(¢) ? -long¢(system.chopLast(token(¢))) : long¢(iz.intType(¢) ? token(¢) : system.chopLast(token(¢)));
-    }
-
-    static long long¢(final String token) throws NumberFormatException {
-      return Long.parseLong(token);
-    }
-
-    static NumberLiteral negativeLiteral(final Expression ¢) {
-      return throwing.negativeLiteral(prefixExpression(¢));
-    }
-
-    static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
-      return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
-    }
-
-    static String token(final Expression ¢) {
-      return iz.numberLiteral(¢) ? token(az.numberLiteral(¢)) : iz.prefixExpression(¢) ? token(prefixExpression(¢)) : null;
-    }
-
-    static String token(final NumberLiteral ¢) {
-      return ¢.getToken();
-    }
-
-    static String token(final PrefixExpression ¢) {
-      return az.numberLiteral(operand(¢)).getToken();
-    }
-  }
-
-  public static ParameterizedType parameterizedType(final ASTNode ¢) {
-    return !iz.parameterizedType(¢) ? null : (ParameterizedType) ¢;
-  }
-
-  public static SuperConstructorInvocation superConstructorInvocation(final ASTNode ¢) {
-    return !iz.superConstructorInvocation(¢) ? null : (SuperConstructorInvocation) ¢;
   }
 }

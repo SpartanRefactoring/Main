@@ -36,6 +36,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         // singleTipperFunction, //
         singleTipperFile, //
         singleTipperProject, //
+        disableTipper, //
         disableFunction, //
         disableClass, //
         // disableFile, //
@@ -85,6 +86,8 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   private final IMarkerResolution disableClass = fixers.disableClassFix();
   /** Disable spartanization in file. */
   private final IMarkerResolution disableFile = fixers.disableFileFix();
+  /** Disables the tipper of this marker. */
+  private final IMarkerResolution disableTipper = quickFix("Disable tip", DisableTipper::disable);
   /** Disable spartanization in class by annotation. */
   private final IMarkerResolution disableClassByAnnotation = fixers.disableClassAnnotationFix();
 

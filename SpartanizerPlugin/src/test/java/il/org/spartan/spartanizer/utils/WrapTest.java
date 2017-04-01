@@ -9,7 +9,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO: Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Oct 7, 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
