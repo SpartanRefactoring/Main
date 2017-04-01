@@ -14,21 +14,6 @@ import il.org.spartan.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-06 */
 public interface Proposition extends BooleanSupplier {
-  /** a {@link Proposition} which is {@code false} */
-  Proposition F = new Singleton("F", () -> false);
-  /** a {@link Proposition} whose evaluation fails with
-   * {@link NullPointerException} */
-  Proposition N = Proposition.of("N", () -> {
-    throw new NullPointerException();
-  });
-  /** a {@link Proposition} which is {@code true} */
-  Proposition T = Proposition.of("T", () -> true);
-  /** a {@link Proposition} whose evaluation fails with
-   * {@link AssertionError} */
-  Proposition X = Proposition.of("X", () -> {
-    throw new AssertionError();
-  });
-
   static Proposition AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return AND(null, s1, s2, ss);
   }
@@ -57,9 +42,28 @@ public interface Proposition extends BooleanSupplier {
     return new Or(toString, s1, s2, ss);
   }
 
+  /** a {@link Proposition} which is {@code false} */
+  Proposition F = new Singleton("F", () -> false);
+  /** a {@link Proposition} whose evaluation fails with
+   * {@link NullPointerException} */
+  Proposition N = Proposition.of("N", () -> {
+    throw new NullPointerException();
+  });
+  /** a {@link Proposition} which is {@code true} */
+  Proposition T = Proposition.of("T", () -> true);
+  /** a {@link Proposition} whose evaluation fails with
+   * {@link AssertionError} */
+  Proposition X = Proposition.of("X", () -> {
+    throw new AssertionError();
+  });
+
   /** Name must be distinct from but similar to
    * {@link #AND(BooleanSupplier, BooleanSupplier, BooleanSupplier...)} */
   Proposition and(BooleanSupplier s, BooleanSupplier... ss);
+
+  default Proposition and(final String toString, final BooleanSupplier s) {
+    return and(Proposition.of(toString, s));
+  }
 
   default boolean eval() {
     return getAsBoolean();
@@ -67,8 +71,25 @@ public interface Proposition extends BooleanSupplier {
 
   Proposition or(BooleanSupplier s, BooleanSupplier... ss);
 
+  default Proposition or(final String toString, final BooleanSupplier s) {
+    return or(Proposition.of(toString, s));
+  }
+
   default <R> R reduce(final PropositionReducer<R> ¢) {
     return ¢.reduce(this);
+  }
+
+  abstract class Aggregate<Inner> extends Outer<Inner> implements Proposition {
+    public Aggregate(final String toString, final Inner inner) {
+      super(inner);
+      this.toString = toString;
+    }
+
+    @Override public final String toString() {
+      return toString != null ? toString : inner instanceof Aggregate ? inner + "" : super.toString();
+    }
+
+    protected final String toString;
   }
 
   final class And extends Some {
@@ -100,47 +121,6 @@ public interface Proposition extends BooleanSupplier {
     }
   }
 
-  abstract class Aggregate<Inner> extends Outer<Inner> implements Proposition {
-    protected final String toString;
-
-    public Aggregate(final String toString, final Inner inner) {
-      super(inner);
-      this.toString = toString;
-    }
-
-    @Override public final String toString() {
-      return toString != null ? toString : inner instanceof Aggregate ? inner + "" : super.toString();
-    }
-  }
-
-  /** A compound {@link Proposition}
-   * @author Yossi Gil {@code yossi.gil@gmail.com}
-   * @since 2017-03-19 */
-  abstract class Some extends Aggregate<List<BooleanSupplier>> {
-    public Some(final String toString) {
-      super(toString, new ArrayList<>());
-    }
-
-    final Proposition add(final BooleanSupplier... ¢) {
-      inner.addAll(as.list(¢));
-      return this;
-    }
-
-    final Proposition add(final BooleanSupplier s, final BooleanSupplier... cs) {
-      inner.add(s);
-      return add(cs);
-    }
-
-    final Proposition add(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... cs) {
-      inner.add(s1);
-      return add(s2, cs);
-    }
-
-    protected Stream<BooleanSupplier> stream() {
-      return inner.stream();
-    }
-  }
-
   final class Not extends Singleton {
     public Not(final BooleanSupplier s) {
       super(s);
@@ -149,6 +129,10 @@ public interface Proposition extends BooleanSupplier {
     @Override public boolean getAsBoolean() {
       return !inner.getAsBoolean();
     }
+  }
+
+  interface Operator1 extends Function<BooleanSupplier, BooleanSupplier> {
+    /** */
   }
 
   final class Or extends Some {
@@ -209,7 +193,31 @@ public interface Proposition extends BooleanSupplier {
     }
   }
 
-  interface Operator1 extends Function<BooleanSupplier, BooleanSupplier> {
-    /** */
+  /** A compound {@link Proposition}
+   * @author Yossi Gil {@code yossi.gil@gmail.com}
+   * @since 2017-03-19 */
+  abstract class Some extends Aggregate<List<BooleanSupplier>> {
+    public Some(final String toString) {
+      super(toString, new ArrayList<>());
+    }
+
+    protected Stream<BooleanSupplier> stream() {
+      return inner.stream();
+    }
+
+    final Proposition add(final BooleanSupplier... ¢) {
+      inner.addAll(as.list(¢));
+      return this;
+    }
+
+    final Proposition add(final BooleanSupplier s, final BooleanSupplier... cs) {
+      inner.add(s);
+      return add(cs);
+    }
+
+    final Proposition add(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... cs) {
+      inner.add(s1);
+      return add(s2, cs);
+    }
   }
 }
