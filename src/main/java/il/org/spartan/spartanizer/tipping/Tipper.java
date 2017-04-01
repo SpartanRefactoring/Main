@@ -60,9 +60,9 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return getClass().equals(¢.getClass());
   }
 
-
-  protected static Converter convert(String from) {
-    return new Examples()/**12*/.convert(from);
+  protected static Converter convert(final String from) {
+    return new Examples()/** 12 */
+        .convert(from);
   }
 
   @Override public final Tip fire() {

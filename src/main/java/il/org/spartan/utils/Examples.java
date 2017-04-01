@@ -32,11 +32,7 @@ public class Examples implements Iterable<Example> {
   }
 
   public Examples ignores(final String code) {
-    return add(new Ignores() {
-      @Override public String get() {
-        return code;
-      }
-    });
+    return add((Ignores) () -> code);
   }
 
   /** Auxiliary class for FAPI
@@ -45,5 +41,4 @@ public class Examples implements Iterable<Example> {
   public interface Converter {
     Examples to(String to);
   }
-
 }

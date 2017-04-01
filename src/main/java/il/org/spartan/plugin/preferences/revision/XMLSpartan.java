@@ -82,9 +82,8 @@ public class XMLSpartan {
       final SpartanTipper st = new SpartanTipper(//
           tc.getSimpleName(), //
           Boolean.parseBoolean(e.getAttribute(ENABLED)), //
-          tcs.get(g),
-          description != null ? description : "No description available", //
-          preview != null  ? preview : EMPTY_PREVIEW);
+          tcs.get(g), description != null ? description : "No description available", //
+          preview != null ? preview : EMPTY_PREVIEW);
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
     }

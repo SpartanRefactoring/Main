@@ -152,8 +152,8 @@ public final class Inliner {
       final ASTNode oldExpression = n.get(), newExpression = copy.of(oldExpression);
       assert oldExpression != null;
       final Expression replacement = get();
-      assert rewriter != null;
       assert replacement != null;
+      assert rewriter != null;
       rewriter.replace(oldExpression, newExpression, editGroup);
       collect.usesOf(name).in(newExpression).stream().filter(Objects::nonNull)
           .forEach(λ -> rewriter.replace(λ, make.plant(replacement).into(λ.getParent()), editGroup));
