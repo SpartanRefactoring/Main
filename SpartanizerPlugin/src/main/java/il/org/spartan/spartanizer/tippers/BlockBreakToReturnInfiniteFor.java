@@ -79,16 +79,17 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
 
-  private Tip make(final ForStatement vor, final ReturnStatement nextReturn, final ExclusionManager exclude) {
-    final Statement $ = make(body(vor), nextReturn);
+  private Tip make(final ForStatement s, final ReturnStatement nextReturn, final ExclusionManager exclude) {
+    final Statement $ = make(body(s), nextReturn);
     if (exclude != null)
-      exclude.exclude(vor);
-    return $ == null ? null : new Tip(description(), getClass(), vor, nextReturn) {
+      exclude.exclude(s);
+    return $ == null ? null : new Tip(description(), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
         r.remove(nextReturn, g);
       }
-    };
+
+    }.extend(nextReturn);
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {

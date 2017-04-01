@@ -64,7 +64,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ir.setFilterImplicitImports(true); // along with this of course
     final Type t = ir.addImport(binding, s.getAST());
     // TODO Ori Roth: enable assignments extraction
-    return t == null || $ instanceof Assignment ? null : new Tip(description(s), getClass(), s) {
+    return t == null || $ instanceof Assignment ? null : new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
         final Type tt = fixWildCardType(t);

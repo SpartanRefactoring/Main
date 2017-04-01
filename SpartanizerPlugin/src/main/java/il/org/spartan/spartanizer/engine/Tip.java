@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -33,51 +34,51 @@ public abstract class Tip extends Range {
     return new Range($, $ + ¢.getLength());
   }
 
-  /** A textual description of the action to be performed **/
-  public final String description;
-  /** The line number of the first character to be rewritten **/
-  public int lineNumber = -1;
-  /** The tipper class that supplied that tip */
-  @SuppressWarnings("rawtypes") public final Class<? extends Tipper> tipperClass;
-  /** Spartanization range char start. */
-  public int spartanizationCharStart;
-  /** Spartanization range char end. */
-  public int spartanizationCharEnd;
-
-  /** Instantiates this class
-   * @param description a textual description of the changes described by this
-   *        instance
-   * @param n the node on which change is to be carried out
-   * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final ASTNode n,
-      final ASTNode... ns) {
-    this(description, tipperClass, range(n, ns));
-    lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(n).getLineNumber(from);
-    spartanizationCharStart = n.getStartPosition();
-    spartanizationCharEnd = spartanizationCharStart + n.getLength();
+  public <N1 extends ASTNode, N2 extends ASTNode> Tip(final String description, //
+      final Class<? extends Tipper<N1>> class1, //
+      final N2 hightlight) {
+    super(range(hightlight));
+    this.description = description;
+    this.tipperClass = class1;
+    lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(hightlight).getLineNumber(from);
+    spartanizationCharStart = hightlight.getStartPosition();
+    spartanizationCharEnd = spartanizationCharStart + hightlight.getLength();
   }
 
   /** Instantiates this class
    * @param description a textual description of the changes described by this
    *        instance
    * @param spartanizationRange the node on which change is to be carried out
-   * @param n the node on which change is to be marked
+   * @param highlight the node on which change is to be marked
    * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final ASTNode spartanizationRange,
-      final ASTNode n, final ASTNode... ns) {
-    this(description, tipperClass, n, ns);
-    spartanizationCharStart = spartanizationRange.getStartPosition();
-    spartanizationCharEnd = spartanizationCharStart + spartanizationRange.getLength();
+  public <N1 extends ASTNode, N2 extends ASTNode> Tip(final String description, //
+      final Class<Tipper<N1>> c, //
+      final N2 highlight, ASTNode... ns) {
+    this(description, c, highlight);
+    extend(ns);
   }
 
-  Tip(final String description, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final Range other) {
-    super(other);
-    this.description = description;
-    this.tipperClass = tipperClass;
-  }
 
   /** Convert the rewrite into changes on an {@link ASTRewrite}
    * @param r where to place the changes
    * @param g to be associated with these changes @ */
   public abstract void go(ASTRewrite r, TextEditGroup g);
+
+  public Tip extend(ASTNode... ns) {
+    Range r = range(this, ns);
+    spartanizationCharStart = r.from;
+    spartanizationCharEnd = r.to;
+    return this;
+  }
+
+  /** A textual description of the action to be performed **/
+  public final String description;
+  /** The line number of the first character to be rewritten **/
+  public int lineNumber;
+  /** Spartanization range char end. */
+  public int spartanizationCharEnd;
+  /** Spartanization range char start. */
+  public int spartanizationCharStart;
+  /** The tipper class that supplied that tip */
+  @SuppressWarnings("rawtypes") public final Class<? extends Tipper> tipperClass;
 }

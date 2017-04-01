@@ -43,7 +43,7 @@ public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<
   @Override public Tip tip(final FieldDeclaration ¢) {
     canTip(¢);
     assert ¢ == fragment.getParent();
-    return new Tip(description(), getClass(), ¢, initializer) {
+    return new Tip(description(), myClass(), ¢, initializer) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final NumberLiteral $ = copy.of(initializer);
         $.setToken(asLiteral());

@@ -20,6 +20,6 @@ public class ContinueCoditinalInForEliminate extends EagerTipper<ForStatement>//
   }
 
   @Override public Tip tip(final ForStatement ¢) {
-    return ContinueInConditionalEliminateAux.actualReplacement(az.block(¢.getBody()), ¢, getClass());
+    return ContinueInConditionalEliminateAux.actualReplacement(az.block(¢.getBody()), ¢, myClass());
   }
 }
