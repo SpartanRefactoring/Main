@@ -24,7 +24,7 @@ public final class TryBodyEmptyLeaveFinallyIfExists extends CarefulTipper<TrySta
   }
 
   @Override public Tip tip(final TryStatement s) {
-    return new Tip(description(s), s, getClass()) {
+    return new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Block finallyBlock = s.getFinally();
         if (finallyBlock == null || statements(finallyBlock).isEmpty())

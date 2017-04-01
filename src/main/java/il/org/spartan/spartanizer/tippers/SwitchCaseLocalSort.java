@@ -29,7 +29,7 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement($.getParent()), n));
-    return new Tip(description(n), n, getClass()) {
+    return new Tip(description(n), getClass(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, copy.of($), g);
         r.replace($, copy.of(n), g);

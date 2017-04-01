@@ -60,7 +60,7 @@ public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
     final int thenSize = $.size(), elzeSize = elze.size();
     final List<Statement> commonPrefix = commonPrefix($, elze);
     return commonPrefix.isEmpty() || commonPrefix.size() == thenSize && commonPrefix.size() == elzeSize && !sideEffects.free(s.getExpression()) ? null
-        : new Tip(description(s), s, getClass()) {
+        : new Tip(description(s), getClass(), s) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             final IfStatement newIf = replacement();
             if (!iz.block(s.getParent())) {

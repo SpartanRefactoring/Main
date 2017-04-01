@@ -28,7 +28,7 @@ enum ContinueInConditionalEliminateAux {
     if (continueStatement == null || !iz.continueStatement(continueStatement.getThenStatement()))
       return null;
     final IfStatement replacementIf = subject.pair(last($), null).toNot(continueStatement.getExpression());
-    return new Tip("Eliminate conditional continue before last statement in the for loop", s, c) {
+    return new Tip("Eliminate conditional continue before last statement in the for loop", c, s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(last($), g);
         r.replace(continueStatement, replacementIf, g);

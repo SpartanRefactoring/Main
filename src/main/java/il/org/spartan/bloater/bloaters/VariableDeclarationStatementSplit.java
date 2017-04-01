@@ -39,7 +39,7 @@ public class VariableDeclarationStatementSplit extends CarefulTipper<VariableDec
     fragments($).remove(fs);
     fragments(first).clear();
     fragments(first).add(ff);
-    return new Tip(description(¢), ¢, getClass()) {
+    return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(parent(¢), Block.STATEMENTS_PROPERTY);
         l.insertAfter($, ¢, g);

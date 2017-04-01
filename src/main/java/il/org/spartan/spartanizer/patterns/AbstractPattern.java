@@ -43,7 +43,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
   @Override public final Tip tip(final N n) {
     assert n != null;
     assert n == current();
-    return new Tip(description(), current(), myClass()) {
+    return new Tip(description(), myClass(), current()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         AbstractPattern.this.go(r, g);
       }

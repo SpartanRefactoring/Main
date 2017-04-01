@@ -71,7 +71,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
       return null;
     if (exclude != null)
       exclude.exclude(x);
-    return new Tip(description(x), x, getClass()) {
+    return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first($);
         $.stream().filter(λ -> λ != first && minus.level(λ) > 0)

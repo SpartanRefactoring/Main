@@ -22,7 +22,7 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
   private static final long serialVersionUID = 0x3B30C2A8E5E15900L;
 
   @Override public Tip tip(final ParenthesizedExpression x) {
-    return new Tip(description(x), x, getClass()) {
+    return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, copy.of(expression(x)), g);
       }

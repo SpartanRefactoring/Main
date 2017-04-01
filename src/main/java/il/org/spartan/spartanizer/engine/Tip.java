@@ -49,9 +49,9 @@ public abstract class Tip extends Range {
    *        instance
    * @param n the node on which change is to be carried out
    * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, final ASTNode n, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass,
+  public Tip(final String description, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final ASTNode n,
       final ASTNode... ns) {
-    this(description, range(n, ns), tipperClass);
+    this(description, tipperClass, range(n, ns));
     lineNumber = yieldAncestors.untilClass(CompilationUnit.class).from(n).getLineNumber(from);
     spartanizationCharStart = n.getStartPosition();
     spartanizationCharEnd = spartanizationCharStart + n.getLength();
@@ -60,17 +60,17 @@ public abstract class Tip extends Range {
   /** Instantiates this class
    * @param description a textual description of the changes described by this
    *        instance
-   * @param n the node on which change is to be marked
    * @param spartanizationRange the node on which change is to be carried out
+   * @param n the node on which change is to be marked
    * @param ns additional nodes, defining the scope of this action. */
-  public Tip(final String description, final ASTNode n, final ASTNode spartanizationRange,
-      @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final ASTNode... ns) {
-    this(description, n, tipperClass, ns);
+  public Tip(final String description, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final ASTNode spartanizationRange,
+      final ASTNode n, final ASTNode... ns) {
+    this(description, tipperClass, n, ns);
     spartanizationCharStart = spartanizationRange.getStartPosition();
     spartanizationCharEnd = spartanizationCharStart + spartanizationRange.getLength();
   }
 
-  Tip(final String description, final Range other, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
+  Tip(final String description, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass, final Range other) {
     super(other);
     this.description = description;
     this.tipperClass = tipperClass;

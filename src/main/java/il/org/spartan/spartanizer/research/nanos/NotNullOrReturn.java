@@ -32,7 +32,7 @@ public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public Tip pattern(final IfStatement ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+    return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(¢, extract.singleStatement(make.ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
       }

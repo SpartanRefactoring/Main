@@ -36,7 +36,7 @@ public final class IfLastInMethod extends EagerTipper<IfStatement>//
     if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block $ = az.block(parent(s));
-    return $ == null || !lastIn(s, statements($)) || !iz.methodDeclaration(parent($)) ? null : new Tip(description(s), s, getClass()) {
+    return $ == null || !lastIn(s, statements($)) || !iz.methodDeclaration(parent($)) ? null : new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.insertAfter(s, extract.statements(then(s)), r, g);
         final IfStatement newIf = copy.of(s);

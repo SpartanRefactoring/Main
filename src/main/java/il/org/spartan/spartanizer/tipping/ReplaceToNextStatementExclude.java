@@ -26,7 +26,7 @@ public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends C
     assert $ != null;
     if (exclude != null)
       exclude.exclude($);
-    return new Tip(description(n), n, getClass(), $) {
+    return new Tip(description(n), getClass(), n, $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         ReplaceToNextStatementExclude.this.go(r, n, $, g, exclude);
       }

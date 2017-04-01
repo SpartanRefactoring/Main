@@ -47,7 +47,7 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     if (m != null)
       m.exclude(c);
     final SimpleName ¢ = namer.newCurrent(c);
-    return new Tip(description(c), c.getException().getName(), getClass()) {
+    return new Tip(description(c), getClass(), c.getException().getName()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, c, r, g);
       }
