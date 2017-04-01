@@ -43,8 +43,9 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
 
   @Override public Examples examples() {
     return convert("int a = 3; return a;").to("return 3;"). //
-        convert("int a = 3; return 2 * a;").to("return 2 * 3;").//
-        ignores("int a = 3; return a *=2;");
+        convert("int a = 3; return 2 * a;").to("return 2 * 3;") //
+        .ignores("int a = 3; return a *=2;")//
+        .ignores("int a = 3; return a =2;");//
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
