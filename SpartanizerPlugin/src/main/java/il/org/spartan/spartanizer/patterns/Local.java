@@ -18,11 +18,11 @@ import il.org.spartan.spartanizer.engine.*;
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
-public abstract class LocalVariable extends Fragment {
+public abstract class Local extends Fragment {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
   protected VariableDeclarationStatement declaration;
 
-  public LocalVariable() {
+  public Local() {
     andAlso("Must be local variable", () -> (declaration = az.variableDeclarationStatement(parent)) != null);
   }
 
