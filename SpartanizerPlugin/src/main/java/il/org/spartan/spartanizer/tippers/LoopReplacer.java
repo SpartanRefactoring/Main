@@ -32,7 +32,7 @@ public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNo
     statements = statements(block);
     lastStatement = last(statements);
     updater = az.expressionStatement(lastStatement).getExpression();
-    updates = extract.updatedVariables(updater);
+    updates = compute.updatedVariables(updater);
   }
 
   protected final boolean validUpdater() {
