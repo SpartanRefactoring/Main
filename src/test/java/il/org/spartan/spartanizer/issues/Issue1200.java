@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
 
-import java.util.function.*;
-
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -18,7 +16,7 @@ import il.org.spartan.utils.*;
  * @since 2017-04-01
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "static-method", "javadoc" })
+@SuppressWarnings({ "javadoc" })
 public class Issue1200 {
   
   private final PropositionJavaNotation javaReducer = new PropositionJavaNotation();
