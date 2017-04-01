@@ -106,19 +106,6 @@ public final class Inliner2 {
     return $;
   }
 
-  public static boolean leftSide(final Statement nextStatement, final String id) {
-    final Bool $ = new Bool();
-    // noinspection SameReturnValue
-    nextStatement.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final Assignment ¢) {
-        if (iz.simpleName(left(¢)) && identifier(az.simpleName(left(¢))).equals(id))
-          $.inner = true;
-        return true;
-      }
-    });
-    return $.inner;
-  }
-
   public static Expression protect(final Expression ¢) {
     switch (¢.getNodeType()) {
       case ARRAY_CREATION:
