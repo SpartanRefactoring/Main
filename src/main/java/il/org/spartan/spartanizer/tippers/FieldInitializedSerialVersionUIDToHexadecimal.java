@@ -35,9 +35,11 @@ public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<
         .ignores("long a = 3;") //
     ;
   }
+
   @Override public String description() {
     return String.format("Convert %s to hexadecimal", initializer == null ? "initializer" : "'" + initializer.getToken() + "'");
   }
+
   @Override public Tip tip(final FieldDeclaration ¢) {
     canTip(¢);
     assert ¢ == fragment.getParent();
@@ -49,10 +51,11 @@ public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<
       }
     };
   }
+
   @Override public boolean canTip(final FieldDeclaration ¢) {
     if ((fragment = wizard.findFragment(¢)) == null)
       return false;
-    Expression i = fragment.getInitializer();
+    final Expression i = fragment.getInitializer();
     if ((initializer = az.numberLiteral(i)) == null
         && (!iz.prefixExpression(i) || (initializer = az.numberLiteral(az.prefixExpression(i).getOperand())) == null))
       return false;
@@ -63,7 +66,7 @@ public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<
       $ = lisp2.chopLast($);
     return parse($, $.matches("^0.*") ? 8 : 10);
   }
-  
+
   private boolean parse(final String token, final int radix) {
     try {
       replacement = Long.parseLong(token, radix);
@@ -73,6 +76,7 @@ public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<
       return false;
     }
   }
+
   String asLiteral() {
     return String.format(//
         replacement < 10 && replacement > -10 ? "%d" //
@@ -80,6 +84,7 @@ public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<
                 : "0x%XL",
         Long.valueOf(replacement));
   }
+
   @Override public String description(@SuppressWarnings("unused") final FieldDeclaration __) {
     return description();
   }

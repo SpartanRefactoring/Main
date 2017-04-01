@@ -39,11 +39,11 @@ public class OutlineTernaryMethodInvocation extends MethodInvocationAbstarctPatt
     return null;
   }
 
-  @Override public String description(@SuppressWarnings("unused") MethodInvocation ¢) {
+  @Override public String description(@SuppressWarnings("unused") final MethodInvocation ¢) {
     return null;
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     for (int i = 0; i < arguments.size(); ++i) {
       final ConditionalExpression $;
       if (($ = az.conditionalExpression(arguments.get(i))) != null) {

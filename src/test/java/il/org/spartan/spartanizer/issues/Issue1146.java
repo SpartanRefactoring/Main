@@ -16,7 +16,7 @@ public class Issue1146 extends TipperTest {
   @Override public Tipper<VariableDeclarationFragment> tipper() {
     return new LocalInitializedIncrementDecrementInline();
   }
-  
+
   @Test public void a() {
     trimmingOf("int i = 1; ++i;")//
         .gives("int i = 1 + 1;")//
@@ -44,9 +44,9 @@ public class Issue1146 extends TipperTest {
         .gives("int x = 1; ++x;")//
         .gives("int x = 1+1;");
   }
-  
-  @Test public void d(){
+
+  @Test public void d() {
     trimmingOf("int x = 1; ++x;")//
-    .givesEither("int x = 2;", "int x = 1+1;", "",null);
+        .givesEither("int x = 2;", "int x = 1+1;", "", null);
   }
 }
