@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO: Raviv Rachmiel please add a description
+/** TODO Raviv Rachmiel please add a description
  * @author Raviv Rachmiel
  * @since 25-11-2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
