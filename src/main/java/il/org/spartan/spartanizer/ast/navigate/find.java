@@ -26,6 +26,7 @@ public enum find {
       }
     };
   }
+
   public static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }

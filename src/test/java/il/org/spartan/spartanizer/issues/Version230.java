@@ -3038,13 +3038,14 @@ public final class Version230 {
     trimmingOf("int k=15;return 7<k;")//
         .gives("return 7<15;");
   }
-  /** Introduced by Yogi on Sat-Apr-01-16:37:37-IDT-2017 
-  (code automatically in class 'JUnitTestMethodFacotry')*/
-    @Test public void test_inta15Return7a() {
-       trimmingOf("int a = 15; return 7 < a;") //
-           .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
-           .gives("return 7<15;") //
-           .stays() //
+
+  /** Introduced by Yogi on Sat-Apr-01-16:37:37-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_inta15Return7a() {
+    trimmingOf("int a = 15; return 7 < a;") //
+        .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
+        .gives("return 7<15;") //
+        .stays() //
     ;
   }
 

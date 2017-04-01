@@ -24,10 +24,9 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
   private static final long serialVersionUID = 1308487951289425805L;
 
   @Override public Examples examples() {
-    return 
-        convert("for(int i=0;i<5;++i) continue;").to("for(int i=0;i<5;++i) { continue; }"); 
+    return convert("for(int i=0;i<5;++i) continue;").to("for(int i=0;i<5;++i) { continue; }");
   }
-  
+
   public ForBlockBloater() {
     andAlso("Valid not an only return", () -> {
       final Collection<Boolean> $ = new ArrayList<>();

@@ -19,6 +19,4 @@ public abstract class NonEmptyForLoop extends ForStatementPattern {
       return !iz.emptyStatement(lastStatement);
     }));
   }
-
-
 }
