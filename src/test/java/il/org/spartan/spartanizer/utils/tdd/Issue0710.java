@@ -5,7 +5,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO David Cohen please add a description
+/** Unit tests for the GitHub issue thus numbered
  * @author David Cohen
  * @author Shahar Yair
  * @author Zahi Mizrahi

@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO Stav Namir please add a description
+/** Unit tests for the GitHub issue thus numbered 
  * @author Stav Namir
  * @since 2016-08-29 */
 @SuppressWarnings("static-method")

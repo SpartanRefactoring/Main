@@ -3,7 +3,7 @@ package il.org.spartan.proposition;
 import java.util.*;
 import java.util.stream.*;
 
-/** TODO Yossi Gil: document class
+/** games of metrics
  * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-03-27 */
 public class B {
