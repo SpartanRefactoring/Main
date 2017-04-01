@@ -1,7 +1,7 @@
 package il.org.spartan.bloater.bloaters;
 
 import static il.org.spartan.spartanizer.ast.factory.subject.*;
-import static il.org.spartan.utils.Example.*;
+import static il.org.spartan.utils.Proposition.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -20,29 +20,33 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2017-03-30 */
 public final class TernaryPushup2 extends InfixExprezzion implements TipperCategory.Bloater {
   private static final long serialVersionUID = 8148439675150970356L;
-  Expression condition, then, elze;
+  Expression operandCondition, operandThen, operandElze;
+  private ConditionalExpression leftConditional;
+  private ConditionalExpression operandConditional;
 
-  @Override public Example[] examples() {
-    return new Example[] { convert("x = a + (cond ? b : c);").to("x = cond ? a + b : a + c;"),
-        convert("x = (cond ? b : c) + a;").to("x = cond ? b + a : c + a;") };
+  @Override public Examples examples() {
+    return convert("x = a + (cond ? b : c);").to("x = cond ? a + b : a + c;").convert("x = (cond ? b : c) + a;").to("x = cond ? b + a : c + a;");
   }
 
   public TernaryPushup2() {
-    andAlso(Proposition.OR("Right or left operand is ternary expression", () -> {
-      ConditionalExpression $;
-      return ($ = az.conditionalExpression(extract.core(right))) != null && (condition = step.expression($)) != null && (then = step.then($)) != null
-          && (elze = step.elze($)) != null;
-    }, () -> {
-      ConditionalExpression e;
-      return (e = az.conditionalExpression(extract.core(left))) != null && (condition = step.expression(e)) != null && (then = step.then(e)) != null
-          && (elze = step.elze(e)) != null;
-    }));
-    andAlso(Proposition.of("Condition has no side effect", () -> !haz.sideEffects(condition)));
+    andAlso(OR("Right or left operand is ternary expression",
+        () -> iz.not.null¢(operandConditional = az.conditionalExpression(extract.core(right))) //
+            && iz.not.null¢(operandCondition = step.expression(operandConditional)) //
+            && iz.not.null¢(operandThen = step.then(operandConditional)) //
+            && iz.not.null¢(operandElze = step.elze(operandConditional)),
+        () -> iz.not.null¢(leftConditional = az.conditionalExpression(extract.core(left)))
+            && iz.not.null¢(operandCondition = step.expression(leftConditional)) //
+            && iz.not.null¢(operandThen = step.then(leftConditional)) //
+            && iz.not.null¢(operandElze = step.elze(leftConditional))));
+    andAlso("Condition has no side effect", //
+        () -> !haz.sideEffects(operandCondition));
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
-    r.replace(current, (iz.conditionalExpression(extract.core(right)) ? pair(pair(left, then).to(operator), pair(left, elze).to(operator))
-        : pair(pair(then, right).to(operator), pair(elze, right).to(operator))).toCondition(condition), g);
+    r.replace(current,
+        (iz.conditionalExpression(extract.core(right)) ? pair(pair(left, operandThen).to(operator), pair(left, operandElze).to(operator))
+            : pair(pair(operandThen, right).to(operator), pair(operandElze, right).to(operator))).toCondition(operandCondition),
+        g);
     return r;
   }
 

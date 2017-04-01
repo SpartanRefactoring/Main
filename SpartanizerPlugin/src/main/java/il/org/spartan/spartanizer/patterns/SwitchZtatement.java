@@ -18,7 +18,7 @@ public abstract class SwitchZtatement extends AbstractPattern<SwitchStatement> {
   protected Expression expression;
 
   public SwitchZtatement() {
-    andAlso(Proposition.of("Must be switch statement", () -> {
+    andAlso(Proposition.that("Must be switch statement", () -> {
       statements = step.statements(current);
       expression = step.expression(current);
       return true;

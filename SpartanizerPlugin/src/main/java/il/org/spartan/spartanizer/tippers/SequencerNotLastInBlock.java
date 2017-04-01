@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -24,11 +22,11 @@ public final class SequencerNotLastInBlock<S extends Statement> extends GoToNext
     return "Remove dead statement after " + ¢;
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("{throw new Exception(); f();}") //
-            .to("{throw new Exception();}") //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("{throw new Exception(); f();}") //
+        .to("{throw new Exception();}") //
+    ;
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final S s, final Statement nextStatement, final TextEditGroup g) {

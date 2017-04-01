@@ -63,7 +63,7 @@ public final class GuessedContextTest {
                 " public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return $; ");
   }
 
-  // @Ignore // TODO Yuval Simon --yg
+  @Ignore 
   @Test public void a9() {
     trimmingOf(
         " public C(int i){j = 2*i;public final int j;public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return null;}")
@@ -112,13 +112,13 @@ public final class GuessedContextTest {
         .stays();
   }
 
-  // @Ignore // TODO Yuval Simon
+  @Ignore 
   @Test public void e03() {
     trimmingOf("/* * This is a comment */ int i = 5; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
         .gives("/* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + (5)); ");
   }
 
-  // @Ignore // TODO Yuval Simon
+  @Ignore 
   @Test public void e09() {
     trimmingOf(
         " final A a = new D().new A(V){ ABRA { CADABRA {V;); w.a(5, a.new Context().lineCount()); final PureIterable&lt;Mutant&gt; ms = a.generateMutants(); w.a(2, count(ms)); final PureIterator&lt;Mutant&gt; i = ms.iterator(); assert (i.hasNext()); w.a(V;{ ABRA ABRA { CADABRA { V;, i.next().text); assert (i.hasNext()); w.a(V;{ ABRA { CADABRA CADABRA { V;, i.next().text); assert !(i.hasNext()); ")
