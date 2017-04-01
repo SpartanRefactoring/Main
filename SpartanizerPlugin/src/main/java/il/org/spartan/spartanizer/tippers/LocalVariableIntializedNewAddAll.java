@@ -74,7 +74,7 @@ public final class LocalVariableIntializedNewAddAll extends GoToNextStatement<Va
     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//
         || anyFurtherUsage(parent, nextStatement, identifier(n))//
-        || leftSide(nextStatement, identifier(n))//
+        || trick.leftSide(nextStatement, identifier(n))//
         || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
@@ -130,20 +130,6 @@ public final class LocalVariableIntializedNewAddAll extends GoToNextStatement<Va
             && !occurencesOf(az.statement(¢), id).isEmpty())
           $.inner = true;
         return false;
-      }
-    });
-    return $.inner;
-  }
-
-  private static boolean leftSide(final Statement nextStatement, final String id) {
-    final Bool $ = new Bool();
-    // noinspection SameReturnValue
-    nextStatement.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final Assignment ¢) {
-        if (iz.simpleName(left(¢))//
-            && identifier(az.simpleName(left(¢))).equals(id))
-          $.inner = true;
-        return true;
       }
     });
     return $.inner;

@@ -30,6 +30,14 @@ public abstract class descendants<N extends ASTNode> {
    * @return add predicate to filter elements */
   public abstract descendants<N> suchThat(Predicate<N> ¢);
 
+  public static boolean containsClassInstanceCreation(final Statement nextStatement) {
+    return !descendants.whoseClassIs(ClassInstanceCreation.class).from(nextStatement).isEmpty();
+  }
+
+  public static boolean containsLambda(final Statement nextStatement) {
+    return !descendants.whoseClassIs(LambdaExpression.class).from(nextStatement).isEmpty();
+  }
+
   static class whoseClassIs<N extends ASTNode> extends descendants<N> {
     final Class<N> clazz;
     Predicate<N> p = λ -> true;

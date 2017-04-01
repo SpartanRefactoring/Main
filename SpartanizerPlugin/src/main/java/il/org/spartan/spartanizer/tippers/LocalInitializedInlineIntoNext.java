@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -60,10 +58,10 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
     if (parent == null//
         || iz.forStatement(parent))
       return null;
-    final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
+    final SimpleName n = trick.peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//
         || anyFurtherUsage(parent, nextStatement, identifier(n))//
-        || leftSide(nextStatement, identifier(n))//
+        || trick.leftSide(nextStatement, identifier(n))//
         || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
@@ -116,34 +114,11 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
         if (!¢.equals(nextStatement)//
             && !¢.equals(originalStatement)//
             && iz.statement(¢)//
-            && !occurencesOf(az.statement(¢), id).isEmpty())
+            && !find.occurencesOf(az.statement(¢), id).isEmpty())
           $.inner = true;
         return false;
       }
     });
     return $.inner;
-  }
-
-  private static boolean leftSide(final Statement nextStatement, final String id) {
-    final Bool $ = new Bool();
-    // noinspection SameReturnValue
-    nextStatement.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final Assignment ¢) {
-        if (iz.simpleName(left(¢))//
-            && identifier(az.simpleName(left(¢))).equals(id))
-          $.inner = true;
-        return true;
-      }
-    });
-    return $.inner;
-  }
-
-  private static SimpleName peelIdentifier(final Statement s, final String id) {
-    final List<SimpleName> $ = occurencesOf(s, id);
-    return $.size() != 1 ? null : first($);
-  }
-
-  static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
-    return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }

@@ -10,16 +10,11 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 
-/** convert {@code
- * int a;
- * a = 3;
- * } into {@code
- * int a = 3;
- * }
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class LocalVariableUnintializedStatementAssignment extends $FragmentAndStatement//
+public final class LocalUnintializedAssignmentToSame extends $FragmentAndStatement//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0xCE4CF4E3910F992L;
 
@@ -27,6 +22,10 @@ public final class LocalVariableUnintializedStatementAssignment extends $Fragmen
     final VariableDeclarationFragment $ = copy.of(f);
     $.setInitializer(copy.of(x));
     return $;
+  }
+
+  @Override public Examples examples() {
+    return convert("int a;a=3;").to("int a=3;");
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
