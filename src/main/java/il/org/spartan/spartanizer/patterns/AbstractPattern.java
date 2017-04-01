@@ -24,7 +24,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
   @Property protected Statement nextStatement;
 
   public AbstractPattern() {
-    this.prerequisite = Proposition.of("Extract parent and next statement", () -> {
+    this.prerequisite = Proposition.that("Extract parent and next statement", () -> {
       parent = current.getParent();
       nextStatement = extract.nextStatement(current);
       return true;
@@ -51,7 +51,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
   }
 
   protected AbstractPattern<N> andAlso(final String description, final BooleanSupplier s) {
-    return andAlso(prerequisite.and(Proposition.of(description, s)));
+    return andAlso(prerequisite.and(Proposition.that(description, s)));
   }
 
   protected AbstractPattern<N> butNot(final Proposition ¢) {
