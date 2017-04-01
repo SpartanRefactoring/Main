@@ -344,7 +344,7 @@ public class Toolbox {
             new LocalVariableIntializedStatementToForInitializers(), //
             new LocalVariableInitializedUnusedRemove(), //
             new LocalInitializedIncrementDecrementInline(), //
-//            new LocalInitializedNewAddAll(), //
+            new LocalInitializedNewAddAll(), //
             null) //
     ;
   }
