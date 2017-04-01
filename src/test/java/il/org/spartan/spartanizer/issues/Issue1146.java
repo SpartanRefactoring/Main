@@ -19,12 +19,14 @@ public class Issue1146 extends TipperTest {
   @Test public void a() {
     trimmingOf("int i = 1; ++i;")//
         .gives("int i = 1 + 1;")//
+        .stays()//
     ;
   }
 
   @Test public void b() {
-    trimmingOf("int count = packed.charAt(i++), value = packed.charAt(i++);--value;f(count++);")//
-        .gives("int count = packed.charAt(i++), value = packed.charAt(i++)-1;f(count++);")//
+    trimmingOf("int count = packed.charAt(i++), value = packed.charAt(i++);--value;")//
+        .gives("int count = packed.charAt(i++), value = packed.charAt(i++)-1;")//
+        .stays()//
     ;
   }
 
@@ -39,5 +41,10 @@ public class Issue1146 extends TipperTest {
   @Test public void c2() {
     TestsUtilsTrimmer.trimmingOf("int x = 1, y = x; ++x;")//
         .gives("int x = 1; ++x;");
+  }
+  
+  @Test public void d(){
+    trimmingOf("int x = 1; ++x;")//
+    .givesEither("int x = 2;", "int x = 1+1;", "",null);
   }
 }
