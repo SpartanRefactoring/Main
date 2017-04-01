@@ -329,11 +329,11 @@ public class Toolbox {
             new FieldInitializedDefaultValue(), //
             new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
             new LocalUnintializedAssignmentToSame(), //
+            new LocalInitializedReturnExpression(), //
             new LocalVariableIntializedUpdateAssignment(), //
             new LocalVariableIntializedIfAssignment(), //
             new LocalInitializedUpdateAssignment(), //
             new LocalVariableIntializedStatementReturnVariable(), //
-            new LocalInitializedReturnExpression(), //
             new LocalVariableIntializedStatementReturnAssignment(), //
             new LocalVariableIntializedReturn(), //
             new LocalVariableIntializedStatementTerminatingScope(), //
