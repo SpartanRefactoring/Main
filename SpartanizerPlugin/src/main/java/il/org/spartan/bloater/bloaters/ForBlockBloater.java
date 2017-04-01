@@ -28,7 +28,7 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
       // similar, what are u trying to find? --yg
       body(current).accept(new ASTVisitor(true) {
         @Override public boolean visit(final Block ¢) {
-          $.add(box.it(¢.hashCode()==¢.hashCode()));
+          $.add(box.it(¢.hashCode() == ¢.hashCode()));
           return true;
         }
       });
@@ -36,7 +36,7 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
     });
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final ForStatement $ = copy.of(current);
     final Block b = current.getAST().newBlock();
     statements(b).add(copy.of(body(current)));
@@ -45,7 +45,7 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
     return r;
   }
 
-  @Override public String description(@SuppressWarnings("unused") ForStatement __) {
+  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "expand the single statements in the for to a block";
   }
 }

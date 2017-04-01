@@ -39,7 +39,6 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
     return $ - metrics.size(newParent);
   }
 
-
   public static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
     final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;

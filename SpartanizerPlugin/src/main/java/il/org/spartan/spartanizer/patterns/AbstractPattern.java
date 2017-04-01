@@ -30,7 +30,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
       return true;
     });
   }
-  
+
   public final void setCurrent(final N c) {
     current = c;
   }

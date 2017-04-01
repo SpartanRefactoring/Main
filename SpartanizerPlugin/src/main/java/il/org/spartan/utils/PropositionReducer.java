@@ -21,10 +21,10 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
   public final R reduce(final BooleanSupplier ¢) {
     return //
     ¢ instanceof Not ? reduce((Not) ¢) //
-      : ¢ instanceof Singleton ? reduce((Singleton) ¢) //
-        : ¢ instanceof And ? reduce((And) ¢) //
-            : ¢ instanceof Or ? reduce((Or) ¢) //
-                : map(¢);
+        : ¢ instanceof Singleton ? reduce((Singleton) ¢) //
+            : ¢ instanceof And ? reduce((And) ¢) //
+                : ¢ instanceof Or ? reduce((Or) ¢) //
+                    : map(¢);
   }
 
   @Override public R reduce(final R r1, final R r2) {
