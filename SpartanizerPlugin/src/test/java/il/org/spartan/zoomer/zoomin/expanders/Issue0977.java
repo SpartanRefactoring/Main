@@ -20,22 +20,21 @@ public class Issue0977 {
   }
 
 
-  @Ignore("Issue #1046")
   @Test public void complexSequencer() {
-    bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} case 2: e();}")//
+    bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} case 2: e(); default:}")//
+        .gives("switch (a()){case 1:if (b()){return c();} else{throw d();} case 2: e(); break; default:}")//
         .stays();
   }
 
-  @Ignore("see issue #1046")
   @Test public void complexSequencerNotLast() {
-    bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} f();case 2:e();}")//
+    bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} f();case 2:e(); default:}")//
+        .gives("switch (a()){case 1:if (b()){return c();} else{throw d();} f();case 2:e(); break; default:}")//
         .stays();
   }
 
-  @Ignore("see issue #1031")
   @Test public void complexSequencerRealWorld() {
     bloatingOf("switch (a()){case 1:if (!parameters((MethodDeclaration) $).contains(¢)){return Kind.method;} else{"
-        + " return Kind.parameter;} case 2:e();}")//
+        + " return Kind.parameter;} case 2:e(); break; default:}")//
             .stays();
   }
 
