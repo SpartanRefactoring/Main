@@ -29,7 +29,7 @@ public class Toolbox {
     public static final Map<String, Class<? extends Tipper<?>>> TipperIDClassTranslationTable = new HashMap<>();
     public static final Map<String, String> TipperIDNameTranslationTable = new HashMap<>();
     public static final Map<Class<? extends Tipper<?>>, String> TipperDescriptionCache = new HashMap<>();
-    public static final Map<Class<? extends Tipper<?>>, Example[]> TipperExamplesCache = new HashMap<>();
+    public static final Map<Class<? extends Tipper<?>>, Examples> TipperExamplesCache = new HashMap<>();
     public static final Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = new HashMap<>();
     static {
       for (final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {

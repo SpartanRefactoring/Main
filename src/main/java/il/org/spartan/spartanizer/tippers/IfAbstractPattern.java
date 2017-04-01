@@ -29,7 +29,7 @@ public abstract class IfAbstractPattern extends AbstractPattern<IfStatement> {
     });
   }
 
-  @Override public abstract Example[] examples();
+  @Override public abstract Examples examples();
 
   static boolean degenerateElse(final IfStatement ¢) {
     return elze(¢) != null && iz.vacuousElse(¢);

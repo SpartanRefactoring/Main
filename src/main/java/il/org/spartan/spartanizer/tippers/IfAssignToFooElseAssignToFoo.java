@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.factory.subject.*;
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -47,12 +45,12 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
     return r;
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
+  @Override public Examples examples() {
+    return  //
         convert("if(x) a += 3; else a += 9;")//
-            .to("a += x ? 3 : 9;"),
+            .to("a += x ? 3 : 9;"). //
         convert("if(x) a = 3; else a = 9;")//
-            .to("a = x ? 3 : 9;"), //
-    };
+            .to("a = x ? 3 : 9;") //
+            ;
   }
 }

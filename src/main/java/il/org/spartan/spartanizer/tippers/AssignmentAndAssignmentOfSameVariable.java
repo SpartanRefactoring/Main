@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -32,15 +30,16 @@ public class AssignmentAndAssignmentOfSameVariable extends GoToNextStatement<Ass
     return "eliminate redundant assignment";
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
+  @Override public Examples examples() {
+    return // 
         convert("x = 1; x = 2;") //
-            .to("x = 2;"), //
-        convert("x.y = 1; x.y = 2;") //
-            .to("x.y = 2;"), //
-        Example.ignores("x = f(); x = 2;"), //
-        Example.ignores("x = 1; x += 2;") //
-    };
+            .to("x = 2;") //
+        .convert("x.y = 1; x.y = 2;") //
+            .to("x.y = 2;") //
+        .ignores("x = f(); x = 2;") //
+        .ignores("x = 1; x += 2;") //
+    ;
+
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {

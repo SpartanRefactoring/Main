@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -23,12 +21,12 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x6A05F681B3F27CB0L;
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("if (x) return b; else {}") //
-            .to("if (x) return b;"), //
-        Example.ignores("if (x) return b;"), //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("if (x) return b; else {}") //
+        .to("if (x) return b;")//
+        .ignores("if (x) return b;") //
+    ;
   }
 
   static boolean degenerateElse(final IfStatement ¢) {
