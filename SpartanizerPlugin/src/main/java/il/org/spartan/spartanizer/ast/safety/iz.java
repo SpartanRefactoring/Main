@@ -589,12 +589,20 @@ public interface iz {
       case EXPRESSION_STATEMENT:
         return true;
       case POSTFIX_EXPRESSION:
-        return in(az.postfixExpression(¢).getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+        return updating(az.postfixExpression(¢));
       case PREFIX_EXPRESSION:
-        return in(az.prefixExpression(¢).getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+        return updating(az.prefixExpression(¢));
       default:
         return false;
     }
+  }
+
+  static boolean updating(final PostfixExpression ¢) {
+    return in(¢.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+  }
+
+  static boolean updating(final PrefixExpression ¢) {
+    return in(¢.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
   }
 
   /** @param ¢ JD
@@ -1312,9 +1320,9 @@ public interface iz {
     }
   }
 
-  static boolean prePostUseOfName(final SimpleName id) {
+  static boolean incrementedOrDecremented(final ASTNode id) {
     final ASTNode $ = parent(id);
-    return prefixExpression($) || postfixExpression($);
+    return iz.prefixExpression($) || iz.updating(az.prefixExpression($));
   }
 
   interface literal {
