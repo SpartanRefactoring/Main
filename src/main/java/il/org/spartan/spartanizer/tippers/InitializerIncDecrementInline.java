@@ -5,8 +5,6 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
