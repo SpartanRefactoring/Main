@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
@@ -31,22 +29,22 @@ public final class ParameterRenameUnderscoreToDoubleUnderscore<N extends Variabl
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @Override public Example[] examples() {
-    return new Example[] {
-        convert("" //
-            + "void f(int _) {\n" //
-            + "}")
-                .to("" //
-                    + "void f(int __) {\n" //
-                    + "}"), //
-        convert("" //
-            + "void f() {\n" //
-            + "  int _ = 1;\n" + "}")
-                .to("" //
-                    + "void f() {\n" //
-                    + "  int __ = 1;\n" //
-                    + "}"), //
-    };
+  @Override public Examples examples() {
+    return convert("" //
+        + "void f(int _) {\n" //
+        + "}")
+            .to("" //
+                + "void f(int __) {\n" //
+                + "}")
+            . //
+            convert("" //
+                + "void f() {\n" //
+                + "  int _ = 1;\n" + "}")
+            .to("" //
+                + "void f() {\n" //
+                + "  int __ = 1;\n" //
+                + "}") //
+    ;
   }
 
   @Override protected SimpleName replacement(final N ¢) {

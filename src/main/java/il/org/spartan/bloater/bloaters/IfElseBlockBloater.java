@@ -1,7 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -39,14 +37,15 @@ public class IfElseBlockBloater extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
 
-  @Override public Example[] examples() {
-    return new Example[] {
-        convert("if(f()) g();")//
-            .to("if(f()) {g();}"),
+  @Override public Examples examples() {
+    return //
+    convert("if(f()) g();")//
+        .to("if(f()) {g();}"). //
         convert("if(f()) g(); else h();")//
-            .to("if(f()) {g();} else {h();}"),
+        .to("if(f()) {g();} else {h();}"). //
         convert("if(x) {a();b();} else h();")//
-            .to("if(x) {a();b();} else {h();}") };
+        .to("if(x) {a();b();} else {h();}")//
+    ;
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {

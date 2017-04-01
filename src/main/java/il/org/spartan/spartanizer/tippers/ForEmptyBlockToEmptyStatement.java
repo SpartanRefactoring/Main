@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -29,13 +27,13 @@ public class ForEmptyBlockToEmptyStatement extends ReplaceCurrentNode<ForStateme
     return iz.block($) && iz.emptyBlock(az.block($));
   }
 
-  @Override public Example[] examples() {
-    return new Example[] {
+  @Override public Examples examples() {
+    return 
         convert("for(x();y();z()){}")//
-            .to("for(x();y();z());"), //
-        Example.ignores("for(x();y();z()){f();g();}"), //
-        Example.ignores("for(x();y();z());")//
-    };
+            .to("for(x();y();z());") //
+        .ignores("for(x();y();z()){f();g();}") //
+        .ignores("for(x();y();z());")//
+    ;
   }
 
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {

@@ -135,8 +135,8 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
   }
 
   /** Should be overridden */
-  default Example[] examples() {
-    return new Example[0];
+  default Examples examples() {
+    return new Examples(); 
   }
 
   T current();
@@ -226,7 +226,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
       return $.get();
     }
 
-    default Example[] listenExamples(final Supplier<Example[]> $) {
+    default Examples listenExamples(final Supplier<Examples> $) {
       return $.get();
     }
 

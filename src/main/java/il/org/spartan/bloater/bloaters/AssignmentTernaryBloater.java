@@ -1,7 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
@@ -24,12 +22,12 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -9043350929840336722L;
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("temp = (a == 0 ? b:c);") //
-            .to("if(a==0) temp = b; else temp = c;"), //
-        Example.ignores("if(a==0) temp = b; else temp= c;") //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("temp = (a == 0 ? b:c);") //
+        .to("if(a==0) temp = b; else temp = c;"). //
+        ignores("if(a==0) temp = b; else temp= c;") //
+    ;
   }
 
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {

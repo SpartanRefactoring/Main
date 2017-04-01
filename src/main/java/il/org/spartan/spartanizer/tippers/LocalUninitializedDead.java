@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -28,10 +26,10 @@ public final class LocalUninitializedDead extends LocalVariableUninitialized imp
     return "Remove unused local variable " + trivia.gist(¢.getName());
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
+  @Override public Examples examples() {
+    return  //
         convert("int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
-            .to("a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);") };
+            .to("a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);") ;
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {

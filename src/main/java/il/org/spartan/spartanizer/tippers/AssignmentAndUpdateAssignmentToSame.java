@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -34,10 +33,8 @@ public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x5D0C16C013FC1AA3L;
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("a+=3;b=6;").to("a+=3+6"), //
-    };
+  @Override public Examples examples() {
+    return convert("a+=3;b=6;").to("a+=3+6"); 
   }
 
   @Override public String description(final Assignment ¢) {
