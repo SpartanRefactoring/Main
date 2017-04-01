@@ -38,13 +38,13 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
             "Initializer has no side effects", () -> sideEffects.free(initializer)//
         ));
     andAlso("Returned expression does not modify local variable", //
-        () -> compute.updateSpots(returnValue).stream().noneMatch(λ ->wizard.eq(λ, name)));
+        () -> compute.updateSpots(returnValue).stream().noneMatch(λ -> wizard.eq(λ, name)));
   }
 
   @Override public Examples examples() {
-    return //
-    convert("int a = 3; return a;").to("return 3;"). //
-        convert("int a = 3; return 2 * a;").to("return 2 * 3;");
+    return convert("int a = 3; return a;").to("return 3;"). //
+        convert("int a = 3; return 2 * a;").to("return 2 * 3;").//
+        ignores("int a = 3; return a *=2;");
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
@@ -52,7 +52,7 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    new Inliner(name, $, g).byValue(initializer).inlineInto(returnValue);
+    new Inliner(name, $, g).byValue(copy.of(initializer)).inlineInto(returnValue);
     remove.deadFragment(current, $, g);
     return $;
   }
