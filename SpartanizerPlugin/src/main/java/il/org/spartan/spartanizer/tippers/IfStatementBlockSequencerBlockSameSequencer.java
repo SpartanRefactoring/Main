@@ -53,19 +53,19 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
   }
 
   @Override public Examples examples() {
-    return  //
-        convert("if (a) {f(); g(); return;} a++; b++; return;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  return;}"). //
+    return //
+    convert("if (a) {f(); g(); return;} a++; b++; return;}")//
+        .to("if (a) {f(); g(); } else {a++; b++;}  return;}"). //
         convert("if (a) {f(); g(); throw x;} a++; b++; throw x;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  throw x;}"). //
+        .to("if (a) {f(); g(); } else {a++; b++;}  throw x;}"). //
         convert("if (a) {f(); g(); return x;} a++; b++; return x;}")//
-            .to("if (a) {f(); g(); } else {a++; b++; } return x;}"). //
+        .to("if (a) {f(); g(); } else {a++; b++; } return x;}"). //
         convert("if (a) {f(); g(); break c;} a++; b++; break c;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  break c;}"). //
+        .to("if (a) {f(); g(); } else {a++; b++;}  break c;}"). //
         convert("if (a) {f(); g(); continue c;} a++; b++; continue c;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  continue c;}"). //
+        .to("if (a) {f(); g(); } else {a++; b++;}  continue c;}"). //
         convert("if (a) {f(); g(); continue ;} a++; b++; continue ;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  continue ;}");//
+        .to("if (a) {f(); g(); } else {a++; b++;}  continue ;}");//
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {

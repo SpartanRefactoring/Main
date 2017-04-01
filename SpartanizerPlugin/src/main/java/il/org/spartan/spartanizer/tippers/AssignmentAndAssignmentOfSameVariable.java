@@ -31,15 +31,14 @@ public class AssignmentAndAssignmentOfSameVariable extends GoToNextStatement<Ass
   }
 
   @Override public Examples examples() {
-    return // 
-        convert("x = 1; x = 2;") //
-            .to("x = 2;") //
+    return //
+    convert("x = 1; x = 2;") //
+        .to("x = 2;") //
         .convert("x.y = 1; x.y = 2;") //
-            .to("x.y = 2;") //
+        .to("x.y = 2;") //
         .ignores("x = f(); x = 2;") //
         .ignores("x = 1; x += 2;") //
     ;
-
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {

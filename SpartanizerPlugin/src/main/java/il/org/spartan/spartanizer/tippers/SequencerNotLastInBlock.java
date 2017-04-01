@@ -23,11 +23,10 @@ public final class SequencerNotLastInBlock<S extends Statement> extends GoToNext
   }
 
   @Override public Examples examples() {
-    return  //
-        convert("{throw new Exception(); f();}") //
-            .to("{throw new Exception();}") //
-            ;
-    
+    return //
+    convert("{throw new Exception(); f();}") //
+        .to("{throw new Exception();}") //
+    ;
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final S s, final Statement nextStatement, final TextEditGroup g) {

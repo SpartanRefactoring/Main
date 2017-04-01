@@ -28,7 +28,6 @@ public final class AssignmentAndAssignmentOfSameValue extends GoToNextStatement<
     return convert("a=3;b=3;").to("b=a=3;") //
         .convert("a=c;b=c;").to("b=a=c;") //
     ;
-
   }
 
   private static Expression extractRight(final Assignment ¢) {

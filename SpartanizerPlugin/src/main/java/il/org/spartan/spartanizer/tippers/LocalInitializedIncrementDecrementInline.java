@@ -25,10 +25,10 @@ public class LocalInitializedIncrementDecrementInline extends LocalVariableIniti
     implements TipperCategory.Inlining {
   public LocalInitializedIncrementDecrementInline() {
     andAlso("Has increment/decrement of variable afterwards", () -> {
-      ExpressionStatement s = az.expressionStatement(nextStatement);
+      final ExpressionStatement s = az.expressionStatement(nextStatement);
       if (s == null)
         return false;
-      PrefixExpression $ = az.prefixExpression(s.getExpression());
+      final PrefixExpression $ = az.prefixExpression(s.getExpression());
       return $ != null && in($.getOperator(), INCREMENT, DECREMENT) //
           && iz.simpleName($.getOperand()) //
           && az.simpleName($.getOperand()).getIdentifier().equals(name.getIdentifier())
@@ -38,7 +38,7 @@ public class LocalInitializedIncrementDecrementInline extends LocalVariableIniti
 
   private static final long serialVersionUID = 7932037869493886974L;
 
-  @Override public String description(@SuppressWarnings("unused") VariableDeclarationFragment __) {
+  @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
     return "inline increment/decrement of variable into variable initialization";
   }
 
@@ -49,10 +49,10 @@ public class LocalInitializedIncrementDecrementInline extends LocalVariableIniti
         .ignores("int x = 1, y = x; ++x;");
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
-    InfixExpression.Operator o = az.prefixExpression(az.expressionStatement(nextStatement)//
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+    final InfixExpression.Operator o = az.prefixExpression(az.expressionStatement(nextStatement)//
         .getExpression()).getOperator().equals(INCREMENT) ? PLUS2 : MINUS2;
-    VariableDeclarationFragment $ = copy.of(current());
+    final VariableDeclarationFragment $ = copy.of(current());
     $.setInitializer(subject.operands(initializer, //
         initializer.getAST().newNumberLiteral("1")).to(o));
     r.replace(current(), $, g);

@@ -13,7 +13,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** Unit tests for the GitHub issue thus numbered 
+/** Unit tests for the GitHub issue thus numbered
  * @author Alexander Kaplan
  * @author Ariel Kolikant
  * @since 2016 */

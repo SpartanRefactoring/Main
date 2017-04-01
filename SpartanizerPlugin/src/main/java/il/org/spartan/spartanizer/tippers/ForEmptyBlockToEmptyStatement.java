@@ -28,9 +28,8 @@ public class ForEmptyBlockToEmptyStatement extends ReplaceCurrentNode<ForStateme
   }
 
   @Override public Examples examples() {
-    return 
-        convert("for(x();y();z()){}")//
-            .to("for(x();y();z());") //
+    return convert("for(x();y();z()){}")//
+        .to("for(x();y();z());") //
         .ignores("for(x();y();z()){f();g();}") //
         .ignores("for(x();y();z());")//
     ;

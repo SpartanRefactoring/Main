@@ -27,9 +27,9 @@ public final class LocalVariableUninitializedDead extends LocalVariableUninitial
   }
 
   @Override public Examples examples() {
-    return  //
-        convert("int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
-            .to("a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);") ;
+    return //
+    convert("int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
+        .to("a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {

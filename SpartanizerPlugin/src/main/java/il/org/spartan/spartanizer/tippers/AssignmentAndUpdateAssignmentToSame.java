@@ -34,7 +34,7 @@ public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement
   private static final long serialVersionUID = 0x5D0C16C013FC1AA3L;
 
   @Override public Examples examples() {
-    return convert("a+=3;b=6;").to("a+=3+6"); 
+    return convert("a+=3;b=6;").to("a+=3+6");
   }
 
   @Override public String description(final Assignment ¢) {
