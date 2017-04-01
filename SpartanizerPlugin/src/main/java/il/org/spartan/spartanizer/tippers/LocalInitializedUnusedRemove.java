@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -35,23 +33,23 @@ public final class LocalInitializedUnusedRemove extends LocalVariableInitialized
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("" //
-            + "int print() {\n" //
-            + "  int number = 1;\n" //
-            + "  System.out.println(\"number\");\n" //
-            + "}")
-                .to("" //
-                    + "int print() {\n" //
-                    + "  System.out.println(\"number\");\n" //
-                    + "}"), //
-        ignores("" //
-            + "int print() {\n" //
-            + "  int number = 1;\n" //
-            + "  System.out.println(number);\n" //
-            + "}"), //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("" //
+        + "int print() {\n" //
+        + "  int number = 1;\n" //
+        + "  System.out.println(\"number\");\n" //
+        + "}")
+            .to("" //
+                + "int print() {\n" //
+                + "  System.out.println(\"number\");\n" //
+                + "}") //
+            .ignores("" //
+                + "int print() {\n" //
+                + "  int number = 1;\n" //
+                + "  System.out.println(number);\n" //
+                + "}") //
+    ;
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {

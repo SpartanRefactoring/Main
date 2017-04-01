@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -44,10 +42,10 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
     return "Replace for {... if(e) break;} loop by do{...} while(!e) loop";
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("for(int i=0;i<10;i++){x = x+5; if(i > 5 && i < 9) break;}") //
-            .to("do{x = x+5;} while(i <= 5 || i>=9);") //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("for(int i=0;i<10;i++){x = x+5; if(i > 5 && i < 9) break;}") //
+        .to("do{x = x+5;} while(i <= 5 || i>=9);") //
+    ;
   }
 }

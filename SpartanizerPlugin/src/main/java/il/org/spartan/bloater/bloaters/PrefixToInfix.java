@@ -1,7 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -29,8 +27,8 @@ public class PrefixToInfix extends PrefixExprezzion implements TipperCategory.Bl
     andAlso("Can be changed", () -> (iz.expressionStatement(current.getParent()) || iz.forStatement(current.getParent())));
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { convert("++i;").to("i += 1;"), convert("--i;").to("i-=1;"), };
+  @Override public Examples examples() {
+    return convert("++i;").to("i += 1;").convert("--i;").to("i-=1;");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {

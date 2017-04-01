@@ -1,9 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import static il.org.spartan.utils.Example.*;
-
-import java.util.stream.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -19,13 +15,17 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 public class SwitchAddDefault extends SwitchZtatement implements TipperCategory.Bloater {
   private static final long serialVersionUID = 3859494576633437003L;
 
-  @Override public Example[] examples() {
-    return new Example[] { convert("switch(x) { case 1: y=2; break; }").to("switch(x) { case 1: y=2; break; default: }"),
-        ignores("switch(x) { case 1: y=2; break; default: }") };
+  @Override public Examples examples() {
+    return //
+    convert("switch(x) { case 1: y=2; break; }")//
+        .to("switch(x) { case 1: y=2; break; default: }").//
+        ignores("switch(x) { case 1: y=2; break; default: }")//
+    ;
   }
 
   public SwitchAddDefault() {
-    andAlso(Proposition.of("Does not have default case", () -> cases().stream().filter(λ -> λ.isDefault()).collect(Collectors.toList()).isEmpty()));
+    andAlso("Does not have default case", //
+        () -> cases().stream().noneMatch(x -> x.isDefault()));
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
