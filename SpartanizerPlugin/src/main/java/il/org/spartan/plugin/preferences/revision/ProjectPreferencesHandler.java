@@ -290,9 +290,9 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       return null;
     final StringBuilder $ = new StringBuilder();
     int c = 1;
-    for (Example x: preview)
-      if (filter.apply(x).booleanValue())
-        $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(x)).append("\n\n");
+    for (Example ¢: preview)
+      if (filter.apply(¢).booleanValue())
+        $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(¢)).append("\n\n");
     return ($ + "").trim();
   }
 

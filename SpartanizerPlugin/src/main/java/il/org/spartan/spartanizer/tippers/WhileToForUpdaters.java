@@ -48,7 +48,7 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
   }
 
   @Override public ASTNode replacement(final WhileStatement ¢) {
-    return !(¢ != null && !iz.containsContinueStatement(body(¢)) && hasFittingUpdater(¢) && cantTip.declarationInitializerStatementTerminatingScope(¢)
-        && cantTip.declarationRedundantInitializer(¢) && cantTip.remvoeRedundantIf(¢)) ? null : buildForWithoutLastStatement(¢);
+    return ¢ == null || iz.containsContinueStatement(body(¢)) || !hasFittingUpdater(¢) || !cantTip.declarationInitializerStatementTerminatingScope(¢)
+        || !cantTip.declarationRedundantInitializer(¢) || !cantTip.remvoeRedundantIf(¢) ? null : buildForWithoutLastStatement(¢);
   }
 }

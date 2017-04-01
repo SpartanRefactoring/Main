@@ -55,38 +55,38 @@ public class PropositionTest {
     assert !Proposition.F.getAsBoolean();
     assert Proposition.T.getAsBoolean();
     assert !Proposition.F.getAsBoolean();
-    Proposition.of(Proposition.T);
-    Proposition.of(Proposition.F);
-    Proposition.of(Proposition.T);
-    Proposition.of(Proposition.F);
-    (Proposition.of(Proposition.T) + "").hashCode();
-    (Proposition.of(Proposition.F) + "").hashCode();
-    (Proposition.of(Proposition.T) + "").hashCode();
-    (Proposition.of(Proposition.F) + "").hashCode();
-    assert Proposition.of(Proposition.T) != null;
-    assert Proposition.of(Proposition.F) != null;
-    assert Proposition.of(Proposition.T) != null;
-    assert Proposition.of(Proposition.F) != null;
-    object = Proposition.of(Proposition.T);
-    object = Proposition.of(Proposition.F);
-    object = Proposition.of(Proposition.T);
-    object = Proposition.of(Proposition.F);
-    assert Proposition.of(Proposition.T) != null;
-    assert Proposition.of(Proposition.F) != null;
-    assert Proposition.of(Proposition.T) != null;
-    assert Proposition.of(Proposition.F) != null;
-    condition = Proposition.of(Proposition.T);
-    condition = Proposition.of(Proposition.F);
-    condition = Proposition.of(Proposition.T);
-    condition = Proposition.of(Proposition.F);
-    assert Proposition.of(() -> true).getAsBoolean();
-    assert Proposition.of(() -> condition != null).getAsBoolean();
-    assert !Proposition.of(() -> false).getAsBoolean();
-    assert Proposition.of(() -> hashCode() == hashCode()).getAsBoolean();
-    assert Proposition.of(Proposition.T).getAsBoolean();
-    assert !Proposition.of(Proposition.F).getAsBoolean();
-    assert Proposition.of(Proposition.T).getAsBoolean();
-    assert !Proposition.of(Proposition.F).getAsBoolean();
+    Proposition.that(Proposition.T);
+    Proposition.that(Proposition.F);
+    Proposition.that(Proposition.T);
+    Proposition.that(Proposition.F);
+    (Proposition.that(Proposition.T) + "").hashCode();
+    (Proposition.that(Proposition.F) + "").hashCode();
+    (Proposition.that(Proposition.T) + "").hashCode();
+    (Proposition.that(Proposition.F) + "").hashCode();
+    assert Proposition.that(Proposition.T) != null;
+    assert Proposition.that(Proposition.F) != null;
+    assert Proposition.that(Proposition.T) != null;
+    assert Proposition.that(Proposition.F) != null;
+    object = Proposition.that(Proposition.T);
+    object = Proposition.that(Proposition.F);
+    object = Proposition.that(Proposition.T);
+    object = Proposition.that(Proposition.F);
+    assert Proposition.that(Proposition.T) != null;
+    assert Proposition.that(Proposition.F) != null;
+    assert Proposition.that(Proposition.T) != null;
+    assert Proposition.that(Proposition.F) != null;
+    condition = Proposition.that(Proposition.T);
+    condition = Proposition.that(Proposition.F);
+    condition = Proposition.that(Proposition.T);
+    condition = Proposition.that(Proposition.F);
+    assert Proposition.that(() -> true).getAsBoolean();
+    assert Proposition.that(() -> condition != null).getAsBoolean();
+    assert !Proposition.that(() -> false).getAsBoolean();
+    assert Proposition.that(() -> hashCode() == hashCode()).getAsBoolean();
+    assert Proposition.that(Proposition.T).getAsBoolean();
+    assert !Proposition.that(Proposition.F).getAsBoolean();
+    assert Proposition.that(Proposition.T).getAsBoolean();
+    assert !Proposition.that(Proposition.F).getAsBoolean();
     Proposition.AND(T, T);
     Proposition.AND(T, T);
     Proposition.AND(T, T, T);
@@ -146,7 +146,7 @@ public class PropositionTest {
     assert not(F).and(not(F)).or(T).or(X).eval();
     final Proposition or = not(F).and(not(F)).or(T).or(X, X);
     assert or.eval();
-    assert Proposition.of(F).or(T).and(T).eval();
+    assert Proposition.that(F).or(T).and(T).eval();
     assert OR(F, T).and(T).eval();
     assert OR(F, T).and(T).or(X).eval();
     assert !OR(F, T).and(T).and(F).eval();
@@ -210,7 +210,7 @@ public class PropositionTest {
   }
 
   @Test public void b95() {
-    azzert.that(of(T).reduce(javaReducer), is("T"));
+    azzert.that(that(T).reduce(javaReducer), is("T"));
   }
 
   @Test public void d() {
@@ -255,8 +255,8 @@ public class PropositionTest {
   }
 
   @Test public void g2() {
-    azzert.that(Proposition.of(F).and(X).reduce(javaReducer), is("(F && X)"));
-    azzert.that(Proposition.of(F).or(X).reduce(javaReducer), is("(F || X)"));
+    azzert.that(Proposition.that(F).and(X).reduce(javaReducer), is("(F && X)"));
+    azzert.that(Proposition.that(F).or(X).reduce(javaReducer), is("(F || X)"));
   }
 
   @Test public void j() {

@@ -26,11 +26,11 @@ public interface Proposition extends BooleanSupplier {
     return new Not(¢);
   }
 
-  static Proposition of(final BooleanSupplier ¢) {
+  static Proposition that(final BooleanSupplier ¢) {
     return new Singleton(¢);
   }
 
-  static Proposition of(final String toString, final BooleanSupplier s) {
+  static Proposition that(final String toString, final BooleanSupplier s) {
     return new Singleton(toString, s);
   }
 
@@ -46,14 +46,14 @@ public interface Proposition extends BooleanSupplier {
   Proposition F = new Singleton("F", () -> false);
   /** a {@link Proposition} whose evaluation fails with
    * {@link NullPointerException} */
-  Proposition N = Proposition.of("N", () -> {
+  Proposition N = Proposition.that("N", () -> {
     throw new NullPointerException();
   });
   /** a {@link Proposition} which is {@code true} */
-  Proposition T = Proposition.of("T", () -> true);
+  Proposition T = Proposition.that("T", () -> true);
   /** a {@link Proposition} whose evaluation fails with
    * {@link AssertionError} */
-  Proposition X = Proposition.of("X", () -> {
+  Proposition X = Proposition.that("X", () -> {
     throw new AssertionError();
   });
 
@@ -62,7 +62,7 @@ public interface Proposition extends BooleanSupplier {
   Proposition and(BooleanSupplier s, BooleanSupplier... ss);
 
   default Proposition and(final String toString, final BooleanSupplier s) {
-    return and(Proposition.of(toString, s));
+    return and(Proposition.that(toString, s));
   }
 
   default boolean eval() {
@@ -72,7 +72,7 @@ public interface Proposition extends BooleanSupplier {
   Proposition or(BooleanSupplier s, BooleanSupplier... ss);
 
   default Proposition or(final String toString, final BooleanSupplier s) {
-    return or(Proposition.of(toString, s));
+    return or(Proposition.that(toString, s));
   }
 
   default <R> R reduce(final PropositionReducer<R> ¢) {
