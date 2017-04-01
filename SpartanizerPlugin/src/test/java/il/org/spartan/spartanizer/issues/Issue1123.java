@@ -21,8 +21,8 @@ public class Issue1123 {
   }
 
   @Test public void b() {
-    trimmingOf("c(N i){N p=i;int a=5;++a;for(;p<10;)p=p.e();return false;}")//
-        .gives("c(N i){N p=i;int a=5;++a;while(p<10)p=p.e();return false;}")//
+    trimmingOf("c(N i){N p=i;int a=5;f(++a);for(;p<10;)p=p.e();return false;}")//
+        .gives("c(N i){N p=i;int a=5;f(++a);while(p<10)p=p.e();return false;}")//
         .stays();
   }
 
