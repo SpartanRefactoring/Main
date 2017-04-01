@@ -24,7 +24,7 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
   private static final long serialVersionUID = -4185849867633961690L;
 
   @Override public Tip tip(final ReturnStatement x) {
-    return new Tip(description(x), x, getClass()) {
+    return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression ee = expression(x);
         final ConditionalExpression e = az.conditionalExpression(!iz.parenthesizedExpression(ee) ? ee : expression(ee));

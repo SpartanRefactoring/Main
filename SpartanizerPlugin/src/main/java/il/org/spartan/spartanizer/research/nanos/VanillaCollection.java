@@ -28,7 +28,7 @@ public final class VanillaCollection extends NanoPatternTipper<FieldDeclaration>
   }
 
   @Override public Tip pattern(final FieldDeclaration ¢) {
-    return new Tip(description(), ¢, getClass()) {
+    return new Tip(description(), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(¢, g);
       }

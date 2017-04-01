@@ -32,7 +32,7 @@ public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
       static final long serialVersionUID = -8053877776935099016L;
 
       @Override public Tip pattern(final EnhancedForStatement ¢) {
-        return new Tip("", ¢, getClass()) {
+        return new Tip("", getClass(), ¢) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             Files.appendFile(out, ¢ + "_________________\n");
             nano.tip(¢).go(r, g);
