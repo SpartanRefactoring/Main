@@ -26,16 +26,20 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** TODO Niv Shalmon please add a description
+/** An interface for fluent api, used to determine the type of an expression
+ * from it's structure and context.
+ * Use type.get to find the type of an expression.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Dor Maayan
  * @author Niv Shalmon
  * @since 2016 */
 public interface type {
+  /** adds a new type to the system */
   static inner.implementation baptize(final String name) {
     return baptize(name, "anonymously born");
   }
 
+  /** adds a new type to the system, with fitting description */
   static inner.implementation baptize(final String name, final String description) {
     return have(name) ? bring(name) : new inner.implementation() {
       @Override public String description() {
@@ -52,10 +56,12 @@ public interface type {
     }.join();
   }
 
+  /** @return the type object with a given name, or null if no such name exists in the system */
   static inner.implementation bring(final String name) {
     return inner.types.get(name);
   }
 
+  /** @return whether a type with a given name exists in the system */
   static boolean have(final String name) {
     return inner.types.containsKey(name);
   }
@@ -75,7 +81,9 @@ public interface type {
   /** @param x JD
    * @return {@code true} <i>if</i> the parameter is an expression whose type is
    *         provably not of type {@link String}, in the sense used in applying
-   *         the {@code +} operator to concatenate strings. concatenation. */
+   *         the {@code +} operator to concatenate strings.
+   *         If returns true, can safely assume that {@code +} is used
+   *         for addition in this context */
   static boolean isNotString(final Expression ¢) {
     return !in(of(¢), STRING, ALPHANUMERIC);
   }
@@ -85,6 +93,7 @@ public interface type {
   }
 
   // TODO Matteo: Nano-pattern of values: not implemented
+  /** @return the type object of the expression */
   @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
     return inner.get(¢);
   }
@@ -300,6 +309,11 @@ public interface type {
       return baptize(step.type(¢) + "");
     }
 
+    /** @param x JD
+     *  @param i most specific type information already known, usually from lookdown
+     *  @return most spefici type information for x, based on the currently known type
+     *  information and the context in which x appears 
+     */
     private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
