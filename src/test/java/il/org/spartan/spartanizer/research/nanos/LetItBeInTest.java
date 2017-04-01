@@ -29,8 +29,7 @@ public class LetItBeInTest {
   @Test public void c() {
     trimmingOf("{{A x = foo(); return bar(y,y);} another();}")//
         .gives("A x=foo();return bar(y,y);another();") //
-        .gives("return bar(y,y);another();") //
-        .using(VariableDeclarationFragment.class, new LetItBeIn())//
+        .gives("foo(); return bar(y,y);") //
         .stays();
   }
 
