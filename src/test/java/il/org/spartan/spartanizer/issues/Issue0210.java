@@ -20,8 +20,8 @@ public final class Issue0210 {
 
   // @Ignore
   @Test public void issue210_02() {
-    trimmingOf("int zero = 0; int result = 8 / zero; ++result;")//
-        .gives("int zero =0, result = 8 / zero; ++result;")//
+    trimmingOf("int zero = 0; int result = 8 / zero; f(++result);")//
+        .gives("int zero =0, result = 8 / zero; f(++result);")//
         .stays();
   }
 
