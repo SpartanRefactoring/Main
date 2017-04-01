@@ -208,7 +208,6 @@ public interface Proposition extends BooleanSupplier {
     
     protected void simplify()
     {
-      Class<?> c = getClass();
       List<BooleanSupplier> newInner = stream()
           .map(λ -> !(getClass().isInstance(λ)) ? Stream.of(λ) : ((Some) λ).inner.stream())
           .flatMap(λ -> λ)
