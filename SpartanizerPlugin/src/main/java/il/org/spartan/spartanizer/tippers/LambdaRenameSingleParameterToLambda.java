@@ -42,7 +42,7 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     if (m != null)
       m.exclude(x);
     final SimpleName ¢ = x.getAST().newSimpleName(namer.lambda);
-    return new Tip(description(x), x, getClass()) {
+    return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, x, r, g);
       }

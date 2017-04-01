@@ -60,7 +60,7 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
     // TODO Tomer Dragucki : use class subject --yg
     a.setLeftHandSide(copy.of(az.expression(f2.getName())));
     a.setRightHandSide(copy.of(az.expression(f2.getInitializer())));
-    return new Tip(description(¢), ¢, getClass()) {
+    return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(¢.getParent(), !SwitchStatement.STATEMENTS_PROPERTY.getNodeClass().isInstance(¢.getParent())
             ? Block.STATEMENTS_PROPERTY : SwitchStatement.STATEMENTS_PROPERTY);

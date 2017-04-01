@@ -35,7 +35,7 @@ public class RenameConstructorParameters extends EagerTipper<MethodDeclaration> 
           final SimpleName $ = d.getAST().newSimpleName(a.getRightHandSide() + ""),
               to1 = d.getAST().newSimpleName(az.fieldAccess(a.getLeftHandSide()).getName().getIdentifier());
           if (!alreadyDefined(to1, d))
-            return new Tip(description(d), d, getClass()) {
+            return new Tip(description(d), getClass(), d) {
               @Override public void go(final ASTRewrite r, final TextEditGroup g) {
                 for (final SingleVariableDeclaration q : step.parameters(d))
                   action.rename($, to1, q, r, g);

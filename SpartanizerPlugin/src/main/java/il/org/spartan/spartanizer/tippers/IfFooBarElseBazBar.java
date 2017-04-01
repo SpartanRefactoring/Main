@@ -62,7 +62,7 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
       if (c.notAllDefined())
         return null;
     }
-    return $.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), s, getClass()) {
+    return $.isEmpty() && elze.isEmpty() || commmonSuffix.isEmpty() ? null : new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final IfStatement newIf = replacement();
         if (iz.block(s.getParent())) {

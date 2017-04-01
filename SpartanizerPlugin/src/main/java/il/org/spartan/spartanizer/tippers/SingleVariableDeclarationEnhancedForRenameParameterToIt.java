@@ -59,7 +59,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToIt exten
     if (m != null)
       m.exclude(body);
     final SimpleName ¢ = namer.newCurrent(d);
-    return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", d, getClass()) {
+    return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename(n, ¢, $, r, g);
       }

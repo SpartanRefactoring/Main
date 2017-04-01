@@ -55,7 +55,7 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
         prev.add($);
         after.add(¢);
       }
-      return s.getParent() == null || prev.isEmpty() ? null : new Tip("Rename parameters", s, getClass()) {
+      return s.getParent() == null || prev.isEmpty() ? null : new Tip("Rename parameters", getClass(), s) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           int counter = 0;
           for (final SimpleName ¢ : prev) {

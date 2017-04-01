@@ -38,7 +38,7 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
     final Expression $ = copy.of(a.getIndex());
     final Statement s = containing.statement(a);
     final AST t = s.getAST();
-    return new Tip(description(a), a, getClass()) {
+    return new Tip(description(a), getClass(), a) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(s.getParent(), Block.STATEMENTS_PROPERTY);
         final ArrayAccess newa = copy.of(a);

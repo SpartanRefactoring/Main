@@ -54,7 +54,7 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
       prev.add($);
       after.add(¢);
     }
-    return prev.isEmpty() ? null : new Tip("Rename paraemters", d, getClass()) {
+    return prev.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         int counter = 0;
         for (final SimpleName ¢ : prev) {
