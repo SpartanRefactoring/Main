@@ -40,12 +40,12 @@ public class ForRedundantContinue extends NonEmptyForLoop//
 
 
   @Override protected ASTRewrite go(ASTRewrite $, TextEditGroup g) {
-    Block b = az.block(forBody);
+    Block b = az.block(body);
     if(b == null)
-      $.replace(forBody, copy.of($.getAST().newEmptyStatement()), g);
+      $.replace(body, copy.of($.getAST().newEmptyStatement()), g);
     else {
       statements(b).remove(lastStatement);
-      $.replace(az.block(forBody), copy.of(b), g);
+      $.replace(az.block(body), copy.of(b), g);
 
     }
     
