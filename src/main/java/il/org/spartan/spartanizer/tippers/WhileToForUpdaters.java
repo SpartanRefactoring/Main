@@ -40,7 +40,6 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null //
-        && ¢ != null //
         && !iz.containsContinueStatement(body(¢)) //
         && hasFittingUpdater(¢) //
         && cantTip.declarationInitializerStatementTerminatingScope(¢) //
