@@ -8,7 +8,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.java.*;
 
 /** Unit tests for the GitHub issue thus numbered
  * @author David Cohen
