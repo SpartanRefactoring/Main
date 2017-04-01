@@ -21,9 +21,9 @@ import il.org.spartan.spartanizer.patterns.*;
  * tests in {@link Issue1146}
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-26 */
-public class InitializerIncDecrementInline extends LocalVariableInitialized//
+public class LocalInitializedIncrementDecrementInline extends LocalVariableInitialized//
     implements TipperCategory.Inlining {
-  public InitializerIncDecrementInline() {
+  public LocalInitializedIncrementDecrementInline() {
     andAlso("Has increment/decrement of variable afterwards",()-> {
       ExpressionStatement s = az.expressionStatement(nextStatement);
       if (s == null)
