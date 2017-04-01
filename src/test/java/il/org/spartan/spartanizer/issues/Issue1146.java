@@ -7,14 +7,14 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** see Github issue thus numbered for more info unit tests for
- * {@link InitializerIncDecrementInline}
+ * {@link LocalInitializedIncrementDecrementInline}
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-26 */
 @SuppressWarnings("static-method")
 public class Issue1146 extends TipperTest{
   
   @Override public Tipper<?> tipper(){
-    return new InitializerIncDecrementInline();
+    return new LocalInitializedIncrementDecrementInline();
   }
   
   @Test public void a() {
