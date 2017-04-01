@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -84,28 +82,6 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     return !wizard.eq($, d) ? $ : null;
   }
 
-  /* @Override public Tip tip( final N n) { final List<Annotation> $ =
-   * extract.annotations(n); if ($ == null || $.isEmpty()) return null;
-   *
-   * List<Annotation> myCopy = (List<Annotation>) sort(new ArrayList<>($));
-   *
-   * return myCopy.equals($) ? null : new Tip(description(n), n, getClass()) {
-   *
-   * @Override public void go( final ASTRewrite r, final TextEditGroup g) {
-   * final ListRewrite l = r.getListRewrite(n, n.getModifiersProperty());
-   *
-   * for (int i = 0; i < $.size(); ++i) { List<Annotation> sorted =
-   * (List<Annotation>) copy.of(myCopy); final ASTNode oldNode ; final ASTNode
-   * newNode ;
-   *
-   * oldNode = $.get(i); if(i < myCopy.size()){ newNode = sorted.get(i); if
-   * (!wizard.same(oldNode,newNode)) { l.replace(oldNode, newNode, g); } } else{
-   * l.remove(oldNode, g);
-   *
-   * }
-   *
-   *
-   * } } }; } */
   @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
@@ -115,13 +91,11 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     return "Sort annotations of declaration";
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("@NonNull @SuppressWarnings public @Override final void f() {}") //
-            .to("@Override @SuppressWarnings @NonNull public final void f() {}"), //
-        convert("@C @B @A class A {}") //
-            .to("@A @B @C class A {}"), //
-    };
+  @Override public Examples examples() {
+    return convert("@NonNull @SuppressWarnings public @Override final void f() {}") //
+            .to("@Override @SuppressWarnings @NonNull public final void f() {}") //
+        .convert("@C @B @A class A {}") //
+            .to("@A @B @C class A {}") //
+            ;
   }
 }

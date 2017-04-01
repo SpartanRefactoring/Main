@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -54,21 +52,20 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
     return "Add 'else' clause to " + ¢;
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
+  @Override public Examples examples() {
+    return  //
         convert("if (a) {f(); g(); return;} a++; b++; return;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  return;}"), //
+            .to("if (a) {f(); g(); } else {a++; b++;}  return;}"). //
         convert("if (a) {f(); g(); throw x;} a++; b++; throw x;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  throw x;}"), //
+            .to("if (a) {f(); g(); } else {a++; b++;}  throw x;}"). //
         convert("if (a) {f(); g(); return x;} a++; b++; return x;}")//
-            .to("if (a) {f(); g(); } else {a++; b++; } return x;}"), //
+            .to("if (a) {f(); g(); } else {a++; b++; } return x;}"). //
         convert("if (a) {f(); g(); break c;} a++; b++; break c;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  break c;}"), //
+            .to("if (a) {f(); g(); } else {a++; b++;}  break c;}"). //
         convert("if (a) {f(); g(); continue c;} a++; b++; continue c;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  continue c;}"), //
+            .to("if (a) {f(); g(); } else {a++; b++;}  continue c;}"). //
         convert("if (a) {f(); g(); continue ;} a++; b++; continue ;}")//
-            .to("if (a) {f(); g(); } else {a++; b++;}  continue ;}"),//
-    };
+            .to("if (a) {f(); g(); } else {a++; b++;}  continue ;}");//
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {

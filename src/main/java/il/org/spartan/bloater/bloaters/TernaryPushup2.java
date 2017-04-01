@@ -1,8 +1,6 @@
 package il.org.spartan.bloater.bloaters;
 
 import static il.org.spartan.spartanizer.ast.factory.subject.*;
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -22,9 +20,8 @@ public final class TernaryPushup2 extends InfixExprezzion implements TipperCateg
   private static final long serialVersionUID = 8148439675150970356L;
   Expression condition, then, elze;
 
-  @Override public Example[] examples() {
-    return new Example[] { convert("x = a + (cond ? b : c);").to("x = cond ? a + b : a + c;"),
-        convert("x = (cond ? b : c) + a;").to("x = cond ? b + a : c + a;") };
+  @Override public Examples examples() {
+    return convert("x = a + (cond ? b : c);").to("x = cond ? a + b : a + c;").convert("x = (cond ? b : c) + a;").to("x = cond ? b + a : c + a;");
   }
 
   public TernaryPushup2() {
