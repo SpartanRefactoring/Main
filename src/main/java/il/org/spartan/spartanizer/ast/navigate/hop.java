@@ -136,10 +136,4 @@ public interface hop {
         : parent(¢) instanceof Block ? rest(¢, step.statements((Block) parent(¢))) //
             : new ArrayList<>();
   }
-
-  static ListRewrite statementsRewriter(final ASTRewrite r, final Statement s) {
-    return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
-        : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
-            : monitor.bug("Weird type", s, parent(s));
-  }
 }
