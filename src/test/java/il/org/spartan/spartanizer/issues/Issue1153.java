@@ -92,7 +92,7 @@ public class Issue1153 {
         .gives("class A { private long serialVersionUID = -0x3E7;}")//
         .stays();
   }
-  
+
   @Test public void m() {
     trimmingOf("class A { private long serialVersionUID = -066L;}")//
         .stays();

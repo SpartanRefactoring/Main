@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.Utils.*;
+import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
@@ -24,11 +25,12 @@ import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 
 /** An interface for fluent api, used to determine the type of an expression
- * from it's structure and context.
- * Use type.get to find the type of an expression.
+ * from it's structure and context. Use type.get to find the type of an
+ * expression.
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Dor Maayan
  * @author Niv Shalmon
@@ -56,7 +58,8 @@ public interface type {
     }.join();
   }
 
-  /** @return the type object with a given name, or null if no such name exists in the system */
+  /** @return the type object with a given name, or null if no such name exists
+   *         in the system */
   static inner.implementation bring(final String name) {
     return inner.types.get(name);
   }
@@ -81,9 +84,9 @@ public interface type {
   /** @param x JD
    * @return {@code true} <i>if</i> the parameter is an expression whose type is
    *         provably not of type {@link String}, in the sense used in applying
-   *         the {@code +} operator to concatenate strings.
-   *         If returns true, can safely assume that {@code +} is used
-   *         for addition in this context */
+   *         the {@code +} operator to concatenate strings. If returns true, can
+   *         safely assume that {@code +} is used for addition in this
+   *         context */
   static boolean isNotString(final Expression ¢) {
     return !in(of(¢), STRING, ALPHANUMERIC);
   }
@@ -310,10 +313,10 @@ public interface type {
     }
 
     /** @param x JD
-     *  @param i most specific type information already known, usually from lookdown
-     *  @return most spefici type information for x, based on the currently known type
-     *  information and the context in which x appears 
-     */
+     * @param i most specific type information already known, usually from
+     *        lookdown
+     * @return most spefici type information for x, based on the currently known
+     *         type information and the context in which x appears */
     private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
