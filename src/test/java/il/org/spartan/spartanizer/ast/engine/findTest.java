@@ -9,7 +9,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 
-/** TODO: orimarco <marcovitch.ori@gmail.com> please add a description
+/** TODO orimarco <marcovitch.ori@gmail.com> please add a description
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Dec 22, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

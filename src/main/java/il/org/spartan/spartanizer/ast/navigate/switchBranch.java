@@ -15,7 +15,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO: YuvalSimon <yuvaltechnion@gmail.com> , this class is duplicate also
+/** TODO YuvalSimon <yuvaltechnion@gmail.com> , this class is duplicate also
  * please add a description
  * @author YuvalSimon <yuvaltechnion@gmail.com>
  * @since Jan 15, 2017 */
@@ -136,7 +136,7 @@ public class switchBranch {
     return $;
   }
 
-  // TODO: Yuval Simon: please simplify this code. It is, to be honest, crappy
+  // TODO Yuval Simon: please simplify this code. It is, to be honest, crappy
   // --yg
   @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
     final List<Statement> l = step.statements(n);
@@ -151,7 +151,7 @@ public class switchBranch {
         s = new ArrayList<>();
         $.add(new switchBranch(c, s));
         nextBranch = false;
-        // TODO: Yuval = make this into a decent for loop --yg
+        // TODO Yuval = make this into a decent for loop --yg
         while (iz.switchCase(l.get(¢)) && ¢ < l.size() - 1)
           c.add(az.switchCase(l.get(¢++)));
         if (¢ >= l.size() - 1)

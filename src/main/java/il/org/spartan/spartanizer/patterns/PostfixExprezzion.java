@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.patterns;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** TODO Abstract Pattern of PostfixExpression
+ /** Abstract Pattern of {@link PostfixExpression}
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-31 */
 public abstract class PostfixExprezzion extends AbstractPattern<PostfixExpression> {

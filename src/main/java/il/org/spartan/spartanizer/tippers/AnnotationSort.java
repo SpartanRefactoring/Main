@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** TODO: kobybs please add a description
+/** TODO kobybs please add a description
  * @author kobybs
  * @author Dan Abramovich
  * @since 20-11-2016 */

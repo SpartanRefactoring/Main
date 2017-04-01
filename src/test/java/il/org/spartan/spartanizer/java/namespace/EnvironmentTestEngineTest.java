@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.utils.*;
 
-/** TODO: Dan Greenstein please add a description
+/** TODO Dan Greenstein please add a description
  * @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */

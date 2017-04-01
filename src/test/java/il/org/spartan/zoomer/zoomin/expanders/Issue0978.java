@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import org.junit.*;
 
-/** TODO: Doron Mehsulam {@code doronmmm@hotmail.com} please add a description
+/** TODO Doron Mehsulam {@code doronmmm@hotmail.com} please add a description
  * @author Doron Mehsulam {@code doronmmm@hotmail.com}
  * @since 2017-01-15 */
 @SuppressWarnings("static-method")
