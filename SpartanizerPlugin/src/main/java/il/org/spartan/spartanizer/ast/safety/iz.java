@@ -1312,10 +1312,9 @@ public interface iz {
     }
   }
 
-  public static boolean isPrePostUse(final SimpleName id) {
+  static boolean prePostUseOfName(final SimpleName id) {
     final ASTNode $ = parent(id);
-    return prefixExpression($)//
-        || postfixExpression($);
+    return prefixExpression($) || postfixExpression($);
   }
 
   interface literal {
