@@ -14,11 +14,13 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.meta.*;
 
-/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- * @since 2017-01-28 */
+/**
+ * @author  Yossi Gil  {@code  Yossi.Gil@GMail.COM}
+ * @since  2017-01-28 
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings("javadoc")
 @Ignore("Yossi Gil")
+@SuppressWarnings("javadoc")
 public class mayShortcircuitTest extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);
   private final Namespace firstBlock = fixtureClass.getChild(0);
