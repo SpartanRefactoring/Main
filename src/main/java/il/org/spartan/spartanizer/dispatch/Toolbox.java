@@ -304,7 +304,7 @@ public class Toolbox {
         .add(FieldDeclaration.class, //
             new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
-            new FieldSerialVersionUIDToHexadecimal(), //
+            new FieldInitializedSerialVersionUIDToHexadecimal(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
@@ -326,7 +326,7 @@ public class Toolbox {
             new AnnotationSort<>(), //
             null)
         .add(VariableDeclarationFragment.class, //
-            new FieldFragmentInitializerDefaultValue(), //
+            new FieldInitializedDefaultValue(), //
             new LocalVariableUnintializedStatementAssignment(), //
             new LocalVariableIntializedUpdateAssignment(), //
             new LocalVariableIntializedIfAssignment(), //
