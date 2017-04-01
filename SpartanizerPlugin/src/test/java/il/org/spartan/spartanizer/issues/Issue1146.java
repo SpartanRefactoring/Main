@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.issues;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.spartanizer.testing.*;
@@ -11,9 +12,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-26 */
 @SuppressWarnings("static-method")
-public class Issue1146 extends TipperTest {
-  @Override public Tipper<?> tipper() {
+public class Issue1146 extends TipperTest<VariableDeclarationFragment> {
+  @Override public Tipper<VariableDeclarationFragment> tipper() {
     return new LocalInitializedIncrementDecrementInline();
+  }
+  
+  @Override public Class<VariableDeclarationFragment> tipsOn() {
+    return VariableDeclarationFragment.class;
   }
 
   @Test public void a() {
@@ -40,7 +45,8 @@ public class Issue1146 extends TipperTest {
    * here */
   @Test public void c2() {
     TestsUtilsTrimmer.trimmingOf("int x = 1, y = x; ++x;")//
-        .gives("int x = 1; ++x;");
+        .gives("int x = 1; ++x;")//
+        .gives("int x = 1+1;");
   }
   
   @Test public void d(){
