@@ -11,6 +11,10 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class LocalVariableInitializedStatement extends LocalVariableInitialized {
   private static final long serialVersionUID = 0x1B70489B1D1340L;
 
+  @Override protected ASTNode range() {
+    return nextStatement;
+  }
+
   @Override public final Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {
     final Tip $ = super.tip(f, exclude);
     if ($ != null && exclude != null)
