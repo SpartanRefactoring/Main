@@ -87,6 +87,17 @@ public class Issue1153 {
         .stays();
   }
 
+  @Test public void l() {
+    trimmingOf("class A { private long serialVersionUID = -999L;}")//
+        .gives("class A { private long serialVersionUID = -0x3E7;}")//
+        .stays();
+  }
+  
+  @Test public void m() {
+    trimmingOf("class A { private long serialVersionUID = -066L;}")//
+        .stays();
+  }
+
   /** Introduced by Yossi on Fri-Mar-24-13:58:53-IDT-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_classAPrivateLonga12345677899L() {
