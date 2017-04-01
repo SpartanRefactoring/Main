@@ -8,6 +8,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
@@ -27,13 +28,16 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
         () -> iz.not.null¢(returnStatement = az.returnStatement(nextStatement)));//
     andAlso("Next statement returns a value return", //
         () -> iz.not.null¢(returnValue = returnStatement.getExpression()));//
-    andAlso("Value returned is local variable", //
-        () -> wizard.eq(name, returnValue)//
-    );
+    andAlso(//
+        Proposition.of("Returned value is identical to local variable", //
+            () -> wizard.eq(name, returnValue)//
+        ).or(//
+            "Initializer has no side effects", () -> sideEffects.free(initializer)//
+        ));
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { Example.convert("int a = 3; return a;").to("return 3;") };
+  @Override public Examples examples() {
+    return convert("int a = 3; return a;").to("return 3;");
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

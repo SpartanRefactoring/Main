@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -35,8 +33,8 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @Override public Example[] examples() {
-    return new Example[] { //
+  @Override public Examples examples() {
+    return  //
         convert("" //
             + "int print() {\n" //
             + "  int number = 1;\n" //
@@ -45,13 +43,13 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
                 .to("" //
                     + "int print() {\n" //
                     + "  System.out.println(\"number\");\n" //
-                    + "}"), //
-        ignores("" //
+                    + "}") //
+        .ignores("" //
             + "int print() {\n" //
             + "  int number = 1;\n" //
             + "  System.out.println(number);\n" //
-            + "}"), //
-    };
+            + "}") //
+    ;
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {

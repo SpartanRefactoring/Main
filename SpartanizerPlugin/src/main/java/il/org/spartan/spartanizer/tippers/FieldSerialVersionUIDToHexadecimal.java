@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -26,14 +24,16 @@ public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclar
   NumberLiteral initializer;
   long replacement;
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("private static long " + SERIAL_VERSION_UID + " = 12345677899L;")//
-            .to("private static long " + SERIAL_VERSION_UID + " = 1234567799;"),
-        ignores("private long a = 3;"), //
-        ignores("private static long a = 3;"), //
-        ignores("long a = 3;"), //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("private static long " + SERIAL_VERSION_UID + " = 12345677899L;")//
+        .to("private static long " + SERIAL_VERSION_UID + " = 1234567799;").//
+        convert("private static long " + SERIAL_VERSION_UID + " = -12345677899L;")//
+        .to("private static long " + SERIAL_VERSION_UID + " = -1234567799;") //
+        .ignores("private long a = 3;") //
+        .ignores("private static long a = 3;") //
+        .ignores("long a = 3;") //
+    ;
   }
 
   @Override public String description() {

@@ -34,7 +34,7 @@ public class XMLSpartan {
   private static final String TIPPER = "tipper";
   private static final String ENABLED = "enabled";
   private static final String TIPPER_ID = "id";
-  private static final Example[] EMPTY_PREVIEW = { Example.convert("[no available preview]").to("[no available preview]") };
+  private static final Examples EMPTY_PREVIEW = new Examples().convert("[no available preview]").to("[no available preview]");
   private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = new HashSet<>();
   static {
     Collections.addAll(NON_CORE, //
@@ -73,14 +73,18 @@ public class XMLSpartan {
       if (tc == null)
         continue;
       final String description = Toolbox.Tables.TipperDescriptionCache.get(tc);
-      final Example[] preview = Toolbox.Tables.TipperExamplesCache.get(tc);
+      final Examples preview = Toolbox.Tables.TipperExamplesCache.get(tc);
       final TipperGroup g = Toolbox.Tables.TipperObjectByClassCache.get(tc).tipperGroup();
       if (!tgs.containsKey(g)) {
         tgs.put(g, new ArrayList<>());
         tcs.put(g, new SpartanCategory(g.name(), false));
       }
-      final SpartanTipper st = new SpartanTipper(tc.getSimpleName(), Boolean.parseBoolean(e.getAttribute(ENABLED)), tcs.get(g),
-          description != null ? description : "No description available", preview != null && preview.length > 0 ? preview : EMPTY_PREVIEW);
+      final SpartanTipper st = new SpartanTipper(//
+          tc.getSimpleName(), //
+          Boolean.parseBoolean(e.getAttribute(ENABLED)), //
+          tcs.get(g),
+          description != null ? description : "No description available", //
+          preview != null  ? preview : EMPTY_PREVIEW);
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
     }
@@ -302,9 +306,9 @@ public class XMLSpartan {
   public static class SpartanTipper extends SpartanElement {
     private final SpartanCategory parent;
     private final String description;
-    private final Example[] preview;
+    private final Examples preview;
 
-    public SpartanTipper(final String name, final boolean enabled, final SpartanCategory parent, final String description, final Example[] preview) {
+    public SpartanTipper(final String name, final boolean enabled, final SpartanCategory parent, final String description, final Examples preview) {
       super(name, enabled);
       this.parent = parent;
       this.description = description;
@@ -319,7 +323,7 @@ public class XMLSpartan {
       return description;
     }
 
-    public Example[] preview() {
+    public Examples preview() {
       return preview;
     }
   }

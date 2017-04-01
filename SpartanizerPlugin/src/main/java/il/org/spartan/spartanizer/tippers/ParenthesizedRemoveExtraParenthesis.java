@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -35,18 +33,18 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
     return "remove extra parenthesis " + trivia.gist(¢);
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
+  @Override public Examples examples() {
+    return  //
         convert("((x)).f();") //
-            .to("(x).f();"), //
+            .to("(x).f();"). //
         convert("(x).f();") //
-            .to("x.f();"), //
+            .to("x.f();"). //
         convert("f((x));") //
-            .to("f(x);"), //
+            .to("f(x);") //
         // TODO Marco: does not pass
         // converts("int i = (x).y;")
         // .to("int i = x.y;")
-    };
+    ;
   }
 
   @Override protected boolean prerequisite(final ParenthesizedExpression ¢) {

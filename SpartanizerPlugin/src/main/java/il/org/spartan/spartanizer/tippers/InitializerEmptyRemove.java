@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -31,13 +29,13 @@ public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
     return "Remove empty " + (iz.static¢(¢) ? "" : "non-") + "static initializer";
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("class C {{}}") //
-            .to("class C {}"), //
+  @Override public Examples examples() {
+    return //
+    convert("class C {{}}") //
+        .to("class C {}"). //
         convert("class C {static {}}") //
-            .to("class C {}"), //
-        Example.ignores("class C {/***/ {}}"), //
-        Example.ignores("class C {/***/ static {}}") };
+        .to("class C {}") //
+        .ignores("class C {/***/ {}}") //
+        .ignores("class C {/***/ static {}}");
   }
 }
