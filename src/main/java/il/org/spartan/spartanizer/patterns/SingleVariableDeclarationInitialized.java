@@ -14,9 +14,7 @@ public abstract class SingleVariableDeclarationInitialized extends AbstractPatte
   protected Expression initializer;
   protected SimpleName name;
   protected Type type;
-  @Property
-  protected SingleVariableDeclaration currentDeclaration;
-
+  @Property protected SingleVariableDeclaration currentDeclaration;
 
   protected SingleVariableDeclarationInitialized() {
     andAlso(new Proposition.Singleton("Illegal Definition", () -> {
@@ -37,8 +35,8 @@ public abstract class SingleVariableDeclarationInitialized extends AbstractPatte
   final SimpleName name() {
     return name;
   }
-  
-  protected Expression initializer(){
+
+  protected Expression initializer() {
     return initializer;
   }
 }
