@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO Alex Kopzon please add a description
+/** A duplicates of {@link WhileToForUpdaters}? 
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class WhileToForWithUpdater extends ReplaceCurrentNode<WhileStatement>//

@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO Alex Kopzon please add a description
+/** Tests for the GitHub issue thus numbered
  * @author Alex Kopzon
  * @since 2016-09-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

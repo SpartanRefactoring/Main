@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO Doron Meshulam please add a description
+/** Unit tests for the GitHub issue thus numbered 
  * @author Doron Meshulam
  * @since 08-Dec-2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

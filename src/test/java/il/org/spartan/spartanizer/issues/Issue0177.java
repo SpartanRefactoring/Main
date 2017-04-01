@@ -8,9 +8,9 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/** TODO Alex please add a description
- * @author Alex
- * @author Dan
+/** Tests for the GitHub issue thus numbered
+ * @author Alex Kopzon
+ * @author Dan Greenstein
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc", "PointlessBooleanExpression" })
