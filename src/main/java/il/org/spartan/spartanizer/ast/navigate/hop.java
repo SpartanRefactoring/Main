@@ -10,7 +10,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -134,6 +133,6 @@ public interface hop {
   static List<Statement> subsequentStatements(final Statement ¢) {
     return parent(¢) instanceof SwitchStatement ? rest(¢, step.statements((SwitchStatement) parent(¢)))
         : parent(¢) instanceof Block ? rest(¢, step.statements((Block) parent(¢))) //
-            : new ArrayList<>();
+            : empty.list();
   }
 }
