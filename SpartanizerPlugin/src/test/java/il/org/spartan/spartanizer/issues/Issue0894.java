@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TODO Dan Abramovich please add a description
+/** Tests for the GitHub issue thus numbered
  * @author Dan Abramovich
  * @since 28-11-2016 */
 @SuppressWarnings("static-method")

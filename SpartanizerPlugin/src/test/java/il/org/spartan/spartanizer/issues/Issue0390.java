@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-/** TODO Alex Kopzon please add a description
+/** Tests for the GitHub issue thus numbered
  * @author Alex Kopzon
  * @since 2016 */
 @SuppressWarnings("static-method")

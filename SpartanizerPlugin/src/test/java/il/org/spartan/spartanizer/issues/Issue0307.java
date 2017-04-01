@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO Alex Kopzon please add a description
+/** Tests for the GitHub issue thus numbered
  * @author Alex Kopzon
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })

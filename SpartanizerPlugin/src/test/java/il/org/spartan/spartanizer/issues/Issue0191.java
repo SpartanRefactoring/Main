@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO Dan Abramovich please add a description
+/** Tests for the GitHub issue thus numbered
  * @author Dan Abramovich
  * @since 27-11-2016 */
 @SuppressWarnings("static-method")

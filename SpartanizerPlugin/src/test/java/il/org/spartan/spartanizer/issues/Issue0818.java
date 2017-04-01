@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TODO RoeyMaor please add a description
+/** Unit tests for the GitHub issue thus numbered
  * @author RoeyMaor
  * @author RoeiRaz
  * @since 11-11-16 */

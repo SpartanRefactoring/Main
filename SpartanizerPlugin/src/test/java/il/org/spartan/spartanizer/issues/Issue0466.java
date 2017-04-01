@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO Raviv Rachmiel please add a description
+/** Unit tests for the GitHub issue thus numbered
  * @author Raviv Rachmiel
  * @since 22-11-2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO kobybs please add a description
+/** Unit tests for the GitHub issue thus numbered 
  * @author kobybs
  * @author Dor Ma'ayan
  * @since 16-11-2016 */
