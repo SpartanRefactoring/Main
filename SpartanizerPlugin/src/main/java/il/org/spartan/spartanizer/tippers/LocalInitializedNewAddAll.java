@@ -31,7 +31,7 @@ public final class LocalInitializedNewAddAll extends LocalVariableInitialized //
     andAlso("Initializer is a 'new Type(...)' expression", //
         () -> iz.not.null¢(newExpression = az.classInstanceCreation(initializer)));
     andAlso("Instance creation takes no argments ", //
-        () -> newExpression.arguments().size() == 0); //
+        () -> newExpression.arguments().isEmpty()); //
     andAlso("Extract type", //
         () -> iz.not.null¢(type = newExpression.getType()));
     andAlso("Next statement is a method invocation", //

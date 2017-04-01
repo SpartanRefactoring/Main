@@ -597,12 +597,12 @@ public interface iz {
     }
   }
 
-  static boolean updating(final PostfixExpression postfixExpression) {
-    return in(postfixExpression.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+  static boolean updating(final PostfixExpression ¢) {
+    return in(¢.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
   }
 
-  static boolean updating(final PrefixExpression prefixExpression) {
-    return in(prefixExpression.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+  static boolean updating(final PrefixExpression ¢) {
+    return in(¢.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
   }
 
   /** @param ¢ JD

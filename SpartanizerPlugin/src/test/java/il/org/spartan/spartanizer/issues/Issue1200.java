@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * @since 2017-04-01
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "javadoc" })
+@SuppressWarnings("javadoc")
 public class Issue1200 {
   
   private final PropositionJavaNotation javaReducer = new PropositionJavaNotation();
