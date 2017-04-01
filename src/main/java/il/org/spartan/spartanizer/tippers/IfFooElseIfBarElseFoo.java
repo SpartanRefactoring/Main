@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.factory.subject.*;
-import static il.org.spartan.utils.Example.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -23,9 +22,11 @@ public class IfFooElseIfBarElseFoo extends ReplaceCurrentNode<IfStatement> //
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -8897742439908596829L;
 
-  @Override public Example[] examples() {
-    return new Example[] { convert("if(a) f(); else if(b) g(); else f();")//
-        .to("if(a || !b) f(); else if(b) g();"), ignores("if(a) f(); else if (x()) g(); else f();") };
+  @Override public Examples examples() {
+    return //
+    convert("if(a) f(); else if(b) g(); else f();")//
+        .to("if(a || !b) f(); else if(b) g();")//
+        .ignores("if(a) f(); else if (x()) g(); else f();");
   }
 
   @Override public ASTNode replacement(final IfStatement s) {

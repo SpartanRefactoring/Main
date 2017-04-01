@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -25,11 +24,11 @@ public final class AssignmentAndAssignmentOfSameValue extends GoToNextStatement<
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 0x69CDEE55CA481121L;
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("a=3;b=3;").to("b=a=3;"), //
-        convert("a=c;b=c;").to("b=a=c;"), //
-    };
+  @Override public Examples examples() {
+    return convert("a=3;b=3;").to("b=a=3;") //
+        .convert("a=c;b=c;").to("b=a=c;") //
+    ;
+
   }
 
   private static Expression extractRight(final Assignment ¢) {
