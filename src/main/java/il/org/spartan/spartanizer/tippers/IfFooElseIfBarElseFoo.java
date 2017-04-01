@@ -31,13 +31,17 @@ public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
       sideEffects.free(elzeIfCondition));
   }
   
-  @Override public Examples examples() {
-    return convert("if(a) f(); else if(b) g(); else f();")//
-            .to("if(a || !b) f(); else if(b) g();");
-  }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Merges if and else blocks when they are the same and there is an else if clause.";
+  }
+  
+  @Override public Examples examples() {
+    return //
+    convert("if(a) f(); else if(b) g(); else f();")//
+        .to("if(a || !b) f(); else if(b) g();")//
+        .ignores("if(a) f(); else if (x()) g(); else f();");
+
   }
 
   @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
