@@ -3,6 +3,7 @@ package il.org.spartan.proposition;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
 import static il.org.spartan.utils.Proposition.not;
+import static il.org.spartan.utils.Proposition.that;
 
 import java.util.*;
 import java.util.function.*;
@@ -26,6 +27,7 @@ public class PropositionTest {
   @Test(expected = AssertionError.class) public void a() {
     X.getAsBoolean();
   }
+
   @Test public void aa() {
     object = Proposition.T;
     assert object != null;
@@ -151,6 +153,7 @@ public class PropositionTest {
     assert OR(F, T).and(T).or(X).eval();
     assert !OR(F, T).and(T).and(F).eval();
   }
+
   @Test public void b2() {
     azzert.that(T_OR_F_OR_X + "", is("T OR F OR X"));
     azzert.that(F.or(T).and(T).reduce(javaReducer), is("((F || T) && T)"));
@@ -158,9 +161,11 @@ public class PropositionTest {
     azzert.that(F.and("X1", X).or(T).reduce(javaReducer), is("((F && X1) || T)"));
     azzert.that(F.or("X1", X).or(T).reduce(javaReducer), is("((F || X1) || T)"));
   }
+
   @Test public void b2a() {
     azzert.that(OR(F, X, N).and(T).reduce(javaReducer), is("((F || X || N) && T)"));
   }
+
   @Test public void b3() {
     assert !hasCycles(T);
     assert !hasCycles(X);
@@ -173,30 +178,38 @@ public class PropositionTest {
     assert !hasCycles(T_AND_F_AND_X);
     assert !hasCycles(T_OR_F_OR_X);
   }
+
   @Test public void b31() {
     assert !hasCycles(T.or(T));
   }
+
   @Test public void b32() {
     assert !hasCycles(T.and(T));
   }
+
   @Test public void b4() {
     T.reduce(javaReducer);
   }
+
   @Test public void b5() {
     F.and(F).reduce(javaReducer);
   }
+
   @Test public void b8() {
     T.or(X).reduce(javaReducer);
   }
+
   @Test public void b9() {
     azzert.that(X.reduce(javaReducer), instanceOf(String.class));
     azzert.that(X.reduce(javaReducer), is("X"));
     azzert.that(T.reduce(javaReducer), is("T"));
     azzert.that(T.or(X).reduce(javaReducer), is("(T || X)"));
   }
+
   @Test public void b91() {
     azzert.that(T.and(X).reduce(javaReducer), is("(T && X)"));
   }
+
   @Test public void b92() {
     azzert.that(not(T).reduce(javaReducer), is("!T"));
   }
@@ -316,28 +329,16 @@ public class PropositionTest {
   }
 
   private Proposition B1, T_OR_F_OR_X;
-
   private Proposition B2, T_AND_F_AND_X;
-
   private Proposition B3, NOT_F_AND_NOT_F_OR_X_OR_N_OR_T;
-
   private Proposition B4, T_OR_F_OR_X_OR_NOT_F_AND_NOT_F_OR_X_OR_N_OR_T;
-
   private Proposition B5, B1_AND_B2;
-
   private Proposition B6, B2_AND_B1;
-
   private Proposition B7, B1_OR_B2;
-
   private Proposition B8, B2_OR_B1;
-
   private final PropositionJavaNotation javaReducer = new PropositionJavaNotation();
-
   Proposition condition;
-
   Proposition inner;
-
   Object object;
-
   BooleanSupplier supplier;
 }

@@ -11,7 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TUnit tests for the GitHub issue thus numbered 
+/** TUnit tests for the GitHub issue thus numbered
  * @author Vivian Shehadeh
  * @author Ward Mattar
  * @since 16-11-06 */

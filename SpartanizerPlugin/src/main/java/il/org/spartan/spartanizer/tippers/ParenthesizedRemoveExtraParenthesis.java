@@ -34,16 +34,16 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
   }
 
   @Override public Examples examples() {
-    return  //
-        convert("((x)).f();") //
-            .to("(x).f();"). //
+    return //
+    convert("((x)).f();") //
+        .to("(x).f();"). //
         convert("(x).f();") //
-            .to("x.f();"). //
+        .to("x.f();"). //
         convert("f((x));") //
-            .to("f(x);") //
-        // TODO Marco: does not pass
-        // converts("int i = (x).y;")
-        // .to("int i = x.y;")
+        .to("f(x);") //
+    // TODO Marco: does not pass
+    // converts("int i = (x).y;")
+    // .to("int i = x.y;")
     ;
   }
 

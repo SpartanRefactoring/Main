@@ -34,21 +34,21 @@ public final class LocalVariableInitializedUnusedRemove extends LocalVariableIni
 
   /** [[SuppressWarningsSpartan]] */
   @Override public Examples examples() {
-    return  //
-        convert("" //
-            + "int print() {\n" //
-            + "  int number = 1;\n" //
-            + "  System.out.println(\"number\");\n" //
-            + "}")
-                .to("" //
-                    + "int print() {\n" //
-                    + "  System.out.println(\"number\");\n" //
-                    + "}") //
-        .ignores("" //
-            + "int print() {\n" //
-            + "  int number = 1;\n" //
-            + "  System.out.println(number);\n" //
-            + "}") //
+    return //
+    convert("" //
+        + "int print() {\n" //
+        + "  int number = 1;\n" //
+        + "  System.out.println(\"number\");\n" //
+        + "}")
+            .to("" //
+                + "int print() {\n" //
+                + "  System.out.println(\"number\");\n" //
+                + "}") //
+            .ignores("" //
+                + "int print() {\n" //
+                + "  int number = 1;\n" //
+                + "  System.out.println(number);\n" //
+                + "}") //
     ;
   }
 

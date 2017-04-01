@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -45,13 +46,13 @@ public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclaratio
   }
 
   @Override public Examples examples() {
-    return  //
-        convert("int a; int b; int c; f(a, b, c);") //
-            .to("int a, b; int c; f(a, b, c);"). //
+    return //
+    convert("int a; int b; int c; f(a, b, c);") //
+        .to("int a, b; int c; f(a, b, c);"). //
         convert("int a, b; int c; f(a, b, c);") //
-            .to("int a, b, c; f(a, b, c);"). //
+        .to("int a, b, c; f(a, b, c);"). //
         convert("final int a = 1; final int b = 2; f(a, b);") //
-            .to("final int a = 1, b = 2; f(a, b);") //
+        .to("final int a = 1, b = 2; f(a, b);") //
         .ignores("int a = 1; final int b = 2; f(a, b);") //
     ;
   }

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.utils.Proposition.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -40,7 +41,7 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
 
   @Override public Examples examples() {
     return //
-        convert("int a = 3; return a;").to("return 3;"). //
+    convert("int a = 3; return a;").to("return 3;"). //
         convert("int a = 3; return 2 * a;").to("return 2 * 3;");
   }
 
@@ -49,7 +50,7 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    new Inliner(name).byValue(initializer).inlineInto(returnValue);
+    new Inliner(name, $, g).byValue(initializer).inlineInto(returnValue);
     remove.deadFragment(current, $, g);
     return $;
   }

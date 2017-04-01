@@ -39,8 +39,6 @@ public interface lisp2 extends lisp {
         return $;
     return -1;
   }
-  
-  
 
   static String nth(final int i, final Collection<?> os) {
     return lisp2.nth(i, os.size());

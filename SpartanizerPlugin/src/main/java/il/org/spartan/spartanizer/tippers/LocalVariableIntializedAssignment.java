@@ -29,9 +29,9 @@ public final class LocalVariableIntializedAssignment extends $FragmentAndStateme
   }
 
   @Override public Examples examples() {
-    return  //
-        convert("int a; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
-            .to("int a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);") ;
+    return //
+    convert("int a; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
+        .to("int a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,

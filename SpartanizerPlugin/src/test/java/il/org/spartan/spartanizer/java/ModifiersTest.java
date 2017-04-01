@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 
-/**  Tests {@link IExtendedModifiersRank}
+/** Tests {@link IExtendedModifiersRank}
  * @author Alex Kopzon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
