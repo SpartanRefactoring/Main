@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** TODO Yossi Gil please add a description
+/** Unit tests for the GitHub issue thus numbered 
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 @Ignore
