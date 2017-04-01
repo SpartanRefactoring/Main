@@ -136,7 +136,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
 
   /** Should be overridden */
   default Examples examples() {
-    return new Examples(); 
+    return new Examples();
   }
 
   T current();

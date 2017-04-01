@@ -26,43 +26,41 @@ public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
   private static final long serialVersionUID = -8897742439908596829L;
 
   public IfFooElseIfBarElseFoo() {
-    andAlso("if and final else must be the same",() -> wizard.eq(then, elzeElze));
-    andAlso("else if expression must have no side effects",() ->//
-      sideEffects.free(elzeIfCondition));
+    andAlso("if and final else must be the same", () -> wizard.eq(then, elzeElze));
+    andAlso("else if expression must have no side effects", () -> //
+    sideEffects.free(elzeIfCondition));
   }
-  
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Merges if and else blocks when they are the same and there is an else if clause.";
   }
-  
+
   @Override public Examples examples() {
     return //
     convert("if(a) f(); else if(b) g(); else f();")//
         .to("if(a || !b) f(); else if(b) g();")//
         .ignores("if(a) f(); else if (x()) g(); else f();");
-
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final IfStatement s2 = copy.of(az.ifStatement(elze)), $ = copy.of(current);
     $.setExpression(operands(condition, operand(elzeIfCondition).to(NOT))//
         .to(CONDITIONAL_OR));
     s2.setElseStatement(null);
     $.setElseStatement(s2);
     final IfStatement p = az.ifStatement(current.getParent());
-    if (p == null || current.getLocationInParent().equals(IfStatement.ELSE_STATEMENT_PROPERTY)){
+    if (p == null || current.getLocationInParent().equals(IfStatement.ELSE_STATEMENT_PROPERTY)) {
       r.replace(current, $, g);
       return r;
     }
     final Block bl = subject.statement($).toBlock();
     IfStatement originalParent = p, newParent = copy.of(originalParent);
     newParent.setThenStatement(bl);
-    /* copies the tree as long as only IfStatements are the parent and the current node
-     * is part of the then branch, so
-     * iz.blockEssential can tell us whether the block is essential or not. */
+    /* copies the tree as long as only IfStatements are the parent and the
+     * current node is part of the then branch, so iz.blockEssential can tell us
+     * whether the block is essential or not. */
     while (originalParent.getLocationInParent().equals(IfStatement.THEN_STATEMENT_PROPERTY)) {
-      Statement child = newParent;
+      final Statement child = newParent;
       originalParent = az.ifStatement(originalParent.getParent());
       newParent = copy.of(originalParent);
       newParent.setThenStatement(child);
