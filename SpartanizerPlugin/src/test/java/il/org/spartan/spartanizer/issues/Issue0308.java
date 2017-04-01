@@ -21,17 +21,17 @@ public class Issue0308 {
   }
 
   @Test public void test2() {
-    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){return e;}finally{int c=0; ++c;}")//
-        .gives("try{int a, b; return a+b;}catch(Exception ¢){return ¢;}finally{int c=0; ++c;}");
+    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){return e;}finally{int c=0; f(++c);}")//
+        .gives("try{int a, b; return a+b;}catch(Exception ¢){return ¢;}finally{int c=0; f(++c);}");
   }
 
   @Test public void test3() {
-    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){t.find();return e;}finally{int c=0; ++c;}")//
-        .gives("try{int a, b; return a+b;}catch(Exception ¢){t.find();return ¢;}finally{int c=0; ++c;}");
+    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){t.find();return e;}finally{int c=0; f(++c);}")//
+        .gives("try{int a, b; return a+b;}catch(Exception ¢){t.find();return ¢;}finally{int c=0; f(++c);}");
   }
 
   @Test public void test4() {
-    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){t.find();return e;}catch(Exceptional e){return e;}finally{int c=0; ++c;}")//
-        .gives("try{int a, b; return a+b;}catch(Exception ¢){t.find();return ¢;}catch(Exceptional ¢){return ¢;}finally{int c=0; ++c;}");
+    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){t.find();return e;}catch(Exceptional e){return e;}finally{int c=0; f(++c);}")//
+        .gives("try{int a, b; return a+b;}catch(Exception ¢){t.find();return ¢;}catch(Exceptional ¢){return ¢;}finally{int c=0; f(++c);}");
   }
 }

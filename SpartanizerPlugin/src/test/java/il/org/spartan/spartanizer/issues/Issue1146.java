@@ -11,7 +11,6 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-26 */
 @SuppressWarnings("static-method")
-@Ignore("in developments")
 public class Issue1146 {
   @Test public void a() {
     trimmingOf("int i = 1; ++i;")//
@@ -26,7 +25,7 @@ public class Issue1146 {
   }
   
   @Test public void c() {
-    trimmingOf("int x = 1, y = x; ++x;")//
+    trimmingOf("int x = 1, y = x; ++x;f(++y);")//
     .stays();
   }
 }
