@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
 /** See {@link #examples()}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class LocalInitialiazedAssignment extends LocalVariableInitializedStatement//
+public final class LocalInitialiazedAssignment extends LocalInitializedStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x1866B79F79A10C90L;
 

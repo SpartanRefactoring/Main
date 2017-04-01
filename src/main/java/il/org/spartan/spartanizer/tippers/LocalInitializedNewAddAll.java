@@ -15,15 +15,15 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
 
 /** convert {@code
- * T a = new ArrayList<>() / new HashSet();
+ * T a = new ArrayList<>() 
  * a.addAll(x)
  * } to {@code
- * T a = new ArrayList
+ * T a = new ArrayList<>(x)
  * }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-02 */
-public final class LocalInitializedNewAddAll extends LocalVariableInitialized //
+public final class LocalInitializedNewAddAll extends LocalInitialized //
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -228096256168103399L;
 
