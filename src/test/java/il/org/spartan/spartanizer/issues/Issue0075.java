@@ -12,18 +12,18 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0075 {
   @Test public void issue075a() {
-    trimmingOf("int i = 0; ++i;")//
+    trimmingOf("int i = 0; f(++i);")//
         .stays();
   }
 
   @Test public void issue075b() {
-    trimmingOf("int i = +1; ++i;")//
-        .gives("int i = 1; ++i;");
+    trimmingOf("int i = +1; f(++i);")//
+        .gives("int i = 1; f(++i);");
   }
 
   @Test public void issue075c() {
-    trimmingOf("int i = +a; ++i;")//
-        .gives("int i = a; ++i;");
+    trimmingOf("int i = +a; f(++i);")//
+        .gives("int i = a; f(++i);");
   }
 
   @Test public void issue075d() {
