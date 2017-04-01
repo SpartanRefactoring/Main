@@ -15,7 +15,7 @@ public abstract class RemovingTipper<N extends ASTNode> extends CarefulTipper<N>
   private static final long serialVersionUID = 0x18DC32CA162FC537L;
 
   @Override public final Tip tip(final N n) {
-    return new Tip(description(n), n, getClass()) {
+    return new Tip(description(n), getClass(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(n, g);
       }

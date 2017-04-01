@@ -25,7 +25,7 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
 
   @Override public Tip tip(final LambdaExpression x) {
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();
-    return new Tip(description(x), x, getClass()) {
+    return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(x, replacement(x, r, g), g);
       }

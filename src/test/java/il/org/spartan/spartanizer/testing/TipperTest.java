@@ -1,12 +1,7 @@
 package il.org.spartan.spartanizer.testing;
 
-import static il.org.spartan.azzert.*;
-
-import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.utils.*;
 
 /** A class used for testing a specific tipper. To use this class, inherit it
  * and override tipper() to return the tipper you want to test, then use this

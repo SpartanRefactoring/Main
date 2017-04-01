@@ -26,7 +26,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     final SwitchCase $ = az.switchCase(extract.nextStatementInside(n));
     if (exclude != null)
       exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement(n.getParent()), n));
-    return new Tip(description(n), n, getClass()) {
+    return new Tip(description(n), getClass(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove($.isDefault() ? n : $, g);
       }

@@ -42,7 +42,7 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
   }
 
   @Override public Tip tip(final Modifier ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+    return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.getListRewrite(parent(¢), az.bodyDeclaration(parent(¢)).getModifiersProperty()).remove(¢, g);
       }

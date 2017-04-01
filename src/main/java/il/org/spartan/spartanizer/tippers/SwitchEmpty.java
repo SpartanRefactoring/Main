@@ -30,7 +30,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
   private static final long serialVersionUID = 0x26848136FD202ECEL;
 
   @Override public Tip tip(final SwitchStatement s) {
-    return new Tip(description(s), s, getClass()) {
+    return new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Statement> ll = statements(s);
         final ExpressionStatement ss = s.getAST().newExpressionStatement(copy.of(expression(s)));

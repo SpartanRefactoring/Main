@@ -26,7 +26,7 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
   }
 
   @Override public Tip tip(final ExpressionStatement ¢) {
-    return !iz.classInstanceCreation(expression(¢)) ? null : new Tip(description(¢), ¢, getClass()) {
+    return !iz.classInstanceCreation(expression(¢)) ? null : new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ClassInstanceCreation cic = az.classInstanceCreation(expression(¢));
         final Type t = cic.getType();

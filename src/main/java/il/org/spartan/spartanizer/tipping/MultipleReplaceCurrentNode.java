@@ -25,7 +25,7 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
   }
 
   @Override public final Tip tip(final N n) {
-    return new Tip(description(n), n, getClass()) {
+    return new Tip(description(n), getClass(), n) {
       @Override @SuppressWarnings("boxing") public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<ASTNode> input = new ArrayList<>(), output = new ArrayList<>();
         MultipleReplaceCurrentNode.this.go(r, n, g, input, output);

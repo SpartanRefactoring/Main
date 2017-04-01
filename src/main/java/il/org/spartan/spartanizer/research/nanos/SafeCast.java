@@ -23,7 +23,7 @@ public class SafeCast extends NanoPatternTipper<CastExpression> {
   }
 
   @Override public Tip pattern(final CastExpression ¢) {
-    return new Tip(description(¢), ¢, getClass()) {
+    return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(¢, make.ast("safeCast(" + expression(¢) + ")"), g);
       }

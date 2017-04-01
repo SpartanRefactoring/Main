@@ -37,7 +37,7 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
   }
 
   @Override public Tip tip(final ArrayAccess a) {
-    return checkInput(a) || !prerequisite(a) ? null : new Tip(description(a), a, getClass()) {
+    return checkInput(a) || !prerequisite(a) ? null : new Tip(description(a), getClass(), a) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final PostfixExpression newpost = a.getAST().newPostfixExpression();
         newpost.setOperand(copy.of(a.getIndex()));

@@ -25,7 +25,7 @@ public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper
       return null;
     if (exclude != null)
       exclude.exclude($);
-    return new Tip(description(n), n, getClass(), $) {
+    return new Tip(description(n), getClass(), n, $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         GoToNextStatement.this.go(r, n, $, g);
       }
