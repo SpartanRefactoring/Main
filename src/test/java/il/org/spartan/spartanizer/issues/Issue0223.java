@@ -33,110 +33,114 @@ public final class Issue0223 {
   Statement context;
   ClassInstanceCreation focus;
 
-  @Test public void A$010_createTipper() {
+  @Test public void a$010_createTipper() {
     tipper = makeTipper();
     assert tipper != null;
   }
 
-  @Test public void A$020_CreateContext() {
+  private Tipper<ClassInstanceCreation> makeTipper() {
+    return new ClassInstanceCreationBoxedValueTypes();
+  }
+
+  @Test public void a$020_CreateContext() {
     context = into.s(INPUT);
     assert context != null;
   }
 
-  @Test public void A$030_FindFocus() {
-    A$020_CreateContext();
+  @Test public void a$030_FindFocus() {
+    a$020_CreateContext();
     focus = findMe(context);
     assert focus != null;
   }
 
-  @Test public void A$040_init() {
-    A$010_createTipper();
-    A$020_CreateContext();
-    A$030_FindFocus();
+  @Test public void a$040_init() {
+    a$010_createTipper();
+    a$020_CreateContext();
+    a$030_FindFocus();
     Toolbox.refresh();
   }
 
   @Test public void B$010init() {
-    A$040_init();
+    a$040_init();
   }
 
   @Test public void B$020findFirst() {
-    A$040_init();
+    a$040_init();
     azzert.that(findMe(context), instanceOf(SUBJECT_CLASS));
   }
 
   @Test public void B$030canSuggest() {
-    A$040_init();
+    a$040_init();
     assert tipper.check(focus);
   }
 
   @Test public void B$030demands() {
-    A$040_init();
+    a$040_init();
     assert tipper.check(focus);
   }
 
   @Test public void B$040tipNotNull() {
-    A$040_init();
+    a$040_init();
     assert tipper.tip(focus) != null;
   }
 
   @Test public void B$050toolboxCanFindTipper() {
-    A$040_init();
+    a$040_init();
     assert Toolbox.defaultInstance().firstTipper(focus) != null;
   }
 
   @Test public void B$060toolboxCanFindFindCorrectTipper() {
-    A$040_init();
+    a$040_init();
     azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
   }
 
   @Test public void B$070callSuggest() {
-    A$040_init();
+    a$040_init();
     tipper.tip(focus);
   }
 
   @Test public void B$080descriptionNotNull() {
-    A$040_init();
+    a$040_init();
     assert tipper.tip(focus).description != null;
   }
 
   @Test public void B$090suggestNotNull() {
-    A$040_init();
+    a$040_init();
     assert tipper.tip(focus) != null;
   }
 
   @Test public void B$100descriptionContains() {
-    A$040_init();
+    a$040_init();
     azzert.that(tipper.tip(focus).description, containsString(focus.getType() + ""));
   }
 
   @Test public void B$110rangeNotEmpty() {
-    A$040_init();
+    a$040_init();
     assert !tipper.tip(focus).isEmpty();
   }
 
   @Test public void B$120findTipperNotEmpty() {
-    A$040_init();
+    a$040_init();
     assert Toolbox.defaultInstance().firstTipper(focus) != null;
   }
 
   @Test public void B$130findTipperOfCorretType() {
-    A$040_init();
+    a$040_init();
     azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(ReplaceCurrentNode.class));
   }
 
   @Test public void B$140findTipperDemands() {
-    A$040_init();
+    a$040_init();
     assert Toolbox.defaultInstance().firstTipper(focus).check(focus);
   }
 
   @Test public void B$150findTipperCanSuggest() {
-    A$040_init();
+    a$040_init();
     assert Toolbox.defaultInstance().firstTipper(focus).check(focus);
   }
 
   @Test public void B$160findTipperReplacmenentNotNull() {
-    A$040_init();
+    a$040_init();
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).replacement(focus) != null;
   }
 
@@ -144,15 +148,27 @@ public final class Issue0223 {
     return findFirst.instanceOf(SUBJECT_CLASS).in(c);
   }
 
-  private ClassInstanceCreationValueTypes makeTipper() {
-    return new ClassInstanceCreationValueTypes();
-  }
-
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimmingOf("Integer x = new Integer(1 + 9);")//
+        .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
+        .gives("Integer x = Integer.valueOf(1+9);")//
         .gives("Integer.valueOf(1+9);")//
         .gives("Integer.valueOf(10);")//
         .stays();
+  }
+
+  @Test public void a1() {
+    trimmingOf("Integer x = new Integer(a);")//
+        .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
+        .gives("Integer x = Integer.valueOf(a);")//
+    ;
+  }
+
+  @Test public void a2() {
+    trimmingOf("new Integer(a);")//
+        .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
+        .gives("Integer.valueOf(a);")//
+    ;
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {

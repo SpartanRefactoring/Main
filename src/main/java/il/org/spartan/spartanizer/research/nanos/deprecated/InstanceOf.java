@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -32,7 +33,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   @Override public Tip pattern(final InstanceofExpression ¢) {
     return new Tip(description(¢), ¢, getClass()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), wizard.ast(izMethodName(¢) + "(" + step.left(¢) + ")"), g);
+        r.replace(!iz.parenthesizedExpression(¢.getParent()) ? ¢ : ¢.getParent(), make.ast(izMethodName(¢) + "(" + step.left(¢) + ")"), g);
         if (!izMethodExist(¢))
           addizMethod(¢, r, g);
       }
@@ -53,11 +54,11 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   }
 
   static void addizMethod(final InstanceofExpression ¢, final ASTRewrite r, final TextEditGroup g) {
-    wizard.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
+    action.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
   }
 
   private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
-    return az.methodDeclaration(wizard.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + type(¢) + ";}"));
+    return az.methodDeclaration(make.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + type(¢) + ";}"));
   }
 
   private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {

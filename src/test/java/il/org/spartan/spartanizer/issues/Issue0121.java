@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO: Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/** TODO: Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")
@@ -32,7 +32,7 @@ public final class Issue0121 {
                 + "}");
   }
 
-  // That is a true renaming bug, and a true Environment issue.
+  // TODO DOR That is a true renaming bug, and a true Environment issue.
   @Ignore @Test public void test02() {
     trimmingOf("class A{"//
         + "class B{"//

@@ -16,23 +16,23 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue0856 {
   @Test public void a() {
     trimmingOf("A a(){A b=\"one expression\";B.d(b);return \"and another\";}") //
-        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext()) //
+        .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext()) //
         .gives("A a(){B.d(\"one expression\");return \"and another\";}")//
         .stays();
   }
 
   @Test public void b() {
     trimmingOf("A foo(){A a=\"one expression\";C c=B.d(a);print(c);return \"and another\";}")
-        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
+        .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext())
         .gives("A foo(){C c=B.d(\"one expression\");print(c);return \"and another\";}")
-        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())
+        .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext())
         .gives("A foo(){print(B.d(\"one expression\"));return \"and another\";}")//
         .stays();
   }
 
   @Test public void c() {
     trimmingOf("A a(){A b=\"one expression\";B.d(b);print(b);return \"and another\";}")
-        .using(VariableDeclarationFragment.class, new FragmentInitializerInlineIntoNext())//
+        .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext())//
         .stays();
   }
 
@@ -56,7 +56,7 @@ public class Issue0856 {
 
   @Test public void d3() {
     trimmingOf("L<O> t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
-        .using(VariableDeclarationFragment.class, new FragmentInitializerToForInitializers()) //
+        .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementToForInitializers()) //
         .gives("L<O> t=new R<>();for(int len=A.t(d), ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
         .stays();
   }

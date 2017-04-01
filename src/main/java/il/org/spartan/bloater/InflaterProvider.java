@@ -48,7 +48,7 @@ public class InflaterProvider extends OperationsProvider {
             new PrefixToInfix()) //
         // .add(PostfixExpression.class, //
         .add(SwitchStatement.class, //
-            new CasesSplit())//
+            new CasesSplit(), new SwitchAddDefault())//
         .add(Assignment.class, //
             new AssignmentOperatorBloater()//
         // new PlusAssignToPostfix())//
@@ -79,7 +79,7 @@ public class InflaterProvider extends OperationsProvider {
             new IfElseBlockBloater()) ///
         // new LongIfBloater()) //
         .add(InfixExpression.class, //
-            new ParenthesesBloater(), new TernaryPushup()) //
+            new ParenthesesBloater(), new TernaryPushup2()) //
     ;//
   }
 

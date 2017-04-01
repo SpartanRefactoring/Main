@@ -122,7 +122,7 @@ public class Toolbox {
         .add(TypeParameter.class, new TypeParameterExtendsObject()) //
         .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
         .add(VariableDeclarationExpression.class, new ForRenameInitializerToIt()) //
-        .add(ClassInstanceCreation.class, new ClassInstanceCreationValueTypes()) //
+        .add(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
         .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
         .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse(), new ExpressionStatementThatIsBooleanLiteral(), null) //
         .add(ReturnStatement.class, new ReturnLastInMethod(), //
@@ -145,7 +145,7 @@ public class Toolbox {
         .add(SingleVariableDeclaration.class, //
             new SingleVariableDeclarationAbbreviation(), //
             new SingelVariableDeclarationUnderscoreDoubled(), //
-            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
+            new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
             new SingleVariableDeclarationEnhancedForRenameParameterToIt(), null)//
         .add(ForStatement.class, //
             new ForNoUpdatersNoInitializerToWhile(), //
@@ -224,7 +224,7 @@ public class Toolbox {
             new InfixSubtractionSort(), //
             new InfixDivisonSortRest(), //
             new InfixConditionalCommon(), //
-            new InfixIndexOfToStringContains(), // v 2.7
+            // new InfixIndexOfToStringContains(), // v 2.7
             new InfixSimplifyComparisionOfAdditions(), //
             new InfixSimplifyComparisionOfSubtractions(), //
             new InfixStringLiteralsConcatenate(), //
@@ -235,8 +235,7 @@ public class Toolbox {
             new BodyDeclarationModifiersSort<>(), //
             new MethodDeclarationRenameSingleParameterToIt(), //
             new MethodDeclarationConstructorMoveToInitializers(), //
-            // new MatchCtorParamNamesToFieldsIfAssigned(),
-            // v 2.7 // This is a new // tipper // #20
+            new RenameConstructorParameters(), //
             null)
         .add(MethodInvocation.class, //
             new MethodInvocationEqualsWithLiteralString(), //
@@ -260,8 +259,8 @@ public class Toolbox {
             new IfReturnFooElseReturnBar(), //
             new IfReturnNoElseReturn(), //
             new IfAssignToFooElseAssignToFoo(), //
-            new IfThenFooBarElseFooBaz(), //
-            new IfBarFooElseBazFoo(), //
+            new IfFooBarElseFooBaz(), //
+            new IfFooBarElseBazBar(), //
             new IfThrowFooElseThrowBar(), //
             new IfThrowNoElseThrow(), //
             new IfExpressionStatementElseSimilarExpressionStatement(), //
@@ -275,6 +274,7 @@ public class Toolbox {
             new IfEmptyThen(), //
             new IfShortestFirst(), //
             new IfFooElseIfBarElseFoo(), //
+            new IfStatementBlockSequencerBlockSameSequencer(), //
             // new PutIfAbsent(), //
             null)//
         .add(PrefixExpression.class, //
@@ -327,21 +327,21 @@ public class Toolbox {
             null)
         .add(VariableDeclarationFragment.class, //
             new FieldFragmentInitializerDefaultValue(), //
-            new FragmentNoInitializerAssignment(), //
-            new FragmentInitialiazerUpdateAssignment(), //
-            new FragmentInitializerIfAssignment(), //
-            new FragmentInitializerIfUpdateAssignment(), //
-            new FragmentInitializerReturnVariable(), //
-            new FragmentInitializerReturnExpression(), //
-            new FragmentInitializerReturnAssignment(), //
-            new FragmentInitializerReturn(), //
-            new FragmentInitializerStatementTerminatingScope(), //
-            new FragmentInitialiazerAssignment(), //
+            new LocalVariableUnintializedStatementAssignment(), //
+            new LocalVariableIntializedUpdateAssignment(), //
+            new LocalVariableIntializedIfAssignment(), //
+            new LocalInitializedUpdateAssignment(), //
+            new LocalVariableIntializedStatementReturnVariable(), //
+            new LocalInitializedReturnExpression(), //
+            new LocalVariableIntializedStatementReturnAssignment(), //
+            new LocalVariableIntializedReturn(), //
+            new LocalVariableIntializedStatementTerminatingScope(), //
+            new LocalVariableIntializedAssignment(), //
             new LocalVariableUninitializedDead(), //
-            new FragmentInitializerInlineIntoNext(), //
-            new FragmentInitializerWhile(), //
-            new FragmentInitializerToForInitializers(), //
-            new FragmentRenameUnderscoreToDoubleUnderscore<>(), //
+            new LocalVariableIntializedInlineIntoNext(), //
+            new LocalVariableIntializedStatementWhile(), //
+            new LocalVariableIntializedStatementToForInitializers(), //
+            new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
             new LocalVariableInitializedUnusedRemove(), //
             null) //
     ;

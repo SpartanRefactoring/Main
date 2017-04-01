@@ -1,5 +1,7 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.utils.Example.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
@@ -11,6 +13,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** converts {@code (a?b:c;)} to {@code (if(a) b; else c;)} relevant for
  * assignment <em>ternary</em> also relevant for assignment (<em>ternary</em>)
@@ -20,6 +23,14 @@ import il.org.spartan.spartanizer.tipping.*;
 public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -9043350929840336722L;
+
+  @Override public Example[] examples() {
+    return new Example[] { //
+        convert("temp = (a == 0 ? b:c);") //
+            .to("if(a==0) temp = b; else temp = c;"), //
+        Example.ignores("if(a==0) temp = b; else temp= c;") //
+    };
+  }
 
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
     final ConditionalExpression $ = az.conditionalExpression(core(x));

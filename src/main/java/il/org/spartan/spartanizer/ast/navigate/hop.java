@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.last;
+import static il.org.spartan.utils.lisp2.rest;
 
 import static il.org.spartan.lisp.*;
 
@@ -9,10 +10,12 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.utils.*;
 
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like
@@ -70,7 +73,7 @@ public interface hop {
     return $ == null ? null : $.getName() + "";
   }
 
-  static SimpleName lastComponent(final Name ¢) {
+  static SimpleName lastName(final Name ¢) {
     return ¢ == null ? null : ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
 
@@ -125,6 +128,18 @@ public interface hop {
   }
 
   static SimpleName simpleName(final Type ¢) {
-    return lastComponent(hop.name(¢));
+    return lastName(hop.name(¢));
+  }
+
+  static List<Statement> subsequentStatements(final Statement ¢) {
+    return parent(¢) instanceof SwitchStatement ? rest(¢, step.statements((SwitchStatement) parent(¢)))
+        : parent(¢) instanceof Block ? rest(¢, step.statements((Block) parent(¢))) //
+            : new ArrayList<>();
+  }
+
+  static ListRewrite statementsRewriter(final ASTRewrite r, final Statement s) {
+    return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
+        : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
+            : monitor.bug("Weird type", s, parent(s));
   }
 }

@@ -1,4 +1,4 @@
-/* TODO Yossi Gil {@code Yossi.Gil@GMail.COM} please add a description
+/* TODO Yossi Gil LocalVariableInitializedStatement description
  *
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  *
@@ -262,7 +262,7 @@ class UsesCollector extends HidingDepth {
   }
 
   private boolean hit(final SimpleName ¢) {
-    return wizard.same(¢, focus);
+    return wizard.eq(¢, focus);
   }
 
   /** This is where we ignore all occurrences of {@link SimpleName} which are

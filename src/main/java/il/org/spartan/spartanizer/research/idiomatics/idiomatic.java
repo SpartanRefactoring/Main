@@ -7,7 +7,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 
 /** An empty {@code enum} with a variety of {@code public
  * static} utility functions of reasonably wide use.
@@ -36,7 +36,7 @@ public interface idiomatic {
     d.setStatic(true);
     d.setOnDemand(true);
     d.setName(u.getAST().newName("il.org.spartan.spartanizer.research.idiomatic"));
-    wizard.addImport(u, r, d);
+    action.addImport(u, r, d);
   }
 
   /** @param <T> JD

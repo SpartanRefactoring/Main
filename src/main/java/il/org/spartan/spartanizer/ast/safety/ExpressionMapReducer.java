@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.ast.safety;
 
+import static il.org.spartan.utils.monitor.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -8,12 +9,11 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class {@link }
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-29 */
-public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
+public abstract class ExpressionMapReducer<T> extends StatementMapReducer<T> {
   @Override public T map(final Expression ¢) {
     if (¢ == null)
       return reduce();
@@ -63,19 +63,18 @@ public abstract class ExpressionMapReducer<T> extends StatementBottomUp<T> {
       case LAMBDA_EXPRESSION:
         return map((LambdaExpression) ¢);
       default:
-        assert fault.unreachable() : fault.specifically("Unrecognized type", ¢.getClass(), ¢, box.it(¢.getNodeType()));
-        return null;
+        return bug("Unrecognized type %s NodeType= %d", ¢.getClass(), ¢, box.it(¢.getNodeType()));
     }
   }
 
   /** Note: this is one of the cases which expressions interact with
    * statements */
-  private T map(@SuppressWarnings("unused") final LambdaExpression x) {
+  private T map(@SuppressWarnings("unused") final LambdaExpression __) {
     return reduce();
   }
 
-  private T map(final CastExpression x) {
-    return map(x.getExpression());
+  private T map(final CastExpression ¢) {
+    return map(¢.getExpression());
   }
 
   private T map(final ArrayInitializer ¢) {

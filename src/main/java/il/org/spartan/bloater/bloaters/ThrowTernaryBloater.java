@@ -5,11 +5,12 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Same as ReturnTernaryExpander just for "throw" {@link Issue #998}
+/** Same as ReturnTernaryExpander just for "throw" @link {Issue0998}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-26 */
 public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
@@ -17,18 +18,9 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
   private static final long serialVersionUID = 0x6F38EBD99BF2A49EL;
 
   private static ASTNode innerThrowReplacement(final Expression x, final Statement s) {
-    final ConditionalExpression ¢;
-    if (!(x instanceof ParenthesizedExpression))
-      ¢ = az.conditionalExpression(x);
-    else {
-      // TODO Doron Meshulam: Use extract.core --yg
-      final Expression unpar = expression(az.parenthesizedExpression(x));
-      if (!(unpar instanceof ConditionalExpression))
-        return null;
-      ¢ = az.conditionalExpression(unpar);
-      if (¢ == null)
-        return null;
-    }
+    final ConditionalExpression ¢ = az.conditionalExpression(extract.core(x));
+    if (¢ == null)
+      return null;
     final IfStatement $ = s.getAST().newIfStatement();
     $.setExpression(copy.of(expression(¢)));
     final ThrowStatement then = ¢.getAST().newThrowStatement();

@@ -38,7 +38,7 @@ public final class PrefixIncrementDecrementReturn extends GoToNextStatement<Pref
     if (parent == null || parent instanceof ForStatement)
       return null;
     final ReturnStatement s = az.returnStatement(nextStatement);
-    if (s == null || !wizard.same(operand(x), expression(s)))
+    if (s == null || !wizard.eq(operand(x), expression(s)))
       return null;
     $.remove(parent, g);
     $.replace(s, subject.operand(x).toReturn(), g);

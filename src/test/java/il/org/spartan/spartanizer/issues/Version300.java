@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-09 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
-public final class Version300 {
+public class Version300 {
   @Test public void a() {
     azzert.that(
         theSpartanizer.once(//
@@ -38,13 +38,13 @@ public final class Version300 {
     //@formatter:off
     default Find prerequisite() { return null; }
     void find();
-    default boolean B(final int i) { return fault.bool(bug(box.it(i))); }
+    default boolean B(final int ¢) { return fault.bool(bug(box.it(¢))); }
     default boolean B(final Object ... __) { return fault.bool(bug(__)); }
-    default void S(final int i) { bug(box.it(i)); }
+    default void S(final int ¢) { bug(box.it(¢)); }
     default void S(final Object ... __) { bug(__); }
-    default void andAlso(final Find f){bug(f);}
-    default void butNot(final Find f){bug(f);}
-    default void orElse(final Find f){bug(f);}
+    default void andAlso(final Find ¢){bug(¢);}
+    default void butNot(final Find ¢){bug(¢);}
+    default void orElse(final Find ¢){bug(¢);}
     default void andIs(final Runnable __1, final Runnable __2){bug(__1); bug(__2);}
     //@formatter:on
   }
@@ -96,6 +96,76 @@ public final class Version300 {
     );
   }
 
+  @Test public void overridePublicStatementreplacementNotNullFinalBlockbNotNullFinalListStatementssextractstatementsbIfidenticalssstatementsbhazhidingsssReturnNullNullableFinalASTNodeparentazstatementparentbIfparentNulliztryStatementparentReturnreorganizeStatementbSwitchsssizeCase0ReturnmakeemptyStatementbCase1FinalStatementfirstssIfizblockEssentialReturnsubjectstatementtoBlockReturncopyofDefaultReturnreorganizeNestedStatementb() {
+    trimmingOf("/**/" + //
+        "@A public B a(@C D b) {" + //
+        "    @C E<B> c = d.x;" + //
+        "    if (f(c, x) || g.h(c)) {" + //
+        "      return null;" + //
+        "    }" + //
+        "    @F G i = j.k(i(b));" + //
+        "    if ((i == null) || l.m(i)) {" + //
+        "      return n(b);" + //
+        "    }" + //
+        "    switch (c.o()) {" + //
+        "      case 0:" + //
+        "        return p.q(b);" + //
+        "      case 1:" + //
+        "        B r;" + //
+        "        r = s(c);" + //
+        "        if (l.t(r))" + //
+        "          return u.k(r).v();" + //
+        "        return w.x(r);" + //
+        "      default:" + //
+        "        return y(b);" + //
+        "    }" + //
+        "  }"//
+    ).gives(
+        // Edit this to reflect your expectation
+        "/**/" + //
+            "@A public B a(@C D b) {" + //
+            "    @C E<B> c = d.x;" + //
+            "    if (f(c, x) || g.h(c)) {" + //
+            "      return null;" + //
+            "    }" + //
+            "    @F G i = j.k(i(b));" + //
+            "    if ((i == null) || l.m(i)) {" + //
+            "      return n(b);" + //
+            "    }" + //
+            "    switch (c.o()) {" + //
+            "      case 0:" + //
+            "        return p.q(b);" + //
+            "      case 1:" + //
+            "        B $;" + //
+            "        $ = s(c);" + //
+            "        if (l.t($))" + //
+            "          return u.k($).v();" + //
+            "        return w.x($);" + //
+            "      default:" + //
+            "        return y(b);" + //
+            "    }" + //
+            "  }"//
+    //
+    )//
+        .gives(
+            "@A public B a(@C D b){@C E<B>c=d.x;if(f(c,x)||g.h(c))return null;@F G i=j.k(i(b));if((i==null)||l.m(i))return n(b);switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
+        .stays();
+  }
+
+  /** Introduced by Yogi on Tue-Mar-28-02:39:50-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_aPublicBaCFinalDbCFinalEBcdebIffcebghcReturnNullFFinalGijkibIfiNulllmiReturnnbSwitchcoCase0ReturnpqbCase1FinalBrrscIfltrReturnukrvReturnwxrDefaultReturnyb() {
+    trimmingOf(
+        "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c)){return n;}G i=j.k(i(b));if((i==n)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:B r;r=s(c);if(l.t(r))return u.k(r).v();return w.x(r);default:return y(b);}}") //
+            .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+            .gives(
+                "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c)){return n;}G i=j.k(i(b));if((i==n)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
+            .using(Block.class, new BlockSingleton()) //
+            .gives(
+                "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c))return n;G i=j.k(i(b));if((i==n)||l.m(i))return n(b);switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
+    ;
+  }
+
   @Test public void c() {
     azzert.that(
         theSpartanizer.thrice(//
@@ -134,10 +204,11 @@ public final class Version300 {
     ;
   }
 
-  @Ignore @Test public void ifab() {
+  @Test public void ifab() {
     trimmingOf("if (a++ == b++) { }") //
         .using(IfStatement.class, new IfEmptyThenEmptyElse()) //
         .gives("a++;b++;") //
+        .gives("++a;++b;") //
         .stays() //
     ;
   }
@@ -153,6 +224,13 @@ public final class Version300 {
     trimmingOf("if(a) { Object o; }")//
         .gives("{}") //
         .gives("") //
+        .stays();
+  }
+
+  @Ignore @Test public void issue73c() {
+    trimmingOf("int foo(Integer integer, ASTNode astn){return integer + astn.hashCode();}")//
+        .gives("int foo(Integer integer,ASTNode n){return integer+n.hashCode();}") //
+        .gives("int foo(Integer i, ASTNode n){return i + n.hashCode();}") //
         .stays();
   }
 
@@ -185,7 +263,7 @@ public final class Version300 {
     azzert.that(kill(make(from)), iz(to));
   }
 
-  @Test public void killer() {
+  @Ignore @Test public void killer() {
     {
       final Expression e = make("int i = 3;");
       kill(e);
@@ -219,8 +297,13 @@ public final class Version300 {
     kill("int _ = new A();", "{new A();}");
     kill("int _ = new A(){};", "{new A(){};}");
     kill("int _ = super.f();", "{super.f();}");
-    kill("int _ = new int[2];", "{new int[2];}");
+    kill("int _ = new int[++i * j--];", "{++i; j--;}");
+    kill("A __ = new A(f(),i++);", "{new A(f(),i++);}");
     kill("A _ =  ((a=b)*i++)+f(g())*((a=b)*i++) + ++j;", "{a=b; i++; f(g());a=b;i++; ++j;}");
+  }
+
+  @Ignore @Test public void killerArrayInitiaizer() {
+    kill("A __ = new A[q()] ={ f(), g(), h(),++i };", "{q(); f(); g(); h(); ++i;}");
   }
 
   public Expression make(final String statement) {

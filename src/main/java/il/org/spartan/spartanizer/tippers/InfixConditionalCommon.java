@@ -60,7 +60,7 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
     if (right == null || right.getOperator() != conjugate)
       return null;
     final Expression leftLeft = left(left);
-    return !sideEffects.free(leftLeft) || !wizard.same(leftLeft, left(right)) ? null
+    return !sideEffects.free(leftLeft) || !wizard.eq(leftLeft, left(right)) ? null
         : subject.pair(leftLeft, subject.pair(chopHead(left), chopHead(right)).to($)).to(conjugate);
   }
 }

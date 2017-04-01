@@ -9,6 +9,6 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1158 {
   @Test public void t1() {
-    trimmingOf("@B // comment\n" + "@A int a() {\n" + "return b() && c();\n" + "}").gives("@A\n" + "@B int a() {\n" + "return b() && c();\n" + "}");
+    trimmingOf("@B // comment\n@A int a() {\nreturn b() && c();\n}").gives("@A\n@B int a() {\nreturn b() && c();\n}");
   }
 }

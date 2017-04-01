@@ -2,7 +2,10 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** Test class for issue 115 - XOR parsing bug with trimmingOf testing utility.
  * @since 2016 */
@@ -17,6 +20,13 @@ public class Issue0115 {
   @Test public void trimmerBugXOR_Notparsing02() {
     trimmingOf("j = j ^ k")//
         .gives("j^=k");
+  }
+
+  @Ignore @Test public void xor() {
+    trimmingOf("a ^= 2; a ^= 3;")//
+        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .gives("a ^= 2 ^ 3;")//
+    ;
   }
 
   @Test public void trimmerBugXOR_Notparsing03() {

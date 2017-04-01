@@ -11,10 +11,6 @@ import il.org.spartan.spartanizer.cmdline.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2016 */
 public interface system {
-  static String chopLast(final String ¢) {
-    return ¢.substring(0, ¢.length() - 1);
-  }
-
   String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
 
   static Process bash(final String shellCommand) {
@@ -46,11 +42,9 @@ public interface system {
   static String myCallerFullClassName() {
     final StackTraceElement[] trace = new Throwable().getStackTrace();
     int i = 0;
-    for (; i < trace.length; ++i) {
-      if (trace[i].getClassName().equals(trace[0].getClassName()))
-        continue;
-      break;
-    }
+    for (; i < trace.length; ++i)
+      if (!trace[i].getClassName().equals(trace[0].getClassName()))
+        break;
     for (int $ = i; $ < trace.length; ++$)
       if (!trace[$].getClassName().equals(trace[i].getClassName()))
         return trace[$].getClassName();

@@ -2,7 +2,10 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** TODO: Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -10,10 +13,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0895 {
   @Test public void a() {
-    trimmingOf("public final class A {" + //
-        " public static void a(final B b) {" + //
-        "   C c = new C() {" + //
-        "     @D" + //
+    trimmingOf("    new C() {" + //
         "     public void d() {" + //
         "       try {" + //
         "         use();" + //
@@ -23,14 +23,9 @@ public class Issue0895 {
         "         F.g(b);" + //
         "       }" + //
         "     }" + //
-        "   };" + //
-        " }" + //
-        "}"//
+        "     }" //
     )//
-        .gives("public final class A {" + //
-            " public static void a(final B b) {" + //
-            "   new C() {" + //
-            "     @D" + //
+        .gives("   new C() {" + //
             "     public void d() {" + //
             "       try {" + //
             "         use();" + //
@@ -38,10 +33,21 @@ public class Issue0895 {
             "         F.g(b);" + //
             "       }" + //
             "     }" + //
-            "   };" + //
-            " }" + //
-            "}"//
-        )//
+            "     }")//
         .stays();
+  }
+
+  /** Introduced by Yogi on Tue-Mar-28-03:29:43-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_publicFinalClassAPublicStaticVoidaFinalBbCcNewCDPublicVoiddTryeCatchEfFgbCatchGfFgb() {
+    trimmingOf(
+        "public final class A{public static void a(final B b){C c=new C(){@D public void d(){try{e();}catch(E f){F.g(b);}catch(G f){F.g(b);}}};}}") //
+            .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+            .gives(
+                "public final class A{public static void a(final B b){new C(){@D public void d(){try{e();}catch(E f){F.g(b);}catch(G f){F.g(b);}}};}}") //
+            .using(TryStatement.class, new MergeCatches()) //
+            .gives("public final class A{public static void a(final B b){new C(){@D public void d(){try{e();}catch(G|E f){F.g(b);}}};}}") //
+            .stays() //
+    ;
   }
 }

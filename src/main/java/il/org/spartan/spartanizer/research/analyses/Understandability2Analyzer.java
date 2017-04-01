@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.utils.*;
@@ -21,9 +22,9 @@ public class Understandability2Analyzer extends IntegerMetricalAnalyzer {
     try (Scanner reader = new Scanner(System.in)) {
       final String s = system.read(reader);
       System.out.println("Got it.");
-      System.out.println("before: " + new Understandability2Analyzer().metric(wizard.ast(s)));
+      System.out.println("before: " + new Understandability2Analyzer().metric(make.ast(s)));
       final String spartanized = new InteractiveSpartanizer().fixedPoint(s);
-      System.out.println("after: " + new Understandability2Analyzer().metric(wizard.ast(spartanized)));
+      System.out.println("after: " + new Understandability2Analyzer().metric(make.ast(spartanized)));
       System.out.println(spartanized);
     }
   }

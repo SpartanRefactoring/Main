@@ -29,7 +29,7 @@ public class UnlessTest {
     trimmingOf("return ¢ != null ? ¢ : \"\";")//
         .using(ConditionalExpression.class, new Unless())//
         .using(ConditionalExpression.class, new DefaultsTo())//
-        .gives("return default¢(¢).to(\"\");")//
+        .gives("return defaults(¢).to(\"\");")//
         .stays();
   }
 

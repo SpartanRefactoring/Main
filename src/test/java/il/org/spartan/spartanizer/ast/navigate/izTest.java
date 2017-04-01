@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Test class for class {@link iz}
@@ -23,23 +24,23 @@ public final class izTest {
 
   @Test public void arrayInitializerTest() {
     assert !iz.arrayInitializer(null);
-    assert iz.arrayInitializer(findFirst.instanceOf(ArrayInitializer.class).in(wizard.ast("Integer arr[] = {2, 5, 8 };")));
-    assert !iz.arrayInitializer(findFirst.instanceOf(ArrayInitializer.class).in(wizard.ast("Integer arr[];")));
+    assert iz.arrayInitializer(findFirst.instanceOf(ArrayInitializer.class).in(make.ast("Integer arr[] = {2, 5, 8 };")));
+    assert !iz.arrayInitializer(findFirst.instanceOf(ArrayInitializer.class).in(make.ast("Integer arr[];")));
   }
 
   @Test public void assignmentTest() {
     assert !iz.assignment(null);
-    assert iz.assignment(findFirst.instanceOf(Assignment.class).in(wizard.ast("x = 5;")));
-    assert iz.assignment(findFirst.instanceOf(Assignment.class).in(wizard.ast("int aa = 5; y = 0.2;")));
-    assert !iz.assignment(wizard.ast("if (c == 5) return false;"));
-    assert !iz.assignment(wizard.ast("while (true) { }"));
+    assert iz.assignment(findFirst.instanceOf(Assignment.class).in(make.ast("x = 5;")));
+    assert iz.assignment(findFirst.instanceOf(Assignment.class).in(make.ast("int aa = 5; y = 0.2;")));
+    assert !iz.assignment(make.ast("if (c == 5) return false;"));
+    assert !iz.assignment(make.ast("while (true) { }"));
   }
 
   @Test public void astNodeTest() {
     assert !iz.astNode(null);
     assert !iz.astNode(Integer.valueOf(5));
     assert !iz.astNode("AAA");
-    assert iz.astNode(wizard.ast("int x = 5;"));
+    assert iz.astNode(make.ast("int x = 5;"));
   }
 
   @Test public void blockRequiredInReplacementNullTest() {
@@ -48,10 +49,10 @@ public final class izTest {
 
   @Test public void bodyDeclarationTest() {
     assert !iz.bodyDeclaration(null);
-    assert !iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class).in(wizard.ast("int x;")));
+    assert !iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class).in(make.ast("int x;")));
     assert iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class)
-        .in(wizard.ast("public enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }")));
-    assert iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class).in(wizard.ast("public static void main() { }")));
+        .in(make.ast("public enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }")));
+    assert iz.bodyDeclaration(findFirst.instanceOf(BodyDeclaration.class).in(make.ast("public static void main() { }")));
   }
 
   @Test public void booleanLiteralFalseOnNull() {
@@ -76,10 +77,10 @@ public final class izTest {
 
   @Test public void booleanOrNullLiteralTest() {
     assert !iz.booleanOrNullLiteral(null);
-    assert !iz.booleanOrNullLiteral(findFirst.instanceOf(NullLiteral.class).in(wizard.ast("true")));
-    assert iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class).in(wizard.ast("true")));
-    assert iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class).in(wizard.ast("false")));
-    assert !iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class).in(wizard.ast("if (c == 5) return 5;")));
+    assert !iz.booleanOrNullLiteral(findFirst.instanceOf(NullLiteral.class).in(make.ast("true")));
+    assert iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class).in(make.ast("true")));
+    assert iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class).in(make.ast("false")));
+    assert !iz.booleanOrNullLiteral(findFirst.instanceOf(BooleanLiteral.class).in(make.ast("if (c == 5) return 5;")));
   }
 
   @Test public void callIsSpecificTrue() {
@@ -92,8 +93,8 @@ public final class izTest {
 
   @Test public void castExpressionTest() {
     assert !iz.castExpression(null);
-    assert iz.castExpression(findFirst.instanceOf(CastExpression.class).in(wizard.ast("int x = (Integer) y;")));
-    assert !iz.castExpression(findFirst.instanceOf(CastExpression.class).in(wizard.ast("int x;")));
+    assert iz.castExpression(findFirst.instanceOf(CastExpression.class).in(make.ast("int x = (Integer) y;")));
+    assert !iz.castExpression(findFirst.instanceOf(CastExpression.class).in(make.ast("int x;")));
   }
 
   @Test public void comparisonTest() {
@@ -114,14 +115,14 @@ public final class izTest {
   @Test public void deMorganTest() {
     assert !iz.deMorgan((InfixExpression) null);
     assert !iz.deMorgan((Operator) null);
-    assert iz.deMorgan(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("true || false")));
-    assert !iz.deMorgan(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("(a == 5)")));
+    assert iz.deMorgan(findFirst.instanceOf(InfixExpression.class).in(make.ast("true || false")));
+    assert !iz.deMorgan(findFirst.instanceOf(InfixExpression.class).in(make.ast("(a == 5)")));
   }
 
   @Test public void emptyStatementTest() {
     assert !iz.emptyStatement(null);
-    assert iz.emptyStatement(findFirst.instanceOf(EmptyStatement.class).in(wizard.ast(";")));
-    assert !iz.emptyStatement(findFirst.instanceOf(Statement.class).in(wizard.ast("a = 5;")));
+    assert iz.emptyStatement(findFirst.instanceOf(EmptyStatement.class).in(make.ast(";")));
+    assert !iz.emptyStatement(findFirst.instanceOf(Statement.class).in(make.ast("a = 5;")));
   }
 
   @Test public void emptyStringLiteral0() {
@@ -151,21 +152,21 @@ public final class izTest {
 
   @Test public void final¢Test() {
     assert !iz.final¢((VariableDeclarationStatement) null);
-    assert iz.final¢(findFirst.instanceOf(VariableDeclarationStatement.class).in(wizard.ast("final int a = 5;")));
-    assert !iz.final¢(findFirst.instanceOf(VariableDeclarationStatement.class).in(wizard.ast("int a = 5;")));
+    assert iz.final¢(findFirst.instanceOf(VariableDeclarationStatement.class).in(make.ast("final int a = 5;")));
+    assert !iz.final¢(findFirst.instanceOf(VariableDeclarationStatement.class).in(make.ast("int a = 5;")));
   }
 
   @Test public void flipableTest() {
     assert !iz.flipable(null);
-    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("a > 6")).getOperator());
-    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("false & true")).getOperator());
-    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("false | true")).getOperator());
-    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("a == 6")).getOperator());
-    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("a != 6")).getOperator());
-    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("a >= 6")).getOperator());
-    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("a <= 6")).getOperator());
-    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("a < 6")).getOperator());
-    assert !iz.flipable(findFirst.instanceOf(InfixExpression.class).in(wizard.ast("a - 8")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(make.ast("a > 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(make.ast("false & true")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(make.ast("false | true")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(make.ast("a == 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(make.ast("a != 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(make.ast("a >= 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(make.ast("a <= 6")).getOperator());
+    assert iz.flipable(findFirst.instanceOf(InfixExpression.class).in(make.ast("a < 6")).getOperator());
+    assert !iz.flipable(findFirst.instanceOf(InfixExpression.class).in(make.ast("a - 8")).getOperator());
   }
 
   @Test public void isConstantFalse() {
@@ -446,14 +447,14 @@ public final class izTest {
 
   @Test public void plainAssignmentTest() {
     assert !iz.plainAssignment(null);
-    assert iz.plainAssignment(findFirst.instanceOf(Assignment.class).in(wizard.ast("a = 5;")));
-    assert !iz.plainAssignment(findFirst.instanceOf(Assignment.class).in(wizard.ast("a++;")));
+    assert iz.plainAssignment(findFirst.instanceOf(Assignment.class).in(make.ast("a = 5;")));
+    assert !iz.plainAssignment(findFirst.instanceOf(Assignment.class).in(make.ast("a++;")));
   }
 
   @Test public void postfixExpressionTest() {
     assert !iz.postfixExpression(null);
-    assert iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class).in(wizard.ast("i++;")));
-    assert !iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class).in(wizard.ast("public static void main() { }")));
+    assert iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class).in(make.ast("i++;")));
+    assert !iz.postfixExpression(findFirst.instanceOf(PostfixExpression.class).in(make.ast("public static void main() { }")));
   }
 
   @Test public void rightOfAssignmentTest() {
@@ -469,26 +470,26 @@ public final class izTest {
 
   @Test public void singletonStatementTest() {
     assert !iz.singletonStatement(null);
-    assert iz.singletonStatement(findFirst.instanceOf(Statement.class).in(wizard.ast("i = 6;")));
-    assert !iz.singletonStatement(findFirst.instanceOf(Statement.class).in(wizard.ast("i = 6; j = 9;")));
+    assert iz.singletonStatement(findFirst.instanceOf(Statement.class).in(make.ast("i = 6;")));
+    assert !iz.singletonStatement(findFirst.instanceOf(Statement.class).in(make.ast("i = 6; j = 9;")));
   }
 
   @Test public void singletonThenTest() {
     assert !iz.singletonThen(null);
-    assert iz.singletonThen(findFirst.instanceOf(IfStatement.class).in(wizard.ast("if (true) { i = 6; }")));
-    assert !iz.singletonThen(findFirst.instanceOf(IfStatement.class).in(wizard.ast("if (true) { i = 6; j = 9; }")));
+    assert iz.singletonThen(findFirst.instanceOf(IfStatement.class).in(make.ast("if (true) { i = 6; }")));
+    assert !iz.singletonThen(findFirst.instanceOf(IfStatement.class).in(make.ast("if (true) { i = 6; j = 9; }")));
   }
 
   @Test public void singleVariableDeclarationTest() {
     assert !iz.singleVariableDeclaration(null);
-    assert iz.singleVariableDeclaration(findFirst.instanceOf(SingleVariableDeclaration.class).in(wizard.ast("try {} catch (Exception e){}")));
-    assert !iz.singleVariableDeclaration(findFirst.instanceOf(Statement.class).in(wizard.ast("Integer a; String b;")));
+    assert iz.singleVariableDeclaration(findFirst.instanceOf(SingleVariableDeclaration.class).in(make.ast("try {} catch (Exception e){}")));
+    assert !iz.singleVariableDeclaration(findFirst.instanceOf(Statement.class).in(make.ast("Integer a; String b;")));
   }
 
   @Test public void stringLiteralTest() {
     assert !iz.stringLiteral(null);
-    assert iz.stringLiteral(findFirst.instanceOf(StringLiteral.class).in(wizard.ast("\"5\"")));
-    assert !iz.stringLiteral(findFirst.instanceOf(StringLiteral.class).in(wizard.ast("false")));
+    assert iz.stringLiteral(findFirst.instanceOf(StringLiteral.class).in(make.ast("\"5\"")));
+    assert !iz.stringLiteral(findFirst.instanceOf(StringLiteral.class).in(make.ast("false")));
   }
 
   @Test public void thisOrNullTest() {
