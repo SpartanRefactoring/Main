@@ -41,7 +41,7 @@ public class ASTTrotter extends ASTVisitor {
   }
 
   private Collection<Rule<? extends ASTNode, ?>> get(final int ¢) {
-    return dispatch[¢] = dispatch[¢] != null ? dispatch[¢] : new ArrayList<>();
+    return dispatch[¢] = dispatch[¢] != null ? dispatch[¢] : empty.list();
   }
 
   protected void startFolding() {
