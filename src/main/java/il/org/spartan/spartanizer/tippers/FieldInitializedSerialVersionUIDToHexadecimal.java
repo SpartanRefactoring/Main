@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
 /** See {@link #examples()} for documentation
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-24 */
-public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
+public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 0x2A2A1B1B2BFBD6A5L;
   public static final String SERIAL_VERSION_UID = "serialVersionUID";
   private VariableDeclarationFragment fragment;
