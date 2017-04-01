@@ -20,7 +20,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
   private List<WrappedCompilationUnit> compilationUnits;
 
   private CommandLineSelection(final List<WrappedCompilationUnit> compilationUnits, final String name) {
-    inner = compilationUnits != null ? compilationUnits : new ArrayList<>();
+    inner = compilationUnits != null ? compilationUnits : empty.list();
     this.name = name;
   }
 

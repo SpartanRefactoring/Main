@@ -37,7 +37,11 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
         ).or(//
             "Initializer has no side effects", () -> sideEffects.free(initializer)//
         ));
+    andAlso("Returned expression does not modify local variable", //
+            () -> wizard.eq(name, returnValue)//
+        );
   }
+
 
   @Override public Examples examples() {
     return //
