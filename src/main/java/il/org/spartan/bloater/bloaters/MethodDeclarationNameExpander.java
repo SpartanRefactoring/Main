@@ -28,7 +28,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * { int res = i; x(res); return res; } }
  * @author Raviv Rachmiel {@code  raviv.rachmiel@gmail.com }
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
-// TODO: Raviv Rachmiel take care of single var declaration, tests
+// TODO Raviv Rachmiel take care of single var declaration, tests
 public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -3829131163900046060L;

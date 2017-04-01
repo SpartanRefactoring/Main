@@ -4,7 +4,7 @@ import org.junit.*;
 
 import il.org.spartan.utils.range.*;
 
-/** TODO: Sapir Bismot please add a description
+/** TODO Sapir Bismot please add a description
  * @author Sapir Bismot
  * @since 04-12-2016 */
 @SuppressWarnings("static-method")

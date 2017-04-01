@@ -25,7 +25,7 @@ public final class LocalInitializedWhileConvertToFor extends ReplaceToNextStatem
     return copy.of(az.variableDeclrationStatement(parent(¢)));
   }
 
-  // TODO: now fitting returns true iff all fragments fitting. We
+  // TODO now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final WhileStatement s) {
     return fragments(vds).stream()
