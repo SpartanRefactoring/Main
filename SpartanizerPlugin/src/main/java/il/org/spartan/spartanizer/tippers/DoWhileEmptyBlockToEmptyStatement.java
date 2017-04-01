@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -29,13 +27,13 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
     return iz.block($) && iz.emptyBlock(az.block($));
   }
 
-  @Override public Example[] examples() {
-    return new Example[] {
+  @Override public Examples examples() {
+    return 
         convert("do{}while(x());y();z();")//
-            .to("do;while(x());y();z();"), //
-        ignores("do{f();g();}while(x());y();z();"), //
-        ignores("do;while(x());y();z();")//
-    };
+            .to("do;while(x());y();z();") //
+        .ignores("do{f();g();}while(x());y();z();") //
+        .ignores("do;while(x());y();z();")//
+        ;
   }
 
   @Override public String description(@SuppressWarnings("unused") final DoStatement __) {

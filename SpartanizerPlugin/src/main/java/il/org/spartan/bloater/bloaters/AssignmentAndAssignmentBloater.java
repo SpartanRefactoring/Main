@@ -1,7 +1,5 @@
 package il.org.spartan.bloater.bloaters;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -50,7 +48,12 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
     };
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { convert("a=b=5;").to("b=5; a=b;"), convert("a+=b+=3;").to("b += 3; a += b;") };
+  @Override public Examples examples() {
+    return //
+    convert("a=b=5;")//
+        .to("b=5; a=b;") //
+        .convert("a+=b+=3;").//
+        to("b += 3; a += b;") //
+    ;
   }
 }
