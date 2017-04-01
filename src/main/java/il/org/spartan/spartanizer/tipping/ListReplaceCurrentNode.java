@@ -29,7 +29,7 @@ public abstract class ListReplaceCurrentNode<N extends ASTNode> extends CarefulT
   }
 
   @Override public final Tip tip(final N n) {
-    return new Tip(description(n), getClass(), n) {
+    return new Tip(description(n), myClass(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(n.getParent(), listDescriptor(n));
         ListReplaceCurrentNode.this.go(r, n, g).forEach(λ -> l.insertBefore(λ, n, g));
