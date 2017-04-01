@@ -159,7 +159,7 @@ public class PropositionTest {
     azzert.that(F.or(T).and(T).reduce(javaReducer), is("((F || T) && T)"));
     azzert.that(F.and(X).or(T).reduce(javaReducer), is("((F && X) || T)"));
     azzert.that(F.and("X1", X).or(T).reduce(javaReducer), is("((F && X1) || T)"));
-    azzert.that(F.or("X1", X).or(T).reduce(javaReducer), is("((F || X1) || T)"));
+    azzert.that(F.or("X1", X).or(T).reduce(javaReducer), is("(F || X1 || T)"));
   }
 
   @Test public void b2a() {
@@ -248,7 +248,7 @@ public class PropositionTest {
   }
 
   @Test public void f() {
-    azzert.that(NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("(((!F && !F) || X) || N || T)"));
+    azzert.that(NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("((!F && !F) || X || N || T)"));
   }
 
   @Test public void f0() {
@@ -259,7 +259,7 @@ public class PropositionTest {
   }
 
   @Test public void g() {
-    azzert.that(T_OR_F_OR_X_OR_NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("((T || F || X) || (((!F && !F) || X) || N || T))"));
+    azzert.that(T_OR_F_OR_X_OR_NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("(T || F || X || (!F && !F) || X || N || T)"));
   }
 
   @Test public void g1() {
@@ -273,18 +273,18 @@ public class PropositionTest {
   }
 
   @Test public void j() {
-    azzert.that(B3.reduce(javaReducer), is("(((!F && !F) || X) || N || T)"));
-    azzert.that(NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("(((!F && !F) || X) || N || T)"));
-    azzert.that(T_OR_F_OR_X_OR_NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("((T || F || X) || (((!F && !F) || X) || N || T))"));
-    azzert.that(B4.reduce(javaReducer), is("((T || F || X) || (((!F && !F) || X) || N || T))"));
-    azzert.that(B5.reduce(javaReducer), is("((T || F || X) && (T && F && X))"));
-    azzert.that(B1_AND_B2.reduce(javaReducer), is("((T || F || X) && (T && F && X))"));
-    azzert.that(B6.reduce(javaReducer), is("((T && F && X) && (T || F || X))"));
-    azzert.that(B2_AND_B1.reduce(javaReducer), is("((T && F && X) && (T || F || X))"));
-    azzert.that(B7.reduce(javaReducer), is("((T || F || X) || (T && F && X))"));
-    azzert.that(B1_OR_B2.reduce(javaReducer), is("((T || F || X) || (T && F && X))"));
-    azzert.that(B8.reduce(javaReducer), is("((T && F && X) || (T || F || X))"));
-    azzert.that(B2_OR_B1.reduce(javaReducer), is("((T && F && X) || (T || F || X))"));
+    azzert.that(B3.reduce(javaReducer), is("((!F && !F) || X || N || T)"));
+    azzert.that(NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("((!F && !F) || X || N || T)"));
+    azzert.that(T_OR_F_OR_X_OR_NOT_F_AND_NOT_F_OR_X_OR_N_OR_T.reduce(javaReducer), is("(T || F || X || (!F && !F) || X || N || T)"));
+    azzert.that(B4.reduce(javaReducer), is("(T || F || X || (!F && !F) || X || N || T)"));
+    azzert.that(B5.reduce(javaReducer), is("((T || F || X) && T && F && X)"));
+    azzert.that(B1_AND_B2.reduce(javaReducer), is("((T || F || X) && T && F && X)"));
+    azzert.that(B6.reduce(javaReducer), is("(T && F && X && (T || F || X))"));
+    azzert.that(B2_AND_B1.reduce(javaReducer), is("(T && F && X && (T || F || X))"));
+    azzert.that(B7.reduce(javaReducer), is("(T || F || X || (T && F && X))"));
+    azzert.that(B1_OR_B2.reduce(javaReducer), is("(T || F || X || (T && F && X))"));
+    azzert.that(B8.reduce(javaReducer), is("((T && F && X) || T || F || X)"));
+    azzert.that(B2_OR_B1.reduce(javaReducer), is("((T && F && X) || T || F || X)"));
   }
 
   @Before public void setUp() {
