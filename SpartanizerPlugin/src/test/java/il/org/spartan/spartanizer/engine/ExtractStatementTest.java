@@ -10,7 +10,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** TODO: Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 7, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

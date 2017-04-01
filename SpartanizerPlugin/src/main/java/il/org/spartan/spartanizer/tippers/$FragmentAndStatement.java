@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO: Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDeclarationFragment> {

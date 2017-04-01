@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO: Yossi Gil please add a description
+/** TODO Yossi Gil please add a description
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @author Matteo Orru'
  * @since 2016 */

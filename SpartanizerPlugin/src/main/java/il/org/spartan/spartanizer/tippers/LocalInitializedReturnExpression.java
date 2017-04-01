@@ -27,7 +27,7 @@ public final class LocalInitializedReturnExpression extends LocalVariableInitial
         () -> iz.not.null¢(returnStatement = az.returnStatement(nextStatement)));//
     andAlso("Next statement returns a value return", //
         () -> iz.not.null¢(returnValue = returnStatement.getExpression()));//
-    andAlso("Value return is local variable", //
+    andAlso("Value returned is local variable", //
         () -> wizard.eq(name, returnValue)//
     );
   }

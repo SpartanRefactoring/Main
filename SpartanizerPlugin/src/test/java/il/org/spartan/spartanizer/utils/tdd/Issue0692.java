@@ -11,7 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** TODO: Vivian Shehadeh please add a description
+/** TODO Vivian Shehadeh please add a description
  * @author Vivian Shehadeh
  * @author Ward Mattar
  * @since 16-11-06 */
