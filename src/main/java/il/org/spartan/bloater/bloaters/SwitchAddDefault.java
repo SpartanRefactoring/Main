@@ -25,7 +25,7 @@ public class SwitchAddDefault extends SwitchZtatement implements TipperCategory.
 
   public SwitchAddDefault() {
     andAlso("Does not have default case", //
-        () -> cases().stream().noneMatch(x -> x.isDefault()));
+        () -> cases().stream().noneMatch(SwitchCase::isDefault));
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
