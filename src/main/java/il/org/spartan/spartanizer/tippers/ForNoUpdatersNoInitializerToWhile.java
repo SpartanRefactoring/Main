@@ -20,12 +20,11 @@ public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForSta
     return String.format("Convert 'for(;%s;)' to 'while(%s)'", $, $);
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        Example.convert("for(;c;)f();").to("while(c)f();"), //
-        Example.ignores("for(g();c;)f();"), //
-        Example.ignores("for(;c;g())f();"), //
-    };
+  @Override public Examples examples() {
+    return convert("for(;c;)f();").to("while(c)f();") //
+        .ignores("for(g();c;)f();") //
+        .ignores("for(;c;g())f();") //
+    ;
   }
 
   @Override public String description(final ForStatement ¢) {

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
@@ -22,12 +20,12 @@ public final class JavadocEmptyRemove extends RemovingTipper<Javadoc>//
     return String.format("Remove empty Javadoc comment of %d characters", box.it(metrics.length(¢)));
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("/***/ void f() {}") //
-            .to("void f() {}"), //
-        Example.ignores("/** Meaningful comment */ void f() {}") //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("/***/ void f() {}") //
+        .to("void f() {}") //
+        .ignores("/** Meaningful comment */ void f() {}") //
+    ;
   }
 
   @Override public boolean prerequisite(final Javadoc ¢) {

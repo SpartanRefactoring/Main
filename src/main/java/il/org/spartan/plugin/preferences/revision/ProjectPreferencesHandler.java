@@ -285,13 +285,14 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param filter examples filter
    * @param converter Example --> String converter
    * @return unified examples string */
-  static String getPreviewString(final Example[] preview, final Function<Example, Boolean> filter, final Function<Example, String> converter) {
+  static String getPreviewString(final Examples preview, final Function<Example, Boolean> filter, final Function<Example, String> converter) {
     if (preview == null)
       return null;
     final StringBuilder $ = new StringBuilder();
-    for (int ¢ = 0, c = 1; ¢ < preview.length; ++¢)
-      if (filter.apply(preview[¢]).booleanValue())
-        $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(preview[¢])).append("\n\n");
+    int c = 1;
+    for (final Example ¢ : preview)
+      if (filter.apply(¢).booleanValue())
+        $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(¢)).append("\n\n");
     return ($ + "").trim();
   }
 

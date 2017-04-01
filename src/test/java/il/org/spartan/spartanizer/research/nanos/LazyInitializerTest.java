@@ -9,6 +9,7 @@ import org.junit.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-28 */
 @SuppressWarnings("static-method")
+@Ignore
 public class LazyInitializerTest {
   @Test public void basic() {
     trimmingOf("¢ = ¢ != null ? ¢ : \"\";")//

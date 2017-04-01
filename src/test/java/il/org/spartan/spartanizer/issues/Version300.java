@@ -33,6 +33,20 @@ public class Version300 {
     );
   }
 
+  @Test public void a0() {
+    trimmingOf("int a(){int $=13;return $;}") //
+        .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
+        .gives("int a(){return 13;}") //
+    ;
+  }
+
+  @Test public void a1() {
+    trimmingOf("int a(){int $=13;return $+$;}") //
+        .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
+        .gives("int a(){return 13+13;}") //
+    ;
+  }
+
   @FunctionalInterface
   interface Find {
     //@formatter:off

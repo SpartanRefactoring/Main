@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * test tests whether the bug mentioned in Issue0 711 had been fixed
  * @author Dan Abramovich
  * @since 22-11-2016 */
+@Ignore
 @SuppressWarnings("static-method")
 public class Issue0711 {
   @Test public void test0() {

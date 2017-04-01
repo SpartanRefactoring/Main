@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -26,12 +24,12 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x5231A5575D7AB4B4L;
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("{ ; ; g(); {} { ; { ; { ; } } ; } } ") //
-            .to("g();"), //
-        Example.ignores("g();"), //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("{ ; ; g(); {} { ; { ; { ; } } ; } } ") //
+        .to("g();") //
+        .ignores("g();") //
+    ;
   }
 
   static Statement reorganizeNestedStatement(final Statement ¢) {

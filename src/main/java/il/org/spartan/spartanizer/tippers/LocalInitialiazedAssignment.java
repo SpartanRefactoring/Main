@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -21,7 +20,7 @@ import il.org.spartan.utils.*;
 /** See {@link #examples()}
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-07 */
-public final class LocalVariableInitialiazerAssignment extends LocalVariableInitializedStatement//
+public final class LocalInitialiazedAssignment extends LocalVariableInitializedStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x1866B79F79A10C90L;
 
@@ -29,10 +28,10 @@ public final class LocalVariableInitialiazerAssignment extends LocalVariableInit
     return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("int a; a = 3; fragment(b); fragment(a,b);a = fragment(a,b); b= fragment(a,b);}")//
-            .to("int a = 3; fragment(b); fragment(a,b);a = fragment(a,b); b= fragment(a,b);") };
+  @Override public Examples examples() {
+    return //
+    convert("int a; a = 3; fragment(b); fragment(a,b);a = fragment(a,b); b= fragment(a,b);}")//
+        .to("int a = 3; fragment(b); fragment(a,b);a = fragment(a,b); b= fragment(a,b);");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {

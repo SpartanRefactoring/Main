@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TUnit tests for the GitHub issue thus numbered 
+/** TUnit tests for the GitHub issue thus numbered
  * @author Oren Afek
  * @since 2016 Testing {@link LambdaRemoveRedundantCurlyBraces } */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

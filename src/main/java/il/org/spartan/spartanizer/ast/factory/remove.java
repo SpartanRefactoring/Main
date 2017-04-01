@@ -74,7 +74,7 @@ public enum remove {
    * @param f
    * @param r
    * @param g */
-  public static void fragment(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
+  public static void local(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
@@ -90,6 +90,6 @@ public enum remove {
   }
 
   public static void statement(final Statement s, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
+    trick.statementRewriter(r,s).remove(s, g);
   }
 }

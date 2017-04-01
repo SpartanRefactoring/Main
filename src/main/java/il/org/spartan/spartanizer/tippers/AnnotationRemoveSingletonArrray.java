@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -24,13 +22,13 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
     return "Remove the curly brackets in the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("@SuppressWarnings({\"unchecked\"}) void f() {}") //
-            .to("@SuppressWarnings(\"unchecked\") void f() {}"), //
-        Example.ignores("@SuppressWarnings(\"unchecked\") void f() {}"), //
-        Example.ignores("@SuppressWarnings() void f() {}"), //
-        Example.ignores("@SuppressWarnings void f() {}") };
+  @Override public Examples examples() {
+    return convert("@SuppressWarnings({\"unchecked\"}) void f() {}") //
+        .to("@SuppressWarnings(\"unchecked\") void f() {}") //
+        .ignores("@SuppressWarnings(\"unchecked\") void f() {}") //
+        .ignores("@SuppressWarnings() void f() {}") //
+        .ignores("@SuppressWarnings void f() {}")//
+    ;
   }
 
   @Override public ASTNode replacement(final SingleMemberAnnotation a) {

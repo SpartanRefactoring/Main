@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.utils.Example.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -19,21 +17,23 @@ import il.org.spartan.utils.*;
 /** See {@link #examples()} for documentation
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2017-03-24 */
-public final class FieldSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
+public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 0x2A2A1B1B2BFBD6A5L;
   public static final String SERIAL_VERSION_UID = "serialVersionUID";
   private VariableDeclarationFragment fragment;
   NumberLiteral initializer;
   long replacement;
 
-  @Override public Example[] examples() {
-    return new Example[] { //
-        convert("private static long " + SERIAL_VERSION_UID + " = 12345677899L;")//
-            .to("private static long " + SERIAL_VERSION_UID + " = 1234567799;"),
-        ignores("private long a = 3;"), //
-        ignores("private static long a = 3;"), //
-        ignores("long a = 3;"), //
-    };
+  @Override public Examples examples() {
+    return //
+    convert("private static long " + SERIAL_VERSION_UID + " = 12345677899L;")//
+        .to("private static long " + SERIAL_VERSION_UID + " = 1234567799;").//
+        convert("private static long " + SERIAL_VERSION_UID + " = -12345677899L;")//
+        .to("private static long " + SERIAL_VERSION_UID + " = -1234567799;") //
+        .ignores("private long a = 3;") //
+        .ignores("private static long a = 3;") //
+        .ignores("long a = 3;") //
+    ;
   }
 
   @Override public String description() {

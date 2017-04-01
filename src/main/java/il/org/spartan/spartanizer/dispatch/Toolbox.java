@@ -29,7 +29,7 @@ public class Toolbox {
     public static final Map<String, Class<? extends Tipper<?>>> TipperIDClassTranslationTable = new HashMap<>();
     public static final Map<String, String> TipperIDNameTranslationTable = new HashMap<>();
     public static final Map<Class<? extends Tipper<?>>, String> TipperDescriptionCache = new HashMap<>();
-    public static final Map<Class<? extends Tipper<?>>, Example[]> TipperExamplesCache = new HashMap<>();
+    public static final Map<Class<? extends Tipper<?>>, Examples> TipperExamplesCache = new HashMap<>();
     public static final Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = new HashMap<>();
     static {
       for (final Tipper<? extends ASTNode> t : freshCopyOfAllTippers().getAllTippers()) {
@@ -304,7 +304,7 @@ public class Toolbox {
         .add(FieldDeclaration.class, //
             new BodyDeclarationModifiersSort<>(), //
             new AnnotationSort<>(), //
-            new FieldSerialVersionUIDToHexadecimal(), //
+            new FieldInitializedSerialVersionUIDToHexadecimal(), //
             null) //
         .add(CastExpression.class, //
             new CastToDouble2Multiply1(), //
@@ -326,8 +326,9 @@ public class Toolbox {
             new AnnotationSort<>(), //
             null)
         .add(VariableDeclarationFragment.class, //
-            new FieldFragmentInitializerDefaultValue(), //
-            new LocalVariableUnintializedStatementAssignment(), //
+            new FieldInitializedDefaultValue(), //
+            new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
+            new LocalUnintializedAssignmentToSame(), //
             new LocalVariableIntializedUpdateAssignment(), //
             new LocalVariableIntializedIfAssignment(), //
             new LocalInitializedUpdateAssignment(), //
@@ -341,9 +342,9 @@ public class Toolbox {
             new LocalVariableIntializedInlineIntoNext(), //
             new LocalVariableIntializedStatementWhile(), //
             new LocalVariableIntializedStatementToForInitializers(), //
-            new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
             new LocalVariableInitializedUnusedRemove(), //
-            new LocalInitializedIncrementDecrementInline(),//
+            new LocalInitializedIncrementDecrementInline(), //
+//            new LocalInitializedNewAddAll(), //
             null) //
     ;
   }
