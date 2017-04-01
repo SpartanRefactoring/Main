@@ -5,11 +5,9 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/**
- * TODO orimarco  {@code  marcovitch.ori@gmail.com}  please add a description
- * @author  orimarco  {@code  marcovitch.ori@gmail.com}
- * @since  2016-12-28 
- */
+/** TODO orimarco {@code  marcovitch.ori@gmail.com} please add a description
+ * @author orimarco {@code  marcovitch.ori@gmail.com}
+ * @since 2016-12-28 */
 @Ignore
 @SuppressWarnings("static-method")
 public class LazyInitializerTest {

@@ -1,5 +1,7 @@
 package il.org.spartan.zoomer.zoomin.expanders;
+
 import static il.org.spartan.azzert.*;
+
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -17,8 +19,6 @@ import il.org.spartan.spartanizer.meta.*;
 public class computeTest extends MetaFixture {
   @Test public void test1a() {
     compute.updateSpots(into.s("return a *=2"));
-    azzert.that(
-        compute.updateSpots(into.s("return a *=2")).size(),
-        is(1));
+    azzert.that(compute.updateSpots(into.s("return a *=2")).size(), is(1));
   }
 }

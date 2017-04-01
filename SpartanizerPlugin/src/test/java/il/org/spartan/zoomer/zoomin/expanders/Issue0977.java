@@ -19,7 +19,6 @@ public class Issue0977 {
         .stays();
   }
 
-
   @Test public void complexSequencer() {
     bloatingOf("switch (a()){case 1:if (b()){return c();} else{throw d();} case 2: e(); default:}")//
         .gives("switch (a()){case 1:if (b()){return c();} else{throw d();} case 2: e(); break; default:}")//
