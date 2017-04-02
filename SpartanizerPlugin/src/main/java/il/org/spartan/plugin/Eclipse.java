@@ -12,6 +12,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jface.dialogs.*;
+import org.eclipse.jface.text.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
@@ -124,5 +125,10 @@ public class Eclipse {
     return $ == null ? new ArrayList<>()
         : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
             .collect(toList());
+  }
+
+  /** @return document for editor */
+  public static IDocument document(final ITextEditor e) {
+    return e.getDocumentProvider().getDocument(e.getEditorInput());
   }
 }
