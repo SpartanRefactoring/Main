@@ -87,7 +87,7 @@ public class InflateHandler extends AbstractHandler {
           @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return λ -> λ;
           }
-        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null)))).name(OPERATION_ACTIVITY.getIng())
+        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null, false)))).name(OPERATION_ACTIVITY.getIng())
         .operationName(OPERATION_ACTIVITY);
   }
 
