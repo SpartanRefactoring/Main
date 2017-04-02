@@ -173,8 +173,7 @@ public class Issue0455 {
 
   @Test public void singleSwitchCaseStatementShouldntTip() {
     trimmingOf("x -> {switch(x){ case 0: ++x; break; default: --x;}}") //
-        .gives("λ -> {switch(λ){ case 0: ++λ; break; default: --λ;}}") //
-        .stays();
+        .gives("λ -> {switch(λ){ case 0: ++λ; break; default: --λ;}}"); //
   }
 
   @Test public void singleSynchronizedStatementShouldntTip() {
