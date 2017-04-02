@@ -16,11 +16,13 @@ public abstract class SwitchZtatement extends AbstractPattern<SwitchStatement> {
   private static final long serialVersionUID = 9009181505972647040L;
   protected List<Statement> statements;
   protected Expression expression;
+  protected List<SwitchCase> cases;
 
   public SwitchZtatement() {
     andAlso(Proposition.that("Must be switch statement", () -> {
       statements = step.statements(current);
       expression = step.expression(current);
+      cases = statements.stream().filter(λ -> iz.switchCase(λ)).map(λ -> az.switchCase(λ)).collect(Collectors.toList());
       return true;
     }));
   }
