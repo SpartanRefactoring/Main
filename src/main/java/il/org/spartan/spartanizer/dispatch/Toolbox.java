@@ -174,6 +174,7 @@ public class Toolbox {
         .add(SwitchStatement.class, //
             new SwitchEmpty(), //
             new MergeSwitchBranches(), //
+            new SwitchWithOneCaseToIf(), //
             null)
         .add(SwitchCase.class, //
             new RemoveRedundantSwitchCases(), //

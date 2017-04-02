@@ -11,12 +11,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2016-11-27 */
 @SuppressWarnings("static-method")
 public class Issue0880 {
-  @Test public void c() {
-    trimmingOf("switch(x) { case b: break; case a: default:y=3;}")//
-        .gives("switch(x){case b: break; default:y=3;}")//
-        .stays();
-  }
-
   @Test public void d() {
     trimmingOf("switch(x) {case b:break;case a: default:y=3;break;}")//
         .gives("switch(x){ case b:break; default:y=3;break;}");
