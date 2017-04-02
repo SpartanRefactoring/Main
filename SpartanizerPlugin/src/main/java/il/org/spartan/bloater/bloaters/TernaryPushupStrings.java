@@ -22,7 +22,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2017-01-08 */
 public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = -5602484588967209664L;
+  private static final long serialVersionUID = -0x4DC0060CE8FDAAC0L;
 
   @Override public Examples examples() {
     return //

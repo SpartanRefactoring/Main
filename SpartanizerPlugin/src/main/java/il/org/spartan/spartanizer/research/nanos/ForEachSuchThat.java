@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
 public class ForEachSuchThat extends ForEach {
-  private static final long serialVersionUID = -1275196391208545377L;
+  private static final long serialVersionUID = -0x11B2685C8CD86C61L;
   private static final String description = "ForEachSuchThat pattern: conevrt to fluent API";
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = as.list(
       patternTipper("for($T $N1 : $N2) if($X1) $X2;", "$N2.stream().filter($N1 -> $X1).forEach($N1 -> $X2);", description),

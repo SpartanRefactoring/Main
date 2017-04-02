@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-20 */
 public final class LastIndex extends NanoPatternTipper<InfixExpression> {
-  private static final long serialVersionUID = -5764445432502726533L;
+  private static final long serialVersionUID = -0x4FFF6C945B72AF85L;
   private static final List<UserDefinedTipper<InfixExpression>> tippers = as.list(patternTipper("$X.size()-1", "lastIndex($X)", "lisp: lastIndex"));
   static final Last rival = new Last();
 

@@ -29,7 +29,7 @@ import il.org.spartan.utils.*;
  * @since 2017-01-13 */
 public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclarationStatement>//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = -401300117746539825L;
+  private static final long serialVersionUID = -0x591B454B69ADD31L;
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!canTip(s, nextStatement))

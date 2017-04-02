@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09 */
 public final class LambdaRenameSingleParameterToLambda extends EagerTipper<LambdaExpression>//
     implements TipperCategory.Centification {
-  private static final long serialVersionUID = -3240064673505742343L;
+  private static final long serialVersionUID = -0x2CF705A7699A0E07L;
 
   @Override public String description(final LambdaExpression ¢) {
     return "Rename lambda parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;

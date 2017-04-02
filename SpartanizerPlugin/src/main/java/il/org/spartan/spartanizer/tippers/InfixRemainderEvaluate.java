@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author Dor Ma'ayan
  * @since 2016 */
 public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
-  private static final long serialVersionUID = -5074474247593472862L;
+  private static final long serialVersionUID = -0x466C277145AD335EL;
 
   @Override double evaluateDouble(final List<Expression> ¢) throws IllegalArgumentException {
     throw new IllegalArgumentException("no remainder among doubles" + ¢);

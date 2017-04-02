@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends CarefulTipper<N> {
-  private static final long serialVersionUID = -2896529202034446513L;
+  private static final long serialVersionUID = -0x283289F678CF10B1L;
 
   @Override public boolean prerequisite(final N ¢) {
     final Statement $ = extract.nextStatement(¢);

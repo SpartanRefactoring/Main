@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 27-11-2016 */
 public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.EmptyCycles {
-  private static final long serialVersionUID = -5409462387889550538L;
+  private static final long serialVersionUID = -0x4B12456197FE34CAL;
 
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
     return copy.of(¢.getElseExpression());

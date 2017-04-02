@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-20 */
 public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -8462153823342463816L;
+  private static final long serialVersionUID = -0x756F9C11630A8B48L;
 
   private static Expression chopHead(final InfixExpression ¢) {
     final List<Expression> $ = allOperands(¢);

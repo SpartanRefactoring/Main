@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class IfReturnNoElseReturn extends GoToNextStatement<IfStatement>//
     implements TipperCategory.Ternarization {
-  private static final long serialVersionUID = -1169329057289882569L;
+  private static final long serialVersionUID = -0x103A4A950D4E4BC9L;
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'return'";

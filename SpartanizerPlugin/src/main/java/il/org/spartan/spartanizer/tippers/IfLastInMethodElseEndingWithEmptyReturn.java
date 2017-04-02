@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-09-09 */
 public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<IfStatement>//
     implements TipperCategory.EarlyReturn {
-  private static final long serialVersionUID = -5100316440166627940L;
+  private static final long serialVersionUID = -0x46C7F6C79A377A64L;
 
   @Override @SuppressWarnings("unused") public String description(final IfStatement __) {
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";

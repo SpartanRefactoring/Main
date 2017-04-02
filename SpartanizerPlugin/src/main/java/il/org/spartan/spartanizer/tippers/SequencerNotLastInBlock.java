@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public final class SequencerNotLastInBlock<S extends Statement> extends GoToNextStatement<S>//
     implements TipperCategory.Deadcode {
-  private static final long serialVersionUID = -7502939324573443092L;
+  private static final long serialVersionUID = -0x681FCB903C826414L;
 
   @Override public String description(final S ¢) {
     return "Remove dead statement after " + ¢;

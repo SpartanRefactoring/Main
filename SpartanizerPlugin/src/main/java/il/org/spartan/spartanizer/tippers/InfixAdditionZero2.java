@@ -36,7 +36,7 @@ import il.org.spartan.utils.range.*;
  * @since 2016 */
 public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.NOP.onNumbers {
-  private static final long serialVersionUID = -8635256643058136983L;
+  private static final long serialVersionUID = -0x77D6982A51CFF797L;
 
   @Override @SuppressWarnings("boxing") public ASTNode replacement(final InfixExpression x) {
     gather(x, new ArrayList<>());

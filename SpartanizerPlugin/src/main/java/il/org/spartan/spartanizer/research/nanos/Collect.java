@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-18 */
 public class Collect extends NanoPatternTipper<EnhancedForStatement> {
-  private static final long serialVersionUID = -2812051728758407982L;
+  private static final long serialVersionUID = -0x27066A25FEAB032EL;
   private static final BlockNanoPatternContainer blockTippers = new BlockNanoPatternContainer()//
       .statementsPattern("$T1 $N1 = new $T2(); for($T3 $N2 : $X1) if($X2) $N1.add($N2);", //
           "$T1 $N1 = ($X1).stream().filter($N2 -> $X2).collect(toList());", //
@@ -45,7 +45,7 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
           "Go Fluent: filter pattern");
 
   public static class defender extends NanoPatternTipper<EnhancedForStatement> {
-    private static final long serialVersionUID = -1531336007723130062L;
+    private static final long serialVersionUID = -0x154065FC541A1CCEL;
 
     @Override protected Tip pattern(final EnhancedForStatement ¢) {
       return firstTip(tippers, ¢);

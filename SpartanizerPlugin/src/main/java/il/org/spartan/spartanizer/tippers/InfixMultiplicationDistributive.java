@@ -30,7 +30,7 @@ import il.org.spartan.utils.range.*;
 public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression>
     //
     implements TipperCategory.Arithmetic, TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -4040103682801205377L;
+  private static final long serialVersionUID = -0x381154E4E51D0081L;
 
   private static boolean IsSimpleMultiplication(final Expression $) {
     return !iz.simpleName($) && ((InfixExpression) $).getOperator() == TIMES;

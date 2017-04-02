@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-22 */
 public class Adjuster extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = -6381093865952528751L;
+  private static final long serialVersionUID = -0x588E33100686496FL;
   private static final Collection<UserDefinedTipper<Expression>> tippers = as.list(//
       patternTipper("$N($A)", "", ""), //
       patternTipper("$N1.$N($A)", "", ""), //

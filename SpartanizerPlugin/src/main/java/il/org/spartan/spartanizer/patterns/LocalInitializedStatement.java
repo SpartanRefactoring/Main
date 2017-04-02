@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
 public abstract class LocalInitializedStatement extends LocalInitialized {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 
   @Override protected ASTNode range() {
     return parent;
