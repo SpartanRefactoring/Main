@@ -24,7 +24,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2017-01-18 */
 public class OutlineTernaryMethodInvocation extends MethodInvocationAbstarctPattern//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 6072619590329942433L;
+  private static final long serialVersionUID = 0x54464757E1B1C1A1L;
 
   public OutlineTernaryMethodInvocation() {
     andAlso("Parnt is not a Lambda Expression", () -> {

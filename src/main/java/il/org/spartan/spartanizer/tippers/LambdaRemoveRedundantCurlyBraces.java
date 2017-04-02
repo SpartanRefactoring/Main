@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @since 2016-11-17 */
 public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpression>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = -574482795207645961L;
+  private static final long serialVersionUID = -0x7F8F90EF9ECDB09L;
 
   @Override public Tip tip(final LambdaExpression x) {
     assert prerequisite(x) : fault.dump() + "\n n = " + x + fault.done();

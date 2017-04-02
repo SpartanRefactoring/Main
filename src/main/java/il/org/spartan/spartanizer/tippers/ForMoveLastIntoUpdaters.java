@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> implements TipperCategory.Unite {
-  private static final long serialVersionUID = -5815591308727978558L;
+  private static final long serialVersionUID = -0x50B5217BA3948A3EL;
 
   private static boolean notClaimedByOthers(final ForStatement ¢) {
     return cantTip.declarationInitializerStatementTerminatingScope(¢)//

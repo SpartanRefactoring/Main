@@ -18,7 +18,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2016-12-25 */
 public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = -1007971487834999855L;
+  private static final long serialVersionUID = -0xDFD08BA4C208C2FL;
 
   @Override public ASTNode replacement(final TryStatement s) {
     final List<CatchClause> catches = step.catchClauses(s);

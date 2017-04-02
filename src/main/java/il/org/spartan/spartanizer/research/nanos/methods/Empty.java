@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-13 */
 public class Empty extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = -4795965741088687841L;
+  private static final long serialVersionUID = -0x428EB16E7088C6E1L;
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return empty(¢);

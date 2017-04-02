@@ -31,7 +31,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09 */
 public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarationExpression>//
     implements TipperCategory.Centification {
-  private static final long serialVersionUID = -3634676628162924936L;
+  private static final long serialVersionUID = -0x3270F722CF10D188L;
 
   @Override public String description(final VariableDeclarationExpression ¢) {
     return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";

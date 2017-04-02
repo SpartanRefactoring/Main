@@ -21,7 +21,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Dor Ma'ayan
  * @since 2016-12-24 */
 public class PrefixToInfix extends PrefixExprezzion implements TipperCategory.Bloater {
-  private static final long serialVersionUID = -6058739737339786139L;
+  private static final long serialVersionUID = -0x5414F7B0C6AE739BL;
 
   public PrefixToInfix() {
     andAlso("Can be changed", () -> (iz.expressionStatement(current.getParent()) || iz.forStatement(current.getParent())));

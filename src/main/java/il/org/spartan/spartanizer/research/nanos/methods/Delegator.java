@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Method delegating to another
  * @author Ori Marcovitch */
 public class Delegator extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = -4053526639017810391L;
+  private static final long serialVersionUID = -0x384105006E3D59D7L;
   private static final NanoPatternContainer<Expression> tippers = new NanoPatternContainer<Expression>().add("$N($A)", "", "") //
       .add("$N1.$N($A)", "", "") //
       .add("$N1().$N($A)", "", "") //

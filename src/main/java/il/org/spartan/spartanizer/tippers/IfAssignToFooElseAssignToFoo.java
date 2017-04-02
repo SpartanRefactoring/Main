@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
     implements TipperCategory.Ternarization {
-  private static final long serialVersionUID = 1076426871620962241L;
+  private static final long serialVersionUID = 0xEF03C895DA707C1L;
   private Assignment thenAssignment;
   private Assignment elzeAssignment;
   private Expression to;

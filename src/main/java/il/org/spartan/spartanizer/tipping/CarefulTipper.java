@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since Sep 25, 2016 */
 public abstract class CarefulTipper<N extends ASTNode> extends Tipper<N> {
-  private static final long serialVersionUID = -1200037106702768820L;
+  private static final long serialVersionUID = -0x10A76363F64E5AB4L;
 
   @Override public final boolean canTip(final N ¢) {
     return prerequisite(¢) && tip(¢) != null;

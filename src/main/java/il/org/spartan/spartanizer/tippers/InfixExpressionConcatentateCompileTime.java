@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-04 */
 public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = -3790899918863457432L;
+  private static final long serialVersionUID = -0x349BFB6422E9DC98L;
 
   @Override public String description() {
     return "Concat the strings to a one string";

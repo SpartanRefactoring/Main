@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-26 */
 public class IfDeadRemove extends ReplaceCurrentNode<IfStatement>//
     implements TipperCategory.EmptyCycles {
-  private static final long serialVersionUID = -4773914669041733973L;
+  private static final long serialVersionUID = -0x42405A1924425155L;
 
   @Override public String description(final IfStatement ¢) {
     return "Remove empty cycles in: " + ¢;

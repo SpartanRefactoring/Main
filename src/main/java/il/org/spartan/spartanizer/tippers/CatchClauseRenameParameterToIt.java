@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @since 22-11-2016 */
 public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClause>//
     implements TipperCategory.Centification {
-  private static final long serialVersionUID = -6638105215049141624L;
+  private static final long serialVersionUID = -0x5C1F4985DCAC0D78L;
 
   @Override public String description(final CatchClause ¢) {
     return String.format("Rename caught %s (%s) to %s", //

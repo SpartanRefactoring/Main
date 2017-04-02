@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
 /** @author Yossi Gil {@code  Yossi.Gil@GMail.COM}
  * @since 2015-08-01 */
 public abstract class IfAbstractPattern extends AbstractPattern<IfStatement> {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
   @Property protected Statement then, elze;
   @Property protected Expression condition;
   @Property protected List<Statement> subsequentStatements;
