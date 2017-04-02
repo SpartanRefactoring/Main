@@ -18,6 +18,7 @@ import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.plugin.*;
+import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.utils.*;
 
 /** Listener for code inflation/deflation using mouse and CTRL key.
@@ -43,6 +44,7 @@ public class InflaterListener implements KeyListener, Listener {
   private final Color originalBackground;
   private final IDocumentUndoManager undoManager;
   private int editDirection;
+  private final boolean compoundEditing;
 
   public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
@@ -53,6 +55,7 @@ public class InflaterListener implements KeyListener, Listener {
     inactiveCursor = text.getCursor();
     originalBackground = text.getSelectionBackground();
     undoManager = DocumentUndoManagerRegistry.getDocumentUndoManager(Eclipse.document(editor));
+    compoundEditing = PreferencesResources.ZOOMER_REVERT_METHOD_VALUE.get();
   }
 
   @Override public void handleEvent(final Event ¢) {
@@ -67,7 +70,7 @@ public class InflaterListener implements KeyListener, Listener {
     windowInformation = WindowInformation.of(text);
     working.set();
     if (c > 0) {
-      if (editDirection != ZOOMOUT_COMPUND_EDIT) {
+      if (compoundEditing && editDirection != ZOOMOUT_COMPUND_EDIT) {
         if (editDirection != NO_COMPUND_EDIT)
           undoManager.endCompoundChange();
         undoManager.beginCompoundChange();
@@ -78,7 +81,7 @@ public class InflaterListener implements KeyListener, Listener {
         working.clear();
       });
     } else if (c < 0) {
-      if (editDirection != ZOOMIN_COMPUND_EDIT) {
+      if (compoundEditing && editDirection != ZOOMIN_COMPUND_EDIT) {
         if (editDirection != NO_COMPUND_EDIT)
           undoManager.endCompoundChange();
         undoManager.beginCompoundChange();
@@ -95,14 +98,14 @@ public class InflaterListener implements KeyListener, Listener {
     text.setSelectionBackground(INFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(windowInformation),
-        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation);
+        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
   }
 
   private void deflate() {
     text.setSelectionBackground(DEFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).limit(windowInformation),
-        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation);
+        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
   }
 
   @Override public void keyPressed(final KeyEvent ¢) {
@@ -127,7 +130,7 @@ public class InflaterListener implements KeyListener, Listener {
   private void deactivate() {
     text.setSelectionBackground(originalBackground);
     active = false;
-    if (editDirection != NO_COMPUND_EDIT)
+    if (compoundEditing && editDirection != NO_COMPUND_EDIT)
       undoManager.endCompoundChange();
     editDirection = NO_COMPUND_EDIT;
     if (text.isDisposed())
