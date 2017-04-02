@@ -3,14 +3,12 @@ package il.org.spartan.bloater;
 import java.util.*;
 import java.util.function.*;
 
-import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jdt.internal.ui.javaeditor.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.source.*;
-import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.swt.custom.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.texteditor.*;
@@ -127,14 +125,12 @@ public final class SingleFlater {
       final ITextEditor e, final WindowInformation i) {
     boolean $ = false;
     try {
-      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
-      textChange.setTextType("java");
       if (f.go(r, null)) {
-        textChange.setEdit(r.rewriteAST());
-        if (textChange.getEdit().getLength() != 0)
-          $ = changeNFocus(e, t, textChange, i);
+        final TextEdit te = r.rewriteAST();
+        if (te != null && te.getLength() > 0)
+          $ = changeNFocus(e, t, te, i);
       }
-    } catch (final CoreException ¢) {
+    } catch (final CoreException | MalformedTreeException | BadLocationException ¢) {
       monitor.log(¢);
     }
     u.dispose();
@@ -158,14 +154,14 @@ public final class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextFileChange tc, final WindowInformation i)
-      throws CoreException {
+  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextEdit te, final WindowInformation i)
+      throws MalformedTreeException, BadLocationException {
     if (i == null || t == null || e == null) {
-      tc.perform(new NullProgressMonitor());
+      te.apply(Eclipse.document(e));
       return true;
     }
-    tc.perform(new NullProgressMonitor());
-    e.getSelectionProvider().setSelection(new TextSelection(tc.getEdit().getOffset(), tc.getEdit().getLength()));
+    te.apply(Eclipse.document(e));
+    e.getSelectionProvider().setSelection(new TextSelection(te.getOffset(), te.getLength()));
     if (!i.invalid())
       t.setTopIndex(i.startLine);
     return false;

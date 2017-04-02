@@ -125,7 +125,7 @@ public class ASTInFilesVisitor {
     ___.______unused(path);
   }
 
-  void visit(final File f) {
+  protected void visit(final File f) {
     monitor.debug("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
