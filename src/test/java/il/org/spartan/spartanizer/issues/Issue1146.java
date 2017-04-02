@@ -12,9 +12,13 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-26 */
 @SuppressWarnings("static-method")
-public class Issue1146 extends TipperTest {
+public class Issue1146 extends TipperTest<VariableDeclarationFragment> {
   @Override public Tipper<VariableDeclarationFragment> tipper() {
     return new LocalInitializedIncrementDecrementInline();
+  }
+
+  @Override public Class<VariableDeclarationFragment> tipsOn() {
+    return VariableDeclarationFragment.class;
   }
 
   @Test public void a() {
