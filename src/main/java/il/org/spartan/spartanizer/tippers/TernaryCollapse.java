@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-9-19 */
 public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -534365936521275928L;
+  private static final long serialVersionUID = -0x76A72FCF26B6A18L;
 
   private static Expression collapse(final ConditionalExpression ¢) {
     Expression $;

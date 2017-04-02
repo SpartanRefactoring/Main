@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-18 */
 public class Vocabulary extends HashMap<String, MethodDeclaration> {
-  private static final long serialVersionUID = -6053017568518719756L;
+  private static final long serialVersionUID = -0x5400A36886C1C90CL;
 
   public static String mangle(final Assignment ¢) {
     return mangle(¢.getOperator());

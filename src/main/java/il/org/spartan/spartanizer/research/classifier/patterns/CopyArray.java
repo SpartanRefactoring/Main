@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class CopyArray extends NanoPatternTipper<ForStatement> {
-  private static final long serialVersionUID = -6362859252282909862L;
+  private static final long serialVersionUID = -0x584D6AC7302164A6L;
   private final Collection<UserDefinedTipper<ForStatement>> tippers = as.list(//
       patternTipper("for (int $N0 = 0; $N0 < $N1; ++$N0)  $N2[$N0] = $N3[$N0];", "copy();", "copy"));
 

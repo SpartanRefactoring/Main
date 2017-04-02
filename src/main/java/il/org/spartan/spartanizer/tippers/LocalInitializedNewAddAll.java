@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.patterns.*;
  * @since 2017-03-02 */
 public final class LocalInitializedNewAddAll extends LocalInitialized //
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = -228096256168103399L;
+  private static final long serialVersionUID = -0x32A5C56237F0DE7L;
 
   public LocalInitializedNewAddAll() {
     andAlso("Initializer is a 'new Type(...)' expression", //

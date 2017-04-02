@@ -10,7 +10,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel <tt>raviv.rachmiel@gmail.com</tt>
  * @since 2017-04-01 */
 public abstract class NonEmptyForLoop extends ForStatementPattern {
-  private static final long serialVersionUID = -6486213170578817738L;
+  private static final long serialVersionUID = -0x5A03A88361CF82CAL;
   protected Statement lastStatement;
 
   public NonEmptyForLoop() {

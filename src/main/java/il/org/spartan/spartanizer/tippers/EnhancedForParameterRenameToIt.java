@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09 */
 public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedForStatement>//
     implements TipperCategory.Centification {
-  private static final long serialVersionUID = -3945693304397811549L;
+  private static final long serialVersionUID = -0x36C1EB27B944CF5DL;
 
   @Override public String description(final EnhancedForStatement ¢) {
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";

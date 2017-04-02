@@ -28,7 +28,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015/09/24 */
 public final class SingleVariableDeclarationAbbreviation extends EagerTipper<SingleVariableDeclaration>//
     implements TipperCategory.Abbreviation {
-  private static final long serialVersionUID = -2709826205107840171L;
+  private static final long serialVersionUID = -0x259B3C93867F64ABL;
   private static String[] shortNames = { "lst", "integer", "list" };
 
   static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {

@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
 public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnitRecord> {
-  private static final long serialVersionUID = -7244420312239137288L;
+  private static final long serialVersionUID = -0x648959E432A36208L;
 
   public void logCompilationUnit(final CompilationUnit ¢) {
     add(new CompilationUnitRecord(¢));
