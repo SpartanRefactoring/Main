@@ -16,6 +16,7 @@ public enum PreferencesResources {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the Spartanizer plug-in";
+  public static final String ZOOMER_PAGE_DESCRIPTION = "Preferences for the Zoomer tool";
   /** General preferences **/
   public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
   public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";
@@ -26,9 +27,12 @@ public enum PreferencesResources {
   };
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_ID = "Preference_enable_by_default_for_new_projects";
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
-  public static final String TIPPER_CATEGORY_PREFIX = "il.org.spartan"; // NOT
-                                                                        // SAFE
+  public static final String ZOOMER_REVERT_METHOD_ID = "ZOOMER_REVERT_METHOD";
+  public static final String ZOOMER_REVERT_METHOD_TEXT = "Compund zoom text edits";
+  // NOT SAFE
+  public static final String TIPPER_CATEGORY_PREFIX = "il.org.spartan";
   public static final Bool NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new Bool(true);
+  public static final Bool ZOOMER_REVERT_METHOD_VALUE = new Bool(false);
 
   public static String getLabel(final Class<? extends ExpanderCategory> $) {
     return system.className($);
