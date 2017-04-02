@@ -12,6 +12,7 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.text.undo.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
@@ -25,6 +26,9 @@ import il.org.spartan.utils.*;
 public class InflaterListener implements KeyListener, Listener {
   // XXX: Ori Roth why so many fields? --yg
   // GUI class, all SWT look like this. --or
+  private static final int NO_COMPUND_EDIT = 0;
+  private static final int ZOOMIN_COMPUND_EDIT = -1;
+  private static final int ZOOMOUT_COMPUND_EDIT = 1;
   private static final Function<Device, Color> INFLATE_COLOR = λ -> new Color(λ, 200, 200, 255);
   private static final Function<Device, Color> DEFLATE_COLOR = λ -> new Color(λ, 200, 255, 200);
   static final int CURSOR_IMAGE = SWT.CURSOR_CROSS;
@@ -37,6 +41,8 @@ public class InflaterListener implements KeyListener, Listener {
   final Bool working = new Bool();
   WindowInformation windowInformation;
   private final Color originalBackground;
+  private final IDocumentUndoManager undoManager;
+  private int editDirection;
 
   public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
@@ -46,6 +52,7 @@ public class InflaterListener implements KeyListener, Listener {
     activeCursor = new Cursor(display, CURSOR_IMAGE);
     inactiveCursor = text.getCursor();
     originalBackground = text.getSelectionBackground();
+    undoManager = DocumentUndoManagerRegistry.getDocumentUndoManager(Eclipse.document(editor));
   }
 
   @Override public void handleEvent(final Event ¢) {
@@ -59,16 +66,29 @@ public class InflaterListener implements KeyListener, Listener {
       return;
     windowInformation = WindowInformation.of(text);
     working.set();
-    if (c > 0)
+    if (c > 0) {
+      if (editDirection != ZOOMOUT_COMPUND_EDIT) {
+        if (editDirection != NO_COMPUND_EDIT)
+          undoManager.endCompoundChange();
+        undoManager.beginCompoundChange();
+      }
+      editDirection = ZOOMOUT_COMPUND_EDIT;
       SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
         inflate();
         working.clear();
       });
-    else if (c < 0)
+    } else if (c < 0) {
+      if (editDirection != ZOOMIN_COMPUND_EDIT) {
+        if (editDirection != NO_COMPUND_EDIT)
+          undoManager.endCompoundChange();
+        undoManager.beginCompoundChange();
+      }
+      editDirection = ZOOMIN_COMPUND_EDIT;
       SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
         deflate();
         working.clear();
       });
+    }
   }
 
   private void inflate() {
@@ -97,6 +117,7 @@ public class InflaterListener implements KeyListener, Listener {
 
   private void activate() {
     active = true;
+    editDirection = NO_COMPUND_EDIT;
     if (text.isDisposed())
       return;
     text.setCursor(activeCursor);
@@ -106,6 +127,9 @@ public class InflaterListener implements KeyListener, Listener {
   private void deactivate() {
     text.setSelectionBackground(originalBackground);
     active = false;
+    if (editDirection != NO_COMPUND_EDIT)
+      undoManager.endCompoundChange();
+    editDirection = NO_COMPUND_EDIT;
     if (text.isDisposed())
       return;
     text.setCursor(inactiveCursor);
