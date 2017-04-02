@@ -21,7 +21,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 03-12-16 */
 public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = -4185849867633961690L;
+  private static final long serialVersionUID = -0x3A172046EB702ADAL;
 
   @Override public Tip tip(final ReturnStatement x) {
     return new Tip(description(x), getClass(), x) {

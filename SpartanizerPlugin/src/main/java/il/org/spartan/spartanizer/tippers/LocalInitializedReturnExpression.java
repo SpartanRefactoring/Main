@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @since 2015-08-07 */
 public final class LocalInitializedReturnExpression extends LocalInitializedStatement //
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = 6685864331590860235L;
+  private static final long serialVersionUID = 0x5CC8F62FB4ED7DCBL;
   private ReturnStatement returnStatement;
   private Expression returnValue;
 

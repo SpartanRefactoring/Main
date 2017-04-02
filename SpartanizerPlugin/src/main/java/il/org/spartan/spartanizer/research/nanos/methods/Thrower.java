@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** Method that does nothing but throwing exception
  * @author Ori Marcovitch */
 public class Thrower extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = -7774411294835596768L;
+  private static final long serialVersionUID = -0x6BE441E1CE75DDE0L;
   private static final Collection<UserDefinedTipper<Statement>> tippers = as.list(patternTipper("throw $X;", "", ""));
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
     implements TipperCategory.Nanos {
-  private static final long serialVersionUID = -4559537421155078857L;
+  private static final long serialVersionUID = -0x3F46BB20880C92C9L;
 
   @Override public final boolean canTip(final N ¢) {
     return ¢ != null && prerequisite(¢);

@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = -774288757243201042L;
+  private static final long serialVersionUID = -0xABED385B90F4612L;
 
   private static InfixExpression replace(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);

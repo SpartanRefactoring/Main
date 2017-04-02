@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class LazyInitializer extends NanoPatternTipper<Assignment> {
-  private static final long serialVersionUID = -884964742974022736L;
+  private static final long serialVersionUID = -0xC4806BEB7B62450L;
   private static final List<UserDefinedTipper<Assignment>> tippers = as
       .list(patternTipper("$X1 = defaults($X1).to($X2)", "lazyInitialize($X1).with(()->$X2)", "lazy evaluation"));
 

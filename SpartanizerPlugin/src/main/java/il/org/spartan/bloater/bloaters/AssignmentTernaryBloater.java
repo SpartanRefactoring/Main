@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @since 23-12-16 */
 public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = -9043350929840336722L;
+  private static final long serialVersionUID = -0x7D806FC1C854EF52L;
 
   @Override public Examples examples() {
     return //

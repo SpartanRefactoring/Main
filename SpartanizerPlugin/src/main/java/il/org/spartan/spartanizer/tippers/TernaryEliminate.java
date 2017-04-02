@@ -28,7 +28,7 @@ public final class TernaryEliminate extends AbstractPattern<ConditionalExpressio
     );
   }
 
-  private static final long serialVersionUID = -6778845891475220340L;
+  private static final long serialVersionUID = -0x5E134C6C247F2774L;
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate conditional exprssion with identical branches";

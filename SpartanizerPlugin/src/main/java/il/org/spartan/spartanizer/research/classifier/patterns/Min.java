@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class Min extends NanoPatternTipper<ForStatement> {
-  private static final long serialVersionUID = -4493640368930874861L;
+  private static final long serialVersionUID = -0x3E5C9E1B727AE5EDL;
   final Collection<UserDefinedTipper<ForStatement>> tippers = as
       .list(patternTipper("for (int $N0 = 1; $N0 < $N1.$N2; ++$N0)  if ($N1[$N0] < $N3)   $N3 = $N1[$N0];", "min();", "min"));
 

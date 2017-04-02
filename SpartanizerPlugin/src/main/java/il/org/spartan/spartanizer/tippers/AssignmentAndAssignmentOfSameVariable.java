@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @see issue #1110 */
 public class AssignmentAndAssignmentOfSameVariable extends GoToNextStatement<Assignment> //
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -2175075259560385549L;
+  private static final long serialVersionUID = -0x1E2F6B6CADD65C0DL;
 
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return description();

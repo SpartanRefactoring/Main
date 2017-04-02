@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
 /** Method Creating new object and returning it
  * @author Ori Marcovitch */
 public class FactoryMethod extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = -2789090530674070291L;
+  private static final long serialVersionUID = -0x26B4D70F773BD313L;
   private static final lazy<Collection<UserDefinedTipper<Statement>>> tippers = lazy.get(() -> as.list(//
       patternTipper("return new $T();", "", ""), //
       patternTipper("return new $T[$X];", "", ""), //

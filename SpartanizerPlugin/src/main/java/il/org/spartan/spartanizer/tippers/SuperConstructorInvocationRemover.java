@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-08-26 */
 public final class SuperConstructorInvocationRemover extends CarefulTipper<SuperConstructorInvocation>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = -2515749220517264334L;
+  private static final long serialVersionUID = -0x22E9BC9648E5BBCEL;
 
   @Override public String description(@SuppressWarnings("unused") final SuperConstructorInvocation __) {
     return "Remove vacuous 'super()' invocation";

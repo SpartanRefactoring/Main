@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-01 */
 public class Exhaust extends NanoPatternTipper<WhileStatement> {
-  private static final long serialVersionUID = -4404219080361481179L;
+  private static final long serialVersionUID = -0x3D1EEDEB45F193DBL;
   private static final Collection<UserDefinedTipper<WhileStatement>> tippers = as.list( //
       patternTipper("while ($X) {}", "exhaust(()->$X);", "Exhaust pattern: conevrt to fluent API")) //
   ;

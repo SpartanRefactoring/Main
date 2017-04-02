@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {
-  private static final long serialVersionUID = -9215176071220857924L;
+  private static final long serialVersionUID = -0x7FE2E1D00BCC8C44L;
 
   @Override public String description(final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
