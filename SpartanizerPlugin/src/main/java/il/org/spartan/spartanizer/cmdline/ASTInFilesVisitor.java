@@ -209,7 +209,7 @@ public class ASTInFilesVisitor {
             }
 
             @Override public boolean ok(final ExpressionStatement ¢) {
-              return compute.usedNames(¢.getExpression()).size() == 1;
+              return compute.useSpots(¢.getExpression()).size() == 1;
             }
           });
         }
