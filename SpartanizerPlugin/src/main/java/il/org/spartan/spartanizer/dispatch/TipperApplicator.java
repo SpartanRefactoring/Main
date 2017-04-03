@@ -30,14 +30,18 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     // w.technicalName();
   }
 
-  @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, @SuppressWarnings("unused") final Int __) {
+  @Override protected int consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    Int $ = new Int ();
     u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
-        if (¢.getClass() == clazz || tipper.check(¢) || inRange(m, ¢))
-          tipper.tip(¢).go(r, null);
+        if (¢.getClass() != clazz && !tipper.check(¢) && !inRange(m, ¢))
+          return;
+        tipper.tip(¢).go(r, null);
+        $.step();
       }
     });
+    return $.get();
   }
 
   @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {

@@ -27,12 +27,8 @@ public class OutlineTernaryMethodInvocation2 extends MethodInvocationAbstarctPat
   private static final long serialVersionUID = 6072619590329942433L;
 
   public OutlineTernaryMethodInvocation2() {
-    andAlso("Parnt is not a Lambda Expression", () -> {
-      return !iz.lambdaExpression(current.getParent());
-    });
-    andAlso("There is at least one argument argument", () -> {
-      return !arguments.isEmpty();
-    });
+    andAlso("Parnt is not a Lambda Expression", () -> !iz.lambdaExpression(current.getParent()));
+    andAlso("There is at least one argument argument", () -> !arguments.isEmpty());
   }
 
   @Override public Examples examples() {

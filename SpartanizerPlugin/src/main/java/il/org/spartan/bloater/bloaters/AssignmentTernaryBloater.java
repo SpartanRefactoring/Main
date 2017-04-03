@@ -1,6 +1,7 @@
 package il.org.spartan.bloater.bloaters;
 
 import static il.org.spartan.spartanizer.ast.factory.subject.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
@@ -8,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
