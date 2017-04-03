@@ -128,7 +128,7 @@ public class Eclipse {
   }
 
   /** @return document for editor */
-  public static IDocument document(final ITextEditor e) {
-    return e.getDocumentProvider().getDocument(e.getEditorInput());
+  public static IDocument document(final ITextEditor ¢) {
+    return ¢.getDocumentProvider().getDocument(¢.getEditorInput());
   }
 }

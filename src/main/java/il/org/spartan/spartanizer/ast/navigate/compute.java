@@ -46,8 +46,8 @@ public enum compute {
     }.map(x);
   }
 
-  public static List<ASTNode> updateSpots(final ASTNode... ns) {
-    return Stream.of(ns).map(compute::updateSpots).flatMap(List<ASTNode>::stream).collect(toList());
+  public static List<ASTNode> updateSpots(final ASTNode... ¢) {
+    return Stream.of(¢).map(compute::updateSpots).flatMap(List<ASTNode>::stream).collect(toList());
   }
 
   public static List<ASTNode> updateSpots(final ASTNode x) {

@@ -118,17 +118,12 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** creates an ASTRewrite which contains the changes
-   * @param counter
    * @param u the Compilation Unit (outermost ASTNode in the Java Grammar)
    * @param m a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  private ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
-    return rewriterOf(¢, null, counter);
-  }
-
-  public final ASTRewrite createRewrite(final CompilationUnit ¢) {
-    return rewriterOf(¢, null, new Int());
+  public ASTRewrite createRewrite(final CompilationUnit ¢) {
+    return rewriterOf(¢, null);
   }
 
   public boolean follow() throws CoreException {
@@ -233,7 +228,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     textChange.setTextType("java");
     final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
     final Int $ = new Int();
-    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), $).rewriteAST());
+    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m)).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
     progressMonitor.done();
@@ -265,17 +260,17 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     textChange.setTextType("java");
     final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
     final Int $ = new Int();
-    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
+    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m)).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
     progressMonitor.done();
     return $.get();
   }
 
-  private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
+  private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    consolidateTips($, u, m, counter);
+    consolidateTips($, u, m);
     progressMonitor.done();
     return $;
   }
@@ -316,11 +311,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return name;
   }
 
-  protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m, Int counter);
+  protected abstract int consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m);
 
-  public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    consolidateTips(r, u, m, new Int());
-  }
 
   /** Determines if the node is outside of the selected text.
    * @return whether the node is not inside selection. If there is no selection
@@ -348,7 +340,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     textChange.setTextType("java");
     final CompilationUnit cu = (CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m);
     final Int $ = new Int();
-    textChange.setEdit(createRewrite(cu, $).rewriteAST());
+    textChange.setEdit(createRewrite(cu).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
     totalChanges += collectSuggestions(cu).size();
@@ -409,7 +401,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
   private ASTRewrite createRewrite(final IMarker ¢) {
-    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢);
   }
 
   private Collection<ICompilationUnit> getUnits() throws JavaModelException {
@@ -456,7 +448,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     final Int $ = new Int();
     final WrappedCompilationUnit u1 = u.build();
     final CompilationUnit u2 = u1.compilationUnit;
-    final ASTRewrite r = createRewrite(u2, $);
+    final ASTRewrite r = createRewrite(u2);
     try {
       textChange.setEdit(r.rewriteAST());
     } catch (final AssertionError x) {
@@ -493,7 +485,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
       final Int $ = new Int();
-      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
+      textChange.setEdit(createRewrite(u.build().compilationUnit).rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);
       if (s != null)

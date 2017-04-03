@@ -22,9 +22,7 @@ public class IfElseBlockBloater2 extends IfAbstractPattern implements TipperCate
   private static final long serialVersionUID = 3585427879204988685L;
 
   public IfElseBlockBloater2() {
-    andAlso("At least the if or the elze are not in a block", () -> {
-      return !iz.block(current.getThenStatement()) || !iz.block(current.getElseStatement());
-    });
+    andAlso("At least the if or the elze are not in a block", () -> !iz.block(current.getThenStatement()) || !iz.block(current.getElseStatement()));
   }
 
   @Override public Examples examples() {

@@ -103,13 +103,14 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
         inputDir = args[¢ + 1];
         // System.out.println("InputDir: " + inputDir);
         ¢ += 2;
-      } else if ("-d".equals(args[¢])) {
-        inputDir = ".";
-        outputDir = folder;
-        ¢ += 1;
       } else {
-        System.out.println(args[¢]);
-        System.out.println("[ERROR]: Something went wrong!");
+        if ("-d".equals(args[¢])) {
+          inputDir = ".";
+          outputDir = folder;
+        } else {
+          System.out.println(args[¢]);
+          System.out.println("[ERROR]: Something went wrong!");
+        }
         ++¢;
       }
   }
