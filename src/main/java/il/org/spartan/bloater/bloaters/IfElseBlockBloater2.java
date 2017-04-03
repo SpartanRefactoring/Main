@@ -19,7 +19,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2016-12-27 */
 public class IfElseBlockBloater2 extends IfAbstractPattern implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 3585427879204988685L;
+  private static final long serialVersionUID = 0x31C1FFA8E3CBA70DL;
 
   public IfElseBlockBloater2() {
     andAlso("At least the if or the elze are not in a block", () -> !iz.block(current.getThenStatement()) || !iz.block(current.getElseStatement()));
