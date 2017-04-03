@@ -10,6 +10,7 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -549,10 +550,7 @@ public enum extract {
    * @param s statement to search for
    * @return index of s in l, or -1 if not contained */
   private static int indexOf(final List<Statement> ss, final Statement s) {
-    for (int $ = 0; $ < ss.size(); ++$)
-      if (wizard.eq(s, ss.get($)))
-        return $;
-    return -1;
+    return IntStream.range(0, ss.size()).filter(λ -> wizard.eq(s, ss.get(λ))).findFirst().orElse(-1);
   }
 
   @SuppressWarnings("boxing") private static Statement next(final Statement s, final List<Statement> ss) {

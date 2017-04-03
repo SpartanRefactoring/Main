@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 import java.util.stream.*;
@@ -14,14 +15,14 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-04-01 */
 public enum compute {
   ;
   public static List<String> useSpots(final Expression x) {
     return new ASTMapReducer<List<String>>() {
       @Override public List<String> reduce() {
-        return empty.list(); 
+        return empty.list();
       }
 
       @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {

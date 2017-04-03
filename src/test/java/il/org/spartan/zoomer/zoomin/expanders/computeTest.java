@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** Unit tests for {@link compute}
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-04-01 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
@@ -34,7 +34,7 @@ public class computeTest extends MetaFixture {
     final List<ASTNode> updateSpots = compute.updateSpots(into.s("return local +=2;"));
     azzert.that(updateSpots.size(), is(1));
     azzert.that(lisp.onlyOne(updateSpots) + "", is("local"));
-    assert !updateSpots.stream().noneMatch(λ -> wizard.eq(λ, lisp.onlyOne(updateSpots).getAST().newSimpleName("local")));
+    assert updateSpots.stream().anyMatch(λ -> wizard.eq(λ, lisp.onlyOne(updateSpots).getAST().newSimpleName("local")));
   }
 
   @Test public void a() {
