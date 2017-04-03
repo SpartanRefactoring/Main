@@ -37,7 +37,7 @@ public final class LocalInitializedReturnExpression extends LocalInitializedStat
         ).or(//
             "Initializer has no side effects", () -> sideEffects.free(initializer)//
         ));
-    andAlso("Returned expression does not modify local variable", //
+    andAlso("Returned expression does not modify our local", //
         () -> compute.updateSpots(returnValue).stream().noneMatch(λ -> wizard.eq(λ, name)));
   }
 

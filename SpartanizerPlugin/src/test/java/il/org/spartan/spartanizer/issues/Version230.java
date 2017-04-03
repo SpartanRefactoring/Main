@@ -884,7 +884,7 @@ public final class Version230 {
 
   @Test public void localUpdateReturnNone() {
     trimmingOf("int a=f();return a +=2 * a;")//
-        .stays();
+       .stays();
   }
 
   @Test public void localUpdateReturnTwice() {
@@ -1127,7 +1127,6 @@ public final class Version230 {
   @Test public void ifSequencerNoElseSequencer05a() {
     trimmingOf("for(;;){ if(a){x();return;} continue;a=3;}")//
         .gives("for(;;){ if(a){x();return;} continue;}")//
-        .gives("for(;;)if(a){x();return;} ")//
         .stays();
   }
 
