@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * @since 2017-04-01 */
 public enum compute {
   ;
-  public static List<String> usedNames(final Expression x) {
+  public static List<String> useSpots(final Expression x) {
     return new ASTMapReducer<List<String>>() {
       @Override public List<String> reduce() {
         return empty.list(); 
