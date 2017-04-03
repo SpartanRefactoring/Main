@@ -43,8 +43,6 @@ public class Version300 {
         .gives("return 1>0;");
   }
 
-
-
   @FunctionalInterface
   interface Find {
     //@formatter:off
@@ -398,7 +396,7 @@ public class Version300 {
         .gives("int a(int b){for(;b<100;b+=1){}return b;}");
   }
 
-  @UnderConstruction("") private Block kill(final Expression ¢) {
+  @UnderConstruction private Block kill(final Expression ¢) {
     final Block $ = ¢.getAST().newBlock();
     statements($).addAll(wizard.decompose(¢));
     return $;

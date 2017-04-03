@@ -49,10 +49,7 @@ public class RenameConstructorParameters extends EagerTipper<MethodDeclaration> 
   }
 
   private static boolean alreadyDefined(final SimpleName to1, final MethodDeclaration d) {
-    for (final SingleVariableDeclaration ¢ : step.parameters(d))
-      if (¢.getName().getIdentifier().equals(to1.getIdentifier()))
-        return true;
-    return false;
+    return step.parameters(d).stream().anyMatch(λ -> λ.getName().getIdentifier().equals(to1.getIdentifier()));
   }
 
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
