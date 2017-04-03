@@ -9,7 +9,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for the GitHub issue thus numbered.
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil 
  * @since 2017-04-03 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
