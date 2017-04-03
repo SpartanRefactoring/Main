@@ -76,7 +76,8 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 
-  @Override public void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m, @NotNull final Int i) {
+  @Override public int consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m) {
+    final Int $ = new Int();
     @Nullable final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
     @NotNull final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
@@ -105,7 +106,7 @@ public class Trimmer extends AbstractGUIApplicator {
         }
         if (s == null)
           return true;
-        i.step();
+        $.step();
         TrimmerLog.application(r, s);
         return true;
       }
@@ -114,6 +115,7 @@ public class Trimmer extends AbstractGUIApplicator {
         disabling.scan(¢);
       }
     });
+    return $.get();
   }
 
   public String fixed(final String from) {
