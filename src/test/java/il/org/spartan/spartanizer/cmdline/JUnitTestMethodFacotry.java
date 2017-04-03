@@ -29,6 +29,7 @@ public enum JUnitTestMethodFacotry {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
+
   public static String unWrapedTestCase(final String raw) {
     return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
@@ -126,6 +127,7 @@ public enum JUnitTestMethodFacotry {
       System.out.println("thrice: " + theSpartanizer.thrice(s));
       System.out.println("fixed: " + theSpartanizer.repetitively(s));
       System.out.println(JUnitTestMethodFacotry.from(namer.signature(s), s));
+      System.out.println(JUnitTestMethodFacotry.makeTipperUnitTest(s));
     }
   }
 
