@@ -21,8 +21,8 @@ import il.org.spartan.spartanizer.meta.*;
 public class computeTest extends MetaFixture {
   @Test public void updatedSpots() {
     compute.updateSpots(into.s("return a *=2"));
-    azzert.that(compute.updateSpots(into.s("return a *=2")).size(), is(1));
     azzert.that(compute.updateSpots(into.s("return a =2")).size(), is(1));
+    azzert.that(compute.updateSpots(into.s("return a *=2")).size(), is(1));
     final List<ASTNode> updateSpots = compute.updateSpots(into.s("return local +=2"));
     azzert.that(updateSpots.size(), is(1));
     azzert.that(lisp.onlyOne(updateSpots) + "", is("local"));
