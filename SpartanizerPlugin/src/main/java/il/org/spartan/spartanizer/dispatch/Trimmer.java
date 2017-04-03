@@ -142,7 +142,7 @@ public class Trimmer extends AbstractGUIApplicator {
   public TextEdit once(@NotNull final IDocument $) throws AssertionError {
     final TextEdit e;
     try {
-      e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+      e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get()), new Int()).rewriteAST($, null);
       e.apply($);
     } catch (@NotNull final NullPointerException | MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       if (!silent)
