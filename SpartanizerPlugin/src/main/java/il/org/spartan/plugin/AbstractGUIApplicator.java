@@ -125,7 +125,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   public ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
     return rewriterOf(¢, null, counter);
   }
-  
+
   public ASTRewrite createRewrite(final CompilationUnit ¢) {
     return rewriterOf(¢, null, new Int());
   }

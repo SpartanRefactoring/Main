@@ -101,7 +101,6 @@ public final class FixedPointTest {
     assertConvertsTo("String tipper = Z2;  tipper = tipper.f(A).f(b) + tipper.f(c); return (tipper + 3); ", "return(Z2.f(A).f(b)+Z2.f(c)+3);");
   }
 
-
   @Test public void shortestIfBranchFirst02() {
     trimmingOf(
         "void foo() {if (!s.equals(0xDEAD)) {int $=0; for (int i=0;i<s.length();++i) if (s.charAt(i)=='a') $ += 2; else if (s.charAt(i)=='d') $ -= 1; return $;} else {return 8;}}")

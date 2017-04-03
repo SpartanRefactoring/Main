@@ -1272,7 +1272,6 @@ public final class Version230 {
     trimmingOf("public int y(){ final Z u=new Z(6);S.h(u.j);return u;} ").gives("public int y(){ final Z $=new Z(6);S.h($.j);return $;} ");
   }
 
-
   @Test public void inlineInitializers() {
     trimmingOf("int b,a=2;return 3 * a * b;")//
         .gives("return 3*2*b;");
@@ -1282,8 +1281,6 @@ public final class Version230 {
     trimmingOf("int b=4,a=2;return 3 * a * b;")//
         .gives("int a=2;return 3*a*4;");
   }
-
-
 
   /** START OF STABLING TESTS */
   @Test public void inlineintoInstanceCreation() {
@@ -3010,7 +3007,6 @@ public final class Version230 {
     trimmingOf("int h,u,m,a,n;return b==true && n + a> m - u || h> u;")//
         .gives("int h,u,m,a,n;return b&&a+n>m-u||h>u;");
   }
-
 
   /** Introduced by Yogi on Sat-Apr-01-16:37:37-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */

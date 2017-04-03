@@ -297,7 +297,7 @@ public interface wizard {
    * @return correspond operator - ¢.¢. "<=" will become ">", "+" will stay
    *         "+". */
   static InfixExpression.Operator conjugate(final InfixExpression.Operator ¢) {
-    return !wizard.conjugate.containsKey(¢) ? ¢ : wizard.conjugate.get(¢);
+    return wizard.conjugate.getOrDefault(¢, ¢);
   }
 
   /** @param ns unknown number of nodes to check
