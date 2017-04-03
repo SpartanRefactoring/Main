@@ -78,21 +78,21 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
     return src.stream().map(SwitchWithOneCaseToIf::cleanBreaks).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
   }
 
-  private static Statement cleanBreaks(final Statement s) {
-    if (s == null)
+  private static Statement cleanBreaks(final Statement ¢) {
+    if (¢ == null)
       return null;
-    switch (s.getNodeType()) {
+    switch (¢.getNodeType()) {
       case BREAK_STATEMENT:
-        return s.getAST().newEmptyStatement();
+        return ¢.getAST().newEmptyStatement();
       case BLOCK:
-        return subject.ss(statements(az.block(s)).stream().map(SwitchWithOneCaseToIf::cleanBreaks).collect(Collectors.toList())).toBlock();
+        return subject.ss(statements(az.block(¢)).stream().map(SwitchWithOneCaseToIf::cleanBreaks).collect(Collectors.toList())).toBlock();
       case IF_STATEMENT:
-        final IfStatement $ = copy.of(az.ifStatement(s));
+        final IfStatement $ = copy.of(az.ifStatement(¢));
         $.setThenStatement(cleanBreaks(then($)));
         $.setElseStatement(cleanBreaks(elze($)));
         return $;
       default:
-        return copy.of(s);
+        return copy.of(¢);
     }
   }
 }
