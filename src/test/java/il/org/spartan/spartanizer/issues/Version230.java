@@ -1272,21 +1272,6 @@ public final class Version230 {
     trimmingOf("public int y(){ final Z u=new Z(6);S.h(u.j);return u;} ").gives("public int y(){ final Z $=new Z(6);S.h($.j);return $;} ");
   }
 
-  @Test public void inlineArrayInitialization2() {
-    trimmingOf("public double[] solve(){ " //
-        + " final SimpleRegression regress=new SimpleRegression(true); " //
-        + " for(double[] dxx : points) " //
-        + " regress.addData(d[0], d[1]); " //
-        + " final double[] $={ regress.getSlope(), regress.getIntercept()}; " //
-        + " return $; " //
-        + "}")
-            .gives("public double[] solve(){ " //
-                + " final SimpleRegression regress=new SimpleRegression(true); " //
-                + " for(double[] dxx : points) " //
-                + " regress.addData(d[0], d[1]); " //
-                + " return new double[] { regress.getSlope(), regress.getIntercept()}; " //
-                + "}");
-  }
 
   @Test public void inlineInitializers() {
     trimmingOf("int b,a=2;return 3 * a * b;")//
@@ -1298,14 +1283,7 @@ public final class Version230 {
         .gives("int a=2;return 3*a*4;");
   }
 
-  @Test public void inlineInitializersSecondStep() {
-    trimmingOf("int a=2;return 3*a*4;")//
-        .gives("return 3 * 2 * 4;");
-  }
 
-  int f() {
-    return 24;
-  }
 
   /** START OF STABLING TESTS */
   @Test public void inlineintoInstanceCreation() {
@@ -3033,10 +3011,6 @@ public final class Version230 {
         .gives("int h,u,m,a,n;return b&&a+n>m-u||h>u;");
   }
 
-  @Test public void inliningIntoReturn() {
-    trimmingOf("int k=15;return 7<k;")//
-        .gives("return 7<15;");
-  }
 
   /** Introduced by Yogi on Sat-Apr-01-16:37:37-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
