@@ -51,7 +51,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
   }
 
   protected ASTNode range() {
-    return current; 
+    return current;
   }
 
   protected AbstractPattern<N> andAlso(final String description, final BooleanSupplier s) {

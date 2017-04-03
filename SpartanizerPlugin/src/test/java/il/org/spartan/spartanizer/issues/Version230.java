@@ -884,7 +884,7 @@ public final class Version230 {
 
   @Test public void localUpdateReturnNone() {
     trimmingOf("int a=f();return a +=2 * a;")//
-       .stays();
+        .stays();
   }
 
   @Test public void localUpdateReturnTwice() {
