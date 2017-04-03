@@ -122,21 +122,33 @@ public final class SingleFlater {
     return true;
   }
 
-  /** @param wcu - the WrappedCompilationUnit which is worked on */
+  /** @param compoundEditing
+   * @param wcu - the WrappedCompilationUnit which is worked on */
   public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final StyledText t,
-      final ITextEditor e, final WindowInformation i) {
+      final ITextEditor e, final WindowInformation i, final boolean compoundEditing) {
     boolean $ = false;
-    try {
-      final TextFileChange textChange = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
-      textChange.setTextType("java");
-      if (f.go(r, null)) {
-        textChange.setEdit(r.rewriteAST());
-        if (textChange.getEdit().getLength() != 0)
-          $ = changeNFocus(e, t, textChange, i);
+    if (compoundEditing)
+      try {
+        if (f.go(r, null)) {
+          final TextEdit te = r.rewriteAST();
+          if (te != null && te.getLength() > 0)
+            $ = changeNFocus(e, t, te, i);
+        }
+      } catch (final CoreException | BadLocationException ¢) {
+        monitor.log(¢);
       }
-    } catch (final CoreException ¢) {
-      monitor.log(¢);
-    }
+    else
+      try {
+        final TextFileChange tfc = new TextFileChange(u.descriptor.getElementName(), (IFile) u.descriptor.getResource());
+        tfc.setTextType("java");
+        if (f.go(r, null)) {
+          tfc.setEdit(r.rewriteAST());
+          if (tfc.getEdit().getLength() != 0)
+            $ = changeNFocus(e, t, tfc, i);
+        }
+      } catch (final CoreException ¢) {
+        monitor.log(¢);
+      }
     u.dispose();
     return $;
   }
@@ -158,14 +170,27 @@ public final class SingleFlater {
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
 
-  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextFileChange tc, final WindowInformation i)
-      throws CoreException {
+  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextEdit te, final WindowInformation i)
+      throws MalformedTreeException, BadLocationException {
     if (i == null || t == null || e == null) {
-      tc.perform(new NullProgressMonitor());
+      te.apply(Eclipse.document(e));
       return true;
     }
-    tc.perform(new NullProgressMonitor());
-    e.getSelectionProvider().setSelection(new TextSelection(tc.getEdit().getOffset(), tc.getEdit().getLength()));
+    te.apply(Eclipse.document(e));
+    e.getSelectionProvider().setSelection(new TextSelection(te.getOffset(), te.getLength()));
+    if (!i.invalid())
+      t.setTopIndex(i.startLine);
+    return false;
+  }
+
+  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextFileChange c, final WindowInformation i)
+      throws CoreException {
+    if (i == null || t == null || e == null) {
+      c.perform(new NullProgressMonitor());
+      return true;
+    }
+    c.perform(new NullProgressMonitor());
+    e.getSelectionProvider().setSelection(new TextSelection(c.getEdit().getOffset(), c.getEdit().getLength()));
     if (!i.invalid())
       t.setTopIndex(i.startLine);
     return false;

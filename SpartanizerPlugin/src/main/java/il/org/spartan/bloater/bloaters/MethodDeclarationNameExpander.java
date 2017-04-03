@@ -31,7 +31,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 // TODO Raviv Rachmiel take care of single var declaration, tests
 public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = -3829131163900046060L;
+  private static final long serialVersionUID = -0x3523CE8186A3EAECL;
 
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";

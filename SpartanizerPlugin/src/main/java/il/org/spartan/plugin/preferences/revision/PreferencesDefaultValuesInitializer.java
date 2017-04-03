@@ -14,5 +14,6 @@ import org.eclipse.core.runtime.preferences.*;
 public final class PreferencesDefaultValuesInitializer extends AbstractPreferenceInitializer {
   @Override public void initializeDefaultPreferences() {
     store().setDefault(PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
+    store().setDefault(PreferencesResources.ZOOMER_REVERT_METHOD_ID, false);
   }
 }

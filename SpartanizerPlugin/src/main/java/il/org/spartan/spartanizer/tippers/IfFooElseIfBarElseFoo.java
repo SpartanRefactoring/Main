@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-26 */
 public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = -8897742439908596829L;
+  private static final long serialVersionUID = -0x7B7B219B59AB5C5DL;
 
   public IfFooElseIfBarElseFoo() {
     andAlso("if and final else must be the same", () -> wizard.eq(then, elzeElze));

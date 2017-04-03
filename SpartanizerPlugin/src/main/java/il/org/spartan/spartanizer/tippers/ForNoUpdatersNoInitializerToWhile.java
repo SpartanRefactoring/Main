@@ -12,7 +12,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-24 */
 public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = -8750113331278505320L;
+  private static final long serialVersionUID = -0x796EA5B6F743E568L;
   Expression condition;
 
   @Override public String description() {

@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch */
 public class Cascading {
   public static class FluentSetter extends JavadocMarkerNanoPattern {
-    private static final long serialVersionUID = -2893413461939243057L;
+    private static final long serialVersionUID = -0x28277836B338C831L;
 
     @Override protected boolean prerequisites(final MethodDeclaration ¢) {
       return hazAtLeastTwoStatements(¢)//

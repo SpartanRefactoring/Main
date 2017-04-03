@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
 public abstract class SingleVariableDeclarationUninitialized extends AbstractPattern<SingleVariableDeclaration> {
-  private static final long serialVersionUID = -6714605477414039462L;
+  private static final long serialVersionUID = -0x5D2F121B3027EFA6L;
   protected Expression initializer;
   protected SimpleName name;
   protected Type type;

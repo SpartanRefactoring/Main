@@ -5,101 +5,92 @@ import static il.org.spartan.lisp.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.InfixExpression.*;
+import org.eclipse.jdt.core.dom.PrefixExpression.*;
+
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 
 /** convert {@code switch (x) { case a: (commands) break; default: (other
  * commands) } } into {@code if(x == a) { (commands) } else { (other commands) }
  * } . Tested in {@link Issue0916}
  * @author Yuval Simon
  * @since 2016-12-18 */
-public class SwitchWithOneCaseToIf extends ReplaceCurrentNode<SwitchStatement>//
+public class SwitchWithOneCaseToIf extends SwitchZtatement//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x513C764E326D1A98L;
-
+  
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }
-
-  // TODO Yuval Simon: this is one of the worst bits of code I have seen.
-  // Simplify it massively. I suspect it is buggy. I do not trust any Switcht
-  // transformation --yg
-  @Override public ASTNode replacement(final SwitchStatement s) {
-    final List<switchBranch> bs = switchBranch.intoBranches(s);
-    if (bs.size() != 2)
-      return null;
-    final switchBranch first = first(bs);
-    if (iz.stringLiteral(expression(first((!first.hasDefault() ? first : last(bs)).cases))))
-      return null;
-    final switchBranch last = last(bs);
-    if (!first.hasDefault() && !last.hasDefault() || first.hasFallThrough() || last.hasFallThrough() || !first.hasStatements()
-        || !last.hasStatements() || haz.sideEffects(expression(s)) && (first.hasDefault() ? last : first).cases.size() > 1)
-      return null;
-    final AST a = s.getAST();
-    final Block b1 = a.newBlock(), b2 = a.newBlock();
-    final switchBranch switchBranch = first.hasDefault() ? first : last(bs);
-    statements(b2).addAll(removeBreakSequencer(switchBranch.statements));
-    final il.org.spartan.spartanizer.ast.navigate.switchBranch branch = !first.hasDefault() ? first : last(bs);
-    statements(b1).addAll(removeBreakSequencer(branch.statements));
-    final Block $ = a.newBlock();
-    statements($).add(subject.pair(b1, b2).toIf(makeFrom(s, branch.cases)));
-    return $;
+  
+  public SwitchWithOneCaseToIf() {
+    andAlso(Proposition.that("Exactly 2 cases", () -> (cases.size() == 2)));
+    andAlso(Proposition.that("Has default case", () -> (first(cases).isDefault() || last(cases).isDefault())));
+    andAlso(Proposition.that("Different branches", () -> {
+      boolean foundSeq = false;
+      int count = 0;
+      for(Statement ¢ : statements) {
+        if(iz.sequencerComplex(¢))
+          foundSeq = true;
+        if(iz.switchCase(¢) && (++count) == 2 && !foundSeq)
+          return false;
+      }
+      return true;
+    }));
   }
-
-  private List<Statement> statements;
-
-  public boolean hasFallThrough() {
-    return statements.stream().anyMatch(iz::switchCase);
-  }
-
-  public static Statement removeBreakSequencer(final Statement s) {
-    if (s == null)
-      return null;
-    if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
-      return copy.of(s);
-    final AST a = s.getAST();
-    Statement $ = null;
-    if (iz.ifStatement(s)) {
-      final IfStatement t = az.ifStatement(s);
-      $ = subject.pair(removeBreakSequencer(step.then(t)), removeBreakSequencer(step.elze(t))).toIf(copy.of(step.expression(t)));
-    } else if (!iz.block(s)) {
-      if (iz.breakStatement(s) && iz.block(s.getParent()))
-        $ = a.newEmptyStatement();
-    } else {
-      final Block b = subject.ss(removeBreakSequencer(statements(az.block(s)))).toBlock();
-      statements(b).addAll(removeBreakSequencer(statements(az.block(s))));
-      $ = b;
+  
+  @Override protected ASTRewrite go(ASTRewrite $, TextEditGroup g) {
+    boolean firstDefault = first(cases()).isDefault();
+    SwitchCase thenCase = firstDefault ? last(cases()) : first(cases());
+    List<Statement> l1 = removeBreaks(statements.subList(1, statements.indexOf(last(cases())))),
+        l2 = removeBreaks(statements.subList(statements.indexOf(last(cases())) + 1, statements.size()));
+    if(firstDefault) {
+      List<Statement> tmp = l1;
+      l1 = l2;
+      l2 = tmp;
     }
+    if(l1.isEmpty() && l2.isEmpty()) {
+      $.remove(current, g);
+      return $;
+    }
+    $.replace(current, l1.isEmpty()
+        ? subject.pair(subject.ss(l2).toBlock(), null)
+            .toIf(subject.operand(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)).to(Operator.NOT))
+        : subject.pair(subject.ss(l1).toBlock(), l2.isEmpty() ? null : subject.ss(l2).toBlock())
+            .toIf(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)), g); 
     return $;
   }
-
-  public static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
-    final List<Statement> $ = new ArrayList<>();
-    for (final Statement ¢ : ss) {
-      final Statement s = removeBreakSequencer(¢);
-      if (s != null)
-        $.add(s);
-    }
-    return $;
+  
+  private static List<Statement> removeBreaks(List<Statement>  src) {
+    return src.stream().map(λ->cleanBreaks(λ)).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
   }
-
-  private static InfixExpression makeFrom(final SwitchStatement s, final Iterable<SwitchCase> cs) {
-    InfixExpression $ = null;
-    for (final SwitchCase c : cs) {
-      if (c.isDefault())
-        continue;
-      final InfixExpression n = subject.pair(expression(s), expression(c)).to(Operator.EQUALS);
-      $ = $ == null ? n : subject.pair($, n).to(Operator.CONDITIONAL_OR);
+  
+  private static Statement cleanBreaks(Statement s) {
+    if(s == null)
+      return null;
+    switch (s.getNodeType()) {
+      case BREAK_STATEMENT:
+        return s.getAST().newEmptyStatement();
+      case BLOCK:
+        return subject.ss(statements(az.block(s)).stream().map(λ -> cleanBreaks(λ)).collect(Collectors.toList())).toBlock();
+      case IF_STATEMENT:
+        IfStatement $ = copy.of(az.ifStatement(s));
+        $.setThenStatement(cleanBreaks(then($)));
+        $.setElseStatement(cleanBreaks(elze($)));
+        return $;
+      default:
+        return copy.of(s);
     }
-    return $;
   }
 }

@@ -1,17 +1,23 @@
 package il.org.spartan.plugin;
 
+import static java.util.stream.Collectors.*;
+
 import java.lang.reflect.*;
 import java.text.*;
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jface.dialogs.*;
+import org.eclipse.jface.text.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
+import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.utils.*;
 
@@ -102,5 +108,27 @@ public class Eclipse {
           }
         });
       }
+  }
+
+  /** @return current {@link IWorkbenchPage} */
+  public static IWorkbenchPage getPage() {
+    final IWorkbench w = PlatformUI.getWorkbench();
+    if (w == null)
+      return null;
+    final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
+    return $ == null ? null : $.getActivePage();
+  }
+
+  /** @return opened text editors */
+  public static Iterable<ITextEditor> openedTextEditors() {
+    final IWorkbenchPage $ = getPage();
+    return $ == null ? new ArrayList<>()
+        : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
+            .collect(toList());
+  }
+
+  /** @return document for editor */
+  public static IDocument document(final ITextEditor e) {
+    return e.getDocumentProvider().getDocument(e.getEditorInput());
   }
 }

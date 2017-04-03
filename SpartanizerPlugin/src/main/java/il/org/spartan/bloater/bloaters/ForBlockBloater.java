@@ -21,7 +21,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Dor Ma'ayan
  * @since 22-12-16 */
 public class ForBlockBloater extends ForStatementPattern implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 1308487951289425805L;
+  private static final long serialVersionUID = 0x1228AEDBE97C1F8DL;
 
   @Override public Examples examples() {
     return convert("for(int i=0;i<5;++i) continue;").to("for(int i=0;i<5;++i) { continue; }");

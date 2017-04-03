@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-03-22 */
 public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpression> //
     implements TipperCategory.NOP {
-  private static final long serialVersionUID = -4282740939895750794L;
+  private static final long serialVersionUID = -0x3B6F5A31A382408AL;
 
   @Override public ASTNode replacement(final InfixExpression x) {
     final List<Expression> es = hop.operands(x);
