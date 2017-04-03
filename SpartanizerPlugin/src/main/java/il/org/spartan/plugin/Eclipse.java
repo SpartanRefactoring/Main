@@ -96,7 +96,7 @@ public class Eclipse {
       else {
         final ProgressMonitorDialog d = Dialogs.progress(true);
         d.run(true, true, m -> {
-          SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
+          runAsynchronouslyInUIThread(() -> {
             final Shell s = d.getShell();
             if (s != null)
               s.setText("Refreshing project");
@@ -130,5 +130,11 @@ public class Eclipse {
   /** @return document for editor */
   public static IDocument document(final ITextEditor ¢) {
     return ¢.getDocumentProvider().getDocument(¢.getEditorInput());
+  }
+
+  /** Run asynchronously in UI thread.
+   * @param ¢ JD */
+  public static void runAsynchronouslyInUIThread(final Runnable ¢) {
+    Display.getDefault().asyncExec(¢);
   }
 }
