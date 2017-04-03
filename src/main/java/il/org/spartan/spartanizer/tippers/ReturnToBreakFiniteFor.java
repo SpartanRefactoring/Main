@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-07 */
 public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -3493773208955099533L;
+  private static final long serialVersionUID = -0x307C6039058B998DL;
 
   private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
     return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");

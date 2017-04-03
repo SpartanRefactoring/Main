@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @since 2017-01-21 */
 public class MethodDeclarationConstructorMoveToInitializers extends CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = -6339897616387193324L;
+  private static final long serialVersionUID = -0x57FBD74AB91AB9ECL;
 
   @Override protected boolean prerequisite(final MethodDeclaration ¢) {
     if (!¢.isConstructor() || !¢.parameters().isEmpty())

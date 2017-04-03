@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.java.*;
  * @since 2015-08-07 */
 public final class LocalVariableIntializedStatementTerminatingScope extends $FragmentAndStatement //
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = -221763355000543721L;
+  private static final long serialVersionUID = -0x313DC98AF0199E9L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline local " + ¢.getName() + " into subsequent statement";

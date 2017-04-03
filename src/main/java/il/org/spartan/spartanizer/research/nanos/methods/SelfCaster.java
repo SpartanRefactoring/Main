@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class SelfCaster extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = -2231005703494976308L;
+  private static final long serialVersionUID = -0x1EF61FDDF0B04334L;
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     if (!hazOneStatement(¢) || hazParameters(¢))

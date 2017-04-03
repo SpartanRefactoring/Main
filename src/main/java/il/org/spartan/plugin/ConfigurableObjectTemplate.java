@@ -10,7 +10,7 @@ package il.org.spartan.plugin;
 public interface ConfigurableObjectTemplate {
   @SuppressWarnings({ "ClassWithTooManyFields", "CanBeFinal" })
   class Settings extends Listener.S {
-    private static final long serialVersionUID = -465808551880648371L;
+    private static final long serialVersionUID = -0x676E268F42F66B3L;
     //@formatter:off
     /* default access */ int howMany;
     /* required here! */ boolean robustMode;
@@ -47,7 +47,7 @@ public interface ConfigurableObjectTemplate {
      * @see #go() the only service provided by this template
      * @author Yossi Gil */
     class Action extends Settings {
-      private static final long serialVersionUID = -1563529531663481546L;
+      private static final long serialVersionUID = -0x15B2C5D33AA27ACAL;
 
       int go() {
         listeners().push("started going");

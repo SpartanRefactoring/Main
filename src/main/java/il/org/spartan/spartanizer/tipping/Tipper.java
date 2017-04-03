@@ -22,7 +22,7 @@ import il.org.spartan.utils.Examples.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     implements TipperCategory, Serializable {
-  private static final long serialVersionUID = -2252675511987504571L;
+  private static final long serialVersionUID = -0x1F431C71663C85BBL;
 
   @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
     return (Class<Tipper<N>>) getClass();

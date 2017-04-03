@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-17 */
 public final class InfixAdditionSort extends InfixExpressionSortingFull//
     implements TipperCategory.Sorting {
-  private static final long serialVersionUID = -6659425996990267080L;
+  private static final long serialVersionUID = -0x5C6B08A93E9B3EC8L;
 
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);

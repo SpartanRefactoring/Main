@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public final class LocalInitializedForMoveToInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = -8610595251612382642L;
+  private static final long serialVersionUID = -0x777EFAC2AD0575B2L;
 
   private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToIt(¢);

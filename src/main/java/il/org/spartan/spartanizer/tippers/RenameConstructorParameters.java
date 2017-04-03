@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-28 */
 public class RenameConstructorParameters extends EagerTipper<MethodDeclaration> implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = -7654679500754995979L;
+  private static final long serialVersionUID = -0x6A3AE2731FF74B0BL;
 
   @Override public Tip tip(final MethodDeclaration d) {
     if (!d.isConstructor())

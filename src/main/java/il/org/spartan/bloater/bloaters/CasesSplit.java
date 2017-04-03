@@ -11,17 +11,20 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 
 /** Expand cases in a {@link SwitchStatement}: {@code switch (x) { case 1: f(1);
  * case 2: f(2); throw new Exception(); default: f(3); } } turns into
  * {@code switch (x) { case 1: f(1); f(2); throw new Exception(); case 2: f(2);
  * throw new Exception(); default: f(3); } } Test file: {@link Issue0977}
  * @author Ori Roth {@code ori.rothh@gmail.com}
+ * @author Yuval Simon
  * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement>//
     implements TipperCategory.Bloater {
@@ -32,12 +35,13 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   }
 
   @Override public Tip tip(final SwitchStatement s) {
-    final List<Statement> $ = getAdditionalStatements(statements(s), caseWithNoSequencer(s));
-    final Statement n = (Statement) s.statements().get(s.statements().indexOf(first($)) - 1);
+    final SwitchCase n = caseWithNoSequencer(s);
+    final List<Statement> $ = getAdditionalStatements(statements(s), n);
     return new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        Map<String,String> mapNames = getMapOldToNewNames($);
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
-        $.forEach(λ -> l.insertBefore(copy.of(λ), n, g));
+        $.forEach(mapNames.isEmpty() ? λ -> l.insertBefore(copy.of(λ), n, g) : λ -> l.insertBefore(replaceNames(copy.of(λ), mapNames), n, g));
         if (!iz.sequencerComplex(last($)))
           l.insertBefore(s.getAST().newBreakStatement(), n, g);
       }
@@ -55,7 +59,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
         $ = null;
       else if (¢ instanceof SwitchCase) {
         if ($ != null)
-          return $;
+          return (SwitchCase) ¢;
         $ = az.switchCase(¢);
       }
     return null;
@@ -64,7 +68,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   private static List<Statement> getAdditionalStatements(final List<Statement> ss, final SwitchCase c) {
     final List<Statement> $ = new ArrayList<>();
     boolean additionalStatements = false;
-    for (final Statement ¢ : ss.subList(ss.indexOf(c) + 1, ss.size())) {
+    for (final Statement ¢ : ss.subList(ss.indexOf(c), ss.size())) {
       if (¢ instanceof SwitchCase)
         additionalStatements = true;
       else if (additionalStatements)
@@ -73,5 +77,24 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
         return $;
     }
     return $;
+  }
+  
+  static Map<String,String> getMapOldToNewNames(List<Statement> ss) {
+    Map<String,String> $ = new HashMap<>();
+    ss.forEach(n -> {
+      if(iz.variableDeclarationStatement(n))
+        extract.fragments(n).forEach(λ -> $.put(λ.getName().getIdentifier(), scope.newName(λ, az.variableDeclarationStatement(n).getType(), λ.getName().getIdentifier())));
+    });
+    return $;
+  }
+  
+  static Statement replaceNames(Statement target, Map<String,String> m) {
+    target.accept(new ASTVisitor() {
+      @Override public void preVisit(ASTNode ¢) {
+        if(iz.simpleName(¢) && m.containsKey(az.simpleName(¢).getIdentifier()))
+          az.simpleName(¢).setIdentifier(m.get(az.simpleName(¢).getIdentifier()));
+      }
+    });
+    return target;
   }
 }

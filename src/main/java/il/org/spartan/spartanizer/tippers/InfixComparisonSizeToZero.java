@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
  * @since 2016-04-24 */
 public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExpression>//
     implements TipperCategory.Idiomatic {
-  private static final long serialVersionUID = -4217296742524813844L;
+  private static final long serialVersionUID = -0x3A86D90B0A9A8214L;
 
   private static String description(final Expression ¢) {
     return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");

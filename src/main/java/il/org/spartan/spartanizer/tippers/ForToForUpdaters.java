@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     implements TipperCategory.Unite {
-  private static final long serialVersionUID = -5815591308727978558L;
+  private static final long serialVersionUID = -0x50B5217BA3948A3EL;
 
   private static ForStatement buildForWithoutLastStatement(final ForStatement $) {
     setUpdaters($);

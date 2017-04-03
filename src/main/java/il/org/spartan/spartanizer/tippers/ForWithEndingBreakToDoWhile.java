@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-03-26 */
 public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Unite {
-  private static final long serialVersionUID = -5286073381265258638L;
+  private static final long serialVersionUID = -0x495BE7BBC2F6B88EL;
 
   @Override public ASTNode replacement(final ForStatement s) {
     final AST create = s.getAST();

@@ -28,7 +28,7 @@ public final class Tips2 {
   // private static Toolbox toolbox = Toolbox.defaultInstance();
   @SuppressWarnings("synthetic-access") //
   private static final Map<String, AbstractGUIApplicator> map = new HashMap<String, AbstractGUIApplicator>() {
-    static final long serialVersionUID = -8921699276699040030L;
+    static final long serialVersionUID = -0x7BD03E391481791EL;
     {
       as.list(all).forEach(λ -> put(λ.getName(), λ));
     }

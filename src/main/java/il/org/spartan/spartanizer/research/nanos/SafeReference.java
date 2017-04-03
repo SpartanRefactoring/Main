@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * pattern @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-03 */
 public final class SafeReference extends NanoPatternTipper<ConditionalExpression> {
-  private static final long serialVersionUID = -4108306692245103780L;
+  private static final long serialVersionUID = -0x3903A32B7BA124A4L;
   private static final List<UserDefinedTipper<ConditionalExpression>> tippers = as.list(
       patternTipper("$N == null ? $D : $N.$N2", "safe($N).get(()->$N.$N2)", "safe reference"),
       patternTipper("$N != null ? $N.$N2 : $D", "safe($N).get(()->$N.$N2)", "safe reference"),

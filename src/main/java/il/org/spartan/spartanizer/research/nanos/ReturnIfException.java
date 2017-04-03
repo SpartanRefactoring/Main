@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-27 */
 public final class ReturnIfException extends NanoPatternTipper<CatchClause> {
-  private static final long serialVersionUID = -1833661738181956430L;
+  private static final long serialVersionUID = -0x197279A2BE8F934EL;
   private static final List<UserDefinedTipper<TryStatement>> tippers = as.list(
       patternTipper("try $B1 catch($T $N){ return null; }", "If.throwz(() -> $B1).returnNull();", "Go Fluent: IfThrowsReturnNull"),
       patternTipper("try $B1 catch($T $N){ return; }", "If.throwz(() -> $B1).returns();", "Go Fluent: IfThrowsReturns"));
