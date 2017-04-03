@@ -76,7 +76,7 @@ public class InflaterListener implements KeyListener, Listener {
         undoManager.beginCompoundChange();
       }
       editDirection = ZOOMOUT_COMPUND_EDIT;
-      SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
+      Eclipse.runAsynchronouslyInUIThread(() -> {
         inflate();
         working.clear();
       });
@@ -87,7 +87,7 @@ public class InflaterListener implements KeyListener, Listener {
         undoManager.beginCompoundChange();
       }
       editDirection = ZOOMIN_COMPUND_EDIT;
-      SpartanizationHandler.runAsynchronouslyInUIThread(() -> {
+      Eclipse.runAsynchronouslyInUIThread(() -> {
         deflate();
         working.clear();
       });
