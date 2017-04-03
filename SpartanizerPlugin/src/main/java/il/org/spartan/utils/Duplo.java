@@ -29,7 +29,7 @@ public interface Duplo<T> {
 
   /** A {@link Duplo} which has no neighbors
    * @param <T>
-   * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+   * @author Yossi Gil 
    * @since 2017-03-30 */
   interface Atomic<T> extends Duplo<T> {
     @Override default Stream<T> neighborsStream() {
