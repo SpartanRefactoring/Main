@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.issues;
 
 import java.io.*;
-import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
@@ -20,19 +19,18 @@ public class Issue1190 {
 
   @Before public void setUp() {
     trimmer = new Trimmer(Toolbox.defaultInstance());
-    trimmer.setExceptionListener(new Consumer<Exception>() {
-      @Override public void accept(Exception ¢) {
-        ¢.printStackTrace();
-        assert false;
-      }
+    trimmer.setExceptionListener(¢ -> {
+      ¢.printStackTrace();
+      assert false;
     });
   }
-  @Test(timeout=30000) public void runTheSpartinizerOnItself() {
+
+  @Test(timeout = 30000) public void runTheSpartinizerOnItself() {
     new ASTInFilesVisitor(new String[] { "-i", ".", "." }) {
-      @Override protected void visit(java.io.File ¢) {
+      @Override protected void visit(final java.io.File ¢) {
         try {
           trimmer.fixed(FileUtils.read(¢));
-        } catch (IOException e) {
+        } catch (final IOException e) {
           e.printStackTrace();
           assert false;
         }

@@ -97,7 +97,7 @@ public class Issue1153 {
     trimmingOf("class A { private long serialVersionUID = -066L;}")//
         .stays();
   }
-  
+
   @Test public void n() {
     trimmingOf("class A { private long serialVersionUID = -9043350929840336722L;}")//
         .gives("class A { private long serialVersionUID = -0x7D806FC1C854EF52L;}")//
@@ -109,13 +109,13 @@ public class Issue1153 {
         .gives("class A { private long serialVersionUID = 0x7D806FC1C854EF52L;}")//
         .stays();
   }
-  
+
   @Test public void o1() {
     trimmingOf("class A { private long serialVersionUID = -1472927802038098123L;}")//
         .gives("class A { private long serialVersionUID = -0x1470E408344718CBL;}")//
         .stays();
   }
-  
+
   /** Introduced by Yossi on Fri-Mar-24-13:58:53-IDT-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_classAPrivateLonga12345677899L() {
