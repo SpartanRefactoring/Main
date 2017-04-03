@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static java.util.stream.Collectors.*;
 
 import java.util.*;
@@ -20,7 +21,7 @@ public enum compute {
   public static List<String> usedNames(final Expression x) {
     return new ASTMapReducer<List<String>>() {
       @Override public List<String> reduce() {
-        return new ArrayList<>();
+        return empty.list(); 
       }
 
       @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {
@@ -52,7 +53,7 @@ public enum compute {
   public static List<ASTNode> updateSpots(final ASTNode x) {
     final List<ASTNode> $ = new ASTMapReducer<List<ASTNode>>() {
       @Override public List<ASTNode> reduce() {
-        return new LinkedList<>();
+        return empty.list();
       }
 
       public List<ASTNode> reduce(final ASTNode n, final List<ASTNode> ns) {
@@ -74,7 +75,7 @@ public enum compute {
       }
 
       @Override protected List<ASTNode> map(final Assignment ¢) {
-        return reduce(¢, super.map(¢));
+        return reduce(to(¢), super.map(¢));
       }
 
       @Override protected List<ASTNode> map(final PostfixExpression ¢) {
