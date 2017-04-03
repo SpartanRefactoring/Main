@@ -51,7 +51,7 @@ public class ASTInFilesVisitor {
     final Bool $ = new Bool();
     cu.accept(new ASTTrotter() {
       @Override public boolean visit(final MethodDeclaration node) {
-        if (!extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
+        if (extract.annotations(node).stream().noneMatch(λ -> "@Test".equals(λ + "")))
           return true;
         startFolding();
         $.set();

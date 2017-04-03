@@ -31,7 +31,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
   }
 
   @Override protected int consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    Int $ = new Int ();
+    final Int $ = new Int();
     u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
