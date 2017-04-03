@@ -57,7 +57,8 @@ public class MetaTester extends BlockJUnit4ClassRunner {
       final SourceLine.SourceLineFactory factory = new SourceLine.SourceLineFactory(testName1);
       for (int ¢ = 1; line != null; ++¢) {
         if (line.contains("void") && line.contains("()"))
-          factory.setTestMethodName(line.replace("public void ", "").replace("()", "").replace("{", "").trim());
+          factory.setTestMethodName(line.replace("public void ", "").replace("()", "").replace("{", "")
+              .replace("@SuppressWarnings(\"static-method\")","").trim());
         $.add(factory.createSourceLine(line, ¢));
         line = linesStream.readLine();
       }

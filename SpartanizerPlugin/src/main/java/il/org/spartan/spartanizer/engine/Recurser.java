@@ -133,8 +133,8 @@ public final class Recurser<T> {
     rs.forEach(λ -> λ.preVisit(f));
   }
 
-  public T preVisit(final Function<Recurser<T>, T> f) {
-    current = f.apply(this);
+  public T preVisit(final Function<Recurser<T>, T> r) {
+    current = r.apply(this);
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return current;
@@ -142,7 +142,7 @@ public final class Recurser<T> {
     children.forEach(λ -> $.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : $) {
-      current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(f);
+      current = ¢.from(index == 0 ? current : $.get(index - 1).getCurrent()).preVisit(r);
       ++index;
     }
     return $.isEmpty() ? current : $.get(index - 1).getCurrent();
