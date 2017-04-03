@@ -408,11 +408,11 @@ public final class EnvironmentTests {
       private final Type[] arrayList;
       @OutOfOrderFlatENV("arrayList") int currentSize;
 
-      @InOrderFlatENV({ "arrayList", "currentSize" }) public SOList(final Type[] newArray) {
+      @InOrderFlatENV({ "arrayList", "currentSize" }) public SOList(final Type[] arrayList) {
         @Begin
         class opening {
           /**/}
-        this.arrayList = newArray;
+        this.arrayList = arrayList;
         this.currentSize = arrayList.length;
         @End({ "arrayList", "currentSize" })
         class closing {
