@@ -18,34 +18,25 @@ import il.org.spartan.utils.*;
  * @since 2017-01-29 */
 public abstract class ASTMapReducer<R> extends Reduce<R> {
   public R map(final ASTNode ¢) {
-    if (iz.statement(¢))
-      return map(az.statement(¢));
-    if (iz.expression(¢))
-      return map(az.expression(¢));
-    return reduce();
+    return iz.statement(¢) ? map(az.statement(¢)) : iz.expression(¢) ? map(az.expression(¢)) : reduce();
   }
 
   protected R atomic(final Expression... ¢) {
     return foldl(as.list(¢));
   }
 
-  protected R map(final AbstractTypeDeclaration d) {
-    final List<IExtendedModifier> modifiers = step.extendedModifiers(d);
-    return reduce(//
-        map(d.getJavadoc()), //
-        foldListModifiers(modifiers), //
-        map(d.getName()), //
-        foldl(step.bodyDeclarations(d)));
+  protected R map(final AbstractTypeDeclaration ¢) {
+    return reduce(map(¢.getJavadoc()), foldListModifiers(step.extendedModifiers(¢)), map(¢.getName()), foldl(step.bodyDeclarations(¢)));
   }
 
   protected R foldListModifiers(final List<IExtendedModifier> ms) {
     R $ = reduce();
-    for (final IExtendedModifier m : ms)
-      $ = reduce($, map(m));
+    for (final IExtendedModifier ¢ : ms)
+      $ = reduce($, map(¢));
     return $;
   }
 
-  protected R map(@SuppressWarnings("unused") final IExtendedModifier m) {
+  protected R map(@SuppressWarnings("unused") final IExtendedModifier __) {
     return reduce();
   }
 
@@ -69,8 +60,8 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
     return reduce(map(to(¢)), map(from(¢)));
   }
 
-  protected R map(final Block b) {
-    return foldl(statements(b));
+  protected R map(final Block ¢) {
+    return foldl(statements(¢));
   }
 
   protected R map(@SuppressWarnings("unused") final BooleanLiteral ¢) {
@@ -180,13 +171,13 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
 
   protected final R foldl(final Iterable<? extends ASTNode> ns) {
     R $ = reduce();
-    for (final ASTNode n : ns)
-      $ = reduce($, map(n));
+    for (final ASTNode ¢ : ns)
+      $ = reduce($, map(¢));
     return $;
   }
 
-  protected R map(final Javadoc javadoc) {
-    return step.tags(javadoc).stream().map(x -> map(x)).reduce(reduce(), (x1, x2) -> reduce(x1, x2));
+  protected R map(final Javadoc j) {
+    return step.tags(j).stream().map(λ -> map(λ)).reduce(reduce(), (x1, x2) -> reduce(x1, x2));
   }
 
   protected R map(final LabeledStatement ¢) {
@@ -205,8 +196,8 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
 
   protected final R mapList(final List<ASTNode> ns) {
     R $ = reduce();
-    for (final ASTNode n : ns)
-      $ = reduce($, map(n));
+    for (final ASTNode ¢ : ns)
+      $ = reduce($, map(¢));
     return $;
   }
 
@@ -315,8 +306,8 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
     );
   }
 
-  protected R map(final TypeDeclarationStatement s) {
-    return map(s.getDeclaration());
+  protected R map(final TypeDeclarationStatement ¢) {
+    return map(¢.getDeclaration());
   }
 
   protected R map(final VariableDeclarationExpression ¢) {
