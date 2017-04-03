@@ -42,25 +42,19 @@ public class Version300 {
     trimmingOf("int k=1;return k > 0;")//
         .gives("return 1>0;");
   }
-
-  @Test public void i2() {
-    trimmingOf("int k=1;return 0<k;")//
-        .gives("return 0<1;");
-  }
-
-  @Test public void a0() {
-    trimmingOf("int a(){int $=13;return $;}") //
-        .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
-        .gives("int a(){return 13;}") //
+  /** Introduced by Yogi on Mon-Apr-03-21:41:40-IDT-2017 
+  (code automatically in class 'JUnitTestMethodFacotry')*/
+    @Test public void test_inta5b2c4Return3bac() {
+       trimmingOf("int a = 5, b = 2, c = 4; return 3 * b * a * c;") //
+           .gives("int b=2,c=4;return 3*b*5*c;") //
+           .gives("int c=4;return 3*2*5*c;") //
+           .gives("return 3*2*5*4;") //
+           .gives("return 120;") //
+           .stays() //
     ;
   }
 
-  @Test public void a1() {
-    trimmingOf("int a(){int $=13;return $+$;}") //
-        .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
-        .gives("int a(){return 13+13;}") //
-    ;
-  }
+
 
   @FunctionalInterface
   interface Find {
