@@ -101,9 +101,6 @@ public final class FixedPointTest {
     assertConvertsTo("String tipper = Z2;  tipper = tipper.f(A).f(b) + tipper.f(c); return (tipper + 3); ", "return(Z2.f(A).f(b)+Z2.f(c)+3);");
   }
 
-  @Test(timeout = 2000) public void multipleInline() {
-    assertConvertsTo("int b=5,a = 2,c=4; return 3 * a * b * c; ", "return 120;");
-  }
 
   @Test public void shortestIfBranchFirst02() {
     trimmingOf(
