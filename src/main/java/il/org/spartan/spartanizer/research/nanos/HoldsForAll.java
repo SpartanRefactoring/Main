@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 22, 2017 */
 public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
-  private static final long serialVersionUID = -419909996243222517L;
+  private static final long serialVersionUID = -0x5D3D1EAB3B67FF5L;
   private static final BlockNanoPatternContainer tippers = new BlockNanoPatternContainer()
       .statementsPattern("for($T $N1 : $X1) if($X2) return false; return true;", "return $X1.stream().allMatch($N1 -> !($X2));",
           "All matches pattern. Consolidate into one statement")

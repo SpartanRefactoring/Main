@@ -129,7 +129,7 @@ public interface wizard {
     }
   };
   Set<String> boxedTypes = new LinkedHashSet<String>() {
-    static final long serialVersionUID = -1241764483314529440L;
+    static final long serialVersionUID = -0x113BA237EAA8B4A0L;
     {
       for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
         add(¢);
@@ -169,7 +169,7 @@ public interface wizard {
   List<Predicate<Modifier>> visibilityModifiers = as.list(ModifierRedundant.isPublic, ModifierRedundant.isPrivate, ModifierRedundant.isProtected);
   IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
   Collection<String> valueTypes = new LinkedHashSet<String>(boxedTypes) {
-    static final long serialVersionUID = -1388399450885860704L;
+    static final long serialVersionUID = -0x134495F1CC662D60L;
     {
       for (final String ¢ : new String[] { "String" }) {
         add(¢);
@@ -179,7 +179,7 @@ public interface wizard {
   };
   @SuppressWarnings("unchecked") Map<Class<? extends ASTNode>, Integer> //
   classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
-    static final long serialVersionUID = -4723718477559082865L;
+    static final long serialVersionUID = -0x418E04ED91DBAF71L;
     {
       for (int nodeType = 1;; ++nodeType)
         try {

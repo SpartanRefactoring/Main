@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2017-01-23 */
 public final class LocalInitializedUnusedRemove extends LocalInitialized implements TipperCategory.Deadcode {
-  private static final long serialVersionUID = -855471283048149285L;
+  private static final long serialVersionUID = -0xBDF3E9975A1F125L;
 
   public LocalInitializedUnusedRemove() {
     andAlso("Local variable is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty());

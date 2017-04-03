@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Raviv Rachmiel
  * @since 2017-03-31 */
 public abstract class ForStatementPattern extends AbstractPattern<ForStatement> {
-  private static final long serialVersionUID = 7758028221095317214L;
+  private static final long serialVersionUID = 0x6BAA0D9033D78EDEL;
   protected Expression forExpression;
   protected Statement body;
 

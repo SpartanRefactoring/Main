@@ -33,7 +33,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-03-04 */
 public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -1157844982389320057L;
+  private static final long serialVersionUID = -0x10117DE08048A979L;
 
   @Override public String description(final Assignment ¢) {
     return "Consolidate update assignment to " + to(¢) + " with subsequent similar assignment";

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-28 */
 public class Default extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = -8671479380276353771L;
+  private static final long serialVersionUID = -0x7857488D8A7F1AEBL;
   private static final UserDefinedTipper<Statement> returnDefault = patternTipper("return $D;", "", "");
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {

@@ -13,14 +13,16 @@ import il.org.spartan.utils.*;
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-31 */
 public abstract class SwitchZtatement extends AbstractPattern<SwitchStatement> {
-  private static final long serialVersionUID = 9009181505972647040L;
+  private static final long serialVersionUID = 0x7D070AD8D484B480L;
   protected List<Statement> statements;
   protected Expression expression;
+  protected List<SwitchCase> cases;
 
   public SwitchZtatement() {
     andAlso(Proposition.that("Must be switch statement", () -> {
       statements = step.statements(current);
       expression = step.expression(current);
+      cases = statements.stream().filter(λ -> iz.switchCase(λ)).map(λ -> az.switchCase(λ)).collect(Collectors.toList());
       return true;
     }));
   }

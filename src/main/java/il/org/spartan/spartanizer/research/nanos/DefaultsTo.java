@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
 public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
-  private static final long serialVersionUID = -7580396559433880409L;
+  private static final long serialVersionUID = -0x6932FA8215A65359L;
   private static final NanoPatternContainer<ConditionalExpression> tippers = new NanoPatternContainer<ConditionalExpression>()
       .add("$X1 != null ? $X1 : $X2", "defaults($X1).to($X2)", "default pattern: Go fluent")
       .add("$X1 == null ? $X2 : $X1", "defaults($X1).to($X2)", "default pattern: Go fluent")

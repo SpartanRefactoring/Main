@@ -55,6 +55,34 @@ public class OperandBloating extends TrimmingOperand {
       return "Error";
     }
   }
+  
+  public OperandBloating givesWithoutRenaming(final String $) {
+    assert $ != null;
+    final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
+    final String wrap = w.on(get());
+    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
+    final ASTRewrite r = ASTRewrite.create(u.getAST());
+    SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
+    try {
+      final IDocument doc = new Document(wrap);
+      r.rewriteAST(doc, null).apply(doc);
+      final String $1 = makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($)) + "",
+          peeled1 = w.off(makeAST.COMPILATION_UNIT.from(doc.get()) + "");
+      if (peeled1.equals(get()))
+        azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
+      if (tide.clean(peeled1).equals(tide.clean(get())))
+        azzert.that("Bloatong of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled1))));
+      if ($1.equals(peeled1) || trivia.essence(peeled1).equals(trivia.essence($1)))
+        return new OperandBloating($1);
+      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", trivia.escapeQuotes(trivia.essence(peeled1)),
+          trivia.escapeQuotes(trivia.essence($1)));
+      azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
+      return new OperandBloating($1);
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      monitor.logProbableBug(this, ¢);
+    }
+    return null;
+  }
 
   @Override public OperandBloating gives(final String $) {
     assert $ != null;

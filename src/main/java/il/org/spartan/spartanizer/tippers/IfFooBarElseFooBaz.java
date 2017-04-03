@@ -32,7 +32,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-29 */
 public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -5372157375600285659L;
+  private static final long serialVersionUID = -0x4A8DBCAB922657DBL;
 
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = new ArrayList<>();

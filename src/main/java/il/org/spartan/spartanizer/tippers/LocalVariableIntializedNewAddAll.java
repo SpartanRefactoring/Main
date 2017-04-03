@@ -39,7 +39,7 @@ public final class LocalVariableIntializedNewAddAll extends GoToNextStatement<Va
     return true;
   }
 
-  private static final long serialVersionUID = -228096256168103399L;
+  private static final long serialVersionUID = -0x32A5C56237F0DE7L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline variable '" + name(¢) + "' into next statement";

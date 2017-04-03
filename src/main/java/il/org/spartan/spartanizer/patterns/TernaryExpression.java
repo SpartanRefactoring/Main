@@ -9,7 +9,7 @@ import il.org.spartan.utils.*;
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-30 */
 public abstract class TernaryExpression extends AbstractPattern<ConditionalExpression> {
-  private static final long serialVersionUID = 852212628211523327L;
+  private static final long serialVersionUID = 0xBD3AADEC1A65EFFL;
   protected Expression condition, then, elze;
 
   public TernaryExpression() {

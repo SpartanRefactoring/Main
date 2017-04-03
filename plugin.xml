@@ -24,11 +24,21 @@ the program changes: https://goo.gl/sIqIBC
 
 <!-- Preferences page -->
 <extension point="org.eclipse.ui.preferencePages">
-  <page 
-  name="Spartanization Tips"
-  class="il.org.spartan.plugin.preferences.revision.PreferencesPage"
-  id="il.org.spartan.plugin.PluginPreferencesPage"
-  category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
+  <page
+    name="Spartanization Tips"
+    class="il.org.spartan.plugin.preferences.revision.PreferencesPage"
+    id="il.org.spartan.plugin.PluginPreferencesPage"
+    category="org.eclipse.jdt.ui.preferences.JavaBasePreferencePage">
+  </page>
+</extension>
+
+<!-- Zoomer preferences page -->
+<extension point="org.eclipse.ui.preferencePages">
+  <page
+    name="Zoomer"
+    class="il.org.spartan.plugin.preferences.revision.ZoomerPreferencesPage"
+    id="il.org.spartan.plugin.ZoomerPreferencesPage"
+    category="il.org.spartan.plugin.PluginPreferencesPage">
   </page>
 </extension>
 

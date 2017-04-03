@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-01 */
 public class ArgumentsTuple extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = -6753982059151484641L;
+  private static final long serialVersionUID = -0x5DBAF6E60F15E6E1L;
 
   @Override protected boolean prerequisites(final MethodDeclaration d) {
     if (!hazAtLeastTwoParameters(d))

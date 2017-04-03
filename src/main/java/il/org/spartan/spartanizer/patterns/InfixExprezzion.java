@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-30 */
 public abstract class InfixExprezzion extends AbstractPattern<InfixExpression> {
-  private static final long serialVersionUID = -5549618171755635448L;
+  private static final long serialVersionUID = -0x4D043452F68C22F8L;
   protected Expression left, right;
   protected InfixExpression.Operator operator;
 

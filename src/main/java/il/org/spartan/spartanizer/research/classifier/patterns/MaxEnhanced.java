@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author Ori Marcovitch
  * @since 2016 */
 public class MaxEnhanced extends NanoPatternTipper<ForStatement> {
-  private static final long serialVersionUID = -7684512700914547413L;
+  private static final long serialVersionUID = -0x6AA4DF9651FD3AD5L;
   final Collection<UserDefinedTipper<ForStatement>> tippers = as
       .list(patternTipper("for (int $N0 = 1; $N0 < $N1.$N2; ++$N0)  if ($N1[$N0] > $N3)   $N3 = $N1[$N0];", "max();", "max"));
 
