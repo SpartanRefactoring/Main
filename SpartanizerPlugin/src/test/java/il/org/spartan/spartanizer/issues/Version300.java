@@ -42,17 +42,6 @@ public class Version300 {
     trimmingOf("int k=1;return k > 0;")//
         .gives("return 1>0;");
   }
-  /** Introduced by Yogi on Mon-Apr-03-21:41:40-IDT-2017 
-  (code automatically in class 'JUnitTestMethodFacotry')*/
-    @Test public void test_inta5b2c4Return3bac() {
-       trimmingOf("int a = 5, b = 2, c = 4; return 3 * b * a * c;") //
-           .gives("int b=2,c=4;return 3*b*5*c;") //
-           .gives("int c=4;return 3*2*5*c;") //
-           .gives("return 3*2*5*4;") //
-           .gives("return 120;") //
-           .stays() //
-    ;
-  }
 
 
 
