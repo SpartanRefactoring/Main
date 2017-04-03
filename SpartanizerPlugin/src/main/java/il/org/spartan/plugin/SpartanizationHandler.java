@@ -1,5 +1,6 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.plugin.Eclipse.*;
 import static il.org.spartan.utils.English.*;
 
 import java.lang.reflect.*;
@@ -10,7 +11,6 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
-import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
@@ -117,12 +117,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     });
     $.operationName(OPERATION_ACTIVITY);
     return $;
-  }
-
-  /** Run asynchronously in UI thread.
-   * @param ¢ JD */
-  public static void runAsynchronouslyInUIThread(final Runnable ¢) {
-    Display.getDefault().asyncExec(¢);
   }
 
   /** Creates and configures an applicator, without configuring the selection.
