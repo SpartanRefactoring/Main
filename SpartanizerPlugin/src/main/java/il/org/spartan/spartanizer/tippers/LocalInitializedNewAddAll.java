@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
 
 /** convert {@code
- * T a = new ArrayList<>() 
+ * T a = new ArrayList<>()
  * a.addAll(x)
  * } to {@code
  * T a = new ArrayList<>(x)

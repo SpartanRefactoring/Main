@@ -44,12 +44,14 @@ public class Issue0977 {
         .gives("switch (x){case 1:f(1);f(2);break;case 2:f(2);break;case 3: f(3);throw new Exception();case 4:throw new Exception();default:}")
         .stays();
   }
-  
+
   @Test public void newNameInVarDeclaration() {
-    bloatingOf("switch (x) { case 1: case 2: int y; y = 1; return y; }").givesWithoutRenaming("switch (x) { case 1: int y1; y1 = 1; return y1; case 2: int y; y = 1; return y; }");
+    bloatingOf("switch (x) { case 1: case 2: int y; y = 1; return y; }")
+        .givesWithoutRenaming("switch (x) { case 1: int y1; y1 = 1; return y1; case 2: int y; y = 1; return y; }");
   }
-  
+
   @Test public void newNameInVarDeclaration2() {
-    bloatingOf("switch (x) { case 1: case 2: int y = f(); return y + 1; }").givesWithoutRenaming("switch (x) { case 1: int y1 = f(); return y1 + 1; case 2: int y = f(); return y + 1; }");
+    bloatingOf("switch (x) { case 1: case 2: int y = f(); return y + 1; }")
+        .givesWithoutRenaming("switch (x) { case 1: int y1 = f(); return y1 + 1; case 2: int y = f(); return y + 1; }");
   }
 }

@@ -32,7 +32,7 @@ public final class LocalInitializedReturnExpression extends LocalInitializedStat
     andAlso("Next statement returns a value return", //
         () -> iz.not.null¢(returnValue = returnStatement.getExpression()));//
     andAlso("Returned value is not a method invocation of a lambda expression ", //
-        ()-> !iz.lambdaExpression(initializer));//
+        () -> !iz.lambdaExpression(initializer));//
     andAlso(//
         that("Returned value is identical to local variable", //
             () -> wizard.eq(name, returnValue)//
