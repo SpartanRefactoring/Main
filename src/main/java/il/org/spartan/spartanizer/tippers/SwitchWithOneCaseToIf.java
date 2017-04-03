@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
+
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -9,8 +11,6 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.PrefixExpression.*;
-
-import static org.eclipse.jdt.core.dom.ASTNode.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -29,55 +29,57 @@ import il.org.spartan.utils.*;
 public class SwitchWithOneCaseToIf extends SwitchZtatement//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x513C764E326D1A98L;
-  
+
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Convert switch statement to if-else statement";
   }
-  
+
   public SwitchWithOneCaseToIf() {
     andAlso(Proposition.that("Exactly 2 cases", () -> (cases.size() == 2)));
     andAlso(Proposition.that("Has default case", () -> (first(cases).isDefault() || last(cases).isDefault())));
     andAlso(Proposition.that("Different branches", () -> {
       boolean foundSeq = false;
       int count = 0;
-      for(Statement ¢ : statements) {
-        if(iz.sequencerComplex(¢))
+      for (final Statement ¢ : statements) {
+        if (iz.sequencerComplex(¢))
           foundSeq = true;
-        if(iz.switchCase(¢) && (++count) == 2 && !foundSeq)
+        if (iz.switchCase(¢) && ++count == 2 && !foundSeq)
           return false;
       }
       return true;
     }));
   }
-  
-  @Override protected ASTRewrite go(ASTRewrite $, TextEditGroup g) {
-    boolean firstDefault = first(cases()).isDefault();
-    SwitchCase thenCase = firstDefault ? last(cases()) : first(cases());
+
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+    final boolean firstDefault = first(cases()).isDefault();
+    final SwitchCase thenCase = firstDefault ? last(cases()) : first(cases());
     List<Statement> l1 = removeBreaks(statements.subList(1, statements.indexOf(last(cases())))),
         l2 = removeBreaks(statements.subList(statements.indexOf(last(cases())) + 1, statements.size()));
-    if(firstDefault) {
-      List<Statement> tmp = l1;
+    if (firstDefault) {
+      final List<Statement> tmp = l1;
       l1 = l2;
       l2 = tmp;
     }
-    if(l1.isEmpty() && l2.isEmpty()) {
+    if (l1.isEmpty() && l2.isEmpty()) {
       $.remove(current, g);
       return $;
     }
-    $.replace(current, l1.isEmpty()
-        ? subject.pair(subject.ss(l2).toBlock(), null)
-            .toIf(subject.operand(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)).to(Operator.NOT))
-        : subject.pair(subject.ss(l1).toBlock(), l2.isEmpty() ? null : subject.ss(l2).toBlock())
-            .toIf(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)), g); 
+    $.replace(current,
+        l1.isEmpty()
+            ? subject.pair(subject.ss(l2).toBlock(), null)
+                .toIf(subject.operand(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)).to(Operator.NOT))
+            : subject.pair(subject.ss(l1).toBlock(), l2.isEmpty() ? null : subject.ss(l2).toBlock())
+                .toIf(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)),
+        g);
     return $;
   }
-  
-  private static List<Statement> removeBreaks(List<Statement>  src) {
-    return src.stream().map(λ->cleanBreaks(λ)).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
+
+  private static List<Statement> removeBreaks(final List<Statement> src) {
+    return src.stream().map(λ -> cleanBreaks(λ)).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
   }
-  
-  private static Statement cleanBreaks(Statement s) {
-    if(s == null)
+
+  private static Statement cleanBreaks(final Statement s) {
+    if (s == null)
       return null;
     switch (s.getNodeType()) {
       case BREAK_STATEMENT:
@@ -85,7 +87,7 @@ public class SwitchWithOneCaseToIf extends SwitchZtatement//
       case BLOCK:
         return subject.ss(statements(az.block(s)).stream().map(λ -> cleanBreaks(λ)).collect(Collectors.toList())).toBlock();
       case IF_STATEMENT:
-        IfStatement $ = copy.of(az.ifStatement(s));
+        final IfStatement $ = copy.of(az.ifStatement(s));
         $.setThenStatement(cleanBreaks(then($)));
         $.setElseStatement(cleanBreaks(elze($)));
         return $;

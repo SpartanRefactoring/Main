@@ -55,7 +55,7 @@ public class OperandBloating extends TrimmingOperand {
       return "Error";
     }
   }
-  
+
   public OperandBloating givesWithoutRenaming(final String $) {
     assert $ != null;
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());

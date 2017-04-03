@@ -15,9 +15,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
-import il.org.spartan.spartanizer.java.namespace.*;
 
 /** Expand cases in a {@link SwitchStatement}: {@code switch (x) { case 1: f(1);
  * case 2: f(2); throw new Exception(); default: f(3); } } turns into
@@ -39,7 +39,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     final List<Statement> $ = getAdditionalStatements(statements(s), n);
     return new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        Map<String,String> mapNames = getMapOldToNewNames($);
+        final Map<String, String> mapNames = getMapOldToNewNames($);
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
         $.forEach(mapNames.isEmpty() ? λ -> l.insertBefore(copy.of(λ), n, g) : λ -> l.insertBefore(replaceNames(copy.of(λ), mapNames), n, g));
         if (!iz.sequencerComplex(last($)))
@@ -78,20 +78,21 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     }
     return $;
   }
-  
-  static Map<String,String> getMapOldToNewNames(List<Statement> ss) {
-    Map<String,String> $ = new HashMap<>();
+
+  static Map<String, String> getMapOldToNewNames(final List<Statement> ss) {
+    final Map<String, String> $ = new HashMap<>();
     ss.forEach(n -> {
-      if(iz.variableDeclarationStatement(n))
-        extract.fragments(n).forEach(λ -> $.put(λ.getName().getIdentifier(), scope.newName(λ, az.variableDeclarationStatement(n).getType(), λ.getName().getIdentifier())));
+      if (iz.variableDeclarationStatement(n))
+        extract.fragments(n).forEach(
+            λ -> $.put(λ.getName().getIdentifier(), scope.newName(λ, az.variableDeclarationStatement(n).getType(), λ.getName().getIdentifier())));
     });
     return $;
   }
-  
-  static Statement replaceNames(Statement target, Map<String,String> m) {
+
+  static Statement replaceNames(final Statement target, final Map<String, String> m) {
     target.accept(new ASTVisitor() {
-      @Override public void preVisit(ASTNode ¢) {
-        if(iz.simpleName(¢) && m.containsKey(az.simpleName(¢).getIdentifier()))
+      @Override public void preVisit(final ASTNode ¢) {
+        if (iz.simpleName(¢) && m.containsKey(az.simpleName(¢).getIdentifier()))
           az.simpleName(¢).setIdentifier(m.get(az.simpleName(¢).getIdentifier()));
       }
     });

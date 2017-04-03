@@ -16,8 +16,8 @@ public class Issue1159 {
     bloatingOf("switch(a){ case 1: switch(b){ default: } }").using(SwitchStatement.class, new SwitchAddDefault())
         .gives("switch(a){ case 1: switch(b){ default: } default: }");
   }
-  
+
   @Test public void t2() {
-    bloatingOf("switch(a){ case 1: y=2; break; default: }").stays();        
+    bloatingOf("switch(a){ case 1: y=2; break; default: }").stays();
   }
 }
