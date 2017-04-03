@@ -9,7 +9,7 @@ import il.org.spartan.utils.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-10-22 */
 public class Setter extends JavadocMarkerNanoPattern {
-  private static final long serialVersionUID = -4815724471383478205L;
+  private static final long serialVersionUID = -0x42D4E3E454F7CFBDL;
 
   @Override public boolean prerequisites(final MethodDeclaration ¢) {
     ___.nothing();

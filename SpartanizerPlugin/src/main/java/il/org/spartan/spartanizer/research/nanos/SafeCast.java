@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-23 */
 public class SafeCast extends NanoPatternTipper<CastExpression> {
-  private static final long serialVersionUID = -7268393430507206430L;
+  private static final long serialVersionUID = -0x64DE8550C12A371EL;
 
   @Override public boolean canTip(final CastExpression ¢) {
     return (expression(yieldAncestors.untilClass(IfStatement.class).from(¢)) + "").contains(expression(¢) + " instanceof " + type(¢));

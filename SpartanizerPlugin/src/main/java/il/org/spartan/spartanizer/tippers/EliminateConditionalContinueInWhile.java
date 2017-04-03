@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-04 */
 public class EliminateConditionalContinueInWhile extends EagerTipper<WhileStatement>//
     implements TipperCategory.Shortcircuit {
-  private static final long serialVersionUID = -2214012312380722330L;
+  private static final long serialVersionUID = -0x1EB9C077BFCB4C9AL;
 
   @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "Eliminate conditional continue before last statement in the for loop";

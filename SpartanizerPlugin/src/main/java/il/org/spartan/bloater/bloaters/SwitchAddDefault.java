@@ -13,7 +13,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-31 */
 public class SwitchAddDefault extends SwitchZtatement implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 3859494576633437003L;
+  private static final long serialVersionUID = 0x358FADDE74C85B4BL;
 
   @Override public Examples examples() {
     return //

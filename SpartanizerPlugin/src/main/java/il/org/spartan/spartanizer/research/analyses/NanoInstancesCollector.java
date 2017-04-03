@@ -29,7 +29,7 @@ public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = NanoInstancesCollector.class;
     spartanalyzer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
-      static final long serialVersionUID = -8053877776935099016L;
+      static final long serialVersionUID = -0x6FC51F2AB6A11A88L;
 
       @Override public Tip pattern(final EnhancedForStatement ¢) {
         return new Tip("", getClass(), ¢) {

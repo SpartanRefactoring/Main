@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 /** @nano Apply statement for each element in collection
  * @author Ori Marcovitch */
 public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
-  private static final long serialVersionUID = -4378523020212222986L;
+  private static final long serialVersionUID = -0x3CC3A37D0C9EBC0AL;
   private static final List<UserDefinedTipper<EnhancedForStatement>> tippers = as.list(
       patternTipper("for($T $N1 : $N2) $X;", "$N2.forEach($N1 -> $X);", "ForEach pattern: conevrt to fluent API"),
       patternTipper("for($T $N1 : $X1) $X2;", "($X1).forEach($N1 -> $X2);", "ForEachThat pattern: conevrt to fluent API"),

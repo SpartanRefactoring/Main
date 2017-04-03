@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2015-07-17 */
 public final class InfixMultiplicationSort extends InfixExpressionSortingFull//
     implements TipperCategory.Sorting {
-  private static final long serialVersionUID = -5781572853977619886L;
+  private static final long serialVersionUID = -0x503C45E0EC609DAEL;
 
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.MULTIPLICATION.sort(¢);

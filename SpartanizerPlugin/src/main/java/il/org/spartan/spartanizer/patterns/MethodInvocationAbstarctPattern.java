@@ -12,7 +12,7 @@ import il.org.spartan.utils.*;
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-04-01 */
 public abstract class MethodInvocationAbstarctPattern extends AbstractPattern<MethodInvocation> {
-  private static final long serialVersionUID = 3572536583557285806L;
+  private static final long serialVersionUID = 0x319433183A0507AEL;
   @Property protected Expression expression;
   @Property protected List<Expression> arguments;
   @Property protected SimpleName name;

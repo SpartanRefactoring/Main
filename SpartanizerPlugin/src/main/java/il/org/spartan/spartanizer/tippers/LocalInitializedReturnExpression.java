@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @since 2015-08-07 */
 public final class LocalInitializedReturnExpression extends LocalInitializedStatement //
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = 6685864331590860235L;
+  private static final long serialVersionUID = 0x5CC8F62FB4ED7DCBL;
   private ReturnStatement returnStatement;
   private Expression returnValue;
 
@@ -31,6 +31,8 @@ public final class LocalInitializedReturnExpression extends LocalInitializedStat
         () -> iz.not.null¢(returnStatement = az.returnStatement(nextStatement)));//
     andAlso("Next statement returns a value return", //
         () -> iz.not.null¢(returnValue = returnStatement.getExpression()));//
+    andAlso("Returned value is not a method invocation of a lambda expression ", //
+        ()-> !iz.lambdaExpression(initializer));//
     andAlso(//
         that("Returned value is identical to local variable", //
             () -> wizard.eq(name, returnValue)//

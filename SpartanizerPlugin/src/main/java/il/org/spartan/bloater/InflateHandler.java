@@ -1,11 +1,12 @@
 package il.org.spartan.bloater;
 
+import static il.org.spartan.plugin.Eclipse.*;
+
 import static java.util.stream.Collectors.*;
 
 import java.util.*;
 import java.util.List;
 import java.util.function.*;
-import java.util.stream.*;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
@@ -50,7 +51,7 @@ public class InflateHandler extends AbstractHandler {
       removePageListener(s);
     } else {
       active.set();
-      getOpenedEditors().forEach(InflateHandler::addListener);
+      openedTextEditors().forEach(InflateHandler::addListener);
       s.addPartListener(pageListener);
     }
     return null;
@@ -73,14 +74,6 @@ public class InflateHandler extends AbstractHandler {
     return $;
   }
 
-  private static IWorkbenchPage getPage() {
-    final IWorkbench w = PlatformUI.getWorkbench();
-    if (w == null)
-      return null;
-    final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
-    return $ == null ? null : $.getActivePage();
-  }
-
   private static StyledText getText(final ITextEditor ¢) {
     if (¢ == null)
       return null;
@@ -94,7 +87,7 @@ public class InflateHandler extends AbstractHandler {
           @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return λ -> λ;
           }
-        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null)))).name(OPERATION_ACTIVITY.getIng())
+        }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null, false)))).name(OPERATION_ACTIVITY.getIng())
         .operationName(OPERATION_ACTIVITY);
   }
 
@@ -132,7 +125,7 @@ public class InflateHandler extends AbstractHandler {
 
   private static void removePageListener(final IPartService ¢) {
     ¢.removePartListener(pageListener);
-    getOpenedEditors().forEach(InflateHandler::removeListener);
+    openedTextEditors().forEach(InflateHandler::removeListener);
   }
 
   static void addListener(final IWorkbenchPart ¢) {
@@ -164,12 +157,5 @@ public class InflateHandler extends AbstractHandler {
         .ifPresent(λ -> ((InflaterListener) ((TypedListener) λ).getEventListener()).finilize());
     ls.forEach(λ -> text.getDisplay().removeFilter(SWT.MouseWheel, (Listener) ((TypedListener) λ).getEventListener()));
     ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
-  }
-
-  private static Iterable<ITextEditor> getOpenedEditors() {
-    final IWorkbenchPage $ = getPage();
-    return $ == null ? new ArrayList<>()
-        : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
-            .collect(toList());
   }
 }

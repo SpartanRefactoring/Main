@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
 /** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-09-05 */
 public final class IfFooElseFoo extends IfAbstractPattern implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -1173304247743605864L;
+  private static final long serialVersionUID = -0x104869FF3436EC68L;
 
   public IfFooElseFoo() {
     andAlso("Then and else are identical", //
