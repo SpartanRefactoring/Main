@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
 /** Remove unused variable
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-23 */
 public final class LocalInitializedUnusedRemove extends LocalInitialized implements TipperCategory.Deadcode {
   private static final long serialVersionUID = -0xBDF3E9975A1F125L;

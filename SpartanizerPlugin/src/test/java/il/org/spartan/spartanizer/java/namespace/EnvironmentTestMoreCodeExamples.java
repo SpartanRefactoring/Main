@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.java.namespace;
 import il.org.spartan.spartanizer.annotations.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Dec 26, 2016 */
 final class EnvironmentTestMoreCodeExamples {
   {

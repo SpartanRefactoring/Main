@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.meta.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-01 */
 @RunWith(Parameterized.class)
 public class ScopeSizeTest extends MetaFixture {

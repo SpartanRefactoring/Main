@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-12-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

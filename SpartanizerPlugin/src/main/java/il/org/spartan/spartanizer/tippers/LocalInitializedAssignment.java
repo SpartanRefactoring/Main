@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalInitializedAssignment extends $FragmentAndStatement//
     implements TipperCategory.Inlining {

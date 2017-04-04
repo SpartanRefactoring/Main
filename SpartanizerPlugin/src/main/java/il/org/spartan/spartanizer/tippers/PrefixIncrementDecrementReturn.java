@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } to {@code
  * return a = 3;
  * }
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-08-28 */
 public final class PrefixIncrementDecrementReturn extends GoToNextStatement<PrefixExpression>//
     implements TipperCategory.Unite {

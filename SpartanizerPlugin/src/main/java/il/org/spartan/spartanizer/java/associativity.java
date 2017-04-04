@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
  * sentence phrase.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-07-16 */
 public enum associativity {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;

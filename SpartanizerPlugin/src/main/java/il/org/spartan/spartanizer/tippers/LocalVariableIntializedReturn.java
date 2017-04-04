@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * } into {@code
  * return 3;
  * }
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalVariableIntializedReturn extends $FragmentAndStatement//
     implements TipperCategory.Shortcircuit {

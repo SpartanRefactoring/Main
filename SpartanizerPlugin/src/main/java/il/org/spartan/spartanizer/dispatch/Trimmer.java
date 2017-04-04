@@ -37,7 +37,7 @@ import il.org.spartan.utils.*;
  * <li>Consolidation: it does not make sense to apply one tipper after the
  * other. Batch processing is required.
  * </ol>
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015/07/10 */
 public class Trimmer extends AbstractGUIApplicator {
   public static boolean silent;

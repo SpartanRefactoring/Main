@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/** @author Yossi Gil
  * @since Jan 24, 2017 */
 public final class FieldInitializedDefaultValue extends ReplaceCurrentNode<VariableDeclarationFragment>
     //
