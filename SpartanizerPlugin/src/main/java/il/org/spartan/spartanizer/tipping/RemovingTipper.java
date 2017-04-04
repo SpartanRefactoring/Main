@@ -9,12 +9,12 @@ import il.org.spartan.spartanizer.engine.*;
 /** An abstract tipping strategy that removes a node if
  * {@link RemovingTipper#prerequisite(ASTNode)} holds.
  * @param <N> Type of node to remove
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-15 */
 public abstract class RemovingTipper<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 0x18DC32CA162FC537L;
 
-  @SuppressWarnings("unchecked") @Override public final Tip tip(final N n) {
+  @Override @SuppressWarnings("unchecked") public final Tip tip(final N n) {
     return new Tip(description(n), (Class<? extends RemovingTipper<N>>) getClass(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.remove(n, g);

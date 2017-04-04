@@ -22,7 +22,7 @@ import il.org.spartan.utils.*;
 /** Encapsulates the operation of replacing a variable with an expression in a
  * certain location.
  * @year 2015
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-16 */
 public final class Inliner2 {
   /** What to replace by {@link #replacement} */
@@ -35,7 +35,7 @@ public final class Inliner2 {
   public final Collection<? extends SimpleName> spots;
 
   /** Factory method: FAPI factory chain
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2017-03-16 [[SuppressWarningsSpartan]] */
   public static Of of(final SimpleName of) {
     return by -> location -> new Inliner2(of, by, location);
@@ -117,14 +117,14 @@ public final class Inliner2 {
   }
 
   /** FAPI factory chain
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2017-03-16 */
   public interface Of {
     By by(Expression by);
   }
 
   /** FAPI factory chain
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2017-03-16 */
   public interface By {
     Inliner2 in(List<? extends ASTNode> ns);
@@ -133,7 +133,7 @@ public final class Inliner2 {
   /** Replace an occurrence of a {@link SimpleName} with an {@link Expression}
    * in an array of
    * @year 2015
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since Sep 13, 2016 */
   public interface replaceAll {
     static ASTRewrite go(final TextEditGroup g, final ASTRewrite r) {

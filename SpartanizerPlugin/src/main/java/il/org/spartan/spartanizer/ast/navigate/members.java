@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Collect members of classes and the such
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-12-22 */
 public interface members {
   static List<BodyDeclaration> of(final EnumDeclaration ¢) {

@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 /** simple no-gimmicks singleton service that does the simple job of applying a
  * {@link Toolbox} {@link #once(String)}, {@link #twice(String)},
  * {@link #thrice(String)}, and {@link #repetitively(String)}.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-08 */
 public interface theSpartanizer {
   static Tipper<?> firstTipper(final String from) {

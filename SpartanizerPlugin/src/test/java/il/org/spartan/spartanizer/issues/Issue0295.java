@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
 
 /** Unit test for {@link LocalInitializedStatementTerminatingScope} for the case
  * of inlining into the expression of an enhanced for
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

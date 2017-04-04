@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Unit tests for {@link GuessedContext}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Sep 7, 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class GuessedContextTest {

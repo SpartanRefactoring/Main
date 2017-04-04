@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Test for {@link IfCommandsSequencerNoElseSingletonSequencer}. Examine cases
  * where the last statement in the if statement then section is not an immediate
  * sequencer, or not a sequencer at all.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @author Ori Roth
  * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")

@@ -27,7 +27,7 @@ import junit.framework.*;
 
 /** Parse and AST visit all Java files under a given path.
  * <p>
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
   @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
@@ -51,7 +51,7 @@ public class ASTInFilesVisitor {
     final Bool $ = new Bool();
     cu.accept(new ASTTrotter() {
       @Override public boolean visit(final MethodDeclaration node) {
-        if (!extract.annotations(node).stream().anyMatch(λ -> "@Test".equals(λ + "")))
+        if (extract.annotations(node).stream().noneMatch(λ -> "@Test".equals(λ + "")))
           return true;
         startFolding();
         $.set();
@@ -209,7 +209,7 @@ public class ASTInFilesVisitor {
             }
 
             @Override public boolean ok(final ExpressionStatement ¢) {
-              return compute.usedNames(¢.getExpression()).size() == 1;
+              return compute.useSpots(¢.getExpression()).size() == 1;
             }
           });
         }

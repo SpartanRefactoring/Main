@@ -1,5 +1,7 @@
 package il.org.spartan.bloater.bloaters;
 
+import static il.org.spartan.spartanizer.ast.factory.subject.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
@@ -7,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -33,8 +34,10 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
     final ConditionalExpression $ = az.conditionalExpression(core(x));
     return $ == null ? null
-        : subject.pair(az.expressionStatement($.getAST().newExpressionStatement(subject.pair(left, then($)).to(o))),
-            az.expressionStatement($.getAST().newExpressionStatement(subject.pair(left, elze($)).to(o)))).toIf($.getExpression());
+        : pair(//
+            az.expressionStatement($.getAST().newExpressionStatement(pair(left, then($)).to(o))),
+            az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)))//
+        ).toIf($.getExpression());
   }
 
   private static ASTNode replaceAssignment(final Statement ¢) {

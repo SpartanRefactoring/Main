@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.*;
  * any kind; default implementation is empty, override to specialize, or use
  * {@link Listener.S}
  * @author Ori Roth
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @see #tick(Object...)
  * @see #push(Object...)
  * @see #pop(Object...)
@@ -48,16 +48,16 @@ public interface Listener {
 
   /** An aggregating kind of {@link Listener} that dispatches the event it
    * receives to the multiple {@link Listener}s it stores internally.
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2.6 */
   class S extends ArrayList<Listener> implements Listener {
     private static final long serialVersionUID = 0x72E812BAFE0B3C7FL;
 
     /** for fluent API use, i.e., <code>
-                                                                               *
-                                                                               * <code>
-                                                                                       <b>public final</b> {@link Listener}  listeners = .
-                                                                           * </code>
+                                                                                *
+                                                                                * <code>
+                                                                                        <b>public final</b> {@link Listener}  listeners = .
+                                                                            * </code>
      * @return an empty new instance */
     public static Listener.S empty() {
       return new Listener.S();
