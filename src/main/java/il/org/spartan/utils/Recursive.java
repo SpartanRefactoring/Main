@@ -34,18 +34,18 @@ import junit.framework.*;
  * </ol>
  * @see Compound
  * @see Atomic
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-11 */
 public interface Recursive<T> extends Duplo<T> {
   /** An atomic recursive structure specializing {@link Recursive}
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2017-03-13 */
   interface Atomic<T> extends Recursive<T>, Duplo.Atomic<T> {
     //
   }
 
   /** A compound recursive structure, specializing {@link Recursive}
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2017-03-13 */
   interface Compound<T> extends Recursive<T>, Duplo.Compound<T> {
     Iterable<Recursive<T>> children();
@@ -69,7 +69,7 @@ public interface Recursive<T> extends Duplo<T> {
   /** A compound recursive structure enumerating {@link #descendants()} in
    * pre-order
    * @param <E>
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2017-03-13 */
   interface Preorder<E> extends Compound<E> {
     @Override default NeighborsMerger<E> neighborsMerger() {

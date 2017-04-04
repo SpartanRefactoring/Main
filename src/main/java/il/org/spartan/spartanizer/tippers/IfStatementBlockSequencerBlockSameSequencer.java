@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
 /** Tested by {@link Issue1105}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-22 */
 public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPattern //
     implements TipperCategory.CommnonFactoring {

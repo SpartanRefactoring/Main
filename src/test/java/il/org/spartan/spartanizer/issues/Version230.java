@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Unit tests for version 2.30
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc", "OverlyComplexClass" }) //
@@ -1272,22 +1272,6 @@ public final class Version230 {
     trimmingOf("public int y(){ final Z u=new Z(6);S.h(u.j);return u;} ").gives("public int y(){ final Z $=new Z(6);S.h($.j);return $;} ");
   }
 
-  @Test public void inlineArrayInitialization2() {
-    trimmingOf("public double[] solve(){ " //
-        + " final SimpleRegression regress=new SimpleRegression(true); " //
-        + " for(double[] dxx : points) " //
-        + " regress.addData(d[0], d[1]); " //
-        + " final double[] $={ regress.getSlope(), regress.getIntercept()}; " //
-        + " return $; " //
-        + "}")
-            .gives("public double[] solve(){ " //
-                + " final SimpleRegression regress=new SimpleRegression(true); " //
-                + " for(double[] dxx : points) " //
-                + " regress.addData(d[0], d[1]); " //
-                + " return new double[] { regress.getSlope(), regress.getIntercept()}; " //
-                + "}");
-  }
-
   @Test public void inlineInitializers() {
     trimmingOf("int b,a=2;return 3 * a * b;")//
         .gives("return 3*2*b;");
@@ -1296,15 +1280,6 @@ public final class Version230 {
   @Test public void inlineInitializersFirstStep() {
     trimmingOf("int b=4,a=2;return 3 * a * b;")//
         .gives("int a=2;return 3*a*4;");
-  }
-
-  @Test public void inlineInitializersSecondStep() {
-    trimmingOf("int a=2;return 3*a*4;")//
-        .gives("return 3 * 2 * 4;");
-  }
-
-  int f() {
-    return 3 * 2 * 4;
   }
 
   /** START OF STABLING TESTS */
@@ -3031,11 +3006,6 @@ public final class Version230 {
   @Test public void shortestOperand11() {
     trimmingOf("int h,u,m,a,n;return b==true && n + a> m - u || h> u;")//
         .gives("int h,u,m,a,n;return b&&a+n>m-u||h>u;");
-  }
-
-  @Test public void inliningIntoReturn() {
-    trimmingOf("int k=15;return 7<k;")//
-        .gives("return 7<15;");
   }
 
   /** Introduced by Yogi on Sat-Apr-01-16:37:37-IDT-2017 (code automatically in

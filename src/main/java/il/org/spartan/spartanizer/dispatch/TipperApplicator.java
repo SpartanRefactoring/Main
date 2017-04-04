@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
 
 /** An adapter that converts the protocol of a single @{link Tipper} instance
  * into that of {@link AbstractGUIApplicator}. This class must eventually die.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015/07/25 */
 public final class TipperApplicator extends AbstractGUIApplicator {
   final Tipper<ASTNode> tipper;
@@ -30,14 +30,18 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     // w.technicalName();
   }
 
-  @Override protected void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m, @SuppressWarnings("unused") final Int __) {
+  @Override protected int consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
+    final Int $ = new Int();
     u.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
-        if (¢.getClass() == clazz || tipper.check(¢) || inRange(m, ¢))
-          tipper.tip(¢).go(r, null);
+        if (¢.getClass() != clazz && !tipper.check(¢) && !inRange(m, ¢))
+          return;
+        tipper.tip(¢).go(r, null);
+        $.step();
       }
     });
+    return $.get();
   }
 
   @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {

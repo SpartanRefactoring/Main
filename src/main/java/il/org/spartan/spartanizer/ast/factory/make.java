@@ -34,7 +34,7 @@ import il.org.spartan.utils.*;
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
  * sentence phrase.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-07-16 */
 public enum make {
   /** Strategy for conversion into a class body */
@@ -327,7 +327,7 @@ public enum make {
    * @return parameter, but logically negated and simplified */
   public static Expression notOf(final Expression ¢) {
     assert ¢ != null;
-    final PrefixExpression $ = subject.operand(¢).to(NOT);
+    final PrefixExpression $ = subject.operand(copy.of(¢)).to(NOT);
     assert $ != null;
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;

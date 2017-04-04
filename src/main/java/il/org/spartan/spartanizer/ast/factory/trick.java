@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
 /** A number of utility functions common to all tippers.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-07-17 */
 public enum trick {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
@@ -223,6 +223,6 @@ public enum trick {
   public static ListRewrite statementRewriter(final ASTRewrite r, final Statement s) {
     return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
         : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
-            : monitor.bug("Weird type", s, parent(s));
+            : monitor.bug("Weird type of %s under %s", s, parent(s));
   }
 }

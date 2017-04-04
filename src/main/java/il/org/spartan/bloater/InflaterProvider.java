@@ -79,7 +79,7 @@ public class InflaterProvider extends OperationsProvider {
             new IfElseBlockBloater()) ///
         // new LongIfBloater()) //
         .add(InfixExpression.class, //
-            new ParenthesesBloater(), new TernaryPushup2()) //
+            new ParenthesesBloater(), new TernaryPushup()) //
     ;//
   }
 
