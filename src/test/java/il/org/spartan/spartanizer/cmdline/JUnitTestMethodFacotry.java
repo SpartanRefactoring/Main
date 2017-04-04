@@ -137,8 +137,11 @@ public enum JUnitTestMethodFacotry {
     result.setText("result will be written here");
   //register listener for the selection event
   button.addSelectionListener(new SelectionAdapter() {
+      /**
+       * [[SuppressWarningsSpartan]]
+       */
       @Override
-      public void widgetSelected(SelectionEvent e) {
+      public void widgetSelected(@SuppressWarnings("unused") SelectionEvent e) {
         String s = textBox.getText();
         result.setText("1s tipper: " + theSpartanizer.firstTipper(s) + "\n" +//
         "once: " + theSpartanizer.once(s) + "\n" +//
