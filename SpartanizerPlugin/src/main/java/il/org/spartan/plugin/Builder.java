@@ -131,7 +131,7 @@ public final class Builder extends IncrementalProjectBuilder {
 
   private void build(IProgressMonitor m) throws CoreException {
     final IResourceDelta d = getDelta(getProject());
-    if (d == null)
+    if (d == null || d.getAffectedChildren().length == 0)
       fullBuild(m);
     else
       incrementalBuild(d);
