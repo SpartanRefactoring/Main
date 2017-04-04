@@ -389,7 +389,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.PreferencesChooser" name="Preferences" />
      <command id="il.org.spartan.CharacterShortcut" name="Character Shortcut" />
      <command id="il.org.spartan.CentificationShortcut" name="Centification Shortcut" />
-     <command id="X" name="X" />
+     <command id="il.org.spartan.SpartanWidget" name="Spartan Widget" />
 </extension>
 
 <!-- Handlers of commands: which class to activate for each command id -->
@@ -408,7 +408,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
    <handler commandId="il.org.spartan.CharacterShortcut" class="il.org.spartan.plugin.CharacterShortcut" />
    <handler commandId="il.org.spartan.CentificationShortcut" class="il.org.spartan.plugin.RenamingHandler" />
-   <handler commandId="X" class="il.org.spartan.bloater.SpartanWidgetHandler" />
+   <handler commandId="il.org.spartan.SpartanWidget" class="il.org.spartan.bloater.SpartanWidgetHandler" />
 </extension>
 
 <!-- Menus -->
@@ -562,7 +562,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		commandId="il.org.spartan.CentificationShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+W"
-		commandId="X"
+		commandId="il.org.spartan.SpartanWidget"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 
