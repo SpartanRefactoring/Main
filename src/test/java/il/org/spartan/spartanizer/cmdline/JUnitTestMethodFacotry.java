@@ -123,17 +123,39 @@ public enum JUnitTestMethodFacotry {
     Shell shell = new Shell(display);
     // the layout manager handle the layout
     // of the widgets in the container
-    shell.setLayout(new FillLayout());
+    GridLayout gridLayout = new GridLayout();
+    gridLayout.numColumns = 3;
+    gridLayout.marginWidth = 10;
+    gridLayout.marginHeight = 15;
+    gridLayout.verticalSpacing = 20;
+    shell.setLayout(gridLayout);
     // Shell can be used as container
     Label label = new Label(shell, SWT.BORDER);
-    label.setText("enter whatever:");
+    label.setText("Enter Whatever:");
     label.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
     Text textBox = new Text(shell, SWT.BORDER);
     textBox.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
-    Button button = new Button(shell, SWT.PUSH);
+    GridData gridData = new GridData();
+    gridData.horizontalSpan = 1;
+    gridData.horizontalAlignment = SWT.FILL;
+    gridData.grabExcessHorizontalSpace = true;
+    gridData.verticalAlignment = SWT.FILL;
+    gridData.grabExcessVerticalSpace = true;
+    textBox.setLayoutData(gridData);
+    Button button = new Button(shell, SWT.WRAP);
     button.setText("Go!");
-    Label result = new Label(shell, SWT.BORDER);
-    result.setText("result will be written here");
+    Label resLabel = new Label(shell, SWT.BORDER);
+    resLabel.setText("Auto Generated Test:");
+    resLabel.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
+    Text result = new Text(shell, SWT.READ_ONLY);
+    // result.setText("result will be written here");
+    gridData = new GridData();
+    gridData.horizontalSpan = 1;
+    gridData.horizontalAlignment = SWT.FILL;
+    gridData.grabExcessHorizontalSpace = true;
+    gridData.verticalAlignment = SWT.FILL;
+    gridData.grabExcessVerticalSpace = true;
+    result.setLayoutData(gridData);
     // register listener for the selection event
     button.addSelectionListener(new SelectionAdapter() {
       /** [[SuppressWarningsSpartan]] */
