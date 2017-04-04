@@ -27,7 +27,7 @@ import il.org.spartan.utils.*;
  * <p>
  * The main method is {@link #reflectedCompilationUnit()} which returns a handle
  * to the AST of the {@link CompilationUnit} in which the instance was defined.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-12-18 */
 public abstract class MetaFixture {
   private static final String JAVA_HOME = System.getProperty("java.home");

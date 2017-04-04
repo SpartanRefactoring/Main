@@ -6,7 +6,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Unit tests of
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-17 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })

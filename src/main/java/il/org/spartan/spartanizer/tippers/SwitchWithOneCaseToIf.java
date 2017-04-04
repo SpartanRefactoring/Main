@@ -26,7 +26,7 @@ import il.org.spartan.utils.*;
  * } . Tested in {@link Issue0916}
  * @author Yuval Simon
  * @since 2016-12-18 */
-public class SwitchWithOneCaseToIf extends SwitchZtatement//
+public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x513C764E326D1A98L;
 
@@ -35,7 +35,7 @@ public class SwitchWithOneCaseToIf extends SwitchZtatement//
   }
 
   public SwitchWithOneCaseToIf() {
-    andAlso(Proposition.that("Exactly 2 cases", () -> (cases.size() == 2)));
+    andAlso(Proposition.that("Exactly twow cases", () -> (cases.size() == 2)));
     andAlso(Proposition.that("Has default case", () -> (first(cases).isDefault() || last(cases).isDefault())));
     andAlso(Proposition.that("Different branches", () -> {
       boolean foundSeq = false;
@@ -75,24 +75,24 @@ public class SwitchWithOneCaseToIf extends SwitchZtatement//
   }
 
   private static List<Statement> removeBreaks(final List<Statement> src) {
-    return src.stream().map(λ -> cleanBreaks(λ)).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
+    return src.stream().map(SwitchWithOneCaseToIf::cleanBreaks).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
   }
 
-  private static Statement cleanBreaks(final Statement s) {
-    if (s == null)
+  private static Statement cleanBreaks(final Statement ¢) {
+    if (¢ == null)
       return null;
-    switch (s.getNodeType()) {
+    switch (¢.getNodeType()) {
       case BREAK_STATEMENT:
-        return s.getAST().newEmptyStatement();
+        return ¢.getAST().newEmptyStatement();
       case BLOCK:
-        return subject.ss(statements(az.block(s)).stream().map(λ -> cleanBreaks(λ)).collect(Collectors.toList())).toBlock();
+        return subject.ss(statements(az.block(¢)).stream().map(SwitchWithOneCaseToIf::cleanBreaks).collect(Collectors.toList())).toBlock();
       case IF_STATEMENT:
-        final IfStatement $ = copy.of(az.ifStatement(s));
+        final IfStatement $ = copy.of(az.ifStatement(¢));
         $.setThenStatement(cleanBreaks(then($)));
         $.setElseStatement(cleanBreaks(elze($)));
         return $;
       default:
-        return copy.of(s);
+        return copy.of(¢);
     }
   }
 }

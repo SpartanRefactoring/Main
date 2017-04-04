@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** convert {@code if (x) { f(); return a; } else { g(); {} } } into {@code if
  * (x) { f(); return a; } g(); }
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {

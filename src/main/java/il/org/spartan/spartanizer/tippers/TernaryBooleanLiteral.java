@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * </code> or <code>
  * <b>null</b>
  * </code> .
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-07-20 */
 public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalExpression> //
     implements TipperCategory.NOP.onBooleans {
