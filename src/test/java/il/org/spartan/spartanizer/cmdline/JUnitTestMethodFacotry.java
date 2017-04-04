@@ -9,6 +9,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
+import org.eclipse.swt.*;
+import org.eclipse.swt.events.*;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
@@ -116,6 +120,44 @@ public enum JUnitTestMethodFacotry {
 
   public static void main(final String[] args) {
     System.out.println("enter whatever:");
+    Display display = new Display();
+    Shell shell = new Shell(display);
+    // the layout manager handle the layout
+    // of the widgets in the container
+    shell.setLayout(new FillLayout());
+ // Shell can be used as container
+    Label label = new Label(shell, SWT.BORDER);
+    label.setText("enter whatever:");
+    label.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
+    Text textBox = new Text(shell, SWT.BORDER);
+    textBox.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
+    Button button =  new Button(shell, SWT.PUSH);
+    button.setText("Go!");
+    Label result = new Label(shell, SWT.BORDER);
+    result.setText("result will be written here");
+  //register listener for the selection event
+  button.addSelectionListener(new SelectionAdapter() {
+      @Override
+      public void widgetSelected(SelectionEvent e) {
+        String s = textBox.getText();
+        result.setText("1s tipper: " + theSpartanizer.firstTipper(s) + "\n" +//
+        "once: " + theSpartanizer.once(s) + "\n" +//
+        "twice: " + theSpartanizer.twice(s) + "\n" +//
+        "thrice: " + theSpartanizer.thrice(s) + "\n" +//
+        "fixed: " + theSpartanizer.repetitively(s) + "\n" +//
+        JUnitTestMethodFacotry.from(namer.signature(s), s) + "\n" +//
+        "");
+      }
+  });
+    // set widgets size to their preferred size
+    label.pack();
+    textBox.pack();
+    button.pack();
+    shell.open();
+    while (!shell.isDisposed())
+      if (!display.readAndDispatch())
+        display.sleep();
+    display.dispose();
     try (Scanner reader = new Scanner(System.in)) {
       String s = "";
       while (reader.hasNext())
