@@ -8,7 +8,7 @@ import org.junit.*;
 import il.org.spartan.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Dec 26, 2016 */
 public final class EnvironmentTestSpawningAndManualAddition {
   private final Environment e0 = Environment.genesis();

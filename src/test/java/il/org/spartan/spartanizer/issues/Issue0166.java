@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for
  * {@link SingleVariableDeclarationEnhancedForRenameParameterToIt}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }AssignmentUpdateAndSameUpdate
  * <p>
  * Tested by {@link Issue1132}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-04 */
 public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {

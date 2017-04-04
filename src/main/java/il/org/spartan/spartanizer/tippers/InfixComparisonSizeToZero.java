@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * and {@code x.size()>=1} {@code !x.isEmpty()}, {@code x.size()<0} to
  * {@code false}, and {@code x.size()>=0} to {@code true}.
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @author Dor Ma'ayan<code><dor.d.ma [at] gmail.com></code>
  * @author Niv Shalmon <code><shalmon.niv [at] gmail.com></code>
  * @author Stav Namir <code><stav1472 [at] gmail.com></code>

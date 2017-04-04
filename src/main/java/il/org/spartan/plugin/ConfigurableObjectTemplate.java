@@ -5,7 +5,7 @@ package il.org.spartan.plugin;
 /** DemonsrateLambdaChains of recommended use of {@link Listener.S} Copy the
  * code, changing the name {@link ConfigurableObjectTemplate} to whatever you
  * need. provide.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Oct 19, 2016 */
 public interface ConfigurableObjectTemplate {
   @SuppressWarnings({ "ClassWithTooManyFields", "CanBeFinal" })

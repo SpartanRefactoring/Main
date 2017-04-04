@@ -11,7 +11,7 @@ import java.util.function.*;
  * <p>
  * This class is not expected to be instantiated by clients; use as demonstrated
  * above
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-10 */
 public interface lazy<T> extends Supplier<T> {
   static <T> lazy<T> get(@¢ final Supplier<T> ¢) {
