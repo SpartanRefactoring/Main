@@ -4,7 +4,7 @@
  * we do not because some of the tests rely on the functions here returning
  * false/true, or for no reason. No one really know...
  *
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  *
  * @see ExclusionManager */
 package il.org.spartan.spartanizer.tippers;
@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-09 */
 public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarationExpression>//
     implements TipperCategory.Centification {

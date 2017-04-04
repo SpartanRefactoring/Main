@@ -7,7 +7,7 @@ import java.util.*;
 import il.org.spartan.spartanizer.annotation.*;
 
 /** tests for class {@link Environment}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Dec 26, 2016 */
 @SuppressWarnings("all")
 public final class EnvironmentTests {

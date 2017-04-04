@@ -4,7 +4,7 @@ import il.org.spartan.utils.*;
 import il.org.spartan.utils.Proposition.*;
 
 /** Render {@link Proposition} using Java/C/C++ notation.
- * @author Yossi Gil {@code yossi.gil@gmail.com}
+ * @author Yossi Gil
  * @since 2017-03-19 */
 public class PropositionJavaNotation extends PropositionInfixNotation {
   @Override protected String close() {

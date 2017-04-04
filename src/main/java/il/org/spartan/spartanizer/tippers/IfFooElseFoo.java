@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
-/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/** @author Yossi Gil
  * @since 2015-09-05 */
 public final class IfFooElseFoo extends IfAbstractPattern implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -0x104869FF3436EC68L;
