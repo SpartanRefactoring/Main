@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
 /** Applies bottom up reduction of the statements tree
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-29 */
 public abstract class StatementReduce<T> {
   protected T map(final ArrayAccess ¢) {

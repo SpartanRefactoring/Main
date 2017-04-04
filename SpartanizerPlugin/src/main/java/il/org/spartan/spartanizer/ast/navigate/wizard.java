@@ -43,7 +43,7 @@ import il.org.spartan.utils.range.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2014 */
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
@@ -297,7 +297,7 @@ public interface wizard {
    * @return correspond operator - ¢.¢. "<=" will become ">", "+" will stay
    *         "+". */
   static InfixExpression.Operator conjugate(final InfixExpression.Operator ¢) {
-    return !wizard.conjugate.containsKey(¢) ? ¢ : wizard.conjugate.get(¢);
+    return wizard.conjugate.getOrDefault(¢, ¢);
   }
 
   /** @param ns unknown number of nodes to check

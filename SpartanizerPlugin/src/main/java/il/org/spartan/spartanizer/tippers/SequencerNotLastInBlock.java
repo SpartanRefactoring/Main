@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** Convert {@code throw X;statement;} to {@code throw X;}.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016 */
 public final class SequencerNotLastInBlock<S extends Statement> extends GoToNextStatement<S>//
     implements TipperCategory.Deadcode {

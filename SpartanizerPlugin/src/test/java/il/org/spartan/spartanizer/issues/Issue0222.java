@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests for centification of a single parameter to a function even if it
  * defines a "$"variable
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

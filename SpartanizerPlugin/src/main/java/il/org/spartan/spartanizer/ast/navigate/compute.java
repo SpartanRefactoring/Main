@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static java.util.stream.Collectors.*;
+
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 import java.util.stream.*;
@@ -14,14 +15,42 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-04-01 */
 public enum compute {
   ;
-  public static List<String> useSpots(final Expression x) {
+  public static List<String> usedNames(final Expression x) {
     return new ASTMapReducer<List<String>>() {
       @Override public List<String> reduce() {
         return empty.list(); 
+      }
+
+      @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {
+        if (ss1 == null && ss2 == null)
+          return new ArrayList<>();
+        if (ss1 == null)
+          return ss2;
+        if (ss2 == null)
+          return ss1;
+        ss1.addAll(ss2);
+        return ss1;
+      }
+
+      @Override protected List<String> map(final SimpleName ¢) {
+        final String $ = ¢.getIdentifier();
+        return guessName.of($) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list($);
+      }
+
+      @Override protected List<String> map(@SuppressWarnings("unused") final ThisExpression ¢) {
+        return reduce();
+      }
+    }.map(x);
+  }
+
+  public static List<String> useSpots(final Expression x) {
+    return new ASTMapReducer<List<String>>() {
+      @Override public List<String> reduce() {
+        return empty.list();
       }
 
       @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {

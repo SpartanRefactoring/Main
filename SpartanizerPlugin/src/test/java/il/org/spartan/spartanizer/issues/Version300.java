@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 
 /** Misc unit tests with no better other place for version 3.00
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-09 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
@@ -42,8 +42,6 @@ public class Version300 {
     trimmingOf("int k=1;return k > 0;")//
         .gives("return 1>0;");
   }
-
-
 
   @FunctionalInterface
   interface Find {
@@ -398,7 +396,7 @@ public class Version300 {
         .gives("int a(int b){for(;b<100;b+=1){}return b;}");
   }
 
-  @UnderConstruction("") private Block kill(final Expression ¢) {
+  @UnderConstruction private Block kill(final Expression ¢) {
     final Block $ = ¢.getAST().newBlock();
     statements($).addAll(wizard.decompose(¢));
     return $;

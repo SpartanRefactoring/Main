@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * {@link #gives(String)}, {@link #stays()}, or {@link #doesNotCrash()}. Prior
  * to that, it can be restricted to certain {@link Tipper}s, by using
  * {@link #using(Class, Tipper)} or {@link #using(Class, Tipper...)}.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-12 */
 public class TrimmingOperand extends Wrapper<String> {
   protected static final String QUICK = "Quick fix: MARK, COPY, PASTE, and REFORMAT is:\n";

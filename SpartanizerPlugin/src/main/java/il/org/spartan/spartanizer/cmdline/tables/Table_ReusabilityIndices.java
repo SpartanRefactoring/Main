@@ -13,7 +13,7 @@ import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
 /** Collects various reusability indices for a given folder(s)
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016 */
 public class Table_ReusabilityIndices {
   static Table writer;

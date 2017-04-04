@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
 
 /** Determines whether a node can be executed multiple times within a given
  * context side of assignments
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-18 */
 public class PossiblyMultipleExecution {
   /** Instantiates this class */

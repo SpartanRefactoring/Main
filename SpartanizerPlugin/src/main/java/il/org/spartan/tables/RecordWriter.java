@@ -6,7 +6,7 @@ import java.util.*;
 import il.org.spartan.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-12-25 */
 public class RecordWriter implements Closeable {
   /** Create a new instance, writing into a given named file

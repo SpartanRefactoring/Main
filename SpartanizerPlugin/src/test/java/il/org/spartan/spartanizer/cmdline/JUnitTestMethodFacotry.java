@@ -29,7 +29,6 @@ public enum JUnitTestMethodFacotry {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
 
-
   public static String unWrapedTestCase(final String raw) {
     return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
