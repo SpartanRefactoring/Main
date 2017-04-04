@@ -51,7 +51,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @Override public String description() {
-    return super.description();
+    return nanoName();
   }
 
   public abstract String description(N n);
