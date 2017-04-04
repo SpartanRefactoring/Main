@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * minimal dispatching at the node level, selecting and applying the most
  * appropriate such object for a given {@link ASTNode}. Dispatching at the tree
  * level is done in class {@link Trimmer}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
  * @since 2015-08-22 */
 public class Toolbox {
   @SuppressWarnings("unchecked")

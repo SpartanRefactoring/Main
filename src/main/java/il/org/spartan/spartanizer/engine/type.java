@@ -29,7 +29,7 @@ import il.org.spartan.spartanizer.java.*;
 /** An interface for fluent api, used to determine the type of an expression
  * from it's structure and context. Use type.get to find the type of an
  * expression.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @author Dor Maayan
  * @author Niv Shalmon
  * @since 2016 */
@@ -504,7 +504,7 @@ public interface type {
   }
 
   /** Types we do not fully understand yet.
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @author Niv Shalmon
    * @since 2016 */
   interface Odd extends inner.implementation {
@@ -535,7 +535,7 @@ public interface type {
   }
 
   /** Primitive type or a set of primitive types
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2016 */
   interface Primitive extends inner.implementation {
     /** @return All {@link Certain} types that an expression of this type can
@@ -544,7 +544,7 @@ public interface type {
 
     /** Primitive types known for certain. {@link String} is also considered
      * {@link Primitive.Certain}
-     * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+     * @author Yossi Gil
      * @since 2016 */
     enum Certain implements Primitive {
       BOOLEAN("boolean", "must be boolean: !f(), f() || g() ", "Boolean")//
@@ -595,7 +595,7 @@ public interface type {
 
     /** A set of {@link Primitive.Certain} types, where the expressions type
      * cannot be determined for certain
-     * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+     * @author Yossi Gil
      * @author Niv Shalmon
      * @since 2016-08-XX */
     enum Uncertain implements Primitive {
