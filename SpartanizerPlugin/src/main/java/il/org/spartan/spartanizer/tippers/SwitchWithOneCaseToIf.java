@@ -38,15 +38,8 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
     andAlso(Proposition.that("Exactly twow cases", () -> (cases.size() == 2)));
     andAlso(Proposition.that("Has default case", () -> (first(cases).isDefault() || last(cases).isDefault())));
     andAlso(Proposition.that("Different branches", () -> {
-      boolean foundSeq = false;
-      int count = 0;
-      for (final Statement ¢ : statements) {
-        if (iz.sequencerComplex(¢))
-          foundSeq = true;
-        if (iz.switchCase(¢) && ++count == 2 && !foundSeq)
-          return false;
-      }
-      return true;
+      assert cases.size() == 2; // I assume this proposition is checked only if the first propositions is true
+      return statements.subList(statements.indexOf(cases.get(0)), statements.indexOf(cases.get(1))).stream().anyMatch(iz::sequencerComplex);
     }));
   }
 
