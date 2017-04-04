@@ -37,7 +37,7 @@ import il.org.spartan.utils.*;
  * <li>Consolidation: it does not make sense to apply one tipper after the
  * other. Batch processing is required.
  * </ol>
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015/07/10 */
 public class Trimmer extends AbstractGUIApplicator {
   public static boolean silent;
@@ -76,7 +76,8 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 
-  @Override public void consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m, @NotNull final Int i) {
+  @Override public int consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m) {
+    final Int $ = new Int();
     @Nullable final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
     @NotNull final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
@@ -105,7 +106,7 @@ public class Trimmer extends AbstractGUIApplicator {
         }
         if (s == null)
           return true;
-        i.step();
+        $.step();
         TrimmerLog.application(r, s);
         return true;
       }
@@ -114,6 +115,7 @@ public class Trimmer extends AbstractGUIApplicator {
         disabling.scan(¢);
       }
     });
+    return $.get();
   }
 
   public String fixed(final String from) {
@@ -140,7 +142,7 @@ public class Trimmer extends AbstractGUIApplicator {
   public TextEdit once(@NotNull final IDocument $) throws AssertionError {
     final TextEdit e;
     try {
-      e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
+      e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get()), new Int()).rewriteAST($, null);
       e.apply($);
     } catch (@NotNull final NullPointerException | MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       if (!silent)

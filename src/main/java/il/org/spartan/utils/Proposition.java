@@ -11,7 +11,7 @@ import il.org.spartan.*;
  * <li>discuss asString()
  * <li>discuss fullEval() *
  * </ol>
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-06 */
 public interface Proposition extends BooleanSupplier {
   static Proposition AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
@@ -165,7 +165,7 @@ public interface Proposition extends BooleanSupplier {
   }
 
   /** A parenthesized {@link Proposition}
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2017-03-19 */
   class Singleton extends Aggregate<BooleanSupplier> implements Recursive.Atomic<Proposition> {
     public Singleton(final BooleanSupplier inner) {
@@ -194,7 +194,7 @@ public interface Proposition extends BooleanSupplier {
   }
 
   /** A compound {@link Proposition}
-   * @author Yossi Gil {@code yossi.gil@gmail.com}
+   * @author Yossi Gil
    * @since 2017-03-19 */
   abstract class Some extends Aggregate<List<BooleanSupplier>> {
     public Some(final String toString) {

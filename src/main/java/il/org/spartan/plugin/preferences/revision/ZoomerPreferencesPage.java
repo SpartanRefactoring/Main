@@ -12,15 +12,15 @@ import il.org.spartan.plugin.*;
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-04-02 */
 public class ZoomerPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-  @Override public void init(@SuppressWarnings("unused") final IWorkbench w) {
+  @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(Plugin.plugin().getPreferenceStore());
     setDescription(ZOOMER_PAGE_DESCRIPTION);
-    store().addPropertyChangeListener(e -> {
-      if (e != null && e.getProperty() != null)
-        switch (e.getProperty()) {
+    store().addPropertyChangeListener(λ -> {
+      if (λ != null && λ.getProperty() != null)
+        switch (λ.getProperty()) {
           case ZOOMER_REVERT_METHOD_ID:
-            if (e.getNewValue() instanceof Boolean)
-              ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) e.getNewValue()).booleanValue());
+            if (λ.getNewValue() instanceof Boolean)
+              ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
             break;
           default:
             break;

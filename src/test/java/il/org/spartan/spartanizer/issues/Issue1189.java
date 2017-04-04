@@ -11,17 +11,18 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.Proposition.*;
 
 /** pretty print of proposition and testing
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>
  * @since 2017-03-30 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "static-method", "javadoc" })
+@SuppressWarnings({ "static-method", "javadoc", "unused" })
 public class Issue1189 {
   private static final String TAB = "\t";
   private static final String NL = "\n";
 
-  @Test @SuppressWarnings("unused") public void a() {
+  @Test public void a() {
     azzert.that(AND("A:", that("B1", () -> {
       throw new AssertionError();
     }), OR("B2:", that("C1", T), that("C2", X), AND("C3:", that("D1", X), that("D2", F))))

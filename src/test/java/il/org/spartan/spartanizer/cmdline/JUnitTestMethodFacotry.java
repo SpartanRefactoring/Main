@@ -168,6 +168,7 @@ public enum JUnitTestMethodFacotry {
       System.out.println("thrice: " + theSpartanizer.thrice(s));
       System.out.println("fixed: " + theSpartanizer.repetitively(s));
       System.out.println(JUnitTestMethodFacotry.from(namer.signature(s), s));
+      System.out.println(JUnitTestMethodFacotry.makeTipperUnitTest(s));
     }
   }
 

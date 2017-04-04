@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 
 /** Misc unit tests with no better other place for version 3.00
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-09 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
@@ -41,25 +41,6 @@ public class Version300 {
   @Test public void i1() {
     trimmingOf("int k=1;return k > 0;")//
         .gives("return 1>0;");
-  }
-
-  @Test public void i2() {
-    trimmingOf("int k=1;return 0<k;")//
-        .gives("return 0<1;");
-  }
-
-  @Test public void a0() {
-    trimmingOf("int a(){int $=13;return $;}") //
-        .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
-        .gives("int a(){return 13;}") //
-    ;
-  }
-
-  @Test public void a1() {
-    trimmingOf("int a(){int $=13;return $+$;}") //
-        .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
-        .gives("int a(){return 13+13;}") //
-    ;
   }
 
   @FunctionalInterface
@@ -415,7 +396,7 @@ public class Version300 {
         .gives("int a(int b){for(;b<100;b+=1){}return b;}");
   }
 
-  @UnderConstruction("") private Block kill(final Expression ¢) {
+  @UnderConstruction private Block kill(final Expression ¢) {
     final Block $ = ¢.getAST().newBlock();
     statements($).addAll(wizard.decompose(¢));
     return $;
