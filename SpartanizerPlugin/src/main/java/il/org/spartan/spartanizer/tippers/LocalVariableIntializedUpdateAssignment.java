@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.patterns.*;
  * } into {@code
  * int a = 3;
  * }
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalVariableIntializedUpdateAssignment extends $FragmentAndStatement//
     implements TipperCategory.Unite {

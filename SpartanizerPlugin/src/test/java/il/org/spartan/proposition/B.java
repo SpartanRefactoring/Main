@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.*;
 
 /** games of metrics
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil
  * @since 2017-03-27 */
 public class B {
   static Map<B, Set<B>> better = new HashMap<>();

@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
+ * @author Yossi Gil
  * @since 2017-03-23 */
 @SuppressWarnings("static-method")
 public class Issue1153 {

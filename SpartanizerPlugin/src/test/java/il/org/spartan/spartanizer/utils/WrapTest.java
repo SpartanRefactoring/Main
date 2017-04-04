@@ -10,7 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Oct 7, 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class WrapTest {

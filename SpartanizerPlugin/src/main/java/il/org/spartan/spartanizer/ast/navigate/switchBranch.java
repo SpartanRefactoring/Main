@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static java.util.Comparator.*;
+
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.lisp.*;
@@ -38,10 +40,10 @@ public class switchBranch {
         : o2.hasDefault() ? -1 : 0;
     static final Comparator<switchBranch> bySequencerLevel = (final switchBranch o1,
         final switchBranch o2) -> o1.sequencerLevel() == 0 || o2.sequencerLevel() == 0 ? 0 : o1.sequencerLevel() - o2.sequencerLevel();
-    static final Comparator<switchBranch> byDepth = (final switchBranch o1, final switchBranch o2) -> o1.depth() - o2.depth();
-    static final Comparator<switchBranch> byStatementsNum = (final switchBranch o1, final switchBranch o2) -> o1.statementsNum() - o2.statementsNum();
-    static final Comparator<switchBranch> byNodesNum = (final switchBranch o1, final switchBranch o2) -> o1.nodesNum() - o2.nodesNum();
-    static final Comparator<switchBranch> byCasesNum = (final switchBranch o1, final switchBranch o2) -> o1.casesNum() - o2.casesNum();
+    static final Comparator<switchBranch> byDepth = comparingInt(switchBranch::depth);
+    static final Comparator<switchBranch> byStatementsNum = comparingInt(switchBranch::statementsNum);
+    static final Comparator<switchBranch> byNodesNum = comparingInt(switchBranch::nodesNum);
+    static final Comparator<switchBranch> byCasesNum = comparingInt(switchBranch::casesNum);
     static final Comparator<switchBranch> byNumericOrder = (final switchBranch o1, final switchBranch o2) -> numericOrder
         .compare(lowestLexicoCase(o1), lowestLexicoCase(o2));
 

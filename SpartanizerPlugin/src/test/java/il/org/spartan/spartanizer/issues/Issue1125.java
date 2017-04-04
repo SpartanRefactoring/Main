@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * {@link ForEmptyBlockToEmptyStatement},
  * {@link WhileEmptyBlockToEmptyStatement} and
  * {@link DoWhileEmptyBlockToEmptyStatement}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()} for documentation
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-08-28 */
 public final class AssignmentAndAssignmentOfSameValue extends GoToNextStatement<Assignment>//
     implements TipperCategory.CommnonFactoring {

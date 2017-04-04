@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
 /** Convert {@code if(a){f();return;}g();} into {@code if(a){f();return;}g();}
  * f(); } provided that this {@code if} statement is the last statement in a
  * method.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016 */
 public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNextStatement<IfStatement>//
     implements TipperCategory.EarlyReturn {

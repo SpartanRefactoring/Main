@@ -9,7 +9,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 
 /** *
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Oct 16, 2016 */
 public final class RefreshAll extends BaseHandler {
   public static void go() {
@@ -21,7 +21,8 @@ public final class RefreshAll extends BaseHandler {
     new Thread(() -> {
       try {
         if (p.isOpen() && p.getNature(Nature.NATURE_ID) != null)
-          p.build(IncrementalProjectBuilder.FULL_BUILD, npm);
+          p.touch(npm);
+        // p.build(IncrementalProjectBuilder.FULL_BUILD, npm);
       } catch (final CoreException ¢) {
         monitor.logEvaluationError(new RefreshAll(), ¢);
       }

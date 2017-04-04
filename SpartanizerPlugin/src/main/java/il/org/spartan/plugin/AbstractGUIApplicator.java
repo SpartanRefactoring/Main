@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
 /** the base class for all GUI applicators contains common functionality
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <boris.van.sosin [at] gmail.com>} (v2)
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}: major refactoring 2013/07/10
+ * @author Yossi Gil: major refactoring 2013/07/10
  * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
 @SuppressWarnings("ALL")
@@ -118,16 +118,15 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   /** creates an ASTRewrite which contains the changes
-   * @param counter
    * @param u the Compilation Unit (outermost ASTNode in the Java Grammar)
    * @param m a progress monitor in which the progress of the refactoring is
    *        displayed
    * @return an ASTRewrite which contains the changes */
-  private ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
+  public ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
     return rewriterOf(¢, null, counter);
   }
 
-  public final ASTRewrite createRewrite(final CompilationUnit ¢) {
+  public ASTRewrite createRewrite(final CompilationUnit ¢) {
     return rewriterOf(¢, null, new Int());
   }
 
@@ -275,7 +274,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
     progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    consolidateTips($, u, m, counter);
+    counter.add(consolidateTips($, u, m));
     progressMonitor.done();
     return $;
   }
@@ -316,11 +315,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return name;
   }
 
-  protected abstract void consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m, Int counter);
-
-  public void consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    consolidateTips(r, u, m, new Int());
-  }
+  protected abstract int consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m);
 
   /** Determines if the node is outside of the selected text.
    * @return whether the node is not inside selection. If there is no selection

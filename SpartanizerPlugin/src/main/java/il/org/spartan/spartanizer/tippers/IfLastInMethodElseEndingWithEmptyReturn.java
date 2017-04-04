@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** convert {@code if(a)f();else{g();return;} } into
  * {@code if(a)f();else{g();;}} provided that this {@code if} statement is the
  * last statement in a method.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @author Daniel Mittelman {@code <mittelmania [at] gmail.com>}
  * @since 2015-09-09 */
 public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<IfStatement>//

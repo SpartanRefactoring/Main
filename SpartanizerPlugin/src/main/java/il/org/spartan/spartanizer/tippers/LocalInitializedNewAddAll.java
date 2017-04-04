@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.patterns.*;
  * } to {@code
  * T a = new ArrayList<>(x)
  * }
+ * @author Yossi Gil
  * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM} {@code Yossi.Gil@GMail.COM}
  * @since 2017-03-02 */
 public final class LocalInitializedNewAddAll extends LocalInitialized //
     implements TipperCategory.Inlining {
@@ -49,8 +49,7 @@ public final class LocalInitializedNewAddAll extends LocalInitialized //
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    final ListRewrite listRewrite = $.getListRewrite(newExpression, ClassInstanceCreation.ARGUMENTS_PROPERTY);
-    listRewrite.insertFirst(copy.of(argument), g);
+    $.getListRewrite(newExpression, ClassInstanceCreation.ARGUMENTS_PROPERTY).insertFirst(copy.of(argument), g);
     remove.statement(nextStatement, $, g);
     return $;
   }

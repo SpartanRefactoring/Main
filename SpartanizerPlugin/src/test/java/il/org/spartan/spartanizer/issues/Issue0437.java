@@ -6,7 +6,7 @@ import org.junit.runners.*;
 /** Failing tests from {@link InfixIndexOfToStringContainsTest} The reason these
  * tests fail is because {@link type.isString()} cannot infer types of variables
  * as strings unless they are string literals...
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")

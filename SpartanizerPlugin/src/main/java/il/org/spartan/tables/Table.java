@@ -11,7 +11,7 @@ import il.org.spartan.utils.*;
 /** A relation is just another name for a table that contains elements of type
  * {@link Record}. This class provides fluent API for generating tables,
  * including aggregation information.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-12-25 */
 public class Table extends Row<Table> implements Closeable {
   private static final long serialVersionUID = 0x4AA7BE471985E874L;

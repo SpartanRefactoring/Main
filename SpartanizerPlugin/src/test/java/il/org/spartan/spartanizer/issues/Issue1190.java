@@ -19,20 +19,19 @@ public class Issue1190 {
 
   @Before public void setUp() {
     trimmer = new Trimmer(Toolbox.defaultInstance());
-    trimmer.setExceptionListener(¢ -> {
-      ¢.printStackTrace();
+    trimmer.setExceptionListener(λ -> {
+      λ.printStackTrace();
       assert false;
     });
   }
 
   @Test(timeout = 30000) public void runTheSpartinizerOnItself() {
     new ASTInFilesVisitor(new String[] { "-i", ".", "." }) {
-      @Override protected void visit(final java.io.File ¢) {
+      @Override protected void visit(final File f) {
         try {
-          trimmer.fixed(FileUtils.read(¢));
-        } catch (final IOException e) {
-          e.printStackTrace();
-          assert false;
+          trimmer.fixed(FileUtils.read(f));
+        } catch (final IOException ¢) {
+          monitor.infoIOException(¢, "Cannot read: " + f);
         }
       }
     }.fire(new ASTVisitor() {/**/});
