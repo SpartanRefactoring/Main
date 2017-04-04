@@ -22,6 +22,7 @@ public final class RefreshAll extends BaseHandler {
       try {
         if (p.isOpen() && p.getNature(Nature.NATURE_ID) != null)
           p.touch(npm);
+        // see issue #767
         // p.build(IncrementalProjectBuilder.FULL_BUILD, npm);
       } catch (final CoreException ¢) {
         monitor.logEvaluationError(new RefreshAll(), ¢);
