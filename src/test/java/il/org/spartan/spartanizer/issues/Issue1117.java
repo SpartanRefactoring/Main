@@ -8,7 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/** @author Yossi Gil
  * @since Jan 23, 2017 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" })

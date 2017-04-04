@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.ast.safety;
 import org.eclipse.jdt.core.dom.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-12-27 */
 public enum property {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;

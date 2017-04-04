@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @author Doron Meshulam
  * @since 2016-09 */
 public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedForStatement>//

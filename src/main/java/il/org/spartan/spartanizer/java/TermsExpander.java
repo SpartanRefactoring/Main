@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.engine.*;
  * {@code a + (b+c+(d-e))} into {@code a+b+c+d-e}
  * <p>
  * Functions named {@link #base} are non-recursive
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-08 */
 public enum TermsExpander {
   ;

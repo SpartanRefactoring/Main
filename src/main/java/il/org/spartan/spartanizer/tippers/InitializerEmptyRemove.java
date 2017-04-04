@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** Restructuring
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-21 */
 public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
     implements TipperCategory.SyntacticBaggage {

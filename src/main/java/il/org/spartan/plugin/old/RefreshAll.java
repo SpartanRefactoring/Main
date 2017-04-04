@@ -9,7 +9,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
 
 /** *
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Oct 16, 2016 */
 public final class RefreshAll extends BaseHandler {
   public static void go() {
