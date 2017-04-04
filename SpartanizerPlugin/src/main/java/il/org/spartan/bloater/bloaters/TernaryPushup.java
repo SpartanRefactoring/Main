@@ -1,45 +1,53 @@
 package il.org.spartan.bloater.bloaters;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.factory.subject.*;
+import static il.org.spartan.utils.Proposition.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
-/** convert {@code
- * a + (cond ? b : c)
-} to * {@code
- * cond ? a + b : a + c
- *
- * } Test case is {@link Issue1049}
- * @author YuvalSimon {@code yuvaltechnion@gmail.com}
- * @since 2017-01-18 */
-public class TernaryPushup extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Bloater {
-  private static final long serialVersionUID = -0x35ED2C85806FEF8AL;
+/** Example in {@link #examples} Test case is {@link Issue1049}
+ * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
+ * @since 2017-03-30 */
+public final class TernaryPushup extends InfixExprezzion implements TipperCategory.Bloater {
+  private static final long serialVersionUID = 0x711512B65712ADF4L;
+  Expression operandCondition, operandThen, operandElze;
+  private ConditionalExpression leftConditional;
+  private ConditionalExpression operandConditional;
 
-  @Override public ASTNode replacement(final InfixExpression x) {
-    final Expression l = extract.core(left(x)), r = extract.core(right(x));
-    if (iz.conditionalExpression(r)) {
-      final ConditionalExpression $ = az.conditionalExpression(r);
-      return subject.pair(subject.pair(l, then($)).to(operator(x)), subject.pair(l, elze($)).to(operator(x))).toCondition(expression($));
-    }
-    final ConditionalExpression ll = az.conditionalExpression(l);
-    return subject.pair(subject.pair(then(ll), r).to(operator(x)), subject.pair(elze(ll), r).to(operator(x))).toCondition(expression(ll));
+  @Override public Examples examples() {
+    return convert("x = a + (cond ? b : c);").to("x = cond ? a + b : a + c;").convert("x = (cond ? b : c) + a;").to("x = cond ? b + a : c + a;");
   }
 
-  @Override protected boolean prerequisite(final InfixExpression x) {
-    if (x == null)
-      return false;
-    final Expression $ = extract.core(left(x)), r = extract.core(right(x));
-    return iz.conditionalExpression(r) && !haz.sideEffects(expression(az.conditionalExpression(r)))
-        || iz.conditionalExpression($) && !haz.sideEffects(expression(az.conditionalExpression($)));
+  public TernaryPushup() {
+    andAlso(OR("Right or left operand is ternary expression",
+        () -> iz.not.null¢(operandConditional = az.conditionalExpression(extract.core(right))) //
+            && iz.not.null¢(operandCondition = step.expression(operandConditional)) //
+            && iz.not.null¢(operandThen = step.then(operandConditional)) //
+            && iz.not.null¢(operandElze = step.elze(operandConditional)),
+        () -> iz.not.null¢(leftConditional = az.conditionalExpression(extract.core(left)))
+            && iz.not.null¢(operandCondition = step.expression(leftConditional)) //
+            && iz.not.null¢(operandThen = step.then(leftConditional)) //
+            && iz.not.null¢(operandElze = step.elze(leftConditional))));
+    andAlso("Condition has no side effect", //
+        () -> !haz.sideEffects(operandCondition));
+  }
+
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+    r.replace(current,
+        (iz.conditionalExpression(extract.core(right)) ? pair(pair(left, operandThen).to(operator), pair(left, operandElze).to(operator))
+            : pair(pair(operandThen, right).to(operator), pair(operandElze, right).to(operator))).toCondition(operandCondition),
+        g);
+    return r;
   }
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
