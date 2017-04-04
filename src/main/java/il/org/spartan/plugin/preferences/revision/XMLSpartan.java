@@ -87,7 +87,7 @@ public class XMLSpartan {
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
     }
-    tgs.entrySet().forEach(λ -> $.put(tcs.get(λ.getKey()), λ.getValue().toArray(new SpartanTipper[λ.getValue().size()])));
+    tgs.forEach((key, value) -> $.put(tcs.get(key), value.toArray(new SpartanTipper[value.size()])));
     return $;
   }
 

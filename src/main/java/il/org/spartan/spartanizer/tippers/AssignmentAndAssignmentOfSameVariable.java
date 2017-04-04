@@ -43,7 +43,7 @@ public class AssignmentAndAssignmentOfSameVariable extends GoToNextStatement<Ass
 
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Assignment nextAssignment = Optional.of(nextStatement) //
-        .map(λ -> az.expressionStatement(λ)) //
+        .map(az::expressionStatement) //
         .map(λ -> az.assignment(λ.getExpression())).orElse(null);
     if (nextAssignment == null || !Operator.ASSIGN.equals(a.getOperator()) || !Operator.ASSIGN.equals(nextAssignment.getOperator()))
       return null;

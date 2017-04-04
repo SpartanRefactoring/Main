@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalUninitializedDead extends LocalVariableUninitialized implements TipperCategory.Deadcode {
   private static final long serialVersionUID = 0x14812B0904DFB002L;

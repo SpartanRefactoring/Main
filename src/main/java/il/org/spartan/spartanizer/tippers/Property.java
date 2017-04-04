@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-03-30 */
 public @interface Property {
   enum Value {

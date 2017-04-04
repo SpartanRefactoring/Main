@@ -26,7 +26,7 @@ public final class analyzeTest {
   private static final ASTNode AST = make.ast("public void m(int y){ y=5;}");
 
   @Test public void a() {
-    final List<String> s = analyze.dependencies(make.ast("return x + y;")).stream().collect(toList());
+    final List<String> s = new ArrayList<>(analyze.dependencies(make.ast("return x + y;")));
     assert s.contains("x");
     assert s.contains("y");
     azzert.that(s.size(), is(2));

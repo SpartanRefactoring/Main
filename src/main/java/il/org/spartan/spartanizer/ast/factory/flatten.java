@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
  * sentence phrase.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016 */
 public enum flatten {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;

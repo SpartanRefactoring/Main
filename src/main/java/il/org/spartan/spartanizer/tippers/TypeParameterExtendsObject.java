@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code T extends Object} to {@code T}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-16 */
 public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypeParameter>//
     implements TipperCategory.SyntacticBaggage {

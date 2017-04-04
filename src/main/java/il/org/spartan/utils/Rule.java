@@ -50,7 +50,7 @@ import java.util.stream.*;
  * </nl>
  * @param <T> type of elements for which the rule is applicable
  * @param <R> type of result of applying this rule
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-10 */
 public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
   @Override default Rule<T, R> self() {
@@ -250,7 +250,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
   /** Default implementation of {@link Rule},
    * @param <T> {@see Rule}
    * @param <R> {@see Rule}
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2017-03-13 */
   abstract class Stateful<T, R> implements Rule<T, R> {
     protected T current;

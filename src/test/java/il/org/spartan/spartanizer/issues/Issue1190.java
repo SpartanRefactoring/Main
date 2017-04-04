@@ -31,7 +31,7 @@ public class Issue1190 {
         try {
           trimmer.fixed(FileUtils.read(f));
         } catch (final IOException ¢) {
-         monitor.infoIOException(¢, "Cannot read: " + f);
+          monitor.infoIOException(¢, "Cannot read: " + f);
         }
       }
     }.fire(new ASTVisitor() {/**/});

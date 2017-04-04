@@ -11,7 +11,7 @@ import il.org.spartan.utils.*;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-11-27 */
 public class Table_Tipper_Groups {
   public static void main(final String[] args) {
