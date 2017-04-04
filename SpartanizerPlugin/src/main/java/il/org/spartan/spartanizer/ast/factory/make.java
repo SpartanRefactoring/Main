@@ -327,7 +327,7 @@ public enum make {
    * @return parameter, but logically negated and simplified */
   public static Expression notOf(final Expression ¢) {
     assert ¢ != null;
-    final PrefixExpression $ = subject.operand(¢).to(NOT);
+    final PrefixExpression $ = subject.operand(copy.of(¢)).to(NOT);
     assert $ != null;
     final Expression $$ = PrefixNotPushdown.simplifyNot($);
     return $$ == null ? $ : $$;
