@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** An empty {@code interface} for fluent API. The name of this type should say
  * it all: The name, followed by a dot, followed by a method name, should read
  * like a sentence phrase.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016 */
 public interface containing {
   static BodyDeclaration bodyDeclaration(final ASTNode ¢) {

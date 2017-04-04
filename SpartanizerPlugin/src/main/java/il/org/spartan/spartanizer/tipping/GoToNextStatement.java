@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Sep 25, 2016 */
 public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 0x49124565B96B22A6L;

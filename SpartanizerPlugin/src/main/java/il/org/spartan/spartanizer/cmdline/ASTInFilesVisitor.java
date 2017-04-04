@@ -27,7 +27,7 @@ import junit.framework.*;
 
 /** Parse and AST visit all Java files under a given path.
  * <p>
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
   @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;

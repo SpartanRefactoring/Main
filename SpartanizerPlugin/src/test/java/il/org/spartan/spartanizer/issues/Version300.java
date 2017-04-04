@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 
 /** Misc unit tests with no better other place for version 3.00
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-09 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })

@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
 /** Replace current node strategy
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Sep 25, 2016 */
 public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 0x50940F8CD3D99328L;

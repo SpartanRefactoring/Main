@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.java.namespace;
 import java.lang.annotation.*;
 
 /** To say that a certain name is recognized in a certain definition.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-01 */
 @Target({ //
     ElementType.FIELD, //
