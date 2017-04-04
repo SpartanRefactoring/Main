@@ -49,7 +49,8 @@ public class XMLSpartan {
         MethodInvocationToStringToEmptyStringAddition.class, //
         ModifierRedundant.class, //
         SingelVariableDeclarationUnderscoreDoubled.class, //
-        SingleVariableDeclarationEnhancedForRenameParameterToIt.class //
+        SingleVariableDeclarationEnhancedForRenameParameterToIt.class, //
+        LambdaRenameSingleParameterToLambda.class //
     );
   }
 
