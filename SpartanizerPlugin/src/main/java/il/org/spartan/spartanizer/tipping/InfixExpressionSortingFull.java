@@ -1,6 +1,6 @@
 /* TODO Yossi Gil LocalVariableInitializedStatement description
  *
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  *
  * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.tipping;

@@ -1,7 +1,7 @@
 /**
  * Before and afer spartanization 
  *
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Oct 23, 2016
  */
 public final class Hello {

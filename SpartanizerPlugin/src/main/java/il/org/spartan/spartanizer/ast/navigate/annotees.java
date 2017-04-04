@@ -12,7 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** Extract items to which a given annotation applies
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-12-22 */
 public interface annotees {
   static List<SimpleName> names(final List<VariableDeclarationFragment> ¢) {

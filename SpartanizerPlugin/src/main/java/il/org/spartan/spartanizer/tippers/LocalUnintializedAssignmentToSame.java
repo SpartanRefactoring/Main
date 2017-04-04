@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
-/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/** @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalUnintializedAssignmentToSame extends $FragmentAndStatement//
     implements TipperCategory.Unite {

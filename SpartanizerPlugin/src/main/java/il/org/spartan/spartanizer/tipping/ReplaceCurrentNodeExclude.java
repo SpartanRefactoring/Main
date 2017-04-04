@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
 /** Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since Sep 25, 2016 */
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
   private static final long serialVersionUID = 0x71A27A5DF828CE68L;

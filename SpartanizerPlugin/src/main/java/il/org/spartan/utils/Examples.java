@@ -36,7 +36,7 @@ public class Examples implements Iterable<Example> {
   }
 
   /** Auxiliary class for FAPI
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @since 2017-03-07 */
   public interface Converter {
     Examples to(String to);
