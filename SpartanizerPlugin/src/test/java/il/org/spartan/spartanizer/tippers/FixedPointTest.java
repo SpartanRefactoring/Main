@@ -102,7 +102,7 @@ public final class FixedPointTest {
   }
 
   @Test(timeout = 2000) public void multipleInline() {
-    assertConvertsTo("int b=5,a = 2,c=4; return 3 * a * b * c; ", "return 120;");
+    assertConvertsTo("int b=5,a = 2,c=4; return 3 * a * b * c;", "return 15 * a * c;");
   }
 
   @Test public void shortestIfBranchFirst02() {
