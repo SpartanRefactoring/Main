@@ -21,7 +21,7 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
   @Override public ASTNode replacement(final ForStatement s) {
     final AST create = s.getAST();
     final DoStatement $ = create.newDoStatement();
-    $.setExpression(make.notOf(step.expression(az.ifStatement(extract.lastStatement(s)))));
+    $.setExpression(copy.of(make.notOf(step.expression(az.ifStatement(extract.lastStatement(s))))));
     final Block b = create.newBlock();
     @NotNull final List<Statement> ls = extract.statements(copy.of(step.body(s)));
     for (int j = 0; j < ls.size() - 1; ++j)
