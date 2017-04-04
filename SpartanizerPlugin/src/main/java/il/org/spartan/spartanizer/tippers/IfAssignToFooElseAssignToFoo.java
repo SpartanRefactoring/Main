@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
-/** @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+/** @author Yossi Gil
  * @since 2015-07-29 */
 public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
     implements TipperCategory.Ternarization {

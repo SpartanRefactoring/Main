@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
 
 /** convert {@code { ; ; g(); {} { ; { ; { ; } } ; } } } into {@code g();}
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-07-29 */
 public final class BlockSimplify extends ReplaceCurrentNode<Block>//
     implements TipperCategory.SyntacticBaggage {

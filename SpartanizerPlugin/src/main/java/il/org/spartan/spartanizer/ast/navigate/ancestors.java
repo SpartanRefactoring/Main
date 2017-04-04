@@ -7,7 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 /** {@link Iterable} over the ancestors of a given node.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-12-23 */
 public interface ancestors {
   static List<ASTNode> path(final ASTNode n) {

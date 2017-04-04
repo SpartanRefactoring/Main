@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A {@link Tipper} to eliminate a ternary in which both branches are identical
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-07-17 */
 public final class TernaryEliminate extends AbstractPattern<ConditionalExpression>//
     implements TipperCategory.CommnonFactoring {

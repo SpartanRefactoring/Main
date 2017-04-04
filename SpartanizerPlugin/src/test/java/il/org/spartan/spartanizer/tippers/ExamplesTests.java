@@ -68,6 +68,6 @@ public class ExamplesTests {
    * @return all tippers to be tested */
   private static Collection<?> allTippers() {
     return Toolbox.freshCopyOfAllTippers().getAllTippers() //
-        .stream().collect(toMap(Tipper<? extends ASTNode>::getClass, λ -> λ, (t1, t2) -> t1)).values();
+        .stream().collect(toMap(Tipper::getClass, λ -> λ, (t1, t2) -> t1)).values();
   }
 }
