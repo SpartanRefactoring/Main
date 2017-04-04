@@ -9,7 +9,7 @@ import il.org.spartan.utils.*;
 
 /** Represents a row of a {@link Table}
  * @param <Self> uses for fluent API, type of subclass
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-01-04 */
 public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Object> {
   private static final long serialVersionUID = 0x5F4CC2841512340L;

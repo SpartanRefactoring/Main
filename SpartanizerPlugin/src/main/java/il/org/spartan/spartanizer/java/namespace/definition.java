@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2016-12-22 */
 public interface definition {
   enum Kind {

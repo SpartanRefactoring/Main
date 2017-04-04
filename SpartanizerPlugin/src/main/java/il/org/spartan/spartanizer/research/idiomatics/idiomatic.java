@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 
 /** An empty {@code enum} with a variety of {@code public
  * static} utility functions of reasonably wide use.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2013/07/01
  * @author Ori Marcovitch
  * @since 20/10/2016 */
@@ -207,7 +207,7 @@ public interface idiomatic {
   /** A class which is just like {@link Supplier} , except that it uses the
    * shorter name ( {@link #λ()} and that it allows for {@link Exception} s to
    * be thrown by the getters.
-   * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+   * @author Yossi Gil
    * @param <T> JD
    * @since 2016` */
   @FunctionalInterface

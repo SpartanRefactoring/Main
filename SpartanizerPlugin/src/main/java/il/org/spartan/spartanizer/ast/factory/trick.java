@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
 /** A number of utility functions common to all tippers.
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2015-07-17 */
 public enum trick {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
