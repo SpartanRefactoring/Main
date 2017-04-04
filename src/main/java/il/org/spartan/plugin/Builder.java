@@ -129,7 +129,7 @@ public final class Builder extends IncrementalProjectBuilder {
 
   private void build() throws CoreException {
     final IResourceDelta d = getDelta(getProject());
-    if (d == null)
+    if (d == null || d.getAffectedChildren().length == 0)
       fullBuild();
     else
       incrementalBuild(d);
