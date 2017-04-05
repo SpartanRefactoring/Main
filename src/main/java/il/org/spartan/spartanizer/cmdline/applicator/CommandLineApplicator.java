@@ -133,7 +133,6 @@ public class CommandLineApplicator extends Applicator {
         final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), dead = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
           final int tipsInvoked = runAction().apply(¢).intValue();
-          System.out.println("tipsInvoked: " + tipsInvoked);
           if (tipsInvoked <= 0)
             dead.add(¢);
           ¢.dispose(); // nullify the CompilationUnit associated to an
