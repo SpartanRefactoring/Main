@@ -16,7 +16,6 @@ import il.org.spartan.plugin.*;
 /** Spartanizer widget.
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-03-21 */
-@Deprecated
 public class SpartanWidgetHandler extends AbstractHandler {
   private static final int R = 70;
   private static final int TRANSPERACY = 100;
