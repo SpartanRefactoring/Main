@@ -45,7 +45,7 @@ public class XMLSpartan {
         InfixExpressionConcatentateCompileTime.class, //
         LambdaRenameSingleParameterToLambda.class, //
         MethodDeclarationRenameReturnToDollar.class, //
-        MethodDeclarationRenameSingleParameterToIt.class, //
+        MethodDeclarationRenameSingleParameterToCent.class, //
         MethodInvocationToStringToEmptyStringAddition.class, //
         ModifierRedundant.class, //
         SingelVariableDeclarationUnderscoreDoubled.class, //
