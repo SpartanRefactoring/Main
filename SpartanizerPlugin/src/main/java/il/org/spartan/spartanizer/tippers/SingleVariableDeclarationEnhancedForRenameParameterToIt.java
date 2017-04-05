@@ -42,7 +42,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToIt exten
       for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
         final SimpleName sn = x.getName();
         assert sn != null;
-        if (in(sn.getIdentifier(), namer.it))
+        if (in(sn.getIdentifier(), namer.cent))
           return null;
       }
     final Statement body = $.getBody();
@@ -58,7 +58,7 @@ public final class SingleVariableDeclarationEnhancedForRenameParameterToIt exten
       return null;
     if (m != null)
       m.exclude(body);
-    final SimpleName ¢ = namer.newCurrent(d);
+    final SimpleName ¢ = namer.newCent(d);
     return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename(n, ¢, $, r, g);
