@@ -110,35 +110,37 @@ public final class Builder extends IncrementalProjectBuilder {
     if (m != null)
       m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
     Toolbox.refresh();
-    build(kind);
+    build(kind, m);
     if (m != null)
       m.done();
     return null;
   }
 
-  private void fullBuild() {
+  private void fullBuild(final IProgressMonitor m) {
     try {
       getProject().accept(λ -> {
+        if (m.isCanceled() || isInterrupted())
+          return false;
         addMarkers(λ);
-        return true; // to continue visiting children.
+        return !m.isCanceled() && !isInterrupted();
       });
     } catch (final CoreException ¢) {
       monitor.logCancellationRequest(this, ¢);
     }
   }
 
-  private void build() throws CoreException {
+  private void build(IProgressMonitor m) throws CoreException {
     final IResourceDelta d = getDelta(getProject());
-    if (d == null)
-      fullBuild();
+    if (d == null || d.getAffectedChildren().length == 0)
+      fullBuild(m);
     else
       incrementalBuild(d);
   }
 
-  private void build(final int kind) throws CoreException {
+  private void build(final int kind, IProgressMonitor m) throws CoreException {
     if (kind != FULL_BUILD)
-      build();
+      build(m);
     else
-      fullBuild();
+      fullBuild(m);
   }
 }

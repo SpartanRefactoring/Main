@@ -36,7 +36,7 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     if (p == null)
       return null;
     final SimpleName sn = name(onlyOne(parameters(p)));
-    if (sn == null || in(sn.getIdentifier(), namer.it))
+    if (sn == null || in(sn.getIdentifier(), namer.cent))
       return null;
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName $ = d.getName();
@@ -56,6 +56,6 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
   }
 
   public static SimpleName newCurrent(final EnhancedForStatement ¢) {
-    return ¢.getAST().newSimpleName(namer.it);
+    return ¢.getAST().newSimpleName(namer.cent);
   }
 }
