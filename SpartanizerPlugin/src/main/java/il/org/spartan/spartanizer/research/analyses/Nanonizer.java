@@ -57,7 +57,7 @@ public class Nanonizer extends NoBraindDamagedTippersSpartanizer {
                 null) //
             .add(IfStatement.class, //
                 new NotNullOrThrow(), //
-                new NotNullOrReturn(), //
+                new NotNullAssumed(), //
                 new ExecuteUnless(), //
                 new GeneralizedSwitch<>(), //
                 new PreconditionNotNull(), //

@@ -11,7 +11,7 @@ import il.org.spartan.utils.*;
 
 /** Generates a table summarizing important statistics about nano patterns
  * @author orimarco {@code marcovitch.ori@gmail.com}
- * @since 2017-03-13 */
+ * @since 2017-04-06 */
 public class Table_Summary_Unspartanized extends Table_Summary {
   static {
     nanonizer.removeSpartanizerTippers();
