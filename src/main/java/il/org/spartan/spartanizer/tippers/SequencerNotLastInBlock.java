@@ -31,11 +31,10 @@ public final class SequencerNotLastInBlock<S extends Statement> extends GoToNext
 
   @Override protected ASTRewrite go(final ASTRewrite $, final S s, final Statement nextStatement, final TextEditGroup g) {
     final Block b = az.block(parent(s));
-    if (b == null) {
+    if (b == null)
       $.remove(nextStatement, g);
-      return $;
-    }
-    $.getListRewrite(b, Block.STATEMENTS_PROPERTY).remove(nextStatement, g);
+    else
+      $.getListRewrite(b, Block.STATEMENTS_PROPERTY).remove(nextStatement, g);
     return $;
   }
 }
