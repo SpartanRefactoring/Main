@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  *       if(X = null) return null;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
-public class NotNullOrReturn extends NanoPatternTipper<IfStatement> {
+public class NotNullAssumed extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 0x36553BED8BDBAFF3L;
   private static final String description = "replace with azzert.notNull(X)";
   private static final lazy<PreconditionNotNull> rival = lazy.get(PreconditionNotNull::new);
