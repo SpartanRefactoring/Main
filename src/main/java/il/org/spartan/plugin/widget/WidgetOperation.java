@@ -16,7 +16,7 @@ public abstract class WidgetOperation implements Serializable {
   private static final long serialVersionUID = 0x5DEE331D4A6A17CEL;
 
   /** Operation on mouse down. */
-  public void onMouseDown(final WidgetContext c) {
+  public void onMouseDown(final WidgetContext __) {
     // DO noting
   }
 
