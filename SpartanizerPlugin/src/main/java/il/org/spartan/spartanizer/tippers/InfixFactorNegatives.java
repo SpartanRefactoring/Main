@@ -42,14 +42,14 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
-    if (!in(x.getOperator(), TIMES, DIVIDE)) {
+    if (!in(x.getOperator(), TIMES, DIVIDE))
       $.add(x);
-      return $;
+    else {
+      gather(core(left(x)), $);
+      gather(core(right(x)), $);
+      if (x.hasExtendedOperands())
+        gather(extendedOperands(x), $);
     }
-    gather(core(left(x)), $);
-    gather(core(right(x)), $);
-    if (x.hasExtendedOperands())
-      gather(extendedOperands(x), $);
     return $;
   }
 

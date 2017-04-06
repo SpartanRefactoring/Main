@@ -53,17 +53,16 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
       l1 = l2;
       l2 = tmp;
     }
-    if (l1.isEmpty() && l2.isEmpty()) {
+    if (l1.isEmpty() && l2.isEmpty())
       $.remove(current, g);
-      return $;
-    }
-    $.replace(current,
-        l1.isEmpty()
-            ? subject.pair(subject.ss(l2).toBlock(), null)
-                .toIf(subject.operand(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)).to(Operator.NOT))
-            : subject.pair(subject.ss(l1).toBlock(), l2.isEmpty() ? null : subject.ss(l2).toBlock())
-                .toIf(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)),
-        g);
+    else
+      $.replace(current,
+          l1.isEmpty()
+              ? subject.pair(subject.ss(l2).toBlock(), null)
+                  .toIf(subject.operand(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)).to(Operator.NOT))
+              : subject.pair(subject.ss(l1).toBlock(), l2.isEmpty() ? null : subject.ss(l2).toBlock())
+                  .toIf(subject.pair(expression, thenCase.getExpression()).to(InfixExpression.Operator.EQUALS)),
+          g);
     return $;
   }
 

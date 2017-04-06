@@ -40,21 +40,21 @@ public final class IfCommandsSequencerNoElseSingletonSequencer extends GoToNextS
     if (wizard.eq(then(asVirtualIf), elze(asVirtualIf))) {
       $.replace(s, then(asVirtualIf), g);
       $.remove(nextStatement, g);
-      return $;
-    }
-    if (!wizard.shoudlInvert(asVirtualIf))
-      return null;
-    final IfStatement canonicalIf = action.invert(asVirtualIf);
-    final List<Statement> ss = extract.statements(elze(canonicalIf));
-    canonicalIf.setElseStatement(null);
-    if (!iz.block(s.getParent())) {
-      ss.add(0, canonicalIf);
-      $.replace(s, subject.ss(ss).toBlock(), g);
-      $.remove(nextStatement, g);
     } else {
-      final ListRewrite lr = insertAfter(s, ss, $, g);
-      lr.replace(s, canonicalIf, g);
-      lr.remove(nextStatement, g);
+      if (!wizard.shoudlInvert(asVirtualIf))
+        return null;
+      final IfStatement canonicalIf = action.invert(asVirtualIf);
+      final List<Statement> ss = extract.statements(elze(canonicalIf));
+      canonicalIf.setElseStatement(null);
+      if (!iz.block(s.getParent())) {
+        ss.add(0, canonicalIf);
+        $.replace(s, subject.ss(ss).toBlock(), g);
+        $.remove(nextStatement, g);
+      } else {
+        final ListRewrite lr = insertAfter(s, ss, $, g);
+        lr.replace(s, canonicalIf, g);
+        lr.remove(nextStatement, g);
+      }
     }
     return $;
   }

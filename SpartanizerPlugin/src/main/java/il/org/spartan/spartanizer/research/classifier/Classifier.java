@@ -81,10 +81,8 @@ public class Classifier extends ASTVisitor {
         if (toRemove.size() > 4) {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
-          again = true;
-          break;
-        }
-        forLoopsList.remove(¢);
+        } else
+          forLoopsList.remove(¢);
         again = true;
         break;
       }

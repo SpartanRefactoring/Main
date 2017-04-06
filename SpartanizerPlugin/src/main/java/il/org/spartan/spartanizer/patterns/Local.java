@@ -33,14 +33,14 @@ public abstract class Local extends Fragment {
    * @return */
   protected final ASTRewrite eliminateFragment(final ASTRewrite $, final TextEditGroup g) {
     final List<VariableDeclarationFragment> live = otherSiblings();
-    if (live.isEmpty()) {
+    if (live.isEmpty())
       $.remove(declaration, g);
-      return $;
+    else {
+      final VariableDeclarationStatement newParent = copy.of(declaration);
+      fragments(newParent).clear();
+      fragments(newParent).addAll(live);
+      $.replace(declaration, newParent, g);
     }
-    final VariableDeclarationStatement newParent = copy.of(declaration);
-    fragments(newParent).clear();
-    fragments(newParent).addAll(live);
-    $.replace(declaration, newParent, g);
     return $;
   }
 

@@ -53,14 +53,14 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
-    if (!in(operator(x), PLUS, MINUS)) {
+    if (!in(operator(x), PLUS, MINUS))
       $.add(x);
-      return $;
+    else {
+      gather(core(left(x)), $);
+      gather(core(right(x)), $);
+      if (x.hasExtendedOperands())
+        gather(extendedOperands(x), $);
     }
-    gather(core(left(x)), $);
-    gather(core(right(x)), $);
-    if (x.hasExtendedOperands())
-      gather(extendedOperands(x), $);
     return $;
   }
 
