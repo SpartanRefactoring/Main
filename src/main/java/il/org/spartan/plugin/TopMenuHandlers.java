@@ -42,9 +42,9 @@ public class TopMenuHandlers extends AbstractHandler {
     final String id = ¢.getCommand().getId();
     if (!handlers.containsKey(id)) {
       monitor.now().info("Handler " + id + " is not registered in " + getClass().getName());
-      return null;
+    } else {
+      handlers.get(id).accept(¢);
     }
-    handlers.get(id).accept(¢);
     return null;
   }
 

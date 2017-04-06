@@ -7,6 +7,7 @@ import org.junit.runner.*;
 
 /** @author Oren Afek
  * @since 3/27/2017 */
+@Ignore
 @RunWith(MetaTester.class)
 public class SimpleTest {
   @Test @SuppressWarnings("static-method") public void testF() {
