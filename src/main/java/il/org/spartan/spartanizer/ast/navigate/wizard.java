@@ -613,7 +613,7 @@ public interface wizard {
   }
 
   static String nodeName(final Class<? extends ASTNode> ¢) {
-    return system.className(¢);
+    return English.name(¢);
   }
 
   static int nodeTypesCount() {

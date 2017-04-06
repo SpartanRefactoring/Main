@@ -1,6 +1,5 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.system.*;
 import static java.lang.String.*;
 
 import java.lang.annotation.*;
@@ -127,9 +126,9 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
 
   default String description() {
     return format("%s/[%s]%s=", //
-        className(Rule.class), //
-        className(this), //
-        technicalName() == className(this) ? "" : technicalName(), //
+        English.name(Rule.class), //
+        English.name(this), //
+        technicalName() == English.name(this) ? "" : technicalName(), //
         technicalName(), //
         !ready() ? "not ready to " : "ready to " + verbObject());
   }
@@ -277,8 +276,8 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
           new IllegalStateException(//
               format(//
                   "Invalid order of method calls on a %s (dynamic type %):\n", //
-                  system.className(Rule.class), //
-                  system.className(this)) //
+                  English.name(Rule.class), //
+                  English.name(this)) //
                   + //
                   format("  REASON: %s\n", format(reason, os))//
           )//

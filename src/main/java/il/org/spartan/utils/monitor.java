@@ -2,7 +2,6 @@ package il.org.spartan.utils;
 
 import static il.org.spartan.utils.English.*;
 import static il.org.spartan.utils.fault.*;
-import static il.org.spartan.utils.system.*;
 import static java.lang.String.*;
 
 import static java.util.stream.Collectors.*;
@@ -94,7 +93,7 @@ public enum monitor {
 
   public static <T> T debug(final Class<?> o, final Throwable t) {
     return debug(//
-        "A static method of " + system.className(o) + //
+        "A static method of " + English.name(o) + //
             "was hit by " + indefinite(t) + "\n" + //
             "exception. This is expected and printed only for the purpose of debugging" + //
             "x = '" + t + "'" + //
@@ -103,7 +102,7 @@ public enum monitor {
 
   public static <T> T debug(final Object o, final Throwable t) {
     return debug(//
-        "An instance of " + system.className(o) + //
+        "An instance of " + English.name(o) + //
             "\n was hit by " + indefinite(t) + //
             " exception. This is expected and printed only for the purpose of debugging" + //
             "\n x = '" + t + "'" + //
@@ -116,7 +115,7 @@ public enum monitor {
 
   public static <T> T infoIOException(final Exception ¢) {
     return now().info(//
-        "   Got an exception of type : " + system.className(¢) + //
+        "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)" //
             + "\n   The exception says: '" + ¢ + "'" //
     );
@@ -124,7 +123,7 @@ public enum monitor {
 
   public static <T> T infoIOException(final Exception x, final String message) {
     return now().info(//
-        "   Got an exception of type : " + system.className(x) + //
+        "   Got an exception of type : " + English.name(x) + //
             "\n      (probably I/O exception)" + //
             "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
@@ -134,7 +133,7 @@ public enum monitor {
 
   public static <T> T infoIOException(final IOException ¢) {
     return now().info(//
-        "   Got an exception of type : " + system.className(¢) + //
+        "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
     );
   }
@@ -150,7 +149,7 @@ public enum monitor {
    * @param ¢ JD */
   public static <T> T logCancellationRequest(final Exception ¢) {
     return now().info(//
-        " " + system.className(¢) + //
+        " " + English.name(¢) + //
             " (probably cancellation) exception." + //
             "\n x = '" + ¢ + "'" //
     );
@@ -161,7 +160,7 @@ public enum monitor {
    * @param x JD */
   public static <T> T logCancellationRequest(final Object o, final Exception x) {
     return now().info(//
-        "An instance of " + system.className(o) + //
+        "An instance of " + English.name(o) + //
             "\n was hit by " + indefinite(x) + //
             " (probably cancellation) exception." + //
             "\n x = '" + x + "'" + //
@@ -171,7 +170,7 @@ public enum monitor {
   public static <T> T logEvaluationError(final Object o, final Throwable t) {
     System.err.println(//
         dump() + //
-            "An instance of " + system.className(o) + "\n" + //
+            "An instance of " + English.name(o) + "\n" + //
             "\n was hit by " + indefinite(t) + //
             "\n      exeption, probably due to unusual Java constructs in the input:" + //
             "\n   x = '" + t + "'" + //
@@ -193,7 +192,7 @@ public enum monitor {
     return bug(//
         "Instance involved is of class %s\n" + //
             "toString() = \n",
-        className(instance), instance);
+        English.name(instance), instance);
   }
 
   public static <T> T bug(final String format, final Object... os) {
@@ -208,9 +207,9 @@ public enum monitor {
             "This is an indication of a bug.\n", //
         indefinite(o), indefinite(t) //
     ) + //
-        format(" %s = '%s'\n", className(o), o) + //
-        format(" %s = '%s'\n", className(t), t) + //
-        format(" trace(%s) = '%s'\n", className(t), trace(t)) //
+        format(" %s = '%s'\n", English.name(o), o) + //
+        format(" %s = '%s'\n", English.name(t), t) + //
+        format(" trace(%s) = '%s'\n", English.name(t), trace(t)) //
     );
   }
 
@@ -222,8 +221,8 @@ public enum monitor {
     return now().error(//
         "A static method was hit by " + indefinite(¢) + " exception.\n" + //
             "This is an indication of a bug.\n" + //
-            format("%s = '%s'\n", className(¢), ¢) + //
-            format("trace(%s) = '%s'\n", className(¢), trace(¢)) //
+            format("%s = '%s'\n", English.name(¢), ¢) + //
+            format("trace(%s) = '%s'\n", English.name(¢), trace(¢)) //
     );
   }
 

@@ -1,7 +1,5 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.system.*;
-
 import static il.org.spartan.lisp.*;
 
 import java.text.*;
@@ -24,7 +22,7 @@ public interface English {
   int TRIM_THRESHOLD = 50;
 
   static String indefinite(final Object ¢) {
-    return indefinite(className(¢));
+    return indefinite(English.name(¢));
   }
 
   static String indefinite(final String className) {
@@ -199,6 +197,19 @@ public interface English {
    * @return printable {@link String} for f(x) */
   static <X> String unknownIfNull(final X x, final Function<X, ?> f) {
     return x == null ? UNKNOWN : f.apply(x) + "";
+  }
+
+  static String name(final Object ¢) {
+    return English.name(¢.getClass());
+  }
+
+  static String name(final Class<?> ¢) {
+    return ¢.getEnclosingClass() == null ? English.selfName(¢) : English.selfName(¢) + "." + name(¢.getEnclosingClass());
+  }
+
+  static String selfName(final Class<?> ¢) {
+    return ¢.isAnonymousClass() ? "{}"
+        : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
   }
 
   interface Activity {
