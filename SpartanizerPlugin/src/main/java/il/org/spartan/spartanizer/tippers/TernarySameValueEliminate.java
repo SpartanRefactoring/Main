@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** converts {@code x==y?y:x} into {@code x}
  * @author Dan Abramovich
  * @since 27-11-2016 */
-public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExpression>//
+public class TernarySameValueEliminate extends ReplaceCurrentNode<ConditionalExpression>//
     implements TipperCategory.EmptyCycles {
   private static final long serialVersionUID = -0x4B12456197FE34CAL;
 
@@ -22,15 +22,9 @@ public class SameEvaluationConditional extends ReplaceCurrentNode<ConditionalExp
 
   @Override protected boolean prerequisite(final ConditionalExpression x) {
     final InfixExpression $ = az.infixExpression(x.getExpression());
-    if (!iz.infixEquals($))
+    if (!iz.infixEquals($) || !sideEffects.free($))
       return false;
-    final Expression left = $.getLeftOperand();
-    if (!sideEffects.free(left))
-      return false;
-    final Expression right = $.getRightOperand();
-    if (!sideEffects.free(right))
-      return false;
-    final Expression then = x.getThenExpression();
+    final Expression left = $.getLeftOperand(), right = $.getRightOperand(), then = x.getThenExpression();
     if (!wizard.eq(then, left) && !wizard.eq(then, right))
       return false;
     final Expression elze = x.getElseExpression();

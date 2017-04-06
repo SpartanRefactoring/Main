@@ -45,7 +45,7 @@ public class Issue0895 {
             .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
             .gives(
                 "public final class A{public static void a(final B b){new C(){@D public void d(){try{e();}catch(E f){F.g(b);}catch(G f){F.g(b);}}};}}") //
-            .using(TryStatement.class, new MergeCatches()) //
+            .using(TryStatement.class, new TryMergeCatchers())
             .gives("public final class A{public static void a(final B b){new C(){@D public void d(){try{e();}catch(G|E f){F.g(b);}}};}}") //
             .stays() //
     ;

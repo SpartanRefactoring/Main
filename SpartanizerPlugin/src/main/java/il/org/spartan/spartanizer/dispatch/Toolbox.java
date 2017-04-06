@@ -249,7 +249,7 @@ public class Toolbox {
             new TryBodyEmptyNoCatchesNoFinallyEliminate(), //
             new TryBodyNotEmptyNoCatchesNoFinallyRemove(), //
             new TryFinallyEmptyRemove(), //
-            new MergeCatches(), //
+            new TryMergeCatchers(), //
             null)//
         .add(IfStatement.class, //
             new IfTrueOrFalse(), //
@@ -290,9 +290,9 @@ public class Toolbox {
             new TernaryShortestFirst(), //
             new TernaryPushdown(), //
             new TernaryPushdownStrings(), //
-            new SameEvaluationConditional(), //
+            new TernarySameValueEliminate(), //
             new TernaryBranchesAreOppositeBooleans(), //
-            new SameEvaluationConditional(), null) //
+            new TernarySameValueEliminate(), null) //
         .add(EnumConstantDeclaration.class, new BodyDeclarationModifiersSort<>()) //
         .add(TypeDeclaration.class, //
             new BodyDeclarationModifiersSort<>(), //
