@@ -47,11 +47,11 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
             return $;
           }
           $.setExpression(copy.of(x.getLeftOperand()));
-          return $;
+        } else {
+          final List<Expression> xs = extract.allOperands(x);
+          xs.remove(i);
+          $.setExpression(subject.operands(xs).to(x.getOperator()));
         }
-        final List<Expression> xs = extract.allOperands(x);
-        xs.remove(i);
-        $.setExpression(subject.operands(xs).to(x.getOperator()));
         return $;
       }
       ++i;

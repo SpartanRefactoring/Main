@@ -38,13 +38,12 @@ public class B {
 
   static List<B> enumerate(final int n) {
     final List<B> $ = new ArrayList<>();
-    if (n <= 0) {
+    if (n <= 0)
       $.add(null);
-      return $;
-    }
-    for (int i = 0; i < n; ++i)
-      for (final B left : enumerate(i))
-        $.addAll(enumerate(n - i - 1).stream().map(λ -> new B(left, λ)).collect(Collectors.toList()));
+    else
+      for (int i = 0; i < n; ++i)
+        for (final B left : enumerate(i))
+          $.addAll(enumerate(n - i - 1).stream().map(λ -> new B(left, λ)).collect(Collectors.toList()));
     return $;
   }
 

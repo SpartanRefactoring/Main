@@ -82,14 +82,14 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
-    if (!in(x.getOperator(), PLUS, MINUS)) {
+    if (!in(x.getOperator(), PLUS, MINUS))
       $.add(x);
-      return $;
+    else {
+      gather(core(left(x)), $);
+      gather(core(right(x)), $);
+      if (x.hasExtendedOperands())
+        gather(extendedOperands(x), $);
     }
-    gather(core(left(x)), $);
-    gather(core(right(x)), $);
-    if (x.hasExtendedOperands())
-      gather(extendedOperands(x), $);
     return $;
   }
 
