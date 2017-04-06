@@ -229,7 +229,7 @@ public enum JUnitTestMethodFacotry {
   }
 
   private static String operandClass(final Tipper<?> ¢) {
-    return system.className(¢.current());
+    return English.name(¢.current());
   }
 
   private static String tipperClass(final Tipper<?> ¢) {

@@ -119,6 +119,6 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   public String className() {
-    return system.className(this);
+    return English.name(this);
   }
 }
