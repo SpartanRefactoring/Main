@@ -16,20 +16,20 @@ public abstract class WidgetOperation implements Serializable {
   private static final long serialVersionUID = 0x5DEE331D4A6A17CEL;
 
   /** Operation on mouse down. */
-  public void onMouseDown(final WidgetContext context) {
+  public void onMouseDown(final WidgetContext c) {
     // DO noting
   }
 
   /** Operation on mouse up. A simple single click operation should be
    * implemented here. */
-  public void onMouseUp(final WidgetContext context) {
+  public void onMouseUp(final WidgetContext c) {
     // DO noting
   }
 
   /** Operation on mouse hold. Will be called once per
    * {@link SpartanWidgetHandler#OPERATION_HOLD_INTERVAL} ms, unless last
    * holdoperation did not finished. */
-  public void onMouseHold(final WidgetContext context) {
+  public void onMouseHold(final WidgetContext c) {
     // DO noting
   }
 
