@@ -10,9 +10,9 @@ import org.junit.runner.*;
 @RunWith(MetaTester.class)
 public class SimpleTest {
   @Test @SuppressWarnings("static-method") public void testF() {
+    assertEquals(1, 2);
     System.out.println("");
     assertEquals(1, 1);
-    assertEquals(1, 2);
     System.out.println("");
     assert true;
   }

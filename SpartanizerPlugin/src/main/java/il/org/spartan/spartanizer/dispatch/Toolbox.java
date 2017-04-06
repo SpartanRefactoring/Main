@@ -234,7 +234,7 @@ public class Toolbox {
             new AnnotationSort<>(), //
             new MethodDeclarationRenameReturnToDollar(), //
             new BodyDeclarationModifiersSort<>(), //
-            new MethodDeclarationRenameSingleParameterToIt(), //
+            new MethodDeclarationRenameSingleParameterToCent(), //
             new MethodDeclarationConstructorMoveToInitializers(), //
             new RenameConstructorParameters(), //
             null)

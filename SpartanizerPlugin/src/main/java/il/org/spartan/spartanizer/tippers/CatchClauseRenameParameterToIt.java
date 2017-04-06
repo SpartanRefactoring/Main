@@ -25,7 +25,7 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     return String.format("Rename caught %s (%s) to %s", //
         ¢.getException().getName(), //
         ¢.getException().getType(), //
-        namer.it //
+        namer.cent //
     );
   }
 
@@ -52,7 +52,7 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
       m.exclude(c);
     return new Tip(description(c), myClass(), c, c.getException().getName()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        action.rename($, namer.newCurrent($), c, r, g);
+        action.rename($, namer.newCent($), c, r, g);
       }
     };
   }
