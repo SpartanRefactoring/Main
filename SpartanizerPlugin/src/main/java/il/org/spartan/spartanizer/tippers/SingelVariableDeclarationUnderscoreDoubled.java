@@ -80,7 +80,7 @@ public final class SingelVariableDeclarationUnderscoreDoubled extends ReplaceCur
   }
 
   @Override public String description(final SingleVariableDeclaration ¢) {
-    return "Rename unused variable " + ¢.getName().getIdentifier() + " to " + unusedVariableName();
+    return "Anonymize parameter " + ¢.getName().getIdentifier();
   }
 
   @Override public ASTNode replacement(final SingleVariableDeclaration ¢) {
