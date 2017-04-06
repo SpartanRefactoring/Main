@@ -37,7 +37,7 @@ public class BloatersExamplesTests extends ExamplesTests {
 
   @Parameters(name = "{index}. {1}") //
   public static Collection<Object[]> data() {
-    return allTippers().stream().map(λ -> new Object[] { λ, system.className(λ) }).collect(toList());
+    return allTippers().stream().map(λ -> new Object[] { λ, English.name(λ) }).collect(toList());
   }
 
   /** Get all tippers from {@link Toolbox}. Removes duplicate tippers (same

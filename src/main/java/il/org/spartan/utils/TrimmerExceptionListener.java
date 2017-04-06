@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public interface TrimmerExceptionListener {
   default void accept(Exception x, @SuppressWarnings("unused") Tipper<? extends ASTNode> __, @SuppressWarnings("unused") ASTNode n) {
     x.printStackTrace();
-  };
+  }
   
   void accept(Exception ¢);
 }

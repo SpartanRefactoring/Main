@@ -51,14 +51,6 @@ public interface system {
     return new Object().getClass().getEnclosingClass().getCanonicalName();
   }
 
-  static String className(final Class<?> ¢) {
-    return ¢.getEnclosingClass() == null ? selfName(¢) : selfName(¢) + "." + className(¢.getEnclosingClass());
-  }
-
-  static String className(final Object ¢) {
-    return className(¢.getClass());
-  }
-
   static Process dumpOutput(final Process $) {
     if (windows())
       return $;
@@ -149,11 +141,6 @@ public interface system {
     }
   }
 
-  static String selfName(final Class<?> ¢) {
-    return ¢.isAnonymousClass() ? "{}"
-        : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
-  }
-
   static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
@@ -170,7 +157,7 @@ public interface system {
   }
 
   static String userName() {
-    return English.upperFirstLetter(System.getProperty("user.name", "Killroy"));
+    return English.upperFirstLetter(System.getProperty("user.name", "User"));
   }
 
   /** This function counts the number of words the given string contains. Words

@@ -35,7 +35,7 @@ public enum PreferencesResources {
   public static final Bool ZOOMER_REVERT_METHOD_VALUE = new Bool(false);
 
   public static String getLabel(final Class<? extends ExpanderCategory> $) {
-    return system.className($);
+    return English.name($);
   }
 
   /** An enum holding together all the "enabled spartanizations" options, also
