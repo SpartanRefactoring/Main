@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
  * @since Dec 14, 2016 */
 @Deprecated
 public class AfterFiles extends DeprecatedFolderASTVisitor {
-  private static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
+  private static final Nanonizer nanonizer = new Nanonizer();
   private final Stack<MethodRecord> scope = new Stack<>();
   private final SortedMap<Integer, List<MethodRecord>> methods = new TreeMap<>(Integer::compareTo);
   static {
@@ -53,7 +53,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
       scope.push(m);
       methods.get(key).add(m);
       final MethodDeclaration after = findFirst.instanceOf(MethodDeclaration.class)
-          .in(make.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
+          .in(make.ast(WrapIntoComilationUnit.Method.off(nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
     } catch (final AssertionError __) {

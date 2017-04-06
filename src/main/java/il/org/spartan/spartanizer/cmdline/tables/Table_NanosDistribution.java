@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-29 */
 public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
-  private static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
+  private static final Nanonizer nanonizer = new Nanonizer();
   private static final Map<Integer, Table> writers = new HashMap<>();
   private static final NanoPatternsOccurencesStatistics npStatistics = new NanoPatternsOccurencesStatistics();
   private static final CleanerVisitor cleanerVisitor = new CleanerVisitor();
@@ -46,7 +46,7 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
     if (!excludeMethod($))
       try {
         npStatistics.logNode(findFirst.instanceOf(MethodDeclaration.class)
-            .in(make.ast(WrapIntoComilationUnit.Method.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""))))));
+            .in(make.ast(WrapIntoComilationUnit.Method.off(nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""))))));
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
       } catch (@SuppressWarnings("unused") final NullPointerException ¢) {
