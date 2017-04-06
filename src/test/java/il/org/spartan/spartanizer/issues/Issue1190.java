@@ -8,6 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** Batch testing - run the spartinizer on itself with no errors
@@ -16,12 +17,24 @@ import il.org.spartan.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Issue1190 {
   Trimmer trimmer;
+  int exceptionsCounter;
 
   @Before public void setUp() {
+    exceptionsCounter=1;
     trimmer = new Trimmer(Toolbox.defaultInstance());
-    trimmer.setExceptionListener(λ -> {
-      λ.printStackTrace();
-      assert false;
+    trimmer.setExceptionListener(new TrimmerExceptionListener() {
+      
+      @Override public void accept(Exception x, Tipper<? extends ASTNode> t, ASTNode n) {
+        System.err.println("Exception #" + exceptionsCounter++);
+        System.err.println("Tipper Type: " + t.getClass());
+        System.err.println("Node Type: " + n.getClass());
+        System.err.println("Node Text: '" + n + "'");
+        System.err.println();
+      }
+      
+      @Override public void accept(Exception ¢) {
+        ¢.printStackTrace();
+      }
     });
   }
 
