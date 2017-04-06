@@ -1,5 +1,8 @@
 package il.org.spartan.plugin;
 
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -47,6 +50,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     try {
       startSpartan();
       addPartListener();
+      loadPreferences();
     } catch (final IllegalStateException ¢) {
       monitor.log(¢);
     }
@@ -117,5 +121,10 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   static class MProject {
     public IProject p;
     public String type;
+  }
+
+  private static void loadPreferences() {
+    NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(store().getBoolean(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID));
+    ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
   }
 }
