@@ -22,7 +22,7 @@ import il.org.spartan.utils.*;
  * @since 2016-12-25 */
 @Deprecated
 public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
-  static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
+  static final Nanonizer nanonizer = new Nanonizer();
   protected static final int MAX_STATEMENTS_REPORTED = 30;
   private static final Stack<MethodRecord> scope = new Stack<>();
   private static Table cWriter; // coverage
@@ -49,7 +49,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
-      spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + ""));
+      nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + ""));
     } catch (final AssertionError __) {
       ___.unused(__);
     }

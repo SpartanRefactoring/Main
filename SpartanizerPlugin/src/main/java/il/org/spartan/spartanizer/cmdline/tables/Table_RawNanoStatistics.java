@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
 public class Table_RawNanoStatistics extends NanoTable {
   static {
     Logger.subscribe(npStatistics::logNPInfo);
-    spartanalyzer.addRejected();
+    nanonizer.addRejected();
   }
 
   public static void summarize(final String path) {
@@ -34,7 +34,7 @@ public class Table_RawNanoStatistics extends NanoTable {
   }
 
   static void fillAbsents() {
-    spartanalyzer.allNanoPatterns().stream()//
+    nanonizer.allNanoPatterns().stream()//
         .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> table.col(λ, 0));
@@ -59,7 +59,7 @@ public class Table_RawNanoStatistics extends NanoTable {
       @Override public boolean visit(final CompilationUnit $) {
         try {
           $.accept(new AnnotationCleanerVisitor());
-          spartanalyzer.fixedPoint(spartanizer.fixedPoint($));
+          nanonizer.fixedPoint(spartanizer.fixedPoint($));
         } catch (final IllegalArgumentException | AssertionError __) {
           ___.unused(__);
         }
@@ -67,7 +67,7 @@ public class Table_RawNanoStatistics extends NanoTable {
       }
 
       @Override public boolean visit(final FieldDeclaration ¢) {
-        spartanalyzer.fixedPoint(make.ast(¢ + ""));
+        nanonizer.fixedPoint(make.ast(¢ + ""));
         return true;
       }
     });
