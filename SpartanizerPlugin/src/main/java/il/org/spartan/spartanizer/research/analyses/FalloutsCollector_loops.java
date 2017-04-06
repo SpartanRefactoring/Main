@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Jan 11, 2017 */
 public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
-  private static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
+  private static final Nanonizer nanonizer = new Nanonizer();
   private static final File out = new File(system.tmp + File.separator + "loops.txt");
 
   public static void main(final String[] args)
@@ -31,7 +31,7 @@ public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     try {
-      descendants.whoseClassIs(EnhancedForStatement.class).from(into.cu(spartanalyzer.fixedPoint(¢))).stream().filter(iz::simpleLoop)
+      descendants.whoseClassIs(EnhancedForStatement.class).from(into.cu(nanonizer.fixedPoint(¢))).stream().filter(iz::simpleLoop)
           .forEach(λ -> appendFile(out, λ + ""));
     } catch (@SuppressWarnings("unused") final AssertionError __) {
       System.err.print("X");

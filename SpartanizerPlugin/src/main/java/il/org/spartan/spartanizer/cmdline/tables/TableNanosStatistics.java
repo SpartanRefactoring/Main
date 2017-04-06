@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-03 */
 public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
-  private static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
+  private static final Nanonizer nanonizer = new Nanonizer();
   private static Table pWriter;
   private static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
   private static final Collection<JavadocMarkerNanoPattern> excluded = as.list(new HashCodeMethod(), new ToStringMethod());
@@ -48,7 +48,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   @Override public boolean visit(final MethodDeclaration $) {
     if (!excludeMethod($))
       try {
-        spartanalyzer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""));
+        nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""));
       } catch (@SuppressWarnings("unused") final AssertionError __) {
         System.err.print("X");
       } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
@@ -85,7 +85,7 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   }
 
   private static void fillAbsents() {
-    spartanalyzer.allNanoPatterns().stream()//
+    nanonizer.allNanoPatterns().stream()//
         .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> pWriter.col(λ, 0));

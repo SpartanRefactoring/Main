@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public abstract class JavadocerTest {
   protected static JavadocMarkerNanoPattern JAVADOCER; // Descendants must
                                                        // initialize
-  static final SpartanAnalyzer spartanizer = new SpartanAnalyzer();
+  static final Nanonizer spartanizer = new Nanonizer();
 
   protected static boolean is(final String ¢) {
     return javadoced("public class A{" + ¢ + "}");
