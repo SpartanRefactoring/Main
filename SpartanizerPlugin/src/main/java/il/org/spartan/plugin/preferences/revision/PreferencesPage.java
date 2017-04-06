@@ -56,6 +56,11 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         λ -> changes.getAble((IProject) λ), //
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.getAble((IProject) λ).booleanValue())) //
     ));
+    addField(
+        new RadioGroupFieldEditor("Cent",
+            "Method return variable rename to:", 3, new String[][] { { "result", "result" }, { "res", "res" }, { "ret", "ret" },
+            { "typeCamelCase", "typeCamelCase" }, { "Function's name", "Function's name" }, { "Other", "Other" } },
+            getFieldEditorParent(), true));
   }
 
   /** @return open projects in workspace */
