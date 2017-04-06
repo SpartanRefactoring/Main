@@ -41,16 +41,16 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
         found = true;
       }
       if (found) {
-        if (!x.hasExtendedOperands()) {
+        if (x.hasExtendedOperands()) {
+          final List<Expression> xs = extract.allOperands(x);
+          xs.remove(i);
+          $.setExpression(subject.operands(xs).to(x.getOperator()));
+        } else {
           if (i == 0) {
             $.setExpression(copy.of(x.getRightOperand()));
             return $;
           }
           $.setExpression(copy.of(x.getLeftOperand()));
-        } else {
-          final List<Expression> xs = extract.allOperands(x);
-          xs.remove(i);
-          $.setExpression(subject.operands(xs).to(x.getOperator()));
         }
         return $;
       }
