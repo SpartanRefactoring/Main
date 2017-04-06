@@ -24,12 +24,10 @@ public class Issue1190 {
     trimmer = new Trimmer(Toolbox.defaultInstance());
     trimmer.setExceptionListener(new TrimmerExceptionListener() {
       
+      @SuppressWarnings("boxing")
       @Override public void accept(Exception x, Tipper<? extends ASTNode> t, ASTNode n) {
-        System.err.println("Exception #" + exceptionsCounter++);
-        System.err.println("Tipper Type: " + t.getClass());
-        System.err.println("Node Type: " + n.getClass());
-        System.err.println("Node Text: '" + n + "'");
-        System.err.println();
+        System.err.printf("%d. Intercepted %s with message '%s'\n", exceptionsCounter++, English.indefinite(x), x.getMessage());
+        System.err.printf("in tipper %s applied on %s:\n%s\n\n", English.name(t), English.indefinite(n),n);  
       }
       
       @Override public void accept(Exception ¢) {

@@ -2,9 +2,7 @@ package il.org.spartan.spartanizer.dispatch;
 
 import static java.util.stream.Collectors.*;
 
-import java.beans.*;
 import java.util.*;
-import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
@@ -25,7 +23,6 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.TrimmerExceptionListener;
 
 /** A smorgasboard containing lots of stuff, but its main purpose, which should
  * be factored out somewhere is to apply a {@link Toolbox} to a tree. The main

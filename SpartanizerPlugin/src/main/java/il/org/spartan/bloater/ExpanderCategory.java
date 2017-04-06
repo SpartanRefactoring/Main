@@ -28,7 +28,7 @@ public interface ExpanderCategory {
   }
 
   static String getLabel(final Class<? extends ExpanderCategory> ¢) {
-    return system.className(¢);
+    return English.name(¢);
   }
 
   // TODO Roth, to preferences?

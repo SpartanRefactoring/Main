@@ -99,7 +99,7 @@ public enum TrimmerLog {
     if (logToFile) {
       init();
       output.put("File", fileName);
-      output.put("Tipper", system.className(w));
+      output.put("Tipper", English.name(w));
       output.put("Named", w.description());
       output.put("Kind", w.tipperGroup());
       output.put("Described", w.description(n));
@@ -110,7 +110,7 @@ public enum TrimmerLog {
     if (!logToScreen)
       return;
     System.out.println("        File: " + fileName);
-    System.out.println("      Tipper: " + system.className(w));
+    System.out.println("      Tipper: " + English.name(w));
     System.out.println("       Named: " + w.description());
     System.out.println("        Kind: " + w.tipperGroup());
     System.out.println("   Described: " + w.description(n));
@@ -121,7 +121,7 @@ public enum TrimmerLog {
   public static void visitation(final ASTNode ¢) {
     if (--maxVisitations > 0)
       System.out.println(
-          "VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + system.className(¢) + ") parent = " + system.className(parent(¢)));
+          "VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + English.name(¢) + ") parent = " + English.name(parent(¢)));
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");
   }
