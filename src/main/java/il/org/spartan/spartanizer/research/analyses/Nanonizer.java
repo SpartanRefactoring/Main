@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -173,5 +174,11 @@ public class Nanonizer extends NoBraindDamagedTippersSpartanizer {
     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
     toolbox.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
+  }
+
+  public Nanonizer removeSpartanizerTippers() {
+    toolbox = Toolbox.emptyToolboox();
+    addNanoPatterns();
+    return this;
   }
 }
