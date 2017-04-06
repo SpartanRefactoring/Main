@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.patterns;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -12,11 +14,15 @@ public abstract class ForStatementPattern extends AbstractPattern<ForStatement> 
   private static final long serialVersionUID = 0x6BAA0D9033D78EDEL;
   protected Expression forExpression;
   protected Statement body;
+  protected List<Expression> initializers;
+  protected List<Expression> updaters;
 
   public ForStatementPattern() {
     andAlso("Must bre legal ForStatement", () -> {
       forExpression = current.getExpression();
       body = step.body(current);
+      initializers = step.initializers(current);
+      updaters = step.updaters(current);   
       return body != null && forExpression != null;
     });
   }
