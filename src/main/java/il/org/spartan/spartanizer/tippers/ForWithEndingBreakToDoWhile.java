@@ -31,7 +31,7 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    if (!iz.ifStatement(extract.lastStatement(¢)))
+    if (!step.initializers(¢).isEmpty() || !iz.ifStatement(extract.lastStatement(¢)))
       return false;
     final Statement $ = az.ifStatement(extract.lastStatement(¢)).getThenStatement();
     return iz.block($) && extract.statements(az.block($)).size() == 1 && iz.breakStatement(extract.statements(az.block($)).get(0))

@@ -22,7 +22,7 @@ public abstract class WidgetOperation implements Serializable {
 
   /** Operation on mouse up. A simple single click operation should be
    * implemented here. */
-  public void onMouseUp(final WidgetContext c) {
+  public void onMouseUp(final WidgetContext __) {
     // DO noting
   }
 

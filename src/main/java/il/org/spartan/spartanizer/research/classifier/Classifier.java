@@ -78,11 +78,12 @@ public class Classifier extends ASTVisitor {
       for (final ASTNode ¢ : forLoopsList) {
         final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
         final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::check).collect(toList()));
-        if (toRemove.size() > 4) {
+        if (toRemove.size() <= 4)
+          forLoopsList.remove(¢);
+        else {
           $.putIfAbsent(¢ + "", Int.valueOf(toRemove.size()));
           forLoopsList.removeAll(toRemove);
-        } else
-          forLoopsList.remove(¢);
+        }
         again = true;
         break;
       }
