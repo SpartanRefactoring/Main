@@ -49,24 +49,20 @@ public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
     s2.setElseStatement(null);
     $.setElseStatement(s2);
     final IfStatement p = az.ifStatement(current.getParent());
-    if (p == null || current.getLocationInParent().equals(IfStatement.ELSE_STATEMENT_PROPERTY)) {
+    if (p == null || current.getLocationInParent().equals(IfStatement.ELSE_STATEMENT_PROPERTY))
       r.replace(current, $, g);
-      return r;
+    else {
+      final Block bl = subject.statement($).toBlock();
+      IfStatement originalParent = p, newParent = copy.of(originalParent);
+      newParent.setThenStatement(bl);
+      while (originalParent.getLocationInParent().equals(IfStatement.THEN_STATEMENT_PROPERTY)) {
+        final Statement child = newParent;
+        originalParent = az.ifStatement(originalParent.getParent());
+        newParent = copy.of(originalParent);
+        newParent.setThenStatement(child);
+      }
+      r.replace(current, !iz.blockEssential(extract.statements(bl).get(0)) ? $ : subject.statement($).toBlock(), g);
     }
-    final Block bl = subject.statement($).toBlock();
-    IfStatement originalParent = p, newParent = copy.of(originalParent);
-    newParent.setThenStatement(bl);
-    /* copies the tree as long as only IfStatements are the parent and the
-     * current node is part of the then branch, so iz.blockEssential can tell us
-     * whether the block is essential or not. */
-    while (originalParent.getLocationInParent().equals(IfStatement.THEN_STATEMENT_PROPERTY)) {
-      final Statement child = newParent;
-      originalParent = az.ifStatement(originalParent.getParent());
-      newParent = copy.of(originalParent);
-      newParent.setThenStatement(child);
-    }
-    r.replace(current, !iz.blockEssential(extract.statements(bl).get(0)) ? $ //
-        : subject.statement($).toBlock(), g);
     return r;
   }
 }
