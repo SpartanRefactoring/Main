@@ -100,7 +100,7 @@ public class Toolbox {
     return freshCopyOfAllTippers();
   }
 
-  private static Toolbox emptyToolboox() {
+  public static Toolbox emptyToolboox() {
     return new Toolbox();
   }
 
