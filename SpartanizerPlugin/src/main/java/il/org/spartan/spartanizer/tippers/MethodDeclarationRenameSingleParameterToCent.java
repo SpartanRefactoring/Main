@@ -18,10 +18,10 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert {@code void f(int ¢){}} to {@code void f(int it){}}
+/** Convert {@code void f(int a){}} to {@code void f(int ¢){}}
  * @author Yossi Gil
  * @since 2016-09 */
-public final class MethodDeclarationRenameSingleParameterToIt extends EagerTipper<MethodDeclaration>//
+public final class MethodDeclarationRenameSingleParameterToCent extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 0x5583F2C8E00B4000L;
 
@@ -41,12 +41,12 @@ public final class MethodDeclarationRenameSingleParameterToIt extends EagerTippe
     if (in($.getIdentifier(), namer.specials))
       return null;
     final Block b = body(d);
-    if (b == null || haz.variableDefinition(b) || haz.it(b) || collect.usesOf($).in(b).isEmpty())
+    if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
     if (m != null)
       m.exclude(d);
-    final SimpleName ¢ = namer.newIt(d);
-    return new Tip("Rename paraemter " + $ + " to it ", getClass(), d) {
+    final SimpleName ¢ = namer.newCent(d);
+    return new Tip("Rename paraemter " + $ + " to ¢ ", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, d, r, g);
         SingleVariableDeclarationAbbreviation.fixJavadoc(d, $, ¢ + "", r, g);

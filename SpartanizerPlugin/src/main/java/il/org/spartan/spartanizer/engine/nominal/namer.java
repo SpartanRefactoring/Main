@@ -48,7 +48,11 @@ public interface namer {
     return in($.getIdentifier(), specials);
   }
 
-  static SimpleName newCurrent(final ASTNode ¢) {
+  static SimpleName newCent(final ASTNode ¢) {
+    return make.from(¢).identifier(cent);
+  }
+
+  static SimpleName newIt(final ASTNode ¢) {
     return make.from(¢).identifier(it);
   }
 
@@ -142,12 +146,13 @@ public interface namer {
   }
 
   String anonymous = "__"; //
-  String it = "¢"; //
+  String cent = "¢"; //
+  String it = "it"; //
   String forbidden = "_"; //
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
   String lambda = "λ"; //
   String return¢ = "$"; //
-  String[] specials = { forbidden, return¢, anonymous, it, lambda };
+  String[] specials = { forbidden, return¢, anonymous, cent, lambda, it };
   GenericsCategory //
   yielding = new GenericsCategory("Supplier", "Iterator"), //
       assuming = new GenericsCategory("Class", "Tipper", "Function", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
