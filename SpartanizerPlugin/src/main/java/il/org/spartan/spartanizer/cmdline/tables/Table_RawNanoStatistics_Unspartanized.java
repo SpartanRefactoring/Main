@@ -30,10 +30,8 @@ public class Table_RawNanoStatistics_Unspartanized extends Table_RawNanoStatisti
       }
 
       void initializeWriter() {
-        synchronized (table) {
-          if (table == null)
-            table = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics_Unspartanized.class) + "-" + corpus, outputFolder);
-        }
+        if (table == null)
+          table = new Table(Table.classToNormalizedFileName(Table_RawNanoStatistics_Unspartanized.class) + "-" + corpus, outputFolder);
       }
     }.fire(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit $) {
