@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } to : {@code try{}catch(Exception1 | Exception2 e){Block} }
  * @author Dor Ma'ayan
  * @since 20-11-2016 */
-public class MergeCatches extends ReplaceCurrentNode<TryStatement>//
+public class TryMergeCatchers extends ReplaceCurrentNode<TryStatement>//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = -0x75F125528ECF8007L;
 
