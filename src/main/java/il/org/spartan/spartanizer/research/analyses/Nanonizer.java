@@ -14,14 +14,14 @@ import il.org.spartan.spartanizer.research.util.*;
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch
  * @since Dec 15, 2016 */
-public class SpartanAnalyzer extends AgileSpartanizer {
-  public SpartanAnalyzer() {
+public class Nanonizer extends NoBraindDamagedTippersSpartanizer {
+  public Nanonizer() {
     addNanoPatterns();
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the gUIBatchLaconizer. */
-  private SpartanAnalyzer addNanoPatterns() {
+  private Nanonizer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
         new SuppressException(), //
@@ -78,7 +78,7 @@ public class SpartanAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  public SpartanAnalyzer addRejected() {
+  public Nanonizer addRejected() {
     add(CatchClause.class, //
         new ReturnOnException(), // R.I.P
         new PercolateException(), // R.I.P
@@ -128,7 +128,7 @@ public class SpartanAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  private SpartanAnalyzer addMethodPatterns() {
+  private Nanonizer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
         new ArgumentsTuple(), //
@@ -152,7 +152,7 @@ public class SpartanAnalyzer extends AgileSpartanizer {
     return this;
   }
 
-  protected SpartanAnalyzer addCharacteristicMethodPatterns() {
+  protected Nanonizer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
         new HashCodeMethod(), // Not Counted, actually skipped

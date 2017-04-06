@@ -22,13 +22,13 @@ import il.org.spartan.utils.*;
 
 public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
   static final NanoPatternTipper<EnhancedForStatement> nano = new HoldsForAny();
-  static final InteractiveSpartanizer spartanalyzer = new InteractiveSpartanizer();
+  static final InteractiveSpartanizer nanonizer = new InteractiveSpartanizer();
   static final File out = new File(system.tmp + File.separator + nano.className() + ".txt");
 
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     clazz = NanoInstancesCollector.class;
-    spartanalyzer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
+    nanonizer.add(EnhancedForStatement.class, new NanoPatternTipper<EnhancedForStatement>() {
       static final long serialVersionUID = -0x6FC51F2AB6A11A88L;
 
       @Override public Tip pattern(final EnhancedForStatement ¢) {
@@ -53,7 +53,7 @@ public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
 
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
-    spartanalyzer.fixedPoint(¢);
+    nanonizer.fixedPoint(¢);
     return true;
   }
 

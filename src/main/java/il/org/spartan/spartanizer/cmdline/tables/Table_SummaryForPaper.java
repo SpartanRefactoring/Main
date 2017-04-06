@@ -29,7 +29,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
   private final Stack<ClassRecord> classRecords = new Stack<>();
   protected static final SortedMap<Integer, List<CompilationUnitRecord>> CUStatistics = new TreeMap<>(Integer::compareTo);
   protected static final SortedMap<Integer, List<ClassRecord>> classStatistics = new TreeMap<>(Integer::compareTo);
-  static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
+  static final Nanonizer nanonizer = new Nanonizer();
   static {
     clazz = Table_SummaryForPaper.class;
     // Logger.subscribe(Table_SummaryForPaper::logNanoContainingMethodInfo);
@@ -72,7 +72,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
       classRecords.push(c);
       classStatistics.get(key).add(c);
       findFirst.instanceOf(TypeDeclaration.class)
-          .in(make.ast(WrapIntoComilationUnit.OUTER.off(spartanalyzer.fixedPoint(WrapIntoComilationUnit.OUTER.on($ + "")))));
+          .in(make.ast(WrapIntoComilationUnit.OUTER.off(nanonizer.fixedPoint(WrapIntoComilationUnit.OUTER.on($ + "")))));
     } catch (final AssertionError __) {
       System.err.print("X");
     } catch (final NullPointerException __) {

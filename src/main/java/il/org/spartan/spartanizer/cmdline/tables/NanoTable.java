@@ -10,9 +10,9 @@ import il.org.spartan.tables.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-17 */
 public abstract class NanoTable {
-  static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
-  protected static final Function<String, String> analyze = spartanalyzer::fixedPoint;
+  static final NoBraindDamagedTippersSpartanizer spartanizer = new NoBraindDamagedTippersSpartanizer();
+  static final Nanonizer nanonizer = new Nanonizer();
+  protected static final Function<String, String> analyze = nanonizer::fixedPoint;
   static final NanoPatternsOccurencesStatisticsLight npStatistics = new NanoPatternsOccurencesStatisticsLight();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   static final NanoPatternsOccurencesStatistics npDistributionStatistics = new NanoPatternsOccurencesStatistics();

@@ -35,7 +35,7 @@ public class SelectTest {
   }
 
   @Test public void test() {
-    System.out.println(new SpartanAnalyzer().fixedPoint(
+    System.out.println(new Nanonizer().fixedPoint(
         "final List<Expression> operands = new ArrayList<>();  for (final Expression ¢ : hop.operands(flatten.of($))) operands.add(make.notOf(¢));"));
   }
 }

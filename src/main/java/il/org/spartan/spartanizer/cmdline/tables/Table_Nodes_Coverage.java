@@ -18,11 +18,11 @@ import il.org.spartan.utils.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
 public class Table_Nodes_Coverage {
-  static final AgileSpartanizer spartanizer = new AgileSpartanizer();
-  protected static final SpartanAnalyzer spartanalyzer = new SpartanAnalyzer();
+  static final NoBraindDamagedTippersSpartanizer spartanizer = new NoBraindDamagedTippersSpartanizer();
+  protected static final Nanonizer nanonizer = new Nanonizer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   private static Table writer;
-  protected static Function<String, String> analyze = spartanalyzer::fixedPoint;
+  protected static Function<String, String> analyze = nanonizer::fixedPoint;
 
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {

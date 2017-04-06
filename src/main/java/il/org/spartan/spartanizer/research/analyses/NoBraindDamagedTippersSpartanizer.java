@@ -8,14 +8,13 @@ import il.org.spartan.spartanizer.tippers.*;
 /** A Spartanizer without heavy or buggy tippers
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
-public class AgileSpartanizer extends InteractiveSpartanizer {
-  public AgileSpartanizer() {
+public class NoBraindDamagedTippersSpartanizer extends InteractiveSpartanizer {
+  public NoBraindDamagedTippersSpartanizer() {
     removeHeavy();
   }
 
-  private AgileSpartanizer removeHeavy() {
+  private NoBraindDamagedTippersSpartanizer removeHeavy() {
     remove(SwitchStatement.class, //
-        new SwitchEmpty(), //
         new MergeSwitchBranches(), //
         new RemoveRedundantSwitchReturn(), //
         new RemoveRedundantSwitchContinue(), //
