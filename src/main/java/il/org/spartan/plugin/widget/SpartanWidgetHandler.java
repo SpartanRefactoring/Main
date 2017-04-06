@@ -1,4 +1,4 @@
-package il.org.spartan.bloater;
+package il.org.spartan.plugin.widget;
 
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
@@ -21,6 +21,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static final int TRANSPERACY = 100;
   private static final Point MINIMAL_BUTTON_SIZE = new Point(9 * R / 10, R / 2 - R / 20);
   private static final String IMAGE_ID = "widget";
+  static final int OPERATION_HOLD_INTERVAL = 500;
   static final AtomicBoolean active = new AtomicBoolean(false);
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
