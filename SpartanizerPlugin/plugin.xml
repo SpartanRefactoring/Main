@@ -408,7 +408,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
    <handler commandId="il.org.spartan.CharacterShortcut" class="il.org.spartan.plugin.CharacterShortcut" />
    <handler commandId="il.org.spartan.CentificationShortcut" class="il.org.spartan.plugin.RenamingHandler" />
-   <handler commandId="il.org.spartan.SpartanWidget" class="il.org.spartan.bloater.SpartanWidgetHandler" />
+   <handler commandId="il.org.spartan.SpartanWidget" class="il.org.spartan.plugin.widget.SpartanWidgetHandler" />
 </extension>
 
 <!-- Menus -->
