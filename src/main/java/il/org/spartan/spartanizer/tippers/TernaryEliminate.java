@@ -41,6 +41,6 @@ public final class TernaryEliminate extends AbstractPattern<ConditionalExpressio
   Expression then, elze, condition;
 
   @Override public Examples examples() {
-    return convert("a() ? f() :f();").to("f();"); 
+    return convert("a() ? f() :f();").to("f();");
   }
 }

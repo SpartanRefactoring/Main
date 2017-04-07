@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-03-24 */
 public enum JUnitTestMethodFacotry {
   ;
@@ -130,10 +130,10 @@ public enum JUnitTestMethodFacotry {
     gridLayout.verticalSpacing = 20;
     shell.setLayout(gridLayout);
     GridData gridData = new GridData(SWT.CENTER, SWT.CENTER, true, true);
-    Label head = new Label(shell, SWT.BORDER);
+    final Label head = new Label(shell, SWT.BORDER);
     head.setText("Test Generator");
     head.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
-    gridData.horizontalSpan=3;
+    gridData.horizontalSpan = 3;
     head.setLayoutData(gridData);
     final Label label = new Label(shell, SWT.BORDER);
     label.setText("Enter Whatever:");

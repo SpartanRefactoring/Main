@@ -24,5 +24,4 @@ public abstract class MethodInvocationAbstarctPattern extends AbstractPattern<Me
       return name != null;
     });
   }
-
 }
