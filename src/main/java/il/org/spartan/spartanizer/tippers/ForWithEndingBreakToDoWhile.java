@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
-
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;
 
@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -30,12 +31,14 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
     return $;
   }
 
-  @Override public boolean prerequisite(final ForStatement ¢) {
-    if (!step.initializers(¢).isEmpty() || !iz.ifStatement(extract.lastStatement(¢)))
+  @Override public boolean prerequisite(final ForStatement s) {
+    if (haz.initializers(s) || haz.updaters(s))
       return false;
-    final Statement $ = az.ifStatement(extract.lastStatement(¢)).getThenStatement();
-    return iz.block($) && extract.statements(az.block($)).size() == 1 && iz.breakStatement(extract.statements(az.block($)).get(0))
-        || iz.breakStatement(az.ifStatement(extract.lastStatement(¢)).getThenStatement());
+    final IfStatement $ = az.ifStatement(extract.lastStatement(s));
+    if (elze($) != null)
+      return false;
+    BreakStatement x = az.breakStatement(then($));
+    return x != null && label(x) == null;
   }
 
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
