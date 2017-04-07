@@ -24,16 +24,12 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @since 2017-01-18 */
 public class OutlineTernaryMethodInvocation extends MethodInvocationAbstarctPattern//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 6072619590329942433L;
+  private static final long serialVersionUID = 0x54464757E1B1C1A1L;
 
   public OutlineTernaryMethodInvocation() {
-    andAlso("Parnt is not a Lambda Expression", () -> {
-      return !iz.lambdaExpression(current.getParent());
-    });
-    andAlso("There is at least one argument argument", () -> {
-      return !arguments.isEmpty();
-    });
-    andAlso("All condotions satisfies", () -> {
+    andAlso("Parent is not a lambda lxpression", () -> !iz.lambdaExpression(current.getParent()));
+    andAlso("There is at least one argument", () -> !arguments.isEmpty());
+    andAlso("All conditions satisfy:", () -> {
       for (int ¢ = 0; ¢ < arguments.size(); ++¢) {
         final ConditionalExpression $;
         if (($ = az.conditionalExpression(arguments.get(¢))) != null && (iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))
