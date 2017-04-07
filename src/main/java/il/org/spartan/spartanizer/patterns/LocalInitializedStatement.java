@@ -1,7 +1,12 @@
 package il.org.spartan.spartanizer.patterns;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -20,5 +25,21 @@ public abstract class LocalInitializedStatement extends LocalInitialized {
     if ($ != null && exclude != null)
       exclude.exclude(f.getParent());
     return $;
+  }
+
+  protected int waste() {
+    return uses().size() * (metrics.size(initializer) - 1);
+  }
+
+  private List<SimpleName> uses() {
+   return collect.usesOf(name).in(nextStatement);
+  }
+
+  protected int saving() {
+    return count.nodes(singleFragment() ? declaration : this.current);
+  }
+
+  private boolean singleFragment() {
+    return fragments(declaration).size() == 1;
   }
 }
