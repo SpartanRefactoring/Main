@@ -139,7 +139,7 @@ public enum haz {
       }
 
       boolean ¢(final ForStatement ¢) {
-        return ¢(initializers(¢));
+        return ¢(step.initializers(¢));
       }
 
       boolean ¢(final Collection<Expression> xs) {
@@ -271,5 +271,13 @@ public enum haz {
    *         if the given parameter is null. */
   public static boolean containIncOrDecExp(final ASTNode... ns) {
     return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.updating(λ));
+  }
+
+  public static boolean updaters(final ForStatement ¢) {
+    return !step.updaters(¢).isEmpty();
+  }
+
+  public static boolean initializers(final ForStatement ¢) {
+    return !step.initializers(¢).isEmpty();
   }
 }

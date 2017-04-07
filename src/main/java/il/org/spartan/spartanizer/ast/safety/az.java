@@ -169,6 +169,10 @@ public enum az {
     return !iz.nodeTypeEquals($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
 
+  public static BreakStatement breakStatement(Statement $ ) {
+    return !iz.nodeTypeEquals($, BREAK_STATEMENT) ? null : (BreakStatement) $;
+  }
+
   /** @param ¢ JD
    * @return */
   public static CastExpression castExpression(final Expression ¢) {

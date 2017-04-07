@@ -30,10 +30,6 @@ public enum step {
     return ¢ == null ? null : ¢.arguments();
   }
 
-  public static Type type(final ParameterizedType ¢) {
-    return ¢ == null ? null : ¢.getType();
-  }
-
   /** Expose the list of arguments in a {@link MethodInvocation}
    * @param ¢ JD
    * @return reference to the list of arguments in the argument */
@@ -50,6 +46,10 @@ public enum step {
    * @return reference to the list of arguments in the argument */
   @SuppressWarnings("unchecked") public static List<Expression> arguments(final SuperMethodInvocation ¢) {
     return ¢ == null ? null : ¢.arguments();
+  }
+
+  public static int arity(final MethodDeclaration ¢) {
+    return ¢ == null ? -1 : parameters(¢) == null ? 0 : parameters(¢).size();
   }
 
   private static boolean balanced(final CharSequence s) {
@@ -396,10 +396,6 @@ public enum step {
     return ¢ == null ? null : ¢.getIdentifier();
   }
 
-  public static int arity(final MethodDeclaration ¢) {
-    return ¢ == null ? -1 : parameters(¢) == null ? 0 : parameters(¢).size();
-  }
-
   public static String identifier(final SingleVariableDeclaration ¢) {
     return identifier(name(¢));
   }
@@ -448,14 +444,14 @@ public enum step {
     return initializers(n).stream().filter(λ -> !iz.static¢(λ)).collect(toList());
   }
 
-  /** @param ¢ JD
-   * @return */
-  public static Javadoc javadoc(final MethodDeclaration ¢) {
+  public static Javadoc javadoc(final BodyDeclaration ¢) {
     return ¢ == null ? null : ¢.getJavadoc();
   }
 
-  /** @param ¢ JD
-   * @return */
+  public static SimpleName label(BreakStatement ¢) {
+    return ¢ == null ? null : ¢.getLabel();
+  }
+
   public static SimpleName label(final ContinueStatement ¢) {
     return ¢ == null ? null : ¢.getLabel();
   }
@@ -547,10 +543,6 @@ public enum step {
     return ¢ == null ? null : ¢.getName();
   }
 
-  public static Name name(final SimpleType ¢) {
-    return ¢ == null ? null : ¢.getName();
-  }
-
   public static SimpleName name(final AnnotationTypeMemberDeclaration ¢) {
     return ¢ == null ? null : ¢.getName();
   }
@@ -578,6 +570,10 @@ public enum step {
   }
 
   public static SimpleName name(final QualifiedName ¢) {
+    return ¢ == null ? null : ¢.getName();
+  }
+
+  public static Name name(final SimpleType ¢) {
     return ¢ == null ? null : ¢.getName();
   }
 
@@ -662,6 +658,14 @@ public enum step {
    * @return parent of the parameter */
   public static ASTNode parent(final ASTNode ¢) {
     return ¢ == null ? null : ¢.getParent();
+  }
+
+  /** @param ¢ current {@link Statement}.
+   * @return the previous {@link Statement} in the parent {@link Block}. If
+   *         parent is not {@link Block} return null, if n is first
+   *         {@link Statement} also null. */
+  public static Statement previousStatementInBody(final Statement ¢) {
+    return lisp2.previous(¢, statements(az.block(parent(¢))));
   }
 
   public static Expression receiver(final MethodInvocation ¢) {
@@ -829,6 +833,10 @@ public enum step {
     return ¢ == null ? null : ¢.getRightOperand();
   }
 
+  public static Type type(final ParameterizedType ¢) {
+    return ¢ == null ? null : ¢.getType();
+  }
+
   /** @param p JD
    * @return */
   public static Type type(final SingleVariableDeclaration ¢) {
@@ -887,19 +895,11 @@ public enum step {
     return ¢ == null ? null : ¢.updaters();
   }
 
-  @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
-    return ¢ == null ? null : ¢.values();
-  }
-
-  /** @param ¢ current {@link Statement}.
-   * @return the previous {@link Statement} in the parent {@link Block}. If
-   *         parent is not {@link Block} return null, if n is first
-   *         {@link Statement} also null. */
-  public static Statement previousStatementInBody(final Statement ¢) {
-    return lisp2.previous(¢, statements(az.block(parent(¢))));
-  }
-
   public static Expression value(final SingleMemberAnnotation ¢) {
     return ¢ == null ? null : ¢.getValue();
+  }
+
+  @SuppressWarnings("unchecked") public static List<MemberValuePair> values(final NormalAnnotation ¢) {
+    return ¢ == null ? null : ¢.values();
   }
 }
