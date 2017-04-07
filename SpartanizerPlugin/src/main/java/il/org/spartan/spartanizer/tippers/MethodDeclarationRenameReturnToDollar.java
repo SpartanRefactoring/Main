@@ -35,18 +35,19 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
-    final SimpleName $ = new Conservative(d).selectReturnVariable();
+    String ret_name = Names.methodReturnName.apply(t, d);
+    final SimpleName $ = new Conservative(d).selectReturnVariable(ret_name);
     if ($ == null)
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Tip("Rename '" + $ + "' to $ (main variable returned by " + description(d) + ")", getClass(), $) {
+    return new Tip("Rename '" + $ + "' to " + ret_name + " (main variable returned by " + description(d) + ")", getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename($, $(), d, r, g);
       }
 
       SimpleName $() {
-        return make.from(d).identifier("$");
+        return make.from(d).identifier(ret_name);
       }
     };
   }
@@ -81,8 +82,8 @@ abstract class AbstractRenamePolicy {
 
   abstract SimpleName innerSelectReturnVariable();
 
-  final SimpleName selectReturnVariable() {
-    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.dollar(step.body(inner)) ? null
+  final SimpleName selectReturnVariable(String ret_name) {
+    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.name(step.body(inner),ret_name) ? null
         : innerSelectReturnVariable();
   }
 }
