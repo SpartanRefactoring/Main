@@ -8,5 +8,5 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-04-07 */
 public final class Names {
-  public static BiFunction<Type, MethodDeclaration, String> methodReturnName = (x,y) -> "$";
+  public static BiFunction<Type, MethodDeclaration, String> methodReturnName = (x, y) -> "$";
 }

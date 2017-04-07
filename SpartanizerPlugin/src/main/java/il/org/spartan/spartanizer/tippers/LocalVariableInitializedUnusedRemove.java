@@ -24,7 +24,7 @@ public final class LocalVariableInitializedUnusedRemove extends LocalInitialized
   }
 
   @Override public String description() {
-    return "Remove unused variable " + name; 
+    return "Remove unused variable " + name;
   }
 
   /** [[SuppressWarningsSpartan]] */

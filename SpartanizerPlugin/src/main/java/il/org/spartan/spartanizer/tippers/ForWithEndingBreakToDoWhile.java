@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.tippers;
 
-import java.util.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.jetbrains.annotations.*;
 
@@ -13,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/**  TODO: Doron - document this
+/** TODO: Doron - document this
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-03-26 */
 public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Unite {
@@ -37,7 +39,7 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
     final IfStatement $ = az.ifStatement(extract.lastStatement(s));
     if (elze($) != null)
       return false;
-    BreakStatement x = az.breakStatement(then($));
+    final BreakStatement x = az.breakStatement(then($));
     return x != null && label(x) == null;
   }
 

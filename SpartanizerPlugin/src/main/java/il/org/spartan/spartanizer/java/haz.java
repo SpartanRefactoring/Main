@@ -103,12 +103,12 @@ public enum haz {
   public static boolean dollar(final Collection<SimpleName> ns) {
     return ns.stream().anyMatch(λ -> "$".equals(identifier(λ)));
   }
-  
-  public static boolean name(final ASTNode ¢, String s) {
+
+  public static boolean name(final ASTNode ¢, final String s) {
     return !collect.usesOf(s).inside(¢).isEmpty();
   }
-  
-  public static boolean name(final Collection<SimpleName> ns, String s) {
+
+  public static boolean name(final Collection<SimpleName> ns, final String s) {
     return ns.stream().anyMatch(λ -> s.equals(identifier(λ)));
   }
 
