@@ -2,15 +2,16 @@ package il.org.spartan.bloater.bloaters;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import java.util.*;
-
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** convert {@code
@@ -21,36 +22,53 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * } Test case is {@link Issue1091}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-18 */
-public class OutlineTernaryMethodInvocation extends ReplaceCurrentNode<MethodInvocation>//
+public class OutlineTernaryMethodInvocation extends MethodInvocationAbstarctPattern//
     implements TipperCategory.Bloater {
-  private static final long serialVersionUID = -0x21F2A34B9F01E455L;
+  private static final long serialVersionUID = 6072619590329942433L;
 
-  @Override public ASTNode replacement(final MethodInvocation n) {
-    if (n == null || iz.lambdaExpression(n.getParent()))
-      return null;
-    final List<Expression> l = arguments(n);
-    if (l.isEmpty())
-      return null;
-    // TODO Yuval Simon: move into loop --yg
-    for (int i = 0; i < l.size(); ++i) {
+  public OutlineTernaryMethodInvocation() {
+    andAlso("Parnt is not a Lambda Expression", () -> {
+      return !iz.lambdaExpression(current.getParent());
+    });
+    andAlso("There is at least one argument argument", () -> {
+      return !arguments.isEmpty();
+    });
+    andAlso("All condotions satisfies", () -> {
+      for (int ¢ = 0; ¢ < arguments.size(); ++¢) {
+        final ConditionalExpression $;
+        if (($ = az.conditionalExpression(arguments.get(¢))) != null && (iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))
+            || haz.sideEffects(arguments.get(¢)))
+          return false;
+      }
+      return true;
+    });
+  }
+
+  @Override public Examples examples() {
+    return null;
+  }
+
+  @Override public String description(@SuppressWarnings("unused") MethodInvocation ¢) {
+    return null;
+  }
+
+  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+    for (int i = 0; i < arguments.size(); ++i) {
       final ConditionalExpression $;
-      if (($ = az.conditionalExpression(l.get(i))) != null) {
+      if (($ = az.conditionalExpression(arguments.get(i))) != null) {
         if (iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))
           return null;
-        final MethodInvocation whenTrue = copy.of(n), whenFalse = copy.of(n);
+        final MethodInvocation whenTrue = copy.of(current), whenFalse = copy.of(current);
         arguments(whenTrue).remove(i);
         arguments(whenTrue).add(i, copy.of(then($)));
         arguments(whenFalse).remove(i);
         arguments(whenFalse).add(i, copy.of(elze($)));
-        return make.parethesized(subject.pair(whenTrue, whenFalse).toCondition(expression($)));
+        r.replace(current, make.parethesized(subject.pair(whenTrue, whenFalse).toCondition(expression($))), g);
+        return r;
       }
-      if (haz.sideEffects(l.get(i)))
+      if (haz.sideEffects(arguments.get(i)))
         break;
     }
     return null;
-  }
-
-  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
-    return "";
   }
 }
