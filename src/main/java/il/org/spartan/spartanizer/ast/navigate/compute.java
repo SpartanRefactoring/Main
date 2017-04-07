@@ -22,7 +22,7 @@ public enum compute {
   public static List<String> usedNames(final Expression x) {
     return new ASTMapReducer<List<String>>() {
       @Override public List<String> reduce() {
-        return empty.list(); 
+        return empty.list();
       }
 
       @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {

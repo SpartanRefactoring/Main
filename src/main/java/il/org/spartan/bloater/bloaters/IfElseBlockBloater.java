@@ -23,7 +23,7 @@ public class IfElseBlockBloater extends IfAbstractPattern implements TipperCateg
 
   public IfElseBlockBloater() {
     andAlso("At least the if or the elze are not in a block", () -> {
-      return !iz.block(current.getThenStatement()) || (current.getElseStatement() != null && !iz.block(current.getElseStatement()));
+      return !iz.block(current.getThenStatement()) || current.getElseStatement() != null && !iz.block(current.getElseStatement());
     });
   }
 
@@ -38,11 +38,11 @@ public class IfElseBlockBloater extends IfAbstractPattern implements TipperCateg
     ;
   }
 
-  @Override public String description(@SuppressWarnings("unused") IfStatement ¢) {
+  @Override public String description(@SuppressWarnings("unused") final IfStatement ¢) {
     return null;
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final IfStatement $ = copy.of(current);
     if (!iz.block(then(current))) {
       final Block b = current.getAST().newBlock();

@@ -602,7 +602,7 @@ public enum step {
   public static int nodeType(final ASTNode ¢) {
     return ¢ == null ? 0 : ¢.getNodeType();
   }
-  
+
   public static Expression operand(final PostfixExpression ¢) {
     return ¢ == null ? null : extract.core(¢.getOperand());
   }
@@ -702,11 +702,11 @@ public enum step {
   public static Expression right(final InfixExpression ¢) {
     return ¢ == null ? null : ¢.getRightOperand();
   }
-  
+
   public static List<Statement> statements(final ASTNode ¢) {
-    return iz.block(¢) ? statements(az.block(¢)) : (!iz.switchStatement(¢) ? null : statements(az.switchStatement(¢)));
+    return iz.block(¢) ? statements(az.block(¢)) : !iz.switchStatement(¢) ? null : statements(az.switchStatement(¢));
   }
-  
+
   /** Expose the list of sideEffects contained in a {@link Block}
    * @param ¢ JD
    * @return reference to the list of sideEffects contained in the argument */

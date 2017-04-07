@@ -22,7 +22,7 @@ public abstract class ForStatementPattern extends AbstractPattern<ForStatement> 
       forExpression = current.getExpression();
       body = step.body(current);
       initializers = step.initializers(current);
-      updaters = step.updaters(current);   
+      updaters = step.updaters(current);
       return body != null && forExpression != null;
     });
   }
