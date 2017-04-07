@@ -19,12 +19,10 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2016-12-27 */
 public class IfElseBlockBloater extends IfAbstractPattern implements TipperCategory.Bloater {
-  private static final long serialVersionUID = 3585427879204988685L;
+  private static final long serialVersionUID = 0x31C1FFA8E3CBA70DL;
 
   public IfElseBlockBloater() {
-    andAlso("At least the if or the elze are not in a block", () -> {
-      return !iz.block(current.getThenStatement()) || current.getElseStatement() != null && !iz.block(current.getElseStatement());
-    });
+    andAlso("At least the if or the elze are not in a block", () -> !iz.block(current.getThenStatement()) || current.getElseStatement() != null && !iz.block(current.getElseStatement()));
   }
 
   @Override public Examples examples() {
@@ -49,13 +47,11 @@ public class IfElseBlockBloater extends IfAbstractPattern implements TipperCateg
       statements(b).add(copy.of(then(current)));
       $.setThenStatement(b);
     }
-    if (elze(current) == null || iz.block(elze(current))) {
-      r.replace(current, $, g);
-      return r;
+    if (elze(current) != null && !iz.block(elze(current))) {
+      final Block b = current.getAST().newBlock();
+      statements(b).add(copy.of(elze(current)));
+      $.setElseStatement(b);
     }
-    final Block b = current.getAST().newBlock();
-    statements(b).add(copy.of(elze(current)));
-    $.setElseStatement(b);
     r.replace(current, $, g);
     return r;
   }
