@@ -35,8 +35,7 @@ public class Issue0984 {
             + "  o.f(b1, x ? a2 : b2);")
         .gives("if(y){o.f(a1,x?a2:b2);}else{o.f(b1,x?a2:b2);}")//
         .gives("if(y){if(x)o.f(a1,a2);else o.f(a1,b2);}else{o.f(b1,x?a2:b2);}")//
-        .gives("if(y){if(x){o.f(a1,a2);}else{o.f(a1,b2);}}else{o.f(b1,x?a2:b2);}")
-        .stays();
+        .gives("if(y){if(x){o.f(a1,a2);}else{o.f(a1,b2);}}else{o.f(b1,x?a2:b2);}").stays();
   }
 
   @Test public void d() {

@@ -46,12 +46,9 @@ public class Issue1044 extends MetaFixture {
   }
 }
 
-/** 
- * This class' only purpose is for the testing above.
+/** This class' only purpose is for the testing above.
  * @author Doron Mehsulam {@code doronmmm@hotmail.com}
- * @since 2017-01-26 
- * [[SuppressWarningsSpartan]]
- */
+ * @since 2017-01-26 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("TooBroadScope")
 class NamespaceFixture {
   static {
