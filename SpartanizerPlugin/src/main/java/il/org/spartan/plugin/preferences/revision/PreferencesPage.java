@@ -57,13 +57,14 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         λ -> changes.getAble((IProject) λ), //
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.getAble((IProject) λ).booleanValue())) //
     ));
-    final String[][] labelAndValues = new String[][] { { "result", "result" }, { "res", "res" }, { "ret", "ret" },
+    final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" },
         { "typeCamelCase", "typeCamelCase" }, { "Function name", "Function's name" }, { "Other", "Other" } };
     final RadioGroupFieldEditor r = new RadioGroupFieldEditor("Cent", "Method return variable rename to:", 3, labelAndValues, getFieldEditorParent(),
         true);
     final StringFieldEditor other = new StringFieldEditor("TT", "", 17, getFieldEditorParent());
     other.setEnabled(false, getFieldEditorParent());
     setRenamingButtons(r, getFieldEditorParent(), other);
+    
     addField(r);
     // addField(other);
   }
@@ -72,7 +73,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     final Control[] cc = e.getRadioBoxControl(parent).getChildren();
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = λ -> "result";
+        Names.methodReturnName = (x,y) -> "$";
         other.setEnabled(false, parent);
       }
 
@@ -82,7 +83,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
     ((Button) cc[1]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = λ -> "res";
+        Names.methodReturnName = (x,y) -> "result";
         other.setEnabled(false, parent);
       }
 
@@ -92,7 +93,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
     ((Button) cc[2]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = λ -> "ret";
+        Names.methodReturnName = (x,y) -> "ret";
         other.setEnabled(false, parent);
       }
 
@@ -102,7 +103,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
     ((Button) cc[3]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = λ -> "typeCamelCase";
+        Names.methodReturnName = (x,y) -> "dummy";
+//        Names.methodReturnName = (x, y) -> (x + "").substring(0, 1).toLowerCase() + (x + "").substring(1, (x + "").length());
         other.setEnabled(false, parent);
       }
 
@@ -112,7 +114,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
     ((Button) cc[4]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = λ -> "method_name";
+        Names.methodReturnName = (x,y) -> y.getName().getIdentifier();
         other.setEnabled(false, parent);
       }
 
@@ -122,7 +124,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
     ((Button) cc[5]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = λ -> "other";
+        Names.methodReturnName = (x,y) -> "other";
         other.setEnabled(true, parent);
       }
 
