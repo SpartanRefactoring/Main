@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.tippers;
-
 import static il.org.spartan.utils.Proposition.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -31,14 +30,15 @@ public final class LocalInitializedReturnExpression extends LocalInitializedStat
         () -> iz.not.null¢(returnStatement = az.returnStatement(nextStatement)));//
     andAlso("Next statement returns a value return", //
         () -> iz.not.null¢(returnValue = returnStatement.getExpression()));//
-    andAlso("Returned value is not a method invocation of a lambda expression ", //
+    andAlso("Returned value is not a lambda expression ", //
         () -> !iz.lambdaExpression(initializer));//
     andAlso(//
         that("Returned value is identical to local variable", //
             () -> wizard.eq(name, returnValue)//
-        ).or(//
-            "Initializer has no side effects", () -> sideEffects.free(initializer)//
-        ));
+        ).or("Initializer has no side effects", //
+            () -> sideEffects.free(initializer)//
+        ).and("Replacement reduces the numer of tokens", //
+            () -> saving() > waste()));
     andAlso("Returned expression does not modify our local", //
         () -> compute.updateSpots(returnValue).stream().noneMatch(λ -> wizard.eq(λ, name)));
   }
