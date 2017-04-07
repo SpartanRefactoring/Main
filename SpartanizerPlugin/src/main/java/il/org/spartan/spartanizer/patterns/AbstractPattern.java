@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil 
  * @since 2017-03-25 */
 public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 1;
