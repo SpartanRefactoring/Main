@@ -16,9 +16,7 @@ public class FixtureBlock extends MetaFixture {
     return f();
   }
 
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
+  /** [[SuppressWarningsSpartan]] */
   int g(@knows("ps") final int... ps) throws IOException {
     // noinspection ForLoopReplaceableByWhile
     for (;;) {

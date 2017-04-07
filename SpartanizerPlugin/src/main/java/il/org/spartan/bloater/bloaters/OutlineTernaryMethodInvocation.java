@@ -30,10 +30,9 @@ public class OutlineTernaryMethodInvocation extends MethodInvocationAbstarctPatt
     andAlso("Parent is not a lambda lxpression", () -> !iz.lambdaExpression(current.getParent()));
     andAlso("There is at least one argument", () -> !arguments.isEmpty());
     andAlso("All conditions satisfy:", () -> {
-      for (Expression argument : arguments) {
+      for (final Expression argument : arguments) {
         final ConditionalExpression $;
-        if (($ = az.conditionalExpression(argument)) != null && (iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))
-                || haz.sideEffects(argument))
+        if (($ = az.conditionalExpression(argument)) != null && (iz.nullLiteral(then($)) || iz.nullLiteral(elze($))) || haz.sideEffects(argument))
           return false;
       }
       return true;

@@ -169,7 +169,7 @@ public enum az {
     return !iz.nodeTypeEquals($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
   }
 
-  public static BreakStatement breakStatement(Statement $ ) {
+  public static BreakStatement breakStatement(final Statement $) {
     return !iz.nodeTypeEquals($, BREAK_STATEMENT) ? null : (BreakStatement) $;
   }
 
