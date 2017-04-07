@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.utils.*;
 
 /** TODO Abstract Pattern for Method Invocation
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
@@ -26,7 +25,4 @@ public abstract class MethodInvocationAbstarctPattern extends AbstractPattern<Me
     });
   }
 
-  @Override public abstract Examples examples();
-
-  @Override public abstract String description(MethodInvocation ¢);
 }

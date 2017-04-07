@@ -21,21 +21,19 @@ import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
-/** convert {@code switch (x) { case a: (commands) break; default: (other
- * commands) } } into {@code if(x == a) { (commands) } else { (other commands) }
- * } . Tested in {@link Issue0916}
+/** See {@link #examples()} Tested in {@link Issue0916}
  * @author Yuval Simon
  * @since 2016-12-18 */
 public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0x513C764E326D1A98L;
 
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override public String description() {
     return "Convert switch statement to if-else statement";
   }
 
   public SwitchWithOneCaseToIf() {
-    andAlso(Proposition.that("Exactly twow cases", () -> (cases.size() == 2)));
+    andAlso(Proposition.that("Exactly two cases", () -> (cases.size() == 2)));
     andAlso(Proposition.that("Has default case", () -> (first(cases).isDefault() || last(cases).isDefault())));
     andAlso(Proposition.that("Different branches", () -> {
       assert cases.size() == 2; // I assume this proposition is checked only if
@@ -87,5 +85,10 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
       default:
         return copy.of(¢);
     }
+  }
+
+  @Override public Examples examples() {
+    return convert("switch(x){case a:f(); g();break; default:g();h();}")//
+        .to("if(x==a){f();g();}else{g();h();}");
   }
 }

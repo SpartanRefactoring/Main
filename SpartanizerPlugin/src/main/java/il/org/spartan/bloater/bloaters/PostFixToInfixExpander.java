@@ -42,7 +42,7 @@ public class PostFixToInfixExpander extends PostfixExprezzion//
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final PostfixExpression __) {
+  @Override public String description() {
     return "replace postfix with infix";
   }
 }

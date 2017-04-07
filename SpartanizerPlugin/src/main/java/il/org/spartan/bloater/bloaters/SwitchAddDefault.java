@@ -36,7 +36,7 @@ public class SwitchAddDefault extends SwitchStatementAbstractPattern implements 
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
+  @Override public String description() {
     return "Add default case to switch statement";
   }
 }
