@@ -119,21 +119,21 @@ public enum JUnitTestMethodFacotry {
   }
 
   public static void main(final String[] args) {
-    Display display = new Display();
-    Shell shell = new Shell(display);
+    final Display display = new Display();
+    final Shell shell = new Shell(display);
     // the layout manager handle the layout
     // of the widgets in the container
-    GridLayout gridLayout = new GridLayout();
+    final GridLayout gridLayout = new GridLayout();
     gridLayout.numColumns = 3;
     gridLayout.marginWidth = 10;
     gridLayout.marginHeight = 15;
     gridLayout.verticalSpacing = 20;
     shell.setLayout(gridLayout);
     // Shell can be used as container
-    Label label = new Label(shell, SWT.BORDER);
+    final Label label = new Label(shell, SWT.BORDER);
     label.setText("Enter Whatever:");
     label.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
-    Text textBox = new Text(shell, SWT.BORDER);
+    final Text textBox = new Text(shell, SWT.BORDER);
     textBox.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
     GridData gridData = new GridData();
     gridData.horizontalSpan = 1;
@@ -142,12 +142,12 @@ public enum JUnitTestMethodFacotry {
     gridData.verticalAlignment = SWT.FILL;
     gridData.grabExcessVerticalSpace = true;
     textBox.setLayoutData(gridData);
-    Button button = new Button(shell, SWT.WRAP);
+    final Button button = new Button(shell, SWT.WRAP);
     button.setText("Go!");
-    Label resLabel = new Label(shell, SWT.BORDER);
+    final Label resLabel = new Label(shell, SWT.BORDER);
     resLabel.setText("Auto Generated Test:");
     resLabel.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
-    Text result = new Text(shell, SWT.READ_ONLY);
+    final Text result = new Text(shell, SWT.READ_ONLY);
     // result.setText("result will be written here");
     gridData = new GridData();
     gridData.horizontalSpan = 1;
@@ -159,8 +159,8 @@ public enum JUnitTestMethodFacotry {
     // register listener for the selection event
     button.addSelectionListener(new SelectionAdapter() {
       /** [[SuppressWarningsSpartan]] */
-      @Override public void widgetSelected(@SuppressWarnings("unused") SelectionEvent e) {
-        String s = textBox.getText();
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent e) {
+        final String s = textBox.getText();
         result.setText("1s tipper: " + theSpartanizer.firstTipper(s) + "\n" + //
         "once: " + theSpartanizer.once(s) + "\n" + //
         "twice: " + theSpartanizer.twice(s) + "\n" + //
