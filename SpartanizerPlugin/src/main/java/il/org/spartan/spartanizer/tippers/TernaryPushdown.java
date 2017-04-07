@@ -109,22 +109,21 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
       return null;
     final List<Expression> es1 = arguments(e1), es2 = arguments(e2);
     final Expression receiver1 = expression(e1), receiver2 = expression(e2);
+    final MethodInvocation $ = copy.of(e1);
     if (!eq(receiver1, receiver2)) {
       if (receiver1 == null || receiver2 == null || !same(es1, es2) || guessName.isClassName(receiver1) || guessName.isClassName(receiver2))
         return null;
-      final MethodInvocation $ = copy.of(e1);
       assert $ != null;
       $.setExpression(action.parenthesize(subject.pair(receiver1, receiver2).toCondition(expression(x))));
-      return $;
+    } else {
+      if (es1.size() != es2.size())
+        return null;
+      final int i = findSingleDifference(es1, es2);
+      if (i < 0)
+        return null;
+      arguments($).remove(i);
+      arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
     }
-    if (es1.size() != es2.size())
-      return null;
-    final int i = findSingleDifference(es1, es2);
-    if (i < 0)
-      return null;
-    final MethodInvocation $ = copy.of(e1);
-    arguments($).remove(i);
-    arguments($).add(i, subject.pair(es1.get(i), es2.get(i)).toCondition(expression(x)));
     return $;
   }
 

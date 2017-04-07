@@ -39,7 +39,11 @@ public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
   private static final long serialVersionUID = 0x6E14426AA4211FFEL;
 
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
-    return "inline increment/decrement of variable into variable initialization";
+    return description(); 
+  }
+
+  @Override public String description() {
+    return "Consolidate initialization of " + name + " with subsequent increment/decrement"; 
   }
 
   @Override public Examples examples() {
