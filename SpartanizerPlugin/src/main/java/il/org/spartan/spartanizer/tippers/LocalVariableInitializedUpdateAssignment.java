@@ -50,6 +50,6 @@ public final class LocalVariableInitializedUpdateAssignment extends LocalInitial
   }
 
   @Override public Examples examples() {
-    return convert("int a;a=3;").to("int a=3;"); 
+    return convert("int a;a=3;").to("int a=3;");
   }
 }

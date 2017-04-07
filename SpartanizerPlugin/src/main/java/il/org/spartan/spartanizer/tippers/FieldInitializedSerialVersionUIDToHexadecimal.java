@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()} for documentation
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-03-24 */
 public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<FieldDeclaration> implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = 0x2A2A1B1B2BFBD6A5L;

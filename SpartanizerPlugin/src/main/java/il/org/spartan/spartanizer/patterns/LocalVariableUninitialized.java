@@ -10,5 +10,4 @@ public abstract class LocalVariableUninitialized extends Local {
     andAlso("Fragment must not be initialized", //
         () -> initializer == null);
   }
-
 }
