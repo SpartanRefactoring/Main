@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.patterns.*;
  * @since 2017-04-06
  */
 public class ForInlineToInitalizers extends ForStatementPattern implements TipperCategory.Inlining {
-  private static final long serialVersionUID = -109676187777547570L;
+  private static final long serialVersionUID = -0x185A5E964CCBD32L;
   
   List<SimpleName> updatedNotDeclared = new ArrayList<>();
   List<SimpleName> candidates = new ArrayList<>();

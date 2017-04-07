@@ -29,7 +29,7 @@ public abstract class WidgetOperation implements Serializable {
   /** Operation on mouse hold. Will be called once per
    * {@link SpartanWidgetHandler#OPERATION_HOLD_INTERVAL} ms, unless last
    * holdoperation did not finished. */
-  public void onMouseHold(final WidgetContext c) {
+  public void onMouseHold(final WidgetContext __) {
     // DO noting
   }
 
