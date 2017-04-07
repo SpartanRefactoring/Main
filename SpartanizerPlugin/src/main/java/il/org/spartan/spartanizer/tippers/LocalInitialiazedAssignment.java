@@ -23,9 +23,6 @@ public final class LocalInitialiazedAssignment extends LocalInitializedStatement
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x1866B79F79A10C90L;
 
-  @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
-    return description();
-  }
 
   @Override public String description() {
     return "Consolidate declaration of " + name + " with its subsequent initialization";
