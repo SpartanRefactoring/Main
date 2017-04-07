@@ -6,11 +6,10 @@ import java.util.function.*;
 import org.eclipse.swt.graphics.*;
 
 import il.org.spartan.plugin.*;
-import il.org.spartan.spartanizer.issues.*;
 
 /** Operation, image, description etc. of a widget button.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
- * @since 2017-04-06  */
+ * @since 2017-04-06 */
 @SuppressWarnings("unused")
 public abstract class WidgetOperation implements Serializable {
   private static final long serialVersionUID = 0x5DEE331D4A6A17CEL;
