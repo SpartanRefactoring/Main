@@ -68,72 +68,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     // addField(other);
   }
 
-  private static void setRenamingButtons(final RadioGroupFieldEditor e, final Composite parent, final StringFieldEditor other) {
-    final Control[] cc = e.getRadioBoxControl(parent).getChildren();
-    ((Button) cc[0]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "$";
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[1]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "result";
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[2]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "ret";
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[3]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "dummy";
-        // Names.methodReturnName = (x, y) -> (x + "").substring(0,
-        // 1).toLowerCase() + (x + "").substring(1, (x + "").length());
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[4]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> y.getName().getIdentifier();
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[5]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "other";
-        other.setEnabled(true, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-  }
-
   /** @return open projects in workspace */
   private static List<Entry<String, Object>> getProjects() {
     final List<Entry<String, Object>> $ = new ArrayList<>();
@@ -386,5 +320,71 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         }
       }.schedule();
     }
+  }
+
+  private static void setRenamingButtons(final RadioGroupFieldEditor e, final Composite parent, final StringFieldEditor other) {
+    final Control[] cc = e.getRadioBoxControl(parent).getChildren();
+    ((Button) cc[0]).addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        Names.methodReturnName = (x, y) -> "$";
+        other.setEnabled(false, parent);
+      }
+
+      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
+        widgetSelected(¢);
+      }
+    });
+    ((Button) cc[1]).addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        Names.methodReturnName = (x, y) -> "result";
+        other.setEnabled(false, parent);
+      }
+
+      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
+        widgetSelected(¢);
+      }
+    });
+    ((Button) cc[2]).addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        Names.methodReturnName = (x, y) -> "ret";
+        other.setEnabled(false, parent);
+      }
+
+      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
+        widgetSelected(¢);
+      }
+    });
+    ((Button) cc[3]).addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        Names.methodReturnName = (x, y) -> "dummy";
+        // Names.methodReturnName = (x, y) -> (x + "").substring(0,
+        // 1).toLowerCase() + (x + "").substring(1, (x + "").length());
+        other.setEnabled(false, parent);
+      }
+
+      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
+        widgetSelected(¢);
+      }
+    });
+    ((Button) cc[4]).addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        Names.methodReturnName = (x, y) -> y.getName().getIdentifier();
+        other.setEnabled(false, parent);
+      }
+
+      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
+        widgetSelected(¢);
+      }
+    });
+    ((Button) cc[5]).addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        Names.methodReturnName = (x, y) -> "other";
+        other.setEnabled(true, parent);
+      }
+
+      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
+        widgetSelected(¢);
+      }
+    });
   }
 }
