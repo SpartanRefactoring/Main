@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
@@ -25,11 +24,7 @@ public final class LocalVariableInitializedUnusedRemove extends LocalInitialized
   }
 
   @Override public String description() {
-    return "Remove unused, uninitialized variable";
-  }
-
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Remove unused variable: " + trivia.gist(¢);
+    return "Remove unused variable " + name; 
   }
 
   /** [[SuppressWarningsSpartan]] */

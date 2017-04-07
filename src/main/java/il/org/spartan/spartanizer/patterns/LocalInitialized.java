@@ -13,5 +13,7 @@ public abstract class LocalInitialized extends Local {
         () -> initializer != null);
   }
 
-  @Override public abstract String description(VariableDeclarationFragment f);
+  @Override public final String description(@SuppressWarnings("unused") VariableDeclarationFragment __) {
+    return description();
+  }
 }

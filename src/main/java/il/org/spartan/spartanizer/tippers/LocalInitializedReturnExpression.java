@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static il.org.spartan.utils.Proposition.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -50,8 +51,8 @@ public final class LocalInitializedReturnExpression extends LocalInitializedStat
         .ignores("int a = 3; return a =2;");//
   }
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Eliminate local " + ¢.getName() + " and inline its value into the expression of the subsequent return statement";
+  @Override public String description() {
+    return "Eliminate local " + name + " and inline its value into the expression of the subsequent return statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
