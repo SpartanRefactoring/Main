@@ -129,13 +129,17 @@ public enum JUnitTestMethodFacotry {
     gridLayout.marginHeight = 15;
     gridLayout.verticalSpacing = 20;
     shell.setLayout(gridLayout);
-    // Shell can be used as container
+    GridData gridData = new GridData(SWT.CENTER, SWT.CENTER, true, true);
+    Label head = new Label(shell, SWT.BORDER);
+    head.setText("Test Generator");
+    gridData.horizontalSpan=3;
+    head.setLayoutData(gridData);
     final Label label = new Label(shell, SWT.BORDER);
     label.setText("Enter Whatever:");
     label.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
-    final Text textBox = new Text(shell, SWT.BORDER);
+    final Text textBox = new Text(shell, SWT.BORDER | SWT.V_SCROLL);
     textBox.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
-    GridData gridData = new GridData();
+    gridData = new GridData();
     gridData.horizontalSpan = 1;
     gridData.horizontalAlignment = SWT.FILL;
     gridData.grabExcessHorizontalSpace = true;
@@ -147,8 +151,7 @@ public enum JUnitTestMethodFacotry {
     final Label resLabel = new Label(shell, SWT.BORDER);
     resLabel.setText("Auto Generated Test:");
     resLabel.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
-    final Text result = new Text(shell, SWT.READ_ONLY);
-    // result.setText("result will be written here");
+    final Text result = new Text(shell, SWT.V_SCROLL | SWT.READ_ONLY);
     gridData = new GridData();
     gridData.horizontalSpan = 1;
     gridData.horizontalAlignment = SWT.FILL;
