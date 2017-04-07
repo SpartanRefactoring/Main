@@ -19,10 +19,6 @@ import il.org.spartan.utils.*;
  * @since 2017-03-25 */
 public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 1;
-  private Proposition prerequisite;
-  @Property protected ASTNode parent;
-  @Property protected Statement nextStatement;
-
   public AbstractPattern() {
     this.prerequisite = Proposition.that("Extract parent and next statement", () -> {
       parent = current.getParent();
@@ -30,16 +26,19 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
       return true;
     });
   }
-
-  public final void setCurrent(final N c) {
-    current = c;
+  @Override public final String description(@SuppressWarnings("unused") N __) {
+    return description(); 
   }
+  @Override public abstract Examples examples();
 
   @Override public final boolean prerequisite(final N ¢) {
     assert current() == ¢;
     return prerequisite.eval();
-  }
+  } 
 
+  public final void setCurrent(final N c) {
+    current = c;
+  }
   @Override public final Tip tip(final N n) {
     assert n != null;
     assert n == current();
@@ -50,8 +49,9 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     }.extend(range());
   }
 
-  protected ASTNode range() {
-    return current;
+  protected AbstractPattern<N> andAlso(final Proposition ¢) {
+    this.prerequisite = prerequisite.and(¢);
+    return this;
   }
 
   protected AbstractPattern<N> andAlso(final String description, final BooleanSupplier s) {
@@ -63,15 +63,20 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     return this;
   }
 
-  protected AbstractPattern<N> andAlso(final Proposition ¢) {
-    this.prerequisite = prerequisite.and(¢);
-    return this;
-  }
-
   protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
 
   protected AbstractPattern<N> orElse(final Proposition ¢) {
     this.prerequisite = prerequisite.or(¢);
     return this;
   }
+
+  protected ASTNode range() {
+    return current;
+  }
+
+  private Proposition prerequisite;
+
+  @Property protected Statement nextStatement;
+
+  @Property protected ASTNode parent;
 }

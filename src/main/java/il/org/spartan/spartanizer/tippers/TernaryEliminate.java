@@ -10,13 +10,14 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** A {@link Tipper} to eliminate a ternary in which both branches are identical
  * @author Yossi Gil
  * @since 2015-07-17 */
 public final class TernaryEliminate extends AbstractPattern<ConditionalExpression>//
     implements TipperCategory.CommnonFactoring {
-  Expression then, elze, condition;
+  private static final long serialVersionUID = -0x5E134C6C247F2774L;
 
   public TernaryEliminate() {
     andAlso("Then and else are identical",
@@ -28,14 +29,18 @@ public final class TernaryEliminate extends AbstractPattern<ConditionalExpressio
     );
   }
 
-  private static final long serialVersionUID = -0x5E134C6C247F2774L;
-
-  @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
+  @Override public String description() {
     return "Eliminate conditional exprssion with identical branches";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(current(), make.plant(then).into(current().getParent()), g);
     return r;
+  }
+
+  Expression then, elze, condition;
+
+  @Override public Examples examples() {
+    return convert("a() ? f() :f();").to("f();"); 
   }
 }

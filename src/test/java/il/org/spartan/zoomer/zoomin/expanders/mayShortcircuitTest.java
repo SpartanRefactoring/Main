@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.meta.*;
 
-/** @author Yossi Gil {@code  Yossi.Gil@GMail.COM}
+/** @author Yossi Gil 
  * @since 2017-01-28 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Ignore("Yossi Gil")

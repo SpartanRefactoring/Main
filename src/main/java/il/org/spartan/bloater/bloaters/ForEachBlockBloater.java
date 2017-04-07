@@ -51,7 +51,7 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
     return r;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
+  @Override public String description() {
     return "expand the single statement in the foreach to a block";
   }
 }
