@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
@@ -24,8 +23,12 @@ public final class LocalInitialiazedAssignment extends LocalInitializedStatement
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x1866B79F79A10C90L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
+  @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment ¢) {
+    return description();
+  }
+
+  @Override public String description() {
+    return "Consolidate declaration of " + name + " with its subsequent initialization";
   }
 
   @Override public Examples examples() {
