@@ -35,7 +35,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
-    String ret_name = Names.methodReturnName.apply(t, d);
+    final String ret_name = Names.methodReturnName.apply(t, d);
     final SimpleName $ = new Conservative(d).selectReturnVariable(ret_name);
     if ($ == null)
       return null;
@@ -82,8 +82,8 @@ abstract class AbstractRenamePolicy {
 
   abstract SimpleName innerSelectReturnVariable();
 
-  final SimpleName selectReturnVariable(String ret_name) {
-    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.name(step.body(inner),ret_name) ? null
+  final SimpleName selectReturnVariable(final String ret_name) {
+    return returnStatements == null || localVariables == null || localVariables.isEmpty() || haz.name(step.body(inner), ret_name) ? null
         : innerSelectReturnVariable();
   }
 }

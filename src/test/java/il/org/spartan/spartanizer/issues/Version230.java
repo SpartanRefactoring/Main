@@ -1727,18 +1727,17 @@ public final class Version230 {
     included("int a=f();while(c)b[i]=a;", VariableDeclarationFragment.class).notIn(new LocalVariableIntializedStatementTerminatingScope());
   }
 
-  /** Introduced by Yogi on Fri-Apr-07-19:53:21-IDT-2017 
-  (code automatically in class 'JUnitTestMethodFacotry')*/
-    @Test public void test_intaIntbForbIfFalseBreakReturnb() {
-       trimmingOf("int a(int b) { for (;; ++b) if (false) break; return b; }") //
-           .using(IfStatement.class, new IfTrueOrFalse()) //
-           .gives("int a(int b){for(;;++b){}return b;}") //
-           .using(ForStatement.class, new ForEmptyBlockToEmptyStatement()) //
-           .gives("int a(int b){for(;;++b);return b;}") //
-           .stays() //
+  /** Introduced by Yogi on Fri-Apr-07-19:53:21-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void test_intaIntbForbIfFalseBreakReturnb() {
+    trimmingOf("int a(int b) { for (;; ++b) if (false) break; return b; }") //
+        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .gives("int a(int b){for(;;++b){}return b;}") //
+        .using(ForStatement.class, new ForEmptyBlockToEmptyStatement()) //
+        .gives("int a(int b){for(;;++b);return b;}") //
+        .stays() //
     ;
   }
-
 
   @Test public void issue62b_1() {
     trimmingOf("int f(int ixx){ for(;ixx<100;ixx=ixx+1)if(false)return;return ixx;}")//

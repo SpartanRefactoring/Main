@@ -130,9 +130,9 @@ public enum JUnitTestMethodFacotry {
     gridLayout.verticalSpacing = 20;
     shell.setLayout(gridLayout);
     GridData gridData = new GridData(SWT.CENTER, SWT.CENTER, true, true);
-    Label head = new Label(shell, SWT.BORDER);
+    final Label head = new Label(shell, SWT.BORDER);
     head.setText("Test Generator");
-    gridData.horizontalSpan=3;
+    gridData.horizontalSpan = 3;
     head.setLayoutData(gridData);
     final Label label = new Label(shell, SWT.BORDER);
     label.setText("Enter Whatever:");

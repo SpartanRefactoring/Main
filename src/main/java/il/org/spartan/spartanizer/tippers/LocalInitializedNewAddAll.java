@@ -43,10 +43,10 @@ public final class LocalInitializedNewAddAll extends LocalInitialized //
     andAlso("Method has only one argument", //
         () -> iz.not.null¢(argument = onlyOne(arguments(methodInvocation))));
   }
+
   @Override public String description() {
     return "Inline variable '" + name + "' into next statement";
   }
-
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     $.getListRewrite(newExpression, ClassInstanceCreation.ARGUMENTS_PROPERTY).insertFirst(copy.of(argument), g);

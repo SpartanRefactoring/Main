@@ -22,22 +22,22 @@ public class Issue1122 {
 
   @Test public void c() {
     trimmingOf("for(int i=0;i<10;++i) if(doSomething()) break;")//
-    .gives("do{} while(!doSomething());");
+        .gives("do{} while(!doSomething());");
   }
 
   @Test public void d() {
     trimmingOf("for (int a = 0; a < 10; ++a) if (b()) return;")//
-    .stays();
+        .stays();
   }
 
   @Test public void e() {
     trimmingOf("for (int a = 0; a < 10; ++a) if (b()) { return; }")//
-    .gives("for(int a=0;a<10;++a)if(b())return;")//
-    .stays();
+        .gives("for(int a=0;a<10;++a)if(b())return;")//
+        .stays();
   }
 
   @Test public void f() {
     trimmingOf("for(int i=0;i<10;++i) if(doSomething()) { break; }")//
-    .stays();
+        .stays();
   }
 }

@@ -448,7 +448,7 @@ public enum step {
     return ¢ == null ? null : ¢.getJavadoc();
   }
 
-  public static SimpleName label(BreakStatement ¢) {
+  public static SimpleName label(final BreakStatement ¢) {
     return ¢ == null ? null : ¢.getLabel();
   }
 
