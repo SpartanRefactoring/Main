@@ -20,7 +20,7 @@ public class Issue1091 {
   }
 
   @Test public void t2() {
-    bloatingOf("x = f(cond() ? a() : b());").gives("x = (cond() ? f(a()) : f(b()));");
+    bloatingOf("x = f(cond() ? a() : b());").stays();
   }
 
   @Test public void t3() {
