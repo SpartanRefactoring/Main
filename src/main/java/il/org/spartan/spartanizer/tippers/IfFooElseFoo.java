@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -28,7 +27,7 @@ public final class IfFooElseFoo extends IfAbstractPattern implements TipperCateg
     return r;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description() {
     return "Eliminate 'if' with two identical branches";
   }
 

@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 
-/** @author Yossi Gil {@code  Yossi.Gil@GMail.COM}
+/** @author Yossi Gil
  * @since 2015-08-01 */
 public abstract class IfAbstractPattern extends AbstractPattern<IfStatement> {
   private static final long serialVersionUID = 1;
@@ -34,6 +34,4 @@ public abstract class IfAbstractPattern extends AbstractPattern<IfStatement> {
   static boolean degenerateElse(final IfStatement ¢) {
     return elze(¢) != null && iz.vacuousElse(¢);
   }
-
-  @Override public abstract String description(IfStatement ¢);
 }

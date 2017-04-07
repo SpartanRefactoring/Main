@@ -37,9 +37,6 @@ public class IfElseBlockBloater extends IfAbstractPattern implements TipperCateg
     ;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final IfStatement ¢) {
-    return null;
-  }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final IfStatement $ = copy.of(current);

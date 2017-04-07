@@ -41,7 +41,7 @@ public class PrefixToInfix extends PrefixExprezzion implements TipperCategory.Bl
     return $;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final PrefixExpression __) {
+  @Override public String description() {
     return "Convert PrefixExpression to Infix Expreesion";
   }
 }

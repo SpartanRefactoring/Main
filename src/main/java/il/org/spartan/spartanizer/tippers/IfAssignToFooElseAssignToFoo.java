@@ -35,7 +35,7 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
         () -> lisp2.areEqual(thenOperator = thenAssignment.getOperator(), elzeAssignment.getOperator()));
   }
 
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description() {
     return "Consolidate assignments to " + to;
   }
 

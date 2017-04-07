@@ -50,7 +50,7 @@ public final class TernaryPushup extends InfixExprezzion implements TipperCatego
     return r;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
+  @Override public String description() {
     return "";
   }
 }

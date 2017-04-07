@@ -31,7 +31,7 @@ public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
     sideEffects.free(elzeIfCondition));
   }
 
-  @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
+  @Override public String description() {
     return "Merges if and else blocks when they are the same and there is an else if clause.";
   }
 

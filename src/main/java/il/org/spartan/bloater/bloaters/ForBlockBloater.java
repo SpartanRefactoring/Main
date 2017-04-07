@@ -51,7 +51,7 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
     return r;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  @Override public String description() {
     return "expand the single statements in the for to a block";
   }
 }

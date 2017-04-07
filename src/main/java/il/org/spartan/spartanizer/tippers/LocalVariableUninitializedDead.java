@@ -1,12 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
-import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
@@ -22,8 +20,8 @@ public final class LocalVariableUninitializedDead extends LocalVariableUninitial
         () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
   }
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Remove unused local variable " + trivia.gist(¢.getName());
+  @Override public String description() {
+    return "Remove unused local variable " + name;
   }
 
   @Override public Examples examples() {
