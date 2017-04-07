@@ -32,11 +32,11 @@ public abstract class LocalInitializedStatement extends LocalInitialized {
   }
 
   private List<SimpleName> uses() {
-   return collect.usesOf(name).in(nextStatement);
+    return collect.usesOf(name).in(nextStatement);
   }
 
   protected int saving() {
-    return count.nodes(singleFragment() ? declaration : this.current);
+    return count.nodes(singleFragment() ? declaration : current);
   }
 
   private boolean singleFragment() {
