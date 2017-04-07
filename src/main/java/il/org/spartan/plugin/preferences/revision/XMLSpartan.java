@@ -27,7 +27,7 @@ import il.org.spartan.utils.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-02-01 */
 public class XMLSpartan {
-  private static final String CURRENT_VERSION = "2.0";
+  private static final String CURRENT_VERSION = "3.0";
   private static final String BASE = "spartan";
   private static final String VERSION = "version";
   private static final String FILE_NAME = "spartanizer.xml";
