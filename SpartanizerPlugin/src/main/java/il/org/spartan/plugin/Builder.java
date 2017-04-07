@@ -6,6 +6,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -131,7 +132,8 @@ public final class Builder extends IncrementalProjectBuilder {
 
   private void build(final IProgressMonitor m) throws CoreException {
     final IResourceDelta d = getDelta(getProject());
-    if (d == null || d.getAffectedChildren().length == 0)
+    IResourceDelta[] acs = d == null ? null : d.getAffectedChildren();
+    if (d == null || acs == null || acs.length == 0 || acs.length == 1 && XMLSpartan.FILE_NAME.equals(acs[0].getResource().getName()))
       fullBuild(m);
     else
       incrementalBuild(d);

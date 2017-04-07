@@ -97,7 +97,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   public String nanoName() {
-    return getClass().getSimpleName();
+    return English.name(myClass());
   }
 
   @Override public final boolean ok(final N ¢) {
@@ -118,7 +118,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
-  public String className() {
+  public final String className() {
     return English.name(this);
   }
 }

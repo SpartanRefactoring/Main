@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil 
  * @since 2017-03-24 */
 public enum JUnitTestMethodFacotry {
   ;
@@ -125,14 +125,15 @@ public enum JUnitTestMethodFacotry {
     // of the widgets in the container
     final GridLayout gridLayout = new GridLayout();
     gridLayout.numColumns = 3;
-    gridLayout.marginWidth = 10;
-    gridLayout.marginHeight = 15;
+    gridLayout.marginWidth = 20;
+    gridLayout.marginHeight = 30;
     gridLayout.verticalSpacing = 20;
     shell.setLayout(gridLayout);
     GridData gridData = new GridData(SWT.CENTER, SWT.CENTER, true, true);
-    final Label head = new Label(shell, SWT.BORDER);
+    Label head = new Label(shell, SWT.BORDER);
     head.setText("Test Generator");
-    gridData.horizontalSpan = 3;
+    head.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
+    gridData.horizontalSpan=3;
     head.setLayoutData(gridData);
     final Label label = new Label(shell, SWT.BORDER);
     label.setText("Enter Whatever:");
@@ -140,7 +141,8 @@ public enum JUnitTestMethodFacotry {
     final Text textBox = new Text(shell, SWT.BORDER | SWT.V_SCROLL);
     textBox.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
     gridData = new GridData();
-    gridData.horizontalSpan = 1;
+    gridData.horizontalSpan = 3;
+    gridData.verticalSpan = 4;
     gridData.horizontalAlignment = SWT.FILL;
     gridData.grabExcessHorizontalSpace = true;
     gridData.verticalAlignment = SWT.FILL;
@@ -148,12 +150,18 @@ public enum JUnitTestMethodFacotry {
     textBox.setLayoutData(gridData);
     final Button button = new Button(shell, SWT.WRAP);
     button.setText("Go!");
+    gridData = new GridData();
+    gridData.horizontalSpan = 3;
+    gridData.grabExcessVerticalSpace = gridData.grabExcessHorizontalSpace = true;
+    gridData.horizontalAlignment = SWT.CENTER;
+    button.setLayoutData(gridData);
     final Label resLabel = new Label(shell, SWT.BORDER);
     resLabel.setText("Auto Generated Test:");
     resLabel.setForeground(display.getSystemColor(SWT.COLOR_BLUE));
     final Text result = new Text(shell, SWT.V_SCROLL | SWT.READ_ONLY);
     gridData = new GridData();
-    gridData.horizontalSpan = 1;
+    gridData.horizontalSpan = 3;
+    gridData.verticalSpan = 4;
     gridData.horizontalAlignment = SWT.FILL;
     gridData.grabExcessHorizontalSpace = true;
     gridData.verticalAlignment = SWT.FILL;

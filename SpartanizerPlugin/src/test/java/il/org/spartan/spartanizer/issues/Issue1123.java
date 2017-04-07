@@ -9,7 +9,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for {@link ForNoUpdatersNoInitializerToWhile}
- * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
+ * @author Yossi Gil 
  * @since 2017-03-24 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
 @SuppressWarnings({ "static-method", "javadoc" }) //
