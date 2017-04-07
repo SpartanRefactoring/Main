@@ -85,7 +85,7 @@ public class Eclipse {
         new Job("Refreshing " + p.getName()) {
           @Override protected IStatus run(final IProgressMonitor m) {
             try {
-              p.build(IncrementalProjectBuilder.FULL_BUILD, m);
+              p.touch(m);
               return Status.OK_STATUS;
             } catch (final CoreException ¢) {
               monitor.log(¢);
@@ -102,7 +102,7 @@ public class Eclipse {
               s.setText("Refreshing project");
           });
           try {
-            p.build(IncrementalProjectBuilder.FULL_BUILD, m);
+            p.touch(m);
           } catch (final CoreException ¢) {
             monitor.log(¢);
           }
