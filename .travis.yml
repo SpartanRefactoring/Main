@@ -15,5 +15,10 @@ env:
 script:
   # the following command line builds the project, runs the tests with coverage and then execute the SonarQube analysis
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$SONAR_TOKEN # -X debug enabled
+  - mvn clean install
+  - mvn test
+  - mvn cobertura:cobertura
 
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
