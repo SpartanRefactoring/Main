@@ -704,7 +704,7 @@ public enum step {
   }
 
   public static List<Statement> statements(final ASTNode ¢) {
-    return iz.block(¢) ? statements(az.block(¢)) : !iz.switchStatement(¢) ? null : statements(az.switchStatement(¢));
+    return iz.block(¢) ? statements(az.block(¢)) : iz.switchStatement(¢) ? statements(az.switchStatement(¢)) : null;
   }
 
   /** Expose the list of sideEffects contained in a {@link Block}

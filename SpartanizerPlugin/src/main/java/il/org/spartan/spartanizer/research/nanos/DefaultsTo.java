@@ -16,8 +16,8 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
       .add("null != $X1 ? $X1 : $X2", "defaults($X1).to($X2)", "default pattern: Go fluent")
       .add("null == $X1 ? $X2 : $X1", "defaults($X1).to($X2)", "default pattern: Go fluent");
   private static final NanoPatternContainer<Block> tippers2 = new BlockNanoPatternContainer()
-      .statementPattern("$T $N = $X1; return $N != null ? $N : $X2;", "return defaults($X1).to($X2);", "dfault pattern: Go fluent")
-      .statementPattern("$T $N = $X1; return $N == null ? $X2 : $N;", "return defaults($X1).to($X2);", "dfault pattern: Go fluent");
+      .statementPattern("$T $N = $X1; return $N != null ? $N : $X2;", "return defaults($X1).to($X2);", "default pattern: Go fluent")
+      .statementPattern("$T $N = $X1; return $N == null ? $X2 : $N;", "return defaults($X1).to($X2);", "default pattern: Go fluent");
 
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return tippers.canTip(¢);
