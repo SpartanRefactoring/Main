@@ -9,8 +9,7 @@ public abstract class LocalInitialized extends Local {
   private static final long serialVersionUID = 0x40D2B631F771C9F4L;
 
   public LocalInitialized() {
-    andAlso(//
-        "Fragment must be initialized", //
+    andAlso("Fragment must be initialized", //
         () -> initializer != null);
   }
 
