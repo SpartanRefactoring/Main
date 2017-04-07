@@ -27,12 +27,8 @@ import il.org.spartan.spartanizer.patterns.*;
 public final class LocalVariableInitializedUpdateAssignment extends LocalInitializedStatement implements TipperCategory.Unite {
   private static final long serialVersionUID = -0x601DD969FC862E65L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
-  }
-
   @Override public String description() {
-    return "Consolidate declaration of variable with its subsequent initialization";
+    return "Consolidate declaration of " + name + " with its subsequent initialization";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
