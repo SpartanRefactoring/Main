@@ -18,9 +18,10 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert {@code void f(int ¢){}} to {@code void f(int it){}}
- * @author Yossi Gil
- * @since 2016-09 */
+/** Convert {@code void f(int a){}} to {@code void f(int it){}} Test class is
+ * Issue1162
+ * @author Dor Ma'ayan
+ * @since 2017-07-05 */
 public final class MethodDeclarationRenameSingleParameterToIt extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 0x5583F2C8E00B4000L;
