@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Various tests upgraded from an old class replaced by
  * {@link LocalVariableUninitializedDead}
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-03-26 */
 @SuppressWarnings("static-method")
 public class Issue0835 {

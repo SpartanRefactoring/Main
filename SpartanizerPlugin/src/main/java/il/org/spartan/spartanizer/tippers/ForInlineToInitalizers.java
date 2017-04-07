@@ -55,12 +55,12 @@ public class ForInlineToInitalizers extends ForStatementPattern implements Tippe
     return null;
   }
 
-  // TODO Yuval Simon: more meaningful description? which variable? 
+  // TODO Yuval Simon: more meaningful description? which variable?
   @Override public String description() {
     return "Inline to for initalizers list";
   }
 
-  // TODO Yuval Simon: please add example 
+  // TODO Yuval Simon: please add example
   @Override public Examples examples() {
     return null;
   }

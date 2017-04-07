@@ -132,7 +132,7 @@ public final class Builder extends IncrementalProjectBuilder {
 
   private void build(final IProgressMonitor m) throws CoreException {
     final IResourceDelta d = getDelta(getProject());
-    IResourceDelta[] acs = d == null ? null : d.getAffectedChildren();
+    final IResourceDelta[] acs = d == null ? null : d.getAffectedChildren();
     if (d == null || acs == null || acs.length == 0 || acs.length == 1 && XMLSpartan.FILE_NAME.equals(acs[0].getResource().getName()))
       fullBuild(m);
     else

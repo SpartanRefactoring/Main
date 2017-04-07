@@ -15,10 +15,11 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-03-25 */
 public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 1;
+
   public AbstractPattern() {
     this.prerequisite = Proposition.that("Extract parent and next statement", () -> {
       parent = current.getParent();
@@ -26,19 +27,22 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
       return true;
     });
   }
-  @Override public final String description(@SuppressWarnings("unused") N __) {
-    return description(); 
+
+  @Override public final String description(@SuppressWarnings("unused") final N __) {
+    return description();
   }
+
   @Override public abstract Examples examples();
 
   @Override public final boolean prerequisite(final N ¢) {
     assert current() == ¢;
     return prerequisite.eval();
-  } 
+  }
 
   public final void setCurrent(final N c) {
     current = c;
   }
+
   @Override public final Tip tip(final N n) {
     assert n != null;
     assert n == current();
@@ -75,8 +79,6 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
   }
 
   private Proposition prerequisite;
-
   @Property protected Statement nextStatement;
-
   @Property protected ASTNode parent;
 }
