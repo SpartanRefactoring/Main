@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 
 /** convert {@code
  * T a = new ArrayList<>()
@@ -58,4 +59,9 @@ public final class LocalInitializedNewAddAll extends LocalInitialized //
   @SuppressWarnings({ "unused", "FieldCanBeLocal" }) private Type type;
   private Expression argument;
   private MethodInvocation methodInvocation;
+
+  @Override public Examples examples() {
+    return convert("T a = new ArrayList<>(); a.addAll(x);")//
+        .to("new ArrayList<>(x)");
+  }
 }

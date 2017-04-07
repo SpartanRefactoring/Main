@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 
 /** Test case is {@link Issue0456} function documented in {@link #examples}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
@@ -54,7 +55,13 @@ public class ForInlineToInitalizers extends ForStatementPattern implements Tippe
     return null;
   }
 
-  @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
+  // TODO Yuval Simon: more meaningful description? which variable? 
+  @Override public String description() {
     return "Inline to for initalizers list";
+  }
+
+  // TODO Yuval Simon: please add example 
+  @Override public Examples examples() {
+    return null;
   }
 }

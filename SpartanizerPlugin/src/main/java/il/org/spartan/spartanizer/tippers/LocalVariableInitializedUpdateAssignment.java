@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 
 /** convert {@code
  * int a;
@@ -46,5 +47,9 @@ public final class LocalVariableInitializedUpdateAssignment extends LocalInitial
     i.inlineInto(newInitializer);
     $.remove(nextStatement, g);
     return $;
+  }
+
+  @Override public Examples examples() {
+    return convert("int a;a=3;").to("int a=3;"); 
   }
 }

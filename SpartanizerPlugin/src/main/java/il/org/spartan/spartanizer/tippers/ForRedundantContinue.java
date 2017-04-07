@@ -30,8 +30,8 @@ public class ForRedundantContinue extends NonEmptyForLoop//
     andAlso(new Proposition.Singleton("Applicable only on loops ending with continue", () -> iz.continueStatement(lastStatement)));
   }
 
-  @Override public String description(final ForStatement ¢) {
-    return "Prune redundant " + extract.lastStatement(¢);
+  @Override public String description() {
+    return "Prune redundant " + extract.lastStatement(current);
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
