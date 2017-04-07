@@ -252,7 +252,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
    * @author Yossi Gil
    * @since 2017-03-13 */
   abstract class Stateful<T, R> implements Rule<T, R> {
-    protected T current;
+    public T current;
 
     @Override public final R apply(final T ¢) {
       if (!ready())
