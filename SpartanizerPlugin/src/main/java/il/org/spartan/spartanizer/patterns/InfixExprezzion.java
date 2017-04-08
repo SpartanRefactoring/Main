@@ -4,7 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** TODO Yuval Simon: document class
+/** A pattern for InfixExpression
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-30 */
 public abstract class InfixExprezzion extends AbstractPattern<InfixExpression> {
