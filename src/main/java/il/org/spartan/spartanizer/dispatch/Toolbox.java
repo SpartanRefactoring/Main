@@ -51,8 +51,7 @@ public class Toolbox {
   @SuppressWarnings("rawtypes") private static final Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
     static final long serialVersionUID = -0x185C3A40849E91FAL;
     {
-      final Toolbox t = freshCopyOfAllTippers();
-      Stream.of(t.implementation).filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
+      Stream.of(freshCopyOfAllTippers().implementation).filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
     }
   };
   /** The default instance of this class */

@@ -5,7 +5,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO Yossi Gil please add a description
@@ -56,15 +55,6 @@ public class InteractiveSpartanizer {
 
   public String once(final String from) {
     return new Trimmer(toolbox).once(from);
-  }
-
-  ASTVisitor collect(final List<Tip> $) {
-    return new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        final Tipper<N> t = toolbox.firstTipper(n);
-        return t == null || t.cantTip(n) || Trimmer.prune(t.tip(n, exclude), $);
-      }
-    };
   }
 
   boolean changed;

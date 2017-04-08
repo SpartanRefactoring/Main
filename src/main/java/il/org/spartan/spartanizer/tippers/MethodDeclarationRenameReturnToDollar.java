@@ -36,23 +36,27 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     final Type t = d.getReturnType2();
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
-    final String ret_name = Names.methodReturnName.apply(t, d);
-    if(ret_name == null || scope.hasInScope(d.getBody(), ret_name))
+    final String name = Names.methodReturnName.apply(t, d);
+    if(name == null || scope.hasInScope(d.getBody(), name))
       return null;
-    final SimpleName $ = new Conservative(d).selectReturnVariable(ret_name);
+    final SimpleName $ = new Conservative(d).selectReturnVariable(name);
     if ($ == null)
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Tip("Rename '" + $ + "' to " + ret_name + " (main variable returned by " + description(d) + ")", getClass(), $) {
+    return new Tip(description(d, name, $), getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename($, $(), d, r, g);
       }
 
       SimpleName $() {
-        return make.from(d).identifier(ret_name);
+        return make.from(d).identifier(name);
       }
-    };
+    }.extend(d);
+  }
+
+  private String description(final MethodDeclaration d, final String name, final SimpleName $) {
+    return "Rename '" + $ + "' to " + name + " (main variable returned by " + description(d) + ")";
   }
 }
 
