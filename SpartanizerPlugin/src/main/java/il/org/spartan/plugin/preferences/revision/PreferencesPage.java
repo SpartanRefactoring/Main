@@ -14,7 +14,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.swt.*;
@@ -26,9 +25,9 @@ import org.eclipse.ui.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.Names.*;
 import il.org.spartan.utils.*;
 
 /** Revised global preferences page for the plugin.
@@ -67,12 +66,13 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" }, { "typeCamelCase", "typeCamelCase" },
         { "Function name", "Function's name" }, { "Other", "Other" } };
     final RadioGroupFieldEditor r = new RadioGroupFieldEditor("Dollars", "Method return variable rename to:", 3, labelAndValues,
-        getFieldEditorParent(), true);
+        getFieldEditorParent());
     final StringFieldEditor other = new StringFieldEditor("TT", "", 17, getFieldEditorParent());
-    other.setEnabled(false, getFieldEditorParent());
-    setReturnValueRenaming(r, getFieldEditorParent(), other);
     addField(r);
-    // addField(other);
+    other.setValidateStrategy(StringFieldEditor.VALIDATE_ON_KEY_STROKE);
+    other.setEnabled(((Button) r.getRadioBoxControl(getFieldEditorParent()).getChildren()[5]).getSelection(), getFieldEditorParent());
+    setTextParams(other);
+    setRenamingButtons(r, getFieldEditorParent(), other);
   }
 
   /** @return open projects in workspace */
@@ -354,11 +354,12 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
   }
 
-  private static void setReturnValueRenaming(final RadioGroupFieldEditor e, final Composite parent, final StringFieldEditor other) {
+  private static void setRenamingButtons(final RadioGroupFieldEditor e, final Composite parent, final StringFieldEditor other) {
     final Control[] cc = e.getRadioBoxControl(parent).getChildren();
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "$";
+        Names.returnName = "$";
+        Names.returnNameSelect = ReturnNameSelect.byConst;
         other.setEnabled(false, parent);
       }
 
@@ -368,7 +369,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
     ((Button) cc[1]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "result";
+        Names.returnName = "result";
+        Names.returnNameSelect = ReturnNameSelect.byConst;
         other.setEnabled(false, parent);
       }
 
@@ -378,7 +380,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
     ((Button) cc[2]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "ret";
+        Names.returnName = "ret";
+        Names.returnNameSelect = ReturnNameSelect.byConst;
         other.setEnabled(false, parent);
       }
 
@@ -387,49 +390,18 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     });
     ((Button) cc[3]).addSelectionListener(new SelectionListener() {
-      String[] reserved = new String[] { "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue",
-          "default", "do", "double", "else", "enum", "extends", "false", "final", "finally", "float", "for", "if", "goto", "implements", "import",
-          "instanceof", "int", "interface", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
-          "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while" };
-
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> {
-          final String n = extractType(x);
-          if (n == null)
-            return null;
-          final String $ = n.substring(0, 1).toLowerCase() + n.substring(1, n.length());
-          return !Arrays.stream(reserved).anyMatch(λ -> λ.equals($)) && !$.equals(n) ? $ : null;
-        };
+        Names.returnNameSelect = ReturnNameSelect.byCamelCase;
         other.setEnabled(false, parent);
       }
 
       @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
         widgetSelected(¢);
       }
-
-      /** Extracts type from ¢, for example for type SomeArray[][] it returns
-       * SomeArray. Returns null in case of type name which can not be decided
-       * properly, such as union type. */
-      String extractType(final Type ¢) {
-        if (¢ == null)
-          return null;
-        if (¢.isArrayType())
-          return extractType(az.arrayType(¢).getElementType());
-        if (¢.isParameterizedType())
-          return extractType(az.parameterizedType(¢).getType());
-        if (¢.isQualifiedType())
-          return az.qualifiedType(¢).getName().getIdentifier();
-        if (¢.isNameQualifiedType())
-          return az.nameQualifiedType(¢).getName().getIdentifier();
-        if (!¢.isSimpleType())
-          return null;
-        final Name $ = az.simpleType(¢).getName();
-        return (!$.isQualifiedName() ? az.simpleName($) : az.qualifiedName($).getName()).getIdentifier();
-      }
     });
     ((Button) cc[4]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> y.getName().getIdentifier();
+        Names.returnNameSelect = ReturnNameSelect.byMethodName;
         other.setEnabled(false, parent);
       }
 
@@ -439,13 +411,40 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
     ((Button) cc[5]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "other";
         other.setEnabled(true, parent);
       }
 
       @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
         widgetSelected(¢);
       }
+    });
+  }
+  
+  private void setTextParams(StringFieldEditor r) {
+    r.setStringValue("$");
+    Text t = r.getTextControl(getFieldEditorParent());
+    t.addVerifyListener(new VerifyListener() {     
+      @Override public void verifyText(VerifyEvent e) {
+        String val = r.getStringValue();
+        if(val.isEmpty()) {
+          if(!Character.isJavaIdentifierStart(e.character))
+            e.doit = false;
+        }
+        else if(!Character.isJavaIdentifierPart(e.character))
+          e.doit = false;
+      }
+    });
+    
+    t.addFocusListener(new FocusListener() {
+      @Override public void focusLost(@SuppressWarnings("unused") FocusEvent e) {
+        Names.returnNameSelect = ReturnNameSelect.byConst;
+        if(r.getStringValue().isEmpty())
+          Names.returnName = "$";
+        else
+          Names.returnName = r.getStringValue();
+      }
+      
+      @Override public void focusGained(@SuppressWarnings("unused") FocusEvent e) {/***/}
     });
   }
 }
