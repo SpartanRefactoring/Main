@@ -53,7 +53,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       SimpleName $() {
         return make.from(d).identifier(name);
       }
-    };
+    }.extend(d);
   }
 
   private static String description(final MethodDeclaration d, final String name, final SimpleName $) {

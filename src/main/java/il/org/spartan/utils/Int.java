@@ -51,4 +51,8 @@ public final class Int {
   public int next() {
     return ++inner;
   }
+
+  public void add(Int other) {
+    inner += other.get();
+  }
 }

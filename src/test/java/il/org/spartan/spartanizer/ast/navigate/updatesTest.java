@@ -8,7 +8,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** Yossi Gil: tests {@link compute#updatedVariables }
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil 
  * @since 2017-03-05 */
 @SuppressWarnings("static-method")
 public class updatesTest {

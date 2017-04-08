@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
  * T a = new ArrayList
  * }
  * @author Yossi Gil
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil 
  * @since 2017-03-02 */
 public final class LocalVariableIntializedNewAddAll extends GoToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
