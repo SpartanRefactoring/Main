@@ -36,7 +36,7 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
     return ¢ + "";
   }
 
-  @Override public Tip tip(final VariableDeclarationStatement s, @SuppressWarnings("unused") final ExclusionManager __) {
+  @Override public Tip tip(final VariableDeclarationStatement s, final ExclusionManager e) {
     assert s != null;
     if (s.getParent() == null)
       return null;
@@ -44,7 +44,11 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
         .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(s, "result")) && !in(λ.getName().getIdentifier(), "result")
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
-    return $.isEmpty() ? null : new Tip("Rename parameters", getClass(), s) {
+    if($.isEmpty())
+      return null;
+    if(e != null)
+      e.exclude(s.getParent());
+    return new Tip("Rename parameters", getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (VariableDeclarationFragment ss : $)
           action.rename(ss.getName(),
