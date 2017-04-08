@@ -76,8 +76,8 @@ public class InflaterProvider extends OperationsProvider {
         .add(WhileStatement.class, //
             new WhileBlockBloater()) //
         .add(IfStatement.class, //
-            new IfElseBlockBloater()) ///
-        // new LongIfBloater()) //
+            new IfElseBlockBloater() ///
+         ,new LongIfBloater()) //
         .add(InfixExpression.class, //
             new ParenthesesBloater(), new TernaryPushup()) //
     ;//

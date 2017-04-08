@@ -9,7 +9,6 @@ import il.org.spartan.bloater.bloaters.*;
 /** Unit tests for {@link LongIfBloater}
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-09 */
-@Ignore // TODO Tomer Dragucki
 @SuppressWarnings("static-method")
 public class Issue0976 {
   @Test public void a() {
@@ -33,5 +32,9 @@ public class Issue0976 {
   @Test public void c() {
     bloatingOf("if(a && b) { f(); } else { g(); }")//
         .gives("if(a) if(b) f(); else { g(); } else g();");
+  }
+
+  @Test public void e() {
+    bloatingOf("if(a && b && c) { f(); } else { g(); }").stays();
   }
 }
