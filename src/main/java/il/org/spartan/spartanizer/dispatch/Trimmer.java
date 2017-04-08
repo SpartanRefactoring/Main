@@ -134,21 +134,20 @@ public class Trimmer extends AbstractGUIApplicator {
     return !¢.hasChildren();
   }
 
-  /** Performs one iteration of Spartanization
-   * @param $ idocument object
+  /** Performs one spartanization iteration
+   * @param d JD 
    * @return
    * @throws AssertionError */
-  public TextEdit once(@NotNull final IDocument $) throws AssertionError {
-    final TextEdit e;
+  public TextEdit once(@NotNull final IDocument d) throws AssertionError {
     try {
-      e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get()), new Int()).rewriteAST($, null);
-      e.apply($);
+      final TextEdit $ = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get()), new Int()).rewriteAST(d, null);
+      $.apply(d);
+      return $;
     } catch (@NotNull final NullPointerException | MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       if (!silent)
         monitor.logEvaluationError(this, ¢);
       throw new AssertionError(¢);
     }
-    return e;
   }
 
   @Override @Nullable protected ASTVisitor makeTipsCollector(@NotNull final List<Tip> $) {
