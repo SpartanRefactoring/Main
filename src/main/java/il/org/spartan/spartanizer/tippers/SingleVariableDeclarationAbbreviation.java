@@ -32,18 +32,13 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
   private static String[] shortNames = { "lst", "integer", "list" };
 
   static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
-    final Javadoc j = d.getJavadoc();
-    if (j == null)
-      return;
-    final List<TagElement> ts = tags(j);
+    final List<TagElement> ts = tags(d.getJavadoc());
     if (ts != null)
       for (final TagElement t : ts)
         if (TagElement.TAG_PARAM.equals(t.getTagName()))
-          for (final Object ¢ : fragments(t))
-            if (¢ instanceof SimpleName && wizard.eq((ASTNode) ¢, oldName)) {
+          for (final IDocElement ¢ : fragments(t))
+            if (¢ instanceof ASTNode && wizard.eq((ASTNode) ¢, oldName)) 
               r.replace((ASTNode) ¢, make.from(d).identifier(newName), g);
-              return;
-            }
   }
 
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
