@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO Tomer Dragucki please add a description
+/** Test "Bug in remove else" as discussed in Issue #352
  * @author Tomer Dragucki
  * @since 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
