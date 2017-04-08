@@ -4,8 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO tomerdragucki {@code tomerd@campus.technion.ac.il} please add a
- * description
+/** Test for "Inlining bug- primitives" Issue #731
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-12 */
 @SuppressWarnings("static-method")
