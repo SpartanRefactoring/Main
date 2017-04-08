@@ -31,7 +31,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author Raviv Rachmiel {@code  raviv.rachmiel@gmail.com }
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO Raviv Rachmiel take care of single var declaration, tests
-public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration>//
+public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x3523CE8186A3EAECL;
 
@@ -39,7 +39,7 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(final MethodDeclaration d, @SuppressWarnings("unused") final ExclusionManager __) {
+  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager m) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
@@ -47,7 +47,11 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
         .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(body(d), "result")) && !in(λ.getName().getIdentifier(), "result")
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
-    return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
+    if($.isEmpty())
+      return null;
+    if(m != null)
+      m.exclude(d);
+    return new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (SingleVariableDeclaration ¢ : $)
           action.rename(¢.getName(),
