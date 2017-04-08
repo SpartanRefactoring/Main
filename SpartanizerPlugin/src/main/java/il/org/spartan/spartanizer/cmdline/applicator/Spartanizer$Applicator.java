@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
 /** TODO Matteo Orru' please add a description
  * @author Matteo Orru'
  * @since 2016 */
-public class Spartanizer$Applicator extends Generic$Applicator {
+public class Spartanizer$Applicator extends GenericApplicator {
   CSVStatistics spectrumStats;
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
 

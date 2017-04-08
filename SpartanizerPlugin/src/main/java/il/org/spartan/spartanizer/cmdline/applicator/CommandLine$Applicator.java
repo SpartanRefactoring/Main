@@ -27,7 +27,7 @@ import il.org.spartan.utils.*;
 /** Specific applicator
  * @author Matteo Orru'
  * @since 2016 */
-public class CommandLine$Applicator extends Generic$Applicator {
+public class CommandLine$Applicator extends GenericApplicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
   public static String presentFileName;
