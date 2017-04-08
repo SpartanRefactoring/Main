@@ -4,17 +4,13 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO YuvalSimon {@code yuvaltechnion@gmail.com} please add a description
+/** Test case for bug in {@link DeclarationInlineIntoNext}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-17 */
 @SuppressWarnings("static-method")
 public class Issue1067 {
   @Test public void t1() {
     trimmingOf("int zero = 0, result = 8 / zero;f(++result);").stays();
-    // int zero = 1, result = 8;
-    // ++result;
-    // int a =0, res = 8;
-    // f(res);
   }
 
   @Test public void t2() {

@@ -28,17 +28,6 @@ public class ForInlineToInitalizers extends ForStatementPattern implements Tippe
     candidates.removeAll(initializers.stream().filter(iz::variableDeclarationExpression).map(az::variableDeclarationExpression)
         .flatMap(λ -> step.fragments(λ).stream()).map(step::name).collect(Collectors.toList()));
     andAlso("Exists updated variable not declared in for initalizers list", () -> !updatedNotDeclared.isEmpty());
-    // andAlso("Exists not declared variable that its value is not used after
-    // the for",
-    // () -> {
-    // List<Statement> l = step.statements(current.getParent());
-    // if(l == null)
-    // return false;
-    //// for(Statement s : l)
-    //// if
-    //// l.subList(l.indexOf(current) + 1, l.size()).stream().filter(predicate)
-    // return true;
-    // });
   }
 
   private static List<SimpleName> updatedVars(final Expression u) {
@@ -60,8 +49,8 @@ public class ForInlineToInitalizers extends ForStatementPattern implements Tippe
     return "Inline to for initalizers list";
   }
 
-  // TODO Yuval Simon: please add example
   @Override public Examples examples() {
-    return null;
+    return convert("int i = 1; for(;i < 5; ++i) f(i);").to("for(int i = 1;i < 5; ++i) f(i);")
+        .ignores("int i = 1; for(;i < 5; ++i) f(i); g(i);");
   }
 }

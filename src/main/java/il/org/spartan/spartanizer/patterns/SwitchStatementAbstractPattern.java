@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
-/** TODO Yuval Simon: document class
+/** A pattern for SwitchStatement
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-31 */
 public abstract class SwitchStatementAbstractPattern extends AbstractPattern<SwitchStatement> {
