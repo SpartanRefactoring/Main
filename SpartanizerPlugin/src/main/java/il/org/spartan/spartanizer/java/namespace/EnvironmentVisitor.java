@@ -217,14 +217,13 @@ final class EnvironmentVisitor extends ASTVisitor {
   static int statementOrderAmongTypeInParent(final Statement s) {
     // extract.statements wouldn't work here - we need a shallow extract,
     // not a deep one.
-    final ASTNode n = s.getParent();
-    if (n == null || !(n instanceof Block) && !(n instanceof SwitchStatement))
-      return 0;
     int $ = 0;
-    for (final Statement ¢ : iz.block(n) ? statements(az.block(n)) : statements(az.switchStatement(n))) {
+    final List<Statement> statements = statements(s.getParent());
+    if (statements == null)
+      return $;
+    for (final Statement ¢ : statements) {
       // This is intentionally '==' and not equals, meaning the exact same
-      // Statement,
-      // not just equivalence.
+      // statement,not just equivalence.
       if (¢ == s)
         break;
       if (¢.getNodeType() == s.getNodeType())

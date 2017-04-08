@@ -53,8 +53,11 @@ public interface scope {
   /** Bug in ternary spartanizing, do not remove the suppress spartanization
    * clause [[SuppressWarningsSpartan]] */
   static Namespace getScopeNamespace(final ASTNode ¢) {
-    final ASTNode $ = delimiter(¢);
-    return new Namespace(Environment.of(last(iz.block($) ? statements(az.block($)) : statements(az.switchStatement($)))));
+    final ASTNode delimiter = delimiter(¢);
+    final List<Statement> statements = statements(delimiter);
+    final Statement last = last(statements);
+    final Namespace of = Environment.of(last);
+    return new Namespace(of);
   }
 
   static String newName(final ASTNode ¢, final Type t) {
