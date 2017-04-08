@@ -420,6 +420,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     });
   }
   
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   private void setTextParams(StringFieldEditor r) {
     r.setStringValue("$");
     Text t = r.getTextControl(getFieldEditorParent());
