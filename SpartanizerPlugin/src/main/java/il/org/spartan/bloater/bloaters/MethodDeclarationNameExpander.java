@@ -47,26 +47,26 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
         .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(body(d), "result")) && !in(λ.getName().getIdentifier(), "result")
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
-    if($.isEmpty())
+    if ($.isEmpty())
       return null;
-    if(m != null)
+    if (m != null)
       m.exclude(d);
     return new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (SingleVariableDeclaration ¢ : $)
+        for (final SingleVariableDeclaration ¢ : $)
           action.rename(¢.getName(),
               make.from(d).identifier(in(¢.getName().getIdentifier(), "$") ? "result" : scope.newName(body(d), step.type(¢), prefix(step.type(¢)))),
               d, r, g);
       }
     };
   }
-  
-  private static boolean nameMatch(String s, Type t) {
-    String $ = prefix(t);
-    return (s.length() >= $.length() && s.substring(0,$.length()).equals($) && s.substring($.length(), s.length()).matches("[0-9]*"));
+
+  private static boolean nameMatch(final String s, final Type t) {
+    final String $ = prefix(t);
+    return s.length() >= $.length() && s.substring(0, $.length()).equals($) && s.substring($.length(), s.length()).matches("[0-9]*");
   }
-  
-  static String prefix(Type ¢) {
+
+  static String prefix(final Type ¢) {
     return namer.shorten(¢);
   }
 }

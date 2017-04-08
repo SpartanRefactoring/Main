@@ -18,19 +18,16 @@ import il.org.spartan.spartanizer.testing.*;
 @SuppressWarnings("static-method")
 public class Issue1040 {
   @Test public void test1() {
-    bloatingOf(new Aux2()).givesWithBinding("int a() {int i;i=0;++i;return 0;}", "a").givesWithBinding("int a() {int i;i=0;i++;return 0;}",
-        "a");
+    bloatingOf(new Aux2()).givesWithBinding("int a() {int i;i=0;++i;return 0;}", "a").givesWithBinding("int a() {int i;i=0;i++;return 0;}", "a");
   }
 
   @Test public void test2() {
-    bloatingOf(new Aux2()).givesWithBinding("int a() {int i;i=0;++i;return 0;}", "a").givesWithBinding("int b() {int i;i=0;++i;return 0;}",
-        "b");
+    bloatingOf(new Aux2()).givesWithBinding("int a() {int i;i=0;++i;return 0;}", "a").givesWithBinding("int b() {int i;i=0;++i;return 0;}", "b");
   }
 
   @Test public void test3() {
-    bloatingOf(new Aux2()).givesWithBinding("int a() {int i;i=0;++i;return 0;}", "a")
-        .givesWithBinding("int b() {int i;i=0;++i;return 0;}", "b").givesWithBinding("int a() {int i;i=0;i++;return 0;}", "a")
-        .givesWithBinding("int b() {int i;i=0;i++;return 0;}", "b");
+    bloatingOf(new Aux2()).givesWithBinding("int a() {int i;i=0;++i;return 0;}", "a").givesWithBinding("int b() {int i;i=0;++i;return 0;}", "b")
+        .givesWithBinding("int a() {int i;i=0;i++;return 0;}", "a").givesWithBinding("int b() {int i;i=0;i++;return 0;}", "b");
   }
 
   @Test(expected = AssertionError.class) public void test6() {
@@ -63,7 +60,7 @@ public class Issue1040 {
       total2 = Stream.of(arr).map(λ -> total2(1)).reduce((x, y) -> x + y).get();
     }
   }
-  
+
   public static class Aux2 extends MetaFixture {
     int a() {
       return 0;

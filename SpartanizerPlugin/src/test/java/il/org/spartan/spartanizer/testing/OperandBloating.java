@@ -35,8 +35,8 @@ public class OperandBloating extends TrimmingOperand {
     super(classText);
     ast = inner;
   }
-  
-  public OperandBloating needRenaming(boolean ¢) {
+
+  public OperandBloating needRenaming(final boolean ¢) {
     needRenaming = ¢;
     return this;
   }
