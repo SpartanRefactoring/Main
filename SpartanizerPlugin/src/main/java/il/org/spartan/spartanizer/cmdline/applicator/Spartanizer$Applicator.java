@@ -114,7 +114,6 @@ public class Spartanizer$Applicator extends GenericApplicator {
     }
   }
 
-
   /** Rewrite CompilationUnit
    * @param ¢
    * @return */

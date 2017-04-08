@@ -12,17 +12,16 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Dor Ma'ayan
  * @since 2017-04-07 */
 public final class Names {
-  public enum ReturnNameSelect {byConst, byCamelCase, byMethodName}
+  public enum ReturnNameSelect {
+    byConst, byCamelCase, byMethodName
+  }
 
-  private static String[] reserved = new String[] { "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue",
-      "default", "do", "double", "else", "enum", "extends", "false", "final", "finally", "float", "for", "if", "goto", "implements", "import",
-      "instanceof", "int", "interface", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short", "static",
-      "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while" };
-
-  
+  private static String[] reserved = new String[] { "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
+      "continue", "default", "do", "double", "else", "enum", "extends", "false", "final", "finally", "float", "for", "if", "goto", "implements",
+      "import", "instanceof", "int", "interface", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short",
+      "static", "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while" };
   public static String returnName = "$";
   public static ReturnNameSelect returnNameSelect = ReturnNameSelect.byConst;
-  
   public static final BiFunction<Type, MethodDeclaration, String> methodReturnName = (x, y) -> {
     switch (returnNameSelect) {
       case byConst:
@@ -39,8 +38,8 @@ public final class Names {
         return "$";
     }
   };
-  
   public static BiFunction<Type, MethodDeclaration, String> methodSingleParameterName = (x, y) -> "¢";
+
   /** Extracts type from ¢, for example for type SomeArray[][] it returns
    * SomeArray. Returns null in case of type name which can not be decided
    * properly, such as union type. */

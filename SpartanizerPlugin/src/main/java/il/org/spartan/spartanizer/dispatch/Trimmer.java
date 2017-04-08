@@ -87,7 +87,7 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 
-  @Override public ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, Consumer<ASTNode> nodeLogger) {
+  @Override public ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     currentToolbox = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
     fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
