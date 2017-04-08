@@ -4,7 +4,7 @@ import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** TODO Yuval Simon: document class
+/** Contains methods for renaming return variables, parameters, etc. 
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-04-07 */
 public final class Names {

@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
 
-/** TODO Yuval Simon: document class
+/** A pattern for ConditionalExpression (i.e ternary)
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-30 */
 public abstract class TernaryExpression extends AbstractPattern<ConditionalExpression> {

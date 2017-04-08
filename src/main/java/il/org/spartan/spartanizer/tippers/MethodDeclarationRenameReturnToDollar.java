@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO Artium Nihamkin (original) please add a description
@@ -36,6 +37,8 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
     final String ret_name = Names.methodReturnName.apply(t, d);
+    if(ret_name == null || scope.hasInScope(d.getBody(), ret_name))
+      return null;
     final SimpleName $ = new Conservative(d).selectReturnVariable(ret_name);
     if ($ == null)
       return null;
