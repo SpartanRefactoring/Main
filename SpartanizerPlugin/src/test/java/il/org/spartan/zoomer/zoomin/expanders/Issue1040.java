@@ -43,16 +43,16 @@ public class Issue1040 {
   }
 
   @Test(expected = AssertionError.class) public void test6() {
-    bloatingOf(new Issue1040Aux3()).givesWithBinding("void toTest() {total = 0;for(final Integer k : arr) {total += total(1);}}", "toTest");
+    bloatingOf(new Aux()).givesWithBinding("void toTest() {total = 0;for(final Integer k : arr) {total += total(1);}}", "toTest");
   }
 
   @Test public void test7() {
-    bloatingOf(new Issue1040Aux3()).givesWithBinding("void toTest2() {total2 = 0;for(final Integer k : arr) {total2 = total2 + total2(1);}}",
+    bloatingOf(new Aux()).givesWithBinding("void toTest2() {total2 = 0;for(final Integer k : arr) {total2 = total2 + total2(1);}}",
         "toTest2");
   }
 
   @SuppressWarnings("unused")
-  public static class Issue1040Aux3 extends MetaFixture {
+  public static class Aux extends MetaFixture {
     int total;
     int total2;
     @SuppressWarnings("boxing") final Integer[] arr = { 1, 2, 3, 4, 5 };
