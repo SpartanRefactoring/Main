@@ -479,9 +479,8 @@ public interface wizard {
 
   static Expression goInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> $ = hop.operands(from);
-    // TODO Raviv Rachmiel: use extract.core
-    $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(az.parenthesizedExpression(λ).getExpression())).forEachOrdered(x -> {
-      final Assignment a = az.assignment(az.parenthesizedExpression(x).getExpression());
+    $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(extract.core(λ))).forEachOrdered(x -> {
+      final Assignment a = az.assignment(extract.core(x));
       final SimpleName var = az.simpleName(left(a));
       fragments(s).stream().filter(λ -> (name(λ) + "").equals(var + "")).forEach(λ -> {
         λ.setInitializer(copy.of(right(a)));
