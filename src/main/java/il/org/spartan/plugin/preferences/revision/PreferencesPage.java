@@ -14,6 +14,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.jface.util.*;
 import org.eclipse.swt.*;
@@ -25,6 +26,7 @@ import org.eclipse.ui.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
@@ -355,17 +357,53 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     });
     ((Button) cc[3]).addSelectionListener(new SelectionListener() {
+      String[] reserved = new String[] { "abstract", "assert", "boolean", "break", "byte",
+          "case", "catch", "char", "class", "const", "continue", "default", "do",
+          "double", "else", "enum", "extends", "false", "final", "finally",
+          "float", "for", "if", "goto", "implements", "import", "instanceof",
+          "int", "interface", "long", "native", "new", "null", "package",
+          "private", "protected", "public", "return", "short", "static",
+          "strictfp", "super", "switch", "synchronized", "this", "throw",
+          "throws", "transient", "true", "try", "void", "volatile", "while" };
+      
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.methodReturnName = (x, y) -> "dummy";
-        // Names.methodReturnName = (x, y) -> (x + "").substring(0,
-        // 1).toLowerCase() + (x + "").substring(1, (x + "").length());
+        Names.methodReturnName = (x, y) -> {
+          String n = extractType(x);
+          if (n == null)
+            return null;
+          String $ = n.substring(0, 1).toLowerCase() + n.substring(1, n.length());
+          return !Arrays.stream(reserved).anyMatch(λ -> λ.equals($)) && !$.equals(n) ? $ : null;
+        };
         other.setEnabled(false, parent);
+        
       }
 
       @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
         widgetSelected(¢);
       }
+      
+      /** Extracts type from ¢, for example for type SomeArray[][] it returns SomeArray.
+       * Returns null in case of type name which can not be decided properly,
+       * such as union type. 
+       */
+      String extractType(Type ¢) {
+        if(¢ == null)
+          return null;
+        if (¢.isArrayType())
+          return extractType(az.arrayType(¢).getElementType());
+        if (¢.isParameterizedType())
+          return extractType(az.parameterizedType(¢).getType());
+        if (¢.isQualifiedType())
+          return az.qualifiedType(¢).getName().getIdentifier();
+        if (¢.isNameQualifiedType())
+          return az.nameQualifiedType(¢).getName().getIdentifier();
+        if (!¢.isSimpleType())
+          return null;
+        Name $ = az.simpleType(¢).getName();
+        return (!$.isQualifiedName() ? az.simpleName($) : az.qualifiedName($).getName()).getIdentifier();
+      }
     });
+    
     ((Button) cc[4]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         Names.methodReturnName = (x, y) -> y.getName().getIdentifier();
