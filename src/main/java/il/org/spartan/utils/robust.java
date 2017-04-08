@@ -6,38 +6,8 @@ import java.util.function.*;
  * @author Yossi Gil
  * @since 2017-04-08 */
 public interface robust {
-  static boolean lyFalse(final BooleanSupplier s, final Consumer<Exception> x) {
-    try {
-      return s.getAsBoolean();
-    } catch (final Exception $) {
-      x.accept($);
-      return false;
-    }
-  }
-
-  static boolean lyTrue(final Runnable r, final Consumer<Exception> x) {
-    try {
-      r.run();
-    } catch (final Exception $) {
-      x.accept($);
-    }
-    return true;
-  }
-
-  static boolean lyTrue(final BooleanSupplier s, final Consumer<Exception> x) {
-    try {
-      return s.getAsBoolean();
-    } catch (final Exception $) {
-      x.accept($);
-      return true;
-    }
-  }
-
-  static void ly(final Runnable r, final Consumer<Exception> x) {
-    robust.lyNull(() -> {
-      r.run();
-      return null;
-    }, x);
+  static void ly(final Runnable r, final Consumer<Exception> c) {
+    robust.lyNull(() -> nullify(() -> r.run()), c);
   }
 
   static void ly(final Runnable r, final Runnable x) {
@@ -52,21 +22,51 @@ public interface robust {
     }
   }
 
+  static boolean lyFalse(final BooleanSupplier s, final Consumer<Exception> c) {
+    try {
+      return s.getAsBoolean();
+    } catch (final Exception $) {
+      c.accept($);
+      return false;
+    }
+  }
+
   static <T> T lyNull(final Supplier<T> t) {
     return robust.ly(t, __ -> null);
   }
 
-  static <T> T lyNull(final Supplier<T> t, final Runnable r) {
-    return robust.ly(t, __ -> {
-      r.run();
-      return null;
-    });
+  static <T> T lyNull(final Supplier<T> t, final Consumer<Exception> c) {
+    return robust.ly(t, λ -> nullify(() -> c.accept(λ)));
   }
 
-  static <T> T lyNull(final Supplier<T> t, final Consumer<Exception> x) {
-    return robust.ly(t, λ -> {
-      x.accept(λ);
-      return null;
-    });
+  static <T> T lyNull(final Supplier<T> t, final Runnable r) {
+    return robust.ly(t, __ -> nullify(r));
+  }
+
+  static boolean lyTrue(final BooleanSupplier s, final Consumer<Exception> c) {
+    try {
+      return s.getAsBoolean();
+    } catch (final Exception $) {
+      c.accept($);
+      return true;
+    }
+  }
+
+  static boolean lyTrue(final Runnable r, final Consumer<Exception> c) {
+    try {
+      r.run();
+    } catch (final Exception $) {
+      c.accept($);
+    }
+    return true;
+  }
+
+  static <T> T null¢(@SuppressWarnings("unused") final Object... __) {
+    return null;
+  }
+
+  static <T> T nullify(final Runnable ¢) {
+    ¢.run();
+    return null;
   }
 }

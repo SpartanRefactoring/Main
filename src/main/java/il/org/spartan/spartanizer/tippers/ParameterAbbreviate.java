@@ -37,7 +37,7 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
       for (final TagElement t : ts)
         if (TagElement.TAG_PARAM.equals(t.getTagName()))
           for (final IDocElement ¢ : fragments(t))
-            if (¢ instanceof ASTNode && wizard.eq((ASTNode) ¢, oldName)) 
+            if (¢ instanceof ASTNode && wizard.eq((ASTNode) ¢, oldName))
               r.replace((ASTNode) ¢, make.from(d).identifier(newName), g);
   }
 

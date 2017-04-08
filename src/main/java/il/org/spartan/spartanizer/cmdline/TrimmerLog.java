@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** Logging stuff
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since Sep 20, 2016 */
 public enum TrimmerLog {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;

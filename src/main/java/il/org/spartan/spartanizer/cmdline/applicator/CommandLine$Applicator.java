@@ -167,7 +167,6 @@ public class CommandLine$Applicator extends GenericApplicator {
     return $;
   }
 
-
   /** consolidate tips on CompilationUnit
    * @param r
    * @param u */

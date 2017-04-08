@@ -44,26 +44,26 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
         .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(s, "result")) && !in(λ.getName().getIdentifier(), "result")
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
-    if($.isEmpty())
+    if ($.isEmpty())
       return null;
-    if(m != null)
+    if (m != null)
       m.exclude(s.getParent());
     return new Tip("Rename parameters", getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (VariableDeclarationFragment ss : $)
+        for (final VariableDeclarationFragment ss : $)
           action.rename(ss.getName(),
               make.from(s).identifier(in(ss.getName().getIdentifier(), "$") ? "result" : scope.newName(s, step.type(s), prefix(step.type(s)))),
               s.getParent(), r, g);
       }
     };
   }
-  
-  private static boolean nameMatch(String s, Type t) {
-    String $ = prefix(t);
-    return (s.length() >= $.length() && s.substring(0,$.length()).equals($) && s.substring($.length(), s.length()).matches("[0-9]*"));
+
+  private static boolean nameMatch(final String s, final Type t) {
+    final String $ = prefix(t);
+    return s.length() >= $.length() && s.substring(0, $.length()).equals($) && s.substring($.length(), s.length()).matches("[0-9]*");
   }
-  
-  static String prefix(Type ¢) {
+
+  static String prefix(final Type ¢) {
     return namer.shorten(¢);
   }
 }

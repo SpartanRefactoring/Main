@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** An abstract class to manipulate bodies of loops.
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-03-05 */
 public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNode<S> {
   private static final long serialVersionUID = 0x8FF10353929C0E6L;

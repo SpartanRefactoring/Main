@@ -59,8 +59,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.getAble((IProject) λ).booleanValue())) //
     ));
     final String[][] parameterRenameOptions = new String[][] { { "¢", "¢" }, { "it", "it" }, { "param", "param" } };
-    RadioGroupFieldEditor singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3, parameterRenameOptions,
-        getFieldEditorParent());
+    final RadioGroupFieldEditor singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3,
+        parameterRenameOptions, getFieldEditorParent());
     addField(singleParameterRadio);
     setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());
     final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" }, { "typeCamelCase", "typeCamelCase" },
@@ -329,28 +329,28 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
   }
 
-  private static void setSingleParameterRenaming(RadioGroupFieldEditor singleParameterRadio, Composite fieldEditorParent) {
+  private static void setSingleParameterRenaming(final RadioGroupFieldEditor singleParameterRadio, final Composite fieldEditorParent) {
     final Control[] cc = singleParameterRadio.getRadioBoxControl(fieldEditorParent).getChildren();
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         Names.methodSingleParameterName = (x, y) -> "¢";
       }
 
-      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {}
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {}
     });
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         Names.methodSingleParameterName = (x, y) -> "¢";
       }
 
-      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {}
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {}
     });
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         Names.methodSingleParameterName = (x, y) -> "¢";
       }
 
-      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {}
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {}
     });
   }
 
@@ -419,35 +419,30 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     });
   }
-  
-  /**
-   * [[SuppressWarningsSpartan]]
-   */
-  private void setTextParams(StringFieldEditor r) {
+
+  /** [[SuppressWarningsSpartan]] */
+  private void setTextParams(final StringFieldEditor r) {
     r.setStringValue("$");
-    Text t = r.getTextControl(getFieldEditorParent());
-    t.addVerifyListener(new VerifyListener() {     
-      @Override public void verifyText(VerifyEvent e) {
-        String val = r.getStringValue();
-        if(val.isEmpty()) {
-          if(!Character.isJavaIdentifierStart(e.character))
-            e.doit = false;
-        }
-        else if(!Character.isJavaIdentifierPart(e.character))
+    final Text t = r.getTextControl(getFieldEditorParent());
+    t.addVerifyListener(e -> {
+      final String val = r.getStringValue();
+      if (val.isEmpty()) {
+        if (!Character.isJavaIdentifierStart(e.character))
           e.doit = false;
-      }
+      } else if (!Character.isJavaIdentifierPart(e.character))
+        e.doit = false;
     });
-    
     t.addFocusListener(new FocusListener() {
-      @Override public void focusLost(@SuppressWarnings("unused") FocusEvent e) {
+      @Override public void focusLost(@SuppressWarnings("unused") final FocusEvent e) {
         Names.returnNameSelect = ReturnNameSelect.byConst;
-        if(r.getStringValue().isEmpty())
+        if (r.getStringValue().isEmpty())
           Names.returnName = "$";
         else
           Names.returnName = r.getStringValue();
       }
-      
-      @Override public void focusGained(@SuppressWarnings("unused") FocusEvent e) {/***/}
+
+      @Override public void focusGained(@SuppressWarnings("unused") final FocusEvent e) {/***/
+      }
     });
   }
 }
