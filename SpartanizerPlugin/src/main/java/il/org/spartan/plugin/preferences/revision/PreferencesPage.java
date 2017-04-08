@@ -59,13 +59,18 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         λ -> changes.getAble((IProject) λ), //
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.getAble((IProject) λ).booleanValue())) //
     ));
+    final String[][] parameterRenameOptions = new String[][] { { "¢", "¢" }, { "it", "it" }, { "param", "param" } };
+    RadioGroupFieldEditor singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3, parameterRenameOptions,
+        getFieldEditorParent());
+    addField(singleParameterRadio);
+    setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());
     final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" }, { "typeCamelCase", "typeCamelCase" },
         { "Function name", "Function's name" }, { "Other", "Other" } };
-    final RadioGroupFieldEditor r = new RadioGroupFieldEditor("Cent", "Method return variable rename to:", 3, labelAndValues, getFieldEditorParent(),
-        true);
+    final RadioGroupFieldEditor r = new RadioGroupFieldEditor("Dollars", "Method return variable rename to:", 3, labelAndValues,
+        getFieldEditorParent(), true);
     final StringFieldEditor other = new StringFieldEditor("TT", "", 17, getFieldEditorParent());
     other.setEnabled(false, getFieldEditorParent());
-    setRenamingButtons(r, getFieldEditorParent(), other);
+    setReturnValueRenaming(r, getFieldEditorParent(), other);
     addField(r);
     // addField(other);
   }
@@ -324,7 +329,32 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
   }
 
-  private static void setRenamingButtons(final RadioGroupFieldEditor e, final Composite parent, final StringFieldEditor other) {
+  private void setSingleParameterRenaming(RadioGroupFieldEditor singleParameterRadio, Composite fieldEditorParent) {
+    final Control[] cc = singleParameterRadio.getRadioBoxControl(fieldEditorParent).getChildren();
+    ((Button) cc[0]).addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        Names.methodSingleParameterName = (x, y) -> "¢";
+      }
+
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {}
+    });
+    ((Button) cc[0]).addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        Names.methodSingleParameterName = (x, y) -> "¢";
+      }
+
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {}
+    });
+    ((Button) cc[0]).addSelectionListener(new SelectionListener() {
+      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
+        Names.methodSingleParameterName = (x, y) -> "¢";
+      }
+
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") SelectionEvent __) {}
+    });
+  }
+
+  private static void setReturnValueRenaming(final RadioGroupFieldEditor e, final Composite parent, final StringFieldEditor other) {
     final Control[] cc = e.getRadioBoxControl(parent).getChildren();
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
