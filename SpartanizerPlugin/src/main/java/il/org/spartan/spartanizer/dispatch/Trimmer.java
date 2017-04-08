@@ -75,7 +75,7 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 
-  @Override public int consolidateTips(final ASTRewrite r, @NotNull final CompilationUnit u, final IMarker m) {
+  @Override public int consolidateTips(final ASTRewrite rewriter, @NotNull final CompilationUnit u, final IMarker m) {
     final Int $ = new Int();
     @Nullable final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
     @NotNull final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
@@ -85,29 +85,47 @@ public class Trimmer extends AbstractGUIApplicator {
         TrimmerLog.visitation(n);
         if (!check(n) || !inRange(m, n) || disabling.on(n))
           return true;
-        @Nullable Tipper<N> w = null;
-        try {
-          w = getTipper(t, n);
-        } catch (@NotNull final Exception ¢) {
-          monitor.logProbableBug(this, ¢);
-          exceptionListener.accept(¢);
-        }
-        if (w == null)
+        @Nullable Tip tip = findTip(n);
+        if (tip == null)
           return true;
-        @Nullable Tip s = null;
+        TrimmerLog.application(rewriter, tip);
+        $.step();
+        progressMonitor.worked(1);
+        return true;
+      }
+
+      <N extends ASTNode> Tip findTip(final N n) {
+        @Nullable Tipper<N> w = findTipper(n);
+        if (w == null)
+          return null;
+        @Nullable Tip s = findTip(n, w);
+        if (s == null)
+          return null;
+        $.step();
+        return s;
+      }
+
+      <N extends ASTNode> Tip findTip(final N n, Tipper<N> w) {
         try {
-          s = w.tip(n, exclude);
+          Tip s = w.tip(n, exclude);
           TrimmerLog.tip(w, n);
+          return s;
         } catch (@NotNull final Exception ¢) {
           monitor.debug(this, ¢);
           monitor.logToFile(¢, fileName, n, n.getRoot());
           exceptionListener.accept(¢, w, n);
+          return null;
         }
-        if (s == null)
-          return true;
-        $.step();
-        TrimmerLog.application(r, s);
-        return true;
+      }
+
+      <N extends ASTNode> Tipper<N> findTipper(final N n) {
+        try {
+          return getTipper(t, n);
+        } catch (@NotNull final Exception ¢) {
+          monitor.logProbableBug(this, ¢);
+          exceptionListener.accept(¢);
+        }
+        return null;
       }
 
       @Override protected void initialization(@NotNull final ASTNode ¢) {
