@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Tests of {@link SingelVariableDeclarationUnderscoreDoubled}
+/** Tests of {@link ParameterAnonymize}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) //

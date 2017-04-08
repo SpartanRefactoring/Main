@@ -194,12 +194,12 @@ public enum JUnitTestMethodFacotry {
 
   public static String makeTipperUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
-    return comment() + format("  @Test public void test_%s() {\n %s\n}\n", signature($), tipperBody($));
+    return comment() + format("  @Test public void %s() {\n %s\n}\n", signature($), tipperBody($));
   }
 
   public static String makeBloaterUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
-    return comment() + format("@Test public void test_%s() {\n %s\n}\n", signature($), bloaterBody($));
+    return comment() + format("@Test public void %s() {\n %s\n}\n", signature($), bloaterBody($));
   }
 
   static String comment() {

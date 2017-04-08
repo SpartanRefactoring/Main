@@ -22,7 +22,7 @@ public class Issue0499 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_publicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
     trimmingOf("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
-        .using(SingleVariableDeclaration.class, new SingelVariableDeclarationUnderscoreDoubled()) //
+        .using(SingleVariableDeclaration.class, new ParameterAnonymize()) //
         .gives("public A a(final B __){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
         .using(LambdaExpression.class, new LambdaRenameSingleParameterToLambda()) //
         .gives("public A a(final B __){assert a!=null;r(λ->Integer.valueOf(a.apply(λ,selection())));return this;}") //
@@ -40,7 +40,7 @@ public class Issue0499 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void publicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
     trimmingOf("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
-        .using(SingleVariableDeclaration.class, new SingelVariableDeclarationUnderscoreDoubled()) //
+        .using(SingleVariableDeclaration.class, new ParameterAnonymize()) //
         .gives("public A a(final B __){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
         .using(LambdaExpression.class, new LambdaRenameSingleParameterToLambda()) //
         .gives("public A a(final B __){assert a!=null;r(λ->Integer.valueOf(a.apply(λ,selection())));return this;}") //
@@ -52,7 +52,7 @@ public class Issue0499 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void ublicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
     trimmingOf("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
-        .using(SingleVariableDeclaration.class, new SingelVariableDeclarationUnderscoreDoubled()) //
+        .using(SingleVariableDeclaration.class, new ParameterAnonymize()) //
         .gives("public A a(final B __){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
         .using(LambdaExpression.class, new LambdaRenameSingleParameterToLambda()) //
         .gives("public A a(final B __){assert a!=null;r(λ->Integer.valueOf(a.apply(λ,selection())));return this;}") //

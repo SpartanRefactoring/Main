@@ -8,7 +8,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for
- * {@link SingleVariableDeclarationEnhancedForRenameParameterToIt}
+ * {@link ForParameterRenameToIt}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
