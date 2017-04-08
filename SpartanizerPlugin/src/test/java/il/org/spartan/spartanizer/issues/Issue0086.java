@@ -104,7 +104,7 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void B$12rangeNotEmpty() {
     A$04_init();
-    assert !tipper.tip(focus).isEmpty();
+    assert !tipper.tip(focus).highlight.isEmpty();
   }
 
   @Test public void B$13applyTipper() {

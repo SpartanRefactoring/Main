@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * in javadoc is changed with dollar/cent renaming.
  * @author Ori Roth
  * @since 2016
- * @see SingleVariableDeclarationAbbreviation#fixJavadoc testing for comments */
+ * @see ParameterAbbreviate#fixJavadoc testing for comments */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method") //
 public class Issue0180 {
