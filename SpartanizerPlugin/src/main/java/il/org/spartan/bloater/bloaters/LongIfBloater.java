@@ -46,6 +46,11 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static boolean shouldTip(final IfStatement ¢) {
-    return iz.infixExpression(¢.getExpression()) && iz.conditionalAnd(az.infixExpression(¢.getExpression()));
+    return iz.infixExpression(¢.getExpression()) && iz.conditionalAnd(az.infixExpression(¢.getExpression())) && !tooComplicated(¢);
+  }
+
+  private static boolean tooComplicated(final IfStatement ¢) {
+    return step.elze(¢) != null && step.extendedOperands(az.infixExpression(¢.getExpression())) != null
+        && !step.extendedOperands(az.infixExpression(¢.getExpression())).isEmpty();
   }
 }
