@@ -114,14 +114,6 @@ public class Spartanizer$Applicator extends Generic$Applicator {
     }
   }
 
-  /** This method
-   * @param u
-   * @return */
-  public ASTRewrite createRewrite(final BodyDeclaration u) {
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    consolidateTips($, u);
-    return $;
-  }
 
   /** Rewrite CompilationUnit
    * @param ¢
@@ -136,57 +128,6 @@ public class Spartanizer$Applicator extends Generic$Applicator {
    * @param r
    * @param u */
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    toolbox = Toolbox.defaultInstance();
-    u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        TrimmerLog.visitation(n);
-        if (disabling.on(n))
-          return true;
-        Tipper<N> tipper = null;
-        try {
-          tipper = getTipper(n);
-        } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
-        }
-        if (tipper == null)
-          return true;
-        Tip s = null;
-        try {
-          s = tipper.tip(n, exclude);
-          tick(n, tipper);
-        } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
-        }
-        if (s == null)
-          return true;
-        ++tippersAppliedOnCurrentObject;
-        TrimmerLog.application(r, s);
-        return true;
-      }
-
-      <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-        return toolbox.firstTipper(¢);
-      }
-
-      <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
-        tick(w);
-        TrimmerLog.tip(w, n);
-      }
-
-      <N extends ASTNode> void tick(final Tipper<N> w) {
-        final String key = English.name(w.getClass());
-        if (!spectrum.containsKey(key))
-          spectrum.put(key, 0);
-        spectrum.put(key, spectrum.get(key) + 1);
-      }
-
-      @Override protected void initialization(final ASTNode ¢) {
-        disabling.scan(¢);
-      }
-    });
-  }
-
-  public void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
