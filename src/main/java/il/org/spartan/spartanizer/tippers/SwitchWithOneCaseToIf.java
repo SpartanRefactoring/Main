@@ -69,7 +69,7 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
     return src.stream().map(SwitchWithOneCaseToIf::cleanBreaks).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
   }
 
-  //TODO Yuval Simon: use map-reduce
+  // TODO Yuval Simon: use map-reduce
   private static Statement cleanBreaks(final Statement ¢) {
     if (¢ == null)
       return null;

@@ -33,59 +33,55 @@ public final class Issue0214 {
     }
   };
 
-  @Test public void A01_hasFunction() {
+  @Test public void a01_hasFunction() {
     tipper.myActualOperandsClass();
   }
 
-  @Test public void A02_functionIsNotVoid() {
+  @Test public void a02_functionIsNotVoid() {
     tipper.myActualOperandsClass();
   }
 
-  @Test public void A03_functionReturnsClass() {
+  @Test public void a03_functionReturnsClass() {
     azzert.that(tipper.myActualOperandsClass(), anyOf(nullValue(), instanceOf(Class.class)));
   }
 
-  @Test public void A04_functionReturnsNulByDeault() {
+  @Test public void a04_functionReturnsNulByDeault() {
     azzert.that(tipper.myActualOperandsClass(), is(nullValue()));
   }
 
-  @Test public void A05_simplifyBlockReturnBlock() {
+  @Test public void a05_simplifyBlockReturnBlock() {
     assert blockSimplify.myActualOperandsClass() != null;
   }
 
-  @Test public void A06_TipperAbstractNotNull() {
+  @Test public void a06_TipperAbstractNotNull() {
     assert new BlockSimplify().myAbstractOperandsClass() != null;
   }
 
-  @Test public void A07_BlockSimplifyReturnsSomeClass() {
+  @Test public void a07_BlockSimplifyReturnsSomeClass() {
     azzert.that(blockSimplify.myAbstractOperandsClass(), instanceOf(Class.class));
   }
 
-  @Test public void A08_TipperReturnsSomeASTNode() {
+  @Test public void a08_TipperReturnsSomeASTNode() {
     azzert.that(tipper.myAbstractOperandsClass(), is(ASTNode.class));
   }
 
-  @Test public void A09_TipperReturnsReasonableValue() {
+  @Test public void a09_TipperReturnsReasonableValue() {
     azzert.that(tipper.myAbstractOperandsClass().getClass(), is(Class.class));
   }
 
-  @Test public void A10_TipperReturnsCorrectStaticType() {
+  @Test public void a10_TipperReturnsCorrectStaticType() {
     azzert.that(mustBeASTNodeClass(tipper.myAbstractOperandsClass()), is(tipper.myAbstractOperandsClass()));
   }
 
-  @Test public void A11_TipperReturnsCorrectValueBlockSimplify() {
+  @Test public void a11_TipperReturnsCorrectValueBlockSimplify() {
     azzert.that(blockSimplify.myAbstractOperandsClass(), is(Block.class));
   }
 
-  @Test public void A12_TipperReturnsCorrectConcreteValueBlockSimplify() {
+  @Test public void a12_TipperReturnsCorrectConcreteValueBlockSimplify() {
     azzert.that(blockSimplify.myActualOperandsClass(), is(Block.class));
   }
 
-  @Test public void A13_TipperReturnsCorrectConcreteValueAssignmentAssignment() {
+  @Test public void a13_TipperReturnsCorrectConcreteValueAssignmentAssignment() {
     azzert.that(new AssignmentAndAssignmentOfSameValue().myActualOperandsClass(), is(Assignment.class));
-  }
-
-  @Test public void A14_TipperReturnsCorrectConcreteValueIfStatement() {
-    azzert.that(new IfAssignToFooElseAssignToFoo().myActualOperandsClass(), is(IfStatement.class));
   }
 }

@@ -111,7 +111,7 @@ public final class Namespace implements Environment {
 
   /** Check whether the {@link Environment} already has the name. */
   @Override public boolean has(final String identifier) {
-    return flat.containsKey(identifier) || nest.has(identifier);
+    return flat.containsKey(identifier) || nest != null && nest.has(identifier);
   }
 
   static Namespace spawnFor(final Namespace $, final ForStatement s) {

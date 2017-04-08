@@ -37,7 +37,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
     if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
       return null;
     final String name = Names.methodReturnName.apply(t, d);
-    if(name == null || scope.hasInScope(d.getBody(), name))
+    if (name == null || scope.hasInScope(d.getBody(), name))
       return null;
     final SimpleName $ = new Conservative(d).selectReturnVariable(name);
     if ($ == null)
