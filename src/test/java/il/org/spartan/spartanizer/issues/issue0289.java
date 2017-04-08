@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-/** TODO Tomer Dragucki please add a description
+/** Testing "Inline into bug" problem discussed in Issue #289
  * @author Tomer Dragucki
  * @since 2016 * */
 @SuppressWarnings({ "static-method", "javadoc" })

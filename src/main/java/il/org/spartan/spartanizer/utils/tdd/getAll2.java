@@ -41,8 +41,6 @@ public enum getAll2 {
    * @return List<Name> which is all names in b
    * @author Doron Meshulam
    * @author Tomer Dragucki */
-  // TODO Tomer Drgucki - this function has zero coverage in tests. Please add
-  // tests.
   public static List<Name> names(final Block b) {
     if (b == null)
       return null;
