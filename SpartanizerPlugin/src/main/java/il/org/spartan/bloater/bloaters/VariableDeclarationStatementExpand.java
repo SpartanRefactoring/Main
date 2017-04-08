@@ -36,7 +36,7 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
     return ¢ + "";
   }
 
-  @Override public Tip tip(final VariableDeclarationStatement s, final ExclusionManager e) {
+  @Override public Tip tip(final VariableDeclarationStatement s, final ExclusionManager m) {
     assert s != null;
     if (s.getParent() == null)
       return null;
@@ -46,8 +46,8 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
         .collect(Collectors.toList());
     if($.isEmpty())
       return null;
-    if(e != null)
-      e.exclude(s.getParent());
+    if(m != null)
+      m.exclude(s.getParent());
     return new Tip("Rename parameters", getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (VariableDeclarationFragment ss : $)
