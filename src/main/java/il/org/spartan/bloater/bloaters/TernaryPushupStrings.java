@@ -32,20 +32,17 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
   }
 
   @Override public ASTNode replacement(final InfixExpression x) {
-    final AST ast = x.getAST();
     final InfixExpression nn = copy.of(x);
     final StringLiteral l;
-    final ConditionalExpression r;
+    final ConditionalExpression $;
     if (iz.stringLiteral(left(nn))) {
       l = az.stringLiteral(left(nn));
-      r = az.conditionalExpression(expression(right(nn)));
+      $ = az.conditionalExpression(expression(right(nn)));
     } else {
       l = az.stringLiteral(right(nn));
-      r = az.conditionalExpression(expression(left(nn)));
+      $ = az.conditionalExpression(expression(left(nn)));
     }
-    final ConditionalExpression $ = ast.newConditionalExpression();
-    $.setExpression(copy.of(r.getExpression()));
-    final StringLiteral l1 = az.stringLiteral(then(r)), l2 = az.stringLiteral(elze(r)), n1 = copy.of(l1), n2 = copy.of(l2);
+    final StringLiteral l1 = az.stringLiteral(then($)), l2 = az.stringLiteral(elze($)), n1 = copy.of(l1), n2 = copy.of(l2);
     if (iz.stringLiteral(left(nn))) {
       n1.setLiteralValue(l.getLiteralValue() + l1.getLiteralValue());
       n2.setLiteralValue(l.getLiteralValue() + l2.getLiteralValue());
@@ -53,10 +50,7 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
       n1.setLiteralValue(l1.getLiteralValue() + l.getLiteralValue());
       n2.setLiteralValue(l2.getLiteralValue() + l.getLiteralValue());
     }
-    // TODO Yuval: use class subject --
-    $.setThenExpression(copy.of(n1));
-    $.setElseExpression(copy.of(n2));
-    return $;
+    return subject.pair(copy.of(n1), copy.of(n2)).toCondition(copy.of($.getExpression()));
   }
 
   @Override protected boolean prerequisite(final InfixExpression ¢) {
