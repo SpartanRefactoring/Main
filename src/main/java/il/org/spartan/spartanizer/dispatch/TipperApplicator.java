@@ -29,7 +29,7 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     // w.technicalName();
   }
 
-  @Override protected ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, Consumer<ASTNode> c) {
+  @Override protected ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> c) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     final ASTVisitor visitor = new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {

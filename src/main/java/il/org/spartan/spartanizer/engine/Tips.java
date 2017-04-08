@@ -7,7 +7,9 @@ import java.util.*;
  * @since 2017-04-08 */
 public class Tips extends ArrayList<Tip> {
   private static final long serialVersionUID = 1;
+
   private Tips() {/**/}
+
   public static Tips empty() {
     return new Tips();
   }

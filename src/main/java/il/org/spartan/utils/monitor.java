@@ -37,7 +37,7 @@ public enum monitor {
       } catch (final IOException ¢) {
         ¢.printStackTrace();
       }
-      return null¢();
+      return robust.null¢();
     }
   },
   INTERACTIVE_TDD {
@@ -47,13 +47,13 @@ public enum monitor {
 
     @Override public <T> T error(final String message) {
       System.err.println(message);
-      return null¢();
+      return robust.null¢();
     }
   },
   /** Used for real headless system; logs are simply ignored */
   OBLIVIOUS {
     @Override public <T> T error(final String message) {
-      return null¢(message);
+      return robust.null¢(message);
     }
   },
   /** For release versions, we keep a log of errors in stderr, but try to
@@ -61,7 +61,7 @@ public enum monitor {
   PRODUCTION {
     @Override public <T> T error(final String message) {
       System.err.println(message);
-      return null¢();
+      return robust.null¢();
     }
   },
   /** Used for debugging; program exits immediately with the first logged
@@ -177,7 +177,7 @@ public enum monitor {
             "\n   o = " + o + "'" + //
             done(t) //
     );
-    return null¢();
+    return robust.null¢();
   }
 
   public static <T> T logEvaluationError(final Throwable ¢) {
@@ -228,7 +228,7 @@ public enum monitor {
 
   /** logs an error in the plugin into an external file
    * @param tipper an error */
-  public static <T> T  logToFile(final Throwable t, final Object... os) {
+  public static <T> T logToFile(final Throwable t, final Object... os) {
     final StringWriter w = new StringWriter();
     t.printStackTrace(new PrintWriter(w));
     final Object[] nos = new Object[os.length + 2];
@@ -237,26 +237,22 @@ public enum monitor {
     nos[1] = (w + "").trim();
     LOG_TO_FILE.debugMessage(separate.these(nos).by(FILE_SUB_SEPARATOR)); //
     LOG_TO_FILE.debugMessage(FILE_SEPARATOR);
-    return null¢();
+    return robust.null¢();
   }
 
   public static void main(final String[] args) {
     System.out.println(Logger.fileName());
   }
 
-  public static <T> T null¢(@SuppressWarnings("unused") final Object... __) {
-    return null;
-  }
-
   @SuppressWarnings("static-method") <T> T debugMessage(final String message) {
-    return null¢(message);
+    return robust.null¢(message);
   }
 
   public abstract <T> T error(String message);
 
   @SuppressWarnings("static-method") public <T> T info(final String message) {
     System.err.println(message);
-    return null¢();
+    return robust.null¢();
   }
 
   private static class Logger {

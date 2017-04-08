@@ -52,7 +52,7 @@ public final class Int {
     return ++inner;
   }
 
-  public void add(Int other) {
+  public void add(final Int other) {
     inner += other.get();
   }
 }
