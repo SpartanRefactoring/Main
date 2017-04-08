@@ -25,7 +25,6 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
-import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
