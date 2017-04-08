@@ -14,14 +14,14 @@ public class Issue1171 {
         + " final S r=new S(true); " //
         + " for(double[] dxx : ps) " //
         + " r.a(d[0], d[1]); " //
-        + " final double[] $={ r.getSlope(), r.g()}; " //
+        + " final double[] $={ r.z(), r.g()}; " //
         + " return $; " //
         + "}")
             .gives("public double[] h(){ " //
                 + " final S r=new S(true); " //
                 + " for(double[] dxx : ps) " //
                 + " r.a(d[0], d[1]); " //
-                + " return new double[] { r.getSlope(), r.g()}; " //
+                + " return new double[] { r.z(), r.g()}; " //
                 + "}");
   }
 }

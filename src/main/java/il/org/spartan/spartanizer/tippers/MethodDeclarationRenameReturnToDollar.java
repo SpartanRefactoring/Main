@@ -15,11 +15,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO Artium Nihamkin (original) please add a description
+/**  A tipper to rename a method's return value to {@link namer#return¢}
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin {@code <boris.van.sosin [at] gmail.com>} (v2)
  * @author Yossi Gil (v3)
@@ -44,7 +45,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       return null;
     if (exclude != null)
       exclude.exclude(d);
-    return new Tip(description(d, name, $), getClass(), $) {
+    return new Tip(description(d, name, $), myClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename($, $(), d, r, g);
       }
@@ -52,7 +53,7 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
       SimpleName $() {
         return make.from(d).identifier(name);
       }
-    }.extend(d);
+    };
   }
 
   private String description(final MethodDeclaration d, final String name, final SimpleName $) {
