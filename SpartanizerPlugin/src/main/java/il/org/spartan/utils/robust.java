@@ -52,11 +52,11 @@ public interface robust {
     }
   }
 
-  static <T> T ly(final Supplier<T> t) {
+  static <T> T lyNull(final Supplier<T> t) {
     return robust.ly(t, __ -> null);
   }
 
-  static <T> T ly(final Supplier<T> t, final Runnable r) {
+  static <T> T lyNull(final Supplier<T> t, final Runnable r) {
     return robust.ly(t, __ -> {
       r.run();
       return null;

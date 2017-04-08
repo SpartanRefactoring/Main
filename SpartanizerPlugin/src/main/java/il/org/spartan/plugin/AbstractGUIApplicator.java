@@ -479,7 +479,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     progressMonitor.done();
   }
 
-  protected abstract ASTRewrite computeMaximalRewrite(CompilationUnit u, IMarker m, Consumer<ASTNode> consumer);
+  protected abstract ASTRewrite computeMaximalRewrite(CompilationUnit u, IMarker m, Consumer<ASTNode> nodeLogger);
 
   protected abstract ASTVisitor makeTipsCollector(Tips into);
 
