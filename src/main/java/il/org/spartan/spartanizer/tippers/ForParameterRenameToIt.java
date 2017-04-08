@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@code for(int i:as)sum+=i;} to {@code for(int ¢:as)sum+=¢;}
  * @author Yossi Gil
  * @since 2016-09 */
-public final class SingleVariableDeclarationEnhancedForRenameParameterToIt extends EagerTipper<SingleVariableDeclaration>
+public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDeclaration>
     //
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 0x477D0D92045512DL;

@@ -228,7 +228,7 @@ public enum monitor {
 
   /** logs an error in the plugin into an external file
    * @param tipper an error */
-  public static void logToFile(final Throwable t, final Object... os) {
+  public static <T> T  logToFile(final Throwable t, final Object... os) {
     final StringWriter w = new StringWriter();
     t.printStackTrace(new PrintWriter(w));
     final Object[] nos = new Object[os.length + 2];
@@ -237,6 +237,7 @@ public enum monitor {
     nos[1] = (w + "").trim();
     LOG_TO_FILE.debugMessage(separate.these(nos).by(FILE_SUB_SEPARATOR)); //
     LOG_TO_FILE.debugMessage(FILE_SEPARATOR);
+    return null¢();
   }
 
   public static void main(final String[] args) {
