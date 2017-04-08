@@ -70,7 +70,7 @@ public class Trimmer extends AbstractGUIApplicator {
     this.toolbox = toolbox;
   }
 
-  public Trimmer setExceptionListener(final TrimmerExceptionListener ¢) {
+  public Trimmer onException(final TrimmerExceptionListener ¢) {
     exceptionListener = ¢;
     return this;
   }
@@ -135,7 +135,7 @@ public class Trimmer extends AbstractGUIApplicator {
   }
 
   /** Performs one spartanization iteration
-   * @param d JD 
+   * @param d JD
    * @return
    * @throws AssertionError */
   public TextEdit once(@NotNull final IDocument d) throws AssertionError {

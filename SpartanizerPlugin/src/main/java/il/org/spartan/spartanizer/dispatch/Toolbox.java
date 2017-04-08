@@ -379,7 +379,7 @@ public class Toolbox {
   }
 
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final Collection<Tipper<?>> ts) {
-    return ts.stream().filter(λ -> ((Tipper<N>) λ).check(n)).map(λ -> (Tipper<N>) λ).findFirst().orElse(null);
+    return ts.stream().map(λ -> (Tipper<N>) λ).filter(λ -> λ.check(n)).findFirst().orElse(null);
   }
 
   /** Implementation */

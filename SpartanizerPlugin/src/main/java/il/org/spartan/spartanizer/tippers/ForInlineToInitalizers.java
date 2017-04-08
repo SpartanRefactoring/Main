@@ -50,7 +50,6 @@ public class ForInlineToInitalizers extends ForStatementPattern implements Tippe
   }
 
   @Override public Examples examples() {
-    return convert("int i = 1; for(;i < 5; ++i) f(i);").to("for(int i = 1;i < 5; ++i) f(i);")
-        .ignores("int i = 1; for(;i < 5; ++i) f(i); g(i);");
+    return convert("int i = 1; for(;i < 5; ++i) f(i);").to("for(int i = 1;i < 5; ++i) f(i);").ignores("int i = 1; for(;i < 5; ++i) f(i); g(i);");
   }
 }

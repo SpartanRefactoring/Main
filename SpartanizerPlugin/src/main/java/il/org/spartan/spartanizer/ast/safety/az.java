@@ -400,15 +400,15 @@ public enum az {
   public static ParameterizedType parameterizedType(final ASTNode ¢) {
     return !iz.parameterizedType(¢) ? null : (ParameterizedType) ¢;
   }
-  
+
   public static SimpleType simpleType(final ASTNode ¢) {
     return !(¢ instanceof SimpleType) ? null : (SimpleType) ¢;
   }
-  
+
   public static QualifiedType qualifiedType(final ASTNode ¢) {
     return !(¢ instanceof QualifiedType) ? null : (QualifiedType) ¢;
   }
-  
+
   public static NameQualifiedType nameQualifiedType(final ASTNode ¢) {
     return !(¢ instanceof NameQualifiedType) ? null : (NameQualifiedType) ¢;
   }
@@ -574,7 +574,7 @@ public enum az {
   public static UnionType UnionType(final ASTNode $) {
     return !($ instanceof UnionType) ? null : (UnionType) $;
   }
-  
+
   /** Down-cast, if possible, to {@link IntersectionType}
    * @param $ result
    * @return parameter down-casted to the returned type, or

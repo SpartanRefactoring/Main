@@ -47,8 +47,7 @@ public class Issue1040 {
   }
 
   @Test public void test7() {
-    bloatingOf(new Aux()).givesWithBinding("void toTest2() {total2 = 0;for(final Integer k : arr) {total2 = total2 + total2(1);}}",
-        "toTest2");
+    bloatingOf(new Aux()).givesWithBinding("void toTest2() {total2 = 0;for(final Integer k : arr) {total2 = total2 + total2(1);}}", "toTest2");
   }
 
   @SuppressWarnings("unused")
