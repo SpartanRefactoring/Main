@@ -13,55 +13,57 @@ import il.org.spartan.bloater.bloaters.*;
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue0979 {
-  @Ignore @Test public void Assign1() {
-    bloatingOf("int a = 5,b=3;")//
-        .gives("int i1 = 5,i2=3;");
-  }
-
-  @Ignore @Test public void Assign2() {
-    bloatingOf("double r = 2;")//
-        .gives("double r;r = 2;") //
+  @Test public void Assign2() {
+    bloatingOf("double r;r = 2;")//
+        .needRenaming(false)
         .gives("double d1; d1 = 2;");
   }
 
-  @Ignore @Test public void basicAss() {
-    bloatingOf("int a = 5;")//
-        .gives("int a; a = 5;")//
+  @Test public void basicAss() {
+    bloatingOf("int a; a = 5;")//
+        .needRenaming(false)
         .gives("int i1; i1 = 5;");
   }
 
   @Test public void basicRenameShortVar() {
-    bloatingOf("void foo(int b){ b = 1;}")//
-        .gives("void foo(int i1){ i1=1;}");
+    bloatingOf("class a{void foo(int ¢){ ¢ = 1;}}")//
+        .needRenaming(false)
+        .gives("class a{void foo(int i1){ i1=1;}}");
   }
 
   @Test public void basicRet() {
-    bloatingOf("int foo(int $){ return $;}")//
-        .gives("int foo(int ret){ return ret;}");
+    bloatingOf("class a{int foo(int $){ return $;}}")//
+        .needRenaming(false)
+        .gives("class a{int foo(int result){ return result;}}");
   }
 
   @Test public void basicRet2params() {
-    bloatingOf("int foo(int $, int ba){ return $;}")//
-        .gives("int foo(int ret, int ba){ return ret;}");
+    bloatingOf("class a{int foo(int $, int i1){ return $;}}")//
+        .needRenaming(false)
+        .gives("class a{int foo(int result, int i1){ return result;}}");
   }
 
   @Test public void ParamsRenameShortVar2() {
-    bloatingOf("void foo(double b,int a){ b = 1.1; a = 4;}")//
-        .gives("void foo(double d1,int i1){ d1=1.1; i1 = 4;}");
+    bloatingOf("class a{void foo(double b,int a){ b = 1.1; a = 4;}}")//
+        .needRenaming(false)
+        .gives("class a{void foo(double d1,int i1){ d1=1.1; i1 = 4;}}");
   }
 
   @Test public void ParamsRenameShortVar3() {
-    bloatingOf("void foo(double b,int a,String t){ b = 1.1; a = 4;}")//
-        .gives("void foo(double d1,int i1,String s1){ d1=1.1; i1 = 4;}");
+    bloatingOf("class a{void foo(double b,int a,String t){ b = 1.1; a = 4;}}")//
+        .needRenaming(false)
+        .gives("class a{void foo(double d1,int i1,String s1){ d1=1.1; i1 = 4;}}");
   }
 
   @Test public void RenameShortVar2() {
-    bloatingOf("void foo(double b){ b = 1.1;}")//
-        .gives("void foo(double d1){ d1=1.1;}");
+    bloatingOf("class a{void foo(double b){ b = 1.1;}}")//
+        .needRenaming(false)
+        .gives("class a{void foo(double d1){ d1=1.1;}}");
   }
 
-  @Ignore @Test public void twoOfSame() {
-    bloatingOf("void foo(int b, int a){ b = 1; a =3;}")//
-        .gives("void foo(int i1, int i2){ i1=1; i2=3;}");
+  @Test public void twoOfSame() {
+    bloatingOf("class a{void foo(int b, int a){ b = 1; a =3;}}")//
+        .needRenaming(false)
+        .gives("class a{void foo(int i1, int i2){ i1=1; i2=3;}}");
   }
 }
