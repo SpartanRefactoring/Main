@@ -214,6 +214,8 @@ public interface Environment {
   }
 
   static Namespace of(final ASTNode n) {
+    if (n == null)
+      return null;
     for (final ASTNode ¢ : ancestors.of(n)) {
       final Namespace $ = property.obtain(Namespace.class).from(¢);
       if ($ != null)

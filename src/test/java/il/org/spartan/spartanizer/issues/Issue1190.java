@@ -22,7 +22,7 @@ public class Issue1190 {
   @Before public void setUp() {
     exceptionsCounter = 1;
     trimmer = new Trimmer(Toolbox.defaultInstance());
-    trimmer.setExceptionListener(new TrimmerExceptionListener() {
+    trimmer.onException(new TrimmerExceptionListener() {
       @Override @SuppressWarnings("boxing") public void accept(final Exception x, final Tipper<? extends ASTNode> t, final ASTNode n) {
         System.err.printf("%d. Intercepted %s with message '%s'\n", exceptionsCounter++, English.indefinite(x), x.getMessage());
         System.err.printf("in tipper %s applied on %s:\n%s\n\n", English.name(t), English.indefinite(n), n);

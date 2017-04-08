@@ -23,12 +23,11 @@ import il.org.spartan.utils.*;
 public class TrimmingOperand extends Wrapper<String> {
   protected static final String QUICK = "Quick fix: MARK, COPY, PASTE, and REFORMAT is:\n";
   protected static final String NEW_UNIT_TEST = "Quick fix: COPY & PASTE Junit @Test method:\n\n";
-  private final Trimmer trimmer;
+  private final Trimmer trimmer = new Trimmer();
   private static int rerunsLeft = 5;
 
   public TrimmingOperand(final String inner) {
     super(inner);
-    trimmer = new Trimmer();
   }
 
   void checkExpected(final String expected) {
@@ -112,7 +111,10 @@ public class TrimmingOperand extends Wrapper<String> {
 
   public void stays() {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    final String wrap = w.on(get()), unpeeled = trim.apply(trimmer.setExceptionListener(λ -> fail(λ.getClass() + " was thrown")), wrap);
+    assert trimmer != null;
+    final Trimmer onException = trimmer.onException(λ -> fail(English.indefinite(λ) + " was thrown"));
+    final String wrap = w.on(get()), //
+        unpeeled = trim.apply(onException, wrap);
     if (wrap.equals(unpeeled))
       return;
     final String peeled = w.off(unpeeled);
