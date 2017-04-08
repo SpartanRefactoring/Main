@@ -5,6 +5,7 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -15,6 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
@@ -37,31 +39,30 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
     return ¢.getName() + "";
   }
 
-  @Override @SuppressWarnings("unused") public Tip tip(final MethodDeclaration d, final ExclusionManager __) {
+  @Override public Tip tip(final MethodDeclaration d, @SuppressWarnings("unused") final ExclusionManager __) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final List<SimpleName> prev = new ArrayList<>(), after = new ArrayList<>();
-    for (final SingleVariableDeclaration parameter : parameters(d)) {
-      final SimpleName $ = parameter.getName();
-      assert $ != null;
-      if (in($.getIdentifier(), "$")) {
-        prev.add($);
-        after.add(make.from(d).identifier("result"));
-        continue;
-      }
-      final SimpleName ¢ = make.from(d).identifier(scope.newName(body(d), step.type(parameter)));
-      prev.add($);
-      after.add(¢);
-    }
-    return prev.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
+    final List<SingleVariableDeclaration> $ = parameters(d).stream()
+        .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(body(d), "result")) && !in(λ.getName().getIdentifier(), "result")
+            && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
+        .collect(Collectors.toList());
+    return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        int counter = 0;
-        for (final SimpleName ¢ : prev) {
-          action.rename(¢, after.get(counter), d, r, g);
-          ++counter;
-        }
+        for (SingleVariableDeclaration ¢ : $)
+          action.rename(¢.getName(),
+              make.from(d).identifier(in(¢.getName().getIdentifier(), "$") ? "result" : scope.newName(body(d), step.type(¢), prefix(step.type(¢)))),
+              d, r, g);
       }
     };
+  }
+  
+  private static boolean nameMatch(String s, Type t) {
+    String $ = prefix(t);
+    return (s.length() >= $.length() && s.substring(0,$.length()).equals($) && s.substring($.length(), s.length()).matches("[0-9]*"));
+  }
+  
+  static String prefix(Type ¢) {
+    return namer.shorten(¢);
   }
 }
