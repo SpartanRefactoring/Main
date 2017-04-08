@@ -27,19 +27,18 @@ public final class LocalVariableInitializedUnusedRemove extends LocalInitialized
     return "Remove unused variable " + name;
   }
 
-  /** [[SuppressWarningsSpartan]] */
   @Override public Examples examples() {
     return //
-    convert("" //
+    convert("\f" //
         + "int print() {\n" //
         + "  int number = 1;\n" //
         + "  System.out.println(\"number\");\n" //
         + "}")
-            .to("" //
+            .to("\f" //
                 + "int print() {\n" //
                 + "  System.out.println(\"number\");\n" //
                 + "}") //
-            .ignores("" //
+            .ignores("\f" //
                 + "int print() {\n" //
                 + "  int number = 1;\n" //
                 + "  System.out.println(number);\n" //
