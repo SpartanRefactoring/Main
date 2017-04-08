@@ -329,7 +329,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
   }
 
-  private void setSingleParameterRenaming(RadioGroupFieldEditor singleParameterRadio, Composite fieldEditorParent) {
+  private static void setSingleParameterRenaming(RadioGroupFieldEditor singleParameterRadio, Composite fieldEditorParent) {
     final Control[] cc = singleParameterRadio.getRadioBoxControl(fieldEditorParent).getChildren();
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
