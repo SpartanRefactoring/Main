@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Generic applicator
  * @author Matteo Orru'
  * @since 2016 */
-public class Generic$Applicator {
+public class GenericApplicator {
   public Toolbox toolbox;
   public int tippersAppliedOnCurrentObject;
   protected int done;
@@ -33,11 +33,11 @@ public class Generic$Applicator {
     return as.list($); // useless?
   }
 
-  public Generic$Applicator() {
+  public GenericApplicator() {
     selectedNodeTypes = setAllNodeTypes();
   }
 
-  public Generic$Applicator(final String... classes) {
+  public GenericApplicator(final String... classes) {
     System.out.println("classes:" + Arrays.toString(classes));
     if (classes == null) {
       selectedNodeTypes = setAllNodeTypes();
@@ -48,7 +48,7 @@ public class Generic$Applicator {
     }
   }
 
-  public Generic$Applicator(final String[] classes, final String... tipperGroups) {
+  public GenericApplicator(final String[] classes, final String... tipperGroups) {
     this(classes);
     selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
   }

@@ -27,10 +27,9 @@ import il.org.spartan.utils.*;
 /** Specific applicator
  * @author Matteo Orru'
  * @since 2016 */
-public class CommandLine$Applicator extends Generic$Applicator {
+public class CommandLine$Applicator extends GenericApplicator {
   final ChainStringToIntegerMap spectrum = new ChainStringToIntegerMap();
   final ChainStringToIntegerMap coverage = new ChainStringToIntegerMap();
-  private String presentMethod;
   public static String presentFileName;
   public static String presentFilePath;
   public static long startingTimePerFile;
@@ -168,15 +167,6 @@ public class CommandLine$Applicator extends Generic$Applicator {
     return $;
   }
 
-  /** createRewrite on BodyDeclaration TODO Matteo -- this gonna be removed? --
-   * matteo
-   * @param u
-   * @return */
-  public ASTRewrite createRewrite(final BodyDeclaration u) {
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    consolidateTips($, u);
-    return $;
-  }
 
   /** consolidate tips on CompilationUnit
    * @param r
@@ -224,68 +214,6 @@ public class CommandLine$Applicator extends Generic$Applicator {
     });
   }
 
-  /** consolidateTips on BodyDeclaration TODO Matteo -- this gonna be removed?
-   * -- matteo
-   * @param r
-   * @param u */
-  private void consolidateTips(final ASTRewrite r, final BodyDeclaration u) {
-    toolbox = Toolbox.defaultInstance();
-    u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
-        TrimmerLog.visitation(n);
-        if (disabling.on(n))
-          return true;
-        Tipper<N> tipper = null;
-        try {
-          tipper = getTipper(n);
-        } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
-        }
-        if (tipper == null)
-          return true;
-        Tip s = null;
-        try {
-          s = tipper.tip(n, exclude);
-          tick(n, tipper);
-        } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
-        }
-        if (s == null)
-          return true;
-        ++tippersAppliedOnCurrentObject;
-        tick2(n, tipper);
-        TrimmerLog.application(r, s);
-        return true;
-      }
-
-      @SuppressWarnings("unused") <N extends ASTNode> void tick(final N n, final Tipper<N> w) throws TipperFailure {
-        tick(w);
-        TrimmerLog.tip(w, n);
-      }
-
-      <N extends ASTNode> void tick(final Tipper<N> w) {
-        final String key = English.name(w.getClass());
-        if (!spectrum.containsKey(key))
-          spectrum.put(key, 0);
-        spectrum.put(key, spectrum.get(key) + 1);
-      }
-
-      <N extends ASTNode> void tick2(@SuppressWarnings("unused") final N __, final Tipper<N> w) {
-        @SuppressWarnings("synthetic-access") final String key = presentFileName + "-" + presentMethod + English.name(w.getClass());
-        if (!coverage.containsKey(key))
-          coverage.put(key, 0);
-        coverage.put(key, coverage.get(key) + 1);
-      }
-
-      @Override protected void initialization(final ASTNode ¢) {
-        disabling.scan(¢);
-      }
-    });
-  }
-
-  // @Override <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-  // return toolbox.firstTipper(¢);
-  // }
   public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> __) {
     apply(u);
     return false;
@@ -295,7 +223,6 @@ public class CommandLine$Applicator extends Generic$Applicator {
    * @param ¢
    * @return */
   private boolean apply(final WrappedCompilationUnit ¢) {
-    // System.out.println("*********");
     presentFileName = ¢.getFileName();
     presentFilePath = ¢.getFilePath();
     startingTimePerFile = new Date().getTime();
