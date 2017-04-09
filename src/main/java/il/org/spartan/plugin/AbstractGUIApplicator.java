@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import java.util.*;
 import java.util.List;
+import java.util.function.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -31,18 +32,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil: major refactoring 2013/07/10
  * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
-@SuppressWarnings("ALL")
 public abstract class AbstractGUIApplicator extends Refactoring {
-  public IProgressMonitor progressMonitor = nullProgressMonitor;
-  private final Collection<TextFileChange> changes = new ArrayList<>();
-  private CompilationUnit compilationUnit;
-  private ICompilationUnit iCompilationUnit;
-  private IMarker marker;
-  protected String name;
-  private ITextSelection selection;
-  private final List<Tip> tips = new ArrayList<>();
-  private int totalChanges;
-
   /*** Instantiates this class, with message identical to name
    * @param name a short name of this instance */
   protected AbstractGUIApplicator(final String name) {
@@ -53,8 +43,17 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return apply(cu, new Range(0, 0));
   }
 
-  private boolean apply(final ICompilationUnit cu, final Range r) {
-    return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())) > 0;
+  public int apply(final WrappedCompilationUnit $, final AbstractSelection<?> s) {
+    if (s != null && s.textSelection != null)
+      setSelection(s.textSelection);
+    if (s instanceof TrackerSelection)
+      return apply($, (TrackerSelection) s);
+    try {
+      return apply($);
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
+      return 0;
+    }
   }
 
   @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
@@ -82,18 +81,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @param u what to check
    * @return a collection of {@link Tip} objects each containing a
    *         spartanization tip */
-  public final Collection<Tip> collectSuggestions(final CompilationUnit ¢) {
-    final List<Tip> $ = new ArrayList<>();
+  public final Tips collectTips(final CompilationUnit ¢) {
+    final Tips $ = Tips.empty();
     ¢.accept(makeTipsCollector($));
     return $;
-  }
-
-  private IFile compilationUnitIFile() {
-    return (IFile) iCompilationUnit.getResource();
-  }
-
-  private String compilationUnitName() {
-    return iCompilationUnit.getElementName();
   }
 
   /** Count the number of tips offered by this instance.
@@ -117,6 +108,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
 
+  public ASTRewrite createRewrite(final CompilationUnit ¢) {
+    return rewriterOf(¢, null, new Int());
+  }
+
   /** creates an ASTRewrite which contains the changes
    * @param u the Compilation Unit (outermost ASTNode in the Java Grammar)
    * @param m a progress monitor in which the progress of the refactoring is
@@ -124,10 +119,6 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    * @return an ASTRewrite which contains the changes */
   public ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
     return rewriterOf(¢, null, counter);
-  }
-
-  public ASTRewrite createRewrite(final CompilationUnit ¢) {
-    return rewriterOf(¢, null, new Int());
   }
 
   public boolean follow() throws CoreException {
@@ -185,29 +176,6 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return getFixWithPreview(getName());
   }
 
-  /** @param s Text for the preview dialog
-   * @return a quickfix which opens a refactoring wizard with the tipper */
-  private IMarkerResolution getFixWithPreview(final String s) {
-    return new IMarkerResolution() {
-      /** a quickfix which opens a refactoring wizard with the tipper
-       * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
-       *         (v2) */
-      @Override public String getLabel() {
-        return "Apply after preview";
-      }
-
-      @Override public void run(final IMarker m) {
-        setMarker(m);
-        try {
-          new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
-              "Laconization: " + s + AbstractGUIApplicator.this);
-        } catch (final InterruptedException ¢) {
-          monitor.logCancellationRequest(this, ¢);
-        }
-      }
-    };
-  }
-
   /** @return compilationUnit */
   public ICompilationUnit getiCompilationUnit() {
     return iCompilationUnit;
@@ -253,30 +221,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return m == null ? !isTextSelected() || !isNotSelected(n) : !eclipse.facade.isNodeOutsideMarker(n, m);
   }
 
-  /** Performs the current tipper on the provided compilation unit
-   * @param u the compilation to Spartanize
-   * @param pm progress monitor for long operations (could be
-   *        {@link NullProgressMonitor} for light operations)
-   * @throws CoreException exception from the {@code pm} */
-  private int performRule(final ICompilationUnit u) throws CoreException {
-    progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
-    textChange.setTextType("java");
-    final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
-    final Int $ = new Int();
-    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
-    if (textChange.getEdit().getLength() != 0)
-      textChange.perform(progressMonitor);
-    progressMonitor.done();
-    return $.get();
-  }
-
-  private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
-    progressMonitor.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    counter.add(consolidateTips($, u, m));
-    progressMonitor.done();
-    return $;
+  public void parse() {
+    compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
   }
 
   /** @param pm a progress monitor in which to display the progress of the
@@ -315,7 +261,130 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return name;
   }
 
-  protected abstract int consolidateTips(ASTRewrite r, CompilationUnit u, IMarker m);
+  private boolean apply(final ICompilationUnit cu, final Range r) {
+    return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())) > 0;
+  }
+
+  private int apply(final WrappedCompilationUnit u) throws CoreException {
+    final TextFileChange textChange = init(u);
+    assert textChange != null;
+    final Int $ = new Int();
+    final WrappedCompilationUnit u1 = u.build();
+    final CompilationUnit u2 = u1.compilationUnit;
+    final ASTRewrite r = createRewrite(u2, $);
+    try {
+      textChange.setEdit(r.rewriteAST());
+    } catch (final AssertionError x) {
+      assert unreachable() : dump() + //
+          "\n x=" + x + //
+          "\n $=" + $ + //
+          "\n u=" + u + //
+          "\n u=" + u.name() + //
+          "\n u1=" + u1 + //
+          "\n u2=" + u2 + //
+          "\n r=" + r + //
+          "\n textchange=" + textChange + //
+          "\n textchange.getEdit=" + textChange.getEdit() + //
+          "\n textchange.getEdit.length=" + (textChange.getEdit() == null ? "??" : textChange.getEdit().getLength() + "") + //
+          done(x);
+      return 0;
+    }
+    if (textChange.getEdit().getLength() != 0)
+      textChange.perform(progressMonitor);
+    progressMonitor.done();
+    return $.get();
+  }
+
+  private int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
+    try {
+      final TextFileChange textChange = init(u);
+      setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
+      final Int $ = new Int();
+      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
+      if (textChange.getEdit().getLength() != 0)
+        textChange.perform(progressMonitor);
+      if (s != null)
+        s.update();
+      return $.get();
+    } catch (final CoreException ¢) {
+      monitor.logEvaluationError(this, ¢);
+      return 0;
+    } finally {
+      progressMonitor.done();
+    }
+  }
+
+  private void collectAllTips() throws CoreException {
+    progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
+    scanCompilationUnits(getUnits());
+    progressMonitor.done();
+  }
+
+  private IFile compilationUnitIFile() {
+    return (IFile) iCompilationUnit.getResource();
+  }
+
+  private String compilationUnitName() {
+    return iCompilationUnit.getElementName();
+  }
+
+  /** creates an ASTRewrite, under the context of a text marker, which contains
+   * the changes
+   * @param pm a progress monitor in which to display the progress of the
+   *        refactoring
+   * @param m the marker
+   * @return an ASTRewrite which contains the changes */
+  private ASTRewrite createRewrite(final IMarker ¢) {
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
+  }
+
+  /** @param s Text for the preview dialog
+   * @return a quickfix which opens a refactoring wizard with the tipper */
+  private IMarkerResolution getFixWithPreview(final String s) {
+    return new IMarkerResolution() {
+      /** a quickfix which opens a refactoring wizard with the tipper
+       * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
+       *         (v2) */
+      @Override public String getLabel() {
+        return "Apply after preview";
+      }
+
+      @Override public void run(final IMarker m) {
+        setMarker(m);
+        try {
+          new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
+              "Laconization: " + s + AbstractGUIApplicator.this);
+        } catch (final InterruptedException ¢) {
+          monitor.logCancellationRequest(this, ¢);
+        }
+      }
+    };
+  }
+
+  private Collection<ICompilationUnit> getUnits() throws JavaModelException {
+    if (!isTextSelected())
+      return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(progressMonitor));
+    final List<ICompilationUnit> $ = new ArrayList<>();
+    $.add(iCompilationUnit);
+    return $;
+  }
+
+  private TextFileChange init(final WrappedCompilationUnit ¢) {
+    setICompilationUnit(¢.descriptor);
+    progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
+    final TextFileChange $ = new TextFileChange(¢.descriptor.getElementName(), (IFile) ¢.descriptor.getResource());
+    $.setTextType("java");
+    return $;
+  }
+
+  private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
+    marker = m;
+    progressMonitor.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
+    scanCompilationUnitForMarkerFix(m, preview);
+    marker = null;
+    progressMonitor.done();
+    return new RefactoringStatus();
+  }
 
   /** Determines if the node is outside of the selected text.
    * @return whether the node is not inside selection. If there is no selection
@@ -324,10 +393,39 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return !isSelected(¢.getStartPosition());
   }
 
-  protected abstract ASTVisitor makeTipsCollector(List<Tip> $);
+  private boolean isSelected(final int offset) {
+    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
+  }
 
-  public void parse() {
-    compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
+  private boolean isTextSelected() {
+    return selection != null && !selection.isEmpty();
+  }
+
+  /** Performs the current tipper on the provided compilation unit
+   * @param u the compilation to Spartanize
+   * @param pm progress monitor for long operations (could be
+   *        {@link NullProgressMonitor} for light operations)
+   * @throws CoreException exception from the {@code pm} */
+  private int performRule(final ICompilationUnit u) throws CoreException {
+    progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
+    final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
+    textChange.setTextType("java");
+    final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
+    final Int $ = new Int();
+    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
+    if (textChange.getEdit().getLength() != 0)
+      textChange.perform(progressMonitor);
+    progressMonitor.done();
+    return $.get();
+  }
+
+  private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
+    progressMonitor.beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
+    final Int count = new Int();
+    final ASTRewrite $ = computeMaximalRewrite(u, m, __ -> count.step());
+    counter.add(count);
+    progressMonitor.done();
+    return $;
   }
 
   private void scan() {
@@ -346,7 +444,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     textChange.setEdit(createRewrite(cu, $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
-    totalChanges += collectSuggestions(cu).size();
+    totalChanges += collectTips(cu).size();
     m.done();
     return $.get();
   }
@@ -381,14 +479,12 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     progressMonitor.done();
   }
 
+  protected abstract ASTRewrite computeMaximalRewrite(CompilationUnit u, IMarker m, Consumer<ASTNode> nodeLogger);
+
+  protected abstract ASTVisitor makeTipsCollector(Tips into);
+
   boolean apply() {
     return apply(iCompilationUnit, new Range(0, 0));
-  }
-
-  private void collectAllTips() throws CoreException {
-    progressMonitor.beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
-    scanCompilationUnits(getUnits());
-    progressMonitor.done();
   }
 
   void collectTips() {
@@ -397,108 +493,13 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     progressMonitor.done();
   }
 
-  /** creates an ASTRewrite, under the context of a text marker, which contains
-   * the changes
-   * @param pm a progress monitor in which to display the progress of the
-   *        refactoring
-   * @param m the marker
-   * @return an ASTRewrite which contains the changes */
-  private ASTRewrite createRewrite(final IMarker ¢) {
-    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
-  }
-
-  private Collection<ICompilationUnit> getUnits() throws JavaModelException {
-    if (!isTextSelected())
-      return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(progressMonitor));
-    final List<ICompilationUnit> $ = new ArrayList<>();
-    $.add(iCompilationUnit);
-    return $;
-  }
-
-  private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
-    marker = m;
-    progressMonitor.beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
-    scanCompilationUnitForMarkerFix(m, preview);
-    marker = null;
-    progressMonitor.done();
-    return new RefactoringStatus();
-  }
-
-  private boolean isSelected(final int offset) {
-    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
-  }
-
-  private boolean isTextSelected() {
-    return selection != null && !selection.isEmpty();
-  }
-
-  public int apply(final WrappedCompilationUnit $, final AbstractSelection<?> s) {
-    if (s != null && s.textSelection != null)
-      setSelection(s.textSelection);
-    if (s instanceof TrackerSelection)
-      return apply($, (TrackerSelection) s);
-    try {
-      return apply($);
-    } catch (final CoreException ¢) {
-      monitor.logEvaluationError(this, ¢);
-      return 0;
-    }
-  }
-
-  private int apply(final WrappedCompilationUnit u) throws CoreException {
-    final TextFileChange textChange = init(u);
-    assert textChange != null;
-    final Int $ = new Int();
-    final WrappedCompilationUnit u1 = u.build();
-    final CompilationUnit u2 = u1.compilationUnit;
-    final ASTRewrite r = createRewrite(u2, $);
-    try {
-      textChange.setEdit(r.rewriteAST());
-    } catch (final AssertionError x) {
-      assert unreachable() : dump() + //
-          "\n x=" + x + //
-          "\n $=" + $ + //
-          "\n u=" + u + //
-          "\n u=" + u.name() + //
-          "\n u1=" + u1 + //
-          "\n u2=" + u2 + //
-          "\n r=" + r + //
-          "\n textchange=" + textChange + //
-          "\n textchange.getEdit=" + textChange.getEdit() + //
-          "\n textchange.getEdit.length=" + (textChange.getEdit() == null ? "??" : textChange.getEdit().getLength() + "") + //
-          done(x);
-      return 0;
-    }
-    if (textChange.getEdit().getLength() != 0)
-      textChange.perform(progressMonitor);
-    progressMonitor.done();
-    return $.get();
-  }
-
-  private TextFileChange init(final WrappedCompilationUnit ¢) {
-    setICompilationUnit(¢.descriptor);
-    progressMonitor.beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange $ = new TextFileChange(¢.descriptor.getElementName(), (IFile) ¢.descriptor.getResource());
-    $.setTextType("java");
-    return $;
-  }
-
-  private int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
-    try {
-      final TextFileChange textChange = init(u);
-      setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
-      final Int $ = new Int();
-      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
-      if (textChange.getEdit().getLength() != 0)
-        textChange.perform(progressMonitor);
-      if (s != null)
-        s.update();
-      return $.get();
-    } catch (final CoreException ¢) {
-      monitor.logEvaluationError(this, ¢);
-      return 0;
-    } finally {
-      progressMonitor.done();
-    }
-  }
+  public IProgressMonitor progressMonitor = nullProgressMonitor;
+  private final Collection<TextFileChange> changes = new ArrayList<>();
+  private CompilationUnit compilationUnit;
+  private ICompilationUnit iCompilationUnit;
+  private IMarker marker;
+  private ITextSelection selection;
+  private final Tips tips = Tips.empty();
+  private int totalChanges;
+  protected String name;
 }

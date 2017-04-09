@@ -41,7 +41,7 @@ enum CollectMetrics {
 
   // TODO Yossi Gil: eliminate warning
   private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
-    reportTips(new Trimmer().collectSuggestions(before));
+    reportTips(new Trimmer().collectTips(before));
   }
 
   private static void go(final File f) {
@@ -105,8 +105,8 @@ enum CollectMetrics {
   private static void reportTips(final Iterable<Tip> ¢) {
     for (final Tip $ : ¢) {
       Tips.put("description", $.description);
-      Tips.put("from", $.from);
-      Tips.put("to", $.to);
+      Tips.put("from", $.highlight.from);
+      Tips.put("to", $.highlight.to);
       Tips.put("linenumber", $.lineNumber);
       Tips.nl();
     }

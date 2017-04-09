@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** unit tests for {@link SingleVariableDeclarationAbbreviation}
+/** unit tests for {@link ParameterAbbreviate}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
