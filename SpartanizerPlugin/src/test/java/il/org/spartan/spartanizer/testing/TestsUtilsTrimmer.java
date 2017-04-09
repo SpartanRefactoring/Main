@@ -11,7 +11,7 @@ import il.org.spartan.utils.*;
 public enum TestsUtilsTrimmer {
   ;
   public static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
-    return a.collectSuggestions(u).size();
+    return a.collectTips(u).size();
   }
 
   public static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {

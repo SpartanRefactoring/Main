@@ -116,7 +116,7 @@ public final class Issue0223 {
 
   @Test public void B$110rangeNotEmpty() {
     a$040_init();
-    assert !tipper.tip(focus).isEmpty();
+    assert !tipper.tip(focus).highlight.isEmpty();
   }
 
   @Test public void B$120findTipperNotEmpty() {
@@ -238,7 +238,7 @@ public final class Issue0223 {
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.consolidateTips($, u, null);
+      a.computeMaximalRewrite(u, null, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {

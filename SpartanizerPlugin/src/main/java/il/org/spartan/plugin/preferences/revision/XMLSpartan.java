@@ -48,8 +48,8 @@ public class XMLSpartan {
         MethodDeclarationRenameSingleParameterToCent.class, //
         MethodInvocationToStringToEmptyStringAddition.class, //
         ModifierRedundant.class, //
-        SingelVariableDeclarationUnderscoreDoubled.class, //
-        SingleVariableDeclarationEnhancedForRenameParameterToIt.class, //
+        ParameterAnonymize.class, //
+        ForParameterRenameToIt.class, //
         LambdaRenameSingleParameterToLambda.class //
     );
   }

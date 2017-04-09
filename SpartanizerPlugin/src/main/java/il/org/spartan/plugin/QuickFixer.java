@@ -109,7 +109,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
 
   static AbstractGUIApplicator getSpartanizer(final IMarker $) {
     try {
-      return Tips.get((String) $.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
+      return DefunctTips.get((String) $.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
     } catch (final CoreException ¢) {
       monitor.log(¢);
     }

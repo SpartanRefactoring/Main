@@ -155,7 +155,17 @@ public interface namer {
   String[] specials = { forbidden, return¢, anonymous, cent, lambda, it };
   GenericsCategory //
   yielding = new GenericsCategory("Supplier", "Iterator"), //
-      assuming = new GenericsCategory("Class", "Tipper", "Function", "Map", "HashMap", "TreeMap", "LinkedHashMap", "LinkedTreeMap"), //
+      assuming = new GenericsCategory(//
+          "Class", //
+          "Comparator", //
+          "Consumer", //
+          "Function", //
+          "HashMap", //
+          "Map", //
+          "Tipper", //
+          "TreeMap", //
+          "LinkedHashMap", //
+          "LinkedTreeMap"), //
       pluralizing = new GenericsCategory(//
           "ArrayList", "Collection", "HashSet", "Iterable", "LinkedHashSet", //
           "LinkedTreeSet", "List", "Queue", "Seuence", "Set", "Stream", //

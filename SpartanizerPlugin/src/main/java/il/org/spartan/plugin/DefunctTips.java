@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * @author Tomer Zeltzer <code><tomerr90 [at] gmail.com></code> (original /
  *         30.05.2014) (v3)
  * @since 2013/07/01 */
-public final class Tips {
+public final class DefunctTips {
   private static final AbstractGUIApplicator[] all = { //
       new Trimmer(), //
   };
@@ -63,7 +63,7 @@ public final class Tips {
 
   private final AbstractGUIApplicator value;
 
-  private Tips(final AbstractGUIApplicator value) {
+  private DefunctTips(final AbstractGUIApplicator value) {
     this.value = value;
   }
 
