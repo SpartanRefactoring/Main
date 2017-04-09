@@ -30,7 +30,7 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * This tipper is applied to all methods in the code, excluding constructors.
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015/09/24 */
-public final class SingleVariableDeclarationAbbreviation extends EagerTipper<SingleVariableDeclaration>//
+public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclaration>//
     implements TipperCategory.Abbreviation {
   private static final long serialVersionUID = -0x259B3C93867F64ABL;
   private static String[] shortNames = { "lst", "integer", "list" };

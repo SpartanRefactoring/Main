@@ -6,8 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** test case for bug in
- * {@link SingleVariableDeclarationEnhancedForRenameParameterToIt}
+/** test case for bug in {@link ForParameterRenameToIt}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-17 */
 @SuppressWarnings("static-method")

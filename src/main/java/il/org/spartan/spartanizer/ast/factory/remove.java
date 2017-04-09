@@ -79,7 +79,7 @@ public enum remove {
     r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
 
-  /** @param t JD
+  /** @param currentToolbox JD
    * @param from JD (already duplicated)
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.

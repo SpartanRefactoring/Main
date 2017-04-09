@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.dispatch;
 
-import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.dom.*;
@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 
 /** An adapter that converts the protocol of a single @{link Tipper} instance
  * into that of {@link AbstractGUIApplicator}. This class must eventually die.
@@ -30,21 +29,23 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     // w.technicalName();
   }
 
-  @Override protected int consolidateTips(final ASTRewrite r, final CompilationUnit u, final IMarker m) {
-    final Int $ = new Int();
-    u.accept(new ASTVisitor(true) {
+  @Override protected ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> c) {
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    final ASTVisitor visitor = new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
         if (¢.getClass() != clazz && !tipper.check(¢) && !inRange(m, ¢))
           return;
-        tipper.tip(¢).go(r, null);
-        $.step();
+        tipper.tip(¢).go($, null);
+        if (c != null)
+          c.accept(¢);
       }
-    });
-    return $.get();
+    };
+    u.accept(visitor);
+    return $;
   }
 
-  @Override protected ASTVisitor makeTipsCollector(final List<Tip> $) {
+  @Override protected ASTVisitor makeTipsCollector(final Tips $) {
     return new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);

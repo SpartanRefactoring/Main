@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 public interface trim {
   static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
-    return a.collectSuggestions(u).size();
+    return a.collectTips(u).size();
   }
 
   static fluentTrimmerApplication of(final String codeFragment) {
@@ -61,10 +61,10 @@ public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
   .gives("a+b-c")}, or <code>trimming // See {@link trim} 
-                                                                                 * .repeatedly //  See {@link trim.repeatedely} 
-                                                                                 * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
-                                                                                 * .of("a+(b-c)") //  See {@link #of(String)} 
-                                                                                 * .gives("a+b-c")</code> */
+                                                                                   * .repeatedly //  See {@link trim.repeatedely} 
+                                                                                   * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+                                                                                   * .of("a+(b-c)") //  See {@link #of(String)} 
+                                                                                   * .gives("a+b-c")</code> */
   interface repeatedly {
     static fluentTrimmerApplication of(final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
@@ -128,6 +128,16 @@ public interface trim {
     @Test public void trimming_repeatedly_of_gives() {
       trim.repeatedly.of("int b = 3; int a = b; return  a;")//
           .gives("return 3;");
+    }
+  }
+
+  class fluentTrimmer extends Trimmer {
+    @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ws) {
+      super(Toolbox.make(clazz, ws));
+    }
+
+    public fluentTrimmerApplication of(final String codeFragment) {
+      return new fluentTrimmerApplication(this, codeFragment);
     }
   }
 }

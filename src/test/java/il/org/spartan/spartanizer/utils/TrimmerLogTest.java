@@ -55,7 +55,7 @@ public class TrimmerLogTest {
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.consolidateTips($, u, null);
+      a.computeMaximalRewrite(u, null, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
@@ -78,7 +78,7 @@ public class TrimmerLogTest {
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.consolidateTips($, u, null);
+      a.computeMaximalRewrite(u, null, null);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
