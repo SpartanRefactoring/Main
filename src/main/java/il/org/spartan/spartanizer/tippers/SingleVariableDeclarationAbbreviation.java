@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.factory.action.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -16,7 +17,10 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.java.namespace.*;
+
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** Abbreviates the name of a method parameter that is a viable candidate for
  * abbreviation (meaning that its name is suitable for renaming, and isn'tipper
@@ -37,7 +41,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
       for (final TagElement t : ts)
         if (TagElement.TAG_PARAM.equals(t.getTagName()))
           for (final IDocElement ¢ : fragments(t))
-            if (¢ instanceof ASTNode && wizard.eq((ASTNode) ¢, oldName)) 
+            if (¢ instanceof ASTNode && wizard.eq((ASTNode) ¢, oldName))
               r.replace((ASTNode) ¢, make.from(d).identifier(newName), g);
   }
 
@@ -76,6 +80,7 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
     return ¢.getName() + "";
   }
 
+  /** [[SuppressWarningsSpartan]] */
   @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
     final MethodDeclaration $ = az.methodDeclaration(parent(d));
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
@@ -84,6 +89,14 @@ public final class SingleVariableDeclarationAbbreviation extends EagerTipper<Sin
       exclude.exclude($);
     final SimpleName oldName = d.getName();
     final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
+    if (iz.methodDeclaration(d.getParent())) {
+      Block b = az.methodDeclaration(d.getParent()).getBody();
+      List<Name> lst = getAll.names(b);
+      List<String> names = lst.stream().map(name -> name.toString()).collect(Collectors.toList());
+      final Namespace n = Environment.of(b);
+      if (names.contains(newName) || n.has(newName))
+        return null;
+    }
     return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         rename(oldName, make.from(d).identifier(newName), $, r, g);
