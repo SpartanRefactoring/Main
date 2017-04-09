@@ -67,21 +67,21 @@ public final class Builder extends IncrementalProjectBuilder {
       addMarkers((IFile) ¢);
   }
 
-  private static void addMarker(final AbstractGUIApplicator a, final Tip r, final IMarker m) throws CoreException {
+  private static void addMarker(final AbstractGUIApplicator a, final Tip t, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
-    m.setAttribute(SPARTANIZATION_TIPPER_KEY, r.tipperClass);
-    m.setAttribute(IMarker.MESSAGE, prefix() + r.description);
-    m.setAttribute(IMarker.CHAR_START, r.from);
-    m.setAttribute(IMarker.CHAR_END, r.to);
-    m.setAttribute(SPARTANIZATION_CHAR_START, r.spartanizationCharStart);
-    m.setAttribute(SPARTANIZATION_CHAR_END, r.spartanizationCharEnd);
+    m.setAttribute(SPARTANIZATION_TIPPER_KEY, t.tipperClass);
+    m.setAttribute(IMarker.MESSAGE, prefix() + t.description);
+    m.setAttribute(IMarker.CHAR_START, t.highlight.from);
+    m.setAttribute(IMarker.CHAR_END, t.highlight.to);
+    m.setAttribute(SPARTANIZATION_CHAR_START, t.getSpartanizationCharStart());
+    m.setAttribute(SPARTANIZATION_CHAR_END, t.getSpartanizationCharEnd());
     m.setAttribute(IMarker.TRANSIENT, false);
-    m.setAttribute(IMarker.LINE_NUMBER, r.lineNumber);
+    m.setAttribute(IMarker.LINE_NUMBER, t.lineNumber);
   }
 
   private static void addMarkers(final IFile ¢) throws CoreException {
-    Tips.reset();
+    DefunctTips.reset();
     deleteMarkers(¢);
     try {
       addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
@@ -91,10 +91,10 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IResource f, final CompilationUnit u) throws CoreException {
-    for (final AbstractGUIApplicator s : Tips.all()) {
+    for (final AbstractGUIApplicator s : DefunctTips.all()) {
       if (s instanceof Trimmer)
         ((Trimmer) s).useProjectPreferences();
-      for (final Tip ¢ : s.collectSuggestions(u)) // NANO
+      for (final Tip ¢ : s.collectTips(u)) // NANO
         if (¢ != null) {
           final TipperGroup group = Toolbox.groupFor(¢.tipperClass);
           addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.dispatch;
 import static java.util.stream.Collectors.*;
 
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
@@ -11,7 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bloater.*;
@@ -40,19 +40,31 @@ import il.org.spartan.utils.*;
  * @since 2015/07/10 */
 public class Trimmer extends AbstractGUIApplicator {
   public static boolean silent;
-
-  public static boolean prune(@Nullable final Tip r, final List<Tip> rs) {
-    if (r == null)
-      return true;
-    r.pruneIncluders(rs);
-    rs.add(r);
-    return true;
-  }
-
   boolean useProjectPreferences;
   private final Map<IProject, Toolbox> toolboxes = new HashMap<>();
-  TrimmerExceptionListener exceptionListener = λ -> {/**/};
   public Toolbox toolbox;
+  private Tipper<?> tipper;
+  Tip tip;
+  Toolbox currentToolbox;
+  String fileName;
+  TrimmerExceptionListener exceptionListener = λ -> monitor.logToFile(λ, this, tip, tipper, fileName);
+  final Consumer<Exception> swallow = λ -> exceptionListener.accept(λ);
+
+  <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
+    return robust.lyNull(() -> getTipper(currentToolbox, ¢), swallow);
+  }
+
+  <N extends ASTNode> Tip findTip(final N ¢) {
+    return robust.lyNull(() -> {
+      tipper = null;
+      final Tipper<N> $ = getTipper(currentToolbox, ¢);
+      if ($ == null)
+        return null;
+      tipper = $;
+      TrimmerLog.tip($, ¢);
+      return $.tip(¢);
+    }, swallow);
+  }
 
   public Trimmer useProjectPreferences() {
     useProjectPreferences = true;
@@ -75,64 +87,32 @@ public class Trimmer extends AbstractGUIApplicator {
     return this;
   }
 
-  @Override public int consolidateTips(final ASTRewrite rewriter, final CompilationUnit u, final IMarker m) {
-    final Int $ = new Int();
-    @Nullable final Toolbox t = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
-    final String fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
+  @Override public ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
+    final ASTRewrite $ = ASTRewrite.create(u.getAST());
+    currentToolbox = !useProjectPreferences ? toolbox : getToolboxByPreferences(u);
+    fileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
-      @Override protected <N extends ASTNode> boolean go(final N n) {
+      @Override protected <N extends ASTNode> boolean go(final N ¢) {
         progressMonitor.worked(1);
-        TrimmerLog.visitation(n);
-        if (!check(n) || !inRange(m, n) || disabling.on(n))
+        tip = null;
+        TrimmerLog.visitation(¢);
+        if (!check(¢) || !inRange(m, ¢) || disabling.on(¢))
           return true;
-        @Nullable Tip tip = findTip(n);
+        tip = findTip(¢);
         if (tip == null)
           return true;
-        TrimmerLog.application(rewriter, tip);
-        $.step();
+        TrimmerLog.application($, tip);
         progressMonitor.worked(1);
+        if (nodeLogger != null)
+          nodeLogger.accept(¢);
         return true;
-      }
-
-      <N extends ASTNode> Tip findTip(final N n) {
-        @Nullable Tipper<N> w = findTipper(n);
-        if (w == null)
-          return null;
-        @Nullable Tip s = findTip(n, w);
-        if (s == null)
-          return null;
-        $.step();
-        return s;
-      }
-
-      <N extends ASTNode> Tip findTip(final N n, Tipper<N> w) {
-        try {
-          Tip s = w.tip(n, exclude);
-          TrimmerLog.tip(w, n);
-          return s;
-        } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
-          monitor.logToFile(¢, fileName, n, n.getRoot());
-          exceptionListener.accept(¢, w, n);
-          return null;
-        }
-      }
-
-      <N extends ASTNode> Tipper<N> findTipper(final N n) {
-        try {
-          return getTipper(t, n);
-        } catch (final Exception ¢) {
-          monitor.logProbableBug(this, ¢);
-          exceptionListener.accept(¢);
-        }
-        return null;
       }
 
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
-    return $.get();
+    return $;
   }
 
   public String fixed(final String from) {
@@ -168,39 +148,30 @@ public class Trimmer extends AbstractGUIApplicator {
     }
   }
 
-  @Override @Nullable protected ASTVisitor makeTipsCollector(final List<Tip> $) {
+  @Override protected ASTVisitor makeTipsCollector(final Tips into) {
     Toolbox.refresh(this);
     return new DispatchingVisitor() {
-      @Nullable Toolbox t;
-
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        final String fileName = English.unknownIfNull(az.compilationUnit(n.getRoot()),
-            λ -> λ.getJavaElement() == null ? English.UNKNOWN : λ.getJavaElement().getElementName());
+        fileName = English.unknownIfNull(az.compilationUnit(n.getRoot()),
+            λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
         progressMonitor.worked(1);
         if (!check(n) || disabling.on(n))
           return true;
-        @Nullable Tipper<N> w = null;
-        try {
-          w = getTipper(t, n);
-        } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
-          monitor.logToFile(¢, fileName, n, n.getRoot());
-          exceptionListener.accept(¢);
-        }
-        if (w != null)
-          progressMonitor.worked(5);
-        try {
-          return w == null /* || w.cantTip(n) [probably bug --or] */ || prune(w.tip(n, exclude), $);
-        } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
-          monitor.logToFile(¢, fileName, n, n.getRoot());
-          exceptionListener.accept(¢);
-        }
-        return false;
+        final Tipper<N> $ = findTipper(n);
+        if ($ == null)
+          return true;
+        progressMonitor.worked(1);
+        return robust.lyTrue(() -> {
+          tip = $.tip(n, exclude);
+          if (tip == null)
+            return;
+          into.removeIf(λ -> λ.highlight.overlapping(tip.highlight));
+          into.add(tip);
+        }, swallow);
       }
 
       @Override protected void initialization(final ASTNode ¢) {
-        t = !useProjectPreferences || !(¢ instanceof CompilationUnit) ? toolbox : getToolboxByPreferences((CompilationUnit) ¢);
+        currentToolbox = !useProjectPreferences || !(¢ instanceof CompilationUnit) ? toolbox : getToolboxByPreferences((CompilationUnit) ¢);
         disabling.scan(¢);
       }
     };
@@ -261,7 +232,7 @@ public class Trimmer extends AbstractGUIApplicator {
 
   /** @param u JD
    * @return {@link Toolbox} by project's preferences */
-  @Nullable Toolbox getToolboxByPreferences(@Nullable final CompilationUnit u) {
+  Toolbox getToolboxByPreferences(final CompilationUnit u) {
     if (u == null)
       return null;
     final ITypeRoot r = u.getTypeRoot();

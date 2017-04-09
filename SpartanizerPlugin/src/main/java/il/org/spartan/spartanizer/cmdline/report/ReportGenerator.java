@@ -277,8 +277,10 @@ public class ReportGenerator implements ConfigurableReport {
     report("tips").put("tipName", ¢.getClass());
     // report("tips").put("description", ¢.description);
     report("tips").put("LineNumber", ¢.lineNumber);
-    report("tips").put("from", ¢.from);
-    report("tips").put("to", ¢.to);
+    report("tips").put("from", ¢.highlight.from);
+    report("tips").put("to", ¢.highlight.to);
+    report("tips").put("span-from", ¢.span.from);
+    report("tips").put("span-to", ¢.span.to);
     // report("tips").put("tipperClass", ¢.tipperClass);
     final long time = new Date().getTime();
     report("tips").put("time", time);

@@ -22,7 +22,7 @@ import il.org.spartan.utils.*;
  * T a = new ArrayList<>(x)
  * }
  * @author Yossi Gil
- * @author Yossi Gil {@code Yossi.Gil@GMail.COM}
+ * @author Yossi Gil
  * @since 2017-03-02 */
 public final class LocalInitializedNewAddAll extends LocalInitialized //
     implements TipperCategory.Inlining {
