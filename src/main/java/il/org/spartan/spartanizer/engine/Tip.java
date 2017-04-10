@@ -82,11 +82,11 @@ public abstract class Tip {
   public abstract void go(ASTRewrite r, TextEditGroup g);
 
   @Override public String toString() {
-    return "Tip [highlight=" + highlight + //
-        ", span=" + span + //
-        ", description=" + description + //
-        ", lineNumber=" + lineNumber + //
-        ", tipperClass=" + namer.lastComponent(tipperClass + "") + "]";
+    return "Tip[h=" + highlight + //
+        ", s=" + span + //
+        ", d=" + description + //
+        ", n=" + lineNumber + //
+        ", c=" + namer.lastComponent(tipperClass + "") + "]";
   }
 
   /** A textual description of the action to be performed */

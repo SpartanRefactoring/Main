@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -50,7 +51,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         AbstractPattern.this.go(r, g);
       }
-    }.extend(range());
+    }.extend(span());
   }
 
   protected AbstractPattern<N> andAlso(final Proposition ¢) {
@@ -74,8 +75,8 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     return this;
   }
 
-  protected ASTNode range() {
-    return current;
+  protected ASTNode[] span() {
+    return as.array(current);
   }
 
   private Proposition prerequisite;

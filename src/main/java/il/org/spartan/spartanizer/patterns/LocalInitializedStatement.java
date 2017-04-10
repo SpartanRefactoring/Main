@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
@@ -15,8 +16,8 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class LocalInitializedStatement extends LocalInitialized {
   private static final long serialVersionUID = 1;
 
-  @Override protected ASTNode range() {
-    return parent;
+  @Override protected ASTNode[] span() {
+    return as.array(current,nextStatement); 
   }
 
   protected int waste() {
