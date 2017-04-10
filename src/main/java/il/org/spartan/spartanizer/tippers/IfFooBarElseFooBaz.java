@@ -85,8 +85,4 @@ public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
           }
         };
   }
-
-  @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
-    return super.tip(s, exclude);
-  }
 }

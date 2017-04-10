@@ -187,7 +187,7 @@ public class CommandLine$Applicator extends GenericApplicator {
           return true;
         Tip s = null;
         try {
-          s = tipper.tip(n, exclude);
+          s = tipper.tip(n);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
         }

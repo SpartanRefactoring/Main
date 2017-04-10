@@ -22,15 +22,13 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = -0x173EADC6209210E7L;
 
-  @Override public Tip tip(final SwitchCase n, final ExclusionManager exclude) {
-    final SwitchCase $ = az.switchCase(extract.nextStatementInBlock(n));
-    if (exclude != null)
-      exclude.excludeAll(extract.casesOnSameBranch(az.switchStatement(n.getParent()), n));
-    return new Tip(description(n), getClass(), n) {
+  @Override public Tip tip(final SwitchCase myCase) {
+    final SwitchCase nextCase = az.switchCase(extract.nextStatementInBlock(myCase));
+    return new Tip(description(myCase), getClass(), myCase) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.remove($.isDefault() ? n : $, g);
+        r.remove(nextCase.isDefault() ? myCase : nextCase, g);
       }
-    };
+    }.spanning(nextCase);
   }
 
   @Override protected boolean prerequisite(final SwitchCase n) {

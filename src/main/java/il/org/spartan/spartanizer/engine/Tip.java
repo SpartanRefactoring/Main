@@ -60,10 +60,10 @@ public abstract class Tip {
       final Class<Tipper<N1>> tipperClass, //
       final N2 highlight, final ASTNode... ns) {
     this(description, tipperClass, highlight);
-    extend(ns);
+    spanning(ns);
   }
 
-  public Tip extend(final ASTNode... ¢) {
+  public Tip spanning(final ASTNode... ¢) {
     span = range(span, ¢);
     return this;
   }

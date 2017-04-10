@@ -112,7 +112,7 @@ public class Issue0295 {
   }
 
   @Test public void B19() {
-    assert tipper.tip(variableDeclarationFragment, null) != null : fault.dump() + //
+    assert tipper.tip(variableDeclarationFragment) != null : fault.dump() + //
         "\n variableDeclarationFragment = " + variableDeclarationFragment + //
         "\n for = " + forr + //
         fault.done();

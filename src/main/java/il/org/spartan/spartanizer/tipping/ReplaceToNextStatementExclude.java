@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends CarefulTipper<N> {
@@ -18,20 +17,18 @@ public abstract class ReplaceToNextStatementExclude<N extends ASTNode> extends C
 
   @Override public boolean prerequisite(final N ¢) {
     final Statement $ = extract.nextStatement(¢);
-    return $ != null && go(ASTRewrite.create(¢.getAST()), ¢, $, null, new ExclusionManager()) != null;
+    return $ != null && go(ASTRewrite.create(¢.getAST()), ¢, $, null) != null;
   }
 
-  @Override public Tip tip(final N n, final ExclusionManager exclude) {
+  @Override public Tip tip(final N n) {
     final Statement $ = extract.nextStatement(n);
     assert $ != null;
-    if (exclude != null)
-      exclude.exclude($);
     return new Tip(description(n), myClass(), n, $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        ReplaceToNextStatementExclude.this.go(r, n, $, g, exclude);
+        ReplaceToNextStatementExclude.this.go(r, n, $, g);
       }
-    };
+    }.spanning($);
   }
 
-  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g, ExclusionManager exclude);
+  protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }

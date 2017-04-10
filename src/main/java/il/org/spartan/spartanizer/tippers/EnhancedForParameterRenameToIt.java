@@ -31,7 +31,7 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
   }
 
-  @Override public Tip tip(final EnhancedForStatement s, final ExclusionManager m) {
+  @Override public Tip tip(final EnhancedForStatement s) {
     final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
@@ -46,8 +46,6 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf($).in(body).isEmpty())
       return null;
     final SimpleName ¢ = newCurrent(s);
-    if (m != null)
-      m.exclude(s);
     return new Tip(description(s), myClass(), s, body) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, s, r, g);

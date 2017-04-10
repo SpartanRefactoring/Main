@@ -38,7 +38,7 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     ;
   }
 
-  @Override public Tip tip(final CatchClause c, final ExclusionManager m) {
+  @Override public Tip tip(final CatchClause c) {
     final SingleVariableDeclaration d = c.getException();
     if (!JohnDoe.property(d))
       return null;
@@ -46,14 +46,11 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     if (namer.isSpecial($))
       return null;
     final Block b = body(c);
-    if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
-      return null;
-    if (m != null)
-      m.exclude(c);
-    return new Tip(description(c), myClass(), c, c.getException().getName()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        action.rename($, namer.newCent($), c, r, g);
-      }
-    };
+    return b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty() ? null
+        : new Tip(description(c), myClass(), c, c.getException().getName()) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            action.rename($, namer.newCent($), c, r, g);
+          }
+        }.spanning(c);
   }
 }

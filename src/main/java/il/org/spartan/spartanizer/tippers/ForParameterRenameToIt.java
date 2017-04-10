@@ -33,7 +33,7 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
     return ¢ + "";
   }
 
-  @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager m) {
+  @Override public Tip tip(final SingleVariableDeclaration d) {
     final EnhancedForStatement $ = az.enhancedFor(parent(d));
     if ($ == null)
       return null;
@@ -56,14 +56,12 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
     assert uses != null;
     if (uses.isEmpty())
       return null;
-    if (m != null)
-      m.exclude(body);
     final SimpleName ¢ = namer.newCent(d);
     return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename(n, ¢, $, r, g);
       }
-    };
+    }.spanning(body);
   }
 
   private static boolean isNameDefined(final Statement s, final SimpleName n) {

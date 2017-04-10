@@ -29,7 +29,7 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager m) {
+  @Override public Tip tip(final MethodDeclaration d) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
@@ -43,14 +43,12 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
     final Block b = body(d);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    if (m != null)
-      m.exclude(d);
     final SimpleName ¢ = namer.newCent(d);
     return new Tip("Rename paraemter " + $ + " to ¢ ", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, d, r, g);
         ParameterAbbreviate.fixJavadoc(d, $, ¢ + "", r, g);
       }
-    };
+    }.spanning(d);
   }
 }
