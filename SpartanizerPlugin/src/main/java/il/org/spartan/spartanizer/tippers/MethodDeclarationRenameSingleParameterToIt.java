@@ -30,7 +30,7 @@ public final class MethodDeclarationRenameSingleParameterToIt extends EagerTippe
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager m) {
+  @Override public Tip tip(final MethodDeclaration d) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
@@ -44,14 +44,12 @@ public final class MethodDeclarationRenameSingleParameterToIt extends EagerTippe
     final Block b = body(d);
     if (b == null || haz.variableDefinition(b) || haz.it(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    if (m != null)
-      m.exclude(d);
     final SimpleName ¢ = namer.newIt(d);
     return new Tip("Rename paraemter " + $ + " to it ", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, d, r, g);
         ParameterAbbreviate.fixJavadoc(d, $, ¢ + "", r, g);
       }
-    };
+    }.spanning(d);
   }
 }

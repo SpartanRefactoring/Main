@@ -90,9 +90,8 @@ public final class LocalInitializedForMoveToInitializers extends ReplaceToNextSt
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
-      final ExclusionManager exclude) {
-    if (f == null || $ == null || nextStatement == null || exclude == null)
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    if (f == null || $ == null || nextStatement == null)
       return null;
     final VariableDeclarationStatement declarationStatement = az.variableDeclrationStatement(f.getParent());
     if (declarationStatement == null)
@@ -100,7 +99,6 @@ public final class LocalInitializedForMoveToInitializers extends ReplaceToNextSt
     final ForStatement forStatement = az.forStatement(nextStatement);
     if (forStatement == null || !fitting(declarationStatement, forStatement))
       return null;
-    exclude.excludeAll(fragments(declarationStatement));
     $.remove(declarationStatement, g);
     // TODO Ori Roth: use list rewriter; talk to Ori Roth
     $.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);

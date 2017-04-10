@@ -51,7 +51,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         AbstractPattern.this.go(r, g);
       }
-    }.extend(span());
+    }.spanning(span());
   }
 
   protected AbstractPattern<N> andAlso(final Proposition ¢) {

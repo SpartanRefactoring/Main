@@ -83,21 +83,13 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeExclude<SingleVa
     return "Anonymize parameter " + ¢.getName().getIdentifier();
   }
 
-  @Override public ASTNode replacement(final SingleVariableDeclaration ¢) {
-    return replacement(¢, null);
-  }
-
-  @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration $, final ExclusionManager m) {
+  @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration $) {
     final MethodDeclaration method = getMethod($);
     if (method == null || body(method) == null)
       return null;
     for (final SingleVariableDeclaration ¢ : parameters(method))
       if (unusedVariableName().equals(¢.getName().getIdentifier()))
         return null;
-    if (BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()))
-      return null;
-    if (m != null)
-      parameters(method).stream().filter(λ -> !$.equals(λ)).forEach(m::exclude);
-    return replace($);
+    return BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()) ? null : replace($);
   }
 }

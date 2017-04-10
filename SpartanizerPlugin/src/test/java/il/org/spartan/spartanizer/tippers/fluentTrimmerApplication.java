@@ -107,7 +107,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
         final Tipper<N> w = current().globalToolbox.firstTipper(n);
         if (w == null)
           return true;
-        final Tip make = w.tip(n, exclude);
+        final Tip make = w.tip(n);
         if (make != null)
           make.go(r, null);
         return true;

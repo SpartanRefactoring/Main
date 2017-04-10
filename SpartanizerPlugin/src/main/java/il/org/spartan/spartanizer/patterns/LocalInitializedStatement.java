@@ -17,7 +17,7 @@ public abstract class LocalInitializedStatement extends LocalInitialized {
   private static final long serialVersionUID = 1;
 
   @Override protected ASTNode[] span() {
-    return as.array(current,nextStatement); 
+    return as.array(current, nextStatement);
   }
 
   protected int waste() {

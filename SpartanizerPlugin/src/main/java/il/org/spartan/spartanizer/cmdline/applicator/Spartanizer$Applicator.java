@@ -143,7 +143,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
           return true;
         Tip s = null;
         try {
-          s = tipper.tip(n, exclude);
+          s = tipper.tip(n);
           tick(n, tipper);
         } catch (final Exception ¢) {
           monitor.debug(this, ¢);
