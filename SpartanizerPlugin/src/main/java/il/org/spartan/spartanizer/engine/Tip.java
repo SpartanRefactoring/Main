@@ -5,6 +5,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -13,10 +15,18 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public abstract class Tip {
-  /** What text range to highlight in the marker of this instance */
-  public final Range highlight;
-  /** Which text range would the application of this instance touche */
-  public Range span;
+  @UnderConstruction("yogi -- 10/04/2017") public static boolean overlapping(final Range r1, final Range r2) {
+    if (r1 == null || r2 == null)
+      return false;
+    if (r1 == r2)
+      return true;
+    if (r1.from < r2.from)
+      return r1.to > r2.from;
+    if (r2.from < r1.from)
+      return r2.to > r1.from;
+    assert r1.from == r2.from;
+    return true;
+  }
 
   private static Range range(final Range r, final ASTNode... ns) {
     Range $ = r;
@@ -41,8 +51,8 @@ public abstract class Tip {
   }
 
   /** Instantiates this class
-   * @param description a textual description of the changes described by this
-   *        instance
+   * @param description a textual description of the changes described by
+   *        thisinstance
    * @param spartanizationRange the node on which change is to be carried out
    * @param highlight the node on which change is to be marked
    * @param ns additional nodes, defining the scope of this action. */
@@ -53,28 +63,40 @@ public abstract class Tip {
     extend(ns);
   }
 
-  /** Convert the rewrite into changes on an {@link ASTRewrite}
-   * @param r where to place the changes
-   * @param g to be associated with these changes @ */
-  public abstract void go(ASTRewrite r, TextEditGroup g);
-
   public Tip extend(final ASTNode... ¢) {
     span = range(span, ¢);
     return this;
-  }
-
-  public int getSpartanizationCharStart() {
-    return span.from;
   }
 
   public int getSpartanizationCharEnd() {
     return span.to;
   }
 
-  /** A textual description of the action to be performed **/
+  public int getSpartanizationCharStart() {
+    return span.from;
+  }
+
+  /** Convert the rewrite into changes on an {@link ASTRewrite}
+   * @param r where to place the changes
+   * @param g to be associated with these changes @ */
+  public abstract void go(ASTRewrite r, TextEditGroup g);
+
+  @Override public String toString() {
+    return "Tip [highlight=" + highlight + //
+        ", span=" + span + //
+        ", description=" + description + //
+        ", lineNumber=" + lineNumber + //
+        ", tipperClass=" + namer.lastComponent(tipperClass + "") + "]";
+  }
+
+  /** A textual description of the action to be performed */
   public final String description;
-  /** The line number of the first character to be rewritten **/
+  /** What text range to highlight in the marker of this instance */
+  public final Range highlight;
+  /** The line number of the first character to be rewritten */
   public int lineNumber;
+  /** Which text range would the application of this instance touches */
+  public Range span;
   @SuppressWarnings("rawtypes")
   /** The tipper class that supplied that tip */
   public final Class<? extends Tipper> tipperClass;

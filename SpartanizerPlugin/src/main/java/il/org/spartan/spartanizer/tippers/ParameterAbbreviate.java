@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
-
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 
@@ -90,9 +89,9 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
     final SimpleName oldName = d.getName();
     final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
     if (iz.methodDeclaration(d.getParent())) {
-      Block b = az.methodDeclaration(d.getParent()).getBody();
-      List<Name> lst = getAll.names(b);
-      List<String> names = lst.stream().map(name -> name.toString()).collect(Collectors.toList());
+      final Block b = az.methodDeclaration(d.getParent()).getBody();
+      final List<Name> lst = getAll.names(b);
+      final List<String> names = lst.stream().map(name -> name.toString()).collect(Collectors.toList());
       final Namespace n = Environment.of(b);
       if (names.contains(newName) || n.has(newName))
         return null;

@@ -48,6 +48,10 @@ public interface namer {
     return in($.getIdentifier(), specials);
   }
 
+  static String lastComponent(final Class<?> ¢) {
+    return lastComponent(¢.getCanonicalName());
+  }
+
   static String lastComponent(final String fullClassName) {
     return fullClassName.replaceAll("[a-z0-9A-Z]*\\.", "");
   }

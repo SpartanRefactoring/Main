@@ -5,7 +5,6 @@
  * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.eclipse.core.runtime.*;
@@ -28,21 +27,6 @@ public class TrimmerLogTest {
    * @author AnnaBel7
    * @author michalcohen
    * @since Nov 10, 2016 */
-  @Test public void a() {
-    TrimmerMonitor.setMaxApplications(50);
-    azzert.that(TrimmerMonitor.getMaxApplications(), is(50));
-  }
-
-  @Test public void b() {
-    TrimmerMonitor.setMaxTips(50);
-    azzert.that(TrimmerMonitor.getMaxTips(), is(50));
-  }
-
-  @Test public void c() {
-    TrimmerMonitor.setMaxVisitations(50);
-    azzert.that(TrimmerMonitor.getMaxVisitations(), is(50));
-  }
-
   @Test public void test02() {
     final TrimmingOperand o = trimmingOf("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
