@@ -38,7 +38,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     // wizard.setParserResolveBindings();
-    TrimmerLog.off();
+    DashboardTapper.off();
     DeprecatedFolderASTVisitor.main(args);
   }
 

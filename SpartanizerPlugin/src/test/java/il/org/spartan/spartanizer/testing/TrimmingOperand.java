@@ -3,6 +3,8 @@ package il.org.spartan.spartanizer.testing;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 
+import java.util.logging.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
@@ -129,17 +131,19 @@ public class TrimmingOperand extends Wrapper<String> {
     azzert.that(trivia.essence(peeled), is(trivia.essence(expected)));
   }
 
+  final Logger logger = Logger.getGlobal();
+
   public void rerun() {
     if (rerunsLeft < 1)
       return;
-    System.err.println("*** Test failed (rerunning to collect more information)");
-    TrimmerLog.on();
+    logger.setLevel(Level.ALL);
+    logger.fine("Test failed (rerunning to collect more information)");
     monitor.set(monitor.INTERACTIVE_TDD);
     apply();
-    TrimmerLog.off();
     monitor.unset();
-    System.err.printf("*** Rerun done. (scroll back to find logging infromation)\n");
-    System.err.printf("*** %d reruns left \n ", box.it(--rerunsLeft));
+    logger.info("Rerun done. (scroll back to find logging infromation)");
+    logger.info(String.format("*** %d reruns left \n ", box.it(--rerunsLeft)));
+    logger.setLevel(Level.INFO);
   }
 
   public <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N> ¢) {
