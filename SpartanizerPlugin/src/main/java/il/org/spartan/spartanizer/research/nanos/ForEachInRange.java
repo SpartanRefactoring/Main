@@ -31,7 +31,7 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
     return "Iterate through a range of indexes and apply a statement for each index";
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return "ForFromTo";
   }
 }

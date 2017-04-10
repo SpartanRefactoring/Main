@@ -20,81 +20,20 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * unusual situations.
  * @author Yossi Gil
  * @since Nov 13, 2016 */
-public enum monitor {
-  /** Log to external file if in debug mode, see issue #196 */
-  LOG_TO_FILE {
-    @Override public <T> T debugMessage(final String message) {
-      return logToFile(message);
-    }
-
-    @Override public <T> T error(final String message) {
-      return logToFile(message);
-    }
-
-    <T> T logToFile(final String message) {
-      try {
-        if (MyLogger.writer() != null) {
-          MyLogger.writer().write(message + "\n");
-          MyLogger.writer().flush();
-        }
-      } catch (final IOException ¢) {
-        ¢.printStackTrace();
+public interface monitor {
+  static <T> T logToFile(final String message) {
+    try {
+      if (MyLogger.writer() != null) {
+        MyLogger.writer().write(message + "\n");
+        MyLogger.writer().flush();
       }
-      return robust.null¢();
+    } catch (final IOException ¢) {
+      ¢.printStackTrace();
     }
-  },
-  INTERACTIVE_TDD {
-    @Override public <T> T debugMessage(final String message) {
-      return info(message);
-    }
+    return null¢();
+  }
 
-    @Override public <T> T error(final String message) {
-      System.err.println(message);
-      return robust.null¢();
-    }
-  },
-  /** Used for real headless system; logs are simply ignored */
-  OBLIVIOUS {
-    @Override public <T> T error(final String message) {
-      return robust.null¢(message);
-    }
-  },
-  /** For release versions, we keep a log of errors in stderr, but try to
-   * proceed */
-  PRODUCTION {
-    @Override public <T> T error(final String message) {
-      System.err.println(message);
-      return robust.null¢();
-    }
-  },
-  /** Used for debugging; program exits immediately with the first logged
-   * message */
-  SUPER_TOUCHY {
-    @Override public <T> T debugMessage(final String message) {
-      return info(message);
-    }
-
-    @Override public <T> T error(final String message) {
-      System.err.println(message);
-      System.exit(1);
-      throw new RuntimeException(message);
-    }
-  },
-  /** Used for debugging; program throws a {@link RuntimeException} with the
-   * first logged message */
-  TOUCHY {
-    @Override public <T> T debugMessage(final String message) {
-      return info(message);
-    }
-
-    @Override public <T> T error(final String message) {
-      throw new RuntimeException(message);
-    }
-  };
-  public static final String FILE_SEPARATOR = "######################################################################################################";
-  public static final String FILE_SUB_SEPARATOR = "\n------------------------------------------------------------------------------------------------------\n";
-
-  public static <T> T debug(final Class<?> o, final Throwable t) {
+  static <T> T debug(final Class<?> o, final Throwable t) {
     return debug(//
         "A static method of " + English.name(o) + //
             "was hit by " + indefinite(t) + "\n" + //
@@ -103,7 +42,7 @@ public enum monitor {
             "o = " + o + "'");
   }
 
-  public static <T> T debug(final Object o, final Throwable t) {
+  static <T> T debug(final Object o, final Throwable t) {
     return debug(//
         "An instance of " + English.name(o) + //
             "\n was hit by " + indefinite(t) + //
@@ -112,66 +51,66 @@ public enum monitor {
             "\n o = " + o + "'");
   }
 
-  public static <T> T debug(final String message) {
-    return now().debugMessage(message);
+  static <T> T debug(final String message) {
+    return robust.nullify(() -> logger.info(message));
   }
 
-  public static <T> T infoIOException(final Exception ¢) {
-    return now().info(//
+  static <T> T infoIOException(final Exception ¢) {
+    return robust.nullify(() -> logger.info(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)" //
             + "\n   The exception says: '" + ¢ + "'" //
-    );
+    ));
   }
 
-  public static <T> T infoIOException(final Exception x, final String message) {
-    return now().info(//
+  static <T> T infoIOException(final Exception x, final String message) {
+    return robust.nullify(() -> logger.info(//
         "   Got an exception of type : " + English.name(x) + //
             "\n      (probably I/O exception)" + //
             "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
             "\n       >>>'" + message + "'<<<" //
-    );
+    ));
   }
 
-  public static <T> T infoIOException(final IOException ¢) {
-    return now().info(//
+  static <T> T infoIOException(final IOException ¢) {
+    return robust.nullify(() -> logger.info(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
-    );
+    ));
   }
 
   /** logs an error in the plugin
    * @param tipper an error */
-  public static <T> T log(final Throwable ¢) {
-    return now().error(¢ + "");
+  static <T> T log(final Throwable ¢) {
+    return robust.nullify(() -> logger.info(¢ + ""));
   }
 
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param ¢ JD */
-  public static <T> T logCancellationRequest(final Exception ¢) {
-    return now().info(//
+  static <T> T logCancellationRequest(final Exception ¢) {
+    return robust.nullify(() -> logger.info(//
         " " + English.name(¢) + //
             " (probably cancellation) exception." + //
             "\n x = '" + ¢ + "'" //
-    );
+    ));
   }
 
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param x JD */
-  public static <T> T logCancellationRequest(final Object o, final Exception x) {
-    return now().info(//
+  static <T> T logCancellationRequest(final Object o, final Exception x) {
+    return robust.nullify(() -> logger.info(//
         "An instance of " + English.name(o) + //
             "\n was hit by " + indefinite(x) + //
             " (probably cancellation) exception." + //
             "\n x = '" + x + "'" + //
-            "\n o = " + o + "'");
+            "\n o = " + o + "'"));
   }
 
-  public static <T> T logEvaluationError(final Object o, final Throwable t) {
-    System.err.println(//
+  static <T> T logEvaluationError(final Object o, final Throwable t) {
+    logger.info(//
         dump() + //
             "An instance of " + English.name(o) + "\n" + //
             "\n was hit by " + indefinite(t) + //
@@ -180,32 +119,36 @@ public enum monitor {
             "\n   o = " + o + "'" + //
             done(t) //
     );
-    return robust.null¢();
+    return null¢();
   }
 
-  public static <T> T logEvaluationError(final Throwable ¢) {
-    return logEvaluationError(now(), ¢);
+  static <T> T null¢() {
+    return null;
   }
 
-  public static <T> T bug() {
+  static <T> T logEvaluationError(final Throwable ¢) {
+    return logEvaluationError(logger, ¢);
+  }
+
+  static <T> T bug() {
     return bug("");
   }
 
-  public static <T> T bug(final Object instance) {
+  static <T> T bug(final Object instance) {
     return bug(//
         "Instance involved is of class %s\n" + //
             "toString() = \n",
         English.name(instance), instance);
   }
 
-  public static <T> T bug(final String format, final Object... os) {
-    return now().error(format(//
+  static <T> T bug(final String format, final Object... os) {
+    return robust.nullify(() -> logger.info(format(//
         "A bug was detected in the vicinty of %s\n", system.myCallerFullClassName()) + //
-        format(format, os));
+        format(format, os)));
   }
 
-  public static <T> T logProbableBug(final Object o, final Throwable t) {
-    return now().error(format(//
+  static <T> T logProbableBug(final Object o, final Throwable t) {
+    return robust.nullify(() -> logger.info(format(//
         "An instance of %s was hit by %s exception.\n" + //
             "This is an indication of a bug.\n", //
         indefinite(o), indefinite(t) //
@@ -213,67 +156,56 @@ public enum monitor {
         format(" %s = '%s'\n", English.name(o), o) + //
         format(" %s = '%s'\n", English.name(t), t) + //
         format(" trace(%s) = '%s'\n", English.name(t), trace(t)) //
-    );
+    ));
   }
 
-  private static String trace(final Throwable ¢) {
+  static String trace(final Throwable ¢) {
     return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
   }
 
-  public static <T> T logProbableBug(final Throwable ¢) {
-    return now().error(//
+  static <T> T logProbableBug(final Throwable ¢) {
+    return robust.nullify(() -> logger.info(//
         "A static method was hit by " + indefinite(¢) + " exception.\n" + //
             "This is an indication of a bug.\n" + //
             format("%s = '%s'\n", English.name(¢), ¢) + //
             format("trace(%s) = '%s'\n", English.name(¢), trace(¢)) //
-    );
+    ));
   }
 
   /** logs an error in the plugin into an external file
    * @param tipper an error */
-  public static <T> T logToFile(final Throwable t, final Object... os) {
+  static <T> T logToFile(final Throwable t, final Object... os) {
     final StringWriter w = new StringWriter();
     t.printStackTrace(new PrintWriter(w));
     final Object[] nos = new Object[os.length + 2];
     System.arraycopy(os, 0, nos, 2, os.length);
     nos[0] = t + "";
     nos[1] = (w + "").trim();
-    LOG_TO_FILE.debugMessage(separate.these(nos).by(FILE_SUB_SEPARATOR)); //
-    LOG_TO_FILE.debugMessage(FILE_SEPARATOR);
-    return robust.null¢();
+    debug(separate.these(nos).by(FILE_SUB_SEPARATOR)); //
+    debug(FILE_SEPARATOR);
+    return null¢();
   }
 
-  public static void main(final String[] args) {
+  static void main(final String[] args) {
     System.out.println(MyLogger.fileName());
   }
 
-  @SuppressWarnings("static-method") <T> T debugMessage(final String message) {
-    return robust.null¢(message);
-  }
+  Logger logger = makeLogger();
 
-  public abstract <T> T error(String message);
-
-  @SuppressWarnings("static-method") public <T> T info(final String message) {
-    System.err.println(message);
-    return robust.null¢();
-  }
-
-  public static final Logger logger = makeLogger();
-
-  private static Logger makeLogger() {
+  static Logger makeLogger() {
     final Logger $ = Logger.getGlobal();
-    for (Handler ¢ : $.getHandlers())
+    for (final Handler ¢ : $.getHandlers())
       $.removeHandler(¢);
-    for (Handler ¢ : $.getParent().getHandlers())
+    for (final Handler ¢ : $.getParent().getHandlers())
       $.getParent().removeHandler(¢);
     $.addHandler(consoleHandler());
     return $;
   }
 
-  private static ConsoleHandler consoleHandler() {
-    ConsoleHandler $ = new ConsoleHandler();
+  static ConsoleHandler consoleHandler() {
+    final ConsoleHandler $ = new ConsoleHandler();
     $.setFormatter(new Formatter() {
-      @Override @SuppressWarnings("boxing") public String format(LogRecord ¢) {
+      @Override @SuppressWarnings("boxing") public String format(final LogRecord ¢) {
         return String.format("%2d. %s %s#%s %s: %s\n", //
             ¢.getSequenceNumber(), //
             new SimpleDateFormat("yy-MM-dd hh:mm:ss").format(new Date(¢.getMillis())), //
@@ -287,7 +219,7 @@ public enum monitor {
     return $;
   }
 
-  public static class MyLogger {
+  class MyLogger {
     private static final String UTF_8 = "utf-8";
     private static OutputStream outputStream;
     private static String fileName;
@@ -334,17 +266,10 @@ public enum monitor {
     }
   }
 
-  private static final Stack<monitor> states = new Stack<>();
-
-  public static void set(final monitor interactiveTdd) {
-    states.push(interactiveTdd);
-  }
-
-  public static monitor now() {
-    return !states.empty() ? states.peek() : monitor.PRODUCTION;
-  }
-
-  public static monitor unset() {
-    return states.pop();
-  }
+  /** @formatter:off */
+  Stack<Level> levels = new Stack<>();
+  String FILE_SEPARATOR = "\n**\n";
+  String FILE_SUB_SEPARATOR = "\n********\n"; 
+  static void set(final Level ¢) { levels.push(¢); } 
+  static void unset() { levels.pop(); }
 }

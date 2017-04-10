@@ -23,8 +23,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2017-03-12 */
 public class TrimmingOperand extends Wrapper<String> {
-  protected static final String QUICK = "Quick fix: MARK, COPY, PASTE, and REFORMAT is:\n";
-  protected static final String NEW_UNIT_TEST = "Quick fix: COPY & PASTE Junit @Test method:\n\n";
+  protected static final String QUICK = "Quick fix (MARK, COPY, PASTE, and REFORMAT):\n";
+  protected static final String NEW_UNIT_TEST = "Quick fix (COPY & PASTE Junit @Test method):\n";
   private final Trimmer trimmer = new Trimmer();
   private static int rerunsLeft = 5;
 
@@ -49,12 +49,12 @@ public class TrimmingOperand extends Wrapper<String> {
     try {
       apply();
     } catch (final Throwable ¢) {
-      System.err.println("*** Test crashed with " + ¢.getClass().getSimpleName());
-      System.err.println("*** Test crashed with " + ¢.getMessage());
-      System.err.println("*** Test crashed rerunning ");
-      monitor.set(monitor.INTERACTIVE_TDD);
+      TrimmerMonitor.logger.setLevel(Level.ALL);
+      monitor.set(Level.ALL);
+      monitor.logger.log(Level.ALL, "Test crashed rerunning ", ¢);
       apply();
       monitor.unset();
+      TrimmerMonitor.logger.setLevel(Level.OFF);
     }
   }
 
@@ -84,8 +84,8 @@ public class TrimmingOperand extends Wrapper<String> {
 
   protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
-    System.err.printf(QUICK + format, os);
-    System.err.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeTipperUnitTest(get()));
+    System.out.printf(QUICK + format, os);
+    System.out.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeTipperUnitTest(get()));
   }
 
   /** Check whether one of the code options is correct
@@ -131,19 +131,17 @@ public class TrimmingOperand extends Wrapper<String> {
     azzert.that(trivia.essence(peeled), is(trivia.essence(expected)));
   }
 
-  final Logger logger = Logger.getGlobal();
-
   public void rerun() {
     if (rerunsLeft < 1)
       return;
-    logger.setLevel(Level.ALL);
-    logger.fine("Test failed (rerunning to collect more information)");
-    monitor.set(monitor.INTERACTIVE_TDD);
+    TrimmerMonitor.logger.setLevel(Level.ALL);
+    TrimmerMonitor.logger.fine("Test failed (rerunning to collect more information)");
+    monitor.set(Level.ALL);
     apply();
     monitor.unset();
-    logger.info("Rerun done. (scroll back to find logging infromation)");
-    logger.info(String.format("*** %d reruns left \n ", box.it(--rerunsLeft)));
-    logger.setLevel(Level.INFO);
+    TrimmerMonitor.logger.info("Rerun done. (scroll back to find logging infromation)");
+    TrimmerMonitor.logger.info(String.format("*** %d reruns left \n ", box.it(--rerunsLeft)));
+    TrimmerMonitor.logger.setLevel(Level.OFF);
   }
 
   public <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N> ¢) {

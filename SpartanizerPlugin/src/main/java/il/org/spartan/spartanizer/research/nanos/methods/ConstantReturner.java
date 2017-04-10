@@ -20,7 +20,7 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
         && !rival.get().matches(¢);
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return "ConstantValue";
   }
 }
