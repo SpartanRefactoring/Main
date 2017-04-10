@@ -23,16 +23,12 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -0x70481BF1FE1E5DFBL;
 
-  private static boolean compareReturnStatements(final ReturnStatement r1, final ReturnStatement r2) {
-    return r1 != null && r2 != null && (r1.getExpression() + "").equals(r2.getExpression() + "");
-  }
-
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(b)) {
       if (az.ifStatement(¢) != null)
         $ = handleIf(¢, nextReturn);
-      if (compareReturnStatements(nextReturn, az.returnStatement(¢)))
+      if (wizard.eq(nextReturn, az.returnStatement(¢).getExpression()))
         return ¢;
     }
     return $;
@@ -49,7 +45,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
   private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
     if (then == null)
       return null;
-    if (compareReturnStatements(az.returnStatement(then), nextReturn))
+    if (wizard.eq(az.returnStatement(then), nextReturn.getExpression()))
       return then;
     if (iz.block(then)) {
       final Statement $ = handleBlock((Block) then, nextReturn);
@@ -60,7 +56,7 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
       return handleIf(then, nextReturn);
     if (elze == null)
       return null;
-    if (compareReturnStatements(az.returnStatement(elze), nextReturn))
+    if (wizard.eq(az.returnStatement(elze), nextReturn.getExpression()))
       return elze;
     if (!iz.block(elze))
       return az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
@@ -76,26 +72,24 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
     return "Convert the return inside the loop to break";
   }
 
-  @Override public String description(final WhileStatement b) {
-    return "Convert the return inside " + b + " to break";
+  @Override public String description(final WhileStatement ¢) {
+    return "Convert the return inside " + ¢ + " to break";
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(final WhileStatement b, final ExclusionManager exclude) {
-    final ReturnStatement nextReturn = extract.nextReturn(b);
-    if (b == null || isInfiniteLoop(b) || nextReturn == null)
+  @Override public Tip tip(final WhileStatement s) {
+    final ReturnStatement nextReturn = extract.nextReturn(s);
+    if (s == null || isInfiniteLoop(s) || nextReturn == null)
       return null;
-    final Statement body = body(b), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
+    final Statement body = body(s), $ = iz.returnStatement(body) && wizard.eq(nextReturn, az.returnStatement(body).getExpression()) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    if (exclude != null)
-      exclude.exclude(b);
-    return $ == null ? null : new Tip(description(), getClass(), b) {
+    return $ == null ? null : new Tip(description(), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, az.astNode(first(statements(az.block(into.s("break;"))))), g);
       }
-    };
+    }.spanning(nextReturn);
   }
 }

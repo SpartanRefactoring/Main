@@ -39,7 +39,7 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
     return ¢.getName() + "";
   }
 
-  @Override public Tip tip(final MethodDeclaration d, final ExclusionManager m) {
+  @Override public Tip tip(final MethodDeclaration d) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
@@ -47,18 +47,14 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
         .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(body(d), "result")) && !in(λ.getName().getIdentifier(), "result")
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
-    if ($.isEmpty())
-      return null;
-    if (m != null)
-      m.exclude(d);
-    return new Tip("Rename paraemters", getClass(), d) {
+    return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final SingleVariableDeclaration ¢ : $)
           action.rename(¢.getName(),
               make.from(d).identifier(in(¢.getName().getIdentifier(), "$") ? "result" : scope.newName(body(d), step.type(¢), prefix(step.type(¢)))),
               d, r, g);
       }
-    };
+    }.spanning(d);
   }
 
   private static boolean nameMatch(final String s, final Type t) {

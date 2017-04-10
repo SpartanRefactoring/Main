@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
@@ -76,7 +77,7 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
     return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
   }
 
-  @Override public Tip tip(final WhileStatement s, final ExclusionManager exclude) {
+  @Override public Tip tip(final WhileStatement s) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
     if (s == null || !isInfiniteLoop(s) || nextReturn == null)
       return null;
@@ -84,13 +85,11 @@ public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileSt
         $ = iz.ifStatement(body) ? handleIf(az.ifStatement(body), nextReturn) //
             : iz.block(body) ? handleBlock(az.block(body), nextReturn) //
                 : iz.breakStatement(body) ? body : null;
-    if (exclude != null)
-      exclude.exclude(s);
     return $ == null ? null : new Tip(description(s), getClass(), s.getExpression()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, nextReturn, g);
-        r.remove(nextReturn, g);
+        remove.statement(nextReturn, r, g);
       }
-    };
+    }.spanning(nextReturn);
   }
 }

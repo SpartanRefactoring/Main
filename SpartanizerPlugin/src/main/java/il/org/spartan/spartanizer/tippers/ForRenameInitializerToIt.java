@@ -37,7 +37,7 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
   }
 
-  @Override public Tip tip(final VariableDeclarationExpression x, final ExclusionManager m) {
+  @Override public Tip tip(final VariableDeclarationExpression x) {
     final ForStatement $ = az.forStatement(parent(x));
     if ($ == null)
       return null;
@@ -47,15 +47,11 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     final Statement body = $.getBody();
     if (body == null || haz.variableDefinition(body) || haz.cent(body) || !Inliner.variableUsedInFor($, n))
       return null;
-    if (m != null) {
-      m.exclude(body);
-      m.exclude($);
-    }
     final SimpleName ¢ = namer.newCent(x);
     return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename(n, ¢, $, r, g);
       }
-    };
+    }.spanning($);
   }
 }

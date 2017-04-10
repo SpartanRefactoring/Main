@@ -62,16 +62,12 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     return "Use at most one arithmetical negation, for first factor of " + ¢.getOperator();
   }
 
-  @Override public Tip tip(final InfixExpression x, final ExclusionManager exclude) {
+  @Override public Tip tip(final InfixExpression x) {
     final List<Expression> $ = gather(x);
     if ($.size() < 2)
       return null;
     final int totalNegation = minus.level(x);
-    if (totalNegation == 0 || totalNegation == 1 && minus.level(left(x)) == 1)
-      return null;
-    if (exclude != null)
-      exclude.exclude(x);
-    return new Tip(description(x), getClass(), x) {
+    return totalNegation == 0 || totalNegation == 1 && minus.level(left(x)) == 1 ? null : new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Expression first = totalNegation % 2 == 0 ? null : first($);
         $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
