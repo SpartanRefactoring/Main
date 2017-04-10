@@ -6,6 +6,7 @@ import java.util.*;
 
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil
@@ -202,6 +203,6 @@ public interface system {
   }
 
   static String callinClassLastName() {
-    return myFullClassName().replaceAll("[a-z0-9A-Z]*\\.", "");
+    return namer.lastComponent(myFullClassName());
   }
 }

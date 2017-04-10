@@ -45,7 +45,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
     dump.go(document.get(), "and this is its content");
     compilationUnit = guessedContext.intoCompilationUnit(document.get());
     assert compilationUnit != null;
-    createRewrite = trimmer().createRewrite(compilationUnit);
+    createRewrite = current().createRewrite(compilationUnit);
     assert createRewrite != null;
     textEdit = createRewrite.rewriteAST(document, null);
     assert textEdit != null;
@@ -62,7 +62,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   String aboutTheSame(final String s1, final String s2) {
     assert s1 != null;
     assert s2 != null;
-    if (s1.equals(s2)) // Highly unlikely, but what the hack
+    if (s1.equals(s2)) // Highly unlikely, but what the heck
       return null;
     final String $ = tide.clean(s1);
     assert $ != null;
@@ -102,9 +102,9 @@ public class fluentTrimmerApplication extends Trimmer.With {
   protected final void fillRewrite(final ASTRewrite r, final IMarker m) {
     compilationUnit.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        if (!trimmer().inRange(m, n))
+        if (!current().inRange(m, n))
           return true;
-        final Tipper<N> w = trimmer().toolbox.firstTipper(n);
+        final Tipper<N> w = current().globalToolbox.firstTipper(n);
         if (w == null)
           return true;
         final Tip make = w.tip(n, exclude);
@@ -183,7 +183,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
               + "\n   to '" + expected + "', but for it converted instead" //
               + "\n   to '" + difference + "'!" //
       );
-    return new fluentTrimmerApplication(trimmer(), document.get());
+    return new fluentTrimmerApplication(current(), document.get());
   }
 
   public void stays() {

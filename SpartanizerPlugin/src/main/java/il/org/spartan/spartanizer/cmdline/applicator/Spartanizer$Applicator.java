@@ -130,7 +130,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        TrimmerLog.visitation(n);
+        DashboardTapper.visitation(n);
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
@@ -151,7 +151,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
         if (s == null)
           return true;
         ++tippersAppliedOnCurrentObject;
-        TrimmerLog.application(r, s);
+        DashboardTapper.rewrite(r, s);
         return true;
       }
 
@@ -161,7 +161,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
 
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
-        TrimmerLog.tip(w, n);
+        DashboardTapper.tip(w, n);
       }
 
       <N extends ASTNode> void tick(final Tipper<N> w) {

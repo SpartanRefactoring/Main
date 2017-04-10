@@ -13,6 +13,6 @@ import il.org.spartan.spartanizer.utils.*;
 @SuppressWarnings("static-method")
 public class Issue0438 {
   @Test public void test01() {
-    TrimmerLog.tip(null, null);
+    DashboardTapper.tip(null, null);
   }
 }

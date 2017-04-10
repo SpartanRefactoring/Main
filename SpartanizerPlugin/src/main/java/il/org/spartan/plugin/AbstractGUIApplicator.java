@@ -83,7 +83,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
    *         spartanization tip */
   public final Tips collectTips(final CompilationUnit ¢) {
     final Tips $ = Tips.empty();
-    ¢.accept(makeTipsCollector($));
+    ¢.accept(tipsCollector($));
     return $;
   }
 
@@ -185,11 +185,10 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     return name;
   }
 
-  public IProgressMonitor getProgressMonitor() {
+  public IProgressMonitor progressMonitor() {
     return progressMonitor;
   }
 
-  /** @return selection */
   public ITextSelection getSelection() {
     return selection;
   }
@@ -420,6 +419,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
+    monitor.logger.fine("Weaving maximal rewrite of " + u);
     progressMonitor.beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
     final Int count = new Int();
     final ASTRewrite $ = computeMaximalRewrite(u, m, __ -> count.step());
@@ -430,7 +430,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   private void scan() {
     tips.clear();
-    compilationUnit.accept(makeTipsCollector(tips));
+    compilationUnit.accept(tipsCollector(tips));
   }
 
   /** @param u JD
@@ -481,7 +481,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
 
   protected abstract ASTRewrite computeMaximalRewrite(CompilationUnit u, IMarker m, Consumer<ASTNode> nodeLogger);
 
-  protected abstract ASTVisitor makeTipsCollector(Tips into);
+  protected abstract ASTVisitor tipsCollector(Tips into);
 
   boolean apply() {
     return apply(iCompilationUnit, new Range(0, 0));
@@ -493,13 +493,18 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     progressMonitor.done();
   }
 
-  public IProgressMonitor progressMonitor = nullProgressMonitor;
+  public TextEditGroup currentEditGroup() {
+    return currentEditGroup;
+  }
+
+  private IProgressMonitor progressMonitor = nullProgressMonitor;
   private final Collection<TextFileChange> changes = new ArrayList<>();
-  private CompilationUnit compilationUnit;
+  protected CompilationUnit compilationUnit;
   private ICompilationUnit iCompilationUnit;
   private IMarker marker;
   private ITextSelection selection;
   private final Tips tips = Tips.empty();
   private int totalChanges;
   protected String name;
+  private TextEditGroup currentEditGroup;
 }
