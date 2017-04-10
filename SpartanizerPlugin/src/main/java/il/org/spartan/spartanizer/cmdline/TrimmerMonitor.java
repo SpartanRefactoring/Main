@@ -25,97 +25,6 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since Sep 20, 2016 */
 public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
-  private int runs = 5;
-
-  public static <T> T compute(final Supplier<T> $) {
-    return $.get();
-  }
-
-  public static final Logger logger = compute(() -> {
-    final Logger $ = Logger.getLogger(system.myCallerFullClassName());
-    $.setUseParentHandlers(false);
-    $.addHandler(compute(() -> {
-      final ConsoleHandler $$ = new ConsoleHandler();
-      $$.setFormatter(new Formatter() {
-        @Override public String format(final LogRecord ¢) {
-          return String.format("%2d. %s %s#%s %s: %s\n", //
-              box.it(¢.getSequenceNumber()), //
-              new SimpleDateFormat("hh:mm:ss").format(new Date(¢.getMillis())), //
-              namer.lastComponent(¢.getSourceClassName()), //
-              ¢.getSourceMethodName(), //
-              ¢.getLevel(), //
-              formatMessage(¢)//
-          );
-        }
-      });
-      $$.setLevel(ALL);
-      return $$;
-    }));
-    return $;
-  });
-
-  boolean expired() {
-    if (--runs == 0)
-      System.out.println("Stopped logging applications");
-    return runs > 0;
-  }
-
-  @Override public void setNode() {
-    if (!expired())
-      logger.log(FINEST, "Visit node {0}", current().node().getClass().getSimpleName());
-  }
-
-  @Override public void tipperAccepts() {
-    if (!expired())
-      logger.log(FINE, "Tipper {0} accepts node {1}", as.list(current().tipper(), current().node().getClass().getSimpleName()));
-  }
-
-  @Override public void tipperRejects() {
-    if (!expired())
-      logger.log(FINER, "Tipper %s rejects node %s", as.list(current().tipper(), current().node()));
-  }
-
-  @Override public void noTipper() {
-    if (!expired())
-      logger.log(FINER, "No tippers found for node {0}", current().node().getClass().getSimpleName());
-  }
-
-  @Override public void tipperTip() {
-    if (!expired())
-      logger.log(FINE, "Tipper %s generated tip %s for node %s", as.list(current().tipper(), current().tip(), current().node()));
-  }
-
-  @Override public void tipPrune() {
-    if (!expired())
-      logger.log(FINE, "Pruning re-%s", current().tip());
-  }
-
-  @Override public void tipRewrite() {
-    if (!expired())
-      logger.log(FINE, "Rewrite re-%s", current().rewrite());
-  }
-
-  public TrimmerMonitor(final Trimmer trimmer) {
-    trimmer.super();
-  }
-
-  private static CSVStatistics output;
-  private static int maxVisitations = 30;
-  private static int maxTips = 20;
-  private static int maxApplications = 10;
-  private static boolean logToScreen = true; // default output
-  private static boolean logToFile;
-  private static String outputDir = "/tmp/trimmerlog-output.CSV";
-  private static String fileName;
-  static {
-    logToScreen = true;
-    off();
-  }
-
-  public static void off() {
-    maxApplications = maxTips = maxVisitations = -1;
-  }
-
   public static void activateLogToFile() {
     logToFile = true;
   }
@@ -124,16 +33,8 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
     logToScreen = true;
   }
 
-  public static void rewrite(final ASTRewrite r, final Tip t) {
-    if (--maxApplications <= 0) {
-      if (maxApplications == 0)
-        System.out.println("Stopped logging applications");
-      t.go(r, null);
-      return;
-    }
-    System.out.println("      Before: " + r);
-    t.go(r, null);
-    System.out.println("       After: " + r);
+  public static <T> T compute(final Supplier<T> $) {
+    return $.get();
   }
 
   public static int getMaxApplications() {
@@ -146,6 +47,22 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
 
   public static int getMaxVisitations() {
     return maxVisitations;
+  }
+
+  public static void off() {
+    logger.setLevel(Level.OFF);
+  }
+
+  public static void rewrite(final ASTRewrite r, final Tip t) {
+    if (--maxApplications <= 0) {
+      if (maxApplications == 0)
+        System.out.println("Stopped logging applications");
+      t.go(r, null);
+      return;
+    }
+    System.out.println("      Before: " + r);
+    t.go(r, null);
+    System.out.println("       After: " + r);
   }
 
   public static void setFileName(final String $) {
@@ -210,4 +127,99 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
       return monitor.infoIOException($);
     }
   }
+
+  public static final Logger logger = compute(() -> {
+    final Logger $ = Logger.getLogger(system.myCallerFullClassName());
+    $.setUseParentHandlers(false);
+    $.addHandler(compute(() -> {
+      final ConsoleHandler $$ = new ConsoleHandler();
+      $$.setFormatter(new Formatter() {
+        @Override public String format(final LogRecord ¢) {
+          return String.format("%2d. %s %s#%s %s: %s\n", //
+              box.it(¢.getSequenceNumber()), //
+              new SimpleDateFormat("hh:mm:ss").format(new Date(¢.getMillis())), //
+              namer.lastComponent(¢.getSourceClassName()), //
+              ¢.getSourceMethodName(), //
+              ¢.getLevel(), //
+              formatMessage(¢)//
+          );
+        }
+      });
+      $$.setLevel(ALL);
+      return $$;
+    }));
+    return $;
+  });
+  private static String fileName;
+  private static boolean logToFile;
+  private static boolean logToScreen = true; // default output
+  private static int maxApplications = 10;
+  private static int maxTips = 20;
+  private static int maxVisitations = 30;
+  private static CSVStatistics output;
+  private static String outputDir = "/tmp/trimmerlog-output.CSV";
+  static {
+    logToScreen = true;
+    off();
+  }
+
+  public TrimmerMonitor(final Trimmer trimmer) {
+    trimmer.super();
+  }
+
+  @Override public void noTipper() {
+    if (!expired())
+      logger.log(FINER, "No tippers found for {0}", name());
+  }
+
+  @Override public void setNode() {
+    if (!expired())
+      logger.log(FINEST, "Visit {0}", name());
+  }
+
+  @Override public void tipperAccepts() {
+    if (!expired()) {
+      logger.log(FINE, "{0} accepts node {1}", as.list(tipper(), name()));
+    }
+  }
+
+  private String name() {
+    return English.name(current().node());
+  }
+
+  private String tipper() {
+    return English.name(current().tipper());
+  }
+
+  @Override public void tipperRejects() {
+    if (!expired())
+      logger.log(FINER, "{0} rejects {1}", as.list(tipper(), name()));
+  }
+
+  @Override public void tipperTip() {
+    if (!expired())
+      logger.log(FINE, "{0} generated {1} for node {2}", as.list(tipper(), tip(), current().node()));
+  }
+
+  @Override public void tipPrune() {
+    if (!expired())
+      logger.log(FINE, "Pruning re-{0}", tip());
+  }
+
+  private Tip tip() {
+    return current().tip();
+  }
+
+  @Override public void tipRewrite() {
+    if (!expired())
+      logger.log(FINE, "Rewrite re-%s", current().rewrite());
+  }
+
+  boolean expired() {
+    if (--runs == 0)
+      System.out.println("Stopped logging applications");
+    return false;
+  }
+
+  private int runs = 5;
 }
