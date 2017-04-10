@@ -5,7 +5,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** TODO Yossi Gil LocalVariableInitializedStatement description
@@ -19,17 +18,13 @@ public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper
     return $ != null && go(ASTRewrite.create(¢.getAST()), ¢, $, null) != null;
   }
 
-  @Override public Tip tip(final N n, final ExclusionManager exclude) {
+  @Override public Tip tip(final N n) {
     final Statement $ = extract.nextStatement(n);
-    if ($ == null || exclude != null && exclude.isExcluded($))
-      return null;
-    if (exclude != null)
-      exclude.exclude($);
     return new Tip(description(n), myClass(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         GoToNextStatement.this.go(r, n, $, g);
       }
-    }.extend($);
+    }.spanning($);
   }
 
   protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);

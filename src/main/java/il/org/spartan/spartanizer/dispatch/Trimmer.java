@@ -164,10 +164,10 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
           return true;
         final Tipper<N> $ = findTipper(n);
         return $ == null || robust.lyTrue(() -> {
-          setTip($.tip(n, exclude));
+          setTip($.tip(n));
           if (tip() == null)
             return;
-          into.removeIf(λ -> λ.highlight.overlapping(tip().highlight));
+          into.removeIf(λ -> Tip.overlapping(λ.highlight, tip().highlight));
           into.add(tip());
         }, swallow);
       }

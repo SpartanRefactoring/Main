@@ -79,28 +79,26 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
     return ¢.getName() + "";
   }
 
-  /** [[SuppressWarningsSpartan]] */
-  @Override public Tip tip(final SingleVariableDeclaration d, final ExclusionManager exclude) {
+  @Override public Tip tip(final SingleVariableDeclaration d) {
     final MethodDeclaration $ = az.methodDeclaration(parent(d));
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
-    if (exclude != null)
-      exclude.exclude($);
     final SimpleName oldName = d.getName();
     final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
-    if (iz.methodDeclaration(d.getParent())) {
-      final Block b = az.methodDeclaration(d.getParent()).getBody();
-      final List<Name> lst = getAll.names(b);
-      final List<String> names = lst.stream().map(name -> name.toString()).collect(Collectors.toList());
-      final Namespace n = Environment.of(b);
-      if (names.contains(newName) || n.has(newName))
-        return null;
-    }
-    return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        rename(oldName, make.from(d).identifier(newName), $, r, g);
-        fixJavadoc($, oldName, newName, r, g);
-      }
-    };
+    if (!iz.methodDeclaration(d.getParent()))
+      return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d) {
+        @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+          rename(oldName, make.from(d).identifier(newName), $, r, g);
+          fixJavadoc($, oldName, newName, r, g);
+        }
+      }.spanning($);
+    final Block b = az.methodDeclaration(d.getParent()).getBody();
+    return getAll.names(b).stream().map(λ -> λ + "").collect(Collectors.toList()).contains(newName) || Environment.of(b).has(newName) ? null
+        : new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d) {
+          @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+            rename(oldName, make.from(d).identifier(newName), $, r, g);
+            fixJavadoc($, oldName, newName, r, g);
+          }
+        }.spanning($);
   }
 }

@@ -11,7 +11,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -78,16 +77,14 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
 
   @Override protected final ASTRewrite go(final ASTRewrite r, final VariableDeclarationFragment f, final Statement nextStatement,
       final TextEditGroup g) {
-    if (!iz.variableDeclarationStatement(f.getParent()))
-      return null;
-    final SimpleName $ = f.getName();
-    return $ == null ? null : go(r, f, $, f.getInitializer(), nextStatement, g);
+    return !iz.variableDeclarationStatement(f.getParent()) ? null : go(r, f, f.getName(), f.getInitializer(), nextStatement, g);
   }
 
-  @Override public final Tip tip(final VariableDeclarationFragment f, final ExclusionManager exclude) {
-    final Tip $ = super.tip(f, exclude);
-    if ($ != null && exclude != null)
-      exclude.exclude(f.getParent());
-    return $;
+  @Override public final Tip tip(final VariableDeclarationFragment f) {
+    return new Tip(description(), myClass(), f) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        $FragmentAndStatement.this.go(r, f, extract.nextStatement(f.getParent()), g);
+      }
+    }.spanning(extract.nextStatement(f.getParent()));
   }
 }

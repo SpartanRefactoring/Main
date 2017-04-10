@@ -87,10 +87,6 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
     };
   }
 
-  @Override public Tip tip(final IfStatement s, final ExclusionManager exclude) {
-    return super.tip(s, exclude);
-  }
-
   private static class DefinitionsCollector extends ASTVisitor {
     private boolean allDefined = true;
     private final Statement[] statements;

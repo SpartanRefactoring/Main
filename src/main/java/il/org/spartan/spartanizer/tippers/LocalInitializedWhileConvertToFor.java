@@ -44,9 +44,8 @@ public final class LocalInitializedWhileConvertToFor extends ReplaceToNextStatem
     return "Merge with subsequent 'while', making a 'for (" + ¢ + "; " + expression(az.whileStatement(extract.nextStatement(¢))) + ";)' loop";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g,
-      final ExclusionManager exclude) {
-    if (f == null || $ == null || nextStatement == null || exclude == null)
+  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
+    if (f == null || $ == null || nextStatement == null)
       return null;
     final VariableDeclarationStatement vds = parent(f);
     if (vds == null)
@@ -54,7 +53,6 @@ public final class LocalInitializedWhileConvertToFor extends ReplaceToNextStatem
     final WhileStatement s = az.whileStatement(nextStatement);
     if (s == null || !fragmentsUseFitting(vds, s))
       return null;
-    exclude.excludeAll(fragments(vds));
     $.remove(vds, g);
     $.replace(s, make.forStatement(f, s), g);
     return $;

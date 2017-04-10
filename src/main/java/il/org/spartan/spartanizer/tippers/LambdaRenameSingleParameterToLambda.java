@@ -29,7 +29,7 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     return "Rename lambda parameter " + onlyOne(parameters(¢)) + " to " + namer.lambda;
   }
 
-  @Override public Tip tip(final LambdaExpression x, final ExclusionManager m) {
+  @Override public Tip tip(final LambdaExpression x) {
     final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
     if (f == null)
       return null;
@@ -39,8 +39,6 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     final Namespace n = Environment.of(x);
     if (n.has(namer.lambda) || n.hasChildren())
       return null;
-    if (m != null)
-      m.exclude(x);
     final SimpleName ¢ = x.getAST().newSimpleName(namer.lambda);
     return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

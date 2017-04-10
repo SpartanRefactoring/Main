@@ -16,11 +16,10 @@ public abstract class DispatchingVisitor extends ASTVisitor {
     super(true);
   }
 
-  public final ExclusionManager exclude = new ExclusionManager();
   private boolean initialized;
 
   boolean cautiousGo(final ASTNode ¢) {
-    return !exclude.isExcluded(¢) && go(¢);
+    return go(¢);
   }
 
   protected abstract <N extends ASTNode> boolean go(N n);

@@ -4,7 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 
@@ -14,9 +13,9 @@ import il.org.spartan.utils.*;
 public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
   private static final long serialVersionUID = 0x71A27A5DF828CE68L;
 
-  @Override public final Tip tip(final N n, final ExclusionManager m) {
-    assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n m = " + m + fault.done();
-    final ASTNode $ = replacement(n, m);
+  @Override public final Tip tip(final N n) {
+    assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n" + fault.done();
+    final ASTNode $ = replacement(n);
     return $ == null ? null : new Tip(description(n), myClass(), n) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);
@@ -28,5 +27,5 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
     return true;
   }
 
-  protected abstract ASTNode replacement(N n, ExclusionManager m);
+  @Override public abstract ASTNode replacement(N n);
 }

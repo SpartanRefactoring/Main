@@ -36,7 +36,7 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
     return ¢ + "";
   }
 
-  @Override public Tip tip(final VariableDeclarationStatement s, final ExclusionManager m) {
+  @Override public Tip tip(final VariableDeclarationStatement s) {
     assert s != null;
     if (s.getParent() == null)
       return null;
@@ -44,18 +44,14 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
         .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(s, "result")) && !in(λ.getName().getIdentifier(), "result")
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
-    if ($.isEmpty())
-      return null;
-    if (m != null)
-      m.exclude(s.getParent());
-    return new Tip("Rename parameters", getClass(), s) {
+    return $.isEmpty() ? null : new Tip("Rename parameters", getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final VariableDeclarationFragment ss : $)
           action.rename(ss.getName(),
               make.from(s).identifier(in(ss.getName().getIdentifier(), "$") ? "result" : scope.newName(s, step.type(s), prefix(step.type(s)))),
               s.getParent(), r, g);
       }
-    };
+    }.spanning(s.getParent());
   }
 
   private static boolean nameMatch(final String s, final Type t) {
