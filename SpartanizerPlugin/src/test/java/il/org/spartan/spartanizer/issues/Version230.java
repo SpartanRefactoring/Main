@@ -1004,12 +1004,12 @@ public final class Version230 {
         .stays();
   }
 
-  @Test public void IfBarFooElseBazFooExtractDefinedSuffix() {
+  @Test public void ifBarFooElseBazFooExtractDefinedSuffix() {
     trimmingOf("public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!');  ++i;} else { i +=2;System.h('@');System.h('@');++i;} }")//
         .gives("public static void f(){ int i=0;if(f()){ i +=1;System.h('!');System.h('!');  } else { i +=2;System.h('@');System.h('@');} ++i;}");
   }
 
-  @Test public void IfBarFooElseBazFooExtractUndefinedSuffix() {
+  @Test public void ifBarFooElseBazFooExtractUndefinedSuffix() {
     trimmingOf("public final static final void f(){ if(tr()){ int i=0;System.h(i + 0);++i;  } else { int i=1;System.h(i * 1);++i;} }");
   }
 
