@@ -33,7 +33,7 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
     return "Count elements in collection that satisfy some predicate";
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return Aggregate.class.getSimpleName();
   }
 }

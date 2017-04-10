@@ -20,7 +20,7 @@ public class Default extends JavadocMarkerNanoPattern {
         || returnDefault.canTip(onlyStatement(¢));
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return "DefaultValue";
   }
 }

@@ -49,7 +49,7 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
         .containsAll(parametersNames(¢));
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return "DefaultArguments";
   }
 }
