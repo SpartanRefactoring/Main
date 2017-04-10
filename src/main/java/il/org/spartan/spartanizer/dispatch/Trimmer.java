@@ -109,6 +109,9 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   public void setCurrentTip(final Tip currentTip) {
     this.currentTip = currentTip;
   }
+  public void clearTipper() {
+    this.currentTipper = null;
+  }
 
   public void setTipper(final Tipper<?> currentTipper) {
     this.currentTipper = currentTipper;
@@ -176,7 +179,6 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
 
   protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
     return robust.lyNull(() -> {
-      setTipper(null);
       final Tipper<N> $ = currentToolbox.firstTipper(¢);
       setTipper($);
       return $;
@@ -186,7 +188,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   public final Taps notify = new Taps()//
       .append(new Tap() {
   //@formatter:off
-        @Override public void setNode() { setCurrentTip(null); setCurrentTip(null); }
+        @Override public void setNode() { setCurrentTip(null); }
         //@formatter:on
       }).append(new ProgressTapper())//
       .append(new TrimmerMonitor(this));
@@ -203,11 +205,8 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
    * @author Yossi Gil
    * @since 2017-04-09 */
   public class ProgressTapper implements Tap {
-    @Override public void noTipper() {
-      w(1);
-    }
-
-    //@formatter:off
+    /** @formatter:off */
+    @Override public void noTipper() { w(1); }
     @Override public void setNode() { w(1); }
     @Override public void tipperAccepts() { w(1); }
     @Override public void tipperRejects() { w(1); }
@@ -219,9 +218,8 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   public interface Tap {
-    default void noTipper() {/**/}
-
     /** @formatter:off */
+    default void noTipper() {/**/}
     default void setNode()       {/**/}
     default void tipperAccepts() {/**/}
     default void tipperRejects() {/**/}
