@@ -26,8 +26,4 @@ public final class ExclusionManager {
   public boolean isExcluded(final ASTNode ¢) {
     return az.stream(hop.ancestors(¢)).anyMatch(inner::contains);
   }
-
-  void unExclude(final ASTNode ¢) {
-    inner.remove(¢);
-  }
 }

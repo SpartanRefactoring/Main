@@ -48,6 +48,10 @@ public interface namer {
     return in($.getIdentifier(), specials);
   }
 
+  static String lastComponent(final String fullClassName) {
+    return fullClassName.replaceAll("[a-z0-9A-Z]*\\.", "");
+  }
+
   static SimpleName newCent(final ASTNode ¢) {
     return make.from(¢).identifier(cent);
   }
@@ -147,8 +151,8 @@ public interface namer {
 
   String anonymous = "__"; //
   String cent = "¢"; //
-  String it = "it"; //
   String forbidden = "_"; //
+  String it = "it"; //
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";
   String lambda = "λ"; //
   String return¢ = "$"; //

@@ -9,9 +9,12 @@ import static java.util.stream.Collectors.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
+import java.util.logging.*;
+import java.util.logging.Formatter;
 import java.util.stream.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
@@ -30,9 +33,9 @@ public enum monitor {
 
     <T> T logToFile(final String message) {
       try {
-        if (Logger.writer() != null) {
-          Logger.writer().write(message + "\n");
-          Logger.writer().flush();
+        if (MyLogger.writer() != null) {
+          MyLogger.writer().write(message + "\n");
+          MyLogger.writer().flush();
         }
       } catch (final IOException ¢) {
         ¢.printStackTrace();
@@ -241,7 +244,7 @@ public enum monitor {
   }
 
   public static void main(final String[] args) {
-    System.out.println(Logger.fileName());
+    System.out.println(MyLogger.fileName());
   }
 
   @SuppressWarnings("static-method") <T> T debugMessage(final String message) {
@@ -255,7 +258,36 @@ public enum monitor {
     return robust.null¢();
   }
 
-  private static class Logger {
+  public static final Logger logger = makeLogger();
+
+  private static Logger makeLogger() {
+    final Logger $ = Logger.getGlobal();
+    for (Handler ¢ : $.getHandlers())
+      $.removeHandler(¢);
+    for (Handler ¢ : $.getParent().getHandlers())
+      $.getParent().removeHandler(¢);
+    $.addHandler(consoleHandler());
+    return $;
+  }
+
+  private static ConsoleHandler consoleHandler() {
+    ConsoleHandler $ = new ConsoleHandler();
+    $.setFormatter(new Formatter() {
+      @Override @SuppressWarnings("boxing") public String format(LogRecord ¢) {
+        return String.format("%2d. %s %s#%s %s: %s\n", //
+            ¢.getSequenceNumber(), //
+            new SimpleDateFormat("yy-MM-dd hh:mm:ss").format(new Date(¢.getMillis())), //
+            namer.lastComponent(¢.getSourceClassName()), //
+            ¢.getSourceMethodName(), //
+            ¢.getLevel(), //
+            formatMessage(¢)//
+        );
+      }
+    });
+    return $;
+  }
+
+  public static class MyLogger {
     private static final String UTF_8 = "utf-8";
     private static OutputStream outputStream;
     private static String fileName;

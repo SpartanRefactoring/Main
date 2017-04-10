@@ -10,7 +10,7 @@ import il.org.spartan.*;
  * @since 2016-12-25 */
 public class RecordWriter implements Closeable {
   /** Create a new instance, writing into a given named file
-   * @param fileName the name of the output file
+   * @param currentFileName the name of the output file
    * @throws IOException */
   public RecordWriter(final TableRenderer renderer, final String basePath) throws IOException {
     this.renderer = renderer;
