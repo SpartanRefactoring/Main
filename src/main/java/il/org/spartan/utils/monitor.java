@@ -269,7 +269,7 @@ public interface monitor {
   /** @formatter:off */
   Stack<Level> levels = new Stack<>();
   String FILE_SEPARATOR = "\n**\n";
-  String FILE_SUB_SEPARATOR = "\n********\n"; 
-  static void set(final Level ¢) { levels.push(¢); } 
+  String FILE_SUB_SEPARATOR = "\n********\n";
+  static void set(final Level ¢) { levels.push(¢); }
   static void unset() { levels.pop(); }
 }

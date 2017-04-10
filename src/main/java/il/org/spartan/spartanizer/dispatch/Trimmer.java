@@ -39,6 +39,14 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     this.globalToolbox = globalToolbox;
   }
 
+  public Tip auxiliaryTip() {
+    return auxiliaryTip;
+  }
+
+  public void clearTipper() {
+    tipper = null;
+  }
+
   @Override public ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
     final Tips tips = Tips.empty();
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
@@ -50,12 +58,16 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
         setNode(¢);
         if (!check(¢) || !inRange(m, ¢) || disabling.on(¢))
           return true;
-        setCurrentTip(findTip(¢));
+        setTip(findTip(¢));
         if (tip() == null)
           return true;
-        for (final Tip t : tips)
-          if (t.span.overlapping(tip().span))
+        for (final Tip t : tips) {
+          auxiliaryTip = t;
+          if (t != null && Tip.overlapping(t.span, tip().span)) {
+            notify.tipPrune();
             return true;
+          }
+        }
         tips.add(tip());
         tip().go(rewrite(), currentEditGroup());
         notify.tipRewrite();
@@ -106,15 +118,8 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     notify.setNode();
   }
 
-  public void setCurrentTip(final Tip currentTip) {
-    this.currentTip = currentTip;
-  }
-  public void clearTipper() {
-    this.currentTipper = null;
-  }
-
   public void setTipper(final Tipper<?> currentTipper) {
-    this.currentTipper = currentTipper;
+    tipper = currentTipper;
     if (tipper() == null)
       notify.noTipper();
     else
@@ -122,17 +127,25 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   public Tip tip() {
-    return currentTip;
+    return tip;
   }
 
   public Tipper<?> tipper() {
-    return currentTipper;
+    return tipper;
   }
 
-  private void setTip(final Tip ¢) {
-    currentTip = ¢;
+  void setTip(final Tip ¢) {
+    tip = ¢;
     if (¢ != null)
       notify.tipperTip();
+  }
+
+  protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
+    return robust.lyNull(() -> {
+      final Tipper<N> $ = currentToolbox.firstTipper(¢);
+      setTipper($);
+      return $;
+    }, swallow);
   }
 
   protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
@@ -151,7 +164,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
           return true;
         final Tipper<N> $ = findTipper(n);
         return $ == null || robust.lyTrue(() -> {
-          setCurrentTip($.tip(n, exclude));
+          setTip($.tip(n, exclude));
           if (tip() == null)
             return;
           into.removeIf(λ -> λ.highlight.overlapping(tip().highlight));
@@ -173,29 +186,18 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
       if ($ == null)
         return null;
       setTip($.tip(¢));
-      return currentTip;
-    }, swallow);
-  }
-
-  protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
-    return robust.lyNull(() -> {
-      final Tipper<N> $ = currentToolbox.firstTipper(¢);
-      setTipper($);
-      return $;
+      return tip;
     }, swallow);
   }
 
   public final Taps notify = new Taps()//
-      .append(new Tap() {
-  //@formatter:off
-        @Override public void setNode() { setCurrentTip(null); }
-        //@formatter:on
-      }).append(new ProgressTapper())//
-      .append(new TrimmerMonitor(this));
-  private ASTNode node;
+      .push(new ProgressTapper())//
+      .push(new TrimmerMonitor(this));
   private ASTRewrite currentRewrite;
-  private Tip currentTip;
-  private Tipper<?> currentTipper;
+  private Tip tip;
+  private Tipper<?> tipper;
+  private ASTNode node;
+  Tip auxiliaryTip;
   String currentFileName;
   Toolbox currentToolbox;
   TrimmerExceptionListener exceptionListener = λ -> monitor.logToFile(λ, this, tip(), tipper(), currentFileName);
@@ -231,13 +233,14 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
 
   public static class Taps implements Tap {
     /** @formatter:off */
-    public Taps append(final Tap ¢) { inner.add(¢); return this; }
+    public Taps pop() { inner.remove(inner.size()-1); return this; }
+    public Taps push(final Tap ¢) { inner.add(¢); return this; }
     @Override public void noTipper() { inner.forEach(Tap::noTipper); }
     @Override public void setNode() { inner.forEach(Tap::setNode); }
     @Override public void tipperAccepts() { inner.forEach(Tap::tipperAccepts); }
     @Override public void tipperRejects() { inner.forEach(Tap::tipperRejects); }
     @Override public void tipperTip() { inner.forEach(Tap::tipperTip); }
-    @Override public void tipPrune() { inner.forEach(Tap::setNode); }
+    @Override public void tipPrune() { inner.forEach(Tap::tipPrune); }
     @Override public void tipRewrite() { inner.forEach(Tap::tipRewrite); }
     private final List<Tap> inner = new LinkedList<>();
     //@formatter:on
