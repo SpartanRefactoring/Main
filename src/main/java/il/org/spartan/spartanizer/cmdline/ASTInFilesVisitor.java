@@ -37,7 +37,7 @@ public class ASTInFilesVisitor {
   protected static final String[] defaultArguments = as.array("..");
   static BufferedWriter out;
   static {
-    DashboardTapper.off();
+    TrimmerMonitor.off();
     Trimmer.silent = true;
   }
 
@@ -157,7 +157,6 @@ public class ASTInFilesVisitor {
     }
 
     public static void main(final String[] args) {
-      monitor.set(monitor.LOG_TO_FILE);
       out = system.callingClassUniqueWriter();
       new ASTInFilesVisitor(args) {
         {
@@ -195,7 +194,6 @@ public class ASTInFilesVisitor {
 
   public static class ExpressionChain {
     public static void main(final String[] args) {
-      monitor.set(monitor.LOG_TO_FILE);
       out = system.callingClassUniqueWriter();
       new ASTInFilesVisitor(args) {
         {
@@ -239,7 +237,6 @@ public class ASTInFilesVisitor {
 
   public static class PrintAllInterfaces {
     public static void main(final String[] args) {
-      monitor.set(monitor.LOG_TO_FILE);
       out = system.callingClassUniqueWriter();
       MethodHandles.lookup();
       new ASTInFilesVisitor(args) {

@@ -78,7 +78,7 @@ public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragme
     return letInliner.tip(¢);
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return "LetInNext";
   }
 }

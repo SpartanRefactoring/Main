@@ -43,7 +43,7 @@ public class NotNullAssumed extends NanoPatternTipper<IfStatement> {
     return description;
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return "NotNullAssumed";
   }
 }

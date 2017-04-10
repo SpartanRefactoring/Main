@@ -37,7 +37,7 @@ public final class HoldsForAll extends NanoPatternTipper<EnhancedForStatement> {
     return "Return whether all elements in collection match predicate";
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return Aggregate.class.getSimpleName();
   }
 }

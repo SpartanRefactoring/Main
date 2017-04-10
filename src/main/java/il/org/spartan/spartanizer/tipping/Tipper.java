@@ -22,16 +22,15 @@ import il.org.spartan.utils.Examples.*;
  * @since 2015-07-09 */
 public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     implements TipperCategory, Serializable {
-  private static final long serialVersionUID = -0x1F431C71663C85BBL;
-
-  @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
-    return (Class<Tipper<N>>) getClass();
+  protected static Converter convert(final String from) {
+    return new Examples()/** 12 */
+        .convert(from);
   }
 
-  private Class<N> myOperandsClass;
+  private static final long serialVersionUID = -0x1F431C71663C85BBL;
 
   @Override public String[] akas() {
-    return new String[] { nanoName() };
+    return new String[] { tipperName() };
   }
 
   public abstract boolean canTip(N n);
@@ -46,12 +45,12 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return !check(¢);
   }
 
-  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
-    return (Class<N>) c2;
+  public final String className() {
+    return English.name(this);
   }
 
   @Override public String description() {
-    return nanoName();
+    return tipperName();
   }
 
   public abstract String description(N n);
@@ -60,29 +59,8 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return getClass().equals(¢.getClass());
   }
 
-  protected static Converter convert(final String from) {
-    return new Examples()/** 12 */
-        .convert(from);
-  }
-
   @Override public final Tip fire() {
     return tip(current());
-  }
-
-  private Class<N> initializeMyOperandsClass() {
-    Class<N> $ = null;
-    for (final Method ¢ : getClass().getMethods())
-      if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
-        $ = lowest($, ¢.getParameterTypes()[0]);
-    return $ != null ? $ : castClass(ASTNode.class);
-  }
-
-  private boolean isDefinedHere(final Method ¢) {
-    return ¢.getDeclaringClass() == getClass();
-  }
-
-  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
-    return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
   /** Heuristics to find the class of operands on which this class works.
@@ -96,8 +74,8 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return !isAbstract($.getModifiers()) ? $ : null;
   }
 
-  public String nanoName() {
-    return English.name(myClass());
+  @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
+    return (Class<Tipper<N>>) getClass();
   }
 
   @Override public final boolean ok(final N ¢) {
@@ -118,7 +96,29 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return m != null && m.isExcluded(n) ? null : tip(n);
   }
 
-  public final String className() {
-    return English.name(this);
+  public String tipperName() {
+    return English.name(myClass());
   }
+
+  @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
+    return (Class<N>) c2;
+  }
+
+  private Class<N> initializeMyOperandsClass() {
+    Class<N> $ = null;
+    for (final Method ¢ : getClass().getMethods())
+      if (¢.getParameterCount() == 1 && !Modifier.isStatic(¢.getModifiers()) && isDefinedHere(¢))
+        $ = lowest($, ¢.getParameterTypes()[0]);
+    return $ != null ? $ : castClass(ASTNode.class);
+  }
+
+  private boolean isDefinedHere(final Method ¢) {
+    return ¢.getDeclaringClass() == getClass();
+  }
+
+  private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
+    return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
+  }
+
+  private Class<N> myOperandsClass;
 }

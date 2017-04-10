@@ -37,7 +37,7 @@ public class ForEachSuchThat extends ForEach {
     return "Iterate a collection and apply a statement for each element";
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return ForEach.class.getSimpleName();
   }
 }
