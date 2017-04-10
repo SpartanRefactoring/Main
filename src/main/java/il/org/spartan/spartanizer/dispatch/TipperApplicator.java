@@ -45,17 +45,17 @@ public final class TipperApplicator extends AbstractGUIApplicator {
     return $;
   }
 
-  @Override protected ASTVisitor makeTipsCollector(final Tips $) {
+  @Override protected ASTVisitor tipsCollector(final Tips $) {
     return new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         super.preVisit(¢);
-        progressMonitor.worked(1);
+        progressMonitor().worked(1);
         if (¢.getClass() == clazz)
           return;
-        progressMonitor.worked(1);
+        progressMonitor().worked(1);
         if (!tipper.check(¢))
           return;
-        progressMonitor.worked(1);
+        progressMonitor().worked(1);
         $.add(tipper.tip(¢));
       }
     };

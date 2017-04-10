@@ -336,21 +336,21 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         Names.methodSingleParameterName = (x, y) -> "¢";
       }
 
-      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {}
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {/**/}
     });
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         Names.methodSingleParameterName = (x, y) -> "¢";
       }
 
-      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {}
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {/**/}
     });
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         Names.methodSingleParameterName = (x, y) -> "¢";
       }
 
-      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {}
+      @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {/**/}
     });
   }
 

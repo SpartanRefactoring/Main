@@ -362,7 +362,7 @@ public class Toolbox {
   }
 
   public static void refresh(final Trimmer ¢) {
-    ¢.toolbox = freshCopyOfAllTippers();
+    ¢.globalToolbox = freshCopyOfAllTippers();
   }
 
   private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ts) {

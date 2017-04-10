@@ -37,7 +37,7 @@ public class ASTInFilesVisitor {
   protected static final String[] defaultArguments = as.array("..");
   static BufferedWriter out;
   static {
-    TrimmerLog.off();
+    DashboardTapper.off();
     Trimmer.silent = true;
   }
 
