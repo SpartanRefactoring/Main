@@ -2267,8 +2267,8 @@ public final class Version230 {
   @Test public void paramAbbreviateNestedMethod() {
     trimmingOf("void f(Iterator iterator){iterator=new Iterator<Object>(){int i=0;"
         + "@Override public boolean hasNext(){ return false;}@Override public Object next(){ return null;} };")
-            .gives("void f(Iterator i){i=new Iterator<Object>(){int i=0;@Override public boolean hasNext(){ return false;}"
-                + "@Override public Object next(){ return null;} };");
+            .gives("void f(Iterator iterator){iterator=new Iterator<Object>(){int i;"
+                + "@Override public boolean hasNext(){ return false;}@Override public Object next(){ return null;} };");
   }
 
   @Test public void parenthesizeOfpushdownTernary() {
