@@ -37,7 +37,7 @@ public class LetItBeInMethod extends JavadocMarkerNanoPattern {
         || iz.returnStatement(secondStatement);
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return "LetIn";
   }
 }

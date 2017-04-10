@@ -61,10 +61,6 @@ public interface robust {
     return true;
   }
 
-  static <T> T null¢(@SuppressWarnings("unused") final Object... __) {
-    return null;
-  }
-
   static <T> T nullify(final Runnable ¢) {
     ¢.run();
     return null;

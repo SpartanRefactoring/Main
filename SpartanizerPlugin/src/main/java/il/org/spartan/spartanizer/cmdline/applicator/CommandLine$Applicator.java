@@ -174,7 +174,7 @@ public class CommandLine$Applicator extends GenericApplicator {
     toolbox = Toolbox.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(final N n) {
-        DashboardTapper.visitation(n);
+        TrimmerMonitor.visitation(n);
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
@@ -203,7 +203,7 @@ public class CommandLine$Applicator extends GenericApplicator {
         ReportGenerator.report("tips").put("Method LOC", includingMethod == null ? "not applicable" : count.lines(includingMethod));
         ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : metrics.tokens(includingMethod + ""));
         ReportGenerator.writeTipsLine(n, s, "tips");
-        DashboardTapper.rewrite(r, s);
+        TrimmerMonitor.rewrite(r, s);
         return true;
       }
 

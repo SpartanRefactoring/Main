@@ -244,6 +244,6 @@ public enum JUnitTestMethodFacotry {
   }
 
   private static String tipperClass(final Tipper<?> ¢) {
-    return ¢.nanoName() + format(¢.getClass().getTypeParameters().length <= 0 ? "" : "<%s>", operandClass(¢));
+    return ¢.tipperName() + format(¢.getClass().getTypeParameters().length <= 0 ? "" : "<%s>", operandClass(¢));
   }
 }

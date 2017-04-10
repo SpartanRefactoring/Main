@@ -40,7 +40,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   @Override public ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
-    Tips tips = Tips.empty();
+    final Tips tips = Tips.empty();
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     currentRewrite = $;
     currentToolbox = !useProjectPreferences ? globalToolbox : getToolboxByPreferences(u);
@@ -53,7 +53,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
         setCurrentTip(findTip(¢));
         if (tip() == null)
           return true;
-        for (Tip t : tips)
+        for (final Tip t : tips)
           if (t.span.overlapping(tip().span))
             return true;
         tips.add(tip());
@@ -102,7 +102,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   public void setNode(final ASTNode currentNode) {
-    this.node = currentNode;
+    node = currentNode;
     notify.setNode();
   }
 
@@ -147,9 +147,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
         if (!check(n) || disabling.on(n))
           return true;
         final Tipper<N> $ = findTipper(n);
-        if ($ == null)
-          return true;
-        return robust.lyTrue(() -> {
+        return $ == null || robust.lyTrue(() -> {
           setCurrentTip($.tip(n, exclude));
           if (tip() == null)
             return;
@@ -191,7 +189,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
         @Override public void setNode() { setCurrentTip(null); setCurrentTip(null); }
         //@formatter:on
       }).append(new ProgressTapper())//
-      .append(new DashboardTapper(this));
+      .append(new TrimmerMonitor(this));
   private ASTNode node;
   private ASTRewrite currentRewrite;
   private Tip currentTip;

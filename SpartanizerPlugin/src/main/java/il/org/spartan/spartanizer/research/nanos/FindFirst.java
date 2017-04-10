@@ -55,7 +55,7 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
     return "Iterate a collection for the first element matching some predicate";
   }
 
-  @Override public String nanoName() {
+  @Override public String tipperName() {
     return "FirstSuchThat";
   }
 }

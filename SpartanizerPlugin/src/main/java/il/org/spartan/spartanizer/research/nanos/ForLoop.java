@@ -48,7 +48,7 @@ public final class ForLoop {
       return firstTip(tippers, az.block(parent($)));
     }
 
-    @Override public String nanoName() {
+    @Override public String tipperName() {
       return "FirstSuchThat";
     }
 

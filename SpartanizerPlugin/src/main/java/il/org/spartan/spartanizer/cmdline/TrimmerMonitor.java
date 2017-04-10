@@ -1,9 +1,15 @@
 package il.org.spartan.spartanizer.cmdline;
+
 import static java.util.logging.Level.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.io.*;
+import java.text.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.logging.*;
+import java.util.logging.Formatter;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -11,56 +17,85 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Yossi Gil
  * @since Sep 20, 2016 */
-public class DashboardTapper extends Trimmer.With implements Trimmer.Tap {
-  private int runs = 1230;
+public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
+  private int runs = 5;
+
+  public static <T> T compute(final Supplier<T> $) {
+    return $.get();
+  }
+
+  public static final Logger logger = compute(() -> {
+    final Logger $ = Logger.getLogger(system.myCallerFullClassName());
+    $.setUseParentHandlers(false);
+    $.addHandler(compute(() -> {
+      final ConsoleHandler $$ = new ConsoleHandler();
+      $$.setFormatter(new Formatter() {
+        @Override public String format(final LogRecord ¢) {
+          return String.format("%2d. %s %s#%s %s: %s\n", //
+              box.it(¢.getSequenceNumber()), //
+              new SimpleDateFormat("hh:mm:ss").format(new Date(¢.getMillis())), //
+              namer.lastComponent(¢.getSourceClassName()), //
+              ¢.getSourceMethodName(), //
+              ¢.getLevel(), //
+              formatMessage(¢)//
+          );
+        }
+      });
+      $$.setLevel(ALL);
+      return $$;
+    }));
+    return $;
+  });
+
   boolean expired() {
     if (--runs == 0)
       System.out.println("Stopped logging applications");
-    return runs > 0; 
+    return runs > 0;
   }
 
   @Override public void setNode() {
     if (!expired())
-      monitor.logger.log(FINEST, "Visit node %s", current().node());
+      logger.log(FINEST, "Visit node {0}", current().node().getClass().getSimpleName());
   }
 
   @Override public void tipperAccepts() {
     if (!expired())
-      monitor.logger.log(FINE, "Tipper %s accepts node %s", as.list(current().tipper(), current().node()));
+      logger.log(FINE, "Tipper {0} accepts node {1}", as.list(current().tipper(), current().node().getClass().getSimpleName()));
   }
 
   @Override public void tipperRejects() {
     if (!expired())
-      monitor.logger.log(FINER, "Tipper %s rejects node %s", as.list(current().tipper(), current().node()));
+      logger.log(FINER, "Tipper %s rejects node %s", as.list(current().tipper(), current().node()));
   }
 
   @Override public void noTipper() {
     if (!expired())
-      monitor.logger.log(FINER, "No tippers found for node %s", current().node());
+      logger.log(FINER, "No tippers found for node {0}", current().node().getClass().getSimpleName());
   }
 
   @Override public void tipperTip() {
     if (!expired())
-      monitor.logger.log(FINE, "Tipper %s generated tip %s for node %s", as.list(current().tipper(), current().tip(),current().node()));
+      logger.log(FINE, "Tipper %s generated tip %s for node %s", as.list(current().tipper(), current().tip(), current().node()));
   }
 
   @Override public void tipPrune() {
     if (!expired())
-      monitor.logger.log(FINE, "Pruning re-%s", current().tip());
+      logger.log(FINE, "Pruning re-%s", current().tip());
   }
 
   @Override public void tipRewrite() {
     if (!expired())
-      monitor.logger.log(FINE, "Rewrite re-%s", current().rewrite());
+      logger.log(FINE, "Rewrite re-%s", current().rewrite());
   }
 
-  public DashboardTapper(Trimmer trimmer) {
+  public TrimmerMonitor(final Trimmer trimmer) {
     trimmer.super();
   }
 
@@ -118,19 +153,19 @@ public class DashboardTapper extends Trimmer.With implements Trimmer.Tap {
   }
 
   public static void setMaxApplications(final int maxApplications) {
-    DashboardTapper.maxApplications = maxApplications;
+    TrimmerMonitor.maxApplications = maxApplications;
   }
 
   public static void setMaxTips(final int maxTips) {
-    DashboardTapper.maxTips = maxTips;
+    TrimmerMonitor.maxTips = maxTips;
   }
 
   public static void setMaxVisitations(final int maxVisitations) {
-    DashboardTapper.maxVisitations = maxVisitations;
+    TrimmerMonitor.maxVisitations = maxVisitations;
   }
 
   public static void setOutputDir(final String $) {
-    DashboardTapper.outputDir = $;
+    TrimmerMonitor.outputDir = $;
   }
 
   public static <N extends ASTNode> void tip(final Tipper<N> w, final N n) {

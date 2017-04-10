@@ -24,23 +24,23 @@ import il.org.spartan.spartanizer.testing.*;
 
 @SuppressWarnings("static-method") //
 public class TrimmerLogTest {
-  /** Tests of {@link DashboardTapper.TrimmerLog}
+  /** Tests of {@link TrimmerMonitor.TrimmerLog}
    * @author AnnaBel7
    * @author michalcohen
    * @since Nov 10, 2016 */
   @Test public void a() {
-    DashboardTapper.setMaxApplications(50);
-    azzert.that(DashboardTapper.getMaxApplications(), is(50));
+    TrimmerMonitor.setMaxApplications(50);
+    azzert.that(TrimmerMonitor.getMaxApplications(), is(50));
   }
 
   @Test public void b() {
-    DashboardTapper.setMaxTips(50);
-    azzert.that(DashboardTapper.getMaxTips(), is(50));
+    TrimmerMonitor.setMaxTips(50);
+    azzert.that(TrimmerMonitor.getMaxTips(), is(50));
   }
 
   @Test public void c() {
-    DashboardTapper.setMaxVisitations(50);
-    azzert.that(DashboardTapper.getMaxVisitations(), is(50));
+    TrimmerMonitor.setMaxVisitations(50);
+    azzert.that(TrimmerMonitor.getMaxVisitations(), is(50));
   }
 
   @Test public void test02() {
