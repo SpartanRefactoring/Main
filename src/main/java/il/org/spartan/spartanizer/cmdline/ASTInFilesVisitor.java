@@ -21,7 +21,6 @@ import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 import junit.framework.*;
 
@@ -36,10 +35,6 @@ public class ASTInFilesVisitor {
   @External(alias = "s", value = "silent") protected boolean silent;
   protected static final String[] defaultArguments = as.array("..");
   static BufferedWriter out;
-  static {
-    TrimmerMonitor.off();
-    Trimmer.silent = true;
-  }
 
   /** Check whether given string containing Jave code contains {@link Test}
    * annotations
