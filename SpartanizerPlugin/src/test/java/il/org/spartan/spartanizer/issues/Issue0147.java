@@ -23,17 +23,17 @@ public class Issue0147 {
   private static final ForRedundantContinue TIPPER = new ForRedundantContinue();
 
   @Test public void a$() {
-    trimmingOf("for(int ¢=0; ¢<5;++¢){x.fuanc(); if(bool) continue;}")//
+    topDownTrimming("for(int ¢=0; ¢<5;++¢){x.fuanc(); if(bool) continue;}")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf("for (final Object o : os) {if (bool) return; continue;}")//
+    topDownTrimming("for (final Object o : os) {if (bool) return; continue;}")//
         .gives("for (final Object o : os) {if (bool) return; }");//
   }
 
   @Test public void b$() {
-    trimmingOf("for(final Object o : os){x.fuanc(); if(bool) continue;}")//
+    topDownTrimming("for(final Object o : os){x.fuanc(); if(bool) continue;}")//
         .stays();
   }
 
@@ -54,7 +54,7 @@ public class Issue0147 {
   }
 
   @Test public void a() {
-    trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
+    topDownTrimming("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
         .gives("for(int ¢=0; ¢<5;++¢){++¢;}")//
         .gives("for(int ¢=0; ¢<5;++¢)++¢;")//
         .stays();

@@ -176,13 +176,13 @@ public class Issue____ {
 
   /** Correct way of trimming does not change */
   @Test public void Z$130() {
-    trimmingOf("a")//
+    topDownTrimming("a")//
         .stays();
   }
 
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
-    trimmingOf("a")//
+    topDownTrimming("a")//
         .stays();
   }
 }

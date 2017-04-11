@@ -14,22 +14,22 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0221 {
   @Test public void A$01() {
-    trimmingOf("class D { int a; }")//
+    topDownTrimming("class D { int a; }")//
         .stays();
   }
 
   @Test public void A$02() {
-    trimmingOf("class D { int a = 3; }")//
+    topDownTrimming("class D { int a = 3; }")//
         .stays();
   }
 
   @Test public void A$03() {
-    trimmingOf("class D{int a=0;}")//
+    topDownTrimming("class D{int a=0;}")//
         .gives("class D{int a;}");
   }
 
   @Test public void A$04() {
-    trimmingOf("class D{Integer a=0;}")//
+    topDownTrimming("class D{Integer a=0;}")//
         .stays();
   }
 

@@ -17,7 +17,7 @@ public class Issue1105 {
   /** Introduced by Yogi on Fri-Mar-31-00:33:42-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_protectedAaFinalBbcdefIfbNullghijReturnggkbChijReturng() {
-    trimmingOf("protected A a() { final B b = c.d(e(f)); if (b == null) { g.h(i, j); return g; } g.k(b, C).h(i, j); return g; }") //
+    topDownTrimming("protected A a() { final B b = c.d(e(f)); if (b == null) { g.h(i, j); return g; } g.k(b, C).h(i, j); return g; }") //
         .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
         .gives("protected A a(){final B b=c.d(e(f));if(b==null){g.h(i,j);}else{g.k(b,C).h(i,j);}return g;}") //
         .using(IfStatement.class, new IfExpressionStatementElseSimilarExpressionStatement()) //

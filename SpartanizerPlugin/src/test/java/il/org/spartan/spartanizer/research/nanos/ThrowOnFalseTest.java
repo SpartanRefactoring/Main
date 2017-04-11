@@ -11,14 +11,14 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ThrowOnFalseTest {
   @Test public void a() {
-    trimmingOf("if(x.isCute()) throw new Watever();")//
+    topDownTrimming("if(x.isCute()) throw new Watever();")//
         .using(IfStatement.class, new ThrowOnFalse())//
         .gives("holds(!(x.isCute())).orThrow(()->new Watever());")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf("if(x.isCute() || iWant()) throw new Watever(with(This, and, zis()));")//
+    topDownTrimming("if(x.isCute() || iWant()) throw new Watever(with(This, and, zis()));")//
         .using(IfStatement.class, new ThrowOnFalse())//
         .gives("holds(!(x.isCute()||iWant())).orThrow(()->new Watever(with(This,and,zis())));")//
         .gives("holds(!x.isCute()&&!iWant()).orThrow(()->new Watever(with(This,and,zis())));")//

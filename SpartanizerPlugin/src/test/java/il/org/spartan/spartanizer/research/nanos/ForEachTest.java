@@ -11,14 +11,14 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ForEachTest {
   @Test public void a() {
-    trimmingOf(" for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  ¢.onBroadcast(e);")//
+    topDownTrimming(" for (AtmosphereResourceEventListener ¢ : willBeResumed ? listeners : rImpl.atmosphereResourceEventListener())  ¢.onBroadcast(e);")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("(willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).forEach(¢->¢.onBroadcast(e));")//
     ;
   }
 
   @Test public void b() {
-    trimmingOf("for (Class i : is) try { " //
+    topDownTrimming("for (Class i : is) try { " //
         + " l.add((A)f.newClassInstance(H.class,i));} " //
         + "catch (Throwable ¢) {" //
         + "logger.warn(\"\",¢);" //
@@ -30,21 +30,21 @@ public class ForEachTest {
   }
 
   @Test public void c() {
-    trimmingOf("for (Class<? extends BroadcastFilter> ¢ : bf) f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b));")//
+    topDownTrimming("for (Class<? extends BroadcastFilter> ¢ : bf) f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b));")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("bf.forEach(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
     ;
   }
 
   @Test public void d() {
-    trimmingOf(" for (final Statement k : ss)    $.append(k);")//
+    topDownTrimming(" for (final Statement k : ss)    $.append(k);")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("ss.forEach(k -> $.append(k));")//
     ;
   }
 
   @Test public void e() {
-    trimmingOf("for (final ICompilationUnit ¢ : us)    scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));")//
+    topDownTrimming("for (final ICompilationUnit ¢ : us)    scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));")//
         .using(EnhancedForStatement.class, new ForEach())//
         .gives("us.forEach(¢->scanCompilationUnit(¢,eclipse.newSubMonitor(progressMonitor)));")//
     ;

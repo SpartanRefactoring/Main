@@ -149,7 +149,7 @@ public final class Issue0223 {
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
-    trimmingOf("Integer x = new Integer(1 + 9);")//
+    topDownTrimming("Integer x = new Integer(1 + 9);")//
         .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
         .gives("Integer x = Integer.valueOf(1+9);")//
         .gives("Integer.valueOf(1+9);")//
@@ -158,37 +158,37 @@ public final class Issue0223 {
   }
 
   @Test public void a1() {
-    trimmingOf("Integer x = new Integer(a);")//
+    topDownTrimming("Integer x = new Integer(a);")//
         .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
         .gives("Integer x = Integer.valueOf(a);")//
     ;
   }
 
   @Test public void a2() {
-    trimmingOf("new Integer(a);")//
+    topDownTrimming("new Integer(a);")//
         .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
         .gives("Integer.valueOf(a);")//
     ;
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
-    trimmingOf("String x = new String(f());")//
+    topDownTrimming("String x = new String(f());")//
         .gives("new String(f());").gives("String.valueOf(f());");
   }
 
   @Test public void vanilla() {
-    trimmingOf("new Integer(3)")//
+    topDownTrimming("new Integer(3)")//
         .gives("Integer.valueOf(3)")//
         .stays();
   }
 
   @Test public void vanilla01() {
-    trimmingOf("new Integer(3)")//
+    topDownTrimming("new Integer(3)")//
         .gives("Integer.valueOf(3)");
   }
 
   @Test public void vanilla02() {
-    final TrimmingOperand a = trimmingOf("new Integer(3)");
+    final TrimmingOperand a = topDownTrimming("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
     final String wrap = WrapIntoComilationUnit.find(a.get()).on(a.get());
     if (wrap.equals(trim.apply(new Trimmer(), wrap)))
@@ -196,7 +196,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla03() {
-    final TrimmingOperand a = trimmingOf("new Integer(3)");
+    final TrimmingOperand a = topDownTrimming("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(a.get()).on(a.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
@@ -209,7 +209,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla04() {
-    final TrimmingOperand o = trimmingOf("new Integer(3)");
+    final TrimmingOperand o = topDownTrimming("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
@@ -227,7 +227,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla05() {
-    final TrimmingOperand o = trimmingOf("new Integer(3)");
+    final TrimmingOperand o = topDownTrimming("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;

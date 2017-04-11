@@ -18,7 +18,7 @@ public enum TestsUtilsTrimmer {
     return new OperandToTipper<>(from, clazz);
   }
 
-  public static TrimmingOperand trimmingOf(final String from) {
+  public static TrimmingOperand topDownTrimming(final String from) {
     return new TrimmingOperand(from);
   }
 

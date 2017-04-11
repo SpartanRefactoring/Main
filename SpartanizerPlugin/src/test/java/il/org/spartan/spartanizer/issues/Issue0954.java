@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0954 {
   @Test public void a() {
-    trimmingOf("/**/" //
+    topDownTrimming("/**/" //
         + "void f() {\n" //
         + "Object[] objectArray = {value};\n" //
         + "String arrayString = Arrays.deepToString(objectArray);\n" //

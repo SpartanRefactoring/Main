@@ -44,7 +44,7 @@ public class Issue1146 extends TipperTest<VariableDeclarationFragment> {
    * TestsUtilsTrimmer trimmingOf. {@link LocalInitializedUnusedRemove} is used
    * here */
   @Test public void c2() {
-    TestsUtilsTrimmer.trimmingOf("int x = 1, y = x; ++x;")//
+    TestsUtilsTrimmer.topDownTrimming("int x = 1, y = x; ++x;")//
         .gives("int x = 1; ++x;")//
         .gives("int x = 1+1;");
   }
