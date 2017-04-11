@@ -33,6 +33,8 @@ public class UseParameterAndReturnItTest extends JavadocerTest {
     assert not("@Override public X unfiltered(Object a){  return (SetMultimap)a;}");
   }
 
+  /** @see Predicates#containsPattern(String) */
+
   @Test public void f() {
     assert is("@Override public SetMultimap<K,V> unfiltered(A a){  if(a==null) print(a); else print(omg); return a;}");
   }

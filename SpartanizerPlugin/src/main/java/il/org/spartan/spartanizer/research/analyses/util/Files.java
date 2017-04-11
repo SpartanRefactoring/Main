@@ -65,7 +65,7 @@ public enum Files {
     try (FileWriter w = new FileWriter(f, true)) {
       w.write(s);
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "append");
+      monitor.config(¢, "append");
     }
   }
 
@@ -76,7 +76,7 @@ public enum Files {
     try (FileWriter w = new FileWriter(f, false)) {
       w.write(s);
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "write");
+      monitor.config(¢, "write");
     }
   }
 

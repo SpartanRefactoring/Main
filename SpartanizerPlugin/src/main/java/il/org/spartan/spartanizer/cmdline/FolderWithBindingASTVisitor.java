@@ -32,7 +32,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     } catch (final JavaModelException ¢) {
       ¢.printStackTrace();
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, f + "");
+      monitor.config(¢, f + "");
     }
   }
 

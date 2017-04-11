@@ -137,7 +137,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
         try {
           tipper = getTipper(n);
         } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
+          monitor.info(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -146,7 +146,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
           s = tipper.tip(n);
           tick(n, tipper);
         } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
+          monitor.info(this, ¢);
         }
         if (s == null)
           return true;

@@ -665,7 +665,7 @@ public enum step {
    *         parent is not {@link Block} return null, if n is first
    *         {@link Statement} also null. */
   public static Statement previousStatementInBody(final Statement ¢) {
-    return lisp2.previous(¢, statements(az.block(parent(¢))));
+    return the.previous(¢, statements(az.block(parent(¢))));
   }
 
   public static Expression receiver(final MethodInvocation ¢) {

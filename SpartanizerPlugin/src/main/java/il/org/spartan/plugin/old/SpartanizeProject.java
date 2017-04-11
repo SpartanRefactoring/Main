@@ -49,9 +49,9 @@ public final class SpartanizeProject extends BaseHandler {
           $.set(0);
         λ.done();
       });
-    } catch (InterruptedException ¢) {
+    } catch (final InterruptedException ¢) {
       monitor.cancel(this, ¢);
-    } catch (InvocationTargetException ¢) {
+    } catch (final InvocationTargetException ¢) {
       monitor.bug(this, ¢);
     }
     return $.get();
@@ -102,7 +102,7 @@ public final class SpartanizeProject extends BaseHandler {
             break;
           }
           pm.worked(1);
-          pm.subTask("Compilation unit " + lisp2.nth(++n, todo) + " (" + ¢.getElementName() + ")");
+          pm.subTask("Compilation unit " + the.nth(++n, todo) + " (" + ¢.getElementName() + ")");
           if (!t.apply(¢))
             done.add(¢);
         }
@@ -112,10 +112,10 @@ public final class SpartanizeProject extends BaseHandler {
         done.clear();
         pm.done();
       });
-    } catch (InvocationTargetException ¢) {
+    } catch (final InvocationTargetException ¢) {
       monitor.bug(this, ¢);
       return true;
-    } catch (InterruptedException ¢) {
+    } catch (final InterruptedException ¢) {
       monitor.cancel(this, ¢);
       return true;
     }

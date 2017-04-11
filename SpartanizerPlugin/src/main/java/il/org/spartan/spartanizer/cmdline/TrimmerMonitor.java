@@ -7,7 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.io.*;
 import java.text.*;
 import java.util.*;
-import java.util.function.*;
 import java.util.logging.*;
 import java.util.logging.Formatter;
 
@@ -25,10 +24,6 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since Sep 20, 2016 */
 public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
-  public static <T> T nameless(final Supplier<T> $) {
-    return $.get();
-  }
-
   public static void off() {
     logger.setLevel(Level.OFF);
   }
@@ -104,14 +99,14 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
     try {
       return output = new CSVStatistics(outputDir, "Tips");
     } catch (final IOException $) {
-      return monitor.infoIOException($);
+      return monitor.config($);
     }
   }
 
-  public static final Logger logger = nameless(() -> {
+  public static final Logger logger = the.lambdaResult(() -> {
     final Logger $ = Logger.getLogger(system.myCallerFullClassName());
     $.setUseParentHandlers(false);
-    $.addHandler(nameless(() -> {
+    $.addHandler(the.lambdaResult(() -> {
       final ConsoleHandler $$ = new ConsoleHandler();
       $$.setFormatter(new Formatter() {
         @Override public String format(final LogRecord ¢) {
