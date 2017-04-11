@@ -181,7 +181,7 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
 
   private String node() {
     final ASTNode $ = current().node();
-    return String.format("%s(%s)", English.name($), trivia.gist($)); 
+    return String.format("%s(%s)", English.name($), trivia.gist($));
   }
 
   private Tip tip() {
