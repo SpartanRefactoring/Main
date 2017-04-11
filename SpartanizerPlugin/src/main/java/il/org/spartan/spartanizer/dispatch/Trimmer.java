@@ -79,7 +79,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
       }
     });
     setRewrite(ASTRewrite.create(u.getAST()));
-    for (Tip ¢ : tips) {
+    for (final Tip ¢ : tips) {
       tip = ¢;
       tip().go(getRewrite(), currentEditGroup());
       notify.tipRewrite();
@@ -234,8 +234,8 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     return rewrite;
   }
 
-  public void setRewrite(ASTRewrite currentRewrite) {
-    this.rewrite = currentRewrite;
+  public void setRewrite(final ASTRewrite currentRewrite) {
+    rewrite = currentRewrite;
   }
 
   public final Taps notify = new Taps()//

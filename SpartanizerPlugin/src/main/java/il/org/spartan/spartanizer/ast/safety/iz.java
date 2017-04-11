@@ -33,10 +33,6 @@ import il.org.spartan.utils.*;
  * @since 2015-07-16 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public interface iz {
-  public static boolean isInfiniteLoop(final WhileStatement ¢) {
-    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
-  }
-
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
@@ -577,6 +573,15 @@ public interface iz {
   static boolean incrementedOrDecremented(final ASTNode id) {
     final ASTNode $ = parent(id);
     return iz.prefixExpression($) || iz.updating(az.prefixExpression($));
+  }
+
+  static boolean infiniteLoop(final ForStatement ¢) {
+    final Expression $ = ¢.getExpression();
+    return $ == null || iz.literal.true¢($);
+  }
+
+  static boolean infiniteLoop(final WhileStatement ¢) {
+    return iz.literal.true¢(¢.getExpression());
   }
 
   /** @param ¢ JD
@@ -1283,6 +1288,7 @@ public interface iz {
   static boolean voidType(final Type ¢) {
     return iz.primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
   }
+
   static boolean whileStatement(final ASTNode x) {
     return iz.nodeTypeEquals(x, WHILE_STATEMENT);
   }
@@ -1292,7 +1298,6 @@ public interface iz {
   }
 
   List<String> defaultLiterals = as.list("null", "0", "false", "0.", "0L");
-
   int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
 
   /** @param ¢ JD

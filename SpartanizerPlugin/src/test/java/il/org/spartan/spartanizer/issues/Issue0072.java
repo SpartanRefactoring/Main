@@ -20,6 +20,19 @@ import il.org.spartan.spartanizer.engine.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0072 {
+  @Test public void a() {
+    trimmingOf("(x-0)-0")//
+        .gives("(x-0)")//
+        .gives("(x)")//
+        .stays();
+  }
+
+  @Test public void a1() {
+    trimmingOf("-(x-0)")//
+        .gives("-(x)")//
+        .stays();
+  }
+
   @Test public void ma() {
     final String s = "0-x";
     final InfixExpression i = into.i(s);
@@ -108,19 +121,6 @@ public class Issue0072 {
 
   @Test public void mf1B() {
     assert iz.simple(into.e("x"));
-    trimmingOf("-(x-0)")//
-        .gives("-(x)")//
-        .stays();
-  }
-
-  @Test public void mg() {
-    trimmingOf("(x-0)-0")//
-        .gives("(x-0)")//
-        .gives("(x)")//
-        .stays();
-  }
-
-  @Test public void mg1() {
     trimmingOf("-(x-0)")//
         .gives("-(x)")//
         .stays();
