@@ -17,7 +17,7 @@ class FolderSpartanaizer {
       @Override protected void visit(final File f) {
         try {
           FileUtils.writeToFile(f.getAbsolutePath(), new NoBraindDamagedTippersSpartanizer().fixedPoint(FileUtils.read(f)));
-        } catch (@SuppressWarnings("unused") Exception ¢) {
+        } catch (@SuppressWarnings("unused") final Exception ¢) {
           System.exit(1); // exception - fail
         }
       }
