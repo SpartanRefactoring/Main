@@ -86,11 +86,11 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && iz.infiniteLoop(¢);
+    return ¢ != null && extract.nextReturn(¢) != null && !iz.finiteLoop(¢);
   }
 
   @Override public Tip tip(final ForStatement vor) {
-    if (vor == null || !iz.infiniteLoop(vor))
+    if (vor == null || iz.finiteLoop(vor))
       return null;
     final ReturnStatement $ = extract.nextReturn(vor);
     return $ == null ? null : make(vor, $);

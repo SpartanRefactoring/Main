@@ -30,14 +30,14 @@ public final class TernaryPushup extends InfixExprezzion implements TipperCatego
 
   public TernaryPushup() {
     andAlso(OR("Right or left operand is ternary expression",
-        () -> iz.not.null¢(operandConditional = az.conditionalExpression(extract.core(right))) //
-            && iz.not.null¢(operandCondition = step.expression(operandConditional)) //
-            && iz.not.null¢(operandThen = step.then(operandConditional)) //
-            && iz.not.null¢(operandElze = step.elze(operandConditional)),
-        () -> iz.not.null¢(leftConditional = az.conditionalExpression(extract.core(left)))
-            && iz.not.null¢(operandCondition = step.expression(leftConditional)) //
-            && iz.not.null¢(operandThen = step.then(leftConditional)) //
-            && iz.not.null¢(operandElze = step.elze(leftConditional))));
+        () -> not.null¢(operandConditional = az.conditionalExpression(extract.core(right))) //
+            && not.null¢(operandCondition = step.expression(operandConditional)) //
+            && not.null¢(operandThen = step.then(operandConditional)) //
+            && not.null¢(operandElze = step.elze(operandConditional)),
+        () -> not.null¢(leftConditional = az.conditionalExpression(extract.core(left)))
+            && not.null¢(operandCondition = step.expression(leftConditional)) //
+            && not.null¢(operandThen = step.then(leftConditional)) //
+            && not.null¢(operandElze = step.elze(leftConditional))));
     andAlso("Condition has no side effect", //
         () -> !haz.sideEffects(operandCondition));
   }

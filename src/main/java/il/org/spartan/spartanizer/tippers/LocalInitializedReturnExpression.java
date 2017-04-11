@@ -28,9 +28,9 @@ public final class LocalInitializedReturnExpression extends LocalInitializedStat
     andAlso("Variable not used in subsequent initializers", //
         () -> !usedInSubsequentInitializers());//
     andAlso("Next statement is return", //
-        () -> iz.not.null¢(returnStatement = az.returnStatement(nextStatement)));//
+        () -> not.null¢(returnStatement = az.returnStatement(nextStatement)));//
     andAlso("Next statement returns a value return", //
-        () -> iz.not.null¢(returnValue = returnStatement.getExpression()));//
+        () -> not.null¢(returnValue = returnStatement.getExpression()));//
     andAlso("Returned value is not a lambda expression ", //
         () -> !iz.lambdaExpression(initializer));//
     andAlso(//
