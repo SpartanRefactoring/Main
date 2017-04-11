@@ -132,7 +132,7 @@ public final class Application implements IApplication {
         fileStats.add(process(f, u));
         ++done;
       } catch (final JavaModelException ¢) {
-        monitor.logProbableBug(this, ¢);
+        monitor.bug(this, ¢);
         ++failed;
       } catch (final IOException ¢) {
         monitor.infoIOException(¢);
@@ -178,7 +178,7 @@ public final class Application implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final NullPointerException | JavaModelException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
   }
 

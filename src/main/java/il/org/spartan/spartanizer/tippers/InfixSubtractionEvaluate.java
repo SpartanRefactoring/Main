@@ -32,7 +32,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
     try {
       $ = az.throwing.double¢(first(xs)) - az.stream(rest(xs)).mapToDouble(az.throwing::double¢).sum();
     } catch (final NumberFormatException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
     return $;
   }
@@ -47,7 +47,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
         $ -= az.throwing.int¢(¢);
       }
     } catch (final NumberFormatException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
     return $;
   }
@@ -62,7 +62,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
         $ -= az.throwing.long¢(¢);
       }
     } catch (final NumberFormatException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
     return $;
   }

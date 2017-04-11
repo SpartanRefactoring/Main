@@ -1306,7 +1306,7 @@ public interface iz {
     try {
       return Double.parseDouble($) == d;
     } catch (final IllegalArgumentException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
       return false;
     }
   }
@@ -1318,7 +1318,7 @@ public interface iz {
       ___.unused(__);
       return false;
     } catch (final IllegalArgumentException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
       return false;
     }
   }
@@ -1327,7 +1327,7 @@ public interface iz {
     try {
       return iz.parseLong($) == l;
     } catch (final IllegalArgumentException ¢) {
-      monitor.exception(box(l), ¢);
+      monitor.bug(box(l), ¢);
       return false;
     }
   }

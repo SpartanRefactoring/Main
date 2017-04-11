@@ -134,7 +134,7 @@ public class XMLSpartan {
     try {
       return getFileInner($);
     } catch (final ParserConfigurationException | CoreException | SAXException | IOException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
       return null;
     }
   }
@@ -242,7 +242,7 @@ public class XMLSpartan {
       f.setContents(new ByteArrayInputStream((writer + "").getBytes()), false, false, new NullProgressMonitor());
       return true;
     } catch (CoreException | TransformerException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
       return false;
     }
   }

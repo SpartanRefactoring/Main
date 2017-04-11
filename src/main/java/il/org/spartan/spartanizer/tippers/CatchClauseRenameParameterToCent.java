@@ -49,6 +49,6 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, c, r, g);
       }
-    };
+    }.spanning(¢);
   }
 }

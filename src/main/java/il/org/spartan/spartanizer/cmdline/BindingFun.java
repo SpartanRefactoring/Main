@@ -71,7 +71,7 @@ final class BindingFun implements IApplication {
       } catch (final IOException ¢) {
         monitor.infoIOException(¢, f + "");
       } catch (final JavaModelException ¢) {
-        monitor.logProbableBug(this, ¢);
+        monitor.bug(this, ¢);
       }
     return IApplication.EXIT_OK;
   }
@@ -87,7 +87,7 @@ final class BindingFun implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final NullPointerException | JavaModelException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
   }
 

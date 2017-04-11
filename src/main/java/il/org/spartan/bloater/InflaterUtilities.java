@@ -76,7 +76,7 @@ public enum InflaterUtilities {
           textChange.perform(new NullProgressMonitor());
       }
     } catch (final CoreException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
     }
   }
 

@@ -30,8 +30,6 @@ public final class SingleFlater {
   @Deprecated private TextSelection textSelection;
   private boolean usesDisabling = true;
   private WindowInformation windowInformation;
-  private Consumer<Exception> exceptionListener;
-
   private SingleFlater() {}
 
   /** Creates a new for a {@link CompilationUnit}.
@@ -45,7 +43,6 @@ public final class SingleFlater {
   public static SingleFlater in(final ASTNode ¢, final Consumer<Exception> c) {
     final SingleFlater $ = new SingleFlater();
     $.root = ¢;
-    $.exceptionListener = c;
     return $;
   }
 
@@ -99,9 +96,7 @@ public final class SingleFlater {
         try {
           w = operationsProvider.getTipper(n);
         } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
-          monitor.log(¢);
-          exceptionListener.accept(¢);
+          monitor.bug(this,¢);
         }
         if (w == null)
           return true;
@@ -116,8 +111,7 @@ public final class SingleFlater {
         o.tipper.check(o.node);
         o.tipper.tip(o.node).go(r, g);
       } catch (final Exception ¢) {
-        monitor.debug(this, ¢);
-        exceptionListener.accept(¢);
+        monitor.bug(this, ¢);
       }
     return true;
   }
@@ -135,7 +129,7 @@ public final class SingleFlater {
             $ = changeNFocus(e, t, te, i);
         }
       } catch (final CoreException | BadLocationException ¢) {
-        monitor.log(¢);
+        monitor.bug(¢);
       }
     else
       try {
@@ -147,7 +141,7 @@ public final class SingleFlater {
             $ = changeNFocus(e, t, tfc, i);
         }
       } catch (final CoreException ¢) {
-        monitor.log(¢);
+        monitor.bug(¢);
       }
     u.dispose();
     return $;
