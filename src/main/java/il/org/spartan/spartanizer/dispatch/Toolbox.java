@@ -150,8 +150,8 @@ public class Toolbox {
             new ForNoUpdatersNoInitializerToWhile(), //
             new ForDeadRemove(), //
             new ContinueCoditinalInForEliminate(), //
-            new BlockBreakToReturnInfiniteFor(), //
-            new ReturnToBreakFiniteFor(), //
+            new InfiniteForBreakToReturn(), //
+            new ForFiniteConvertReturnToBreak(), //
             new ForToForUpdaters(), //
             new ForTrueConditionRemove(), //
             new ForAndReturnToFor(), //

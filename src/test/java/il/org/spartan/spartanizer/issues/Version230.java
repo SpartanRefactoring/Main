@@ -992,6 +992,8 @@ public final class Version230 {
   @Test public void ifSequencerNoElseSequencer05a() {
     trimminKof("for(;;){ if(a){x();return;} continue;a=3;}")//
         .gives("for(;;){ if(a){x();return;} continue;}")//
+        .gives("for(;;){ if(a){x();return;} }")//
+        .gives("for(;;)if(a){x();return;}") //    
         .stays();
   }
 

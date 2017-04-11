@@ -2,15 +2,15 @@ package il.org.spartan.spartanizer.patterns;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** Abstract Pattern of {@link PostfixExpression}
+/** Abstract Pattern of {@link PrefixExpression}
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-31 */
-public abstract class PostfixExprezzion extends AbstractPattern<PostfixExpression> {
+public abstract class PrefixExpressionPattern extends AbstractPattern<PrefixExpression> {
   private static final long serialVersionUID = -0x4D043452F68C22F8L;
   protected Expression operand;
-  protected PostfixExpression.Operator operator;
+  protected PrefixExpression.Operator operator;
 
-  public PostfixExprezzion() {
+  public PrefixExpressionPattern() {
     andAlso("Must be infix expression", () -> {
       operand = current.getOperand();
       operator = current.getOperator();
