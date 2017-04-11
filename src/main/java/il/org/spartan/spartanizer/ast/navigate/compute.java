@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -21,40 +22,12 @@ public enum compute {
   ;
   public static List<ReturnStatement> returns(final ASTNode n) {
     return new ASTMapReducer<List<ReturnStatement>>() {
-      @Override protected List<ReturnStatement> map(LambdaExpression ¢) {
-        return reduce();
-      }
-
-      @Override protected List<ReturnStatement> map(ForStatement ¢) {
-        return reduce();
-      }
-
-      @Override protected List<ReturnStatement> map(EnhancedForStatement ¢) {
-        return reduce();
-      }
-
-      @Override protected List<ReturnStatement> map(WhileStatement ¢) {
-        return reduce();
-      }
-
-      @Override protected List<ReturnStatement> map(DoStatement ¢) {
-        return reduce();
-      }
-
-      @Override protected List<ReturnStatement> map(SwitchStatement ¢) {
-        return reduce();
-      }
-
-      @Override protected List<ReturnStatement> map(AnonymousClassDeclaration ¢) {
-        return reduce();
-      }
-
-      @Override protected List<ReturnStatement> map(TypeDeclarationStatement ¢) {
-        return reduce();
-      }
-
-      @Override protected List<ReturnStatement> map(ReturnStatement ¢) {
-        return as.list(¢);
+      @Override protected int[] leaf() {
+        return new int[] { //
+            LAMBDA_EXPRESSION, //
+            FOR_STATEMENT, //
+            ENHANCED_FOR_STATEMENT, //
+            DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION, SWITCH_STATEMENT, TYPE_DECLARATION_STATEMENT, };
       }
 
       @Override public List<ReturnStatement> reduce() {
