@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -11,16 +9,35 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.utils.*;
 
 /** Convert Finite loops with return sideEffects to shorter ones : toList
  * Convert {@code for (..) { does(something); return XX; } return XX; } to :
  * {@code for (..) { does(something); break; } return XX; }
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public final class WhileFiniteReturnToBreak extends CarefulTipper<WhileStatement>//
+public final class WhileFiniteReturnToBreak extends AbstractPattern<WhileStatement>//
     implements TipperCategory.CommnonFactoring {
+  private ReturnStatement nextReturn;
+  private ReturnStatement convertToBreak;
+
+  public WhileFiniteReturnToBreak() {
+    andAlso("Loop must be finite", //
+        () -> iz.finiteLoop(current));
+    andAlso("Loop must be followed by return", //
+        () -> not.null¢(nextReturn = //
+            az.returnStatement(nextStatement)));
+    andAlso("Loop a return that can be converted to break", //
+        () -> not.null¢(convertToBreak = //
+            compute//
+                .returns(current.getBody())//
+                .stream().filter(λ -> wizard.eq(λ, nextReturn))//
+                .findFirst()//
+                .orElse(null)//
+        ));
+  }
+
   private static final long serialVersionUID = -0x70481BF1FE1E5DFBL;
 
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
@@ -68,24 +85,12 @@ public final class WhileFiniteReturnToBreak extends CarefulTipper<WhileStatement
     return "Convert the return inside the loop to break";
   }
 
-  @Override public String description(final WhileStatement ¢) {
-    return "Convert the return inside " + ¢ + " to break";
+  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+    r.replace(convertToBreak, current.getAST().newBreakStatement(),g); 
+    return r;
   }
 
-  @Override public boolean prerequisite(final WhileStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && !iz.infiniteLoop(¢);
-  }
-
-  @Override public Tip tip(final WhileStatement s) {
-    final ReturnStatement nextReturn = extract.nextReturn(s);
-    if (s == null || iz.infiniteLoop(s) || nextReturn == null)
-      return null;
-    final Statement body = body(s), $ = iz.returnStatement(body) && wizard.eq(nextReturn, az.returnStatement(body).getExpression()) ? body
-        : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
-    return $ == null ? null : new Tip(description(), getClass(), s) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace($, az.astNode(first(statements(az.block(into.s("break;"))))), g);
-      }
-    };
+  @Override public Examples examples() {
+    return null;
   }
 }
