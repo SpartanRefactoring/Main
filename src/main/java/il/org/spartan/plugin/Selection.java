@@ -473,7 +473,7 @@ public class Selection extends AbstractSelection<Selection> {
         final int $ = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         return new NodeFinder(u.build().compilationUnit, $, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - $).getCoveredNode();
       } catch (final CoreException ¢) {
-        monitor.logEvaluationError(¢);
+        monitor.exception(¢);
         return null;
       }
     }

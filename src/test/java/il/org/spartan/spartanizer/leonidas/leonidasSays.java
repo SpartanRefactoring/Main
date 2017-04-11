@@ -163,7 +163,7 @@ public enum leonidasSays {
       try {
         edits.apply(document);
       } catch (MalformedTreeException | BadLocationException ¢) {
-        monitor.logEvaluationError(this, ¢);
+        monitor.exception(this, ¢);
       }
       azzertEquals(rrr, document);
     }
@@ -275,7 +275,7 @@ public enum leonidasSays {
       try {
         edits.apply(document);
       } catch (MalformedTreeException | BadLocationException ¢) {
-        monitor.logEvaluationError(this, ¢);
+        monitor.exception(this, ¢);
       }
       azzertEquals(expected, document);
     }

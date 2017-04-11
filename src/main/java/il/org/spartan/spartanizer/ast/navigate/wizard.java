@@ -190,7 +190,7 @@ public interface wizard {
           // unused node type
           break;
         } catch (final Exception ¢) {
-          monitor.logEvaluationError(this, ¢);
+          monitor.exception(this, ¢);
           break;
         }
     }

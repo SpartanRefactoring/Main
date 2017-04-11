@@ -150,7 +150,7 @@ public enum eclipse {
     try {
       return find($, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
     } catch (final CoreException ¢) {
-      monitor.logEvaluationError(¢);
+      monitor.exception(¢);
     }
     return null;
   }
@@ -221,7 +221,7 @@ public enum eclipse {
       return $.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || $.getLength() + $.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
     } catch (final CoreException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
       return true;
     }
   }
@@ -231,7 +231,7 @@ public enum eclipse {
     try {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
     }
     return null;
   }
@@ -240,7 +240,7 @@ public enum eclipse {
     try {
       return compilationUnits($, nullProgressMonitor);
     } catch (final JavaModelException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
       return null;
     }
   }

@@ -109,7 +109,7 @@ public interface monitor {
             "\n o = " + o + "'"));
   }
 
-  static <T> T logEvaluationError(final Object o, final Throwable t) {
+  static <T> T exception(final Object o, final Throwable t) {
     logger.info(//
         dump() + //
             "An instance of " + English.name(o) + "\n" + //
@@ -126,8 +126,8 @@ public interface monitor {
     return null;
   }
 
-  static <T> T logEvaluationError(final Throwable ¢) {
-    return logEvaluationError(logger, ¢);
+  static <T> T exception(final Throwable ¢) {
+    return exception(logger, ¢);
   }
 
   static <T> T bug() {

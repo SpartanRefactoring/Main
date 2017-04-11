@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * to : {@code while (true) { doSomething(); if(done()) return XX; } }
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public final class BlockBreakToReturnInfiniteWhile extends CarefulTipper<WhileStatement>//
+public final class WhileInfiniteBreakToReturn extends CarefulTipper<WhileStatement>//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -0x565FA66D15A7881BL;
 
