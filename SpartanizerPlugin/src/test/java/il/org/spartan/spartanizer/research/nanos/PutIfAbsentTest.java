@@ -11,42 +11,42 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class PutIfAbsentTest {
   @Test public void a() {
-    topDownTrimming("if(!map.containsKey(y)) map.put(y,z);")//
+    trimminKof("if(!map.containsKey(y)) map.put(y,z);")//
         .using(IfStatement.class, new PutIfAbsent())//
         .gives("map.putIfAbsent(y,z);")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("if(!map.containsKey(y)) map.put(y,new OMG(Its, (a)big, one));")//
+    trimminKof("if(!map.containsKey(y)) map.put(y,new OMG(Its, (a)big, one));")//
         .using(IfStatement.class, new PutIfAbsent())//
         .gives("map.putIfAbsent(y,new OMG(Its, (a)big, one));")//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming("if(!m.a.p.containsKey(y)) m.a.p.put(y,new OMG(Its, (a)big, one));")//
+    trimminKof("if(!m.a.p.containsKey(y)) m.a.p.put(y,new OMG(Its, (a)big, one));")//
         .using(IfStatement.class, new PutIfAbsent())//
         .gives("m.a.p.putIfAbsent(y,new OMG(Its, (a)big, one));")//
         .stays();
   }
 
   @Test public void d() {
-    topDownTrimming("if(!this.map.containsKey(y)) this.map.put(y,new OMG(Its, (a)big, one));")//
+    trimminKof("if(!this.map.containsKey(y)) this.map.put(y,new OMG(Its, (a)big, one));")//
         .using(IfStatement.class, new PutIfAbsent())//
         .gives("this.map.putIfAbsent(y,new OMG(Its, (a)big, one));")//
         .stays();
   }
 
   @Test public void e() {
-    topDownTrimming("if(!this.containsKey(y)) this.put(y,new OMG(Its, (a)big, one));")//
+    trimminKof("if(!this.containsKey(y)) this.put(y,new OMG(Its, (a)big, one));")//
         .using(IfStatement.class, new PutIfAbsent())//
         .gives("this.putIfAbsent(y,new OMG(Its, (a)big, one));")//
         .stays();
   }
 
   @Test public void f() {
-    topDownTrimming("if(!containsKey(y)) put(y,new OMG(Its, (a)big, one));")//
+    trimminKof("if(!containsKey(y)) put(y,new OMG(Its, (a)big, one));")//
         .using(IfStatement.class, new PutIfAbsent())//
         .gives("putIfAbsent(y,new OMG(Its, (a)big, one));")//
         .stays();

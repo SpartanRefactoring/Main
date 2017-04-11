@@ -10,13 +10,13 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class HoldsForAllTest {
   @Test public void a() {
-    topDownTrimming("for (  Entry<?> λ : that.entrySet())   if (m.count(λ.getElement()) != λ.getCount())   return false;  return true;")//
+    trimminKof("for (  Entry<?> λ : that.entrySet())   if (m.count(λ.getElement()) != λ.getCount())   return false;  return true;")//
         .using(EnhancedForStatement.class, new HoldsForAll())//
         .gives("return that.entrySet().stream().allMatch(λ -> !(m.count(λ.getElement()) != λ.getCount()));");
   }
 
   @Test public void b() {
-    topDownTrimming("for (  Entry<?> λ : that.entrySet())   if (λ != null)   return false;  return true;")//
+    trimminKof("for (  Entry<?> λ : that.entrySet())   if (λ != null)   return false;  return true;")//
         .using(IfStatement.class, new ExecuteUnless(), new NotNullAssumed())//
         .using(EnhancedForStatement.class, new HoldsForAll())//
         .gives("return that.entrySet().stream().allMatch(λ -> !(λ != null));")//
@@ -25,7 +25,7 @@ public class HoldsForAllTest {
   }
 
   @Test public void c() {
-    topDownTrimming("for (X x : Y) if (whatever) return false;")//
+    trimminKof("for (X x : Y) if (whatever) return false;")//
         .using(EnhancedForStatement.class, new HoldsForAll())//
         .gives("returnIf(Y.stream().allMatch(x -> !(whatever)));")//
         .gives("returnIf(Y.stream().allMatch(λ -> !(whatever)));")//
@@ -33,7 +33,7 @@ public class HoldsForAllTest {
   }
 
   @Test public void d() {
-    topDownTrimming("for (X x : Y) if (whatever) $ = false;")//
+    trimminKof("for (X x : Y) if (whatever) $ = false;")//
         .using(EnhancedForStatement.class, new HoldsForAll())//
         .gives("$ = Y.stream().allMatch(x -> !(whatever));")//
         .gives("$ = Y.stream().allMatch(λ -> !(whatever));")//
@@ -41,7 +41,7 @@ public class HoldsForAllTest {
   }
 
   @Test public void e() {
-    topDownTrimming(" for (BroadcasterCacheInspector ¢ : inspectors) if (!¢.inspect(m)) return false;")//
+    trimminKof(" for (BroadcasterCacheInspector ¢ : inspectors) if (!¢.inspect(m)) return false;")//
         .using(EnhancedForStatement.class, new HoldsForAll())//
         .gives("returnIf(inspectors.stream().allMatch(¢->!(!¢.inspect(m))));") //
         .gives("returnIf(inspectors.stream().allMatch(λ->!(!λ.inspect(m))));") //

@@ -14,22 +14,22 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue0172 {
   @Test public void a01() {
-    topDownTrimming("1+3*x+0")//
+    trimminKof("1+3*x+0")//
         .gives("1+3*x");
   }
 
   @Test public void a02() {
-    topDownTrimming("1+3*x+0+\"\"")//
+    trimminKof("1+3*x+0+\"\"")//
         .gives("1+3*x+\"\"");
   }
 
   @Test public void a03() {
-    topDownTrimming("0+x+\"\"")//
+    trimminKof("0+x+\"\"")//
         .stays();
   }
 
   @Test public void a04() {
-    topDownTrimming("2+1*x+0+\"abc\"+\"\"")//
+    trimminKof("2+1*x+0+\"abc\"+\"\"")//
         .gives("2+1*x+\"abc\"")//
         .gives("1*x+2+\"abc\"")//
         .gives("x+2+\"abc\"")//
@@ -37,36 +37,36 @@ public final class Issue0172 {
   }
 
   @Test public void a05() {
-    topDownTrimming("x+\"\"+\"abc\"+0")//
+    trimminKof("x+\"\"+\"abc\"+0")//
         .gives("x+\"abc\"+0")//
         .stays();
   }
 
   @Test public void a06() {
-    topDownTrimming("0 + \"\"")//
+    trimminKof("0 + \"\"")//
         .stays();
   }
 
   @Test public void a07() {
-    topDownTrimming("\"\" + 0")//
+    trimminKof("\"\" + 0")//
         .gives("0+\"\"")//
         .stays();
   }
 
   @Test public void a08() {
-    topDownTrimming("\"\" + 0 + 1")//
+    trimminKof("\"\" + 0 + 1")//
         .gives("0+ \"\" + 1")//
         .stays();
   }
 
   @Test public void a09() {
-    topDownTrimming("x+1+0")//
+    trimminKof("x+1+0")//
         .gives("x+1")//
         .stays();
   }
 
   @Test public void a10() {
-    topDownTrimming("0+x+1")//
+    trimminKof("0+x+1")//
         .stays();
   }
 }

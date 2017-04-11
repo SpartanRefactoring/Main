@@ -12,32 +12,32 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0129 {
   @Test public void issue129_01() {
-    topDownTrimming("$ += s + (new Integer(i) + \"\")")//
+    trimminKof("$ += s + (new Integer(i) + \"\")")//
         .gives("$ += s + (Integer.valueOf(i) + \"\")")//
         .stays();
   }
 
   @Test public void issue129_02() {
-    topDownTrimming("1 + 2 - (x+1)")//
+    trimminKof("1 + 2 - (x+1)")//
         .gives("1+2-x-1")//
         .gives("3-x-1")//
         .stays();
   }
 
   @Test public void issue129_03() {
-    topDownTrimming("1 + 2 + (x+1)")//
+    trimminKof("1 + 2 + (x+1)")//
         .gives("3 + x + 1")//
         .stays();
   }
 
   @Test public void issue129_04() {
-    topDownTrimming("\"\" + 0 + (x - 7)")//
+    trimminKof("\"\" + 0 + (x - 7)")//
         .gives("0 + \"\" + (x - 7)")//
         .stays();
   }
 
   @Test public void issue129_05() {
-    topDownTrimming("x + 5 + y + 7.0 +1.*f(3)")//
+    trimminKof("x + 5 + y + 7.0 +1.*f(3)")//
         .stays();
   }
 }

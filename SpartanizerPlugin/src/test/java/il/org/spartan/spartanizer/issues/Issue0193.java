@@ -12,47 +12,47 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0193 {
   @Test public void t10() {
-    topDownTrimming("x*0")//
+    trimminKof("x*0")//
         .gives("0")//
         .stays();
   }
 
   @Test public void t20() {
-    topDownTrimming("0*x")//
+    trimminKof("0*x")//
         .gives("0")//
         .stays();
   }
 
   @Test public void t30() {
-    topDownTrimming("(x+y)*0")//
+    trimminKof("(x+y)*0")//
         .gives("0")//
         .stays();
   }
 
   @Test public void t40() {
-    topDownTrimming("calc()*0")//
+    trimminKof("calc()*0")//
         .gives("0*calc()")//
         .stays();
   }
 
   @Test public void t50() {
-    topDownTrimming("0*(f())")//
+    trimminKof("0*(f())")//
         .stays();
   }
 
   @Test public void t60() {
-    topDownTrimming("0*(new int[f()])")//
+    trimminKof("0*(new int[f()])")//
         .stays();
   }
 
   @Test public void t70() {
-    topDownTrimming("x*0*new int[f()]")//
+    trimminKof("x*0*new int[f()]")//
         .gives("0*x*new int[f()]")//
         .stays();
   }
 
   @Test public void t80() {
-    topDownTrimming("calc()*x*0")//
+    trimminKof("calc()*x*0")//
         .gives("0*x*calc()")//
         .stays();
   }

@@ -14,60 +14,60 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0073 {
   @Test public void a$01() {
-    topDownTrimming("x + \"\"")//
+    trimminKof("x + \"\"")//
         .stays();
   }
 
   @Test public void a$02() {
-    topDownTrimming("\"\" + \"abc\" + \"\"")//
+    trimminKof("\"\" + \"abc\" + \"\"")//
         .gives("\"abc\"");
   }
 
   @Test public void a$03() {
-    topDownTrimming("\"\"+\"abc\"")//
+    trimminKof("\"\"+\"abc\"")//
         .gives("\"abc\"")//
         .stays();
   }
 
   @Test public void a$04() {
-    topDownTrimming("\"abc\" + \"\"+\"abc\"")//
+    trimminKof("\"abc\" + \"\"+\"abc\"")//
         .gives("\"abc\" + \"abc\"");
   }
 
   @Test public void a$05() {
-    topDownTrimming("x + \"\"+\"abc\"")//
+    trimminKof("x + \"\"+\"abc\"")//
         .gives("x + \"abc\"")//
         .stays();
   }
 
   @Test public void a$06() {
-    topDownTrimming("\"abc\" + \"\" + x")//
+    trimminKof("\"abc\" + \"\" + x")//
         .gives("\"abc\" + x");
   }
 
   @Test public void a$07() {
-    topDownTrimming("\"abc\" + \"\"")//
+    trimminKof("\"abc\" + \"\"")//
         .gives("\"abc\"")//
         .stays();
   }
 
   @Test public void a$08() {
-    topDownTrimming("\"\" + \"abc\"")//
+    trimminKof("\"\" + \"abc\"")//
         .gives("\"abc\"");
   }
 
   @Test public void a$09() {
-    topDownTrimming("((String)x) + \"\"")//
+    trimminKof("((String)x) + \"\"")//
         .gives("((String)x)");
   }
 
   @Test public void a$10() {
-    topDownTrimming("x + \"\"")//
+    trimminKof("x + \"\"")//
         .stays();
   }
 
   @Test public void a$11() {
-    topDownTrimming("\"abc\" + \"\"")//
+    trimminKof("\"abc\" + \"\"")//
         .gives("\"abc\"");
   }
 }

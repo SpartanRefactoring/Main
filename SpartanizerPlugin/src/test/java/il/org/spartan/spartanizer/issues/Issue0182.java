@@ -12,7 +12,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0182 {
   @Test public void dollar() {
-    topDownTrimming("int toString() { int x = 5; System.out.println(x); return x + 7;}")
+    trimminKof("int toString() { int x = 5; System.out.println(x); return x + 7;}")
         .gives("int toString() { int $ = 5; System.out.println($); return $ + 7;}");
   }
 }

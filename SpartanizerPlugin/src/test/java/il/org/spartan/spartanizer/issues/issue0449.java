@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class issue0449 {
   @Test public void a() {
-    topDownTrimming("s = s.replaceAll(b,c); s=s.replaceAll(d,e);")//
+    trimminKof("s = s.replaceAll(b,c); s=s.replaceAll(d,e);")//
         .using(Assignment.class, new AssignmentAndAssignmentToSame())//
         .gives("s = s.replaceAll(b,c).replaceAll(d,e);");
   }

@@ -53,13 +53,13 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a=a & b")//
+    trimminKof("a=a & b")//
         .gives("a&=b");
   }
 
   @Test public void bitWiseOr_noSideEffects() {
     azzert.that(1 | 2, is(3));
-    topDownTrimming("a=a|b")//
+    trimminKof("a=a|b")//
         .gives("a|=b");
   }
 
@@ -75,7 +75,7 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a=a|b")//
+    trimminKof("a=a|b")//
         .gives("a|=b");
   }
 
@@ -117,7 +117,7 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a=a | b")//
+    trimminKof("a=a | b")//
         .gives("a|=b");
   }
 
@@ -159,13 +159,13 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a = a ^ b ")//
+    trimminKof("a = a ^ b ")//
         .gives("a ^= b");
   }
 
   @Test public void logicalAnd_noSideEffects() {
     azzert.nay(true & false);
-    topDownTrimming("a=a && b")//
+    trimminKof("a=a && b")//
         .gives("a&=b");
   }
 
@@ -188,7 +188,7 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a=a && b")//
+    trimminKof("a=a && b")//
         .gives("a&=b");
   }
 
@@ -218,7 +218,7 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a=a && b")//
+    trimminKof("a=a && b")//
         .gives("a&=b");
   }
 
@@ -261,13 +261,13 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a=a && b")//
+    trimminKof("a=a && b")//
         .gives("a&=b");
   }
 
   @Test public void logicalOr_noSideEffects() {
     azzert.aye(true | false);
-    topDownTrimming("a=a||b")//
+    trimminKof("a=a||b")//
         .gives("a|=b");
   }
 
@@ -290,7 +290,7 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a=a||b")//
+    trimminKof("a=a||b")//
         .gives("a|=b");
   }
 
@@ -320,7 +320,7 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a=a||b")//
+    trimminKof("a=a||b")//
         .gives("a|=b");
   }
 
@@ -362,7 +362,7 @@ public class Issue0177 {
       }
     }
     new Class();
-    topDownTrimming("a=a|(b=b&a)")//
+    trimminKof("a=a|(b=b&a)")//
         .gives("a|=b=b&a")//
         .gives("a|=b&=a");
   }

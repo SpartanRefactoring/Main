@@ -13,33 +13,33 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0853 {
   @Test public void test0() {
-    topDownTrimming("for(int ¢ = 3; ¢ < 10; ++¢){++x;}") //
+    trimminKof("for(int ¢ = 3; ¢ < 10; ++¢){++x;}") //
         .using(ForStatement.class, new ReplaceForWithRange()).gives("for(Integer ¢ : range.from(3).to(10)){{++x;}}")//
         .gives("for(Integer ¢ : range.from(3).to(10))++x;")//
         .stays();
   }
 
   @Test public void test1() {
-    topDownTrimming("for(int ¢ = 3; ¢ < 10; ++¢){++x;¢+=x;++y;}") //
+    trimminKof("for(int ¢ = 3; ¢ < 10; ++¢){++x;¢+=x;++y;}") //
         .using(ForStatement.class, new ReplaceForWithRange())//
         .stays();
   }
 
   @Test public void test2() {
-    topDownTrimming("for(int ¢ = 3; ¢ < 10; ++¢){++x;++¢;++y;}") //
+    trimminKof("for(int ¢ = 3; ¢ < 10; ++¢){++x;++¢;++y;}") //
         .using(ForStatement.class, new ReplaceForWithRange())//
         .stays();
   }
 
   @Test public void test3() {
-    topDownTrimming("for(int ¢ = 10; ¢ > 5; --¢){++x;++y;}") //
+    trimminKof("for(int ¢ = 10; ¢ > 5; --¢){++x;++y;}") //
         .using(ForStatement.class, new ReplaceForWithRange()).gives("for(Integer ¢ : range.from(10).step(-1).to(5)){{++x;++y;}}")//
         .gives("for(Integer ¢ : range.from(10).step(-1).to(5)){++x;++y;}") //
         .stays();
   }
 
   @Test public void test4() {
-    topDownTrimming("for(int ¢ = 10; ¢ > 5; ¢-=2){++x;++y;}") //
+    trimminKof("for(int ¢ = 10; ¢ > 5; ¢-=2){++x;++y;}") //
         .using(ForStatement.class, new ReplaceForWithRange()).gives("for(Integer ¢ : range.from(10).step(-2).to(5)){{++x;++y;}}")//
         .gives("for(Integer ¢ : range.from(10).step(-2).to(5)){++x;++y;}")//
         .stays();

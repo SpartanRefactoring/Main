@@ -39,7 +39,7 @@ public class Issue0835 {
   }
 
   @Test public void returnNotNullNonEmptyBlock() {
-    topDownTrimming("{int x;}")//
+    trimminKof("{int x;}")//
         .gives("int x;")//
         .gives("")//
         .stays();
@@ -48,7 +48,7 @@ public class Issue0835 {
   /** Introduced by Yossi on Sun-Mar-26-18:52:18-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_whileTrue() {
-    topDownTrimming("{ while (true) { } }") //
+    trimminKof("{ while (true) { } }") //
         .using(Block.class, new BlockSingleton()) //
         .gives("while(true){}") //
         .using(WhileStatement.class, new WhileDeadRemove()) //
@@ -59,14 +59,14 @@ public class Issue0835 {
   }
 
   @Test public void returnNullIfBlockIfNotSingleVarDef2() {
-    topDownTrimming("{return 1;}").gives("return 1;").stays();
+    trimminKof("{return 1;}").gives("return 1;").stays();
   }
 
   @Test public void returnNullOnEmptyBlock1() {
-    topDownTrimming("{}").gives("");
+    trimminKof("{}").gives("");
   }
 
   @Test public void returnNullOnEmptyBlock2() {
-    topDownTrimming("\n{}\n").gives("");
+    trimminKof("\n{}\n").gives("");
   }
 }

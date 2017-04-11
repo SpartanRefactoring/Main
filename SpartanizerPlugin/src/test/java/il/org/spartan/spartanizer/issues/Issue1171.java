@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1171 {
   @Test public void inlineArrayInitialization2() {
-    topDownTrimming("public double[] h(){ " //
+    trimminKof("public double[] h(){ " //
         + " final S r=new S(true); " //
         + " for(double[] dxx : ps) " //
         + " r.a(d[0], d[1]); " //

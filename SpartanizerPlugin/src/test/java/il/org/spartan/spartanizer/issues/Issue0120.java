@@ -13,22 +13,22 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0120 {
   @Test public void a1() {
-    topDownTrimming("\"a\"+\"b\"")//
+    trimminKof("\"a\"+\"b\"")//
         .gives("\"ab\"");
   }
 
   @Test public void a2() {
-    topDownTrimming("\"abc\"+\"de\"+\"fgh\"")//
+    trimminKof("\"abc\"+\"de\"+\"fgh\"")//
         .gives("\"abcdefgh\"");
   }
 
   @Test public void a3() {
-    topDownTrimming("\"abc\"+a.toString()+\"de\"+\"fgh\"")//
+    trimminKof("\"abc\"+a.toString()+\"de\"+\"fgh\"")//
         .gives("\"abc\"+a.toString()+\"defgh\"");
   }
 
   @Test public void a4() {
-    topDownTrimming("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"")//
+    trimminKof("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"")//
         .gives("c.toString()+\"abc\"+a.toString()+\"defgh\"");
   }
 }

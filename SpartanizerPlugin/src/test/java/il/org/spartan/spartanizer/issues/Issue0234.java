@@ -10,22 +10,22 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0234 {
   @Test public void b$01() {
-    topDownTrimming("try { f(); } catch(Exception e) { return -1; }")//
+    trimminKof("try { f(); } catch(Exception e) { return -1; }")//
         .stays();
   }
 
   @Test public void b$02() {
-    topDownTrimming("try { } catch(Exception e) { return -1; } return true;")//
+    trimminKof("try { } catch(Exception e) { return -1; } return true;")//
         .gives("return true;");
   }
 
   @Test public void b$03() {
-    topDownTrimming("int a; try { } catch(Exception e) { return -1; }")//
+    trimminKof("int a; try { } catch(Exception e) { return -1; }")//
         .gives("");
   }
 
   @Test public void b$04() {
-    topDownTrimming("int a=5; try { } catch(Exception e) { return -1; } finally { ++a; }")//
+    trimminKof("int a=5; try { } catch(Exception e) { return -1; } finally { ++a; }")//
         .gives("int a=5; {++a;}")//
         .gives("int a=5; ++a;");
   }

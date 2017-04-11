@@ -11,33 +11,33 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1122 {
   @Test public void a() {
-    topDownTrimming("for(int i=0;i<10;){x = x+5; if(i > 5 && i < 9) break;}")//
+    trimminKof("for(int i=0;i<10;){x = x+5; if(i > 5 && i < 9) break;}")//
         .gives("do{x = x+5;} while(i <= 5 || i>=9);");
   }
 
   @Test public void b() {
-    topDownTrimming("for(int i=0;i<10;++i){y=y*x; x = x+5; if(doSomething()) break;}")//
+    trimminKof("for(int i=0;i<10;++i){y=y*x; x = x+5; if(doSomething()) break;}")//
         .gives("do{y=y*x; x = x+5;} while(!doSomething());");
   }
 
   @Test public void c() {
-    topDownTrimming("for(int i=0;i<10;++i) if(doSomething()) break;")//
+    trimminKof("for(int i=0;i<10;++i) if(doSomething()) break;")//
         .gives("do{} while(!doSomething());");
   }
 
   @Test public void d() {
-    topDownTrimming("for (int a = 0; a < 10; ++a) if (b()) return;")//
+    trimminKof("for (int a = 0; a < 10; ++a) if (b()) return;")//
         .stays();
   }
 
   @Test public void e() {
-    topDownTrimming("for (int a = 0; a < 10; ++a) if (b()) { return; }")//
+    trimminKof("for (int a = 0; a < 10; ++a) if (b()) { return; }")//
         .gives("for(int a=0;a<10;++a)if(b())return;")//
         .stays();
   }
 
   @Test public void f() {
-    topDownTrimming("for(int i=0;i<10;++i) if(doSomething()) { break; }")//
+    trimminKof("for(int i=0;i<10;++i) if(doSomething()) { break; }")//
         .stays();
   }
 }

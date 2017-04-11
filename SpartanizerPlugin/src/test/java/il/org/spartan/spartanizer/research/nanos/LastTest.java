@@ -11,21 +11,21 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class LastTest {
   @Test public void a() {
-    topDownTrimming("li.get(li.size()-1)")//
+    trimminKof("li.get(li.size()-1)")//
         .using(MethodInvocation.class, new Last())//
         .gives("last(li)")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("li.get(li.size()-1);")//
+    trimminKof("li.get(li.size()-1);")//
         .using(MethodInvocation.class, new Last())//
         .gives("last(li);")//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming("omg(li.get(0), li.get(li.size()-1));")//
+    trimminKof("omg(li.get(0), li.get(li.size()-1));")//
         .using(MethodInvocation.class, new First())//
         .using(MethodInvocation.class, new Last())//
         .gives("omg(first(li),last(li));")//
@@ -33,7 +33,7 @@ public class LastTest {
   }
 
   @Test public void d() {
-    topDownTrimming("li.m().get(li.m().size()-1);")//
+    trimminKof("li.m().get(li.m().size()-1);")//
         .using(MethodInvocation.class, new Last())//
         .gives("last(li.m());")//
         .stays();

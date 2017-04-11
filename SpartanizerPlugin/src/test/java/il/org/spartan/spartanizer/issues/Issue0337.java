@@ -12,7 +12,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0337 {
   @Test public void t18() {
-    topDownTrimming("while(b==q){int i;double tipper; x=tipper+i;}")//
+    trimminKof("while(b==q){int i;double tipper; x=tipper+i;}")//
         .stays();
   }
 }

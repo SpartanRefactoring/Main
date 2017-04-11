@@ -11,25 +11,25 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0902 {
   @Test public void a() {
-    topDownTrimming("void f(){int x; int y;return;}")//
+    trimminKof("void f(){int x; int y;return;}")//
         .gives("void f(){}")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("void f(){int x; return;}")//
+    trimminKof("void f(){int x; return;}")//
         .gives("void f(){}")//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming("void f(){return;}")//
+    trimminKof("void f(){return;}")//
         .gives("void f(){}")//
         .stays();
   }
 
   @Test public void d() {
-    topDownTrimming("void f(){int a;}")//
+    trimminKof("void f(){int a;}")//
         .gives("void f(){}")//
         .stays();
   }

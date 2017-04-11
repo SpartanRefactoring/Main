@@ -10,13 +10,13 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class AdvancedGivesTests {
   @Test public void test0() {
-    topDownTrimming("1+2")//
+    trimminKof("1+2")//
         .givesEither("3", "")//
         .stays();
   }
 
   @Test public void test1() {
-    topDownTrimming("1+2+a")//
+    trimminKof("1+2+a")//
         .givesEither("a+3", "3+a");
   }
 }
