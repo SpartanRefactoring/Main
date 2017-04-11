@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.utils.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("static-method")
 public class Issue0438 {
-  @Test public void test01() {
-    TrimmerMonitor.tip(null, null);
+  @Test public void placeholder() {
+    assert true;
   }
 }
