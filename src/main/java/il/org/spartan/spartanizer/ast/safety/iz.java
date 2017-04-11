@@ -33,14 +33,8 @@ import il.org.spartan.utils.*;
  * @since 2015-07-16 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public interface iz {
-  interface not {
-    @SafeVarargs static <T> boolean in(final T t, final T... ts) {
-      return !iz.in(t, ts);
-    }
-
-    static boolean null¢(final Object ¢) {
-      return ¢ != null;
-    }
+  public static boolean isInfiniteLoop(final WhileStatement ¢) {
+    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
   static boolean abstract¢(final BodyDeclaration ¢) {
@@ -269,6 +263,10 @@ public interface iz {
 
   static boolean constructor(final ASTNode ¢) {
     return iz.methodDeclaration(¢) && az.methodDeclaration(¢).isConstructor();
+  }
+
+  static boolean constructorInvocation(final ASTNode ¢) {
+    return ¢ != null && iz.nodeTypeEquals(¢, CONSTRUCTOR_INVOCATION);
   }
 
   /** Determine whether an {@link ASTNode} contains as a children a
@@ -576,33 +574,9 @@ public interface iz {
     return Stream.of(ts).anyMatch(λ -> λ != null && λ.equals(candidate));
   }
 
-  /** @param pattern JD
-   * @return whether the node is an Expression Statement of type Post or Pre
-   *         Expression with ++ or -- operator false if node is not an
-   *         Expression Statement or its a Post or Pre fix expression that its
-   *         operator is not ++ or -- */
-  static boolean updating(final ASTNode ¢) {
-    if (¢ == null)
-      return false;
-    switch (¢.getNodeType()) {
-      case ASSIGNMENT:
-      case EXPRESSION_STATEMENT:
-        return true;
-      case POSTFIX_EXPRESSION:
-        return updating(az.postfixExpression(¢));
-      case PREFIX_EXPRESSION:
-        return updating(az.prefixExpression(¢));
-      default:
-        return false;
-    }
-  }
-
-  static boolean updating(final PostfixExpression ¢) {
-    return in(¢.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
-  }
-
-  static boolean updating(final PrefixExpression ¢) {
-    return in(¢.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+  static boolean incrementedOrDecremented(final ASTNode id) {
+    final ASTNode $ = parent(id);
+    return iz.prefixExpression($) || iz.updating(az.prefixExpression($));
   }
 
   /** @param ¢ JD
@@ -1146,6 +1120,10 @@ public interface iz {
     return ¢ instanceof SimpleType && "String".equals(step.identifier(step.name((SimpleType) ¢)));
   }
 
+  static boolean superConstructorInvocation(final ASTNode ¢) {
+    return ¢ != null && iz.nodeTypeEquals(¢, SUPER_CONSTRUCTOR_INVOCATION);
+  }
+
   /** @param ¢ JD
    * @return */
   static boolean superMethodInvocation(final Expression ¢) {
@@ -1221,6 +1199,35 @@ public interface iz {
     return in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE);
   }
 
+  /** @param pattern JD
+   * @return whether the node is an Expression Statement of type Post or Pre
+   *         Expression with ++ or -- operator false if node is not an
+   *         Expression Statement or its a Post or Pre fix expression that its
+   *         operator is not ++ or -- */
+  static boolean updating(final ASTNode ¢) {
+    if (¢ == null)
+      return false;
+    switch (¢.getNodeType()) {
+      case ASSIGNMENT:
+      case EXPRESSION_STATEMENT:
+        return true;
+      case POSTFIX_EXPRESSION:
+        return updating(az.postfixExpression(¢));
+      case PREFIX_EXPRESSION:
+        return updating(az.prefixExpression(¢));
+      default:
+        return false;
+    }
+  }
+
+  static boolean updating(final PostfixExpression ¢) {
+    return in(¢.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+  }
+
+  static boolean updating(final PrefixExpression ¢) {
+    return in(¢.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+  }
+
   /** @param ¢ JD
    * @return whether the statement is side effect and updating an initializer
    *         from the for initializers. returns false if the parent is not a for
@@ -1276,7 +1283,6 @@ public interface iz {
   static boolean voidType(final Type ¢) {
     return iz.primitiveType(¢) && az.primitiveType(¢).getPrimitiveTypeCode().equals(PrimitiveType.VOID);
   }
-
   static boolean whileStatement(final ASTNode x) {
     return iz.nodeTypeEquals(x, WHILE_STATEMENT);
   }
@@ -1286,6 +1292,7 @@ public interface iz {
   }
 
   List<String> defaultLiterals = as.list("null", "0", "false", "0.", "0L");
+
   int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
 
   /** @param ¢ JD
@@ -1320,11 +1327,6 @@ public interface iz {
     }
   }
 
-  static boolean incrementedOrDecremented(final ASTNode id) {
-    final ASTNode $ = parent(id);
-    return iz.prefixExpression($) || iz.updating(az.prefixExpression($));
-  }
-
   interface literal {
     /** @param ¢ JD
      * @return */
@@ -1355,11 +1357,13 @@ public interface iz {
     }
   }
 
-  static boolean superConstructorInvocation(final ASTNode ¢) {
-    return ¢ != null && iz.nodeTypeEquals(¢, SUPER_CONSTRUCTOR_INVOCATION);
-  }
+  interface not {
+    @SafeVarargs static <T> boolean in(final T t, final T... ts) {
+      return !iz.in(t, ts);
+    }
 
-  static boolean constructorInvocation(final ASTNode ¢) {
-    return ¢ != null && iz.nodeTypeEquals(¢, CONSTRUCTOR_INVOCATION);
+    static boolean null¢(final Object ¢) {
+      return ¢ != null;
+    }
   }
 }

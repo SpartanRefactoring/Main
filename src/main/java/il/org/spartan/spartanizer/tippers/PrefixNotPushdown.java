@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import static il.org.spartan.spartanizer.ast.factory.make.*;
 import static il.org.spartan.spartanizer.ast.factory.subject.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -67,7 +67,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   private static Expression comparison(final InfixExpression ¢) {
-    return pair(left(¢), right(¢)).to(wizard.negate(¢.getOperator()));
+    return pair(left(¢), right(¢)).to(negate(¢.getOperator()));
   }
 
   private static boolean hasOpportunity(final Expression inner) {
@@ -92,7 +92,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   private static Expression perhapsDeMorgan(final InfixExpression ¢) {
-    return ¢ == null ? null : wizard.applyDeMorgan(¢);
+    return ¢ == null ? null : applyDeMorgan(¢);
   }
 
   private static Expression perhapsDoubleNegation(final Expression ¢) {
