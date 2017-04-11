@@ -21,6 +21,7 @@ public class ReturnOnExceptionTest {
         .using(CatchClause.class, new ReturnOnException())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnDefault();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnDefault();")//
+        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnDefault();") //
         .gives("If.throwz(()->A.a(b).c().d(λ->f[g++]=h(λ))).returnDefault();")//
         .stays()//
     ;
@@ -42,8 +43,9 @@ public class ReturnOnExceptionTest {
     ) //
         .using(CatchClause.class, new ReturnOnException())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returns();")//
-        .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returns();")//
-        .gives("If.throwz(()->A.a(b).c().d(λ->f[g++]=h(λ))).returns();")//
+        .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returns();") //
+        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returns();") //
+        .gives("If.throwz(()->A.a(b).c().d(λ->f[g++]=h(λ))).returns();") //
         .stays()//
     ;
   }
@@ -69,6 +71,7 @@ public class ReturnOnExceptionTest {
         .using(CatchClause.class, new ReturnOnException())//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnDefault();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnDefault();")//
+        .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnDefault();") //
         .gives("If.throwz(()->A.a(b).c().d(λ->f[g++]=h(λ))).returnDefault();")//
         .stays()//
     ;
