@@ -7,7 +7,7 @@ import java.util.function.*;
  * @since 2017-04-08 */
 public interface robust {
   static void ly(final Runnable r, final Consumer<Exception> c) {
-    robust.lyNull(() -> nullify(() -> r.run()), c);
+    robust.lyNull(() -> nullify(r::run), c);
   }
 
   static void ly(final Runnable r, final Runnable x) {
