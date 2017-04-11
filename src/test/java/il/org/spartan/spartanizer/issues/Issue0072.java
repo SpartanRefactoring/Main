@@ -115,12 +115,13 @@ public class Issue0072 {
 
   @Test public void mg() {
     trimmingOf("(x-0)-0")//
+        .gives("(x-0)")//
         .gives("(x)")//
         .stays();
   }
 
   @Test public void mg1() {
-    trimmingOf("-(x-0)-0")//
+    trimmingOf("-(x-0)")//
         .gives("-(x)")//
         .stays();
   }
