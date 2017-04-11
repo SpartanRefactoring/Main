@@ -12,7 +12,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class issue0445 {
   @Test public void a() {
-    topDownTrimming(//
+    trimminKof(//
         "@Override" + //
             "    public String toString() {" + //
             "      StringBuilder builder = new StringBuilder(5 * size());" + //

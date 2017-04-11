@@ -11,21 +11,21 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ExecuteUnlessTest {
   @Test public void a() {
-    topDownTrimming("if(x == 8) print(8);")//
+    trimminKof("if(x == 8) print(8);")//
         .using(IfStatement.class, new ExecuteUnless())//
         .gives("execute(() -> print(8)).when(x==8);")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("if(x == 8 && iz.Literal(lit) || bigDaddy(d)) a.b()._(f,g).f.x(8,g,h*p);")//
+    trimminKof("if(x == 8 && iz.Literal(lit) || bigDaddy(d)) a.b()._(f,g).f.x(8,g,h*p);")//
         .using(IfStatement.class, new ExecuteUnless())//
         .gives("execute(()->a.b()._(f,g).f.x(8,g,h*p)).when(x==8&&iz.Literal(lit)||bigDaddy(d));")//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming("for (final E constant : cs) if(Y) $.add(constant);")//
+    trimminKof("for (final E constant : cs) if(Y) $.add(constant);")//
         .using(IfStatement.class, new ExecuteUnless())//
         .stays();
   }

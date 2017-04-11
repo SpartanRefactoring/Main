@@ -11,28 +11,28 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class SingletonTest {
   @Test public void a() {
-    topDownTrimming("return collection.size() == 1;")//
+    trimminKof("return collection.size() == 1;")//
         .using(InfixExpression.class, new Singleton())//
         .gives("return singleton(collection);")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("return 1 == collection.size();")//
+    trimminKof("return 1 == collection.size();")//
         .using(InfixExpression.class, new Singleton())//
         .gives("return singleton(collection);")//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming("return 1 == collection.size() && first(collection).isPretty;")//
+    trimminKof("return 1 == collection.size() && first(collection).isPretty;")//
         .using(InfixExpression.class, new Singleton())//
         .gives("return singleton(collection) && first(collection).isPretty;")//
         .stays();
   }
 
   @Test public void d() {
-    topDownTrimming("return 1 == (really.complicated ? exp : re).ssion.size() && first(collection).isPretty;")//
+    trimminKof("return 1 == (really.complicated ? exp : re).ssion.size() && first(collection).isPretty;")//
         .using(InfixExpression.class, new Singleton())//
         .gives("return singleton((really.complicated ? exp : re).ssion) && first(collection).isPretty;")//
         .stays();

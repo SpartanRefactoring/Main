@@ -10,10 +10,10 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1013 {
   @Test public void t1() {
-    topDownTrimming("a[x] = a[x] + x++;++x;").stays();
+    trimminKof("a[x] = a[x] + x++;++x;").stays();
   }
 
   @Test public void t2() {
-    topDownTrimming("a[x] = x;++x;").stays();
+    trimminKof("a[x] = x;++x;").stays();
   }
 }

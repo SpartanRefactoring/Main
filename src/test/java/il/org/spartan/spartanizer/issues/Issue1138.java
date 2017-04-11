@@ -11,6 +11,6 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1138 {
   @Test public void test() {
-    topDownTrimming("int a = 0; int b;a+=1;").gives("int a=0;int b;a++;");
+    trimminKof("int a = 0; int b;a+=1;").gives("int a=0;int b;a++;");
   }
 }

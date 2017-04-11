@@ -12,33 +12,33 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0914 {
   @Test public void actualBug() {
-    topDownTrimming(" private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {ASTNode $ = ¢;"
+    trimminKof(" private static MethodDeclaration findMethodAncestor(final ASTNode ¢) {ASTNode $ = ¢;"
         + "while (!iz.methodDeclaration($) && $ != null)$ = $.getParent();return az.methodDeclaration($);}")//
             .stays();
   }
 
   @Test public void challenge_while_d() {
-    topDownTrimming("static X f(final S ¢) {X $ = ¢.elze();" + //
+    trimminKof("static X f(final S ¢) {X $ = ¢.elze();" + //
         "while ($ instanceof S)$ = ((S) $).elze();return $;}")//
             .stays();
   }
 
   @Test public void initializers_while_3() {
-    topDownTrimming("public boolean check(int i) {int p = i, a = 0; f(++a);while(p <10) ++p;return false;}")//
+    trimminKof("public boolean check(int i) {int p = i, a = 0; f(++a);while(p <10) ++p;return false;}")//
         .stays();
   }
 
   @Test public void initializers_while_4() {
-    topDownTrimming("public boolean check(ASTNode i) {ASTNode p = i; int a = 5; f(++a);while(p <10) p = p.getParent();return false;}").stays();
+    trimminKof("public boolean check(ASTNode i) {ASTNode p = i; int a = 5; f(++a);while(p <10) p = p.getParent();return false;}").stays();
   }
 
   @Test public void t05() {
-    topDownTrimming("static X f(final S ¢) {X $ = ¢.elze();while ($ instanceof S)$ = ((S) $).elze();return $;}")//
+    trimminKof("static X f(final S ¢) {X $ = ¢.elze();while ($ instanceof S)$ = ((S) $).elze();return $;}")//
         .stays();
   }
 
   @Test public void test0() {
-    topDownTrimming("static X f(final S ¢) {X $ = ¢.elze();while ($ instanceof S)$ = ((S) $).elze();return $;}")//
+    trimminKof("static X f(final S ¢) {X $ = ¢.elze();while ($ instanceof S)$ = ((S) $).elze();return $;}")//
         .stays();
   }
 }

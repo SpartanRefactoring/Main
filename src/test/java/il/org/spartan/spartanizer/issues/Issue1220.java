@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1220 {
   @Test public void a() {
-    topDownTrimming("for (int a = 0; a < 10; ++a) { b = b * c; c = c + 5; if (!d[a].e().f(d[0].e())) break; }") //
+    trimminKof("for (int a = 0; a < 10; ++a) { b = b * c; c = c + 5; if (!d[a].e().f(d[0].e())) break; }") //
         .using(ForStatement.class, new ForWithEndingBreakToDoWhile()) //
         .stays()//
     ;

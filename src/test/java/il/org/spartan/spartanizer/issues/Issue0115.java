@@ -13,39 +13,39 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0115 {
   @Test public void trimmerBugXOR_Notparsing01() {
-    topDownTrimming("j=j^k")//
+    trimminKof("j=j^k")//
         .gives("j^=k");
   }
 
   @Test public void trimmerBugXOR_Notparsing02() {
-    topDownTrimming("j = j ^ k")//
+    trimminKof("j = j ^ k")//
         .gives("j^=k");
   }
 
   @Ignore @Test public void xor() {
-    topDownTrimming("a ^= 2; a ^= 3;")//
+    trimminKof("a ^= 2; a ^= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a ^= 2 ^ 3;")//
     ;
   }
 
   @Test public void trimmerBugXOR_Notparsing03() {
-    topDownTrimming("j = j^ k")//
+    trimminKof("j = j^ k")//
         .gives("j ^= k");
   }
 
   @Test public void trimmerBugXOR_Notparsing04() {
-    topDownTrimming("j = j ^k")//
+    trimminKof("j = j ^k")//
         .gives("j ^= k");
   }
 
   @Test public void trimmerBugXOR_Parsing01() {
-    topDownTrimming("j = j ^ k")//
+    trimminKof("j = j ^ k")//
         .gives("j ^= k");
   }
 
   @Test public void trimmerBugXOR_Parsing02() {
-    topDownTrimming("j = j ^ k")//
+    trimminKof("j = j ^ k")//
         .gives("j ^=k");
   }
 }

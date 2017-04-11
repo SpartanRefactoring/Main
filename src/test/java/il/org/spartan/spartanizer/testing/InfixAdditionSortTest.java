@@ -26,58 +26,58 @@ public final class InfixAdditionSortTest {
   private static final String OUTPUT = "a*b + b*c  + d*e + 1 + 2 + 3+4";
 
   @Test public void test00() {
-    topDownTrimming(input)//
+    trimminKof(input)//
         .gives(OUTPUT)//
         .gives("a*b + b*c  + d*e + 10")//
         .stays();
   }
 
   @Test public void test01() {
-    topDownTrimming("1 + a*b")//
+    trimminKof("1 + a*b")//
         .gives("a*b + 1")//
         .stays();
   }
 
   @Test public void test01b() {
-    topDownTrimming("c*d + a*b")//
+    trimminKof("c*d + a*b")//
         .gives("a*b + c*d")//
         .stays();
   }
 
   @Test public void test01c() {
-    topDownTrimming("1 + c*d + a*b")//
+    trimminKof("1 + c*d + a*b")//
         .gives("a*b + c*d + 1")//
         .stays();
   }
 
   @Test public void test01d() {
-    topDownTrimming("1 + 2 + c*d + a*b")//
+    trimminKof("1 + 2 + c*d + a*b")//
         .gives("3 + c*d + a*b")//
         .gives("a*b + c*d + 3")//
         .stays();
   }
 
   @Test public void test01e() {
-    topDownTrimming("c/d + a*b")//
+    trimminKof("c/d + a*b")//
         .gives("a*b + c/d")//
         .stays();
   }
 
   @Test public void test01f() {
-    topDownTrimming("1 + c/d + a*b")//
+    trimminKof("1 + c/d + a*b")//
         .gives("a*b + c/d + 1")//
         .stays();
   }
 
   @Test public void test01g() {
-    topDownTrimming("c*1 + a*b")//
+    trimminKof("c*1 + a*b")//
         .gives("a*b + c*1")//
         .gives("a*b + c")//
         .stays();
   }
 
   @Test public void test01h() {
-    topDownTrimming("c*2 + a*b")//
+    trimminKof("c*2 + a*b")//
         .gives("a*b + c*2")//
         .gives("a*b + 2*c")//
         .gives("2*c + a*b")//
@@ -85,7 +85,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void a2bc() {
-    topDownTrimming("a * 2 + b * c") //
+    trimminKof("a * 2 + b * c") //
         .using(InfixExpression.class, new InfixMultiplicationSort()) //
         .gives("2*a+b*c") //
         .stays() //
@@ -93,7 +93,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void testa2bc() {
-    topDownTrimming("a * 2 + b * c") //
+    trimminKof("a * 2 + b * c") //
         .gives("2*a+b*c") //
         .stays() //
     ;
@@ -102,7 +102,7 @@ public final class InfixAdditionSortTest {
   /** Automatically generated on Tue-Mar-14-22:16:24-IST-2017, copied by
    * Matteo */
   @Test public void abc2() {
-    topDownTrimming("a * b + c * 2") //
+    trimminKof("a * b + c * 2") //
         .using(InfixExpression.class, new InfixMultiplicationSort()) //
         .gives("a*b+2*c") //
         .using(InfixExpression.class, new InfixAdditionSort()) //
@@ -142,7 +142,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test05e() {
-    topDownTrimming("a - (b+c)")//
+    trimminKof("a - (b+c)")//
         .gives("a - b - c")//
         .stays();
   }
@@ -214,7 +214,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test16a() {
-    topDownTrimming("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")//
+    trimminKof("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")//
         .using(InfixExpression.class, new InfixAdditionSort()) //
         .gives("c+a/400+(b*306+5)/10+(365*a+a/4-a/100)-1") //
         .using(InfixExpression.class, new InfixAdditionSubtractionExpand()) //
@@ -227,17 +227,17 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test16a2() {
-    topDownTrimming("365 * a + a / 4")//
+    trimminKof("365 * a + a / 4")//
         .gives("a / 4 + 365 * a").stays();
   }
 
   @Test public void test16a2a() {
-    topDownTrimming("365 * a + a / 4 - a / 100")//
+    trimminKof("365 * a + a / 4 - a / 100")//
         .gives("a / 4 + 365 * a - a / 100").stays();
   }
 
   @Test public void test_365aa4a100a400() {
-    topDownTrimming("365 * a + a / 4 - a / 100 + a / 400") //
+    trimminKof("365 * a + a / 4 - a / 100 + a / 400") //
         .using(InfixExpression.class, new InfixAdditionSort()) //
         .gives("a/400+365*a+a/4-a/100") //
         .using(InfixExpression.class, new InfixAdditionSort()) //
@@ -247,12 +247,12 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test16a3() {
-    topDownTrimming("365 * a + d / 4 - e / 100")//
+    trimminKof("365 * a + d / 4 - e / 100")//
         .gives("d / 4 + 365 * a - e / 100").stays();
   }
 
   @Test public void test16a4() {
-    topDownTrimming("365 * a + b / 4 - c / 100 + d / 400") //
+    trimminKof("365 * a + b / 4 - c / 100 + d / 400") //
         .using(InfixExpression.class, new InfixAdditionSort()) //
         .gives("d/400+365*a+b/4-c/100") //
         .using(InfixExpression.class, new InfixAdditionSort()) //
@@ -262,7 +262,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test16a2b() {
-    topDownTrimming("365 * a + a / 4 - a / 100 + a / 400")//
+    trimminKof("365 * a + a / 4 - a / 100 + a / 400")//
         .using(InfixExpression.class, new InfixAdditionSort()) //
         .gives("a/400+365*a+a/4-a/100") //
         .using(InfixExpression.class, new InfixAdditionSort()) //
@@ -271,7 +271,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test16a5() {
-    topDownTrimming("365 * a + b / 4 - c / 100 + d / 400") //
+    trimminKof("365 * a + b / 4 - c / 100 + d / 400") //
         .using(InfixExpression.class, new InfixAdditionSort()) //
         .gives("d/400+365*a+b/4-c/100") //
         .using(InfixExpression.class, new InfixAdditionSort()) //
@@ -283,7 +283,7 @@ public final class InfixAdditionSortTest {
   /** Introduced by Yogi on Thu-Mar-30-08:25:11-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_365aa4a100a400b306510c1() {
-    topDownTrimming("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1") //
+    trimminKof("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1") //
         .using(InfixExpression.class, new InfixAdditionSort()) //
         .gives("c+a*400+(b*306+5)*10+(365*a+a*4-a*100)-1") //
         .using(InfixExpression.class, new InfixAdditionSubtractionExpand()) //
@@ -301,7 +301,7 @@ public final class InfixAdditionSortTest {
   /** Introduced by Yogi on Thu-Mar-30-08:30:51-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_a4b365b400b10c3065100b1() {
-    topDownTrimming("a + 4 * b + 365 * b + 400 * b + 10 * (c * 306 + 5) - 100 * b - 1") //
+    trimminKof("a + 4 * b + 365 * b + 400 * b + 10 * (c * 306 + 5) - 100 * b - 1") //
         .using(InfixExpression.class, new InfixMultiplicationSort()) //
         .gives("a+4*b+365*b+400*b+10*(306*c+5)-100*b-1") //
         .stays() //
@@ -309,7 +309,7 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test16b() {
-    topDownTrimming("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1")//
+    trimminKof("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1")//
         .using(InfixExpression.class, new InfixAdditionSort()) //
         .gives("c+a*400+(b*306+5)*10+(365*a+a*4-a*100)-1") //
         .gives("c+a*400+(b*306+5)*10+365*a+a*4-a*100-1") //
@@ -320,58 +320,58 @@ public final class InfixAdditionSortTest {
   }
 
   @Test public void test16d1() {
-    topDownTrimming("365 * a + a * 4")// *
+    trimminKof("365 * a + a * 4")// *
         .gives("a*4 + 365*a")//
         .gives("4*a + 365*a")//
         .stays();
   }
 
   @Test public void test16e() {
-    topDownTrimming("365 * a + a / 4")//
+    trimminKof("365 * a + a / 4")//
         .gives("a/4 + 365*a").stays();
   }
 
   @Test public void test16f() {
-    topDownTrimming("365 * a + b / 4")//
+    trimminKof("365 * a + b / 4")//
         .gives("b/4 + 365*a").stays();
   }
 
   @Test public void test16g() {
-    topDownTrimming("a * 365 + b / 4")//
+    trimminKof("a * 365 + b / 4")//
         .gives("b/4 + a*365")//
         .gives("b/4 + 365*a")//
         .stays();
   }
 
   @Test public void test16h() {
-    topDownTrimming("d / 4 + e / 100")//
+    trimminKof("d / 4 + e / 100")//
         .stays();
   }
 
   @Test public void test16h1() {
-    topDownTrimming("d / 400 + e / 100")//
+    trimminKof("d / 400 + e / 100")//
         .stays();
   }
 
   @Test public void test16i() {
-    topDownTrimming("d / 4 + e / 100 + h / 400")//
+    trimminKof("d / 4 + e / 100 + h / 400")//
         .stays();
   }
 
   @Test public void test16j() {
-    topDownTrimming("d / 4 + e * 100")//
+    trimminKof("d / 4 + e * 100")//
         .gives("d / 4 + 100*e")//
         .stays();
   }
 
   @Test public void test17() {
-    topDownTrimming("y / 100 + l - 365 * y - y / 4 - y / 400")//
+    trimminKof("y / 100 + l - 365 * y - y / 4 - y / 400")//
         .gives("l+y/100-365*y-y/4-y/400") //
         .stays();
   }
 
   @Test public void test17a() {
-    topDownTrimming("y / 100 + l")//
+    trimminKof("y / 100 + l")//
         .stays();
   }
 }

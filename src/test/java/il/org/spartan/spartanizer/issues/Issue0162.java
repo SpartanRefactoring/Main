@@ -14,43 +14,43 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0162 {
   @Test public void issue162_02() {
-    topDownTrimming("\"I ate\"+(\" an\"+\" ice cream sandwich\")")//
+    trimminKof("\"I ate\"+(\" an\"+\" ice cream sandwich\")")//
         .gives("\"I ate\"+\" an\"+\" ice cream sandwich\"")//
         .gives("\"I ate an ice cream sandwich\"")//
         .stays();
   }
 
   @Test public void issue162_03() {
-    topDownTrimming("(2*3)+\"\"")//
+    trimminKof("(2*3)+\"\"")//
         .gives("2*3+\"\"")//
         .gives("6+\"\"")//
         .stays();
   }
 
   @Test public void issue162_04() {
-    topDownTrimming("\"a\"+(x-2)")//
+    trimminKof("\"a\"+(x-2)")//
         .stays();
   }
 
   @Test public void issue162_05() {
-    topDownTrimming("\"a\"+((x-2))")//
+    trimminKof("\"a\"+((x-2))")//
         .gives("\"a\"+(x-2)")//
         .stays();
   }
 
   @Test public void issue162_06() {
-    topDownTrimming("(\"a\")+(x-2)")//
+    trimminKof("(\"a\")+(x-2)")//
         .gives("\"a\"+(x-2)")//
         .stays();
   }
 
   @Test public void issue162_07() {
-    topDownTrimming("(x-2)+\"abc\"")//
+    trimminKof("(x-2)+\"abc\"")//
         .gives("x-2+\"abc\"");
   }
 
   @Test public void issue162_08() {
-    topDownTrimming("(f() ? x : y) + \".toString\"")//
+    trimminKof("(f() ? x : y) + \".toString\"")//
         .stays();
   }
 }

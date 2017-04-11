@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ReturnOnExceptionTest {
   @Test public void a() {
-    topDownTrimming(//
+    trimminKof(//
         "try {" + //
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //
@@ -27,13 +27,13 @@ public class ReturnOnExceptionTest {
   }
 
   @Test public void b() {
-    topDownTrimming("try{ thing(); } catch(A a){ return null;}catch(B b){return 3;}")//
+    trimminKof("try{ thing(); } catch(A a){ return null;}catch(B b){return 3;}")//
         .using(CatchClause.class, new ReturnOnException())//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming(//
+    trimminKof(//
         "try {" + //
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //
@@ -49,7 +49,7 @@ public class ReturnOnExceptionTest {
   }
 
   @Test public void d() {
-    topDownTrimming("try{ thing(); } catch(A a){ return;}catch(B b){return;}")//
+    trimminKof("try{ thing(); } catch(A a){ return;}catch(B b){return;}")//
         .gives("try{thing();}catch(B|A a){return;}")//
         .using(CatchClause.class, new ReturnOnException())//
         .gives("If.throwz(()->{{thing();}}).returns();")//
@@ -59,7 +59,7 @@ public class ReturnOnExceptionTest {
   }
 
   @Test public void e() {
-    topDownTrimming(//
+    trimminKof(//
         "try {" + //
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //

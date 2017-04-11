@@ -11,81 +11,81 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public final class Issue0107 {
   @Test public void a() {
-    topDownTrimming("a+=1;")//
+    trimminKof("a+=1;")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("for(int c = 0; c <5; c-=1)\nc*=2;")//
+    trimminKof("for(int c = 0; c <5; c-=1)\nc*=2;")//
         .gives("for(int c = 0; c <5; --c)\nc*=2;")//
         .stays();
   }
 
   @Test public void e() {
-    topDownTrimming("for(String a ; a.length()<3 ; (a = \"\")+=1){}")//
+    trimminKof("for(String a ; a.length()<3 ; (a = \"\")+=1){}")//
         .gives("for(String a ; a.length()<3 ; (a = \"\")+=1);").stays();
   }
 
   @Test public void f() {
-    topDownTrimming("a+=2;")//
+    trimminKof("a+=2;")//
         .stays();
   }
 
   @Test public void g() {
-    topDownTrimming("a/=1;")//
+    trimminKof("a/=1;")//
         .stays();
   }
 
   @Test public void i() {
-    topDownTrimming("a-=1;")//
+    trimminKof("a-=1;")//
         .gives("--a;")//
         .stays();
   }
 
   @Test public void j() {
-    topDownTrimming("for(int a ; a<10 ; a-=1);")//
+    trimminKof("for(int a ; a<10 ; a-=1);")//
         .gives("for(int a ; a<10 ; --a);");
   }
 
   @Test public void k() {
-    topDownTrimming("a-=2;")//
+    trimminKof("a-=2;")//
         .stays();
   }
 
   @Test public void l() {
-    topDownTrimming("while((x-=1) > 0);")//
+    trimminKof("while((x-=1) > 0);")//
         .gives("while((--x) > 0);");
   }
 
   @Test public void m() {
-    topDownTrimming("s = \"hello\"; \ns += 1;")//
+    trimminKof("s = \"hello\"; \ns += 1;")//
         .stays();
   }
 
   @Test public void o() {
-    topDownTrimming("for(int a ; a<3 ; a+=1);")//
+    trimminKof("for(int a ; a<3 ; a+=1);")//
         .gives("for(int a ; a<3 ; a++);")//
         .gives("for(int a ; a<3 ; ++a);")//
         .stays();
   }
 
   @Test public void t1() {
-    topDownTrimming("while((x-=1) >= 1) System.out.println(x);")//
+    trimminKof("while((x-=1) >= 1) System.out.println(x);")//
         .gives("while((--x) >= 1) System.out.println(x);");
   }
 
   @Test public void t2() {
-    topDownTrimming("i = a += 1;")//
+    trimminKof("i = a += 1;")//
         .stays();
   }
 
   @Test public void t3() {
-    topDownTrimming("i += i + 1;")//
+    trimminKof("i += i + 1;")//
         .stays();
   }
 
   @Test public void t4() {
-    topDownTrimming("i -= i - 1")//
+    trimminKof("i -= i - 1")//
         .stays();
   }
 }

@@ -14,54 +14,54 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class CollectedTests {
   @Test public void a() {
-    topDownTrimming(
+    trimminKof(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() <x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.x.f(coes.size()); ")
             .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("int a  = f(); for (int i = a; i <100; i++) b[i] = 3;")//
+    trimminKof("int a  = f(); for (int i = a; i <100; i++) b[i] = 3;")//
         .gives("for (int i = f(); i <100; i++) b[i] = 3;");
   }
 
   @Test public void c() {
-    topDownTrimming(
+    trimminKof(
         "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() <x - y)       outdated.add(pi);     S.x.f(coes.size());     S.x.f(outdated.size()); ")
             .stays();
   }
 
   @Test public void d() {
-    topDownTrimming("   final W s = new W(\"bob\");\n    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
+    trimminKof("   final W s = new W(\"bob\");\n    return s.l(hZ).l(\"-ba\").toString() == \"bob-ha-banai\";")
         .gives("return(new W(\"bob\")).l(hZ).l(\"-ba\").toString()==\"bob-ha-banai\";");
   }
 
   @Test public void e() {
-    topDownTrimming("1-c-b")//
+    trimminKof("1-c-b")//
         .gives("1-b-c");
   }
 
   @Test public void f() {
-    topDownTrimming("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();")//
+    trimminKof("int res = 0;   String $ = blah + known;   y(res + $.length());   return res + $.length();")//
         .stays();
   }
 
   @Test public void g() {
-    topDownTrimming("")//
+    trimminKof("")//
         .stays();
   }
 
   @Test public void h() {
-    topDownTrimming("public void f() {\n")//
+    trimminKof("public void f() {\n")//
         .stays();
   }
 
   @Test public void i() {
-    topDownTrimming("switch (a) { default: }")//
+    trimminKof("switch (a) { default: }")//
         .gives("");
   }
 
   @Test public void shortestOperand09() {
-    topDownTrimming("return 2 - 4 <50 - 20 - 10 - 5;")//
+    trimminKof("return 2 - 4 <50 - 20 - 10 - 5;")//
         .gives("return  -2<15;") //
         .stays();
   }

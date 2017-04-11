@@ -15,13 +15,13 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0117 {
   @Test public void issue54ForPlainUseInCondition() {
-    topDownTrimming("int a  = f(); for (int ¢ = 0; a <100;  ++¢) b[¢] *= 3 << a;")//
+    trimminKof("int a  = f(); for (int ¢ = 0; a <100;  ++¢) b[¢] *= 3 << a;")//
         .gives("for (int a  = f(), ¢ = 0; a <100;  ++¢) b[¢] *= 3 << a;")//
         .stays();
   }
 
   @Test public void issue54ForPlainUseInInitializer() {
-    topDownTrimming("int a  = f(); for (int ¢ = a; ¢ <100; ++¢) b[¢] = 3;")//
+    trimminKof("int a  = f(); for (int ¢ = a; ¢ <100; ++¢) b[¢] = 3;")//
         .gives("for (int ¢ = f(); ¢ <100; ++¢) b[¢] = 3;");
   }
 }

@@ -10,14 +10,14 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class DefaultsToTest {
   @Test public void a() {
-    topDownTrimming("return ¢ != null ? ¢ : \"\";")//
+    trimminKof("return ¢ != null ? ¢ : \"\";")//
         .using(ConditionalExpression.class, new DefaultsTo())//
         .gives("return defaults(¢).to(\"\");")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("{B $ = t.tip(x); return $ != null ? $ : t2.tip(y);}")//
+    trimminKof("{B $ = t.tip(x); return $ != null ? $ : t2.tip(y);}")//
         .using(ConditionalExpression.class, new DefaultsTo())//
         .gives("return defaults(t.tip(x)).to(t2.tip(y));")//
         .using(ConditionalExpression.class, new DefaultsTo())//

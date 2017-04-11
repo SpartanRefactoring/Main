@@ -18,7 +18,9 @@ public enum TestsUtilsTrimmer {
     return new OperandToTipper<>(from, clazz);
   }
 
-  public static TrimmingOperand topDownTrimming(final String from) {
+  /** About four hundred tests depend on a particular trimming policy. We shall
+   * call it {@link #trimminKof(String)} */
+  public static TrimmingOperand trimminKof(final String from) {
     return new TrimmingOperand(from);
   }
 

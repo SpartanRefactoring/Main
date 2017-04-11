@@ -14,95 +14,95 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0922 {
   @Test public void a$01() {
-    topDownTrimming("assertTrue(true);")//
+    trimminKof("assertTrue(true);")//
         .gives("assert true;")//
         .stays();
   }
 
   @Test public void a$02() {
-    topDownTrimming("assertFalse(true);")//
+    trimminKof("assertFalse(true);")//
         .gives("assert false;")//
         .stays();
   }
 
   @Test public void a$03() {
-    topDownTrimming("assertTrue(T);")//
+    trimminKof("assertTrue(T);")//
         .gives("assert T;")//
         .stays();
   }
 
   @Test public void a$04() {
-    topDownTrimming("assertFalse(T);")//
+    trimminKof("assertFalse(T);")//
         .gives("assert !T;")//
         .stays();
   }
 
   @Test public void a$05() {
-    topDownTrimming("assertTrue(M, true);")//
+    trimminKof("assertTrue(M, true);")//
         .gives("assert true:M;")//
         .stays();
   }
 
   @Test public void a$06() {
-    topDownTrimming("assertFalse(M, true);")//
+    trimminKof("assertFalse(M, true);")//
         .gives("assert false:M;")//
         .stays();
   }
 
   @Test public void a$07() {
-    topDownTrimming("assertTrue(M, T);")//
+    trimminKof("assertTrue(M, T);")//
         .gives("assert T:M;")//
         .stays();
   }
 
   @Test public void a$08() {
-    topDownTrimming("assertFalse(M, T);")//
+    trimminKof("assertFalse(M, T);")//
         .gives("assert !T:M;")//
         .stays();
   }
 
   @Test public void a$09() {
-    topDownTrimming("Assert.assertFalse(M, T);")//
+    trimminKof("Assert.assertFalse(M, T);")//
         .gives("assert !T:M;")//
         .stays();
   }
 
   @Test public void a$10() {
-    topDownTrimming("org.junit.Assert.assertFalse(M, T);")//
+    trimminKof("org.junit.Assert.assertFalse(M, T);")//
         .gives("assert !T:M;")//
         .stays();
   }
 
   @Test public void a$11() {
-    topDownTrimming("org.junit.Assert.assertTrue(T);")//
+    trimminKof("org.junit.Assert.assertTrue(T);")//
         .gives("assert T;")//
         .stays();
   }
 
   @Test public void a$12() {
-    topDownTrimming("Assert.assertNotNull(T);")//
+    trimminKof("Assert.assertNotNull(T);")//
         .gives("assert T != null;")//
         .stays();
   }
 
   @Test public void a$13() {
-    topDownTrimming("Assert.assertNotNull(message, T);")//
+    trimminKof("Assert.assertNotNull(message, T);")//
         .gives("assert T != null: message;")//
         .stays();
   }
 
   @Test public void a$14() {
-    topDownTrimming("Assert.assertNull(message, T);")//
+    trimminKof("Assert.assertNull(message, T);")//
         .stays();
   }
 
   @Test public void a$15() {
-    topDownTrimming("Assert.assertNull(message, T);")//
+    trimminKof("Assert.assertNull(message, T);")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("azzert.notNull(message, T);")//
+    trimminKof("azzert.notNull(message, T);")//
         .gives("assert T != null: message;")//
         .stays();
   }

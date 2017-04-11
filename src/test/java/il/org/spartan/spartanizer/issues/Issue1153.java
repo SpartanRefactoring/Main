@@ -36,82 +36,82 @@ public class Issue1153 {
   }
 
   @Test public void c() {
-    topDownTrimming("class A { private static final long serialVersionUID = 3405687738L;}")//
+    trimminKof("class A { private static final long serialVersionUID = 3405687738L;}")//
         .gives("class A { private static final long serialVersionUID = 0xCAFEABBAL;}")//
         .stays();
   }
 
   @Test public void d() {
-    topDownTrimming("class A { private static final long serialVersionUID = 0x2;}")//
+    trimminKof("class A { private static final long serialVersionUID = 0x2;}")//
         .stays();
   }
 
   @Test public void e() {
-    topDownTrimming("class A { private static final long serialVersionUID = 02;}")//
+    trimminKof("class A { private static final long serialVersionUID = 02;}")//
         .stays();
   }
 
   @Test public void f() {
-    topDownTrimming("class A { private static final long serialVersionUID = 1;}")//
+    trimminKof("class A { private static final long serialVersionUID = 1;}")//
         .stays();
   }
 
   @Test public void f1() {
-    topDownTrimming("class A { private static final long serialVersionUID = 2;}")//
+    trimminKof("class A { private static final long serialVersionUID = 2;}")//
         .stays();
   }
 
   @Test public void g() {
-    topDownTrimming("class A { private static final long serialVersionUID = 0x2;}")//
+    trimminKof("class A { private static final long serialVersionUID = 0x2;}")//
         .stays();
   }
 
   @Test public void h() {
-    topDownTrimming("class A { private static final long serialVersionUID = 0X2;}")//
+    trimminKof("class A { private static final long serialVersionUID = 0X2;}")//
         .stays();
   }
 
   @Test public void i() {
-    topDownTrimming("class A { private static final long serialVersionUID = 10;}")//
+    trimminKof("class A { private static final long serialVersionUID = 10;}")//
         .stays();
   }
 
   @Test public void j() {
-    topDownTrimming("class A { private static final long serialVersionUID = 0XDeadL;}")//
+    trimminKof("class A { private static final long serialVersionUID = 0XDeadL;}")//
         .stays();
   }
 
   @Test public void k() {
-    topDownTrimming("class A { private long serialVersionUID = 12345677899L;}")//
+    trimminKof("class A { private long serialVersionUID = 12345677899L;}")//
         .gives("class A { private long serialVersionUID = 0x2DFDC184BL;}")//
         .stays();
   }
 
   @Test public void l() {
-    topDownTrimming("class A { private long serialVersionUID = -999L;}")//
+    trimminKof("class A { private long serialVersionUID = -999L;}")//
         .gives("class A { private long serialVersionUID = -0x3E7;}")//
         .stays();
   }
 
   @Test public void m() {
-    topDownTrimming("class A { private long serialVersionUID = -066L;}")//
+    trimminKof("class A { private long serialVersionUID = -066L;}")//
         .stays();
   }
 
   @Test public void n() {
-    topDownTrimming("class A { private long serialVersionUID = -9043350929840336722L;}")//
+    trimminKof("class A { private long serialVersionUID = -9043350929840336722L;}")//
         .gives("class A { private long serialVersionUID = -0x7D806FC1C854EF52L;}")//
         .stays();
   }
 
   @Test public void o() {
-    topDownTrimming("class A { private long serialVersionUID = 9043350929840336722L;}")//
+    trimminKof("class A { private long serialVersionUID = 9043350929840336722L;}")//
         .gives("class A { private long serialVersionUID = 0x7D806FC1C854EF52L;}")//
         .stays();
   }
 
   @Test public void o1() {
-    topDownTrimming("class A { private long serialVersionUID = -1472927802038098123L;}")//
+    trimminKof("class A { private long serialVersionUID = -1472927802038098123L;}")//
         .gives("class A { private long serialVersionUID = -0x1470E408344718CBL;}")//
         .stays();
   }
@@ -119,7 +119,7 @@ public class Issue1153 {
   /** Introduced by Yossi on Fri-Mar-24-13:58:53-IDT-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_classAPrivateLonga12345677899L() {
-    topDownTrimming("class A { private long a = 12345677899L; }") //
+    trimminKof("class A { private long a = 12345677899L; }") //
         .stays() //
     ;
   }
