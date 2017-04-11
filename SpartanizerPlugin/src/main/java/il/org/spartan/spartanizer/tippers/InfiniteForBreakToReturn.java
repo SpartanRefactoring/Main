@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * to : {@code for(;true;) { doSomething(); if(done()) return XX; }}
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
-public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatement>//
+public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = -0x7074B13F7F9E2909L;
 

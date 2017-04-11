@@ -6,8 +6,8 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** This is a unit test for {@link ReturnToBreakFiniteFor} of previously failed
- * tests. Related to {@link Issue0131}.
+/** This is a unit test for {@link ForFiniteConvertReturnToBreak} of previously
+ * failed tests. Related to {@link Issue0131}.
  * @author Yuval Simon
  * @since 2016-12-08 */
 @SuppressWarnings("static-method")

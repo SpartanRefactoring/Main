@@ -15,11 +15,11 @@ import il.org.spartan.utils.*;
  * {@code for (..) { does(something); break; } return XX; }
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public final class WhileFiniteReturnToBreak extends AbstractPattern<WhileStatement>//
+public final class ForFiniteConvertReturnToBreak extends ForStatementPattern//
     implements TipperCategory.CommnonFactoring {
-  private static final long serialVersionUID = -0x70481BF1FE1E5DFBL;
+  private static final long serialVersionUID = -0x307C6039058B998DL;
 
-  public WhileFiniteReturnToBreak() {
+  public ForFiniteConvertReturnToBreak() {
     andAlso("Loop must be finite", //
         () -> iz.finiteLoop(current));
     andAlso("Loop must be followed by return", //
@@ -28,7 +28,7 @@ public final class WhileFiniteReturnToBreak extends AbstractPattern<WhileStateme
     andAlso("Loop a return that can be converted to break", //
         () -> not.null¢(convertToBreak = //
             compute//
-                .returns(current.getBody())//
+                .returns(body)//
                 .stream().filter(λ -> wizard.eq(λ, nextReturn))//
                 .findFirst()//
                 .orElse(null)//
@@ -36,11 +36,12 @@ public final class WhileFiniteReturnToBreak extends AbstractPattern<WhileStateme
   }
 
   @Override public String description() {
-    return "Convert the return inside the loop to break";
+    return "Convert " + convertToBreak + " to loop break";
   }
 
   @Override public Examples examples() {
-    return null;
+    return convert("for (;x();) { if(x) return XX; } return XX;")//
+        .to("for (;x();) { if(x) break; } return XX; }");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {

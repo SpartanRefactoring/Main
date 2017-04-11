@@ -47,30 +47,34 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
   @Override public final Tip tip(final N n) {
     assert n != null;
     assert n == current();
-    return new Tip(description(), myClass(), current()) {
+    return new Tip(description(), myClass(), highlight()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         AbstractPattern.this.go(r, g);
       }
     }.spanning(span());
   }
 
-  protected AbstractPattern<N> andAlso(final Proposition ¢) {
+  protected ASTNode highlight() {
+    return current;
+  }
+
+  protected final AbstractPattern<N> andAlso(final Proposition ¢) {
     this.prerequisite = prerequisite.and(¢);
     return this;
   }
 
-  protected AbstractPattern<N> andAlso(final String description, final BooleanSupplier s) {
+  protected final AbstractPattern<N> andAlso(final String description, final BooleanSupplier s) {
     return andAlso(prerequisite.and(Proposition.that(description, s)));
   }
 
-  protected AbstractPattern<N> butNot(final Proposition ¢) {
+  protected final AbstractPattern<N> butNot(final Proposition ¢) {
     this.prerequisite = prerequisite.and(not(¢));
     return this;
   }
 
   protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
 
-  protected AbstractPattern<N> orElse(final Proposition ¢) {
+  protected final AbstractPattern<N> orElse(final Proposition ¢) {
     this.prerequisite = prerequisite.or(¢);
     return this;
   }

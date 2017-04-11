@@ -14,15 +14,20 @@ import il.org.spartan.spartanizer.tippers.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0312 {
-  @Test public void a() {
-    trimminKof("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
-        .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
-        .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;break;}return x;")
-        .gives("for(int i=1;i<7;){if(i==5){tipper+=9;break;}y+=15;break;}return x;")
-        .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;break;}y+=15;break;}return x;")//
-        .gives("for(int ¢=1;¢<7;){if(¢==5){tipper+=9;} else {y+=15;} break;}return x;")//
-        .gives("for(int ¢=1;¢<7;){if(¢!=5)y+=15;else tipper+=9;break;}return x;") //
-        .stays();
+  /** Introduced by Yogi on Tue-Apr-11-22:59:10-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void forInta1a7Ifa5b9Returncd15ReturncReturnc() {
+    trimminKof("for (int a = 1; a < 7;) { if (a == 5) { b += 9; return c; } d += 15; return c; } return c;") //
+        .using(ForStatement.class, new ForFiniteConvertReturnToBreak()) //
+        .gives("for(int a=1;a<7;){if(a==5){b+=9;break;}d+=15;return c;}return c;") //
+        .using(ForStatement.class, new ForFiniteConvertReturnToBreak()) //
+        .gives("for(int a=1;a<7;){if(a==5){b+=9;break;}d+=15;break;}return c;") //
+        .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
+        .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{d+=15;}break;}return c;") //
+        .using(Block.class, new BlockSingleton()) //
+        .gives("for(int a=1;a<7;){if(a==5)b+=9;else d+=15;break;}return c;") //
+        .stays() //
+    ;
   }
 
   /** Introduced by Yogi on Fri-Mar-31-00:30:47-IDT-2017 (code automatically in

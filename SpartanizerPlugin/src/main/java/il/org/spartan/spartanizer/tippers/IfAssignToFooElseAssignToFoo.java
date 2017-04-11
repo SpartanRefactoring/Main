@@ -24,6 +24,10 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
   private Expression to;
   private Assignment.Operator thenOperator;
 
+  @Override protected ASTNode highlight() {
+    return to;
+  }
+
   public IfAssignToFooElseAssignToFoo() {
     andAlso("Then part is an assignment", //
         () -> not.null¢(thenAssignment = extract.assignment(then)));

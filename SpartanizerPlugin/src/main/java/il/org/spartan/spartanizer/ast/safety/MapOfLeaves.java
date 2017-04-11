@@ -11,6 +11,9 @@ abstract class MapOfLeaves<R> extends Reduce<R> {
   protected R map(final BooleanLiteral ¢) {
     return leaf(¢);
   }
+  protected R map(final CharacterLiteral ¢) {
+    return leaf(¢);
+  }
 
   protected R map(final EmptyStatement ¢) {
     return leaf(¢);

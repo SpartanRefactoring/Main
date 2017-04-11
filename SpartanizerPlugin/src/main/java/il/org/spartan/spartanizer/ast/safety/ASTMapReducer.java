@@ -138,6 +138,8 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return map((QualifiedName) ¢);
       case THIS_EXPRESSION:
         return map((ThisExpression) ¢);
+      case CHARACTER_LITERAL:
+        return map((CharacterLiteral) ¢);
       case NUMBER_LITERAL:
         return map((NumberLiteral) ¢);
       case NULL_LITERAL:
@@ -177,7 +179,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
       case LAMBDA_EXPRESSION:
         return map((LambdaExpression) ¢);
       default:
-        return bug("Unrecognized type %s NodeType= %d", ¢.getClass(), ¢, box.it(¢.getNodeType()));
+        return bug("Unrecognized %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
   }
 

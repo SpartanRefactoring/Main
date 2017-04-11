@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.patterns;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.utils.*;
 
 /** TODO dormaayn: document class Note that Java currently does not allow
  * initializers to single varaible declarations
@@ -17,7 +16,7 @@ public abstract class SingleVariableDeclarationInitialized extends AbstractPatte
   @Property protected SingleVariableDeclaration currentDeclaration;
 
   protected SingleVariableDeclarationInitialized() {
-    andAlso(new Proposition.Singleton("Illegal Definition", () -> {
+    andAlso("Illegal Definition", () -> {
       if (current().getInitializer() == null)
         return false;
       name = current().getName();
@@ -25,7 +24,7 @@ public abstract class SingleVariableDeclarationInitialized extends AbstractPatte
       initializer = current().getInitializer();
       currentDeclaration = current();
       return true;
-    }));
+    });
   }
 
   protected Type type() {
