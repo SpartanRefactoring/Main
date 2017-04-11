@@ -10,12 +10,12 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0057 {
   @Test public void a() {
-    topDownTrimming("void m(List<Expression>... expressions) { }")//
+    trimminKof("void m(List<Expression>... expressions) { }")//
         .gives("void m(List<Expression>... xss) {}");
   }
 
   @Test public void b() {
-    topDownTrimming("void m(Expression... expression) { }")//
+    trimminKof("void m(Expression... expression) { }")//
         .gives("void m(Expression... xs) {}");
   }
 }

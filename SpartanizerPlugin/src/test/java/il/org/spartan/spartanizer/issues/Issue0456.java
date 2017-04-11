@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0456 {
   @Test public void a() {
-    topDownTrimming(
+    trimminKof(
         "{ long q = (r & 1) != 0 ? d(x, r) : (x >>> 1) / (r >>> 1); long r = x - r * q; b[--i] = C.f((int) r, r); x = q; for (; x > 0; x /= r)   b[--i] = C.f((int) (x % r), r);}")
             .gives(
                 "{ long q = (r & 1) != 0 ? d(x, r) : (x >>> 1) / (r >>> 1); long r = x - r * q; b[--i] = C.f((int) r, r); for (x=q; x > 0; x /= r)   b[--i] = C.f((int) (x % r), r);}")//
@@ -26,7 +26,7 @@ public class Issue0456 {
   /** Automatically generated on Thu-Mar-16-12:17:27-IST-2017, copied by
    * Yossi */
   @Test public void b() {
-    topDownTrimming(
+    trimminKof(
         "{ long q = (r & 1) != 0 ? d(x, r) : (x >>> 1) / (r >>> 1); long r = x - r * q; b[--i] = C.f((int) r, r); x = q; for (; x > 0; x /= r) b[--i] = C.f((int) (x % r), r); }") //
             .using(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()) //
             .gives("{long q=(r&1)!=0?d(x,r):(x>>>1)/(r>>>1),r=x-r*q;b[--i]=C.f((int)r,r);x=q;for(;x>0;x/=r)b[--i]=C.f((int)(x%r),r);}") //
@@ -39,7 +39,7 @@ public class Issue0456 {
   /** Automatically generated on Thu-Mar-16-12:22:45-IST-2017, copied by
    * Yossi */
   @Test public void c() {
-    topDownTrimming(
+    trimminKof(
         "{ long q = (r & 1) != 0 ? d(x, r) : (x >>> 1) / (r >>> 1), r = x - r * q; b[--i] = C.f((int) r, r); x = q; for (; x > 0; x /= r) b[--i] = C.f((int) (x % r), r); }") //
             .using(InfixExpression.class, new InfixMultiplicationSort()) //
             .gives("{long q=(r&1)!=0?d(x,r):(x>>>1)/(r>>>1),r=x-q*r;b[--i]=C.f((int)r,r);x=q;for(;x>0;x/=r)b[--i]=C.f((int)(x%r),r);}") //
@@ -50,7 +50,7 @@ public class Issue0456 {
   /** Automatically generated on Thu-Mar-16-12:25:21-IST-2017, copied by
    * Yossi */
   @Test public void d() {
-    topDownTrimming(
+    trimminKof(
         "{ long q = (r & 1) != 0 ? d(x, r) : (x >>> 1) / (r >>> 1), r = x - q * r; b[--i] = C.f((int) r, r); x = q; for (; x > 0; x /= r) b[--i] = C.f((int) (x % r), r); }") //
             .stays() //
     ;

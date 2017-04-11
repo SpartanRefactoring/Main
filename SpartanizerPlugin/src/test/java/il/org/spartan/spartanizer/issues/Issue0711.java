@@ -13,13 +13,13 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0711 {
   @Test public void test0() {
-    topDownTrimming("int oneLarger(int x) {Function<Integer, Integer> $ = i -> i + 1;return $.eval(x);}")//
+    trimminKof("int oneLarger(int x) {Function<Integer, Integer> $ = i -> i + 1;return $.eval(x);}")//
         .gives("int oneLarger(int x) {Function<Integer, Integer> $ = λ -> λ + 1;return $.eval(x);}")//
         .stays();
   }
 
   @Test public void test1() {
-    topDownTrimming("Consumer<Integer> x = (i->i+1); use(f);x.accept(6);")//
+    trimminKof("Consumer<Integer> x = (i->i+1); use(f);x.accept(6);")//
         .gives("Consumer<Integer> x = (λ->λ+1); use(f);x.accept(6);")//
         .stays();
   }

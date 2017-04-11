@@ -11,20 +11,20 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class LastIndexTest {
   @Test public void a() {
-    topDownTrimming("li.size()-1")//
+    trimminKof("li.size()-1")//
         .using(InfixExpression.class, new LastIndex())//
         .gives("lastIndex(li)")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("li.get(li.size()-1);")//
+    trimminKof("li.get(li.size()-1);")//
         .using(InfixExpression.class, new LastIndex())//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming("li.get(li.size()-1);")//
+    trimminKof("li.get(li.size()-1);")//
         .using(InfixExpression.class, new LastIndex())//
         .using(MethodInvocation.class, new Last())//
         .gives("last(li);")//

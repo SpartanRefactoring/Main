@@ -15,14 +15,14 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0856 {
   @Test public void a() {
-    topDownTrimming("A a(){A b=\"one expression\";B.d(b);return \"and another\";}") //
+    trimminKof("A a(){A b=\"one expression\";B.d(b);return \"and another\";}") //
         .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext()) //
         .gives("A a(){B.d(\"one expression\");return \"and another\";}")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("A foo(){A a=\"one expression\";C c=B.d(a);print(c);return \"and another\";}")
+    trimminKof("A foo(){A a=\"one expression\";C c=B.d(a);print(c);return \"and another\";}")
         .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext())
         .gives("A foo(){C c=B.d(\"one expression\");print(c);return \"and another\";}")
         .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext())
@@ -31,38 +31,38 @@ public class Issue0856 {
   }
 
   @Test public void c() {
-    topDownTrimming("A a(){A b=\"one expression\";B.d(b);print(b);return \"and another\";}")
+    trimminKof("A a(){A b=\"one expression\";B.d(b);print(b);return \"and another\";}")
         .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext())//
         .stays();
   }
 
   @Test public void d() {
-    topDownTrimming("L<O> t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
+    trimminKof("L<O> t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
         .gives("L<O> t=new R<>();for(int len=A.t(d), ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
         .stays();
   }
 
   @Test public void d1() {
-    topDownTrimming("t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
+    trimminKof("t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
         .gives("t=new R<>();for(int len=A.t(d), ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
         .stays();
   }
 
   @Test public void d2() {
-    topDownTrimming("int len=t();for(int ¢=0; ¢ <len; ++¢)t.add(x);")//
+    trimminKof("int len=t();for(int ¢=0; ¢ <len; ++¢)t.add(x);")//
         .gives("for(int len=t(), ¢=0; ¢ <len; ++¢)t.add(x);")//
         .stays();
   }
 
   @Test public void d3() {
-    topDownTrimming("L<O> t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
+    trimminKof("L<O> t=new R<>();int len=A.t(d);for(int ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
         .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementToForInitializers()) //
         .gives("L<O> t=new R<>();for(int len=A.t(d), ¢=0; ¢ <len; ++¢)t.add(A.get(d, ¢));$.a(t);")//
         .stays();
   }
 
   @Test public void e() {
-    topDownTrimming("I il=(I)((T)l).g();il.finalize(); return 0;")//
+    trimminKof("I il=(I)((T)l).g();il.finalize(); return 0;")//
         .gives("((I)((T)l).g()).finalize();return 0;")//
         .stays();
   }

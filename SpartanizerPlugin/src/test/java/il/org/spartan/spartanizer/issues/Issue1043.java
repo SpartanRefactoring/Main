@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1043 {
   @Test public void test0() {
-    topDownTrimming("try (final File f = new File()){i++;}") //
+    trimminKof("try (final File f = new File()){i++;}") //
         .gives("try (File f = new File()) {++i;}") //
         .stays();
   }
 
   @Test public void test1() {
-    topDownTrimming("try (final File f = new File(); final B b = new B()){i++;}") //
+    trimminKof("try (final File f = new File(); final B b = new B()){i++;}") //
         .gives("try (File f = new File(); B b = new B()) {++i;}") //
         .stays();
   }

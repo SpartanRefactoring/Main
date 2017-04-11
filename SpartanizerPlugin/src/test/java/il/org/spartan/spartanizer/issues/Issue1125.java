@@ -18,27 +18,27 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue1125 {
   @Test public void forLoop() {
-    topDownTrimming("for(x();y();z()){}")//
+    trimminKof("for(x();y();z()){}")//
         .gives("for(x();y();z());")//
         .stays()//
     ;
   }
 
   @Test public void forLoop2() {
-    topDownTrimming("for(x();y();z()){f();g();}")//
+    trimminKof("for(x();y();z()){f();g();}")//
         .stays()//
     ;
   }
 
   @Test public void whileLoop() {
-    topDownTrimming("while(x()){}")//
+    trimminKof("while(x()){}")//
         .gives("while(x());")//
         .stays()//
     ;
   }
 
   @Test public void whileLoop2() {
-    topDownTrimming("while(x()){f();g();}")//
+    trimminKof("while(x()){f();g();}")//
         .gives("for(;x(); g()){f();}")//
         .gives("for(;x(); g())f();")//
         .stays()//
@@ -46,14 +46,14 @@ public class Issue1125 {
   }
 
   @Test public void doLoop() {
-    topDownTrimming("do{}while(x());")//
+    trimminKof("do{}while(x());")//
         .gives("do;while(x());")//
         .stays()//
     ;
   }
 
   @Test public void doLoop2() {
-    topDownTrimming("do{f();g();}while(x());")//
+    trimminKof("do{f();g();}while(x());")//
         .stays()//
     ;
   }

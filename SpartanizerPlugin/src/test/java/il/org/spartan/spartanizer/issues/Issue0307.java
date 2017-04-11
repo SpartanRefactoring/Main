@@ -11,13 +11,13 @@ import org.junit.*;
 public class Issue0307 {
   // p is not JD so no renaming happening
   @Test public void a() {
-    topDownTrimming(
+    trimminKof(
         "public ASTNode inclusiveLastFrom(final ASTNode n) {for (ASTNode $ = inclusiveFrom(n), p = $; ; p = from(p), $ = p)if (p == null)return $;}")
             .stays();
   }
 
   @Test public void b() {
-    topDownTrimming(
+    trimminKof(
         "public ASTNode inclusiveLastFrom(final ASTNode n) {for (ASTNode $ = inclusiveFrom(n), node = $; ; node = from(node), $ = node)if (node == null)return $;}")
             .gives(
                 "public ASTNode inclusiveLastFrom(final ASTNode n) {for (ASTNode $ = inclusiveFrom(n), ¢ = $; ; ¢ = from(¢), $ = ¢)if (¢ == null)return $;}")

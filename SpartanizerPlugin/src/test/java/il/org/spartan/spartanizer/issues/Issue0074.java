@@ -16,22 +16,22 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue0074 {
   // TODO Yuval Simon unignore a test for this tipper in {@link Version 230}
   @Test public void issue74a() {
-    topDownTrimming("int[] a = new int[] {,}")//
+    trimminKof("int[] a = new int[] {,}")//
         .gives("int[] a = new int[] {}");
   }
 
   @Test public void issue74b() {
-    topDownTrimming("int[] a = new int[] {2,3,}")//
+    trimminKof("int[] a = new int[] {2,3,}")//
         .gives("int[] a = new int[] {2,3}");
   }
 
   @Test public void issue74c() {
-    topDownTrimming("a = new int[]{2,3,}")//
+    trimminKof("a = new int[]{2,3,}")//
         .gives("a = new int[] {2,3}");
   }
 
   @Test public void issue74d() {
-    topDownTrimming("int[] a = new int[] {2,3};")//
+    trimminKof("int[] a = new int[] {2,3};")//
         .gives("");
   }
 }

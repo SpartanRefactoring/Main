@@ -53,7 +53,7 @@ public class Issue0000 {
 
   /** Correct way of trimming does not change */
   @Test public void demoOfTrimming() {
-    topDownTrimming("a")//
+    trimminKof("a")//
         .stays();
   }
 

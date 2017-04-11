@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1057 {
   @Test public void a() {
-    topDownTrimming("/**/" //
+    trimminKof("/**/" //
         + "void f() {\n" //
         + "  int a = 1;" //
         + "  x();" //
@@ -24,7 +24,7 @@ public class Issue1057 {
   }
 
   @Test public void b() {
-    topDownTrimming("/**/" //
+    trimminKof("/**/" //
         + "private static int nsBranchBreakOrRetInd(final SwitchStatement s, int i) {\n" //
         + "  final List<Statement> l = statements(az.switchStatement(s));\n" //
         + "  int $;\n" //

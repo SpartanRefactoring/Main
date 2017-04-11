@@ -10,23 +10,23 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1067 {
   @Test public void t1() {
-    topDownTrimming("int zero = 0, result = 8 / zero;f(++result);").stays();
+    trimminKof("int zero = 0, result = 8 / zero;f(++result);").stays();
   }
 
   @Test public void t2() {
-    topDownTrimming("int div = 2, result = 8/div;f(++result);")// //
+    trimminKof("int div = 2, result = 8/div;f(++result);")// //
         .stays();
   }
 
   static class Issue0364 {
     @Test public void notTerminating() {
-      topDownTrimming("void f() {\n  String[] x = {\"\"};  g(x);  h();}").gives("void f() {\n  g(new String[] {\"\"});  h();}");
+      trimminKof("void f() {\n  String[] x = {\"\"};  g(x);  h();}").gives("void f() {\n  g(new String[] {\"\"});  h();}");
     }
   }
 
   static class Issue0856 {
     @Test public void e() {
-      topDownTrimming(" final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
+      trimminKof(" final InflaterListener il = (InflaterListener) ((TypedListener) l).getEventListener();" + //
           "il.finalize(); " + //
           "return 0;")//
               .gives(//
@@ -39,7 +39,7 @@ public class Issue1067 {
 
   static class Version230 {
     @Test public void inlineArrayInitialization1() {
-      topDownTrimming("public void multiDimensionalIntArraysAreEqual() {\n" //
+      trimminKof("public void multiDimensionalIntArraysAreEqual() {\n" //
           + "  int[][] int1 = {{1, 2, 3}, {4, 5, 6}};\n" //
           + "  int[][] int2 = {{1, 2, 3}, {4, 5, 6}};\n" //
           + "  assertArrayEquals(int1, int2);\n" //

@@ -34,12 +34,12 @@ public class Version300 {
   }
 
   @Test public void i0() {
-    topDownTrimming("int a=1;return a > 0;")//
+    trimminKof("int a=1;return a > 0;")//
         .gives("return 1>0;");
   }
 
   @Test public void i1() {
-    topDownTrimming("int k=1;return k > 0;")//
+    trimminKof("int k=1;return k > 0;")//
         .gives("return 1>0;");
   }
 
@@ -90,7 +90,7 @@ public class Version300 {
   };
 
   @Test public void abcd() {
-    topDownTrimming("a = !(b ? c : d)") //
+    trimminKof("a = !(b ? c : d)") //
         .using(PrefixExpression.class, new PrefixNotPushdown()) //
         .gives("a=b?!c:!d") //
         .stays() //
@@ -107,7 +107,7 @@ public class Version300 {
   }
 
   @Test public void overridePublicStatementreplacementNotNullFinalBlockbNotNullFinalListStatementssextractstatementsbIfidenticalssstatementsbhazhidingsssReturnNullNullableFinalASTNodeparentazstatementparentbIfparentNulliztryStatementparentReturnreorganizeStatementbSwitchsssizeCase0ReturnmakeemptyStatementbCase1FinalStatementfirstssIfizblockEssentialReturnsubjectstatementtoBlockReturncopyofDefaultReturnreorganizeNestedStatementb() {
-    topDownTrimming("/**/" + //
+    trimminKof("/**/" + //
         "@A public B a(@C D b) {" + //
         "    @C E<B> c = d.x;" + //
         "    if (f(c, x) || g.h(c)) {" + //
@@ -165,7 +165,7 @@ public class Version300 {
   /** Introduced by Yogi on Tue-Mar-28-02:39:50-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_aPublicBaCFinalDbCFinalEBcdebIffcebghcReturnNullFFinalGijkibIfiNulllmiReturnnbSwitchcoCase0ReturnpqbCase1FinalBrrscIfltrReturnukrvReturnwxrDefaultReturnyb() {
-    topDownTrimming(
+    trimminKof(
         "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c)){return n;}G i=j.k(i(b));if((i==n)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:B r;r=s(c);if(l.t(r))return u.k(r).v();return w.x(r);default:return y(b);}}") //
             .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
             .gives(
@@ -197,7 +197,7 @@ public class Version300 {
   /** Automatically generated on Thu-Mar-16-08:26:53-IST-2017, copied by
    * Yossi */
   @Test public void genererated13() {
-    topDownTrimming("{}") //
+    trimminKof("{}") //
         .gives("") //
         .stays() //
     ;
@@ -206,7 +206,7 @@ public class Version300 {
   /** Automatically generated on Thu-Mar-16-08:15:41-IST-2017, copied by
    * Yossi */
   @Test public void ifaAb() {
-    topDownTrimming("if (a) { A b; }") //
+    trimminKof("if (a) { A b; }") //
         .using(IfStatement.class, new IfDeadRemove()) //
         .gives("{}") //
         .gives("") //
@@ -215,7 +215,7 @@ public class Version300 {
   }
 
   @Test public void ifab() {
-    topDownTrimming("if (a++ == b++) { }") //
+    trimminKof("if (a++ == b++) { }") //
         .using(IfStatement.class, new IfEmptyThenEmptyElse()) //
         .gives("a++;b++;") //
         .gives("++a;++b;") //
@@ -224,28 +224,28 @@ public class Version300 {
   }
 
   @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement() {
-    topDownTrimming("if(a) { int i = 3; }")//
+    trimminKof("if(a) { int i = 3; }")//
         .gives("{}") //
         .gives("") //
         .stays();
   }
 
   @Test public void ifDoNotRemoveBracesWithVariableDeclarationStatement2() {
-    topDownTrimming("if(a) { Object o; }")//
+    trimminKof("if(a) { Object o; }")//
         .gives("{}") //
         .gives("") //
         .stays();
   }
 
   @Ignore @Test public void issue73c() {
-    topDownTrimming("int foo(Integer integer, ASTNode astn){return integer + astn.hashCode();}")//
+    trimminKof("int foo(Integer integer, ASTNode astn){return integer + astn.hashCode();}")//
         .gives("int foo(Integer integer,ASTNode n){return integer+n.hashCode();}") //
         .gives("int foo(Integer i, ASTNode n){return i + n.hashCode();}") //
         .stays();
   }
 
   @Ignore @Test public void inlineArrayInitialization1() {
-    topDownTrimming("public void multiDimensionalIntArraysAreEqual(){ " //
+    trimminKof("public void multiDimensionalIntArraysAreEqual(){ " //
         + " int[][] int1={{1, 2, 3}, {4, 5, 6}}; " //
         + " int[][] int2={{1, 2, 3}, {4, 5, 6}}; " //
         + " assertArrayEquals(int1, int2); " //
@@ -261,7 +261,7 @@ public class Version300 {
   }
 
   @Test public void intaIntbForb100bb1IfFalseBreakReturnb() {
-    topDownTrimming("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
+    trimminKof("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
         .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
         .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
         .using(IfStatement.class, new IfTrueOrFalse()) //
@@ -326,7 +326,7 @@ public class Version300 {
 
   // @Ignore("Unignore one by one")
   @Test public void negationPushdownTernary() {
-    topDownTrimming("a = !(b ? c: d)")//
+    trimminKof("a = !(b ? c: d)")//
         .using(PrefixExpression.class, new PrefixNotPushdown())//
         .gives("a=b?!c:!d") //
     ;
@@ -342,7 +342,7 @@ public class Version300 {
   }
 
   @Test public void stAgives() {
-    topDownTrimming("boolean a(int[] b, int c){ if (d == c) return true; return false; }") //
+    trimminKof("boolean a(int[] b, int c){ if (d == c) return true; return false; }") //
         .gives("boolean a(int[] b, int c){ return d == c ? true: false; }") //
         .gives("boolean a(int[] b, int c){ return d == c || false; }") //
         .gives("boolean a(int[] b, int c){ return d == c; }") //
@@ -375,13 +375,13 @@ public class Version300 {
   /** trimmer wraps with void method so it is tipped by
    * {@link RemoveRedundantSwitchReturn} */
   @Ignore("Yuval Simon") @Test public void switchSimplifyCaseAfterDefault1() {
-    topDownTrimming("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;case RETURN_STATEMENT:return 2;"
+    trimminKof("switch(n.getNodeType()){case BREAK_STATEMENT:return 0;case CONTINUE_STATEMENT:return 1;case RETURN_STATEMENT:return 2;"
         + "case THROW_STATEMENT:return 3;default:return-1;}")//
             .stays();
   }
 
   @Test public void x() {
-    topDownTrimming("int f(int i) { for(;i<100;i=i+1) if(false) return; return i; }")//
+    trimminKof("int f(int i) { for(;i<100;i=i+1) if(false) return; return i; }")//
         .gives("int f(int ¢){for(;¢<100;¢=¢+1)if(false)return;return ¢;}") //
         .gives("int f(int ¢){for(;¢<100;¢+=1){}return ¢;}");
   }
@@ -389,7 +389,7 @@ public class Version300 {
   /** Introduced by Yossi on Thu-Mar-16-12:37:12-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void x1() {
-    topDownTrimming("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
+    trimminKof("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
         .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
         .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
         .using(IfStatement.class, new IfTrueOrFalse()) //
