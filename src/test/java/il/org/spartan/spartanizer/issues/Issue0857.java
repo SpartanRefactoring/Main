@@ -13,7 +13,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0857 {
   @Test public void report234() {
-    trimmingOf(//
+    topDownTrimming(//
         "public static A a() {" + //
             " A b = \"str\";" + //
             " B.d(b);" + //

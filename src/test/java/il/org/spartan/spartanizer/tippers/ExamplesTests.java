@@ -38,11 +38,11 @@ public class ExamplesTests {
   }
 
   protected void ignores(final Ignores ¢) {
-    wrap(() -> trimmingOf(¢.get()).usingTipper(tipper).stays());
+    wrap(() -> topDownTrimming(¢.get()).usingTipper(tipper).stays());
   }
 
   protected void converts(final Converts ¢) {
-    wrap(() -> trimmingOf(¢.from()).usingTipper(tipper).gives(¢.to()));
+    wrap(() -> topDownTrimming(¢.from()).usingTipper(tipper).gives(¢.to()));
   }
 
   protected void wrap(final Runnable test) {

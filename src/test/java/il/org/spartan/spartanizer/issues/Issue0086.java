@@ -119,7 +119,7 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void doubleVanillaThrow() {
     A$04_init();
-    trimmingOf("int f() { if (false)    i++;  else {    g(i);    throw new RuntimeException();  }  f(); a = 3; return 2;}")//
+    topDownTrimming("int f() { if (false)    i++;  else {    g(i);    throw new RuntimeException();  }  f(); a = 3; return 2;}")//
         .gives("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}")//
         .gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();return 2;}")//
         .gives("int f(){g(i);throw new RuntimeException();}")//
@@ -131,7 +131,7 @@ public final class Issue0086 extends Issue____ {
   }
 
   @Test public void vanilla() {
-    trimmingOf("{   throw Something();  f(); a = 3; return 2;}")//
+    topDownTrimming("{   throw Something();  f(); a = 3; return 2;}")//
         .gives("throw Something();f(); a=3; return 2;").gives("throw Something();a=3; return 2;")//
         .gives("throw Something(); return 2;")//
         .gives("throw Something();")//
@@ -139,42 +139,42 @@ public final class Issue0086 extends Issue____ {
   }
 
   @Test public void vanilla01() {
-    trimmingOf("throw Something();a=3; return 2;")//
+    topDownTrimming("throw Something();a=3; return 2;")//
         .gives("throw Something(); return 2;")//
         .gives("throw Something();")//
         .stays();
   }
 
   @Test public void vanilla02() {
-    trimmingOf("return Something();a=3; return 2;")//
+    topDownTrimming("return Something();a=3; return 2;")//
         .gives("return Something(); return 2;")//
         .gives("return Something();")//
         .stays();
   }
 
   @Test public void vanilla03() {
-    trimmingOf("continue a;a=3; return 2;")//
+    topDownTrimming("continue a;a=3; return 2;")//
         .gives("continue a; return 2;")//
         .gives("continue a;")//
         .stays();
   }
 
   @Test public void vanilla04() {
-    trimmingOf("break a;a=3; return 2;")//
+    topDownTrimming("break a;a=3; return 2;")//
         .gives("break a; return 2;")//
         .gives("break a;")//
         .stays();
   }
 
   @Test public void vanilla05() {
-    trimmingOf("continue ;a=3; return 2;")//
+    topDownTrimming("continue ;a=3; return 2;")//
         .gives("continue ; return 2;")//
         .gives("continue ;")//
         .stays();
   }
 
   @Test public void vanilla06() {
-    trimmingOf("break;a=3; return 2;")//
+    topDownTrimming("break;a=3; return 2;")//
         .gives("break; return 2;")//
         .gives("break;")//
         .stays();

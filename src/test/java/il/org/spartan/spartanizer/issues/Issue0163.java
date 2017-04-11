@@ -12,25 +12,25 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0163 {
   @Test public void issue163_01() {
-    trimmingOf("return \"remove the block: \" + n + \"\";")//
+    topDownTrimming("return \"remove the block: \" + n + \"\";")//
         .gives("return \"remove the block: \" + n;")//
         .stays();
   }
 
   @Test public void issue163_02() {
-    trimmingOf("x + \"\" + f() + \"\" + g() + \"abc\"")//
+    topDownTrimming("x + \"\" + f() + \"\" + g() + \"abc\"")//
         .gives("x + \"\" + f() + g() + \"abc\"")//
         .stays();
   }
 
   @Test public void issue163_03() {
-    trimmingOf("x + \"\" + \"\"")//
+    topDownTrimming("x + \"\" + \"\"")//
         .gives("x+\"\"")//
         .stays();
   }
 
   @Test public void issue163_04() {
-    trimmingOf("\"\"+\"\"+x +\"\"")//
+    topDownTrimming("\"\"+\"\"+x +\"\"")//
         .gives("\"\"+\"\"+x")//
         .gives("\"\"+x")//
         .gives("x+\"\"")//

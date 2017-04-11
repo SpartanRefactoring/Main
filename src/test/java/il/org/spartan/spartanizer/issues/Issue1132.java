@@ -26,14 +26,14 @@ public class Issue1132 {
   }
 
   @Test public void and() {
-    trimmingOf("a &=2; a &= 3;")//
+    topDownTrimming("a &=2; a &= 3;")//
         .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
         .gives("a &= 2 & 3;")//
     ;
   }
 
   @Test public void divides() {
-    trimmingOf("a /=2; a /= 3;")//
+    topDownTrimming("a /=2; a /= 3;")//
         .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
         .gives("a /= 2 * 3;")//
     ;
@@ -47,35 +47,35 @@ public class Issue1132 {
   }
 
   @Test public void minus() {
-    trimmingOf("a -=2; a -= 3;")//
+    topDownTrimming("a -=2; a -= 3;")//
         .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
         .gives("a -= 2 + 3;")//
     ;
   }
 
   @Test public void or() {
-    trimmingOf("a |=2; a |= 3;")//
+    topDownTrimming("a |=2; a |= 3;")//
         .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
         .gives("a |= 2 | 3;")//
     ;
   }
 
   @Test public void plus() {
-    trimmingOf("a +=2; a += 3;")//
+    topDownTrimming("a +=2; a += 3;")//
         .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
         .gives("a += 2 + 3;")//
     ;
   }
 
   @Test public void times() {
-    trimmingOf("a *=2; a *= 3;")//
+    topDownTrimming("a *=2; a *= 3;")//
         .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
         .gives("a *= 2 * 3;")//
     ;
   }
 
   @Test public void xor() {
-    trimmingOf("a ^= 2; a ^= 3;")//
+    topDownTrimming("a ^= 2; a ^= 3;")//
         .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
         .gives("a ^= 2 ^ 3;")//
     ;

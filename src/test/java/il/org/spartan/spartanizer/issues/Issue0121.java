@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public final class Issue0121 {
   @Test public void test01() {
-    trimmingOf("class A{ \n" //
+    topDownTrimming("class A{ \n" //
         + "class B{} \n" //
         + "B f(int t){ \n" //
         + "return new B(){ \n" //
@@ -34,7 +34,7 @@ public final class Issue0121 {
 
   // TODO DOR That is a true renaming bug, and a true Environment issue.
   @Ignore @Test public void test02() {
-    trimmingOf("class A{"//
+    topDownTrimming("class A{"//
         + "class B{"//
         + "int t;"//
         + "B(int t){"//
@@ -67,7 +67,7 @@ public final class Issue0121 {
   }
 
   @Test public void test03() {
-    trimmingOf("class A{"//
+    topDownTrimming("class A{"//
         + "class B{"//
         + "int x;"//
         + "B(int x){"//

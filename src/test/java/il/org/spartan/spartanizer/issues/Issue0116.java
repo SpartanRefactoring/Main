@@ -12,38 +12,38 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0116 {
   @Test public void issue116_01() {
-    trimmingOf("\"\" + x")//
+    topDownTrimming("\"\" + x")//
         .gives("x + \"\"")//
         .stays();
   }
 
   @Test public void issue116_02() {
-    trimmingOf("\"\" + x.foo()")//
+    topDownTrimming("\"\" + x.foo()")//
         .gives("x.foo() + \"\"")//
         .stays();
   }
 
   @Test public void issue116_03() {
-    trimmingOf("\"\" + (Integer)(\"\" + x).length()")//
+    topDownTrimming("\"\" + (Integer)(\"\" + x).length()")//
         .gives("(Integer)(\"\" + x).length() + \"\"")//
         .gives("(Integer)(x +\"\").length() + \"\"")//
         .stays();
   }
 
   @Test public void issue116_04() {
-    trimmingOf("String s = \"\" + x.foo();")//
+    topDownTrimming("String s = \"\" + x.foo();")//
         .gives("x.foo();")//
         .stays();
   }
 
   @Test public void issue116_07() {
-    trimmingOf("\"\" + 0 + (x - 7)")//
+    topDownTrimming("\"\" + 0 + (x - 7)")//
         .gives("0 + \"\" + (x - 7)")//
         .stays();
   }
 
   @Test public void issue116_08() {
-    trimmingOf("return x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\";")
+    topDownTrimming("return x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\";")
         .gives("return \"Use \" + (x == null ? \"isEmpty()\" : \"\" + x + \".isEmpty()\");")
         .gives("return \"Use \" + ((x == null ? \"\" : \"\" + x + \".\")+\"isEmpty()\");")
         .gives("return \"Use \" + (x == null ? \"\" : \"\" + x  + \".\")+\"isEmpty()\";")

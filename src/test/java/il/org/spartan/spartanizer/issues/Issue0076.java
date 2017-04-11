@@ -12,17 +12,17 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0076 {
   @Test public void issue076a() {
-    trimmingOf("a*b + a*c")//
+    topDownTrimming("a*b + a*c")//
         .gives("a*(b+c)");
   }
 
   @Test public void issue076b() {
-    trimmingOf("b*a + c*a")//
+    topDownTrimming("b*a + c*a")//
         .gives("a*(b+c)");
   }
 
   @Test public void issue076c() {
-    trimmingOf("b*a + c*a + d*a")//
+    topDownTrimming("b*a + c*a + d*a")//
         .gives("a*(b+c+d)");
   }
 }

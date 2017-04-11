@@ -11,14 +11,14 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class UnlessTest {
   @Test public void basic() {
-    trimmingOf("return k == null ? null : new SynchronizedEntry<K,V>(k,mutex);")//
+    topDownTrimming("return k == null ? null : new SynchronizedEntry<K,V>(k,mutex);")//
         .using(ConditionalExpression.class, new Unless())//
         .gives("return unless(k==null).eval(() -> new SynchronizedEntry<K,V>(k,mutex)).defaultTo(null);")//
         .stays();
   }
 
   @Test public void basic2() {
-    trimmingOf("return ($ == null) ? null : $.size();")//
+    topDownTrimming("return ($ == null) ? null : $.size();")//
         .using(ConditionalExpression.class, new Unless())//
         .gives("return unless(($==null)).eval(()->$.size()).defaultTo(null);")//
         .gives("return unless($==null).eval(()->$.size()).defaultTo(null);")//
@@ -26,7 +26,7 @@ public class UnlessTest {
   }
 
   @Test public void respect() {
-    trimmingOf("return ¢ != null ? ¢ : \"\";")//
+    topDownTrimming("return ¢ != null ? ¢ : \"\";")//
         .using(ConditionalExpression.class, new Unless())//
         .using(ConditionalExpression.class, new DefaultsTo())//
         .gives("return defaults(¢).to(\"\");")//
@@ -34,7 +34,7 @@ public class UnlessTest {
   }
 
   @Test public void respect2() {
-    trimmingOf("return ¢ != null ? ¢ : \"\";")//
+    topDownTrimming("return ¢ != null ? ¢ : \"\";")//
         .using(ConditionalExpression.class, new Unless())//
         .stays();
   }

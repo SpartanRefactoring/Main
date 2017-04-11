@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0906 {
   @Test public void issue075h() {
-    trimmingOf("int i; i = +0;")//
+    topDownTrimming("int i; i = +0;")//
         .gives("int i = +0;");
   }
 }
