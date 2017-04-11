@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
@@ -30,11 +31,29 @@ public final class Issue0172 {
 
   @Test public void a04() {
     trimminKof("2+1*x+0+\"abc\"+\"\"")//
+    .gives("2+1*x+0+\"abc\"") //
         .gives("2+1*x+\"abc\"")//
         .gives("1*x+2+\"abc\"")//
         .gives("x+2+\"abc\"")//
         .stays();
   }
+  /** Introduced by Yogi on Tue-Apr-11-13:20:11-IDT-2017 
+  (code automatically in class 'JUnitTestMethodFacotry')*/
+    @Test public void a0abc() {
+       trimminKof("2 + 1 * a + 0 + \"abc\" + \"\"") //
+           .using(InfixExpression.class, new InfixPlusEmptyString()) //
+           .gives("2+1*a+0+\"abc\"") //
+           .using(InfixExpression.class, new InfixTermsZero()) //
+           .gives("2+1*a+\"abc\"") //
+           .using(InfixExpression.class, new InfixAdditionSort()) //
+           .gives("1*a+2+\"abc\"") //
+           .using(InfixExpression.class, new InfixMultiplicationByOne()) //
+           .gives("a+2+\"abc\"") //
+           .stays() //
+    ;
+  }
+
+
 
   @Test public void a05() {
     trimminKof("x+\"\"+\"abc\"+0")//
