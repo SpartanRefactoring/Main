@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public abstract class Tip {
-  @UnderConstruction("yogi -- 10/04/2017") public static boolean overlapping(final Range r1, final Range r2) {
+  @UnderConstruction("yogi -- 10/04/2017") public static boolean overlap(final Range r1, final Range r2) {
     if (r1 == null || r2 == null)
       return false;
     if (r1 == r2)
