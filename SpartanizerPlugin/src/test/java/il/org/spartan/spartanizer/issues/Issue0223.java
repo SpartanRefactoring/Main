@@ -3,9 +3,7 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;

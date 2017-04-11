@@ -61,7 +61,7 @@ public final class LocalVariableIntializedStatementTerminatingScope extends $Fra
     for (final SimpleName use : uses)
       if (Inliner.never(use, nextStatement) || Inliner.isPresentOnAnonymous(use, nextStatement))
         return null;
-    final Expression v = Inliner.protect(initializer, currentStatement);
+    final Expression v = Inliner.protect(initializer);
     final InlinerWithValue i = new Inliner(n, $, g).byValue(v);
     final Statement newStatement = copy.of(nextStatement);
     if (i.addedSize(newStatement) - removalSaving(f) > 0)
