@@ -109,7 +109,7 @@ public enum makeAST {
     try (Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (final Exception ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
       return new StringBuilder();
     }
   }

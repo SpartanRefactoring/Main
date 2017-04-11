@@ -51,7 +51,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     try {
       return apply($);
     } catch (final CoreException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
       return 0;
     }
   }
@@ -98,7 +98,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     } catch (final OperationCanceledException ¢) {
       monitor.logCancellationRequest(this, ¢);
     } catch (final CoreException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
     }
     return totalChanges;
   }
@@ -146,7 +146,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule($);
     } catch (final CoreException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
     }
     return 0;
   }
@@ -165,7 +165,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         try {
           runAsMarkerFix(m);
         } catch (final CoreException ¢) {
-          monitor.logEvaluationError(this, ¢);
+          monitor.exception(this, ¢);
         }
       }
     };
@@ -306,7 +306,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         s.update();
       return $.get();
     } catch (final CoreException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
       return 0;
     } finally {
       progressMonitor.done();

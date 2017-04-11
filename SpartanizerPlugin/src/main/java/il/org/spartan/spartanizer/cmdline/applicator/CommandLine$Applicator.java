@@ -148,7 +148,7 @@ public class CommandLine$Applicator extends GenericApplicator {
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        monitor.logEvaluationError(this, ¢);
+        monitor.exception(this, ¢);
         throw new AssertionError(¢);
       }
       if (!e.hasChildren())

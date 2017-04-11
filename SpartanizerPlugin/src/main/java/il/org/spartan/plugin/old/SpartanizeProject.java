@@ -111,7 +111,7 @@ public final class SpartanizeProject extends BaseHandler {
         pm.done();
       });
     } catch (final InterruptedException | InvocationTargetException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
       return true;
     }
     return $.get() || todo.isEmpty();

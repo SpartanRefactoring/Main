@@ -25,7 +25,7 @@ public final class RefreshAll extends BaseHandler {
         // see issue #767
         // p.build(IncrementalProjectBuilder.FULL_BUILD, npm);
       } catch (final CoreException ¢) {
-        monitor.logEvaluationError(new RefreshAll(), ¢);
+        monitor.exception(new RefreshAll(), ¢);
       }
     }).run();
   }
