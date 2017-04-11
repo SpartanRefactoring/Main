@@ -19,16 +19,16 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@code for (..) { does(something); break; } return XX; }
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement>//
+public final class WhileFiniteReturnToBreak extends CarefulTipper<WhileStatement>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -0x70481BF1FE1E5DFBL;
 
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(b)) {
-      if (az.ifStatement(¢) != null)
+      if (iz.ifStatement(¢))
         $ = handleIf(¢, nextReturn);
-      if (wizard.eq(nextReturn, az.returnStatement(¢).getExpression()))
+      if (wizard.eq(nextReturn, expression(az.returnStatement(¢))))
         return ¢;
     }
     return $;
@@ -52,20 +52,16 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
       if ($ != null)
         return $;
     }
-    if (az.ifStatement(then) != null)
+    if (iz.ifStatement(then))
       return handleIf(then, nextReturn);
     if (elze == null)
       return null;
-    if (wizard.eq(az.returnStatement(elze), nextReturn.getExpression()))
+    if (wizard.eq(az.returnStatement(elze), nextReturn))
       return elze;
     if (!iz.block(elze))
       return az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
     final Statement $ = handleBlock((Block) elze, nextReturn);
     return $ != null ? $ : az.ifStatement(elze) == null ? null : handleIf(elze, nextReturn);
-  }
-
-  private static boolean isInfiniteLoop(final WhileStatement ¢) {
-    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
   }
 
   @Override public String description() {
@@ -77,12 +73,12 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && !isInfiniteLoop(¢);
+    return ¢ != null && extract.nextReturn(¢) != null && !iz.isInfiniteLoop(¢);
   }
 
   @Override public Tip tip(final WhileStatement s) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
-    if (s == null || isInfiniteLoop(s) || nextReturn == null)
+    if (s == null || iz.isInfiniteLoop(s) || nextReturn == null)
       return null;
     final Statement body = body(s), $ = iz.returnStatement(body) && wizard.eq(nextReturn, az.returnStatement(body).getExpression()) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
@@ -90,6 +86,6 @@ public final class ReturnToBreakFiniteWhile extends CarefulTipper<WhileStatement
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace($, az.astNode(first(statements(az.block(into.s("break;"))))), g);
       }
-    }.spanning(nextReturn);
+    };
   }
 }
