@@ -31,9 +31,10 @@ public enum compute {
             ANONYMOUS_CLASS_DECLARATION, //
             SWITCH_STATEMENT, //
             TYPE_DECLARATION_STATEMENT, //
-            };
+        };
       }
-      @Override public List<ReturnStatement> map(ReturnStatement ¢) {
+
+      @Override public List<ReturnStatement> map(final ReturnStatement ¢) {
         return as.list(¢);
       }
 
