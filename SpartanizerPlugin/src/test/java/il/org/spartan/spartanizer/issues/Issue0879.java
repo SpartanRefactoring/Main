@@ -12,13 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 28-11-2016 */
 @SuppressWarnings("static-method")
 public class Issue0879 {
-  @Test public void test0() {
-    trimmingOf("void f(){return;}")//
-        .gives("void f(){}")//
-        .stays();
-  }
-
-  @Test public void test1() {
+  @Test public void a() {
     trimmingOf("void f(){int x; int y;return;}")//
         .gives("void f(){}")//
         .stays();
@@ -41,16 +35,6 @@ public class Issue0879 {
         .gives("void a(){}") //
         .stays() //
     ;
-  }
-
-  @Test public void test3() {
-    trimmingOf("void f(){int x=9;int y=7; x+=4;y=x+x;return;}")//
-        .gives("void f(){int x=9,y=7;x+=4;y=x+x;}") //
-        .gives("void f(){int x=9+4,y=7;y=x+x;}") //
-        .gives("void f(){int y=7;y=(9+4)+(9+4);}") //
-        .gives("void f(){int y=(9+4)+(9+4);}") //
-        .gives("void f(){}") //
-        .stays();
   }
 
   /** Introduced by Yogi on Thu-Mar-30-16:33:00-IDT-2017 (code automatically in
@@ -77,5 +61,21 @@ public class Issue0879 {
         .gives("int a(){return 26;}") //
         .stays() //
     ;
+  }
+
+  @Test public void test0() {
+    trimmingOf("void f(){return;}")//
+        .gives("void f(){}")//
+        .stays();
+  }
+
+  @Test public void test3() {
+    trimmingOf("void f(){int x=9;int y=7; x+=4;y=x+x;return;}")//
+        .gives("void f(){int x=9,y=7;x+=4;y=x+x;}") //
+        .gives("void f(){int x=9+4,y=7;y=x+x;}") //
+        .gives("void f(){int y=7;y=(9+4)+(9+4);}") //
+        .gives("void f(){int y=(9+4)+(9+4);}") //
+        .gives("void f(){}") //
+        .stays();
   }
 }

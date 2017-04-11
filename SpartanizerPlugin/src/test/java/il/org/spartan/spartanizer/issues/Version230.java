@@ -1490,8 +1490,8 @@ public final class Version230 {
 
   @Test public void issue46() {
     trimmingOf("int f(){ x++;y++;if(a){ i++; j++; k++;} }")//
-    .gives("int f(){++x;++y;if(!a)return;i++;j++;k++;}") //
-    .gives("int f(){++x;++y;if(!a)return;++i;++j;++k;}") //
+        .gives("int f(){++x;++y;if(!a)return;i++;j++;k++;}") //
+        .gives("int f(){++x;++y;if(!a)return;++i;++j;++k;}") //
     ;
   }
 

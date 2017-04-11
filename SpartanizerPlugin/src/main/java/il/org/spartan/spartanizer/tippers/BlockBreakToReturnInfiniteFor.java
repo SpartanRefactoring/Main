@@ -67,10 +67,6 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
     return handleIf(az.ifStatement(s), nextReturn);
   }
 
-  private static boolean isInfiniteLoop(final ForStatement ¢) {
-    return az.booleanLiteral(¢.getExpression()) != null && az.booleanLiteral(¢.getExpression()).booleanValue();
-  }
-
   @Override public String description() {
     return "Convert the break inside 'for(;;)' to 'return'";
   }
@@ -90,11 +86,11 @@ public final class BlockBreakToReturnInfiniteFor extends CarefulTipper<ForStatem
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && isInfiniteLoop(¢);
+    return ¢ != null && extract.nextReturn(¢) != null && iz.infiniteLoop(¢);
   }
 
   @Override public Tip tip(final ForStatement vor) {
-    if (vor == null || !isInfiniteLoop(vor))
+    if (vor == null || !iz.infiniteLoop(vor))
       return null;
     final ReturnStatement $ = extract.nextReturn(vor);
     return $ == null ? null : make(vor, $);

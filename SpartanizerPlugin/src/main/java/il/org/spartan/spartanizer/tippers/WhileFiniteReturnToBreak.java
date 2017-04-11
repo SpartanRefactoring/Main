@@ -73,12 +73,12 @@ public final class WhileFiniteReturnToBreak extends CarefulTipper<WhileStatement
   }
 
   @Override public boolean prerequisite(final WhileStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && !iz.isInfiniteLoop(¢);
+    return ¢ != null && extract.nextReturn(¢) != null && !iz.infiniteLoop(¢);
   }
 
   @Override public Tip tip(final WhileStatement s) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
-    if (s == null || iz.isInfiniteLoop(s) || nextReturn == null)
+    if (s == null || iz.infiniteLoop(s) || nextReturn == null)
       return null;
     final Statement body = body(s), $ = iz.returnStatement(body) && wizard.eq(nextReturn, az.returnStatement(body).getExpression()) ? body
         : iz.block(body) ? handleBlock(az.block(body), nextReturn) : az.ifStatement(body) == null ? null : handleIf(body, nextReturn);
