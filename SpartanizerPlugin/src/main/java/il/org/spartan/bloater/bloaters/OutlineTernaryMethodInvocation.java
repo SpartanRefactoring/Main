@@ -22,7 +22,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * } Test case is {@link Issue1091}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-18 */
-public class OutlineTernaryMethodInvocation extends MethodInvocationAbstarctPattern//
+public class OutlineTernaryMethodInvocation extends MethodInvocationAbstractPattern//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x54464757E1B1C1A1L;
 

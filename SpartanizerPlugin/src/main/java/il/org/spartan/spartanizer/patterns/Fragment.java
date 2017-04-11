@@ -14,7 +14,11 @@ public abstract class Fragment extends AbstractPattern<VariableDeclarationFragme
   protected Expression initializer;
   protected SimpleName name;
 
-  Fragment() {
+  @Override protected ASTNode highlight() {
+    return name;
+  }
+
+  protected Fragment() {
     andAlso("Inapplicable on annotated fragments", () -> {
       if (haz.annotation(current()))
         return false;
