@@ -235,12 +235,7 @@ public final class Issue0223 {
     assert d != null;
     final Trimmer a = new Trimmer();
     try {
-      final IProgressMonitor pm = wizard.nullProgressMonitor;
-      pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
-      final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.computeMaximalRewrite(u);
-      pm.done();
-      $.rewriteAST(d, null).apply(d);
+      a.computeMaximalRewrite(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }

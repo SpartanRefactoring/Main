@@ -15,12 +15,13 @@ import il.org.spartan.utils.*;
 
 public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   public R map(final ASTNode ¢) {
-    return iz.statement(¢) ? map(az.statement(¢)) //
-        : iz.expression(¢) ? map(az.expression(¢)) //
-            : ¢.getNodeType() == ANONYMOUS_CLASS_DECLARATION ? map((AnonymousClassDeclaration) ¢) //
-                : ¢.getNodeType() == MODIFIER ? map((Modifier) ¢) //
-                    : ¢.getNodeType() == CATCH_CLAUSE ? map((CatchClause) ¢) //
-                        : reduce();
+    return iz.nodeTypeIn(¢, protect()) ? reduce()//
+        : iz.statement(¢) ? map(az.statement(¢))//
+            : iz.expression(¢) ? map(az.expression(¢))//
+                : ¢.getNodeType() == ANONYMOUS_CLASS_DECLARATION ? map((AnonymousClassDeclaration) ¢)//
+                    : ¢.getNodeType() == MODIFIER ? map((Modifier) ¢) //
+                        : ¢.getNodeType() == CATCH_CLAUSE ? map((CatchClause) ¢)//
+                            : reduce();
   }
 
   protected R composite(final List<? extends ASTNode> ns) {
@@ -48,7 +49,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return $;
   }
 
-  @SuppressWarnings("static-method") protected int[] leaf() {
+  @SuppressWarnings("static-method") protected int[] protect() {
     return new int[] {};
   }
 

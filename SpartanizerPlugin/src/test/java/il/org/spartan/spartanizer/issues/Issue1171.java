@@ -10,18 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1171 {
   @Test public void inlineArrayInitialization2() {
-    trimminKof("public double[] h(){ " //
-        + " final S r=new S(true); " //
-        + " for(double[] dxx : ps) " //
-        + " r.a(d[0], d[1]); " //
-        + " final double[] $={ r.z(), r.g()}; " //
-        + " return $; " //
-        + "}")
-            .gives("public double[] h(){ " //
-                + " final S r=new S(true); " //
-                + " for(double[] dxx : ps) " //
-                + " r.a(d[0], d[1]); " //
-                + " return new double[] { r.z(), r.g()}; " //
-                + "}");
+    trimminKof("final double[] $={ r.z(), r.g()};return $; }")//
+        .gives("return new double[] { r.z(), r.g()}; ");
   }
 }
