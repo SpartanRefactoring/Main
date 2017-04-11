@@ -2,8 +2,11 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** @author Yossi Gil
  * @since 2016 */
@@ -80,8 +83,21 @@ public final class Issue0131 {
         .gives("for(int i=4;i<s.g();++i){if(i==5){t+=9;break;}else return tr;y+=15;break;}return x;");
   }
 
-  @Test public void a14() {
-    trimminKof("public static void main(){while(i<7){if(i==5){t+=9;return x;}else return tr;y+=15;return x;}return x;}")
-        .gives("public static void main(){while(i<7){if(i==5){t+=9;return x;}else return tr;y+=15;break;}return x;}");
+  /** Introduced by Yogi on Tue-Apr-11-17:34:42-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void publicStaticVoidaWhileb7Ifb5c9ReturndElseReturnef15ReturndReturnd() {
+    trimminKof("a() { while (b < 7) { if (b == 5) { c += 9; return d; } else return e; f += 15; return d; } return d; }") //
+        .using(WhileStatement.class, new WhileFiniteReturnToBreak()) //
+        .gives("a(){while(b<7){if(b==5){c+=9;break;}else return e;f+=15;return d;}return d;}") //
+        .using(WhileStatement.class, new WhileFiniteReturnToBreak()) //
+        .gives("a(){while(b<7){if(b==5){c+=9;break;}else return e;f+=15;break;}return d;}") //
+        .using(IfStatement.class, new IfThenOrElseIsCommandsFollowedBySequencer()) //
+        .gives("a(){while(b<7){if(b!=5)return e;c+=9;break;f+=15;break;}return d;}") //
+        .using(BreakStatement.class, new SequencerNotLastInBlock<BreakStatement>()) //
+        .gives("a(){while(b<7){if(b!=5)return e;c+=9;break;break;}return d;}") //
+        .using(BreakStatement.class, new SequencerNotLastInBlock<BreakStatement>()) //
+        .gives("a(){while(b<7){if(b!=5)return e;c+=9;break;}return d;}") //
+        .stays() //
+    ;
   }
 }

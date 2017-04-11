@@ -526,6 +526,15 @@ public interface iz {
     return $.matches("[+-]?0[xX].*") ? 16 : $.matches("[+-]?0[bB].*") ? 2 : $.matches("[+-]?0.*") ? 8 : 10;
   }
 
+  static boolean finiteLoop(final ForStatement ¢) {
+    final Expression $ = ¢.getExpression();
+    return $ != null && !iz.literal.true¢($);
+  }
+
+  static boolean finiteLoop(final WhileStatement ¢) {
+    return !iz.literal.true¢(¢.getExpression());
+  }
+
   /** @param o The operator to check
    * @return True - if the operator have opposite one in terms of operands
    *         swap. */
@@ -569,19 +578,9 @@ public interface iz {
   @SafeVarargs static <T> boolean in(final T candidate, final T... ts) {
     return Stream.of(ts).anyMatch(λ -> λ != null && λ.equals(candidate));
   }
-
   static boolean incrementedOrDecremented(final ASTNode id) {
     final ASTNode $ = parent(id);
     return iz.prefixExpression($) || iz.updating(az.prefixExpression($));
-  }
-
-  static boolean infiniteLoop(final ForStatement ¢) {
-    final Expression $ = ¢.getExpression();
-    return $ == null || iz.literal.true¢($);
-  }
-
-  static boolean infiniteLoop(final WhileStatement ¢) {
-    return iz.literal.true¢(¢.getExpression());
   }
 
   /** @param ¢ JD
@@ -1359,16 +1358,6 @@ public interface iz {
 
     static boolean xliteral(final String s, final ASTNode ¢) {
       return iz.literal(az.stringLiteral(¢), s);
-    }
-  }
-
-  interface not {
-    @SafeVarargs static <T> boolean in(final T t, final T... ts) {
-      return !iz.in(t, ts);
-    }
-
-    static boolean null¢(final Object ¢) {
-      return ¢ != null;
     }
   }
 }

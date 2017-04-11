@@ -18,15 +18,29 @@ import il.org.spartan.utils.*;
  * @since 2017-01-29 */
 public abstract class ASTMapReducer<R> extends Reduce<R> {
   public R map(final ASTNode ¢) {
-    return iz.statement(¢) ? map(az.statement(¢)) : iz.expression(¢) ? map(az.expression(¢)) : reduce();
+    return iz.statement(¢) ? map(az.statement(¢)) //
+        : iz.expression(¢) ? map(az.expression(¢)) //
+            : ¢.getNodeType() == ANONYMOUS_CLASS_DECLARATION ? map((AnonymousClassDeclaration) ¢) //
+                : ¢.getNodeType() == MODIFIER ? map((Modifier) ¢) //
+                    : reduce();
+  }
+
+  public R mapList(final List<? extends ASTNode> ns) {
+    R $ = reduce();
+    for (final ASTNode ¢ : ns)
+      $ = reduce($, map(¢));
+    return $;
   }
 
   protected R atomic(final Expression... ¢) {
     return foldl(as.list(¢));
   }
 
-  protected R map(final AbstractTypeDeclaration ¢) {
-    return reduce(map(¢.getJavadoc()), foldListModifiers(step.extendedModifiers(¢)), map(¢.getName()), foldl(step.bodyDeclarations(¢)));
+  protected final R foldl(final Iterable<? extends ASTNode> ns) {
+    R $ = reduce();
+    for (final ASTNode ¢ : ns)
+      $ = reduce($, map(¢));
+    return $;
   }
 
   protected R foldListModifiers(final List<IExtendedModifier> ms) {
@@ -36,8 +50,12 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
     return $;
   }
 
-  protected R map(@SuppressWarnings("unused") final IExtendedModifier __) {
-    return reduce();
+  protected R map(final AbstractTypeDeclaration ¢) {
+    return reduce(map(¢.getJavadoc()), foldListModifiers(step.extendedModifiers(¢)), map(¢.getName()), foldl(step.bodyDeclarations(¢)));
+  }
+
+  protected R map(AnonymousClassDeclaration ¢) {
+    return bodyDeclarations(¢).stream().map(this::map).reduce(this::reduce).orElse(reduce());
   }
 
   protected R map(final ArrayAccess ¢) {
@@ -161,19 +179,20 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
     return atomic(¢.getExpression());
   }
 
+  protected R map(ForStatement ¢) {
+    return reduce(mapList(initializers(¢)), map(¢.getExpression()), mapList(updaters(¢)), map(¢.getBody()));
+  }
+
+  protected R map(@SuppressWarnings("unused") final IExtendedModifier __) {
+    return reduce();
+  }
+
   protected R map(final IfStatement ¢) {
     return reduce(map(expression(¢)), map(then(¢)), map(elze(¢)));
   }
 
   protected R map(final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
-  }
-
-  protected final R foldl(final Iterable<? extends ASTNode> ns) {
-    R $ = reduce();
-    for (final ASTNode ¢ : ns)
-      $ = reduce($, map(¢));
-    return $;
   }
 
   protected R map(final Javadoc j) {
@@ -194,11 +213,8 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
     return reduce(map(expression(¢)), foldl(arguments(¢)));
   }
 
-  protected final R mapList(final List<ASTNode> ns) {
-    R $ = reduce();
-    for (final ASTNode ¢ : ns)
-      $ = reduce($, map(¢));
-    return $;
+  protected R map(Modifier ¢) {
+    return reduce();
   }
 
   protected R map(@SuppressWarnings("unused") final NullLiteral ¢) {
@@ -251,6 +267,8 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
         return map((EnhancedForStatement) ¢);
       case EXPRESSION_STATEMENT:
         return map((ExpressionStatement) ¢);
+      case FOR_STATEMENT:
+        return map((ForStatement) ¢);
       case IF_STATEMENT:
         return map((IfStatement) ¢);
       case LABELED_STATEMENT:
@@ -287,6 +305,10 @@ public abstract class ASTMapReducer<R> extends Reduce<R> {
 
   protected R map(final SuperMethodInvocation ¢) {
     return reduce(map(expression(¢)), foldl(arguments(¢)));
+  }
+
+  protected R map(SwitchStatement ¢) {
+    return reduce(map(¢.getExpression()), mapList(statements(¢)));
   }
 
   protected R map(final SynchronizedStatement ¢) {
