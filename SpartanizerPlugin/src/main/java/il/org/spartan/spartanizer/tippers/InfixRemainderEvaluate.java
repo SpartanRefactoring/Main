@@ -44,7 +44,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
         $ %= int¢;
       }
     } catch (final NumberFormatException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
     return $;
   }
@@ -63,7 +63,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
         $ %= long¢;
       }
     } catch (final NumberFormatException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
     return $;
   }

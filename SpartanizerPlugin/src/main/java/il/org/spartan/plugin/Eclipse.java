@@ -88,7 +88,7 @@ public class Eclipse {
               p.touch(m);
               return Status.OK_STATUS;
             } catch (final CoreException ¢) {
-              monitor.log(¢);
+              monitor.bug(¢);
               return Status.CANCEL_STATUS;
             }
           }
@@ -104,7 +104,7 @@ public class Eclipse {
           try {
             p.touch(m);
           } catch (final CoreException ¢) {
-            monitor.log(¢);
+            monitor.bug(¢);
           }
         });
       }

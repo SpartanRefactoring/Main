@@ -55,7 +55,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       try {
         new RefactoringWizardOpenOperation(new Wizard(g)).run(Display.getCurrent().getActiveShell(), "Laconization: " + g);
       } catch (final InterruptedException ¢¢) {
-        monitor.logCancellationRequest(this, ¢¢);
+        monitor.cancel(this, ¢¢);
       }
       return Integer.valueOf(0);
     });
@@ -111,7 +111,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     try {
       return DefunctTips.get((String) $.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
     } catch (final CoreException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
     }
     return null;
   }
@@ -141,7 +141,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         assert $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         return $.getResource() == null ? null : getSingleTipper((Class<? extends Tipper<?>>) $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
       } catch (final CoreException ¢) {
-        monitor.log(¢);
+        monitor.bug(¢);
       }
       return null;
     }
@@ -150,7 +150,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       try {
         return new SingleTipper<>($.newInstance());
       } catch (InstantiationException | IllegalAccessException ¢) {
-        monitor.log(¢);
+        monitor.bug(¢);
       }
       return null;
     }
@@ -171,7 +171,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException ¢) {
-            monitor.exception(this, ¢);
+            monitor.bug(this, ¢);
           }
         }
       };
@@ -215,7 +215,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           try {
             disabler.deactivate(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException ¢) {
-            monitor.exception(this, ¢);
+            monitor.bug(this, ¢);
           }
         }
       };

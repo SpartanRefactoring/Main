@@ -55,8 +55,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     addField(new BooleanFieldEditor(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT, getFieldEditorParent()));
     addField(new ListSelectionEditor("X", "Configure tips for projects:", getFieldEditorParent(), ps,
         p -> ProjectPreferencesHandler.execute((IProject) p, changes.getPreference((IProject) p), (pp, es) -> changes.update(pp, es)), //
-        λ -> changes.getAble((IProject) λ), //
-        λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.getAble((IProject) λ).booleanValue())) //
+        λ -> changes.isEnabled((IProject) λ), //
+        λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.isEnabled((IProject) λ).booleanValue())) //
     ));
     final String[][] parameterRenameOptions = new String[][] { { "¢", "¢" }, { "it", "it" }, { "param", "param" } };
     final RadioGroupFieldEditor singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3,
@@ -84,7 +84,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         if (p.isOpen() && p.hasNature(JavaCore.NATURE_ID))
           $.add(new AbstractMap.SimpleEntry<>(p.getName(), p));
       } catch (final CoreException ¢) {
-        monitor.log(¢);
+        monitor.bug(¢);
       }
     return $;
   }
@@ -274,13 +274,13 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getTippersByCategories(¢));
     }
 
-    public Boolean getAble(final IProject p) {
+    public Boolean isEnabled(final IProject p) {
       final Boolean $ = enabled.get(p);
       if ($ == null)
         try {
           return Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
         } catch (final CoreException ¢) {
-          monitor.log(¢);
+          monitor.bug(¢);
           return Boolean.FALSE;
         }
       return $;
@@ -318,7 +318,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
               try {
                 TipsOnOffToggle.toggleNature(p, enabled.get(p).booleanValue());
               } catch (final CoreException ¢) {
-                monitor.log(¢);
+                monitor.bug(¢);
               }
             m.worked(1);
           }

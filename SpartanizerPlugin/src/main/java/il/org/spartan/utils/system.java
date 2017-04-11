@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @since 2016 */
 public interface system {
   String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
+  String UTF_8 = "utf-8";
 
   static Process bash(final String shellCommand) {
     if (windows())
@@ -22,7 +23,7 @@ public interface system {
       if ($ != null)
         return dumpOutput($);
     } catch (final IOException ¢) {
-      monitor.logProbableBug(shellCommand, ¢);
+      monitor.bug(shellCommand, ¢);
     }
     return null;
   }

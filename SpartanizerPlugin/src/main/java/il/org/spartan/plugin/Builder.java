@@ -86,7 +86,7 @@ public final class Builder extends IncrementalProjectBuilder {
     try {
       addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
     } catch (final Throwable x) {
-      monitor.log(x);
+      monitor.bug(x);
     }
   }
 
@@ -126,7 +126,7 @@ public final class Builder extends IncrementalProjectBuilder {
         return !m.isCanceled() && !isInterrupted();
       });
     } catch (final CoreException ¢) {
-      monitor.logCancellationRequest(this, ¢);
+      monitor.cancel(this, ¢);
     }
   }
 

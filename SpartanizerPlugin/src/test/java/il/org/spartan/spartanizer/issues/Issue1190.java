@@ -29,7 +29,7 @@ public class Issue1190 {
       }
 
       @Override public void accept(final Exception ¢) {
-        monitor.exception(this, ¢);
+        monitor.bug(this, ¢);
       }
     });
   }
