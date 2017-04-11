@@ -87,7 +87,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     tipper = null;
   }
 
-  public ASTRewrite computeMaximalRewrite(CompilationUnit ¢) {
+  public ASTRewrite computeMaximalRewrite(final CompilationUnit ¢) {
     return computeMaximalRewrite(¢, null, null);
   }
 
@@ -241,6 +241,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     if (¢ != null)
       notify.tipperTip();
   }
+
   public final Taps notify = new Taps()//
       .push(new ProgressTapper())//
       .push(new TrimmerMonitor(this));
@@ -252,7 +253,6 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   Toolbox currentToolbox;
   String fileName;
   TrimmerExceptionListener exceptionListener = λ -> monitor.logToFile(λ, this, tip(), tipper(), fileName);
-
   final Consumer<Exception> swallow = λ -> exceptionListener.accept(λ);
 
   /** A {@link Tap} to update {@link #progressMonitor}
@@ -284,7 +284,10 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   public static class Taps implements Tap {
-    @Override public void noTipper() { inner.forEach(Tap::noTipper); }
+    @Override public void noTipper() {
+      inner.forEach(Tap::noTipper);
+    }
+
     /** @formatter:off */
     public Taps pop() { inner.remove(inner.size()-1); return this; }
     public Taps push(final Tap ¢) { inner.add(¢); return this; }

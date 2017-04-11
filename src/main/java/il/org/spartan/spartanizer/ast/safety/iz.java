@@ -578,6 +578,7 @@ public interface iz {
   @SafeVarargs static <T> boolean in(final T candidate, final T... ts) {
     return Stream.of(ts).anyMatch(λ -> λ != null && λ.equals(candidate));
   }
+
   static boolean incrementedOrDecremented(final ASTNode id) {
     final ASTNode $ = parent(id);
     return iz.prefixExpression($) || iz.updating(az.prefixExpression($));

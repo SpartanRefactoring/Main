@@ -85,8 +85,8 @@ public final class WhileFiniteReturnToBreak extends AbstractPattern<WhileStateme
     return "Convert the return inside the loop to break";
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
-    r.replace(convertToBreak, current.getAST().newBreakStatement(),g); 
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+    r.replace(convertToBreak, current.getAST().newBreakStatement(), g);
     return r;
   }
 
