@@ -34,7 +34,7 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
   private static final long serialVersionUID = -0x3270F722CF10D188L;
 
   @Override public String description(final VariableDeclarationExpression ¢) {
-    return "Rename iteration variable '" + extract.onlyName(¢) + "' of for loop to '¢'";
+    return "Rename iteration variable '" + extract.onlyName(¢) + "' to '¢'";
   }
 
   @Override public Tip tip(final VariableDeclarationExpression x) {
