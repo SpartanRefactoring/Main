@@ -83,7 +83,7 @@ public enum GuessedContext {
     final GuessedContext $ = qfind(codeFragment);
     if ($ != null)
       return $;
-    monitor.debug(
+    monitor.info(
         "GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n\n" + enumerateFailingAttempts(codeFragment));
     return GuessedContext.STATEMENTS_LOOK_ALIKE;
   }

@@ -110,7 +110,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
     List<Expression> temp = new ArrayList<>(xs);
     for (final Integer i : range.from(0).to(xs.size())) {
-      temp = lisp2.removeFirstElement(temp);
+      temp = the.rest(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
@@ -119,7 +119,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
             addDifferent(op, different);
         if (temp.size() == 1)
           extract.allOperands(az.infixExpression(first(temp))).stream().filter(λ -> !isIn(λ, $)).forEach(λ -> addDifferent(λ, different));
-        lisp2.removeElFromList(different, $);
+        lisp2.removeFromList(different, $);
       }
     }
     Expression addition = null;

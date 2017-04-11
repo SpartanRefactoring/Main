@@ -164,7 +164,7 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     try {
       return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "opening report file");
+      monitor.config(¢, "opening report file");
       return null;
     }
   }

@@ -993,7 +993,7 @@ public final class Version230 {
     trimminKof("for(;;){ if(a){x();return;} continue;a=3;}")//
         .gives("for(;;){ if(a){x();return;} continue;}")//
         .gives("for(;;){ if(a){x();return;} }")//
-        .gives("for(;;)if(a){x();return;}") //    
+        .gives("for(;;)if(a){x();return;}") //
         .stays();
   }
 

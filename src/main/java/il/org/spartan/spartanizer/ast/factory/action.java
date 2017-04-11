@@ -232,7 +232,7 @@ public enum action {
   }
 
   public static int sequencerRank(final ASTNode ¢) {
-    return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
+    return the.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 
   public static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {

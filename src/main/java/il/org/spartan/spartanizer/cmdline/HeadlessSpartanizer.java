@@ -71,7 +71,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputFolder)))
             .defaultRunAction(new CommandLine$Applicator()).go();
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢);
+      monitor.config(¢);
     }
   }
 

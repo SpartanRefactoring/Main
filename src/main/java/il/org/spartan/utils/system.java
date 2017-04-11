@@ -60,7 +60,7 @@ public interface system {
       for (String line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, $ + "");
+      monitor.config(¢, $ + "");
     }
     return $;
   }
@@ -108,7 +108,7 @@ public interface system {
     try {
       return new BufferedWriter(new FileWriter(ephemeral(myFullClassName()).dot("txt")));
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢);
+      monitor.config(¢);
     }
     return null;
   }

@@ -135,10 +135,10 @@ public final class Application implements IApplication {
         monitor.bug(this, ¢);
         ++failed;
       } catch (final IOException ¢) {
-        monitor.infoIOException(¢);
+        monitor.config(¢);
         ++failed;
       } catch (final Exception ¢) {
-        monitor.debug(this, ¢);
+        monitor.info(this, ¢);
         ++failed;
       } finally {
         discardCompilationUnit(u);
