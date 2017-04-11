@@ -67,7 +67,7 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
     final VariableDeclarationStatement pp = az.variableDeclarationStatement(parent);
     if (pp != null)
-      e = Inliner.protect(e, pp);
+      e = Inliner.protect(e);
     if (pp == null//
         || fragments(pp).size() <= 1)
       $.remove(parent, g);

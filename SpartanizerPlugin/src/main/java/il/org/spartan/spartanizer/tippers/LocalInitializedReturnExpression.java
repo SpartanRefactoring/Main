@@ -56,7 +56,7 @@ public final class LocalInitializedReturnExpression extends LocalInitializedStat
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    new Inliner(name, $, g).byValue(copy.of(initializer)).inlineInto(returnValue);
+    new Inliner(name, $, g).byValue(Inliner.protect(initializer)).inlineInto(returnValue);
     remove.deadFragment(current, $, g);
     return $;
   }

@@ -21,7 +21,7 @@ public abstract class LocalInitializedStatement extends LocalInitialized {
   }
 
   protected int waste() {
-    return uses().size() * (metrics.size(initializer) - 1);
+    return uses().size() * (metrics.size(Inliner.protect(initializer)) - 1);
   }
 
   private List<SimpleName> uses() {

@@ -73,13 +73,15 @@ public final class Inliner {
     return !($ instanceof SimpleName) ? null : ((SimpleName) $).getIdentifier();
   }
 
-  public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
+  public static Expression protect(final Expression initializer) {
     if (!iz.arrayInitializer(initializer))
-      return initializer;
+      return copy.of(initializer);
+    final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(parent(initializer)));
+    assert parent != null;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
-    $.setType(az.arrayType(copy.of(type(currentStatement))));
-    // TODO // causes // IllegalArgumentException // (--om)
+    $.setType(az.arrayType(copy.of(type(parent))));
     $.setInitializer(copy.of(az.arrayInitializer(initializer)));
+    // TODO // causes // IllegalArgumentException // (--om)
     return $;
   }
 
