@@ -171,7 +171,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException ¢) {
-            monitor.logEvaluationError(this, ¢);
+            monitor.exception(this, ¢);
           }
         }
       };
@@ -215,7 +215,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           try {
             disabler.deactivate(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException ¢) {
-            monitor.logEvaluationError(this, ¢);
+            monitor.exception(this, ¢);
           }
         }
       };

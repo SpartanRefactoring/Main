@@ -37,7 +37,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
         $ /= az.throwing.double¢(¢);
       }
     } catch (final NumberFormatException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
     }
     return $;
   }
@@ -56,7 +56,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
         $ /= az.throwing.int¢(¢);
       }
     } catch (final NumberFormatException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
     }
     return $;
   }
@@ -75,7 +75,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
         $ /= az.throwing.long¢(¢);
       }
     } catch (final NumberFormatException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
     }
     return $;
   }
