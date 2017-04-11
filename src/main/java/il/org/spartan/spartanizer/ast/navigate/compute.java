@@ -19,6 +19,55 @@ import il.org.spartan.utils.*;
  * @since 2017-04-01 */
 public enum compute {
   ;
+  public static List<ReturnStatement> returns(final ASTNode n) {
+    return new ASTMapReducer<List<ReturnStatement>>() {
+      @Override protected List<ReturnStatement> map(LambdaExpression ¢) {
+        return reduce();
+      }
+
+      @Override protected List<ReturnStatement> map(ForStatement ¢) {
+        return reduce();
+      }
+
+      @Override protected List<ReturnStatement> map(EnhancedForStatement ¢) {
+        return reduce();
+      }
+
+      @Override protected List<ReturnStatement> map(WhileStatement ¢) {
+        return reduce();
+      }
+
+      @Override protected List<ReturnStatement> map(DoStatement ¢) {
+        return reduce();
+      }
+
+      @Override protected List<ReturnStatement> map(SwitchStatement ¢) {
+        return reduce();
+      }
+
+      @Override protected List<ReturnStatement> map(AnonymousClassDeclaration ¢) {
+        return reduce();
+      }
+
+      @Override protected List<ReturnStatement> map(TypeDeclarationStatement ¢) {
+        return reduce();
+      }
+
+      @Override protected List<ReturnStatement> map(ReturnStatement ¢) {
+        return as.list(¢);
+      }
+
+      @Override public List<ReturnStatement> reduce() {
+        return empty.list();
+      }
+
+      @Override public List<ReturnStatement> reduce(final List<ReturnStatement> ss1, final List<ReturnStatement> ss2) {
+        ss1.addAll(ss2);
+        return ss1;
+      }
+    }.map(n);
+  }
+
   public static List<String> usedNames(final Expression x) {
     return new ASTMapReducer<List<String>>() {
       @Override public List<String> reduce() {

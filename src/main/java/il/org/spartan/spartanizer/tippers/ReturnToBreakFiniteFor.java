@@ -75,12 +75,12 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
-    return ¢ != null && extract.nextReturn(¢) != null && !iz.infiniteLoop(¢);
+    return ¢ != null && extract.nextReturn(¢) != null && iz.finiteLoop(¢);
   }
 
   @Override public Tip tip(final ForStatement s) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
-    if (nextReturn == null || iz.infiniteLoop(s))
+    if (nextReturn == null || !iz.finiteLoop(s))
       return null;
     final Statement body = body(s), $ = iz.returnStatement(body) && compareReturnStatements(nextReturn, az.returnStatement(body)) ? body
         : iz.block(body) ? handleBlock((Block) body, nextReturn) : iz.ifStatement(body) ? handleIf(body, nextReturn) : null;

@@ -18,10 +18,10 @@ class FolderSpartanaizer {
         try {
           FileUtils.writeToFile(f.getAbsolutePath(), new NoBraindDamagedTippersSpartanizer().fixedPoint(FileUtils.read(f)));
         } catch (Exception ¢) {
-          System.exit(-1); // exception - fail
+          System.exit(1); // exception - fail
         }
       }
-    }.fire(new ASTVisitor() {});
+    }.fire(new ASTVisitor() {/**/});
     System.exit(0); // success
   }
 }
