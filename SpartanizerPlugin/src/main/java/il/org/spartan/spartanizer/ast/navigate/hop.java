@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.Utils.last;
-import static il.org.spartan.utils.lisp2.rest;
 
 import static il.org.spartan.lisp.*;
 
@@ -132,8 +131,8 @@ public interface hop {
   }
 
   static List<Statement> subsequentStatements(final Statement ¢) {
-    return parent(¢) instanceof SwitchStatement ? rest(¢, step.statements((SwitchStatement) parent(¢)))
-        : parent(¢) instanceof Block ? rest(¢, step.statements((Block) parent(¢))) //
+    return parent(¢) instanceof SwitchStatement ? the.rest(¢, step.statements((SwitchStatement) parent(¢)))
+        : parent(¢) instanceof Block ? the.rest(¢, step.statements((Block) parent(¢))) //
             : empty.list();
   }
 }

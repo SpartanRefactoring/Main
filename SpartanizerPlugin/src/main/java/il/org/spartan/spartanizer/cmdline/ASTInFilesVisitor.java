@@ -76,7 +76,7 @@ public class ASTInFilesVisitor {
     try {
       return !containsTestAnnotation(FileUtils.read($));
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "File = " + $);
+      monitor.config(¢, "File = " + $);
       return false;
     }
   }
@@ -121,7 +121,7 @@ public class ASTInFilesVisitor {
   }
 
   protected void visit(final File f) {
-    monitor.debug("Visiting: " + f.getName());
+    monitor.info("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
     if (Utils.isProductionCode(f) && productionCode(f))
@@ -132,7 +132,7 @@ public class ASTInFilesVisitor {
         if (!silent)
           dotter.click();
       } catch (final IOException ¢) {
-        monitor.infoIOException(¢, "File = " + f);
+        monitor.config(¢, "File = " + f);
       }
   }
 

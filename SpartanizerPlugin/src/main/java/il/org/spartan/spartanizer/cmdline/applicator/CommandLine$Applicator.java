@@ -181,7 +181,7 @@ public class CommandLine$Applicator extends GenericApplicator {
         try {
           tipper = getTipper(n);
         } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
+          monitor.info(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -189,7 +189,7 @@ public class CommandLine$Applicator extends GenericApplicator {
         try {
           s = tipper.tip(n);
         } catch (final Exception ¢) {
-          monitor.debug(this, ¢);
+          monitor.info(this, ¢);
         }
         if (s == null)
           return true;

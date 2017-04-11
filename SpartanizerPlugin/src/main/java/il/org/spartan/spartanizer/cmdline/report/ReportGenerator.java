@@ -178,7 +178,7 @@ public class ReportGenerator implements ConfigurableReport {
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, id);
+      monitor.config(¢, id);
     }
   }
 

@@ -30,6 +30,7 @@ public final class SingleFlater {
   @Deprecated private TextSelection textSelection;
   private boolean usesDisabling = true;
   private WindowInformation windowInformation;
+
   private SingleFlater() {}
 
   /** Creates a new for a {@link CompilationUnit}.
@@ -96,7 +97,7 @@ public final class SingleFlater {
         try {
           w = operationsProvider.getTipper(n);
         } catch (final Exception ¢) {
-          monitor.bug(this,¢);
+          monitor.bug(this, ¢);
         }
         if (w == null)
           return true;

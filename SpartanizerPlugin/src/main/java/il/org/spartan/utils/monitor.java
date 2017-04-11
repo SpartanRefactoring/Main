@@ -1,20 +1,16 @@
 package il.org.spartan.utils;
 
 import static il.org.spartan.utils.English.*;
-import static il.org.spartan.utils.fault.*;
 import static java.lang.String.*;
 
 import static java.util.stream.Collectors.*;
 
 import java.io.*;
-import java.text.*;
 import java.util.*;
 import java.util.logging.*;
-import java.util.logging.Formatter;
 import java.util.stream.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
@@ -27,9 +23,9 @@ public interface monitor {
 
   static <T> T bug(final Object instance) {
     return bug(//
-        "Instance involved is of class %s\n" + //
+        "Instance involved is %s\n" + //
             "toString() = \n",
-        English.name(instance), instance);
+        English.indefinite(instance), instance);
   }
 
   static <T> T bug(final Object o, final Throwable t) {
@@ -56,6 +52,17 @@ public interface monitor {
 
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
+   * @param ¢ JD */
+  static <T> T cancel(final Exception ¢) {
+    return robust.nullify(() -> logger.info(//
+        " " + English.name(¢) + //
+            " (probably cancellation) exception." + //
+            "\n x = '" + ¢ + "'" //
+    ));
+  }
+
+  /** To be invoked whenever you do not know what to do with an exception
+   * @param o JD
    * @param x JD */
   static <T> T cancel(final Object o, final Exception x) {
     return robust.nullify(() -> logger.info(//
@@ -66,54 +73,15 @@ public interface monitor {
             "\n o = " + o + "'"));
   }
 
-  static ConsoleHandler consoleHandler() {
-    final ConsoleHandler $ = new ConsoleHandler();
-    $.setFormatter(new Formatter() {
-      @Override @SuppressWarnings("boxing") public String format(final LogRecord ¢) {
-        return String.format("%2d. %s %s#%s %s: %s\n", //
-            ¢.getSequenceNumber(), //
-            new SimpleDateFormat("yy-MM-dd hh:mm:ss").format(new Date(¢.getMillis())), //
-            namer.lastComponent(¢.getSourceClassName()), //
-            ¢.getSourceMethodName(), //
-            ¢.getLevel(), //
-            formatMessage(¢)//
-        );
-      }
-    });
-    return $;
-  }
-
-  static <T> T debug(final Class<?> o, final Throwable t) {
-    return debug(//
-        "A static method of " + English.name(o) + //
-            "was hit by " + indefinite(t) + "\n" + //
-            "exception. This is expected and printed only for the purpose of debugging" + //
-            "x = '" + t + "'" + //
-            "o = " + o + "'");
-  }
-
-  static <T> T debug(final Object o, final Throwable t) {
-    return debug(//
-        "An instance of " + English.name(o) + //
-            "\n was hit by " + indefinite(t) + //
-            " exception. This is expected and printed only for the purpose of debugging" + //
-            "\n x = '" + t + "'" + //
-            "\n o = " + o + "'");
-  }
-
-  static <T> T debug(final String message) {
-    return robust.nullify(() -> logger.info(message));
-  }
-
-  static <T> T infoIOException(final Exception ¢) {
-    return robust.nullify(() -> logger.info(//
+  static <T> T config(final Exception ¢) {
+    return robust.nullify(() -> logger.config(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)" //
             + "\n   The exception says: '" + ¢ + "'" //
     ));
   }
 
-  static <T> T infoIOException(final Exception x, final String message) {
+  static <T> T config(final Exception x, final String message) {
     return robust.nullify(() -> logger.info(//
         "   Got an exception of type : " + English.name(x) + //
             "\n      (probably I/O exception)" + //
@@ -123,22 +91,32 @@ public interface monitor {
     ));
   }
 
-  static <T> T infoIOException(final IOException ¢) {
+  static <T> T config(final IOException ¢) {
     return robust.nullify(() -> logger.info(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
     ));
   }
+  static <T> T info(final Class<?> o, final Throwable t) {
+    return info(//
+        "A static method of " + English.name(o) + //
+            "was hit by " + indefinite(t) + "\n" + //
+            "exception. This is expected and printed only for the purpose of debugging" + //
+            "x = '" + t + "'" + //
+            "o = " + o + "'");
+  }
 
-  /** To be invoked whenever you do not know what to do with an exception
-   * @param o JD
-   * @param ¢ JD */
-  static <T> T logCancellationRequest(final Exception ¢) {
-    return robust.nullify(() -> logger.info(//
-        " " + English.name(¢) + //
-            " (probably cancellation) exception." + //
-            "\n x = '" + ¢ + "'" //
-    ));
+  static <T> T info(final Object o, final Throwable t) {
+    return info(//
+        "An instance of " + English.name(o) + //
+            "\n was hit by " + indefinite(t) + //
+            " exception. This is expected and printed only for the purpose of debugging" + //
+            "\n x = '" + t + "'" + //
+            "\n o = " + o + "'");
+  }
+
+  static <T> T info(final String message) {
+    return robust.nullify(() -> logger.info(message));
   }
 
   static <T> T logProbableBug(final Throwable ¢) {
@@ -150,18 +128,6 @@ public interface monitor {
     ));
   }
 
-  static <T> T logToFile(final String message) {
-    try {
-      if (MyLogger.writer() != null) {
-        MyLogger.writer().write(message + "\n");
-        MyLogger.writer().flush();
-      }
-    } catch (final IOException ¢) {
-      ¢.printStackTrace();
-    }
-    return null¢();
-  }
-
   /** logs an error in the plugin into an external file
    * @param tipper an error */
   static <T> T logToFile(final Throwable t, final Object... os) {
@@ -171,27 +137,9 @@ public interface monitor {
     System.arraycopy(os, 0, nos, 2, os.length);
     nos[0] = t + "";
     nos[1] = (w + "").trim();
-    debug(separate.these(nos).by(FILE_SUB_SEPARATOR)); //
-    debug(FILE_SEPARATOR);
-    return null¢();
-  }
-
-  static void main(final String[] args) {
-    System.out.println(MyLogger.fileName());
-  }
-
-  static Logger makeLogger() {
-    final Logger $ = Logger.getGlobal();
-    for (final Handler ¢ : $.getHandlers())
-      $.removeHandler(¢);
-    for (final Handler ¢ : $.getParent().getHandlers())
-      $.getParent().removeHandler(¢);
-    $.addHandler(consoleHandler());
-    return $;
-  }
-
-  static <T> T null¢() {
-    return null;
+    info(separate.these(nos).by(FILE_SUB_SEPARATOR)); //
+    info(FILE_SEPARATOR);
+    return the.null¢();
   }
 
   static void set(final Level ¢) {
@@ -210,46 +158,11 @@ public interface monitor {
   String FILE_SUB_SEPARATOR = "\n********\n";
   /** @formatter:off */
   Stack<Level> levels = new Stack<>();
-  Logger logger = makeLogger();
-  class MyLogger {
-    public static File file() {
-      return file = file != null ? file : new File(fileName());
-    }
-    public static String fileName() {
-      if (fileName != null)
-        return fileName;
-      fileName = system.tmp + "spartanizer" + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + ".txt";
-      System.out.flush();
-      System.err.flush();
-      System.err.format("\n --- Your secret log file will be found in \n\t%s\n", fileName);
-      System.out.flush();
-      return fileName;
-    }
-    public static OutputStream outputStream() {
-      try {
-        return outputStream = outputStream != null ? outputStream : new FileOutputStream(file(), true);
-      } catch (@SuppressWarnings("unused") final FileNotFoundException __) {
-        try {
-          return outputStream = new FileOutputStream(fileName(), true);
-        } catch (@SuppressWarnings("unused") final FileNotFoundException ___) {
-          return outputStream = null;
-        }
-      }
-    }
-    public static Writer writer() {
-      if (outputStream() == null)
-        return null;
-      try {
-        return writer = writer != null ? writer : new BufferedWriter(new OutputStreamWriter(outputStream(), system.UTF_8));
-      } catch (final UnsupportedEncodingException ¢) {
-        assert fault.unreachable() : specifically(String.format("Encoding '%s' should not be invalid", system.UTF_8), //
-            ¢, file, fileName, file(), fileName());
-        return null;
-      }
-    }
-    private static File file;
-    private static String fileName;
-    private static OutputStream outputStream;
-    private static Writer writer;
-  }
+  Logger logger = the.lambdaResult(()->{
+    final Logger $ = Logger.getGlobal();
+    final ConsoleHandler handler = new ConsoleHandler();
+    handler.setLevel(Level.ALL);
+    $.addHandler(handler);
+    return $;
+  });
 }

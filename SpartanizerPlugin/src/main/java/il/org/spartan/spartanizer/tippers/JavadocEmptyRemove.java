@@ -24,7 +24,7 @@ public final class JavadocEmptyRemove extends RemovingTipper<Javadoc>//
     return //
     convert("/***/ void f() {}") //
         .to("void f() {}") //
-        .ignores("/** Meaningful comment */ void f() {}") //
+        .ignores("/** Some comment */ void f() {}") //
     ;
   }
 

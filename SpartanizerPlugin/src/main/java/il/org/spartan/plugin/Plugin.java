@@ -46,7 +46,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
 
   @Override public void start(final BundleContext c) throws Exception {
     super.start(c);
-    monitor.debug("START: GUIBatchLaconizer");
+    monitor.info("START: GUIBatchLaconizer");
     try {
       startSpartan();
       addPartListener();
@@ -57,23 +57,23 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   }
 
   @Override public void stop(final BundleContext ¢) throws Exception {
-    monitor.debug("STOP: spartnizer");
+    monitor.info("STOP: spartnizer");
     plugin = null;
     super.stop(¢);
   }
 
   @Override protected void loadDialogSettings() {
-    monitor.debug("LDS: gUIBatchLaconizer");
+    monitor.info("LDS: gUIBatchLaconizer");
     super.loadDialogSettings();
   }
 
   @Override protected void refreshPluginActions() {
-    monitor.debug("RPA: gUIBatchLaconizer");
+    monitor.info("RPA: gUIBatchLaconizer");
     super.refreshPluginActions();
   }
 
   @Override protected void saveDialogSettings() {
-    monitor.debug("SDS: gUIBatchLaconizer");
+    monitor.info("SDS: gUIBatchLaconizer");
     super.saveDialogSettings();
   }
 

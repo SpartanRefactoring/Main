@@ -134,7 +134,7 @@ public interface ConfigurableReport {
       try {
         report = new CSVStatistics(reportFilename, header);
       } catch (final IOException ¢) {
-        monitor.infoIOException(¢, header);
+        monitor.config(¢, header);
       }
     }
 
@@ -196,7 +196,7 @@ public interface ConfigurableReport {
         try {
           report = new CSVStatistics(getFileName(), getHeader());
         } catch (final IOException ¢) {
-          monitor.infoIOException(¢);
+          monitor.config(¢);
         }
       }
 

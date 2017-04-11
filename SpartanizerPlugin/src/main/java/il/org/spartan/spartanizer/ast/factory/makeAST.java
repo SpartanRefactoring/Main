@@ -88,7 +88,7 @@ public enum makeAST {
         if (¢ == null)
           return $;
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, f + "");
+      monitor.config(¢, f + "");
       return null;
     }
   }

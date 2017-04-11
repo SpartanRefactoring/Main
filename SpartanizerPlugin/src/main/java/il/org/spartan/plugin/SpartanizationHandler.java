@@ -57,7 +57,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       } catch (final InvocationTargetException ¢) {
         monitor.logProbableBug(¢);
       } catch (final InterruptedException ¢) {
-        monitor.logCancellationRequest(¢);
+        monitor.cancel(¢);
       }
     });
     $.defaultRunAction(t);
@@ -130,7 +130,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       if (openDialog.get())
         runAsynchronouslyInUIThread(() -> {
           d.getProgressMonitor()
-              .subTask(English.trim(lisp2.nth($.selection().inner.indexOf(¢), $.selection().size()) + "\tSpartanizing " + ¢.name()));
+              .subTask(English.trim(the.nth($.selection().inner.indexOf(¢), $.selection().size()) + "\tSpartanizing " + ¢.name()));
           d.getProgressMonitor().worked(1);
           if (d.getProgressMonitor().isCanceled())
             $.stop();
@@ -167,7 +167,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       } catch (final InvocationTargetException ¢) {
         monitor.logProbableBug(¢);
       } catch (final InterruptedException ¢) {
-        monitor.logCancellationRequest(¢);
+        monitor.cancel(¢);
       }
     });
     $.defaultRunAction(t);

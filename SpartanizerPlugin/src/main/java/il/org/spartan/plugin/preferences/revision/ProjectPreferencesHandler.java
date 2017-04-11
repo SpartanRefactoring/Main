@@ -85,8 +85,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       Eclipse.refreshProject(p);
     } catch (InvocationTargetException | CoreException ¢) {
       return monitor.logProbableBug(¢);
-    } catch (InterruptedException ¢) {
-      return monitor.logCancellationRequest(¢);
+    } catch (final InterruptedException ¢) {
+      return monitor.cancel(¢);
     }
     return null;
   }

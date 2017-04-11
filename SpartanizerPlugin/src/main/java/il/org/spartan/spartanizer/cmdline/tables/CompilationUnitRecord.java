@@ -74,7 +74,7 @@ public class CompilationUnitRecord {
     try {
       containsTestAnnotation(FileUtils.read(f));
     } catch (final IOException ¢) {
-      monitor.infoIOException(¢, "File = " + f);
+      monitor.config(¢, "File = " + f);
     }
     return hasTestAnnotation;
   }
