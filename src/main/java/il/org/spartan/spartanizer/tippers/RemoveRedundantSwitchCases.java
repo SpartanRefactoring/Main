@@ -23,12 +23,12 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
   private static final long serialVersionUID = -0x173EADC6209210E7L;
 
   @Override public Tip tip(final SwitchCase myCase) {
-    final SwitchCase nextCase = az.switchCase(extract.nextStatementInBlock(myCase));
+    final SwitchCase $ = az.switchCase(extract.nextStatementInBlock(myCase));
     return new Tip(description(myCase), getClass(), myCase) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.remove(nextCase.isDefault() ? myCase : nextCase, g);
+        r.remove(!$.isDefault() ? $ : myCase, g);
       }
-    }.spanning(nextCase);
+    }.spanning($);
   }
 
   @Override protected boolean prerequisite(final SwitchCase n) {
