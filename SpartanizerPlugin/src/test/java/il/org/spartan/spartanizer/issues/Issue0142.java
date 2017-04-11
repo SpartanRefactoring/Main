@@ -12,13 +12,11 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0142 {
   @Test public void disableSpartanizaionInClass() {
-    trimminKof("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; }  /***/ int g() { int $ = 2; return $; } }")
-        .stays();
+    trimminKof("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; }  /***/ int g() { int $ = 2; return $; } }").stays();
   }
 
   @Test public void disableSpartanizaionInClass1() {
-    trimminKof("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; }  /***/ int g() { int $ = 2; return $; } }")
-        .stays();
+    trimminKof("/**[[SuppressWarningsSpartan]]*/ class A { /***/ int f() { int $ = 1; return $; }  /***/ int g() { int $ = 2; return $; } }").stays();
   }
 
   @Test public void disableSpartanizaionInMethod() {
