@@ -22,12 +22,19 @@ public enum compute {
   ;
   public static List<ReturnStatement> returns(final ASTNode n) {
     return new ASTMapReducer<List<ReturnStatement>>() {
-      @Override protected int[] leaf() {
+      @Override protected int[] protect() {
         return new int[] { //
             LAMBDA_EXPRESSION, //
             FOR_STATEMENT, //
             ENHANCED_FOR_STATEMENT, //
-            DO_STATEMENT, ANONYMOUS_CLASS_DECLARATION, SWITCH_STATEMENT, TYPE_DECLARATION_STATEMENT, };
+            DO_STATEMENT, //
+            ANONYMOUS_CLASS_DECLARATION, //
+            SWITCH_STATEMENT, //
+            TYPE_DECLARATION_STATEMENT, //
+            };
+      }
+      @Override public List<ReturnStatement> map(ReturnStatement ¢) {
+        return as.list(¢);
       }
 
       @Override public List<ReturnStatement> reduce() {
