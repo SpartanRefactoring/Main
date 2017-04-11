@@ -31,14 +31,18 @@ public class Issue0860 {
   }
 
   @Test public void t4() {
-    trimminKof("switch(x) {case C5:case C2:case C9:case C1:case B:x = 2;break;}").using(SwitchCase.class, new SwitchCaseLocalSort())
-        .gives("switch(x) {case C2:case C5:case C9:case C1:case B:x = 2;break;}").using(SwitchCase.class, new SwitchCaseLocalSort())
-        .gives("switch(x) {case C2:case C5:case C1:case C9:case B:x = 2;break;}").using(SwitchCase.class, new SwitchCaseLocalSort())
-        .gives("switch(x) {case C2:case C1:case C5:case C9:case B:x = 2;break;}").using(SwitchCase.class, new SwitchCaseLocalSort())
-        .gives("switch(x) {case C1:case C2:case C5:case C9:case B:x = 2;break;}").using(SwitchCase.class, new SwitchCaseLocalSort())
-        .gives("switch(x) {case C1:case C2:case C5:case B:case C9:x = 2;break;}").using(SwitchCase.class, new SwitchCaseLocalSort())
-        .gives("switch(x) {case C1:case C2:case B:case C5:case C9:x = 2;break;}").using(SwitchCase.class, new SwitchCaseLocalSort())
-        .gives("switch(x) {case C1:case B:case C2:case C5:case C9:x = 2;break;}").using(SwitchCase.class, new SwitchCaseLocalSort())
-        .gives("switch(x) {case B:case C1:case C2:case C5:case C9:x = 2;break;}");
+    trimminKof("switch(x) {case C5:case C2:case C9:case C1:case B:x = 2;break;}")//
+        .using(SwitchCase.class, new SwitchCaseLocalSort())//
+        .gives("switch(x){case C2:case C5:case C1:case C9:case B:x=2;break;}") //
+        .using(SwitchCase.class, new SwitchCaseLocalSort())//
+        .gives("switch(x){case C2:case C1:case C5:case B:case C9:x=2;break;}") //
+        .using(SwitchCase.class, new SwitchCaseLocalSort())//
+        .gives("switch(x){case C1:case C2:case B:case C5:case C9:x=2;break;}") //
+        .using(SwitchCase.class, new SwitchCaseLocalSort())//
+        .gives("switch(x){case C1:case B:case C2:case C5:case C9:x=2;break;}") //
+        .using(SwitchCase.class, new SwitchCaseLocalSort())//
+        .gives("switch(x){case B:case C1:case C2:case C5:case C9:x=2;break;}") //
+        .using(SwitchCase.class, new SwitchCaseLocalSort())//
+        .stays();
   }
 }
