@@ -151,8 +151,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     try {
       progressMonitorDialog.run(true, true, r);
     } catch (InterruptedException | InvocationTargetException ¢) {
-      monitor.log(¢);
-      return null;
+      return monitor.bug(¢);
     }
     closeDialog(initialDialog);
     doWork(finalWork(applicator, selection.getCompilationUnits(), attributes), eclipse.progressMonitorDialog(hasDisplay()));
@@ -174,7 +173,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
         monitor.logProbableBug(¢);
         return false;
       } catch (final InterruptedException ¢) {
-        monitor.logCancellationRequest(this, ¢);
+        monitor.cancel(this, ¢);
         return false;
       }
     return true;

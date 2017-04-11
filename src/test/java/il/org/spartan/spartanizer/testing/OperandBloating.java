@@ -91,7 +91,7 @@ public class OperandBloating extends TrimmingOperand {
       azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
       return new OperandBloating($1);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.logProbableBug(this, ¢);
+      monitor.bug(this, ¢);
     }
     return null;
   }
@@ -143,7 +143,7 @@ public class OperandBloating extends TrimmingOperand {
       p.setResolveBindings(true);
       return new OperandBloating(az.compilationUnit(p.createAST(null)), unpeeled);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.logProbableBug(this, ¢);
+      monitor.bug(this, ¢);
     }
     return null;
   }
@@ -202,7 +202,7 @@ public class OperandBloating extends TrimmingOperand {
           trivia.escapeQuotes(trivia.essence(get())));
       azzert.that(trivia.essence(peeled), is(trivia.essence(get())));
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.logProbableBug(this, ¢);
+      monitor.bug(this, ¢);
     }
   }
 
@@ -220,7 +220,7 @@ public class OperandBloating extends TrimmingOperand {
       if (!unpeeled.equals(get()) && unpeeled.equals(get()))
         assertSimilar(get(), unpeeled);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.logProbableBug(this, ¢);
+      monitor.bug(this, ¢);
     }
   }
 

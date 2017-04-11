@@ -79,12 +79,14 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param p JD
    * @param pc enabled tippers
    * @return null */
-  public static Object commit(final IProject p, final Collection<String> pc) {
+  public static Void commit(final IProject p, final Collection<String> pc) {
     XMLSpartan.updateEnabledTippers(p, pc);
     try {
       Eclipse.refreshProject(p);
-    } catch (InvocationTargetException | CoreException | InterruptedException ¢) {
-      monitor.log(¢);
+    } catch (InvocationTargetException | CoreException ¢) {
+      return monitor.logProbableBug(¢);
+    } catch (InterruptedException ¢) {
+      return monitor.logCancellationRequest(¢);
     }
     return null;
   }
@@ -272,7 +274,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
             })).run(Display.getCurrent().getActiveShell(), "Tipper Preview") == Window.OK)
               $.setChecked(st, true);
           } catch (final InterruptedException ¢¢) {
-            monitor.logCancellationRequest(this, ¢¢);
+            monitor.cancel(this, ¢¢);
           }
         }
       });
@@ -304,7 +306,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     try {
       e.apply($);
     } catch (MalformedTreeException | BadLocationException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
     }
     return $.get();
   }

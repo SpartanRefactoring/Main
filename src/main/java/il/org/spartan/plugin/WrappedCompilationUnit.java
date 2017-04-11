@@ -48,7 +48,7 @@ public class WrappedCompilationUnit {
         compilationUnit = (CompilationUnit) (!useBinding ? make.COMPILATION_UNIT.parser(descriptor)
             : make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
       } catch (final Throwable x) {
-        monitor.log(x);
+        monitor.bug(x);
       }
     return this;
   }

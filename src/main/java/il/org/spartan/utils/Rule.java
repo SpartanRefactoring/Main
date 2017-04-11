@@ -272,7 +272,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     }
 
     private R badTypeState(final String reason, final Object... os) {
-      return monitor.logProbableBug(this,
+      return monitor.bug(this,
           new IllegalStateException(//
               format(//
                   "Invalid order of method calls on a %s (dynamic type %):\n", //

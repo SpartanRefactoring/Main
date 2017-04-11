@@ -52,7 +52,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       addPartListener();
       loadPreferences();
     } catch (final IllegalStateException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
     }
   }
 
@@ -107,11 +107,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
                 mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
               }
             } catch (final Exception ¢) {
-              monitor.log(¢);
+              monitor.bug(¢);
             }
           }).schedule(SAFETY_DELAY);
       } catch (final CoreException ¢) {
-        monitor.log(¢);
+        monitor.bug(¢);
       }
     });
     listening = true;

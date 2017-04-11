@@ -56,7 +56,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
     try {
       toggleNature(p, !p.hasNature(Nature.NATURE_ID));
     } catch (final CoreException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
     return null;
   }

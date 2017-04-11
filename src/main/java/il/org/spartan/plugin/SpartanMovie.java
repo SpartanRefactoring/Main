@@ -66,7 +66,7 @@ public class SpartanMovie extends AbstractHandler {
               sleep(SLEEP_BETWEEN);
             }
           } catch (final CoreException ¢) {
-            monitor.log(¢);
+            monitor.bug(¢);
           }
         }
         pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
@@ -74,7 +74,7 @@ public class SpartanMovie extends AbstractHandler {
         pm.done();
       });
     } catch (InvocationTargetException | InterruptedException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
       ¢.printStackTrace();
     }
     sleep(1);
@@ -97,7 +97,7 @@ public class SpartanMovie extends AbstractHandler {
     try {
       return $.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
     } catch (final CoreException m) {
-      monitor.log(m);
+      monitor.bug(m);
       return new IMarker[0];
     }
   }
@@ -106,7 +106,7 @@ public class SpartanMovie extends AbstractHandler {
     try {
       return eclipse.compilationUnits(eclipse.currentCompilationUnit(), wizard.nullProgressMonitor);
     } catch (final JavaModelException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
       return new ArrayList<>();
     }
   }
@@ -115,7 +115,7 @@ public class SpartanMovie extends AbstractHandler {
     try {
       IDE.openEditor(p, f, true);
     } catch (final PartInitException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
       return false;
     }
     return true;
@@ -161,7 +161,7 @@ public class SpartanMovie extends AbstractHandler {
         if (((Integer) ms[i].getAttribute(IMarker.CHAR_START)).intValue() < ((Integer) ms[$].getAttribute(IMarker.CHAR_START)).intValue())
           $ = i;
       } catch (final CoreException ¢) {
-        monitor.log(¢);
+        monitor.bug(¢);
         break;
       }
     return ms[$];

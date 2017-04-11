@@ -45,7 +45,7 @@ public class Augmenter implements Application {
         textChange.perform(npm);
       return Integer.valueOf(0);
     } catch (final CoreException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
     return Integer.valueOf(0);
   }

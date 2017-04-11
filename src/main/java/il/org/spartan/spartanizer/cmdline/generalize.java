@@ -71,7 +71,7 @@ public enum generalize {
     try {
       r.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.exception(¢);
+      monitor.bug(¢);
     }
     return ASTutils.extractCode(s, d);
   }

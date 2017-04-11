@@ -140,7 +140,7 @@ public enum sideEffects {
       case INSTANCEOF_EXPRESSION:
         return sideEffects.free(left(az.instanceofExpression(¢)));
       default:
-        monitor.logProbableBug(sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + wizard.nodeName(¢)));
+        monitor.bug(sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + wizard.nodeName(¢)));
         return false;
     }
   }

@@ -72,7 +72,7 @@ public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<
       replacement = Long.parseLong(token, radix);
       return true;
     } catch (final NumberFormatException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
       return false;
     }
   }
