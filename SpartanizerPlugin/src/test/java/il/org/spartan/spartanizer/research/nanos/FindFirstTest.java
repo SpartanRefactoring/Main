@@ -13,67 +13,67 @@ import org.junit.runners.*;
 @SuppressWarnings("static-method")
 public class FindFirstTest {
   @Test public void a() {
-    trimmingOf("for(Object i : is) if(i.isN()) return i; return null;")//
+    topDownTrimming("for(Object i : is) if(i.isN()) return i; return null;")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("return is.stream().filter(i->i.isN()).findFirst().orElse(null);");
   }
 
   @Test public void b() {
-    trimmingOf("for(Object i : is) if(i.isN()) return i; throw new None();")//
+    topDownTrimming("for(Object i : is) if(i.isN()) return i; throw new None();")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("return is.stream().filter(i->i.isN()).findFirst().orElseThrow(()->new None());");
   }
 
   @Test public void c() {
-    trimmingOf("for(Object i : is) if(i.isN()) {theChosen = i; break;}")//
+    topDownTrimming("for(Object i : is) if(i.isN()) {theChosen = i; break;}")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("theChosen=is.stream().filter(i->i.isN()).findFirst().orElse(theChosen);");
   }
 
   @Test public void d() {
-    trimmingOf("for (EF $ : EF) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.gI(); return 0;")//
+    topDownTrimming("for (EF $ : EF) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.gI(); return 0;")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("return EF.stream().filter($->$.getX()==x&&$.getY()==y&&$.getZ()==z).map($->$.gI()).findFirst().orElse(0);");
   }
 
   @Test public void e() {
-    trimmingOf("for(Object i : is) if(i.isN()) return i; return 0;")//
+    topDownTrimming("for(Object i : is) if(i.isN()) return i; return 0;")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("return is.stream().filter(i->i.isN()).findFirst().orElse(0);");
   }
 
   @Test public void f() {
-    trimmingOf("for (final G $ : G.values()) if ($.clazz.isA(¢)) return $; return null;")//
+    topDownTrimming("for (final G $ : G.values()) if ($.clazz.isA(¢)) return $; return null;")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("return G.values().stream().filter($->$.clazz.isA(¢)).findFirst().orElse(null);");
   }
 
   @Test public void g() {
-    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.m($)) return az.m($); return null;")//
+    topDownTrimming("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.m($)) return az.m($); return null;")//
         .using(ForStatement.class, new ForLoop.FindFirst())//
         .gives("return from(¢).step(($)->$!=null).to(($)->$=p($)).findFirst($->iz.m($)).map(($)->az.m($)).orElse(null);");
   }
 
   @Test public void h() {
-    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.m($)) return az.m($); return null;")//
+    topDownTrimming("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.m($)) return az.m($); return null;")//
         .using(ForStatement.class, new ForEachInRange(), new ForLoop.FindFirst())//
         .gives("return from(¢).step(($)->$!=null).to(($)->$=p($)).findFirst($->iz.m($)).map(($)->az.m($)).orElse(null);");
   }
 
   @Test public void i() {
-    trimmingOf("for(Object i : is) if(i.isN()) return i;")//
+    topDownTrimming("for(Object i : is) if(i.isN()) return i;")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("returnFirstIfAny(is).matches(i->i.isN());");
   }
 
   @Test public void j() {
-    trimmingOf("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.m($)) return az.m($);")//
+    topDownTrimming("for (ASTNode $ = ¢; $ != null; $ = p($)) if (iz.m($)) return az.m($);")//
         .using(ForStatement.class, new ForLoop.FindFirst())//
         .gives("returnFirstIfAny(from(¢).step(($)->$!=null).to(($)->$=p($))).matches($->iz.m($)).map(az.m($));");
   }
 
   @Test public void k() {
-    trimmingOf("for (EF $ : EF) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.gI();")//
+    topDownTrimming("for (EF $ : EF) if ($.getX() == x && $.getY() == y && $.getZ() == z) return $.gI();")//
         .using(EnhancedForStatement.class, new FindFirst())//
         .gives("returnFirstIfAny(EF).matches($->$.getX()==x&&$.getY()==y&&$.getZ()==z).map($->$.gI());");
   }

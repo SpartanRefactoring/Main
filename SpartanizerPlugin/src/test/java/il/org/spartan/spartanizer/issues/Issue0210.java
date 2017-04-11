@@ -14,34 +14,34 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0210 {
   @Test public void issue210_01() {
-    trimmingOf("8/0")//
+    topDownTrimming("8/0")//
         .stays();
   }
 
   // @Ignore
   @Test public void issue210_02() {
-    trimmingOf("int zero = 0; int result = 8 / zero; f(++result);")//
+    topDownTrimming("int zero = 0; int result = 8 / zero; f(++result);")//
         .gives("int zero =0, result = 8 / zero; f(++result);")//
         .stays();
   }
 
   @Test public void issue210_03() {
-    trimmingOf("8/4.0/0/12")//
+    topDownTrimming("8/4.0/0/12")//
         .stays();
   }
 
   @Test public void issue210_04() {
-    trimmingOf("x+8l/0")//
+    topDownTrimming("x+8l/0")//
         .stays();
   }
 
   @Test public void issue210_05() {
-    trimmingOf("8%0")//
+    topDownTrimming("8%0")//
         .stays();
   }
 
   @Test public void issue210_06() {
-    trimmingOf("8%0l")//
+    topDownTrimming("8%0l")//
         .stays();
   }
 }

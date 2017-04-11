@@ -12,18 +12,18 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0359 {
   @Test public void b() {
-    trimmingOf("int i;++i;")//
+    topDownTrimming("int i;++i;")//
         .stays();
   }
 
   @Test public void d() {
-    trimmingOf("int i=f();")//
+    topDownTrimming("int i=f();")//
         .gives("f();")//
         .stays();
   }
 
   @Test public void t20() {
-    trimmingOf("for(;b==q++;){int i;}")//
+    topDownTrimming("for(;b==q++;){int i;}")//
         .gives("while(b==q++){int i;}")//
         .gives("while(b==q++){}")//
         .gives("while(b==q++);")//

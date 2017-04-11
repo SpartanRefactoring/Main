@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0312 {
   @Test public void a() {
-    trimmingOf("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
+    topDownTrimming("int i=1;while(i<7){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;return x;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;return x;}y+=15;break;}return x;")
         .gives("for(int i=1;i<7;){if(i==5){tipper+=9;break;}y+=15;break;}return x;")
@@ -28,7 +28,7 @@ public class Issue0312 {
   /** Introduced by Yogi on Fri-Mar-31-00:30:47-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void forInta1a7Ifa5b9Breakc15BreakReturnd() {
-    trimmingOf("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
+    topDownTrimming("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
         .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{c+=15;}break;}return d;") //
         .using(Block.class, new BlockSingleton()) //
@@ -40,7 +40,7 @@ public class Issue0312 {
   /** Introduced by Yogi on Fri-Mar-31-00:39:20-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_forInta1a7Ifa5b9Breakc15BreakReturnd() {
-    trimmingOf("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
+    topDownTrimming("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
         .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{c+=15;}break;}return d;") //
         .using(Block.class, new BlockSingleton()) //
@@ -50,7 +50,7 @@ public class Issue0312 {
   }
 
   @Test public void bugInLastIfInMethod1() {
-    trimmingOf("       @Override public void f() {\n          if (!isMessageSuppressed(message)) {\n"
+    topDownTrimming("       @Override public void f() {\n          if (!isMessageSuppressed(message)) {\n"
         + "            final List<LocalMessage> messages = new ArrayList<LocalMessage>();\n            messages.add(message);\n"
         + "            stats.unreadMessageCount += message.isSet(Flag.SEEN) ? 0 : 1;\n"
         + "            stats.flaggedMessageCount += message.isSet(Flag.FLAGGED) ? 1 : 0;\n            if (listener != null)\n"
@@ -60,31 +60,31 @@ public class Issue0312 {
   }
 
   @Test public void chocolate1() {
-    trimmingOf("for(int $=0;$<a.length;++$)sum +=$;")//
+    topDownTrimming("for(int $=0;$<a.length;++$)sum +=$;")//
         .stays();
   }
 
   @Test public void chocolate2() {
-    trimmingOf("for(int i=0, j=0;i<a.length;++j)sum +=i+j;")//
+    topDownTrimming("for(int i=0, j=0;i<a.length;++j)sum +=i+j;")//
         .gives("for(int ¢=0, j=0;¢<a.length;++j)sum +=¢+j;")//
         .stays();
   }
 
   @Test public void issue54ForPlain() {
-    trimmingOf("int a  = f(); for (int i = 0; i <100;  ++i) b[i] = a;")//
+    topDownTrimming("int a  = f(); for (int i = 0; i <100;  ++i) b[i] = a;")//
         .gives("for (int i = 0; i <100;  ++i) b[i] = f();")//
         .gives("for (int ¢ = 0; ¢ <100;  ++¢) b[¢] = f();")//
         .stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
-    trimmingOf("for (int s = i++; i <10; ++s) sum+=s;")//
+    topDownTrimming("for (int s = i++; i <10; ++s) sum+=s;")//
         .gives("for (int ¢ = i++; i <10; ++¢) sum+=¢;")//
         .stays();
   }
 
   @Test public void t18() {
-    trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}")//
+    topDownTrimming("while(b==q){int i;double tipper; x=tipper+i;}")//
         .stays();
   }
 }

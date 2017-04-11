@@ -12,59 +12,59 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0108 {
   @Test public void a() {
-    trimmingOf("x=x*y")//
+    topDownTrimming("x=x*y")//
         .gives("x*=y");
   }
 
   @Test public void b() {
-    trimmingOf("x=y*x")//
+    topDownTrimming("x=y*x")//
         .gives("x*=y");
   }
 
   @Test public void c() {
-    trimmingOf("x=y*z")//
+    topDownTrimming("x=y*z")//
         .stays();
   }
 
   @Test public void d() {
-    trimmingOf("x = x * x")//
+    topDownTrimming("x = x * x")//
         .gives("x*=x");
   }
 
   @Test public void e() {
-    trimmingOf("x = y * z * x * k * 9")//
+    topDownTrimming("x = y * z * x * k * 9")//
         .gives("x *= y * z * k * 9");
   }
 
   @Test public void f() {
-    trimmingOf("a = y * z * a")//
+    topDownTrimming("a = y * z * a")//
         .gives("a *= y * z");
   }
 
   @Test public void g() {
-    trimmingOf("a=a*5")//
+    topDownTrimming("a=a*5")//
         .gives("a*=5");
   }
 
   @Test public void h() {
-    trimmingOf("a=a*(alex)")//
+    topDownTrimming("a=a*(alex)")//
         .gives("a*=alex");
   }
 
   @Test public void i() {
-    trimmingOf("a = a * (c = c * kif)")//
+    topDownTrimming("a = a * (c = c * kif)")//
         .gives("a *= c = c*kif")//
         .gives("a *= c *= kif")//
         .stays();
   }
 
   @Test public void j() {
-    trimmingOf("x=x*foo(x,y)")//
+    topDownTrimming("x=x*foo(x,y)")//
         .gives("x*=foo(x,y)");
   }
 
   @Test public void k() {
-    trimmingOf("z=foo(x=(y=y*u),17)")//
+    topDownTrimming("z=foo(x=(y=y*u),17)")//
         .gives("z=foo(x=(y*=u),17)");
   }
 }

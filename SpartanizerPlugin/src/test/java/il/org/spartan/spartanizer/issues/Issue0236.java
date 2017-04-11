@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0236 {
   @Test public void issue236_01() {
-    trimmingOf("b ? \"a long string\" : \"another \"+\"long\"+\" string\"")//
+    topDownTrimming("b ? \"a long string\" : \"another \"+\"long\"+\" string\"")//
         .gives("(b ? \"a long\" : \"another \"+\"long\"+\"\") +\" string\"")//
         .gives("(b ? \"a long\" : \"another \"+\"long\") +\" string\"")//
         .gives("((b ? \"a \" : \"another \"+\"\") +\"long\")+\" string\"")//
@@ -28,18 +28,18 @@ public class Issue0236 {
   }
 
   @Test public void issue236_02() {
-    trimmingOf("b? \"something\" : \"something\"+\" else\"")//
+    topDownTrimming("b? \"something\" : \"something\"+\" else\"")//
         .gives("\"something\" + (b? \"\" : \"\"+\" else\")").gives("\"something\" + (b? \"\" : \" else\")")//
         .stays();
   }
 
   @Test public void issue236_03() {
-    trimmingOf("isIncrement(¢) ? \"++\" : \"--\"")//
+    topDownTrimming("isIncrement(¢) ? \"++\" : \"--\"")//
         .stays();
   }
 
   @Test public void issue236_04() {
-    trimmingOf("isIncrement(¢) ? \"++x\" : \"--x\"")//
+    topDownTrimming("isIncrement(¢) ? \"++x\" : \"--x\"")//
         .gives("(isIncrement(¢) ? \"++\" : \"--\")+\"x\"")//
         .stays();
   }

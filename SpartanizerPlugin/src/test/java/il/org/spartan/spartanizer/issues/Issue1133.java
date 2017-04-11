@@ -15,49 +15,49 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1133 {
   @Test public void and() {
-    trimmingOf("a =2; a &= 3;")//
+    topDownTrimming("a =2; a &= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 & 3;")//
     ;
   }
 
   @Test public void divides() {
-    trimmingOf("a =2; a /= 3;")//
+    topDownTrimming("a =2; a /= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 / 3;")//
     ;
   }
 
   @Test public void minus() {
-    trimmingOf("a =2; a -= 3;")//
+    topDownTrimming("a =2; a -= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 - 3;")//
     ;
   }
 
   @Test public void or() {
-    trimmingOf("a =2; a |= 3;")//
+    topDownTrimming("a =2; a |= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 | 3;")//
     ;
   }
 
   @Test public void function() {
-    trimmingOf("a =b; a += f(c,d);")//
+    topDownTrimming("a =b; a += f(c,d);")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = b + f(c,d);")//
     ;
   }
 
   @Test public void plus() {
-    trimmingOf("a =2; a += 3;")//
+    topDownTrimming("a =2; a += 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 + 3;")//
     ;
   }
 
   @Test public void times() {
-    trimmingOf("a =2; a *= 3;")//
+    topDownTrimming("a =2; a *= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 * 3;")//
     ;

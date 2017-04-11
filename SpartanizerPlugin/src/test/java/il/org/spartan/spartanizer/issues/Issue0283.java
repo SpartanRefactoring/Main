@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0283 {
   @Test public void a() {
-    trimmingOf("@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings( 3 ) @Inherited  @Deprecated public void test0() { }}")
+    topDownTrimming("@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings( 3 ) @Inherited  @Deprecated public void test0() { }}")
         .gives("@Ignore class Test123{@Deprecated @Inherited @Test @WebEndpoint @WebFault @SuppressWarnings(3)  public void test0(){}}") //
         .stays();
   }
@@ -23,7 +23,7 @@ public class Issue0283 {
   /** Automatically generated on Sun-Mar-12-18:46:48-IST-2017, copied by
    * Yossi */
   @Test public void err1() {
-    trimmingOf("@A @B class C{@A @D1(3)@E @D(3)@E @F public void a(){}}") //
+    topDownTrimming("@A @B class C{@A @D1(3)@E @D(3)@E @F public void a(){}}") //
         .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
         .gives("@A @B class C{@A @D(3) @D1(3) @E @F public void a(){}}") //
         .stays() //
@@ -31,7 +31,7 @@ public class Issue0283 {
   }
 
   @Test public void duplication() {
-    trimmingOf("@A @D1(3)@E @D(3)@E @F public void a(){}") //
+    topDownTrimming("@A @D1(3)@E @D(3)@E @F public void a(){}") //
         .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
         .gives("@A @D(3) @D1(3) @E @F public void a(){}") //
         .stays();
@@ -40,7 +40,7 @@ public class Issue0283 {
   /** Introduced by Yogi on Thu-Mar-23-19:55:44-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_aBClassCAD3EF3GPublicVoida() {
-    trimmingOf("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
+    topDownTrimming("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
         .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .gives("@A @B class C{@A @D(3)@E @F(3)@G public void a(){}}") //
         .stays() //
@@ -49,7 +49,7 @@ public class Issue0283 {
 
   /** Automatically generated */
   @Test public void err4() {
-    trimmingOf("@A @B class C{@A @D1(3)@E @D(3) @F public void a(){}}") //
+    topDownTrimming("@A @B class C{@A @D1(3)@E @D(3) @F public void a(){}}") //
         .gives("@A @B class C{@A @D(3)@D1(3) @E @F public void a(){}}") //
         .stays();
   }
@@ -57,7 +57,7 @@ public class Issue0283 {
   /** Introduced by Yogi on Thu-Mar-23-20:04:01-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_BClassCAD3EF3GPublicVoida() {
-    trimmingOf("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
+    topDownTrimming("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
         .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .gives("@A @B class C{@A @D(3)@E @F(3)@G public void a(){}}") //
         .stays() //
@@ -65,7 +65,7 @@ public class Issue0283 {
   }
 
   @Test public void test0() {
-    trimmingOf("@SuppressWarnings(\"unused\") " //
+    topDownTrimming("@SuppressWarnings(\"unused\") " //
         + "@Deprecated " //
         + "@Override " //
         + " void myMethod() { }") //
@@ -89,7 +89,7 @@ public class Issue0283 {
   }
 
   @Test public void test2() {
-    trimmingOf("public class Point {" //
+    topDownTrimming("public class Point {" //
         + "@ConstructorProperties({\"x\", \"y\"}) @Deprecated " //
         + "public Point(int x, int y) {" //
         + "this.x = x;" //
@@ -105,16 +105,16 @@ public class Issue0283 {
   }
 
   @Test public void test31() {
-    trimmingOf("class Test123 {@Test  @Deprecated public void test0() { }}").gives("class Test123 {@Deprecated @Test  public void test0() { }}");
+    topDownTrimming("class Test123 {@Test  @Deprecated public void test0() { }}").gives("class Test123 {@Deprecated @Test  public void test0() { }}");
   }
 
   @Test public void test32() {
-    trimmingOf("@Ignore class Test123 {@Test @SuppressWarnings({ 3 })  @Deprecated public void test0() { }}")
+    topDownTrimming("@Ignore class Test123 {@Test @SuppressWarnings({ 3 })  @Deprecated public void test0() { }}")
         .gives("@Ignore class Test123 {@Deprecated @Test @SuppressWarnings({ 3 })  public void test0() { }}");
   }
 
   @Test public void test3() {
-    trimmingOf("@Ignore class Test123 {@Test @SuppressWarnings({ 3, 4 }) @Inherited  @Deprecated public void test0() { }}")
+    topDownTrimming("@Ignore class Test123 {@Test @SuppressWarnings({ 3, 4 }) @Inherited  @Deprecated public void test0() { }}")
         .gives("@Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings({ 3, 4 })  public void test0(){}}") //
         .stays();
   }
@@ -122,13 +122,13 @@ public class Issue0283 {
   /** Introduced by Yogi on Thu-Mar-23-20:01:54-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_aClassBCDE3E3FPublicVoida() {
-    trimmingOf("@A class B{@C @D @E(3)@F public void a(){}}") //
+    topDownTrimming("@A class B{@C @D @E(3)@F public void a(){}}") //
         .stays() //
     ;
   }
 
   @Test public void test5() {
-    trimmingOf("@Ignore @Deprecated class Test123 {@Test @SuppressWarnings(3) @Inherited  @Deprecated public void test0(){}}")
+    topDownTrimming("@Ignore @Deprecated class Test123 {@Test @SuppressWarnings(3) @Inherited  @Deprecated public void test0(){}}")
         .gives("@Deprecated @Ignore class Test123{@Test @SuppressWarnings(3) @Inherited  @Deprecated public void test0(){}}") //
         .gives("@Deprecated @Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings(3)  public void test0(){}}") //
         .stays();

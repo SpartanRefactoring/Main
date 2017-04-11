@@ -10,14 +10,14 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1168 {
   @Test public void a() {
-    trimmingOf("/**/" //
+    topDownTrimming("/**/" //
         + "a = b;\n" //
         + "a += c;\n" //
         + "a = 1;").stays();
   }
 
   @Test public void b() {
-    trimmingOf("/**/" //
+    topDownTrimming("/**/" //
         + "a = b;\n" //
         + "a = a * 5;")
             .gives("/**/" //

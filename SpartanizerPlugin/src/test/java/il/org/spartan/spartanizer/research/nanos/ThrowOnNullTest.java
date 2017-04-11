@@ -11,14 +11,14 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ThrowOnNullTest {
   @Test public void a() {
-    trimmingOf("if(x == null) throw new Watever();")//
+    topDownTrimming("if(x == null) throw new Watever();")//
         .using(IfStatement.class, new ThrowOnNull())//
         .gives("notNull(x).orThrow(()->new Watever());")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf("if(x == null) throw new Watever(with(This, and, zis()));")//
+    topDownTrimming("if(x == null) throw new Watever(with(This, and, zis()));")//
         .using(IfStatement.class, new ThrowOnNull())//
         .gives("notNull(x).orThrow(()->new Watever(with(This,and,zis())));")//
         .stays();

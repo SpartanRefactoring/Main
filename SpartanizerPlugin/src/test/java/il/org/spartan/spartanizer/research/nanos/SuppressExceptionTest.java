@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class SuppressExceptionTest {
   @Test public void a() {
-    trimmingOf(//
+    topDownTrimming(//
         "try {" + //
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //
@@ -27,7 +27,7 @@ public class SuppressExceptionTest {
   }
 
   @Test public void b() {
-    trimmingOf("try{ thing(); } catch(A a){}catch(B b){}")//
+    topDownTrimming("try{ thing(); } catch(A a){}catch(B b){}")//
         .gives("try{thing();}catch(B|A a){}")//
         .using(CatchClause.class, new SuppressException())//
         .gives("{try{{thing();}}catch(B|A a){ignore();};}")//

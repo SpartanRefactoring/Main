@@ -11,35 +11,35 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class VanillaCollectionTest {
   @Test public void a() {
-    trimmingOf("class C{public static final List<Int> li = new ArrayList<>();}")//
+    topDownTrimming("class C{public static final List<Int> li = new ArrayList<>();}")//
         .using(FieldDeclaration.class, new VanillaCollection())//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf("class C{public static final List<Int> li = new ArrayList<Int>();}")//
+    topDownTrimming("class C{public static final List<Int> li = new ArrayList<Int>();}")//
         .using(FieldDeclaration.class, new VanillaCollection())//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void c() {
-    trimmingOf("class C{public static final Set<Int> li = new HashSet<>();}")//
+    topDownTrimming("class C{public static final Set<Int> li = new HashSet<>();}")//
         .using(FieldDeclaration.class, new VanillaCollection())//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void d() {
-    trimmingOf("class C{public static final Set<Int> li = new TreeSet<>();}")//
+    topDownTrimming("class C{public static final Set<Int> li = new TreeSet<>();}")//
         .using(FieldDeclaration.class, new VanillaCollection())//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void e() {
-    trimmingOf("class C{public static final Map<Int, String> li = new HashMap<>();}")//
+    topDownTrimming("class C{public static final Map<Int, String> li = new HashMap<>();}")//
         .using(FieldDeclaration.class, new VanillaCollection())//
         .gives("class C{}")//
         .stays();

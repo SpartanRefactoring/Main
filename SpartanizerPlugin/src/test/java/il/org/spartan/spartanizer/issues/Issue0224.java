@@ -15,20 +15,20 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0224 {
   @Test public void a$01() {
-    trimmingOf("a+b.toString()")//
+    topDownTrimming("a+b.toString()")//
         .gives("a+\"\"+b")//
         .stays();
   }
 
   @Test public void a$02() {
-    trimmingOf("b.toString()")//
+    topDownTrimming("b.toString()")//
         .gives("\"\"+b")//
         .gives("b+\"\"")//
         .stays();
   }
 
   @Test public void a$03() {
-    trimmingOf("\"5\"+b.toString()")//
+    topDownTrimming("\"5\"+b.toString()")//
         .gives("\"5\"+\"\"+b")//
         .gives("\"5\"+b")//
         .stays();

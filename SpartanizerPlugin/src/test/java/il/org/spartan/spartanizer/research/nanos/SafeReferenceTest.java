@@ -11,98 +11,98 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class SafeReferenceTest {
   @Test public void field() {
-    trimmingOf("return x !=null ? x.y : null;")//
+    topDownTrimming("return x !=null ? x.y : null;")//
         .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.y);")//
         .stays();
   }
 
   @Test public void field2() {
-    trimmingOf("return x ==null ? null : x.field;")//
+    topDownTrimming("return x ==null ? null : x.field;")//
         .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.field);")//
         .stays();
   }
 
   @Test public void field3() {
-    trimmingOf("return x == null ? null : x.y.z;")//
+    topDownTrimming("return x == null ? null : x.y.z;")//
         .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.y.z);")//
         .stays();
   }
 
   @Test public void field4() {
-    trimmingOf("return x != null && x.y;")//
+    topDownTrimming("return x != null && x.y;")//
         .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("return safe(x).get(()->x.y);")//
         .stays();
   }
 
   @Test public void field5() {
-    trimmingOf("return x != null && x.y.z.w;")//
+    topDownTrimming("return x != null && x.y.z.w;")//
         .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("return safe(x).get(()->x.y.z.w);")//
         .stays();
   }
 
   @Test public void field6() {
-    trimmingOf("return x == null ? 0 : x.y.z;")//
+    topDownTrimming("return x == null ? 0 : x.y.z;")//
         .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).get(()->x.y.z);")//
         .stays();
   }
 
   @Test public void method() {
-    trimmingOf("return x == null ? null : x.y();")//
+    topDownTrimming("return x == null ? null : x.y();")//
         .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).invoke(()->x.y());")//
         .stays();
   }
 
   @Test public void method2() {
-    trimmingOf("return x == null ? null : x.y.z();")//
+    topDownTrimming("return x == null ? null : x.y.z();")//
         .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method3() {
-    trimmingOf("return x == null ? 0 : x.z();")//
+    topDownTrimming("return x == null ? 0 : x.z();")//
         .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).invoke(()->x.z());")//
         .stays();
   }
 
   @Test public void method4() {
-    trimmingOf("return x == null ? 0 : x.y.z();")//
+    topDownTrimming("return x == null ? 0 : x.y.z();")//
         .using(ConditionalExpression.class, new SafeReference())//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method5() {
-    trimmingOf("return x != null && x.z();")//
+    topDownTrimming("return x != null && x.z();")//
         .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("return safe(x).invoke(()->x.z());")//
         .stays();
   }
 
   @Test public void method6() {
-    trimmingOf("return x != null && x.y.z();")//
+    topDownTrimming("return x != null && x.y.z();")//
         .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method7() {
-    trimmingOf("(x != null) && x.y()")//
+    topDownTrimming("(x != null) && x.y()")//
         .using(InfixExpression.class, new Infix.SafeNavigation())//
         .gives("safe(x).invoke(()->x.y())")//
         .stays();
   }
 
   @Test public void respect() {
-    trimmingOf("return x ==null ? null : x.field;")//
+    topDownTrimming("return x ==null ? null : x.field;")//
         .using(ConditionalExpression.class, //
             new Unless(), //
             new DefaultsTo(), //

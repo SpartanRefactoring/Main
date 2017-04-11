@@ -39,7 +39,7 @@ public class Issue0835 {
   }
 
   @Test public void returnNotNullNonEmptyBlock() {
-    trimmingOf("{int x;}")//
+    topDownTrimming("{int x;}")//
         .gives("int x;")//
         .gives("")//
         .stays();
@@ -48,7 +48,7 @@ public class Issue0835 {
   /** Introduced by Yossi on Sun-Mar-26-18:52:18-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_whileTrue() {
-    trimmingOf("{ while (true) { } }") //
+    topDownTrimming("{ while (true) { } }") //
         .using(Block.class, new BlockSingleton()) //
         .gives("while(true){}") //
         .using(WhileStatement.class, new WhileDeadRemove()) //
@@ -59,14 +59,14 @@ public class Issue0835 {
   }
 
   @Test public void returnNullIfBlockIfNotSingleVarDef2() {
-    trimmingOf("{return 1;}").gives("return 1;").stays();
+    topDownTrimming("{return 1;}").gives("return 1;").stays();
   }
 
   @Test public void returnNullOnEmptyBlock1() {
-    trimmingOf("{}").gives("");
+    topDownTrimming("{}").gives("");
   }
 
   @Test public void returnNullOnEmptyBlock2() {
-    trimmingOf("\n{}\n").gives("");
+    topDownTrimming("\n{}\n").gives("");
   }
 }
