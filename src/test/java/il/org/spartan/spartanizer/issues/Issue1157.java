@@ -8,6 +8,7 @@ import org.junit.*;
  * @since 2017-04-09 */
 @SuppressWarnings("static-method")
 public class Issue1157 {
+  /** [[SuppressWarningsSpartan]] - see #1245 */
   @Test public void t1() {
     trimminKof("" //
         + "@Override public V computeIfPresent(K key, BiFunction<? super K, ? super V, ? extends V> function) {" //
