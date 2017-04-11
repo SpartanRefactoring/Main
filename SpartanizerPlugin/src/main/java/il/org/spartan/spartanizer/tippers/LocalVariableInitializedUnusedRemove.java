@@ -13,18 +13,18 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
 
-/** Remove unused variable
+/** Remove unused local
  * @author Yossi Gil
  * @since 2017-01-23 */
 public final class LocalVariableInitializedUnusedRemove extends LocalInitialized implements TipperCategory.Deadcode {
   private static final long serialVersionUID = -0xBDF3E9975A1F125L;
 
   public LocalVariableInitializedUnusedRemove() {
-    andAlso("Local variable is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
+    andAlso("Local is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
   }
 
   @Override public String description() {
-    return "Remove unused variable " + name;
+    return "Remove unused local " + name;
   }
 
   @Override public Examples examples() {
