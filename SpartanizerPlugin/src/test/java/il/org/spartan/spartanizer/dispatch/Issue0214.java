@@ -33,7 +33,7 @@ public final class Issue0214 {
       return null;
     }
 
-    @Override public Tip tip(final ASTNode ¢) {
+    @Override public Tip tip(@SuppressWarnings("unused") final ASTNode ¢) {
       return null;
     }
   };

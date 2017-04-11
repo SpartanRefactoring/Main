@@ -1,5 +1,9 @@
 package il.org.spartan.spartanizer.dispatch;
 
+import static il.org.spartan.spartanizer.engine.Tip.*;
+
+import static java.util.stream.Collectors.*;
+
 import java.util.*;
 import java.util.function.*;
 
@@ -47,25 +51,69 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     tipper = null;
   }
 
-  @Override public ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
+  public ASTRewrite bottomUp(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
+    setCompilationUnit(u);
     final Tips tips = Tips.empty();
-    final ASTRewrite $ = ASTRewrite.create(u.getAST());
-    currentRewrite = $;
-    currentToolbox = !useProjectPreferences ? globalToolbox : getToolboxByPreferences(u);
-    currentFileName = English.unknownIfNull(u.getJavaElement(), IJavaElement::getElementName);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
         if (!check(¢) || !inRange(m, ¢) || disabling.on(¢))
           return true;
-        setTip(findTip(¢));
+        findTip(¢);
+        if (tip() == null)
+          return true;
+        tips.stream().filter(λ -> overlap(λ.span, tip().span)).collect(toList()).forEach(λ -> {
+          auxiliaryTip = λ;
+          tips.remove(λ);
+          notify.tipPrune();
+        });
+        if (tip() != null)
+          tips.add(tip());
+        if (nodeLogger != null)
+          nodeLogger.accept(¢);
+        return true;
+      }
+
+      @Override protected void initialization(final ASTNode ¢) {
+        disabling.scan(¢);
+      }
+    });
+    setRewrite(ASTRewrite.create(u.getAST()));
+    for (Tip ¢ : tips) {
+      tip = ¢;
+      tip().go(getRewrite(), currentEditGroup());
+      notify.tipRewrite();
+    }
+    return getRewrite();
+  }
+
+  private void setCompilationUnit(final CompilationUnit ¢) {
+    currentToolbox = !useProjectPreferences ? globalToolbox : getToolboxByPreferences(¢);
+    fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
+  }
+
+  @Override public ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
+    setCompilationUnit(u);
+    topDown(u, m, nodeLogger);
+    return rewrite();
+  }
+
+  private void topDown(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
+    final Tips tips = Tips.empty();
+    setRewrite(ASTRewrite.create(u.getAST()));
+    u.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(final N ¢) {
+        setNode(¢);
+        if (!check(¢) || !inRange(m, ¢) || disabling.on(¢))
+          return true;
+        findTip(¢);
         if (tip() == null)
           return true;
         for (final Tip t : tips) {
           auxiliaryTip = t;
-          if (t != null && Tip.overlapping(t.span, tip().span)) {
+          if ((auxiliaryTip = t) != null && Tip.overlap(t.span, tip().span)) {
             notify.tipPrune();
-            return true;
+            return false;
           }
         }
         tips.add(tip());
@@ -80,7 +128,6 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
         disabling.scan(¢);
       }
     });
-    return $;
   }
 
   @SafeVarargs public final <N extends ASTNode> Trimmer fix(final Class<N> c, final Tipper<N>... ts) {
@@ -110,7 +157,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   public ASTRewrite rewrite() {
-    return currentRewrite;
+    return getRewrite();
   }
 
   public void setNode(final ASTNode currentNode) {
@@ -148,15 +195,9 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     }, swallow);
   }
 
-  protected <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    final Tipper<N> $ = currentToolbox.firstTipper(¢);
-    setTipper($);
-    return $;
-  }
-
   @Override protected ASTVisitor tipsCollector(final Tips into) {
     Toolbox.refresh(this);
-    currentFileName = English.unknownIfNull(compilationUnit, λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
+    fileName = English.unknownIfNull(compilationUnit, λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         setNode(n);
@@ -167,7 +208,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
           setTip($.tip(n));
           if (tip() == null)
             return;
-          into.removeIf(λ -> Tip.overlapping(λ.highlight, tip().highlight));
+          into.removeIf(λ -> Tip.overlap(λ.highlight, tip().highlight));
           into.add(tip());
         }, swallow);
       }
@@ -179,28 +220,35 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     };
   }
 
-  <N extends ASTNode> Tip findTip(final N ¢) {
-    return robust.lyNull(() -> {
+  <N extends ASTNode> void findTip(final N ¢) {
+    robust.ly(() -> {
       setTip(null);
       final Tipper<N> $ = findTipper(¢);
       if ($ == null)
-        return null;
+        return;
       setTip($.tip(¢));
-      return tip;
     }, swallow);
+  }
+
+  public ASTRewrite getRewrite() {
+    return rewrite;
+  }
+
+  public void setRewrite(ASTRewrite currentRewrite) {
+    this.rewrite = currentRewrite;
   }
 
   public final Taps notify = new Taps()//
       .push(new ProgressTapper())//
       .push(new TrimmerMonitor(this));
-  private ASTRewrite currentRewrite;
-  private Tip tip;
+  private ASTRewrite rewrite;
+  protected Tip tip;
   private Tipper<?> tipper;
   private ASTNode node;
   Tip auxiliaryTip;
-  String currentFileName;
+  String fileName;
   Toolbox currentToolbox;
-  TrimmerExceptionListener exceptionListener = λ -> monitor.logToFile(λ, this, tip(), tipper(), currentFileName);
+  TrimmerExceptionListener exceptionListener = λ -> monitor.logToFile(λ, this, tip(), tipper(), fileName);
   final Consumer<Exception> swallow = λ -> exceptionListener.accept(λ);
 
   /** A {@link Tap} to update {@link #progressMonitor}
