@@ -851,21 +851,21 @@ public final class Version230 {
         .stays();
   }
 
-  /** Introduced by Yogi on Tue-Apr-11-10:06:26-IDT-2017 
-  (code automatically in class 'JUnitTestMethodFacotry')*/
-    @Test public void return22aTrue() {
-       trimmingOf("return (2 > 2 + a) == true;") //
-           .using(InfixExpression.class, new InfixComparisonBooleanLiteral()) //
-           .gives("return 2>2+a;") //
-           .using(InfixExpression.class, new InfixComparisonSpecific()) //
-           .gives("return 2+a<2;") //
-           .using(InfixExpression.class, new InfixAdditionSort()) //
-           .gives("return a+2<2;") //
-           .using(InfixExpression.class, new InfixSimplifyComparisionOfAdditions()) //
-           .gives("return a<2-2;") //
-           .using(InfixExpression.class, new InfixSubtractionEvaluate()) //
-           .gives("return a<0;") //
-           .stays() //
+  /** Introduced by Yogi on Tue-Apr-11-10:06:26-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void return22aTrue() {
+    trimmingOf("return (2 > 2 + a) == true;") //
+        .using(InfixExpression.class, new InfixComparisonBooleanLiteral()) //
+        .gives("return 2>2+a;") //
+        .using(InfixExpression.class, new InfixComparisonSpecific()) //
+        .gives("return 2+a<2;") //
+        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .gives("return a+2<2;") //
+        .using(InfixExpression.class, new InfixSimplifyComparisionOfAdditions()) //
+        .gives("return a<2-2;") //
+        .using(InfixExpression.class, new InfixSubtractionEvaluate()) //
+        .gives("return a<0;") //
+        .stays() //
     ;
   }
 
@@ -1489,7 +1489,10 @@ public final class Version230 {
   }
 
   @Test public void issue46() {
-    trimmingOf("int f(){ x++;y++;if(a){ i++; j++; k++;} }").gives("int f(){ ++x;++y;if(!a)return;++i;++j; ++k; }");
+    trimmingOf("int f(){ x++;y++;if(a){ i++; j++; k++;} }")//
+    .gives("int f(){++x;++y;if(!a)return;i++;j++;k++;}") //
+    .gives("int f(){++x;++y;if(!a)return;++i;++j;++k;}") //
+    ;
   }
 
   @Test public void issue49() {
@@ -3021,7 +3024,7 @@ public final class Version230 {
 
   @Test public void shortestOperand13a() {
     trimmingOf("(2> 2 + a)==true")//
-        .gives("2>a+2 ");
+        .gives("2>2 +a ");
   }
 
   @Test public void shortestOperand13b() {
