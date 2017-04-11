@@ -81,7 +81,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     final Statement p = addAllBlocks(s, $);
     if (p == null)
       return $;
-    if (az.block(p) != null)
+    if (iz.block(p))
       $.add(az.block(p));
     else {
       final Block b = s.getAST().newBlock();

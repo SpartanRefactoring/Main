@@ -54,7 +54,7 @@ public final class ReturnToBreakFiniteFor extends CarefulTipper<ForStatement>//
       if ($ != null)
         return $;
     }
-    if (az.ifStatement(then) != null)
+    if (iz.ifStatement(then))
       return handleIf(then, nextReturn);
     if (elze == null)
       return null;
