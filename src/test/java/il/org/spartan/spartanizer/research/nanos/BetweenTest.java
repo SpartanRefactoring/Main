@@ -14,7 +14,7 @@ import org.junit.runners.*;
 @SuppressWarnings("static-method")
 public class BetweenTest {
   @Test public void a() {
-    trimmingOf("if( c >'a' && c < 'z') use();")//
+    topDownTrimming("if( c >'a' && c < 'z') use();")//
         .using(InfixExpression.class, new Between())//
         .gives("if(is.value(c).between('a').and('z'))use();")//
         .stays();
@@ -22,7 +22,7 @@ public class BetweenTest {
 
   // different operators
   @Test public void b() {
-    trimmingOf("if('a' <= c && c < 'z') use();")//
+    topDownTrimming("if('a' <= c && c < 'z') use();")//
         .using(InfixExpression.class, new Between())//
         .gives("if(is.value(c).between('a').inclusive().and('z'))use();")//
         .stays();
@@ -30,7 +30,7 @@ public class BetweenTest {
 
   // order
   @Test public void c() {
-    trimmingOf("radix >= Character.MIN_RADIX && radix <= Character.MAX_RADIX")//
+    topDownTrimming("radix >= Character.MIN_RADIX && radix <= Character.MAX_RADIX")//
         .using(InfixExpression.class, new Between())//
         .gives("if(is.value(radix).between(Character.MIN_RADIX).inclusive().and(Character.MAX_RADIX))use();")//
         .stays();

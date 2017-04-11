@@ -16,31 +16,31 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1094 extends MetaFixture {
   @Test public void b() {
-    trimmingOf("void f(){ try {} finally{}}")//
+    topDownTrimming("void f(){ try {} finally{}}")//
         .gives("void f(){ }")//
         .stays();
   }
 
   @Test public void b1() {
-    trimmingOf("void f(){ try {} finally{}}")//
+    topDownTrimming("void f(){ try {} finally{}}")//
         .gives("void f(){ }")//
         .stays();
   }
 
   @Test public void b1a() {
-    trimmingOf("void f(){ try(File f = new File()) {} finally{}}")//
+    topDownTrimming("void f(){ try(File f = new File()) {} finally{}}")//
         .gives("void f(){ }")//
         .stays();
   }
 
   @Test public void ba() {
-    trimmingOf("void f(){ try {} finally{}}")//
+    topDownTrimming("void f(){ try {} finally{}}")//
         .gives("void f(){ }")//
         .stays();
   }
 
   @Test public void c() {
-    trimmingOf("void f() { try { a(); } finally { }}") //
+    topDownTrimming("void f() { try { a(); } finally { }}") //
         .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
         .gives("void f(){{ a();} }")//
         .gives("void f(){ a(); }")//
@@ -48,7 +48,7 @@ public class Issue1094 extends MetaFixture {
   }
 
   @Test public void c1() {
-    trimmingOf("void f() { try { a(); } finally { }}") //
+    topDownTrimming("void f() { try { a(); } finally { }}") //
         .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
         .gives("void f(){{ a();} }")//
         .gives("void f(){ a(); }")//
@@ -56,25 +56,25 @@ public class Issue1094 extends MetaFixture {
   }
 
   @Test public void c1a() {
-    trimmingOf("void f() { try(File f = new File()) { a(); } finally { }}") //
+    topDownTrimming("void f() { try(File f = new File()) { a(); } finally { }}") //
         .stays();
   }
 
   @Test public void c1x() {
-    trimmingOf("void f() { try { a(); } finally { }}") //
+    topDownTrimming("void f() { try { a(); } finally { }}") //
         .gives("void f(){{ a();} }")//
         .gives("void f(){ a(); }")//
         .stays();
   }
 
   @Test public void ca() {
-    trimmingOf("void f() { try(File f = new File()) { a(); } finally { }}") //
+    topDownTrimming("void f() { try(File f = new File()) { a(); } finally { }}") //
         .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
         .stays();
   }
 
   @Test public void d() {
-    trimmingOf("void f() { try { a(); b(); } finally { }}") //
+    topDownTrimming("void f() { try { a(); b(); } finally { }}") //
         .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
         .gives("void f(){{ a();b();} }")//
         .gives("void f(){ a();b(); }")//
@@ -82,7 +82,7 @@ public class Issue1094 extends MetaFixture {
   }
 
   @Test public void d1() {
-    trimmingOf("void f() { try { a(); b(); } finally { }}") //
+    topDownTrimming("void f() { try { a(); b(); } finally { }}") //
         .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
         .gives("void f(){{ a();b();} }")//
         .gives("void f(){ a();b(); }")//
@@ -90,12 +90,12 @@ public class Issue1094 extends MetaFixture {
   }
 
   @Test public void d1a() {
-    trimmingOf("void f() { try(File f = new File()) { a(); b(); } finally { }}") //
+    topDownTrimming("void f() { try(File f = new File()) { a(); b(); } finally { }}") //
         .stays();
   }
 
   @Test public void da() {
-    trimmingOf("void f() { try(File f = new File()) { a(); b(); } finally { }}") //
+    topDownTrimming("void f() { try(File f = new File()) { a(); b(); } finally { }}") //
         .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
         .stays();
   }

@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ForEachInRangeTest {
   @Test public void a() {
-    trimmingOf("for (int ¢=0; ¢ < 4096; ++¢) whitespace.append(\" \");")//
+    topDownTrimming("for (int ¢=0; ¢ < 4096; ++¢) whitespace.append(\" \");")//
         .using(ForStatement.class, new ForEachInRange())//
         .gives("range.from(0).to(4096).forEach(¢->whitespace.append(\" \"));")//
         .gives("range.from(0).to(4096).forEach(λ->whitespace.append(\" \"));")//
@@ -19,7 +19,7 @@ public class ForEachInRangeTest {
   }
 
   @Test public void b() {
-    trimmingOf("for (int ¢=0; ¢ < 2000; ++¢) whitespace.append(\" \");")//
+    topDownTrimming("for (int ¢=0; ¢ < 2000; ++¢) whitespace.append(\" \");")//
         .using(ForStatement.class, new ForEachInRange())//
         .gives("range.from(0).to(2000).forEach(¢->whitespace.append(\" \"));")//
         .gives("range.from(0).to(2000).forEach(λ->whitespace.append(\" \"));")//
@@ -27,7 +27,7 @@ public class ForEachInRangeTest {
   }
 
   @Test public void c() {
-    trimmingOf("for (int ¢=0; ¢ < ls.size(); ++¢) $[¢]=ls.elementAt(¢);")//
+    topDownTrimming("for (int ¢=0; ¢ < ls.size(); ++¢) $[¢]=ls.elementAt(¢);")//
         .using(ForStatement.class, new ForEachInRange())//
         .gives("range.from(0).to(ls.size()).forEach(¢->$[¢]=ls.elementAt(¢));")//
         .gives("range.from(0).to(ls.size()).forEach(λ->$[λ]=ls.elementAt(λ));")//
@@ -35,7 +35,7 @@ public class ForEachInRangeTest {
   }
 
   @Test public void d() {
-    trimmingOf("for (int ¢= thingy().f.g; ¢ < 7; ++¢) $[¢]=ls.elementAt(¢);")//
+    topDownTrimming("for (int ¢= thingy().f.g; ¢ < 7; ++¢) $[¢]=ls.elementAt(¢);")//
         .using(ForStatement.class, new ForEachInRange())//
         .gives("range.from(thingy().f.g).to(7).forEach(¢->$[¢]=ls.elementAt(¢));")//
     ;

@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ReturnPreviousTest {
   @Test public void a() {
-    trimmingOf("int $=value;  value=newValue;  return $;")//
+    topDownTrimming("int $=value;  value=newValue;  return $;")//
         .using(ReturnStatement.class, new ReturnPrevious())//
         .gives("return update(value).with(newValue).getOld();")//
         .stays();

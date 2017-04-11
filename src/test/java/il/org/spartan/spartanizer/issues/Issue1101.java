@@ -12,7 +12,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1101 {
   @Ignore @Test public void a() {
-    trimmingOf("/**/" + //
+    topDownTrimming("/**/" + //
         "  boolean a(final A b, final A c) {" + //
         "    final String off = off(wrap), $ = trivia.accurateEssence(inner);" + //
         "    final String essence2 = trivia.accurateEssence(off);" + //

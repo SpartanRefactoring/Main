@@ -10,16 +10,16 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0882 {
   @Test public void forTestNoChange() {
-    trimmingOf("for(int ¢=0;¢<5;++¢)++¢;")//
+    topDownTrimming("for(int ¢=0;¢<5;++¢)++¢;")//
         .stays();
   }
 
   @Test public void mainTest() {
-    trimmingOf("for(int ¢=0;¢<5;++¢) continue;").gives("for(int ¢=0;¢<5;++¢) ;").stays();
+    topDownTrimming("for(int ¢=0;¢<5;++¢) continue;").gives("for(int ¢=0;¢<5;++¢) ;").stays();
   }
 
   @Test public void mainTestFullBlock() {
-    trimmingOf("for(int ¢=0;¢<5;++¢) {++¢;continue;}")//
+    topDownTrimming("for(int ¢=0;¢<5;++¢) {++¢;continue;}")//
         .gives("for(int ¢=0;¢<5;++¢) {++¢;}")//
         .gives("for(int ¢=0;¢<5;++¢) ++¢;")//
         .stays();

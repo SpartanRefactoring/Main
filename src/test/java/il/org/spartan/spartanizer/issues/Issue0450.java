@@ -20,23 +20,23 @@ public class Issue0450 {
   ;
 
   @Test public void test0() {
-    trimmingOf(SEPARATOR_CASE)//
+    topDownTrimming(SEPARATOR_CASE)//
         .stays();
   }
 
   @Test public void test0a() {
-    trimmingOf(SEPARATOR_CASE)//
+    topDownTrimming(SEPARATOR_CASE)//
         .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementTerminatingScope())//
         .stays();
   }
 
   @Test public void test0b() {
-    trimmingOf(SEPARATOR_CASE)//
+    topDownTrimming(SEPARATOR_CASE)//
         .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext()).stays();
   }
 
   @Test public void test1() {
-    trimmingOf("int x = 7;" //
+    topDownTrimming("int x = 7;" //
         + "for (final String a : args)" //
         + "System.out.print(x+a.length());")
             .gives("for (final String a : args)" //
@@ -44,7 +44,7 @@ public class Issue0450 {
   }
 
   @Test public void test2() {
-    trimmingOf("final Separator s = \"hello\";" //
+    topDownTrimming("final Separator s = \"hello\";" //
         + "for (final String a : args)" //
         + "System.out.print(s + a);")
             .gives("for (final String a : args)" //

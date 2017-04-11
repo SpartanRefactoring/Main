@@ -11,7 +11,6 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.Proposition.*;
 
 /** pretty print of proposition and testing
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>

@@ -19,13 +19,13 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 public final class GuessedContextTest {
   @Ignore // TODO Yuval Simon --yg
   @Test public void a1() {
-    trimmingOf("public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); S.x.f($.j); return $;}")
+    topDownTrimming("public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); S.x.f($.j); return $;}")
         .gives("public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); S.x.f($.j); return $;}");
   }
 
   @Ignore // TODO Yuval Simon --yg
   @Test public void a2() {
-    trimmingOf(
+    topDownTrimming(
         "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final Laconization s = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ")
             .gives(
                 "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final Laconization $ = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ");
@@ -33,7 +33,7 @@ public final class GuessedContextTest {
 
   @Ignore // TODO Yuval Simon --yg
   @Test public void a3() {
-    trimmingOf(
+    topDownTrimming(
         " public C(int i) { j = 2*i; public final int j; public int yada7(final String blah) { final C $ = new C(blah.length()); if (blah.contains(0xDEAD)) return $.j; int x = blah.length()/2; if (x==3) return x; x = y($.j - x); return x; ")
             .gives(
                 " public C(int i) { j = 2*i; public final int j; public int yada7(final String blah) { final C $ = new C(blah.length()); if (blah.contains(0xDEAD)) return $.j; int $ = blah.length()/2; if ($==3) return $; $ = y($.j - $); return $; ");
@@ -41,7 +41,7 @@ public final class GuessedContextTest {
 
   @Ignore // TODO Yuval Simon --yg
   @Test public void a6() {
-    trimmingOf(
+    topDownTrimming(
         " public final int j; public void y() { final C $ = new C(6); final R r = new R() { @O public void system() { final C res2 = new C($.j); S.x.f(res2.j); doStuff(res2); private int doStuff(final C r) { final C $ = new C(r.j); return $.j + 1; S.x.f($.j); ")
             .gives(
                 " j = 2*i; } public final int j; public void y() { final C $ = new C(6); final R r = new R() { @O public void system() { final C res2 = new C($.j); S.x.f(res2.j); doStuff(res2); private int doStuff(final C r) { final C $ = new C(r.j); return $.j + 1; S.x.f($.j); ");
@@ -49,7 +49,7 @@ public final class GuessedContextTest {
 
   @Ignore // TODO Yuval Simon --yg
   @Test public void a7() {
-    trimmingOf(
+    topDownTrimming(
         " public final int j; public C y() { final C $ = new C(6); final R r = new R() { @O public void system() { $ = new C(8); S.x.f($.j); doStuff($); private void doStuff(C res2) { S.x.f(res2.j); private C $; S.x.f($.j); return $; ")
             .gives(
                 " j = 2*i; } public final int j; public C y() { final C $ = new C(6); final R r = new R() { @O public void system() { $ = new C(8); S.x.f($.j); doStuff($); private void doStuff(C res2) { S.x.f(res2.j); private C $; S.x.f($.j); return $; ");
@@ -57,14 +57,14 @@ public final class GuessedContextTest {
 
   @Ignore // TODO Yuval Simon --yg
   @Test public void a8() {
-    trimmingOf(
+    topDownTrimming(
         " public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return $; ")
             .gives(
                 " public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return $; ");
   }
 
   @Ignore @Test public void a9() {
-    trimmingOf(
+    topDownTrimming(
         " public C(int i){j = 2*i;public final int j;public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return null;}")
             .stays();
   }
@@ -107,23 +107,23 @@ public final class GuessedContextTest {
   }
 
   public void doNotInlineDeclarationWithAnnotationSimplified() {
-    trimmingOf("@SuppressWarnings() int $ = (Class<T>) findClass(className); return $; ")//
+    topDownTrimming("@SuppressWarnings() int $ = (Class<T>) findClass(className); return $; ")//
         .stays();
   }
 
   @Ignore @Test public void e03() {
-    trimmingOf("/* * This is a comment */ int i = 5; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
+    topDownTrimming("/* * This is a comment */ int i = 5; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
         .gives("/* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + (5)); ");
   }
 
   @Ignore @Test public void e09() {
-    trimmingOf(
+    topDownTrimming(
         " final A a = new D().new A(V){ ABRA { CADABRA {V;); w.a(5, a.new Context().lineCount()); final PureIterable&lt;Mutant&gt; ms = a.generateMutants(); w.a(2, count(ms)); final PureIterator&lt;Mutant&gt; i = ms.iterator(); assert (i.hasNext()); w.a(V;{ ABRA ABRA { CADABRA { V;, i.next().text); assert (i.hasNext()); w.a(V;{ ABRA { CADABRA CADABRA { V;, i.next().text); assert !(i.hasNext()); ")
             .stays();
   }
 
   @Test public void e10() {
-    trimmingOf(
+    topDownTrimming(
         " final A a = new A(\"{ ABRA { CADABRA {\"); w.a(5, a.new Context().lineCount()); final PureIterable<Mutant> ms = a.mutantsGenerator(); w.a(2, count(ms)); final PureIterator<Mutant> i = ms.iterator(); assert (i.hasNext()); w.a(\"{ ABRA ABRA { CADABRA { \", i.next().text); assert (i.hasNext()); w.assertEquals(\"{ ABRA { CADABRA CADABRA { \", i.next().text); assert !(i.hasNext());")
             .stays();
   }

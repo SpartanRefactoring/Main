@@ -11,28 +11,28 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class MyNameTest {
   @Test public void a() {
-    trimmingOf("void foo(){ foo(a);}")//
+    topDownTrimming("void foo(){ foo(a);}")//
         .using(MethodInvocation.class, new MyName())//
         .gives("void foo(){reduce¢(a);}")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf("void foo(){ return foo(a) + foo(a,b);}")//
+    topDownTrimming("void foo(){ return foo(a) + foo(a,b);}")//
         .using(MethodInvocation.class, new MyName())//
         .gives("void foo(){ return reduce¢(a) + reduce¢(a,b);}")//
         .stays();
   }
 
   @Test public void c() {
-    trimmingOf("void foo(){ return foo(a) + foo(a,b) == 7 ? foo() : bar();}")//
+    topDownTrimming("void foo(){ return foo(a) + foo(a,b) == 7 ? foo() : bar();}")//
         .using(MethodInvocation.class, new MyName())//
         .gives("void foo(){ return reduce¢(a) + reduce¢(a,b) == 7 ? foo() : bar();}")//
         .stays();
   }
 
   @Test public void d() {
-    trimmingOf("void foo(int a){ return foo(a) + foo(a,b) == 7 ? foo() : barar();}")//
+    topDownTrimming("void foo(int a){ return foo(a) + foo(a,b) == 7 ? foo() : barar();}")//
         .using(MethodInvocation.class, new MyName())//
         .gives("void foo(int a){ return foo(a) + reduce¢(a,b) == 7 ? reduce¢() : barar();}")//
         .gives("void foo(int a){ return foo(a) + reduce¢(a,b) != 7 ? barar() : reduce¢();}")//

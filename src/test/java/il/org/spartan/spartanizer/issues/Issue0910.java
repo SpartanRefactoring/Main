@@ -14,14 +14,14 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0910 {
   @Test public void singleVariableDeclarationStatementShouldntTip() {
-    trimmingOf("x -> {int y;}") //
+    topDownTrimming("x -> {int y;}") //
         .gives("x->{}") //
         .gives("λ->{}") //
         .stays();
   }
 
   @Test public void singleVariableDeclarationStatementShouldntTip2() {
-    trimmingOf("x -> {int y = f(x); while (x < f(y)) return x; return y; }") //
+    topDownTrimming("x -> {int y = f(x); while (x < f(y)) return x; return y; }") //
         .stays();
   }
 }

@@ -39,23 +39,23 @@ public class InfixAdditionSubtractionExpandTest {
   }
 
   @Test @SuppressWarnings("static-method") public void test06() {
-    trimmingOf("a - (b+c)")//
+    topDownTrimming("a - (b+c)")//
         .gives("a - b -c").stays();
   }
 
   @Test @SuppressWarnings("static-method") public void test07() {
-    trimmingOf("1 - (a+b)")//
+    topDownTrimming("1 - (a+b)")//
         .gives("1 - a - b").stays();
   }
 
   // TODO Matteo (for himself) this is not working properly
   @Test @SuppressWarnings("static-method") public void test08() {
-    trimmingOf("1 - (a+1)")//
+    topDownTrimming("1 - (a+1)")//
         .gives("1 - a - 1").stays();
   }
 
   @Test @SuppressWarnings("static-method") public void test09() {
-    trimmingOf("1 - (a+c)")//
+    topDownTrimming("1 - (a+c)")//
         .gives("1 - a - c").stays();
   }
 }

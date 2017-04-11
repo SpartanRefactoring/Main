@@ -12,13 +12,13 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0443 {
   @Test public void a() {
-    trimmingOf("public void f (String[] ss) {}")//
+    topDownTrimming("public void f (String[] ss) {}")//
         .gives("public void f (String[] __) {}")//
         .stays();
   }
 
   @Test public void b() {
-    trimmingOf("public void f (String... ss) {}")//
+    topDownTrimming("public void f (String... ss) {}")//
         .gives("public void f (String... __) {}")//
         .stays();
   }

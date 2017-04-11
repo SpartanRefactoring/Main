@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class NotNullOrReturnTest {
   @Test public void a() {
-    trimmingOf("statement(); if(x == null) return; use(); use();")//
+    topDownTrimming("statement(); if(x == null) return; use(); use();")//
         .using(IfStatement.class, new NotNullAssumed())//
         .gives("statement(); azzert.notNull(x); use(); use();")//
         .gives("statement();assert x!=null;use();use();") //
@@ -19,13 +19,13 @@ public class NotNullOrReturnTest {
   }
 
   @Test public void sanity() {
-    trimmingOf("statement(); azzert.notNull(x); use(); use();")//
+    topDownTrimming("statement(); azzert.notNull(x); use(); use();")//
         .using(IfStatement.class, new NotNullAssumed())//
         .stays();
   }
 
   @Test public void a2() {
-    trimmingOf("statement(); if(x == null || y == null) return; use(); use();")//
+    topDownTrimming("statement(); if(x == null || y == null) return; use(); use();")//
         .using(IfStatement.class, new NotNullAssumed())//
         .gives("statement(); azzert.notNull(x,y); use(); use();")//
         .gives("statement();assert y!=null:x;use();use();") //
@@ -33,7 +33,7 @@ public class NotNullOrReturnTest {
   }
 
   @Test public void b() {
-    trimmingOf("statement(); if(x == null) return null; use(); use();")//
+    topDownTrimming("statement(); if(x == null) return null; use(); use();")//
         .using(IfStatement.class, new NotNullAssumed())//
         .gives("statement(); azzert.notNull(x); use(); use();")//
         .gives("statement();assert x!=null;use();use();") //
@@ -41,7 +41,7 @@ public class NotNullOrReturnTest {
   }
 
   @Test public void b2() {
-    trimmingOf("statement(); if(x == null || y == null) return null; use(); use();")//
+    topDownTrimming("statement(); if(x == null || y == null) return null; use(); use();")//
         .using(IfStatement.class, new NotNullAssumed())//
         .gives("statement(); azzert.notNull(x,y); use(); use();")//
         .gives("statement();assert y!=null:x;use();use();") //
@@ -49,19 +49,19 @@ public class NotNullOrReturnTest {
   }
 
   @Test public void respect() {
-    trimmingOf("void m(){if(x == null) return; use(); use();}")//
+    topDownTrimming("void m(){if(x == null) return; use(); use();}")//
         .using(IfStatement.class, new NotNullAssumed())//
         .stays();
   }
 
   @Test public void respect2() {
-    trimmingOf("void m(){use(); if(x == null) return false; use(); use();}")//
+    topDownTrimming("void m(){use(); if(x == null) return false; use(); use();}")//
         .using(IfStatement.class, new NotNullAssumed())//
         .stays();
   }
 
   @Test public void respect3() {
-    trimmingOf("void m(){use(); if(x == null) return; use(); use();}")//
+    topDownTrimming("void m(){use(); if(x == null) return; use(); use();}")//
         .using(IfStatement.class, new NotNullAssumed())//
         .gives("void m(){use();azzert.notNull(x);use();use();}") //
         .gives("void m(){use();assert x!=null;use();use();}") //
@@ -69,7 +69,7 @@ public class NotNullOrReturnTest {
   }
 
   @Test public void respect4() {
-    trimmingOf("statement(); if(x == null) return false; use(); use();")//
+    topDownTrimming("statement(); if(x == null) return false; use(); use();")//
         .using(IfStatement.class, new NotNullAssumed())//
         .stays();
   }
