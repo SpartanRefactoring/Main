@@ -283,6 +283,7 @@ public final class Matcher {
     return iz.block(¢) || iz.statement(¢);
   }
 
+  /** [[SuppressWarningsSpartan]] - see #1246 */
   private static boolean sameName(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     final String $ = p + "";
     return !$.startsWith("$") ? iz.name(n) && $.equals(identifier(az.name(n)))
