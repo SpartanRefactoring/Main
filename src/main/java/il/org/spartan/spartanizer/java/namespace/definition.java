@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static il.org.spartan.utils.lisp2.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -66,8 +64,8 @@ public interface definition {
         assert e != null;
         final ForStatement s = az.forStatement(parent(e));
         assert s != null;
-        final List<ASTNode> $ = new ArrayList<>(rest(f, fragments(e)));
-        $.addAll(rest(e, initializers(s)));
+        final List<ASTNode> $ = new ArrayList<>(the.rest(f, fragments(e)));
+        $.addAll(the.rest(e, initializers(s)));
         $.add(expression(s));
         $.addAll(updaters(s));
         $.add(body(s));
@@ -109,7 +107,7 @@ public interface definition {
         "\n\t p = " + f.getInitializer() + parent(f) + "/" + parent(f).getClass().getSimpleName()//
             + fault.done();
         assert fragments(s) != null;
-        $.addAll(rest(f, fragments(s)));
+        $.addAll(the.rest(f, fragments(s)));
         $.addAll(hop.subsequentStatements(s));
         return $;
       }
@@ -131,8 +129,8 @@ public interface definition {
         final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
         final TryStatement s = az.tryStatement(parent(e));
         final List<ASTNode> $ = new ArrayList<>();
-        $.addAll(rest(f, fragments(e)));
-        $.addAll(rest(e, resources(s)));
+        $.addAll(the.rest(f, fragments(e)));
+        $.addAll(the.rest(e, resources(s)));
         $.add(body(s));
         $.addAll(catchClauses(s));
         return $;

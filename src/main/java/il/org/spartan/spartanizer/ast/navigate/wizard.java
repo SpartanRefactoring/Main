@@ -737,7 +737,7 @@ public interface wizard {
   }
 
   static int sequencerRank(final ASTNode ¢) {
-    return lisp2.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
+    return the.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 
   static void setBinding(final ASTParser $) {

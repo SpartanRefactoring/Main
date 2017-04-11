@@ -40,7 +40,7 @@ public class Issue1190 {
         try {
           trimmer.fixed(FileUtils.read(f));
         } catch (final IOException ¢) {
-          monitor.infoIOException(¢, "Cannot read: " + f);
+          monitor.config(¢, "Cannot read: " + f);
         }
       }
     }.fire(new ASTVisitor() {/**/});
