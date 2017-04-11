@@ -48,7 +48,7 @@ public class OutlineTernaryMethodInvocation extends MethodInvocationAbstractPatt
       final ConditionalExpression $;
       if (($ = az.conditionalExpression(arguments.get(i))) != null) {
         if (iz.nullLiteral(then($)) || iz.nullLiteral(elze($)))
-          return null;
+          break;
         final MethodInvocation whenTrue = copy.of(current), whenFalse = copy.of(current);
         arguments(whenTrue).remove(i);
         arguments(whenTrue).add(i, copy.of(then($)));

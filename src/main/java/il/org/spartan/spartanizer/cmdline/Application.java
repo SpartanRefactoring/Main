@@ -178,7 +178,7 @@ public final class Application implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final NullPointerException | JavaModelException ¢) {
-      monitor.logEvaluationError(this, ¢);
+      monitor.exception(this, ¢);
     }
   }
 
