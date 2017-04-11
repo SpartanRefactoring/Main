@@ -42,10 +42,10 @@ public final class SingleFlater {
     });
   }
 
-  public static SingleFlater in(final ASTNode ¢, final Consumer<Exception> x) {
+  public static SingleFlater in(final ASTNode ¢, final Consumer<Exception> c) {
     final SingleFlater $ = new SingleFlater();
     $.root = ¢;
-    $.exceptionListener = x;
+    $.exceptionListener = c;
     return $;
   }
 
