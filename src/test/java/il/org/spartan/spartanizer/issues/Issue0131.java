@@ -66,21 +66,45 @@ public final class Issue0131 {
         .gives("for(int i=4;i<s.g();++i){i+=9;i++;break;}return x;").gives("for(int ¢=4;¢<s.g();++¢){¢+=9;¢++;break;}return x;");
   }
 
-  @Test public void a11() {
-    trimminKof("void foo() {int t=5;int z=2;for(int i=4;i<s.g();++i){if(z==i){t+=9;return x;}y+=15;return x;}return x;}")
-        .gives("void foo() {int t=5, z=2;for(int i=4;i<s.g();++i){if(z==i){t+=9;return x;}y+=15;break;}return x;}")
-        .gives("void foo() {int t=5, z=2;for(int i=4;i<s.g();++i){if(z==i){t+=9;break;}y+=15;break;}return x;}")
-        .gives("void foo() {int t=5, z=2;for(int ¢=4;¢<s.g();++¢){if(z==¢){t+=9;break;}y+=15;break;}return x;}")
-        .gives("void foo() {for(int t=5, z=2, ¢=4;¢<s.g();++¢){if(z==¢){t+=9;break;}y+=15;break;}return x;}")//
-        .gives("void foo(){for(int t=5,z=2,¢=4;¢<s.g();++¢){if(z==¢){t+=9;}else{y+=15;}break;}return x;}") //
-        .gives("void foo(){for(int t=5,z=2,¢=4;¢<s.g();++¢){if(z==¢)t+=9;else y+=15;break;}return x;}") //
-        .stays();
+  /** Introduced by Yogi on Tue-Apr-11-23:01:29-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void voidaIntb5Intc2ForIntd4defdIfcdb9Returngh15ReturngReturng() {
+    trimminKof(
+        "void a() { int b = 5; int c = 2; for (int d = 4; d < e.f(); ++d) { if (c == d) { b += 9; return g; } h += 15; return g; } return g; }") //
+            .using(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()) //
+            .gives("void a(){int b=5,c=2;for(int d=4;d<e.f();++d){if(c==d){b+=9;return g;}h+=15;return g;}return g;}") //
+            .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementToForInitializers()) //
+            .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d){b+=9;return g;}h+=15;return g;}return g;}") //
+            .using(ForStatement.class, new ForFiniteConvertReturnToBreak()) //
+            .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d){b+=9;break;}h+=15;return g;}return g;}") //
+            .using(ForStatement.class, new ForFiniteConvertReturnToBreak()) //
+            .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d){b+=9;break;}h+=15;break;}return g;}") //
+            .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
+            .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d){b+=9;}else{h+=15;}break;}return g;}") //
+            .using(Block.class, new BlockSingleton()) //
+            .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d)b+=9;else h+=15;break;}return g;}") //
+            .stays() //
+    ;
   }
 
-  @Test public void a12() {
-    trimminKof("boolean b=false;for(int i=4;i<s.g();++i){if(i==5){t+=9;return x;}else return tr;y+=15;return x;}return x;")
-        .gives("for(int i=4;i<s.g();++i){if(i==5){t+=9;return x;}else return tr;y+=15;break;}return x;")
-        .gives("for(int i=4;i<s.g();++i){if(i==5){t+=9;break;}else return tr;y+=15;break;}return x;");
+  /** Introduced by Yogi on Tue-Apr-11-23:02:38-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Test public void booleanaFalseForIntb4bcdbIfb5e9ReturnfElseReturngh15ReturnfReturnf() {
+    trimminKof("boolean a = false; for (int b = 4; b < c.d(); ++b) { if (b == 5) { e += 9; return f; } else return g; h += 15; return f; } return f;") //
+        .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+        .gives("for(int b=4;b<c.d();++b){if(b==5){e+=9;return f;}else return g;h+=15;return f;}return f;") //
+        .using(ForStatement.class, new ForFiniteConvertReturnToBreak()) //
+        .gives("for(int b=4;b<c.d();++b){if(b==5){e+=9;break;}else return g;h+=15;return f;}return f;") //
+        .using(ForStatement.class, new ForFiniteConvertReturnToBreak()) //
+        .gives("for(int b=4;b<c.d();++b){if(b==5){e+=9;break;}else return g;h+=15;break;}return f;") //
+        .using(IfStatement.class, new IfThenOrElseIsCommandsFollowedBySequencer()) //
+        .gives("for(int b=4;b<c.d();++b){if(b!=5)return g;e+=9;break;h+=15;break;}return f;") //
+        .using(BreakStatement.class, new SequencerNotLastInBlock<BreakStatement>()) //
+        .gives("for(int b=4;b<c.d();++b){if(b!=5)return g;e+=9;break;break;}return f;") //
+        .using(BreakStatement.class, new SequencerNotLastInBlock<BreakStatement>()) //
+        .gives("for(int b=4;b<c.d();++b){if(b!=5)return g;e+=9;break;}return f;") //
+        .stays() //
+    ;
   }
 
   /** Introduced by Yogi on Tue-Apr-11-17:34:42-IDT-2017 (code automatically in

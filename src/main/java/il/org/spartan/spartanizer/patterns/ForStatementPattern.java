@@ -12,26 +12,18 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2017-03-31 */
 public abstract class ForStatementPattern extends AbstractPattern<ForStatement> {
   private static final long serialVersionUID = 0x6BAA0D9033D78EDEL;
-  protected Expression forExpression;
+  protected Expression expression;
   protected Statement body;
   protected List<Expression> initializers;
   protected List<Expression> updaters;
 
   public ForStatementPattern() {
-    andAlso("Must bre legal ForStatement", () -> {
-      forExpression = current.getExpression();
+    andAlso("Must be a valid for statement", () -> {
+      expression = current.getExpression();
       body = step.body(current);
       initializers = step.initializers(current);
       updaters = step.updaters(current);
-      return body != null && forExpression != null;
+      return body != null;
     });
-  }
-
-  protected Statement forBody() {
-    return body;
-  }
-
-  protected Expression forCondition() {
-    return forExpression;
   }
 }

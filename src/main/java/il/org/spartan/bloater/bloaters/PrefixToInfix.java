@@ -20,7 +20,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @author Dor Ma'ayan
  * @since 2016-12-24 */
-public class PrefixToInfix extends PrefixExprezzion implements TipperCategory.Bloater {
+public class PrefixToInfix extends PrefixExpressionPattern implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x5414F7B0C6AE739BL;
 
   public PrefixToInfix() {

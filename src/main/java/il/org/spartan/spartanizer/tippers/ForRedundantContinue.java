@@ -27,7 +27,8 @@ public class ForRedundantContinue extends NonEmptyForLoop//
   }
 
   public ForRedundantContinue() {
-    andAlso(new Proposition.Singleton("Applicable only on loops ending with continue", () -> iz.continueStatement(lastStatement)));
+    andAlso("Applicable only on loops ending with continue", //
+        () -> iz.continueStatement(lastStatement));
   }
 
   @Override public String description() {

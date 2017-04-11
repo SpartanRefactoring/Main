@@ -18,7 +18,7 @@ import il.org.spartan.zoomer.zoomin.expanders.*;
 /** Example in {@link #examples} Test case is {@link Issue1049}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-30 */
-public final class TernaryPushup extends InfixExprezzion implements TipperCategory.Bloater {
+public final class TernaryPushup extends InfixExpressionPattern implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x711512B65712ADF4L;
   Expression operandCondition, operandThen, operandElze;
   private ConditionalExpression leftConditional;

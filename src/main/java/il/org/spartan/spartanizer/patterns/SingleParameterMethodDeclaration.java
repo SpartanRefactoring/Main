@@ -12,8 +12,11 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @author Raviv Rachmiel <tt>raviv.rachmiel@gmail.com</tt>
  * @since 2017-03-29 */
 public abstract class SingleParameterMethodDeclaration extends NonEmptyMethodDeclaration {
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
+
   private static final long serialVersionUID = 0x7F668ECA50C04888L;
-  protected SingleVariableDeclaration parameter;
 
   public SingleParameterMethodDeclaration() {
     andAlso("Must have only one parameter", () -> {
@@ -22,15 +25,17 @@ public abstract class SingleParameterMethodDeclaration extends NonEmptyMethodDec
     });
   }
 
+  protected final SimpleName parameterName() {
+    return parameter.getName();
+  }
+
+  @Override protected ASTNode highlight() {
+    return parameterName();
+  }
+
   protected Type type() {
     return parameter.getType();
   }
 
-  protected final SimpleName ParameterName() {
-    return parameter.getName();
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
+  protected SingleVariableDeclaration parameter;
 }
