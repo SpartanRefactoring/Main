@@ -119,7 +119,7 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void doubleVanillaThrow() {
     A$04_init();
-    topDownTrimming("int f() { if (false)    i++;  else {    g(i);    throw new RuntimeException();  }  f(); a = 3; return 2;}")//
+    trimminKof("int f() { if (false)    i++;  else {    g(i);    throw new RuntimeException();  }  f(); a = 3; return 2;}")//
         .gives("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}")//
         .gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();return 2;}")//
         .gives("int f(){g(i);throw new RuntimeException();}")//
@@ -131,7 +131,7 @@ public final class Issue0086 extends Issue____ {
   }
 
   @Test public void vanilla() {
-    topDownTrimming("{   throw Something();  f(); a = 3; return 2;}")//
+    trimminKof("{   throw Something();  f(); a = 3; return 2;}")//
         .gives("throw Something();f(); a=3; return 2;").gives("throw Something();a=3; return 2;")//
         .gives("throw Something(); return 2;")//
         .gives("throw Something();")//
@@ -139,42 +139,42 @@ public final class Issue0086 extends Issue____ {
   }
 
   @Test public void vanilla01() {
-    topDownTrimming("throw Something();a=3; return 2;")//
+    trimminKof("throw Something();a=3; return 2;")//
         .gives("throw Something(); return 2;")//
         .gives("throw Something();")//
         .stays();
   }
 
   @Test public void vanilla02() {
-    topDownTrimming("return Something();a=3; return 2;")//
+    trimminKof("return Something();a=3; return 2;")//
         .gives("return Something(); return 2;")//
         .gives("return Something();")//
         .stays();
   }
 
   @Test public void vanilla03() {
-    topDownTrimming("continue a;a=3; return 2;")//
+    trimminKof("continue a;a=3; return 2;")//
         .gives("continue a; return 2;")//
         .gives("continue a;")//
         .stays();
   }
 
   @Test public void vanilla04() {
-    topDownTrimming("break a;a=3; return 2;")//
+    trimminKof("break a;a=3; return 2;")//
         .gives("break a; return 2;")//
         .gives("break a;")//
         .stays();
   }
 
   @Test public void vanilla05() {
-    topDownTrimming("continue ;a=3; return 2;")//
+    trimminKof("continue ;a=3; return 2;")//
         .gives("continue ; return 2;")//
         .gives("continue ;")//
         .stays();
   }
 
   @Test public void vanilla06() {
-    topDownTrimming("break;a=3; return 2;")//
+    trimminKof("break;a=3; return 2;")//
         .gives("break; return 2;")//
         .gives("break;")//
         .stays();

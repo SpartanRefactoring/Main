@@ -12,7 +12,7 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1055 {
   @Test public void vanilla() {
-    topDownTrimming("switch(x) { case 1: { y=2; } } ") //
+    trimminKof("switch(x) { case 1: { y=2; } } ") //
         .gives("switch(x) { case 1: y = 2; }") //
     ;
   }

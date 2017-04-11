@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class LazyInitializerTest {
   @Test public void basic() {
-    topDownTrimming("¢ = ¢ != null ? ¢ : \"\";")//
+    trimminKof("¢ = ¢ != null ? ¢ : \"\";")//
         .using(ConditionalExpression.class, new DefaultsTo())//
         .using(Assignment.class, new LazyInitializer())//
         .gives("¢ = defaults(¢).to(\"\");")//

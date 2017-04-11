@@ -11,28 +11,28 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class MinTest {
   @Test public void a() {
-    topDownTrimming("return x > y ? y : x;")//
+    trimminKof("return x > y ? y : x;")//
         .using(ConditionalExpression.class, new Min())//
         .gives("return min(x,y);")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("return x >= y ? y : x;")//
+    trimminKof("return x >= y ? y : x;")//
         .using(ConditionalExpression.class, new Min())//
         .gives("return min(x,y);")//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming("return y < x ? y : x;")//
+    trimminKof("return y < x ? y : x;")//
         .using(ConditionalExpression.class, new Min())//
         .gives("return min(x,y);")//
         .stays();
   }
 
   @Test public void d() {
-    topDownTrimming("return y <= x ? y : x;")//
+    trimminKof("return y <= x ? y : x;")//
         .using(ConditionalExpression.class, new Min())//
         .gives("return min(x,y);")//
         .stays();

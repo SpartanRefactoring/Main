@@ -11,38 +11,38 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0235 {
   @Test public void test0() {
-    topDownTrimming("try{ f(); } catch(Exception e) { } finally {}")//
+    trimminKof("try{ f(); } catch(Exception e) { } finally {}")//
         .gives("try{ f(); } catch(Exception e) { }")//
         .stays();
   }
 
   @Test public void test1() {
-    topDownTrimming("try{ return i; } catch(Exception e) { throw e; } finally {}")//
+    trimminKof("try{ return i; } catch(Exception e) { throw e; } finally {}")//
         .gives("try{ return i; } catch(Exception e) { throw e; }")//
         .gives("try{ return i; } catch(Exception ¢) { throw ¢; }")//
         .stays();
   }
 
   @Test public void test2() {
-    topDownTrimming("try{ return i; } catch(Exception e) { throw e; } finally { return 7;}")//
+    trimminKof("try{ return i; } catch(Exception e) { throw e; } finally { return 7;}")//
         .gives("try{ return i; } catch(Exception ¢) { throw ¢; } finally { return 7;}")//
         .stays();//
   }
 
   @Test public void test3() {
-    topDownTrimming("try{ return i; } finally { return 7;}")//
+    trimminKof("try{ return i; } finally { return 7;}")//
         .stays();
   }
 
   @Test public void test4() {
-    topDownTrimming("try{ return i; } finally { }")//
+    trimminKof("try{ return i; } finally { }")//
         .gives("{return i;}")//
         .gives("return i;")//
         .stays();
   }
 
   @Test public void test5() {
-    topDownTrimming("try{ try{ return i; } catch(Exception e){} finally { }} catch(Exception e){} finally { } ")//
+    trimminKof("try{ try{ return i; } catch(Exception e){} finally { }} catch(Exception e){} finally { } ")//
         .gives("try{ try{ return i; } catch(Exception e){} finally { } } catch(Exception e){} ")
         .gives("try{ try{ return i; } catch(Exception e){} } catch(Exception e){}");
   }

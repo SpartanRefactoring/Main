@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class LetItBeInTest {
   @Test public void a() {
-    topDownTrimming("{{A λ = foo(); return bar(λ,λ);} another();}")//
+    trimminKof("{{A λ = foo(); return bar(λ,λ);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .gives("{{{return let(()->foo()).in(λ->bar(λ,λ));}}another();}") //
         .gives("return let(()->foo()).in(λ->bar(λ,λ));another();") //
@@ -20,21 +20,21 @@ public class LetItBeInTest {
   }
 
   @Test public void b() {
-    topDownTrimming("{{A x = foo(); return bar(x,x);} another();}")//
+    trimminKof("{{A x = foo(); return bar(x,x);} another();}")//
         .gives("A x = foo(); return bar(x,x); another();")//
         .gives("A x = foo(); return bar(x,x);")//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming("{{A x = foo(); return bar(y,y);} another();}")//
+    trimminKof("{{A x = foo(); return bar(y,y);} another();}")//
         .gives("A x=foo();return bar(y,y);another();") //
         .gives("foo(); return bar(y,y);") //
         .stays();
   }
 
   @Test public void d() {
-    topDownTrimming("{{A x = foo(); bar(x,x);} another();}")//
+    trimminKof("{{A x = foo(); bar(x,x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .gives("{{{let(()->foo()).in(x->bar(x,x));}}another();}") //
         .gives("let(()->foo()).in(x->bar(x,x));another();") //
@@ -43,25 +43,25 @@ public class LetItBeInTest {
   }
 
   @Test public void e() {
-    topDownTrimming("{{A y = bar(), x = foo(); bar(x,x); print(y);} another();}")//
+    trimminKof("{{A y = bar(), x = foo(); bar(x,x); print(y);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .stays();
   }
 
   @Test public void i() {
-    topDownTrimming("X x = foo(); bar1(x,x); bar2(x);")//
+    trimminKof("X x = foo(); bar1(x,x); bar2(x);")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .stays();
   }
 
   @Test public void f() {
-    topDownTrimming("{{A x = foo(); bar(x,x); print(x);} another();}")//
+    trimminKof("{{A x = foo(); bar(x,x); print(x);} another();}")//
         .using(VariableDeclarationFragment.class, new LetItBeIn())//
         .stays();
   }
 
   @Test public void g() {
-    topDownTrimming("{"//
+    trimminKof("{"//
         + "    final Object value=m.invoke(a);"//
         + "    if (value == null) {"//
         + "      throw new IllegalStateException(String.format(\"Annotation method %s returned null\",m));"//
@@ -72,7 +72,7 @@ public class LetItBeInTest {
   }
 
   @Test public void h() {
-    topDownTrimming("{"//
+    trimminKof("{"//
         + "final AtmosphereInterceptor a=(AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass);"//
         + "f.getAtmosphereConfig().startupHook("//
         + "  new AtmosphereConfig.StartupHook(){"//

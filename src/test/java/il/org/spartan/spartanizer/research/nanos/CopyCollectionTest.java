@@ -15,13 +15,13 @@ import org.junit.runners.*;
 @SuppressWarnings("static-method")
 public class CopyCollectionTest {
   @Test public void a() {
-    topDownTrimming("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);")//
+    trimminKof("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);")//
         .using(ClassInstanceCreation.class, new CopyCollection())//
         .gives("StatsAccumulator $=Create.from(values);");
   }
 
   @Test public void b() {
-    topDownTrimming("StatsAccumulator<N> $=new StatsAccumulator<>();  $.addAll(values);")//
+    trimminKof("StatsAccumulator<N> $=new StatsAccumulator<>();  $.addAll(values);")//
         .using(ClassInstanceCreation.class, new CopyCollection())//
         .gives("StatsAccumulator<N> $=Create.from(values);");
   }

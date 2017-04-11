@@ -16,51 +16,51 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0251 {
   @Test public void Issue302_test() {
-    topDownTrimming("if(b()){int i;}")//
+    trimminKof("if(b()){int i;}")//
         .gives("if (b()){}")//
     ;
   }
 
   @Test public void t01() {
-    topDownTrimming("if(b==true){int i;}")//
+    trimminKof("if(b==true){int i;}")//
         .gives("{}")//
         .gives("")//
         .stays();
   }
 
   @Test public void t02() {
-    topDownTrimming("if(b){int i;int b; b=i+1;g();}")//
+    trimminKof("if(b){int i;int b; b=i+1;g();}")//
         .gives("if(!b)return;int i;int b;b=i+1;g();");
   }
 
   @Test public void t03() {
-    topDownTrimming("if(b){int i;int j;int k;}")//
+    trimminKof("if(b){int i;int j;int k;}")//
         .gives("{}")//
         .gives("")//
         .stays();
   }
 
   @Test public void t04() {
-    topDownTrimming("if(b){int i;int j;}else{int tipper;}")//
+    trimminKof("if(b){int i;int j;}else{int tipper;}")//
         .gives("{}")//
         .gives("")//
         .stays();
   }
 
   @Test public void t05() {
-    topDownTrimming("if(b)g();")//
+    trimminKof("if(b)g();")//
         .stays() //
     ;
   }
 
   @Test public void t06() {
-    topDownTrimming("if(b()){int i;}")//
+    trimminKof("if(b()){int i;}")//
         .gives("if(b()){}")//
     ;
   }
 
   @Test public void t07() {
-    topDownTrimming("if(b){int i;int j;}else{g();}")//
+    trimminKof("if(b){int i;int j;}else{g();}")//
         .gives("if(!b)g();else {int i;int j;}")//
         .gives("if(!b)g();else{}")//
         .gives("if(!b)g();")//
@@ -68,7 +68,7 @@ public class Issue0251 {
   }
 
   @Test public void t10() {
-    topDownTrimming("if(b==true){int i=5;}")//
+    trimminKof("if(b==true){int i=5;}")//
         .gives("{}")//
         .gives("")//
         .stays() //
@@ -76,7 +76,7 @@ public class Issue0251 {
   }
 
   @Test public void t11() {
-    topDownTrimming("if(b==true){int i=g();}")//
+    trimminKof("if(b==true){int i=g();}")//
         .gives("if(b){g();}")//
         .gives("if(b)g();")//
         .stays() //
@@ -84,7 +84,7 @@ public class Issue0251 {
   }
 
   @Test public void t12() {
-    topDownTrimming("if(b==true){int i=5,q=g();}")//
+    trimminKof("if(b==true){int i=5,q=g();}")//
         .gives("if(b){g(); int i=5;}")//
         .gives("if(!b)return;g(); int i=5;")//
         .gives("if(!b)return;g();")//
@@ -95,34 +95,34 @@ public class Issue0251 {
   }
 
   @Test public void t13() {
-    topDownTrimming("if(b){int i;int j;if(s){int q;}}else{int q;int tipper;}")//
+    trimminKof("if(b){int i;int j;if(s){int q;}}else{int q;int tipper;}")//
         .gives("{}")//
         .gives("")//
         .stays();
   }
 
   @Test public void t14() {
-    topDownTrimming("if(b){int i;int j;while(s){int q;}}else{int q;int tipper;}")//
+    trimminKof("if(b){int i;int j;while(s){int q;}}else{int q;int tipper;}")//
         .gives("{}")//
         .gives("")//
         .stays();
   }
 
   @Test public void t15() {
-    topDownTrimming("if(b==q()){int i;}")//
+    trimminKof("if(b==q()){int i;}")//
         .gives("if(b==q()){}")//
     ;
   }
 
   @Test public void t16() {
-    topDownTrimming("while(b==q){int i;}")//
+    trimminKof("while(b==q){int i;}")//
         .gives("{}");
   }
 
   @Test public void t17() {
     final String variable = "while(b==q){if(tipper==q()){int i;}}";
     assert !sideEffects.free(into.s(variable));
-    topDownTrimming(variable)//
+    trimminKof(variable)//
         .gives("while(b==q)if(tipper==q()){int i;}")//
         .gives("while(b==q)if(tipper==q()){}")//
     ;
@@ -139,7 +139,7 @@ public class Issue0251 {
   /** Introduced by Yossi on Sat-Mar-25-05:15:04-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_whileabc() {
-    topDownTrimming("while (a == b) { c(); { } }") //
+    trimminKof("while (a == b) { c(); { } }") //
         .using(WhileStatement.class, new WhileToForUpdaters()) //
         .gives("for(;a==b;c()){c();}") //
         .using(Block.class, new BlockSingleton()) //
@@ -149,7 +149,7 @@ public class Issue0251 {
   }
 
   @Test public void t21() {
-    topDownTrimming("for(i=1;b==q;++i){if(tipper==q()){int i;}}")//
+    trimminKof("for(i=1;b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=1;b==q;++i)if(tipper==q()){int i;}")//
         .gives("for(i=1;b==q;++i)if(tipper==q()){}")//
         .stays();
@@ -158,7 +158,7 @@ public class Issue0251 {
   /** Introduced by Yossi on Sat-Mar-25-05:16:02-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void whileabc() {
-    topDownTrimming("while (a == b) { c(); { } }") //
+    trimminKof("while (a == b) { c(); { } }") //
         .using(WhileStatement.class, new WhileToForUpdaters()) //
         .gives("for(;a==b;c()){c();}") //
         .using(Block.class, new BlockSingleton()) //
@@ -168,21 +168,21 @@ public class Issue0251 {
   }
 
   @Test public void t23() {
-    topDownTrimming("for(i=1;b==q();++i){if(tipper==q()){int i;}}")//
+    trimminKof("for(i=1;b==q();++i){if(tipper==q()){int i;}}")//
         .gives("for(i=1;b==q();++i)if(tipper==q()){int i;}")//
         .gives("for(i=1;b==q();++i)if(tipper==q()){}")//
         .stays();
   }
 
   @Test public void t24() {
-    topDownTrimming("for(i=tipper();b==q;++i){if(tipper==q()){int i;}}")//
+    trimminKof("for(i=tipper();b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=tipper();b==q;++i)if(tipper==q()){int i;}")//
         .gives("for(i=tipper();b==q;++i)if(tipper==q()){}")//
         .stays();
   }
 
   @Test public void t25() {
-    topDownTrimming("for(i=4;b==q;f=i()){if(tipper==q()){int i;}}")//
+    trimminKof("for(i=4;b==q;f=i()){if(tipper==q()){int i;}}")//
         .gives("for(i=4;b==q;f=i())if(tipper==q()){int i;}")//
         .gives("for(i=4;b==q;f=i())if(tipper==q()){}")//
         .stays();

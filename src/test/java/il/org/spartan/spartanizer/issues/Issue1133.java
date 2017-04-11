@@ -15,49 +15,49 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1133 {
   @Test public void and() {
-    topDownTrimming("a =2; a &= 3;")//
+    trimminKof("a =2; a &= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 & 3;")//
     ;
   }
 
   @Test public void divides() {
-    topDownTrimming("a =2; a /= 3;")//
+    trimminKof("a =2; a /= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 / 3;")//
     ;
   }
 
   @Test public void minus() {
-    topDownTrimming("a =2; a -= 3;")//
+    trimminKof("a =2; a -= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 - 3;")//
     ;
   }
 
   @Test public void or() {
-    topDownTrimming("a =2; a |= 3;")//
+    trimminKof("a =2; a |= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 | 3;")//
     ;
   }
 
   @Test public void function() {
-    topDownTrimming("a =b; a += f(c,d);")//
+    trimminKof("a =b; a += f(c,d);")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = b + f(c,d);")//
     ;
   }
 
   @Test public void plus() {
-    topDownTrimming("a =2; a += 3;")//
+    trimminKof("a =2; a += 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 + 3;")//
     ;
   }
 
   @Test public void times() {
-    topDownTrimming("a =2; a *= 3;")//
+    trimminKof("a =2; a *= 3;")//
         .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
         .gives("a = 2 * 3;")//
     ;

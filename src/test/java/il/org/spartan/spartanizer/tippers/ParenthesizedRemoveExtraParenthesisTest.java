@@ -10,57 +10,57 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ParenthesizedRemoveExtraParenthesisTest {
   @Test public void a() {
-    topDownTrimming("((a + b))")//
+    trimminKof("((a + b))")//
         .gives("(a+b)")//
         .stays();
   }
 
   @Test public void b() {
-    topDownTrimming("((T)b)")//
+    trimminKof("((T)b)")//
         .stays();
   }
 
   @Test public void c() {
-    topDownTrimming("a((b))")//
+    trimminKof("a((b))")//
         .gives("a(b)")//
         .stays();
   }
 
   @Test public void d() {
-    topDownTrimming("((B)b).f()")//
+    trimminKof("((B)b).f()")//
         .stays();
   }
 
   @Test public void e() {
-    topDownTrimming("((B)b).f")//
+    trimminKof("((B)b).f")//
         .stays();
   }
 
   @Test public void f() {
-    topDownTrimming("(a).b();")//
+    trimminKof("(a).b();")//
         .gives("a.b();")//
         .stays();
   }
 
   @Test public void g() {
-    topDownTrimming("(a.b).c();")//
+    trimminKof("(a.b).c();")//
         .gives("a.b.c();")//
         .stays();
   }
 
   @Test public void h() {
-    topDownTrimming("(a.b()).c();")//
+    trimminKof("(a.b()).c();")//
         .gives("a.b().c();")//
         .stays();
   }
 
   @Test public void i() {
-    topDownTrimming("(a ? b : c).d()")//
+    trimminKof("(a ? b : c).d()")//
         .stays();
   }
 
   @Test public void j() {
-    topDownTrimming("(a.b(x ? y : z)).d()")//
+    trimminKof("(a.b(x ? y : z)).d()")//
         .gives("a.b(x ? y : z).d()")//
         .stays();
   }

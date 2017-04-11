@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0229 {
   @Test public void vanilla() {
-    topDownTrimming("final class X { @SafeVarargs public final void f(final int... __) {}}")//
+    trimminKof("final class X { @SafeVarargs public final void f(final int... __) {}}")//
         .stays();
   }
 }

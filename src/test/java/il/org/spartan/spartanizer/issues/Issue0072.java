@@ -21,14 +21,14 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0072 {
   @Test public void a() {
-    topDownTrimming("(x-0)-0")//
+    trimminKof("(x-0)-0")//
         .gives("(x-0)")//
         .gives("(x)")//
         .stays();
   }
 
   @Test public void a1() {
-    topDownTrimming("-(x-0)")//
+    trimminKof("-(x-0)")//
         .gives("-(x)")//
         .stays();
   }
@@ -44,41 +44,41 @@ public class Issue0072 {
     assert !iz.literal0(right(i));
     azzert.that(make.minus(left(i)), iz("0"));
     azzert.that(make.minus(right(i)), iz("-x"));
-    topDownTrimming(s)//
+    trimminKof(s)//
         .gives("-x");
   }
 
   @Test public void mb() {
-    topDownTrimming("x-0")//
+    trimminKof("x-0")//
         .gives("x");
   }
 
   @Test public void mc() {
-    topDownTrimming("x-0-y")//
+    trimminKof("x-0-y")//
         .gives("x-y")//
         .stays();
   }
 
   @Test public void md1() {
-    topDownTrimming("0-x-0")//
+    trimminKof("0-x-0")//
         .gives("-x")//
         .stays();
   }
 
   @Test public void md2() {
-    topDownTrimming("0-x-0-y")//
+    trimminKof("0-x-0-y")//
         .gives("-x-y")//
         .stays();
   }
 
   @Test public void md3() {
-    topDownTrimming("0-x-0-y-0-z-0-0")//
+    trimminKof("0-x-0-y-0-z-0-0")//
         .gives("-x-y-z")//
         .stays();
   }
 
   @Test public void me() {
-    topDownTrimming("0-(x-0)")//
+    trimminKof("0-(x-0)")//
         .gives("-(x-0)")//
         .gives("-(x)")//
         .stays();
@@ -101,19 +101,19 @@ public class Issue0072 {
   }
 
   @Test public void meA() {
-    topDownTrimming("(x-0)")//
+    trimminKof("(x-0)")//
         .gives("(x)")//
         .stays();
   }
 
   @Test public void mf1() {
-    topDownTrimming("0-(x-y)")//
+    trimminKof("0-(x-y)")//
         .gives("-(x-y)")//
         .stays();
   }
 
   @Test public void mf1A() {
-    topDownTrimming("0-(x-0)")//
+    trimminKof("0-(x-0)")//
         .gives("-(x-0)")//
         .gives("-(x)")//
         .stays();
@@ -121,81 +121,81 @@ public class Issue0072 {
 
   @Test public void mf1B() {
     assert iz.simple(into.e("x"));
-    topDownTrimming("-(x-0)")//
+    trimminKof("-(x-0)")//
         .gives("-(x)")//
         .stays();
   }
 
   @Test public void mh() {
-    topDownTrimming("x-0-y")//
+    trimminKof("x-0-y")//
         .gives("x-y")//
         .stays();
   }
 
   @Test public void mi() {
-    topDownTrimming("0-x-0-y-0-z-0")//
+    trimminKof("0-x-0-y-0-z-0")//
         .gives("-x-y-z")//
         .stays();
   }
 
   @Test public void mj() {
-    topDownTrimming("0-0")//
+    trimminKof("0-0")//
         .gives("0");
   }
 
   @Test public void mx() {
-    topDownTrimming("0-0")//
+    trimminKof("0-0")//
         .gives("0");
   }
 
   @Test public void pa() {
-    topDownTrimming("(int)x+0")//
+    trimminKof("(int)x+0")//
         .gives("(int)x");
   }
 
   @Test public void pb() {
-    topDownTrimming("0+(int)x")//
+    trimminKof("0+(int)x")//
         .gives("(int)x");
   }
 
   @Test public void pc() {
-    topDownTrimming("0-x")//
+    trimminKof("0-x")//
         .gives("-x");
   }
 
   @Test public void pd() {
-    topDownTrimming("0+(int)x+0")//
+    trimminKof("0+(int)x+0")//
         .gives("(int)x")//
         .stays();
   }
 
   @Test public void pe() {
-    topDownTrimming("(int)x+0-x")//
+    trimminKof("(int)x+0-x")//
         .gives("(int)x-x")//
         .stays();
   }
 
   @Test public void pf() {
-    topDownTrimming("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0+0")//
+    trimminKof("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0+0")//
         .gives("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0").gives("(int)x+(int)x+(int)y+(int)z")//
         .stays();
   }
 
   @Test public void pg() {
-    topDownTrimming("0+(x+y)")//
+    trimminKof("0+(x+y)")//
         .gives("0+x+y")//
         .stays();
   }
 
   @Test public void ph() {
-    topDownTrimming("0+((x+y)+0+(z+h))+0")//
+    trimminKof("0+((x+y)+0+(z+h))+0")//
         .gives("0 +(x+y) +0+(z+h)+0")//
         .gives("0 +x+y +0+(z+h)+0")//
         .stays();
   }
 
   @Test public void pi() {
-    topDownTrimming("0+(0+x+y+((int)x+0))")//
+    trimminKof("0+(0+x+y+((int)x+0))")//
         .gives("0+x+y+(int)x +0")//
         .stays();
   }

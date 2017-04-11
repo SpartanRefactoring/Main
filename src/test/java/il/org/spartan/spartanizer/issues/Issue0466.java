@@ -12,23 +12,23 @@ import org.junit.runners.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0466 {
   @Test public void TestDoesUseShouldntChange() {
-    topDownTrimming("@SuppressWarnings(\"unused\") public void check__(Object... ¢) { ¢.get2(0);  }")//
+    trimminKof("@SuppressWarnings(\"unused\") public void check__(Object... ¢) { ¢.get2(0);  }")//
         .stays();
   }
 
   @Test public void TestDoesUseShouldntChange2() {
-    topDownTrimming("public void check__(@SuppressWarnings(\"unused\") Object... ¢) { ¢.get2(0);  }")//
+    trimminKof("public void check__(@SuppressWarnings(\"unused\") Object... ¢) { ¢.get2(0);  }")//
         .stays();
   }
 
   @Test public void TestDoubleUnderscore() {
-    topDownTrimming("@SuppressWarnings(\"unused\") public void check__(Object... os) {  }")//
+    trimminKof("@SuppressWarnings(\"unused\") public void check__(Object... os) {  }")//
         .gives("@SuppressWarnings(\"unused\") public void check__(Object... __) {  }")//
         .stays();
   }
 
   @Test public void TestDoubleUnderscoreInside() {
-    topDownTrimming("public void check__(@SuppressWarnings(\"unused\")  Object... os) {  }")//
+    trimminKof("public void check__(@SuppressWarnings(\"unused\")  Object... os) {  }")//
         .gives("public void check__(@SuppressWarnings(\"unused\")  Object... __) {  }")//
         .stays();
   }
