@@ -33,11 +33,21 @@ public class Issue1218 {
         .gives("return 0<1;");
   }
 
-  @Test public void a3() {
-    trimmingOf("int b=5,a = 2,c=4; return 3 * a * b * c; ")//
-        .gives("return 120;");
+  /** Introduced by Yogi on Tue-Apr-11-12:14:38-IDT-2017 
+  (code automatically in class 'JUnitTestMethodFacotry')*/
+    @Test public void inta5b2c4Return3bac() {
+       trimmingOf("int a = 5, b = 2, c = 4; return 3 * b * a * c;") //
+           .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
+           .gives("int b=2,c=4;return 3*b*5*c;") //
+           .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
+           .gives("int c=4;return 3*2*5*c;") //
+           .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
+           .gives("return 3*2*5*4;") //
+           .using(InfixExpression.class, new InfixMultiplicationEvaluate()) //
+           .gives("return 120;") //
+           .stays() //
+    ;
   }
-
   @Test public void a4() {
     trimmingOf("int a=2;return 3*a*4;")//
         .gives("return 3 * 2 * 4;");
