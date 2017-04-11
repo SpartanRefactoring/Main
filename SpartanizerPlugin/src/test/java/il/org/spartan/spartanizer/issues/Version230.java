@@ -851,9 +851,22 @@ public final class Version230 {
         .stays();
   }
 
-  @Test public void i1() {
-    trimmingOf("return(2> 2 + a)==true;")//
-        .gives("return 2>a+2;");
+  /** Introduced by Yogi on Tue-Apr-11-10:06:26-IDT-2017 
+  (code automatically in class 'JUnitTestMethodFacotry')*/
+    @Test public void return22aTrue() {
+       trimmingOf("return (2 > 2 + a) == true;") //
+           .using(InfixExpression.class, new InfixComparisonBooleanLiteral()) //
+           .gives("return 2>2+a;") //
+           .using(InfixExpression.class, new InfixComparisonSpecific()) //
+           .gives("return 2+a<2;") //
+           .using(InfixExpression.class, new InfixAdditionSort()) //
+           .gives("return a+2<2;") //
+           .using(InfixExpression.class, new InfixSimplifyComparisionOfAdditions()) //
+           .gives("return a<2-2;") //
+           .using(InfixExpression.class, new InfixSubtractionEvaluate()) //
+           .gives("return a<0;") //
+           .stays() //
+    ;
   }
 
   @Test public void ifBarFooElseBazFooExtractDefinedSuffix() {
