@@ -47,10 +47,6 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     return auxiliaryTip;
   }
 
-  public void clearTipper() {
-    tipper = null;
-  }
-
   public ASTRewrite bottomUp(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
     setCompilationUnit(u);
     final Tips tips = Tips.empty();
@@ -87,15 +83,82 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     return getRewrite();
   }
 
-  private void setCompilationUnit(final CompilationUnit ¢) {
-    currentToolbox = !useProjectPreferences ? globalToolbox : getToolboxByPreferences(¢);
-    fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
+  public void clearTipper() {
+    tipper = null;
+  }
+
+  public ASTRewrite computeMaximalRewrite(CompilationUnit ¢) {
+    return computeMaximalRewrite(¢, null, null);
   }
 
   @Override public ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
     setCompilationUnit(u);
     topDown(u, m, nodeLogger);
     return rewrite();
+  }
+
+  @SafeVarargs public final <N extends ASTNode> Trimmer fix(final Class<N> c, final Tipper<N>... ts) {
+    if (firstAddition) {
+      firstAddition = false;
+      globalToolbox = new Toolbox();
+    }
+    globalToolbox.add(c, ts);
+    return this;
+  }
+
+  @SafeVarargs public final Trimmer fixBloater(final Tipper<?>... ¢) {
+    return (Trimmer) fix(InflaterProvider.freshCopyOfAllExpanders(), ¢);
+  }
+
+  @SafeVarargs public final Trimmer fixTipper(final Tipper<?>... ¢) {
+    return (Trimmer) fix(Toolbox.freshCopyOfAllTippers(), ¢);
+  }
+
+  public ASTRewrite getRewrite() {
+    return rewrite;
+  }
+
+  public ASTNode node() {
+    return node;
+  }
+
+  public Trimmer onException(final TrimmerExceptionListener ¢) {
+    exceptionListener = ¢;
+    return this;
+  }
+
+  public ASTRewrite rewrite() {
+    return getRewrite();
+  }
+
+  public void setNode(final ASTNode currentNode) {
+    node = currentNode;
+    notify.setNode();
+  }
+
+  public void setRewrite(final ASTRewrite currentRewrite) {
+    rewrite = currentRewrite;
+  }
+
+  public void setTipper(final Tipper<?> currentTipper) {
+    tipper = currentTipper;
+    if (tipper() == null)
+      notify.noTipper();
+    else
+      notify.tipperAccepts();
+  }
+
+  public Tip tip() {
+    return tip;
+  }
+
+  public Tipper<?> tipper() {
+    return tipper;
+  }
+
+  private void setCompilationUnit(final CompilationUnit ¢) {
+    currentToolbox = !useProjectPreferences ? globalToolbox : getToolboxByPreferences(¢);
+    fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
   }
 
   private void topDown(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
@@ -128,63 +191,6 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
         disabling.scan(¢);
       }
     });
-  }
-
-  @SafeVarargs public final <N extends ASTNode> Trimmer fix(final Class<N> c, final Tipper<N>... ts) {
-    if (firstAddition) {
-      firstAddition = false;
-      globalToolbox = new Toolbox();
-    }
-    globalToolbox.add(c, ts);
-    return this;
-  }
-
-  @SafeVarargs public final Trimmer fixBloater(final Tipper<?>... ¢) {
-    return (Trimmer) fix(InflaterProvider.freshCopyOfAllExpanders(), ¢);
-  }
-
-  @SafeVarargs public final Trimmer fixTipper(final Tipper<?>... ¢) {
-    return (Trimmer) fix(Toolbox.freshCopyOfAllTippers(), ¢);
-  }
-
-  public ASTNode node() {
-    return node;
-  }
-
-  public Trimmer onException(final TrimmerExceptionListener ¢) {
-    exceptionListener = ¢;
-    return this;
-  }
-
-  public ASTRewrite rewrite() {
-    return getRewrite();
-  }
-
-  public void setNode(final ASTNode currentNode) {
-    node = currentNode;
-    notify.setNode();
-  }
-
-  public void setTipper(final Tipper<?> currentTipper) {
-    tipper = currentTipper;
-    if (tipper() == null)
-      notify.noTipper();
-    else
-      notify.tipperAccepts();
-  }
-
-  public Tip tip() {
-    return tip;
-  }
-
-  public Tipper<?> tipper() {
-    return tipper;
-  }
-
-  void setTip(final Tip ¢) {
-    tip = ¢;
-    if (¢ != null)
-      notify.tipperTip();
   }
 
   protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
@@ -230,25 +236,23 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     }, swallow);
   }
 
-  public ASTRewrite getRewrite() {
-    return rewrite;
+  void setTip(final Tip ¢) {
+    tip = ¢;
+    if (¢ != null)
+      notify.tipperTip();
   }
-
-  public void setRewrite(final ASTRewrite currentRewrite) {
-    rewrite = currentRewrite;
-  }
-
   public final Taps notify = new Taps()//
       .push(new ProgressTapper())//
       .push(new TrimmerMonitor(this));
-  private ASTRewrite rewrite;
-  protected Tip tip;
-  private Tipper<?> tipper;
   private ASTNode node;
+  private ASTRewrite rewrite;
+  private Tipper<?> tipper;
+  protected Tip tip;
   Tip auxiliaryTip;
-  String fileName;
   Toolbox currentToolbox;
+  String fileName;
   TrimmerExceptionListener exceptionListener = λ -> monitor.logToFile(λ, this, tip(), tipper(), fileName);
+
   final Consumer<Exception> swallow = λ -> exceptionListener.accept(λ);
 
   /** A {@link Tap} to update {@link #progressMonitor}
@@ -280,10 +284,10 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   public static class Taps implements Tap {
+    @Override public void noTipper() { inner.forEach(Tap::noTipper); }
     /** @formatter:off */
     public Taps pop() { inner.remove(inner.size()-1); return this; }
     public Taps push(final Tap ¢) { inner.add(¢); return this; }
-    @Override public void noTipper() { inner.forEach(Tap::noTipper); }
     @Override public void setNode() { inner.forEach(Tap::setNode); }
     @Override public void tipperAccepts() { inner.forEach(Tap::tipperAccepts); }
     @Override public void tipperRejects() { inner.forEach(Tap::tipperRejects); }
