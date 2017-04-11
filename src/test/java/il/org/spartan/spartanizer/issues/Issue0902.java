@@ -12,6 +12,7 @@ import org.junit.*;
 public class Issue0902 {
   @Test public void a() {
     trimminKof("void f(){int x; int y;return;}")//
+        .gives("void f(){int x,y;}")//
         .gives("void f(){}")//
         .stays();
   }
