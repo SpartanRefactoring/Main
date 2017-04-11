@@ -7,16 +7,13 @@ package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.testing.*;
@@ -36,12 +33,7 @@ public class TrimmerLogTest {
     assert d != null;
     final Trimmer a = new Trimmer();
     try {
-      final IProgressMonitor pm = wizard.nullProgressMonitor;
-      pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
-      final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.computeMaximalRewrite(u, null, null);
-      pm.done();
-      $.rewriteAST(d, null).apply(d);
+      a.computeMaximalRewrite(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
@@ -59,12 +51,7 @@ public class TrimmerLogTest {
     assert d != null;
     final Trimmer a = new Trimmer();
     try {
-      final IProgressMonitor pm = wizard.nullProgressMonitor;
-      pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
-      final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.computeMaximalRewrite(u, null, null);
-      pm.done();
-      $.rewriteAST(d, null).apply(d);
+      a.computeMaximalRewrite(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
