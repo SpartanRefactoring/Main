@@ -29,7 +29,7 @@ public abstract class LocalInitializedStatement extends LocalInitialized {
   }
 
   protected int saving() {
-    return count.nodes(singleFragment() ? declaration : current);
+    return count.nodes(!singleFragment() ? current : declaration);
   }
 
   private boolean singleFragment() {
