@@ -109,6 +109,7 @@ public interface hop {
     return penultimate(body(¢));
   }
 
+  /** [[SuppressWarningsSpartan]] - see #1246 */
   static VariableDeclarationFragment penultimate(final Statement body) {
     final ASTNode n = hop.lastStatement(copy.of(body));
     final Statement $ = !(n instanceof Statement) ? null : (Statement) n;
