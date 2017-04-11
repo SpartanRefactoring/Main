@@ -148,7 +148,7 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
   }
 
   @Override public void noTipper() {
-    logger.log(FINER, "No tippers found for {0}", node());
+    logger.log(FINER, "No tippers for {0}", node());
   }
 
   @Override public void setNode() {
@@ -164,7 +164,7 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
   }
 
   @Override public void tipperTip() {
-    logger.log(FINE, "Tip {0} for {1}", as.array(tipper(), tip(), node()));
+    logger.log(FINE, "{0} tips {1}", as.array(tipper(), tip(), node()));
   }
 
   @Override public void tipPrune() {
@@ -180,7 +180,8 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
   }
 
   private String node() {
-    return English.name(current().node());
+    final ASTNode $ = current().node();
+    return String.format("%s(%s)", English.name($), trivia.gist($)); 
   }
 
   private Tip tip() {
