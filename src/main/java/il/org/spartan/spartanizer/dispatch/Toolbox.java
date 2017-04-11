@@ -161,7 +161,7 @@ public class Toolbox {
         .add(WhileStatement.class, //
             new EliminateConditionalContinueInWhile(), //
             new BlockBreakToReturnInfiniteWhile(), //
-            new ReturnToBreakFiniteWhile(), //
+            new WhileFiniteReturnToBreak(), //
             new WhileDeadRemove(), //
             new WhileToForUpdaters(), //
             new WhileEmptyBlockToEmptyStatement(), //
