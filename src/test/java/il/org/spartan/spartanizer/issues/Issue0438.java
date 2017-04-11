@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.issues;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Failing (were ignored) tests of {@link TrimmerLogTest}
