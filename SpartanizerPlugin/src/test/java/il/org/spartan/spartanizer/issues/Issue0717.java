@@ -18,7 +18,7 @@ import il.org.spartan.utils.range.*;
 public class Issue0717 {
   private static final String CHAR_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
   private static final int MAX_NAME_SIZE = 100;
-  private static final int MAX_STAT_AMOUNT = 100;
+  private static final int MAX_STAT_AMOUNT = 200;
   final MethodDeclaration fiveStatMethod = (MethodDeclaration) make.ast("public void foo() {int a; int b; int c; int d; int e;}");
   final MethodDeclaration oneStatMethod = (MethodDeclaration) make.ast("public void foo() {int a; }");
   final MethodDeclaration fourStatMethod = (MethodDeclaration) make.ast("public void foo() {int a; ; ; ; }");
@@ -67,7 +67,7 @@ public class Issue0717 {
   @Test public void randomBigBlockReturnsTrue() {
     final String methodName = generateRandomString(), firstStat = "{int x; ++x;", nextStat = "x=4;";
     final Random random = new Random();
-    final int statAmount = random.nextInt(MAX_STAT_AMOUNT) < 6 ? 6 : random.nextInt(MAX_STAT_AMOUNT);
+    final int statAmount = random.nextInt(MAX_STAT_AMOUNT) < 10 ? 10 : random.nextInt(MAX_STAT_AMOUNT);
     String randomBigBlock = "public void " + methodName + "()" + firstStat;
     for (int ¢ = 0; ¢ < statAmount; ++¢)
       randomBigBlock += nextStat;

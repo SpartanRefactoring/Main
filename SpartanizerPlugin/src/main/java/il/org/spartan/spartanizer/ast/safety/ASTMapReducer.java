@@ -212,7 +212,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   }
 
   /** TODO: fix this! */
-  protected R map(final LambdaExpression fixMe) {
+  protected R map(@SuppressWarnings("unused") final LambdaExpression fixMe) {
     return reduce();
   }
 
