@@ -19,6 +19,9 @@ public class Issue0882 {
   }
 
   @Test public void mainTestFullBlock() {
-    trimmingOf("for(int ¢=0;¢<5;++¢) {++¢;continue;}").gives("for(int ¢=0;¢<5;++¢) ++¢;").stays();
+    trimmingOf("for(int ¢=0;¢<5;++¢) {++¢;continue;}")//
+    .gives("for(int ¢=0;¢<5;++¢) {++¢;}")//
+    .gives("for(int ¢=0;¢<5;++¢) ++¢;")//
+    .stays();
   }
 }
