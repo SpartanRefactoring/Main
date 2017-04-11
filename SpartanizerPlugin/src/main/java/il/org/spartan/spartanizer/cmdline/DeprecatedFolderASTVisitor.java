@@ -48,13 +48,13 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
 
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor() {
     if (clazz == null) {
-      monitor.logProbableBug(clazz, fault.stackCapture());
+      monitor.bug(clazz, fault.stackCapture());
       System.exit(1);
     }
     try {
       return declaredConstructor != null ? declaredConstructor : clazz.getConstructor();
     } catch (NoSuchMethodException | SecurityException ¢) {
-      monitor.logProbableBug(clazz, ¢);
+      monitor.bug(clazz, ¢);
       System.err.println("Make sure that class " + clazz + " is not abstract and that it has a default constructor");
       throw new RuntimeException();
     }

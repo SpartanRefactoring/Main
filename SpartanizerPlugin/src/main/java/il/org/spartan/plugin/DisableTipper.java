@@ -24,7 +24,7 @@ public class DisableTipper {
       try {
         disable((Class<? extends Tipper<?>>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY), m.getResource().getProject());
       } catch (final CoreException ¢) {
-        monitor.log(¢);
+        monitor.bug(¢);
       }
   }
 
@@ -42,7 +42,7 @@ public class DisableTipper {
     try {
       Eclipse.refreshProject(p);
     } catch (InvocationTargetException | CoreException | InterruptedException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
     }
   }
 }

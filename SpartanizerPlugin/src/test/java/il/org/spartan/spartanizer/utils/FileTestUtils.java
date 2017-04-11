@@ -60,7 +60,7 @@ public class FileTestUtils {
       if ($ != null)
         $.deleteOnExit();
     } catch (final IOException ¢) {
-      monitor.log(¢); // Probably permissions problem
+      monitor.bug(¢); // Probably permissions problem
     }
     return $;
   }

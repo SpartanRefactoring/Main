@@ -66,7 +66,7 @@ public class CharacterShortcut extends AbstractHandler {
     try {
       u.applyTextEdit(m, new NullProgressMonitor());
     } catch (final JavaModelException ¢) {
-      return monitor.log(¢);
+      return monitor.bug(¢);
     }
     return fixSelection($.textSelection.getOffset() + 1);
   }

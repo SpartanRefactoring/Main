@@ -70,7 +70,7 @@ public interface theSpartanizer {
           try {
             e.apply($);
           } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-            monitor.exception(trimmer, ¢);
+            monitor.bug(trimmer, ¢);
           }
         }
 

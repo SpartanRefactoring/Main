@@ -51,7 +51,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     try {
       return apply($);
     } catch (final CoreException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
       return 0;
     }
   }
@@ -96,9 +96,9 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     try {
       checkFinalConditions(progressMonitor);
     } catch (final OperationCanceledException ¢) {
-      monitor.logCancellationRequest(this, ¢);
+      monitor.cancel(this, ¢);
     } catch (final CoreException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
     return totalChanges;
   }
@@ -146,7 +146,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule($);
     } catch (final CoreException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
     return 0;
   }
@@ -165,7 +165,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         try {
           runAsMarkerFix(m);
         } catch (final CoreException ¢) {
-          monitor.exception(this, ¢);
+          monitor.bug(this, ¢);
         }
       }
     };
@@ -306,7 +306,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         s.update();
       return $.get();
     } catch (final CoreException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
       return 0;
     } finally {
       progressMonitor.done();
@@ -354,7 +354,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
           new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
               "Laconization: " + s + AbstractGUIApplicator.this);
         } catch (final InterruptedException ¢) {
-          monitor.logCancellationRequest(this, ¢);
+          monitor.cancel(this, ¢);
         }
       }
     };

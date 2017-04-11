@@ -68,7 +68,7 @@ public enum LibrariesManagement {
       if (Stream.of(p.getRawClasspath()).anyMatch(λ -> LIBRARY_PATH_CONTAINER.getPath().equals(λ.getPath())))
         return true;
     } catch (final JavaModelException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
     }
     return false;
   }
@@ -83,7 +83,7 @@ public enum LibrariesManagement {
     try {
       es = p.getRawClasspath();
     } catch (final JavaModelException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
       return false;
     }
     final List<IClasspathEntry> nes = new ArrayList<>();
@@ -93,7 +93,7 @@ public enum LibrariesManagement {
     try {
       p.setRawClasspath(nes.toArray(new IClasspathEntry[nes.size()]), null);
     } catch (final JavaModelException ¢) {
-      monitor.log(¢);
+      monitor.bug(¢);
       return false;
     }
     return true;

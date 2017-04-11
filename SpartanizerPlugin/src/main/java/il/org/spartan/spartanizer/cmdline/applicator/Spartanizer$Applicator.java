@@ -106,7 +106,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        monitor.exception(this, ¢);
+        monitor.bug(this, ¢);
         throw new AssertionError(¢);
       }
       if (!e.hasChildren())

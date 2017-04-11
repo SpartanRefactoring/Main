@@ -85,7 +85,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
       return $;
     } catch (final NullPointerException | MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       if (!silent)
-        monitor.exception(this, ¢);
+        monitor.bug(this, ¢);
       throw new AssertionError(¢);
     }
   }

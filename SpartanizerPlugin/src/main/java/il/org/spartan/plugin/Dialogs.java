@@ -50,7 +50,7 @@ public enum Dialogs {
         final ImageData d = ImageDescriptor.createFromURL(new URL(url)).getImageData();
         images.put($, d == null ? null : new Image(null, scale.apply(d)));
       } catch (final MalformedURLException ¢) {
-        monitor.log(¢);
+        monitor.bug(¢);
         images.put($, null);
       }
     return images.get($);

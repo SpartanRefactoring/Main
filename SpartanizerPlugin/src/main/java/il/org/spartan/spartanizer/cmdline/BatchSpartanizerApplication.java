@@ -127,7 +127,7 @@ final class BatchSpartanizerApplication implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final NullPointerException | JavaModelException ¢) {
-      monitor.exception(this, ¢);
+      monitor.bug(this, ¢);
     }
   }
 
