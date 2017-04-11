@@ -238,7 +238,7 @@ public final class Issue0223 {
       final IProgressMonitor pm = wizard.nullProgressMonitor;
       pm.beginTask("Creating rewrite operation...", IProgressMonitor.UNKNOWN);
       final ASTRewrite $ = ASTRewrite.create(u.getAST());
-      a.computeMaximalRewrite(u, null, null);
+      a.computeMaximalRewrite(u);
       pm.done();
       $.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
