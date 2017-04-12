@@ -150,8 +150,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       initializeProgressDialog(progressMonitorDialog);
     try {
       progressMonitorDialog.run(true, true, r);
-    } catch (InterruptedException | InvocationTargetException ¢) {
-      return monitor.bug(¢);
+    } catch (InterruptedException | InvocationTargetException $) {
+      return monitor.bug($);
     }
     closeDialog(initialDialog);
     doWork(finalWork(applicator, selection.getCompilationUnits(), attributes), eclipse.progressMonitorDialog(hasDisplay()));

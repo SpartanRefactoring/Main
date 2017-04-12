@@ -41,7 +41,8 @@ public final class SingleFlater {
     });
   }
 
-  public static SingleFlater in(final ASTNode ¢, final Consumer<Exception> c) {
+  @SuppressWarnings("unused") // see #1249
+  public static SingleFlater in(final ASTNode ¢, final Consumer<Exception> __) {
     final SingleFlater $ = new SingleFlater();
     $.root = ¢;
     return $;
