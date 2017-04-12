@@ -44,7 +44,7 @@ public class Configuration {
         if (t == null)
           return true;
         done.set();
-        Configurations.extractTip(t, n).go($, null);
+        Tippers.extractTip(t, n).go($, null);
         return false;
       }
     });
@@ -87,7 +87,7 @@ public class Configuration {
           String.format("Did you forget to use create an enum instance in %s \nfor the %s of tipper %s \n (description= %s)?", //
               TipperGroup.class.getSimpleName(), //
               TipperCategory.class.getSimpleName(), //
-              Configurations.name(¢), //
+              Tippers.name(¢), //
               ¢.description()));//
       if (¢.tipperGroup().isEnabled())
         get(nodeType.intValue()).add(¢);

@@ -36,7 +36,7 @@ public class InteractiveSpartanizer {
     return $;
   }
 
-  public Configuration configuration = Configurations.defaultConfiguration();
+  public Configuration configuration = Configurations.all();
 
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     configuration.disable(¢);
@@ -62,7 +62,7 @@ public class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
-      configuration = Configurations.freshCopyOfAllTippers();
+      configuration = Configurations.allClone();
     changed = true;
     configuration.add(c, ts);
     return this;
@@ -70,7 +70,7 @@ public class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
-      configuration = Configurations.freshCopyOfAllTippers();
+      configuration = Configurations.allClone();
     changed = true;
     configuration.remove(c, ts);
     return this;
@@ -78,7 +78,7 @@ public class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
     if (!changed)
-      configuration = Configurations.freshCopyOfAllTippers();
+      configuration = Configurations.allClone();
     changed = true;
     configuration.add(i, ts);
     return this;

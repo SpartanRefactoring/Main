@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
@@ -19,16 +20,16 @@ public class Table_Tippers {
 
   public void go() {
     try (Table t = new Table(this)) {
-      final List<Tipper<? extends ASTNode>>[] implementation = Configurations.defaultConfiguration().implementation;
+      final List<Tipper<? extends ASTNode>>[] implementation = Configurations.all().implementation;
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
           for (final Tipper<?> ¢ : implementation[i])
             if (¢ != null && !(¢ instanceof TipperCategory.Bloater))
               t //
                   .col("Category", ¢.tipperGroup())//
-                  .col("Tipper", Configurations.name(¢))//
+                  .col("Tipper", Tippers.name(¢))//
                   .col("Node Type Number", i + "") //
-                  .col("Node Class", Configurations.intToClassName(i))//
+                  .col("Node Class", wizard.intToClassName(i))//
                   .col("Actual class", name(¢.myActualOperandsClass()))//
                   .col("Abstract class", name(¢.myAbstractOperandsClass()))//
                   .nl();

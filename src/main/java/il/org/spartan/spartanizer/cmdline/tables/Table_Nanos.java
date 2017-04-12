@@ -6,7 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -31,7 +31,7 @@ public class Table_Nanos {
             if (¢ instanceof NanoPatternTipper)
               t//
                   .col("Name", name(¢.getClass()))//
-                  .col("Node Class", Configurations.intToClassName(i))//
+                  .col("Node Class", wizard.intToClassName(i))//
                   .col("Description", ¢.description())//
                   .col("Example", ((NanoPatternTipper<?>) ¢).symbolycReplacement())//
                   .col("Replacement", ((NanoPatternTipper<?>) ¢).symbolycReplacement())//

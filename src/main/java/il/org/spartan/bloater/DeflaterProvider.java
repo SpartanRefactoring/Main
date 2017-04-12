@@ -13,14 +13,15 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** a wrapper for the original tippers configuration
  * @author Raviv Rachmiel
- * @since 20-12-16 will hold an configuration for the expanders and return them */
+ * @since 20-12-16 will hold an configuration for the expanders and return
+ *        them */
 public class DeflaterProvider extends OperationsProvider {
   private Configuration configuration;
 
   public DeflaterProvider() {
-    configuration = Configurations.defaultConfiguration();
+    configuration = Configurations.all();
     if (configuration == null)
-      configuration = Configurations.freshCopyOfAllTippers();
+      configuration = Configurations.allClone();
   }
 
   public DeflaterProvider(final Configuration tb) {

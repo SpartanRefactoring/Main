@@ -269,5 +269,4 @@ final class BatchSpartanizerApplication implements IApplication {
     report.nl();
     return false;
   }
-
 }

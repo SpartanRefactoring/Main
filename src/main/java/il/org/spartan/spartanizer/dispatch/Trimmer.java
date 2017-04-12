@@ -35,7 +35,7 @@ import il.org.spartan.utils.*;
 public class Trimmer extends AbstractTipperNoBetterNameYet {
   /** Instantiates this class */
   public Trimmer() {
-    this(Configurations.defaultConfiguration());
+    this(Configurations.all());
   }
 
   public Trimmer(final Configuration globalConfiguration) {
@@ -111,7 +111,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   @SafeVarargs public final Trimmer fixTipper(final Tipper<?>... ¢) {
-    return (Trimmer) fix(Configurations.freshCopyOfAllTippers(), ¢);
+    return (Trimmer) fix(Configurations.allClone(), ¢);
   }
 
   public ASTRewrite getRewrite() {
@@ -220,7 +220,8 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
       }
 
       @Override protected void initialization(final ASTNode ¢) {
-        currentConfiguration = !useProjectPreferences || !(¢ instanceof CompilationUnit) ? globalConfiguration : getPreferredConfiguration((CompilationUnit) ¢);
+        currentConfiguration = !useProjectPreferences || !(¢ instanceof CompilationUnit) ? globalConfiguration
+            : getPreferredConfiguration((CompilationUnit) ¢);
         disabling.scan(¢);
       }
     };
