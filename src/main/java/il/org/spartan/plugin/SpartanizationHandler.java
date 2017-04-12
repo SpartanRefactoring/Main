@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
- * that uses {@link GUIBatchLaconizer} as its applicator.
+ * that uses {@link BatchApplicator} as its applicator.
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
@@ -27,7 +27,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final GUIBatchLaconizer a = applicator().defaultSelection();
+    final BatchApplicator a = applicator().defaultSelection();
     a.passes(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
@@ -41,21 +41,21 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     applicator().passes(1).selection(Selection.Util.by(¢)).go();
   }
 
-  public static GUIBatchLaconizer applicator() {
+  public static BatchApplicator applicator() {
     return applicator(OPERATION_ACTIVITY);
   }
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  public static GUIBatchLaconizer applicator(final English.Activity activityNamer) {
-    final GUIBatchLaconizer $ = new GUIBatchLaconizer();
+  public static BatchApplicator applicator(final English.Activity activityNamer) {
+    final BatchApplicator $ = new BatchApplicator();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.runContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
       } catch (final InvocationTargetException ¢) {
-        monitor.logProbableBug(¢);
+        monitor.bug(¢);
       } catch (final InterruptedException ¢) {
         monitor.cancel(¢);
       }
@@ -121,8 +121,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  @Deprecated @SuppressWarnings("deprecation") public static GUIBatchLaconizer applicatorMapper() {
-    final GUIBatchLaconizer $ = new GUIBatchLaconizer();
+  @Deprecated @SuppressWarnings("deprecation") public static BatchApplicator applicatorMapper() {
+    final BatchApplicator $ = new BatchApplicator();
     final Trimmer t = new Trimmer();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Bool openDialog = new Bool();
@@ -165,7 +165,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       try {
         d.run(true, true, __ -> r.run());
       } catch (final InvocationTargetException ¢) {
-        monitor.logProbableBug(¢);
+        monitor.bug(¢);
       } catch (final InterruptedException ¢) {
         monitor.cancel(¢);
       }

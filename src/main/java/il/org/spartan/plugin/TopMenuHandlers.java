@@ -14,13 +14,13 @@ import il.org.spartan.utils.*;
 public class TopMenuHandlers extends AbstractHandler {
   @SuppressWarnings("serial") public static final Map<String, Consumer<ExecutionEvent>> handlers = new HashMap<String, Consumer<ExecutionEvent>>() {
     {
-      put("il.org.spartan.LaconizeSelection", e -> {
+      put("il.org.spartan.SpartanizeSelection", e -> {
         final Selection s = Selection.Util.current();
         SpartanizationHandler.applicator().passes(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
       });
-      put("il.org.spartan.LaconizeCurrent",
+      put("il.org.spartan.SpartanizeCurrent",
           λ -> SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit()).go());
-      put("il.org.spartan.LaconizeAll",
+      put("il.org.spartan.SpartanizeAll",
           λ -> SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits()).go());
       put("il.org.spartan.ZoomTool", λ -> {
         if (InflateHandler.active.get() || showZoomToolMessage())

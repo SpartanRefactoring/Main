@@ -84,7 +84,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   }
 
   private static void printHelpPrompt() {
-    System.out.println("Batch GUIBatchLaconizer");
+    System.out.println("Batch" + system.myFullClassName());
     System.out.println("");
     System.out.println("Options:");
     System.out.println("  -d       default directory: use the current directory for the analysis");

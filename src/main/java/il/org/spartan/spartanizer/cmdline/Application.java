@@ -313,7 +313,7 @@ public final class Application implements IApplication {
       try {
         return roundStats.get($).intValue();
       } catch (final IndexOutOfBoundsException ¢) {
-        monitor.logProbableBug(¢);
+        monitor.bug(¢);
         return 0;
       }
     }

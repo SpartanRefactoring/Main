@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
 public enum Dialogs {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** Title used for dialogs. */
-  private static final String NAME = "Laconic";
+  private static final String NAME = "The Spartanizer";
   /** Id for run in background button. */
   private static final int RIB_ID = 2;
   public static final String ICON = "platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif";
