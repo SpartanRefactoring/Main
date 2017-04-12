@@ -18,9 +18,9 @@ public class DeflaterProvider extends OperationsProvider {
   private Configuration configuration;
 
   public DeflaterProvider() {
-    configuration = Configuration.defaultInstance();
+    configuration = Utils.defaultInstance();
     if (configuration == null)
-      configuration = Configuration.freshCopyOfAllTippers();
+      configuration = Utils.freshCopyOfAllTippers();
   }
 
   public DeflaterProvider(final Configuration tb) {

@@ -11,6 +11,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.Utils;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -133,7 +134,7 @@ public interface trim {
 
   class fluentTrimmer extends Trimmer {
     @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ws) {
-      super(Configuration.make(clazz, ws));
+      super(Utils.make(clazz, ws));
     }
 
     public fluentTrimmerApplication of(final String codeFragment) {

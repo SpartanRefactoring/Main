@@ -7,7 +7,7 @@ import java.util.function.*;
  * @since 2017-04-08 */
 public interface robust {
   static void ly(final Runnable r, final Consumer<Exception> c) {
-    robust.lyNull(() -> nullify(r::run), c);
+    robust.lyNull(() -> run.nullifying(r::run), c);
   }
 
   static void ly(final Runnable r, final Runnable x) {
@@ -36,11 +36,11 @@ public interface robust {
   }
 
   static <T> T lyNull(final Supplier<T> t, final Consumer<Exception> c) {
-    return robust.ly(t, λ -> nullify(() -> c.accept(λ)));
+    return robust.ly(t, λ -> run.nullifying(() -> c.accept(λ)));
   }
 
   static <T> T lyNull(final Supplier<T> t, final Runnable r) {
-    return robust.ly(t, __ -> nullify(r));
+    return robust.ly(t, __ -> run.nullifying(r));
   }
 
   static boolean lyTrue(final BooleanSupplier s, final Consumer<Exception> c) {
@@ -59,10 +59,5 @@ public interface robust {
       c.accept($);
     }
     return true;
-  }
-
-  static <T> T nullify(final Runnable ¢) {
-    ¢.run();
-    return the.null¢();
   }
 }

@@ -14,11 +14,11 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1153 {
   @Test public void a() {
-    Configuration.defaultInstance();
+    Utils.defaultInstance();
   }
 
   @Test public void b() {
-    Configuration.freshCopyOfAllTippers();
+    Utils.freshCopyOfAllTippers();
   }
 
   @Test public void b1() {
