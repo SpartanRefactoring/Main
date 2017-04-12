@@ -7,6 +7,8 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import il.org.spartan.utils.fluent.*;
+
 /** An abstract interface defining tippers, bloaters, and light weight pattern
  * search, logging, computing statistics, etc.
  * <p>
@@ -272,7 +274,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     }
 
     private R badTypeState(final String reason, final Object... os) {
-      return monitor.bug(this,
+      return note.bug(this,
           new IllegalStateException(//
               format(//
                   "Invalid order of method calls on a %s (dynamic type %):\n", //

@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 public class OperandBloating extends TrimmingOperand {
   ASTNode ast;
@@ -91,7 +92,7 @@ public class OperandBloating extends TrimmingOperand {
       azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
       return new OperandBloating($1);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return null;
   }
@@ -114,7 +115,7 @@ public class OperandBloating extends TrimmingOperand {
       assertSimilar($1, unpeeled);
       return new OperandBloating(createCUWithBinding(unpeeled), unpeeled);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     }
     return null;
   }
@@ -143,7 +144,7 @@ public class OperandBloating extends TrimmingOperand {
       p.setResolveBindings(true);
       return new OperandBloating(az.compilationUnit(p.createAST(null)), unpeeled);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return null;
   }
@@ -202,7 +203,7 @@ public class OperandBloating extends TrimmingOperand {
           trivia.escapeQuotes(trivia.essence(get())));
       azzert.that(trivia.essence(peeled), is(trivia.essence(get())));
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
   }
 
@@ -220,7 +221,7 @@ public class OperandBloating extends TrimmingOperand {
       if (!unpeeled.equals(get()) && unpeeled.equals(get()))
         assertSimilar(get(), unpeeled);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
   }
 

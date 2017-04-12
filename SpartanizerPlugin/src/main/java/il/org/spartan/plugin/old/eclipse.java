@@ -29,6 +29,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Fluent API services for the plugin
  * @author Yossi Gil
@@ -150,7 +151,7 @@ public enum eclipse {
     try {
       return find($, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
     } catch (final CoreException ¢) {
-      return monitor.bug(¢);
+      return note.bug(¢);
     }
   }
 
@@ -175,7 +176,7 @@ public enum eclipse {
       if (i != null)
         icon = new ImageIcon(i);
     } catch (final MalformedURLException $) {
-      return monitor.config($);
+      return note.config($);
     }
     return icon;
   }
@@ -188,7 +189,7 @@ public enum eclipse {
       iconNonBusy = new org.eclipse.swt.graphics.Image(null,
           ImageDescriptor.createFromURL(new URL("platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif")).getImageData());
     } catch (final MalformedURLException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     }
     return iconNonBusy;
   }
@@ -220,7 +221,7 @@ public enum eclipse {
       return $.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
           || $.getLength() + $.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
     } catch (final CoreException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
       return true;
     }
   }
@@ -230,7 +231,7 @@ public enum eclipse {
     try {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException $) {
-      return monitor.bug(this, $);
+      return note.bug(this, $);
     }
   }
 
@@ -238,7 +239,7 @@ public enum eclipse {
     try {
       return compilationUnits($, nullProgressMonitor);
     } catch (final JavaModelException ¢) {
-      return monitor.bug(this, ¢);
+      return note.bug(this, ¢);
     }
   }
 }

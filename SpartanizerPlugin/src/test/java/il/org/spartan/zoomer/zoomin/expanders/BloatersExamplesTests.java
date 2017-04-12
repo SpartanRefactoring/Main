@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Example.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Examples tests for bloaters.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

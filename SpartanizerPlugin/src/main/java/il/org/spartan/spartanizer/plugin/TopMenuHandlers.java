@@ -7,6 +7,7 @@ import org.eclipse.core.commands.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Some simple handlers to be used by the GUI.
  * @author Ori Roth
@@ -43,7 +44,7 @@ public class TopMenuHandlers extends AbstractHandler {
     if (handlers.containsKey(id))
       handlers.get(id).accept(¢);
     else
-      monitor.logger.info("Handler " + id + " is not registered in " + getClass().getName());
+      note.logger.info("Handler " + id + " is not registered in " + getClass().getName());
     return null;
   }
 

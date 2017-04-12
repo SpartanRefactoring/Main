@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Evaluate the multiplication of numbers according to the following rules :
  * toList toList {@code
@@ -30,7 +31,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
     try {
       return $.stream().map(az.throwing::double¢).reduce(1.0, (x, y) -> x * y);
     } catch (final NumberFormatException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return 1;
   }
@@ -44,7 +45,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
         $ *= az.throwing.int¢(¢);
       }
     } catch (final NumberFormatException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return $;
   }
@@ -58,7 +59,7 @@ public final class InfixMultiplicationEvaluate extends $EvaluateInfixExpression 
         $ *= az.throwing.long¢(¢);
       }
     } catch (final NumberFormatException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return $;
   }

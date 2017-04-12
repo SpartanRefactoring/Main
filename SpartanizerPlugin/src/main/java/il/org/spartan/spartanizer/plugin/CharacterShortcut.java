@@ -15,6 +15,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A shortcut to textually insert a new special character/s.
  * @author Ori Roth {@code ori.rothh@gmail.com}
@@ -66,7 +67,7 @@ public class CharacterShortcut extends AbstractHandler {
     try {
       u.applyTextEdit(m, new NullProgressMonitor());
     } catch (final JavaModelException ¢) {
-      return monitor.bug(¢);
+      return note.bug(¢);
     }
     return fixSelection($.textSelection.getOffset() + 1);
   }

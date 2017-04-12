@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}
@@ -63,7 +64,7 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
     try {
       return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
-      monitor.config(¢, "opening report file");
+      note.config(¢, "opening report file");
       return null;
     }
   }

@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Parse and visit all Java files under a given path.
  * @author Yossi Gil
@@ -48,13 +49,13 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
 
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor() {
     if (clazz == null) {
-      monitor.bug(clazz, fault.stackCapture());
+      note.bug(clazz, fault.stackCapture());
       System.exit(1);
     }
     try {
       return declaredConstructor != null ? declaredConstructor : clazz.getConstructor();
     } catch (NoSuchMethodException | SecurityException ¢) {
-      monitor.bug(clazz, ¢);
+      note.bug(clazz, ¢);
       System.err.println("Make sure that class " + clazz + " is not abstract and that it has a default constructor");
       throw new RuntimeException();
     }
@@ -115,7 +116,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
         if (!silent)
           dotter.click();
       } catch (final IOException ¢) {
-        monitor.config(¢, "File = " + f);
+        note.config(¢, "File = " + f);
       }
   }
 
@@ -143,7 +144,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       try {
         out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
       } catch (final IOException ¢) {
-        monitor.config(¢);
+        note.config(¢);
         return;
       }
       DeprecatedFolderASTVisitor.main(args);

@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.classifier.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Old class for some anlyzes, sort of deprecated since we use
  * {@link DeprecatedFolderASTVisitor}
@@ -62,7 +63,7 @@ public enum Analyze {
     try {
       return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
-      monitor.config(¢, "opening report file");
+      note.config(¢, "opening report file");
       return null;
     }
   }

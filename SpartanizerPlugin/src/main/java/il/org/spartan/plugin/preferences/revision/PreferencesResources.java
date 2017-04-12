@@ -8,6 +8,7 @@ import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** TODO Daniel Mittelman please add a description
  * @author Daniel Mittelman

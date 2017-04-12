@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of ***
  * @author Ori Marcovitch
@@ -69,9 +70,9 @@ final class BindingFun implements IApplication {
         ___.______unused();
         iterateMethodInvocations(cu);
       } catch (final IOException ¢) {
-        monitor.config(¢, f + "");
+        note.config(¢, f + "");
       } catch (final JavaModelException ¢) {
-        monitor.bug(this, ¢);
+        note.bug(this, ¢);
       }
     return IApplication.EXIT_OK;
   }
@@ -87,7 +88,7 @@ final class BindingFun implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final NullPointerException | JavaModelException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
   }
 

@@ -62,7 +62,7 @@ public class BatchApplicator extends Applicator {
             listener().tick(message.visit_cu.get(operationName(), Integer.valueOf(alive.indexOf(¢)), Integer.valueOf(alive.size()),
                 ¢.descriptor.getElementName(), totalTipsInvoked.get(), thisPassTipsInvoked.get()));
           } catch (final Throwable x) {
-            monitor.bug(x);
+            note.bug(x);
           }
           if (!shouldRun())
             break;
@@ -199,7 +199,7 @@ public class BatchApplicator extends Applicator {
     try {
       w.setDescription(d);
     } catch (final CoreException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
       return false;
     }
     return true;
@@ -216,7 +216,7 @@ public class BatchApplicator extends Applicator {
     try {
       w.setDescription(d);
     } catch (final CoreException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     }
   }
 }

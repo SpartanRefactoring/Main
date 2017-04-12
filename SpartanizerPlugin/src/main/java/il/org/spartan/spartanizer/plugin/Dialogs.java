@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Utility class for dialogs management.
  * @author Ori Roth
@@ -50,7 +51,7 @@ public enum Dialogs {
         final ImageData d = ImageDescriptor.createFromURL(new URL(url)).getImageData();
         images.put($, d == null ? null : new Image(null, scale.apply(d)));
       } catch (final MalformedURLException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
         images.put($, null);
       }
     return images.get($);

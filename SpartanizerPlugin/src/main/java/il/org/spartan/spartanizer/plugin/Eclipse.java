@@ -20,6 +20,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Eclipse common utilities.
  * @author Ori Roth {@code ori.rothh@gmail.com}
@@ -88,7 +89,7 @@ public class Eclipse {
               p.touch(m);
               return Status.OK_STATUS;
             } catch (final CoreException ¢) {
-              monitor.bug(¢);
+              note.bug(¢);
               return Status.CANCEL_STATUS;
             }
           }
@@ -104,7 +105,7 @@ public class Eclipse {
           try {
             p.touch(m);
           } catch (final CoreException ¢) {
-            monitor.bug(¢);
+            note.bug(¢);
           }
         });
       }

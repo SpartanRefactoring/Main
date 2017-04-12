@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Disable tipper, removing it from XML file.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
@@ -24,7 +25,7 @@ public class DisableTipper {
       try {
         disable((Class<? extends Tipper<?>>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY), m.getResource().getProject());
       } catch (final CoreException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       }
   }
 
@@ -42,7 +43,7 @@ public class DisableTipper {
     try {
       Eclipse.refreshProject(p);
     } catch (InvocationTargetException | CoreException | InterruptedException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     }
   }
 }

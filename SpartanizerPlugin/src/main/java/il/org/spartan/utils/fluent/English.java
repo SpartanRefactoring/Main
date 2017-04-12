@@ -1,4 +1,4 @@
-package il.org.spartan.utils;
+package il.org.spartan.utils.fluent;
 
 import static il.org.spartan.lisp.*;
 
@@ -9,6 +9,7 @@ import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.utils.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth
