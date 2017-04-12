@@ -7,12 +7,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.research.*;
-import il.org.spartan.research.analyses.*;
-import il.org.spartan.research.util.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
