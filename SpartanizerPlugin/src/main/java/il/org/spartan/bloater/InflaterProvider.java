@@ -16,18 +16,18 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 20-12-16 */
 public class InflaterProvider extends OperationsProvider {
-  final Toolbox toolbox;
+  final Configuration configuration;
 
   public InflaterProvider() {
-    toolbox = InflaterProvider.freshCopyOfAllExpanders();
+    configuration = InflaterProvider.freshCopyOfAllExpanders();
   }
 
-  public InflaterProvider(final Toolbox tb) {
-    toolbox = tb;
+  public InflaterProvider(final Configuration tb) {
+    configuration = tb;
   }
 
-  public static Toolbox freshCopyOfAllExpanders() {
-    return new Toolbox()//
+  public static Configuration freshCopyOfAllExpanders() {
+    return new Configuration()//
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander(), //
             new ExtractExpressionFromReturn()) //
@@ -84,7 +84,7 @@ public class InflaterProvider extends OperationsProvider {
   }
 
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return toolbox.firstTipper(¢);
+    return configuration.firstTipper(¢);
   }
 
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {

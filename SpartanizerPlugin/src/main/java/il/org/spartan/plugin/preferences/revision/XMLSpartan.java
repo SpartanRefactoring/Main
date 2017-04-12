@@ -70,12 +70,12 @@ public class XMLSpartan {
     final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
     for (int i = 0; i < ns.getLength(); ++i) {
       final Element e = (Element) ns.item(i);
-      final Class<?> tc = Toolbox.Tables.TipperIDClassTranslationTable.get(e.getAttribute(TIPPER_ID));
+      final Class<?> tc = Configuration.Tables.TipperIDClassTranslationTable.get(e.getAttribute(TIPPER_ID));
       if (tc == null)
         continue;
-      final String description = Toolbox.Tables.TipperDescriptionCache.get(tc);
-      final Examples preview = Toolbox.Tables.TipperExamplesCache.get(tc);
-      final TipperGroup g = Toolbox.Tables.TipperObjectByClassCache.get(tc).tipperGroup();
+      final String description = Configuration.Tables.TipperDescriptionCache.get(tc);
+      final Examples preview = Configuration.Tables.TipperExamplesCache.get(tc);
+      final TipperGroup g = Configuration.Tables.TipperObjectByClassCache.get(tc).tipperGroup();
       if (!tgs.containsKey(g)) {
         tgs.put(g, new ArrayList<>());
         tcs.put(g, new SpartanCategory(g.name(), false));
@@ -97,7 +97,7 @@ public class XMLSpartan {
    * @param p JD
    * @return enabled tippers for project */
   @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
-    final Set<Class<Tipper<? extends ASTNode>>> $ = Toolbox.freshCopyOfAllTippers().getAllTippers().stream()
+    final Set<Class<Tipper<? extends ASTNode>>> $ = Configuration.freshCopyOfAllTippers().getAllTippers().stream()
         .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(toSet());
     if (p == null)
       return $;
@@ -121,7 +121,7 @@ public class XMLSpartan {
       return;
     for (int i = 0; i < l.getLength(); ++i) {
       final Element e = (Element) l.item(i);
-      final String nameByID = Toolbox.Tables.TipperIDNameTranslationTable.get(e.getAttribute(TIPPER_ID));
+      final String nameByID = Configuration.Tables.TipperIDNameTranslationTable.get(e.getAttribute(TIPPER_ID));
       e.setAttribute(ENABLED, nameByID != null && ss.contains(nameByID) ? "true" : "false");
     }
     commit(p, d);
@@ -194,7 +194,7 @@ public class XMLSpartan {
     final Element e = $.createElement("spartan");
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
-    Toolbox.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
+    Configuration.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
     $.appendChild(e);
     $.setXmlStandalone(true); // TODO Roth: does not seem to work
     return $;
@@ -204,7 +204,7 @@ public class XMLSpartan {
    * @param d JD
    * @param p JD
    * @param seen seen tippers by name. Tippers can appear multiple times in the
-   *        {@link Toolbox}, so we should avoid duplications
+   *        {@link Configuration}, so we should avoid duplications
    * @param e base element "spartan" */
   private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Collection<String> seen, final Node e) {
     if (d == null || t == null || seen == null || e == null)

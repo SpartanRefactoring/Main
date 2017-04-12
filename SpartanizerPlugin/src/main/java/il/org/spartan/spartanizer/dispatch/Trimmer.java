@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** A smorgasboard containing lots of stuff, but its main purpose, which should
- * be factored out somewhere is to apply a {@link Toolbox} to a tree. The main
+ * be factored out somewhere is to apply a {@link Configuration} to a tree. The main
  * difficulties are:
  * <ol>
  * <li>Top down or bottom up traversal
@@ -35,10 +35,10 @@ import il.org.spartan.utils.*;
 public class Trimmer extends AbstractTipperNoBetterNameYet {
   /** Instantiates this class */
   public Trimmer() {
-    this(Toolbox.defaultInstance());
+    this(Configuration.defaultInstance());
   }
 
-  public Trimmer(final Toolbox globalToolbox) {
+  public Trimmer(final Configuration globalToolbox) {
     super("Trimming");
     this.globalToolbox = globalToolbox;
   }
@@ -100,7 +100,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   @SafeVarargs public final <N extends ASTNode> Trimmer fix(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
-      globalToolbox = new Toolbox();
+      globalToolbox = new Configuration();
     }
     globalToolbox.add(c, ts);
     return this;
@@ -111,7 +111,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   @SafeVarargs public final Trimmer fixTipper(final Tipper<?>... ¢) {
-    return (Trimmer) fix(Toolbox.freshCopyOfAllTippers(), ¢);
+    return (Trimmer) fix(Configuration.freshCopyOfAllTippers(), ¢);
   }
 
   public ASTRewrite getRewrite() {
@@ -202,7 +202,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   @Override protected ASTVisitor tipsCollector(final Tips into) {
-    Toolbox.refresh(this);
+    Configuration.refresh(this);
     fileName = English.unknownIfNull(compilationUnit, λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -250,7 +250,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   private Tipper<?> tipper;
   protected Tip tip;
   Tip auxiliaryTip;
-  Toolbox currentToolbox;
+  Configuration currentToolbox;
   String fileName;
   TrimmerExceptionListener exceptionListener = λ -> monitor.logToFile(λ, this, tip(), tipper(), fileName);
   final Consumer<Exception> swallow = λ -> exceptionListener.accept(λ);
