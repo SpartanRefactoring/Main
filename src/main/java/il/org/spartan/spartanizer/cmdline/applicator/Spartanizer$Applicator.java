@@ -29,7 +29,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
 
   /** Instantiates this class */
   public Spartanizer$Applicator() {
-    this(il.org.spartan.spartanizer.dispatch.Utils.defaultInstance());
+    this(il.org.spartan.spartanizer.dispatch.Configurations.defaultConfiguration());
   }
 
   public Spartanizer$Applicator(final Configuration configuration) {
@@ -127,7 +127,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
    * @param r
    * @param u */
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    configuration = il.org.spartan.spartanizer.dispatch.Utils.defaultInstance();
+    configuration = il.org.spartan.spartanizer.dispatch.Configurations.defaultConfiguration();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerMonitor.visitation(n);

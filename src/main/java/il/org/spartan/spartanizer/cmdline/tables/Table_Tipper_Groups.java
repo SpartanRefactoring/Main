@@ -6,7 +6,7 @@ import java.util.stream.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.dispatch.Utils;
+import il.org.spartan.spartanizer.dispatch.Configurations;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
@@ -21,7 +21,7 @@ public class Table_Tipper_Groups {
 
   public void go() {
     final Map<TipperGroup, Integer> groups = new TreeMap<>();
-    Utils.defaultTipperLists().forEach(ts -> flow(ts).forEach(λ -> inc(groups, λ)));
+    Configurations.defaultTipperLists().forEach(ts -> flow(ts).forEach(λ -> inc(groups, λ)));
     final int total = groups.values().stream().mapToInt(Integer::intValue).reduce((x, y) -> (x + y)).getAsInt();
     try (Table t = new Table(this)) {
       groups.keySet()

@@ -97,7 +97,7 @@ public class XMLSpartan {
    * @param p JD
    * @return enabled tippers for project */
   @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
-    final Set<Class<Tipper<? extends ASTNode>>> $ = Utils.freshCopyOfAllTippers().getAllTippers().stream()
+    final Set<Class<Tipper<? extends ASTNode>>> $ = Configurations.freshCopyOfAllTippers().getAllTippers().stream()
         .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(toSet());
     if (p == null)
       return $;
@@ -194,7 +194,7 @@ public class XMLSpartan {
     final Element e = $.createElement("spartan");
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
-    Utils.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
+    Configurations.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
     $.appendChild(e);
     $.setXmlStandalone(true); // TODO Roth: does not seem to work
     return $;

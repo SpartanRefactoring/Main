@@ -96,7 +96,7 @@ public final class Builder extends IncrementalProjectBuilder {
         ((Trimmer) s).useProjectPreferences();
       for (final Tip ¢ : s.collectTips(u)) // NANO
         if (¢ != null) {
-          final TipperGroup group = Utils.groupFor(¢.tipperClass);
+          final TipperGroup group = Configurations.groupFor(¢.tipperClass);
           addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));
         }
     }
@@ -110,7 +110,6 @@ public final class Builder extends IncrementalProjectBuilder {
       throws CoreException {
     if (m != null)
       m.beginTask("Checking for spartanization opportunities", IProgressMonitor.UNKNOWN);
-    Utils.refresh();
     build(kind, m);
     if (m != null)
       m.done();
