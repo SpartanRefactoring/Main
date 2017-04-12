@@ -11,7 +11,7 @@ import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.dispatch.Utils;
+import il.org.spartan.spartanizer.dispatch.Configurations;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -62,10 +62,10 @@ public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
   .gives("a+b-c")}, or <code>trimming // See {@link trim} 
-                                                                                                 * .repeatedly //  See {@link trim.repeatedely} 
-                                                                                                 * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
-                                                                                                 * .of("a+(b-c)") //  See {@link #of(String)} 
-                                                                                                 * .gives("a+b-c")</code> */
+                                                                                                  * .repeatedly //  See {@link trim.repeatedely} 
+                                                                                                  * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+                                                                                                  * .of("a+(b-c)") //  See {@link #of(String)} 
+                                                                                                  * .gives("a+b-c")</code> */
   interface repeatedly {
     static fluentTrimmerApplication of(final String codeFragment) {
       return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
@@ -134,7 +134,7 @@ public interface trim {
 
   class fluentTrimmer extends Trimmer {
     @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ws) {
-      super(Utils.make(clazz, ws));
+      super(Configurations.make(clazz, ws));
     }
 
     public fluentTrimmerApplication of(final String codeFragment) {

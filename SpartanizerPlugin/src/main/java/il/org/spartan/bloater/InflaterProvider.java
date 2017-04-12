@@ -12,7 +12,7 @@ import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** holds the new toolbox for the expanders and returns them
+/** holds the new configuration for the expanders and returns them
  * @author Raviv Rachmiel
  * @since 20-12-16 */
 public class InflaterProvider extends OperationsProvider {

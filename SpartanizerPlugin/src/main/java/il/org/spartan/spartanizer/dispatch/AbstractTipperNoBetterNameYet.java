@@ -39,9 +39,9 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
   @SafeVarargs public final <N extends ASTNode> AbstractTipperNoBetterNameYet addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
-      globalToolbox = new Configuration();
+      globalConfiguration = new Configuration();
     }
-    globalToolbox.add(c, ts);
+    globalConfiguration.add(c, ts);
     return this;
   }
 
@@ -51,7 +51,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
 
   /** @param u JD
    * @return {@link Configuration} by project's preferences */
-  protected Configuration getToolboxByPreferences(final CompilationUnit u) {
+  protected Configuration getPreferredConfiguration(final CompilationUnit u) {
     if (u == null)
       return null;
     final ITypeRoot r = u.getTypeRoot();
@@ -63,14 +63,14 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
     final IProject p = jp.getProject();
     if (p == null)
       return null;
-    if (toolboxes.containsKey(p))
-      return toolboxes.get(p);
-    final Configuration $ = Utils.freshCopyOfAllTippers();
+    if (configurations.containsKey(p))
+      return configurations.get(p);
+    final Configuration $ = Configurations.freshCopyOfAllTippers();
     final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
     final Collection<Tipper<?>> xs = $.getAllTippers().stream().filter(λ -> !es.contains(λ.getClass())).collect(toList());
     for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
       ¢.removeAll(xs);
-    toolboxes.put(p, $);
+    configurations.put(p, $);
     return $;
   }
 
@@ -105,21 +105,21 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
   protected AbstractTipperNoBetterNameYet fix(final Configuration all, final Tipper<?>... ts) {
     final List<Tipper<?>> tss = as.list(ts);
     if (!firstAddition)
-      tss.addAll(globalToolbox.getAllTippers());
+      tss.addAll(globalConfiguration.getAllTippers());
     firstAddition = false;
-    globalToolbox = all;
-    Stream.of(globalToolbox.implementation).filter(Objects::nonNull).forEachOrdered((final List<Tipper<? extends ASTNode>> ¢) -> ¢.retainAll(tss));
+    globalConfiguration = all;
+    Stream.of(globalConfiguration.implementation).filter(Objects::nonNull).forEachOrdered((final List<Tipper<? extends ASTNode>> ¢) -> ¢.retainAll(tss));
     return this;
   }
 
   public AbstractTipperNoBetterNameYet useProjectPreferences() {
     useProjectPreferences = true;
-    toolboxes.clear();
+    configurations.clear();
     return this;
   }
 
-  public Configuration globalToolbox;
-  protected final Map<IProject, Configuration> toolboxes = new HashMap<>();
+  public Configuration globalConfiguration;
+  protected final Map<IProject, Configuration> configurations = new HashMap<>();
   protected boolean useProjectPreferences;
   protected boolean firstAddition = true;
 }

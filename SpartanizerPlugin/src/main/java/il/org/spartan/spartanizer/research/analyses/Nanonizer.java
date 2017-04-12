@@ -177,7 +177,7 @@ public class Nanonizer extends NoBraindDamagedTippersSpartanizer {
   }
 
   public Nanonizer removeSpartanizerTippers() {
-    configuration = Utils.emptyToolboox();
+    configuration = Configurations.empty();
     addNanoPatterns();
     return this;
   }

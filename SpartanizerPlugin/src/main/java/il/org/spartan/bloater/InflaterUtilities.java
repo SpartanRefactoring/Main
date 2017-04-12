@@ -27,10 +27,10 @@ public enum InflaterUtilities {
    *        each we check if we can expand
    * @param g JD
    * @return true iff rewrite object should be applied For now - we only have a
-   *         few expanders (1) so we will not infrastructure a full toolbox as
+   *         few expanders (1) so we will not infrastructure a full configuration as
    *         in the spartanizer But we should definitely implement it one day
    *         more expanders should be added to the change ASTNode in a "for
-   *         loop" for each expander. SHOULD BE ORGANIZED correctly in a toolbox
+   *         loop" for each expander. SHOULD BE ORGANIZED correctly in a configuration
    *         infrastructure when we have more expanders */
   static boolean rewrite(final ASTRewrite r, final Iterable<ASTNode> ns, final TextEditGroup g) {
     boolean $ = false;
