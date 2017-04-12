@@ -17,7 +17,7 @@ public class PercolateExceptionTest {
             "  }" + //
             " catch (  B i) { throw i;}"//
     ) //
-        .using(CatchClause.class, new PercolateException())//
+        .using(new PercolateException(), CatchClause.class)//
         .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){percolate(i);};}")//
         .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){percolate(i);}")//
         .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){percolate(i);}")//
@@ -29,7 +29,7 @@ public class PercolateExceptionTest {
   @Test public void b() {
     trimminKof("try{ thing(); } catch(A ¢){ throw ¢;}catch(B ¢){ throw ¢;}")//
         .gives("try{thing();}catch(B|A ¢){throw ¢;}")//
-        .using(CatchClause.class, new PercolateException())//
+        .using(new PercolateException(), CatchClause.class)//
         .gives("{try{{thing();}}catch(B|A ¢){percolate(¢);};}")//
         .gives("try{{thing();}}catch(B|A ¢){percolate(¢);}")//
         .gives("try{thing();}catch(B|A ¢){percolate(¢);}")//

@@ -382,7 +382,7 @@ public final class Version230 {
 
   @Test public void canonicalFragementExample1() {
     trimminKof("int a;a=3;")//
-        .using(VariableDeclarationFragment.class, new LocalUnintializedAssignmentToSame()) //
+        .using(new LocalUnintializedAssignmentToSame(), VariableDeclarationFragment.class) //
         .gives("int a=3;");
   }
 
@@ -855,15 +855,15 @@ public final class Version230 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void return22aTrue() {
     trimminKof("return (2 > 2 + a) == true;") //
-        .using(InfixExpression.class, new InfixComparisonBooleanLiteral()) //
+        .using(new InfixComparisonBooleanLiteral(), InfixExpression.class) //
         .gives("return 2>2+a;") //
-        .using(InfixExpression.class, new InfixComparisonSpecific()) //
+        .using(new InfixComparisonSpecific(), InfixExpression.class) //
         .gives("return 2+a<2;") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("return a+2<2;") //
-        .using(InfixExpression.class, new InfixSimplifyComparisionOfAdditions()) //
+        .using(new InfixSimplifyComparisionOfAdditions(), InfixExpression.class) //
         .gives("return a<2-2;") //
-        .using(InfixExpression.class, new InfixSubtractionEvaluate()) //
+        .using(new InfixSubtractionEvaluate(), InfixExpression.class) //
         .gives("return a<0;") //
         .stays() //
     ;
@@ -1594,7 +1594,7 @@ public final class Version230 {
   }
 
   @Test public void issue54WhileScopeDoesNotInclude() {
-    included("int a=f();while(c)b[i]=a;", VariableDeclarationFragment.class).notIn(new LocalVariableIntializedStatementTerminatingScope());
+    included("int a=f();while(c)b[i]=a;", VariableDeclarationFragment.class).notIn(new LocalVariableInitializedStatementTerminatingScope());
   }
 
   @Test public void issue62b_1() {
@@ -3569,9 +3569,9 @@ public final class Version230 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_inta0b0cd0e0fabIfabcdceg() {
     trimminKof("int a = 0, b = 0, c, d = 0, e = 0; f(a, b); if (a < b) { c = d; c = e; } g();") //
-        .using(Assignment.class, new AssignmentAndAssignmentOfSameVariable()) //
+        .using(new AssignmentAndAssignmentOfSameVariable(), Assignment.class) //
         .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b){c=e;}g();") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b)c=e;g();") //
         .gives("int a=0,b=0,e=0;f(a,b);if(a<b)c=e;g();") //
         .stays() //
@@ -3582,7 +3582,7 @@ public final class Version230 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_inta15Return7a() {
     trimminKof("int a = 15; return 7 < a;") //
-        .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
+        .using(new LocalInitializedReturnExpression(), VariableDeclarationFragment.class) //
         .gives("return 7<15;") //
         .stays() //
     ;
@@ -3592,25 +3592,25 @@ public final class Version230 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_intaba3b5Ifa4Ifb3b2Elsebab3ElseIfb3b2Elsebaab3() {
     trimminKof("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = 2; else { b = a; b = 3; } else if (b == 3) b = 2; else { b = a * a; b = 3; }") //
-        .using(VariableDeclarationFragment.class, new LocalUnintializedAssignmentToSame()) //
+        .using(new LocalUnintializedAssignmentToSame(), VariableDeclarationFragment.class) //
         .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
-        .using(VariableDeclarationFragment.class, new LocalUnintializedAssignmentToSame()) //
+        .using(new LocalUnintializedAssignmentToSame(), VariableDeclarationFragment.class) //
         .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
-        .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementTerminatingScope()) //
+        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
-        .using(Assignment.class, new AssignmentAndAssignmentOfSameValue()) //
+        .using(new AssignmentAndAssignmentOfSameValue(), Assignment.class) //
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
-        .using(IfStatement.class, new IfAssignToFooElseAssignToFoo()) //
+        .using(new IfAssignToFooElseAssignToFoo(), IfStatement.class) //
         .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}") //
-        .using(Assignment.class, new AssignmentAndAssignmentOfSameVariable()) //
+        .using(new AssignmentAndAssignmentOfSameVariable(), Assignment.class) //
         .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3;}") //
-        .using(IfStatement.class, new IfAssignToFooElseAssignToFoo()) //
+        .using(new IfAssignToFooElseAssignToFoo(), IfStatement.class) //
         .gives("int b=5;if(3==4)b=b==3?2:(b=3);else b=b==3?2:3;") //
-        .using(IfStatement.class, new IfAssignToFooElseAssignToFoo()) //
+        .using(new IfAssignToFooElseAssignToFoo(), IfStatement.class) //
         .gives("int b=5;b=3==4?b==3?2:(b=3):b==3?2:3;") //
-        .using(ConditionalExpression.class, new TernaryShortestFirst()) //
+        .using(new TernaryShortestFirst(), ConditionalExpression.class) //
         .gives("int b=5;b=3!=4?b==3?2:3:b==3?2:(b=3);") //
-        .using(ConditionalExpression.class, new TernaryShortestFirst()) //
+        .using(new TernaryShortestFirst(), ConditionalExpression.class) //
         .gives("int b=5;b=3!=4?b==3?2:3:b!=3?(b=3):2;") //
         .stays() //
     ;
@@ -3620,9 +3620,9 @@ public final class Version230 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_intaIntbForbIfFalseBreakReturnb() {
     trimminKof("int a(int b) { for (;; ++b) if (false) break; return b; }") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("int a(int b){for(;;++b){}return b;}") //
-        .using(ForStatement.class, new ForEmptyBlockToEmptyStatement()) //
+        .using(new ForEmptyBlockToEmptyStatement(), ForStatement.class) //
         .gives("int a(int b){for(;;++b);return b;}") //
         .stays() //
     ;

@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue1117 {
   @Test public void a() {
     trimminKof("(x)->x")//
-        .using(LambdaExpression.class, new LambdaRemoveParenthesis()) //
+        .using(new LambdaRemoveParenthesis(), LambdaExpression.class) //
         .gives("x->x")//
         .gives("λ->λ")//
         .stays()//
@@ -24,7 +24,7 @@ public class Issue1117 {
 
   @Test public void b() {
     trimminKof("(final int x)->x")//
-        .using(LambdaExpression.class, new LambdaRemoveParenthesis()) //
+        .using(new LambdaRemoveParenthesis(), LambdaExpression.class) //
         .stays()//
     ;
   }

@@ -15,7 +15,7 @@ import org.junit.runners.*;
 public class BetweenTest {
   @Test public void a() {
     trimminKof("if( c >'a' && c < 'z') use();")//
-        .using(InfixExpression.class, new Between())//
+        .using(new Between(), InfixExpression.class)//
         .gives("if(is.value(c).between('a').and('z'))use();")//
         .stays();
   }
@@ -23,7 +23,7 @@ public class BetweenTest {
   // different operators
   @Test public void b() {
     trimminKof("if('a' <= c && c < 'z') use();")//
-        .using(InfixExpression.class, new Between())//
+        .using(new Between(), InfixExpression.class)//
         .gives("if(is.value(c).between('a').inclusive().and('z'))use();")//
         .stays();
   }
@@ -31,7 +31,7 @@ public class BetweenTest {
   // order
   @Test public void c() {
     trimminKof("radix >= Character.MIN_RADIX && radix <= Character.MAX_RADIX")//
-        .using(InfixExpression.class, new Between())//
+        .using(new Between(), InfixExpression.class)//
         .gives("if(is.value(radix).between(Character.MIN_RADIX).inclusive().and(Character.MAX_RADIX))use();")//
         .stays();
   }

@@ -14,14 +14,14 @@ import org.junit.runners.*;
 public class GetOrElseThrowTest {
   @Test public void a() {
     trimminKof("if(x == null) throw new Error(); return x;")//
-        .using(IfStatement.class, new GetOrElseThrow())//
+        .using(new GetOrElseThrow(), IfStatement.class)//
         .gives("notNull(x).get(x);")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("s1(); if(x == null) throw new Error(); return x; s2();")//
-        .using(IfStatement.class, new GetOrElseThrow())//
+        .using(new GetOrElseThrow(), IfStatement.class)//
         .gives("s1(); notNull(x).get(x); s2();")//
         .stays();
   }

@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Testing disabling lambda expression tipping
- * {@link LocalVariableIntializedStatementTerminatingScope}
+ * {@link LocalVariableInitializedStatementTerminatingScope}
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-22 */
 @SuppressWarnings("static-method")

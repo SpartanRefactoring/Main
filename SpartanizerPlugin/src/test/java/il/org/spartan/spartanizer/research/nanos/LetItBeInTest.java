@@ -12,7 +12,7 @@ import org.junit.*;
 public class LetItBeInTest {
   @Test public void a() {
     trimminKof("{{A λ = foo(); return bar(λ,λ);} another();}")//
-        .using(VariableDeclarationFragment.class, new LetItBeIn())//
+        .using(new LetItBeIn(), VariableDeclarationFragment.class)//
         .gives("{{{return let(()->foo()).in(λ->bar(λ,λ));}}another();}") //
         .gives("return let(()->foo()).in(λ->bar(λ,λ));another();") //
         .gives("return let(()->foo()).in(λ->bar(λ,λ));") //
@@ -35,7 +35,7 @@ public class LetItBeInTest {
 
   @Test public void d() {
     trimminKof("{{A x = foo(); bar(x,x);} another();}")//
-        .using(VariableDeclarationFragment.class, new LetItBeIn())//
+        .using(new LetItBeIn(), VariableDeclarationFragment.class)//
         .gives("{{{let(()->foo()).in(x->bar(x,x));}}another();}") //
         .gives("let(()->foo()).in(x->bar(x,x));another();") //
         .gives("let(()->foo()).in(λ->bar(λ,λ));another();") //
@@ -44,19 +44,19 @@ public class LetItBeInTest {
 
   @Test public void e() {
     trimminKof("{{A y = bar(), x = foo(); bar(x,x); print(y);} another();}")//
-        .using(VariableDeclarationFragment.class, new LetItBeIn())//
+        .using(new LetItBeIn(), VariableDeclarationFragment.class)//
         .stays();
   }
 
   @Test public void i() {
     trimminKof("X x = foo(); bar1(x,x); bar2(x);")//
-        .using(VariableDeclarationFragment.class, new LetItBeIn())//
+        .using(new LetItBeIn(), VariableDeclarationFragment.class)//
         .stays();
   }
 
   @Test public void f() {
     trimminKof("{{A x = foo(); bar(x,x); print(x);} another();}")//
-        .using(VariableDeclarationFragment.class, new LetItBeIn())//
+        .using(new LetItBeIn(), VariableDeclarationFragment.class)//
         .stays();
   }
 
@@ -67,7 +67,7 @@ public class LetItBeInTest {
         + "      throw new IllegalStateException(String.format(\"Annotation method %s returned null\",m));"//
         + "    }"//
         + "    $+=hashMember(m.getName(),value); }")//
-            .using(VariableDeclarationFragment.class, new LetItBeIn())//
+            .using(new LetItBeIn(), VariableDeclarationFragment.class)//
             .stays();
   }
 
@@ -81,7 +81,7 @@ public class LetItBeInTest {
         + "    }"//
         + "  });"//
         + "}")//
-            .using(VariableDeclarationFragment.class, new LetItBeIn())//
+            .using(new LetItBeIn(), VariableDeclarationFragment.class)//
             .gives(
                 "{{let(()->(AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass)).in(a->f.getAtmosphereConfig().startupHook(new AtmosphereConfig.StartupHook(){@Override public void started(AtmosphereFramework framework){framework.interceptor(a);}}));}}") //
             .gives(

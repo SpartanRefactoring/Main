@@ -18,9 +18,9 @@ public class Issue1105 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_protectedAaFinalBbcdefIfbNullghijReturnggkbChijReturng() {
     trimminKof("protected A a() { final B b = c.d(e(f)); if (b == null) { g.h(i, j); return g; } g.k(b, C).h(i, j); return g; }") //
-        .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
+        .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
         .gives("protected A a(){final B b=c.d(e(f));if(b==null){g.h(i,j);}else{g.k(b,C).h(i,j);}return g;}") //
-        .using(IfStatement.class, new IfExpressionStatementElseSimilarExpressionStatement()) //
+        .using(new IfExpressionStatementElseSimilarExpressionStatement(), IfStatement.class) //
         .gives("protected A a(){final B b=c.d(e(f));(b==null?g:g.k(b,C)).h(i,j);return g;}") //
         .stays() //
     ;

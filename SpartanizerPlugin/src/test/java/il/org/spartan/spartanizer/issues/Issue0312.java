@@ -18,13 +18,13 @@ public class Issue0312 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void forInta1a7Ifa5b9Returncd15ReturncReturnc() {
     trimminKof("for (int a = 1; a < 7;) { if (a == 5) { b += 9; return c; } d += 15; return c; } return c;") //
-        .using(ForStatement.class, new ForFiniteConvertReturnToBreak()) //
+        .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;break;}d+=15;return c;}return c;") //
-        .using(ForStatement.class, new ForFiniteConvertReturnToBreak()) //
+        .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;break;}d+=15;break;}return c;") //
-        .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
+        .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{d+=15;}break;}return c;") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("for(int a=1;a<7;){if(a==5)b+=9;else d+=15;break;}return c;") //
         .stays() //
     ;
@@ -34,9 +34,9 @@ public class Issue0312 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void forInta1a7Ifa5b9Breakc15BreakReturnd() {
     trimminKof("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
-        .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
+        .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{c+=15;}break;}return d;") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("for(int a=1;a<7;){if(a==5)b+=9;else c+=15;break;}return d;") //
         .stays() //
     ;
@@ -46,9 +46,9 @@ public class Issue0312 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_forInta1a7Ifa5b9Breakc15BreakReturnd() {
     trimminKof("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
-        .using(IfStatement.class, new IfStatementBlockSequencerBlockSameSequencer()) //
+        .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{c+=15;}break;}return d;") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("for(int a=1;a<7;){if(a==5)b+=9;else c+=15;break;}return d;") //
         .stays() //
     ;

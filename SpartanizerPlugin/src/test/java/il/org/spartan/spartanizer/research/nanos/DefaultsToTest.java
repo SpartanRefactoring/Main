@@ -11,16 +11,16 @@ import org.junit.*;
 public class DefaultsToTest {
   @Test public void a() {
     trimminKof("return ¢ != null ? ¢ : \"\";")//
-        .using(ConditionalExpression.class, new DefaultsTo())//
+        .using(new DefaultsTo(), ConditionalExpression.class)//
         .gives("return defaults(¢).to(\"\");")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("{B $ = t.tip(x); return $ != null ? $ : t2.tip(y);}")//
-        .using(ConditionalExpression.class, new DefaultsTo())//
+        .using(new DefaultsTo(), ConditionalExpression.class)//
         .gives("return defaults(t.tip(x)).to(t2.tip(y));")//
-        .using(ConditionalExpression.class, new DefaultsTo())//
+        .using(new DefaultsTo(), ConditionalExpression.class)//
         .stays();
   }
 }

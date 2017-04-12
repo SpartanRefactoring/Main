@@ -140,9 +140,9 @@ public class Issue0251 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_whileabc() {
     trimminKof("while (a == b) { c(); { } }") //
-        .using(WhileStatement.class, new WhileToForUpdaters()) //
+        .using(new WhileToForUpdaters(), WhileStatement.class) //
         .gives("for(;a==b;c()){c();}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("for(;a==b;c())c();") //
         .stays() //
     ;
@@ -159,9 +159,9 @@ public class Issue0251 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void whileabc() {
     trimminKof("while (a == b) { c(); { } }") //
-        .using(WhileStatement.class, new WhileToForUpdaters()) //
+        .using(new WhileToForUpdaters(), WhileStatement.class) //
         .gives("for(;a==b;c()){c();}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("for(;a==b;c())c();") //
         .stays() //
     ;

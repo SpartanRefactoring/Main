@@ -24,13 +24,13 @@ public class Issue0905 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_ifaTrueIntb5cd() {
     trimminKof("if (a == true) { int b = 5, c = d(); }") //
-        .using(InfixExpression.class, new InfixComparisonBooleanLiteral()) //
+        .using(new InfixComparisonBooleanLiteral(), InfixExpression.class) //
         .gives("if(a){int b=5,c=d();}") //
-        .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("if(a){d(); int b=5;}") //
-        .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("if(a){d();}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("if(a)d();") //
         .stays() //
     ;

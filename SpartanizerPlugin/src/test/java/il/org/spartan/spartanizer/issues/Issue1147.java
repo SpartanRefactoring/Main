@@ -14,13 +14,13 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue1147 {
   @Test public void t1() {
     trimminKof("switch (digits(round3(¢))) {case -1:case 0:return \"%.3f\";case 1:return \"%.2f\";case 2:return \"%.1f\";default:return \"%.0f\";}")
-        .using(SwitchStatement.class, new SwitchBranchSort()).stays();
+        .using(new SwitchBranchSort(), SwitchStatement.class).stays();
   }
 
   @Test public void t2() {
     trimminKof("switch (digits(round3(¢))) {case 0:case 1:return \"%.3f\";case -1:return \"%.2f\";case 2:return \"%.1f\";default:return \"%.0f\";}")
-        .using(SwitchStatement.class, new SwitchBranchSort())
+        .using(new SwitchBranchSort(), SwitchStatement.class)
         .gives("switch (digits(round3(¢))) {case -1:return \"%.2f\";case 0:case 1:return \"%.3f\";case 2:return \"%.1f\";default:return \"%.0f\";}")
-        .using(SwitchStatement.class, new SwitchBranchSort()).stays();
+        .using(new SwitchBranchSort(), SwitchStatement.class).stays();
   }
 }

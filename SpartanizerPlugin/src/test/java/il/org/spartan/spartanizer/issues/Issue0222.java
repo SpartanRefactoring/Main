@@ -34,7 +34,7 @@ public class Issue0222 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_aBaCbIfbNullReturnNullABcNewDcdebcdfbIfbgchijbReturnc() {
     trimminKof("A<B>a(C b){if(b==null)return null;A<B>c=new D<>();c.d(e(b));c.d(f(b));if(b.g())c.h(i.j(b));return c;}") //
-        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
         .gives("A<B>a(C b){if(b==null)return null;A<B>$=new D<>();$.d(e(b));$.d(f(b));if(b.g())$.h(i.j(b));return $;}") //
         .stays() //
     ;

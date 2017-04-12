@@ -28,9 +28,9 @@ public class Issue0456 {
   @Test public void b() {
     trimminKof(
         "{ long q = (r & 1) != 0 ? d(x, r) : (x >>> 1) / (r >>> 1); long r = x - r * q; b[--i] = C.f((int) r, r); x = q; for (; x > 0; x /= r) b[--i] = C.f((int) (x % r), r); }") //
-            .using(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()) //
+            .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
             .gives("{long q=(r&1)!=0?d(x,r):(x>>>1)/(r>>>1),r=x-r*q;b[--i]=C.f((int)r,r);x=q;for(;x>0;x/=r)b[--i]=C.f((int)(x%r),r);}") //
-            .using(VariableDeclarationFragment.class, new LocalVariableIntializedInlineIntoNext()) //
+            .using(new LocalVariableIntializedInlineIntoNext(), VariableDeclarationFragment.class) //
             .gives("{long q=(r&1)!=0?d(x,r):(x>>>1)/(r>>>1);b[--i]=C.f((int)x-r*q,r);x=q;for(;x>0;x/=r)b[--i]=C.f((int)(x%r),r);}") //
             .stays() //
     ;
@@ -41,7 +41,7 @@ public class Issue0456 {
   @Test public void c() {
     trimminKof(
         "{ long q = (r & 1) != 0 ? d(x, r) : (x >>> 1) / (r >>> 1), r = x - r * q; b[--i] = C.f((int) r, r); x = q; for (; x > 0; x /= r) b[--i] = C.f((int) (x % r), r); }") //
-            .using(InfixExpression.class, new InfixMultiplicationSort()) //
+            .using(new InfixMultiplicationSort(), InfixExpression.class) //
             .gives("{long q=(r&1)!=0?d(x,r):(x>>>1)/(r>>>1),r=x-q*r;b[--i]=C.f((int)r,r);x=q;for(;x>0;x/=r)b[--i]=C.f((int)(x%r),r);}") //
             .stays() //
     ;

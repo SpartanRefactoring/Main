@@ -33,9 +33,9 @@ public class Issue0310 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void xooleanaFinalAbForAcbcNullIfBdcReturnTruecceReturnFalse() {
     trimminKof("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; c = c.e(); } return false; }") //
-        .using(ForStatement.class, new ForToForUpdaters()) //
+        .using(new ForToForUpdaters(), ForStatement.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e()){if(B.d(c))return true;}return false;}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e())if(B.d(c))return true;return false;}") //
         .stays() //
     ;
@@ -88,9 +88,9 @@ public class Issue0310 {
 
   @Test public void test_booleanaFinalAbForAcbcNullIfBdcReturnTruecceReturnFalse() {
     trimminKof("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; c = c.e(); } return false; }") //
-        .using(ForStatement.class, new ForToForUpdaters()) //
+        .using(new ForToForUpdaters(), ForStatement.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e()){if(B.d(c))return true;}return false;}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e())if(B.d(c))return true;return false;}") //
         .stays() //
     ;
@@ -100,11 +100,11 @@ public class Issue0310 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_booleanaFinalAbForAcbcNullIfBdcReturnTrueIfedcReturnTrueccfReturnFalse() {
     trimminKof("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; if (e.d(c)) return true; c = c.f(); } return false; }") //
-        .using(ForStatement.class, new ForToForUpdaters()) //
+        .using(new ForToForUpdaters(), ForStatement.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c))return true;if(e.d(c))return true;}return false;}") //
-        .using(IfStatement.class, new IfFooSequencerIfFooSameSequencer()) //
+        .using(new IfFooSequencerIfFooSameSequencer(), IfStatement.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c)||e.d(c))return true;}return false;}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f())if(B.d(c)||e.d(c))return true;return false;}") //
         .stays() //
     ;

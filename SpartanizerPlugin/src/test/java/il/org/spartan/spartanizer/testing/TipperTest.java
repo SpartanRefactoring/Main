@@ -32,7 +32,7 @@ public abstract class TipperTest<N extends ASTNode> {
       super(inner);
       this.tipper = tipper;
       this.tipsOn = tipsOn;
-      using(tipsOn, tipper);
+      using(tipper, tipsOn);
     }
 
     private TipperTrimmingOperand(final TrimmingOperand o, final Tipper<M> tipper, final Class<M> tipsOn) {

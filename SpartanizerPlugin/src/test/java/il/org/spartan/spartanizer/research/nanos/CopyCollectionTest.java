@@ -16,13 +16,13 @@ import org.junit.runners.*;
 public class CopyCollectionTest {
   @Test public void a() {
     trimminKof("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);")//
-        .using(ClassInstanceCreation.class, new CopyCollection())//
+        .using(new CopyCollection(), ClassInstanceCreation.class)//
         .gives("StatsAccumulator $=Create.from(values);");
   }
 
   @Test public void b() {
     trimminKof("StatsAccumulator<N> $=new StatsAccumulator<>();  $.addAll(values);")//
-        .using(ClassInstanceCreation.class, new CopyCollection())//
+        .using(new CopyCollection(), ClassInstanceCreation.class)//
         .gives("StatsAccumulator<N> $=Create.from(values);");
   }
 }

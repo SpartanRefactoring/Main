@@ -18,7 +18,7 @@ public class ReturnOnExceptionTest {
             " catch (  B i) {" + //
             "    return null;}"//
     ) //
-        .using(CatchClause.class, new ReturnOnException())//
+        .using(new ReturnOnException(), CatchClause.class)//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnDefault();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnDefault();")//
         .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnDefault();") //
@@ -29,7 +29,7 @@ public class ReturnOnExceptionTest {
 
   @Test public void b() {
     trimminKof("try{ thing(); } catch(A a){ return null;}catch(B b){return 3;}")//
-        .using(CatchClause.class, new ReturnOnException())//
+        .using(new ReturnOnException(), CatchClause.class)//
         .stays();
   }
 
@@ -41,7 +41,7 @@ public class ReturnOnExceptionTest {
             " catch (  B i) {" + //
             "    return;}"//
     ) //
-        .using(CatchClause.class, new ReturnOnException())//
+        .using(new ReturnOnException(), CatchClause.class)//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returns();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returns();") //
         .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returns();") //
@@ -53,7 +53,7 @@ public class ReturnOnExceptionTest {
   @Test public void d() {
     trimminKof("try{ thing(); } catch(A a){ return;}catch(B b){return;}")//
         .gives("try{thing();}catch(B|A a){return;}")//
-        .using(CatchClause.class, new ReturnOnException())//
+        .using(new ReturnOnException(), CatchClause.class)//
         .gives("If.throwz(()->{{thing();}}).returns();")//
         .gives("If.throwz(()->{thing();}).returns();")//
         .gives("If.throwz(()->thing()).returns();")//
@@ -68,7 +68,7 @@ public class ReturnOnExceptionTest {
             " catch (  B i) {" + //
             "    return 0;}"//
     ) //
-        .using(CatchClause.class, new ReturnOnException())//
+        .using(new ReturnOnException(), CatchClause.class)//
         .gives("If.throwz(()->{{A.a(b).c().d(e->f[g++]=h(e));}}).returnDefault();")//
         .gives("If.throwz(()->{A.a(b).c().d(e->f[g++]=h(e));}).returnDefault();")//
         .gives("If.throwz(()->A.a(b).c().d(e->f[g++]=h(e))).returnDefault();") //

@@ -12,7 +12,7 @@ import org.junit.*;
 public class TakeDefaultToTest {
   @Test public void basic() {
     trimminKof("return hiChars == null ? 1 : hiChars.length;")//
-        .using(ConditionalExpression.class, new TakeDefaultTo())//
+        .using(new TakeDefaultTo(), ConditionalExpression.class)//
         .gives("return take(hiChars.length).default¢(hiChars).to(1);")//
         .stays();
   }
