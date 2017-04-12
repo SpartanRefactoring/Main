@@ -3132,13 +3132,13 @@ public final class Version230 {
 
   @Test public void ignoreBooleanMethod() {
     trimminKof("boolean f(){ int x=0;for(int i=0;i<10;++i)x +=i;return x;}")//
-        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
         .stays();
   }
 
   @Test public void ignoreVoidMethod() {
     trimminKof("Void f(){ int x=0;for(int i=0;i<10;++i)x +=i;return x;}")//
-        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
         .stays();
   }
 

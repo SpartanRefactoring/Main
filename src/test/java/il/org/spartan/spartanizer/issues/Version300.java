@@ -37,9 +37,9 @@ public class Version300 {
    * class 'JUnitTestMethodFacotry') */
   @Ignore("Yossi Gil") @Test public void inta6FinalAbNewAaIntc2dccdcc2() {
     trimminKof("int a = 6; final A b = new A(a); int c = 2 + d; c(c - d); c(c * 2);") //
-        .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("int a=6;new A(a);int c=2+d;c(c-d);c(c*2);") //
-        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("int a=6;new A(a);int c=2+d;c(c-d);c(2*c);") //
         .gives("new A(6);int c=2+d;c(c-d);c(2*c);") //
         .stays() //
