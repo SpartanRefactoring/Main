@@ -5,7 +5,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** *

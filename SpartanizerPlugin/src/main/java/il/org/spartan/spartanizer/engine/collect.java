@@ -10,9 +10,9 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** A utility class for finding occurrences of an {@link Expression} in an
  * {@link ASTNode}.

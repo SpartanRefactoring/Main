@@ -17,7 +17,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.bloater.*;
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** An application of the Bloater project. Augment java code to be more clear

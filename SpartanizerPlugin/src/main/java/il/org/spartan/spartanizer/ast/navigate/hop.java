@@ -11,9 +11,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.fluent.*;
 
 /** An empty {@code interface} for fluent programming. The name should say it

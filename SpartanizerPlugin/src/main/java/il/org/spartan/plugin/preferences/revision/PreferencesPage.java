@@ -23,9 +23,9 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tippers.Names.*;
 import il.org.spartan.utils.*;
