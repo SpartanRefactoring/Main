@@ -22,7 +22,7 @@ public class Configuration {
     final Configuration $ = new Configuration();
     int i = 0;
     for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
-      $.implementation[i++] = new ArrayList<>(¢);
+      $.implementation[i++] = ¢ == null ? null : new ArrayList<>(¢);
     return $;
   }
 
