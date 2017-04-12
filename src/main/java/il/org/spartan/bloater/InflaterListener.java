@@ -17,8 +17,8 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** Listener for code inflation/deflation using mouse and CTRL key.

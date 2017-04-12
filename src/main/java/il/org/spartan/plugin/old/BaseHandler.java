@@ -7,7 +7,7 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.handlers.*;
 
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
  *         original version

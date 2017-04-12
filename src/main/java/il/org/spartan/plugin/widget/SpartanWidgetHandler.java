@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** Spartanizer widget.
  * @author Ori Roth {@code ori.rothh@gmail.com}

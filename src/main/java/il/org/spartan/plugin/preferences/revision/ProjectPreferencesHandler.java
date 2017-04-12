@@ -25,8 +25,8 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.dialogs.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Example.*;
 import il.org.spartan.utils.fluent.*;

@@ -1,6 +1,6 @@
 package il.org.spartan.bloater;
 
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** Applicator for the Athens project.
  * @author Ori Roth

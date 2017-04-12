@@ -3,7 +3,7 @@ package il.org.spartan.bloater.collateral;
 import org.eclipse.core.commands.*;
 
 import il.org.spartan.bloater.*;
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an
