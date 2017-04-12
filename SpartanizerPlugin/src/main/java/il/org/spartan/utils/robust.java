@@ -63,6 +63,6 @@ public interface robust {
 
   static <T> T nullify(final Runnable ¢) {
     ¢.run();
-    return the.null¢(); 
+    return the.null¢();
   }
 }

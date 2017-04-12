@@ -433,7 +433,7 @@ public interface iz {
   }
 
   static boolean empty(final TagElement e) {
-    return fragments(e).stream().allMatch(λ -> λ == null || λ instanceof SimpleName || (λ instanceof TextElement) && iz.empty((TextElement) λ));
+    return fragments(e).stream().allMatch(λ -> λ == null || λ instanceof SimpleName || λ instanceof TextElement && iz.empty((TextElement) λ));
   }
 
   static boolean empty(final TextElement ¢) {
