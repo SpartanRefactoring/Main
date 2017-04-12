@@ -6,7 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.research.nanos.deprecated.*;
+import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /* Tests {@link Exhaust}

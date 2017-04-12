@@ -8,8 +8,8 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.research.util.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.research.util.*;
 
 /** Tests of {@link research.util}
  * @author AnnaBel7

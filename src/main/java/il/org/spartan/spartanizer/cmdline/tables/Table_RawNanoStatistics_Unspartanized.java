@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.research.util.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;

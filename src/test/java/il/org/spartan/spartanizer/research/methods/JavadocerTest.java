@@ -2,9 +2,9 @@ package il.org.spartan.spartanizer.research.methods;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.research.analyses.*;
-import il.org.spartan.research.nanos.common.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Base class for all tests for method patterns
  * @author Ori Marcovitch
