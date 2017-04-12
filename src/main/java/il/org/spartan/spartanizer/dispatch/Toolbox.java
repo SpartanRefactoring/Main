@@ -95,10 +95,6 @@ public class Toolbox {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
-  public static Toolbox mutableDefaultInstance() {
-    return freshCopyOfAllTippers();
-  }
-
   public static Toolbox emptyToolboox() {
     return new Toolbox();
   }
