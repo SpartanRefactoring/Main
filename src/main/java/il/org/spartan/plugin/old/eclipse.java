@@ -174,8 +174,8 @@ public enum eclipse {
       final Image i = Toolkit.getDefaultToolkit().getImage(new URL(iconAddress));
       if (i != null)
         icon = new ImageIcon(i);
-    } catch (final MalformedURLException ¢) {
-      return monitor.config(¢);
+    } catch (final MalformedURLException $) {
+      return monitor.config($);
     }
     return icon;
   }
@@ -229,8 +229,8 @@ public enum eclipse {
   List<ICompilationUnit> compilationUnits() {
     try {
       return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
-    } catch (final JavaModelException ¢) {
-      return monitor.bug(this, ¢);
+    } catch (final JavaModelException $) {
+      return monitor.bug(this, $);
     }
   }
 
