@@ -5,6 +5,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.Utils;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO Yossi Gil please add a description
@@ -35,7 +36,7 @@ public class InteractiveSpartanizer {
     return $;
   }
 
-  public Configuration configuration = Configuration.defaultInstance();
+  public Configuration configuration = Utils.defaultInstance();
 
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     configuration.disable(¢);
@@ -61,7 +62,7 @@ public class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
-      configuration = Configuration.freshCopyOfAllTippers();
+      configuration = Utils.freshCopyOfAllTippers();
     changed = true;
     configuration.add(c, ts);
     return this;
@@ -69,7 +70,7 @@ public class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
-      configuration = Configuration.freshCopyOfAllTippers();
+      configuration = Utils.freshCopyOfAllTippers();
     changed = true;
     configuration.remove(c, ts);
     return this;
@@ -77,7 +78,7 @@ public class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
     if (!changed)
-      configuration = Configuration.freshCopyOfAllTippers();
+      configuration = Utils.freshCopyOfAllTippers();
     changed = true;
     configuration.add(i, ts);
     return this;

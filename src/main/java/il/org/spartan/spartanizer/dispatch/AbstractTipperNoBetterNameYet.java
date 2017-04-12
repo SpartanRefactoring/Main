@@ -65,7 +65,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
       return null;
     if (toolboxes.containsKey(p))
       return toolboxes.get(p);
-    final Configuration $ = Configuration.freshCopyOfAllTippers();
+    final Configuration $ = Utils.freshCopyOfAllTippers();
     final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
     final Collection<Tipper<?>> xs = $.getAllTippers().stream().filter(λ -> !es.contains(λ.getClass())).collect(toList());
     for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
