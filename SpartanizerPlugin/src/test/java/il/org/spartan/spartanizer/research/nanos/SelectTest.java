@@ -15,14 +15,14 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 public class SelectTest {
   @Test public void a() {
     trimminKof("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
-        .using(EnhancedForStatement.class, new Select())//
+        .using(new Select(), EnhancedForStatement.class)//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(toList()));")//
     ;
   }
 
   @Test public void b() {
     trimminKof("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(peel(¢));")//
-        .using(EnhancedForStatement.class, new Select())//
+        .using(new Select(), EnhancedForStatement.class)//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).map(¢->peel(¢)).collect(toList()));")//
     ;
   }

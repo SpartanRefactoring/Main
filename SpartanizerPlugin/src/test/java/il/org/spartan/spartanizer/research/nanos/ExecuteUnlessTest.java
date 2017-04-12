@@ -12,21 +12,21 @@ import org.junit.*;
 public class ExecuteUnlessTest {
   @Test public void a() {
     trimminKof("if(x == 8) print(8);")//
-        .using(IfStatement.class, new ExecuteUnless())//
+        .using(new ExecuteUnless(), IfStatement.class)//
         .gives("execute(() -> print(8)).when(x==8);")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("if(x == 8 && iz.Literal(lit) || bigDaddy(d)) a.b()._(f,g).f.x(8,g,h*p);")//
-        .using(IfStatement.class, new ExecuteUnless())//
+        .using(new ExecuteUnless(), IfStatement.class)//
         .gives("execute(()->a.b()._(f,g).f.x(8,g,h*p)).when(x==8&&iz.Literal(lit)||bigDaddy(d));")//
         .stays();
   }
 
   @Test public void c() {
     trimminKof("for (final E constant : cs) if(Y) $.add(constant);")//
-        .using(IfStatement.class, new ExecuteUnless())//
+        .using(new ExecuteUnless(), IfStatement.class)//
         .stays();
   }
 }

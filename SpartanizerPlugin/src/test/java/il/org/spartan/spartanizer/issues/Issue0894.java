@@ -15,7 +15,7 @@ public class Issue0894 {
   // return $L1
   @Test public void test0() {
     trimminKof("for(int ¢ = 3; ¢ < 10; ++¢){++x;}") //
-        .using(ForStatement.class, new ReplaceForWithRange()).gives("for(Integer ¢ : range.from(3).to(10)){{++x;}}")//
+        .using(new ReplaceForWithRange(), ForStatement.class).gives("for(Integer ¢ : range.from(3).to(10)){{++x;}}")//
         .gives("for(Integer ¢ : range.from(3).to(10))++x;")//
         .stays();
   }
@@ -23,7 +23,7 @@ public class Issue0894 {
   // ¢-=2 matches ++$N for some reason
   @Test public void test2() {
     trimminKof("for(int ¢ = 10; ¢ > 5; ¢-=2){++x;++y;}") //
-        .using(ForStatement.class, new ReplaceForWithRange()).gives("for(Integer ¢ : range.from(10).step(-2).to(5)){{++x;++y;}}")//
+        .using(new ReplaceForWithRange(), ForStatement.class).gives("for(Integer ¢ : range.from(10).step(-2).to(5)){{++x;++y;}}")//
         .gives("for(Integer ¢ : range.from(10).step(-2).to(5)){++x;++y;}")//
         .stays();
   }

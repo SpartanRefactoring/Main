@@ -12,7 +12,7 @@ import org.junit.*;
 public class ReturnPreviousTest {
   @Test public void a() {
     trimminKof("int $=value;  value=newValue;  return $;")//
-        .using(ReturnStatement.class, new ReturnPrevious())//
+        .using(new ReturnPrevious(), ReturnStatement.class)//
         .gives("return update(value).with(newValue).getOld();")//
         .stays();
   }

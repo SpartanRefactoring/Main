@@ -42,13 +42,13 @@ public final class Issue0172 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void a0abc() {
     trimminKof("2 + 1 * a + 0 + \"abc\" + \"\"") //
-        .using(InfixExpression.class, new InfixPlusEmptyString()) //
+        .using(new InfixPlusEmptyString(), InfixExpression.class) //
         .gives("2+1*a+0+\"abc\"") //
-        .using(InfixExpression.class, new InfixTermsZero()) //
+        .using(new InfixTermsZero(), InfixExpression.class) //
         .gives("2+1*a+\"abc\"") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("1*a+2+\"abc\"") //
-        .using(InfixExpression.class, new InfixMultiplicationByOne()) //
+        .using(new InfixMultiplicationByOne(), InfixExpression.class) //
         .gives("a+2+\"abc\"") //
         .stays() //
     ;

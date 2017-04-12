@@ -86,7 +86,7 @@ public final class InfixAdditionSortTest {
 
   @Test public void a2bc() {
     trimminKof("a * 2 + b * c") //
-        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("2*a+b*c") //
         .stays() //
     ;
@@ -103,9 +103,9 @@ public final class InfixAdditionSortTest {
    * Matteo */
   @Test public void abc2() {
     trimminKof("a * b + c * 2") //
-        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("a*b+2*c") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("2*c+a*b") //
         .stays() //
     ;
@@ -215,13 +215,13 @@ public final class InfixAdditionSortTest {
 
   @Test public void test16a() {
     trimminKof("365 * a + a / 4 - a / 100 + a / 400 + (b * 306 + 5) / 10 + c - 1")//
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("c+a/400+(b*306+5)/10+(365*a+a/4-a/100)-1") //
-        .using(InfixExpression.class, new InfixAdditionSubtractionExpand()) //
+        .using(new InfixAdditionSubtractionExpand(), InfixExpression.class) //
         .gives("c+a/400+(b*306+5)/10+365*a+a/4-a/100-1") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("c+a/4+365*a+a/400+(b*306+5)/10-a/100-1") //
-        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("c+a/4+365*a+a/400+(306*b+5)/10-a/100-1") //
         .stays();
   }
@@ -238,9 +238,9 @@ public final class InfixAdditionSortTest {
 
   @Test public void test_365aa4a100a400() {
     trimminKof("365 * a + a / 4 - a / 100 + a / 400") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("a/400+365*a+a/4-a/100") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("a/4+365*a+a/400-a/100") //
         .stays() //
     ;
@@ -253,9 +253,9 @@ public final class InfixAdditionSortTest {
 
   @Test public void test16a4() {
     trimminKof("365 * a + b / 4 - c / 100 + d / 400") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("d/400+365*a+b/4-c/100") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("b/4+365*a+d/400-c/100") //
         .stays() //
     ;
@@ -263,18 +263,18 @@ public final class InfixAdditionSortTest {
 
   @Test public void test16a2b() {
     trimminKof("365 * a + a / 4 - a / 100 + a / 400")//
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("a/400+365*a+a/4-a/100") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("a/4+365*a+a/400-a/100") //
         .stays();
   }
 
   @Test public void test16a5() {
     trimminKof("365 * a + b / 4 - c / 100 + d / 400") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("d/400+365*a+b/4-c/100") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("b/4+365*a+d/400-c/100") //
         .stays() //
     ;
@@ -284,15 +284,15 @@ public final class InfixAdditionSortTest {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_365aa4a100a400b306510c1() {
     trimminKof("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("c+a*400+(b*306+5)*10+(365*a+a*4-a*100)-1") //
-        .using(InfixExpression.class, new InfixAdditionSubtractionExpand()) //
+        .using(new InfixAdditionSubtractionExpand(), InfixExpression.class) //
         .gives("c+a*400+(b*306+5)*10+365*a+a*4-a*100-1") //
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("c+a*4+365*a+a*400+(b*306+5)*10-a*100-1") //
-        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("c+4*a+365*a+400*a+10*(b*306+5)-100*a-1") //
-        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("c+4*a+365*a+400*a+10*(306*b+5)-100*a-1") //
         .stays() //
     ;
@@ -302,7 +302,7 @@ public final class InfixAdditionSortTest {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_a4b365b400b10c3065100b1() {
     trimminKof("a + 4 * b + 365 * b + 400 * b + 10 * (c * 306 + 5) - 100 * b - 1") //
-        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("a+4*b+365*b+400*b+10*(306*c+5)-100*b-1") //
         .stays() //
     ;
@@ -310,7 +310,7 @@ public final class InfixAdditionSortTest {
 
   @Test public void test16b() {
     trimminKof("365 * a + a * 4 - a * 100 + a * 400 + (b * 306 + 5) * 10 + c - 1")//
-        .using(InfixExpression.class, new InfixAdditionSort()) //
+        .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("c+a*400+(b*306+5)*10+(365*a+a*4-a*100)-1") //
         .gives("c+a*400+(b*306+5)*10+365*a+a*4-a*100-1") //
         .gives("c+a*4+365*a+a*400+(b*306+5)*10-100*a-1") //

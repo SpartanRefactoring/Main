@@ -30,11 +30,11 @@ public class Issue1123 {
    * class 'TestCaseFacotry') */
   @Test public void test_aaAbIntc0d1WhilecdIfc0c7cReturnc() {
     trimminKof("A a(A b) { int c = 0, d = 1; while (c < d) { if (c == 0) c = 7; ++c; } return c; }") //
-        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
         .gives("A a(A b){int $=0,d=1;while($<d){if($==0)$=7;++$;}return $;}") //
-        .using(WhileStatement.class, new WhileToForUpdaters()) //
+        .using(new WhileToForUpdaters(), WhileStatement.class) //
         .gives("A a(A b){int $=0,d=1;for(;$<d;++$){if($==0)$=7;}return $;}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("A a(A b){int $=0,d=1;for(;$<d;++$)if($==0)$=7;return $;}") //
         .stays() //
     ;

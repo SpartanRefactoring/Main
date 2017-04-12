@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * {@link TestsUtilsTrimmer#trimminKof(String)} which can then be subjected to
  * {@link #gives(String)}, {@link #stays()}, or {@link #doesNotCrash()}. Prior
  * to that, it can be restricted to certain {@link Tipper}s, by using
- * {@link #using(Class, Tipper)} or {@link #using(Class, Tipper...)}.
+ * {@link #using(Tipper, Class)} or {@link #using(Class, Tipper...)}.
  * @author Yossi Gil
  * @since 2017-03-12 */
 public class TrimmingOperand extends Wrapper<String> {
@@ -144,7 +144,7 @@ public class TrimmingOperand extends Wrapper<String> {
     TrimmerMonitor.logger.setLevel(Level.OFF);
   }
 
-  public <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N> ¢) {
+  public <N extends ASTNode> TrimmingOperand using(final Tipper<N> ¢, final Class<N> c) {
     trimmer.fix(c, ¢);
     return this;
   }

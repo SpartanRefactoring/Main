@@ -12,28 +12,28 @@ import org.junit.*;
 public class MaxTest {
   @Test public void a() {
     trimminKof("return x > y ? x : y;")//
-        .using(ConditionalExpression.class, new Max())//
+        .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("return x >= y ? x : y;")//
-        .using(ConditionalExpression.class, new Max())//
+        .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();
   }
 
   @Test public void c() {
     trimminKof("return y < x ? x : y;")//
-        .using(ConditionalExpression.class, new Max())//
+        .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();
   }
 
   @Test public void d() {
     trimminKof("return y <= x ? x : y;")//
-        .using(ConditionalExpression.class, new Max())//
+        .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();
   }

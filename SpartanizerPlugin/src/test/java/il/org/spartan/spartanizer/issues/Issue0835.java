@@ -49,9 +49,9 @@ public class Issue0835 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_whileTrue() {
     trimminKof("{ while (true) { } }") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("while(true){}") //
-        .using(WhileStatement.class, new WhileDeadRemove()) //
+        .using(new WhileDeadRemove(), WhileStatement.class) //
         .gives("{}") //
         .gives("") //
         .stays() //

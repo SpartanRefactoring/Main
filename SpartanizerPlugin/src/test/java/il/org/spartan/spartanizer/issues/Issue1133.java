@@ -16,49 +16,49 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue1133 {
   @Test public void and() {
     trimminKof("a =2; a &= 3;")//
-        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 & 3;")//
     ;
   }
 
   @Test public void divides() {
     trimminKof("a =2; a /= 3;")//
-        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 / 3;")//
     ;
   }
 
   @Test public void minus() {
     trimminKof("a =2; a -= 3;")//
-        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 - 3;")//
     ;
   }
 
   @Test public void or() {
     trimminKof("a =2; a |= 3;")//
-        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 | 3;")//
     ;
   }
 
   @Test public void function() {
     trimminKof("a =b; a += f(c,d);")//
-        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = b + f(c,d);")//
     ;
   }
 
   @Test public void plus() {
     trimminKof("a =2; a += 3;")//
-        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 + 3;")//
     ;
   }
 
   @Test public void times() {
     trimminKof("a =2; a *= 3;")//
-        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 * 3;")//
     ;
   }

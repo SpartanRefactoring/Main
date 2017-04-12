@@ -24,7 +24,7 @@ public class Issue0283 {
    * Yossi */
   @Test public void err1() {
     trimminKof("@A @B class C{@A @D1(3)@E @D(3)@E @F public void a(){}}") //
-        .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
+        .using(new AnnotationSort<MethodDeclaration>(), MethodDeclaration.class) //
         .gives("@A @B class C{@A @D(3) @D1(3) @E @F public void a(){}}") //
         .stays() //
     ;
@@ -32,7 +32,7 @@ public class Issue0283 {
 
   @Test public void duplication() {
     trimminKof("@A @D1(3)@E @D(3)@E @F public void a(){}") //
-        .using(MethodDeclaration.class, new AnnotationSort<MethodDeclaration>()) //
+        .using(new AnnotationSort<MethodDeclaration>(), MethodDeclaration.class) //
         .gives("@A @D(3) @D1(3) @E @F public void a(){}") //
         .stays();
   }
@@ -41,7 +41,7 @@ public class Issue0283 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_aBClassCAD3EF3GPublicVoida() {
     trimminKof("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
-        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
+        .using(new AnnotationRemoveSingletonArrray(), SingleMemberAnnotation.class) //
         .gives("@A @B class C{@A @D(3)@E @F(3)@G public void a(){}}") //
         .stays() //
     ;
@@ -58,7 +58,7 @@ public class Issue0283 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_BClassCAD3EF3GPublicVoida() {
     trimminKof("@A @B class C{@A @D(3)@E @F({3})@G public void a(){}}") //
-        .using(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
+        .using(new AnnotationRemoveSingletonArrray(), SingleMemberAnnotation.class) //
         .gives("@A @B class C{@A @D(3)@E @F(3)@G public void a(){}}") //
         .stays() //
     ;

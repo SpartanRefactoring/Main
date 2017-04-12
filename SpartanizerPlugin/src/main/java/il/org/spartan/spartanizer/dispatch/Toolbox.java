@@ -335,7 +335,7 @@ public class Toolbox {
             new LocalVariableIntializedStatementReturnVariable(), //
             new LocalVariableIntializedStatementReturnAssignment(), //
             new LocalVariableIntializedReturn(), //
-            new LocalVariableIntializedStatementTerminatingScope(), //
+            new LocalVariableInitializedStatementTerminatingScope(), //
             new LocalVariableIntializedAssignment(), //
             new LocalVariableUninitializedDead(), //
             new LocalVariableIntializedInlineIntoNext(), //

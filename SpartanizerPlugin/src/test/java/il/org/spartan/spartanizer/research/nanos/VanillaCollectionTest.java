@@ -12,35 +12,35 @@ import org.junit.*;
 public class VanillaCollectionTest {
   @Test public void a() {
     trimminKof("class C{public static final List<Int> li = new ArrayList<>();}")//
-        .using(FieldDeclaration.class, new VanillaCollection())//
+        .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("class C{public static final List<Int> li = new ArrayList<Int>();}")//
-        .using(FieldDeclaration.class, new VanillaCollection())//
+        .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void c() {
     trimminKof("class C{public static final Set<Int> li = new HashSet<>();}")//
-        .using(FieldDeclaration.class, new VanillaCollection())//
+        .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void d() {
     trimminKof("class C{public static final Set<Int> li = new TreeSet<>();}")//
-        .using(FieldDeclaration.class, new VanillaCollection())//
+        .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void e() {
     trimminKof("class C{public static final Map<Int, String> li = new HashMap<>();}")//
-        .using(FieldDeclaration.class, new VanillaCollection())//
+        .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }

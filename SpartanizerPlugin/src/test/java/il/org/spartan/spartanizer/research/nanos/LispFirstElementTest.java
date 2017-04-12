@@ -12,21 +12,21 @@ import org.junit.*;
 public class LispFirstElementTest {
   @Test public void a() {
     trimminKof("li.get(0)")//
-        .using(MethodInvocation.class, new First())//
+        .using(new First(), MethodInvocation.class)//
         .gives("first(li)")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("li.get(0);")//
-        .using(MethodInvocation.class, new First())//
+        .using(new First(), MethodInvocation.class)//
         .gives("first(li);")//
         .stays();
   }
 
   @Test public void c() {
     trimminKof("omg(li.get(0),li.get(0));")//
-        .using(MethodInvocation.class, new First())//
+        .using(new First(), MethodInvocation.class)//
         .gives("omg(first(li),first(li));")//
         .stays();
   }
