@@ -65,7 +65,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
       return null;
     if (configurations.containsKey(p))
       return configurations.get(p);
-    final Configuration $ = Configurations.freshCopyOfAllTippers();
+    final Configuration $ = Configurations.allClone();
     final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
     final Collection<Tipper<?>> xs = $.getAllTippers().stream().filter(λ -> !es.contains(λ.getClass())).collect(toList());
     for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
@@ -108,7 +108,8 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
       tss.addAll(globalConfiguration.getAllTippers());
     firstAddition = false;
     globalConfiguration = all;
-    Stream.of(globalConfiguration.implementation).filter(Objects::nonNull).forEachOrdered((final List<Tipper<? extends ASTNode>> ¢) -> ¢.retainAll(tss));
+    Stream.of(globalConfiguration.implementation).filter(Objects::nonNull)
+        .forEachOrdered((final List<Tipper<? extends ASTNode>> ¢) -> ¢.retainAll(tss));
     return this;
   }
 
@@ -118,7 +119,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
     return this;
   }
 
-  public Configuration globalConfiguration;
+  public Configuration globalConfiguration = Configurations.all();
   protected final Map<IProject, Configuration> configurations = new HashMap<>();
   protected boolean useProjectPreferences;
   protected boolean firstAddition = true;

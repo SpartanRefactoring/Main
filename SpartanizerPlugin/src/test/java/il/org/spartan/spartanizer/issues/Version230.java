@@ -1222,7 +1222,7 @@ public final class Version230 {
     assert e != null;
     azzert.that(right(e) + "", is("f(a,b,c)"));
     azzert.that(left(e) + "", is("f(a,b,c,d,e)"));
-    final Tipper<InfixExpression> s = Configurations.defaultConfiguration().firstTipper(e);
+    final Tipper<InfixExpression> s = Configurations.all().firstTipper(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
@@ -1242,7 +1242,7 @@ public final class Version230 {
     assert e != null;
     azzert.that(right(e) + "", is("f(a,b,c)"));
     azzert.that(left(e) + "", is("f(a,b,c,d)"));
-    final Tipper<InfixExpression> s = Configurations.defaultConfiguration().firstTipper(e);
+    final Tipper<InfixExpression> s = Configurations.all().firstTipper(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
@@ -2873,7 +2873,7 @@ public final class Version230 {
 
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
     final InfixExpression e = i("null !=a");
-    final Tipper<InfixExpression> w = Configurations.defaultConfiguration().firstTipper(e);
+    final Tipper<InfixExpression> w = Configurations.all().firstTipper(e);
     assert w != null;
     assert w.check(e);
     assert w.check(e);
@@ -2883,7 +2883,7 @@ public final class Version230 {
   }
 
   @Test public void rightSipmlificatioForNulNNVariable() {
-    azzert.that(Configurations.defaultConfiguration().firstTipper(i("null !=a")), instanceOf(InfixComparisonSpecific.class));
+    azzert.that(Configurations.all().firstTipper(i("null !=a")), instanceOf(InfixComparisonSpecific.class));
   }
 
   @Test public void sequencerFirstInElse() {

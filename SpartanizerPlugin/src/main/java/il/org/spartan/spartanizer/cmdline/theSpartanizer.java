@@ -109,5 +109,5 @@ public interface theSpartanizer {
     return once(once(javaCode));
   }
 
-  Configuration configuration = Configurations.defaultConfiguration();
+  Configuration configuration = Configurations.all();
 }
