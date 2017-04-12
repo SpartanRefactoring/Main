@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.research.nanos.methods;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** @nano a method returns some constant
