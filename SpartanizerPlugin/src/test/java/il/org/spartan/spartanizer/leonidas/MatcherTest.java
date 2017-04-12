@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.leonidas;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.research.Matcher.*;
+import static il.org.spartan.research.Matcher.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;

@@ -8,9 +8,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.research.nanos.common.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Trait with useful fluent conditions on {@link MethodDeclaration}
  * @author Ori Marcovitch

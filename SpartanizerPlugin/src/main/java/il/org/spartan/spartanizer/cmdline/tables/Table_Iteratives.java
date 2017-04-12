@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.cmdline.tables;
 
-import static il.org.spartan.spartanizer.research.nanos.common.NanoPatternUtil.*;
+import static il.org.spartan.research.nanos.common.NanoPatternUtil.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -8,12 +8,12 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.research.*;
+import il.org.spartan.research.analyses.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.research.*;
-import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
