@@ -7,14 +7,17 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** A {@link Tipper} to replace String appending using StringBuilder or
  * StringBuffer with appending using operator "+"
@@ -22,67 +25,47 @@ import il.org.spartan.spartanizer.tipping.*;
  * can be replaced with {@code String s = myName + "'s grade is " + 100;}
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11 */
-public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvocation>//
+public final class StringFromStringBuilder extends MethodInvocationPattern//
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -0x27A02FA5B2C416E2L;
+  private Expression simplification;
 
-  // building a replacement
-  private static ASTNode replacement(final MethodInvocation i, final List<Expression> xs) {
+  public StringFromStringBuilder() {
+    andAlso("Not toString", () -> !"toString".equals(name + ""));
+    andAlso("Can be simplified toString", () -> not.null¢(simplification = simplification()));
+  }
+
+  private static Expression replacement(final MethodInvocation i, final List<Expression> xs) {
     if (xs.isEmpty())
       return make.emptyString(i);
     if (xs.size() == 1)
-      return ASTNode.copySubtree(i.getAST(), first(xs));
+      return copy.of(first(xs));
     final InfixExpression $ = i.getAST().newInfixExpression();
     InfixExpression t = $;
     for (final Expression ¢ : xs.subList(0, xs.size() - 2)) {
-      t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), ¢));
+      t.setLeftOperand(copy.of(¢));
       t.setOperator(PLUS2);
       t.setRightOperand(i.getAST().newInfixExpression());
       t = (InfixExpression) t.getRightOperand();
     }
-    t.setLeftOperand((Expression) ASTNode.copySubtree(i.getAST(), xs.get(xs.size() - 2)));
+    t.setLeftOperand(copy.of(the.penultimate(xs)));
     t.setOperator(PLUS2);
-    t.setRightOperand((Expression) ASTNode.copySubtree(i.getAST(), last(xs)));
+    t.setRightOperand(copy.of(last(xs)));
     return $;
   }
 
-  /** list of class extending Expression class, that need to be surrounded by
-   * parenthesis when put out of method arguments list */
-  private final Class<?>[] np = { InfixExpression.class };
-
-  /** Adds parenthesis to expression if needed.
-   * @param x an Expression
-   * @return e itself if no parenthesis needed, otherwise a
-   *         ParenthesisExpression containing e */
-  private Expression addParenthesisIfNeeded(final Expression x) {
-    final AST a = x.getAST();
-    if (!isParethesisNeeded(x))
-      return x;
-    final ParenthesizedExpression $ = a.newParenthesizedExpression();
-    $.setExpression((Expression) ASTNode.copySubtree(a, x));
-    return $;
-  }
-
-  @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
+  @Override public String description() {
     return "Use \"+\" operator to concatenate strings";
   }
 
-  /** Checks if an expression need parenthesis in order to interpreted correctly
-   * @param x an Expression
-   * @return whether or not this expression need parenthesis when put together
-   *         with other expressions in infix expression. There could be non
-   *         explicit parenthesis if the expression is located in an arguments
-   *         list, so making it a part of infix expression require additional
-   *         parenthesis */
-  private boolean isParethesisNeeded(final Expression x) {
-    return Stream.of(np).anyMatch(λ -> λ.isInstance(x));
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+    r.replace(current, simplification, g);
+    return r;
   }
 
-  @Override public ASTNode replacement(final MethodInvocation i) {
-    if (!"toString".equals(i.getName() + ""))
-      return null;
+  private Expression simplification() {
     final List<Expression> $ = new ArrayList<>();
-    MethodInvocation r = i;
+    MethodInvocation r = current;
     for (boolean hs = false;;) {
       final Expression e = r.getExpression();
       final ClassInstanceCreation c = az.classInstanceCreation(e);
@@ -111,6 +94,10 @@ public final class StringFromStringBuilder extends ReplaceCurrentNode<MethodInvo
       hs |= iz.stringLiteral(a);
       r = mi;
     }
-    return replacement(i, $);
+    return replacement(current, $);
+  }
+
+  @Override public Examples examples() {
+    return null;
   }
 }
