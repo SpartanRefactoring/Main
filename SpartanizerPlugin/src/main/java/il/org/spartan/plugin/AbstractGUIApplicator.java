@@ -352,7 +352,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         setMarker(m);
         try {
           new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
-              "Laconization: " + s + AbstractGUIApplicator.this);
+              "Spartanization: " + s + AbstractGUIApplicator.this);
         } catch (final InterruptedException ¢) {
           monitor.cancel(this, ¢);
         }

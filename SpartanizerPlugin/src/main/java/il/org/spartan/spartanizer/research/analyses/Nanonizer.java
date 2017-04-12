@@ -21,7 +21,7 @@ public class Nanonizer extends NoBraindDamagedTippersSpartanizer {
   }
 
   /** Add our wonderful patterns (which are actually just special tippers) to
-   * the gUIBatchLaconizer. */
+   * the instance. */
   private Nanonizer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //

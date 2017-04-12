@@ -26,7 +26,7 @@ enum event {
 /** An {@link Applicator} suitable for eclipse GUI.
  * @author Ori Roth
  * @since 2.6 */
-public class GUIBatchLaconizer extends Applicator {
+public class BatchApplicator extends Applicator {
   private static final String DEFAULT_OPERATION_NAME = "Operat";
   /** Few passes for the applicator to conduct. */
   private static final int PASSES_FEW = 1;
@@ -81,35 +81,35 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Default listener configuration of . Simple printing to console.
    * @return {@code this} applicator */
-  @Override public GUIBatchLaconizer defaultListenerNoisy() {
+  @Override public BatchApplicator defaultListenerNoisy() {
     listener(λ -> as.list(λ).forEach(System.out::print));
     return this;
   }
 
   /** Default listener configuration of . Silent listener.
    * @return {@code this} applicator */
-  public GUIBatchLaconizer defaultListenerSilent() {
+  public BatchApplicator defaultListenerSilent() {
     listener((final Object... __) -> {/**/});
     return this;
   }
 
   /** Default selection configuration of . Normal eclipse user selection.
    * @return {@code this} applicator */
-  public GUIBatchLaconizer defaultSelection() {
+  public BatchApplicator defaultSelection() {
     selection(Selection.Util.current());
     return this;
   }
 
   /** Default passes configuration of , with few passes.
    * @return {@code this} applicator */
-  public GUIBatchLaconizer defaultPassesFew() {
+  public BatchApplicator defaultPassesFew() {
     passes(PASSES_FEW);
     return this;
   }
 
   /** Default passes configuration of , with many passes.
    * @return {@code this} applicator */
-  public GUIBatchLaconizer defaultPassesMany() {
+  public BatchApplicator defaultPassesMany() {
     passes(PASSES_MANY);
     return this;
   }
@@ -117,7 +117,7 @@ public class GUIBatchLaconizer extends Applicator {
   /** Default run context configuration of . Simply runs the {@link Runnable} in
    * the current thread.
    * @return {@code this} applicator */
-  public GUIBatchLaconizer defaultRunContext() {
+  public BatchApplicator defaultRunContext() {
     runContext(Runnable::run);
     return this;
   }
@@ -127,7 +127,7 @@ public class GUIBatchLaconizer extends Applicator {
    * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD
    * @return {@code this} applicator */
-  public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
+  public BatchApplicator defaultRunAction(final AbstractGUIApplicator a) {
     if (a instanceof Trimmer)
       ((Trimmer) a).useProjectPreferences();
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : a.apply(λ, selection())));
@@ -137,21 +137,21 @@ public class GUIBatchLaconizer extends Applicator {
 
   /** Default operation name.
    * @return {@code this} applicator */
-  public GUIBatchLaconizer defaultOperationName() {
+  public BatchApplicator defaultOperationName() {
     operationName(English.Activity.simple(DEFAULT_OPERATION_NAME));
     return this;
   }
 
   /** Default settings for all {@link Applicator} components.
    * @return {@code this} applicator */
-  public GUIBatchLaconizer defaultSettings() {
+  public BatchApplicator defaultSettings() {
     return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer()).defaultOperationName();
   }
 
   /** Factory method.
    * @return default event applicator */
-  public static GUIBatchLaconizer defaultApplicator() {
-    return new GUIBatchLaconizer().defaultSettings();
+  public static BatchApplicator defaultApplicator() {
+    return new BatchApplicator().defaultSettings();
   }
 
   /** Printing definition of events that occur during spartanization.

@@ -10,7 +10,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.utils.*;
 
-/** Test for the GUIBatchLaconizer class
+/** Test for our test classes and methods pruner
  * @author Matteo Orrù
  * @since 2016 */
 @SuppressWarnings("static-method")
@@ -178,25 +178,21 @@ public class SpartanizerTest {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         print(AnnotationTypeDeclaration.class);
         // assert ("AnnotationTypeDeclaration is not included",
-        // gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
 
       @Override public boolean visit(final FieldDeclaration ¢) {
         // assert !("FieldDeclaration is not included",
-        // !gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
 
       @Override public boolean visit(final MethodDeclaration ¢) {
         // assert !("MethodDeclaration is not included",
-        // gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
 
       @Override public boolean visit(final TypeDeclaration ¢) {
         // assert ("TypeDeclaration is not included",
-        // !gUIBatchLaconizer.check(¢));
         return super.visit(¢);
       }
     });

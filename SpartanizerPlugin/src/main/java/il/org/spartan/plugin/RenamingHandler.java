@@ -15,7 +15,7 @@ public class RenamingHandler extends AbstractHandler {
     return null;
   }
 
-  public static GUIBatchLaconizer applicator() {
+  public static BatchApplicator applicator() {
     System.out.println("hi im here !!!!");
     return null;
   }
