@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.research.analyses.util.*;
+import il.org.spartan.spartanizer.research.analyses.util.*;
 
 /** Map containing data about nano patterns occurences
  * @author orimarco <marcovitch.ori@gmail.com>

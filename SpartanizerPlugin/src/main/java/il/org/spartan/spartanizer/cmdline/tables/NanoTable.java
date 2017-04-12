@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.util.function.*;
 
-import il.org.spartan.research.analyses.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.tables.*;
 
 /** Base class for nano analysis

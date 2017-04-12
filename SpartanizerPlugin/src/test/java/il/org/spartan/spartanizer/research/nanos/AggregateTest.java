@@ -6,8 +6,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.research.nanos.*;
-import il.org.spartan.research.nanos.deprecated.*;
+import il.org.spartan.spartanizer.research.nanos.*;
+import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** Tests {@link Aggregate}
  * @author Ori Marcovitch
