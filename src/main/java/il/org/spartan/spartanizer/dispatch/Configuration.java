@@ -23,7 +23,7 @@ import il.org.spartan.utils.*;
  * level is done in class {@link Trimmer}
  * @author Yossi Gil
  * @since 2015-08-22 */
-public class Toolbox {
+public class Configuration {
   @SuppressWarnings("unchecked")
   public static class Tables {
     public static final Map<String, Class<? extends Tipper<?>>> TipperIDClassTranslationTable = new HashMap<>();
@@ -44,7 +44,7 @@ public class Toolbox {
   }
 
   public static void main(final String[] args) {
-    final Toolbox t = freshCopyOfAllTippers();
+    final Configuration t = freshCopyOfAllTippers();
     System.out.printf("Currently, there are a total of %d tippers offered on %d classes", box.it(t.tippersCount()), box.it(t.nodesTypeCount()));
   }
 
@@ -55,7 +55,7 @@ public class Toolbox {
     }
   };
   /** The default instance of this class */
-  static Toolbox defaultInstance;
+  static Configuration defaultInstance;
 
   /** Generate an {@link ASTRewrite} that contains the changes proposed by the
    * first tipper that applies to a node in the usual scan.
@@ -91,20 +91,20 @@ public class Toolbox {
     return t.tip(n);
   }
 
-  public static Toolbox defaultInstance() {
+  public static Configuration defaultInstance() {
     return defaultInstance = defaultInstance != null ? defaultInstance : freshCopyOfAllTippers();
   }
 
-  public static Toolbox emptyToolboox() {
-    return new Toolbox();
+  public static Configuration emptyToolboox() {
+    return new Configuration();
   }
 
   @SafeVarargs public static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {
     return Stream.of(ts).filter(λ -> λ.check(n)).findFirst().orElse(null);
   }
 
-  public static Toolbox freshCopyOfAllTippers() {
-    return new Toolbox()//
+  public static Configuration freshCopyOfAllTippers() {
+    return new Configuration()//
         .add(SingleMemberAnnotation.class, new AnnotationRemoveSingletonArrray()) //
         .add(Initializer.class, new InitializerEmptyRemove()) //
         .add(ArrayAccess.class, new ArrayAccessAndIncrement()) //
@@ -349,7 +349,7 @@ public class Toolbox {
    * @param w JS
    * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
-  @SafeVarargs public static <N extends ASTNode> Toolbox make(final Class<N> clazz, final Tipper<N>... ts) {
+  @SafeVarargs public static <N extends ASTNode> Configuration make(final Class<N> clazz, final Tipper<N>... ts) {
     return emptyToolboox().add(clazz, ts);
   }
 
@@ -387,7 +387,7 @@ public class Toolbox {
    * @param c JD
    * @param ts JD
    * @return {@code this}, for easy chaining. */
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Configuration add(final Class<N> c, final Tipper<N>... ts) {
     final Integer $ = wizard.classToNodeType.get(c);
     assert $ != null : fault.dump() + //
         "\n c = " + c + //
@@ -398,7 +398,7 @@ public class Toolbox {
     return add($, ts);
   }
 
-  @SafeVarargs public final <N extends ASTNode> Toolbox add(final Integer nodeType, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Configuration add(final Integer nodeType, final Tipper<N>... ts) {
     for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
@@ -406,7 +406,7 @@ public class Toolbox {
           String.format("Did you forget to use create an enum instance in %s \nfor the %s of tipper %s \n (description= %s)?", //
               TipperGroup.class.getSimpleName(), //
               TipperCategory.class.getSimpleName(), //
-              Toolbox.name(¢), //
+              Configuration.name(¢), //
               ¢.description()));//
       if (¢.tipperGroup().isEnabled())
         get(nodeType.intValue()).add(¢);
@@ -414,7 +414,7 @@ public class Toolbox {
     return this;
   }
 
-  @SafeVarargs public final <N extends ASTNode> Toolbox remove(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Configuration remove(final Class<N> c, final Tipper<N>... ts) {
     final Integer nodeType = wizard.classToNodeType.get(c);
     for (final Tipper<N> ¢ : ts)
       get(nodeType.intValue()).remove(¢);
@@ -449,7 +449,7 @@ public class Toolbox {
   }
 
   public static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
-    return Stream.of(Toolbox.defaultInstance().implementation).filter(λ -> λ != null && !λ.isEmpty());
+    return Stream.of(Configuration.defaultInstance().implementation).filter(λ -> λ != null && !λ.isEmpty());
   }
 
   public int tippersCount() {
@@ -484,7 +484,7 @@ public class Toolbox {
     final List<String> $ = new ArrayList<>();
     if (¢ == null)
       return $;
-    final Toolbox t = freshCopyOfAllTippers();
+    final Configuration t = freshCopyOfAllTippers();
     assert t.implementation != null;
     Stream.of(t.implementation).filter(Objects::nonNull)
         .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::technicalName).collect(toList())));

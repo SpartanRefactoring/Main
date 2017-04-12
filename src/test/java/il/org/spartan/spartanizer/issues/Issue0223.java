@@ -55,7 +55,7 @@ public final class Issue0223 {
     a$010_createTipper();
     a$020_CreateContext();
     a$030_FindFocus();
-    Toolbox.refresh();
+    Configuration.refresh();
   }
 
   @Test public void B$010init() {
@@ -84,12 +84,12 @@ public final class Issue0223 {
 
   @Test public void B$050toolboxCanFindTipper() {
     a$040_init();
-    assert Toolbox.defaultInstance().firstTipper(focus) != null;
+    assert Configuration.defaultInstance().firstTipper(focus) != null;
   }
 
   @Test public void B$060toolboxCanFindFindCorrectTipper() {
     a$040_init();
-    azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
+    azzert.that(Configuration.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
   }
 
   @Test public void B$070callSuggest() {
@@ -119,27 +119,27 @@ public final class Issue0223 {
 
   @Test public void B$120findTipperNotEmpty() {
     a$040_init();
-    assert Toolbox.defaultInstance().firstTipper(focus) != null;
+    assert Configuration.defaultInstance().firstTipper(focus) != null;
   }
 
   @Test public void B$130findTipperOfCorretType() {
     a$040_init();
-    azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(ReplaceCurrentNode.class));
+    azzert.that(Configuration.defaultInstance().firstTipper(focus), instanceOf(ReplaceCurrentNode.class));
   }
 
   @Test public void B$140findTipperDemands() {
     a$040_init();
-    assert Toolbox.defaultInstance().firstTipper(focus).check(focus);
+    assert Configuration.defaultInstance().firstTipper(focus).check(focus);
   }
 
   @Test public void B$150findTipperCanSuggest() {
     a$040_init();
-    assert Toolbox.defaultInstance().firstTipper(focus).check(focus);
+    assert Configuration.defaultInstance().firstTipper(focus).check(focus);
   }
 
   @Test public void B$160findTipperReplacmenentNotNull() {
     a$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Toolbox.defaultInstance().firstTipper(focus)).replacement(focus) != null;
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Configuration.defaultInstance().firstTipper(focus)).replacement(focus) != null;
   }
 
   private ClassInstanceCreation findMe(final Statement c) {

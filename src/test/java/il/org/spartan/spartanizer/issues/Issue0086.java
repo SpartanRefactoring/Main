@@ -45,7 +45,7 @@ public final class Issue0086 extends Issue____ {
     A$01_createTipper();
     A$02_CreateContext();
     A$03_FindFocus();
-    Toolbox.refresh();
+    Configuration.refresh();
   }
 
   @Test public void B$01init() {
@@ -74,12 +74,12 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void B$05toolboxCanFindTipper() {
     A$04_init();
-    assert Toolbox.defaultInstance().firstTipper(focus) != null;
+    assert Configuration.defaultInstance().firstTipper(focus) != null;
   }
 
   @Test public void B$06toolboxCanFindFindCorrectTipper() {
     A$04_init();
-    azzert.that(Toolbox.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
+    azzert.that(Configuration.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
   }
 
   @Test public void B$07callSuggest() {
@@ -114,7 +114,7 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void B$14applyTipper() {
     A$04_init();
-    Toolbox.defaultInstance().firstTipper(focus);
+    Configuration.defaultInstance().firstTipper(focus);
   }
 
   @Test public void doubleVanillaThrow() {

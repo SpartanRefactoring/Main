@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** simple no-gimmicks singleton service that does the simple job of applying a
- * {@link Toolbox} {@link #once(String)}, {@link #twice(String)},
+ * {@link Configuration} {@link #once(String)}, {@link #twice(String)},
  * {@link #thrice(String)}, and {@link #repetitively(String)}.
  * @author Yossi Gil
  * @since 2017-03-08 */
@@ -25,7 +25,7 @@ public interface theSpartanizer {
     if (n != null)
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
-          return searching && go(toolbox.firstTipper(¢));
+          return searching && go(configuration.firstTipper(¢));
         }
 
         <N extends ASTNode> boolean go(final Tipper<N> ¢) {
@@ -45,7 +45,7 @@ public interface theSpartanizer {
    * @return trimmed text, or null in case of error or no more applicable
    *         tippers */
   @SuppressWarnings("hiding") static String once(final String from) {
-    final Trimmer trimmer = new Trimmer(toolbox);
+    final Trimmer trimmer = new Trimmer(configuration);
     final IDocument $ = new Document(from);
     final ASTNode root = make.ast(from);
     if (root != null)
@@ -90,7 +90,7 @@ public interface theSpartanizer {
 
   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
-      return toolbox.firstTipper($);
+      return configuration.firstTipper($);
     } catch (final Exception ¢) {
       return monitor.bug(¢);
     }
@@ -108,5 +108,5 @@ public interface theSpartanizer {
     return once(once(javaCode));
   }
 
-  Toolbox toolbox = Toolbox.defaultInstance();
+  Configuration configuration = Configuration.defaultInstance();
 }

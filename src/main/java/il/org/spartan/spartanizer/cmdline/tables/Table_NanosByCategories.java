@@ -21,14 +21,14 @@ public class Table_NanosByCategories {
   }
 
   public void go() {
-    final List<Tipper<? extends ASTNode>>[] implementation = new Nanonizer().toolbox.implementation;
+    final List<Tipper<? extends ASTNode>>[] implementation = new Nanonizer().configuration.implementation;
     final Map<String, Set<String>> categories = new TreeMap<>();
     for (int i = 0; i < implementation.length; ++i)
       if (implementation[i] != null)
         for (final Tipper<?> ¢ : implementation[i])
           if (¢ instanceof NanoPatternTipper) {
             final NanoPatternTipper<? extends ASTNode> np = (NanoPatternTipper<? extends ASTNode>) ¢;
-            final String category = Category.pretty(np.category() != null ? np.category() + "" : Toolbox.intToClassName(i));
+            final String category = Category.pretty(np.category() != null ? np.category() + "" : Configuration.intToClassName(i));
             categories.putIfAbsent(category, new TreeSet<>());
             categories.get(category).add(np.className());
           }
