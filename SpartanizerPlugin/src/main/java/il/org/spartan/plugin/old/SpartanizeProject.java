@@ -11,8 +11,8 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 

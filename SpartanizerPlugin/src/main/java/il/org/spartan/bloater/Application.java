@@ -1,6 +1,6 @@
 package il.org.spartan.bloater;
 
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** A generic application that makes changes in java code. Being use by the
  * {@link Applicator}.

@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.research.analyses;
 import java.util.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** Created out of {@link ConfigurableObjectTemplate}

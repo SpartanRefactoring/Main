@@ -5,7 +5,7 @@ import java.util.function.*;
 
 import org.eclipse.swt.graphics.*;
 
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** Operation, image, description etc. of a widget button.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

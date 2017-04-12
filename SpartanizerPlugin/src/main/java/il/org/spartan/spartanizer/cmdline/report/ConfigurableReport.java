@@ -8,12 +8,12 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** Configurable Report that uses {@link Listener.S}

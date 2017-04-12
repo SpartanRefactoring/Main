@@ -6,7 +6,7 @@ import static il.org.spartan.plugin.preferences.revision.PreferencesResources.Ti
 import org.eclipse.jface.preference.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 
 /** Preferences page for Zoomer tool.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

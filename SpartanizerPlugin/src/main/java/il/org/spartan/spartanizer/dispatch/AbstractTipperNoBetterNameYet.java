@@ -12,9 +12,9 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
