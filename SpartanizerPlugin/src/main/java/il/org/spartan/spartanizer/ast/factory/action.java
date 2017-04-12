@@ -251,7 +251,7 @@ public enum action {
     return $;
   }
 
-  /** @param currentToolbox JD
+  /** 
    * @param from JD (already duplicated)
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.

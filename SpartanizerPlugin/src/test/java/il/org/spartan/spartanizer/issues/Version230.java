@@ -19,7 +19,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.dispatch.Utils;
+import il.org.spartan.spartanizer.dispatch.Configurations;
 import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -1222,7 +1222,7 @@ public final class Version230 {
     assert e != null;
     azzert.that(right(e) + "", is("f(a,b,c)"));
     azzert.that(left(e) + "", is("f(a,b,c,d,e)"));
-    final Tipper<InfixExpression> s = Utils.defaultInstance().firstTipper(e);
+    final Tipper<InfixExpression> s = Configurations.defaultConfiguration().firstTipper(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
@@ -1242,7 +1242,7 @@ public final class Version230 {
     assert e != null;
     azzert.that(right(e) + "", is("f(a,b,c)"));
     azzert.that(left(e) + "", is("f(a,b,c,d)"));
-    final Tipper<InfixExpression> s = Utils.defaultInstance().firstTipper(e);
+    final Tipper<InfixExpression> s = Configurations.defaultConfiguration().firstTipper(e);
     assert s != null;
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
@@ -2873,7 +2873,7 @@ public final class Version230 {
 
   @Test public void rightSimplificatioForNulNNVariableReplacement() {
     final InfixExpression e = i("null !=a");
-    final Tipper<InfixExpression> w = Utils.defaultInstance().firstTipper(e);
+    final Tipper<InfixExpression> w = Configurations.defaultConfiguration().firstTipper(e);
     assert w != null;
     assert w.check(e);
     assert w.check(e);
@@ -2883,7 +2883,7 @@ public final class Version230 {
   }
 
   @Test public void rightSipmlificatioForNulNNVariable() {
-    azzert.that(Utils.defaultInstance().firstTipper(i("null !=a")), instanceOf(InfixComparisonSpecific.class));
+    azzert.that(Configurations.defaultConfiguration().firstTipper(i("null !=a")), instanceOf(InfixComparisonSpecific.class));
   }
 
   @Test public void sequencerFirstInElse() {

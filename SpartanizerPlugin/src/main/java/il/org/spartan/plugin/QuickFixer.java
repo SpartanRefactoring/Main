@@ -138,7 +138,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     }
 
     @Override protected boolean check(final ASTNode ¢) {
-      return tipper != null && Utils.defaultInstance().get(¢.getNodeType()).contains(tipper);
+      return tipper != null && Configurations.defaultConfiguration().get(¢.getNodeType()).contains(tipper);
     }
 
     @SuppressWarnings("unchecked") public static SingleTipper<?> getApplicator(final IMarker $) {

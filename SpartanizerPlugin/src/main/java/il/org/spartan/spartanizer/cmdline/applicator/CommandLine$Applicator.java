@@ -171,7 +171,7 @@ public class CommandLine$Applicator extends GenericApplicator {
    * @param r
    * @param u */
   private void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    configuration = il.org.spartan.spartanizer.dispatch.Utils.defaultInstance();
+    configuration = il.org.spartan.spartanizer.dispatch.Configurations.defaultConfiguration();
     u.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(final N n) {
         TrimmerMonitor.visitation(n);

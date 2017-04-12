@@ -10,20 +10,24 @@ public interface run {
     ¢.run();
     return the.null¢();
   }
+
   static <T> T nullifying(final DoubleSupplier ¢) {
-    return ignoring.null¢(¢.getAsDouble()); 
+    return ignoring.null¢(¢.getAsDouble());
   }
+
   static <T> T nullifying(final LongSupplier ¢) {
-    return ignoring.null¢(¢.getAsLong()); 
+    return ignoring.null¢(¢.getAsLong());
   }
+
   static <T> T nullifying(final IntSupplier ¢) {
-    return ignoring.null¢(¢.getAsInt()); 
+    return ignoring.null¢(¢.getAsInt());
   }
 
   static <T> T nullifying(final BooleanSupplier ¢) {
-    return ignoring.null¢(¢.getAsBoolean()); 
+    return ignoring.null¢(¢.getAsBoolean());
   }
- static <T,R> T nullifying(final Supplier<R> ¢) {
-    return ignoring.null¢(¢.get()); 
+
+  static <T, R> T nullifying(final Supplier<R> ¢) {
+    return ignoring.null¢(¢.get());
   }
 }

@@ -9,8 +9,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.dispatch.Utils;
+import il.org.spartan.spartanizer.dispatch.Configurations;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -26,100 +25,99 @@ public final class Issue0086 extends Issue____ {
   ThrowStatement focus;
   Tipper<ThrowStatement> tipper;
 
-  @Test public void A$01_createTipper() {
+  @Test public void a01_createTipper() {
     tipper = makeTipper();
     assert tipper != null;
   }
 
-  @Test public void A$02_CreateContext() {
+  @Test public void a02_CreateContext() {
     context = into.s(INPUT);
     assert context != null;
   }
 
-  @Test public void A$03_FindFocus() {
-    A$02_CreateContext();
+  @Test public void a03_FindFocus() {
+    a02_CreateContext();
     focus = findFirst.instanceOf(ThrowStatement.class).in(context);
     assert focus != null;
   }
 
-  @Test public void A$04_init() {
-    A$01_createTipper();
-    A$02_CreateContext();
-    A$03_FindFocus();
-    Utils.refresh();
+  @Test public void a04_init() {
+    a01_createTipper();
+    a02_CreateContext();
+    a03_FindFocus();
   }
 
-  @Test public void B$01init() {
-    A$04_init();
+  @Test public void b01init() {
+    a04_init();
   }
 
-  @Test public void B$02findFirstThrow() {
-    A$04_init();
+  @Test public void b02findFirstThrow() {
+    a04_init();
     azzert.that(findFirst.instanceOf(ThrowStatement.class).in(context), instanceOf(ThrowStatement.class));
   }
 
-  @Test public void B$03canSuggest() {
-    A$04_init();
+  @Test public void b03canSuggest() {
+    a04_init();
     assert tipper.check(focus);
   }
 
-  @Test public void B$03demands() {
-    A$04_init();
+  @Test public void b03demands() {
+    a04_init();
     assert tipper.check(focus);
   }
 
-  @Test public void B$04tipNotNull() {
-    A$04_init();
+  @Test public void b04tipNotNull() {
+    a04_init();
     assert tipper.tip(focus) != null;
   }
 
-  @Test public void B$05toolboxCanFindTipper() {
-    A$04_init();
-    assert Utils.defaultInstance().firstTipper(focus) != null;
+  @Test public void b05ConfigCanFindTipper() {
+    a04_init();
+    assert Configurations.defaultConfiguration().firstTipper(focus) != null;
   }
 
-  @Test public void B$06toolboxCanFindFindCorrectTipper() {
-    A$04_init();
-    azzert.that(Utils.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
+  @Test public void b06ConfigCanFindFindCorrectTipper() {
+    a04_init();
+    azzert.that(Configurations.defaultConfiguration().firstTipper(focus), instanceOf(tipper.getClass()));
   }
 
-  @Test public void B$07callSuggest() {
-    A$04_init();
+  @Test public void b07callSuggest() {
+    a04_init();
     tipper.tip(focus);
   }
 
-  @Test public void B$09descriptionNotNull() {
-    A$04_init();
+  @Test public void b09descriptionNotNull() {
+    a04_init();
     assert tipper.tip(focus).description != null;
   }
 
-  @Test public void B$0suggestNotNull() {
-    A$04_init();
+  @Test public void b0suggestNotNull() {
+    a04_init();
     assert tipper.tip(focus) != null;
   }
 
-  @Test public void B$10descriptionContains() {
-    A$04_init();
+  @Test public void b10descriptionContains() {
+    a04_init();
     azzert.that(tipper.tip(focus).description, containsString(focus + ""));
   }
 
-  @Test public void B$12rangeNotEmpty() {
-    A$04_init();
+  @Test public void b12rangeNotEmpty() {
+    a04_init();
     assert !tipper.tip(focus).highlight.isEmpty();
   }
 
-  @Test public void B$13applyTipper() {
-    A$04_init();
+  @Test public void b13applyTipper() {
+    a04_init();
     tipper.tip(focus);
   }
 
-  @Test public void B$14applyTipper() {
-    A$04_init();
-    Utils.defaultInstance().firstTipper(focus);
+  @Test public void b14applyTipper() {
+    a04_init();
+    Configurations.defaultConfiguration().firstTipper(focus);
   }
 
   @Test public void doubleVanillaThrow() {
-    A$04_init();
+    a04_init();
     trimminKof("int f() { if (false)    i++;  else {    g(i);    throw new RuntimeException();  }  f(); a = 3; return 2;}")//
         .gives("int f(){{g(i);throw new RuntimeException();}f();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();f();a=3;return 2;}")//
         .gives("int f(){g(i);throw new RuntimeException();a=3;return 2;}").gives("int f(){g(i);throw new RuntimeException();return 2;}")//

@@ -19,8 +19,8 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** A smorgasboard containing lots of stuff, but its main purpose, which should
- * be factored out somewhere is to apply a {@link Configuration} to a tree. The main
- * difficulties are:
+ * be factored out somewhere is to apply a {@link Configuration} to a tree. The
+ * main difficulties are:
  * <ol>
  * <li>Top down or bottom up traversal
  * <li>Overlapping in the domain of distinct tippers
@@ -35,12 +35,12 @@ import il.org.spartan.utils.*;
 public class Trimmer extends AbstractTipperNoBetterNameYet {
   /** Instantiates this class */
   public Trimmer() {
-    this(Utils.defaultInstance());
+    this(Configurations.defaultConfiguration());
   }
 
-  public Trimmer(final Configuration globalToolbox) {
-    super("Trimming");
-    this.globalToolbox = globalToolbox;
+  public Trimmer(final Configuration globalConfiguration) {
+    super(system.myShortClassName());
+    this.globalConfiguration = globalConfiguration;
   }
 
   public Tip auxiliaryTip() {
@@ -100,9 +100,9 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   @SafeVarargs public final <N extends ASTNode> Trimmer fix(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
-      globalToolbox = new Configuration();
+      globalConfiguration = new Configuration();
     }
-    globalToolbox.add(c, ts);
+    globalConfiguration.add(c, ts);
     return this;
   }
 
@@ -111,7 +111,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   @SafeVarargs public final Trimmer fixTipper(final Tipper<?>... ¢) {
-    return (Trimmer) fix(Utils.freshCopyOfAllTippers(), ¢);
+    return (Trimmer) fix(Configurations.freshCopyOfAllTippers(), ¢);
   }
 
   public ASTRewrite getRewrite() {
@@ -157,7 +157,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   }
 
   private void setCompilationUnit(final CompilationUnit ¢) {
-    currentToolbox = !useProjectPreferences ? globalToolbox : getToolboxByPreferences(¢);
+    currentConfiguration = !useProjectPreferences ? globalConfiguration : getPreferredConfiguration(¢);
     fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
   }
 
@@ -195,14 +195,14 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
 
   protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
     return robust.lyNull(() -> {
-      final Tipper<N> $ = currentToolbox.firstTipper(¢);
+      final Tipper<N> $ = currentConfiguration.firstTipper(¢);
       setTipper($);
       return $;
     }, swallow);
   }
 
   @Override protected ASTVisitor tipsCollector(final Tips into) {
-    Utils.refresh(this);
+    Configurations.refresh(this);
     fileName = English.unknownIfNull(compilationUnit, λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -220,7 +220,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
       }
 
       @Override protected void initialization(final ASTNode ¢) {
-        currentToolbox = !useProjectPreferences || !(¢ instanceof CompilationUnit) ? globalToolbox : getToolboxByPreferences((CompilationUnit) ¢);
+        currentConfiguration = !useProjectPreferences || !(¢ instanceof CompilationUnit) ? globalConfiguration : getPreferredConfiguration((CompilationUnit) ¢);
         disabling.scan(¢);
       }
     };
@@ -250,7 +250,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   private Tipper<?> tipper;
   protected Tip tip;
   Tip auxiliaryTip;
-  Configuration currentToolbox;
+  Configuration currentConfiguration;
   String fileName;
   TrimmerExceptionListener exceptionListener = λ -> monitor.logToFile(λ, this, tip(), tipper(), fileName);
   final Consumer<Exception> swallow = λ -> exceptionListener.accept(λ);

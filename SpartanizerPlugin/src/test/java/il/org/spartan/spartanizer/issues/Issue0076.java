@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** Test class for {@link InfixMultiplicationDistributive}
  * @since 2016 */
-@Ignore("Disabled: there is some bug in distributive rule - not in Toolbox.")
+@Ignore("Disabled: there is some bug in distributive rule - not in configuration.")
 @SuppressWarnings("static-method")
 public class Issue0076 {
   @Test public void issue076a() {

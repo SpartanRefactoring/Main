@@ -19,16 +19,16 @@ public class Table_Tippers {
 
   public void go() {
     try (Table t = new Table(this)) {
-      final List<Tipper<? extends ASTNode>>[] implementation = Utils.defaultInstance().implementation;
+      final List<Tipper<? extends ASTNode>>[] implementation = Configurations.defaultConfiguration().implementation;
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
           for (final Tipper<?> ¢ : implementation[i])
             if (¢ != null && !(¢ instanceof TipperCategory.Bloater))
               t //
                   .col("Category", ¢.tipperGroup())//
-                  .col("Tipper", Utils.name(¢))//
+                  .col("Tipper", Configurations.name(¢))//
                   .col("Node Type Number", i + "") //
-                  .col("Node Class", Utils.intToClassName(i))//
+                  .col("Node Class", Configurations.intToClassName(i))//
                   .col("Actual class", name(¢.myActualOperandsClass()))//
                   .col("Abstract class", name(¢.myAbstractOperandsClass()))//
                   .nl();
