@@ -9,19 +9,20 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** TODO Ori Roth document
  * @author Yossi Gil
  * @since 2017-04-12 */
 public interface Tippers {
   interface cache {
-    Map<Class<? extends Tipper<?>>, Examples> tipperToExamples = the.lambdaResult(() -> {
+    Map<Class<? extends Tipper<?>>, Examples> tipperToExamples = anonymous.ly(() -> {
       final Map<Class<? extends Tipper<?>>, Examples> $ = new HashMap<>();
       for (final Tipper<? extends ASTNode> ¢ : Configurations.allClone().getAllTippers())
         $.put(¢.myClass(), ¢.examples());
       return $;
     });
-    Map<String, Class<? extends Tipper<?>>> serivalVersionUIDToTip = the.lambdaResult(() -> {
+    Map<String, Class<? extends Tipper<?>>> serivalVersionUIDToTip = anonymous.ly(() -> {
       final Map<String, Class<? extends Tipper<?>>> $ = new HashMap<>();
       for (final Tipper<? extends ASTNode> t : Configurations.allClone().getAllTippers()) {
         final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";
@@ -29,13 +30,13 @@ public interface Tippers {
       }
       return $;
     });
-    Map<Class<? extends Tipper<?>>, String> tipperToDescription = the.lambdaResult(() -> {
+    Map<Class<? extends Tipper<?>>, String> tipperToDescription = anonymous.ly(() -> {
       final Map<Class<? extends Tipper<?>>, String> $ = new HashMap<>();
       for (final Tipper<? extends ASTNode> ¢ : Configurations.allClone().getAllTippers())
         $.put(¢.myClass(), ¢.description());
       return $;
     });
-    Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = the.lambdaResult(() -> {
+    Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = anonymous.ly(() -> {
       final Map<Class<? extends Tipper<?>>, Tipper<?>> $ = new HashMap<>();
       for (final Tipper<? extends ASTNode> ¢ : Configurations.allClone().getAllTippers())
         $.put(¢.myClass(), ¢);
@@ -43,7 +44,7 @@ public interface Tippers {
     });
   }
 
-  Map<String, String> TipperIDNameTranslationTable = the.lambdaResult(() -> {
+  Map<String, String> TipperIDNameTranslationTable = anonymous.ly(() -> {
     final Map<String, String> $ = new HashMap<>();
     for (final Tipper<? extends ASTNode> t : Configurations.allClone().getAllTippers()) {
       final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";

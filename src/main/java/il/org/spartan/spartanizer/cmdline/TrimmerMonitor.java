@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Yossi Gil
@@ -103,11 +104,13 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
     }
   }
 
-  public static final Logger logger = the.lambdaResult(() -> {
+  public static final Logger logger = anonymous.ly(() -> {
     final Logger $ = Logger.getLogger(system.myCallerFullClassName());
     $.setUseParentHandlers(false);
-    $.addHandler(the.lambdaResult(() -> {
+    $.addHandler(anonymous.ly(() -> {
       final ConsoleHandler $$ = new ConsoleHandler();
+      $.setUseParentHandlers(false);
+      $.setLevel(Level.ALL);
       $$.setFormatter(new Formatter() {
         @Override public String format(final LogRecord ¢) {
           return String.format("%2d. %s %s#%s %s: %s\n", //
@@ -120,7 +123,6 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
           );
         }
       });
-      $$.setLevel(ALL);
       return $$;
     }));
     return $;

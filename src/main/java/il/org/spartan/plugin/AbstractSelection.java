@@ -4,8 +4,6 @@ import java.util.*;
 
 import org.eclipse.jface.text.*;
 
-import il.org.spartan.utils.*;
-
 /** An abstract selection, containing files and possible text selection.
  * @author Ori Roth
  * @since 2.6 */

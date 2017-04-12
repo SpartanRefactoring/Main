@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.cmdline.applicator;
-
 import java.util.*;
 import java.util.function.*;
 
@@ -8,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** An {@link Applicator} suitable for the command line.
  * @author Matteo Orru'

@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
 
 /** Example in {@link #examples} Test case is {@link Issue1049}

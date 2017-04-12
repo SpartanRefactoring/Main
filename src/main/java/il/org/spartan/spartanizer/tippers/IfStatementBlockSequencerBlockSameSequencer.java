@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Tested by {@link Issue1105}
  * @author Yossi Gil

@@ -14,6 +14,7 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A handler for {@link DefunctTips}. This handler executes all safe Tips on
  * all Java files in the current project.

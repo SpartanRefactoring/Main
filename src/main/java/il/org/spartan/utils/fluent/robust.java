@@ -1,13 +1,15 @@
-package il.org.spartan.utils;
+package il.org.spartan.utils.fluent;
 
 import java.util.function.*;
+
+import il.org.spartan.utils.fluent.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-08 */
 public interface robust {
   static void ly(final Runnable r, final Consumer<Exception> c) {
-    robust.lyNull(() -> run.nullifying(r::run), c);
+    robust.lyNull(() -> nulling.ly(r::run), c);
   }
 
   static void ly(final Runnable r, final Runnable x) {
@@ -36,11 +38,11 @@ public interface robust {
   }
 
   static <T> T lyNull(final Supplier<T> t, final Consumer<Exception> c) {
-    return robust.ly(t, λ -> run.nullifying(() -> c.accept(λ)));
+    return robust.ly(t, λ -> nulling.ly(() -> c.accept(λ)));
   }
 
   static <T> T lyNull(final Supplier<T> t, final Runnable r) {
-    return robust.ly(t, __ -> run.nullifying(r));
+    return robust.ly(t, __ -> nulling.ly(r));
   }
 
   static boolean lyTrue(final BooleanSupplier s, final Consumer<Exception> c) {
