@@ -797,4 +797,12 @@ public interface wizard {
   static boolean valid(final ASTNode $) {
     return !($ instanceof CompilationUnit) || ((CompilationUnit) $).getProblems().length == 0;
   }
+
+  static String intToClassName(final int $) {
+    try {
+      return ASTNode.nodeClassForType($).getSimpleName();
+    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
+      return "???";
+    }
+  }
 }
