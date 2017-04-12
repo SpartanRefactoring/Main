@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** TODO Matteo Orru' please add a description
@@ -138,7 +137,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
         try {
           tipper = getTipper(n);
         } catch (final Exception ¢) {
-          note.info(this, ¢);
+          note.ignore(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -147,7 +146,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
           s = tipper.tip(n);
           tick(n, tipper);
         } catch (final Exception ¢) {
-          note.info(this, ¢);
+          note.ignore(this, ¢);
         }
         if (s == null)
           return true;

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.cmdline.applicator;
+
 import java.util.*;
 import java.util.function.*;
 

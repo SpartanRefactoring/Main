@@ -6,8 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.research.nanos.*;
-
 /** Between nano
  * @author Ori Marcovitch
  * @since 2016 */

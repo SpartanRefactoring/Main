@@ -207,7 +207,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       try {
         collect(FileUtils.read(f));
       } catch (final IOException ¢) {
-        note.config(¢, "File = " + f);
+        note.io(¢, "File = " + f);
       }
   }
 
@@ -258,7 +258,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       report = new CSVStatistics(reportFileName, "property");
       new FilesGenerator(".java").from(presentSourcePath).forEach(this::collect);
     } catch (final IOException ¢) {
-      note.config(¢, beforeFileName + "|" + afterFileName);
+      note.io(¢, beforeFileName + "|" + afterFileName);
       System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");
     }
     applyEssenceCommandLine();

@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.plugin;
 import java.util.function.*;
 
 import il.org.spartan.spartanizer.cmdline.applicator.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Configurable applicator.

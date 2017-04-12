@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
@@ -89,7 +88,7 @@ public enum makeAST {
         if (¢ == null)
           return $;
     } catch (final IOException ¢) {
-      note.config(¢, f + "");
+      note.io(¢, f + "");
       return null;
     }
   }

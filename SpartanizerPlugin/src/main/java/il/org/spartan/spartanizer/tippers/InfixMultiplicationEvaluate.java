@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Evaluate the multiplication of numbers according to the following rules :

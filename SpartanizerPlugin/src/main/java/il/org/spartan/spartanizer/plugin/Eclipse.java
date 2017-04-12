@@ -19,7 +19,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Eclipse common utilities.
