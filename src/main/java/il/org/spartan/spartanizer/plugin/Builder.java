@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> @since
@@ -86,7 +87,7 @@ public final class Builder extends IncrementalProjectBuilder {
     try {
       addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
     } catch (final Throwable x) {
-      monitor.bug(x);
+      note.bug(x);
     }
   }
 
@@ -125,7 +126,7 @@ public final class Builder extends IncrementalProjectBuilder {
         return !m.isCanceled() && !isInterrupted();
       });
     } catch (final CoreException ¢) {
-      monitor.cancel(this, ¢);
+      note.cancel(this, ¢);
     }
   }
 

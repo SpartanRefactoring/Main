@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Example.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A test generator for {@link Tipper}s, creating tests from their declared
  * examples (see {@link Tipper#examples}).

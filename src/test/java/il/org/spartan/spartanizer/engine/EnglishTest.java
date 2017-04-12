@@ -9,6 +9,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Test class for {@link English}
  * @author yonzarecki

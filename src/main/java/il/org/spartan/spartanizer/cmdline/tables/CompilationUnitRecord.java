@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}
@@ -74,7 +75,7 @@ public class CompilationUnitRecord {
     try {
       containsTestAnnotation(FileUtils.read(f));
     } catch (final IOException ¢) {
-      monitor.config(¢, "File = " + f);
+      note.config(¢, "File = " + f);
     }
     return hasTestAnnotation;
   }

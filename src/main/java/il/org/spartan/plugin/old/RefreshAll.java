@@ -7,6 +7,7 @@ import org.eclipse.core.runtime.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** *
  * @author Yossi Gil
@@ -25,7 +26,7 @@ public final class RefreshAll extends BaseHandler {
         // see issue #767
         // p.build(IncrementalProjectBuilder.FULL_BUILD, npm);
       } catch (final CoreException ¢) {
-        monitor.bug(new RefreshAll(), ¢);
+        note.bug(new RefreshAll(), ¢);
       }
     }).run();
   }

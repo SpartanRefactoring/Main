@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.dispatch.Configurations;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Batch testing - run the spartinizer on itself with no errors
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>
@@ -30,7 +31,7 @@ public class Issue1190 {
       }
 
       @Override public void accept(final Exception ¢) {
-        monitor.bug(this, ¢);
+        note.bug(this, ¢);
       }
     });
   }
@@ -41,7 +42,7 @@ public class Issue1190 {
         try {
           trimmer.fixed(FileUtils.read(f));
         } catch (final IOException ¢) {
-          monitor.config(¢, "Cannot read: " + f);
+          note.config(¢, "Cannot read: " + f);
         }
       }
     }.fire(new ASTVisitor() {/**/});

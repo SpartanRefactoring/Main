@@ -25,6 +25,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like
@@ -1306,7 +1307,7 @@ public interface iz {
     try {
       return Double.parseDouble($) == d;
     } catch (final IllegalArgumentException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
       return false;
     }
   }
@@ -1318,7 +1319,7 @@ public interface iz {
       ___.unused(__);
       return false;
     } catch (final IllegalArgumentException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
       return false;
     }
   }
@@ -1327,7 +1328,7 @@ public interface iz {
     try {
       return iz.parseLong($) == l;
     } catch (final IllegalArgumentException ¢) {
-      monitor.bug(box(l), ¢);
+      note.bug(box(l), ¢);
       return false;
     }
   }

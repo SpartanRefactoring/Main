@@ -14,6 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of this
@@ -132,13 +133,13 @@ public final class Application implements IApplication {
         fileStats.add(process(f, u));
         ++done;
       } catch (final JavaModelException ¢) {
-        monitor.bug(this, ¢);
+        note.bug(this, ¢);
         ++failed;
       } catch (final IOException ¢) {
-        monitor.config(¢);
+        note.config(¢);
         ++failed;
       } catch (final Exception ¢) {
-        monitor.info(this, ¢);
+        note.info(this, ¢);
         ++failed;
       } finally {
         discardCompilationUnit(u);
@@ -178,7 +179,7 @@ public final class Application implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final NullPointerException | JavaModelException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
   }
 
@@ -313,7 +314,7 @@ public final class Application implements IApplication {
       try {
         return roundStats.get($).intValue();
       } catch (final IndexOutOfBoundsException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
         return 0;
       }
     }

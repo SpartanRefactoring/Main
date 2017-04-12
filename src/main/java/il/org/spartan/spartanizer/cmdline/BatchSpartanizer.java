@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Scans files named by outputFolder, ignore test files, and collect
  * statistics.
@@ -206,7 +207,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       try {
         collect(FileUtils.read(f));
       } catch (final IOException ¢) {
-        monitor.config(¢, "File = " + f);
+        note.config(¢, "File = " + f);
       }
   }
 
@@ -257,7 +258,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       report = new CSVStatistics(reportFileName, "property");
       new FilesGenerator(".java").from(presentSourcePath).forEach(this::collect);
     } catch (final IOException ¢) {
-      monitor.config(¢, beforeFileName + "|" + afterFileName);
+      note.config(¢, beforeFileName + "|" + afterFileName);
       System.err.println(classesDone + " files processed; processing of " + presentSourcePath + " failed for some I/O reason");
     }
     applyEssenceCommandLine();

@@ -1,6 +1,6 @@
-package il.org.spartan.utils;
+package il.org.spartan.utils.fluent;
 
-import static il.org.spartan.utils.English.*;
+import static il.org.spartan.utils.fluent.English.*;
 import static java.lang.String.*;
 
 import static java.util.stream.Collectors.*;
@@ -11,13 +11,14 @@ import java.util.logging.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
  * @author Yossi Gil
  * @since Nov 13, 2016 */
-public interface monitor {
+public interface note {
   String FILE_SEPARATOR = "\n**\n";
   String FILE_SUB_SEPARATOR = "\n********\n";
   /** @formatter:off */

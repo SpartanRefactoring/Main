@@ -29,6 +29,7 @@ import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tippers.Names.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Revised global preferences page for the plugin.
  * @author Ori Roth {@code ori.rothh@gmail.com}
@@ -84,7 +85,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         if (p.isOpen() && p.hasNature(JavaCore.NATURE_ID))
           $.add(new AbstractMap.SimpleEntry<>(p.getName(), p));
       } catch (final CoreException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       }
     return $;
   }
@@ -280,7 +281,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         try {
           return Boolean.valueOf(p.hasNature(Nature.NATURE_ID));
         } catch (final CoreException ¢) {
-          monitor.bug(¢);
+          note.bug(¢);
           return Boolean.FALSE;
         }
       return $;
@@ -318,7 +319,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
               try {
                 TipsOnOffToggle.toggleNature(p, enabled.get(p).booleanValue());
               } catch (final CoreException ¢) {
-                monitor.bug(¢);
+                note.bug(¢);
               }
             m.worked(1);
           }

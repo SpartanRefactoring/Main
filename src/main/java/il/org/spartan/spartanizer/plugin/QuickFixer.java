@@ -17,6 +17,7 @@ import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
  * resolutions.
@@ -61,7 +62,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       try {
         new RefactoringWizardOpenOperation(new Wizard(g)).run(Display.getCurrent().getActiveShell(), "Spartanization: " + g);
       } catch (final InterruptedException ¢¢) {
-        monitor.cancel(this, ¢¢);
+        note.cancel(this, ¢¢);
       }
       return Integer.valueOf(0);
     });
@@ -117,7 +118,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     try {
       return DefunctTips.get((String) $.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
     } catch (final CoreException ¢) {
-      return monitor.bug(¢);
+      return note.bug(¢);
     }
   }
 
@@ -146,7 +147,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         assert $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY) != null;
         return $.getResource() == null ? null : getSingleTipper((Class<? extends Tipper<?>>) $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY));
       } catch (final CoreException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       }
       return null;
     }
@@ -155,7 +156,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       try {
         return new SingleTipper<>($.newInstance());
       } catch (InstantiationException | IllegalAccessException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       }
       return null;
     }
@@ -176,7 +177,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException ¢) {
-            monitor.bug(this, ¢);
+            note.bug(this, ¢);
           }
         }
       };
@@ -220,7 +221,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
           try {
             disabler.deactivate(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException ¢) {
-            monitor.bug(this, ¢);
+            note.bug(this, ¢);
           }
         }
       };

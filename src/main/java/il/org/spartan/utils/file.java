@@ -3,6 +3,8 @@ package il.org.spartan.utils;
 import java.io.*;
 import java.nio.file.*;
 
+import il.org.spartan.utils.fluent.*;
+
 /** File utils
  * @author Ori Marcovitch
  * @since Dec 4, 2016 */
@@ -19,7 +21,7 @@ public enum file {
     try {
       Files.move(source, source.resolveSibling(to));
     } catch (final IOException ¢) {
-      monitor.config(¢);
+      note.config(¢);
     }
   }
 

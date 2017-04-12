@@ -7,6 +7,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** An abstract representation of our test suite, which is represented in
  * directory tree.
@@ -60,7 +61,7 @@ public class FileTestUtils {
       if ($ != null)
         $.deleteOnExit();
     } catch (final IOException ¢) {
-      monitor.bug(¢); // Probably permissions problem
+      note.bug(¢); // Probably permissions problem
     }
     return $;
   }

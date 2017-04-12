@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A smorgasboard containing lots of stuff factored out of {@link Trimmer}
  * <ol>
@@ -85,7 +86,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
       return $;
     } catch (final NullPointerException | MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       if (!silent)
-        monitor.bug(this, ¢);
+        note.bug(this, ¢);
       throw new AssertionError(¢);
     }
   }
