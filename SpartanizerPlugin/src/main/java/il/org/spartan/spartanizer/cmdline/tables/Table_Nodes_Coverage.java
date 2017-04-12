@@ -5,12 +5,12 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.research.*;
-import il.org.spartan.research.analyses.*;
-import il.org.spartan.research.util.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.nanos.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.research.analyses.*;
+import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 
