@@ -1,4 +1,4 @@
-package il.org.spartan.utils;
+package il.org.spartan.utils.fluent;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 

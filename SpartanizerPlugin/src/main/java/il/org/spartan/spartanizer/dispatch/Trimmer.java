@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A smorgasboard containing lots of stuff, but its main purpose, which should
  * be factored out somewhere is to apply a {@link Configuration} to a tree. The

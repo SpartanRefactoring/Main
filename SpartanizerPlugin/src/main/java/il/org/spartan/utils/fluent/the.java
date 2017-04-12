@@ -1,9 +1,8 @@
-package il.org.spartan.utils;
+package il.org.spartan.utils.fluent;
 
 import static il.org.spartan.lisp.*;
 
 import java.util.*;
-import java.util.function.*;
 
 import il.org.spartan.utils.range.*;
 
@@ -16,10 +15,6 @@ public interface the {
       if (is[$] == i)
         return $;
     return -1;
-  }
-
-  static <T> T lambdaResult(final Supplier<T> $) {
-    return $.get();
   }
 
   static String nth(final int i, final Collection<?> os) {
