@@ -82,9 +82,9 @@ public class Version290 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta6FinalAbNewAaIntc2dccacca() {
     trimminKof("int a = 6; final A b = new A(a); int c = 2 + d; c(c + a); c(c * a);") //
-        .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("int a=6;new A(a);int c=2+d;c(c+a);c(c*a);") //
-        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("int a=6;new A(a);int c=2+d;c(c+a);c(a*c);") //
         .stays() //
     ;

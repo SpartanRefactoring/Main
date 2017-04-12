@@ -2,53 +2,43 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for the GitHub issue thus numbered. case of inlining into the
  * expression of an enhanced for
  * @author Yossi Gil
  * @since 2017-03-16 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore("Ori Roth: All tests fail")
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0293 {
-  @Test public void t1() {
-    trimminKof("/* * This is a comment */ int i = 6; int j = 2; int k = i+2; S.x.f(i-j+k); ")
-        .gives("/* * This is a comment */ int j = 2; int i = 6; int k = i+2; S.x.f(i-j+k); ");
+  /** Introduced by Yogi on Thu-Apr-13-00:39:17-IDT-2017 
+  (code automatically in class 'JUnitTestMethodFacotry')*/
+    @Test public void inta6Intb2Intca2Aeabc() {
+       trimminKof("int a = 6; int b = 2; int c = a + 2; A.e(a - b + c);") //
+           .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
+           .gives("int a=6,b=2;int c=a+2;A.e(a-b+c);") //
+           .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
+           .gives("int a=6,b=2,c=a+2;A.e(a-b+c);") //
+           .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+           .gives("int a=6,c=a+2;A.e(a-2+c);") //
+           .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+           .gives("int a=6;A.e(a-2+(a+2));") //
+           .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+           .gives("A.e(6-2+(6+2));") //
+           .using(new InfixAdditionSubtractionExpand(), InfixExpression.class) //
+           .gives("A.e(6-2+6+2);") //
+           .using(new InfixAdditionEvaluate(), InfixExpression.class) //
+           .gives("A.e(6-2+8);") //
+           .using(new InfixSubtractionEvaluate(), InfixExpression.class) //
+           .gives("A.e(4+8);") //
+           .using(new InfixAdditionEvaluate(), InfixExpression.class) //
+           .gives("A.e(12);") //
+           .stays() //
+    ;
   }
 
-  @Test public void t2() {
-    trimminKof("/* * This is a comment */ int i = 6, h = 7; int j = 2; int k = i+2; S.x.f(i-j+k); ")
-        .gives("/* * This is a comment */ int h = 7; int j = 2; int i = 6; int k = i+2; S.x.f(i-j+k); ");
-  }
-
-  @Test public void t3() {
-    trimminKof("/* * This is a comment */ int i = 6; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); y(i); y(i+m); ")
-        .gives("/* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); int i = 6; y(i); y(i+m); ");
-  }
-
-  @Test public void t4() {
-    trimminKof(
-        " /* * This is a comment */ int i = 6; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); final C bc = new C(i); y(i+m+bc.j); private static class C { public C(int i) { j = 2*i; public final int j; ")
-            .gives(
-                " /* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m); int i = 6; final C bc = new C(i); y(i+m+bc.j); private static class C { public C(int i) { j = 2*i; public final int j; ");
-  }
-
-  @Test public void t5() {
-    trimminKof("/* * This is a comment */ int i = y(0); int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); y(i+m); ")
-        .gives("/* * This is a comment */ int j = 3; int k = j+2; int i = y(0); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ");
-  }
-
-  @Test public void t6() {
-    trimminKof("/* * This is a comment */ int i = y(0); int h = 8; int j = 3; int k = j+2 + y(i); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ")
-        .gives("/* * This is a comment */ int h = 8; int i = y(0); int j = 3; int k = j+2 + y(i); int m = k + j -19; y(m*2 - k/m + i); y(i+m); ");
-  }
-
-  @Test public void t7() {
-    trimminKof(
-        "public final int j; private C yada6() { final C res = new C(6); final Runnable r = new Runnable() { @Override public void system() { res = new C(8); S.x.f(res.j); doStuff(res); private void doStuff(C res2) { S.x.f(res2.j); private C res; S.x.f(res.j); return res; ")
-            .gives(
-                "public final int j; private C yada6() { final Runnable r = new Runnable() { @Override public void system() { res = new C(8); S.x.f(res.j); doStuff(res); private void doStuff(C res2) { S.x.f(res2.j); private C res; final C res = new C(6); S.x.f(res.j); return res; ");
-  }
 }
