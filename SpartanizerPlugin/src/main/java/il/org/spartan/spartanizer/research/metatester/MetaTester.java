@@ -19,14 +19,12 @@ public class MetaTester extends BlockJUnit4ClassRunner {
   private final Class<?> testClass;
   private final File sourceFile;
   private final String testName;
-  private final List<SourceLine> sourceLines;
 
   public MetaTester(final Class<?> clazz) throws InitializationError {
     super(clazz);
     testClass = clazz;
     testName = testClass.getSimpleName();
     sourceFile = openSourceFile(testName);
-    sourceLines = readAllLines(testName);
   }
 
   @Override public Description getDescription() {
@@ -34,37 +32,18 @@ public class MetaTester extends BlockJUnit4ClassRunner {
   }
 
   @Override @SuppressWarnings("unused") protected void runChild(final FrameworkMethod __, final RunNotifier n) {
-    final Class<?> newTestClass = new TestClassGenerator(testClass).generate(testClass.getSimpleName() + "_CustomTest", sourceLines);
+    final Class<?> newTestClass = new StringTestClassGenerator(testClass, testName, sourceFile).generate(testClass.getSimpleName() + "_CustomTest");
     final TestSuite suite = new TestSuite(newTestClass);
     suite.run(new TestResult());
     try {
       new BlockJUnit4ClassRunnerWithParametersFactory()
           .createRunnerForTestWithParameters(new TestWithParameters(" ", new TestClass(newTestClass), new ArrayList<>())).run(n);
     } catch (final InitializationError ignore) {/**/}
-    // Uncomment this to run the original test aswell
+    // Uncomment this to run the original test as well
     /* super.runChild(method, notifier); */
   }
 
   private File openSourceFile(final String className) {
     return new File(FileUtils.makePath(testSourcePath(testClass), className + ".java"));
-  }
-
-  @SuppressWarnings({ "unused", "resource" }) private List<SourceLine> readAllLines(final String testName1) {
-    final List<SourceLine> $ = new ArrayList<>();
-    try {
-      final BufferedReader linesStream = new BufferedReader(new FileReader(sourceFile));
-      String line = linesStream.readLine();
-      final SourceLine.SourceLineFactory factory = new SourceLine.SourceLineFactory(testName1);
-      for (int ¢ = 1; line != null; ++¢) {
-        if (line.contains("void") && line.contains("()"))
-          factory.setTestMethodName(
-              line.replace("public void ", "").replace("()", "").replace("{", "").replace("@SuppressWarnings(\"static-method\")", "").trim());
-        $.add(factory.createSourceLine(line, ¢));
-        line = linesStream.readLine();
-      }
-      $.remove(SourceLine.EMPTY);
-      return $;
-    } catch (final IOException ignore) {/**/}
-    return new ArrayList<>();
   }
 }
