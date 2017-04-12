@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.research.characteristics;
 
 import org.junit.*;
 
+import il.org.spartan.research.nanos.characteristics.*;
 import il.org.spartan.spartanizer.research.methods.*;
-import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 
 /** Tests {@link ArgumentsTuple}
  * @author orimarco {@code marcovitch.ori@gmail.com}
