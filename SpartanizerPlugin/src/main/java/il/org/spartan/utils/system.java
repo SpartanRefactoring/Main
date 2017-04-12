@@ -85,7 +85,7 @@ public interface system {
     ;
   }
 
-  @SuppressWarnings({ "boxing", "incomplete-switch" }) static boolean isBalanced(final String s) {
+  @SuppressWarnings("boxing") static boolean isBalanced(final String s) {
     final Stack<Character> $ = new Stack<>();
     for (final char ¢ : s.toCharArray())
       switch (¢) {
