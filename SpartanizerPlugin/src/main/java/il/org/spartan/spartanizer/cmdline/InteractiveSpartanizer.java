@@ -61,7 +61,7 @@ public class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
-      toolbox = Toolbox.mutableDefaultInstance();
+      toolbox = Toolbox.freshCopyOfAllTippers();
     changed = true;
     toolbox.add(c, ts);
     return this;
@@ -69,7 +69,7 @@ public class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
-      toolbox = Toolbox.mutableDefaultInstance();
+      toolbox = Toolbox.freshCopyOfAllTippers();
     changed = true;
     toolbox.remove(c, ts);
     return this;
@@ -77,7 +77,7 @@ public class InteractiveSpartanizer {
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
     if (!changed)
-      toolbox = Toolbox.mutableDefaultInstance();
+      toolbox = Toolbox.freshCopyOfAllTippers();
     changed = true;
     toolbox.add(i, ts);
     return this;

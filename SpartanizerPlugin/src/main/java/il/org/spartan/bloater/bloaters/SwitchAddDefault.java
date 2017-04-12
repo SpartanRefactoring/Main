@@ -23,7 +23,9 @@ public class SwitchAddDefault extends SwitchStatementAbstractPattern implements 
     ;
   }
 
+  // TODO Yuval Simon - please eliminate this
   public SwitchAddDefault() {
+    andAlso("Yuval, I disabled this; it keeps on tipping as spartanization", ()->false);
     andAlso("Does not have default case", //
         () -> cases().stream().noneMatch(SwitchCase::isDefault));
   }
