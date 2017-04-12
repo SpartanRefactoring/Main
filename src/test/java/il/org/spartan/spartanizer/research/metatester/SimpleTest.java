@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import org.junit.runner.*;
 
+import il.org.spartan.research.metatester.*;
+
 /**
  * @author  Oren Afek
  * @since  3/27/2017 

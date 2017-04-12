@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.research.methods;
 
 import org.junit.*;
 
-import il.org.spartan.spartanizer.research.nanos.characteristics.*;
+import il.org.spartan.research.nanos.characteristics.*;
 
 /** Tests {@link Cascading.FluentSetter}
  * @author Ori Marcovitch */
