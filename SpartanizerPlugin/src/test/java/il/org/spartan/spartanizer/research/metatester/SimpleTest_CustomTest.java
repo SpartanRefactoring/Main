@@ -6,15 +6,15 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class SimpleTest_CustomTest { 
 
-	public @Test void   testF_14() {
-	    assertEquals(1, 2);
-	}
+	@Test public void testF_14() {
+    assertEquals(1, 2);
+  }
 
-	public @Test void   testF_16() {
-	    assertEquals(1, 1);
-	}
+	@Test public void testF_16() {
+    assertEquals(1, 1);
+  }
 
-	public @Test void   testF_18() {
-	    assert true;
-	}
+	@Test public void testF_18() {
+    assert true;
+  }
 }

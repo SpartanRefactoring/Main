@@ -22,12 +22,12 @@ public class StringTestClassGenerator implements TestClassGenerator {
   private final File originalSourceFile;
   
 
-  public StringTestClassGenerator(final Class<?> testClass, String testName, File sourceFile) {
+  public StringTestClassGenerator(final Class<?> testClass, String testName, File originalSourceFile) {
     this.testClass = testClass;
     sourcePath = makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\", testClass));
     packageName = packageName("\\.", testClass);
     this.testName = testName;
-    this.originalSourceFile = sourceFile;
+    this.originalSourceFile = originalSourceFile;
   }
 
   @Override public Class<?> generate(final String testClassName) {
