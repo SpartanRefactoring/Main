@@ -1,6 +1,8 @@
-package il.org.spartan.utils;
+package il.org.spartan.utils.fluent;
 
 import java.util.function.*;
+
+import il.org.spartan.utils.*;
 
 /** lazy initialization as in {@code
     static final lazy<Collection<Thing>> things = lazy.get(() -> as.list(//

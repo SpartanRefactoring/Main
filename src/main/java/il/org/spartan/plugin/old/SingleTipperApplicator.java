@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;
 
 /** TODO Ori Roth <ori.rothh@gmail.com> please add a description
