@@ -92,7 +92,7 @@ public interface theSpartanizer {
     try {
       return toolbox.firstTipper($);
     } catch (final Exception ¢) {
-      return monitor.logProbableBug(¢);
+      return monitor.bug(¢);
     }
   }
 

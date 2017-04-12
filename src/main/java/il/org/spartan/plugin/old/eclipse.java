@@ -37,7 +37,7 @@ public enum eclipse {
   facade;
   static ImageIcon icon;
   static org.eclipse.swt.graphics.Image iconNonBusy;
-  static final String NAME = "Laconic";
+  static final String NAME = "The Spartanizer";
   static final Shell parent = null;
   static final boolean persistLocation = false;
   static final boolean persistSize = false;
@@ -175,7 +175,7 @@ public enum eclipse {
       if (i != null)
         icon = new ImageIcon(i);
     } catch (final MalformedURLException ¢) {
-      return monitor.logProbableBug(¢);
+      return monitor.config(¢);
     }
     return icon;
   }

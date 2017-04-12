@@ -114,7 +114,7 @@ public class OperandBloating extends TrimmingOperand {
       assertSimilar($1, unpeeled);
       return new OperandBloating(createCUWithBinding(unpeeled), unpeeled);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.logProbableBug(¢);
+      monitor.bug(¢);
     }
     return null;
   }

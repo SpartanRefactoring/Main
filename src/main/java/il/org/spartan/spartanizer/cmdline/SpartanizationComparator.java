@@ -22,7 +22,7 @@ import il.org.spartan.utils.*;
  * @since Jan 21, 2017 */
 public enum SpartanizationComparator {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-  @External(alias = "i", value = "input folder") static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "i", value = "input folder") static String inputFolder = system.isWindows() ? "" : ".";
   @External(alias = "o", value = "output folder") static final String outputFolder = "/tmp";
   static String presentSourcePath;
   @SuppressWarnings("CanBeFinal") static String presentSourceName;
@@ -32,7 +32,7 @@ public enum SpartanizationComparator {
   private static final CSVLineWriter writer = new CSVLineWriter(makeFile("method-properties"));
 
   static String makeFile(final String fileName) {
-    return outputFolder + "/" + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
+    return outputFolder + "/" + (system.isWindows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
   public static void main(final String[] where) {

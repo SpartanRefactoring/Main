@@ -48,10 +48,10 @@ public enum collect {
   };
   static final ASTMatcher matcher = new ASTMatcher();
 
-  /** Creates a new gUIBatchLaconizer which holds the occurrences of the
+  /** Creates a new instance which holds the occurrences of the
    * provided name in declarations.
    * @param n JD
-   * @return A {@link GUIBatchLaconizer}, with the uses of the provided
+   * @return A {@link BatchApplicator}, with the uses of the provided
    *         identifier within declarations. */
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
@@ -75,7 +75,7 @@ public enum collect {
 
   /** Finds all the rest (not declarations or definitions) identifier (n) uses.
    * @param n same as "name"
-   * @return {@link GUIBatchLaconizer} of all occurrences which are not
+   * @return {@link BatchApplicator} of all occurrences which are not
    *         definitions. */
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
@@ -90,7 +90,7 @@ public enum collect {
   /** finds all the occurrences of the given name (n) in which it is a
    * {@link ClassInstanceCreation}
    * @param n JD
-   * @return a gUIBatchLaconizer with all unsafe uses of the identifier (n) */
+   * @return a new instance with all unsafe uses of the identifier (n) */
   public static Collector unsafeUsesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -101,10 +101,10 @@ public enum collect {
     };
   }
 
-  /** Creates a new gUIBatchLaconizer which holds all the occurrences of the
+  /** Creates a new instance which holds all the occurrences of the
    * provided name.
    * @param n JD
-   * @return A {@link GUIBatchLaconizer}, with the uses of the provided
+   * @return A {@link BatchApplicator}, with the uses of the provided
    *         identifier within the provided {@link ASTNode}s array to the in
    *         function.. */
   public static Collector usesOf(final SimpleName n) {

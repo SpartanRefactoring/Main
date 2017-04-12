@@ -60,18 +60,9 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  // // TODO Ori Roth: use Policy / replacement for Trimmer.
-  // /** Default run action configuration of {@link GUIBatchLaconizer}.
-  // Spartanize the
-  // * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
-  // * @param a JD
-  // * @return {@code this} applicator */
-  // public GUIBatchLaconizer defaultRunAction(final AbstractGUIApplicator a) {
-  // setRunAction(¢ -> Integer.valueOf(a.apply(¢, selection())));
-  // name(a.getName());
-  // return this;
-  // }
-  /** Default run action configuration of . Spartanize the
+  /** TODO Ori Roth: use Policy / replacement for Trimmer.
+   * <p>
+   * Default run action configuration of . Spartanize the
    * {@link CompilationUnit} using received TODO maybe this method are going to
    * die (as well as Spartanize$Applicator) {@link Spartanizer$Applicator}.
    * @param a JD

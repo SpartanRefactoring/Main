@@ -26,9 +26,9 @@ public final class GuessedContextTest {
   @Ignore // TODO Yuval Simon --yg
   @Test public void a2() {
     trimminKof(
-        "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final Laconization s = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ")
+        "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final L s = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); ")
             .gives(
-                "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final Laconization $ = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ");
+                "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final L $ = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); ");
   }
 
   @Ignore // TODO Yuval Simon --yg

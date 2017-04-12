@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since Dec 14, 2016 */
 public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected static String inputFolder = system.isWindows() ? "" : ".";
   @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected static String outputFolder = "/tmp";
   protected static final String[] defaultArguments = as.array("..");
   protected static Class<? extends DeprecatedFolderASTVisitor> clazz;
@@ -79,7 +79,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   }
 
   protected static String makeFile(final String fileName) {
-    return outputFolder + File.separator + (system.windows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
+    return outputFolder + File.separator + (system.isWindows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
 
   protected void visit(final String path) {

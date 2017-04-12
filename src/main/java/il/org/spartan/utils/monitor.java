@@ -17,6 +17,21 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since Nov 13, 2016 */
 public interface monitor {
+  String FILE_SEPARATOR = "\n**\n";
+
+  String FILE_SUB_SEPARATOR = "\n********\n";
+
+  /** @formatter:off */
+  Stack<Level> levels = new Stack<>();
+
+  Logger logger = the.lambdaResult(()->{
+    final Logger $ = Logger.getGlobal();
+    final ConsoleHandler handler = new ConsoleHandler();
+    handler.setLevel(Level.ALL);
+    $.addHandler(handler);
+    return $;
+  });
+
   static <T> T bug() {
     return bug("");
   }
@@ -47,9 +62,13 @@ public interface monitor {
   }
 
   static <T> T bug(final Throwable ¢) {
-    return bug(logger, ¢);
+    return robust.nullify(() -> logger.info(//
+        "A static method was hit by " + indefinite(¢) + " exception.\n" + //
+            "This is an indication of a bug.\n" + //
+            format("%s = '%s'\n", English.name(¢), ¢) + //
+            format("trace(%s) = '%s'\n", English.name(¢), trace(¢)) //
+    ));
   }
-
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param ¢ JD */
@@ -97,6 +116,7 @@ public interface monitor {
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
     ));
   }
+
   static <T> T info(final Class<?> o, final Throwable t) {
     return info(//
         "A static method of " + English.name(o) + //
@@ -119,15 +139,6 @@ public interface monitor {
     return robust.nullify(() -> logger.info(message));
   }
 
-  static <T> T logProbableBug(final Throwable ¢) {
-    return robust.nullify(() -> logger.info(//
-        "A static method was hit by " + indefinite(¢) + " exception.\n" + //
-            "This is an indication of a bug.\n" + //
-            format("%s = '%s'\n", English.name(¢), ¢) + //
-            format("trace(%s) = '%s'\n", English.name(¢), trace(¢)) //
-    ));
-  }
-
   /** logs an error in the plugin into an external file
    * @param tipper an error */
   static <T> T logToFile(final Throwable t, final Object... os) {
@@ -141,28 +152,13 @@ public interface monitor {
     info(FILE_SEPARATOR);
     return the.null¢();
   }
-
   static void set(final Level ¢) {
     levels.push(¢);
   }
-
   static String trace(final Throwable ¢) {
     return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
   }
-
   static void unset() {
     levels.pop();
   }
-
-  String FILE_SEPARATOR = "\n**\n";
-  String FILE_SUB_SEPARATOR = "\n********\n";
-  /** @formatter:off */
-  Stack<Level> levels = new Stack<>();
-  Logger logger = the.lambdaResult(()->{
-    final Logger $ = Logger.getGlobal();
-    final ConsoleHandler handler = new ConsoleHandler();
-    handler.setLevel(Level.ALL);
-    $.addHandler(handler);
-    return $;
-  });
 }

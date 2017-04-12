@@ -12,11 +12,8 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface system {
-  String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
-  String UTF_8 = "utf-8";
-
   static Process bash(final String shellCommand) {
-    if (windows())
+    if (isWindows())
       return null;
     try {
       final Process $ = Runtime.getRuntime().exec(new String[] { "/bin/bash", "-c", shellCommand });
@@ -28,33 +25,17 @@ public interface system {
     return null;
   }
 
-  /** @return the name of the class from which this method was called. */
-  static String myFullClassName() {
-    final StackTraceElement[] $ = new Throwable().getStackTrace();
-    for (int ¢ = 1; ¢ < $.length; ++¢)
-      if (!$[¢].getClassName().equals($[0].getClassName()))
-        return $[¢].getClassName();
-    return new Object().getClass().getEnclosingClass().getCanonicalName();
-  }
-
-  /** @return if called from a (potentially static) method m in class A, gives
-   *         the full name of the class B != A, such that a method in B, made a
-   *         sequence of calls through methods in A, which ended in the call to
-   *         m. */
-  static String myCallerFullClassName() {
-    final StackTraceElement[] trace = new Throwable().getStackTrace();
-    int i = 0;
-    for (; i < trace.length; ++i)
-      if (!trace[i].getClassName().equals(trace[0].getClassName()))
-        break;
-    for (int $ = i; $ < trace.length; ++$)
-      if (!trace[$].getClassName().equals(trace[i].getClassName()))
-        return trace[$].getClassName();
-    return new Object().getClass().getEnclosingClass().getCanonicalName();
+  static BufferedWriter callingClassUniqueWriter() {
+    try {
+      return new BufferedWriter(new FileWriter(ephemeral(myFullClassName()).dot("txt")));
+    } catch (final IOException ¢) {
+      monitor.config(¢);
+    }
+    return null;
   }
 
   static Process dumpOutput(final Process $) {
-    if (windows())
+    if (isWindows())
       return $;
     try (BufferedReader in = new BufferedReader(new InputStreamReader($.getInputStream()))) {
       for (String line = in.readLine(); line != null; line = in.readLine())
@@ -104,13 +85,58 @@ public interface system {
     ;
   }
 
-  static BufferedWriter callingClassUniqueWriter() {
-    try {
-      return new BufferedWriter(new FileWriter(ephemeral(myFullClassName()).dot("txt")));
-    } catch (final IOException ¢) {
-      monitor.config(¢);
-    }
-    return null;
+  @SuppressWarnings({ "boxing", "incomplete-switch" }) static boolean isBalanced(final String s) {
+    final Stack<Character> $ = new Stack<>();
+    for (final char ¢ : s.toCharArray())
+      switch (¢) {
+        case '(':
+        case '[':
+        case '{':
+          $.push(¢);
+          continue;
+        case ')':
+          if ($.isEmpty() || $.pop() != '(')
+            return false;
+          continue;
+        case ']':
+          if ($.isEmpty() || $.pop() != '[')
+            return false;
+          continue;
+        case '}':
+          if ($.isEmpty() || $.pop() != '{')
+            return false;
+          continue;
+      }
+    return $.isEmpty();
+  }
+
+  /** @return if called from a (potentially static) method m in class A, gives
+   *         the full name of the class B != A, such that a method in B, made a
+   *         sequence of calls through methods in A, which ended in the call to
+   *         m. */
+  static String myCallerFullClassName() {
+    final StackTraceElement[] trace = new Throwable().getStackTrace();
+    int i = 0;
+    for (; i < trace.length; ++i)
+      if (!trace[i].getClassName().equals(trace[0].getClassName()))
+        break;
+    for (int $ = i; $ < trace.length; ++$)
+      if (!trace[$].getClassName().equals(trace[i].getClassName()))
+        return trace[$].getClassName();
+    return new Object().getClass().getEnclosingClass().getCanonicalName();
+  }
+
+  /** @return the name of the class from which this method was called. */
+  static String myFullClassName() {
+    final StackTraceElement[] $ = new Throwable().getStackTrace();
+    for (int ¢ = 1; ¢ < $.length; ++¢)
+      if (!$[¢].getClassName().equals($[0].getClassName()))
+        return $[¢].getClassName();
+    return new Object().getClass().getEnclosingClass().getCanonicalName();
+  }
+
+  static String myShortClassName() {
+    return namer.lastComponent(myFullClassName());
   }
 
   static String now() {
@@ -170,40 +196,14 @@ public interface system {
     return $ == null || $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
 
-  static boolean windows() {
+  static boolean isWindows() {
     return System.getProperty("os.name").contains("indows");
   }
 
-  @SuppressWarnings({ "boxing", "incomplete-switch" }) static boolean isBalanced(final String s) {
-    final Stack<Character> $ = new Stack<>();
-    for (final char ¢ : s.toCharArray())
-      switch (¢) {
-        case '(':
-        case '[':
-        case '{':
-          $.push(¢);
-          continue;
-        case ')':
-          if ($.isEmpty() || $.pop() != '(')
-            return false;
-          continue;
-        case ']':
-          if ($.isEmpty() || $.pop() != '[')
-            return false;
-          continue;
-        case '}':
-          if ($.isEmpty() || $.pop() != '{')
-            return false;
-          continue;
-      }
-    return $.isEmpty();
-  }
+  String tmp = System.getProperty("java.io.tmpdir", "/tmp") + System.getProperty("file.separator", "/");
+  String UTF_8 = "utf-8";
 
   interface Extension {
     File dot(String extentsion);
-  }
-
-  static String callinClassLastName() {
-    return namer.lastComponent(myFullClassName());
   }
 }

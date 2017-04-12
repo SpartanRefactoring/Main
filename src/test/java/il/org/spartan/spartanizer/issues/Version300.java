@@ -323,7 +323,9 @@ public class Version300 {
   @Test public void myClassNameTest() {
     azzert.that(system.myFullClassName(), is(getClass().getCanonicalName()));
   }
-
+  @Test public void myShortClassNameTest() {
+    azzert.that(system.myShortClassName(), is(getClass().getSimpleName()));
+  }
   // @Ignore("Unignore one by one")
   @Test public void negationPushdownTernary() {
     trimminKof("a = !(b ? c: d)")//
