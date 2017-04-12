@@ -1,0 +1,24 @@
+package il.org.spartan.spartanizer.research.metatester;
+
+import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
+
+import il.org.spartan.spartanizer.ast.navigate.*;
+
+/** TODO orenafek: document class 
+ * 
+ * @author orenafek
+ * @since 2017-04-12 */
+@SuppressWarnings("all")
+public class ASTTestClassGenerator implements TestClassGenerator {
+ 
+  @Override public Class<?> generate(String testClassName, String fileContent) {
+    ASTNode file = wizard.ast(fileContent);
+    
+    
+    return Object.class;
+  }
+  
+  
+}
