@@ -21,7 +21,9 @@ public class Table_Tipper_Groups {
 
   public void go() {
     final Map<TipperGroup, Integer> groups = new TreeMap<>();
-    Configurations.defaultTipperLists().forEach(ts -> flow(ts).forEach(λ -> inc(groups, λ)));
+    Stream.of(Configurations.all().implementation)//
+        .filter(λ -> λ != null && !λ.isEmpty())//
+        .forEach(ts -> flow(ts).forEach(λ -> inc(groups, λ)));
     final int total = groups.values().stream().mapToInt(Integer::intValue).reduce((x, y) -> (x + y)).getAsInt();
     try (Table t = new Table(this)) {
       groups.keySet()

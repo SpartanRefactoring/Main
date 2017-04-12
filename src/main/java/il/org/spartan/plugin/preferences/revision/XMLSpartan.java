@@ -96,9 +96,9 @@ public class XMLSpartan {
    * corrupted XML file), full tippers collection is returned.
    * @param p JD
    * @return enabled tippers for project */
-  @SuppressWarnings("unchecked") public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
-    final Set<Class<Tipper<? extends ASTNode>>> $ = Configurations.freshCopyOfAllTippers().getAllTippers().stream()
-        .map(λ -> (Class<Tipper<? extends ASTNode>>) λ.getClass()).collect(toSet());
+  public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
+    final Set<Class<Tipper<? extends ASTNode>>> $ = Configurations.allTippers()//
+        .map(λ -> λ.getClass()).map(λ -> unchecked(λ)).collect(toSet());
     if (p == null)
       return $;
     final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p);
@@ -107,6 +107,10 @@ public class XMLSpartan {
     final Set<String> ets = m.values().stream().flatMap(Arrays::stream).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toSet());
     $.removeIf(λ -> !ets.contains(λ.getSimpleName()));
     return $;
+  }
+
+  @SuppressWarnings("unchecked") private static Class<Tipper<?>> unchecked(@SuppressWarnings("rawtypes") final Class<? extends Tipper> λ) {
+    return (Class<Tipper<?>>) λ;
   }
 
   /** Updates the project's XML file to enable given tippers.
@@ -194,7 +198,7 @@ public class XMLSpartan {
     final Element e = $.createElement("spartan");
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
-    Configurations.freshCopyOfAllTippers().getAllTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
+    Configurations.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
     $.appendChild(e);
     $.setXmlStandalone(true); // TODO Roth: does not seem to work
     return $;

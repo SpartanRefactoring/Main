@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.*;
@@ -28,7 +28,7 @@ public class Table_NanosByCategories {
         for (final Tipper<?> ¢ : implementation[i])
           if (¢ instanceof NanoPatternTipper) {
             final NanoPatternTipper<? extends ASTNode> np = (NanoPatternTipper<? extends ASTNode>) ¢;
-            final String category = Category.pretty(np.category() != null ? np.category() + "" : Configurations.intToClassName(i));
+            final String category = Category.pretty(np.category() != null ? np.category() + "" : wizard.intToClassName(i));
             categories.putIfAbsent(category, new TreeSet<>());
             categories.get(category).add(np.className());
           }

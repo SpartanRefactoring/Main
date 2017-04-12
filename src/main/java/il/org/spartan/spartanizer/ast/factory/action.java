@@ -251,8 +251,7 @@ public enum action {
     return $;
   }
 
-  /** 
-   * @param from JD (already duplicated)
+  /** @param from JD (already duplicated)
    * @param to is the list that will contain the pulled out initializations from
    *        the given expression.
    * @return expression to the new for loop, without the initializers. */
