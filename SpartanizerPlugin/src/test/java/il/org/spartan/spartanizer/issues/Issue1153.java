@@ -14,11 +14,11 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1153 {
   @Test public void a() {
-    Toolbox.defaultInstance();
+    Configuration.defaultInstance();
   }
 
   @Test public void b() {
-    Toolbox.freshCopyOfAllTippers();
+    Configuration.freshCopyOfAllTippers();
   }
 
   @Test public void b1() {
@@ -30,9 +30,9 @@ public class Issue1153 {
     assert c != null;
     final FieldInitializedSerialVersionUIDToHexadecimal x = new FieldInitializedSerialVersionUIDToHexadecimal();
     assert x != null;
-    final Toolbox toolbox = new Toolbox();
-    assert toolbox != null;
-    toolbox.add(c, x);
+    final Configuration configuration = new Configuration();
+    assert configuration != null;
+    configuration.add(c, x);
   }
 
   @Test public void c() {

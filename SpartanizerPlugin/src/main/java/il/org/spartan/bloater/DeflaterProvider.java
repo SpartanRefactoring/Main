@@ -15,20 +15,20 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 20-12-16 will hold an toolbox for the expanders and return them */
 public class DeflaterProvider extends OperationsProvider {
-  private Toolbox toolbox;
+  private Configuration configuration;
 
   public DeflaterProvider() {
-    toolbox = Toolbox.defaultInstance();
-    if (toolbox == null)
-      toolbox = Toolbox.freshCopyOfAllTippers();
+    configuration = Configuration.defaultInstance();
+    if (configuration == null)
+      configuration = Configuration.freshCopyOfAllTippers();
   }
 
-  public DeflaterProvider(final Toolbox tb) {
-    toolbox = tb;
+  public DeflaterProvider(final Configuration tb) {
+    configuration = tb;
   }
 
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-    return toolbox.firstTipper(¢);
+    return configuration.firstTipper(¢);
   }
 
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {

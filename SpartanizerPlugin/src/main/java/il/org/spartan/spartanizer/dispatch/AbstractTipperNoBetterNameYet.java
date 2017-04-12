@@ -39,7 +39,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
   @SafeVarargs public final <N extends ASTNode> AbstractTipperNoBetterNameYet addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
-      globalToolbox = new Toolbox();
+      globalToolbox = new Configuration();
     }
     globalToolbox.add(c, ts);
     return this;
@@ -50,8 +50,8 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
   }
 
   /** @param u JD
-   * @return {@link Toolbox} by project's preferences */
-  protected Toolbox getToolboxByPreferences(final CompilationUnit u) {
+   * @return {@link Configuration} by project's preferences */
+  protected Configuration getToolboxByPreferences(final CompilationUnit u) {
     if (u == null)
       return null;
     final ITypeRoot r = u.getTypeRoot();
@@ -65,7 +65,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
       return null;
     if (toolboxes.containsKey(p))
       return toolboxes.get(p);
-    final Toolbox $ = Toolbox.freshCopyOfAllTippers();
+    final Configuration $ = Configuration.freshCopyOfAllTippers();
     final Set<Class<Tipper<? extends ASTNode>>> es = XMLSpartan.enabledTippers(p);
     final Collection<Tipper<?>> xs = $.getAllTippers().stream().filter(λ -> !es.contains(λ.getClass())).collect(toList());
     for (final List<Tipper<? extends ASTNode>> ¢ : $.implementation)
@@ -102,7 +102,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
         return $.get();
   }
 
-  protected AbstractTipperNoBetterNameYet fix(final Toolbox all, final Tipper<?>... ts) {
+  protected AbstractTipperNoBetterNameYet fix(final Configuration all, final Tipper<?>... ts) {
     final List<Tipper<?>> tss = as.list(ts);
     if (!firstAddition)
       tss.addAll(globalToolbox.getAllTippers());
@@ -118,8 +118,8 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
     return this;
   }
 
-  public Toolbox globalToolbox;
-  protected final Map<IProject, Toolbox> toolboxes = new HashMap<>();
+  public Configuration globalToolbox;
+  protected final Map<IProject, Configuration> toolboxes = new HashMap<>();
   protected boolean useProjectPreferences;
   protected boolean firstAddition = true;
 }

@@ -20,7 +20,7 @@ public class Table_Tipper_Groups {
 
   public void go() {
     final Map<TipperGroup, Integer> groups = new TreeMap<>();
-    Toolbox.defaultTipperLists().forEach(ts -> flow(ts).forEach(λ -> inc(groups, λ)));
+    Configuration.defaultTipperLists().forEach(ts -> flow(ts).forEach(λ -> inc(groups, λ)));
     final int total = groups.values().stream().mapToInt(Integer::intValue).reduce((x, y) -> (x + y)).getAsInt();
     try (Table t = new Table(this)) {
       groups.keySet()

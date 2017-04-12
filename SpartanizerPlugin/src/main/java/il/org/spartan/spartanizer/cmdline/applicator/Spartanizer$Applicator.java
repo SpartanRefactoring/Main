@@ -29,11 +29,11 @@ public class Spartanizer$Applicator extends GenericApplicator {
 
   /** Instantiates this class */
   public Spartanizer$Applicator() {
-    this(Toolbox.defaultInstance());
+    this(Configuration.defaultInstance());
   }
 
-  public Spartanizer$Applicator(final Toolbox toolbox) {
-    this.toolbox = toolbox;
+  public Spartanizer$Applicator(final Configuration configuration) {
+    this.configuration = configuration;
   }
 
   /** Apply the spartanization to a selection of CompilationUnits
@@ -127,7 +127,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
    * @param r
    * @param u */
   public void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    toolbox = Toolbox.defaultInstance();
+    configuration = Configuration.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         TrimmerMonitor.visitation(n);
@@ -156,7 +156,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
       }
 
       <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
-        return toolbox.firstTipper(¢);
+        return configuration.firstTipper(¢);
       }
 
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
