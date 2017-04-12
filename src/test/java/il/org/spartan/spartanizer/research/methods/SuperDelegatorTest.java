@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.research.methods;
 
 import org.junit.*;
 
-import il.org.spartan.spartanizer.research.nanos.methods.*;
+import il.org.spartan.research.nanos.methods.*;
 
 /** Tests {@link SuperDelegator}
  * @author Ori Marcovitch */

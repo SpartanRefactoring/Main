@@ -5,6 +5,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.research.nanos.*;
+
 /** Tests {@link DefaultsTo}
  * @author Ori Marcovitch */
 @SuppressWarnings("static-method")
