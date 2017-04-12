@@ -14,7 +14,6 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
