@@ -4,7 +4,7 @@
 <plugin>
 <!-- Which class to run at startup -->
 <extension point="org.eclipse.ui.startup">
-  <startup class="il.org.spartan.plugin.Plugin"/>
+  <startup class="il.org.spartan.spartanizer.plugin.Plugin"/>
 </extension>
 
 <!-- Builder, i.e, the system component that keeps generating spartan tips when
@@ -18,7 +18,7 @@ the program changes: https://goo.gl/sIqIBC
 
 <!-- the central part of tipping: which Java class to run on changes -->
   <builder hasNature="true"> 
-    <run class="il.org.spartan.plugin.Builder"/> 
+    <run class="il.org.spartan.spartanizer.plugin.Builder"/> 
   </builder>
 </extension>
 
@@ -231,109 +231,109 @@ Java class which generates several quick fix for tips. -->
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Abbreviation"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Annonimaization"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Canonicalization"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.CommonFactoring"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Centification"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Deadcode"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Dollarization"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.EarlyReturn"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Idiomatic"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Inlining"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.InVain"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Nanopatterns"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.NOOP"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.ScopeReduction"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Sorting"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.SyntacticBaggage"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 <extension point="org.eclipse.ui.ide.markerResolution">
   <markerResolutionGenerator 
    markerType="il.org.spartan.tip.Ternarization"
-   class="il.org.spartan.plugin.QuickFixer"
+   class="il.org.spartan.spartanizer.plugin.QuickFixer"
   />
 </extension>
 
@@ -366,7 +366,7 @@ shown/generated, manual is a bit vague, but that's the bottom line -->
   id = "il.org.spartan.nature"
 >
   <runtime>
-    <run class="il.org.spartan.plugin.Nature"/> 
+    <run class="il.org.spartan.spartanizer.plugin.Nature"/> 
   </runtime>
   <builder id="spartan.tipper"/> 
 </extension>
@@ -394,20 +394,20 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
 <!-- Handlers of commands: which class to activate for each command id -->
 <extension point="org.eclipse.ui.handlers">
-   <handler commandId="il.org.spartan.SpartanizeSelection" class="il.org.spartan.plugin.TopMenuHandlers"/>
-   <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.plugin.TopMenuHandlers"/>
-   <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.plugin.TopMenuHandlers"/>
-   <handler commandId="il.org.spartan.ZoomSelection" class="il.org.spartan.plugin.TopMenuHandlers"/>
-   <handler commandId="il.org.spartan.ZoomAll" class="il.org.spartan.plugin.TopMenuHandlers"/>
-   <handler commandId="il.org.spartan.ZoomTool" class="il.org.spartan.plugin.TopMenuHandlers"/>
-   <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.plugin.TipsOnOffToggle" />
+   <handler commandId="il.org.spartan.SpartanizeSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.ZoomSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.ZoomAll" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.ZoomTool" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.spartanizer.plugin.TipsOnOffToggle" />
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.old.RefreshAll"/>
-   <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.plugin.SpartanMovie"/>
-   <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.plugin.SpartanizationHandler"/>
+   <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.spartanizer.plugin.SpartanMovie"/>
+   <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.spartanizer.plugin.SpartanizationHandler"/>
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.bloater.InflateHandler" />
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
-   <handler commandId="il.org.spartan.CharacterShortcut" class="il.org.spartan.plugin.CharacterShortcut" />
-   <handler commandId="il.org.spartan.CentificationShortcut" class="il.org.spartan.plugin.RenamingHandler" />
+   <handler commandId="il.org.spartan.CharacterShortcut" class="il.org.spartan.spartanizer.plugin.CharacterShortcut" />
+   <handler commandId="il.org.spartan.CentificationShortcut" class="il.org.spartan.spartanizer.plugin.RenamingHandler" />
    <handler commandId="il.org.spartan.SpartanWidget" class="il.org.spartan.plugin.widget.SpartanWidgetHandler" />
 </extension>
 

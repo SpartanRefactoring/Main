@@ -8,11 +8,11 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)

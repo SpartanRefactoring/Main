@@ -6,8 +6,8 @@ import java.util.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
+import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
 
 /** Old table presenting touched methods (%)
  * @author orimarco {@code marcovitch.ori@gmail.com} Infix

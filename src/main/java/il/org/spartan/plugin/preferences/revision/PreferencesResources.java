@@ -5,8 +5,8 @@ import java.util.stream.*;
 import org.eclipse.jface.preference.*;
 
 import il.org.spartan.bloater.*;
-import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** TODO Daniel Mittelman please add a description

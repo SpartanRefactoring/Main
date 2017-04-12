@@ -1,6 +1,6 @@
 package il.org.spartan.bloater;
 
-import static il.org.spartan.plugin.Eclipse.*;
+import static il.org.spartan.spartanizer.plugin.Eclipse.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -24,7 +24,7 @@ import org.eclipse.ui.texteditor.*;
 import il.org.spartan.*;
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
-import il.org.spartan.plugin.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
