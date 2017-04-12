@@ -104,7 +104,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         if (!current().inRange(m, n))
           return true;
-        final Tipper<N> w = current().globalToolbox.firstTipper(n);
+        final Tipper<N> w = current().globalConfiguration.firstTipper(n);
         if (w == null)
           return true;
         final Tip make = w.tip(n);

@@ -15,13 +15,13 @@ public interface Tippers {
   interface cache {
     Map<Class<? extends Tipper<?>>, Examples> tipperToExamples = the.lambdaResult(() -> {
       final Map<Class<? extends Tipper<?>>, Examples> $ = new HashMap<>();
-      for (final Tipper<? extends ASTNode> ¢ : Utils.freshCopyOfAllTippers().getAllTippers())
+      for (final Tipper<? extends ASTNode> ¢ : Configurations.freshCopyOfAllTippers().getAllTippers())
         $.put(¢.myClass(), ¢.examples());
       return $;
     });
     Map<String, Class<? extends Tipper<?>>> serivalVersionUIDToTip = the.lambdaResult(() -> {
       final Map<String, Class<? extends Tipper<?>>> $ = new HashMap<>();
-      for (final Tipper<? extends ASTNode> t : Utils.freshCopyOfAllTippers().getAllTippers()) {
+      for (final Tipper<? extends ASTNode> t : Configurations.freshCopyOfAllTippers().getAllTippers()) {
         final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";
         $.put(id, t.myClass());
       }
@@ -29,13 +29,13 @@ public interface Tippers {
     });
     Map<Class<? extends Tipper<?>>, String> tipperToDescription = the.lambdaResult(() -> {
       final Map<Class<? extends Tipper<?>>, String> $ = new HashMap<>();
-      for (final Tipper<? extends ASTNode> ¢ : Utils.freshCopyOfAllTippers().getAllTippers())
+      for (final Tipper<? extends ASTNode> ¢ : Configurations.freshCopyOfAllTippers().getAllTippers())
         $.put(¢.myClass(), ¢.description());
       return $;
     });
     Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = the.lambdaResult(() -> {
       final Map<Class<? extends Tipper<?>>, Tipper<?>> $ = new HashMap<>();
-      for (final Tipper<? extends ASTNode> ¢ : Utils.freshCopyOfAllTippers().getAllTippers())
+      for (final Tipper<? extends ASTNode> ¢ : Configurations.freshCopyOfAllTippers().getAllTippers())
         $.put(¢.myClass(), ¢);
       return $;
     });
@@ -43,7 +43,7 @@ public interface Tippers {
 
   Map<String, String> TipperIDNameTranslationTable = the.lambdaResult(() -> {
     final Map<String, String> $ = new HashMap<>();
-    for (final Tipper<? extends ASTNode> t : Utils.freshCopyOfAllTippers().getAllTippers()) {
+    for (final Tipper<? extends ASTNode> t : Configurations.freshCopyOfAllTippers().getAllTippers()) {
       final String id = ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "";
       $.put(id, t.myClass() + "");
     }

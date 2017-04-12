@@ -31,7 +31,7 @@ public class Table_Nanos {
             if (¢ instanceof NanoPatternTipper)
               t//
                   .col("Name", name(¢.getClass()))//
-                  .col("Node Class", Utils.intToClassName(i))//
+                  .col("Node Class", Configurations.intToClassName(i))//
                   .col("Description", ¢.description())//
                   .col("Example", ((NanoPatternTipper<?>) ¢).symbolycReplacement())//
                   .col("Replacement", ((NanoPatternTipper<?>) ¢).symbolycReplacement())//

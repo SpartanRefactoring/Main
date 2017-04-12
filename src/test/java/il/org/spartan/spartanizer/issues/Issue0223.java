@@ -13,7 +13,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.dispatch.Utils;
+import il.org.spartan.spartanizer.dispatch.Configurations;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -56,91 +56,90 @@ public final class Issue0223 {
     a$010_createTipper();
     a$020_CreateContext();
     a$030_FindFocus();
-    Utils.refresh();
   }
 
-  @Test public void B$010init() {
+  @Test public void b010init() {
     a$040_init();
   }
 
-  @Test public void B$020findFirst() {
+  @Test public void b020findFirst() {
     a$040_init();
     azzert.that(findMe(context), instanceOf(SUBJECT_CLASS));
   }
 
-  @Test public void B$030canSuggest() {
+  @Test public void b030canSuggest() {
     a$040_init();
     assert tipper.check(focus);
   }
 
-  @Test public void B$030demands() {
+  @Test public void b030demands() {
     a$040_init();
     assert tipper.check(focus);
   }
 
-  @Test public void B$040tipNotNull() {
+  @Test public void b040tipNotNull() {
     a$040_init();
     assert tipper.tip(focus) != null;
   }
 
-  @Test public void B$050toolboxCanFindTipper() {
+  @Test public void b050ConfigCanFindTipper() {
     a$040_init();
-    assert Utils.defaultInstance().firstTipper(focus) != null;
+    assert Configurations.defaultConfiguration().firstTipper(focus) != null;
   }
 
-  @Test public void B$060toolboxCanFindFindCorrectTipper() {
+  @Test public void b060ConfigCanFindFindCorrectTipper() {
     a$040_init();
-    azzert.that(Utils.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
+    azzert.that(Configurations.defaultConfiguration().firstTipper(focus), instanceOf(tipper.getClass()));
   }
 
-  @Test public void B$070callSuggest() {
+  @Test public void b070callSuggest() {
     a$040_init();
     tipper.tip(focus);
   }
 
-  @Test public void B$080descriptionNotNull() {
+  @Test public void b080descriptionNotNull() {
     a$040_init();
     assert tipper.tip(focus).description != null;
   }
 
-  @Test public void B$090suggestNotNull() {
+  @Test public void b090suggestNotNull() {
     a$040_init();
     assert tipper.tip(focus) != null;
   }
 
-  @Test public void B$100descriptionContains() {
+  @Test public void b100descriptionContains() {
     a$040_init();
     azzert.that(tipper.tip(focus).description, containsString(focus.getType() + ""));
   }
 
-  @Test public void B$110rangeNotEmpty() {
+  @Test public void b110rangeNotEmpty() {
     a$040_init();
     assert !tipper.tip(focus).highlight.isEmpty();
   }
 
-  @Test public void B$120findTipperNotEmpty() {
+  @Test public void b120findTipperNotEmpty() {
     a$040_init();
-    assert Utils.defaultInstance().firstTipper(focus) != null;
+    assert Configurations.defaultConfiguration().firstTipper(focus) != null;
   }
 
-  @Test public void B$130findTipperOfCorretType() {
+  @Test public void b130findTipperOfCorretType() {
     a$040_init();
-    azzert.that(Utils.defaultInstance().firstTipper(focus), instanceOf(ReplaceCurrentNode.class));
+    azzert.that(Configurations.defaultConfiguration().firstTipper(focus), instanceOf(ReplaceCurrentNode.class));
   }
 
-  @Test public void B$140findTipperDemands() {
+  @Test public void b140findTipperDemands() {
     a$040_init();
-    assert Utils.defaultInstance().firstTipper(focus).check(focus);
+    assert Configurations.defaultConfiguration().firstTipper(focus).check(focus);
   }
 
-  @Test public void B$150findTipperCanSuggest() {
+  @Test public void b150findTipperCanSuggest() {
     a$040_init();
-    assert Utils.defaultInstance().firstTipper(focus).check(focus);
+    assert Configurations.defaultConfiguration().firstTipper(focus).check(focus);
   }
 
-  @Test public void B$160findTipperReplacmenentNotNull() {
+  @Test public void b160findTipperReplacmenentNotNull() {
     a$040_init();
-    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Utils.defaultInstance().firstTipper(focus)).replacement(focus) != null;
+    assert ((ReplaceCurrentNode<ClassInstanceCreation>) Configurations.defaultConfiguration().firstTipper(focus)).replacement(focus) != null;
   }
 
   private ClassInstanceCreation findMe(final Statement c) {

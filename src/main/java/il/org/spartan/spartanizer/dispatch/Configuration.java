@@ -1,19 +1,13 @@
 package il.org.spartan.spartanizer.dispatch;
 
-import static java.util.stream.Collectors.*;
-
-import java.io.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -24,8 +18,13 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Configuration {
-  /** The default instance of this class */
-  static Configuration defaultInstance;
+  @Override public Configuration clone() {
+    final Configuration $ = new Configuration();
+    int i = 0;
+    for (final List<Tipper<? extends ASTNode>> ¢ : implementation)
+      $.implementation[i++] = new ArrayList<>(¢);
+    return $;
+  }
 
   /** Generate an {@link ASTRewrite} that contains the changes proposed by the
    * first tipper that applies to a node in the usual scan.
@@ -45,7 +44,7 @@ public class Configuration {
         if (t == null)
           return true;
         done.set();
-        Utils.extractTip(t, n).go($, null);
+        Configurations.extractTip(t, n).go($, null);
         return false;
       }
     });
@@ -88,7 +87,7 @@ public class Configuration {
           String.format("Did you forget to use create an enum instance in %s \nfor the %s of tipper %s \n (description= %s)?", //
               TipperGroup.class.getSimpleName(), //
               TipperCategory.class.getSimpleName(), //
-              Utils.name(¢), //
+              Configurations.name(¢), //
               ¢.description()));//
       if (¢.tipperGroup().isEnabled())
         get(nodeType.intValue()).add(¢);

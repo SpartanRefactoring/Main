@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.dispatch;
 
 import static java.util.stream.Collectors.*;
 
-import java.io.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -18,26 +17,25 @@ import il.org.spartan.utils.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-12 */
-public interface Utils {
-  static Configuration defaultInstance() {
-    return Configuration.defaultInstance = Configuration.defaultInstance != null ? Configuration.defaultInstance : freshCopyOfAllTippers();
+public interface Configurations {
+  /** The default instance of this class */
+  lazy<Configuration> defaultInstance = lazy.get(() -> freshCopyOfAllTippers());
+
+  static Configuration defaultConfiguration() {
+    return defaultInstance.get();
   }
 
   static Stream<List<Tipper<? extends ASTNode>>> defaultTipperLists() {
-    return Stream.of(defaultInstance().implementation).filter(λ -> λ != null && !λ.isEmpty());
+    return Stream.of(defaultConfiguration().implementation).filter(λ -> λ != null && !λ.isEmpty());
   }
 
-  static Configuration emptyToolboox() {
+  static Configuration empty() {
     return new Configuration();
-  }
-
-  static Tip extractTip(final ASTNode n, final Tipper<ASTNode> t) {
-    return t.tip(n);
   }
 
   static Tip extractTip(final Tipper<? extends ASTNode> t, final ASTNode n) {
     @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
-    return extractTip(n, $);
+    return $.tip(n);
   }
 
   @SafeVarargs static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {
@@ -323,7 +321,7 @@ public interface Utils {
    * @return a new defaultInstance containing only the tippers passed as
    *         parameter */
   @SafeVarargs static <N extends ASTNode> Configuration make(final Class<N> clazz, final Tipper<N>... ts) {
-    return emptyToolboox().add(clazz, ts);
+    return empty().add(clazz, ts);
   }
 
   static String name(final Class<? extends Tipper<?>> ¢) {
@@ -334,12 +332,8 @@ public interface Utils {
     return ¢.getClass().getSimpleName();
   }
 
-  static void refresh() {
-    Configuration.defaultInstance = freshCopyOfAllTippers();
-  }
-
   static void refresh(final Trimmer ¢) {
-    ¢.globalToolbox = freshCopyOfAllTippers();
+    ¢.globalConfiguration = defaultInstance.get().clone();
   }
 
   @SuppressWarnings("rawtypes") Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
