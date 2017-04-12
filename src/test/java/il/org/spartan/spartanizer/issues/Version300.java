@@ -91,7 +91,7 @@ public class Version300 {
 
   @Test public void abcd() {
     trimminKof("a = !(b ? c : d)") //
-        .using(PrefixExpression.class, new PrefixNotPushdown()) //
+        .using(new PrefixNotPushdown(), PrefixExpression.class) //
         .gives("a=b?!c:!d") //
         .stays() //
     ;
@@ -167,10 +167,10 @@ public class Version300 {
   @Test public void test_aPublicBaCFinalDbCFinalEBcdebIffcebghcReturnNullFFinalGijkibIfiNulllmiReturnnbSwitchcoCase0ReturnpqbCase1FinalBrrscIfltrReturnukrvReturnwxrDefaultReturnyb() {
     trimminKof(
         "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c)){return n;}G i=j.k(i(b));if((i==n)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:B r;r=s(c);if(l.t(r))return u.k(r).v();return w.x(r);default:return y(b);}}") //
-            .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+            .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
             .gives(
                 "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c)){return n;}G i=j.k(i(b));if((i==n)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
-            .using(Block.class, new BlockSingleton()) //
+            .using(new BlockSingleton(), Block.class) //
             .gives(
                 "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c))return n;G i=j.k(i(b));if((i==n)||l.m(i))return n(b);switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
     ;
@@ -207,7 +207,7 @@ public class Version300 {
    * Yossi */
   @Test public void ifaAb() {
     trimminKof("if (a) { A b; }") //
-        .using(IfStatement.class, new IfDeadRemove()) //
+        .using(new IfDeadRemove(), IfStatement.class) //
         .gives("{}") //
         .gives("") //
         .stays() //
@@ -216,7 +216,7 @@ public class Version300 {
 
   @Test public void ifab() {
     trimminKof("if (a++ == b++) { }") //
-        .using(IfStatement.class, new IfEmptyThenEmptyElse()) //
+        .using(new IfEmptyThenEmptyElse(), IfStatement.class) //
         .gives("a++;b++;") //
         .gives("++a;++b;") //
         .stays() //
@@ -262,9 +262,9 @@ public class Version300 {
 
   @Test public void intaIntbForb100bb1IfFalseBreakReturnb() {
     trimminKof("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
-        .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
+        .using(new AssignmentToFromInfixIncludingTo(), Assignment.class) //
         .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("int a(int b){for(;b<100;b+=1){}return b;}")//
     ;
   }
@@ -329,7 +329,7 @@ public class Version300 {
   // @Ignore("Unignore one by one")
   @Test public void negationPushdownTernary() {
     trimminKof("a = !(b ? c: d)")//
-        .using(PrefixExpression.class, new PrefixNotPushdown())//
+        .using(new PrefixNotPushdown(), PrefixExpression.class)//
         .gives("a=b?!c:!d") //
     ;
   }
@@ -392,9 +392,9 @@ public class Version300 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void x1() {
     trimminKof("int a(int b) { for (; b < 100; b = b + 1) if (false) break; return b; }") //
-        .using(Assignment.class, new AssignmentToFromInfixIncludingTo()) //
+        .using(new AssignmentToFromInfixIncludingTo(), Assignment.class) //
         .gives("int a(int b){for(;b<100;b+=1)if(false)break;return b;}") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("int a(int b){for(;b<100;b+=1){}return b;}");
   }
 

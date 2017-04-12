@@ -202,11 +202,11 @@ public final class Version250 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void ifFalseaElseIfFalsebElsec() {
     trimminKof("if (false) { a(); } else { if (false) b(); else c(); }") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("{if(false)b();else c();}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("if(false)b();else c();") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("c();") //
         .stays() //
     ;
@@ -216,11 +216,11 @@ public final class Version250 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void ifFalseaElseIfTruebElsec() {
     trimminKof("if (false) { a(); } else { if (true) b(); else c(); }") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("{if(true)b();else c();}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("if(true)b();else c();") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("b();") //
         .stays() //
     ;
@@ -230,11 +230,11 @@ public final class Version250 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void ifTrueIfTrueaElsebElseIfFalseaElseb() {
     trimminKof("if (true) { if (true) a(); else b(); } else { if (false) a(); else b(); }") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("{if(true)a();else b();}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("if(true)a();else b();") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("a();") //
         .stays() //
     ;
@@ -259,11 +259,11 @@ public final class Version250 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void ifFaeaElseIfTruebElsec() {
     trimminKof("if (false) a(); else { if (true) b(); else c(); }") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("{if(true)b();else c();}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("if(true)b();else c();") //
-        .using(IfStatement.class, new IfTrueOrFalse()) //
+        .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("b();") //
         .stays() //
     ;

@@ -42,10 +42,10 @@ public class Issue0895 {
   @Test public void test_publicFinalClassAPublicStaticVoidaFinalBbCcNewCDPublicVoiddTryeCatchEfFgbCatchGfFgb() {
     trimminKof(
         "public final class A{public static void a(final B b){C c=new C(){@D public void d(){try{e();}catch(E f){F.g(b);}catch(G f){F.g(b);}}};}}") //
-            .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+            .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
             .gives(
                 "public final class A{public static void a(final B b){new C(){@D public void d(){try{e();}catch(E f){F.g(b);}catch(G f){F.g(b);}}};}}") //
-            .using(TryStatement.class, new TryMergeCatchers())
+            .using(new TryMergeCatchers(), TryStatement.class)
             .gives("public final class A{public static void a(final B b){new C(){@D public void d(){try{e();}catch(G|E f){F.g(b);}}};}}") //
             .stays() //
     ;

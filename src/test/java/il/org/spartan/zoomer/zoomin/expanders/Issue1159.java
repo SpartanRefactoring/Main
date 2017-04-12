@@ -13,7 +13,7 @@ import il.org.spartan.bloater.bloaters.*;
 @SuppressWarnings("static-method")
 public class Issue1159 {
   @Test public void t1() {
-    bloatingOf("switch(a){ case 1: switch(b){ default: } }").using(SwitchStatement.class, new SwitchAddDefault())
+    bloatingOf("switch(a){ case 1: switch(b){ default: } }").using(new SwitchAddDefault(), SwitchStatement.class)
         .gives("switch(a){ case 1: switch(b){ default: } default: }");
   }
 

@@ -16,14 +16,14 @@ public class HoldsOrReturnTest {
 
   @Test public void a() {
     trimminKof("if(x.isCute()) return;")//
-        .using(IfStatement.class, nano)//
+        .using(nano, IfStatement.class)//
         .gives("holds(!(x.isCute())).orReturn();")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("if(x.isCute() || iWant()) return 0;")//
-        .using(IfStatement.class, nano)//
+        .using(nano, IfStatement.class)//
         .gives("holds(!(x.isCute()||iWant())).orReturn(0);")//
         .gives("holds(!x.isCute()&&!iWant()).orReturn(0);") //
         .stays();
@@ -31,7 +31,7 @@ public class HoldsOrReturnTest {
 
   @Test public void c() {
     trimminKof("if(iWant()) return null;")//
-        .using(IfStatement.class, nano)//
+        .using(nano, IfStatement.class)//
         .gives("holds(!(iWant())).orReturn(null);") //
         .stays();
   }

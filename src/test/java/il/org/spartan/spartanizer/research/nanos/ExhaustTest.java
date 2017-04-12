@@ -18,14 +18,14 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 public class ExhaustTest {
   @Test public void a() {
     trimminKof("while (keyReferenceQueue.poll() != null) {}")//
-        .using(WhileStatement.class, new Exhaust())//
+        .using(new Exhaust(), WhileStatement.class)//
         .gives("exhaust(()->keyReferenceQueue.poll()!=null);")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("while (keyReferenceQueue.poll() != null) {something(); andAnother();}")//
-        .using(WhileStatement.class, new Exhaust())//
+        .using(new Exhaust(), WhileStatement.class)//
         .stays();
   }
 }

@@ -22,9 +22,9 @@ public class Issue0499 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_publicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
     trimminKof("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
-        .using(SingleVariableDeclaration.class, new ParameterAnonymize()) //
+        .using(new ParameterAnonymize(), SingleVariableDeclaration.class) //
         .gives("public A a(final B __){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
-        .using(LambdaExpression.class, new LambdaRenameSingleParameterToLambda()) //
+        .using(new LambdaRenameSingleParameterToLambda(), LambdaExpression.class) //
         .gives("public A a(final B __){assert a!=null;r(λ->Integer.valueOf(a.apply(λ,selection())));return this;}") //
         .stays() //
     ;
@@ -40,9 +40,9 @@ public class Issue0499 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void publicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
     trimminKof("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
-        .using(SingleVariableDeclaration.class, new ParameterAnonymize()) //
+        .using(new ParameterAnonymize(), SingleVariableDeclaration.class) //
         .gives("public A a(final B __){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
-        .using(LambdaExpression.class, new LambdaRenameSingleParameterToLambda()) //
+        .using(new LambdaRenameSingleParameterToLambda(), LambdaExpression.class) //
         .gives("public A a(final B __){assert a!=null;r(λ->Integer.valueOf(a.apply(λ,selection())));return this;}") //
         .stays() //
     ;
@@ -52,9 +52,9 @@ public class Issue0499 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void ublicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
     trimminKof("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
-        .using(SingleVariableDeclaration.class, new ParameterAnonymize()) //
+        .using(new ParameterAnonymize(), SingleVariableDeclaration.class) //
         .gives("public A a(final B __){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
-        .using(LambdaExpression.class, new LambdaRenameSingleParameterToLambda()) //
+        .using(new LambdaRenameSingleParameterToLambda(), LambdaExpression.class) //
         .gives("public A a(final B __){assert a!=null;r(λ->Integer.valueOf(a.apply(λ,selection())));return this;}") //
         .stays() //
     ;

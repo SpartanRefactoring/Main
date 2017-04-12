@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tippers.*;
 public class issue0449 {
   @Test public void a() {
     trimminKof("s = s.replaceAll(b,c); s=s.replaceAll(d,e);")//
-        .using(Assignment.class, new AssignmentAndAssignmentToSame())//
+        .using(new AssignmentAndAssignmentToSame(), Assignment.class)//
         .gives("s = s.replaceAll(b,c).replaceAll(d,e);");
   }
 }

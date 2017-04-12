@@ -27,7 +27,7 @@ public class CountIfTest {
 
   @Test public void c() {
     trimminKof("while (BlockFalling.canFall(w,i,j - 1,k) && j > 0) --j;")//
-        .using(WhileStatement.class, new While.CountIf())//
+        .using(new While.CountIf(), WhileStatement.class)//
         .gives("j+=countWhile(()->BlockFalling.canFall(w,i,j-1,k)&&j>0);")//
         .stays();
   }

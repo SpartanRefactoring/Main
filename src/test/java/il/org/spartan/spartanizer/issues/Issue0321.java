@@ -18,7 +18,7 @@ public class Issue0321 {
             "   instance = allTippers();" + //
             " return instance;" + //
             "}")//
-                .using(IfStatement.class, new CachingPattern())//
+                .using(new CachingPattern(), IfStatement.class)//
                 .gives( //
                     "public static Toolbox defaultInstance() {" + //
                         " return  instance != null ? instance : (instance = allTippers());" + //

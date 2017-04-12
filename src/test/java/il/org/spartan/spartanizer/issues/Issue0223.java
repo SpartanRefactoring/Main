@@ -148,7 +148,7 @@ public final class Issue0223 {
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
     trimminKof("Integer x = new Integer(1 + 9);")//
-        .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
+        .using(new ClassInstanceCreationBoxedValueTypes(), ClassInstanceCreation.class) //
         .gives("Integer x = Integer.valueOf(1+9);")//
         .gives("Integer.valueOf(1+9);")//
         .gives("Integer.valueOf(10);")//
@@ -157,14 +157,14 @@ public final class Issue0223 {
 
   @Test public void a1() {
     trimminKof("Integer x = new Integer(a);")//
-        .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
+        .using(new ClassInstanceCreationBoxedValueTypes(), ClassInstanceCreation.class) //
         .gives("Integer x = Integer.valueOf(a);")//
     ;
   }
 
   @Test public void a2() {
     trimminKof("new Integer(a);")//
-        .using(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
+        .using(new ClassInstanceCreationBoxedValueTypes(), ClassInstanceCreation.class) //
         .gives("Integer.valueOf(a);")//
     ;
   }

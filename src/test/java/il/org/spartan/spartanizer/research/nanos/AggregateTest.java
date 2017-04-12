@@ -16,19 +16,19 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 public class AggregateTest {
   @Ignore @Test public void a() {
     trimminKof("for (int ¢ = 1; ¢ < arr.length; ++¢)  if (arr[¢] < min)   min = arr[¢];") //
-        .using(EnhancedForStatement.class, new Aggregate())//
+        .using(new Aggregate(), EnhancedForStatement.class)//
         .gives("StatsAccumulator $=Create.a(StatsAccumulator.class).from(values);");
   }
 
   @Test public void b() {
     trimminKof("for (final Object ¢ : os)  if (¢.better(best))   best = ¢;")//
-        .using(EnhancedForStatement.class, new Aggregate())//
+        .using(new Aggregate(), EnhancedForStatement.class)//
         .gives("best=os.stream().reduce((¢,best)->¢.better(best)?¢:best).get();");
   }
 
   @Test public void c() {
     trimminKof("int $ = 0; for(B d : bs) $ += f();")//
-        .using(EnhancedForStatement.class, new Aggregate())//
+        .using(new Aggregate(), EnhancedForStatement.class)//
         .gives("int $ = 0; $+=bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .gives("int $ = 0 + bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
         .gives("bs.stream().map(d->f()).reduce((x,y)->x+y).get();")//
@@ -38,23 +38,23 @@ public class AggregateTest {
 
   @Test public void d() {
     trimminKof("for(B d : (B)bs) $ += f();")//
-        .using(EnhancedForStatement.class, new Aggregate())//
+        .using(new Aggregate(), EnhancedForStatement.class)//
         .gives("$ += ((B)bs).stream().map(d->f()).reduce((x,y)->x+y).get();")//
-        .using(EnhancedForStatement.class, new Aggregate())//
+        .using(new Aggregate(), EnhancedForStatement.class)//
         .stays();
   }
 
   @Test public void e() {
     trimminKof("for(B d : omg ? yes : no) $ += f();")//
-        .using(EnhancedForStatement.class, new Aggregate())//
+        .using(new Aggregate(), EnhancedForStatement.class)//
         .gives("$+=(omg ? yes : no).stream().map(d->f()).reduce((x,y)->x+y).get();")//
-        .using(EnhancedForStatement.class, new Aggregate())//
+        .using(new Aggregate(), EnhancedForStatement.class)//
         .stays();
   }
 
   @Test public void f() {
     trimminKof("for (final List<?> ¢ : implementation)    if (¢ != null)  $ += ¢.size();")//
-        .using(EnhancedForStatement.class, new Aggregate())//
+        .using(new Aggregate(), EnhancedForStatement.class)//
         .gives("$+=implementation.stream().filter(¢->¢!=null).map(¢->¢.size()).reduce((x,y)->x+y).get();")//
         .gives("$+=implementation.stream().filter(λ->λ!=null).map(λ->λ.size()).reduce((x,y)->x+y).get();")//
         .stays();
@@ -62,7 +62,7 @@ public class AggregateTest {
 
   @Test public void g() {
     trimminKof("int $ = init; for (final Statement ¢ : ss)    $ += base + horizontalComplexity(¢);")//
-        .using(EnhancedForStatement.class, new Aggregate())//
+        .using(new Aggregate(), EnhancedForStatement.class)//
         .gives("int $=init;$+=ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
         .gives("int $=init + ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
     ;

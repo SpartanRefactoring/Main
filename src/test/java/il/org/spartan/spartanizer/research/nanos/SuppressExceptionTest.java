@@ -17,7 +17,7 @@ public class SuppressExceptionTest {
             "  }" + //
             " catch (  B i) {}"//
     ) //
-        .using(CatchClause.class, new SuppressException())//
+        .using(new SuppressException(), CatchClause.class)//
         .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();};}")//
         .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();}")//
         .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){ignore();}")//
@@ -29,7 +29,7 @@ public class SuppressExceptionTest {
   @Test public void b() {
     trimminKof("try{ thing(); } catch(A a){}catch(B b){}")//
         .gives("try{thing();}catch(B|A a){}")//
-        .using(CatchClause.class, new SuppressException())//
+        .using(new SuppressException(), CatchClause.class)//
         .gives("{try{{thing();}}catch(B|A a){ignore();};}")//
         .gives("try{{thing();}}catch(B|A a){ignore();}")//
         .gives("try{thing();}catch(B|A a){ignore();}")//
