@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** File utils
@@ -66,7 +65,7 @@ public enum Files {
     try (FileWriter w = new FileWriter(f, true)) {
       w.write(s);
     } catch (final IOException ¢) {
-      note.config(¢, "append");
+      note.io(¢, "append");
     }
   }
 
@@ -77,7 +76,7 @@ public enum Files {
     try (FileWriter w = new FileWriter(f, false)) {
       w.write(s);
     } catch (final IOException ¢) {
-      note.config(¢, "write");
+      note.io(¢, "write");
     }
   }
 

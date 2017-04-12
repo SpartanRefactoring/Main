@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.dispatch.Configurations;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** simple no-gimmicks singleton service that does the simple job of applying a

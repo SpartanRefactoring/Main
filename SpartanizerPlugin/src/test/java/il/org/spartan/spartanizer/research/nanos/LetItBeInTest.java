@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.research.nanos.*;
-
 /** Tests {@link LetItBeIn}
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-01 */

@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.internal.core.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** A utility class to manage libraries at the users side, in front of the

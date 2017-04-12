@@ -163,7 +163,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     try {
       return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
-      note.config(¢, "opening report file");
+      note.io(¢, "opening report file");
       return null;
     }
   }

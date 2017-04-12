@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** A meta class containing handler and marker resolution strategies.

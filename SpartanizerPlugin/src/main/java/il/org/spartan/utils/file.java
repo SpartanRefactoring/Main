@@ -21,7 +21,7 @@ public enum file {
     try {
       Files.move(source, source.resolveSibling(to));
     } catch (final IOException ¢) {
-      note.config(¢);
+      note.io(¢);
     }
   }
 

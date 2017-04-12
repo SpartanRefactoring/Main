@@ -5,12 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import org.junit.runner.*;
 
-import il.org.spartan.spartanizer.research.metatester.*;
-
-/**
- * @author  Oren Afek
- * @since  3/27/2017 
- */
+/** @author Oren Afek
+ * @since 3/27/2017 */
 @Ignore
 @RunWith(MetaTester.class)
 public class SimpleTest {

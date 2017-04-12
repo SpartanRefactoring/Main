@@ -22,7 +22,6 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Specific applicator
@@ -182,7 +181,7 @@ public class CommandLine$Applicator extends GenericApplicator {
         try {
           tipper = getTipper(n);
         } catch (final Exception ¢) {
-          note.info(this, ¢);
+          note.ignore(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -190,7 +189,7 @@ public class CommandLine$Applicator extends GenericApplicator {
         try {
           s = tipper.tip(n);
         } catch (final Exception ¢) {
-          note.info(this, ¢);
+          note.ignore(this, ¢);
         }
         if (s == null)
           return true;

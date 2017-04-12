@@ -77,7 +77,7 @@ public class ASTInFilesVisitor {
     try {
       return !containsTestAnnotation(FileUtils.read($));
     } catch (final IOException ¢) {
-      note.config(¢, "File = " + $);
+      note.io(¢, "File = " + $);
       return false;
     }
   }
@@ -133,7 +133,7 @@ public class ASTInFilesVisitor {
         if (!silent)
           dotter.click();
       } catch (final IOException ¢) {
-        note.config(¢, "File = " + f);
+        note.io(¢, "File = " + f);
       }
   }
 

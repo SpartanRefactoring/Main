@@ -12,7 +12,6 @@ import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Utility class for dialogs management.

@@ -12,7 +12,6 @@ import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.fluent.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
@@ -92,7 +91,7 @@ public interface note {
             "\n o = " + o + "'"));
   }
 
-  static <T> T config(final Exception ¢) {
+  static <T> T io(final Exception ¢) {
     return nulling.ly(() -> logger.config(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)" //
@@ -100,7 +99,7 @@ public interface note {
     ));
   }
 
-  static <T> T config(final Exception x, final String message) {
+  static <T> T io(final Exception x, final String message) {
     return nulling.ly(() -> logger.info(//
         "   Got an exception of type : " + English.name(x) + //
             "\n      (probably I/O exception)" + //
@@ -110,14 +109,14 @@ public interface note {
     ));
   }
 
-  static <T> T config(final IOException ¢) {
+  static <T> T io(final IOException ¢) {
     return nulling.ly(() -> logger.info(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
     ));
   }
 
-  static <T> T info(final Class<?> o, final Throwable t) {
+  static <T> T ignore(final Class<?> o, final Throwable t) {
     return info(//
         "A static method of " + English.name(o) + //
             "was hit by " + indefinite(t) + "\n" + //
@@ -126,7 +125,7 @@ public interface note {
             "o = " + o + "'");
   }
 
-  static <T> T info(final Object o, final Throwable t) {
+  static <T> T ignore(final Object o, final Throwable t) {
     return info(//
         "An instance of " + English.name(o) + //
             "\n was hit by " + indefinite(t) + //
