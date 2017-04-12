@@ -30,7 +30,7 @@ public interface system {
     try {
       return new BufferedWriter(new FileWriter(ephemeral(myFullClassName()).dot("txt")));
     } catch (final IOException ¢) {
-      note.config(¢);
+      note.io(¢);
     }
     return null;
   }
@@ -42,7 +42,7 @@ public interface system {
       for (String line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
     } catch (final IOException ¢) {
-      note.config(¢, $ + "");
+      note.io(¢, $ + "");
     }
     return $;
   }

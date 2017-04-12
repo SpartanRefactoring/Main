@@ -9,7 +9,6 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.dispatch.Configurations;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
@@ -24,16 +23,6 @@ public class Issue1190 {
   @Before public void setUp() {
     exceptionsCounter = 1;
     trimmer = new Trimmer(Configurations.all());
-    trimmer.onException(new TrimmerExceptionListener() {
-      @Override @SuppressWarnings("boxing") public void accept(final Exception x, final Tipper<? extends ASTNode> t, final ASTNode n) {
-        System.err.printf("%d. Intercepted %s with message '%s'\n", exceptionsCounter++, English.indefinite(x), x.getMessage());
-        System.err.printf("in tipper %s applied on %s:\n%s\n\n", English.name(t), English.indefinite(n), n);
-      }
-
-      @Override public void accept(final Exception ¢) {
-        note.bug(this, ¢);
-      }
-    });
   }
 
   @Test(timeout = 30000) public void runTheSpartinizerOnItself() {
@@ -42,7 +31,7 @@ public class Issue1190 {
         try {
           trimmer.fixed(FileUtils.read(f));
         } catch (final IOException ¢) {
-          note.config(¢, "Cannot read: " + f);
+          note.io(¢, "Cannot read: " + f);
         }
       }
     }.fire(new ASTVisitor() {/**/});

@@ -26,6 +26,7 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
   public void logCompilationUnit(final CompilationUnit ¢) {
     add(new CompilationUnitRecord(¢));
   }
+
   public void logAfterSpartanization(final CompilationUnit ¢) {
     last(this).logAfterSpartanization(¢);
   }

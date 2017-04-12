@@ -70,7 +70,7 @@ final class BindingFun implements IApplication {
         ___.______unused();
         iterateMethodInvocations(cu);
       } catch (final IOException ¢) {
-        note.config(¢, f + "");
+        note.io(¢, f + "");
       } catch (final JavaModelException ¢) {
         note.bug(this, ¢);
       }

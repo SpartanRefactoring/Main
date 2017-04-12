@@ -123,11 +123,6 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     return node;
   }
 
-  public Trimmer onException(final TrimmerExceptionListener ¢) {
-    exceptionListener = ¢;
-    return this;
-  }
-
   public ASTRewrite rewrite() {
     return getRewrite();
   }
@@ -199,7 +194,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
       final Tipper<N> $ = currentConfiguration.firstTipper(¢);
       setTipper($);
       return $;
-    }, swallow);
+    }, λ -> note.bug(λ));
   }
 
   @Override protected ASTVisitor tipsCollector(final Tips into) {
@@ -217,7 +212,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
             return;
           into.removeIf(λ -> Tip.overlap(λ.highlight, tip().highlight));
           into.add(tip());
-        }, swallow);
+        }, note::bug);
       }
 
       @Override protected void initialization(final ASTNode ¢) {
@@ -235,7 +230,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
       if ($ == null)
         return;
       setTip($.tip(¢));
-    }, swallow);
+    }, λ -> note.bug(λ));
   }
 
   void setTip(final Tip ¢) {
@@ -254,8 +249,6 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   Tip auxiliaryTip;
   Configuration currentConfiguration;
   String fileName;
-  TrimmerExceptionListener exceptionListener = λ -> note.logToFile(λ, this, tip(), tipper(), fileName);
-  final Consumer<Exception> swallow = λ -> exceptionListener.accept(λ);
 
   /** A {@link Tap} to update {@link #progressMonitor}
    * @author Yossi Gil

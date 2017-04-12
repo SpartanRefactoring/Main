@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Coercion pattern <br>
@@ -159,7 +158,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
           $.toPath(), StandardCopyOption.REPLACE_EXISTING);
     } catch (final IOException ¢) {
-      note.config(¢, "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template");
+      note.io(¢, "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template");
     }
     return $;
   }

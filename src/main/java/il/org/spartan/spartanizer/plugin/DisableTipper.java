@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Disable tipper, removing it from XML file.

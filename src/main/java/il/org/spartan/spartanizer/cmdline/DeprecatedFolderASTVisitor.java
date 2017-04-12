@@ -116,7 +116,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
         if (!silent)
           dotter.click();
       } catch (final IOException ¢) {
-        note.config(¢, "File = " + f);
+        note.io(¢, "File = " + f);
       }
   }
 
@@ -144,7 +144,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       try {
         out = new BufferedWriter(new FileWriter("/tmp/out.txt", false));
       } catch (final IOException ¢) {
-        note.config(¢);
+        note.io(¢);
         return;
       }
       DeprecatedFolderASTVisitor.main(args);
