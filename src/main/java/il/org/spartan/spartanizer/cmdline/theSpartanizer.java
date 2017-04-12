@@ -8,6 +8,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.Utils;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -108,5 +109,5 @@ public interface theSpartanizer {
     return once(once(javaCode));
   }
 
-  Configuration configuration = Configuration.defaultInstance();
+  Configuration configuration = Utils.defaultInstance();
 }

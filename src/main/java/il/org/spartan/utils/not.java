@@ -1,4 +1,6 @@
-package il.org.spartan.spartanizer.ast.safety;
+package il.org.spartan.utils;
+
+import il.org.spartan.spartanizer.ast.safety.*;
 
 public interface not {
   @SafeVarargs static <T> boolean in(final T t, final T... ts) {

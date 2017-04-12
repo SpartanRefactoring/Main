@@ -8,6 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.Utils;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -21,7 +22,7 @@ public class Issue1190 {
 
   @Before public void setUp() {
     exceptionsCounter = 1;
-    trimmer = new Trimmer(Configuration.defaultInstance());
+    trimmer = new Trimmer(Utils.defaultInstance());
     trimmer.onException(new TrimmerExceptionListener() {
       @Override @SuppressWarnings("boxing") public void accept(final Exception x, final Tipper<? extends ASTNode> t, final ASTNode n) {
         System.err.printf("%d. Intercepted %s with message '%s'\n", exceptionsCounter++, English.indefinite(x), x.getMessage());

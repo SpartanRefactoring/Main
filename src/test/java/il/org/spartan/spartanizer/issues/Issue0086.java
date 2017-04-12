@@ -10,6 +10,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.dispatch.Utils;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -45,7 +46,7 @@ public final class Issue0086 extends Issue____ {
     A$01_createTipper();
     A$02_CreateContext();
     A$03_FindFocus();
-    Configuration.refresh();
+    Utils.refresh();
   }
 
   @Test public void B$01init() {
@@ -74,12 +75,12 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void B$05toolboxCanFindTipper() {
     A$04_init();
-    assert Configuration.defaultInstance().firstTipper(focus) != null;
+    assert Utils.defaultInstance().firstTipper(focus) != null;
   }
 
   @Test public void B$06toolboxCanFindFindCorrectTipper() {
     A$04_init();
-    azzert.that(Configuration.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
+    azzert.that(Utils.defaultInstance().firstTipper(focus), instanceOf(tipper.getClass()));
   }
 
   @Test public void B$07callSuggest() {
@@ -114,7 +115,7 @@ public final class Issue0086 extends Issue____ {
 
   @Test public void B$14applyTipper() {
     A$04_init();
-    Configuration.defaultInstance().firstTipper(focus);
+    Utils.defaultInstance().firstTipper(focus);
   }
 
   @Test public void doubleVanillaThrow() {
