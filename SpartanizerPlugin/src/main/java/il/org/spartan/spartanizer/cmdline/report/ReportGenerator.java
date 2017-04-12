@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Generator for reports
  * @author Matteo Orru'
@@ -178,7 +179,7 @@ public class ReportGenerator implements ConfigurableReport {
     try {
       reports.put(id, new CSVStatistics(reportFileName, id));
     } catch (final IOException ¢) {
-      monitor.config(¢, id);
+      note.config(¢, id);
     }
   }
 

@@ -7,6 +7,7 @@ import java.util.*;
 import il.org.spartan.java.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil
@@ -20,7 +21,7 @@ public interface system {
       if ($ != null)
         return dumpOutput($);
     } catch (final IOException ¢) {
-      monitor.bug(shellCommand, ¢);
+      note.bug(shellCommand, ¢);
     }
     return null;
   }
@@ -29,7 +30,7 @@ public interface system {
     try {
       return new BufferedWriter(new FileWriter(ephemeral(myFullClassName()).dot("txt")));
     } catch (final IOException ¢) {
-      monitor.config(¢);
+      note.config(¢);
     }
     return null;
   }
@@ -41,7 +42,7 @@ public interface system {
       for (String line = in.readLine(); line != null; line = in.readLine())
         System.out.println(line);
     } catch (final IOException ¢) {
-      monitor.config(¢, $ + "");
+      note.config(¢, $ + "");
     }
     return $;
   }

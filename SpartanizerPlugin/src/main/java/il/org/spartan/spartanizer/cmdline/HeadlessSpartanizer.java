@@ -7,6 +7,7 @@ import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A configurable version of the HeadlessSpartanizer that relies on
  * {@link CommandLineApplicator} and {@link CommandLineSelection}
@@ -71,7 +72,7 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
             .defaultSelection(CommandLineSelection.of(CommandLineSelection.Util.getAllCompilationUnits(inputFolder)))
             .defaultRunAction(new CommandLine$Applicator()).go();
     } catch (final IOException ¢) {
-      monitor.config(¢);
+      note.config(¢);
     }
   }
 

@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.research.analyses.util.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Collects methods, applies spartanization and nanos, then generates a file
  * with tagged (fully covered by single nano) methods and a file with non-tagged
@@ -164,7 +165,7 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     try {
       return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
-      monitor.config(¢, "opening report file");
+      note.config(¢, "opening report file");
       return null;
     }
   }

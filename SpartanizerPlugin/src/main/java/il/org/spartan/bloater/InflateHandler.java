@@ -26,6 +26,7 @@ import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an

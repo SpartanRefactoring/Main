@@ -19,6 +19,7 @@ import org.eclipse.ui.views.markers.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Describes a selection, containing selected compilation unit(s) and text
  * selection
@@ -141,7 +142,7 @@ public class Selection extends AbstractSelection<Selection> {
       if (changed)
         textSelection = new TextSelection(no, nl - no);
     } catch (final CoreException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
       return this;
     }
     return this;
@@ -404,7 +405,7 @@ public class Selection extends AbstractSelection<Selection> {
       try {
         rs = p.getPackageFragmentRoots();
       } catch (final JavaModelException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
         return empty();
       }
       as.list(rs).forEach(λ -> $.unify(by(λ)));
@@ -418,7 +419,7 @@ public class Selection extends AbstractSelection<Selection> {
       try {
         Stream.of(r.getChildren()).filter(λ -> λ.getElementType() == IJavaElement.PACKAGE_FRAGMENT).forEach(λ -> $.unify(by((IPackageFragment) λ)));
       } catch (final JavaModelException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
         return empty();
       }
       return $.setName(r.getElementName());
@@ -432,7 +433,7 @@ public class Selection extends AbstractSelection<Selection> {
             : Selection.of($.getCompilationUnits())
                 .setName($.getElementName() != null && !$.getElementName().isEmpty() ? $.getElementName() : DEFAULT_PACKAGE_NAME);
       } catch (final JavaModelException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
         return empty();
       }
     }
@@ -448,7 +449,7 @@ public class Selection extends AbstractSelection<Selection> {
       try {
         return $.getSourceRange();
       } catch (final JavaModelException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
         return null;
       }
     }
@@ -460,7 +461,7 @@ public class Selection extends AbstractSelection<Selection> {
         final int $ = ((Integer) m.getAttribute(Builder.SPARTANIZATION_CHAR_START)).intValue();
         return new TextSelection($, ((Integer) m.getAttribute(Builder.SPARTANIZATION_CHAR_END)).intValue() - $);
       } catch (final CoreException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
         return null;
       }
     }
@@ -473,7 +474,7 @@ public class Selection extends AbstractSelection<Selection> {
         final int $ = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         return new NodeFinder(u.build().compilationUnit, $, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - $).getCoveredNode();
       } catch (final CoreException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
         return null;
       }
     }

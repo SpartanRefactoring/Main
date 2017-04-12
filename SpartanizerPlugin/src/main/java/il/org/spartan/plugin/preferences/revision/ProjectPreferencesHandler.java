@@ -85,9 +85,9 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     try {
       Eclipse.refreshProject(p);
     } catch (InvocationTargetException | CoreException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     } catch (final InterruptedException ¢) {
-      monitor.cancel(¢);
+      note.cancel(¢);
     }
     return null;
   }
@@ -275,7 +275,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
             })).run(Display.getCurrent().getActiveShell(), "Tipper Preview") == Window.OK)
               $.setChecked(st, true);
           } catch (final InterruptedException ¢¢) {
-            monitor.cancel(this, ¢¢);
+            note.cancel(this, ¢¢);
           }
         }
       });
@@ -307,7 +307,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     try {
       e.apply($);
     } catch (MalformedTreeException | BadLocationException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     }
     return $.get();
   }

@@ -100,7 +100,7 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
     try {
       return output = new CSVStatistics(outputDir, "Tips");
     } catch (final IOException $) {
-      return monitor.config($);
+      return note.config($);
     }
   }
 

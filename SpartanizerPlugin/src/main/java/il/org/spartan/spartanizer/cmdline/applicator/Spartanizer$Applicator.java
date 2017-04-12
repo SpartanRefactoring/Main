@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** TODO Matteo Orru' please add a description
  * @author Matteo Orru'
@@ -106,7 +107,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        monitor.bug(this, ¢);
+        note.bug(this, ¢);
         throw new AssertionError(¢);
       }
       if (!e.hasChildren())
@@ -137,7 +138,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
         try {
           tipper = getTipper(n);
         } catch (final Exception ¢) {
-          monitor.info(this, ¢);
+          note.info(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -146,7 +147,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
           s = tipper.tip(n);
           tick(n, tipper);
         } catch (final Exception ¢) {
-          monitor.info(this, ¢);
+          note.info(this, ¢);
         }
         if (s == null)
           return true;

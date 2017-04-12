@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Evaluate the $ of numbers according to the following rules {@code
  * int % int --> int
@@ -44,7 +45,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
         $ %= int¢;
       }
     } catch (final NumberFormatException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return $;
   }
@@ -63,7 +64,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
         $ %= long¢;
       }
     } catch (final NumberFormatException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return $;
   }

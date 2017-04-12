@@ -22,6 +22,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Generates files after nano spartanization+replacing
  * @author Ori Marcovitch
@@ -162,7 +163,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     try {
       return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
-      monitor.config(¢, "opening report file");
+      note.config(¢, "opening report file");
       return null;
     }
   }

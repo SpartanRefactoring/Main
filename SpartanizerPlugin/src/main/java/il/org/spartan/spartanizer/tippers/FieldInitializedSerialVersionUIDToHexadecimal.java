@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** See {@link #examples()} for documentation
  * @author Yossi Gil
@@ -72,7 +73,7 @@ public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<
       replacement = Long.parseLong(token, radix);
       return true;
     } catch (final NumberFormatException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
       return false;
     }
   }

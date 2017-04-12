@@ -9,6 +9,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -71,7 +72,7 @@ public enum generalize {
     try {
       r.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     }
     return ASTutils.extractCode(s, d);
   }

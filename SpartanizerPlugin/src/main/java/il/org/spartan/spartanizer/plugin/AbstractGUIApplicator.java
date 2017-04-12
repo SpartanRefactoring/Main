@@ -25,6 +25,7 @@ import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** the base class for all GUI applicators contains common functionality
  * @author Artium Nihamkin (original)
@@ -51,7 +52,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     try {
       return apply($);
     } catch (final CoreException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
       return 0;
     }
   }
@@ -96,9 +97,9 @@ public abstract class AbstractGUIApplicator extends Refactoring {
     try {
       checkFinalConditions(progressMonitor);
     } catch (final OperationCanceledException ¢) {
-      monitor.cancel(this, ¢);
+      note.cancel(this, ¢);
     } catch (final CoreException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return totalChanges;
   }
@@ -146,7 +147,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
       return performRule($);
     } catch (final CoreException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return 0;
   }
@@ -165,7 +166,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         try {
           runAsMarkerFix(m);
         } catch (final CoreException ¢) {
-          monitor.bug(this, ¢);
+          note.bug(this, ¢);
         }
       }
     };
@@ -306,7 +307,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
         s.update();
       return $.get();
     } catch (final CoreException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
       return 0;
     } finally {
       progressMonitor.done();
@@ -354,7 +355,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
           new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
               "Spartanization: " + s + AbstractGUIApplicator.this);
         } catch (final InterruptedException ¢) {
-          monitor.cancel(this, ¢);
+          note.cancel(this, ¢);
         }
       }
     };
@@ -419,7 +420,7 @@ public abstract class AbstractGUIApplicator extends Refactoring {
   }
 
   private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
-    monitor.logger.fine("Weaving maximal rewrite of " + u);
+    note.logger.fine("Weaving maximal rewrite of " + u);
     progressMonitor.beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
     final Int count = new Int();
     final ASTRewrite $ = computeMaximalRewrite(u, m, __ -> count.step());

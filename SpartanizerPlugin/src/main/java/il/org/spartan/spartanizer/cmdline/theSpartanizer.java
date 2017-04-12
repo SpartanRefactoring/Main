@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** simple no-gimmicks singleton service that does the simple job of applying a
  * {@link Configuration} {@link #once(String)}, {@link #twice(String)},
@@ -71,7 +72,7 @@ public interface theSpartanizer {
           try {
             e.apply($);
           } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-            monitor.bug(trimmer, ¢);
+            note.bug(trimmer, ¢);
           }
         }
 
@@ -93,7 +94,7 @@ public interface theSpartanizer {
     try {
       return configuration.firstTipper($);
     } catch (final Exception ¢) {
-      return monitor.bug(¢);
+      return note.bug(¢);
     }
   }
 
