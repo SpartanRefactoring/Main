@@ -15,6 +15,7 @@ import java.util.stream.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 public enum LogToTest {
   ;
@@ -48,16 +49,16 @@ public enum LogToTest {
         final List<String> es = new ArrayList<>();
         es.add("");
         for (String l = r.readLine(); l != null; l = r.readLine())
-          if (l.equals(monitor.FILE_SEPARATOR.trim())) {
+          if (l.equals(note.FILE_SEPARATOR.trim())) {
             analyze(xs, ts, nu, es);
             es.clear();
             es.add("");
-          } else if (l.equals(monitor.FILE_SUB_SEPARATOR.trim()))
+          } else if (l.equals(note.FILE_SUB_SEPARATOR.trim()))
             es.add("");
           else
             es.set(es.size() - 1, last(es) + "\n" + l);
       } catch (final IOException ¢) {
-        monitor.config(¢, f + "");
+        note.config(¢, f + "");
         return;
       }
     System.out.println("Creating test file...");
@@ -66,7 +67,7 @@ public enum LogToTest {
         new OutputStreamWriter(new FileOutputStream(TESTS_FOLDER + File.separator + fileName + ".java", true), "utf-8"))) {
       w.write(wrap(ts, fileName));
     } catch (final IOException ¢) {
-      monitor.config(¢);
+      note.config(¢);
       return;
     }
     System.out.println("Done! Written " + ts.size() + " tests to " + fileName + ".java");

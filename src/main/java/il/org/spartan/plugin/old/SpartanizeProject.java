@@ -51,9 +51,9 @@ public final class SpartanizeProject extends BaseHandler {
         λ.done();
       });
     } catch (final InterruptedException ¢) {
-      monitor.cancel(this, ¢);
+      note.cancel(this, ¢);
     } catch (final InvocationTargetException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return $.get();
   }
@@ -114,10 +114,10 @@ public final class SpartanizeProject extends BaseHandler {
         pm.done();
       });
     } catch (final InvocationTargetException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
       return true;
     } catch (final InterruptedException ¢) {
-      monitor.cancel(this, ¢);
+      note.cancel(this, ¢);
       return true;
     }
     return $.get() || todo.isEmpty();

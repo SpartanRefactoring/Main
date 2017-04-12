@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** An abstraction layer for the functionality of @{link TipperFactory}
  * and @{Matcher}.<br>
@@ -163,7 +164,7 @@ public enum leonidasSays {
       try {
         edits.apply(document);
       } catch (MalformedTreeException | BadLocationException ¢) {
-        monitor.bug(this, ¢);
+        note.bug(this, ¢);
       }
       azzertEquals(rrr, document);
     }
@@ -275,7 +276,7 @@ public enum leonidasSays {
       try {
         edits.apply(document);
       } catch (MalformedTreeException | BadLocationException ¢) {
-        monitor.bug(this, ¢);
+        note.bug(this, ¢);
       }
       azzertEquals(expected, document);
     }

@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Selection useful to deal with projects using the command line
  * @author Matteo Orru'
@@ -106,7 +107,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
       try {
         $.add((CompilationUnit) makeAST.COMPILATION_UNIT.from(FileUtils.read(f)));
       } catch (final IOException ¢) {
-        monitor.config(¢);
+        note.config(¢);
       }
     }
   }

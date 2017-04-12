@@ -16,6 +16,7 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth
@@ -151,7 +152,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     try {
       progressMonitorDialog.run(true, true, r);
     } catch (InterruptedException | InvocationTargetException $) {
-      return monitor.bug($);
+      return note.bug($);
     }
     closeDialog(initialDialog);
     doWork(finalWork(applicator, selection.getCompilationUnits(), attributes), eclipse.progressMonitorDialog(hasDisplay()));
@@ -171,9 +172,9 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
         d.run(true, true, p);
         return true;
       } catch (final InvocationTargetException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       } catch (final InterruptedException ¢) {
-        monitor.cancel(this, ¢);
+        note.cancel(this, ¢);
       }
     return false;
   }

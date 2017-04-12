@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A number of utility functions common to all tippers.
  * @author Yossi Gil
@@ -223,6 +224,6 @@ public enum trick {
   public static ListRewrite statementRewriter(final ASTRewrite r, final Statement s) {
     return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
         : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
-            : monitor.bug("Weird type of %s under %s", s, parent(s));
+            : note.bug("Weird type of %s under %s", s, parent(s));
   }
 }

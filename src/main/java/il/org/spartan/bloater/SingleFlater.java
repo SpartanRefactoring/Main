@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A tool for committing a single change to a {@link CompilationUnit}.
  * @author Ori Roth {@code ori.rothh@gmail.com}
@@ -98,7 +99,7 @@ public final class SingleFlater {
         try {
           w = operationsProvider.getTipper(n);
         } catch (final Exception ¢) {
-          monitor.bug(this, ¢);
+          note.bug(this, ¢);
         }
         if (w == null)
           return true;
@@ -113,7 +114,7 @@ public final class SingleFlater {
         o.tipper.check(o.node);
         o.tipper.tip(o.node).go(r, g);
       } catch (final Exception ¢) {
-        monitor.bug(this, ¢);
+        note.bug(this, ¢);
       }
     return true;
   }
@@ -131,7 +132,7 @@ public final class SingleFlater {
             $ = changeNFocus(e, t, te, i);
         }
       } catch (final CoreException | BadLocationException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       }
     else
       try {
@@ -143,7 +144,7 @@ public final class SingleFlater {
             $ = changeNFocus(e, t, tfc, i);
         }
       } catch (final CoreException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       }
     u.dispose();
     return $;

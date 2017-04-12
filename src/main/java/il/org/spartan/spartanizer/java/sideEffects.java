@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil
@@ -140,7 +141,7 @@ public enum sideEffects {
       case INSTANCEOF_EXPRESSION:
         return sideEffects.free(left(az.instanceofExpression(¢)));
       default:
-        monitor.bug(sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + wizard.nodeName(¢)));
+        note.bug(sideEffects.MISSING_CASE, new AssertionError("Missing 'case' in switch for class: " + wizard.nodeName(¢)));
         return false;
     }
   }

@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.engine.nominal;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.utils.English.*;
+import static il.org.spartan.utils.fluent.English.*;
 
 import static il.org.spartan.lisp.*;
 
@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like

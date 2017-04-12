@@ -6,6 +6,7 @@ import org.eclipse.jface.preference.*;
 
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Classification of Expanders
  * @author Raviv Rachmiel

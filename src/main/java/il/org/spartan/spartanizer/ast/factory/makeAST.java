@@ -11,6 +11,7 @@ import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -88,7 +89,7 @@ public enum makeAST {
         if (¢ == null)
           return $;
     } catch (final IOException ¢) {
-      monitor.config(¢, f + "");
+      note.config(¢, f + "");
       return null;
     }
   }
@@ -109,7 +110,7 @@ public enum makeAST {
     try (Scanner $ = new Scanner(f)) {
       return new StringBuilder($.useDelimiter("\\Z").next());
     } catch (final Exception ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
       return new StringBuilder();
     }
   }

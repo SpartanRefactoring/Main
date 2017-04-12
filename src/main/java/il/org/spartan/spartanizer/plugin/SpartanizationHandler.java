@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.plugin.Eclipse.*;
-import static il.org.spartan.utils.English.*;
+import static il.org.spartan.utils.fluent.English.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -56,9 +56,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       try {
         d.run(true, true, __ -> r.run());
       } catch (final InvocationTargetException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       } catch (final InterruptedException ¢) {
-        monitor.cancel(¢);
+        note.cancel(¢);
       }
     });
     $.defaultRunAction(t);
@@ -165,9 +165,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       try {
         d.run(true, true, __ -> r.run());
       } catch (final InvocationTargetException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       } catch (final InterruptedException ¢) {
-        monitor.cancel(¢);
+        note.cancel(¢);
       }
     });
     $.defaultRunAction(t);

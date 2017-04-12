@@ -13,6 +13,7 @@ import org.osgi.framework.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** TODO Artium Nihamkin please add a description
  * @author Artium Nihamkin
@@ -46,34 +47,34 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
 
   @Override public void start(final BundleContext c) throws Exception {
     super.start(c);
-    monitor.logger.fine("START " + this);
+    note.logger.fine("START " + this);
     try {
       startSpartan();
       addPartListener();
       loadPreferences();
     } catch (final IllegalStateException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     }
   }
 
   @Override public void stop(final BundleContext ¢) throws Exception {
-    monitor.logger.fine("STOP " + this);
+    note.logger.fine("STOP " + this);
     plugin = null;
     super.stop(¢);
   }
 
   @Override protected void loadDialogSettings() {
-    monitor.logger.finest(this + "");
+    note.logger.finest(this + "");
     super.loadDialogSettings();
   }
 
   @Override protected void refreshPluginActions() {
-    monitor.logger.finest(this + "");
+    note.logger.finest(this + "");
     super.refreshPluginActions();
   }
 
   @Override protected void saveDialogSettings() {
-    monitor.logger.finest(this + "");
+    note.logger.finest(this + "");
     super.saveDialogSettings();
   }
 
@@ -107,11 +108,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
                 mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
               }
             } catch (final Exception ¢) {
-              monitor.bug(¢);
+              note.bug(¢);
             }
           }).schedule(SAFETY_DELAY);
       } catch (final CoreException ¢) {
-        monitor.bug(¢);
+        note.bug(¢);
       }
     });
     listening = true;

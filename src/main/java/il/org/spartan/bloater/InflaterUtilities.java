@@ -15,6 +15,7 @@ import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Helper functions for the inflater
  * @author Raviv Rachmiel
@@ -77,7 +78,7 @@ public enum InflaterUtilities {
           textChange.perform(new NullProgressMonitor());
       }
     } catch (final CoreException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     }
   }
 

@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Scans files named by outputFolder, ignore test files, and collect
  * statistics. It does everything BatchSpartanizer does, but using the
@@ -127,7 +128,7 @@ final class BatchSpartanizerApplication implements IApplication {
       u.close();
       u.delete(true, null);
     } catch (final NullPointerException | JavaModelException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
   }
 

@@ -254,7 +254,7 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   Tip auxiliaryTip;
   Configuration currentConfiguration;
   String fileName;
-  TrimmerExceptionListener exceptionListener = λ -> monitor.logToFile(λ, this, tip(), tipper(), fileName);
+  TrimmerExceptionListener exceptionListener = λ -> note.logToFile(λ, this, tip(), tipper(), fileName);
   final Consumer<Exception> swallow = λ -> exceptionListener.accept(λ);
 
   /** A {@link Tap} to update {@link #progressMonitor}

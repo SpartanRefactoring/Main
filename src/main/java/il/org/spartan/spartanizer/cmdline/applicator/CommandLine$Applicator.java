@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Specific applicator
  * @author Matteo Orru'
@@ -148,7 +149,7 @@ public class CommandLine$Applicator extends GenericApplicator {
       try {
         e.apply($);
       } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-        monitor.bug(this, ¢);
+        note.bug(this, ¢);
         throw new AssertionError(¢);
       }
       if (!e.hasChildren())
@@ -181,7 +182,7 @@ public class CommandLine$Applicator extends GenericApplicator {
         try {
           tipper = getTipper(n);
         } catch (final Exception ¢) {
-          monitor.info(this, ¢);
+          note.info(this, ¢);
         }
         if (tipper == null)
           return true;
@@ -189,7 +190,7 @@ public class CommandLine$Applicator extends GenericApplicator {
         try {
           s = tipper.tip(n);
         } catch (final Exception ¢) {
-          monitor.info(this, ¢);
+          note.info(this, ¢);
         }
         if (s == null)
           return true;

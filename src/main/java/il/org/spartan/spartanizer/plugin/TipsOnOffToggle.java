@@ -7,6 +7,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;
 
 /** A command handler which toggles the spartanization nature
@@ -56,7 +57,7 @@ public final class TipsOnOffToggle extends AbstractHandler {
     try {
       toggleNature(p, !p.hasNature(Nature.NATURE_ID));
     } catch (final CoreException ¢) {
-      monitor.bug(this, ¢);
+      note.bug(this, ¢);
     }
     return null;
   }

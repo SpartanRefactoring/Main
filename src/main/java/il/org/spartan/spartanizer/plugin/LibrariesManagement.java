@@ -9,6 +9,7 @@ import org.eclipse.jdt.internal.core.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A utility class to manage libraries at the users side, in front of the
  * ecilpse machine and specific code. Current implementation makes use of the
@@ -68,7 +69,7 @@ public enum LibrariesManagement {
       if (Stream.of(p.getRawClasspath()).anyMatch(λ -> LIBRARY_PATH_CONTAINER.getPath().equals(λ.getPath())))
         return true;
     } catch (final JavaModelException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
     }
     return false;
   }
@@ -83,7 +84,7 @@ public enum LibrariesManagement {
     try {
       es = p.getRawClasspath();
     } catch (final JavaModelException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
       return false;
     }
     final List<IClasspathEntry> nes = new ArrayList<>();
@@ -93,7 +94,7 @@ public enum LibrariesManagement {
     try {
       p.setRawClasspath(nes.toArray(new IClasspathEntry[nes.size()]), null);
     } catch (final JavaModelException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
       return false;
     }
     return true;

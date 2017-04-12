@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Support for plugin's XML configurations file for projects. Currently
  * describes what tippers are enabled for the project.
@@ -138,7 +139,7 @@ public class XMLSpartan {
     try {
       return getFileInner($);
     } catch (final ParserConfigurationException | CoreException | SAXException | IOException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
       return null;
     }
   }
@@ -246,7 +247,7 @@ public class XMLSpartan {
       f.setContents(new ByteArrayInputStream((writer + "").getBytes()), false, false, new NullProgressMonitor());
       return true;
     } catch (CoreException | TransformerException ¢) {
-      monitor.bug(¢);
+      note.bug(¢);
       return false;
     }
   }

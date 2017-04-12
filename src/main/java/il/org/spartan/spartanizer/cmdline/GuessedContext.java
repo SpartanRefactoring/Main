@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -83,7 +84,7 @@ public enum GuessedContext {
     final GuessedContext $ = qfind(codeFragment);
     if ($ != null)
       return $;
-    monitor
+    note
         .info("GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n\n" + enumerateFailingAttempts(codeFragment));
     return GuessedContext.STATEMENTS_LOOK_ALIKE;
   }

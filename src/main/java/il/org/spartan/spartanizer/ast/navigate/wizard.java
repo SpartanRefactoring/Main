@@ -191,7 +191,7 @@ public interface wizard {
           // unused node type
           break;
         } catch (final Exception ¢) {
-          monitor.bug(this, ¢);
+          note.bug(this, ¢);
           break;
         }
     }

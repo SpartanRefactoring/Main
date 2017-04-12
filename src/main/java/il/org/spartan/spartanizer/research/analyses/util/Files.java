@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** File utils
  * @author Ori Marcovitch
@@ -65,7 +66,7 @@ public enum Files {
     try (FileWriter w = new FileWriter(f, true)) {
       w.write(s);
     } catch (final IOException ¢) {
-      monitor.config(¢, "append");
+      note.config(¢, "append");
     }
   }
 
@@ -76,7 +77,7 @@ public enum Files {
     try (FileWriter w = new FileWriter(f, false)) {
       w.write(s);
     } catch (final IOException ¢) {
-      monitor.config(¢, "write");
+      note.config(¢, "write");
     }
   }
 

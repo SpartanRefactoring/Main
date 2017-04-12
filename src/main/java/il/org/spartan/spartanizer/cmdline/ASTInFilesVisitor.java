@@ -22,6 +22,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 import junit.framework.*;
 
 /** Parse and AST visit all Java files under a given path.
@@ -76,7 +77,7 @@ public class ASTInFilesVisitor {
     try {
       return !containsTestAnnotation(FileUtils.read($));
     } catch (final IOException ¢) {
-      monitor.config(¢, "File = " + $);
+      note.config(¢, "File = " + $);
       return false;
     }
   }
@@ -121,7 +122,7 @@ public class ASTInFilesVisitor {
   }
 
   protected void visit(final File f) {
-    monitor.info("Visiting: " + f.getName());
+    note.info("Visiting: " + f.getName());
     if (!silent)
       dotter.click();
     if (Utils.isProductionCode(f) && productionCode(f))
@@ -132,7 +133,7 @@ public class ASTInFilesVisitor {
         if (!silent)
           dotter.click();
       } catch (final IOException ¢) {
-        monitor.config(¢, "File = " + f);
+        note.config(¢, "File = " + f);
       }
   }
 

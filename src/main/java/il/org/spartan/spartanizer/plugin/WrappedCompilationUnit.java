@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Couples together {@link CompilationUnit} and its {@link ICompilationUnit}.
  * @author Ori Roth
@@ -48,7 +49,7 @@ public class WrappedCompilationUnit {
         compilationUnit = (CompilationUnit) (!useBinding ? make.COMPILATION_UNIT.parser(descriptor)
             : make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
       } catch (final Throwable x) {
-        monitor.bug(x);
+        note.bug(x);
       }
     return this;
   }
