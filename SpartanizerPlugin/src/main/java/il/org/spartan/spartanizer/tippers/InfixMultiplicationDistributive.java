@@ -1,5 +1,4 @@
 package il.org.spartan.spartanizer.tippers;
-
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static il.org.spartan.lisp.*;
@@ -18,6 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;
 
 /** Apply the distributive rule to multiplication: {@code

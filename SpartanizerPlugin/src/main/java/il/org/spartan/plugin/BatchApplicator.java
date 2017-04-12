@@ -1,5 +1,4 @@
 package il.org.spartan.plugin;
-
 import java.util.*;
 import java.util.function.*;
 
@@ -10,6 +9,7 @@ import org.eclipse.jdt.core.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;
 
 /** Possible events during spartanization process

@@ -10,6 +10,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Method Creating new object and returning it
  * @author Ori Marcovitch */

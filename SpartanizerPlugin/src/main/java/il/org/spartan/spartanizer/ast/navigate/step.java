@@ -7,9 +7,11 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.plugin.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:

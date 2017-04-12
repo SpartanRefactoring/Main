@@ -11,6 +11,7 @@ import java.util.logging.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
@@ -22,7 +23,7 @@ public interface monitor {
   /** @formatter:off */
   Stack<Level> levels = new Stack<>();
 
-  Logger logger = the.lambdaResult(()->{
+  Logger logger = anonymous.ly(()->{
     final Logger $ = Logger.getGlobal();
     final ConsoleHandler handler = new ConsoleHandler();
     handler.setLevel(Level.ALL);
@@ -42,7 +43,7 @@ public interface monitor {
   }
 
   static <T> T bug(final Object o, final Throwable t) {
-    return run.nullifying(() -> logger.info(format(//
+    return nulling.ly(() -> logger.info(format(//
         "An instance of %s was hit by %s exception.\n" + //
             "This is an indication of a bug.\n", //
         English.name(o), English.indefinite(t) //
@@ -54,13 +55,13 @@ public interface monitor {
   }
 
   static <T> T bug(final String format, final Object... os) {
-    return run.nullifying(() -> logger.info(format(//
+    return nulling.ly(() -> logger.info(format(//
         "A bug was detected in the vicinty of %s\n", system.myCallerFullClassName()) + //
         format(format, os)));
   }
 
   static <T> T bug(final Throwable ¢) {
-    return run.nullifying(() -> logger.info(//
+    return nulling.ly(() -> logger.info(//
         "A static method was hit by " + indefinite(¢) + " exception.\n" + //
             "This is an indication of a bug.\n" + //
             format("%s = '%s'\n", English.name(¢), ¢) + //
@@ -71,7 +72,7 @@ public interface monitor {
    * @param o JD
    * @param ¢ JD */
   static <T> T cancel(final Exception ¢) {
-    return run.nullifying(() -> logger.info(//
+    return nulling.ly(() -> logger.info(//
         " " + English.name(¢) + //
             " (probably cancellation) exception." + //
             "\n x = '" + ¢ + "'" //
@@ -82,7 +83,7 @@ public interface monitor {
    * @param o JD
    * @param x JD */
   static <T> T cancel(final Object o, final Exception x) {
-    return run.nullifying(() -> logger.info(//
+    return nulling.ly(() -> logger.info(//
         "An instance of " + English.name(o) + //
             "\n was hit by " + indefinite(x) + //
             " (probably cancellation) exception." + //
@@ -91,7 +92,7 @@ public interface monitor {
   }
 
   static <T> T config(final Exception ¢) {
-    return run.nullifying(() -> logger.config(//
+    return nulling.ly(() -> logger.config(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)" //
             + "\n   The exception says: '" + ¢ + "'" //
@@ -99,7 +100,7 @@ public interface monitor {
   }
 
   static <T> T config(final Exception x, final String message) {
-    return run.nullifying(() -> logger.info(//
+    return nulling.ly(() -> logger.info(//
         "   Got an exception of type : " + English.name(x) + //
             "\n      (probably I/O exception)" + //
             "\n   The exception says: '" + x + "'" + //
@@ -109,7 +110,7 @@ public interface monitor {
   }
 
   static <T> T config(final IOException ¢) {
-    return run.nullifying(() -> logger.info(//
+    return nulling.ly(() -> logger.info(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
     ));
@@ -134,7 +135,7 @@ public interface monitor {
   }
 
   static <T> T info(final String message) {
-    return run.nullifying(() -> logger.info(message));
+    return nulling.ly(() -> logger.info(message));
   }
 
   /** logs an error in the plugin into an external file
