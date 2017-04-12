@@ -24,7 +24,7 @@ public class Issue0115 {
 
   @Ignore @Test public void xor() {
     trimminKof("a ^= 2; a ^= 3;")//
-        .using(Assignment.class, new AssignmentAndUpdateAssignmentToSame()) //
+        .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a ^= 2 ^ 3;")//
     ;
   }

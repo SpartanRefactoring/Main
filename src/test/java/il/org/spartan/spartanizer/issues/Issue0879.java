@@ -23,16 +23,16 @@ public class Issue0879 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void daIntb4Ifb3b3b4Elseb5b55Return() {
     trimminKof("void a() { int b = 4; if (b > 3) { b += 3; b += 4; } else { b += 5; b += 55; } return; }") //
-        .using(Assignment.class, new AssignmentUpdateAndSameUpdate()) //
+        .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
         .gives("void a(){int b=4;if(b>3){b+=3+4;}else{b+=5+55;}return;}") //
-        .using(Block.class, new BlockSingleton()) //
+        .using(new BlockSingleton(), Block.class) //
         .gives("void a(){int b=4;if(b>3)b+=3+4;else b+=5+55;return;}") //
-        .using(InfixExpression.class, new InfixAdditionEvaluate()) //
+        .using(new InfixAdditionEvaluate(), InfixExpression.class) //
         .gives("void a(){int b=4;if(b>3)b+=7;else b+=60;return;}") //
         .gives("void a(){int b=4;b+=b>3?7:60;}") //
-        .using(VariableDeclarationFragment.class, new LocalVariableIntializedUpdateAssignment()) //
+        .using(new LocalVariableIntializedUpdateAssignment(), VariableDeclarationFragment.class) //
         .gives("void a(){int b=4+(4>3?7:60);}") //
-        .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("void a(){}") //
         .stays() //
     ;
@@ -42,23 +42,23 @@ public class Issue0879 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_intaIntb9Intc7b4cbbReturnc() {
     trimminKof("int a() { int b = 9; int c = 7; b += 4; c = b + b; return c; }") //
-        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
         .gives("int a(){int b=9;int $=7;b+=4;$=b+b;return $;}") //
-        .using(VariableDeclarationStatement.class, new TwoDeclarationsIntoOne()) //
+        .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a(){int b=9,$=7;b+=4;$=b+b;return $;}") //
-        .using(VariableDeclarationFragment.class, new LocalVariableIntializedUpdateAssignment()) //
+        .using(new LocalVariableIntializedUpdateAssignment(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=9+4,$=7;$=b+b;return $;}") //
-        .using(InfixExpression.class, new InfixAdditionEvaluate()) //
+        .using(new InfixAdditionEvaluate(), InfixExpression.class) //
         .gives("int a(){int b=13,$=7;$=b+b;return $;}") //
-        .using(VariableDeclarationFragment.class, new LocalVariableIntializedAssignment()) //
+        .using(new LocalVariableIntializedAssignment(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=13,$=b+b;return $;}") //
-        .using(VariableDeclarationFragment.class, new LocalVariableIntializedStatementReturnVariable()) //
+        .using(new LocalVariableIntializedStatementReturnVariable(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=13;return b+b;}") //
-        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
         .gives("int a(){int $=13;return $+$;}") //
-        .using(VariableDeclarationFragment.class, new LocalInitializedReturnExpression()) //
+        .using(new LocalInitializedReturnExpression(), VariableDeclarationFragment.class) //
         .gives("int a(){return 13+13;}") //
-        .using(InfixExpression.class, new InfixAdditionEvaluate()) //
+        .using(new InfixAdditionEvaluate(), InfixExpression.class) //
         .gives("int a(){return 26;}") //
         .stays() //
     ;

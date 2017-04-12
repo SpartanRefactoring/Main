@@ -12,14 +12,14 @@ import org.junit.*;
 public class ThrowOnNullTest {
   @Test public void a() {
     trimminKof("if(x == null) throw new Watever();")//
-        .using(IfStatement.class, new ThrowOnNull())//
+        .using(new ThrowOnNull(), IfStatement.class)//
         .gives("notNull(x).orThrow(()->new Watever());")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("if(x == null) throw new Watever(with(This, and, zis()));")//
-        .using(IfStatement.class, new ThrowOnNull())//
+        .using(new ThrowOnNull(), IfStatement.class)//
         .gives("notNull(x).orThrow(()->new Watever(with(This,and,zis())));")//
         .stays();
   }

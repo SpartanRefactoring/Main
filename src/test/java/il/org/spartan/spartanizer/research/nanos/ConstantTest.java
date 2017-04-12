@@ -12,14 +12,14 @@ import org.junit.*;
 public class ConstantTest {
   @Test public void a() {
     trimminKof("class C{public static final int a = 7;}")//
-        .using(FieldDeclaration.class, new Constant())//
+        .using(new Constant(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("class C{public static final Boolean a = 7;}")//
-        .using(FieldDeclaration.class, new Constant())//
+        .using(new Constant(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
@@ -30,7 +30,7 @@ public class ConstantTest {
         + "public static final char b = 7;"//
         + "public static final String b = \"fff\";"//
         + "}")//
-            .using(FieldDeclaration.class, new Constant())//
+            .using(new Constant(), FieldDeclaration.class)//
             .gives("class C{}")//
             .stays();
   }
@@ -42,7 +42,7 @@ public class ConstantTest {
         + "public static final char b = 7;"//
         + "public static final String b = \"fff\";"//
         + "}")//
-            .using(FieldDeclaration.class, new Constant())//
+            .using(new Constant(), FieldDeclaration.class)//
             .gives("class C{public static final Int b = 7;}")//
             .stays();
   }

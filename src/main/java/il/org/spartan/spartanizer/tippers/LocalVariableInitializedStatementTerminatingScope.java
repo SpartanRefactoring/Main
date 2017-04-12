@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.java.*;
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalVariableIntializedStatementTerminatingScope extends $FragmentAndStatement //
+public final class LocalVariableInitializedStatementTerminatingScope extends $FragmentAndStatement //
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -0x313DC98AF0199E9L;
 

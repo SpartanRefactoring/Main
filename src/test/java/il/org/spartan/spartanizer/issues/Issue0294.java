@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit test for {@link LocalVariableIntializedStatementTerminatingScope} for
+/** Unit test for {@link LocalVariableInitializedStatementTerminatingScope} for
  * the case of inlining into the expression of an enhanced for
  * @author Yossi Gil
  * @since 2016 */

@@ -41,7 +41,7 @@ public class Issue1094 extends MetaFixture {
 
   @Test public void c() {
     trimminKof("void f() { try { a(); } finally { }}") //
-        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
+        .using(new TryBodyNotEmptyNoCatchesNoFinallyRemove(), TryStatement.class) //
         .gives("void f(){{ a();} }")//
         .gives("void f(){ a(); }")//
         .stays();
@@ -49,7 +49,7 @@ public class Issue1094 extends MetaFixture {
 
   @Test public void c1() {
     trimminKof("void f() { try { a(); } finally { }}") //
-        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
+        .using(new TryBodyNotEmptyNoCatchesNoFinallyRemove(), TryStatement.class) //
         .gives("void f(){{ a();} }")//
         .gives("void f(){ a(); }")//
         .stays();
@@ -69,13 +69,13 @@ public class Issue1094 extends MetaFixture {
 
   @Test public void ca() {
     trimminKof("void f() { try(File f = new File()) { a(); } finally { }}") //
-        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
+        .using(new TryBodyNotEmptyNoCatchesNoFinallyRemove(), TryStatement.class) //
         .stays();
   }
 
   @Test public void d() {
     trimminKof("void f() { try { a(); b(); } finally { }}") //
-        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
+        .using(new TryBodyNotEmptyNoCatchesNoFinallyRemove(), TryStatement.class) //
         .gives("void f(){{ a();b();} }")//
         .gives("void f(){ a();b(); }")//
         .stays();
@@ -83,7 +83,7 @@ public class Issue1094 extends MetaFixture {
 
   @Test public void d1() {
     trimminKof("void f() { try { a(); b(); } finally { }}") //
-        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
+        .using(new TryBodyNotEmptyNoCatchesNoFinallyRemove(), TryStatement.class) //
         .gives("void f(){{ a();b();} }")//
         .gives("void f(){ a();b(); }")//
         .stays();
@@ -96,7 +96,7 @@ public class Issue1094 extends MetaFixture {
 
   @Test public void da() {
     trimminKof("void f() { try(File f = new File()) { a(); b(); } finally { }}") //
-        .using(TryStatement.class, new TryBodyNotEmptyNoCatchesNoFinallyRemove()) //
+        .using(new TryBodyNotEmptyNoCatchesNoFinallyRemove(), TryStatement.class) //
         .stays();
   }
 }

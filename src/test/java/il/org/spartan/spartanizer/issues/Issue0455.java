@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue0455 {
   @Test public void assertStatementShouldntTip() {
     trimminKof("x -> {assert (1 < 2);}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
@@ -29,28 +29,28 @@ public class Issue0455 {
 
   @Test public void breakStatementShouldntTip() {
     trimminKof("x -> {break;}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void continueStatementShouldntTip() {
     trimminKof("x -> {continue;}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void doWhileStatementShouldntTip() {
     trimminKof("x -> {do ++x; while(x < 10);}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void emptyReturnStatement() {
     trimminKof("(x) -> {return;}")//
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .gives("(x) -> {}")//
         .gives("x -> {}")//
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
@@ -77,7 +77,7 @@ public class Issue0455 {
 
   @Test public void paransAreNotRemovedFromParams() {
     trimminKof("(x) -> {return x;}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .gives("(x) -> x")//
         .gives("x -> x")//
         .gives("λ->λ")//
@@ -86,30 +86,30 @@ public class Issue0455 {
 
   @Test public void parenthesisAreNotAddedToParameters() {
     trimminKof("x -> {return x;}")//
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .gives("x -> x")//
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void simpleBiFunction() {
     trimminKof("(x,y) -> {return x + y;}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .gives("(x,y) -> x + y")//
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void simpleConsumerWithotTipper() {
     trimminKof("new Set<String>().forEach(item -> {return \"$\" + item;});")//
         .gives("new Set<String>().forEach(item -> \"$\" + item);")//
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void simpleProducer() {
     trimminKof("()->{return 42;}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .gives("()->42")//
         .stays();
   }
@@ -121,15 +121,15 @@ public class Issue0455 {
 
   @Test public void singleConstructorInvocationStatement() {
     trimminKof("x -> {new Object();}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .gives("x -> new Object()") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void singleEnhancedForStatementShouldntTip() {
     trimminKof("x -> { for (String y : l)if (y.equals(x))return;}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
@@ -142,7 +142,7 @@ public class Issue0455 {
 
   @Test public void singleNonReturnStatement0() {
     trimminKof("(x) -> {System.out.println(x);}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .gives("(x) -> System.out.println(x)") //
         .gives("x -> System.out.println(x)") //
         .gives("λ -> System.out.println(λ)") //
@@ -151,7 +151,7 @@ public class Issue0455 {
 
   @Test public void singleNonReturnStatement() {
     trimminKof("Consumer<Integer> x = (x) -> {System.out.println(x);};") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .gives("Consumer<Integer> x = (x) -> System.out.println(x);") //
         .gives("") //
         .stays();
@@ -159,15 +159,15 @@ public class Issue0455 {
 
   @Test public void singleRangeBasedForStatementShouldntTip() {
     trimminKof("x -> { for (;;)break;}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void singleReturnStatementAndSingleParameterd() {
     trimminKof("new ArrayList<Integer>().map(x->{return x+1;});") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .gives("new ArrayList<Integer>().map(x -> x+1);")//
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
@@ -198,19 +198,19 @@ public class Issue0455 {
 
   @Test public void singleTryStatementShouldntTip() {
     trimminKof("x -> {try {throw new Error();}catch(Exception __){}}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void superConstructrInvocationShouldntTip() {
     trimminKof("x ->{super(x);}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 
   @Test public void whileStatementShouldntTip() {
     trimminKof("x->{while(x < 0);}") //
-        .using(LambdaExpression.class, new LambdaRemoveRedundantCurlyBraces())//
+        .using(new LambdaRemoveRedundantCurlyBraces(), LambdaExpression.class)//
         .stays();
   }
 }
