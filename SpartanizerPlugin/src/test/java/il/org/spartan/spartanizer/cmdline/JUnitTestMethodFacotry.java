@@ -208,7 +208,7 @@ public enum JUnitTestMethodFacotry {
             "(code automatically in class '%s')*/\n", //
         system.userName(), //
         system.now(), //
-        system.callinClassLastName());
+        system.myShortClassName());
   }
 
   static String tipperBody(final String input) {

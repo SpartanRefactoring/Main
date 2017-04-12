@@ -8,7 +8,6 @@ import org.junit.runners.*;
 /** @author Yossi Gil
  * @since 2014-07-10 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Ignore("For version 300")
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class IgnoredTrimmerTest {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
@@ -108,9 +107,9 @@ public final class IgnoredTrimmerTest {
 
   @Test public void reanmeReturnVariableToDollar10() {
     trimminKof(
-        "@Override public IMarkerResolution[] getResolutions(final IMarker m) { try { final Laconization s = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ")
+        "@Override public IMarkerResolution[] getResolutions(final IMarker m) { try { final L s = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); ")
             .gives(
-                "@Override public IMarkerResolution[] getResolutions(final IMarker m) { try { final Laconization $ = All.get((String) m.getAttribute(Builder.Laconization_TYPE_KEY)); ");
+                "@Override public IMarkerResolution[] getResolutions(final IMarker m) { try { final L $ = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); ");
   }
 
   @Test public void renameVariableUnderscore2() {

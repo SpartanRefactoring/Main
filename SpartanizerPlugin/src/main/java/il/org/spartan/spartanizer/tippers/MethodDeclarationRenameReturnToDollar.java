@@ -35,8 +35,17 @@ public final class MethodDeclarationRenameReturnToDollar extends EagerTipper<Met
 
   @Override public Tip tip(final MethodDeclaration d) {
     final Type t = d.getReturnType2();
-    if (t instanceof PrimitiveType && ((PrimitiveType) t).getPrimitiveTypeCode() == PrimitiveType.VOID)
+    if (t == null)
       return null;
+    switch (t + "") {
+      case "boolean":
+      case "void":
+      case "Void":
+      case "java.lang.Void":
+        return null;
+      default:
+        break;
+    }
     final String name = Names.methodReturnName.apply(t, d);
     if (name == null || scope.hasInScope(d.getBody(), name))
       return null;

@@ -30,7 +30,7 @@ import junit.framework.*;
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
   @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.windows() ? "" : ".";
+  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
   @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
   @External(alias = "s", value = "silent") protected boolean silent;
   protected static final String[] defaultArguments = as.array("..");

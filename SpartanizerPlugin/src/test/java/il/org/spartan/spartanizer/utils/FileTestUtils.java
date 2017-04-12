@@ -100,11 +100,11 @@ public class FileTestUtils {
     return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
 
-  static AbstractGUIApplicator makeLaconizationObject(final File ¢) {
-    return makeLaconizationObject(¢.getName());
+  static AbstractGUIApplicator makeApplicator(final File ¢) {
+    return makeApplicator(¢.getName());
   }
 
-  static AbstractGUIApplicator makeLaconizationObject(final String folderForClass) {
+  static AbstractGUIApplicator makeApplicator(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     assert c != null;
     final Object $ = getInstance(c);
@@ -150,7 +150,7 @@ public class FileTestUtils {
     @Override public void go(final List<Object[]> $, final File d) {
       for (final File f : d.listFiles()) // NANO
         if (f != null && f.isFile() && f.exists()) {
-          final Object[] c = makeCase(makeLaconizationObject(d), d, f, f.getName());
+          final Object[] c = makeCase(makeApplicator(d), d, f, f.getName());
           if (c != null)
             $.add(c);
         }

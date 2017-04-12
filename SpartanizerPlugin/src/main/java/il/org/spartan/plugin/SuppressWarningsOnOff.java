@@ -27,7 +27,7 @@ import il.org.spartan.spartanizer.dispatch.*;
  * textual, implemented as a JavaDoc comment that can be read by
  * {@link DisabledChecker}.
  * @author Ori Roth */
-public enum SuppressWarningsLaconicOnOff {
+public enum SuppressWarningsOnOff {
   ByComment((r, d) -> {
     final Javadoc j = d.getJavadoc();
     String s = enablersRemoved(j);
@@ -51,7 +51,7 @@ public enum SuppressWarningsLaconicOnOff {
    * @param d a {@link BodyDeclaration} to disable */
   final BiConsumer<ASTRewrite, BodyDeclaration> disable;
 
-  SuppressWarningsLaconicOnOff(final BiConsumer<ASTRewrite, BodyDeclaration> disable) {
+  SuppressWarningsOnOff(final BiConsumer<ASTRewrite, BodyDeclaration> disable) {
     this.disable = disable;
   }
 

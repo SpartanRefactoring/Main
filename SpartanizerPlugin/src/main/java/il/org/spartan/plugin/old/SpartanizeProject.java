@@ -73,7 +73,7 @@ public final class SpartanizeProject extends BaseHandler {
     todo.clear();
     todo.addAll(eclipse.facade.compilationUnits(currentCompilationUnit));
     final int $ = countTips();
-    return eclipse.announce(status + "Laconizing '" + javaProject.getElementName() + "' project \nCompleted in " + passNumber + " passes. \n"
+    return eclipse.announce(status + "Spartanizing '" + javaProject.getElementName() + "' project \nCompleted in " + passNumber + " passes. \n"
         + (passNumber < MAX_PASSES ? "" : "   === too many passes\n") + "Tips followed: " + (initialCount - $) + "\nTips before: " + initialCount
         + "\nTips after: " + $ + "\n");
   }
