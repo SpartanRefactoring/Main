@@ -33,6 +33,19 @@ public class Version300 {
     );
   }
 
+  /** Introduced by Yogi on Wed-Apr-12-10:56:30-IDT-2017 (code automatically in
+   * class 'JUnitTestMethodFacotry') */
+  @Ignore("Yossi Gil") @Test public void inta6FinalAbNewAaIntc2dccdcc2() {
+    trimminKof("int a = 6; final A b = new A(a); int c = 2 + d; c(c - d); c(c * 2);") //
+        .using(VariableDeclarationFragment.class, new LocalVariableInitializedUnusedRemove()) //
+        .gives("int a=6;new A(a);int c=2+d;c(c-d);c(c*2);") //
+        .using(InfixExpression.class, new InfixMultiplicationSort()) //
+        .gives("int a=6;new A(a);int c=2+d;c(c-d);c(2*c);") //
+        .gives("new A(6);int c=2+d;c(c-d);c(2*c);") //
+        .stays() //
+    ;
+  }
+
   @Test public void i0() {
     trimminKof("int a=1;return a > 0;")//
         .gives("return 1>0;");
@@ -323,9 +336,11 @@ public class Version300 {
   @Test public void myClassNameTest() {
     azzert.that(system.myFullClassName(), is(getClass().getCanonicalName()));
   }
+
   @Test public void myShortClassNameTest() {
     azzert.that(system.myShortClassName(), is(getClass().getSimpleName()));
   }
+
   // @Ignore("Unignore one by one")
   @Test public void negationPushdownTernary() {
     trimminKof("a = !(b ? c: d)")//

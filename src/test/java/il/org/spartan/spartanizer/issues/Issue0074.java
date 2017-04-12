@@ -4,11 +4,10 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 
 import org.junit.*;
 
-import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** This is a unit test for {@link InitializationListRemoveComma} The tests
- * issue74a-d are taken from {@link IgnoredTrimmerTest} and {@link Version230}
+ * issue74a-d are taken from {@link Version290} and {@link Version230}
  * @author Yuval Simon
  * @since 2016-12-09 */
 @Ignore

@@ -18,9 +18,7 @@ import il.org.spartan.*;
  * @since Nov 13, 2016 */
 public interface monitor {
   String FILE_SEPARATOR = "\n**\n";
-
   String FILE_SUB_SEPARATOR = "\n********\n";
-
   /** @formatter:off */
   Stack<Level> levels = new Stack<>();
 

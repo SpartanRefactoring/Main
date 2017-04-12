@@ -38,6 +38,57 @@ public enum action {
       }
   }
 
+  public static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
+    r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
+  }
+
+  public static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
+    final Javadoc j = n.getJavadoc();
+    if (j == null)
+      r.replace(n,
+          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
+          g);
+    else
+      r.replace(j,
+          r.createStringPlaceholder(
+              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
+              ASTNode.JAVADOC),
+          g);
+  }
+
+  /** Adds method m to the first type in file.
+   * @param fileName
+   * @param m */
+  public static void addMethodToFile(final String fileName, final MethodDeclaration m) {
+    try {
+      final String str = readFromFile(fileName);
+      final IDocument d = new Document(str);
+      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
+      final ASTRewrite r = ASTRewrite.create(t.getAST());
+      action.addMethodToType(t, m, r, null);
+      r.rewriteAST(d, null).apply(d);
+      writeToFile(fileName, d.get());
+    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
+      x2.printStackTrace();
+    }
+  }
+
+  /** @param d JD
+   * @param m JD
+   * @param r rewriter
+   * @param g edit group, usually null */
+  public static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
+    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(copy.of(m), g);
+  }
+
+  /** @param d JD
+   * @param s JD
+   * @param r rewriter
+   * @param g edit group, usually null */
+  public static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
+    r.getListRewrite(step.body(d), Block.STATEMENTS_PROPERTY).insertLast(s, g);
+  }
+
   public static IfStatement blockIfNeeded(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     if (!iz.blockRequired(s))
       return s;
@@ -102,6 +153,31 @@ public enum action {
           return true;
       }
     return false;
+  }
+
+  /** Parenthesize an expression (if necessary).
+   * @param x JD
+   * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
+   *         parenthesis. */
+  public static Expression parenthesize(final Expression ¢) {
+    return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
+  }
+
+  public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+    return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
+        : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s)
+            : iz.parenthesizedExpression(from)
+                ? LocalVariableIntializedStatementToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
+  }
+
+  /** Make a duplicate, suitable for tree rewrite, of the parameter
+   * @param ¢ JD
+   * @param ¢ JD
+   * @return a duplicate of the parameter, downcasted to the returned type.
+   * @see ASTNode#copySubtree
+   * @see ASTRewrite */
+  @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
+    return (N) copySubtree(t, n);
   }
 
   /** As {@link elze(ConditionalExpression)} but returns the last else statement
@@ -189,6 +265,13 @@ public enum action {
     new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));
   }
 
+  /** replaces an ASTNode with another
+   * @param n
+   * @param with */
+  public static <N extends ASTNode> void replace(final N n, final N with, final ASTRewrite r) {
+    r.replace(n, with, null);
+  }
+
   public static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
     final Block parent = az.block(what.getParent());
     final List<Statement> siblings = extract.statements(parent);
@@ -200,6 +283,10 @@ public enum action {
     copy.into(siblings, statements($));
     r.replace(parent, $, g);
     return r;
+  }
+
+  public static int sequencerRank(final ASTNode ¢) {
+    return the.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
 
   public static boolean shoudlInvert(final IfStatement s) {
@@ -229,92 +316,5 @@ public enum action {
 
   private static int positivePrefixLength(final IfStatement $) {
     return metrics.length($.getExpression(), then($));
-  }
-
-  public static int sequencerRank(final ASTNode ¢) {
-    return the.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
-  }
-
-  public static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
-    r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
-  }
-
-  public static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
-    final Javadoc j = n.getJavadoc();
-    if (j == null)
-      r.replace(n,
-          r.createGroupNode(new ASTNode[] { r.createStringPlaceholder("/**\n" + addedJavadoc + "\n*/\n", ASTNode.JAVADOC), r.createCopyTarget(n) }),
-          g);
-    else
-      r.replace(j,
-          r.createStringPlaceholder(
-              (j + "").replaceFirst("\\*\\/$", ((j + "").matches("(?s).*\n\\s*\\*\\/$") ? "" : "\n ") + "* " + addedJavadoc + "\n */"),
-              ASTNode.JAVADOC),
-          g);
-  }
-
-  /** Adds method m to the first type in file.
-   * @param fileName
-   * @param m */
-  public static void addMethodToFile(final String fileName, final MethodDeclaration m) {
-    try {
-      final String str = readFromFile(fileName);
-      final IDocument d = new Document(str);
-      final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
-      final ASTRewrite r = ASTRewrite.create(t.getAST());
-      action.addMethodToType(t, m, r, null);
-      r.rewriteAST(d, null).apply(d);
-      writeToFile(fileName, d.get());
-    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
-      x2.printStackTrace();
-    }
-  }
-
-  /** @param d JD
-   * @param m JD
-   * @param r rewriter
-   * @param g edit group, usually null */
-  public static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
-  }
-
-  /** @param d JD
-   * @param s JD
-   * @param r rewriter
-   * @param g edit group, usually null */
-  public static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(step.body(d), Block.STATEMENTS_PROPERTY).insertLast(s, g);
-  }
-
-  public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s)
-            : iz.parenthesizedExpression(from)
-                ? LocalVariableIntializedStatementToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
-  }
-
-  /** Make a duplicate, suitable for tree rewrite, of the parameter
-   * @param ¢ JD
-   * @param ¢ JD
-   * @return a duplicate of the parameter, downcasted to the returned type.
-   * @see ASTNode#copySubtree
-   * @see ASTRewrite */
-  @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
-    return (N) copySubtree(t, n);
-  }
-
-  /** Parenthesize an expression (if necessary).
-   * @param x JD
-   * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
-   *         parenthesis. */
-  public static Expression parenthesize(final Expression ¢) {
-    return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
-  }
-
-  /** replaces an ASTNode with another
-   * @param n
-   * @param with */
-  public static <N extends ASTNode> void replace(final N n, final N with, final ASTRewrite r) {
-    r.replace(n, with, null);
   }
 }

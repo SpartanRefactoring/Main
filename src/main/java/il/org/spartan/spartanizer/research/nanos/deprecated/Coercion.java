@@ -89,8 +89,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static void addAzMethodToType(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
-    final AbstractTypeDeclaration t = containingType(¢);
-    action.addMethodToType(t, az.methodDeclaration(ASTNode.copySubtree(t.getAST(), createAzMethod(¢))), r, g);
+    action.addMethodToType(containingType(¢), az.methodDeclaration(copy.of(createAzMethod(¢))), r, g);
   }
 
   private static void addAzMethodToFile(final CastExpression ¢, final String path) {
@@ -98,8 +97,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   }
 
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
-    return az.methodDeclaration(
-        ASTNode.copySubtree(¢.getAST(), az.methodDeclaration(make.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢)))));
+    return copy.of(az.methodDeclaration(make.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢))));
   }
 
   private static String azMethodModifier() {

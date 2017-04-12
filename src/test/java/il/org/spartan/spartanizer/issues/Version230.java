@@ -3124,8 +3124,21 @@ public final class Version230 {
         .stays();
   }
 
-  @Test public void simpleBooleanMethod() {
-    trimminKof("boolean f(){ int x=0;for(int i=0;i<10;++i)x +=i;return x;}").gives("boolean f(){ int $=0;for(int i=0;i<10;++i)$ +=i;return $;}");
+  @Test public void simpleIntMethod() {
+    trimminKof("int f(){ int x=0;for(int i=0;i<10;++i)x +=i;return x;}")//
+        .gives("int f(){ int $=0;for(int i=0;i<10;++i)$ +=i;return $;}");
+  }
+
+  @Test public void ignoreBooleanMethod() {
+    trimminKof("boolean f(){ int x=0;for(int i=0;i<10;++i)x +=i;return x;}")//
+        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .stays();
+  }
+
+  @Test public void ignoreVoidMethod() {
+    trimminKof("Void f(){ int x=0;for(int i=0;i<10;++i)x +=i;return x;}")//
+        .using(MethodDeclaration.class, new MethodDeclarationRenameReturnToDollar()) //
+        .stays();
   }
 
   @Test public void simplifyLogicalNegationNested() {

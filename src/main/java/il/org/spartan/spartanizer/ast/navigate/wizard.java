@@ -674,16 +674,6 @@ public interface wizard {
     return Stream.of(v).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
 
-  /** Make a duplicate, suitable for tree rewrite, of the parameter
-   * @param ¢ JD
-   * @param ¢ JD
-   * @return a duplicate of the parameter, downcasted to the returned type.
-   * @see ASTNode#copySubtree
-   * @see ASTRewrite */
-  @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
-    return (N) copySubtree(t, n);
-  }
-
   /** replaces an ASTNode with another
    * @param n
    * @param with */
@@ -779,6 +769,30 @@ public interface wizard {
     final IfStatement $ = make.invert(s);
     return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(make.invert($));
   }
+
+  /** Checks if an expression need parenthesis in order to interpreted correctly
+   * @param x an Expression
+   * @return whether or not this expression need parenthesis when put together
+   *         with other expressions in infix expression. There could be non
+   *         explicit parenthesis if the expression is located in an arguments
+   *         list, so making it a part of infix expression require additional
+   *         parenthesis */
+  static boolean isParethesisNeeded(final Expression x) {
+    return Stream.of(np).anyMatch(λ -> λ.isInstance(x));
+  }
+
+  static Expression addParenthesisIfNeeded(final Expression x) {
+    final AST a = x.getAST();
+    if (!isParethesisNeeded(x))
+      return x;
+    final ParenthesizedExpression $ = a.newParenthesizedExpression();
+    $.setExpression(copy.of(x));
+    return $;
+  }
+
+  /** list of class extending Expression class, that need to be surrounded by
+   * parenthesis when put out of method arguments list */
+  Class<?>[] np = { InfixExpression.class };
 
   static boolean valid(final ASTNode $) {
     return !($ instanceof CompilationUnit) || ((CompilationUnit) $).getProblems().length == 0;
