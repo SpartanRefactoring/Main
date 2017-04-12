@@ -8,7 +8,6 @@ import org.junit.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2016-12-24 */
 @SuppressWarnings("static-method")
-
 public class Issue1005 {
   @Test public void t1() {
     bloatingOf("++i;")//
@@ -76,8 +75,8 @@ public class Issue1005 {
     bloatingOf("for(++x;x<5;){;}")//
         .gives("for(x+=1;x<5;){;}");
   }
-@Ignore("Default switch")
-  @Test public void t8() {
+
+  @Ignore("Default switch") @Test public void t8() {
     bloatingOf("switch(++x){}")//
         .gives("switch(++x){default:}");
   }
