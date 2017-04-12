@@ -6,8 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.research.nanos.*;
-
 /** Tests {@link ForEachSuchThat}
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */

@@ -20,9 +20,8 @@ public class StringTestClassGenerator implements TestClassGenerator {
   public final String packageName;
   private final String testName;
   private final File originalSourceFile;
-  
 
-  public StringTestClassGenerator(final Class<?> testClass, String testName, File originalSourceFile) {
+  public StringTestClassGenerator(final Class<?> testClass, final String testName, final File originalSourceFile) {
     this.testClass = testClass;
     sourcePath = makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\", testClass));
     packageName = packageName("\\.", testClass);
@@ -31,11 +30,11 @@ public class StringTestClassGenerator implements TestClassGenerator {
   }
 
   @Override public Class<?> generate(final String testClassName) {
-   final Collection<? extends SourceLine> $ = readAllLines();
+    final Collection<? extends SourceLine> $ = readAllLines();
     return loadClass(testClassName, getClassString($.stream().filter(λ -> λ instanceof TestLine).map(λ -> (TestLine) λ).collect(Collectors.toList()),
         $.stream().filter(λ -> λ instanceof ImportLine).map(λ -> (ImportLine) λ).collect(Collectors.toList()), testClassName));
   }
-  
+
   @SuppressWarnings({ "unused", "resource" }) private List<SourceLine> readAllLines() {
     final List<SourceLine> $ = new ArrayList<>();
     try {
@@ -54,7 +53,7 @@ public class StringTestClassGenerator implements TestClassGenerator {
     } catch (final IOException ignore) {/**/}
     return new ArrayList<>();
   }
-  
+
   @SuppressWarnings("resource") private void compileSourceCode(final String className, final String sourceCode) {
     FileWriter writer = null;
     final File sourceFile = new File(makePath(sourcePath, className + JAVA_SUFFIX));

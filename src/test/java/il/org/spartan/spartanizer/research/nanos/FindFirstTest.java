@@ -6,8 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.spartanizer.research.nanos.*;
-
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 /** Tests {@link FindFirst} and {@link ForLoop.FindFirst}
  * @author Ori Marcovitch

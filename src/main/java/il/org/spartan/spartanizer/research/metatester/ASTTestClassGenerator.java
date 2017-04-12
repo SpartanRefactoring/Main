@@ -1,11 +1,6 @@
 package il.org.spartan.spartanizer.research.metatester;
 
-import java.util.*;
-
-import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.utils.*;
 
 /** TODO orenafek: document class
@@ -14,8 +9,8 @@ import il.org.spartan.utils.*;
 @UnderConstruction("OrenAfek -- 12/04/2017")
 @SuppressWarnings("all")
 public class ASTTestClassGenerator implements TestClassGenerator {
-  @Override public Class<?> generate(String testClassName, String fileContent) {
-    ASTNode file = wizard.ast(fileContent);
+  @Override public Class<?> generate(final String testClassName, final String fileContent) {
+    wizard.ast(fileContent);
     return Object.class;
   }
 }

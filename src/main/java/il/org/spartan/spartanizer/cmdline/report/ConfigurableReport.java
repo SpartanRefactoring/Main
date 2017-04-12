@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Configurable Report that uses {@link Listener.S}
@@ -135,7 +134,7 @@ public interface ConfigurableReport {
       try {
         report = new CSVStatistics(reportFilename, header);
       } catch (final IOException ¢) {
-        note.config(¢, header);
+        note.io(¢, header);
       }
     }
 
@@ -197,7 +196,7 @@ public interface ConfigurableReport {
         try {
           report = new CSVStatistics(getFileName(), getHeader());
         } catch (final IOException ¢) {
-          note.config(¢);
+          note.io(¢);
         }
       }
 

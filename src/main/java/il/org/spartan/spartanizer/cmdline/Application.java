@@ -136,10 +136,10 @@ public final class Application implements IApplication {
         note.bug(this, ¢);
         ++failed;
       } catch (final IOException ¢) {
-        note.config(¢);
+        note.io(¢);
         ++failed;
       } catch (final Exception ¢) {
-        note.info(this, ¢);
+        note.ignore(this, ¢);
         ++failed;
       } finally {
         discardCompilationUnit(u);

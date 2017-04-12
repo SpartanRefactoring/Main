@@ -28,7 +28,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Fluent API services for the plugin
@@ -176,7 +175,7 @@ public enum eclipse {
       if (i != null)
         icon = new ImageIcon(i);
     } catch (final MalformedURLException $) {
-      return note.config($);
+      return note.io($);
     }
     return icon;
   }

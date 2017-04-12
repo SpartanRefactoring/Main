@@ -515,7 +515,7 @@ class ZZZ___Fixture_ModelClass {
         }
         myIgnoredException.printStackTrace();
       } catch (@catch¢ final IOException | CloneNotSupportedException ¢) {
-        note.config(¢);
+        note.io(¢);
       }
       @knows("lemon") @foreign({ "¢", "x", "bread", "pear", "resourceInTry" }) final int a = hashCode();
       q(a * a);

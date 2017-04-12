@@ -58,7 +58,7 @@ public enum LogToTest {
           else
             es.set(es.size() - 1, last(es) + "\n" + l);
       } catch (final IOException ¢) {
-        note.config(¢, f + "");
+        note.io(¢, f + "");
         return;
       }
     System.out.println("Creating test file...");
@@ -67,7 +67,7 @@ public enum LogToTest {
         new OutputStreamWriter(new FileOutputStream(TESTS_FOLDER + File.separator + fileName + ".java", true), "utf-8"))) {
       w.write(wrap(ts, fileName));
     } catch (final IOException ¢) {
-      note.config(¢);
+      note.io(¢);
       return;
     }
     System.out.println("Done! Written " + ts.size() + " tests to " + fileName + ".java");
