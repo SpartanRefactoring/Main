@@ -42,7 +42,7 @@ public interface monitor {
   }
 
   static <T> T bug(final Object o, final Throwable t) {
-    return robust.nullify(() -> logger.info(format(//
+    return run.nullifying(() -> logger.info(format(//
         "An instance of %s was hit by %s exception.\n" + //
             "This is an indication of a bug.\n", //
         English.name(o), English.indefinite(t) //
@@ -54,13 +54,13 @@ public interface monitor {
   }
 
   static <T> T bug(final String format, final Object... os) {
-    return robust.nullify(() -> logger.info(format(//
+    return run.nullifying(() -> logger.info(format(//
         "A bug was detected in the vicinty of %s\n", system.myCallerFullClassName()) + //
         format(format, os)));
   }
 
   static <T> T bug(final Throwable ¢) {
-    return robust.nullify(() -> logger.info(//
+    return run.nullifying(() -> logger.info(//
         "A static method was hit by " + indefinite(¢) + " exception.\n" + //
             "This is an indication of a bug.\n" + //
             format("%s = '%s'\n", English.name(¢), ¢) + //
@@ -71,7 +71,7 @@ public interface monitor {
    * @param o JD
    * @param ¢ JD */
   static <T> T cancel(final Exception ¢) {
-    return robust.nullify(() -> logger.info(//
+    return run.nullifying(() -> logger.info(//
         " " + English.name(¢) + //
             " (probably cancellation) exception." + //
             "\n x = '" + ¢ + "'" //
@@ -82,7 +82,7 @@ public interface monitor {
    * @param o JD
    * @param x JD */
   static <T> T cancel(final Object o, final Exception x) {
-    return robust.nullify(() -> logger.info(//
+    return run.nullifying(() -> logger.info(//
         "An instance of " + English.name(o) + //
             "\n was hit by " + indefinite(x) + //
             " (probably cancellation) exception." + //
@@ -91,7 +91,7 @@ public interface monitor {
   }
 
   static <T> T config(final Exception ¢) {
-    return robust.nullify(() -> logger.config(//
+    return run.nullifying(() -> logger.config(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)" //
             + "\n   The exception says: '" + ¢ + "'" //
@@ -99,7 +99,7 @@ public interface monitor {
   }
 
   static <T> T config(final Exception x, final String message) {
-    return robust.nullify(() -> logger.info(//
+    return run.nullifying(() -> logger.info(//
         "   Got an exception of type : " + English.name(x) + //
             "\n      (probably I/O exception)" + //
             "\n   The exception says: '" + x + "'" + //
@@ -109,7 +109,7 @@ public interface monitor {
   }
 
   static <T> T config(final IOException ¢) {
-    return robust.nullify(() -> logger.info(//
+    return run.nullifying(() -> logger.info(//
         "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
     ));
@@ -134,7 +134,7 @@ public interface monitor {
   }
 
   static <T> T info(final String message) {
-    return robust.nullify(() -> logger.info(message));
+    return run.nullifying(() -> logger.info(message));
   }
 
   /** logs an error in the plugin into an external file

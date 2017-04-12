@@ -54,7 +54,7 @@ public final class SingleTipperApplicator {
       final IMarker m, //
       final Type t, //
       final Tipper<?> w) {
-    Configuration.refresh();
+    Utils.refresh();
     final TipperApplyVisitor v = new TipperApplyVisitor($, m, t, u, w);
     if (w == null)
       u.accept(v);
@@ -198,8 +198,8 @@ public final class SingleTipperApplicator {
         @Override protected <N extends ASTNode> boolean go(final N n) {
           if (disabling.on(n) || !w.myAbstractOperandsClass().isInstance(n))
             return true;
-          Configuration.defaultInstance();
-          @SuppressWarnings("unchecked") final Tipper<N> x = Configuration.findTipper(n, w);
+          Utils.defaultInstance();
+          @SuppressWarnings("unchecked") final Tipper<N> x = Utils.findTipper(n, w);
           if (x == null)
             return true;
           final Tip make = x.tip(n);
@@ -219,7 +219,7 @@ public final class SingleTipperApplicator {
         return false;
       if (eclipse.facade.isNodeOutsideMarker(n, marker))
         return true;
-      final Tipper<N> t = Configuration.defaultInstance().firstTipper(n);
+      final Tipper<N> t = Utils.defaultInstance().firstTipper(n);
       if (t != null)
         apply(t, n);
       doneTraversing = true;
