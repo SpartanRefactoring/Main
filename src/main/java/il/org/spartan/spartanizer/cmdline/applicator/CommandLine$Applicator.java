@@ -171,7 +171,7 @@ public class CommandLine$Applicator extends GenericApplicator {
    * @param r
    * @param u */
   private void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    toolbox = Toolbox.defaultInstance();
+    configuration = Configuration.defaultInstance();
     u.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(final N n) {
         TrimmerMonitor.visitation(n);
