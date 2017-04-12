@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.ast.factory;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -49,15 +47,15 @@ public enum copy {
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
-  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> ¢ of(final ¢ ¢) {
-    return ¢ == null ? null : (¢) copySubtree(¢.getAST(), ¢);
+  @SuppressWarnings("unchecked") public static <N extends ASTNode> N of(final N ¢) {
+    return ¢ == null ? null : (N) ASTNode.copySubtree(¢.getAST(), ¢);
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter
-   * @param ¢s JD
+   * @param ¢ JD
    * @return a duplicate of the parameter, downcasted to the returned type. */
-  @SuppressWarnings("unchecked") public static <¢ extends ASTNode> Collection<¢> of(final Collection<¢> ¢s) {
-    return ¢s.stream().map(λ -> (¢) copySubtree(λ.getAST(), λ)).collect(toList());
+  public static <N extends ASTNode> Collection<N> of(final Collection<N> ¢) {
+    return ¢.stream().map(copy::of).collect(toList());
   }
 
   public static Expression ofWhileExpression(final WhileStatement ¢) {

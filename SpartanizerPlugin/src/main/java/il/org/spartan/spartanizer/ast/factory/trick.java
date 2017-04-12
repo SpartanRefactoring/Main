@@ -75,7 +75,7 @@ public enum trick {
    * @param r rewriter
    * @param g edit group, usually null */
   public static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
-    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(ASTNode.copySubtree(d.getAST(), m), g);
+    r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(copy.of(m), g);
   }
 
   /** @param d JD

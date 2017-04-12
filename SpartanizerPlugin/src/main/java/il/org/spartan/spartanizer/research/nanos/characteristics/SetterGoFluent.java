@@ -42,8 +42,8 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         if (!iz.voidType(returnType(d)))
           return;
-        final MethodDeclaration n = az.methodDeclaration(ASTNode.copySubtree(d.getAST(), d));
-        n.setReturnType2(az.type(ASTNode.copySubtree(n.getAST(), getType(yieldAncestors.untilContainingType().from(d)))));
+        final MethodDeclaration n = copy.of(d);
+        n.setReturnType2(copy.of(getType(yieldAncestors.untilContainingType().from(d))));
         final ReturnStatement s = n.getAST().newReturnStatement();
         s.setExpression(n.getAST().newThisExpression());
         action.addStatement(n, s, r, g);

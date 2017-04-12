@@ -7,12 +7,10 @@ import java.util.function.*;
 
 import il.org.spartan.utils.range.*;
 
-/** TODO Yossi Gil: document class 
- * 
+/** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-12 */
 public interface the {
-
   @SuppressWarnings("boxing") static int index(final int i, final int... is) {
     for (final Integer $ : range.from(0).to(is.length))
       if (is[$] == i)
@@ -38,6 +36,10 @@ public interface the {
 
   static <T> T null¢() {
     return null;
+  }
+
+  static <T> T penultimate(final List<T> ¢) {
+    return ¢ == null || ¢.size() < 2 ? null : ¢.get(¢.size() - 2);
   }
 
   static <T> T previous(final T t, final List<T> ts) {
@@ -66,4 +68,5 @@ public interface the {
       else
         add = x == t;
     return $;
-  }}
+  }
+}

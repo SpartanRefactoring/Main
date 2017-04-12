@@ -46,7 +46,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
 
   @Override public void start(final BundleContext c) throws Exception {
     super.start(c);
-    monitor.logger.fine("START " + this); 
+    monitor.logger.fine("START " + this);
     try {
       startSpartan();
       addPartListener();
@@ -57,23 +57,23 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   }
 
   @Override public void stop(final BundleContext ¢) throws Exception {
-    monitor.logger.fine("STOP " + this); 
+    monitor.logger.fine("STOP " + this);
     plugin = null;
     super.stop(¢);
   }
 
   @Override protected void loadDialogSettings() {
-    monitor.logger.finest(this+"");
+    monitor.logger.finest(this + "");
     super.loadDialogSettings();
   }
 
   @Override protected void refreshPluginActions() {
-    monitor.logger.finest(this+"");
+    monitor.logger.finest(this + "");
     super.refreshPluginActions();
   }
 
   @Override protected void saveDialogSettings() {
-    monitor.logger.finest(this+"");
+    monitor.logger.finest(this + "");
     super.saveDialogSettings();
   }
 
