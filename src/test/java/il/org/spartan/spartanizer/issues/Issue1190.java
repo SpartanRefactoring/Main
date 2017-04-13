@@ -18,10 +18,8 @@ import il.org.spartan.utils.fluent.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Issue1190 {
   Trimmer trimmer;
-  int exceptionsCounter;
 
   @Before public void setUp() {
-    exceptionsCounter = 1;
     trimmer = new Trimmer(Configurations.all());
   }
 
