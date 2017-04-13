@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Testing testing mechanisms.
  * @author Ori Roth
  * @since 2017-04-13 */
+@Ignore
 public class Issue1249 {
   private Tipper<ExpressionStatement> fail = new FailingTipper<>();
 
