@@ -46,7 +46,12 @@ public enum extract {
   public static List<Annotation> annotations(final BodyDeclaration ¢) {
     return annotations(extendedModifiers(¢));
   }
+  
+  public static List<Annotation> annotations(final MethodDeclaration ¢) {
+    return annotations(extendedModifiers(¢));
+  }
 
+  
   private static List<Annotation> annotations(final List<IExtendedModifier> ¢) {
     return ¢.stream().map(az::annotation).filter(Objects::nonNull).collect(toList());
   }
