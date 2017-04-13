@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Table representing coverage for methods with 1 to 3 statements
  * @deprecated
