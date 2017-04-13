@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
@@ -71,10 +72,11 @@ public class ASTTestClassGenerator implements TestClassGenerator {
         .map(x -> x.source) //
         .forEach(λ -> az.abstractTypeDeclaration(λ.getParent()).bodyDeclarations().remove(λ));
   }
-
+  
   @Override public Class<?> generate(String testClassName, final File originalSourceFile) {
     root = makeAST(originalSourceFile);
     modifyClass();
+    removeUnnecessaryImports();
     String $ = testClassSkelaton(allTestMethods().stream().map(λ -> tests(λ, prefixes(λ))).collect(Collectors.toList()));
     return loadClass(testClassName, format.code($), testClass, sourcePath);
   }
@@ -88,6 +90,21 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     }).forEach($::add);
     return $;
   }
+  
+  private void removeUnnecessaryImports() {
+    List<Class<?>> importsToRemove = Arrays.asList(MetaTester.class);
+    root.accept(new ASTVisitor() {
+      @Override public boolean visit(ImportDeclaration node) {
+        if (importsToRemove.stream().map(x -> x.getPackage().getName())
+            .anyMatch(x -> node.getName().toString().contains(x)) ||
+            node.getName().toString().equals("org.junit.runner")) {
+          node.delete();
+          return true;
+        }
+        return false;
+      }
+    });
+  }
 
   private String testClassSkelaton(List<List<String>> tests) {
     removeOriginalTestsFromTree();
@@ -96,7 +113,9 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     $.replace($.lastIndexOf("}"), $.length(), "");
     tests.stream().map(l -> l.stream().reduce((s1, s2) -> s1 + s2).orElse("")).forEach($::append);
     $.append("\n}\n");
-    return $ + "";
+    return $.toString()
+        .replaceFirst("@SuppressWarnings\\([\"a-zA-Z0-9-{}]*\\)[\n\t\r ]*public class","public class")
+        .replace("public class", "@SuppressWarnings(\"all\") public class");
   }
 
   private static <T> String removeBraces(List<T> l) {
