@@ -250,6 +250,18 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
   Configuration currentConfiguration;
   String fileName;
 
+  public interface Tap {
+    /** @formatter:off */
+    default void noTipper() {/**/}
+    default void setNode()       {/**/}
+    default void tipperAccepts() {/**/}
+    default void tipperRejects() {/**/}
+    default void tipperTip()     {/**/}
+    default void tipPrune()      {/**/}
+    default void tipRewrite()    {/**/}
+    //@formatter:on
+  }
+
   /** A {@link Tap} to update {@link #progressMonitor}
    * @author Yossi Gil
    * @since 2017-04-09 */
@@ -263,18 +275,6 @@ public class Trimmer extends AbstractTipperNoBetterNameYet {
     @Override public void tipPrune() { w(2); }
     @Override public void tipRewrite() { w(5); }
     void w(final int w) { progressMonitor().worked(w); }
-    //@formatter:on
-  }
-
-  public interface Tap {
-    /** @formatter:off */
-    default void noTipper() {/**/}
-    default void setNode()       {/**/}
-    default void tipperAccepts() {/**/}
-    default void tipperRejects() {/**/}
-    default void tipperTip()     {/**/}
-    default void tipPrune()      {/**/}
-    default void tipRewrite()    {/**/}
     //@formatter:on
   }
 

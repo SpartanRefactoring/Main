@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.utils.fluent.*;
 
 /** Fluet API library for formatting things
  * @author Ori Marcovitch
