@@ -37,12 +37,6 @@ public final class SingleFlater {
    * @param ¢ JD
    * @return new */
   public static SingleFlater in(final ASTNode ¢) {
-    return in(¢, λ -> {/**/
-    });
-  }
-
-  @SuppressWarnings("unused") // see #1249
-  public static SingleFlater in(final ASTNode ¢, final Consumer<Exception> __) {
     final SingleFlater $ = new SingleFlater();
     $.root = ¢;
     return $;
@@ -79,13 +73,17 @@ public final class SingleFlater {
     return this;
   }
 
+  protected <N extends ASTNode> Tipper<N> getTipper(final N n) {
+    return robust.lyNull(() -> operationsProvider.getTipper(n), λ -> note.bug(this, λ));
+  }
+
   /** Main operation. Commit a single change to the {@link CompilationUnit}.
    * @param flaterChooser a {@link Function} to choose an {@link Operation} to
    *        make out of a collection of {@link Option}s.
    * @param r JD
    * @param g JD
    * @return true iff a change has been commited */
-  @SuppressWarnings({ "unchecked", "rawtypes" }) public boolean go(final ASTRewrite r, final TextEditGroup g) {
+  @SuppressWarnings("rawtypes") public boolean go(final ASTRewrite r, final TextEditGroup g) {
     if (root == null || operationsProvider == null)
       return false;
     disabling.scan(root);
@@ -94,13 +92,8 @@ public final class SingleFlater {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
         if (!inWindow(n) || usesDisabling && disabling.on(n))
           return true;
-        Tipper<N> w = null;
-        try {
-          w = operationsProvider.getTipper(n);
-        } catch (final Exception ¢) {
-          note.bug(this, ¢);
-        }
-        if (w == null)
+        Tipper<N> w;
+        if ((w = getTipper(n)) == null)
           return true;
         operations.add(Operation.of(n, w));
         return true;
@@ -108,14 +101,16 @@ public final class SingleFlater {
     });
     if (operations.isEmpty())
       return false;
-    for (final Operation o : operationsProvider.getFunction().apply(operations))
-      try {
-        o.tipper.check(o.node);
-        o.tipper.tip(o.node).go(r, g);
-      } catch (final Exception ¢) {
-        note.bug(this, ¢);
-      }
+    for (final Operation ¢ : operationsProvider.getFunction().apply(operations))
+      perform(¢, r, g);
     return true;
+  }
+
+  @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final ASTRewrite r, final TextEditGroup g) {
+    robust.ly(() -> {
+      o.tipper.check(o.node);
+      o.tipper.tip(o.node).go(r, g);
+    }, λ -> note.bug(this, λ));
   }
 
   /** @param compoundEditing
