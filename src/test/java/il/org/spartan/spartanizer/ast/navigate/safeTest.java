@@ -7,7 +7,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import org.junit.*;
 
-import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.utils.fluent.*;
 
 @SuppressWarnings("static-method")
 public class safeTest {
