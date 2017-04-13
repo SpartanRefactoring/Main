@@ -19,6 +19,7 @@ public class MetaTester extends BlockJUnit4ClassRunner {
   private final Class<?> testClass;
   private final File sourceFile;
   private final String testName;
+  private boolean hasRan = false; 
 
   public MetaTester(final Class<?> clazz) throws InitializationError {
     super(clazz);
@@ -32,6 +33,9 @@ public class MetaTester extends BlockJUnit4ClassRunner {
   }
 
   @Override @SuppressWarnings("unused") protected void runChild(final FrameworkMethod __, final RunNotifier n) {
+   if(hasRan)
+     return;
+    
     final Class<?> newTestClass = new StringTestClassGenerator(testClass, testName, sourceFile).generate(testClass.getSimpleName() + "_CustomTest");
     final Class<?> n2 = new ASTTestClassGenerator().generate(testClass.getSimpleName() + "_CustomTest",sourceFile);
     final TestSuite suite = new TestSuite(newTestClass);
@@ -42,6 +46,7 @@ public class MetaTester extends BlockJUnit4ClassRunner {
     } catch (final InitializationError ignore) {/**/}
     // Uncomment this to run the original test as well
     /* super.runChild(method, notifier); */
+    hasRan = true;
   }
 
   private File openSourceFile(final String className) {
