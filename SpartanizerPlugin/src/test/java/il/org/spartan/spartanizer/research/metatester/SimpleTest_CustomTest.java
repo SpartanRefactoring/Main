@@ -1,24 +1,19 @@
 package il.org.spartan.spartanizer.research.metatester;
 import static org.junit.Assert.*;
 import org.junit.*;
-import org.junit.runner.*;
-
+@Ignore
 @SuppressWarnings("static-method")
 public class SimpleTest_CustomTest { 
 
-	@Test public void testF_13() {
-    assertEquals(1, 1);
-  }
+	public @Test void   testF_14() {
+	    assertEquals(1, 2);
+	}
 
-	@Test public void testF_15() {
-    assertEquals(1, 1);
-  }
+	public @Test void   testF_16() {
+	    assertEquals(1, 1);
+	}
 
-	@Test public void testF_17() {
-    assert true;
-  }
-
-	@Test public void testG_21() {
-    assert true;
-  }
+	public @Test void   testF_18() {
+	    assert true;
+	}
 }
