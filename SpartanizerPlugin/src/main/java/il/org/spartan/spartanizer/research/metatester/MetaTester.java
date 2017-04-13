@@ -33,6 +33,7 @@ public class MetaTester extends BlockJUnit4ClassRunner {
 
   @Override @SuppressWarnings("unused") protected void runChild(final FrameworkMethod __, final RunNotifier n) {
     final Class<?> newTestClass = new StringTestClassGenerator(testClass, testName, sourceFile).generate(testClass.getSimpleName() + "_CustomTest");
+    final Class<?> n2 = new ASTTestClassGenerator().generate(testClass.getSimpleName() + "_CustomTest",sourceFile);
     final TestSuite suite = new TestSuite(newTestClass);
     suite.run(new TestResult());
     try {
