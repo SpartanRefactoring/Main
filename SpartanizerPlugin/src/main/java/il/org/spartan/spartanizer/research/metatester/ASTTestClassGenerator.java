@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
 
@@ -17,31 +19,60 @@ import il.org.spartan.utils.*;
 @UnderConstruction("OrenAfek -- 12/04/2017")
 @SuppressWarnings("all")
 public class ASTTestClassGenerator implements TestClassGenerator {
+  private ASTNode root;
+
   enum SourceLineType {
     TEST, OTHER;
   }
 
-  EnumMap<SourceLineType, ASTNode> sourceLines;
+  Set<ASTNode> sourceLines;
 
   public ASTTestClassGenerator() {
-    sourceLines = new EnumMap<>(SourceLineType.class);
+    sourceLines = new HashSet<>();
   }
 
-  private void addToMap(SourceLineType t, ASTNode n) {
-    sourceLines.put(t, n);
+  private void modifyClass() {
+    root.accept(new ASTVisitor() {
+      @Override public boolean visit(TypeDeclaration node) {
+        SimpleName $ = az.typeDeclaration(node).getName();
+        $.setIdentifier($ + "_Meta");
+        Annotation a = extract.annotations(node).stream()//
+            .filter(λ -> haz.name(λ, "RunWith"))//
+            .findAny().orElse(null);
+        if (a != null)
+          node.modifiers().remove(a);
+        return true;
+      }
+    });
+  }
+
+  private void addToMap(ASTNode ¢) {
+    sourceLines.add(¢);
+  }
+
+  private void removeOriginalTestsFromTree(ASTNode root) {
+    sourceLines.stream() //
+        .peek(λ -> System.out.println("Node = " + λ)) //
+        .forEach(λ -> az.abstractTypeDeclaration(λ.getParent()).bodyDeclarations().remove(λ));
   }
 
   private void fillMap(ASTNode root) {
+    root.accept(new DispatchingVisitor() {
+      @Override protected <N extends ASTNode> boolean go(N __) {
+        return false;
+      }
+    });
     step.statements(root).stream().forEach(λ -> {
-      if (!sourceLines.containsValue(λ))
-        addToMap(SourceLineType.OTHER, λ);
+      if (!sourceLines.contains(λ))
+        addToMap(λ);
     });
   }
 
   @Override public Class<?> generate(String testClassName, final File originalSourceFile) {
-    ASTNode $ = makeAST(originalSourceFile);
-    allTestMethods($).stream().forEach(λ -> tests(prefixes(λ)));
-    fillMap($);
+    root = makeAST(originalSourceFile);
+    modifyClass();
+    testClassSkelaton(allTestMethods().stream().map(λ -> tests(prefixes(λ))).collect(Collectors.toList()));
+    
     return Object.class;
   }
 
@@ -55,25 +86,30 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     return $;
   }
 
-  private List<String> testClassSkelaton(File __){
-    List<String> $ = new ArrayList<>();
-    sourceLines.entrySet().stream().filter(e -> e.getKey() != SourceLineType.TEST);
-    return $;
+  private String testClassSkelaton(List<List<String>> tests) {
+    removeOriginalTestsFromTree(root);
+    StringBuilder $ = new StringBuilder();
+    $.append(root + "");
+    $.replace($.lastIndexOf("}"), $.length(), "");
+    tests.stream().map(l -> l.stream().reduce((s1, s2) -> s1 + s2).orElse("")).forEach($::append);
+    $.append("\n}\n");
+    return $ + "";
   }
 
   private List<String> tests(List<String> prefixes) {
     final Int $ = Int.valueOf(0);
-    return prefixes.stream().map(λ -> String.format("@Test public void test%d(){\n%s}", $.next(), λ)).peek(System.out::println)
-        .collect(Collectors.toList());
+    return prefixes.stream().map(λ -> String.format("@Test public void test%d(){\n%s}", $.next(), λ)).collect(Collectors.toList());
   }
 
-  private List<MethodDeclaration> allTestMethods(ASTNode file) {
+  private List<MethodDeclaration> allTestMethods() {
     List<MethodDeclaration> $ = new ArrayList<>();
-    file.accept(new ASTVisitor() {
+    root.accept(new ASTVisitor() {
       @Override public boolean visit(MethodDeclaration node) {
         boolean result = extract.annotations(node).stream().anyMatch(λ -> haz.name(λ, "Test"));
         if (result) {
-          step.statements(node).stream().forEach(λ -> addToMap(SourceLineType.TEST, λ));
+          addToMap(node);
+          // step.statements(node).stream().forEach(λ ->
+          // addToMap(SourceLineType.TEST, λ));
           $.add(node);
         }
         return result;
@@ -100,4 +136,3 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     return "";
   }
 }
-
