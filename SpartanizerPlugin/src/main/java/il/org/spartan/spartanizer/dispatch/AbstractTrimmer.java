@@ -25,17 +25,17 @@ import il.org.spartan.utils.fluent.*;
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
+abstract class AbstractTrimmer extends GUIConfigurationApplicator {
   /** return if got to fixed point of code */
   protected static boolean fixed(final TextEdit ¢) {
     return !¢.hasChildren();
   }
 
-  public AbstractTipperNoBetterNameYet(final String string) {
+  public AbstractTrimmer(final String string) {
     super(string);
   }
 
-  @SafeVarargs public final <N extends ASTNode> AbstractTipperNoBetterNameYet addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> AbstractTrimmer addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       globalConfiguration = new Configuration();
@@ -99,7 +99,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
         return $.get();
   }
 
-  protected AbstractTipperNoBetterNameYet fix(final Configuration all, final Tipper<?>... ts) {
+  protected AbstractTrimmer fix(final Configuration all, final Tipper<?>... ts) {
     final List<Tipper<?>> tss = as.list(ts);
     if (!firstAddition)
       tss.addAll(globalConfiguration.getAllTippers());
@@ -110,7 +110,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
     return this;
   }
 
-  public AbstractTipperNoBetterNameYet useProjectPreferences() {
+  public AbstractTrimmer useProjectPreferences() {
     useProjectPreferences = true;
     configurations.clear();
     return this;

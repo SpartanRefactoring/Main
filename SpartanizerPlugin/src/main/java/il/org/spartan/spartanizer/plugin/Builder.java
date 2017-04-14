@@ -67,7 +67,7 @@ public final class Builder extends IncrementalProjectBuilder {
       addMarkers((IFile) ¢);
   }
 
-  private static void addMarker(final AbstractGUIApplicator a, final Tip t, final IMarker m) throws CoreException {
+  private static void addMarker(final GUIConfigurationApplicator a, final Tip t, final IMarker m) throws CoreException {
     m.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
     m.setAttribute(SPARTANIZATION_TYPE_KEY, a + "");
     m.setAttribute(SPARTANIZATION_TIPPER_KEY, t.tipperClass);
@@ -91,7 +91,7 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IResource f, final CompilationUnit u) throws CoreException {
-    for (final AbstractGUIApplicator s : DefunctTips.all()) {
+    for (final GUIConfigurationApplicator s : DefunctTips.all()) {
       if (s instanceof Trimmer)
         ((Trimmer) s).useProjectPreferences();
       for (final Tip ¢ : s.collectTips(u)) // NANO

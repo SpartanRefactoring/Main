@@ -55,7 +55,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       λ -> new BatchApplicator().defaultSettings().defaultRunAction(getSpartanizer(λ)).passes(1).selection(Selection.Util.by(λ)).go());
   /** Apply spartanization to marked code with a preview. */
   private final IMarkerResolution applyPreview = quickFix("Apply after preview", ¢ -> {
-    final AbstractGUIApplicator g = getSpartanizer(¢);
+    final GUIConfigurationApplicator g = getSpartanizer(¢);
     final Applicator a = new BatchApplicator().defaultSettings().passes(1).selection(Selection.Util.by(¢));
     a.setRunAction(u -> {
       try {
@@ -113,7 +113,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     };
   }
 
-  static AbstractGUIApplicator getSpartanizer(final IMarker $) {
+  static GUIConfigurationApplicator getSpartanizer(final IMarker $) {
     try {
       return DefunctTips.get((String) $.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
     } catch (final CoreException ¢) {

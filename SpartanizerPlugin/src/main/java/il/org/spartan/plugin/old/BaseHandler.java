@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.plugin.*;
  * @author Yossi Gil: major refactoring 2013/07/11
  * @since 2013/07/01 */
 abstract class BaseHandler extends AbstractHandler {
-  private final AbstractGUIApplicator inner;
+  private final GUIConfigurationApplicator inner;
 
   /** Instantiates this class */
   BaseHandler() {
@@ -23,7 +23,7 @@ abstract class BaseHandler extends AbstractHandler {
 
   /** Instantiates this class
    * @param inner JD */
-  private BaseHandler(final AbstractGUIApplicator inner) {
+  private BaseHandler(final GUIConfigurationApplicator inner) {
     this.inner = inner;
   }
 
@@ -39,7 +39,7 @@ abstract class BaseHandler extends AbstractHandler {
     return inner.getName();
   }
 
-  private AbstractGUIApplicator getRefactoring() {
+  private GUIConfigurationApplicator getRefactoring() {
     return inner;
   }
 
@@ -57,7 +57,7 @@ abstract class BaseHandler extends AbstractHandler {
   }
 
   private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit u) {
-    final AbstractGUIApplicator $ = getRefactoring();
+    final GUIConfigurationApplicator $ = getRefactoring();
     $.setSelection(s);
     $.setICompilationUnit(u);
     return new Wizard($);

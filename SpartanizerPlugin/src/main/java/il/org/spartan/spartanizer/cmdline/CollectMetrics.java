@@ -30,7 +30,7 @@ enum CollectMetrics {
     System.err.println("Your output should be here: " + output.close());
   }
 
-  public static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {
+  public static Document rewrite(final GUIConfigurationApplicator a, final CompilationUnit u, final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
