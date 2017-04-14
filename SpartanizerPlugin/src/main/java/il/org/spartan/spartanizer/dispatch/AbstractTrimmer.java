@@ -2,12 +2,16 @@ package il.org.spartan.spartanizer.dispatch;
 
 import static java.util.stream.Collectors.*;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
@@ -25,14 +29,14 @@ import il.org.spartan.utils.fluent.*;
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-abstract class AbstractTrimmer extends GUIConfigurationApplicator {
+public abstract class AbstractTrimmer extends GUIConfigurationApplicator{
+  public AbstractTrimmer(String name) {
+    super(name);
+  }
+
   /** return if got to fixed point of code */
   protected static boolean fixed(final TextEdit ¢) {
     return !¢.hasChildren();
-  }
-
-  public AbstractTrimmer(final String string) {
-    super(string);
   }
 
   @SafeVarargs public final <N extends ASTNode> AbstractTrimmer addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
@@ -116,8 +120,46 @@ abstract class AbstractTrimmer extends GUIConfigurationApplicator {
     return this;
   }
 
+  public ASTRewrite createRewrite(final CompilationUnit ¢) {
+    return rewriterOf(¢, null, new Int());
+  }
+
+  private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
+    note.logger.fine("Weaving maximal rewrite of " + u);
+    progressMonitor.beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
+    final Int count = new Int();
+    final ASTRewrite $ = computeMaximalRewrite(u, m, __ -> count.step());
+    counter.add(count);
+    progressMonitor.done();
+    return $;
+  }
+
+  /** creates an ASTRewrite which contains the changes
+   * @param u the Compilation Unit (outermost ASTNode in the Java Grammar)
+   * @param m a progress monitor in which the progress of the refactoring is
+   *        displayed
+   * @return an ASTRewrite which contains the changes */
+  public ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
+    return rewriterOf(¢, null, counter);
+  }
+
+  public String compilationUnitName() {
+    return iCompilationUnit.getElementName();
+  }
+
+  /** creates an ASTRewrite, under the context of a text marker, which contains
+   * the changes
+   * @param pm a progress monitor in which to display the progress of the
+   *        refactoring
+   * @param m the marker
+   * @return an ASTRewrite which contains the changes */
+  public ASTRewrite createRewrite(final IMarker ¢) {
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
+  }
+
   public Configuration globalConfiguration = Configurations.all();
   protected final Map<IProject, Configuration> configurations = new HashMap<>();
+  private IProgressMonitor progressMonitor = nullProgressMonitor;
   protected boolean useProjectPreferences;
   protected boolean firstAddition = true;
 }

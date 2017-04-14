@@ -194,10 +194,10 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
           if (pm.isCanceled())
             break;
           pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
-          final int tipsCommited = a.fuzzyImplementationApply(u, s.textSelection);
+          final int tipsCommited = a.run(u, s.textSelection);
           totalTips += tipsCommited;
           (tipsCommited == 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
-          (a.fuzzyImplementationApply(u, s.textSelection) != 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
+          (a.run(u, s.textSelection) != 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
           pm.worked(1);
         }
       }
