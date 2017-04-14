@@ -41,7 +41,7 @@ public class TestFluent_null¢ {
       return null;
     }
   };
-  final Customer nullNameCustomer = () -> () -> new State() {};
+  final Customer nullNameCustomer = () -> () -> new State() {/***/};
   final Customer nullStateCustomer = new Customer() {
     @Override public Address getAddress() {
       return new Address() {

@@ -125,10 +125,10 @@ public class BatchApplicator extends Applicator {
 
   // TODO Ori Roth: use Policy / replacement for Trimmer.
   /** Default run action configuration of . Spartanize the
-   * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
+   * {@link ICompilationUnit} using received {@link GUIConfigurationApplicator}.
    * @param a JD
    * @return {@code this} applicator */
-  public BatchApplicator defaultRunAction(final AbstractGUIApplicator a) {
+  public BatchApplicator defaultRunAction(final GUIConfigurationApplicator a) {
     if (a instanceof Trimmer)
       ((Trimmer) a).useProjectPreferences();
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : a.apply(λ, selection())));

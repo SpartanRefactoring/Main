@@ -33,10 +33,10 @@ import il.org.spartan.utils.fluent.*;
  * @author Yossi Gil: major refactoring 2013/07/10
  * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
-public abstract class AbstractGUIApplicator extends Refactoring {
+public abstract class GUIConfigurationApplicator extends Refactoring {
   /*** Instantiates this class, with message identical to name
    * @param name a short name of this instance */
-  protected AbstractGUIApplicator(final String name) {
+  protected GUIConfigurationApplicator(final String name) {
     this.name = name;
   }
 
@@ -352,8 +352,8 @@ public abstract class AbstractGUIApplicator extends Refactoring {
       @Override public void run(final IMarker m) {
         setMarker(m);
         try {
-          new RefactoringWizardOpenOperation(new Wizard(AbstractGUIApplicator.this)).run(Display.getCurrent().getActiveShell(),
-              "Spartanization: " + s + AbstractGUIApplicator.this);
+          new RefactoringWizardOpenOperation(new Wizard(GUIConfigurationApplicator.this)).run(Display.getCurrent().getActiveShell(),
+              "Spartanization: " + s + GUIConfigurationApplicator.this);
         } catch (final InterruptedException ¢) {
           note.cancel(this, ¢);
         }
