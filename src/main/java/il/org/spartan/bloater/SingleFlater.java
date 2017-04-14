@@ -16,6 +16,7 @@ import org.eclipse.text.edits.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -74,7 +75,11 @@ public final class SingleFlater {
   }
 
   protected <N extends ASTNode> Tipper<N> getTipper(final N n) {
-    return robust.lyNull(() -> operationsProvider.getTipper(n), λ -> note.bug(this, λ));
+    return robust.lyNull(() -> {
+      final Tipper<N> $ = operationsProvider.getTipper(n);
+      setTipper($);
+      return $;
+    }, λ -> note.bug(this, λ));
   }
 
   /** Main operation. Commit a single change to the {@link CompilationUnit}.
@@ -84,16 +89,18 @@ public final class SingleFlater {
    * @param g JD
    * @return true iff a change has been commited */
   @SuppressWarnings("rawtypes") public boolean go(final ASTRewrite r, final TextEditGroup g) {
+    setRewrite(r);
     if (root == null || operationsProvider == null)
       return false;
     disabling.scan(root);
     final List<Operation<?>> operations = new ArrayList<>();
     root.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("synthetic-access") protected <N extends ASTNode> boolean go(final N n) {
+        setNode(n);
         if (!inWindow(n) || usesDisabling && disabling.on(n))
           return true;
-        Tipper<N> w;
-        if ((w = getTipper(n)) == null)
+        Tipper<N> w = getTipper(n);
+        if (w == null)
           return true;
         operations.add(Operation.of(n, w));
         return true;
@@ -102,14 +109,18 @@ public final class SingleFlater {
     if (operations.isEmpty())
       return false;
     for (final Operation ¢ : operationsProvider.getFunction().apply(operations))
-      perform(¢, r, g);
+      perform(¢, g);
     return true;
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final ASTRewrite r, final TextEditGroup g) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final TextEditGroup g) {
     robust.ly(() -> {
+      setTipper(o.tipper);
+      setNode(o.node);
       o.tipper.check(o.node);
-      o.tipper.tip(o.node).go(r, g);
+      setTip(o.tipper.tip(o.node));
+      tip().go(rewrite(), g);
+      notify.tipRewrite();
     }, λ -> note.bug(this, λ));
   }
 
@@ -258,6 +269,88 @@ public final class SingleFlater {
 
     public void invalidate() {
       startChar = INVALID;
+    }
+  }
+
+  private Tipper<?> tipper;
+  protected Tip tip;
+  private ASTRewrite rewrite;
+  private ASTNode node;
+  public final Taps notify = new Taps()//
+      .push(new SingleFlaterMonitor(this));
+
+  void setTip(final Tip ¢) {
+    tip = ¢;
+    if (¢ != null)
+      notify.tipperTip();
+  }
+
+  public void setNode(final ASTNode currentNode) {
+    node = currentNode;
+    notify.setNode();
+  }
+
+  public void setRewrite(final ASTRewrite currentRewrite) {
+    rewrite = currentRewrite;
+  }
+
+  public void setTipper(final Tipper<?> currentTipper) {
+    tipper = currentTipper;
+    if (tipper() == null)
+      notify.noTipper();
+    else
+      notify.tipperAccepts();
+  }
+
+  public ASTRewrite rewrite() {
+    return rewrite;
+  }
+
+  public Tip tip() {
+    return tip;
+  }
+
+  public ASTNode node() {
+    return node;
+  }
+
+  public Tipper<?> tipper() {
+    return tipper;
+  }
+
+  public interface Tap {
+    /** @formatter:off */
+    default void noTipper() {/**/}
+    default void setNode()       {/**/}
+    default void tipperAccepts() {/**/}
+    default void tipperRejects() {/**/}
+    default void tipperTip()     {/**/}
+    default void tipPrune()      {/**/}
+    default void tipRewrite()    {/**/}
+    //@formatter:on
+  }
+
+  public static class Taps implements Tap {
+    @Override public void noTipper() {
+      inner.forEach(Tap::noTipper);
+    }
+
+    /** @formatter:off */
+    public Taps pop() { inner.remove(inner.size()-1); return this; }
+    public Taps push(final Tap ¢) { inner.add(¢); return this; }
+    @Override public void setNode() { inner.forEach(Tap::setNode); }
+    @Override public void tipperAccepts() { inner.forEach(Tap::tipperAccepts); }
+    @Override public void tipperRejects() { inner.forEach(Tap::tipperRejects); }
+    @Override public void tipperTip() { inner.forEach(Tap::tipperTip); }
+    @Override public void tipPrune() { inner.forEach(Tap::tipPrune); }
+    @Override public void tipRewrite() { inner.forEach(Tap::tipRewrite); }
+    private final List<Tap> inner = new LinkedList<>();
+    //@formatter:on
+  }
+
+  public abstract class With {
+    public SingleFlater current() {
+      return SingleFlater.this;
     }
   }
 }
