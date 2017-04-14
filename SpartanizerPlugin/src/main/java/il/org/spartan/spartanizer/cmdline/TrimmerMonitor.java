@@ -140,8 +140,8 @@ public class TrimmerMonitor extends Trimmer.With implements TrimmingTapper {
     off();
   }
 
-  public TrimmerMonitor(final TrimmingSetup trimmer) {
-    trimmer.super();
+  public TrimmerMonitor(final TrimmingSetup setup) {
+    setup.super();
   }
 
   @Override public void noTipper() {

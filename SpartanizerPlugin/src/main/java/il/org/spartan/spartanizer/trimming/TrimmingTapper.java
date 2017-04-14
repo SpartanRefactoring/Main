@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.trimming;
 
 public interface TrimmingTapper {
   /** @formatter:off */
+  default void begin() {/**/}
+  default void end() {/**/}
   default void noTipper() {/**/}
   default void setNode()       {/**/}
   default void tipperAccepts() {/**/}
