@@ -50,7 +50,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @return applicator for this handler */
   public static BatchApplicator applicator(final English.Activity activityNamer) {
     final BatchApplicator $ = new BatchApplicator();
-    final Trimmer t = new Trimmer();
+    final TrimmerImplementation t = new TrimmerImplementation();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.runContext(r -> {
       try {
@@ -124,7 +124,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @return applicator for this handler */
   @Deprecated @SuppressWarnings("deprecation") public static BatchApplicator applicatorMapper() {
     final BatchApplicator $ = new BatchApplicator();
-    final Trimmer t = new Trimmer();
+    final TrimmerImplementation t = new TrimmerImplementation();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Bool openDialog = new Bool();
     $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {

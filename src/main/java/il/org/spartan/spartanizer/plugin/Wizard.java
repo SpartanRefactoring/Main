@@ -9,9 +9,9 @@ import il.org.spartan.utils.*;
  * @author Artium Nihamkin
  * @since 2013/01/01 */
 public final class Wizard extends RefactoringWizard {
-  /** @param r the refactoring to be used with this wizard */
-  public Wizard(final Refactoring r) {
-    super(r, PREVIEW_EXPAND_FIRST_NODE);
+  /** @param refactoring the refactoring to be used with this wizard */
+  public Wizard(final Refactoring refactoring) {
+    super(refactoring, PREVIEW_EXPAND_FIRST_NODE);
   }
 
   @Override protected void addUserInputPages() {

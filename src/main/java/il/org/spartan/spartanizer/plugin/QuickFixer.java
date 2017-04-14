@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.old.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.fluent.*;
@@ -113,18 +114,17 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     };
   }
 
-  static GUIConfigurationApplicator getSpartanizer(final IMarker $) {
-    try {
-      return DefunctTips.get((String) $.getAttribute(Builder.SPARTANIZATION_TYPE_KEY));
-    } catch (final CoreException ¢) {
-      return note.bug(¢);
-    }
+  static Trimmer getSpartanizer(final IMarker $) {
+    return new TrimmerImplementation(); 
   }
 
-  /** Single tipper applicator implementation using modified {@link Trimmer}
+  /** Single tipper applicator implementation using modified
+   * {@link TrimmerImplementation}
    * @author Ori Roth
    * @since 2016 */
-  private static class SingleTipper<N extends ASTNode> extends Trimmer {
+  private static class SingleTipper<N extends ASTNode> extends TrimmerImplementation {
+    private String name;
+
     SingleTipper(final Tipper<N> tipper) {
       this.tipper = tipper;
       name = "Applying " + tipper.technicalName();

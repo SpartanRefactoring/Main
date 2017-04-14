@@ -8,13 +8,14 @@ import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.ui.handlers.*;
 
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>:
  *         original version
  * @author Yossi Gil: major refactoring 2013/07/11
  * @since 2013/07/01 */
 abstract class BaseHandler extends AbstractHandler {
-  private final GUIConfigurationApplicator inner;
+  private final Trimmer inner;
 
   /** Instantiates this class */
   BaseHandler() {
@@ -23,7 +24,7 @@ abstract class BaseHandler extends AbstractHandler {
 
   /** Instantiates this class
    * @param inner JD */
-  private BaseHandler(final GUIConfigurationApplicator inner) {
+  private BaseHandler(final Trimmer inner) {
     this.inner = inner;
   }
 
@@ -37,10 +38,6 @@ abstract class BaseHandler extends AbstractHandler {
 
   private String getDialogTitle() {
     return inner.getName();
-  }
-
-  private GUIConfigurationApplicator getRefactoring() {
-    return inner;
   }
 
   private Void execute(final ISelection ¢) throws InterruptedException {
@@ -57,7 +54,7 @@ abstract class BaseHandler extends AbstractHandler {
   }
 
   private RefactoringWizard getWizard(final ITextSelection s, final ICompilationUnit u) {
-    final GUIConfigurationApplicator $ = getRefactoring();
+    final GUIConfigurationApplicator $ = inner;
     $.setSelection(s);
     $.setICompilationUnit(u);
     return new Wizard($);

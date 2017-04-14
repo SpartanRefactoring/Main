@@ -129,8 +129,8 @@ public class BatchApplicator extends Applicator {
    * @param a JD
    * @return {@code this} applicator */
   public BatchApplicator defaultRunAction(final GUIConfigurationApplicator a) {
-    if (a instanceof Trimmer)
-      ((TrimmingSetup) a).useProjectPreferences();
+    if (a instanceof TrimmerImplementation)
+      ((Trimmer) a).useProjectPreferences();
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : a.apply(λ, selection())));
     name(a.getName());
     return this;
@@ -146,7 +146,7 @@ public class BatchApplicator extends Applicator {
   /** Default settings for all {@link Applicator} components.
    * @return {@code this} applicator */
   public BatchApplicator defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new Trimmer()).defaultOperationName();
+    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new TrimmerImplementation()).defaultOperationName();
   }
 
   /** Factory method.
