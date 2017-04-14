@@ -7,7 +7,6 @@ package il.org.spartan.spartanizer.research;
  * @since 2016 */
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 public abstract class UserDefinedTipper<N extends ASTNode> extends Tipper<N>//
