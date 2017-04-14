@@ -9,14 +9,14 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit tests for {@link TipperApplicator}
+/** Unit tests for {@link GUISingleTipperApplicator}
  * @author Yossi GIl
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("javadoc")
 public final class TipperApplicatorTest {
   private static final Class<BlockSimplify> BLOCK_SIMPLIFY = BlockSimplify.class;
-  private final TipperApplicator it = new TipperApplicator(new BlockSimplify());
+  private final GUISingleTipperApplicator it = new GUISingleTipperApplicator(new BlockSimplify());
 
   @Test public void clazzIsCorrect() {
     azzert.that(it.clazz, is(Block.class));
