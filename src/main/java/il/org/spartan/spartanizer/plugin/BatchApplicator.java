@@ -130,7 +130,7 @@ public class BatchApplicator extends Applicator {
    * @return {@code this} applicator */
   public BatchApplicator defaultRunAction(final GUIConfigurationApplicator a) {
     if (a instanceof Trimmer)
-      ((TrimmerSetup) a).useProjectPreferences();
+      ((TrimmingSetup) a).useProjectPreferences();
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : a.apply(λ, selection())));
     name(a.getName());
     return this;
