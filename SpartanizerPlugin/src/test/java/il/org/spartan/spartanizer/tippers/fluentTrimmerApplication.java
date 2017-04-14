@@ -28,7 +28,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;
 
-  public fluentTrimmerApplication(final TrimmerSetup t, final String codeFragment) {
+  public fluentTrimmerApplication(final TrimmingSetup t, final String codeFragment) {
     t.super();
     this.codeFragment = codeFragment;
     assert codeFragment != null;

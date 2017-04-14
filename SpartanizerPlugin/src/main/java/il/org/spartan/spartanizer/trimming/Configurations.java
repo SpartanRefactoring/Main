@@ -315,7 +315,7 @@ public interface Configurations {
     return ¢.getSimpleName();
   }
 
-  static void refresh(final TrimmerSetup ¢) {
+  static void refresh(final TrimmingSetup ¢) {
     ¢.globalConfiguration = all();
   }
 

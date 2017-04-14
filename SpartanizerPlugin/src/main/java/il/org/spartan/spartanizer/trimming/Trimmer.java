@@ -31,7 +31,7 @@ import il.org.spartan.utils.fluent.*;
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-public class Trimmer extends TrimmerSetup {
+public class Trimmer extends TrimmingSetup {
   /** Instantiates this class */
   public Trimmer() {
     this(Configurations.all());
@@ -54,7 +54,7 @@ public class Trimmer extends TrimmerSetup {
         if (tip() == null)
           return true;
         tips.stream().filter(λ -> overlap(λ.span, tip().span)).collect(toList()).forEach(λ -> {
-          auxiliaryTip = λ;
+          setAuxiliaryTip(λ);
           tips.remove(λ);
           notify.tipPrune();
         });
@@ -88,7 +88,7 @@ public class Trimmer extends TrimmerSetup {
     return rewrite();
   }
 
-  @SafeVarargs public final <N extends ASTNode> TrimmerSetup fix(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> TrimmingSetup fix(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       globalConfiguration = new Configuration();
@@ -97,17 +97,12 @@ public class Trimmer extends TrimmerSetup {
     return this;
   }
 
-  @SafeVarargs public final TrimmerSetup fixBloater(final Tipper<?>... ¢) {
+  @SafeVarargs public final TrimmingSetup fixBloater(final Tipper<?>... ¢) {
     return fix(InflaterProvider.freshCopyOfAllExpanders(), ¢);
   }
 
-  @SafeVarargs public final TrimmerSetup fixTipper(final Tipper<?>... ¢) {
+  @SafeVarargs public final TrimmingSetup fixTipper(final Tipper<?>... ¢) {
     return fix(Configurations.allClone(), ¢);
-  }
-
-  private void setCompilationUnit(final CompilationUnit ¢) {
-    currentConfiguration = !useProjectPreferences ? globalConfiguration : getPreferredConfiguration(¢);
-    fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
   }
 
   private void topDown(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
@@ -122,8 +117,8 @@ public class Trimmer extends TrimmerSetup {
         if (tip() == null)
           return true;
         for (final Tip t : tips) {
-          auxiliaryTip = t;
-          if ((auxiliaryTip = t) != null && Tip.overlap(t.span, tip().span)) {
+          setAuxiliaryTip(t);
+          if ((setAuxiliaryTip(t)) != null && Tip.overlap(t.span, tip().span)) {
             notify.tipPrune();
             return false;
           }
@@ -144,7 +139,7 @@ public class Trimmer extends TrimmerSetup {
 
   protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
     return robust.lyNull(() -> {
-      final Tipper<N> $ = currentConfiguration.firstTipper(¢);
+      final Tipper<N> $ = currentConfiguration().firstTipper(¢);
       setTipper($);
       return $;
     }, λ -> note.bug(λ));
@@ -169,8 +164,8 @@ public class Trimmer extends TrimmerSetup {
       }
 
       @Override protected void initialization(final ASTNode ¢) {
-        currentConfiguration = !useProjectPreferences || !(¢ instanceof CompilationUnit) ? globalConfiguration
-            : getPreferredConfiguration((CompilationUnit) ¢);
+        setCurrentConfiguration(!useProjectPreferences || !(¢ instanceof CompilationUnit) ? globalConfiguration
+            : getPreferredConfiguration((CompilationUnit) ¢));
         disabling.scan(¢);
       }
     };

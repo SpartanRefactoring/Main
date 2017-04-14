@@ -29,17 +29,17 @@ import il.org.spartan.utils.fluent.*;
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-public abstract class TrimmerSetup extends GUIConfigurationApplicator {
-  public TrimmerSetup(final String name) {
+public abstract class TrimmingSetup extends GUIConfigurationApplicator {
+  public TrimmingSetup(final String name) {
     super(name);
   }
 
   /** return if got to fixed point of code */
-  protected static boolean fixed(final TextEdit ¢) {
+  private static boolean fixed(final TextEdit ¢) {
     return !¢.hasChildren();
   }
 
-  @SafeVarargs public final <N extends ASTNode> TrimmerSetup addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> TrimmingSetup addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       globalConfiguration = new Configuration();
@@ -103,7 +103,7 @@ public abstract class TrimmerSetup extends GUIConfigurationApplicator {
         return $.get();
   }
 
-  protected TrimmerSetup fix(final Configuration all, final Tipper<?>... ts) {
+  protected TrimmingSetup fix(final Configuration all, final Tipper<?>... ts) {
     final List<Tipper<?>> tss = as.list(ts);
     if (!firstAddition)
       tss.addAll(globalConfiguration.getAllTippers());
@@ -114,7 +114,7 @@ public abstract class TrimmerSetup extends GUIConfigurationApplicator {
     return this;
   }
 
-  public TrimmerSetup useProjectPreferences() {
+  public TrimmingSetup useProjectPreferences() {
     useProjectPreferences = true;
     configurations.clear();
     return this;
@@ -126,11 +126,11 @@ public abstract class TrimmerSetup extends GUIConfigurationApplicator {
 
   private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
     note.logger.fine("Weaving maximal rewrite of " + u);
-    progressMonitor.beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
+    progressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
     final Int count = new Int();
     final ASTRewrite $ = computeMaximalRewrite(u, m, __ -> count.step());
     counter.add(count);
-    progressMonitor.done();
+    progressMonitor().done();
     return $;
   }
 
@@ -154,15 +154,16 @@ public abstract class TrimmerSetup extends GUIConfigurationApplicator {
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
   public ASTRewrite createRewrite(final IMarker ¢) {
-    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor()), ¢, new Int());
   }
 
   public void clearTipper() {
     tipper = null;
   }
 
-  public TrimmingTappers push(TrimmingTapper ¢) {
-    return notify.push(¢);
+  public TrimmingSetup push(TrimmingTapper ¢) {
+    notify.push(¢);
+    return this;
   }
 
   public TrimmingTappers pop() {
@@ -200,16 +201,31 @@ public abstract class TrimmerSetup extends GUIConfigurationApplicator {
     rewrite = currentRewrite;
   }
 
-  public void setTipper(final Tipper<?> currentTipper) {
+  protected void setTipper(final Tipper<?> currentTipper) {
     tipper = currentTipper;
     if (tipper() == null)
       notify.noTipper();
     else
       notify.tipperAccepts();
   }
+  public Tip setAuxiliaryTip(Tip auxiliaryTip) {
+    this.auxiliaryTip = auxiliaryTip;
+    return auxiliaryTip;
+  }
+  protected void setCompilationUnit(final CompilationUnit ¢) {
+    setCurrentConfiguration(!useProjectPreferences ? globalConfiguration : getPreferredConfiguration(¢));
+    fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
+  }
+  public Configuration currentConfiguration() {
+    return currentConfiguration;
+  }
+
+  public void setCurrentConfiguration(Configuration currentConfiguration) {
+    this.currentConfiguration = currentConfiguration;
+  }
   public abstract class With {
-    public TrimmerSetup current() {
-      return TrimmerSetup.this;
+    public TrimmingSetup current() {
+      return TrimmingSetup.this;
     }
   }
   public Configuration globalConfiguration = Configurations.all();
@@ -222,7 +238,7 @@ public abstract class TrimmerSetup extends GUIConfigurationApplicator {
   protected Tipper<?> tipper;
   protected Tip tip;
   protected boolean firstAddition = true;
-  protected Tip auxiliaryTip;
-  protected Configuration currentConfiguration;
+  private Tip auxiliaryTip;
+  private Configuration currentConfiguration;
   protected String fileName;
 }
