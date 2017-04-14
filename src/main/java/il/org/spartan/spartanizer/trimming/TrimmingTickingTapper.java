@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.trimming;
 
-import il.org.spartan.spartanizer.tipping.*;
-
 /** A {@link TrimmingTapper} to update {@link #progressMonitor}
  * @author Yossi Gil
  * @since 2017-04-09 */
