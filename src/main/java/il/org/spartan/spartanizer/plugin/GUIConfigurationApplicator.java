@@ -108,15 +108,8 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
 
-  public int run(final ICompilationUnit $, final ITextSelection s) {
-    try {
-      setICompilationUnit($);
-      setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
-      return performRule($);
-    } catch (final CoreException ¢) {
-      note.bug(this, ¢);
-    }
-    return 0;
+  public TextEditGroup currentEditGroup() {
+    return currentEditGroup;
   }
 
   /** a quickfix which automatically performs the tip
@@ -153,18 +146,12 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     return name;
   }
 
-  public IProgressMonitor progressMonitor() {
-    return progressMonitor;
-  }
-
   public ITextSelection getSelection() {
     return selection;
   }
 
-  private IProgressMonitor progressMonitor;
-
   public int go() throws CoreException {
-    final AbstractTrimmer t = new Trimmer();
+    final TrimmerSetup t = new Trimmer();
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(t.compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
@@ -177,12 +164,6 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     return $.get();
   }
 
-  /** .
-   * @return whether there are tips which can be performed on the compilation
-   *         unit. */
-  public final boolean haveTips() {
-    return countTips() > 0;
-  }
 
   /** @param m marker which represents the range to apply the tipper within
    * @param n the node which needs to be within the range of {@code m}
@@ -193,6 +174,21 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
 
   public void parse() {
     compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor);
+  }
+
+  public IProgressMonitor progressMonitor() {
+    return progressMonitor;
+  }
+
+  public int run(final ICompilationUnit $, final ITextSelection s) {
+    try {
+      setICompilationUnit($);
+      setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
+      return performRule($);
+    } catch (final CoreException ¢) {
+      note.bug(this, ¢);
+    }
+    return 0;
   }
 
   /** @param pm a progress monitor in which to display the progress of the
@@ -241,7 +237,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     final Int $ = new Int();
     final WrappedCompilationUnit u1 = u.build();
     final CompilationUnit u2 = u1.compilationUnit;
-    final AbstractTrimmer t = new Trimmer();
+    final TrimmerSetup t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u2, $);
     try {
       textChange.setEdit(r.rewriteAST());
@@ -267,7 +263,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
-    final AbstractTrimmer t = new Trimmer();
+    final TrimmerSetup t = new Trimmer();
     try {
       final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
@@ -365,7 +361,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
    *        {@link NullProgressMonitor} for light operations)
    * @throws CoreException exception from the {@code pm} */
   private int performRule(final ICompilationUnit u) throws CoreException {
-    final AbstractTrimmer t = new Trimmer();
+    final TrimmerSetup t = new Trimmer();
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
@@ -387,7 +383,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
    * @throws CoreException */
   private int scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
     m.beginTask("Collecting tips for " + u.getElementName(), IProgressMonitor.UNKNOWN);
-    final AbstractTrimmer t = new Trimmer();
+    final TrimmerSetup t = new Trimmer();
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final CompilationUnit cu = (CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m);
@@ -401,7 +397,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
-    final AbstractTrimmer t = new Trimmer();
+    final TrimmerSetup t = new Trimmer();
     progressMonitor.beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     progressMonitor.done();
@@ -445,17 +441,14 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     progressMonitor.done();
   }
 
-  public TextEditGroup currentEditGroup() {
-    return currentEditGroup;
-  }
-
   private final Collection<TextFileChange> changes = new ArrayList<>();
-  protected CompilationUnit compilationUnit;
-  protected ICompilationUnit iCompilationUnit;
+  private TextEditGroup currentEditGroup;
   private IMarker marker;
   private ITextSelection selection;
   private final Tips tips = Tips.empty();
   private int totalChanges;
+  protected CompilationUnit compilationUnit;
+  protected ICompilationUnit iCompilationUnit;
   protected String name;
-  private TextEditGroup currentEditGroup;
+  protected IProgressMonitor progressMonitor;
 }

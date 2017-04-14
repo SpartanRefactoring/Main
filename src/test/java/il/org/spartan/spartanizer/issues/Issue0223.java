@@ -212,7 +212,7 @@ public final class Issue0223 {
     assert u != null;
     final IDocument d = new Document(wrap);
     assert d != null;
-    final Trimmer a = new Trimmer();
+    final TrimmerSetup a = new Trimmer();
     try {
       a.createRewrite(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {

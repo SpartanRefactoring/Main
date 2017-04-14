@@ -24,7 +24,7 @@ import il.org.spartan.utils.fluent.*;
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Yossi Gil
  * @since Sep 20, 2016 */
-public class TrimmerMonitor extends Trimmer.With implements Trimmer.TrimmingTap {
+public class TrimmerMonitor extends Trimmer.With implements TrimmingTapper {
   public static void off() {
     logger.setLevel(Level.OFF);
   }
@@ -140,7 +140,7 @@ public class TrimmerMonitor extends Trimmer.With implements Trimmer.TrimmingTap 
     off();
   }
 
-  public TrimmerMonitor(final Trimmer trimmer) {
+  public TrimmerMonitor(final TrimmerSetup trimmer) {
     trimmer.super();
   }
 

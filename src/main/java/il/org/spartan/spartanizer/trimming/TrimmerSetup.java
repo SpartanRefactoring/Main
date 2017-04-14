@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.trimming;
 
 import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 import java.util.stream.*;
 
@@ -18,6 +16,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
@@ -29,8 +29,8 @@ import il.org.spartan.utils.fluent.*;
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-public abstract class AbstractTrimmer extends GUIConfigurationApplicator {
-  public AbstractTrimmer(final String name) {
+public abstract class TrimmerSetup extends GUIConfigurationApplicator {
+  public TrimmerSetup(final String name) {
     super(name);
   }
 
@@ -39,7 +39,7 @@ public abstract class AbstractTrimmer extends GUIConfigurationApplicator {
     return !¢.hasChildren();
   }
 
-  @SafeVarargs public final <N extends ASTNode> AbstractTrimmer addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> TrimmerSetup addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       globalConfiguration = new Configuration();
@@ -103,7 +103,7 @@ public abstract class AbstractTrimmer extends GUIConfigurationApplicator {
         return $.get();
   }
 
-  protected AbstractTrimmer fix(final Configuration all, final Tipper<?>... ts) {
+  protected TrimmerSetup fix(final Configuration all, final Tipper<?>... ts) {
     final List<Tipper<?>> tss = as.list(ts);
     if (!firstAddition)
       tss.addAll(globalConfiguration.getAllTippers());
@@ -114,7 +114,7 @@ public abstract class AbstractTrimmer extends GUIConfigurationApplicator {
     return this;
   }
 
-  public AbstractTrimmer useProjectPreferences() {
+  public TrimmerSetup useProjectPreferences() {
     useProjectPreferences = true;
     configurations.clear();
     return this;
@@ -157,9 +157,72 @@ public abstract class AbstractTrimmer extends GUIConfigurationApplicator {
     return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
   }
 
+  public void clearTipper() {
+    tipper = null;
+  }
+
+  public TrimmingTappers push(TrimmingTapper ¢) {
+    return notify.push(¢);
+  }
+
+  public TrimmingTappers pop() {
+    return notify.pop();
+  }
+
+  public Tip auxiliaryTip() {
+    return auxiliaryTip;
+  }
+  public Tip tip() {
+    return tip;
+  }
+
+  public Tipper<?> tipper() {
+    return tipper;
+  }
+  public ASTRewrite getRewrite() {
+    return rewrite;
+  }
+
+  public ASTNode node() {
+    return node;
+  }
+
+  public ASTRewrite rewrite() {
+    return getRewrite();
+  }
+
+  public void setNode(final ASTNode currentNode) {
+    node = currentNode;
+    notify.setNode();
+  }
+
+  public void setRewrite(final ASTRewrite currentRewrite) {
+    rewrite = currentRewrite;
+  }
+
+  public void setTipper(final Tipper<?> currentTipper) {
+    tipper = currentTipper;
+    if (tipper() == null)
+      notify.noTipper();
+    else
+      notify.tipperAccepts();
+  }
+  public abstract class With {
+    public TrimmerSetup current() {
+      return TrimmerSetup.this;
+    }
+  }
   public Configuration globalConfiguration = Configurations.all();
   protected final Map<IProject, Configuration> configurations = new HashMap<>();
-  private final IProgressMonitor progressMonitor = nullProgressMonitor;
+  public final TrimmingTappers notify = new TrimmingTappers()
+        .push(new TrimmerMonitor(this));
   protected boolean useProjectPreferences;
+  protected ASTNode node;
+  protected ASTRewrite rewrite;
+  protected Tipper<?> tipper;
+  protected Tip tip;
   protected boolean firstAddition = true;
+  protected Tip auxiliaryTip;
+  protected Configuration currentConfiguration;
+  protected String fileName;
 }
