@@ -17,7 +17,7 @@ public abstract class Applicator {
    * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
   /** The modification process for each {@link ICU} in {@link Selection}. May
-   * activate, for instance, a {@link AbstractGUIApplicator}. The return value
+   * activate, for instance, a {@link GUIConfigurationApplicator}. The return value
    * determines whether the compilation unit should continue to the next pass or
    * not. */
   private Function<WrappedCompilationUnit, Integer> runAction;

@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
-  static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
+  static int countOpportunities(final GUIConfigurationApplicator a, final CompilationUnit u) {
     return a.collectTips(u).size();
   }
 
@@ -44,7 +44,7 @@ public interface trim {
     return $.get();
   }
 
-  static Document rewrite(final AbstractGUIApplicator a, final CompilationUnit u, final Document $) {
+  static Document rewrite(final GUIConfigurationApplicator a, final CompilationUnit u, final Document $) {
     try {
       a.createRewrite(u).rewriteAST($, null).apply($);
       return $;
