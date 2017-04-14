@@ -93,7 +93,7 @@ public final class Builder extends IncrementalProjectBuilder {
   private static void addMarkers(final IResource f, final CompilationUnit u) throws CoreException {
     for (final GUIConfigurationApplicator s : DefunctTips.all()) {
       if (s instanceof Trimmer)
-        ((Trimmer) s).useProjectPreferences();
+        ((TrimmerSetup) s).useProjectPreferences();
       for (final Tip ¢ : s.collectTips(u)) // NANO
         if (¢ != null) {
           final TipperGroup group = Configurations.groupFor(¢.tipperClass);
