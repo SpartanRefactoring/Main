@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.plugin;
 import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.utils.fault.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 import java.util.List;
 import java.util.function.*;
@@ -23,6 +21,7 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
@@ -34,14 +33,13 @@ import il.org.spartan.utils.fluent.*;
  * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
 public abstract class GUIConfigurationApplicator extends Refactoring {
-  /*** Instantiates this class, with message identical to name
-   * @param name a short name of this instance */
-  protected GUIConfigurationApplicator(final String name) {
+  public GUIConfigurationApplicator(String name) {
     this.name = name;
   }
 
   public boolean apply(final ICompilationUnit cu) {
-    return apply(cu, new Range(0, 0));
+    boolean v = run(cu, new TextSelection(0, 0)) > 0;
+    return v;
   }
 
   public int apply(final WrappedCompilationUnit $, final AbstractSelection<?> s) {
@@ -95,7 +93,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   public int countTips() {
     setMarker(null);
     try {
-      checkFinalConditions(progressMonitor);
+      checkFinalConditions(progressMonitor());
     } catch (final OperationCanceledException ¢) {
       note.cancel(this, ¢);
     } catch (final CoreException ¢) {
@@ -109,39 +107,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
 
-  public ASTRewrite createRewrite(final CompilationUnit ¢) {
-    return rewriterOf(¢, null, new Int());
-  }
-
-  /** creates an ASTRewrite which contains the changes
-   * @param u the Compilation Unit (outermost ASTNode in the Java Grammar)
-   * @param m a progress monitor in which the progress of the refactoring is
-   *        displayed
-   * @return an ASTRewrite which contains the changes */
-  public ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
-    return rewriterOf(¢, null, counter);
-  }
-
-  public boolean follow() throws CoreException {
-    progressMonitor.beginTask("Preparing the change ...", IProgressMonitor.UNKNOWN);
-    final ASTRewrite astRewrite = ASTRewrite.create(compilationUnit.getAST());
-    for (final Tip ¢ : tips) {
-      progressMonitor.worked(1);
-      ¢.go(astRewrite, new TextEditGroup("spartanization: textEditGroup"));
-    }
-    progressMonitor.done();
-    final TextEdit rewriteAST = astRewrite.rewriteAST();
-    final TextFileChange textFileChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
-    textFileChange.setTextType("java");
-    textFileChange.setEdit(rewriteAST);
-    final boolean $ = textFileChange.getEdit().getLength() != 0;
-    if ($)
-      textFileChange.perform(progressMonitor);
-    progressMonitor.done();
-    return $;
-  }
-
-  public int fuzzyImplementationApply(final ICompilationUnit $, final ITextSelection s) {
+  public int run(final ICompilationUnit $, final ITextSelection s) {
     try {
       setICompilationUnit($);
       setSelection(s != null && s.getLength() > 0 && !s.isEmpty() ? s : null);
@@ -194,13 +160,16 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     return selection;
   }
 
+  private IProgressMonitor progressMonitor;
+
   public int go() throws CoreException {
+    AbstractTrimmer t = new Trimmer();
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
-    final TextFileChange textChange = new TextFileChange(compilationUnitName(), compilationUnitIFile());
+    final TextFileChange textChange = new TextFileChange(t.compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
     final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
     final Int $ = new Int();
-    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), $).rewriteAST());
+    textChange.setEdit(t.createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
     progressMonitor.done();
@@ -262,7 +231,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private boolean apply(final ICompilationUnit cu, final Range r) {
-    return fuzzyImplementationApply(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())) > 0;
+    return run(cu, r == null || r.isEmpty() ? new TextSelection(0, 0) : new TextSelection(r.from, r.size())) > 0;
   }
 
   private int apply(final WrappedCompilationUnit u) throws CoreException {
@@ -271,7 +240,8 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     final Int $ = new Int();
     final WrappedCompilationUnit u1 = u.build();
     final CompilationUnit u2 = u1.compilationUnit;
-    final ASTRewrite r = createRewrite(u2, $);
+    AbstractTrimmer t = new Trimmer();
+    final ASTRewrite r = t.createRewrite(u2, $);
     try {
       textChange.setEdit(r.rewriteAST());
     } catch (final AssertionError x) {
@@ -296,11 +266,12 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
+    AbstractTrimmer t = new Trimmer();
     try {
       final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
       final Int $ = new Int();
-      textChange.setEdit(createRewrite(u.build().compilationUnit, $).rewriteAST());
+      textChange.setEdit(t.createRewrite(u.build().compilationUnit, $).rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(progressMonitor);
       if (s != null)
@@ -322,20 +293,6 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
 
   private IFile compilationUnitIFile() {
     return (IFile) iCompilationUnit.getResource();
-  }
-
-  private String compilationUnitName() {
-    return iCompilationUnit.getElementName();
-  }
-
-  /** creates an ASTRewrite, under the context of a text marker, which contains
-   * the changes
-   * @param pm a progress monitor in which to display the progress of the
-   *        refactoring
-   * @param m the marker
-   * @return an ASTRewrite which contains the changes */
-  private ASTRewrite createRewrite(final IMarker ¢) {
-    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
   }
 
   /** @param s Text for the preview dialog
@@ -407,26 +364,17 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
    *        {@link NullProgressMonitor} for light operations)
    * @throws CoreException exception from the {@code pm} */
   private int performRule(final ICompilationUnit u) throws CoreException {
+    AbstractTrimmer t = new Trimmer();
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final IProgressMonitor m = eclipse.newSubMonitor(progressMonitor);
     final Int $ = new Int();
-    textChange.setEdit(createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
+    textChange.setEdit(t.createRewrite((CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m), $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(progressMonitor);
     progressMonitor.done();
     return $.get();
-  }
-
-  private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
-    note.logger.fine("Weaving maximal rewrite of " + u);
-    progressMonitor.beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
-    final Int count = new Int();
-    final ASTRewrite $ = computeMaximalRewrite(u, m, __ -> count.step());
-    counter.add(count);
-    progressMonitor.done();
-    return $;
   }
 
   private void scan() {
@@ -438,11 +386,12 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
    * @throws CoreException */
   private int scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
     m.beginTask("Collecting tips for " + u.getElementName(), IProgressMonitor.UNKNOWN);
+    AbstractTrimmer t = new Trimmer();
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final CompilationUnit cu = (CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m);
     final Int $ = new Int();
-    textChange.setEdit(createRewrite(cu, $).rewriteAST());
+    textChange.setEdit(t.createRewrite(cu, $).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
     totalChanges += collectTips(cu).size();
@@ -451,13 +400,14 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
+    AbstractTrimmer t = new Trimmer();
     progressMonitor.beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     progressMonitor.done();
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     progressMonitor.beginTask("Collecting tips for " + m, IProgressMonitor.UNKNOWN);
-    textChange.setEdit(createRewrite(m).rewriteAST());
+    textChange.setEdit(t.createRewrite(m).rewriteAST());
     progressMonitor.done();
     if (textChange.getEdit().getLength() != 0)
       if (preview)
@@ -498,10 +448,9 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     return currentEditGroup;
   }
 
-  private IProgressMonitor progressMonitor = nullProgressMonitor;
   private final Collection<TextFileChange> changes = new ArrayList<>();
   protected CompilationUnit compilationUnit;
-  private ICompilationUnit iCompilationUnit;
+  protected ICompilationUnit iCompilationUnit;
   private IMarker marker;
   private ITextSelection selection;
   private final Tips tips = Tips.empty();

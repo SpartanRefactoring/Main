@@ -44,20 +44,15 @@ public interface trim {
     return $.get();
   }
 
-  static Document rewrite(final GUIConfigurationApplicator a, final CompilationUnit u, final Document $) {
+  static Document rewrite(final AbstractTrimmer t, final CompilationUnit u, final Document $) {
     try {
-      a.createRewrite(u).rewriteAST($, null).apply($);
+      t.createRewrite(u).rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
     }
   }
 
-  static String apply(final Tipper<? extends ASTNode> t, final String from) {
-    final CompilationUnit $ = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
-    assert $ != null;
-    return rewrite(new TipperApplicator(t), $, new Document(from)).get();
-  }
 
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
