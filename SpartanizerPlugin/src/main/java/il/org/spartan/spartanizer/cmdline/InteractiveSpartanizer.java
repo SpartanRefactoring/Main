@@ -35,10 +35,10 @@ public class InteractiveSpartanizer {
     return $;
   }
 
-  public Configuration configuration = Configurations.all();
+  private Configuration configuration = Configurations.all();
 
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
-    configuration.disable(¢);
+    configuration().disable(¢);
     return this;
   }
 
@@ -46,40 +46,48 @@ public class InteractiveSpartanizer {
    * @param from what to process
    * @return trimmed text */
   public String fixedPoint(final String from) {
-    return new Trimmer(configuration).fixed(from);
+    return new Trimmer(configuration()).fixed(from);
   }
 
   public String fixedPoint(final ASTNode from) {
-    return new Trimmer(configuration).fixed(from + "");
+    return new Trimmer(configuration()).fixed(from + "");
   }
 
   public String once(final String from) {
-    return new Trimmer(configuration).once(from);
+    return new Trimmer(configuration()).once(from);
   }
 
   boolean changed;
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
-      configuration = Configurations.allClone();
+      this.setConfiguration(Configurations.allClone());
     changed = true;
-    configuration.add(c, ts);
+    configuration().add(c, ts);
     return this;
   }
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
     if (!changed)
-      configuration = Configurations.allClone();
+      this.setConfiguration(Configurations.allClone());
     changed = true;
-    configuration.remove(c, ts);
+    configuration().remove(c, ts);
     return this;
   }
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
     if (!changed)
-      configuration = Configurations.allClone();
+      this.setConfiguration(Configurations.allClone());
     changed = true;
-    configuration.add(i, ts);
+    configuration().add(i, ts);
     return this;
+  }
+
+  public Configuration configuration() {
+    return configuration;
+  }
+
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
   }
 }

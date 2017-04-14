@@ -170,7 +170,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
       @Override public void tick(int work) {
         progressMonitor().worked(work);
       }
-    });
+    }).push(new TrimmingTapper() {});
   }
 
   /** @param m marker which represents the range to apply the tipper within
@@ -178,10 +178,6 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
    * @return whether the node is within range */
   public final boolean inRange(final IMarker m, final ASTNode n) {
     return m == null ? !isTextSelected() || !isNotSelected(n) : !eclipse.facade.isNodeOutsideMarker(n, m);
-  }
-
-  public void parse() {
-    compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parser(iCompilationUnit).createAST(progressMonitor());
   }
 
   public IProgressMonitor progressMonitor() {
@@ -223,8 +219,8 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   /** @param subject the selection to set */
-  public void setSelection(final ITextSelection ¢) {
-    selection = ¢;
+  public void setSelection(final ITextSelection s) {
+    this.selection = s != null && s.getLength() > 0 && !s.isEmpty() ? s : null;
   }
 
   public int TipsCount() {
@@ -247,6 +243,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     final CompilationUnit u2 = u1.compilationUnit;
     final TrimmingSetup t = makeTrimmer();
     final ASTRewrite r = t.createRewrite(u2, $);
+    
     try {
       textChange.setEdit(r.rewriteAST());
     } catch (final AssertionError x) {
@@ -382,11 +379,6 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     return $.get();
   }
 
-  private void scan() {
-    tips.clear();
-    compilationUnit.accept(tipsCollector(tips));
-  }
-
   /** @param u JD
    * @throws CoreException */
   private int scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
@@ -443,10 +435,8 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     return apply(iCompilationUnit, new Range(0, 0));
   }
 
-  void collectTips() {
-    progressMonitor().beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
-    scan();
-    progressMonitor().done();
+  protected String compilationUnitName() {
+    return iCompilationUnit.getElementName();
   }
 
   private final Collection<TextFileChange> changes = new ArrayList<>();
@@ -455,8 +445,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   private ITextSelection selection;
   private final Tips tips = Tips.empty();
   private int totalChanges;
-  protected CompilationUnit compilationUnit;
-  protected ICompilationUnit iCompilationUnit;
+  private ICompilationUnit iCompilationUnit;
   protected String name;
   private IProgressMonitor progressMonitor = wizard.nullProgressMonitor;
 }

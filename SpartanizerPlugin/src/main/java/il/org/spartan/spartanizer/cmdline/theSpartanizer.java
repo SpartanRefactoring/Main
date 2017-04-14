@@ -9,6 +9,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.fluent.*;
@@ -45,7 +46,7 @@ public interface theSpartanizer {
    * @return trimmed text, or null in case of error or no more applicable
    *         tippers */
   @SuppressWarnings("hiding") static String once(final String from) {
-    final TrimmingSetup trimmer = new Trimmer(configuration);
+    final GUIConfigurationApplicator trimmer = new Trimmer(configuration);
     final IDocument $ = new Document(from);
     final ASTNode root = make.ast(from);
     if (root != null)

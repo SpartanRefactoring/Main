@@ -13,13 +13,13 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
-/** A smorgasboard containing lots of stuff, but its main purpose, which should
- * be factored out somewhere is to apply a {@link Configuration} to a tree. The
- * main difficulties are:
+/** Apply a {@link Configuration} to a tree. 
+ * Issues are
  * <ol>
  * <li>Top down or bottom up traversal
  * <li>Overlapping in the domain of distinct tippers
@@ -88,7 +88,7 @@ public class Trimmer extends TrimmingSetup {
     return rewrite();
   }
 
-  @SafeVarargs public final <N extends ASTNode> TrimmingSetup fix(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> GUIConfigurationApplicator fix(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       globalConfiguration = new Configuration();
@@ -97,11 +97,11 @@ public class Trimmer extends TrimmingSetup {
     return this;
   }
 
-  @SafeVarargs public final TrimmingSetup fixBloater(final Tipper<?>... ¢) {
+  @SafeVarargs public final GUIConfigurationApplicator fixBloater(final Tipper<?>... ¢) {
     return fix(InflaterProvider.freshCopyOfAllExpanders(), ¢);
   }
 
-  @SafeVarargs public final TrimmingSetup fixTipper(final Tipper<?>... ¢) {
+  @SafeVarargs public final GUIConfigurationApplicator fixTipper(final Tipper<?>... ¢) {
     return fix(Configurations.allClone(), ¢);
   }
 
@@ -147,7 +147,7 @@ public class Trimmer extends TrimmingSetup {
 
   @Override protected ASTVisitor tipsCollector(final Tips into) {
     Configurations.refresh(this);
-    fileName = English.unknownIfNull(compilationUnit, λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
+    fileName = English.unknownIfNull(compilationUnit(), λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
         setNode(n);
