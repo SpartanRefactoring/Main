@@ -10,8 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 /** {@link Issue #1018}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}

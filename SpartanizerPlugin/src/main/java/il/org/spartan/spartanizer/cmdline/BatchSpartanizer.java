@@ -221,7 +221,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     runWordCount();
     System.err.printf("\n Our batch applicator had %d tippers dispersed over %d hooks\n", //
         box.it(interactiveSpartanizer.configuration.tippersCount()), //
-        box.it(il.org.spartan.spartanizer.dispatch.Configurations.hooksCount())//
+        box.it(il.org.spartan.spartanizer.trimming.Configurations.hooksCount())//
     );
   }
 

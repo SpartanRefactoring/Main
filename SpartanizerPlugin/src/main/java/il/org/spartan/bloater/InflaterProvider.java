@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.bloaters.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 /** holds the new configuration for the expanders and returns them
  * @author Raviv Rachmiel

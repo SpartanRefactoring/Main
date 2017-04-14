@@ -4,8 +4,8 @@ import java.util.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 /** TODO Matteo Orru' please add a description
  * @author Matteo Orru'

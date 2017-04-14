@@ -12,7 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;

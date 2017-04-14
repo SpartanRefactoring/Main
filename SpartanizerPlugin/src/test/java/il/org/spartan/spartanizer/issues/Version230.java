@@ -18,11 +18,10 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.dispatch.Configurations;
 import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** Unit tests for version 2.30
