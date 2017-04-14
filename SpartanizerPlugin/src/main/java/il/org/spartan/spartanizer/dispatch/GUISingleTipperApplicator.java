@@ -17,13 +17,14 @@ import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** An adapter that converts the protocol of a single @{link Tipper} instance
- * into that of {@link GUIConfigurationApplicator}. This class must eventually die.
+ * into that of {@link GUIConfigurationApplicator}. This class must eventually
+ * die.
  * @author Yossi Gil
  * @since 2015/07/25 */
 public final class GUISingleTipperApplicator extends GUIConfigurationApplicator {
   final Tipper<ASTNode> tipper;
   final Class<? extends ASTNode> clazz;
-  private IProgressMonitor progressMonitor = nullProgressMonitor;
+  private final IProgressMonitor progressMonitor = nullProgressMonitor;
 
   /** Instantiates this class
    * @param statementsTipper The tipper we wish to convert

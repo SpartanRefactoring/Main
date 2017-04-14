@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2017-04-13 */
 @Ignore
 public class Issue1249 {
-  private Tipper<ExpressionStatement> fail = new FailingTipper<>();
+  private final Tipper<ExpressionStatement> fail = new FailingTipper<>();
 
   @Test(expected = Exception.class) public void a() {
     trimminKof("f();").using(fail, ExpressionStatement.class).doesNotCrash();

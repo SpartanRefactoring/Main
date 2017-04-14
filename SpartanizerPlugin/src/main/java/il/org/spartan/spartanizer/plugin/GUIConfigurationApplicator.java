@@ -33,12 +33,12 @@ import il.org.spartan.utils.fluent.*;
  * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
 public abstract class GUIConfigurationApplicator extends Refactoring {
-  public GUIConfigurationApplicator(String name) {
+  public GUIConfigurationApplicator(final String name) {
     this.name = name;
   }
 
   public boolean apply(final ICompilationUnit cu) {
-    boolean v = run(cu, new TextSelection(0, 0)) > 0;
+    final boolean v = run(cu, new TextSelection(0, 0)) > 0;
     return v;
   }
 
@@ -163,7 +163,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   private IProgressMonitor progressMonitor;
 
   public int go() throws CoreException {
-    AbstractTrimmer t = new Trimmer();
+    final AbstractTrimmer t = new Trimmer();
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(t.compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
@@ -240,7 +240,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     final Int $ = new Int();
     final WrappedCompilationUnit u1 = u.build();
     final CompilationUnit u2 = u1.compilationUnit;
-    AbstractTrimmer t = new Trimmer();
+    final AbstractTrimmer t = new Trimmer();
     final ASTRewrite r = t.createRewrite(u2, $);
     try {
       textChange.setEdit(r.rewriteAST());
@@ -266,7 +266,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
-    AbstractTrimmer t = new Trimmer();
+    final AbstractTrimmer t = new Trimmer();
     try {
       final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
@@ -364,7 +364,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
    *        {@link NullProgressMonitor} for light operations)
    * @throws CoreException exception from the {@code pm} */
   private int performRule(final ICompilationUnit u) throws CoreException {
-    AbstractTrimmer t = new Trimmer();
+    final AbstractTrimmer t = new Trimmer();
     progressMonitor.beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
@@ -386,7 +386,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
    * @throws CoreException */
   private int scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
     m.beginTask("Collecting tips for " + u.getElementName(), IProgressMonitor.UNKNOWN);
-    AbstractTrimmer t = new Trimmer();
+    final AbstractTrimmer t = new Trimmer();
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final CompilationUnit cu = (CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m);
@@ -400,7 +400,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
-    AbstractTrimmer t = new Trimmer();
+    final AbstractTrimmer t = new Trimmer();
     progressMonitor.beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     progressMonitor.done();
