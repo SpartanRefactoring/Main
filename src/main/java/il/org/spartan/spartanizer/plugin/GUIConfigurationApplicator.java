@@ -38,7 +38,8 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   public boolean apply(final ICompilationUnit cu) {
-    final boolean v = run(cu, new TextSelection(0, 0)) > 0;
+    final int run = run(cu, new TextSelection(0, 0));
+    final boolean v = run > 0;
     return v;
   }
 
