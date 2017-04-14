@@ -16,8 +16,7 @@ import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
-/** A handler for {@link DefunctTips}. This handler executes all safe Tips on
- * all Java files in the current project.
+/** executes all safe Tips on all Java files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>
  * @author Ori Roth
  * @author Yossi Gil
