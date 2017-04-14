@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.dispatch;
+package il.org.spartan.spartanizer.trimming;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 

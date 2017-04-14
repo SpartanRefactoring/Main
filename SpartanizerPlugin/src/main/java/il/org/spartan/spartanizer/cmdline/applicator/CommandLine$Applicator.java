@@ -18,10 +18,10 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Specific applicator
@@ -171,7 +171,7 @@ public class CommandLine$Applicator extends GenericApplicator {
    * @param r
    * @param u */
   private void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    configuration = il.org.spartan.spartanizer.dispatch.Configurations.all();
+    configuration = il.org.spartan.spartanizer.trimming.Configurations.all();
     u.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(final N n) {
         TrimmerMonitor.visitation(n);

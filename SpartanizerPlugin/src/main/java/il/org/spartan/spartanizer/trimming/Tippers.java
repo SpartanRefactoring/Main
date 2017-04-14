@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.dispatch;
+package il.org.spartan.spartanizer.trimming;
 
 import java.io.*;
 import java.util.*;
