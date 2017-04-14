@@ -31,8 +31,6 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
     return !¢.hasChildren();
   }
 
-  public static boolean silent;
-
   public AbstractTipperNoBetterNameYet(final String string) {
     super(string);
   }
@@ -85,9 +83,7 @@ abstract class AbstractTipperNoBetterNameYet extends AbstractGUIApplicator {
       $.apply(d);
       return $;
     } catch (final NullPointerException | MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      if (!silent)
-        note.bug(this, ¢);
-      throw new AssertionError(¢);
+      return note.bug(this, ¢);
     }
   }
 

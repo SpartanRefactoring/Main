@@ -41,10 +41,9 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   protected Dotter dotter;
   protected String absolutePath;
   protected String relativePath;
-  private final boolean silent = false;
+  private boolean silent;
   static {
     TrimmerMonitor.off();
-    Trimmer.silent = true;
   }
 
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor() {
