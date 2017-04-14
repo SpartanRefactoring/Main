@@ -38,7 +38,6 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
   static {
     clazz = Table1To3Statements.class;
     TrimmerMonitor.off();
-    Trimmer.silent = true;
     Logger.subscribe(Table1To3Statements::logNanoContainingMethodInfo);
   }
 
