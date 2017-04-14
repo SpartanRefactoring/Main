@@ -8,7 +8,6 @@ import java.lang.reflect.Modifier;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Examples.*;

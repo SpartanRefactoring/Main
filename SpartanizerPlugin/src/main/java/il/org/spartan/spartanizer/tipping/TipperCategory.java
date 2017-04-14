@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.dispatch;
+package il.org.spartan.spartanizer.tipping;
 
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
