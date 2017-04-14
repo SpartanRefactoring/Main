@@ -24,7 +24,7 @@ public class Table_Nanos {
 
   public void go() {
     try (Table t = new Table(this)) {
-      final List<Tipper<? extends ASTNode>>[] implementation = new Nanonizer().configuration.implementation;
+      final List<Tipper<? extends ASTNode>>[] implementation = new Nanonizer().configuration().implementation;
       for (int i = 0; i < implementation.length; ++i)
         if (implementation[i] != null)
           for (final Tipper<?> ¢ : implementation[i])

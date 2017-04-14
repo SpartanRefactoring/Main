@@ -22,6 +22,7 @@ import il.org.spartan.utils.fluent.*;
 public final class GUISingleTipperApplicator extends GUIConfigurationApplicator {
   public final Tipper<ASTNode> tipper;
   public final Class<? extends ASTNode> clazz;
+  private CompilationUnit compilationUnit;
 
   /** Instantiates this class
    * @param statementsTipper The tipper we wish to convert
@@ -87,10 +88,6 @@ public final class GUISingleTipperApplicator extends GUIConfigurationApplicator 
    * @return an ASTRewrite which contains the changes */
   public ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
     return rewriterOf(¢, null, counter);
-  }
-
-  String compilationUnitName() {
-    return iCompilationUnit.getElementName();
   }
 
   /** creates an ASTRewrite, under the context of a text marker, which contains

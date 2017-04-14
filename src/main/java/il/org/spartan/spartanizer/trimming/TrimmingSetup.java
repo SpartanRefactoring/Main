@@ -39,7 +39,7 @@ public abstract class TrimmingSetup extends GUIConfigurationApplicator {
     return !¢.hasChildren();
   }
 
-  @SafeVarargs public final <N extends ASTNode> TrimmingSetup addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> GUIConfigurationApplicator addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
     if (firstAddition) {
       firstAddition = false;
       globalConfiguration = new Configuration();
@@ -103,7 +103,7 @@ public abstract class TrimmingSetup extends GUIConfigurationApplicator {
         return $.get();
   }
 
-  protected TrimmingSetup fix(final Configuration all, final Tipper<?>... ts) {
+  protected GUIConfigurationApplicator fix(final Configuration all, final Tipper<?>... ts) {
     final List<Tipper<?>> tss = as.list(ts);
     if (!firstAddition)
       tss.addAll(globalConfiguration.getAllTippers());
@@ -114,7 +114,7 @@ public abstract class TrimmingSetup extends GUIConfigurationApplicator {
     return this;
   }
 
-  public TrimmingSetup useProjectPreferences() {
+  public GUIConfigurationApplicator useProjectPreferences() {
     useProjectPreferences = true;
     configurations.clear();
     return this;
@@ -141,10 +141,6 @@ public abstract class TrimmingSetup extends GUIConfigurationApplicator {
    * @return an ASTRewrite which contains the changes */
   public ASTRewrite createRewrite(final CompilationUnit ¢, final Int counter) {
     return rewriterOf(¢, null, counter);
-  }
-
-  public String compilationUnitName() {
-    return iCompilationUnit.getElementName();
   }
 
   /** creates an ASTRewrite, under the context of a text marker, which contains
@@ -209,8 +205,7 @@ public abstract class TrimmingSetup extends GUIConfigurationApplicator {
       notify.tipperAccepts();
   }
   public Tip setAuxiliaryTip(Tip auxiliaryTip) {
-    this.auxiliaryTip = auxiliaryTip;
-    return auxiliaryTip;
+    return this.auxiliaryTip = auxiliaryTip;
   }
   protected void setCompilationUnit(final CompilationUnit ¢) {
     setCurrentConfiguration(!useProjectPreferences ? globalConfiguration : getPreferredConfiguration(¢));
@@ -220,8 +215,12 @@ public abstract class TrimmingSetup extends GUIConfigurationApplicator {
     return currentConfiguration;
   }
 
-  public void setCurrentConfiguration(Configuration currentConfiguration) {
-    this.currentConfiguration = currentConfiguration;
+  public TrimmingSetup setCurrentConfiguration(Configuration currentConfiguration) {
+   this.currentConfiguration = currentConfiguration;
+   return this;
+  }
+  protected CompilationUnit compilationUnit() {
+    return compilationUnit;
   }
   public abstract class With {
     public TrimmingSetup current() {
@@ -240,5 +239,6 @@ public abstract class TrimmingSetup extends GUIConfigurationApplicator {
   protected boolean firstAddition = true;
   private Tip auxiliaryTip;
   private Configuration currentConfiguration;
+  private CompilationUnit compilationUnit;
   protected String fileName;
 }
