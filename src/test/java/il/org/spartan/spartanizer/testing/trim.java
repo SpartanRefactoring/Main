@@ -35,15 +35,16 @@ public interface trim {
     return new fluentTrimmer(clazz, ts);
   }
 
-  static String apply(final TrimmerSetup t, final String from) {
+  static String apply(final TrimmingSetup s, final String from) {
+    assert s !=null;
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
-    final Document $ = trim.rewrite(t, u, new Document(from));
+    final Document $ = trim.rewrite(s, u, new Document(from));
     assert $ != null;
     return $.get();
   }
 
-  static Document rewrite(final TrimmerSetup t, final CompilationUnit u, final Document $) {
+  static Document rewrite(final TrimmingSetup t, final CompilationUnit u, final Document $) {
     try {
       t.createRewrite(u).rewriteAST($, null).apply($);
       return $;

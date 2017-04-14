@@ -72,11 +72,11 @@ public final class GUISingleTipperApplicator extends GUIConfigurationApplicator 
 
   private ASTRewrite rewriterOf(final CompilationUnit u, final IMarker m, final Int counter) {
     note.logger.fine("Weaving maximal rewrite of " + u);
-    progressMonitor.beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
+    progressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
     final Int count = new Int();
     final ASTRewrite $ = computeMaximalRewrite(u, m, __ -> count.step());
     counter.add(count);
-    progressMonitor.done();
+    progressMonitor().done();
     return $;
   }
 
@@ -100,6 +100,6 @@ public final class GUISingleTipperApplicator extends GUIConfigurationApplicator 
    * @param m the marker
    * @return an ASTRewrite which contains the changes */
   ASTRewrite createRewrite(final IMarker ¢) {
-    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor), ¢, new Int());
+    return rewriterOf((CompilationUnit) makeAST.COMPILATION_UNIT.from(¢, progressMonitor()), ¢, new Int());
   }
 }
