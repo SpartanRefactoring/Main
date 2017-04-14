@@ -4,9 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
-import il.org.spartan.spartanizer.dispatch.Configurations;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

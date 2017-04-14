@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 /** @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code> (v2)
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code> (original /

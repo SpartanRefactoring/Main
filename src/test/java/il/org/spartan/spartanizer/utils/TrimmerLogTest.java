@@ -15,8 +15,8 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.testing.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 @SuppressWarnings("static-method") //
 public class TrimmerLogTest {

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.dispatch;
+package il.org.spartan.spartanizer.trimming;
 
 import static il.org.spartan.spartanizer.engine.Tip.*;
 
@@ -250,7 +250,7 @@ public class Trimmer extends AbstractTrimmer {
   Configuration currentConfiguration;
   String fileName;
 
-  public interface Tap {
+  public interface TrimmingTap {
     /** @formatter:off */
     default void noTipper() {/**/}
     default void setNode()       {/**/}
@@ -262,10 +262,10 @@ public class Trimmer extends AbstractTrimmer {
     //@formatter:on
   }
 
-  /** A {@link Tap} to update {@link #progressMonitor}
+  /** A {@link TrimmingTap} to update {@link #progressMonitor}
    * @author Yossi Gil
    * @since 2017-04-09 */
-  public class ProgressTapper implements Tap {
+  public class ProgressTapper implements TrimmingTap {
     /** @formatter:off */
     @Override public void noTipper() { w(1); }
     @Override public void setNode() { w(1); }
@@ -278,21 +278,21 @@ public class Trimmer extends AbstractTrimmer {
     //@formatter:on
   }
 
-  public static class Taps implements Tap {
+  public static class Taps implements TrimmingTap {
     @Override public void noTipper() {
-      inner.forEach(Tap::noTipper);
+      inner.forEach(TrimmingTap::noTipper);
     }
 
     /** @formatter:off */
     public Taps pop() { inner.remove(inner.size()-1); return this; }
-    public Taps push(final Tap ¢) { inner.add(¢); return this; }
-    @Override public void setNode() { inner.forEach(Tap::setNode); }
-    @Override public void tipperAccepts() { inner.forEach(Tap::tipperAccepts); }
-    @Override public void tipperRejects() { inner.forEach(Tap::tipperRejects); }
-    @Override public void tipperTip() { inner.forEach(Tap::tipperTip); }
-    @Override public void tipPrune() { inner.forEach(Tap::tipPrune); }
-    @Override public void tipRewrite() { inner.forEach(Tap::tipRewrite); }
-    private final List<Tap> inner = new LinkedList<>();
+    public Taps push(final TrimmingTap ¢) { inner.add(¢); return this; }
+    @Override public void setNode() { inner.forEach(TrimmingTap::setNode); }
+    @Override public void tipperAccepts() { inner.forEach(TrimmingTap::tipperAccepts); }
+    @Override public void tipperRejects() { inner.forEach(TrimmingTap::tipperRejects); }
+    @Override public void tipperTip() { inner.forEach(TrimmingTap::tipperTip); }
+    @Override public void tipPrune() { inner.forEach(TrimmingTap::tipPrune); }
+    @Override public void tipRewrite() { inner.forEach(TrimmingTap::tipRewrite); }
+    private final List<TrimmingTap> inner = new LinkedList<>();
     //@formatter:on
   }
 

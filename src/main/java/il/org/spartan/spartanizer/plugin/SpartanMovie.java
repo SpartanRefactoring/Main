@@ -15,7 +15,7 @@ import org.eclipse.ui.progress.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
+import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;
 

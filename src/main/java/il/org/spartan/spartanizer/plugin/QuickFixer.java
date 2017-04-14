@@ -14,8 +14,8 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.old.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.fluent.*;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker

@@ -8,6 +8,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 /** Unit tests for {@link GUISingleTipperApplicator}
  * @author Yossi GIl

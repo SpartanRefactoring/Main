@@ -5,8 +5,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
