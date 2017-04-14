@@ -35,7 +35,7 @@ public interface trim {
     return new fluentTrimmer(clazz, ts);
   }
 
-  static String apply(final Trimmer t, final String from) {
+  static String apply(final TrimmerSetup t, final String from) {
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document $ = trim.rewrite(t, u, new Document(from));
@@ -43,7 +43,7 @@ public interface trim {
     return $.get();
   }
 
-  static Document rewrite(final AbstractTrimmer t, final CompilationUnit u, final Document $) {
+  static Document rewrite(final TrimmerSetup t, final CompilationUnit u, final Document $) {
     try {
       t.createRewrite(u).rewriteAST($, null).apply($);
       return $;

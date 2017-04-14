@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.trimming;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.function.*;
 
 import org.eclipse.core.resources.*;
@@ -22,9 +20,8 @@ import il.org.spartan.utils.fluent.*;
  * @author Yossi Gil
  * @since 2015/07/25 */
 public final class GUISingleTipperApplicator extends GUIConfigurationApplicator {
-  final Tipper<ASTNode> tipper;
-  final Class<? extends ASTNode> clazz;
-  private final IProgressMonitor progressMonitor = nullProgressMonitor;
+  public final Tipper<ASTNode> tipper;
+  public final Class<? extends ASTNode> clazz;
 
   /** Instantiates this class
    * @param statementsTipper The tipper we wish to convert
