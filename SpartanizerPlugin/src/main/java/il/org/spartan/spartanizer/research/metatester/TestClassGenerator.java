@@ -10,13 +10,11 @@ import javax.tools.*;
 
 import il.org.spartan.utils.*;
 
-
 /** @author Oren Afek
  * @since 2017-04-12 **/
 @UnderConstruction("Oren Afek 13.4.17")
 @SuppressWarnings("unused")
 public interface TestClassGenerator {
-
   String JAVA_SUFFIX = ".java";
 
   default Class<?> generate(final String testClassName) {

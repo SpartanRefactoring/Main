@@ -16,11 +16,9 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.metatester.*;
 import il.org.spartan.utils.*;
 
-/**
- * Tests class  {@link Proposition}
- * @author  Yossi Gil  {@code    Yossi.Gil@GMail.COM}
- * @since  2017-03-08 
- */
+/** Tests class {@link Proposition}
+ * @author Yossi Gil {@code    Yossi.Gil@GMail.COM}
+ * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(MetaTester.class)
 @SuppressWarnings("static-method")
