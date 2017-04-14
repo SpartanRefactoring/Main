@@ -33,7 +33,7 @@ import il.org.spartan.utils.fluent.*;
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-public class Trimmer extends AbstractTipperNoBetterNameYet {
+public class Trimmer extends AbstractTrimmer {
   /** Instantiates this class */
   public Trimmer() {
     this(Configurations.all());

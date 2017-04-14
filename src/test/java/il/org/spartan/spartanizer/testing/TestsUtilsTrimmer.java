@@ -10,7 +10,7 @@ import il.org.spartan.utils.*;
 
 public enum TestsUtilsTrimmer {
   ;
-  public static int countOpportunities(final AbstractGUIApplicator a, final CompilationUnit u) {
+  public static int countOpportunities(final GUIConfigurationApplicator a, final CompilationUnit u) {
     return a.collectTips(u).size();
   }
 

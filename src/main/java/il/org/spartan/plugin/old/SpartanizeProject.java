@@ -39,7 +39,7 @@ public final class SpartanizeProject extends BaseHandler {
     if (todo.isEmpty())
       return 0;
     final Int $ = new Int();
-    final AbstractGUIApplicator a = new Trimmer();
+    final GUIConfigurationApplicator a = new Trimmer();
     try {
       eclipse.progressMonitorDialog(true).run(true, true, λ -> {
         λ.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);

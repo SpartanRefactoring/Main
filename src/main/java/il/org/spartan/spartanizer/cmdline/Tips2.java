@@ -11,22 +11,22 @@ import il.org.spartan.spartanizer.plugin.*;
  * @author Matteo Orru'
  * @since 2016 */
 public final class Tips2 {
-  private static final AbstractGUIApplicator[] all = { //
+  private static final GUIConfigurationApplicator[] all = { //
       new Trimmer(), //
   };
-  private final AbstractGUIApplicator value;
+  private final GUIConfigurationApplicator value;
 
-  private Tips2(final AbstractGUIApplicator value) {
+  private Tips2(final GUIConfigurationApplicator value) {
     this.value = value;
   }
 
   /** @return ? */
-  public AbstractGUIApplicator value() {
+  public GUIConfigurationApplicator value() {
     return value;
   }
 
   @SuppressWarnings("synthetic-access") //
-  private static final Map<String, AbstractGUIApplicator> map = new HashMap<String, AbstractGUIApplicator>() {
+  private static final Map<String, GUIConfigurationApplicator> map = new HashMap<String, GUIConfigurationApplicator>() {
     static final long serialVersionUID = -0x7BD03E391481791EL;
     {
       as.list(all).forEach(λ -> put(λ.getName(), λ));
@@ -34,12 +34,12 @@ public final class Tips2 {
   };
 
   /** @return all the registered spartanization refactoring objects */
-  public static Iterable<AbstractGUIApplicator> all() {
+  public static Iterable<GUIConfigurationApplicator> all() {
     return map.values();
   }
 
   /** @return Iteration over all {@link @GUIApplicator) class instances */
-  public static Iterable<AbstractGUIApplicator> allAvailablespartanizations() {
+  public static Iterable<GUIConfigurationApplicator> allAvailablespartanizations() {
     return as.iterable(all);
   }
 
@@ -51,13 +51,13 @@ public final class Tips2 {
   /** @param tipper rule
    * @return spartanization class rule instance */
   @SuppressWarnings("unchecked") //
-  public static <T extends AbstractGUIApplicator> T findInstance(final Class<? extends T> ¢) {
+  public static <T extends GUIConfigurationApplicator> T findInstance(final Class<? extends T> ¢) {
     return Stream.of(all).filter(λ -> λ.getClass().equals(¢)).map(λ -> (T) λ).findFirst().orElse(null);
   }
 
   /** @param name the name of the applicator
    * @return an instance of the class */
-  public static AbstractGUIApplicator get(final String name) {
+  public static GUIConfigurationApplicator get(final String name) {
     assert name != null;
     return map.get(name);
   }
