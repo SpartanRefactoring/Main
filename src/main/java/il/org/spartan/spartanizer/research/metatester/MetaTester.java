@@ -19,7 +19,7 @@ public class MetaTester extends BlockJUnit4ClassRunner {
   private final Class<?> testClass;
   private final File sourceFile;
   private final String testName;
-  private boolean hasRan = false; 
+  private boolean hasRan; 
 
   public MetaTester(final Class<?> clazz) throws InitializationError {
     super(clazz);
