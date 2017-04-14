@@ -125,16 +125,15 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
    * @author Ori Roth
    * @since 2016 */
   private static class SingleTipper<N extends ASTNode> extends Trimmer {
-    final Tipper<N> tipper;
-
     SingleTipper(final Tipper<N> tipper) {
       this.tipper = tipper;
       name = "Applying " + tipper.technicalName();
     }
 
-    @Override @SuppressWarnings("unchecked") protected <N1 extends ASTNode> Tipper<N1> findTipper(final N1 ¢) {
+    @Override protected <O extends ASTNode> il.org.spartan.spartanizer.tipping.Tipper<O> findTipper(O ¢) {
       assert check(¢);
-      return !tipper.check((N) ¢) ? null : (Tipper<N1>) tipper;
+      @SuppressWarnings("unchecked") Tipper<O> $ = (Tipper<O>) tipper;
+      return $.check(¢) ? $ : null;
     }
 
     @Override protected boolean check(final ASTNode ¢) {

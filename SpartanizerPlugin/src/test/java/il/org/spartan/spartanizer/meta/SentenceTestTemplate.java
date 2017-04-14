@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2017-01-17 */
 public enum SentenceTestTemplate {
   ;
-  public static final Trimmer trimmer = new Trimmer();
+  public static final TrimmerSetup trimmer = new Trimmer();
 
   static Iterable<List<MethodDeclaration>> allSentences() {
     return collectSentences(new Issue1008());

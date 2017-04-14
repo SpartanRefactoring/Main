@@ -30,7 +30,7 @@ enum CollectMetrics {
   }
 
   //
-  public static Document rewrite(final AbstractTrimmer t, final CompilationUnit u, final Document $) {
+  public static Document rewrite(final TrimmerSetup t, final CompilationUnit u, final Document $) {
     try {
       t.createRewrite(u).rewriteAST($, null).apply($);
       return $;
