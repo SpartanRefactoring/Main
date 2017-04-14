@@ -15,7 +15,6 @@ import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.ui.refactoring.*;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.text.edits.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.old.*;
@@ -106,10 +105,6 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   @Override public final Change createChange(final IProgressMonitor pm) throws OperationCanceledException {
     setProgressMonitor(pm);
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
-  }
-
-  public TextEditGroup currentEditGroup() {
-    return currentEditGroup;
   }
 
   /** a quickfix which automatically performs the tip
@@ -228,10 +223,6 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   /** @param subject the selection to set */
   public void setSelection(final ITextSelection ¢) {
     this.selection = ¢ != null && ¢.getLength() > 0 && !¢.isEmpty() ? ¢ : null;
-  }
-
-  public int TipsCount() {
-    return tips.size();
   }
 
   @Override public String toString() {
@@ -443,10 +434,8 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private final Collection<TextFileChange> changes = new ArrayList<>();
-  private TextEditGroup currentEditGroup;
   private IMarker marker;
   private ITextSelection selection;
-  private final Tips tips = Tips.empty();
   private int totalChanges;
   private ICompilationUnit iCompilationUnit;
   protected String title;

@@ -224,6 +224,9 @@ public abstract class Trimmer extends GUIConfigurationApplicator {
     return compilationUnit;
   }
   protected abstract ASTRewrite computeMaximalRewrite(CompilationUnit u, IMarker m, Consumer<ASTNode> nodeLogger);
+  public TextEditGroup currentEditGroup() {
+    return currentEditGroup;
+  }
   public abstract class With {
     public Trimmer current() {
       return Trimmer.this;
@@ -242,5 +245,6 @@ public abstract class Trimmer extends GUIConfigurationApplicator {
   private Tip auxiliaryTip;
   private Configuration currentConfiguration;
   private CompilationUnit compilationUnit;
+  private TextEditGroup currentEditGroup;
   protected String fileName;
 }
