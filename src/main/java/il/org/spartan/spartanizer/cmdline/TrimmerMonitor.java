@@ -14,17 +14,17 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Yossi Gil
  * @since Sep 20, 2016 */
-public class TrimmerMonitor extends Trimmer.With implements Trimmer.Tap {
+public class TrimmerMonitor extends Trimmer.With implements Trimmer.TrimmingTap {
   public static void off() {
     logger.setLevel(Level.OFF);
   }

@@ -2,9 +2,9 @@ package il.org.spartan.spartanizer.utils;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.trimming.*;
 
 /** Fails on every operation, used to test testing mechanisms.
  * @author Ori Roth
