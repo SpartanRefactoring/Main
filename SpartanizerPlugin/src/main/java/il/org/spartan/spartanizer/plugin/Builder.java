@@ -81,7 +81,6 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IFile ¢) throws CoreException {
-    DefunctTips.reset();
     deleteMarkers(¢);
     try {
       addMarkers(¢, (CompilationUnit) makeAST.COMPILATION_UNIT.from(¢));
@@ -91,15 +90,13 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IResource f, final CompilationUnit u) throws CoreException {
-    for (final GUIConfigurationApplicator s : DefunctTips.all()) {
-      if (s instanceof Trimmer)
-        ((TrimmingSetup) s).useProjectPreferences();
-      for (final Tip ¢ : s.collectTips(u)) // NANO
-        if (¢ != null) {
-          final TipperGroup group = Configurations.groupFor(¢.tipperClass);
-          addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));
-        }
-    }
+    TrimmerImplementation s = new TrimmerImplementation();
+    s.useProjectPreferences();
+    for (final Tip ¢ : s.collectTips(u)) // NANO
+      if (¢ != null) {
+        final TipperGroup group = Configurations.groupOf(¢);
+        addMarker(s, ¢, f.createMarker(group == null || group.id == null ? MARKER_TYPE : MARKER_TYPE + "." + group.name()));
+      }
   }
 
   private static String prefix() {

@@ -39,7 +39,7 @@ public final class SpartanizeProject extends BaseHandler {
     if (todo.isEmpty())
       return 0;
     final Int $ = new Int();
-    final GUIConfigurationApplicator a = new Trimmer();
+    final GUIConfigurationApplicator a = new TrimmerImplementation();
     try {
       eclipse.progressMonitorDialog(true).run(true, true, λ -> {
         λ.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
@@ -88,7 +88,7 @@ public final class SpartanizeProject extends BaseHandler {
   }
 
   boolean singlePass() {
-    final Trimmer t = new Trimmer();
+    final TrimmerImplementation t = new TrimmerImplementation();
     final IProgressService ps = workench.getProgressService();
     final Int passNum = new Int(passNumber + 1);
     final Bool $ = new Bool();
