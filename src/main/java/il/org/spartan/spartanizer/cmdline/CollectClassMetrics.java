@@ -26,10 +26,10 @@ enum CollectClassMetrics {
     System.err.println("Your output should be here: " + output.close());
   }
 
-  static CompilationUnit spartanize(final CompilationUnit before) {
-    final Trimmer tr = new Trimmer();
+  static CompilationUnit spartanize(final CompilationUnit u) {
+    final TrimmerImplementation tr = new TrimmerImplementation();
     assert tr != null;
-    final ICompilationUnit $ = (ICompilationUnit) before.getJavaElement();
+    final ICompilationUnit $ = (ICompilationUnit) u.getJavaElement();
     tr.setICompilationUnit($);
     assert $ != null;
     try {
@@ -37,7 +37,7 @@ enum CollectClassMetrics {
     } catch (OperationCanceledException | CoreException ¢) {
       ¢.printStackTrace();
     }
-    return before;
+    return u;
   }
 
   private static void go(final File f) {

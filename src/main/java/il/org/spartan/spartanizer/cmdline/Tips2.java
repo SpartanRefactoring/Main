@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.trimming.*;
  * @since 2016 */
 public final class Tips2 {
   private static final GUIConfigurationApplicator[] all = { //
-      new Trimmer(), //
+      new TrimmerImplementation(), //
   };
   private final GUIConfigurationApplicator value;
 

@@ -5,7 +5,6 @@ import static il.org.spartan.utils.fault.*;
 
 import java.util.*;
 import java.util.List;
-import java.util.function.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -27,21 +26,21 @@ import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
-/** the base class for all GUI applicators contains common functionality
+/** base class for all GUI applicators contains common functionality. The
+ * class combines this features: GUI, including extension of and the ability to
+ * display {@link #title} and {@link #progressMonitor()}
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin <boris.van.sosin [at] gmail.com>} (v2)
  * @author Yossi Gil: major refactoring 2013/07/10
  * @author Ori Roth: new plugin logic interfaces
  * @since 2013/01/01 */
 public abstract class GUIConfigurationApplicator extends Refactoring {
-  public GUIConfigurationApplicator(final String name) {
-    this.name = name;
+  public GUIConfigurationApplicator(final String title) {
+    this.title = title;
   }
 
-  public boolean apply(final ICompilationUnit cu) {
-    final int run = run(cu, new TextSelection(0, 0));
-    final boolean v = run > 0;
-    return v;
+  public boolean apply(final ICompilationUnit ¢) {
+    return run(¢, new TextSelection(0, 0)) > 0;
   }
 
   public int apply(final WrappedCompilationUnit $, final AbstractSelection<?> s) {
@@ -144,7 +143,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   @Override public final String getName() {
-    return name;
+    return title;
   }
 
   public ITextSelection getSelection() {
@@ -152,7 +151,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   public int go() throws CoreException {
-    final TrimmingSetup t = makeTrimmer();
+    final Trimmer t = makeTrimmer();
     progressMonitor().beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(t.compilationUnitName(), compilationUnitIFile());
     textChange.setTextType("java");
@@ -165,12 +164,20 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     return $.get();
   }
 
-  private TrimmingSetup makeTrimmer() {
-    return new Trimmer().push(new TrimmingTickingTapper() {
+  private Trimmer makeTrimmer() {
+    return new TrimmerImplementation().push(new TrimmingTickingTapper() {
       @Override public void tick(int work) {
         progressMonitor().worked(work);
       }
-    }).push(new TrimmingTapper() {});
+    }).push(new TrimmingTapper() {
+      @Override public void begin() {
+        TrimmingTapper.super.begin();
+      }
+
+      @Override public void end() {
+        TrimmingTapper.super.end();
+      }
+    });
   }
 
   /** @param m marker which represents the range to apply the tipper within
@@ -219,8 +226,8 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   /** @param subject the selection to set */
-  public void setSelection(final ITextSelection s) {
-    this.selection = s != null && s.getLength() > 0 && !s.isEmpty() ? s : null;
+  public void setSelection(final ITextSelection ¢) {
+    this.selection = ¢ != null && ¢.getLength() > 0 && !¢.isEmpty() ? ¢ : null;
   }
 
   public int TipsCount() {
@@ -228,7 +235,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   @Override public String toString() {
-    return name;
+    return title;
   }
 
   private boolean apply(final ICompilationUnit cu, final Range r) {
@@ -241,9 +248,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     final Int $ = new Int();
     final WrappedCompilationUnit u1 = u.build();
     final CompilationUnit u2 = u1.compilationUnit;
-    final TrimmingSetup t = makeTrimmer();
-    final ASTRewrite r = t.createRewrite(u2, $);
-    
+    final ASTRewrite r = makeTrimmer().createRewrite(u2, $);
     try {
       textChange.setEdit(r.rewriteAST());
     } catch (final AssertionError x) {
@@ -268,7 +273,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private int apply(final WrappedCompilationUnit u, final TrackerSelection s) {
-    final TrimmingSetup t = makeTrimmer();
+    final Trimmer t = makeTrimmer();
     try {
       final TextFileChange textChange = init(u);
       setSelection(s == null || s.textSelection == null || s.textSelection.getLength() <= 0 || s.textSelection.isEmpty() ? null : s.textSelection);
@@ -366,7 +371,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
    *        {@link NullProgressMonitor} for light operations)
    * @throws CoreException exception from the {@code pm} */
   private int performRule(final ICompilationUnit u) throws CoreException {
-    final TrimmingSetup t = makeTrimmer();
+    final Trimmer t = makeTrimmer();
     progressMonitor().beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
@@ -383,7 +388,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
    * @throws CoreException */
   private int scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
     m.beginTask("Collecting tips for " + u.getElementName(), IProgressMonitor.UNKNOWN);
-    final TrimmingSetup t = makeTrimmer();
+    final Trimmer t = makeTrimmer();
     final TextFileChange textChange = new TextFileChange(u.getElementName(), (IFile) u.getResource());
     textChange.setTextType("java");
     final CompilationUnit cu = (CompilationUnit) make.COMPILATION_UNIT.parser(u).createAST(m);
@@ -397,7 +402,7 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   }
 
   private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
-    final TrimmingSetup t = makeTrimmer();
+    final Trimmer t = makeTrimmer();
     progressMonitor().beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
     progressMonitor().done();
@@ -427,8 +432,6 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
     progressMonitor().done();
   }
 
-  protected abstract ASTRewrite computeMaximalRewrite(CompilationUnit u, IMarker m, Consumer<ASTNode> nodeLogger);
-
   protected abstract ASTVisitor tipsCollector(Tips into);
 
   boolean apply() {
@@ -446,6 +449,6 @@ public abstract class GUIConfigurationApplicator extends Refactoring {
   private final Tips tips = Tips.empty();
   private int totalChanges;
   private ICompilationUnit iCompilationUnit;
-  protected String name;
+  protected String title;
   private IProgressMonitor progressMonitor = wizard.nullProgressMonitor;
 }

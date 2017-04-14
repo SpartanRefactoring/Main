@@ -30,7 +30,7 @@ enum CollectMetrics {
   }
 
   //
-  public static Document rewrite(final TrimmingSetup t, final CompilationUnit u, final Document $) {
+  public static Document rewrite(final Trimmer t, final CompilationUnit u, final Document $) {
     try {
       t.createRewrite(u).rewriteAST($, null).apply($);
       return $;
@@ -41,7 +41,7 @@ enum CollectMetrics {
 
   // TODO Yossi Gil: eliminate warning
   private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
-    reportTips(new Trimmer().collectTips(before));
+    reportTips(new TrimmerImplementation().collectTips(before));
   }
 
   private static void go(final File f) {
@@ -113,7 +113,7 @@ enum CollectMetrics {
   }
 
   private static CompilationUnit spartanize(final String javaCode) {
-    final String $ = new Trimmer().fixed(javaCode);
+    final String $ = new TrimmerImplementation().fixed(javaCode);
     output.put("Characters", $.length());
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);
   }

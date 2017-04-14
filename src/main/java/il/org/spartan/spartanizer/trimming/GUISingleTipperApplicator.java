@@ -22,8 +22,6 @@ import il.org.spartan.utils.fluent.*;
 public final class GUISingleTipperApplicator extends GUIConfigurationApplicator {
   public final Tipper<ASTNode> tipper;
   public final Class<? extends ASTNode> clazz;
-  private CompilationUnit compilationUnit;
-
   /** Instantiates this class
    * @param statementsTipper The tipper we wish to convert
    * @param name The title of the refactoring */
@@ -35,7 +33,7 @@ public final class GUISingleTipperApplicator extends GUIConfigurationApplicator 
     // w.technicalName();
   }
 
-  @Override protected ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> n) {
+  protected ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> c) {
     final ASTRewrite $ = ASTRewrite.create(u.getAST());
     final ASTVisitor visitor = new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
@@ -43,8 +41,8 @@ public final class GUISingleTipperApplicator extends GUIConfigurationApplicator 
         if (¢.getClass() != clazz && !tipper.check(¢) && !inRange(m, ¢))
           return;
         tipper.tip(¢).go($, null);
-        if (n != null)
-          n.accept(¢);
+        if (c != null)
+          c.accept(¢);
       }
     };
     u.accept(visitor);
