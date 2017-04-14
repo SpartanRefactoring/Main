@@ -34,7 +34,7 @@ public class SpartanMovie extends AbstractHandler {
     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
     final IWorkbenchPage page = window == null ? null : window.getActivePage();
     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
-    final Trimmer trimmer = new Trimmer();
+    final TrimmerImplementation trimmerImplementation = new TrimmerImplementation();
     if (compilationUnits == null || page == null || progressService == null)
       return null;
     try {
@@ -58,7 +58,7 @@ public class SpartanMovie extends AbstractHandler {
               IDE.openEditor(page, marker, true);
               refresh(page);
               sleep(SLEEP_BETWEEN);
-              trimmer.runAsMarkerFix(marker);
+              trimmerImplementation.runAsMarkerFix(marker);
               ++changes;
               marker.delete(); // TODO Ori Roth: does not seem to make a
                                // difference

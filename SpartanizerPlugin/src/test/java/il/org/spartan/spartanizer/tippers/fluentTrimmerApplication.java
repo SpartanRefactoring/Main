@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.trimming.*;
 /** TODO Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-public class fluentTrimmerApplication extends Trimmer.With {
+public class fluentTrimmerApplication extends TrimmerImplementation.With {
   public final String codeFragment;
   public final GuessedContext guessedContext;
   public final String wrappedFragment;
@@ -28,7 +28,7 @@ public class fluentTrimmerApplication extends Trimmer.With {
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;
 
-  public fluentTrimmerApplication(final TrimmingSetup t, final String codeFragment) {
+  public fluentTrimmerApplication(final Trimmer t, final String codeFragment) {
     t.super();
     this.codeFragment = codeFragment;
     assert codeFragment != null;

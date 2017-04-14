@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
 /** Singleton containing all {@link Tipper}s which are active. This class does
  * minimal dispatching at the node level, selecting and applying the most
  * appropriate such object for a given {@link ASTNode}. Dispatching at the tree
- * level is done in class {@link Trimmer}
+ * level is done in class {@link TrimmerImplementation}
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Configuration {

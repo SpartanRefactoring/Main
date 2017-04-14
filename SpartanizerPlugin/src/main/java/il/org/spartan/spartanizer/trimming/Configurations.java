@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.fluent.*;
@@ -289,7 +290,7 @@ public interface Configurations {
     return $;
   }
 
-  static TipperGroup groupFor(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
+  static TipperGroup groupOf(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     return categoryMap == null || !categoryMap.containsKey(tipperClass) ? null : categoryMap.get(tipperClass);
   }
 
@@ -315,7 +316,7 @@ public interface Configurations {
     return ¢.getSimpleName();
   }
 
-  static void refresh(final TrimmingSetup ¢) {
+  static void refresh(final Trimmer ¢) {
     ¢.globalConfiguration = all();
   }
 
@@ -325,4 +326,8 @@ public interface Configurations {
       Stream.of(allClone().implementation).filter(Objects::nonNull).forEach(ts -> ts.forEach(λ -> put(λ.getClass(), λ.tipperGroup())));
     }
   };
+
+  static TipperGroup groupOf(Tip ¢) {
+    return groupOf(¢.tipperClass); 
+  }
 }

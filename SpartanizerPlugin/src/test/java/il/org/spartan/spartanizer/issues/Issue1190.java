@@ -16,10 +16,10 @@ import il.org.spartan.utils.fluent.*;
  * @since 2017-04-01 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Issue1190 {
-  TrimmingSetup trimmer;
+  Trimmer trimmer;
 
   @Before public void setUp() {
-    trimmer = new Trimmer(Configurations.all());
+    trimmer = new TrimmerImplementation(Configurations.all());
   }
 
   @Test(timeout = 30000) public void runTheSpartinizerOnItself() {

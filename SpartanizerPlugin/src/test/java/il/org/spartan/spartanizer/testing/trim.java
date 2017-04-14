@@ -1,9 +1,7 @@
 package il.org.spartan.spartanizer.testing;
 
-import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
-import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
 
@@ -27,7 +25,7 @@ public interface trim {
   }
 
   static fluentTrimmerApplication of(final String codeFragment) {
-    return new fluentTrimmerApplication(new Trimmer(), codeFragment);
+    return new fluentTrimmerApplication(new TrimmerImplementation(), codeFragment);
   }
 
   @SafeVarargs //
@@ -35,16 +33,16 @@ public interface trim {
     return new fluentTrimmer(clazz, ts);
   }
 
-  static String apply(final TrimmingSetup s, final String from) {
-    assert s !=null;
+  static String apply(final Trimmer t, final String from) {
+    assert t !=null;
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
-    final Document $ = trim.rewrite(s, u, new Document(from));
+    final Document $ = trim.rewrite(t, u, new Document(from));
     assert $ != null;
     return $.get();
   }
 
-  static Document rewrite(final TrimmingSetup t, final CompilationUnit u, final Document $) {
+  static Document rewrite(final Trimmer t, final CompilationUnit u, final Document $) {
     try {
       t.createRewrite(u).rewriteAST($, null).apply($);
       return $;
@@ -62,7 +60,7 @@ public interface trim {
                                                                                                       * .gives("a+b-c")</code> */
   interface repeatedly {
     static fluentTrimmerApplication of(final String codeFragment) {
-      return new fluentTrimmerApplication(new Trimmer(), codeFragment) {
+      return new fluentTrimmerApplication(new TrimmerImplementation(), codeFragment) {
         @Override public fluentTrimmerApplication gives(final String expected) {
           return super.gives(new InteractiveSpartanizer().fixedPoint(expected));
         }
@@ -75,14 +73,6 @@ public interface trim {
 
     @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
       return new fluentTrimmer(clazz, ts) {
-        @Override public RefactoringStatus checkAllConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
-          return super.checkAllConditions(pm);
-        }
-
-        @Override protected RefactoringTickProvider doGetRefactoringTickProvider() {
-          return super.doGetRefactoringTickProvider();
-        }
-
         @Override public fluentTrimmerApplication of(final String codeFragment) {
           return super.of(codeFragment);
         }
@@ -126,7 +116,7 @@ public interface trim {
     }
   }
 
-  class fluentTrimmer extends Trimmer {
+  class fluentTrimmer extends TrimmerImplementation {
     @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ws) {
       super(Configurations.make(clazz, ws));
     }

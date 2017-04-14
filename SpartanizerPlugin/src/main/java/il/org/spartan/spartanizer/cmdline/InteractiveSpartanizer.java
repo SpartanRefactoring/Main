@@ -46,15 +46,15 @@ public class InteractiveSpartanizer {
    * @param from what to process
    * @return trimmed text */
   public String fixedPoint(final String from) {
-    return new Trimmer(configuration()).fixed(from);
+    return new TrimmerImplementation(configuration()).fixed(from);
   }
 
   public String fixedPoint(final ASTNode from) {
-    return new Trimmer(configuration()).fixed(from + "");
+    return new TrimmerImplementation(configuration()).fixed(from + "");
   }
 
   public String once(final String from) {
-    return new Trimmer(configuration()).once(from);
+    return new TrimmerImplementation(configuration()).once(from);
   }
 
   boolean changed;
@@ -87,7 +87,7 @@ public class InteractiveSpartanizer {
     return configuration;
   }
 
-  public void setConfiguration(Configuration configuration) {
-    this.configuration = configuration;
+  public void setConfiguration(Configuration ¢) {
+    this.configuration = ¢;
   }
 }
