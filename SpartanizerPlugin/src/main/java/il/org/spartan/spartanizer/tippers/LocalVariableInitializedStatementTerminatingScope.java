@@ -15,10 +15,10 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
  * @author Yossi Gil

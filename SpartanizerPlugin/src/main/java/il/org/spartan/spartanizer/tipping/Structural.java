@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.dispatch;
+package il.org.spartan.spartanizer.tipping;
 
 /** Auxiliary type: non public intentionally */
 @FunctionalInterface

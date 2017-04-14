@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 

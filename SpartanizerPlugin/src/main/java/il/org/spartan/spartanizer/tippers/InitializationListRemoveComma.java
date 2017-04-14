@@ -4,7 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 // This code is not working: we never managed to get this to work. Stav was the

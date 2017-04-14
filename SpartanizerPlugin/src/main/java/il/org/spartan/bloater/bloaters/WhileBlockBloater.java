@@ -7,7 +7,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** converts while(condition)statement to while(condition){statement} Issue #975

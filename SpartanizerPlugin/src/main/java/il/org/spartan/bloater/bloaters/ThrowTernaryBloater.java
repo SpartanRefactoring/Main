@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Same as ReturnTernaryExpander just for "throw" @link {Issue0998}
