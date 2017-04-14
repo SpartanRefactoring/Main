@@ -99,7 +99,7 @@ public final class SingleFlater {
         setNode(n);
         if (!inWindow(n) || usesDisabling && disabling.on(n))
           return true;
-        Tipper<N> w = getTipper(n);
+        final Tipper<N> w = getTipper(n);
         if (w == null)
           return true;
         operations.add(Operation.of(n, w));

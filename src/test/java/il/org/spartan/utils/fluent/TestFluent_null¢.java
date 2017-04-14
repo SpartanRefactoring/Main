@@ -20,9 +20,7 @@ public class TestFluent_null¢ {
     azzert.that(i1, is(5));
     azzert.isNull(i2);
     azzert.isNull(i3);
-    
     null¢.guardingly(State::getName).on(null);
-
     californiaCustomer.getAddress().getState().getName();
     nullAddressCustomer.getAddress().getState();
     nullStateCustomer.getAddress().getState();
@@ -36,30 +34,11 @@ public class TestFluent_null¢ {
     }
   };
   final Function<String, Integer> f = String::length;
-  final Customer nullAddressCustomer = new Customer() {
-    @Override public Address getAddress() {
-      return null;
-    }
+  final Customer nullAddressCustomer = () -> null;
+  final Customer nullNameCustomer = () -> () -> new State() {/***/
   };
-  final Customer nullNameCustomer = () -> () -> new State() {/***/};
-  final Customer nullStateCustomer = new Customer() {
-    @Override public Address getAddress() {
-      return new Address() {
-        @Override public State getState() {
-          return null;
-        }
-      };
-    }
-  };
-  final Customer nullStateCustomer1 = new Customer() {
-    @Override public Address getAddress() {
-      return new Address() {
-        @Override public State getState() {
-          return null;
-        }
-      };
-    }
-  };
+  final Customer nullStateCustomer = () -> () -> null;
+  final Customer nullStateCustomer1 = () -> () -> null;
 
   //@formatter:off
   interface Address { State getState(); }

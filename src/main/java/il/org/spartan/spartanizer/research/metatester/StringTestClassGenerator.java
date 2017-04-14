@@ -8,25 +8,23 @@ import java.util.stream.*;
 
 import il.org.spartan.utils.*;
 
-
 /** @author Oren Afek
  * @since 3/26/2017 */
 @UnderConstruction("Oren Afek -- 13.4.17")
 @SuppressWarnings("all")
 public class StringTestClassGenerator implements TestClassGenerator {
-
   private final Class<?> testClass;
   private final String sourcePath;
   public final String packageName;
   private final String testName;
   private final File originalSourceFile;
 
-  public StringTestClassGenerator(final Class<?> testClass, String testName, File sourceFile) {
+  public StringTestClassGenerator(final Class<?> testClass, final String testName, final File sourceFile) {
     this.testClass = testClass;
     sourcePath = makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\", testClass));
     packageName = packageName("\\.", testClass);
     this.testName = testName;
-    this.originalSourceFile = sourceFile;
+    originalSourceFile = sourceFile;
   }
 
   @Override public Class<?> generate(final String testClassName) {
@@ -78,4 +76,3 @@ public class StringTestClassGenerator implements TestClassGenerator {
     return "package " + packageNameString + ";";
   }
 }
-
