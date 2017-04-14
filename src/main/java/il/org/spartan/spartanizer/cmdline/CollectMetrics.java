@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.dispatch.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
@@ -29,10 +28,10 @@ enum CollectMetrics {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
-
-  public static Document rewrite(final GUIConfigurationApplicator a, final CompilationUnit u, final Document $) {
+//
+  public static Document rewrite(final AbstractTrimmer t, final CompilationUnit u, final Document $) {
     try {
-      a.createRewrite(u).rewriteAST($, null).apply($);
+      t.createRewrite(u).rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
