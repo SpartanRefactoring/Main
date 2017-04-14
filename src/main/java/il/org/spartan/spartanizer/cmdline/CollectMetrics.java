@@ -28,7 +28,8 @@ enum CollectMetrics {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
-//
+
+  //
   public static Document rewrite(final AbstractTrimmer t, final CompilationUnit u, final Document $) {
     try {
       t.createRewrite(u).rewriteAST($, null).apply($);

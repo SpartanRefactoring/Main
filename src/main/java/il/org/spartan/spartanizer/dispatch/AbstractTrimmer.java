@@ -29,8 +29,8 @@ import il.org.spartan.utils.fluent.*;
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-public abstract class AbstractTrimmer extends GUIConfigurationApplicator{
-  public AbstractTrimmer(String name) {
+public abstract class AbstractTrimmer extends GUIConfigurationApplicator {
+  public AbstractTrimmer(final String name) {
     super(name);
   }
 
@@ -159,7 +159,7 @@ public abstract class AbstractTrimmer extends GUIConfigurationApplicator{
 
   public Configuration globalConfiguration = Configurations.all();
   protected final Map<IProject, Configuration> configurations = new HashMap<>();
-  private IProgressMonitor progressMonitor = nullProgressMonitor;
+  private final IProgressMonitor progressMonitor = nullProgressMonitor;
   protected boolean useProjectPreferences;
   protected boolean firstAddition = true;
 }

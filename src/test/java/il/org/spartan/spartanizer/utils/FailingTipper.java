@@ -13,15 +13,15 @@ import il.org.spartan.spartanizer.tipping.*;
 public class FailingTipper<N extends ASTNode> extends Tipper<N> implements TipperCategory.Abbreviation {
   private static final long serialVersionUID = 0x7FE33D08914707AFL;
 
-  @Override public boolean canTip(N __) {
+  @Override public boolean canTip(final N __) {
     return true;
   }
 
-  @Override public String description(N __) {
+  @Override public String description(final N __) {
     return "tipper that always apply and always fail, used for testing";
   }
 
-  @Override public Tip tip(N ¢) {
+  @Override public Tip tip(final N ¢) {
     throw new RuntimeException("thown on purpose, see FailingTipper");
   }
 }
