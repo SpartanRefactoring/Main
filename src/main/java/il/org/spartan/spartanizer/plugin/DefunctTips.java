@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.plugin;
 
-import java.util.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
