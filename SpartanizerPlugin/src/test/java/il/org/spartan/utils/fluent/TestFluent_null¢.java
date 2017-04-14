@@ -21,10 +21,7 @@ public class TestFluent_null¢ {
     azzert.isNull(i2);
     azzert.isNull(i3);
     null¢.guardingly(State::getName).on(null);
-    californiaCustomer.getAddress().getState().getName();
-    nullAddressCustomer.getAddress().getState();
-    nullStateCustomer.getAddress().getState();
-    nullNameCustomer.getAddress().getState();
+    null¢.guardingly(State::getName).on(californiaCustomer.getAddress().getState());
   }
 
   String nullString;
