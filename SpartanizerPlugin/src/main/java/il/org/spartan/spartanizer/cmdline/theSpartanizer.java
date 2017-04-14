@@ -45,7 +45,7 @@ public interface theSpartanizer {
    * @return trimmed text, or null in case of error or no more applicable
    *         tippers */
   @SuppressWarnings("hiding") static String once(final String from) {
-    final TrimmerSetup trimmer = new Trimmer(configuration);
+    final TrimmingSetup trimmer = new Trimmer(configuration);
     final IDocument $ = new Document(from);
     final ASTNode root = make.ast(from);
     if (root != null)

@@ -140,7 +140,7 @@ public class TrimmerMonitor extends Trimmer.With implements TrimmingTapper {
     off();
   }
 
-  public TrimmerMonitor(final TrimmerSetup trimmer) {
+  public TrimmerMonitor(final TrimmingSetup trimmer) {
     trimmer.super();
   }
 
