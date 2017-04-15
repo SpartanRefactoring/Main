@@ -16,22 +16,23 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.testing.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.trimming.*;
 
 @SuppressWarnings("static-method") //
-public class TrimmerLogTest {
-  /** Tests of {@link TrimmerMonitor.TrimmerLog}
+public class TestOperandTest {
+  /** Tests of {@link TraversalMonitor.TrimmerLog}
    * @author AnnaBel7
    * @author michalcohen
    * @since Nov 10, 2016 */
   @Test public void test02() {
-    final TrimmingOperand o = trimminKof("new Integer(3)");
+    final TestOperand o = trimminKof("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final IDocument d = new Document(wrap);
     assert d != null;
-    final Traversalmplementation a = new Traversalmplementation();
+    final TraversalImplementation a = new TraversalImplementation();
     try {
       a.go(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
@@ -43,13 +44,13 @@ public class TrimmerLogTest {
   }
 
   @Test public void test03() {
-    final TrimmingOperand o = trimminKof("for(int i=0; i <100; i++){\n\tpr(i);\n}");
+    final TestOperand o = trimminKof("for(int i=0; i <100; i++){\n\tpr(i);\n}");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
     final IDocument d = new Document(wrap);
     assert d != null;
-    final Traversalmplementation a = new Traversalmplementation();
+    final TraversalImplementation a = new TraversalImplementation();
     try {
       a.go(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
@@ -61,7 +62,7 @@ public class TrimmerLogTest {
   }
 
   @Test public void test04() {
-    final TrimmingOperand o = trimminKof("for(int i=0; i <100; i++){\n\tpr(i);\n}");
+    final TestOperand o = trimminKof("for(int i=0; i <100; i++){\n\tpr(i);\n}");
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find(o.get()).on(o.get()));
     assert u != null;
     assert u.getJavaElement() == null;

@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.trimming;
 
-/** A {@link TrimmingTapper} to update {@link #progressMonitor}
+/** A {@link TraversalTapper} to update {@link #progressMonitor}
  * @author Yossi Gil
  * @since 2017-04-09 */
-public interface TrimmingTickingTapper extends TrimmingTapper {
+public interface TraversalTickingTapper extends TraversalTapper {
   /** @formatter:off */
   @Override default void noTipper() { tick(1); }
   @Override default void setNode() { tick(1); }

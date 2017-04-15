@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2017-01-17 */
 public enum SentenceTestTemplate {
   ;
-  public static final Traversal traversal = new Traversalmplementation();
+  public static final Traversal traversal = new TraversalImplementation();
 
   static Iterable<List<MethodDeclaration>> allSentences() {
     return collectSentences(new Issue1008());

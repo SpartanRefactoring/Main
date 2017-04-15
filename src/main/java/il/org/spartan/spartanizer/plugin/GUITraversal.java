@@ -415,14 +415,14 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return m != null ? !wizard.disjoint(n, m) : !isTextSelected() || !isNotSelected(n);
   }
 
-  public final Traversal traversal = new Traversalmplementation().push((TrimmingTickingTapper) λ -> getProgressMonitor().worked(λ))
-      .push(new TrimmingTapper() {
+  public final Traversal traversal = new TraversalImplementation().push((TraversalTickingTapper) λ -> getProgressMonitor().worked(λ))
+      .push(new TraversalTapper() {
         @Override public void begin() {
-          TrimmingTapper.super.begin();
+          TraversalTapper.super.begin();
         }
 
         @Override public void end() {
-          TrimmingTapper.super.end();
+          TraversalTapper.super.end();
         }
       });
   private final Collection<TextFileChange> changes = new ArrayList<>();

@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** A smorgasboard containing lots of stuff factored out of
- * {@link Traversalmplementation}
+ * {@link TraversalImplementation}
  * <ol>
  * <li>Configuration: sometime you wish to disable some of the tippers.
  * </ol>
@@ -63,11 +63,11 @@ public abstract class Traversal implements Selfie<Traversal> {
     return node;
   }
 
-  public TrimmingTappers pop() {
+  public TraversalTappers pop() {
     return notify.pop();
   }
 
-  public Traversal push(final TrimmingTapper ¢) {
+  public Traversal push(final TraversalTapper ¢) {
     notify.push(¢);
     return this;
   }
@@ -148,6 +148,7 @@ public abstract class Traversal implements Selfie<Traversal> {
 
   protected void setCompilationUnit(final CompilationUnit ¢) {
     fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
+    notify.begin();
   }
 
   protected void setTipper(final Tipper<?> currentTipper) {
@@ -160,9 +161,9 @@ public abstract class Traversal implements Selfie<Traversal> {
 
   public final Int rewriteCount = new Int();
   public final Configuration configuration = Configurations.allClone();
-  public final TrimmingTappers notify = new TrimmingTappers()//
-      .push(new TrimmerMonitor(this)) //
-      .push(new TrimmingTapper() {
+  public final TraversalTappers notify = new TraversalTappers()//
+      .push(new TraversalMonitor(this)) //
+      .push(new TraversalTapper() {
         @Override public void begin() {
           rewriteCount.clear();
         }

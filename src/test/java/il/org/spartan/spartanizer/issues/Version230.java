@@ -40,7 +40,7 @@ public final class Version230 {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.Expression;
     final String wrap = w.on(from);
     azzert.that(from, is(w.off(wrap)));
-    final String unpeeled = trim.apply(new Traversalmplementation(), wrap);
+    final String unpeeled = trim.apply(new TraversalImplementation(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + from);
     final String peeled = w.off(unpeeled);
@@ -3651,7 +3651,7 @@ public final class Version230 {
         .gives("f()* f(a,b,c,d)");
   }
 
-  final Traversalmplementation trimmer = new Traversalmplementation();
+  final TraversalImplementation trimmer = new TraversalImplementation();
 
   @Test public void twoOpportunityExample() {
     azzert.that(countOpportunities(trimmer, (CompilationUnit) makeAST.COMPILATION_UNIT

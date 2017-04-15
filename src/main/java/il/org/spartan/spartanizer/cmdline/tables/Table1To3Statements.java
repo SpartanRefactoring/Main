@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
@@ -36,7 +37,7 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
   private static int totalStatementsCovered;
   static {
     clazz = Table1To3Statements.class;
-    TrimmerMonitor.off();
+    TraversalMonitor.off();
     Logger.subscribe(Table1To3Statements::logNanoContainingMethodInfo);
   }
 

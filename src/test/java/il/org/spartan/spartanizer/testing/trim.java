@@ -116,7 +116,7 @@ public interface trim {
     }
   }
 
-  class fluentTrimmer extends Traversalmplementation {
+  class fluentTrimmer extends TraversalImplementation {
     @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ts) {
       configuration.setTo(clazz, ts);
     }
