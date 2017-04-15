@@ -130,7 +130,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
     configuration = il.org.spartan.spartanizer.trimming.Configurations.all();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        TrimmerMonitor.visitation(n);
+        TraversalMonitor.visitation(n);
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
@@ -151,7 +151,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
         if (s == null)
           return true;
         ++tippersAppliedOnCurrentObject;
-        TrimmerMonitor.rewrite(r, s);
+        TraversalMonitor.rewrite(r, s);
         return true;
       }
 
@@ -161,7 +161,7 @@ public class Spartanizer$Applicator extends GenericApplicator {
 
       <N extends ASTNode> void tick(final N n, final Tipper<N> w) {
         tick(w);
-        TrimmerMonitor.tip(w, n);
+        TraversalMonitor.tip(w, n);
       }
 
       <N extends ASTNode> void tick(final Tipper<N> w) {

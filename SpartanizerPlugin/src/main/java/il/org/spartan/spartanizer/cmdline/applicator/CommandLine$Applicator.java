@@ -174,7 +174,7 @@ public class CommandLine$Applicator extends GenericApplicator {
     configuration = il.org.spartan.spartanizer.trimming.Configurations.all();
     u.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(final N n) {
-        TrimmerMonitor.visitation(n);
+        TraversalMonitor.visitation(n);
         if (disabling.on(n))
           return true;
         Tipper<N> tipper = null;
@@ -203,7 +203,7 @@ public class CommandLine$Applicator extends GenericApplicator {
         ReportGenerator.report("tips").put("Method LOC", includingMethod == null ? "not applicable" : count.lines(includingMethod));
         ReportGenerator.report("tips").put("Method Tokens", includingMethod == null ? "not applicable" : metrics.tokens(includingMethod + ""));
         ReportGenerator.writeTipsLine(n, s, "tips");
-        TrimmerMonitor.rewrite(r, s);
+        TraversalMonitor.rewrite(r, s);
         return true;
       }
 

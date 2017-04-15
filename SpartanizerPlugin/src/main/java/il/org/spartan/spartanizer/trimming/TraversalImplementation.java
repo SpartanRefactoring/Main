@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -25,7 +26,7 @@ import il.org.spartan.utils.fluent.*;
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-public class Traversalmplementation extends Traversal {
+public class TraversalImplementation extends Traversal {
   /** Instantiates this class */
   public ASTRewrite bottomUp(final CompilationUnit u) {
     setCompilationUnit(u);
@@ -73,17 +74,17 @@ public class Traversalmplementation extends Traversal {
     return rewrite();
   }
 
-  @SafeVarargs public final <N extends ASTNode> Traversal restrictConfiguration(final Tipper<N>... ¢) {
+  @SafeVarargs public final <N extends ASTNode> Traversal restrictTo(final Tipper<N>... ¢) {
     configuration.restrictTo(¢);
     return this;
   }
 
   public final <N extends ASTNode> Traversal fixBloater(final Tipper<N> ¢) {
-    return restrictConfiguration(¢);
+    return restrictTo(¢);
   }
 
   @SafeVarargs public final <N extends ASTNode> Traversal fixTipper(final Tipper<N>... ¢) {
-    return restrictConfiguration(¢);
+    return restrictTo(¢);
   }
 
   private void topDown(final CompilationUnit u) {

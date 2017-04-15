@@ -21,6 +21,7 @@ import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
@@ -42,7 +43,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   protected String relativePath;
   private boolean silent;
   static {
-    TrimmerMonitor.off();
+    TraversalMonitor.off();
   }
 
   private static Constructor<? extends DeprecatedFolderASTVisitor> declaredConstructor() {

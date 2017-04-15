@@ -24,7 +24,7 @@ public abstract class TipperTest<N extends ASTNode> {
   }
 
   // an inner class used to wrap usingTipper into gives and stays
-  public class TipperTrimmingOperand<M extends ASTNode> extends TrimmingOperand {
+  public class TipperTrimmingOperand<M extends ASTNode> extends TestOperand {
     private final Tipper<M> tipper;
     private final Class<M> tipsOn;
 
@@ -35,7 +35,7 @@ public abstract class TipperTest<N extends ASTNode> {
       using(tipper, tipsOn);
     }
 
-    private TipperTrimmingOperand(final TrimmingOperand o, final Tipper<M> tipper, final Class<M> tipsOn) {
+    private TipperTrimmingOperand(final TestOperand o, final Tipper<M> tipper, final Class<M> tipsOn) {
       this(o.get(), tipper, tipsOn);
     }
 

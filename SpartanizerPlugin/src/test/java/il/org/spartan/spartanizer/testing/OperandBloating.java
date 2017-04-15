@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.fluent.*;
 
-public class OperandBloating extends TrimmingOperand {
+public class OperandBloating extends TestOperand {
   ASTNode ast;
   String xclassText;
   boolean needRenaming = true;
