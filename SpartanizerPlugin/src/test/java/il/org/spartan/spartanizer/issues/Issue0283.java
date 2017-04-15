@@ -15,8 +15,8 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0283 {
   @Test public void a() {
-    trimminKof("@Ignore class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings( 3 ) @Inherited  @Deprecated public void test0() { }}")
-        .gives("@Ignore class Test123{@Deprecated @Inherited @Test @WebEndpoint @WebFault @SuppressWarnings(3)  public void test0(){}}") //
+    trimminKof("@Forget class Test123 { @Test @WebFault @WebEndpoint @SuppressWarnings( 3 ) @Inherited  @Deprecated public void test0() { }}")
+        .gives("@Forget class Test123{@Deprecated @Inherited @Test @WebEndpoint @WebFault @SuppressWarnings(3)  public void test0(){}}") //
         .stays();
   }
 
@@ -109,13 +109,13 @@ public class Issue0283 {
   }
 
   @Test public void test32() {
-    trimminKof("@Ignore class Test123 {@Test @SuppressWarnings({ 3 })  @Deprecated public void test0() { }}")
-        .gives("@Ignore class Test123 {@Deprecated @Test @SuppressWarnings({ 3 })  public void test0() { }}");
+    trimminKof("@Forget class Test123 {@Test @SuppressWarnings({ 3 })  @Deprecated public void test0() { }}")
+        .gives("@Forget class Test123 {@Deprecated @Test @SuppressWarnings({ 3 })  public void test0() { }}");
   }
 
   @Test public void test3() {
-    trimminKof("@Ignore class Test123 {@Test @SuppressWarnings({ 3, 4 }) @Inherited  @Deprecated public void test0() { }}")
-        .gives("@Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings({ 3, 4 })  public void test0(){}}") //
+    trimminKof("@Forget class Test123 {@Test @SuppressWarnings({ 3, 4 }) @Inherited  @Deprecated public void test0() { }}")
+        .gives("@Forget class Test123{@Deprecated @Inherited @Test @SuppressWarnings({ 3, 4 })  public void test0(){}}") //
         .stays();
   }
 
@@ -128,9 +128,9 @@ public class Issue0283 {
   }
 
   @Test public void test5() {
-    trimminKof("@Ignore @Deprecated class Test123 {@Test @SuppressWarnings(3) @Inherited  @Deprecated public void test0(){}}")
-        .gives("@Deprecated @Ignore class Test123{@Test @SuppressWarnings(3) @Inherited  @Deprecated public void test0(){}}") //
-        .gives("@Deprecated @Ignore class Test123{@Deprecated @Inherited @Test @SuppressWarnings(3)  public void test0(){}}") //
+    trimminKof("@Forget @Deprecated class Test123 {@Test @SuppressWarnings(3) @Inherited  @Deprecated public void test0(){}}")
+        .gives("@Deprecated @Forget class Test123{@Test @SuppressWarnings(3) @Inherited  @Deprecated public void test0(){}}") //
+        .gives("@Deprecated @Forget class Test123{@Deprecated @Inherited @Test @SuppressWarnings(3)  public void test0(){}}") //
         .stays();
   }
 }

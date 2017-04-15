@@ -12,22 +12,22 @@ public interface nulling {
   }
 
   static <T> T ly(final DoubleSupplier ¢) {
-    return null¢.ignoring(¢.getAsDouble());
+    return Null.ignoring(¢.getAsDouble());
   }
 
   static <T> T ly(final LongSupplier ¢) {
-    return null¢.ignoring(¢.getAsLong());
+    return Null.ignoring(¢.getAsLong());
   }
 
   static <T> T ly(final IntSupplier ¢) {
-    return null¢.ignoring(¢.getAsInt());
+    return Null.ignoring(¢.getAsInt());
   }
 
   static <T> T ly(final BooleanSupplier ¢) {
-    return null¢.ignoring(¢.getAsBoolean());
+    return Null.ignoring(¢.getAsBoolean());
   }
 
   static <T, R> T ly(final Supplier<R> ¢) {
-    return null¢.forgetting(¢.get());
+    return Null.forgetting(¢.get());
   }
 }

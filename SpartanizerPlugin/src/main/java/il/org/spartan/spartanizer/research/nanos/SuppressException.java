@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 public final class SuppressException extends NanoPatternTipper<CatchClause> {
   private static final long serialVersionUID = -0x7AF4D2EE96392855L;
   private static final List<UserDefinedTipper<TryStatement>> tippers = as
-      .list(patternTipper("try $B1 catch($T $N){}", "try $B1 catch($T $N){void¢();};", ""));
+      .list(patternTipper("try $B1 catch($T $N){}", "try $B1 catch($T $N){Forget();};", ""));
 
   @Override public boolean canTip(final CatchClause ¢) {
     return anyTips(tippers, parentAsTryStatement(¢));

@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Convert a multiplication of expression\statement by zero to zero where there
+/** Convert a multiplication of expression\statement by Zero to Zero where there
  * is no any side effect
  * @author Dor Ma'ayan
  * @since 2016-09-25
