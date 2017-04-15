@@ -29,12 +29,12 @@ import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
- * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an
+ * {@link BloaterGUIApplicator} as an {@link Applicator} and {@link Augmenter} as an
  * {@link Application}.
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public class InflateHandler extends AbstractHandler {
-  private static final English.Activity OPERATION_ACTIVITY = English.Activity.simple("Zoom");
+  private static final English.Inflection OPERATION_ACTIVITY = English.Inflection.stem("Zoom");
   public static final Bool active = new Bool();
   private static final IPartListener pageListener = pageListener();
 
@@ -82,8 +82,8 @@ public class InflateHandler extends AbstractHandler {
     return !($ instanceof StyledText) ? null : (StyledText) $;
   }
 
-  public static BatchApplicator applicator() {
-    return (BatchApplicator) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
+  public static NewGUIApplicator applicator() {
+    return (NewGUIApplicator) SpartanizationHandler.applicator(OPERATION_ACTIVITY).setRunAction(
         ¢ -> Integer.valueOf(as.bit(SingleFlater.commitChanges(SingleFlater.in(¢.buildWithBinding().compilationUnit).from(new InflaterProvider() {
           @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
             return λ -> λ;

@@ -18,16 +18,16 @@ import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
- * that uses {@link BatchApplicator} as its applicator.
+ * that uses {@link NewGUIApplicator} as its applicator.
  * @author Ori Roth
  * @since 2.6 */
 public class SpartanizationHandler extends AbstractHandler implements IMarkerResolution {
-  private static final English.Activity OPERATION_ACTIVITY = English.Activity.simple("Spartaniz");
+  private static final English.Inflection OPERATION_ACTIVITY = English.Inflection.stem("Spartaniz");
   public static final int PASSES = 20;
   private static final int DIALOG_THRESHOLD = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final BatchApplicator a = applicator().defaultSelection();
+    final NewGUIApplicator a = applicator().defaultSelection();
     a.setPasses(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
@@ -41,14 +41,14 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     applicator().setPasses(1).selection(Selection.Util.by(¢)).go();
   }
 
-  public static BatchApplicator applicator() {
+  public static NewGUIApplicator applicator() {
     return applicator(OPERATION_ACTIVITY);
   }
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  public static BatchApplicator applicator(final English.Activity activityNamer) {
-    final BatchApplicator $ = new BatchApplicator();
+  public static NewGUIApplicator applicator(final English.Inflection activityNamer) {
+    final NewGUIApplicator $ = new NewGUIApplicator();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     $.setContext(r -> {
       try {
@@ -119,8 +119,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
-  @Deprecated @SuppressWarnings("deprecation") public static BatchApplicator applicatorMapper() {
-    final BatchApplicator $ = new BatchApplicator();
+  @Deprecated @SuppressWarnings("deprecation") public static NewGUIApplicator applicatorMapper() {
+    final NewGUIApplicator $ = new NewGUIApplicator();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Bool openDialog = new Bool();
     $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
