@@ -22,7 +22,9 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
                 : ¢.getNodeType() == ANONYMOUS_CLASS_DECLARATION ? map((AnonymousClassDeclaration) ¢)//
                     : ¢.getNodeType() == MODIFIER ? map((Modifier) ¢) //
                         : ¢.getNodeType() == CATCH_CLAUSE ? map((CatchClause) ¢)//
-                            : reduce();
+                            : ¢.getNodeType() == METHOD_REF ? map((MethodRef) ¢)
+                                : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢) //
+                                    : reduce();
   }
 
   protected R composite(final List<? extends ASTNode> ns) {
@@ -59,10 +61,11 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   }
 
   protected R map(final Annotation ¢) {
-    return ¢.isMarkerAnnotation() ? map((MarkerAnnotation) ¢) //
-        : ¢.isNormalAnnotation() ? map((NormalAnnotation) ¢) //
-            : ¢.isSingleMemberAnnotation() ? map((SingleMemberAnnotation) ¢) //
-                : bug("Unrecognized Annotation; type=%s", English.name(¢.getClass()));
+    return ¢ instanceof MarkerAnnotation ? map((MarkerAnnotation) ¢) //
+        : ¢ instanceof NormalAnnotation ? map((NormalAnnotation) ¢) //
+            : ¢ instanceof SingleMemberAnnotation ? map((SingleMemberAnnotation) ¢) //
+                : bug("Unrecognized Annotation; type=%s", English.name(¢.getClass())) //
+    ;
   }
 
   protected R map(final AnonymousClassDeclaration ¢) {
@@ -179,9 +182,29 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return map((CastExpression) ¢);
       case LAMBDA_EXPRESSION:
         return map((LambdaExpression) ¢);
+      case FIELD_ACCESS:
+        return map((FieldAccess) ¢);
+      case EXPRESSION_METHOD_REFERENCE:
+        return map((ExpressionMethodReference) ¢);
       default:
-        return bug("Unrecognized %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
+        return bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
+  }
+
+  protected R map(final MethodRefParameter ¢) {
+    return reduce(map(¢.getType()), map(¢.getName()));
+  }
+
+  protected R map(final MethodRef ¢) {
+    return reduce(map(¢), map(¢));
+  }
+
+  protected R map(final ExpressionMethodReference ¢) {
+    return reduce(map(¢.getExpression()), map(¢.getName()));
+  }
+
+  protected R map(final FieldAccess ¢) {
+    return reduce(map(¢.getExpression()), map(¢.getName()));
   }
 
   protected R map(final ExpressionStatement ¢) {
