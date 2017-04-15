@@ -29,7 +29,7 @@ public abstract class Applicator {
   /** Applicator's name. */
   private String name;
   /** Applicator's operation namer. */
-  private English.Activity operationName;
+  private English.Inflection operationName;
 
   /** Tell this applicator it should not run. */
   public void stop() {
@@ -129,14 +129,14 @@ public abstract class Applicator {
   }
 
   /** @return applicator's name */
-  English.Activity operationName() {
+  English.Inflection operationName() {
     return operationName;
   }
 
   /** Name this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  public Applicator operationName(final English.Activity ¢) {
+  public Applicator operationName(final English.Inflection ¢) {
     operationName = ¢;
     return this;
   }

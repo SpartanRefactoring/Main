@@ -6,7 +6,7 @@ import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.plugin.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
- * {@link BloatApplicator} as an {@link Applicator} and {@link Augmenter} as an
+ * {@link BloaterGUIApplicator} as an {@link Applicator} and {@link Augmenter} as an
  * {@link Application}.
  * @author Ori Roth
  * @since Nov 25, 2016 */
@@ -16,8 +16,8 @@ class CollateralHandler extends AbstractHandler {
     return null;
   }
 
-  private static BloatApplicator applicator() {
-    final BloatApplicator $ = BloatApplicator.defaultApplicator();
+  private static BloaterGUIApplicator applicator() {
+    final BloaterGUIApplicator $ = BloaterGUIApplicator.defaultApplicator();
     $.setRunAction(λ -> new Augmenter().commitChanges(λ, $.selection()));
     $.defaultRunContext();
     return $;
