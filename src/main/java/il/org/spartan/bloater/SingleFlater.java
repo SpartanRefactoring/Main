@@ -28,7 +28,6 @@ import il.org.spartan.utils.fluent.*;
 public final class SingleFlater {
   private ASTNode root;
   private OperationsProvider operationsProvider;
-  @Deprecated private TextSelection textSelection;
   private boolean usesDisabling = true;
   private WindowInformation windowInformation;
 
@@ -55,7 +54,6 @@ public final class SingleFlater {
    * @param ¢ JD
    * @return {@code this} flater */
   @Deprecated public SingleFlater limit(final TextSelection ¢) {
-    textSelection = ¢;
     return this;
   }
 
@@ -155,15 +153,14 @@ public final class SingleFlater {
     return $;
   }
 
-
   /** @param from1 - starting char of first interval
    * @param lenth1 - length of first interval
    * @param from2 - starting char of second interval
    * @param length2 - length of second interval SPARTANIZED - should use Bloater
    *        one day to understand it */
   static boolean intervalsIntersect(final int from1, final int length1, final int from2, final int length2) {
-    return length1 != 0 && length2 != 0 && (from1 < from2 ? from1 + length1 > from2
-        : from1 != from2 ? from2 + length2 > from1 : length1 > 0 && length2 > 0);
+    return length1 != 0 && length2 != 0
+        && (from1 < from2 ? from1 + length1 > from2 : from1 != from2 ? from2 + length2 > from1 : length1 > 0 && length2 > 0);
   }
 
   private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextEdit te, final WindowInformation i)

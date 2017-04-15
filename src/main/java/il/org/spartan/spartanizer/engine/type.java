@@ -358,8 +358,7 @@ public interface type {
 
       default implementation aboveBinaryOperator(final InfixExpression.Operator ¢) {
         return in(¢, EQUALS, NOT_EQUALS) ? this
-            : ¢ == op.PLUS2 ? asAlphaNumeric()
-                : wizard.isBitwiseOperator(¢) ? asBooleanIntegral() : wizard.isShift(¢) ? asIntegral() : asNumeric();
+            : ¢ == op.PLUS2 ? asAlphaNumeric() : wizard.isBitwiseOperator(¢) ? asBooleanIntegral() : wizard.isShift(¢) ? asIntegral() : asNumeric();
       }
 
       default implementation asAlphaNumeric() {

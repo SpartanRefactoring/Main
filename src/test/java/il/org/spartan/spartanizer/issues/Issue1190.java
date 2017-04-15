@@ -19,7 +19,7 @@ public class Issue1190 {
   TextualTraversals trimmer;
 
   @Before public void setUp() {
-    trimmer = new TextualTraversals(); 
+    trimmer = new TextualTraversals();
   }
 
   @Test(timeout = 30000) public void runTheSpartinizerOnItself() {

@@ -85,7 +85,7 @@ public final class SpartanizeProject extends BaseHandler {
   }
 
   boolean singlePass() {
-    final GUITraversal t = new GUITraversal(); 
+    final GUITraversal t = new GUITraversal();
     final IProgressService ps = workench.getProgressService();
     final Int passNum = new Int(passNumber + 1);
     final Bool $ = new Bool();

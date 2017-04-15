@@ -88,7 +88,7 @@ public interface theSpartanizer {
     }
   }
 
-  Trimmer trimmer = new TrimmerImplementation(); 
+  Trimmer trimmer = new TrimmerImplementation();
 
   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
