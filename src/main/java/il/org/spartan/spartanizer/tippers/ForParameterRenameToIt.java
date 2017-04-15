@@ -41,7 +41,7 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
       for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
         final SimpleName sn = x.getName();
         assert sn != null;
-        if (in(sn.getIdentifier(), namer.cent))
+        if (in(sn.getIdentifier(), Namer.cent))
           return null;
       }
     final Statement body = $.getBody();
@@ -49,13 +49,13 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
       return null;
     final SimpleName n = d.getName();
     assert n != null;
-    if (in(n.getIdentifier(), namer.specials) || haz.variableDefinition(body) || haz.cent(body))
+    if (in(n.getIdentifier(), Namer.specials) || haz.variableDefinition(body) || haz.cent(body))
       return null;
     final List<SimpleName> uses = collect.usesOf(n).in(body);
     assert uses != null;
     if (uses.isEmpty())
       return null;
-    final SimpleName ¢ = namer.newCent(d);
+    final SimpleName ¢ = Namer.newCent(d);
     return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename(n, ¢, $, r, g);

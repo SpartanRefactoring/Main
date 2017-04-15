@@ -21,6 +21,6 @@ public final class TryBodyEmptyNoCatchesNoFinallyEliminate extends RemovingTippe
   }
 
   @Override public String description(final TryStatement ¢) {
-    return "Eliminate this no-op try block " + trivia.gist(¢.getBody());
+    return "Eliminate this no-op try block " + Trivia.gist(¢.getBody());
   }
 }

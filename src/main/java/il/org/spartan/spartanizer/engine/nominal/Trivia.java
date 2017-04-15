@@ -9,20 +9,20 @@ import il.org.spartan.spartanizer.engine.*;
 
 /** Trivia includes in it spaces, tabs, newlines, comments, line comments, and
  * in general anything that is not a token of Java. Here we have a bunch of
- * function that deal with trivia in many ways.
+ * function that deal with Trivia in many ways.
  * @author Yossi Gil
  * @since 2017-01-19 */
-public enum trivia {
+public enum Trivia {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static String accurateEssence(final String codeFragment) {
-    return trivia.fixTideClean(trivia.removeComments(into.cu(codeFragment)) + "");
+    return Trivia.fixTideClean(Trivia.removeComments(into.cu(codeFragment)) + "");
   }
 
   /** Obtain a condensed textual representation of an {@link ASTNode}
    * @param ¢ JD
    * @return textual representation of the parameter, */
   static String asString(final ASTNode ¢) {
-    return removeWhites(trivia.cleanForm(¢));
+    return removeWhites(Trivia.cleanForm(¢));
   }
 
   public static String cleanForm(final ASTNode ¢) {
@@ -45,7 +45,7 @@ public enum trivia {
   }
 
   public static String essence(final String codeFragment) {
-    return trivia.fixTideClean(tide.clean(trivia.removeComments(codeFragment)));
+    return Trivia.fixTideClean(tide.clean(Trivia.removeComments(codeFragment)));
   }
 
   /** This method fixes a bug from tide.clean which causes ^ to replaced with

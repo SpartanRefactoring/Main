@@ -24,7 +24,7 @@ import il.org.spartan.utils.fluent.*;
  * @author Yossi Gil
  * @since 2016 */
 @SuppressWarnings("InfiniteRecursion")
-public interface namer {
+public interface Namer {
   static String[] components(final Name ¢) {
     return components(¢);
   }
@@ -75,7 +75,7 @@ public interface namer {
   }
 
   static String shorten(final List<Type> ¢) {
-    return ¢.stream().filter(namer::interestingType).map(namer::shorten).findFirst().orElse(null);
+    return ¢.stream().filter(Namer::interestingType).map(Namer::shorten).findFirst().orElse(null);
   }
 
   static String shorten(final Name ¢) {

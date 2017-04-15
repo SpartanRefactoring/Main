@@ -180,6 +180,6 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   static String classToNormalizedFileName(final String className) {
-    return separate.these(lisp.rest(as.iterable(namer.components(className)))).by('-').toLowerCase();
+    return separate.these(lisp.rest(as.iterable(Namer.components(className)))).by('-').toLowerCase();
   }
 }

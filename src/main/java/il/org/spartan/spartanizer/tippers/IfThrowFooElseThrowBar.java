@@ -24,7 +24,7 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
   private static final long serialVersionUID = -0x629F5E257C7498C9L;
 
   @Override public String description(final IfStatement ¢) {
-    return "Consolidate 'if' " + trivia.gist(¢.getExpression()) + " into a single 'throw' statement";
+    return "Consolidate 'if' " + Trivia.gist(¢.getExpression()) + " into a single 'throw' statement";
   }
 
   @Override public boolean prerequisite(final IfStatement ¢) {

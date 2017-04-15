@@ -38,12 +38,12 @@ public final class MethodDeclarationRenameSingleParameterToIt extends EagerTippe
       return null;
     final SimpleName $ = parameter.getName();
     assert $ != null;
-    if (in($.getIdentifier(), namer.specials))
+    if (in($.getIdentifier(), Namer.specials))
       return null;
     final Block b = body(d);
     if (b == null || haz.variableDefinition(b) || haz.it(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    final SimpleName ¢ = namer.newIt(d);
+    final SimpleName ¢ = Namer.newIt(d);
     return new Tip("Rename paraemter " + $ + " to it ", getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, d, r, g);

@@ -22,7 +22,7 @@ public final class LocalUninitializedDead extends LocalVariableUninitialized imp
   }
 
   @Override public String description() {
-    return "Remove unused local variable " + trivia.gist(name);
+    return "Remove unused local variable " + Trivia.gist(name);
   }
 
   @Override public Examples examples() {

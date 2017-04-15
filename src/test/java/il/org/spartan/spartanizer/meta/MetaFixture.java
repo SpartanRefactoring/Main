@@ -48,7 +48,7 @@ public abstract class MetaFixture {
    * @return a string as described */
   public static String ancestry(final ASTNode n) {
     final Int $ = new Int();
-    return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
+    return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + Trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
   }
 

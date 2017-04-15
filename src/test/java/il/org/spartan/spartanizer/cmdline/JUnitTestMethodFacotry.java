@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.engine.nominal.namer.*;
-import static il.org.spartan.spartanizer.engine.nominal.trivia.*;
+import static il.org.spartan.spartanizer.engine.nominal.Namer.*;
+import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
 import static java.lang.String.*;
 
 import java.util.*;
@@ -180,7 +180,7 @@ public enum JUnitTestMethodFacotry {
         "twice: " + theSpartanizer.twice(s) + "\n" + //
         "thrice: " + theSpartanizer.thrice(s) + "\n" + //
         "fixed: " + theSpartanizer.repetitively(s) + "\n" + //
-        JUnitTestMethodFacotry.from(namer.signature(s), s) + "\n" + //
+        JUnitTestMethodFacotry.from(Namer.signature(s), s) + "\n" + //
         "");
       }
     });
@@ -227,7 +227,7 @@ public enum JUnitTestMethodFacotry {
                   "         .using(%s.class, new %s()) //\n", operandClass(t), tipperClass(t))
               + //
               format(//
-                  "         .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
+                  "         .gives(\"%s\") //\n", escapeQuotes(Trivia.essence(to)));
       from = to;
     }
   }
@@ -237,7 +237,7 @@ public enum JUnitTestMethodFacotry {
       final String to = OperandBloating.bloat(from);
       if (to.equals(from))
         return $ + "  .stays() //\n  ;";
-      $ += format(" .gives(\"%s\") //\n", escapeQuotes(trivia.essence(to)));
+      $ += format(" .gives(\"%s\") //\n", escapeQuotes(Trivia.essence(to)));
       from = to;
     }
   }

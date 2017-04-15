@@ -54,10 +54,10 @@ public enum WrapIntoComilationUnit {
       final String on = w.on(codeFragment);
       final ASTNode n = makeAST.COMPILATION_UNIT.from(on);
       $.append("\n* Attempt ").append(++i).append(": ").append(w);
-      $.append("\n* I = <").append(trivia.essence(on)).append(">;");
-      $.append("\n* O = <").append(trivia.essence(n + "")).append(">;");
+      $.append("\n* I = <").append(Trivia.essence(on)).append(">;");
+      $.append("\n* O = <").append(Trivia.essence(n + "")).append(">;");
       $.append("\n**** PARSED=\n").append(w.intoCompilationUnit(codeFragment)).append("");
-      $.append("\n* AST=").append(trivia.essence(n.getAST() + ""));
+      $.append("\n* AST=").append(Trivia.essence(n.getAST() + ""));
       $.append("\n**** INPUT=\n").append(on);
       $.append("\n**** OUTPUT=\n").append(n);
       $.append("\n**** PROBLEMS=\n").append(wizard.problems(n));
@@ -74,7 +74,7 @@ public enum WrapIntoComilationUnit {
   }
 
   private boolean contains(final String wrap, final String inner) {
-    final String off = off(wrap), $ = trivia.essence(inner), essence2 = trivia.essence(off);
+    final String off = off(wrap), $ = Trivia.essence(inner), essence2 = Trivia.essence(off);
     assert essence2 != null;
     return essence2.contains($);
   }

@@ -37,12 +37,12 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
       return null;
     final SimpleName $ = parameter.getName();
     assert $ != null;
-    if (in($.getIdentifier(), namer.specials))
+    if (in($.getIdentifier(), Namer.specials))
       return null;
     final Block b = body(d);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    final SimpleName ¢ = namer.newCent(d);
+    final SimpleName ¢ = Namer.newCent(d);
     return new Tip("Rename paraemter " + $ + " to ¢ ", getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, d, r, g);

@@ -16,6 +16,6 @@ public enum TestUtilsAll {
    * @param actual JD */
   public static void assertSimilar(final String expected, final String actual) {
     if (!expected.equals(actual))
-      azzert.that(trivia.essence(actual), is(trivia.essence(expected)));
+      azzert.that(Trivia.essence(actual), is(Trivia.essence(expected)));
   }
 }

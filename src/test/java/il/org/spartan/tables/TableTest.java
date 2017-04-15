@@ -17,7 +17,7 @@ public class TableTest {
   }
 
   @Test public void test2() {
-    final String[] components = namer.components("Table_NanosByCategories");
+    final String[] components = Namer.components("Table_NanosByCategories");
     azzert.that(components, is(new String[] { "Table", "Nanos", "By", "Categories" }));
     azzert.that(separate.these(lisp.rest(as.iterable(components))).by('-').toLowerCase(), is("nanos-by-categories"));
   }

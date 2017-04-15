@@ -27,7 +27,7 @@ public interface English {
   }
 
   static String indefinite(final String className) {
-    final String $ = namer.components(className)[0];
+    final String $ = Namer.components(className)[0];
     final char openingLetter = first($);
     return isAcronym($) ? indefinite(pronounce(openingLetter)) : //
         (Utils.intIsIn(openingLetter, 'i', 'e', 'o', 'u', 'y') ? "an" : "a") + " " + className;

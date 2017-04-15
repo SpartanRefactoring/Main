@@ -14,8 +14,8 @@ public class Issue1101 {
   @Ignore @Test public void a() {
     trimminKof("/**/" + //
         "  boolean a(final A b, final A c) {" + //
-        "    final String off = off(wrap), $ = trivia.accurateEssence(inner);" + //
-        "    final String essence2 = trivia.accurateEssence(off);" + //
+        "    final String off = off(wrap), $ = Trivia.accurateEssence(inner);" + //
+        "    final String essence2 = Trivia.accurateEssence(off);" + //
         "    assert essence2 != null;" + //
         "    return essence2.contains($);" + //
         "  } "//
@@ -23,8 +23,8 @@ public class Issue1101 {
         // Edit this to reflect your expectation
         "/**/" + //
             "  boolean a(final A b, final A c) {" + //
-            "    final String $ = trivia.accurateEssence(inner);" + //
-            "    final String essence2 = trivia.accurateEssence(off(wrap));" + //
+            "    final String $ = Trivia.accurateEssence(inner);" + //
+            "    final String essence2 = Trivia.accurateEssence(off(wrap));" + //
             "    assert essence2 != null;" + //
             "    return essence2.contains($);" + //
             "  } "//
