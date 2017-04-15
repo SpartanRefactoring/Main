@@ -18,10 +18,10 @@ public class SuppressExceptionTest {
             " catch (  B i) {}"//
     ) //
         .using(new SuppressException(), CatchClause.class)//
-        .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();};}")//
-        .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){ignore();}")//
-        .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){ignore();}")//
-        .gives("try{A.a(b).c().d(λ->f[g++]=h(λ));}catch(B i){ignore();}")//
+        .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){void¢();};}")//
+        .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){void¢();}")//
+        .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){void¢();}")//
+        .gives("try{A.a(b).c().d(λ->f[g++]=h(λ));}catch(B i){void¢();}")//
         .stays()//
     ;
   }
@@ -30,9 +30,9 @@ public class SuppressExceptionTest {
     trimminKof("try{ thing(); } catch(A a){}catch(B b){}")//
         .gives("try{thing();}catch(B|A a){}")//
         .using(new SuppressException(), CatchClause.class)//
-        .gives("{try{{thing();}}catch(B|A a){ignore();};}")//
-        .gives("try{{thing();}}catch(B|A a){ignore();}")//
-        .gives("try{thing();}catch(B|A a){ignore();}")//
+        .gives("{try{{thing();}}catch(B|A a){void¢();};}")//
+        .gives("try{{thing();}}catch(B|A a){void¢();}")//
+        .gives("try{thing();}catch(B|A a){void¢();}")//
         .stays();
   }
 }
