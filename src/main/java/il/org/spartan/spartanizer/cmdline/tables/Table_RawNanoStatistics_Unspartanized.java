@@ -16,7 +16,7 @@ public class Table_RawNanoStatistics_Unspartanized extends Table_RawNanoStatisti
   static {
     nanonizer.removeSpartanizerTippers();
     nanonizer.add(Block.class, //
-        new BlockSingleton(), //
+        new BlockSingletonEliminate(), //
         null);
   }
 

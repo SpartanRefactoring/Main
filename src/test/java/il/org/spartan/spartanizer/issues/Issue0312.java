@@ -24,7 +24,7 @@ public class Issue0312 {
         .gives("for(int a=1;a<7;){if(a==5){b+=9;break;}d+=15;break;}return c;") //
         .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{d+=15;}break;}return c;") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("for(int a=1;a<7;){if(a==5)b+=9;else d+=15;break;}return c;") //
         .stays() //
     ;
@@ -36,7 +36,7 @@ public class Issue0312 {
     trimminKof("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
         .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{c+=15;}break;}return d;") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("for(int a=1;a<7;){if(a==5)b+=9;else c+=15;break;}return d;") //
         .stays() //
     ;
@@ -48,7 +48,7 @@ public class Issue0312 {
     trimminKof("for (int a = 1; a < 7;) { if (a == 5) { b += 9; break; } c += 15; break; } return d;") //
         .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
         .gives("for(int a=1;a<7;){if(a==5){b+=9;}else{c+=15;}break;}return d;") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("for(int a=1;a<7;){if(a==5)b+=9;else c+=15;break;}return d;") //
         .stays() //
     ;

@@ -25,7 +25,7 @@ public class Issue0879 {
     trimminKof("void a() { int b = 4; if (b > 3) { b += 3; b += 4; } else { b += 5; b += 55; } return; }") //
         .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
         .gives("void a(){int b=4;if(b>3){b+=3+4;}else{b+=5+55;}return;}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("void a(){int b=4;if(b>3)b+=3+4;else b+=5+55;return;}") //
         .using(new InfixAdditionEvaluate(), InfixExpression.class) //
         .gives("void a(){int b=4;if(b>3)b+=7;else b+=60;return;}") //
