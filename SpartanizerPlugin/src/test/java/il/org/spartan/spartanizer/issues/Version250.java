@@ -204,7 +204,7 @@ public final class Version250 {
     trimminKof("if (false) { a(); } else { if (false) b(); else c(); }") //
         .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("{if(false)b();else c();}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("if(false)b();else c();") //
         .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("c();") //
@@ -218,7 +218,7 @@ public final class Version250 {
     trimminKof("if (false) { a(); } else { if (true) b(); else c(); }") //
         .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("{if(true)b();else c();}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("if(true)b();else c();") //
         .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("b();") //
@@ -232,7 +232,7 @@ public final class Version250 {
     trimminKof("if (true) { if (true) a(); else b(); } else { if (false) a(); else b(); }") //
         .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("{if(true)a();else b();}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("if(true)a();else b();") //
         .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("a();") //
@@ -261,7 +261,7 @@ public final class Version250 {
     trimminKof("if (false) a(); else { if (true) b(); else c(); }") //
         .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("{if(true)b();else c();}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("if(true)b();else c();") //
         .using(new IfTrueOrFalse(), IfStatement.class) //
         .gives("b();") //

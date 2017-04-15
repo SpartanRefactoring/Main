@@ -35,7 +35,7 @@ public class Issue0310 {
     trimminKof("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; c = c.e(); } return false; }") //
         .using(new ForToForUpdaters(), ForStatement.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e()){if(B.d(c))return true;}return false;}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e())if(B.d(c))return true;return false;}") //
         .stays() //
     ;
@@ -90,7 +90,7 @@ public class Issue0310 {
     trimminKof("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; c = c.e(); } return false; }") //
         .using(new ForToForUpdaters(), ForStatement.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e()){if(B.d(c))return true;}return false;}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.e())if(B.d(c))return true;return false;}") //
         .stays() //
     ;
@@ -104,7 +104,7 @@ public class Issue0310 {
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c))return true;if(e.d(c))return true;}return false;}") //
         .using(new IfFooSequencerIfFooSameSequencer(), IfStatement.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f()){if(B.d(c)||e.d(c))return true;}return false;}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("boolean a(final A b){for(A c=b;c!=null;c=c.f())if(B.d(c)||e.d(c))return true;return false;}") //
         .stays() //
     ;

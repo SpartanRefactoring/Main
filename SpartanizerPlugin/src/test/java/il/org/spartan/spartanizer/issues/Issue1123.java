@@ -34,7 +34,7 @@ public class Issue1123 {
         .gives("A a(A b){int $=0,d=1;while($<d){if($==0)$=7;++$;}return $;}") //
         .using(new WhileToForUpdaters(), WhileStatement.class) //
         .gives("A a(A b){int $=0,d=1;for(;$<d;++$){if($==0)$=7;}return $;}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("A a(A b){int $=0,d=1;for(;$<d;++$)if($==0)$=7;return $;}") //
         .stays() //
     ;
