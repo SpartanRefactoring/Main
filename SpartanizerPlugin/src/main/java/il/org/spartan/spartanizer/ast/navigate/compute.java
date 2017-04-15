@@ -43,6 +43,10 @@ public enum compute {
       }
 
       @Override public List<ReturnStatement> reduce(final List<ReturnStatement> ss1, final List<ReturnStatement> ss2) {
+        if (ss1 == null)
+          return ss2;
+        if (ss2 == null)
+          return ss1;
         ss1.addAll(ss2);
         return ss1;
       }
