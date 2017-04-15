@@ -36,7 +36,7 @@ public class InteractiveSpartanizer {
   }
 
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
-    traversals.trimmer.configuration.disable(¢);
+    traversals.traversal.configuration.disable(¢);
     return this;
   }
 
@@ -58,12 +58,12 @@ public class InteractiveSpartanizer {
   public final TextualTraversals traversals = new TextualTraversals();
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
-    traversals.trimmer.configuration.add(c, ts);
+    traversals.traversal.configuration.add(c, ts);
     return this;
   }
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
-    traversals.trimmer.configuration.remove(c, ts);
+    traversals.traversal.configuration.remove(c, ts);
     return this;
   }
 }

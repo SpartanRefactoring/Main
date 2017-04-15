@@ -25,7 +25,7 @@ import il.org.spartan.utils.fluent.*;
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-public class TrimmerImplementation extends Trimmer {
+public class Traversalmplementation extends Traversal {
   /** Instantiates this class */
   public ASTRewrite bottomUp(final CompilationUnit u) {
     setCompilationUnit(u);
@@ -73,16 +73,16 @@ public class TrimmerImplementation extends Trimmer {
     return rewrite();
   }
 
-  @SafeVarargs public final <N extends ASTNode> Trimmer restrictConfiguration(final Tipper<N>... ¢) {
+  @SafeVarargs public final <N extends ASTNode> Traversal restrictConfiguration(final Tipper<N>... ¢) {
     configuration.restrictTo(¢);
     return this;
   }
 
-  public final <N extends ASTNode> Trimmer fixBloater(final Tipper<N> ¢) {
+  public final <N extends ASTNode> Traversal fixBloater(final Tipper<N> ¢) {
     return restrictConfiguration(¢);
   }
 
-  @SafeVarargs public final <N extends ASTNode> Trimmer fixTipper(final Tipper<N>... ¢) {
+  @SafeVarargs public final <N extends ASTNode> Traversal fixTipper(final Tipper<N>... ¢) {
     return restrictConfiguration(¢);
   }
 

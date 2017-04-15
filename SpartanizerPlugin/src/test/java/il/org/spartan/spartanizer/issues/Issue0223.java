@@ -188,7 +188,7 @@ public final class Issue0223 {
     final TrimmingOperand a = trimminKof("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
     final String wrap = WrapIntoComilationUnit.find(a.get()).on(a.get());
-    if (wrap.equals(trim.apply(new TrimmerImplementation(), wrap)))
+    if (wrap.equals(trim.apply(new Traversalmplementation(), wrap)))
       azzert.fail("Nothing done on " + a.get());
   }
 
@@ -199,7 +199,7 @@ public final class Issue0223 {
     assert u != null;
     final Document d = new Document(wrap);
     assert d != null;
-    final Document $ = trim.rewrite(new TrimmerImplementation(), u, d);
+    final Document $ = trim.rewrite(new Traversalmplementation(), u, d);
     assert $ != null;
     if (wrap.equals($.get()))
       azzert.fail("Nothing done on " + a.get());
@@ -212,7 +212,7 @@ public final class Issue0223 {
     assert u != null;
     final IDocument d = new Document(wrap);
     assert d != null;
-    final Trimmer a = new TrimmerImplementation();
+    final Traversal a = new Traversalmplementation();
     try {
       a.go(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
@@ -230,7 +230,7 @@ public final class Issue0223 {
     assert u != null;
     final IDocument d = new Document(wrap);
     assert d != null;
-    final TrimmerImplementation a = new TrimmerImplementation();
+    final Traversalmplementation a = new Traversalmplementation();
     try {
       a.go(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
