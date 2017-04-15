@@ -115,7 +115,7 @@ public class SingleFlaterMonitor extends SingleFlater.With implements SingleFlat
           return String.format("%2d. %s %s#%s %s: %s\n", //
               box.it(¢.getSequenceNumber()), //
               new SimpleDateFormat("hh:mm:ss").format(new Date(¢.getMillis())), //
-              namer.lastComponent(¢.getSourceClassName()), //
+              Namer.lastComponent(¢.getSourceClassName()), //
               ¢.getSourceMethodName(), //
               ¢.getLevel(), //
               formatMessage(¢)//
@@ -169,7 +169,7 @@ public class SingleFlaterMonitor extends SingleFlater.With implements SingleFlat
 
   private String node() {
     final ASTNode $ = current().node();
-    return String.format("%s(%s)", English.name($), trivia.gist($));
+    return String.format("%s(%s)", English.name($), Trivia.gist($));
   }
 
   private Tip tip() {

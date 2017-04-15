@@ -311,7 +311,7 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final String key, final Type t) {
-    put(key, new Binding(key, type.baptize(trivia.condense(t))));
+    put(key, new Binding(key, type.baptize(Trivia.condense(t))));
     return this;
   }
 
@@ -365,7 +365,7 @@ public final class Namespace implements Environment {
 
   public static Iterable<String> namesGenerator(final SimpleType t) {
     return () -> new Iterator<String>() {
-      final String base = namer.variableName(t);
+      final String base = Namer.variableName(t);
       int n = -1;
 
       @Override public String next() {
@@ -379,7 +379,7 @@ public final class Namespace implements Environment {
   }
 
   public String generateName(final Type ¢) {
-    return generateName(namer.shorten(¢));
+    return generateName(Namer.shorten(¢));
   }
 
   public String generateName(final String ¢) {
@@ -399,7 +399,7 @@ public final class Namespace implements Environment {
   }
 
   public boolean allowsCurrentRecursive() {
-    return flat.keySet().stream().noneMatch(λ -> isVariable(λ) && !in(λ, namer.specials))
+    return flat.keySet().stream().noneMatch(λ -> isVariable(λ) && !in(λ, Namer.specials))
         && children.stream().allMatch(Namespace::allowsCurrentRecursive);
   }
 

@@ -153,7 +153,7 @@ public interface Environment {
 
   static Collection<Entry<String, Binding>> declarationsOf(final VariableDeclarationStatement s) {
     final Collection<Entry<String, Binding>> $ = new ArrayList<>();
-    final type t = type.baptize(trivia.condense(type(s)));
+    final type t = type.baptize(Trivia.condense(type(s)));
     final String path = fullName(s);
     $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(toList()));
     return $;

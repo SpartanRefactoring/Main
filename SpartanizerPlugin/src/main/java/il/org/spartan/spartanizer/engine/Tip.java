@@ -87,7 +87,7 @@ public abstract class Tip {
         ", s=" + span + //
         ", d=" + description + //
         ", n=" + lineNumber + //
-        ", c=" + namer.lastComponent(tipperClass + "") + "]";
+        ", c=" + Namer.lastComponent(tipperClass + "") + "]";
   }
 
   public void intoMarker(final IMarker $) {

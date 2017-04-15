@@ -24,7 +24,7 @@ public final class WrapTest {
   }
 
   @Test public void essenceTest() {
-    azzert.that("if(b){;}throw new Exception();", is(trivia.essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
+    azzert.that("if(b){;}throw new Exception();", is(Trivia.essence("if (b) {\n /* empty */; \n} // no else \n throw new Exception();\n")));
   }
 
   @Test public void expression() {
@@ -97,11 +97,11 @@ public final class WrapTest {
   }
 
   @Test public void removeComments() {
-    similar(trivia.removeComments("if (b) {\n /* empty */} else {\n throw new Exception();\n}"), "if (b) {} else { throw new Exception(); }");
+    similar(Trivia.removeComments("if (b) {\n /* empty */} else {\n throw new Exception();\n}"), "if (b) {} else { throw new Exception(); }");
   }
 
   private void similar(final String s1, final String s2) {
-    azzert.that(trivia.essence(s2), is(trivia.essence(s1)));
+    azzert.that(Trivia.essence(s2), is(Trivia.essence(s1)));
   }
 
   @Test public void statement() {

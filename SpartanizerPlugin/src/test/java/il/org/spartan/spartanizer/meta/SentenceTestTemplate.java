@@ -93,7 +93,7 @@ public enum SentenceTestTemplate {
       final String peeled = WrapIntoComilationUnit.Method.off(trim.apply(traversal, WrapIntoComilationUnit.Method.on(firstBody()))),
           to = secondBody();
       if (!to.equals(peeled))
-        azzert.that(trivia.essence(peeled), is(trivia.essence(to)));
+        azzert.that(Trivia.essence(peeled), is(Trivia.essence(to)));
     }
 
     String firstBody() {
@@ -139,7 +139,7 @@ public enum SentenceTestTemplate {
         return;
       final String peeled = WrapIntoComilationUnit.Method.off(unpeeled);
       if (!peeled.equals(from) && !tide.clean(peeled).equals(tide.clean(from)))
-        azzert.that(trivia.essence(peeled), is(trivia.essence(from)));
+        azzert.that(Trivia.essence(peeled), is(Trivia.essence(from)));
     }
   }
 }

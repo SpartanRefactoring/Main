@@ -16,7 +16,7 @@ public final class ParameterRenameUnderscoreToDoubleUnderscore<N extends Variabl
   private static final long serialVersionUID = 0x28D6776DBEFFA844L;
 
   @Override public String description(final N ¢) {
-    return "Use double underscore instead of " + trivia.gist(¢);
+    return "Use double underscore instead of " + Trivia.gist(¢);
   }
 
   @Override public String description() {

@@ -31,11 +31,11 @@ public class idiomaticTest {
   }
 
   @Test public void use10() {
-    assert idiomatic.vhen(true).eval(Object::new) != null;
+    assert idiomatic.then(true).eval(Object::new) != null;
   }
 
   @Test public void use11() {
-    azzert.isNull(idiomatic.vhen(false).eval(Object::new));
+    azzert.isNull(idiomatic.then(false).eval(Object::new));
   }
 
   @Test public void use2() {

@@ -25,7 +25,7 @@ public final class LocalVariableIntializedAssignment extends $FragmentAndStateme
   private static final long serialVersionUID = 0x14812B0904DFB002L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Consolidate declaration of " + trivia.gist(¢.getName()) + " with its subsequent initialization";
+    return "Consolidate declaration of " + Trivia.gist(¢.getName()) + " with its subsequent initialization";
   }
 
   @Override public Examples examples() {

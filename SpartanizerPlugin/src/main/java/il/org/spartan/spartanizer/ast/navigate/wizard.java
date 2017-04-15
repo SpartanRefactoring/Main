@@ -452,7 +452,7 @@ public interface wizard {
    * @param n2 JD
    * @return {@code true} if the parameters are the same. */
   static boolean eq(final ASTNode n1, final ASTNode n2) {
-    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && trivia.cleanForm(n1).equals(trivia.cleanForm(n2));
+    return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && Trivia.cleanForm(n1).equals(Trivia.cleanForm(n2));
   }
 
   /** Find the first matching expression to the given boolean (b).
@@ -812,7 +812,7 @@ public interface wizard {
    * @since 15/3/2017 */
   static boolean same2(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType()
-        && tide.clean(trivia.cleanForm(n1) + "").equals(tide.clean(trivia.cleanForm(n2) + ""));
+        && tide.clean(Trivia.cleanForm(n1) + "").equals(tide.clean(Trivia.cleanForm(n2) + ""));
   }
 
   static int sequencerRank(final ASTNode ¢) {

@@ -134,7 +134,7 @@ public final class GuessedContextTest {
   }
 
   @Test public void essenceTest() {
-    azzert.that("if(b){;}throw new Exception();", is(trivia.essence("if (b) {  ;  }    throw new Exception(); ")));
+    azzert.that("if(b){;}throw new Exception();", is(Trivia.essence("if (b) {  ;  }    throw new Exception(); ")));
   }
 
   @Test public void expression() {
