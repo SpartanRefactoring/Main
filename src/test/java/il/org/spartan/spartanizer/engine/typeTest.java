@@ -24,14 +24,14 @@ import il.org.spartan.spartanizer.ast.safety.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method", "unused" })
 public final class typeTest {
-  /** Ideally this class is empty, but still {@link Ignore} d.
+  /** Ideally this class is empty, but still {@link Forget} d.
    * @author Yossi Gil */
-  // @Ignore("Under construction")
+  // @Forget("Under construction")
   public static class NotWorkingYet {
     // All test work now
   }
 
-  // @Ignore("Under construction")
+  // @Forget("Under construction")
   public static class Pending {
     // No tests are pending
   }

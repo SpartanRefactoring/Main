@@ -40,7 +40,7 @@ public class definitionTest extends MetaFixture {
     @field static final long serialVersionUID = 1;
     {
       put("@Test", null);
-      put("@Ignore", null);
+      put("@Forget", null);
       put("@Override", null);
       put("@annotation", null);
       put("@class¢", null);
@@ -122,7 +122,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a16() {
     markers().forEach(λ -> annotations.put(λ + "", λ));
-    assert annotations.get("@Ignore") != null;
+    assert annotations.get("@Forget") != null;
   }
 
   @Test @method public void a17() {
@@ -432,7 +432,7 @@ interface DummyInterface {/**/ }
 @interface try¢ {
   /**/ }
 
-@Ignore
+@org.junit.Ignore
 @class¢
 @knows("type definitionTest")
 @SuppressWarnings("ALL")

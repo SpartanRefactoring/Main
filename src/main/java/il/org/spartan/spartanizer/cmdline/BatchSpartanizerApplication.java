@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
-/** Scans files named by outputFolder, void¢ test files, and collect
+/** Scans files named by outputFolder, Forget test files, and collect
  * statistics. It does everything BatchSpartanizer does, but using the
  * {@link EventApplicator}
  * @author Matteo Orru' */

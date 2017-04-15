@@ -18,10 +18,10 @@ public class IgnoringExceptionsTest {
             " catch (  B i) {}"//
     ) //
         .using(new IgnoringExceptions(), CatchClause.class)//
-        .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){void¢();};}")//
-        .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){void¢();}")//
-        .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){void¢();}")//
-        .gives("try{A.a(b).c().d(λ->f[g++]=h(λ));}catch(B i){void¢();}")//
+        .gives("{try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){Forget();};}")//
+        .gives("try{{A.a(b).c().d(e->f[g++]=h(e));}}catch(B i){Forget();}")//
+        .gives("try{A.a(b).c().d(e->f[g++]=h(e));}catch(B i){Forget();}")//
+        .gives("try{A.a(b).c().d(λ->f[g++]=h(λ));}catch(B i){Forget();}")//
         .stays()//
     ;
   }
@@ -30,9 +30,9 @@ public class IgnoringExceptionsTest {
     trimminKof("try{ thing(); } catch(A a){}catch(B b){}")//
         .gives("try{thing();}catch(B|A a){}")//
         .using(new IgnoringExceptions(), CatchClause.class)//
-        .gives("{try{{thing();}}catch(B|A a){void¢();};}")//
-        .gives("try{{thing();}}catch(B|A a){void¢();}")//
-        .gives("try{thing();}catch(B|A a){void¢();}")//
+        .gives("{try{{thing();}}catch(B|A a){Forget();};}")//
+        .gives("try{{thing();}}catch(B|A a){Forget();}")//
+        .gives("try{thing();}catch(B|A a){Forget();}")//
         .stays();
   }
 }

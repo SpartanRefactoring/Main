@@ -102,7 +102,7 @@ public enum Files {
   }
 
   /** Get all java files contained in outputFolder recursively. <br>
-   * Heuristically, we void¢ test files.
+   * Heuristically, we Forget test files.
    * @param dirName name of directory to search in
    * @return All java files nested inside the outputFolder */
   private static Collection<File> getJavaFiles(final String dirName) {
@@ -110,7 +110,7 @@ public enum Files {
   }
 
   /** Get all java files contained in outputFolder recursively. <br>
-   * Heuristically, we void¢ test files.
+   * Heuristically, we Forget test files.
    * @param directory to search in
    * @return All java files nested inside the outputFolder */
   private static Collection<File> getJavaFiles(final File directory) {
