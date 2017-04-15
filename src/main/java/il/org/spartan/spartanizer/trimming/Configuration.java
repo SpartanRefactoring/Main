@@ -135,7 +135,7 @@ public class Configuration {
   }
 
   @SafeVarargs public final Configuration restrictTo(final Tipper<?>... ts) {
-    Stream.of(implementation).forEach(x -> x.removeIf(λ -> iz.in(λ, ts)));
+    Stream.of(implementation).filter(Objects::nonNull).forEach(x -> x.removeIf(λ -> iz.in(λ, ts)));
     return this;
   }
 
