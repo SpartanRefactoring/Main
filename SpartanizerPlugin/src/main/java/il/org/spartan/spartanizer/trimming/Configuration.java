@@ -134,12 +134,12 @@ public class Configuration {
     return get(¢.getNodeType());
   }
 
-  @SafeVarargs public final Configuration restrictTo(Tipper<?>... ts) {
+  @SafeVarargs public final Configuration restrictTo(final Tipper<?>... ts) {
     Stream.of(implementation).forEach(x -> x.removeIf(λ -> iz.in(λ, ts)));
     return this;
   }
 
-  @SafeVarargs public final <N extends ASTNode> Configuration setTo(Class<N> c, Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Configuration setTo(final Class<N> c, final Tipper<N>... ts) {
     clear().get(wizard.nodeType(c)).addAll(as.list(ts));
     return this;
   }

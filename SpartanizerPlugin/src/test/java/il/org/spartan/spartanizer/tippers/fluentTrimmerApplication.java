@@ -42,7 +42,7 @@ public class fluentTrimmerApplication extends TrimmerImplementation {
     dump.go(document.get(), "and this is its content");
     compilationUnit = guessedContext.intoCompilationUnit(document.get());
     assert compilationUnit != null;
-    createRewrite = go(compilationUnit); 
+    createRewrite = go(compilationUnit);
     assert createRewrite != null;
     textEdit = createRewrite.rewriteAST(document, null);
     assert textEdit != null;

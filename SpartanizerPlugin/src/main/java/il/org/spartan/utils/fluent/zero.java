@@ -19,5 +19,4 @@ public interface zero {
   @SuppressWarnings("unused") static int ignoringAll(final Object _1, final Object... _2) {
     return 0;
   }
-
 }

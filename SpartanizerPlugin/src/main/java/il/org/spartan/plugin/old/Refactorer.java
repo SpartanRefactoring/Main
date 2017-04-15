@@ -109,8 +109,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
    * @param targetCompilationUnits JD
    * @param helloString JD
    * @return work to be done before running the refactorer main loop */
-  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final GUITraversal __,
-      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
+  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final GUITraversal __, final List<ICompilationUnit> targetCompilationUnits,
+      final Map<attribute, Object> m) {
     return null;
   }
 
@@ -118,8 +118,8 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
    * @param targetCompilationUnits JD
    * @param helloString JD
    * @return work to be done after running the refactorer main loop */
-  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final GUITraversal __,
-      final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
+  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final GUITraversal __, final List<ICompilationUnit> targetCompilationUnits,
+      final Map<attribute, Object> m) {
     return null;
   }
 

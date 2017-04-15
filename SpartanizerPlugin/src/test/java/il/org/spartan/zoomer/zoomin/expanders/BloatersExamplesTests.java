@@ -24,12 +24,12 @@ import il.org.spartan.utils.fluent.*;
 @RunWith(Parameterized.class)
 public class BloatersExamplesTests extends ExamplesTests {
   @Override protected void ignores(final Ignores ¢) {
-    Tipper<?>[] ¢1 = { tipper };
+    final Tipper<?>[] ¢1 = { tipper };
     wrap(() -> trimminKof(¢.get()).using(¢1).stays());
   }
 
   @Override protected void converts(final Converts ¢) {
-    Tipper<?>[] ¢1 = { tipper };
+    final Tipper<?>[] ¢1 = { tipper };
     wrap(() -> trimminKof(¢.from()).using(¢1).gives(¢.to()));
   }
 

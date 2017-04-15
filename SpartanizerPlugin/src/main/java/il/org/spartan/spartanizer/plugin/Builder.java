@@ -77,7 +77,7 @@ public final class Builder extends IncrementalProjectBuilder {
   }
 
   private static void addMarkers(final IResource f, final CompilationUnit u) throws CoreException {
-    Trimmer s = new TrimmerImplementation();
+    final Trimmer s = new TrimmerImplementation();
     s.useProjectPreferences();
     for (final Tip ¢ : s.collectTips(u)) // NANO
       if (¢ != null)

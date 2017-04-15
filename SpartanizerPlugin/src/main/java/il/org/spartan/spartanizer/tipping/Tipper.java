@@ -111,23 +111,23 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
-  public static <N extends ASTNode> Tipper<N> materialize(IMarker $) {
+  public static <N extends ASTNode> Tipper<N> materialize(final IMarker $) {
     if ($.getResource() == null)
       return null;
-    Object o = getKey($);
+    final Object o = getKey($);
     if (o == null)
       return null¢.ignoringAll(note.bug("Missing attribute"));
     if (!(o instanceof Class))
       return null¢.ignoringAll(note.bug("Attribute of wrong type"));
-    Class<?> clazz = (Class<?>) o;
+    final Class<?> clazz = (Class<?>) o;
     @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> tipperClass = (Class<? extends Tipper<N>>) clazz;
     return Tipper.instantiate(tipperClass);
   }
 
-  private static Object getKey(IMarker $) {
+  private static Object getKey(final IMarker $) {
     try {
       return $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
-    } catch (CoreException ¢) {
+    } catch (final CoreException ¢) {
       return note.bug(¢);
     }
   }
@@ -141,5 +141,4 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   private Class<N> myOperandsClass;
-
 }

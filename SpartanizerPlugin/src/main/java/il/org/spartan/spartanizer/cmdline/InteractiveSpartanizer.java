@@ -35,7 +35,6 @@ public class InteractiveSpartanizer {
     return $;
   }
 
-
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     traversals.trimmer.configuration.disable(¢);
     return this;
@@ -46,7 +45,9 @@ public class InteractiveSpartanizer {
    * @return trimmed text */
   public String fixedPoint(final String from) {
     return traversals.fixed(from + "");
-  }public String fixedPoint(final ASTNode from) {
+  }
+
+  public String fixedPoint(final ASTNode from) {
     return traversals.fixed(from + "");
   }
 
@@ -70,5 +71,4 @@ public class InteractiveSpartanizer {
     traversals.trimmer.configuration.add(i, ts);
     return this;
   }
-
 }

@@ -41,7 +41,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   }
 
   public int apply(final WrappedCompilationUnit u) {
-    TextFileChange textChange = init(u);
+    final TextFileChange textChange = init(u);
     final CompilationUnit compilationUnit = u.build().compilationUnit;
     final ASTRewrite r = go(compilationUnit);
     try {
@@ -212,11 +212,11 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       final TextFileChange textChange = new TextFileChange($.getElementName(), (IFile) $.getResource());
       textChange.setTextType("java");
       final IProgressMonitor m = eclipse.newSubMonitor(getProgressMonitor());
-      ASTParser parser = make.COMPILATION_UNIT.parser($);
-      ASTNode createAST = parser.createAST(m);
-      CompilationUnit createAST2 = (CompilationUnit) createAST;
+      final ASTParser parser = make.COMPILATION_UNIT.parser($);
+      final ASTNode createAST = parser.createAST(m);
+      final CompilationUnit createAST2 = (CompilationUnit) createAST;
       final CompilationUnit ¢ = createAST2;
-      ASTRewrite createRewrite = go(¢);
+      final ASTRewrite createRewrite = go(¢);
       textChange.setEdit(createRewrite.rewriteAST());
       if (textChange.getEdit().getLength() != 0)
         textChange.perform(getProgressMonitor());
@@ -253,7 +253,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return self(() -> progressMonitor = ¢);
   }
 
-  public void setSelection(AbstractSelection<?> ¢) {
+  public void setSelection(final AbstractSelection<?> ¢) {
     setSelection(¢ == null || ¢.textSelection == null ? null : ¢.textSelection);
   }
 
@@ -284,7 +284,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return az.compilationUnit(makeAST.COMPILATION_UNIT.from(¢, getProgressMonitor()));
   }
 
-  private ASTRewrite computeRewrite(CompilationUnit ¢) {
+  private ASTRewrite computeRewrite(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
     final ASTRewrite $ = trimmer.go(¢);
@@ -399,7 +399,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   }
 
   private TextFileChange textFileChange() {
-    TextFileChange $ = new TextFileChange(compilationUnitName(), compilationUnitIFile());
+    final TextFileChange $ = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     $.setTextType("java");
     return $;
   }

@@ -9,15 +9,10 @@ import java.util.function.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.ltk.ui.refactoring.*;
-import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.plugin.old.*;
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.fluent.*;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
@@ -30,16 +25,17 @@ import il.org.spartan.utils.fluent.*;
 public final class QuickFixer implements IMarkerResolutionGenerator {
   @Override public IMarkerResolution[] getResolutions(final IMarker __) {
     return new IMarkerResolution[] { //
-        quickFix("Apply",
-            λ -> new BatchApplicator().defaultSettings().setPasses(1).selection(Selection.Util.by(λ)).go()), //
+        quickFix("Apply", λ -> new BatchApplicator().defaultSettings().setPasses(1).selection(Selection.Util.by(λ)).go()), //
         // applyPreview, //
         // laconizeFile, //
         quickFix("Spartanize function", λ -> applicator(λ).selection(Selection.Util.expand(λ, MethodDeclaration.class)).go()), //
         quickFix("Spartanize class", λ -> applicator(λ).selection(Selection.Util.expand(λ, AbstractTypeDeclaration.class)).go()), //
         // singleTipperFunction, //
-        quickFix("Apply to compilation unit", λ -> applicator(λ).restrictTo(Tipper.materialize(λ)).selection(Selection.Util.getCurrentCompilationUnit(λ)).go()), //
+        quickFix("Apply to compilation unit",
+            λ -> applicator(λ).restrictTo(Tipper.materialize(λ)).selection(Selection.Util.getCurrentCompilationUnit(λ)).go()), //
         quickFix("Apply to entire project",
-            λ -> SpartanizationHandler.applicator().restrictTo(Tipper.materialize(λ)).manyPasses().selection(Selection.Util.getAllCompilationUnit(λ)).go()), //
+            λ -> SpartanizationHandler.applicator().restrictTo(Tipper.materialize(λ)).manyPasses().selection(Selection.Util.getAllCompilationUnit(λ))
+                .go()), //
         quickFix("Disable tip", DisableTipper::disable), //
         fixers.disableFunctionFix(), //
         fixers.disableClassFix(), //
