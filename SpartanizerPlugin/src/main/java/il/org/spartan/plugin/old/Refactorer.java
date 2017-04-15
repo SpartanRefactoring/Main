@@ -178,7 +178,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return false;
   }
 
-  private IRunnableWithProgress runnable(final Selection s, final GUITraversal a, final Map<attribute, Object> m) {
+  private IRunnableWithProgress runnable(final Selection s, final GUITraversal t, final Map<attribute, Object> m) {
     return pm -> {
       final int $ = passesCount();
       int pass, totalTips = 0;
@@ -194,10 +194,10 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
           if (pm.isCanceled())
             break;
           pm.subTask(getProgressMonitorSubMessage(currentCompilationUnits, u));
-          final int tipsCommited = a.run(u, s.textSelection);
+          final int tipsCommited = t.run(u, s.textSelection);
           totalTips += tipsCommited;
           (tipsCommited == 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
-          (a.run(u, s.textSelection) != 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
+          (t.run(u, s.textSelection) != 0 ? doneCompilationUnits : modifiedCompilationUnits).add(u);
           pm.worked(1);
         }
       }
