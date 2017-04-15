@@ -149,7 +149,7 @@ public class BatchApplicator extends Applicator {
   /** Default settings for all {@link Applicator} components.
    * @return {@code this} applicator */
   public BatchApplicator defaultSettings() {
-    return defaultListenerSilent().fewPasses().defaultRunContext().defaultSelection() .defaultOperationName();
+    return defaultListenerSilent().fewPasses().defaultRunContext().defaultSelection().defaultOperationName();
   }
 
   /** Factory method.

@@ -92,7 +92,7 @@ public abstract class Tip {
         ", c=" + namer.lastComponent(tipperClass + "") + "]";
   }
 
-  public void intoMarker(IMarker $) {
+  public void intoMarker(final IMarker $) {
     try {
       $.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
       $.setAttribute(Builder.SPARTANIZATION_TIPPER_KEY, tipperClass);
@@ -103,7 +103,7 @@ public abstract class Tip {
       $.setAttribute(Builder.SPARTANIZATION_CHAR_END, getSpartanizationCharEnd());
       $.setAttribute(IMarker.TRANSIENT, false);
       $.setAttribute(IMarker.LINE_NUMBER, lineNumber);
-    } catch (CoreException ¢) {
+    } catch (final CoreException ¢) {
       note.bug(¢);
     }
   }

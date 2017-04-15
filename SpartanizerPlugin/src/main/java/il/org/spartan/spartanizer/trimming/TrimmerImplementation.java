@@ -27,14 +27,13 @@ import il.org.spartan.utils.fluent.*;
  * @since 2015/07/10 */
 public class TrimmerImplementation extends Trimmer {
   /** Instantiates this class */
-
   public ASTRewrite bottomUp(final CompilationUnit u) {
     setCompilationUnit(u);
     final Tips tips = Tips.empty();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
-        if (wizard.disjoint(¢,getRange()))
+        if (wizard.disjoint(¢, getRange()))
           return false;
         if (!check(¢) || disabling.on(¢))
           return true;
@@ -93,7 +92,7 @@ public class TrimmerImplementation extends Trimmer {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
-        if (wizard.disjoint(¢,getRange()))
+        if (wizard.disjoint(¢, getRange()))
           return false;
         if (!check(¢) || disabling.on(¢))
           return true;
@@ -101,7 +100,7 @@ public class TrimmerImplementation extends Trimmer {
         if (tip() == null)
           return true;
         for (final Tip t : tips)
-          if ((setAuxiliaryTip(t)) != null && Tip.overlap(t.span, tip().span)) {
+          if (setAuxiliaryTip(t) != null && Tip.overlap(t.span, tip().span)) {
             notify.tipPrune();
             return false;
           }
@@ -163,5 +162,4 @@ public class TrimmerImplementation extends Trimmer {
     if (¢ != null)
       notify.tipperTip();
   }
-
 }
