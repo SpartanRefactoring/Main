@@ -30,7 +30,7 @@ public class Issue0905 {
         .gives("if(a){d(); int b=5;}") //
         .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("if(a){d();}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("if(a)d();") //
         .stays() //
     ;

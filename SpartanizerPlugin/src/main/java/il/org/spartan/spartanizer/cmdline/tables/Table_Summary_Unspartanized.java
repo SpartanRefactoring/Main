@@ -16,7 +16,7 @@ public class Table_Summary_Unspartanized extends Table_Summary {
   static {
     nanonizer.removeSpartanizerTippers();
     nanonizer.add(Block.class, //
-        new BlockSingleton(), //
+        new BlockSingletonEliminate(), //
         null);
   }
 

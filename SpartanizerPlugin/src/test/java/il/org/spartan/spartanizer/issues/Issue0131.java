@@ -81,7 +81,7 @@ public final class Issue0131 {
             .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d){b+=9;break;}h+=15;break;}return g;}") //
             .using(new IfStatementBlockSequencerBlockSameSequencer(), IfStatement.class) //
             .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d){b+=9;}else{h+=15;}break;}return g;}") //
-            .using(new BlockSingleton(), Block.class) //
+            .using(new BlockSingletonEliminate(), Block.class) //
             .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d)b+=9;else h+=15;break;}return g;}") //
             .stays() //
     ;
