@@ -156,7 +156,7 @@ public class FileTestUtils {
         }
     }
 
-    abstract Object[] makeCase(GUITraversal a, File d, File f, String name);
+    abstract Object[] makeCase(GUITraversal t, File d, File f, String name);
   }
 
   /* Auxiliary function for test suite inherited classes */

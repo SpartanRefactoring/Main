@@ -8,7 +8,7 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
@@ -25,8 +25,8 @@ enum CollectClassMetrics {
   }
 
   static CompilationUnit spartanize(final CompilationUnit u) {
-    final Traversal t = new TraversalImplementation();
-    t.go(u);
+    final TextualTraversals t = new TextualTraversals();
+    t.once(u);
     return u;
   }
 

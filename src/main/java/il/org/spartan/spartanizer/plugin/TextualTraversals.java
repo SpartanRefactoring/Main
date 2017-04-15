@@ -24,33 +24,34 @@ public class TextualTraversals {
       });
 
   public String fixed(final String from) {
-    for (final IDocument $ = new Document(from);;)
-      if (fixed(once($)))
+    int n = 0;
+    for (IDocument $ = new Document(from), to;; $ = to) {
+      to = once($);
+      if (to == null || ++n > 20)
         return $.get();
+    }
+  }
+
+  public String once(final ASTNode n) {
+    return once(n + "");
   }
 
   /** Performs one spartanization iteration
    * @param d JD
    * @return
    * @throws AssertionError */
-  public TextEdit once(final IDocument d) throws AssertionError {
+  public IDocument once(final IDocument d) throws AssertionError {
     try {
       final TextEdit $ = traversal.go((CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get())).rewriteAST(d, null);
       $.apply(d);
-      return $;
-    } catch (final NullPointerException | MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      return $.getChildren().length == 0 ? null : d;
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       return note.bug(this, ¢);
     }
   }
 
   public String once(final String from) {
     final IDocument $ = new Document(from);
-    once($);
-    return $.get();
-  }
-
-  /** return if got to fixed point of code */
-  private static boolean fixed(final TextEdit ¢) {
-    return !¢.hasChildren();
+    return once($).get();
   }
 }
