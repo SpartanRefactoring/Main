@@ -34,29 +34,27 @@ public abstract class Tip {
   private static Range range(final Range r, final ASTNode... ns) {
     Range $ = r;
     for (final ASTNode ¢ : ns)
-      $ = $.merge(range(¢));
+      $ = $.merge(wizard.range(¢));
     return $;
   }
 
-  static Range range(final ASTNode ¢) {
-    final int $ = ¢.getStartPosition();
-    return new Range($, $ + ¢.getLength());
+  public <N1 extends ASTNode, N2 extends ASTNode> Tip(//
+      final String description, //
+      final Class<? extends Tipper<N1>> tipperClass, //
+      final N2 center) {
+    this(description, tipperClass, containing.compilationUnit(center), wizard.range(center));
   }
 
-  public <N1 extends ASTNode, N2 extends ASTNode> Tip(final String description, //
-      final Class<? extends Tipper<N1>> tipperClass, //
-      final N2 highlight) {
+  public <N extends ASTNode> Tip(final String description, final Class<? extends Tipper<N>> tipperClass, final CompilationUnit u, final Range highlight) {
     this.description = description;
     this.tipperClass = tipperClass;
-    span = range(this.highlight = range(highlight)); // Ensure two distinct
-    final CompilationUnit compilationUnit = yieldAncestors.untilClass(CompilationUnit.class).from(highlight);
-    lineNumber = compilationUnit == null ? -1 : compilationUnit.getLineNumber(highlight.getStartPosition());
+    span = range(this.highlight = highlight); // Ensure two distinct ranges
+    lineNumber = u == null ? -1 : u.getLineNumber(highlight.from);
   }
 
   /** Instantiates this class
    * @param description a textual description of the changes described by
-   *        thisinstance
-   * @param spartanizationRange the node on which change is to be carried out
+   *        this instance
    * @param highlight the node on which change is to be marked
    * @param ns additional nodes, defining the scope of this action. */
   public <N1 extends ASTNode, N2 extends ASTNode> Tip(final String description, //
