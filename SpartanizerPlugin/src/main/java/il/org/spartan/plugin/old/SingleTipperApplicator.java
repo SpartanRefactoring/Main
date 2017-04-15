@@ -196,7 +196,7 @@ public final class SingleTipperApplicator {
     protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode b) {
       b.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N n) {
-          if (disabling.on(n) || !w.myAbstractOperandsClass().isInstance(n))
+          if (disabling.on(n) || !w.getAbstractOperandClass().isInstance(n))
             return true;
           Configurations.all();
           @SuppressWarnings("unchecked") final Tipper<N> x = Tippers.findTipper(n, w);
@@ -217,7 +217,7 @@ public final class SingleTipperApplicator {
     @Override protected <N extends ASTNode> boolean go(final N n) {
       if (doneTraversing)
         return false;
-      if (eclipse.facade.isNodeOutsideMarker(n, marker))
+      if (wizard.disjoint(n, marker))
         return true;
       final Tipper<N> t = Configurations.all().firstTipper(n);
       if (t != null)

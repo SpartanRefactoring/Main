@@ -71,7 +71,7 @@ public class FileTestUtils {
     return $;
   }
 
-  private static GUIConfigurationApplicator error(final String message, final Class<?> c, final Throwable t) {
+  private static GUITraversal error(final String message, final Class<?> c, final Throwable t) {
     System.err.println(message + " '" + c.getCanonicalName() + "' " + t.getMessage());
     return null;
   }
@@ -100,16 +100,16 @@ public class FileTestUtils {
     return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
 
-  static GUIConfigurationApplicator makeApplicator(final File ¢) {
+  static GUITraversal makeApplicator(final File ¢) {
     return makeApplicator(¢.getName());
   }
 
-  static GUIConfigurationApplicator makeApplicator(final String folderForClass) {
+  static GUITraversal makeApplicator(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     assert c != null;
     final Object $ = getInstance(c);
     assert $ != null;
-    return (GUIConfigurationApplicator) $;
+    return (GUITraversal) $;
   }
 
   /** Makes an Output file out of a Test file */
@@ -156,7 +156,7 @@ public class FileTestUtils {
         }
     }
 
-    abstract Object[] makeCase(GUIConfigurationApplicator a, File d, File f, String name);
+    abstract Object[] makeCase(GUITraversal a, File d, File f, String name);
   }
 
   /* Auxiliary function for test suite inherited classes */

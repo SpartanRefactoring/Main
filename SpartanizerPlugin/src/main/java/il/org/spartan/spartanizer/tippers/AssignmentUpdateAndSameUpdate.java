@@ -57,6 +57,6 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
 
   private static Operator unifying(final Assignment ¢) {
     final Operator $ = wizard.assign2infix(¢.getOperator());
-    return $ == MINUS2 ? PLUS2 : $ == DIVIDE ? TIMES : $;
+    return $ == op.MINUS2 ? op.PLUS2 : $ == DIVIDE ? TIMES : $;
   }
 }

@@ -155,21 +155,15 @@ public final class SingleFlater {
     return $;
   }
 
-  /** @param ¢ JD
-   * @return true iff node is inside predeclared range */
-  @Deprecated boolean inRange(final ASTNode ¢) {
-    final int $ = ¢.getStartPosition();
-    return textSelection == null || $ >= textSelection.getOffset() && $ < textSelection.getLength() + textSelection.getOffset();
-  }
 
-  /** @param startChar1 - starting char of first interval
+  /** @param from1 - starting char of first interval
    * @param lenth1 - length of first interval
-   * @param startChar2 - starting char of second interval
+   * @param from2 - starting char of second interval
    * @param length2 - length of second interval SPARTANIZED - should use Bloater
    *        one day to understand it */
-  static boolean intervalsIntersect(final int startChar1, final int length1, final int startChar2, final int length2) {
-    return length1 != 0 && length2 != 0 && (startChar1 < startChar2 ? length1 + startChar1 > startChar2
-        : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
+  static boolean intervalsIntersect(final int from1, final int length1, final int from2, final int length2) {
+    return length1 != 0 && length2 != 0 && (from1 < from2 ? from1 + length1 > from2
+        : from1 != from2 ? from2 + length2 > from1 : length1 > 0 && length2 > 0);
   }
 
   private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextEdit te, final WindowInformation i)

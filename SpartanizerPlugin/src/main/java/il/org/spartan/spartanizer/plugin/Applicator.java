@@ -17,7 +17,7 @@ public abstract class Applicator {
    * will run in this context, thus supporting tracking and monitoring. */
   private Consumer<Runnable> runContext;
   /** The modification process for each {@link ICU} in {@link Selection}. May
-   * activate, for instance, a {@link GUIConfigurationApplicator}. The return
+   * activate, for instance, a {@link GUITraversal}. The return
    * value determines whether the compilation unit should continue to the next
    * pass or not. */
   private Function<WrappedCompilationUnit, Integer> runAction;
@@ -50,7 +50,7 @@ public abstract class Applicator {
   /** Determines run context for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  public Applicator runContext(final Consumer<Runnable> ¢) {
+  public Applicator setContext(final Consumer<Runnable> ¢) {
     runContext = ¢;
     return this;
   }
@@ -76,7 +76,7 @@ public abstract class Applicator {
   /** Determines number of iterations for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  public Applicator passes(final int ¢) {
+  public Applicator setPasses(final int ¢) {
     passes = ¢;
     return this;
   }

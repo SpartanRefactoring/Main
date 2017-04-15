@@ -6,9 +6,12 @@ import java.io.*;
 import java.lang.reflect.*;
 import java.lang.reflect.Modifier;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Examples.*;
 import il.org.spartan.utils.fluent.*;
@@ -65,12 +68,12 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
 
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the type of the node. */
-  public final Class<N> myAbstractOperandsClass() {
+  public final Class<N> getAbstractOperandClass() {
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
 
   public Class<N> myActualOperandsClass() {
-    final Class<N> $ = myAbstractOperandsClass();
+    final Class<N> $ = getAbstractOperandClass();
     return !isAbstract($.getModifiers()) ? $ : null;
   }
 
@@ -108,5 +111,35 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
 
+  public static <N extends ASTNode> Tipper<N> materialize(IMarker $) {
+    if ($.getResource() == null)
+      return null;
+    Object o = getKey($);
+    if (o == null)
+      return null¢.ignoringAll(note.bug("Missing attribute"));
+    if (!(o instanceof Class))
+      return null¢.ignoringAll(note.bug("Attribute of wrong type"));
+    Class<?> clazz = (Class<?>) o;
+    @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> tipperClass = (Class<? extends Tipper<N>>) clazz;
+    return Tipper.instantiate(tipperClass);
+  }
+
+  private static Object getKey(IMarker $) {
+    try {
+      return $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
+    } catch (CoreException ¢) {
+      return note.bug(¢);
+    }
+  }
+
+  public static <X extends ASTNode, T extends Tipper<X>> Tipper<X> instantiate(final Class<T> $) {
+    try {
+      return $.newInstance();
+    } catch (InstantiationException | IllegalAccessException ¢) {
+      return note.bug(¢);
+    }
+  }
+
   private Class<N> myOperandsClass;
+
 }

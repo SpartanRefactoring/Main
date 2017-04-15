@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
@@ -23,7 +24,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
   private static InfixExpression replace(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
     lisp2.swap($, 0, 1);
-    return subject.operands($).to(wizard.PLUS2);
+    return subject.operands($).to(op.PLUS2);
   }
 
   @Override public String description(final InfixExpression ¢) {

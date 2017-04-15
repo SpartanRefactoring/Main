@@ -7,7 +7,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
@@ -16,10 +16,10 @@ import il.org.spartan.utils.fluent.*;
  * @since 2017-04-01 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Issue1190 {
-  Trimmer trimmer;
+  TextualTrimmer trimmer;
 
   @Before public void setUp() {
-    trimmer = new TrimmerImplementation(Configurations.all());
+    trimmer = new TextualTrimmer(); 
   }
 
   @Test(timeout = 30000) public void runTheSpartinizerOnItself() {

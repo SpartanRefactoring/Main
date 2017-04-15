@@ -14,8 +14,7 @@ import org.eclipse.ui.ide.*;
 import org.eclipse.ui.progress.*;
 
 import il.org.spartan.plugin.old.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;
 
@@ -34,7 +33,7 @@ public class SpartanMovie extends AbstractHandler {
     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
     final IWorkbenchPage page = window == null ? null : window.getActivePage();
     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
-    final TrimmerImplementation trimmerImplementation = new TrimmerImplementation();
+    final GUITraversal traversal = new GUITraversal();
     if (compilationUnits == null || page == null || progressService == null)
       return null;
     try {
@@ -58,7 +57,7 @@ public class SpartanMovie extends AbstractHandler {
               IDE.openEditor(page, marker, true);
               refresh(page);
               sleep(SLEEP_BETWEEN);
-              trimmerImplementation.runAsMarkerFix(marker);
+              traversal.runAsMarkerFix(marker);
               ++changes;
               marker.delete(); // TODO Ori Roth: does not seem to make a
                                // difference
@@ -104,7 +103,7 @@ public class SpartanMovie extends AbstractHandler {
 
   private static List<ICompilationUnit> getCompilationUnits() {
     try {
-      return eclipse.compilationUnits(eclipse.currentCompilationUnit(), wizard.nullProgressMonitor);
+      return eclipse.compilationUnits(eclipse.currentCompilationUnit(), op.nullProgressMonitor);
     } catch (final JavaModelException ¢) {
       note.bug(¢);
       return new ArrayList<>();

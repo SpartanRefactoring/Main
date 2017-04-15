@@ -30,7 +30,7 @@ public class Issue1153 {
     assert c != null;
     final FieldInitializedSerialVersionUIDToHexadecimal x = new FieldInitializedSerialVersionUIDToHexadecimal();
     assert x != null;
-    final Configuration configuration = new Configuration();
+    final Configuration configuration = Configurations.allClone();
     assert configuration != null;
     configuration.add(c, x);
   }

@@ -47,7 +47,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     if ($.size() == 1)
       return !iz.literal0(first) ? first : make.minus(first($));
     assert $.size() >= 2;
-    return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(MINUS2);
+    return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(op.MINUS2);
   }
 
   @Override public String description(final InfixExpression ¢) {

@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Concat some strings to one string {@code
@@ -31,7 +32,7 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
   }
 
   @Override public ASTNode replacement(final InfixExpression x) {
-    if (x.getOperator() != wizard.PLUS2)
+    if (x.getOperator() != op.PLUS2)
       return null;
     final List<Expression> $ = extract.allOperands(x);
     assert $.size() >= 2;
@@ -50,6 +51,6 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
     if (clean)
       return null;
     assert !$.isEmpty();
-    return $.size() <= 1 ? first($) : subject.operands($).to(wizard.PLUS2);
+    return $.size() <= 1 ? first($) : subject.operands($).to(op.PLUS2);
   }
 }

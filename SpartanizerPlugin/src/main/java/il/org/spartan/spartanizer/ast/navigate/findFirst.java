@@ -106,7 +106,7 @@ public interface findFirst {
       @Override public boolean visit(final InfixExpression ¢) {
         if ($.get() != null)
           return false;
-        if (¢.getOperator() != PLUS2)
+        if (¢.getOperator() != op.PLUS2)
           return true;
         $.set(¢);
         return false;

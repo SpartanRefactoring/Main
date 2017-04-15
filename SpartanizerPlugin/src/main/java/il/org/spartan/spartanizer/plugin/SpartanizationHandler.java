@@ -14,7 +14,6 @@ import org.eclipse.jface.dialogs.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
@@ -29,7 +28,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     final BatchApplicator a = applicator().defaultSelection();
-    a.passes(a.selection().textSelection != null ? 1 : PASSES);
+    a.setPasses(a.selection().textSelection != null ? 1 : PASSES);
     a.go();
     return null;
   }
@@ -39,7 +38,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
   }
 
   @Override public void run(final IMarker ¢) {
-    applicator().passes(1).selection(Selection.Util.by(¢)).go();
+    applicator().setPasses(1).selection(Selection.Util.by(¢)).go();
   }
 
   public static BatchApplicator applicator() {
@@ -50,9 +49,8 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @return applicator for this handler */
   public static BatchApplicator applicator(final English.Activity activityNamer) {
     final BatchApplicator $ = new BatchApplicator();
-    final TrimmerImplementation t = new TrimmerImplementation();
     final ProgressMonitorDialog d = Dialogs.progress(false);
-    $.runContext(r -> {
+    $.setContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
       } catch (final InvocationTargetException ¢) {
@@ -61,7 +59,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         note.cancel(¢);
       }
     });
-    $.defaultRunAction(t);
     $.listener(new Listener() {
       static final int DIALOG_CREATION = 1;
       static final int DIALOG_PROCESSING = 2;
@@ -124,7 +121,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
    * @return applicator for this handler */
   @Deprecated @SuppressWarnings("deprecation") public static BatchApplicator applicatorMapper() {
     final BatchApplicator $ = new BatchApplicator();
-    final TrimmerImplementation t = new TrimmerImplementation();
     final ProgressMonitorDialog d = Dialogs.progress(false);
     final Bool openDialog = new Bool();
     $.listener(EventMapper.empty(event.class).expand(EventMapper.recorderOf(event.visit_cu).rememberBy(WrappedCompilationUnit.class).does((__, ¢) -> {
@@ -161,7 +157,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
                 + " with " + unknownIfNull((Collection<?>) ¢.get(event.visit_cu), λ -> Integer.valueOf(λ.size())) + " files in "
                 + plurales("pass", (Int) ¢.get(event.run_pass))).open();
         })));
-    $.runContext(r -> {
+    $.setContext(r -> {
       try {
         d.run(true, true, __ -> r.run());
       } catch (final InvocationTargetException ¢) {
@@ -170,7 +166,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         note.cancel(¢);
       }
     });
-    $.defaultRunAction(t);
     return $;
   }
 

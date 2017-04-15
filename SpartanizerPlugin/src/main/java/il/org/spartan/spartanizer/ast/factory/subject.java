@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
@@ -264,7 +265,7 @@ public enum subject {
       final InfixExpression $ = ast.newInfixExpression();
       $.setOperator(¢);
       $.setLeftOperand(make.plant(left).intoLeft($));
-      $.setRightOperand(¢ != wizard.PLUS2 ? make.plant(right).into($)
+      $.setRightOperand(¢ != op.PLUS2 ? make.plant(right).into($)
           : !precedence.greater($, right)
               && (!precedence.equal($, right) || !type.isNotString(left) && !make.PlantingExpression.isStringConactingSafe(right))
               && !iz.simple(right) ? subject.operand(right).parenthesis() : right);
