@@ -36,10 +36,9 @@ public class InteractiveSpartanizer {
     return $;
   }
 
-  private Configuration configuration = Configurations.all();
 
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
-    configuration().disable(¢);
+    traversals.trimmer.configuration.disable(¢);
     return this;
   }
 
@@ -47,54 +46,31 @@ public class InteractiveSpartanizer {
    * @param from what to process
    * @return trimmed text */
   public String fixedPoint(final String from) {
-    final TextualTrimmer $ = new TextualTrimmer();
-    $.trimmer.setCurrentConfiguration(configuration);
-    return $.fixed(from + "");
-  }
-
+    return traversals.fixed(from + "");
+  }@SuppressWarnings("static-method")
   public String fixedPoint(final ASTNode from) {
-    final TextualTrimmer $ = new TextualTrimmer();
-    $.trimmer.setCurrentConfiguration(configuration);
-    return $.fixed(from + "");
+    return traversals.fixed(from + "");
   }
 
   public String once(final String from) {
-    final TextualTrimmer $ = new TextualTrimmer();
-    $.trimmer.setCurrentConfiguration(configuration);
-    return $.once(from);
+    return traversals.once(from);
   }
 
-  boolean changed;
+  public final TextualTraversals traversals = new TextualTraversals();
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
-    if (!changed)
-      this.setConfiguration(Configurations.allClone());
-    changed = true;
-    configuration().add(c, ts);
+    traversals.trimmer.configuration.add(c, ts);
     return this;
   }
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
-    if (!changed)
-      this.setConfiguration(Configurations.allClone());
-    changed = true;
-    configuration().remove(c, ts);
+    traversals.trimmer.configuration.remove(c, ts);
     return this;
   }
 
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer adxd(final Integer i, final Tipper<N>... ts) {
-    if (!changed)
-      this.setConfiguration(Configurations.allClone());
-    changed = true;
-    configuration().add(i, ts);
+    traversals.trimmer.configuration.add(i, ts);
     return this;
   }
 
-  public Configuration configuration() {
-    return configuration;
-  }
-
-  public void setConfiguration(Configuration ¢) {
-    this.configuration = ¢;
-  }
 }

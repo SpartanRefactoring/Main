@@ -114,7 +114,7 @@ enum CollectMetrics {
   }
 
   private static CompilationUnit spartanize(final String javaCode) {
-    final String $ = new TextualTrimmer().fixed(javaCode);
+    final String $ = new TextualTraversals().fixed(javaCode);
     output.put("Characters", $.length());
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);
   }
