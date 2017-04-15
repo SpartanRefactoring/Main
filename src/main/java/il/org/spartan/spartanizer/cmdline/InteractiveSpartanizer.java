@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.trimming.*;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil
@@ -47,8 +46,7 @@ public class InteractiveSpartanizer {
    * @return trimmed text */
   public String fixedPoint(final String from) {
     return traversals.fixed(from + "");
-  }@SuppressWarnings("static-method")
-  public String fixedPoint(final ASTNode from) {
+  }public String fixedPoint(final ASTNode from) {
     return traversals.fixed(from + "");
   }
 

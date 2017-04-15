@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.spartanizer.trimming.*;
 
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch
