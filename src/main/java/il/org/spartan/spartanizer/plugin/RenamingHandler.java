@@ -5,8 +5,8 @@ import org.eclipse.core.commands.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.bloater.collateral.*;
 
-/** Handler for the Renamig thesis of Dor. Uses {@link BloaterGUIApplicator} as an
- * {@link Applicator} and {@link Augmenter} as an {@link Application}.
+/** Handler for the Renamig thesis of Dor. Uses {@link BloaterGUIApplicator} as
+ * an {@link Applicator} and {@link Augmenter} as an {@link Application}.
  * @author Dor Ma'ayan
  * @since Apr 4, 2017 */
 public class RenamingHandler extends AbstractHandler {

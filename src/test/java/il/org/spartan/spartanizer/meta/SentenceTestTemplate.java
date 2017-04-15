@@ -90,7 +90,8 @@ public enum SentenceTestTemplate {
     @Parameter(2) @SuppressWarnings("CanBeFinal") public MethodDeclaration _2second;
 
     @Test public void chagesTo() {
-      final String peeled = WrapIntoComilationUnit.Method.off(trim.apply(traversal, WrapIntoComilationUnit.Method.on(firstBody()))), to = secondBody();
+      final String peeled = WrapIntoComilationUnit.Method.off(trim.apply(traversal, WrapIntoComilationUnit.Method.on(firstBody()))),
+          to = secondBody();
       if (!to.equals(peeled))
         azzert.that(trivia.essence(peeled), is(trivia.essence(to)));
     }
