@@ -45,11 +45,11 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf($).in(body).isEmpty())
       return null;
     final SimpleName ¢ = newCurrent(s);
-    return new Tip(description(s), myClass(), s, body) {
+    return new Tip(description(s), myClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, s, r, g);
       }
-    };
+    }.spanning(s);
   }
 
   public static SimpleName newCurrent(final EnhancedForStatement ¢) {

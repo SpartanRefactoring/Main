@@ -63,7 +63,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
   }
 
   protected Range start() {
-    return new Range(current.getStartPosition(), current.getStartPosition() + 2);
+    return new Range(current.getStartPosition(), current.getStartPosition() + 1);
   }
 
   protected ASTNode highlight() {

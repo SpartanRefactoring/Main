@@ -43,7 +43,7 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
         .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(s, "result")) && !in(λ.getName().getIdentifier(), "result")
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
-    return $.isEmpty() ? null : new Tip("Rename parameters", getClass(), s) {
+    return $.isEmpty() ? null : new Tip("Verbosify parameter names", getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final VariableDeclarationFragment ss : $)
           action.rename(ss.getName(),

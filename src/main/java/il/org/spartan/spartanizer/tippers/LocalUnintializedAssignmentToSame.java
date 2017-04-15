@@ -37,7 +37,7 @@ public final class LocalUnintializedAssignmentToSame extends $FragmentAndStateme
     if (initializer != null)
       return null;
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.eq(n, to(a)) || Fragment.doesUseForbiddenSiblings(f, from(a)))
+    if (a == null || !wizard.eq(n, to(a)) || FragmentPattern.doesUseForbiddenSiblings(f, from(a)))
       return null;
     $.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
     $.remove(containing.statement(a), g);
