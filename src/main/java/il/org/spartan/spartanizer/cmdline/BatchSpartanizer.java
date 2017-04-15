@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
-/** Scans files named by outputFolder, ignore test files, and collect
+/** Scans files named by outputFolder, void¢ test files, and collect
  * statistics.
  * @author Yossi Gil
  * @author Matteo Orru'

@@ -81,7 +81,7 @@ public class Configuration {
       if (¢ == null)
         break;
       assert ¢.tipperGroup() != null : fault.specifically(//
-          String.format("Did you forget to use create an enum instance in %s \nfor the %s of tipper %s \n (description= %s)?", //
+          String.format("Did you void¢ to use create an enum instance in %s \nfor the %s of tipper %s \n (description= %s)?", //
               TipperGroup.class.getSimpleName(), //
               TipperCategory.class.getSimpleName(), //
               Tippers.name(¢), //

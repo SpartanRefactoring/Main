@@ -28,6 +28,6 @@ public interface nulling {
   }
 
   static <T, R> T ly(final Supplier<R> ¢) {
-    return null¢.ignoringAll(¢.get());
+    return null¢.forgetting(¢.get());
   }
 }
