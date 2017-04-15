@@ -6,6 +6,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
+import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -97,7 +98,8 @@ public class Configuration {
       get(nodeType).remove(¢);
     return this;
   }
-public Collection<Tipper<? extends ASTNode>> getAllTippers() {
+
+  public Collection<Tipper<? extends ASTNode>> getAllTippers() {
     final Collection<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
@@ -132,14 +134,18 @@ public Collection<Tipper<? extends ASTNode>> getAllTippers() {
     return get(¢.getNodeType());
   }
 
-  @SafeVarargs public final  Configuration restrictTo(Tipper<?> ...ts) {
-    Stream.of(implementation).forEach(x -> x.removeIf(λ -> iz.in(λ,ts)));
+  @SafeVarargs public final Configuration restrictTo(Tipper<?>... ts) {
+    Stream.of(implementation).forEach(x -> x.removeIf(λ -> iz.in(λ, ts)));
     return this;
   }
 
-  public <N extends ASTNode> Configuration setTo(Class<N> c, Tipper<N> t) {
+  @SafeVarargs public final <N extends ASTNode> Configuration setTo(Class<N> c, Tipper<N>... ts) {
+    clear().get(wizard.nodeType(c)).addAll(as.list(ts));
+    return this;
+  }
+
+  public Configuration clear() {
     Stream.of(implementation).filter(Objects::nonNull).forEach(λ -> λ.clear());
-    get(wizard.nodeType(c)).add(t);
     return this;
   }
 }
