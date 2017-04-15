@@ -24,10 +24,10 @@ enum CollectClassMetrics {
     System.err.println("Your output should be here: " + output.close());
   }
 
-  static CompilationUnit spartanize(final CompilationUnit u) {
+  static CompilationUnit spartanize(final CompilationUnit $) {
     final TextualTraversals t = new TextualTraversals();
-    t.once(u);
-    return u;
+    t.once($);
+    return $;
   }
 
   private static void go(final File f) {

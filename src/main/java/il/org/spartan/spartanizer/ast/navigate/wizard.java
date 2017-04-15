@@ -825,8 +825,8 @@ public interface wizard {
     return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(make.invert($));
   }
 
-  static boolean valid(final ASTNode n) {
-    final CompilationUnit $ = az.compilationUnit(n.getRoot());
+  static boolean valid(final ASTNode ¢) {
+    final CompilationUnit $ = az.compilationUnit(¢.getRoot());
     return $ == null || $.getProblems().length == 0;
   }
 

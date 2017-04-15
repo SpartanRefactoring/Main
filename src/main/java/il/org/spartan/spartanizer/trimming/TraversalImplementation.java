@@ -67,9 +67,9 @@ public class TraversalImplementation extends Traversal {
     notify.tipRewrite();
   }
 
-  @Override public ASTRewrite go(final CompilationUnit u) {
-    setCompilationUnit(u);
-    topDown(u);
+  @Override public ASTRewrite go(final CompilationUnit ¢) {
+    setCompilationUnit(¢);
+    topDown(¢);
     return rewrite();
   }
 
