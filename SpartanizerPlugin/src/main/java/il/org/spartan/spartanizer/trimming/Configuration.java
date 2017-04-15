@@ -138,7 +138,7 @@ public Collection<Tipper<? extends ASTNode>> getAllTippers() {
   }
 
   public <N extends ASTNode> Configuration setTo(Class<N> c, Tipper<N> t) {
-    Stream.of(implementation).forEach(λ -> λ.clear());
+    Stream.of(implementation).filter(Objects::nonNull).forEach(λ -> λ.clear());
     get(wizard.nodeType(c)).add(t);
     return this;
   }
