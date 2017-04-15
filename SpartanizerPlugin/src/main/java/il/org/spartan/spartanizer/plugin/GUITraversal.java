@@ -45,9 +45,9 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     final CompilationUnit compilationUnit = u.build().compilationUnit;
     final ASTRewrite r = go(compilationUnit);
     try {
+      textChange.setEdit(r.rewriteAST());
       if (textChange.getEdit().getLength() != 0)
-        textChange.setEdit(r.rewriteAST());
-      textChange.perform(getProgressMonitor());
+        textChange.perform(getProgressMonitor());
     } catch (final CoreException ¢) {
       note.bug(this, ¢);
     } catch (final AssertionError x) {
