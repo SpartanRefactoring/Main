@@ -213,9 +213,9 @@ public interface English {
         : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
   }
 
-  interface Activity {
-    static Activity simple(final String base) {
-      return new Activity() {
+  interface Inflection {
+    static Inflection stem(final String base) {
+      return new Inflection() {
         @Override public String get() {
           return base;
         }

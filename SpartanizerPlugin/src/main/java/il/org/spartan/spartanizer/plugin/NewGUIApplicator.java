@@ -27,8 +27,19 @@ enum event {
 /** An {@link Applicator} suitable for eclipse GUI.
  * @author Ori Roth
  * @since 2.6 */
-public class BatchApplicator extends Applicator {
-  private static final String DEFAULT_OPERATION_NAME = "Operat";
+public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplicator> {
+  protected NewGUIApplicator() {}
+
+  public static Applicator plain() {
+    return new NewGUIApplicator()//
+        .defaultListenerSilent()//
+        .fewPasses()//
+        .defaultRunContext()//
+        .defaultSelection()//
+        .defaultOperationName();
+  }
+
+  private static final String DEFAULT_STEM = "Opera";
   /** Few passes for the applicator to conduct. */
   private static final int PASSES_FEW = 1;
   /** Many passes for the applicator to conduct. */
@@ -88,35 +99,35 @@ public class BatchApplicator extends Applicator {
 
   /** Default listener configuration of . Simple printing to console.
    * @return {@code this} applicator */
-  @Override public BatchApplicator defaultListenerNoisy() {
+  @Override public NewGUIApplicator defaultListenerNoisy() {
     listener(λ -> as.list(λ).forEach(System.out::print));
     return this;
   }
 
   /** Default listener configuration of . Silent listener.
    * @return {@code this} applicator */
-  public BatchApplicator defaultListenerSilent() {
+  public NewGUIApplicator defaultListenerSilent() {
     listener((final Object... __) -> {/**/});
     return this;
   }
 
   /** Default selection configuration of . Normal eclipse user selection.
    * @return {@code this} applicator */
-  public BatchApplicator defaultSelection() {
+  public NewGUIApplicator defaultSelection() {
     selection(Selection.Util.current());
     return this;
   }
 
   /** Default passes configuration of , with few passes.
    * @return {@code this} applicator */
-  public BatchApplicator fewPasses() {
+  public NewGUIApplicator fewPasses() {
     setPasses(PASSES_FEW);
     return this;
   }
 
   /** Default passes configuration of , with many passes.
    * @return {@code this} applicator */
-  public BatchApplicator manyPasses() {
+  public NewGUIApplicator manyPasses() {
     setPasses(PASSES_MANY);
     return this;
   }
@@ -124,7 +135,7 @@ public class BatchApplicator extends Applicator {
   /** Default run context configuration of . Simply runs the {@link Runnable} in
    * the current thread.
    * @return {@code this} applicator */
-  public BatchApplicator defaultRunContext() {
+  public NewGUIApplicator defaultRunContext() {
     setContext(Runnable::run);
     return this;
   }
@@ -136,7 +147,7 @@ public class BatchApplicator extends Applicator {
    * {@link ICompilationUnit} using received {@link GUITraversal}.
    * @param t JD
    * @return {@code this} applicator */
-  public BatchApplicator restrictTo(final Tipper<?> t) {
+  public NewGUIApplicator restrictTo(final Tipper<?> t) {
     inner.setSelection(selection());
     inner.setName(t.description());
     inner.trimmer.useProjectPreferences();
@@ -147,34 +158,34 @@ public class BatchApplicator extends Applicator {
 
   /** Default operation name.
    * @return {@code this} applicator */
-  public BatchApplicator defaultOperationName() {
-    operationName(English.Activity.simple(DEFAULT_OPERATION_NAME));
+  public NewGUIApplicator defaultOperationName() {
+    operationName(English.Inflection.stem(DEFAULT_STEM));
     return this;
   }
 
   /** Default settings for all {@link Applicator} components.
    * @return {@code this} applicator */
-  public BatchApplicator defaultSettings() {
+  public NewGUIApplicator defaultSettings() {
     return defaultListenerSilent().fewPasses().defaultRunContext().defaultSelection().defaultOperationName();
   }
 
   /** Factory method.
    * @return default event applicator */
-  public static BatchApplicator defaultApplicator() {
-    return new BatchApplicator().defaultSettings();
+  public static NewGUIApplicator defaultApplicator() {
+    return new NewGUIApplicator().defaultSettings();
   }
 
   /** Printing definition of events that occur during spartanization.
    * @author Ori Roth
    * @since 2.6 */
   private enum message {
-    run_start(2, inp -> printableAt(inp, 0, λ -> ((English.Activity) λ).getIng()) + " " + printableAt(inp, 1)), //
+    run_start(2, inp -> printableAt(inp, 0, λ -> ((English.Inflection) λ).getIng()) + " " + printableAt(inp, 1)), //
     run_pass(1, λ -> "Pass #" + printableAt(λ, 0)), //
     run_pass_finish(1, λ -> "Pass #" + printableAt(λ, 0) + " finished"), //
     visit_cu(6,
-        inp -> the.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, λ -> ((English.Activity) λ).getIng()) + " "
+        inp -> the.nth(printableAt(inp, 1), printableAt(inp, 2)) + "\t" + printableAt(inp, 0, λ -> ((English.Inflection) λ).getIng()) + " "
             + printableAt(inp, 3) + "\nTips: total = " + printableAt(inp, 4) + "\tthis pass = " + printableAt(inp, 5)), //
-    run_finish(3, inp -> "Done " + printableAt(inp, 0, λ -> ((English.Activity) λ).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
+    run_finish(3, inp -> "Done " + printableAt(inp, 0, λ -> ((English.Inflection) λ).getIng()) + " " + printableAt(inp, 1) + "\nTips accepted: "
         + printableAt(inp, 2));
     private final int inputCount;
     private final Function<Object[], String> printing;
@@ -228,5 +239,9 @@ public class BatchApplicator extends Applicator {
     } catch (final CoreException ¢) {
       note.bug(¢);
     }
+  }
+
+  @Override public NewGUIApplicator self() {
+    return null;
   }
 }

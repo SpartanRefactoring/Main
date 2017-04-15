@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static il.org.spartan.spartanizer.plugin.BatchApplicator.*;
+import static il.org.spartan.spartanizer.plugin.NewGUIApplicator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
@@ -25,7 +25,7 @@ import il.org.spartan.utils.fluent.*;
 public final class QuickFixer implements IMarkerResolutionGenerator {
   @Override public IMarkerResolution[] getResolutions(final IMarker __) {
     return new IMarkerResolution[] { //
-        quickFix("Apply", λ -> new BatchApplicator().defaultSettings().setPasses(1).selection(Selection.Util.by(λ)).go()), //
+        quickFix("Apply", λ -> NewGUIApplicator.plain().selection(Selection.Util.by(λ)).go()), //
         // applyPreview, //
         // laconizeFile, //
         quickFix("Spartanize function", λ -> applicator(λ).selection(Selection.Util.expand(λ, MethodDeclaration.class)).go()), //
@@ -44,7 +44,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
     };
   }
 
-  private static BatchApplicator applicator(final IMarker λ) {
+  private static NewGUIApplicator applicator(final IMarker λ) {
     return defaultApplicator()//
         .manyPasses();
   }
