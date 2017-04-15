@@ -2,8 +2,11 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
+
+import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for Issue 1055
  * @author Yossi Gil
@@ -15,5 +18,11 @@ public class Issue1055 {
     trimminKof("switch(x) { case 1: { y=2; } } ") //
         .gives("switch(x) { case 1: y = 2; }") //
     ;
+  }
+
+  @Test public void also() {
+    trimminKof("I x = new I(3),y=null;if(a)synchronized(x){{ y=2;}} return x*y;") //
+        .gives("I x = new I(3),y=null;if(a)synchronized(x){y=2;} return x*y;") //
+        .stays();
   }
 }
