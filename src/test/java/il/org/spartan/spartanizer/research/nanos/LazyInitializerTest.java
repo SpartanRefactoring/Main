@@ -13,9 +13,7 @@ public class LazyInitializerTest {
   @Test public void basic() {
     trimminKof("¢ = ¢ != null ? ¢ : \"\";")//
         .using(new DefaultsTo(), ConditionalExpression.class)//
-        .using(new LazyInitializer(), Assignment.class)//
         .gives("¢ = defaults(¢).to(\"\");")//
-        .using(new DefaultsTo(), ConditionalExpression.class)//
         .using(new LazyInitializer(), Assignment.class)//
         .gives("lazyInitialize(¢).with(()-> \"\");").stays();
   }

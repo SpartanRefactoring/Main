@@ -26,8 +26,7 @@ public class LastTest {
 
   @Test public void c() {
     trimminKof("omg(li.get(0), li.get(li.size()-1));")//
-        .using(new First(), MethodInvocation.class)//
-        .using(new Last(), MethodInvocation.class)//
+        .using(MethodInvocation.class, new First(), new Last())//
         .gives("omg(first(li),last(li));")//
         .stays();
   }
