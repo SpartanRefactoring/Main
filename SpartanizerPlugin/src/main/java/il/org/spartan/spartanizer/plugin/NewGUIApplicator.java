@@ -30,8 +30,6 @@ enum event {
 public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplicator> {
   protected NewGUIApplicator() {}
 
-  
-
   private static final String DEFAULT_STEM = "Opera";
   /** Few passes for the applicator to conduct. */
   private static final int PASSES_FEW = 1;
@@ -57,11 +55,11 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
           break;
         final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), done = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
-          Function<WrappedCompilationUnit, Integer> runAction = runAction();
+          final Function<WrappedCompilationUnit, Integer> runAction = runAction();
           assert runAction != null;
-          WrappedCompilationUnit build = ¢.build();
+          final WrappedCompilationUnit build = ¢.build();
           assert build != null;
-          Integer apply = runAction.apply(build);
+          final Integer apply = runAction.apply(build);
           assert apply != null;
           final int tipsInvoked = apply.intValue();
           if (tipsInvoked <= 0)
@@ -125,7 +123,6 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     return this;
   }
 
-
   GUITraversal inner = new GUITraversal();
 
   // TODO Ori Roth: use Policy / replacement for Trimmer.
@@ -155,7 +152,8 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
         .fewPasses()//
         .defaultSelection()//
         .defaultOperationName();
-  }    
+  }
+
   /** Factory method.
    * @return default event applicator */
   public static NewGUIApplicator defaultApplicator() {

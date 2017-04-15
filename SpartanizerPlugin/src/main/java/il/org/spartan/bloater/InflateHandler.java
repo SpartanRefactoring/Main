@@ -29,8 +29,8 @@ import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
- * {@link BloaterGUIApplicator} as an {@link Applicator} and {@link Augmenter} as an
- * {@link Application}.
+ * {@link BloaterGUIApplicator} as an {@link Applicator} and {@link Augmenter}
+ * as an {@link Application}.
  * @author Ori Roth
  * @since Nov 25, 2016 */
 public class InflateHandler extends AbstractHandler {
