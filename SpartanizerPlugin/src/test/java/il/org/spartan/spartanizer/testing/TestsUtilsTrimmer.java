@@ -20,11 +20,11 @@ public enum TestsUtilsTrimmer {
 
   /** About four hundred tests depend on a particular trimming policy. We shall
    * call it {@link #trimminKof(String)} */
-  public static TrimmingOperand trimminKof(final String from) {
-    return new TrimmingOperand(from);
+  public static TestOperand trimminKof(final String from) {
+    return new TestOperand(from);
   }
 
-  public static class OperandToTipper<N extends ASTNode> extends TrimmingOperand {
+  public static class OperandToTipper<N extends ASTNode> extends TestOperand {
     final Class<N> clazz;
 
     OperandToTipper(final String from, final Class<N> clazz) {

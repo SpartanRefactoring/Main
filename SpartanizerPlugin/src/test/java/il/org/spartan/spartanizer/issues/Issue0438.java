@@ -5,7 +5,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.utils.*;
 
-/** Failing (were ignored) tests of {@link TrimmerLogTest}
+/** Failing (were ignored) tests of {@link TestOperandTest}
  * @author Yossi Gil
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

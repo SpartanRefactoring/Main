@@ -12,14 +12,14 @@ import il.org.spartan.utils.fluent.*;
  * @author Yossi Gil
  * @since 2017-04-14 */
 public class TextualTraversals {
-  public final Traversal traversal = new Traversalmplementation()//
-      .push(new TrimmingTapper() {
+  public final Traversal traversal = new TraversalImplementation()//
+      .push(new TraversalTapper() {
         @Override public void begin() {
-          TrimmingTapper.super.begin();
+          TraversalTapper.super.begin();
         }
 
         @Override public void end() {
-          TrimmingTapper.super.end();
+          TraversalTapper.super.end();
         }
       });
 

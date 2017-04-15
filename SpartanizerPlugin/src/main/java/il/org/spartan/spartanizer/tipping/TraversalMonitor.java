@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.cmdline;
+package il.org.spartan.spartanizer.tipping;
 
 import static java.util.logging.Level.*;
 
@@ -24,7 +24,7 @@ import il.org.spartan.utils.fluent.*;
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Yossi Gil
  * @since Sep 20, 2016 */
-public class TrimmerMonitor extends Traversalmplementation.With implements TrimmingTapper {
+public class TraversalMonitor extends TraversalImplementation.With implements TraversalTapper {
   public static void off() {
     logger.setLevel(Level.OFF);
   }
@@ -46,19 +46,19 @@ public class TrimmerMonitor extends Traversalmplementation.With implements Trimm
   }
 
   public static void setMaxApplications(final int maxApplications) {
-    TrimmerMonitor.maxApplications = maxApplications;
+    TraversalMonitor.maxApplications = maxApplications;
   }
 
   public static void setMaxTips(final int maxTips) {
-    TrimmerMonitor.maxTips = maxTips;
+    TraversalMonitor.maxTips = maxTips;
   }
 
   public static void setMaxVisitations(final int maxVisitations) {
-    TrimmerMonitor.maxVisitations = maxVisitations;
+    TraversalMonitor.maxVisitations = maxVisitations;
   }
 
   public static void setOutputDir(final String $) {
-    TrimmerMonitor.outputDir = $;
+    TraversalMonitor.outputDir = $;
   }
 
   public static <N extends ASTNode> void tip(final Tipper<N> w, final N n) {
@@ -140,7 +140,7 @@ public class TrimmerMonitor extends Traversalmplementation.With implements Trimm
     off();
   }
 
-  public TrimmerMonitor(final Traversal setup) {
+  public TraversalMonitor(final Traversal setup) {
     setup.super();
   }
 

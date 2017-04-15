@@ -22,19 +22,19 @@ import il.org.spartan.utils.fluent.*;
  * {@link #using(Tipper, Class)} or {@link #using(Class, Tipper...)}.
  * @author Yossi Gil
  * @since 2017-03-12 */
-public class TrimmingOperand extends Wrapper<String> {
+public class TestOperand extends Wrapper<String> {
   protected static final String QUICK = "Quick fix (MARK, COPY, PASTE, and REFORMAT):\n";
   protected static final String NEW_UNIT_TEST = "Quick fix (COPY & PASTE Junit @Test method):\n";
-  private final Traversal traversal = new Traversalmplementation();
+  private final Traversal traversal = new TraversalImplementation();
   private static int rerunsLeft = 5;
 
-  public TrimmingOperand(final String inner) {
+  public TestOperand(final String inner) {
     super(inner);
   }
 
   void checkExpected(final String expected) {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    final String wrap = w.on(get()), unpeeled = trim.apply(new Traversalmplementation(), wrap);
+    final String wrap = w.on(get()), unpeeled = trim.apply(new TraversalImplementation(), wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
     final String peeled = w.off(unpeeled);
@@ -49,12 +49,12 @@ public class TrimmingOperand extends Wrapper<String> {
     try {
       apply();
     } catch (final Throwable ¢) {
-      TrimmerMonitor.logger.setLevel(Level.ALL);
+      TraversalMonitor.logger.setLevel(Level.ALL);
       note.set(Level.ALL);
       note.logger.log(Level.ALL, "Test crashed rerunning ", ¢);
       apply();
       note.unset();
-      TrimmerMonitor.logger.setLevel(Level.OFF);
+      TraversalMonitor.logger.setLevel(Level.OFF);
     }
   }
 
@@ -62,7 +62,7 @@ public class TrimmingOperand extends Wrapper<String> {
     return trim.apply(traversal, WrapIntoComilationUnit.find(get()).on(get()));
   }
 
-  public TrimmingOperand gives(final String $) {
+  public TestOperand gives(final String $) {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(traversal, wrap);
     if (wrap.equals(unpeeled)) {
@@ -75,11 +75,11 @@ public class TrimmingOperand extends Wrapper<String> {
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
     if ($.equals(peeled) || trivia.essence(peeled).equals(trivia.essence($)))
-      return new TrimmingOperand($);
+      return new TestOperand($);
     copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", trivia.escapeQuotes(trivia.essence(peeled)),
         trivia.escapeQuotes(trivia.essence($)));
     azzert.that(trivia.essence(peeled), is(trivia.essence($)));
-    return new TrimmingOperand($);
+    return new TestOperand($);
   }
 
   protected void copyPasteReformat(final String format, final Object... os) {
@@ -93,7 +93,7 @@ public class TrimmingOperand extends Wrapper<String> {
    * @return Operand
    * @author Dor Ma'ayan
    * @since 09-12-2016 */
-  public TrimmingOperand givesEither(final String... options) {
+  public TestOperand givesEither(final String... options) {
     assert options != null;
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(traversal, wrap);
@@ -106,7 +106,7 @@ public class TrimmingOperand extends Wrapper<String> {
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
     for (final String $ : options)
       if (trivia.essence($).equals(trivia.essence(peeled)))
-        return new TrimmingOperand($);
+        return new TestOperand($);
     azzert.fail("Expects: " + peeled + " But none of the given options match");
     return null;
   }
@@ -133,27 +133,27 @@ public class TrimmingOperand extends Wrapper<String> {
   public void rerun() {
     if (rerunsLeft < 1)
       return;
-    TrimmerMonitor.logger.setLevel(Level.ALL);
-    TrimmerMonitor.logger.fine("Test failed (rerunning to collect more information)");
+    TraversalMonitor.logger.setLevel(Level.ALL);
+    TraversalMonitor.logger.fine("Test failed (rerunning to collect more information)");
     note.set(Level.ALL);
     apply();
     note.unset();
-    TrimmerMonitor.logger.info("Rerun done. (scroll back to find logging infromation)");
-    TrimmerMonitor.logger.info(String.format("*** %d reruns left \n ", box.it(--rerunsLeft)));
-    TrimmerMonitor.logger.setLevel(Level.OFF);
+    TraversalMonitor.logger.info("Rerun done. (scroll back to find logging infromation)");
+    TraversalMonitor.logger.info(String.format("*** %d reruns left \n ", box.it(--rerunsLeft)));
+    TraversalMonitor.logger.setLevel(Level.OFF);
   }
 
-  public <N extends ASTNode> TrimmingOperand using(final Tipper<N> ¢, final Class<N> c) {
+  public <N extends ASTNode> TestOperand using(final Tipper<N> ¢, final Class<N> c) {
     traversal.configuration.setTo(c, ¢);
     return this;
   }
 
-  @SafeVarargs public final <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> TestOperand using(final Class<N> c, final Tipper<N>... ts) {
     traversal.configuration.setTo(c, ts);
     return this;
   }
 
-  @SafeVarargs public final TrimmingOperand using(final Tipper<?>... ¢1) {
+  @SafeVarargs public final TestOperand using(final Tipper<?>... ¢1) {
     traversal.configuration.restrictTo(¢1);
     return this;
   }

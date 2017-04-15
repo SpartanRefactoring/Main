@@ -42,7 +42,7 @@ enum CollectMetrics {
 
   // TODO Yossi Gil: eliminate warning
   private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
-    reportTips(new Traversalmplementation().collectTips(before));
+    reportTips(new TraversalImplementation().collectTips(before));
   }
 
   private static void go(final File f) {
