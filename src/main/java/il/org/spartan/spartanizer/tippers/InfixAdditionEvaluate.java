@@ -68,6 +68,6 @@ public final class InfixAdditionEvaluate extends $EvaluateInfixExpression {
   }
 
   @Override Operator operator() {
-    return PLUS2;
+    return op.PLUS2;
   }
 }

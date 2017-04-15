@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -35,14 +36,14 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
       }
     es2.add(prev);
     if (es2.size() >= 2)
-      return subject.operands(es2).to(wizard.PLUS2);
+      return subject.operands(es2).to(op.PLUS2);
     final StringLiteral $ = x.getAST().newStringLiteral();
     $.setLiteralValue(az.stringLiteral(lisp.first(es2)).getLiteralValue());
     return $;
   }
 
   @Override protected boolean prerequisite(final InfixExpression x) {
-    if (operator(x) != wizard.PLUS2)
+    if (operator(x) != op.PLUS2)
       return false;
     final List<Expression> es = hop.operands(x);
     Expression prev = lisp.first(es);

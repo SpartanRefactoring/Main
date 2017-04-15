@@ -7,6 +7,6 @@ import il.org.spartan.spartanizer.plugin.*;
  * @since Nov 25, 2016 */
 public class BloatApplicator extends BatchApplicator {
   public static BloatApplicator defaultApplicator() {
-    return (BloatApplicator) new BloatApplicator().defaultListenerSilent().defaultRunContext().passes(1);
+    return (BloatApplicator) new BloatApplicator().defaultListenerSilent().defaultRunContext().setPasses(1);
   }
 }

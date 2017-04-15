@@ -43,13 +43,13 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   /** @param e JD
    * @return the applicator used by this refactorer */
-  public GUIConfigurationApplicator getApplicator(@SuppressWarnings("unused") final ExecutionEvent __) {
+  public GUITraversal getApplicator(@SuppressWarnings("unused") final ExecutionEvent __) {
     return null;
   }
 
   /** @param m JD
    * @return the applicator used by this refactorer */
-  public GUIConfigurationApplicator getApplicator(@SuppressWarnings("unused") final IMarker __) {
+  public GUITraversal getApplicator(@SuppressWarnings("unused") final IMarker __) {
     return null;
   }
 
@@ -109,7 +109,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
    * @param targetCompilationUnits JD
    * @param helloString JD
    * @return work to be done before running the refactorer main loop */
-  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final GUIConfigurationApplicator __,
+  @SuppressWarnings("unused") public IRunnableWithProgress initialWork(final GUITraversal __,
       final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
     return null;
   }
@@ -118,7 +118,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
    * @param targetCompilationUnits JD
    * @param helloString JD
    * @return work to be done after running the refactorer main loop */
-  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final GUIConfigurationApplicator __,
+  @SuppressWarnings("unused") public IRunnableWithProgress finalWork(final GUITraversal __,
       final List<ICompilationUnit> targetCompilationUnits, final Map<attribute, Object> m) {
     return null;
   }
@@ -134,7 +134,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
 
   private Void go(final ExecutionEvent e, final IMarker m) {
     final Selection selection = either(getSelection(), getSelection(m));
-    final GUIConfigurationApplicator applicator = either(getApplicator(e), getApplicator(m));
+    final GUITraversal applicator = either(getApplicator(e), getApplicator(m));
     if (!valid(selection, applicator) || selection.inner.isEmpty())
       return null;
     final Map<attribute, Object> attributes = unknowns();
@@ -178,7 +178,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return false;
   }
 
-  private IRunnableWithProgress runnable(final Selection s, final GUIConfigurationApplicator a, final Map<attribute, Object> m) {
+  private IRunnableWithProgress runnable(final Selection s, final GUITraversal a, final Map<attribute, Object> m) {
     return pm -> {
       final int $ = passesCount();
       int pass, totalTips = 0;

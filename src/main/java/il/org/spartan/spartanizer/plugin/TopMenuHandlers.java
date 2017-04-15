@@ -16,12 +16,12 @@ public class TopMenuHandlers extends AbstractHandler {
     {
       put("il.org.spartan.SpartanizeSelection", e -> {
         final Selection s = Selection.Util.current();
-        SpartanizationHandler.applicator().passes(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
+        SpartanizationHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
       });
       put("il.org.spartan.SpartanizeCurrent",
-          λ -> SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getCurrentCompilationUnit()).go());
+          λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getCurrentCompilationUnit()).go());
       put("il.org.spartan.SpartanizeAll",
-          λ -> SpartanizationHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits()).go());
+          λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getAllCompilationUnits()).go());
       put("il.org.spartan.ZoomTool", λ -> {
         if (InflateHandler.active.get() || showZoomToolMessage())
           InflateHandler.goWheelAction();
@@ -29,12 +29,12 @@ public class TopMenuHandlers extends AbstractHandler {
       put("il.org.spartan.ZoomSelection", e -> {
         final Selection s = Selection.Util.current().setUseBinding();
         if (!s.isTextSelection)
-          InflateHandler.applicator().passes(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
+          InflateHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
         else if (InflateHandler.active.get() || showZoomToolMessage())
           InflateHandler.goWheelAction();
       });
       put("il.org.spartan.ZoomAll",
-          λ -> InflateHandler.applicator().defaultPassesMany().selection(Selection.Util.getAllCompilationUnits().setUseBinding()).go());
+          λ -> InflateHandler.applicator().manyPasses().selection(Selection.Util.getAllCompilationUnits().setUseBinding()).go());
     }
   };
 

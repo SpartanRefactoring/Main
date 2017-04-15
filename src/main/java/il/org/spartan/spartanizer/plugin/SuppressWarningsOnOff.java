@@ -150,7 +150,7 @@ public enum SuppressWarningsOnOff {
       boolean b;
 
       @Override public void preVisit(final ASTNode n) {
-        if (b || facade.isNodeOutsideMarker(n, m))
+        if (b || wizard.disjoint(n, m))
           return;
         final BodyDeclaration d;
         switch (t) {

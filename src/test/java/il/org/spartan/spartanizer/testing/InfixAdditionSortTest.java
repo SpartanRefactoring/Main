@@ -10,6 +10,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -167,7 +168,7 @@ public final class InfixAdditionSortTest {
     final Expression e = TermsExpander.simplify(INPUT);
     azzert.that(e, instanceOf(InfixExpression.class));
     final InfixExpression i = (InfixExpression) e;
-    azzert.that(i.getOperator(), is(wizard.PLUS2));
+    azzert.that(i.getOperator(), is(op.PLUS2));
     assert hop.operands(i) != null;
     azzert.that(hop.operands(i).size(), is(nTERMS));
     assert wizard.same2(i, INPUT);

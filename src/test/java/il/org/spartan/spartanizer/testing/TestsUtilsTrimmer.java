@@ -4,13 +4,13 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
 public enum TestsUtilsTrimmer {
   ;
-  public static int countOpportunities(final GUIConfigurationApplicator a, final CompilationUnit u) {
+  public static int countOpportunities(final Trimmer a, final CompilationUnit u) {
     return a.collectTips(u).size();
   }
 

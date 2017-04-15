@@ -12,7 +12,6 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.progress.*;
 
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
@@ -38,12 +37,11 @@ public final class SpartanizeProject extends BaseHandler {
     if (todo.isEmpty())
       return 0;
     final Int $ = new Int();
-    final GUIConfigurationApplicator a = new TrimmerImplementation();
+    final GUITraversal a = new GUITraversal();
     try {
       eclipse.progressMonitorDialog(true).run(true, true, λ -> {
         λ.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
-        a.setMarker(null);
-        a.setICompilationUnit(first(todo));
+        a.iCompilationUnit(first(todo));
         $.add(a.countTips());
         if (λ.isCanceled())
           $.set(0);
@@ -87,7 +85,7 @@ public final class SpartanizeProject extends BaseHandler {
   }
 
   boolean singlePass() {
-    final TrimmerImplementation t = new TrimmerImplementation();
+    final GUITraversal t = new GUITraversal(); 
     final IProgressService ps = workench.getProgressService();
     final Int passNum = new Int(passNumber + 1);
     final Bool $ = new Bool();

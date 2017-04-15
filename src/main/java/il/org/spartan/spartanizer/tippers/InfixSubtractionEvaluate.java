@@ -72,6 +72,6 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
   }
 
   @Override Operator operator() {
-    return MINUS2;
+    return op.MINUS2;
   }
 }

@@ -59,27 +59,27 @@ public final class Issue0214 {
   }
 
   @Test public void a06_TipperAbstractNotNull() {
-    assert new BlockSimplify().myAbstractOperandsClass() != null;
+    assert new BlockSimplify().getAbstractOperandClass() != null;
   }
 
   @Test public void a07_BlockSimplifyReturnsSomeClass() {
-    azzert.that(blockSimplify.myAbstractOperandsClass(), instanceOf(Class.class));
+    azzert.that(blockSimplify.getAbstractOperandClass(), instanceOf(Class.class));
   }
 
   @Test public void a08_TipperReturnsSomeASTNode() {
-    azzert.that(tipper.myAbstractOperandsClass(), is(ASTNode.class));
+    azzert.that(tipper.getAbstractOperandClass(), is(ASTNode.class));
   }
 
   @Test public void a09_TipperReturnsReasonableValue() {
-    azzert.that(tipper.myAbstractOperandsClass().getClass(), is(Class.class));
+    azzert.that(tipper.getAbstractOperandClass().getClass(), is(Class.class));
   }
 
   @Test public void a10_TipperReturnsCorrectStaticType() {
-    azzert.that(mustBeASTNodeClass(tipper.myAbstractOperandsClass()), is(tipper.myAbstractOperandsClass()));
+    azzert.that(mustBeASTNodeClass(tipper.getAbstractOperandClass()), is(tipper.getAbstractOperandClass()));
   }
 
   @Test public void a11_TipperReturnsCorrectValueBlockSimplify() {
-    azzert.that(blockSimplify.myAbstractOperandsClass(), is(Block.class));
+    azzert.that(blockSimplify.getAbstractOperandClass(), is(Block.class));
   }
 
   @Test public void a12_TipperReturnsCorrectConcreteValueBlockSimplify() {

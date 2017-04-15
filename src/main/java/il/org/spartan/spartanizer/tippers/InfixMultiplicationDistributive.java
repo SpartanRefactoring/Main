@@ -96,7 +96,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
         subject.pair(//
             first(different), second(different)//
         ).to(//
-            PLUS2)//
+            op.PLUS2)//
     ).to(//
         TIMES//
     );
@@ -124,7 +124,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     }
     Expression addition = null;
     for (final Integer ¢ : range.from(0).to(different.size() - 1))
-      addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(PLUS2);
+      addition = subject.pair(addition != null ? addition : different.get(¢), different.get(¢ + 1)).to(op.PLUS2);
     if ($.isEmpty())
       return addition;
     if ($.size() == 1)

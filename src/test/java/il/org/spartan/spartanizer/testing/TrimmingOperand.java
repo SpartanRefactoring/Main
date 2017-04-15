@@ -25,7 +25,7 @@ import il.org.spartan.utils.fluent.*;
 public class TrimmingOperand extends Wrapper<String> {
   protected static final String QUICK = "Quick fix (MARK, COPY, PASTE, and REFORMAT):\n";
   protected static final String NEW_UNIT_TEST = "Quick fix (COPY & PASTE Junit @Test method):\n";
-  private final TrimmerImplementation trimmerImplementation = new TrimmerImplementation();
+  private final Trimmer trimmer = new TrimmerImplementation();
   private static int rerunsLeft = 5;
 
   public TrimmingOperand(final String inner) {
@@ -59,12 +59,12 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   String apply() {
-    return trim.apply(trimmerImplementation, WrapIntoComilationUnit.find(get()).on(get()));
+    return trim.apply(trimmer, WrapIntoComilationUnit.find(get()).on(get()));
   }
 
   public TrimmingOperand gives(final String $) {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    final String wrap = w.on(get()), unpeeled = trim.apply(trimmerImplementation, wrap);
+    final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled)) {
       copyPasteReformat("  .stays()//\n  ;\n");
       azzert.fail("Nothing done on " + get());
@@ -96,7 +96,7 @@ public class TrimmingOperand extends Wrapper<String> {
   public TrimmingOperand givesEither(final String... options) {
     assert options != null;
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    final String wrap = w.on(get()), unpeeled = trim.apply(trimmerImplementation, wrap);
+    final String wrap = w.on(get()), unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       azzert.fail("Nothing done on " + get());
     final String peeled = w.off(unpeeled);
@@ -113,9 +113,9 @@ public class TrimmingOperand extends Wrapper<String> {
 
   public void stays() {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    assert trimmerImplementation != null;
+    assert trimmer != null;
     final String wrap = w.on(get()), //
-        unpeeled = trim.apply(trimmerImplementation, wrap);
+        unpeeled = trim.apply(trimmer, wrap);
     if (wrap.equals(unpeeled))
       return;
     final String peeled = w.off(unpeeled);
@@ -144,22 +144,17 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   public <N extends ASTNode> TrimmingOperand using(final Tipper<N> ¢, final Class<N> c) {
-    trimmerImplementation.fix(c, ¢);
+    trimmer.configuration.setTo(c, ¢);
     return this;
   }
 
   @SafeVarargs public final <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N>... ts) {
-    as.list(ts).forEach(λ -> trimmerImplementation.addSingleTipper(c, λ));
+    as.list(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
     return this;
   }
 
-  @SafeVarargs public final TrimmingOperand usingTipper(final Tipper<?>... ¢) {
-    trimmerImplementation.fixTipper(¢);
-    return this;
-  }
-
-  @SafeVarargs public final TrimmingOperand usingBloater(final Tipper<?>... ¢) {
-    trimmerImplementation.fixBloater(¢);
+  @SafeVarargs public final  TrimmingOperand usingTipper(final Tipper<?>... ¢1) {
+    trimmer.configuration.restrictTo(¢1);
     return this;
   }
 }

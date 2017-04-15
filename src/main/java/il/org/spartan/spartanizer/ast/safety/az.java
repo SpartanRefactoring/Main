@@ -66,7 +66,7 @@ public enum az {
     }
 
     static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
-      return operator(¢) != MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
+      return operator(¢) != op.MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
     }
 
     static String token(final Expression ¢) {

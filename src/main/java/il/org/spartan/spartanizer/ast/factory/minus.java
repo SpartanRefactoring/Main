@@ -16,6 +16,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** takes care of of multiplicative terms with minus symbol in them.
@@ -58,7 +59,7 @@ public enum minus {
   }
 
   private static int level(final PrefixExpression ¢) {
-    return az.bit(operator(¢) == wizard.MINUS1) + level(operand(¢));
+    return az.bit(operator(¢) == op.MINUS1) + level(operand(¢));
   }
 
   public static Expression peel(final Expression $) {
@@ -82,6 +83,6 @@ public enum minus {
   }
 
   public static Expression peel(final PrefixExpression $) {
-    return out(operator($), wizard.MINUS1, wizard.PLUS1) ? $ : peel(operand($));
+    return out(operator($), op.MINUS1, op.PLUS1) ? $ : peel(operand($));
   }
 }
