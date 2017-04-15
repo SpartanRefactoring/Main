@@ -1,11 +1,6 @@
-/* TODO Yossi Gil LocalVariableInitializedStatement description
- *
- * @author Yossi Gil
- *
- * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
@@ -18,9 +13,12 @@ import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.trimming.*;
 
+/** Yossi Gil LocalVariableInitializedStatement description
+ * @author Yossi Gil
+ * @since Sep 25, 2016 */
 @SuppressWarnings("static-method") //
 public class TestOperandTest {
-  /** Tests of {@link TraversalMonitor.TrimmerLog}
+  /** Tests of {@link TraversalMonitor}
    * @author AnnaBel7
    * @author michalcohen
    * @since Nov 10, 2016 */

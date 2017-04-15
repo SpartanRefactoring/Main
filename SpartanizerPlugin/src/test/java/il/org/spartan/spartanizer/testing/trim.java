@@ -24,13 +24,13 @@ public interface trim {
     return t.traversal.collectTips(u).size();
   }
 
-  static fluentTrimmerApplication of(final String codeFragment) {
-    return new fluentTrimmerApplication(codeFragment);
+  static fluentTraverasalApplication of(final String codeFragment) {
+    return new fluentTraverasalApplication(codeFragment);
   }
 
   @SafeVarargs //
-  static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
-    return new fluentTrimmer(clazz, ts);
+  static <N extends ASTNode> fluentTraversal with(final Class<N> clazz, final Tipper<N>... ts) {
+    return new fluentTraversal(clazz, ts);
   }
 
   static String apply(final Traversal t, final String from) {
@@ -59,9 +59,9 @@ public interface trim {
                                                                                                          * .of("a+(b-c)") //  See {@link #of(String)} 
                                                                                                          * .gives("a+b-c")</code> */
   interface repeatedly {
-    static fluentTrimmerApplication of(final String codeFragment) {
-      return new fluentTrimmerApplication(codeFragment) {
-        @Override public fluentTrimmerApplication gives(final String expected) {
+    static fluentTraverasalApplication of(final String codeFragment) {
+      return new fluentTraverasalApplication(codeFragment) {
+        @Override public fluentTraverasalApplication gives(final String expected) {
           return super.gives(new InteractiveSpartanizer().fixedPoint(expected));
         }
 
@@ -71,9 +71,9 @@ public interface trim {
       };
     }
 
-    @SafeVarargs static <N extends ASTNode> fluentTrimmer with(final Class<N> clazz, final Tipper<N>... ts) {
-      return new fluentTrimmer(clazz, ts) {
-        @Override public fluentTrimmerApplication of(final String codeFragment) {
+    @SafeVarargs static <N extends ASTNode> fluentTraversal with(final Class<N> clazz, final Tipper<N>... ts) {
+      return new fluentTraversal(clazz, ts) {
+        @Override public fluentTraverasalApplication of(final String codeFragment) {
           return super.of(codeFragment);
         }
       };
@@ -116,13 +116,13 @@ public interface trim {
     }
   }
 
-  class fluentTrimmer extends TraversalImplementation {
-    @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ts) {
+  class fluentTraversal extends TraversalImplementation {
+    @SafeVarargs public <N extends ASTNode> fluentTraversal(final Class<N> clazz, final Tipper<N>... ts) {
       configuration.setTo(clazz, ts);
     }
 
-    @SuppressWarnings("static-method") public fluentTrimmerApplication of(final String codeFragment) {
-      return new fluentTrimmerApplication(codeFragment);
+    @SuppressWarnings("static-method") public fluentTraverasalApplication of(final String codeFragment) {
+      return new fluentTraverasalApplication(codeFragment);
     }
   }
 }

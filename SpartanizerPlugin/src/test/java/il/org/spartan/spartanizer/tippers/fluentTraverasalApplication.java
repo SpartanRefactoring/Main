@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.trimming.*;
 /** TODO Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-public class fluentTrimmerApplication extends TraversalImplementation {
+public class fluentTraverasalApplication extends TraversalImplementation {
   public final String codeFragment;
   public final GuessedContext guessedContext;
   public final String wrappedFragment;
@@ -26,7 +26,7 @@ public class fluentTrimmerApplication extends TraversalImplementation {
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;
 
-  public fluentTrimmerApplication(final String codeFragment) {
+  public fluentTraverasalApplication(final String codeFragment) {
     this.codeFragment = codeFragment;
     assert codeFragment != null;
     dump.go(codeFragment);
@@ -136,7 +136,7 @@ public class fluentTrimmerApplication extends TraversalImplementation {
     return $.get();
   }
 
-  public fluentTrimmerApplication gives(final String expected) {
+  public fluentTraverasalApplication gives(final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {
       dump.go(this);
       azzert.fail(//
@@ -174,7 +174,7 @@ public class fluentTrimmerApplication extends TraversalImplementation {
               + "\n   to '" + expected + "', but for it converted instead" //
               + "\n   to '" + difference + "'!" //
       );
-    return new fluentTrimmerApplication(document.get());
+    return new fluentTraverasalApplication(document.get());
   }
 
   public void stays() {
