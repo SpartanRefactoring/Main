@@ -84,11 +84,11 @@ public class OperandBloating extends TestOperand {
         azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
       if (tide.clean(peeled1).equals(tide.clean(get())))
         azzert.that("Bloatong of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled1))));
-      if ($1.equals(peeled1) || trivia.essence(peeled1).equals(trivia.essence($1)))
+      if ($1.equals(peeled1) || Trivia.essence(peeled1).equals(Trivia.essence($1)))
         return new OperandBloating($1);
-      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", trivia.escapeQuotes(trivia.essence(peeled1)),
-          trivia.escapeQuotes(trivia.essence($1)));
-      azzert.that(trivia.essence(peeled1), is(trivia.essence($1)));
+      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", Trivia.escapeQuotes(Trivia.essence(peeled1)),
+          Trivia.escapeQuotes(Trivia.essence($1)));
+      azzert.that(Trivia.essence(peeled1), is(Trivia.essence($1)));
       return new OperandBloating($1);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       note.bug(this, ¢);
@@ -195,12 +195,12 @@ public class OperandBloating extends TestOperand {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get(), peeled = w.off(unpeeled);
-      if (wrap.equals(peeled) || trivia.essence(get()).equals(trivia.essence(peeled)))
+      if (wrap.equals(peeled) || Trivia.essence(get()).equals(Trivia.essence(peeled)))
         return;
       copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
-          trivia.escapeQuotes(trivia.essence(peeled)), //
-          trivia.escapeQuotes(trivia.essence(get())));
-      azzert.that(trivia.essence(peeled), is(trivia.essence(get())));
+          Trivia.escapeQuotes(Trivia.essence(peeled)), //
+          Trivia.escapeQuotes(Trivia.essence(get())));
+      azzert.that(Trivia.essence(peeled), is(Trivia.essence(get())));
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       note.bug(this, ¢);
     }
@@ -215,7 +215,7 @@ public class OperandBloating extends TestOperand {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
       final String unpeeled = doc.get();
-      if (wrap.equals(unpeeled) || trivia.essence(get()).equals(trivia.essence(unpeeled)))
+      if (wrap.equals(unpeeled) || Trivia.essence(get()).equals(Trivia.essence(unpeeled)))
         return;
       if (!unpeeled.equals(get()) && unpeeled.equals(get()))
         assertSimilar(get(), unpeeled);

@@ -47,11 +47,11 @@ public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTippe
       @Override @SuppressWarnings("unchecked") public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Expression> branchesExpressions = branchesExpressions(¢);
         r.replace(¢,
-            make.ast("holds(" + namer.cent + " ->"
+            make.ast("holds(" + Namer.cent + " ->"
                 + (differsInSingleAtomic(branchesExpressions(¢))
-                    ? replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), namer.cent) + ")"
+                    ? replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), Namer.cent) + ")"
                         + createOns(singleAtomicDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢)
-                    : replaceAll(first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", namer.cent) + ")"
+                    : replaceAll(first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", Namer.cent) + ")"
                         + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢))),
             g);
       }

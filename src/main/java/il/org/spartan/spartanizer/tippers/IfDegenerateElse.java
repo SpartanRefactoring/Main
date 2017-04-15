@@ -33,7 +33,7 @@ public final class IfDegenerateElse extends ReplaceCurrentNode<IfStatement>//
   }
 
   @Override public String description(final IfStatement ¢) {
-    return "Remove vacuous 'else' branch of 'if(" + trivia.gist(¢.getExpression() + "") + ")...'";
+    return "Remove vacuous 'else' branch of 'if(" + Trivia.gist(¢.getExpression() + "") + ")...'";
   }
 
   @Override public boolean prerequisite(final IfStatement ¢) {

@@ -42,7 +42,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
   }
 
   @Override public String description(final InfixExpression ¢) {
-    return description() + " around " + trivia.gist(¢);
+    return description() + " around " + Trivia.gist(¢);
   }
 
   @Override public Expression replacement(final InfixExpression x) {

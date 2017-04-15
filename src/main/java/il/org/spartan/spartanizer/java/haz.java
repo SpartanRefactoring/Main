@@ -79,11 +79,11 @@ public enum haz {
   }
 
   public static boolean cent(final ASTNode ¢) {
-    return !collect.usesOf(namer.cent).inside(¢).isEmpty();
+    return !collect.usesOf(Namer.cent).inside(¢).isEmpty();
   }
 
   public static boolean it(final ASTNode ¢) {
-    return !collect.usesOf(namer.it).inside(¢).isEmpty();
+    return !collect.usesOf(Namer.it).inside(¢).isEmpty();
   }
 
   /** Determine whether an {@link ASTNode} contains as a children a

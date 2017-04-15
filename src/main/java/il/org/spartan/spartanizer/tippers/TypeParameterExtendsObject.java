@@ -21,7 +21,7 @@ public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypePar
   private static final long serialVersionUID = -0x7B57A434F5B0573CL;
 
   @Override public String description(final TypeParameter ¢) {
-    return "Trim implicit extends " + trivia.gist(¢);
+    return "Trim implicit extends " + Trivia.gist(¢);
   }
 
   @Override public TypeParameter replacement(final TypeParameter p) {

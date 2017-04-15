@@ -41,12 +41,12 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     if ($ == null)
       return null;
     final SimpleName n = extract.onlyName(x);
-    if (n == null || in(n.getIdentifier(), namer.specials) || !JohnDoe.property(x.getType(), n))
+    if (n == null || in(n.getIdentifier(), Namer.specials) || !JohnDoe.property(x.getType(), n))
       return null;
     final Statement body = $.getBody();
     if (body == null || haz.variableDefinition(body) || haz.cent(body) || !Inliner.variableUsedInFor($, n))
       return null;
-    final SimpleName ¢ = namer.newCent(x);
+    final SimpleName ¢ = Namer.newCent(x);
     return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename(n, ¢, $, r, g);

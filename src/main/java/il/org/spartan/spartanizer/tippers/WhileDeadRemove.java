@@ -19,7 +19,7 @@ public class WhileDeadRemove extends ReplaceCurrentNode<WhileStatement>//
   }
 
   @Override public String description(final WhileStatement ¢) {
-    return "Remove :" + trivia.gist(¢);
+    return "Remove :" + Trivia.gist(¢);
   }
 
   @Override public ASTNode replacement(final WhileStatement ¢) {

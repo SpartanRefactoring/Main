@@ -39,12 +39,12 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     if (!JohnDoe.property(parameter))
       return null;
     final SimpleName $ = parameter.getName();
-    if (namer.isSpecial($))
+    if (Namer.isSpecial($))
       return null;
     final Block b = body(c);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    final SimpleName ¢ = namer.newCent(c);
+    final SimpleName ¢ = Namer.newCent(c);
     return new Tip(description(c), getClass(), c.getException().getName()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         action.rename($, ¢, c, r, g);

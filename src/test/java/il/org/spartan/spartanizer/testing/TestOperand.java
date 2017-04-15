@@ -74,11 +74,11 @@ public class TestOperand extends Wrapper<String> {
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
-    if ($.equals(peeled) || trivia.essence(peeled).equals(trivia.essence($)))
+    if ($.equals(peeled) || Trivia.essence(peeled).equals(Trivia.essence($)))
       return new TestOperand($);
-    copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", trivia.escapeQuotes(trivia.essence(peeled)),
-        trivia.escapeQuotes(trivia.essence($)));
-    azzert.that(trivia.essence(peeled), is(trivia.essence($)));
+    copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", Trivia.escapeQuotes(Trivia.essence(peeled)),
+        Trivia.escapeQuotes(Trivia.essence($)));
+    azzert.that(Trivia.essence(peeled), is(Trivia.essence($)));
     return new TestOperand($);
   }
 
@@ -105,7 +105,7 @@ public class TestOperand extends Wrapper<String> {
     if (tide.clean(peeled).equals(tide.clean(get())))
       azzert.that("Trimming of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled))));
     for (final String $ : options)
-      if (trivia.essence($).equals(trivia.essence(peeled)))
+      if (Trivia.essence($).equals(Trivia.essence(peeled)))
         return new TestOperand($);
     azzert.fail("Expects: " + peeled + " But none of the given options match");
     return null;
@@ -122,12 +122,12 @@ public class TestOperand extends Wrapper<String> {
     if (peeled.equals(get()) || tide.clean(peeled).equals(tide.clean(get())))
       return;
     final String expected = get();
-    if (expected.equals(peeled) || trivia.essence(peeled).equals(trivia.essence(expected)))
+    if (expected.equals(peeled) || Trivia.essence(peeled).equals(Trivia.essence(expected)))
       return;
     copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
-        trivia.escapeQuotes(trivia.essence(peeled)), //
-        trivia.escapeQuotes(trivia.essence(expected)));
-    azzert.that(trivia.essence(peeled), is(trivia.essence(expected)));
+        Trivia.escapeQuotes(Trivia.essence(peeled)), //
+        Trivia.escapeQuotes(Trivia.essence(expected)));
+    azzert.that(Trivia.essence(peeled), is(Trivia.essence(expected)));
   }
 
   public void rerun() {

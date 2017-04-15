@@ -73,7 +73,7 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
   }
 
   @Override public String description(final InfixExpression ¢) {
-    return "Remove noop of adding 0 in " + trivia.gist(¢);
+    return "Remove noop of adding 0 in " + Trivia.gist(¢);
   }
 
   @Override public Tip tip(final InfixExpression x) {

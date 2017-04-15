@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** A number of utility functions common to all tippers.
@@ -313,7 +314,32 @@ public enum action {
     return positivePrefixLength($) >= positivePrefixLength(action.invert($));
   }
 
-  private static int positivePrefixLength(final IfStatement $) {
+  public static int positivePrefixLength(final IfStatement $) {
     return metrics.length($.getExpression(), then($));
+  }
+
+  public static ListRewrite statementRewriter(final ASTRewrite r, final Statement s) {
+    return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
+        : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
+            : note.bug("Weird type of %s under %s", s, parent(s));
+  }
+
+  public static boolean leftSide(final Statement nextStatement, final String id) {
+    final Bool $ = new Bool();
+    // noinspection SameReturnValue
+    nextStatement.accept(new ASTVisitor(true) {
+      @Override public boolean visit(final Assignment ¢) {
+        if (iz.simpleName(left(¢))//
+            && identifier(az.simpleName(left(¢))).equals(id))
+          $.inner = true;
+        return true;
+      }
+    });
+    return $.inner;
+  }
+
+  public static SimpleName peelIdentifier(final Statement s, final String id) {
+    final List<SimpleName> $ = find.occurencesOf(s, id);
+    return $.size() != 1 ? null : first($);
   }
 }

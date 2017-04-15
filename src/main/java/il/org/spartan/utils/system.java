@@ -137,7 +137,7 @@ public interface system {
   }
 
   static String myShortClassName() {
-    return namer.lastComponent(myFullClassName());
+    return Namer.lastComponent(myFullClassName());
   }
 
   static String now() {
