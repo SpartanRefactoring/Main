@@ -25,8 +25,7 @@ enum CollectClassMetrics {
   }
 
   static CompilationUnit spartanize(final CompilationUnit $) {
-    final TextualTraversals t = new TextualTraversals();
-    t.once($);
+    new TextualTraversals().once($);
     return $;
   }
 

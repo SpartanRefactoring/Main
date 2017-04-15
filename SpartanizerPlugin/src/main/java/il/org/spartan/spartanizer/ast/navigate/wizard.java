@@ -209,7 +209,7 @@ public interface wizard {
     }
   };
   List<Predicate<Modifier>> visibilityModifiers = as.list(ModifierRedundant.isPublic, ModifierRedundant.isPrivate, ModifierRedundant.isProtected);
-  public static Range range(final ASTNode ¢) {
+  static Range range(final ASTNode ¢) {
     final int $ = ¢.getStartPosition();
     return new Range($, $ + ¢.getLength());
   }
@@ -601,7 +601,7 @@ public interface wizard {
         NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
 
-  static boolean isDefaultLiteral(final Expression ¢) {
+  static boolean notDefaultLiteral(final Expression ¢) {
     return !iz.nullLiteral(¢) && !iz.literal0(¢) && !literal.false¢(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
   }
 
@@ -700,7 +700,7 @@ public interface wizard {
   static <N extends ASTNode> int nodeType(final Class<N> ¢) {
     final Integer $ = classToNodeType.get(¢);
     return $ != null ? $.intValue()
-        : zero.ignoringAll(note.bug(fault.dump() + //
+        : zero.forgetting(note.bug(fault.dump() + //
             "\n c = " + ¢ + //
             "\n c.getSimpleName() = " + ¢.getSimpleName() + //
             "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //

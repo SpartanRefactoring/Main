@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
-public abstract class Fragment extends AbstractPattern<VariableDeclarationFragment> {
+public abstract class FragmentPattern extends AbstractPattern<VariableDeclarationFragment> {
   private static final long serialVersionUID = -0x5D2F121B3027EFA6L;
   protected Expression initializer;
   protected SimpleName name;
@@ -18,7 +18,7 @@ public abstract class Fragment extends AbstractPattern<VariableDeclarationFragme
     return name;
   }
 
-  protected Fragment() {
+  protected FragmentPattern() {
     andAlso("Inapplicable on annotated fragments", () -> {
       if (haz.annotation(current()))
         return false;

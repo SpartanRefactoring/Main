@@ -119,8 +119,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
       return null¢.ignoringAll(note.bug("Missing attribute"));
     if (!(o instanceof Class))
       return null¢.ignoringAll(note.bug("Attribute of wrong type"));
-    final Class<?> clazz = (Class<?>) o;
-    @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> tipperClass = (Class<? extends Tipper<N>>) clazz;
+    @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> tipperClass = (Class<? extends Tipper<N>>) (Class<?>) o;
     return Tipper.instantiate(tipperClass);
   }
 
