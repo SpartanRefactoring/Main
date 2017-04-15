@@ -66,9 +66,4 @@ public class InteractiveSpartanizer {
     traversals.trimmer.configuration.remove(c, ts);
     return this;
   }
-
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer adxd(final Integer i, final Tipper<N>... ts) {
-    traversals.trimmer.configuration.add(i, ts);
-    return this;
-  }
 }
