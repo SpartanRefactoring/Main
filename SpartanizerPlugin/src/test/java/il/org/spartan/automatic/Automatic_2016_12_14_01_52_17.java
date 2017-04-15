@@ -7,7 +7,7 @@ import org.junit.*;
 /** Auto generated
  * @author Ori Roth
  * @since 2016_12_14 */
-// @Ignore // TODO Yuval: is part of your issue --or
+// @Forget // TODO Yuval: is part of your issue --or
 @SuppressWarnings("static-method")
 public class Automatic_2016_12_14_01_52_17 {
  /** Test created automatically due to java.lang.NullPointerException thrown

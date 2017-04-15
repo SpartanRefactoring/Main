@@ -341,7 +341,7 @@ public class Version300 {
     azzert.that(system.myShortClassName(), is(getClass().getSimpleName()));
   }
 
-  // @Ignore("Unignore one by one")
+  // @Forget("Unignore one by one")
   @Test public void negationPushdownTernary() {
     trimminKof("a = !(b ? c: d)")//
         .using(new PrefixNotPushdown(), PrefixExpression.class)//

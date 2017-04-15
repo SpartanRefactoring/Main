@@ -4,7 +4,7 @@ package il.org.spartan.utils.fluent;
  * 
  * @author Yossi Gil
  * @since 2017-04-16 */
-public interface void¢ {
+public interface Forget {
   @SuppressWarnings("unused") static void it(final boolean __) { /**/ }
   @SuppressWarnings("unused") static void it(final double __) { /**/ }
   @SuppressWarnings("unused") static void it(final long __) { /**/ }
