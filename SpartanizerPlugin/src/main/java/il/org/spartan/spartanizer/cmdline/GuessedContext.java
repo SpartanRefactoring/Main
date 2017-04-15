@@ -83,8 +83,7 @@ public enum GuessedContext {
     final GuessedContext $ = qfind(codeFragment);
     if ($ != null)
       return $;
-    note.info("GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n\n" + enumerateFailingAttempts(codeFragment));
-    return GuessedContext.STATEMENTS_LOOK_ALIKE;
+    throw new AssertionError("GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n\n" + enumerateFailingAttempts(codeFragment));
   }
 
   public static GuessedContext qfind(final String codeFragment) {
