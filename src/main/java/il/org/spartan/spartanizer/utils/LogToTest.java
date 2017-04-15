@@ -109,7 +109,7 @@ public enum LogToTest {
         "package il.org.spartan.automatic;\n\nimport static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"
             + "import org.junit.*;\n\n/** @author Ori Roth\n* @since " + new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + " */\n" //
             + "@SuppressWarnings(\"static-method\")\n" //
-            + "@Ignore\n" //
+            + "@Forget\n" //
             + "public class " + fileName + " {\n");
     ss.forEach(λ -> $.append(λ).append("\n"));
     return format.code($.append("}\n") + "");
