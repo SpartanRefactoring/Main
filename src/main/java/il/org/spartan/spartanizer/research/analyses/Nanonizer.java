@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.trimming.*;
 /** A Spartanizer which also applies nano patterns.
  * @author Ori Marcovitch
  * @since Dec 15, 2016 */
-public class Nanonizer extends NoBraindDamagedTippersSpartanizer {
+public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
   public Nanonizer() {
     addNanoPatterns();
   }
@@ -172,12 +172,12 @@ public class Nanonizer extends NoBraindDamagedTippersSpartanizer {
 
   public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
-    configuration().getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
+    traversals.trimmer.configuration.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
   }
 
   public Nanonizer removeSpartanizerTippers() {
-    this.setConfiguration(Configurations.empty());
+    traversals.trimmer.configuration.clear();
     addNanoPatterns();
     return this;
   }

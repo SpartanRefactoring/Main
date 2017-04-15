@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.trimming.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
-  static int countOpportunities(final GUITraversal a, final CompilationUnit u) {
-    return a.trimmer.collectTips(u).size();
+  static int countOpportunities(final GUITraversal t, final CompilationUnit u) {
+    return t.trimmer.collectTips(u).size();
   }
 
   static fluentTrimmerApplication of(final String codeFragment) {
@@ -117,8 +117,8 @@ public interface trim {
   }
 
   class fluentTrimmer extends TrimmerImplementation {
-    @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ws) {
-      super(Configurations.make(clazz, ws));
+    @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ts) {
+      configuration.setTo(clazz, ts);
     }
 
     @SuppressWarnings("static-method") public fluentTrimmerApplication of(final String codeFragment) {

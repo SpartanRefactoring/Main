@@ -27,13 +27,6 @@ import il.org.spartan.utils.fluent.*;
  * @since 2015/07/10 */
 public class TrimmerImplementation extends Trimmer {
   /** Instantiates this class */
-  public TrimmerImplementation() {
-    this(Configurations.all());
-  }
-
-  public TrimmerImplementation(final Configuration globalConfiguration) {
-    this.setGlobalConfiguration(globalConfiguration);
-  }
 
   public ASTRewrite bottomUp(final CompilationUnit u) {
     setCompilationUnit(u);
@@ -126,7 +119,7 @@ public class TrimmerImplementation extends Trimmer {
 
   protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
     return robust.lyNull(() -> {
-      final Tipper<N> $ = currentConfiguration().firstTipper(¢);
+      final Tipper<N> $ = configuration.firstTipper(¢);
       setTipper($);
       return $;
     }, λ -> note.bug(λ));
@@ -150,8 +143,6 @@ public class TrimmerImplementation extends Trimmer {
       }
 
       @Override protected void initialization(final ASTNode ¢) {
-        setCurrentConfiguration(
-            !useProjectPreferences || !(¢ instanceof CompilationUnit) ? getGlobalConfiguration() : getPreferredConfiguration((CompilationUnit) ¢));
         disabling.scan(¢);
       }
     };
@@ -173,11 +164,4 @@ public class TrimmerImplementation extends Trimmer {
       notify.tipperTip();
   }
 
-  public Configuration getGlobalConfiguration() {
-    return globalConfiguration;
-  }
-
-  public void setGlobalConfiguration(Configuration globalConfiguration) {
-    this.globalConfiguration = globalConfiguration;
-  }
 }

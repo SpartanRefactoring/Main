@@ -11,7 +11,7 @@ import il.org.spartan.utils.fluent.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-14 */
-public class TextualTrimmer {
+public class TextualTraversals {
   public final Trimmer trimmer = new TrimmerImplementation()//
       .push(new TrimmingTapper() {
         @Override public void begin() {

@@ -18,7 +18,7 @@ import il.org.spartan.utils.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-07 */
 public class Table_Nodes_Coverage {
-  static final NoBraindDamagedTippersSpartanizer spartanizer = new NoBraindDamagedTippersSpartanizer();
+  static final NoBrainDamagedTippersSpartanizer spartanizer = new NoBrainDamagedTippersSpartanizer();
   protected static final Nanonizer nanonizer = new Nanonizer();
   static final CompilationUnitCoverageStatistics statistics = new CompilationUnitCoverageStatistics();
   private static Table writer;

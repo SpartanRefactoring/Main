@@ -149,11 +149,11 @@ public class TrimmingOperand extends Wrapper<String> {
   }
 
   @SafeVarargs public final <N extends ASTNode> TrimmingOperand using(final Class<N> c, final Tipper<N>... ts) {
-    as.list(ts).forEach(λ -> trimmer.addSingleTipper(c, λ));
+    trimmer.configuration.setTo(c,ts);
     return this;
   }
 
-  @SafeVarargs public final  TrimmingOperand usingTipper(final Tipper<?>... ¢1) {
+  @SafeVarargs public final  TrimmingOperand using(final Tipper<?>... ¢1) {
     trimmer.configuration.restrictTo(¢1);
     return this;
   }
