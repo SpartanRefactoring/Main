@@ -1,8 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
-import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -10,6 +7,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -18,7 +16,7 @@ import il.org.spartan.spartanizer.trimming.*;
 /** TODO Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-public class fluentTrimmerApplication extends TrimmerImplementation.With {
+public class fluentTrimmerApplication extends TrimmerImplementation {
   public final String codeFragment;
   public final GuessedContext guessedContext;
   public final String wrappedFragment;
@@ -28,8 +26,7 @@ public class fluentTrimmerApplication extends TrimmerImplementation.With {
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;
 
-  public fluentTrimmerApplication(final Trimmer t, final String codeFragment) {
-    t.super();
+  public fluentTrimmerApplication(final String codeFragment) {
     this.codeFragment = codeFragment;
     assert codeFragment != null;
     dump.go(codeFragment);
@@ -45,7 +42,7 @@ public class fluentTrimmerApplication extends TrimmerImplementation.With {
     dump.go(document.get(), "and this is its content");
     compilationUnit = guessedContext.intoCompilationUnit(document.get());
     assert compilationUnit != null;
-    createRewrite = current().createRewrite(compilationUnit);
+    createRewrite = go(compilationUnit); 
     assert createRewrite != null;
     textEdit = createRewrite.rewriteAST(document, null);
     assert textEdit != null;
@@ -80,7 +77,7 @@ public class fluentTrimmerApplication extends TrimmerImplementation.With {
   /** creates an ASTRewrite which contains the changes
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite() {
-    return createRewrite(nullProgressMonitor);
+    return createRewrite(op.nullProgressMonitor);
   }
 
   /** creates an ASTRewrite which contains the changes
@@ -88,23 +85,17 @@ public class fluentTrimmerApplication extends TrimmerImplementation.With {
    *        displayed
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite(final IProgressMonitor ¢) {
-    return createRewrite(¢, null);
-  }
-
-  private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m) {
-    pm.beginTask("Creating rewrite operation...", 1);
+    ¢.beginTask("Creating rewrite operation...", 1);
     final ASTRewrite $ = ASTRewrite.create(compilationUnit.getAST());
-    fillRewrite($, m);
-    pm.done();
+    fillRewrite($);
+    ¢.done();
     return $;
   }
 
-  protected final void fillRewrite(final ASTRewrite r, final IMarker m) {
+  protected final void fillRewrite(final ASTRewrite r) {
     compilationUnit.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
-        if (!current().inRange(m, n))
-          return true;
-        final Tipper<N> w = current().globalConfiguration.firstTipper(n);
+        final Tipper<N> w = configuration.firstTipper(n);
         if (w == null)
           return true;
         final Tip make = w.tip(n);
@@ -183,7 +174,7 @@ public class fluentTrimmerApplication extends TrimmerImplementation.With {
               + "\n   to '" + expected + "', but for it converted instead" //
               + "\n   to '" + difference + "'!" //
       );
-    return new fluentTrimmerApplication(current(), document.get());
+    return new fluentTrimmerApplication(document.get());
   }
 
   public void stays() {

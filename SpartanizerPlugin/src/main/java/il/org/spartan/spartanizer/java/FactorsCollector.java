@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 // TOOD Niv: Who wrote this class?
@@ -72,7 +73,7 @@ final class FactorsCollector {
 
   private Void addDivide(final Expression x) {
     assert x != null;
-    final Expression ¢ = minus.level(x) % 2 == 0 ? minus.peel(x) : subject.operand(minus.peel(x)).to(wizard.MINUS1);
+    final Expression ¢ = minus.level(x) % 2 == 0 ? minus.peel(x) : subject.operand(minus.peel(x)).to(op.MINUS1);
     all.add(Factor.divide(¢));
     dividers.add(¢);
     return null;
@@ -89,7 +90,7 @@ final class FactorsCollector {
 
   private Void addTimes(final Expression x) {
     assert x != null;
-    final Expression ¢ = minus.level(x) % 2 == 0 ? minus.peel(x) : subject.operand(minus.peel(x)).to(wizard.MINUS1);
+    final Expression ¢ = minus.level(x) % 2 == 0 ? minus.peel(x) : subject.operand(minus.peel(x)).to(op.MINUS1);
     multipliers.add(¢);
     all.add(Factor.times(¢));
     return null;

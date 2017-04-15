@@ -23,6 +23,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
@@ -357,7 +358,7 @@ public interface type {
 
       default implementation aboveBinaryOperator(final InfixExpression.Operator ¢) {
         return in(¢, EQUALS, NOT_EQUALS) ? this
-            : ¢ == wizard.PLUS2 ? asAlphaNumeric()
+            : ¢ == op.PLUS2 ? asAlphaNumeric()
                 : wizard.isBitwiseOperator(¢) ? asBooleanIntegral() : wizard.isShift(¢) ? asIntegral() : asNumeric();
       }
 
@@ -433,7 +434,7 @@ public interface type {
        *         {@link BOOLEANINTEGRAL} {@link #NUMERIC} , or
        *         {@link #ALPHANUMERIC} , in case it cannot decide */
       default implementation underBinaryOperator(final InfixExpression.Operator o, final implementation k) {
-        if (o == wizard.PLUS2)
+        if (o == op.PLUS2)
           return underPlus(k);
         if (wizard.isComparison(o))
           return BOOLEAN;
@@ -443,7 +444,7 @@ public interface type {
           return underIntegersOnlyOperator(k);
         if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
           return asIntegralUnderOperation();
-        if (!in(o, TIMES, DIVIDE, wizard.MINUS2))
+        if (!in(o, TIMES, DIVIDE, op.MINUS2))
           throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
         return underNumericOnlyOperator(k);
       }

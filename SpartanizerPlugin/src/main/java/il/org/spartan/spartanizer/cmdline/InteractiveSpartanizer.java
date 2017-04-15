@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.trimming.*;
 
@@ -46,15 +47,21 @@ public class InteractiveSpartanizer {
    * @param from what to process
    * @return trimmed text */
   public String fixedPoint(final String from) {
-    return new TrimmerImplementation(configuration()).fixed(from);
+    final TextualTrimmer $ = new TextualTrimmer();
+    $.trimmer.setCurrentConfiguration(configuration);
+    return $.fixed(from + "");
   }
 
   public String fixedPoint(final ASTNode from) {
-    return new TrimmerImplementation(configuration()).fixed(from + "");
+    final TextualTrimmer $ = new TextualTrimmer();
+    $.trimmer.setCurrentConfiguration(configuration);
+    return $.fixed(from + "");
   }
 
   public String once(final String from) {
-    return new TrimmerImplementation(configuration()).once(from);
+    final TextualTrimmer $ = new TextualTrimmer();
+    $.trimmer.setCurrentConfiguration(configuration);
+    return $.once(from);
   }
 
   boolean changed;
@@ -75,7 +82,7 @@ public class InteractiveSpartanizer {
     return this;
   }
 
-  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer add(final Integer i, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer adxd(final Integer i, final Tipper<N>... ts) {
     if (!changed)
       this.setConfiguration(Configurations.allClone());
     changed = true;

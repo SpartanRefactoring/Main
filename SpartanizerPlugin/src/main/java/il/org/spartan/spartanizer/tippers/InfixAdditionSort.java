@@ -26,6 +26,6 @@ public final class InfixAdditionSort extends InfixExpressionSortingFull//
   }
 
   @Override protected boolean suitable(final InfixExpression ¢) {
-    return in(¢.getOperator(), PLUS2) && type.isNotString(¢);
+    return in(¢.getOperator(), op.PLUS2) && type.isNotString(¢);
   }
 }

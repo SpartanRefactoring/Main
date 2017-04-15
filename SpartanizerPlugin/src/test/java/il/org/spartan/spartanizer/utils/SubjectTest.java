@@ -49,11 +49,11 @@ public final class SubjectTest {
   }
 
   @Test public void extractcoreLeft() {
-    azzert.that(subject.pair(e("((a-B))"), e("c-d")).to(PLUS2), iz("a - B + c - d"));
+    azzert.that(subject.pair(e("((a-B))"), e("c-d")).to(op.PLUS2), iz("a - B + c - d"));
   }
 
   @Test public void extractcoreRight() {
-    azzert.that(subject.pair(e("a-B"), e("(c-d)")).to(PLUS2), iz("a - B + c - d"));
+    azzert.that(subject.pair(e("a-B"), e("(c-d)")).to(op.PLUS2), iz("a - B + c - d"));
   }
 
   @Test public void makeIfNotStatement() {
@@ -85,7 +85,7 @@ public final class SubjectTest {
   }
 
   @Test public void operandsNoParenthesisRest() {
-    azzert.that(subject.operands(e("((a-b))"), e("b-c"), e("c+d")).to(PLUS2), iz("a-b+b-c+c+d"));
+    azzert.that(subject.operands(e("((a-b))"), e("b-c"), e("c+d")).to(op.PLUS2), iz("a-b+b-c+c+d"));
   }
 
   @Test public void operandsParenthesisLeft() {
@@ -101,7 +101,7 @@ public final class SubjectTest {
   }
 
   @Test public void operandsVanilla() {
-    azzert.that(subject.operands(e("((a))"), e("b"), e("c")).to(PLUS2), iz("a+b+c"));
+    azzert.that(subject.operands(e("((a))"), e("b"), e("c")).to(op.PLUS2), iz("a+b+c"));
   }
 
   @Test public void postfix() {

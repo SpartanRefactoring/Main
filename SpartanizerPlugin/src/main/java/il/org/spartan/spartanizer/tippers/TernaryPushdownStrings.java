@@ -100,28 +100,28 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
 
   private static Expression replacementPrefix(final String then, final String elze, final int commonPrefixIndex, final Expression condition) {
     return subject.pair(getPrefix(then, commonPrefixIndex, condition), subject.pair(getSuffix(then, commonPrefixIndex, condition), //
-        getSuffix(elze, commonPrefixIndex, condition)).toCondition(condition)).to(PLUS2);
+        getSuffix(elze, commonPrefixIndex, condition)).toCondition(condition)).to(op.PLUS2);
   }
 
   private static Expression replacementSuffix(final String then, final String elze, final int commonSuffixLength, final Expression condition) {
     return subject.pair(
         subject.operand(subject.pair(getPrefix(then, then.length() - commonSuffixLength, condition)//
             , getPrefix(elze, elze.length() - commonSuffixLength, condition)).toCondition(condition)).parenthesis()//
-        , getSuffix(then, then.length() - commonSuffixLength, condition)).to(PLUS2);
+        , getSuffix(then, then.length() - commonSuffixLength, condition)).to(op.PLUS2);
   }
 
   private static InfixExpression replacePrefix(final InfixExpression x, final int i) {
-    assert x.getOperator() == PLUS2;
+    assert x.getOperator() == op.PLUS2;
     final List<Expression> $ = extract.allOperands(x);
     final StringLiteral l = az.stringLiteral(first($));
     assert l != null;
     assert l.getLiteralValue().length() >= i;
     replaceFirst($, getSuffix(l.getLiteralValue(), i, x));
-    return subject.operands($).to(PLUS2);
+    return subject.operands($).to(op.PLUS2);
   }
 
   private static InfixExpression replaceSuffix(final InfixExpression x, final int i) {
-    assert x.getOperator() == PLUS2;
+    assert x.getOperator() == op.PLUS2;
     final List<Expression> $ = extract.allOperands(x);
     final StringLiteral l = az.stringLiteral(last($));
     assert l != null;
@@ -132,7 +132,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
         "\n l = " + l + //
         fault.done();
     replaceLast($, getPrefix(l.getLiteralValue(), l.getLiteralValue().length() - i, x));
-    return subject.operands($).to(PLUS2);
+    return subject.operands($).to(op.PLUS2);
   }
 
   private static String shorter(final String s1, final String s2) {
@@ -153,13 +153,13 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
 
   private static Expression simplify(final Expression condition, final StringLiteral then, final InfixExpression elze) {
     final String $ = then.getLiteralValue();
-    assert elze.getOperator() == PLUS2;
+    assert elze.getOperator() == op.PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
     if (iz.stringLiteral(first(elzeOperands))) {
       final int commonPrefixIndex = firstDifference($, az.stringLiteral(first(elzeOperands)).getLiteralValue());
       if (commonPrefixIndex != 0)
         return subject.pair(getPrefix($, commonPrefixIndex, condition), subject.pair(getSuffix($, commonPrefixIndex, condition), //
-            replacePrefix(elze, commonPrefixIndex)).toCondition(condition)).to(PLUS2);
+            replacePrefix(elze, commonPrefixIndex)).toCondition(condition)).to(op.PLUS2);
     }
     if (!iz.stringLiteral(last(elzeOperands)))
       return null;
@@ -173,7 +173,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
             .pair(getPrefix($, $.length() - commonSuffixIndex, condition)//
                 , replaceSuffix(elze, commonSuffixIndex))//
             .toCondition(condition)).parenthesis(), getSuffix($, $.length() - commonSuffixIndex, condition))//
-        .to(PLUS2);
+        .to(op.PLUS2);
   }
 
   private static Expression simplify(final Expression condition, final StringLiteral then, final StringLiteral elze) {
@@ -181,9 +181,9 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   }
 
   private static Expression simplifyStrings(final InfixExpression then, final InfixExpression elze, final Expression condition) {
-    assert then.getOperator() == PLUS2;
+    assert then.getOperator() == op.PLUS2;
     final List<Expression> thenOperands = extract.allOperands(then);
-    assert elze.getOperator() == PLUS2;
+    assert elze.getOperator() == op.PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
     if (iz.stringLiteral(first(thenOperands)) && iz.stringLiteral(first(elzeOperands))) {
       final String $ = az.stringLiteral(first(thenOperands)).getLiteralValue();
@@ -194,7 +194,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
                 .pair(//
                     replacePrefix(then, commonPrefixIndex), replacePrefix(elze, commonPrefixIndex))//
                 .toCondition(condition))
-            .to(PLUS2);
+            .to(op.PLUS2);
     }
     if (!iz.stringLiteral(last(thenOperands)) || !iz.stringLiteral(last(elzeOperands)))
       return null;
@@ -204,7 +204,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
         : subject.pair(subject.operand(subject
             .pair(replaceSuffix(then, commonSuffixIndex)//
                 , replaceSuffix(elze, commonSuffixIndex))//
-            .toCondition(condition)).parenthesis(), getSuffix(thenStr, thenStr.length() - commonSuffixIndex, condition)).to(PLUS2);
+            .toCondition(condition)).parenthesis(), getSuffix(thenStr, thenStr.length() - commonSuffixIndex, condition)).to(op.PLUS2);
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {

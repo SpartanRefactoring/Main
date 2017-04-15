@@ -29,7 +29,7 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
     final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
-    final InfixExpression $ = subject.pair(make.emptyString(i), receiver).to(PLUS2);
+    final InfixExpression $ = subject.pair(make.emptyString(i), receiver).to(op.PLUS2);
     return !iz.methodInvocation(parent(i)) ? $ : make.parethesized($);
   }
 }

@@ -410,7 +410,7 @@ public interface iz {
   }
 
   static boolean deterministic(final PrefixExpression ¢) {
-    return !in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE) && deterministic(¢.getOperand());
+    return !in(¢.getOperator(), op.INCREMENT_PRE, op.DECREMENT_PRE) && deterministic(¢.getOperand());
   }
 
   static boolean deterministic(final Stream<Expression> ¢) {
@@ -620,11 +620,11 @@ public interface iz {
   }
 
   static boolean infixMinus(final ASTNode ¢) {
-    return operator(az.infixExpression(¢)) == MINUS2;
+    return operator(az.infixExpression(¢)) == op.MINUS2;
   }
 
   static boolean infixPlus(final ASTNode ¢) {
-    return operator(az.infixExpression(¢)) == PLUS2;
+    return operator(az.infixExpression(¢)) == op.PLUS2;
   }
 
   static boolean infixTimes(final Expression ¢) {
@@ -952,7 +952,7 @@ public interface iz {
   }
 
   static boolean prefixMinus(final Expression ¢) {
-    return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == MINUS1;
+    return iz.prefixExpression(¢) && az.prefixExpression(¢).getOperator() == op.MINUS1;
   }
 
   /** @param ¢ JD
@@ -1202,7 +1202,7 @@ public interface iz {
   }
 
   static boolean updater(final PrefixExpression ¢) {
-    return in(¢.getOperator(), INCREMENT_PRE, DECREMENT_PRE);
+    return in(¢.getOperator(), op.INCREMENT_PRE, op.DECREMENT_PRE);
   }
 
   /** @param pattern JD

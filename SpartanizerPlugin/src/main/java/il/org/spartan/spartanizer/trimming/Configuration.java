@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -18,6 +19,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Configuration {
+  public Configuration() {}
+
   @Override public Configuration clone() {
     final Configuration $ = new Configuration();
     int i = 0;
@@ -69,17 +72,10 @@ public class Configuration {
    * @param ts JD
    * @return {@code this}, for easy chaining. */
   @SafeVarargs public final <N extends ASTNode> Configuration add(final Class<N> c, final Tipper<N>... ts) {
-    final Integer $ = wizard.classToNodeType.get(c);
-    assert $ != null : fault.dump() + //
-        "\n c = " + c + //
-        "\n c.getSimpleName() = " + c.getSimpleName() + //
-        "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
-        "\n classForNodeType = " + wizard.classToNodeType + //
-        fault.done();
-    return add($, ts);
+    return add(wizard.nodeType(c), ts);
   }
 
-  @SafeVarargs public final <N extends ASTNode> Configuration add(final Integer nodeType, final Tipper<N>... ts) {
+  @SafeVarargs public final <N extends ASTNode> Configuration add(final int nodeType, final Tipper<N>... ts) {
     for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
         break;
@@ -90,19 +86,18 @@ public class Configuration {
               Tippers.name(¢), //
               ¢.description()));//
       if (¢.tipperGroup().isEnabled())
-        get(nodeType.intValue()).add(¢);
+        get(nodeType).add(¢);
     }
     return this;
   }
 
   @SafeVarargs public final <N extends ASTNode> Configuration remove(final Class<N> c, final Tipper<N>... ts) {
-    final Integer nodeType = wizard.classToNodeType.get(c);
+    final int nodeType = wizard.nodeType(c);
     for (final Tipper<N> ¢ : ts)
-      get(nodeType.intValue()).remove(¢);
+      get(nodeType).remove(¢);
     return this;
   }
-
-  public Collection<Tipper<? extends ASTNode>> getAllTippers() {
+public Collection<Tipper<? extends ASTNode>> getAllTippers() {
     final Collection<Tipper<? extends ASTNode>> $ = new ArrayList<>();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
@@ -129,11 +124,22 @@ public class Configuration {
     return Stream.of(implementation).filter(Objects::nonNull).mapToInt(List::size).sum();
   }
 
-  public int nodesTypeCount() {
-    return (int) Stream.of(implementation).filter(Objects::nonNull).count();
+  public long nodesTypeCount() {
+    return Stream.of(implementation).filter(Objects::nonNull).count();
   }
 
-  <N extends ASTNode> Collection<Tipper<? extends ASTNode>> get(final N ¢) {
+  Collection<Tipper<? extends ASTNode>> get(final ASTNode ¢) {
     return get(¢.getNodeType());
+  }
+
+  @SafeVarargs public final  Configuration restrictTo(Tipper<?> ...ts) {
+    Stream.of(implementation).forEach(x -> x.removeIf(λ -> iz.in(λ,ts)));
+    return this;
+  }
+
+  public <N extends ASTNode> Configuration setTo(Class<N> c, Tipper<N> t) {
+    Stream.of(implementation).forEach(λ -> λ.clear());
+    get(wizard.nodeType(c)).add(t);
+    return this;
   }
 }

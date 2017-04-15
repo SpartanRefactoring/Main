@@ -7,7 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil
@@ -32,16 +32,16 @@ public enum TermsReorganizer {
     if (rest.isEmpty())
       return first;
     rest.add(0, first);
-    return subject.operands(rest).to(wizard.MINUS2);
+    return subject.operands(rest).to(op.MINUS2);
   }
 
   private static Expression buildMinus(final List<Expression> ¢) {
-    final Expression $ = subject.operand(first(¢)).to(wizard.MINUS1);
+    final Expression $ = subject.operand(first(¢)).to(op.MINUS1);
     if (¢.size() == 1)
       return $;
     ¢.remove(0);
     ¢.add(0, $);
-    return subject.operands(¢).to(wizard.MINUS2);
+    return subject.operands(¢).to(op.MINUS2);
   }
 
   private static Expression buildPlus(final List<Expression> ¢) {
@@ -51,9 +51,9 @@ public enum TermsReorganizer {
       case 1:
         return first(¢);
       case 2:
-        return subject.pair(first(¢), second(¢)).to(wizard.PLUS2);
+        return subject.pair(first(¢), second(¢)).to(op.PLUS2);
       default:
-        return subject.operands(¢).to(wizard.PLUS2);
+        return subject.operands(¢).to(op.PLUS2);
     }
   }
 }

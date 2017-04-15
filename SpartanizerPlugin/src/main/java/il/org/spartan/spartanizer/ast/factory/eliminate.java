@@ -14,6 +14,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** takes care of of multiplicative terms with minus symbol in them.
@@ -74,11 +75,11 @@ public enum eliminate {
   }
 
   public static Expression peel(final PrefixExpression $) {
-    return out($.getOperator(), wizard.MINUS1, wizard.PLUS1) ? $ : peel($.getOperand());
+    return out($.getOperator(), op.MINUS1, op.PLUS1) ? $ : peel($.getOperand());
   }
 
   private static int level(final PrefixExpression ¢) {
-    return az.bit(¢.getOperator() == wizard.MINUS1) + level(¢.getOperand());
+    return az.bit(¢.getOperator() == op.MINUS1) + level(¢.getOperand());
   }
 
   private static List<Expression> peel(final Collection<Expression> ¢) {

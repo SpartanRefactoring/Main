@@ -4,22 +4,16 @@ import static il.org.spartan.spartanizer.engine.Tip.*;
 
 import static java.util.stream.Collectors.*;
 
-import java.util.function.*;
-
-import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
-import il.org.spartan.bloater.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
-/** Apply a {@link Configuration} to a tree. 
- * Issues are
+/** Apply a {@link Configuration} to a tree. Issues are
  * <ol>
  * <li>Top down or bottom up traversal
  * <li>Overlapping in the domain of distinct tippers
@@ -38,17 +32,18 @@ public class TrimmerImplementation extends Trimmer {
   }
 
   public TrimmerImplementation(final Configuration globalConfiguration) {
-    super(system.myShortClassName());
-    this.globalConfiguration = globalConfiguration;
+    this.setGlobalConfiguration(globalConfiguration);
   }
 
-  public ASTRewrite bottomUp(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
+  public ASTRewrite bottomUp(final CompilationUnit u) {
     setCompilationUnit(u);
     final Tips tips = Tips.empty();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
-        if (!check(¢) || !inRange(m, ¢) || disabling.on(¢))
+        if (wizard.disjoint(¢,getRange()))
+          return false;
+        if (!check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
         if (tip() == null)
@@ -60,8 +55,6 @@ public class TrimmerImplementation extends Trimmer {
         });
         if (tip() != null)
           tips.add(tip());
-        if (nodeLogger != null)
-          nodeLogger.accept(¢);
         return true;
       }
 
@@ -71,63 +64,57 @@ public class TrimmerImplementation extends Trimmer {
     });
     setRewrite(ASTRewrite.create(u.getAST()));
     for (final Tip ¢ : tips) {
-      tip = ¢;
-      tip().go(getRewrite(), currentEditGroup());
-      notify.tipRewrite();
+      setTip(¢);
+      applyTip();
     }
     return getRewrite();
   }
 
-  public ASTRewrite computeMaximalRewrite(final CompilationUnit ¢) {
-    return computeMaximalRewrite(¢, null, null);
+  private void applyTip() {
+    tip().go(getRewrite(), currentEditGroup());
+    notify.tipRewrite();
   }
 
-  @Override public ASTRewrite computeMaximalRewrite(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
+  @Override public ASTRewrite go(final CompilationUnit u) {
     setCompilationUnit(u);
-    topDown(u, m, nodeLogger);
+    topDown(u);
     return rewrite();
   }
 
-  @SafeVarargs public final <N extends ASTNode> GUIConfigurationApplicator fix(final Class<N> c, final Tipper<N>... ts) {
-    if (firstAddition) {
-      firstAddition = false;
-      globalConfiguration = new Configuration();
-    }
-    globalConfiguration.add(c, ts);
+  @SafeVarargs public final <N extends ASTNode> Trimmer restrictConfiguration(final Tipper<N>... ¢) {
+    configuration.restrictTo(¢);
     return this;
   }
 
-  @SafeVarargs public final GUIConfigurationApplicator fixBloater(final Tipper<?>... ¢) {
-    return fix(InflaterProvider.freshCopyOfAllExpanders(), ¢);
+  public final <N extends ASTNode> Trimmer fixBloater(final Tipper<N> ¢) {
+    return restrictConfiguration(¢);
   }
 
-  @SafeVarargs public final GUIConfigurationApplicator fixTipper(final Tipper<?>... ¢) {
-    return fix(Configurations.allClone(), ¢);
+  @SafeVarargs public final <N extends ASTNode> Trimmer fixTipper(final Tipper<N>... ¢) {
+    return restrictConfiguration(¢);
   }
 
-  private void topDown(final CompilationUnit u, final IMarker m, final Consumer<ASTNode> nodeLogger) {
+  private void topDown(final CompilationUnit u) {
     final Tips tips = Tips.empty();
     setRewrite(ASTRewrite.create(u.getAST()));
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
-        if (!check(¢) || !inRange(m, ¢) || disabling.on(¢))
+        if (wizard.disjoint(¢,getRange()))
+          return false;
+        if (!check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
         if (tip() == null)
           return true;
-        for (final Tip t : tips) {
-          setAuxiliaryTip(t);
+        for (final Tip t : tips)
           if ((setAuxiliaryTip(t)) != null && Tip.overlap(t.span, tip().span)) {
             notify.tipPrune();
             return false;
           }
-        }
         tips.add(tip());
         tip().go(rewrite(), currentEditGroup());
         notify.tipRewrite();
-        if (nodeLogger != null)
-          nodeLogger.accept(¢);
         return false;
       }
 
@@ -145,8 +132,7 @@ public class TrimmerImplementation extends Trimmer {
     }, λ -> note.bug(λ));
   }
 
-  @Override protected ASTVisitor tipsCollector(final Tips into) {
-    Configurations.refresh(this);
+  @Override public ASTVisitor tipsCollector(final Tips into) {
     fileName = English.unknownIfNull(compilationUnit(), λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -164,8 +150,8 @@ public class TrimmerImplementation extends Trimmer {
       }
 
       @Override protected void initialization(final ASTNode ¢) {
-        setCurrentConfiguration(!useProjectPreferences || !(¢ instanceof CompilationUnit) ? globalConfiguration
-            : getPreferredConfiguration((CompilationUnit) ¢));
+        setCurrentConfiguration(
+            !useProjectPreferences || !(¢ instanceof CompilationUnit) ? getGlobalConfiguration() : getPreferredConfiguration((CompilationUnit) ¢));
         disabling.scan(¢);
       }
     };
@@ -187,5 +173,11 @@ public class TrimmerImplementation extends Trimmer {
       notify.tipperTip();
   }
 
+  public Configuration getGlobalConfiguration() {
+    return globalConfiguration;
+  }
 
+  public void setGlobalConfiguration(Configuration globalConfiguration) {
+    this.globalConfiguration = globalConfiguration;
+  }
 }

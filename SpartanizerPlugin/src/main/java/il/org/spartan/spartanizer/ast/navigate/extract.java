@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.range.*;
@@ -197,7 +198,7 @@ public enum extract {
   }
 
   public static Expression core(final PrefixExpression $) {
-    return $.getOperator() != wizard.PLUS1 ? $ : core($.getOperand());
+    return $.getOperator() != op.PLUS1 ? $ : core($.getOperand());
   }
 
   /** Computes the "Essence" of a statement, i.e., if a statement is essentially

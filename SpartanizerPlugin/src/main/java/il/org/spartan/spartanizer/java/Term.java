@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.java;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 /** An additive term, which might be either negative or positive
  * @author Yossi Gil
@@ -33,7 +33,7 @@ class Term {
       return expression;
     final PrefixExpression $ = expression.getAST().newPrefixExpression();
     $.setOperand(expression);
-    $.setOperator(wizard.MINUS1);
+    $.setOperator(op.MINUS1);
     return $;
   }
 

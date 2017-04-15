@@ -316,10 +316,6 @@ public interface Configurations {
     return ¢.getSimpleName();
   }
 
-  static void refresh(final Trimmer ¢) {
-    ¢.globalConfiguration = all();
-  }
-
   @SuppressWarnings("rawtypes") Map<Class<? extends Tipper>, TipperGroup> categoryMap = new HashMap<Class<? extends Tipper>, TipperGroup>() {
     static final long serialVersionUID = -0x185C3A40849E91FAL;
     {

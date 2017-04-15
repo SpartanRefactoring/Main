@@ -3651,10 +3651,12 @@ public final class Version230 {
         .gives("f()* f(a,b,c,d)");
   }
 
+  final TrimmerImplementation trimmer = new TrimmerImplementation();
+
   @Test public void twoOpportunityExample() {
-    azzert.that(countOpportunities(new TrimmerImplementation(), (CompilationUnit) makeAST.COMPILATION_UNIT
+    azzert.that(countOpportunities(trimmer, (CompilationUnit) makeAST.COMPILATION_UNIT
         .from(WrapIntoComilationUnit.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
-    azzert.that(countOpportunities(new TrimmerImplementation(), (CompilationUnit) makeAST.COMPILATION_UNIT
+    azzert.that(countOpportunities(trimmer, (CompilationUnit) makeAST.COMPILATION_UNIT
         .from(WrapIntoComilationUnit.Expression.on("on * notion * of * no * nothion !=the * plain + kludge"))), is(1));
   }
 

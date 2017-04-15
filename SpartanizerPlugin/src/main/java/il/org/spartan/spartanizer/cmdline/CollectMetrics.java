@@ -11,6 +11,7 @@ import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
 
@@ -32,7 +33,7 @@ enum CollectMetrics {
   //
   public static Document rewrite(final Trimmer t, final CompilationUnit u, final Document $) {
     try {
-      t.createRewrite(u).rewriteAST($, null).apply($);
+      t.go(u).rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
@@ -113,7 +114,7 @@ enum CollectMetrics {
   }
 
   private static CompilationUnit spartanize(final String javaCode) {
-    final String $ = new TrimmerImplementation().fixed(javaCode);
+    final String $ = new TextualTrimmer().fixed(javaCode);
     output.put("Characters", $.length());
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from($);
   }

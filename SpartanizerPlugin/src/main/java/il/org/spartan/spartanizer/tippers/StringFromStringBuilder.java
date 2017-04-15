@@ -44,12 +44,12 @@ public final class StringFromStringBuilder extends MethodInvocationPattern//
     InfixExpression t = $;
     for (final Expression ¢ : xs.subList(0, xs.size() - 2)) {
       t.setLeftOperand(copy.of(¢));
-      t.setOperator(PLUS2);
+      t.setOperator(op.PLUS2);
       t.setRightOperand(i.getAST().newInfixExpression());
       t = (InfixExpression) t.getRightOperand();
     }
     t.setLeftOperand(copy.of(the.penultimate(xs)));
-    t.setOperator(PLUS2);
+    t.setOperator(op.PLUS2);
     t.setRightOperand(copy.of(last(xs)));
     return $;
   }
