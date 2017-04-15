@@ -22,7 +22,7 @@ public interface null¢ {
     return null;
   }
 
-  @SuppressWarnings("unused") static <T> T ignoringAll(final Object _1, final Object... _2) {
+  @SuppressWarnings("unused") static <T> T forgetting(final Object _1, final Object... _2) {
     return null;
   }
 

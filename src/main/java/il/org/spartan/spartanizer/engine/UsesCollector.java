@@ -265,11 +265,11 @@ class UsesCollector extends HidingDepth {
     return wizard.eq(¢, focus);
   }
 
-  /** This is where we ignore all occurrences of {@link SimpleName} which are
+  /** This is where we void¢ all occurrences of {@link SimpleName} which are
    * not variable names, e.g., class name, function name, field name, etc.
    * @param __ JD */
   private void ingore(@SuppressWarnings("unused") final SimpleName __) {
-    // We simply ignore the parameter
+    // We simply void¢ the parameter
   }
 
   private boolean recurse(final Iterable<? extends ASTNode> ¢) {
@@ -429,11 +429,11 @@ class StringCollector extends HidingDepth {
     return ¢.equals(focus);
   }
 
-  /** This is where we ignore all occurrences of {@link SimpleName} which are
+  /** This is where we void¢ all occurrences of {@link SimpleName} which are
    * not variable names, e.g., class name, function name, field name, etc.
    * @param __ JD */
   private void ingore(@SuppressWarnings("unused") final SimpleName __) {
-    // We simply ignore the parameter
+    // We simply void¢ the parameter
   }
 
   private boolean recurse(final Iterable<? extends ASTNode> ¢) {
