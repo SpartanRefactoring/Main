@@ -19,7 +19,7 @@ public abstract class Applicator {
   /** The modification process for each {@link ICU} in {@link Selection}. May
    * activate, for instance, a {@link GUITraversal}. The return value determines
    * whether the compilation unit should continue to the next pass or not. */
-  private Function<WrappedCompilationUnit, Integer> runAction;
+  private Function<WrappedCompilationUnit, Integer> runAction = λ -> Integer.valueOf(0);
   /** How many passes this applicator conducts. May vary according to
    * {@link Applicator#selection}. */
   private int passes;

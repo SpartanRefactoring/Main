@@ -125,7 +125,15 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
 
   GUITraversal inner = new GUITraversal();
 
-  // TODO Ori Roth: use Policy / replacement for Trimmer.
+  /** Default run action configuration of . Spartanize the
+   * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
+   * @param a JD
+   * @return {@code this} applicator */
+  public NewGUIApplicator defaultRunAction() {
+    setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ)));
+    return this;
+  }
+
   /** Default run action configuration of . Spartanize the
    * {@link ICompilationUnit} using received {@link GUITraversal}.
    * @param t JD
@@ -148,6 +156,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
 
   public static NewGUIApplicator plain() {
     return new NewGUIApplicator()//
+        .defaultRunAction()//
         .defaultListenerSilent()//
         .fewPasses()//
         .defaultSelection()//
