@@ -25,12 +25,12 @@ public final class BlockSingletonEliminate extends AbstractPattern<Block> implem
   public BlockSingletonEliminate() {
     andAlso("Parent is a statement", //
         () -> not.null¢(container = az.statement(parent)));
-    andAlso("Parent is not a try, switch or catch", //
-        () -> !iz.nodeTypeIn(container, TRY_STATEMENT, SWITCH_STATEMENT, CATCH_CLAUSE, SYNCHRONIZED_STATEMENT)); 
-    andAlso("Block is not essential", //
-        () -> !iz.blockEssential(container));
+    andAlso("Parent is not a try, catch or synchronized", //
+        () -> !iz.nodeTypeIn(container, TRY_STATEMENT, CATCH_CLAUSE, SYNCHRONIZED_STATEMENT)); 
     andAlso("Block has only one statement", //
         () -> not.null¢(onlyStatement = onlyOne(statements(current))));
+    andAlso("Block is not essential", //
+        () -> !iz.blockEssential(onlyStatement));
     andAlso("Statement is not a variable declaration", //
         () -> !iz.variableDeclarationStatement(onlyStatement));
   }
