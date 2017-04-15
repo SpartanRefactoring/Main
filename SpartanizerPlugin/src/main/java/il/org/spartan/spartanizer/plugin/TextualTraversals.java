@@ -32,8 +32,8 @@ public class TextualTraversals {
     }
   }
 
-  public String once(final ASTNode n) {
-    return once(n + "");
+  public String once(final ASTNode ¢) {
+    return once(¢ + "");
   }
 
   /** Performs one spartanization iteration
@@ -44,14 +44,13 @@ public class TextualTraversals {
     try {
       final TextEdit $ = traversal.go((CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get())).rewriteAST(d, null);
       $.apply(d);
-      return $.getChildren().length == 0 ? null : d;
+      return $.getChildren().length != 0 ? d : null;
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       return note.bug(this, ¢);
     }
   }
 
   public String once(final String from) {
-    final IDocument $ = new Document(from);
-    return once($).get();
+    return once(new Document(from)).get();
   }
 }
