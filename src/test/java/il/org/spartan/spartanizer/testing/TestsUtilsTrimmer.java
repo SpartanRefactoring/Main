@@ -10,8 +10,8 @@ import il.org.spartan.utils.*;
 
 public enum TestsUtilsTrimmer {
   ;
-  public static int countOpportunities(final Traversal a, final CompilationUnit u) {
-    return a.collectTips(u).size();
+  public static int countOpportunities(final Traversal t, final CompilationUnit u) {
+    return t.collectTips(u).size();
   }
 
   public static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
