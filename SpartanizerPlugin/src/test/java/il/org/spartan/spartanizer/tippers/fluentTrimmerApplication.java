@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.trimming.*;
 /** TODO Yossi Gil LocalVariableInitializedStatement description
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-public class fluentTrimmerApplication extends TrimmerImplementation {
+public class fluentTrimmerApplication extends Traversalmplementation {
   public final String codeFragment;
   public final GuessedContext guessedContext;
   public final String wrappedFragment;

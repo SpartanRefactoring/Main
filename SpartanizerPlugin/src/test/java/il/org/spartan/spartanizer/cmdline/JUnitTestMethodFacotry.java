@@ -121,6 +121,7 @@ public enum JUnitTestMethodFacotry {
   }
 
   public static void main(final String[] args) {
+    System.err.println("");
     final Display display = new Display();
     final Shell shell = new Shell(display);
     // the layout manager handle the layout

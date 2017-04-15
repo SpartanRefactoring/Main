@@ -53,7 +53,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     } catch (final AssertionError x) {
       note.bug(dump() + //
           "\n x=" + x + //
-          "\n $=" + trimmer.rewriteCount.get() + //
+          "\n $=" + traversal.rewriteCount.get() + //
           "\n u=" + u + //
           "\n u.name=" + u.name() + //
           "\n r=" + r + //
@@ -64,7 +64,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     } finally {
       getProgressMonitor().done();
     }
-    return trimmer.rewriteCount.get();
+    return traversal.rewriteCount.get();
   }
 
   public int apply(final WrappedCompilationUnit $, final AbstractSelection<?> s) {
@@ -96,7 +96,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   }
 
   public Tips collectTips(final CompilationUnit ¢) {
-    return trimmer.collectTips(¢);
+    return traversal.collectTips(¢);
   }
 
   /** Count the number of tips offered by this instance.
@@ -182,7 +182,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     if (textChange.getEdit().getLength() != 0)
       textChange.perform(getProgressMonitor());
     getProgressMonitor().done();
-    return trimmer.rewriteCount.get();
+    return traversal.rewriteCount.get();
   }
 
   /** @param iCompilationUnit the compilationUnit to set
@@ -207,7 +207,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     try {
       iCompilationUnit($);
       setSelection(s);
-      trimmer.setRange(range(getSelection()));
+      traversal.setRange(range(getSelection()));
       getProgressMonitor().beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
       final TextFileChange textChange = new TextFileChange($.getElementName(), (IFile) $.getResource());
       textChange.setTextType("java");
@@ -224,7 +224,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     } catch (final CoreException ¢) {
       note.bug(this, ¢);
     }
-    return trimmer.rewriteCount.get();
+    return traversal.rewriteCount.get();
   }
 
   /** @param pm a progress monitor in which to display the progress of the
@@ -241,7 +241,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   }
 
   public GUITraversal setMarker(final IMarker ¢) {
-    trimmer.setRange(range(¢));
+    traversal.setRange(range(¢));
     return self(() -> marker = ¢);
   }
 
@@ -287,7 +287,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private ASTRewrite computeRewrite(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
-    final ASTRewrite $ = trimmer.go(¢);
+    final ASTRewrite $ = traversal.go(¢);
     getProgressMonitor().done();
     return $;
   }
@@ -347,8 +347,8 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private ASTRewrite go(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
-    final ASTRewrite $ = trimmer.go(¢);
-    trimmer.pop();
+    final ASTRewrite $ = traversal.go(¢);
+    traversal.pop();
     getProgressMonitor().done();
     return $;
   }
@@ -363,9 +363,9 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     textChange.setEdit(go(cu).rewriteAST());
     if (textChange.getEdit().getLength() != 0)
       changes.add(textChange);
-    totalTips += trimmer.collectTips(cu).size();
+    totalTips += traversal.collectTips(cu).size();
     m.done();
-    return trimmer.rewriteCount.get();
+    return traversal.rewriteCount.get();
   }
 
   private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
@@ -415,7 +415,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return m != null ? !wizard.disjoint(n, m) : !isTextSelected() || !isNotSelected(n);
   }
 
-  public final Trimmer trimmer = new TrimmerImplementation().push((TrimmingTickingTapper) λ -> getProgressMonitor().worked(λ))
+  public final Traversal traversal = new Traversalmplementation().push((TrimmingTickingTapper) λ -> getProgressMonitor().worked(λ))
       .push(new TrimmingTapper() {
         @Override public void begin() {
           TrimmingTapper.super.begin();
