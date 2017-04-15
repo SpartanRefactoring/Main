@@ -31,7 +31,7 @@ enum CollectMetrics {
   }
 
   //
-  public static Document rewrite(final Trimmer t, final CompilationUnit u, final Document $) {
+  public static Document rewrite(final Traversal t, final CompilationUnit u, final Document $) {
     try {
       t.go(u).rewriteAST($, null).apply($);
       return $;
@@ -42,7 +42,7 @@ enum CollectMetrics {
 
   // TODO Yossi Gil: eliminate warning
   private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
-    reportTips(new TrimmerImplementation().collectTips(before));
+    reportTips(new Traversalmplementation().collectTips(before));
   }
 
   private static void go(final File f) {

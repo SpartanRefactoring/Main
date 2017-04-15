@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @since 2017-01-17 */
 public enum SentenceTestTemplate {
   ;
-  public static final Trimmer trimmer = new TrimmerImplementation();
+  public static final Traversal traversal = new Traversalmplementation();
 
   static Iterable<List<MethodDeclaration>> allSentences() {
     return collectSentences(new Issue1008());
@@ -57,7 +57,7 @@ public enum SentenceTestTemplate {
     @Parameter(0) @SuppressWarnings("CanBeFinal") public String name;
 
     @Ignore @Test public void changes() {
-      final String from = changes + "", wrap = WrapIntoComilationUnit.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
+      final String from = changes + "", wrap = WrapIntoComilationUnit.Method.on(from), unpeeled = trim.apply(traversal, wrap);
       azzert.that("Nothing done on " + name, wrap, is(not(unpeeled)));
       final String peeled = WrapIntoComilationUnit.Method.off(unpeeled);
       azzert.that("No trimming of " + name, peeled, is(not(from)));
@@ -90,7 +90,7 @@ public enum SentenceTestTemplate {
     @Parameter(2) @SuppressWarnings("CanBeFinal") public MethodDeclaration _2second;
 
     @Test public void chagesTo() {
-      final String peeled = WrapIntoComilationUnit.Method.off(trim.apply(trimmer, WrapIntoComilationUnit.Method.on(firstBody()))), to = secondBody();
+      final String peeled = WrapIntoComilationUnit.Method.off(trim.apply(traversal, WrapIntoComilationUnit.Method.on(firstBody()))), to = secondBody();
       if (!to.equals(peeled))
         azzert.that(trivia.essence(peeled), is(trivia.essence(to)));
     }
@@ -133,7 +133,7 @@ public enum SentenceTestTemplate {
     @Parameter(1) @SuppressWarnings("CanBeFinal") public MethodDeclaration stays;
 
     @Test public void stays() {
-      final String from = stays + "", wrap = WrapIntoComilationUnit.Method.on(from), unpeeled = trim.apply(trimmer, wrap);
+      final String from = stays + "", wrap = WrapIntoComilationUnit.Method.on(from), unpeeled = trim.apply(traversal, wrap);
       if (wrap.equals(unpeeled))
         return;
       final String peeled = WrapIntoComilationUnit.Method.off(unpeeled);

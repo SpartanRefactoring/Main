@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.trimming.*;
  * @since 2016 */
 public interface trim {
   static int countOpportunities(final GUITraversal t, final CompilationUnit u) {
-    return t.trimmer.collectTips(u).size();
+    return t.traversal.collectTips(u).size();
   }
 
   static fluentTrimmerApplication of(final String codeFragment) {
@@ -33,7 +33,7 @@ public interface trim {
     return new fluentTrimmer(clazz, ts);
   }
 
-  static String apply(final Trimmer t, final String from) {
+  static String apply(final Traversal t, final String from) {
     assert t != null;
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
@@ -42,7 +42,7 @@ public interface trim {
     return $.get();
   }
 
-  static Document rewrite(final Trimmer t, final CompilationUnit u, final Document $) {
+  static Document rewrite(final Traversal t, final CompilationUnit u, final Document $) {
     try {
       t.go(u).rewriteAST($, null).apply($);
       return $;
@@ -116,7 +116,7 @@ public interface trim {
     }
   }
 
-  class fluentTrimmer extends TrimmerImplementation {
+  class fluentTrimmer extends Traversalmplementation {
     @SafeVarargs public <N extends ASTNode> fluentTrimmer(final Class<N> clazz, final Tipper<N>... ts) {
       configuration.setTo(clazz, ts);
     }

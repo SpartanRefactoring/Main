@@ -7,6 +7,6 @@ import il.org.spartan.spartanizer.plugin.*;
  * @since Nov 25, 2016 */
 public class BloaterGUIApplicator extends NewGUIApplicator {
   public static BloaterGUIApplicator defaultApplicator() {
-    return (BloaterGUIApplicator) new BloaterGUIApplicator().defaultListenerSilent().defaultRunContext().setPasses(1);
+    return (BloaterGUIApplicator) new BloaterGUIApplicator().defaultListenerSilent().setPasses(1);
   }
 }
