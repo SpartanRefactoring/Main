@@ -59,6 +59,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         note.cancel(¢);
       }
     });
+    $.defaultRunAction();
     $.listener(new Listener() {
       static final int DIALOG_CREATION = 1;
       static final int DIALOG_PROCESSING = 2;

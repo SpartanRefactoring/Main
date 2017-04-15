@@ -8,6 +8,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.preferences.revision.*;
@@ -90,6 +91,10 @@ public abstract class Traversal implements Selfie<Traversal> {
 
   public Traversal setRange(final Range ¢) {
     return self(() -> range = ¢);
+  }
+
+  public Traversal setRange(final ITextSelection ¢) {
+    return self(() -> range = ¢ == null ? null : new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength()));
   }
 
   public void setRewrite(final ASTRewrite currentRewrite) {
