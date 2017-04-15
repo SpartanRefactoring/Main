@@ -142,7 +142,7 @@ public class Issue0251 {
     trimminKof("while (a == b) { c(); { } }") //
         .using(new WhileToForUpdaters(), WhileStatement.class) //
         .gives("for(;a==b;c()){c();}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("for(;a==b;c())c();") //
         .stays() //
     ;
@@ -161,7 +161,7 @@ public class Issue0251 {
     trimminKof("while (a == b) { c(); { } }") //
         .using(new WhileToForUpdaters(), WhileStatement.class) //
         .gives("for(;a==b;c()){c();}") //
-        .using(new BlockSingleton(), Block.class) //
+        .using(new BlockSingletonEliminate(), Block.class) //
         .gives("for(;a==b;c())c();") //
         .stays() //
     ;

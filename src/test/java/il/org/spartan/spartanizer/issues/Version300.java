@@ -183,7 +183,7 @@ public class Version300 {
             .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
             .gives(
                 "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c)){return n;}G i=j.k(i(b));if((i==n)||l.m(i)){return n(b);}switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
-            .using(new BlockSingleton(), Block.class) //
+            .using(new BlockSingletonEliminate(), Block.class) //
             .gives(
                 "public B a(D b){X c=d.e(b);if(f(c,x)||g.h(c))return n;G i=j.k(i(b));if((i==n)||l.m(i))return n(b);switch(c.o()){case 0:return p.q(b);case 1:B $;$=s(c);if(l.t($))return u.k($).v();return w.x($);default:return y(b);}}") //
     ;

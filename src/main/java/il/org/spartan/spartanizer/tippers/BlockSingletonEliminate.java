@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -18,19 +18,27 @@ import il.org.spartan.utils.fluent.*;
 /** convert {@code if (a){g();}} into {@code if(a)g();}
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class BlockSingleton extends AbstractPattern<Block> implements TipperCategory.SyntacticBaggage {
+public final class BlockSingletonEliminate extends AbstractPattern<Block> implements TipperCategory.SyntacticBaggage {
   private Statement onlyStatement;
+  private Statement container;
 
-  public BlockSingleton() {
-    andAlso("Block has only one statement", () -> not.null¢(onlyStatement = onlyOne(statements(current))));
-    andAlso("Block is not essential", () -> !iz.blockEssential(onlyStatement));
-    andAlso("Statement is not a variable declaration", () -> !iz.variableDeclarationStatement(onlyStatement));
+  public BlockSingletonEliminate() {
+    andAlso("Parent is a statement", //
+        () -> not.null¢(container = az.statement(parent)));
+    andAlso("Parent is not a try, switch or catch", //
+        () -> !iz.nodeTypeIn(container, TRY_STATEMENT, SWITCH_STATEMENT, CATCH_CLAUSE, SYNCHRONIZED_STATEMENT)); 
+    andAlso("Block is not essential", //
+        () -> !iz.blockEssential(container));
+    andAlso("Block has only one statement", //
+        () -> not.null¢(onlyStatement = onlyOne(statements(current))));
+    andAlso("Statement is not a variable declaration", //
+        () -> !iz.variableDeclarationStatement(onlyStatement));
   }
 
   private static final long serialVersionUID = 0x9FD71EDA4C3056AL;
 
   @Override protected ASTNode highlight() {
-    return null;
+    return null; 
   }
 
   @Override public String description() {

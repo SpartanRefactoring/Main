@@ -101,7 +101,7 @@ public interface Configurations {
           new PlusAssignToPostfix(), null) //
       .add(Block.class, //
           new BlockSimplify(), //
-          new BlockSingleton(), //
+          new BlockSingletonEliminate(), //
           // new CachingPattern(), // v 2.7
           // new BlockInlineStatementIntoNext(), //
           // new FindFirst(),
