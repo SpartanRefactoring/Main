@@ -50,17 +50,6 @@ import il.org.spartan.utils.range.*;
  * @since 2014 */
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
-  static <N extends ASTNode> int nodeType(final Class<N> ¢) {
-    final Integer $ = classToNodeType.get(¢);
-    return $ != null ? $.intValue()
-        : zero.ignoringAll(note.bug(fault.dump() + //
-            "\n c = " + ¢ + //
-            "\n c.getSimpleName() = " + ¢.getSimpleName() + //
-            "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
-            "\n classForNodeType = " + wizard.classToNodeType + //
-            fault.done()));
-  }
-
   interface op {
     Assignment.Operator[] assignment = { ASSIGN, PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,
         BIT_XOR_ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN };
@@ -97,6 +86,7 @@ public interface wizard {
       put(RIGHT_SHIFT_UNSIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED);
     }
   };
+
   @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
     {
       for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
@@ -219,6 +209,10 @@ public interface wizard {
     }
   };
   List<Predicate<Modifier>> visibilityModifiers = as.list(ModifierRedundant.isPublic, ModifierRedundant.isPrivate, ModifierRedundant.isProtected);
+  public static Range range(final ASTNode ¢) {
+    final int $ = ¢.getStartPosition();
+    return new Range($, $ + ¢.getLength());
+  }
 
   static Expression addParenthesisIfNeeded(final Expression x) {
     final AST a = x.getAST();
@@ -410,6 +404,14 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
+  static boolean disjoint(final ASTNode n, final IMarker m) {
+    return disjoint(n, range(m));
+  }
+
+  static boolean disjoint(final ASTNode n, final Range r) {
+    return r != null && (from(n) >= r.to || to(n) <= r.from);
+  }
+
   /** Determines if we can be certain that a {@link Statement} ends with a
    * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
    * {@link BreakStatement}, {@link ContinueStatement}).
@@ -496,6 +498,19 @@ public interface wizard {
       return false;
     final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
+  }
+
+  static int from(final ASTNode ¢) {
+    return ¢.getStartPosition();
+  }
+
+  static int from(final IMarker $) {
+    try {
+      return ((Integer) $.getAttribute(IMarker.CHAR_END)).intValue();
+    } catch (CoreException | ClassCastException ¢) {
+      note.bug(¢);
+      return Integer.MIN_VALUE;
+    }
   }
 
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
@@ -682,6 +697,17 @@ public interface wizard {
     return English.name(¢);
   }
 
+  static <N extends ASTNode> int nodeType(final Class<N> ¢) {
+    final Integer $ = classToNodeType.get(¢);
+    return $ != null ? $.intValue()
+        : zero.ignoringAll(note.bug(fault.dump() + //
+            "\n c = " + ¢ + //
+            "\n c.getSimpleName() = " + ¢.getSimpleName() + //
+            "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //
+            "\n classForNodeType = " + wizard.classToNodeType + //
+            fault.done()));
+  }
+
   static int nodeTypesCount() {
     return classToNodeType.size() + 2;
   }
@@ -741,6 +767,14 @@ public interface wizard {
     return Stream.of(v).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
 
+  static Range range(final IMarker ¢) {
+    return ¢ == null ? null : new Range(from(¢), to(¢));
+  }
+
+  static Range range(final ITextSelection ¢) {
+    return new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength());
+  }
+
   /** replaces an ASTNode with another
    * @param n
    * @param with */
@@ -790,11 +824,9 @@ public interface wizard {
     if (resolveBinding.inner)
       $.setEnvironment(null, null, null, true);
   }
-
   static void setParserResolveBindings() {
     resolveBinding.inner = true;
   }
-
   static boolean shoudlInvert(final IfStatement s) {
     final int $ = wizard.sequencerRank(hop.lastStatement(then(s))), rankElse = wizard.sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !thenIsShorter(s);
@@ -825,9 +857,8 @@ public interface wizard {
     return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(make.invert($));
   }
 
-  static boolean valid(final ASTNode ¢) {
-    final CompilationUnit $ = az.compilationUnit(¢.getRoot());
-    return $ == null || $.getProblems().length == 0;
+  static int to(final ASTNode ¢) {
+    return ¢.getLength() + from(¢);
   }
 
   static int to(final IMarker $) {
@@ -839,36 +870,8 @@ public interface wizard {
     }
   }
 
-  static int from(final IMarker $) {
-    try {
-      return ((Integer) $.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (CoreException | ClassCastException ¢) {
-      note.bug(¢);
-      return Integer.MIN_VALUE;
-    }
-  }
-
-  static Range range(final IMarker ¢) {
-    return ¢ == null ? null : new Range(from(¢), to(¢));
-  }
-
-  static Range range(final ITextSelection ¢) {
-    return new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength());
-  }
-
-  static boolean disjoint(final ASTNode n, final IMarker m) {
-    return disjoint(n, range(m));
-  }
-
-  static boolean disjoint(final ASTNode n, final Range r) {
-    return r != null && (from(n) >= r.to || to(n) <= r.from);
-  }
-
-  static int from(final ASTNode ¢) {
-    return ¢.getStartPosition();
-  }
-
-  static int to(final ASTNode ¢) {
-    return ¢.getLength() + from(¢);
+  static boolean valid(final ASTNode ¢) {
+    final CompilationUnit $ = az.compilationUnit(¢.getRoot());
+    return $ == null || $.getProblems().length == 0;
   }
 }

@@ -47,11 +47,23 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
   @Override public final Tip tip(final N n) {
     assert n != null;
     assert n == current();
-    return new Tip(description(), myClass(), highlight()) {
+    return (highlight() != null ? new Tip(description(), myClass(), highlight()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         AbstractPattern.this.go(r, g);
       }
-    }.spanning(span());
+    } : new Tip(description(), myClass(), containingCompilationUnit(), start()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        AbstractPattern.this.go(r, g);
+      }
+    }).spanning(span());
+  }
+
+  private CompilationUnit containingCompilationUnit() {
+    return containing.compilationUnit(current);
+  }
+
+  protected Range start() {
+    return new Range(current.getStartPosition(), current.getStartPosition() + 1);
   }
 
   protected ASTNode highlight() {

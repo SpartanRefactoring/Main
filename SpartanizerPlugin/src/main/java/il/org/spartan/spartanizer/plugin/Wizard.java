@@ -5,7 +5,7 @@ import org.eclipse.ltk.ui.refactoring.*;
 
 import il.org.spartan.utils.*;
 
-/** TODO Artium Nihamkin please add a description
+/** Relic;  
  * @author Artium Nihamkin
  * @since 2013/01/01 */
 public final class Wizard extends RefactoringWizard {
