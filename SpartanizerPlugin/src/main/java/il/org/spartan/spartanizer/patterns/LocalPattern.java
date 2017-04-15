@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.patterns;
 
-import static java.util.stream.Collectors.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -14,16 +12,18 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.utils.fluent.*;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
-public abstract class Local extends Fragment {
+public abstract class LocalPattern extends FragmentAmongFragmentsPattern {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
   protected VariableDeclarationStatement declaration;
 
-  public Local() {
-    andAlso("Must be local variable", () -> (declaration = az.variableDeclarationStatement(parent)) != null);
+  public LocalPattern() {
+    andAlso("Must be local variable", //
+        () -> not.null¢(declaration = az.variableDeclarationStatement(parent)));
   }
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
@@ -55,23 +55,8 @@ public abstract class Local extends Fragment {
     return $ - metrics.size(newParent);
   }
 
-  protected final List<VariableDeclarationFragment> otherSiblings() {
-    return fragments(declaration).stream().filter(λ -> λ != current()).collect(toList());
-  }
-
   protected boolean usedInSubsequentInitializers() {
     return youngerSiblings().stream().anyMatch(λ -> !collect.usesOf(name()).in(λ.getInitializer()).isEmpty());
-  }
-
-  protected final Collection<VariableDeclarationFragment> youngerSiblings() {
-    final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
-    boolean collecting = false;
-    for (final VariableDeclarationFragment ¢ : fragments(declaration))
-      if (¢ == current())
-        collecting = true;
-      else if (collecting)
-        $.add(¢);
-    return $;
   }
 
   final boolean doesUseForbiddenSiblings(final ASTNode... ns) {
@@ -85,5 +70,9 @@ public abstract class Local extends Fragment {
    * @param g */
   void remove(final ASTRewrite r, final TextEditGroup g) {
     r.remove(declaration.fragments().size() > 1 ? current() : declaration, g);
+  }
+
+  @Override protected final List<VariableDeclarationFragment> siblings() {
+    return step.fragments(declaration);
   }
 }

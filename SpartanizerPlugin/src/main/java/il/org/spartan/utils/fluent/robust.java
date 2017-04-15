@@ -6,8 +6,8 @@ import java.util.function.*;
  * @author Yossi Gil
  * @since 2017-04-08 */
 public interface robust {
-  static void ly(final Runnable r, final Consumer<Exception> x) {
-    robust.lyNull(() -> nulling.ly(r::run), x);
+  static void ly(final Runnable r, final Consumer<Exception> c) {
+    robust.lyNull(() -> nulling.ly(r::run), c);
   }
 
   static void ly(final Runnable r, final Runnable x) {
@@ -22,11 +22,11 @@ public interface robust {
     }
   }
 
-  static boolean lyFalse(final BooleanSupplier s, final Consumer<Exception> x) {
+  static boolean lyFalse(final BooleanSupplier s, final Consumer<Exception> c) {
     try {
       return s.getAsBoolean();
     } catch (final Exception $) {
-      x.accept($);
+      c.accept($);
       return false;
     }
   }

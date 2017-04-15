@@ -1,41 +1,44 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since Jan 24, 2017 */
-public final class FieldInitializedDefaultValue extends ReplaceCurrentNode<VariableDeclarationFragment>
-    //
-    implements TipperCategory.SyntacticBaggage {
+public final class FieldInitializedDefaultValue extends FieldPattern implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x5641BB9EAF40D88BL;
 
+  public FieldInitializedDefaultValue() {
+    andAlso("Field must not be final", () -> !Modifier.isFinal(declaration.getModifiers()));
+    andAlso("Initializer must be a literal", () -> iz.literal(initializer));
+    andAlso("Initializer must be a default litral value", () -> iz.defaultLiteral(initializer));
+    andAlso("Not inside an interface ", () -> !iz.interface¢(containing.typeDeclaration(declaration)));
+    andAlso("Not an initialization of a boxed type, e.g. public Integer a = 0;",
+        () -> !isBoxedType(declaration.getType() + "") || iz.nullLiteral(initializer));
+  }
+
   @Override public String description() {
-    return "Remove default values initiliazing field";
+    return "Remove default initializer " + initializer() + " of field " + name;
   }
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Remove default initializer " + ¢.getInitializer() + " of field " + ¢.getName();
+  @Override public Examples examples() {
+    return convert("public int i =0;").to("public int i;").ignores("public Integer i=0;");
   }
 
-  @Override public VariableDeclarationFragment replacement(final VariableDeclarationFragment f) {
-    final FieldDeclaration parent = az.fieldDeclaration(parent(f));
-    if (parent == null || Modifier.isFinal(parent.getModifiers()))
-      return null;
-    final Expression e = f.getInitializer();
-    if (e == null || !iz.literal(e) || isDefaultLiteral(e) || isBoxedType(parent.getType() + "") && !iz.nullLiteral(e)
-        || iz.interface¢(containing.typeDeclaration(parent)))
-      return null;
-    final VariableDeclarationFragment $ = copy.of(f);
-    $.setInitializer(null);
-    return $;
+  @Override public ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+    final VariableDeclarationFragment f = copy.of(current);
+    f.setInitializer(null);
+    r.replace(current, f, g);
+    return r;
   }
 }

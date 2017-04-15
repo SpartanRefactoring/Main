@@ -42,8 +42,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
 
   public int apply(final WrappedCompilationUnit u) {
     final TextFileChange textChange = init(u);
-    final CompilationUnit compilationUnit = u.build().compilationUnit;
-    final ASTRewrite r = go(compilationUnit);
+    final ASTRewrite r = go(u.build().compilationUnit);
     try {
       textChange.setEdit(r.rewriteAST());
       if (textChange.getEdit().getLength() != 0)
@@ -172,17 +171,30 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return selection;
   }
 
-  public int go() throws CoreException {
+  public int go() {
     getProgressMonitor().beginTask("Creating change for " + compilationUnitName(), IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = textFileChange();
-    final IProgressMonitor m = eclipse.newSubMonitor(getProgressMonitor());
     final ASTParser parser = make.COMPILATION_UNIT.parser(iCompilationUnit);
-    final CompilationUnit createAST = (CompilationUnit) parser.createAST(m);
-    textChange.setEdit(go(createAST).rewriteAST());
+    assert parser != null;
+    final CompilationUnit u = (CompilationUnit) parser.createAST(newSubProgressMonitor());
+    assert u != null;
+    try {
+      textChange.setEdit(go(u).rewriteAST());
+    } catch (JavaModelException | IllegalArgumentException $) {
+      return zero.forgetting(note.bug($));
+    }
     if (textChange.getEdit().getLength() != 0)
-      textChange.perform(getProgressMonitor());
+      try {
+        textChange.perform(newSubProgressMonitor());
+      } catch (CoreException $) {
+        return zero.forgetting(note.bug($));
+      }
     getProgressMonitor().done();
     return traversal.rewriteCount.get();
+  }
+
+  private IProgressMonitor newSubProgressMonitor() {
+    return eclipse.newSubMonitor(getProgressMonitor());
   }
 
   /** @param iCompilationUnit the compilationUnit to set
@@ -211,14 +223,16 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       getProgressMonitor().beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
       final TextFileChange textChange = new TextFileChange($.getElementName(), (IFile) $.getResource());
       textChange.setTextType("java");
-      final IProgressMonitor m = eclipse.newSubMonitor(getProgressMonitor());
-      final ASTParser parser = make.COMPILATION_UNIT.parser($);
-      final ASTNode createAST = parser.createAST(m);
-      final CompilationUnit ¢ = (CompilationUnit) createAST;
-      final ASTRewrite createRewrite = go(¢);
-      textChange.setEdit(createRewrite.rewriteAST());
+      final IProgressMonitor m = newSubProgressMonitor();
+      final ASTParser p = make.COMPILATION_UNIT.parser($);
+      assert p != null;
+      final CompilationUnit u = az.compilationUnit(p.createAST(m));
+      assert u != null;
+      final ASTRewrite r = go(u);
+      assert r != null;
+      textChange.setEdit(r.rewriteAST());
       if (textChange.getEdit().getLength() != 0)
-        textChange.perform(getProgressMonitor());
+        textChange.perform(newSubProgressMonitor());
       getProgressMonitor().done();
     } catch (final CoreException ¢) {
       note.bug(this, ¢);
@@ -395,7 +409,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private void scanCompilationUnits(final Collection<ICompilationUnit> us) throws IllegalArgumentException, CoreException {
     getProgressMonitor().beginTask("Iterating over eligible compilation units...", us.size());
     for (final ICompilationUnit ¢ : us) // NANO - can't, throws...
-      scanCompilationUnit(¢, eclipse.newSubMonitor(getProgressMonitor()));
+      scanCompilationUnit(¢, newSubProgressMonitor());
     getProgressMonitor().done();
   }
 

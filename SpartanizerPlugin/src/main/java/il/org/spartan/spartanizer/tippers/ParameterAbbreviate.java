@@ -1,12 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.spartanizer.ast.factory.action.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
-import java.util.stream.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -85,15 +83,15 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
     final SimpleName oldName = d.getName();
     final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
     if (!iz.methodDeclaration(d.getParent()))
-      return new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d) {
+      return new Tip("Abbreviate parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d.getName()) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {
           rename(oldName, make.from(d).identifier(newName), $, r, g);
           fixJavadoc($, oldName, newName, r, g);
         }
       }.spanning($);
     final Block b = az.methodDeclaration(d.getParent()).getBody();
-    return getAll.names(b).stream().map(λ -> λ + "").collect(Collectors.toList()).contains(newName) || Environment.of(b).has(newName) ? null
-        : new Tip("Rename parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d) {
+    return getAll.names(b).stream().map(λ -> λ + "").collect(toList()).contains(newName) || Environment.of(b).has(newName) ? null
+        : new Tip("Abbreviate local " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d.getName()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             rename(oldName, make.from(d).identifier(newName), $, r, g);
             fixJavadoc($, oldName, newName, r, g);
