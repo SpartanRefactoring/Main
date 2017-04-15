@@ -41,10 +41,10 @@ public class Issue1146 extends TipperTest<VariableDeclarationFragment> {
   }
 
   /** an example of the difference between TipperTest's trimmingOf and
-   * TestsUtilsTrimmer trimmingOf. {@link LocalInitializedUnusedRemove} is used
+   * TestUtilsSpartanizer trimmingOf. {@link LocalInitializedUnusedRemove} is used
    * here */
   @Test public void c2() {
-    TestsUtilsTrimmer.trimminKof("int x = 1, y = x; ++x;")//
+    TestsUtilsSpartanizer.trimminKof("int x = 1, y = x; ++x;")//
         .gives("int x = 1; ++x;")//
         .gives("int x = 1+1;");
   }

@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.testing;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;

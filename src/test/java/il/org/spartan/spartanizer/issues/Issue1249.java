@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsTrimmer.*;
+import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import org.eclipse.jdt.core.dom.*;

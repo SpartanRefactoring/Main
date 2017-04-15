@@ -23,7 +23,7 @@ public class CommandLineApplicator extends Applicator {
 
   // private final CommandLine$Applicator a = new CommandLine$Applicator();
   /** Default listener configuration. Simple printing to console.
-   * @return {@code this} applicator */
+   * @return {@code this} instance */
   @Override public CommandLineApplicator defaultListenerNoisy() {
     listener(os -> {
       as.list(os).forEach(λ -> System.out.print(λ + " "));
@@ -43,7 +43,7 @@ public class CommandLineApplicator extends Applicator {
   }
 
   /** Default passes configuration, with many passes.
-   * @return {@code this} applicator */
+   * @return {@code this} instance */
   public CommandLineApplicator defaultPassesMany() {
     setPasses(PASSES_MANY);
     return this;
@@ -61,13 +61,11 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** TODO Ori Roth: use Policy / replacement for Trimmer.
-   * <p>
-   * Default run action configuration of . Spartanize the
+  /** Default run action configuration of . Spartanize the
    * {@link CompilationUnit} using received TODO maybe this method are going to
    * die (as well as Spartanize$Applicator) {@link Spartanizer$Applicator}.
    * @param a JD
-   * @return {@code this} applicator */
+   * @return {@code this} instance */
   public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
     setRunAction(λ -> Integer.valueOf(as.bit(a.apply(λ, selection()))));
     name(a.getClass().getSimpleName());
@@ -77,7 +75,7 @@ public class CommandLineApplicator extends Applicator {
   /** Default run action configuration of . Spartanize the
    * {@link CompilationUnit} using received {@link CommandLine$Applicator}.
    * @param a JD
-   * @return {@code this} applicator */
+   * @return {@code this} instance */
   @Override public CommandLineApplicator defaultRunAction(final CommandLine$Applicator a) {
     CommandLine$Applicator.startingTime = new Date().getTime();
     setRunAction(λ -> Integer.valueOf(as.bit(a.apply(λ, selection()))));

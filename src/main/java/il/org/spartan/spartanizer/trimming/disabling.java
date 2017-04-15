@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface disabling {
-  String disabledPropertyId = "Trimmer_disabled_id";
+  String disabledPropertyId = disabling.class.getCanonicalName();
 
   /** A recursive scan for disabled nodes. Adds disabled property to disabled
    * nodes and their sub trees.

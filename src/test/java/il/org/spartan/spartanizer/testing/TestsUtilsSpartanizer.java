@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
-public enum TestsUtilsTrimmer {
+public enum TestsUtilsSpartanizer {
   ;
   public static int countOpportunities(final Traversal t, final CompilationUnit u) {
     return t.collectTips(u).size();
