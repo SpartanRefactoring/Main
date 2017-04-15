@@ -45,7 +45,7 @@ public interface theSpartanizer {
    * @return trimmed text, or null in case of error or no more applicable
    *         tippers */
   @SuppressWarnings("hiding") static String once(final String from) {
-    final Traversal traversal = new Traversalmplementation();
+    final Traversal traversal = new TraversalImplementation();
     final IDocument $ = new Document(from);
     final ASTNode root = make.ast(from);
     if (root != null)
@@ -88,7 +88,7 @@ public interface theSpartanizer {
     }
   }
 
-  Traversal traversal = new Traversalmplementation();
+  Traversal traversal = new TraversalImplementation();
 
   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {

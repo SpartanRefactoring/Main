@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.trimming;
 
-public interface TrimmingTapper {
+public interface TraversalTapper {
   /** @formatter:off */
   default void begin() {/**/}
   default void end() {/**/}
