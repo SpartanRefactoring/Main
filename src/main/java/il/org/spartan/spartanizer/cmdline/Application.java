@@ -155,7 +155,7 @@ public final class Application implements IApplication {
 
   private FileStats process(final File f, final ICompilationUnit u) throws IOException, JavaModelException {
     final FileStats $ = new FileStats(f);
-    final GUITraversal t = new GUITraversal(); 
+    final GUITraversal t = new GUITraversal();
     IntStream.range(0, optRounds).forEach(λ -> t.apply(u));
     FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()), u.getSource());
     if (optVerbose)

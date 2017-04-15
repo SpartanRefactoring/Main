@@ -171,7 +171,8 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
 
   public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = new ArrayList<>();
-    traversals.trimmer.configuration.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance).forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
+    traversals.trimmer.configuration.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance)
+        .forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
   }
 

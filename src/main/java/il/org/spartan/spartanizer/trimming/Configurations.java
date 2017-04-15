@@ -323,7 +323,7 @@ public interface Configurations {
     }
   };
 
-  static TipperGroup groupOf(Tip ¢) {
-    return groupOf(¢.tipperClass); 
+  static TipperGroup groupOf(final Tip ¢) {
+    return groupOf(¢.tipperClass);
   }
 }

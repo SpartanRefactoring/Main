@@ -25,7 +25,6 @@ import il.org.spartan.utils.fluent.*;
  * @author Yossi Gil
  * @since 2015/07/10 */
 public abstract class Trimmer implements Selfie<Trimmer> {
-
   public Tip auxiliaryTip() {
     return auxiliaryTip;
   }
@@ -47,7 +46,6 @@ public abstract class Trimmer implements Selfie<Trimmer> {
   }
 
   public abstract ASTRewrite go(CompilationUnit u);
-
 
   public TextEditGroup currentEditGroup() {
     return currentEditGroup;
@@ -86,14 +84,13 @@ public abstract class Trimmer implements Selfie<Trimmer> {
     return this.auxiliaryTip = auxiliaryTip;
   }
 
-
   public void setNode(final ASTNode currentNode) {
     node = currentNode;
     notify.setNode();
   }
 
-  public Trimmer setRange(Range ¢) {
-    return self(() -> this.range = ¢);
+  public Trimmer setRange(final Range ¢) {
+    return self(() -> range = ¢);
   }
 
   public void setRewrite(final ASTRewrite currentRewrite) {

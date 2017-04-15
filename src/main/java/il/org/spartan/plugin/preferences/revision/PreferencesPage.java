@@ -96,8 +96,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     store().addPropertyChangeListener(listener);
   }
 
-  /** An event handler used to re-initialize the {@link TrimmerImplementation} spartanization
-   * once a tipper preference was modified. */
+  /** An event handler used to re-initialize the {@link TrimmerImplementation}
+   * spartanization once a tipper preference was modified. */
   static class SpartanPropertyListener implements IPropertyChangeListener {
     private final Bool refreshNeeded;
 
