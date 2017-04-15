@@ -346,6 +346,8 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private ASTRewrite go(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
+    if (selection != null)
+      traversal.setRange(selection);
     final ASTRewrite $ = traversal.go(¢);
     traversal.pop();
     getProgressMonitor().done();

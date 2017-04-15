@@ -84,7 +84,6 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     });
     if (isAutoBuildChanged)
       enableAutoBuild();
-    // TODO Ori Roth: add metrics etc.
     listener().pop(message.run_finish.get(operationName(), selection().name, totalTipsInvoked.inner));
   }
 
@@ -130,7 +129,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
    * @param a JD
    * @return {@code this} applicator */
   public NewGUIApplicator defaultRunAction() {
-    setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ)));
+    setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
     return this;
   }
 
