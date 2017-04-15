@@ -15,7 +15,7 @@ public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<Wild
   private static final long serialVersionUID = 0x6081E85742D71E64L;
 
   @Override public String description(final WildcardType ¢) {
-    return "Trim implicit extends " + trivia.gist(¢);
+    return "Trim implicit extends " + Trivia.gist(¢);
   }
 
   @Override public WildcardType replacement(final WildcardType ¢) {

@@ -47,7 +47,7 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
   private static final long serialVersionUID = 0x6F3B3E10E4F678DFL;
 
   @Override public String description() {
-    return "Add 'else' clause to " + trivia.gist(current);
+    return "Add 'else' clause to " + Trivia.gist(current);
   }
 
   @Override public Examples examples() {
@@ -76,7 +76,7 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
     final List<Statement> move = lisp2.chopLast(subsequentStatements);
     for (final Statement x : move)
       listRewrite2.insertLast(copy.of(x), g);
-    final ListRewrite listRewrite3 = trick.statementRewriter(r, current);
+    final ListRewrite listRewrite3 = action.statementRewriter(r, current);
     for (final Statement x : move)
       listRewrite3.remove(x, g);
     return r;

@@ -52,13 +52,13 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
     final String identifier = ¢.getName().getIdentifier();
     if (iz.in(identifier, shortNames))
       return true;
-    final String $ = namer.shorten(¢.getType());
+    final String $ = Namer.shorten(¢.getType());
     return $ != null && ($ + pluralVariadic(¢)).equals(identifier);
   }
 
   private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
     final List<SimpleName> localVariables = new MethodExplorer(d).localVariables();
-    final String shortName = namer.shorten($.getType());
+    final String shortName = Namer.shorten($.getType());
     return shortName != null && localVariables.stream().noneMatch(λ -> λ.getIdentifier().equals(shortName + pluralVariadic($)))
         && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(shortName + pluralVariadic($)))
         && !d.getName().getIdentifier().equalsIgnoreCase(shortName + pluralVariadic($));
@@ -81,7 +81,7 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
     final SimpleName oldName = d.getName();
-    final String newName = namer.shorten(d.getType()) + pluralVariadic(d);
+    final String newName = Namer.shorten(d.getType()) + pluralVariadic(d);
     if (!iz.methodDeclaration(d.getParent()))
       return new Tip("Abbreviate parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d.getName()) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {

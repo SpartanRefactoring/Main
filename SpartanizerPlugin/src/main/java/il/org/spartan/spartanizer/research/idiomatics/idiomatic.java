@@ -91,7 +91,7 @@ public interface idiomatic {
   }
 
   static Trigger unless(final boolean condition) {
-    return vhen(!condition);
+    return then(!condition);
   }
 
   /** @param <T> JD
@@ -151,7 +151,7 @@ public interface idiomatic {
 
   /** @param condition JD
    * @return */
-  static Trigger vhen(final boolean condition) {
+  static Trigger then(final boolean condition) {
     return condition ? eval : tIgnore;
   }
 

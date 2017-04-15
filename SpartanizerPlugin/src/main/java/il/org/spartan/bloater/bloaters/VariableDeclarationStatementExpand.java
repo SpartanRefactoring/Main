@@ -59,6 +59,6 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
   }
 
   static String prefix(final Type ¢) {
-    return namer.shorten(¢);
+    return Namer.shorten(¢);
   }
 }

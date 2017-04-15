@@ -99,7 +99,7 @@ public interface theSpartanizer {
   }
 
   static boolean same(final String s1, final String s2) {
-    return s1 == null || s2 == null || s2.equals(s1) || trivia.essence(s1).equals(trivia.essence(s2));
+    return s1 == null || s2 == null || s2.equals(s1) || Trivia.essence(s1).equals(Trivia.essence(s2));
   }
 
   static String thrice(final String javaCode) {

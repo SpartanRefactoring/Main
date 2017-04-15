@@ -30,7 +30,7 @@ public class StringBuilderListener implements Listener {
 
   @Override public void tick(final Object... os) {
     $.append(newId()).append(": ");
-    as.list(os).forEach(λ -> $.append(new Separator(", ")).append(trivia.gist(λ)));
+    as.list(os).forEach(λ -> $.append(new Separator(", ")).append(Trivia.gist(λ)));
     $.append('\n');
   }
 }

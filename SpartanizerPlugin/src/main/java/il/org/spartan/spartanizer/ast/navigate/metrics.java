@@ -36,7 +36,7 @@ public interface metrics {
   }
 
   static int condensedSize(final ASTNode ¢) {
-    return trivia.condense(¢).length();
+    return Trivia.condense(¢).length();
   }
 
   /** @param n JD

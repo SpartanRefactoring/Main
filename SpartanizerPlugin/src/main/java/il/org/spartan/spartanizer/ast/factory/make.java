@@ -372,7 +372,7 @@ public enum make {
     if (elze.isEmpty())
       return main;
     final int rankThen = wizard.sequencerRank(last(then)), rankElse = wizard.sequencerRank(last(elze));
-    return rankElse > rankThen || rankThen == rankElse && !trick.thenIsShorter(s) ? $ : main;
+    return rankElse > rankThen || rankThen == rankElse && !action.thenIsShorter(s) ? $ : main;
   }
 
   public static boolean thenIsShorter(final IfStatement s) {
@@ -392,7 +392,7 @@ public enum make {
       return false;
     assert n1 == n2;
     final IfStatement $ = invert(s);
-    return trick.positivePrefixLength($) >= trick.positivePrefixLength(invert($));
+    return action.positivePrefixLength($) >= action.positivePrefixLength(invert($));
   }
 
   /** @param ¢ the expression to return in the return statement

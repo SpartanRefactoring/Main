@@ -26,7 +26,7 @@ public final class FuncsTest {
   @Test public void arrayOfInts() {
     final Type t = t("int[][] __;");
     assert t != null;
-    azzert.that(namer.shorten(t), equalTo("iss"));
+    azzert.that(Namer.shorten(t), equalTo("iss"));
   }
 
   @Test public void asComparisonPrefixlExpression() {
