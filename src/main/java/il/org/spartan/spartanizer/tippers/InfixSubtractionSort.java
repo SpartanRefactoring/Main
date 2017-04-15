@@ -26,6 +26,6 @@ public final class InfixSubtractionSort extends InfixExpressionSortingRest//
   }
 
   @Override protected boolean suitable(final InfixExpression ¢) {
-    return in(¢.getOperator(), MINUS2);
+    return in(¢.getOperator(), op.MINUS2);
   }
 }

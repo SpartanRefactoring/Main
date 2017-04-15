@@ -51,7 +51,7 @@ public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final InfixExpression.Operator o = az.prefixExpression(az.expressionStatement(nextStatement)//
-        .getExpression()).getOperator().equals(INCREMENT) ? PLUS2 : MINUS2;
+        .getExpression()).getOperator().equals(INCREMENT) ? op.PLUS2 : op.MINUS2;
     final VariableDeclarationFragment $ = copy.of(current());
     $.setInitializer(subject.operands(initializer, //
         initializer.getAST().newNumberLiteral("1")).to(o));

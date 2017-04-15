@@ -23,6 +23,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -111,7 +112,7 @@ public enum make {
       if (!infixExpression(host))
         return false;
       final InfixExpression $ = az.infixExpression(host);
-      return ($.getOperator() != wizard.PLUS2 || !type.isNotString($)) && isStringConactingSafe(inner);
+      return ($.getOperator() != op.PLUS2 || !type.isNotString($)) && isStringConactingSafe(inner);
     }
   }
 
@@ -157,7 +158,7 @@ public enum make {
             ASTParser.K_COMPILATION_UNIT)) {
           final ASTParser p = wizard.parser(guess);
           p.setSource(javaSnippet.toCharArray());
-          final ASTNode $ = p.createAST(wizard.nullProgressMonitor);
+          final ASTNode $ = p.createAST(op.nullProgressMonitor);
           if (wizard.valid($))
             return $;
         }
@@ -260,7 +261,7 @@ public enum make {
     if (xs.size() == 1)
       return first(xs);
     final InfixExpression $ = t.newInfixExpression();
-    $.setOperator(wizard.PLUS2);
+    $.setOperator(op.PLUS2);
     $.setLeftOperand(copy.of(first(xs)));
     $.setRightOperand(copy.of(second(xs)));
     for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢)))) // NANO
@@ -279,8 +280,8 @@ public enum make {
   public static Expression minus(final Expression ¢) {
     final PrefixExpression $ = az.prefixExpression(¢);
     return $ == null ? make.minus(¢, az.numberLiteral(¢))
-        : $.getOperator() == wizard.MINUS1 ? $.getOperand() //
-            : $.getOperator() == wizard.PLUS1 ? subject.operand($.getOperand()).to(wizard.MINUS1)//
+        : $.getOperator() == op.MINUS1 ? $.getOperand() //
+            : $.getOperator() == op.PLUS1 ? subject.operand($.getOperand()).to(op.MINUS1)//
                 : ¢;
   }
 
@@ -298,7 +299,7 @@ public enum make {
   }
 
   static Expression minusOf(final Expression ¢) {
-    return iz.literal0(¢) ? ¢ : subject.operand(¢).to(wizard.MINUS1);
+    return iz.literal0(¢) ? ¢ : subject.operand(¢).to(op.MINUS1);
   }
 
   public static boolean mixedLiteralKind(final Collection<Expression> xs) {

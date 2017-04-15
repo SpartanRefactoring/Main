@@ -8,7 +8,7 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 import il.org.spartan.utils.range.*;
@@ -103,15 +103,15 @@ public class BatchApplicator extends Applicator {
 
   /** Default passes configuration of , with few passes.
    * @return {@code this} applicator */
-  public BatchApplicator defaultPassesFew() {
-    passes(PASSES_FEW);
+  public BatchApplicator fewPasses() {
+    setPasses(PASSES_FEW);
     return this;
   }
 
   /** Default passes configuration of , with many passes.
    * @return {@code this} applicator */
-  public BatchApplicator defaultPassesMany() {
-    passes(PASSES_MANY);
+  public BatchApplicator manyPasses() {
+    setPasses(PASSES_MANY);
     return this;
   }
 
@@ -119,20 +119,23 @@ public class BatchApplicator extends Applicator {
    * the current thread.
    * @return {@code this} applicator */
   public BatchApplicator defaultRunContext() {
-    runContext(Runnable::run);
+    setContext(Runnable::run);
     return this;
   }
 
+  GUITraversal inner = new GUITraversal();
+
   // TODO Ori Roth: use Policy / replacement for Trimmer.
   /** Default run action configuration of . Spartanize the
-   * {@link ICompilationUnit} using received {@link GUIConfigurationApplicator}.
-   * @param a JD
+   * {@link ICompilationUnit} using received {@link GUITraversal}.
+   * @param t JD
    * @return {@code this} applicator */
-  public BatchApplicator defaultRunAction(final GUIConfigurationApplicator a) {
-    if (a instanceof TrimmerImplementation)
-      ((Trimmer) a).useProjectPreferences();
-    setRunAction(λ -> Integer.valueOf(λ == null ? 0 : a.apply(λ, selection())));
-    name(a.getName());
+  public BatchApplicator restrictTo(final Tipper<?> t) {
+    inner.setSelection(selection());
+    inner.setName(t.description());
+    inner.trimmer.useProjectPreferences();
+    inner.trimmer.configuration.restrictTo(t);
+    setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ)));
     return this;
   }
 
@@ -146,7 +149,7 @@ public class BatchApplicator extends Applicator {
   /** Default settings for all {@link Applicator} components.
    * @return {@code this} applicator */
   public BatchApplicator defaultSettings() {
-    return defaultListenerSilent().defaultPassesFew().defaultRunContext().defaultSelection().defaultRunAction(new TrimmerImplementation()).defaultOperationName();
+    return defaultListenerSilent().fewPasses().defaultRunContext().defaultSelection() .defaultOperationName();
   }
 
   /** Factory method.

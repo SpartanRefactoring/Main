@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 
-import org.eclipse.core.runtime.*;
-import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
@@ -27,16 +25,8 @@ enum CollectClassMetrics {
   }
 
   static CompilationUnit spartanize(final CompilationUnit u) {
-    final TrimmerImplementation tr = new TrimmerImplementation();
-    assert tr != null;
-    final ICompilationUnit $ = (ICompilationUnit) u.getJavaElement();
-    tr.setICompilationUnit($);
-    assert $ != null;
-    try {
-      tr.checkAllConditions(null);
-    } catch (OperationCanceledException | CoreException ¢) {
-      ¢.printStackTrace();
-    }
+    final Trimmer t = new TrimmerImplementation();
+    t.go(u);
     return u;
   }
 

@@ -20,12 +20,12 @@ import il.org.spartan.spartanizer.trimming.*;
  * @author Yossi Gil
  * @since 2016 */
 public interface trim {
-  static int countOpportunities(final GUIConfigurationApplicator a, final CompilationUnit u) {
-    return a.collectTips(u).size();
+  static int countOpportunities(final GUITraversal a, final CompilationUnit u) {
+    return a.trimmer.collectTips(u).size();
   }
 
   static fluentTrimmerApplication of(final String codeFragment) {
-    return new fluentTrimmerApplication(new TrimmerImplementation(), codeFragment);
+    return new fluentTrimmerApplication(codeFragment);
   }
 
   @SafeVarargs //
@@ -34,7 +34,7 @@ public interface trim {
   }
 
   static String apply(final Trimmer t, final String from) {
-    assert t !=null;
+    assert t != null;
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(from);
     assert u != null;
     final Document $ = trim.rewrite(t, u, new Document(from));
@@ -44,7 +44,7 @@ public interface trim {
 
   static Document rewrite(final Trimmer t, final CompilationUnit u, final Document $) {
     try {
-      t.createRewrite(u).rewriteAST($, null).apply($);
+      t.go(u).rewriteAST($, null).apply($);
       return $;
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError(¢);
@@ -54,13 +54,13 @@ public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
   .gives("a+b-c")}, or <code>trimming // See {@link trim} 
-                                                                                                      * .repeatedly //  See {@link trim.repeatedely} 
-                                                                                                      * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
-                                                                                                      * .of("a+(b-c)") //  See {@link #of(String)} 
-                                                                                                      * .gives("a+b-c")</code> */
+                                                                                                       * .repeatedly //  See {@link trim.repeatedely} 
+                                                                                                       * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+                                                                                                       * .of("a+(b-c)") //  See {@link #of(String)} 
+                                                                                                       * .gives("a+b-c")</code> */
   interface repeatedly {
     static fluentTrimmerApplication of(final String codeFragment) {
-      return new fluentTrimmerApplication(new TrimmerImplementation(), codeFragment) {
+      return new fluentTrimmerApplication(codeFragment) {
         @Override public fluentTrimmerApplication gives(final String expected) {
           return super.gives(new InteractiveSpartanizer().fixedPoint(expected));
         }
@@ -121,8 +121,8 @@ public interface trim {
       super(Configurations.make(clazz, ws));
     }
 
-    public fluentTrimmerApplication of(final String codeFragment) {
-      return new fluentTrimmerApplication(this, codeFragment);
+    @SuppressWarnings("static-method") public fluentTrimmerApplication of(final String codeFragment) {
+      return new fluentTrimmerApplication(codeFragment);
     }
   }
 }

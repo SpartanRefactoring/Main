@@ -1,13 +1,17 @@
 package il.org.spartan.spartanizer.engine;
 
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import il.org.spartan.utils.fluent.*;
 
 /** A function object representing a sequence of operations on an
  * {@link ASTRewrite} object.
@@ -86,6 +90,22 @@ public abstract class Tip {
         ", d=" + description + //
         ", n=" + lineNumber + //
         ", c=" + namer.lastComponent(tipperClass + "") + "]";
+  }
+
+  public void intoMarker(IMarker $) {
+    try {
+      $.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
+      $.setAttribute(Builder.SPARTANIZATION_TIPPER_KEY, tipperClass);
+      $.setAttribute(IMarker.MESSAGE, Builder.prefix() + description);
+      $.setAttribute(IMarker.CHAR_START, highlight.from);
+      $.setAttribute(IMarker.CHAR_END, highlight.to);
+      $.setAttribute(Builder.SPARTANIZATION_CHAR_START, getSpartanizationCharStart());
+      $.setAttribute(Builder.SPARTANIZATION_CHAR_END, getSpartanizationCharEnd());
+      $.setAttribute(IMarker.TRANSIENT, false);
+      $.setAttribute(IMarker.LINE_NUMBER, lineNumber);
+    } catch (CoreException ¢) {
+      note.bug(¢);
+    }
   }
 
   /** A textual description of the action to be performed */

@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -33,7 +34,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
    * @return whether the parenthesis can be removed and false otherwise */
   private static boolean canRemove(final InfixExpression x) {
     return in(operator(x), TIMES, DIVIDE)
-        || operator(x) == wizard.PLUS2 && extract.allOperands(x).stream().allMatch(λ -> type.of(λ) == type.Primitive.Certain.STRING);
+        || operator(x) == op.PLUS2 && extract.allOperands(x).stream().allMatch(λ -> type.of(λ) == type.Primitive.Certain.STRING);
   }
 
   @Override public String description() {
@@ -45,7 +46,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
   }
 
   @Override public Expression replacement(final InfixExpression x) {
-    if (operator(x) != wizard.PLUS2)
+    if (operator(x) != op.PLUS2)
       return null;
     final List<Expression> es = hop.operands(x);
     boolean isString = false;
@@ -62,7 +63,7 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
         replace(es, ¢, ii);
       }
     }
-    final Expression $ = subject.operands(es).to(wizard.PLUS2);
+    final Expression $ = subject.operands(es).to(op.PLUS2);
     return !wizard.eq($, x) ? $ : null;
   }
 }

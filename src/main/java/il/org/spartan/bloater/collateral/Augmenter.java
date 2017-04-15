@@ -17,6 +17,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.bloater.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.fluent.*;
 
@@ -59,10 +60,10 @@ public class Augmenter implements Application {
       @Override public boolean visit(final Block b) {
         if (discardOptimization(b))
           return false;
-        if (inRange(b, s))
+        if (wizard.inRange(b, s))
           $.add(statements(b));
         else {
-          final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> inRange(λ, s)).collect(toList()));
+          final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> wizard.inRange(λ, s)).collect(toList()));
           if (!discardOptimization(l))
             $.add(l);
         }
@@ -136,17 +137,6 @@ public class Augmenter implements Application {
    *         declaration */
   private static boolean hasImportIncluded(final CompilationUnit u, final String s) {
     return imports(u).stream().anyMatch(λ -> identifier(name(λ)).equals(s));
-  }
-
-  // TODO Ori Roth move to utility
-  /** @param n JD
-   * @param s JD
-   * @return true iff node is inside selection */
-  static boolean inRange(final ASTNode n, final ITextSelection s) {
-    if (n == null || s == null)
-      return false;
-    final int $ = n.getStartPosition();
-    return $ >= s.getOffset() && $ < s.getLength() + s.getOffset();
   }
 
   /** Determines whether a block should not be collateralized, i.e. when it has

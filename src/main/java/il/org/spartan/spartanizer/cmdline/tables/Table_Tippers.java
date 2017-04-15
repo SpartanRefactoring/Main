@@ -31,7 +31,7 @@ public class Table_Tippers {
                   .col("Node Type Number", i + "") //
                   .col("Node Class", wizard.intToClassName(i))//
                   .col("Actual class", name(¢.myActualOperandsClass()))//
-                  .col("Abstract class", name(¢.myAbstractOperandsClass()))//
+                  .col("Abstract class", name(¢.getAbstractOperandClass()))//
                   .nl();
       System.err.println(t.description());
     }

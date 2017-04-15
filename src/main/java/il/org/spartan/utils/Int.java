@@ -55,4 +55,8 @@ public final class Int {
   public void add(final Int other) {
     inner += other.get();
   }
+
+  public void clear() {
+    inner = 0;
+  }
 }

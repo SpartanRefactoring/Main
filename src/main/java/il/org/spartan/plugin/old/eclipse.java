@@ -25,7 +25,6 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.fluent.*;
@@ -62,7 +61,7 @@ public enum eclipse {
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
    * @param m A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times use {@link wizard#nullProgressMonitor}
+   *        operation times use {@link op#nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
   public static List<ICompilationUnit> compilationUnits(final IJavaElement u, final IProgressMonitor m) throws JavaModelException {
@@ -148,7 +147,7 @@ public enum eclipse {
    * @return node marked by the marker in the compilation unit */
   static ASTNode getNodeByMarker(final ICompilationUnit $, final IMarker m) {
     try {
-      return find($, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
+      return !m.exists() ? null : find($, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
     } catch (final CoreException ¢) {
       return note.bug(¢);
     }
@@ -159,7 +158,7 @@ public enum eclipse {
   }
 
   private static ASTNode createAST(final ICompilationUnit ¢) {
-    return make.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
+    return make.COMPILATION_UNIT.parser(¢).createAST(op.nullProgressMonitor);
   }
 
   private static int int¢(final IMarker m, final String name) throws CoreException {
@@ -215,20 +214,10 @@ public enum eclipse {
     return !($ instanceof ITextSelection) ? null : (ITextSelection) $;
   }
 
-  public boolean isNodeOutsideMarker(final ASTNode $, final IMarker m) {
-    try {
-      return $.getStartPosition() < ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue()
-          || $.getLength() + $.getStartPosition() > ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (final CoreException ¢) {
-      note.bug(this, ¢);
-      return true;
-    }
-  }
-
   /** @return List of all compilation units in the current project */
   List<ICompilationUnit> compilationUnits() {
     try {
-      return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
+      return compilationUnits(currentCompilationUnit(), op.nullProgressMonitor);
     } catch (final JavaModelException $) {
       return note.bug(this, $);
     }
@@ -236,7 +225,7 @@ public enum eclipse {
 
   Collection<ICompilationUnit> compilationUnits(final IJavaElement $) {
     try {
-      return compilationUnits($, nullProgressMonitor);
+      return compilationUnits($, op.nullProgressMonitor);
     } catch (final JavaModelException ¢) {
       return note.bug(this, ¢);
     }

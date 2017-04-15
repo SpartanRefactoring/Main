@@ -26,9 +26,7 @@ public class ASTTrotter extends ASTVisitor {
 
   <N extends ASTNode, T> ASTTrotter hookClassOnRule(final Class<N> c, final Rule<N, T> r) {
     init();
-    final Integer nodeType = wizard.classToNodeType.get(c);
-    assert nodeType != null : fault.specifically("Unrecongized class", c);
-    get(nodeType.intValue()).add(r);
+    get(wizard.nodeType(c)).add(r);
     return this;
   }
 

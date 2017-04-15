@@ -38,14 +38,14 @@ public class CommandLineApplicator extends Applicator {
   }
 
   private CommandLineApplicator defaultPassesFew() {
-    passes(PASSES_FEW);
+    setPasses(PASSES_FEW);
     return this;
   }
 
   /** Default passes configuration, with many passes.
    * @return {@code this} applicator */
   public CommandLineApplicator defaultPassesMany() {
-    passes(PASSES_MANY);
+    setPasses(PASSES_MANY);
     return this;
   }
 
@@ -86,7 +86,7 @@ public class CommandLineApplicator extends Applicator {
   }
 
   private CommandLineApplicator defaultRunContext() {
-    runContext(Runnable::run);
+    setContext(Runnable::run);
     return this;
   }
 
