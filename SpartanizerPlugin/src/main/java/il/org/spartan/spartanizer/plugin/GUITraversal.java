@@ -214,8 +214,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       final IProgressMonitor m = eclipse.newSubMonitor(getProgressMonitor());
       final ASTParser parser = make.COMPILATION_UNIT.parser($);
       final ASTNode createAST = parser.createAST(m);
-      final CompilationUnit createAST2 = (CompilationUnit) createAST;
-      final CompilationUnit ¢ = createAST2;
+      final CompilationUnit ¢ = (CompilationUnit) createAST;
       final ASTRewrite createRewrite = go(¢);
       textChange.setEdit(createRewrite.rewriteAST());
       if (textChange.getEdit().getLength() != 0)
