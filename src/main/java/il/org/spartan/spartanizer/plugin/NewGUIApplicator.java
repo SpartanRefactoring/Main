@@ -30,14 +30,7 @@ enum event {
 public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplicator> {
   protected NewGUIApplicator() {}
 
-  public static Applicator plain() {
-    return new NewGUIApplicator()//
-        .defaultListenerSilent()//
-        .fewPasses()//
-        .defaultRunContext()//
-        .defaultSelection()//
-        .defaultOperationName();
-  }
+  
 
   private static final String DEFAULT_STEM = "Opera";
   /** Few passes for the applicator to conduct. */
@@ -132,13 +125,6 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     return this;
   }
 
-  /** Default run context configuration of . Simply runs the {@link Runnable} in
-   * the current thread.
-   * @return {@code this} applicator */
-  public NewGUIApplicator defaultRunContext() {
-    setContext(Runnable::run);
-    return this;
-  }
 
   GUITraversal inner = new GUITraversal();
 
@@ -150,8 +136,8 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
   public NewGUIApplicator restrictTo(final Tipper<?> t) {
     inner.setSelection(selection());
     inner.setName(t.description());
-    inner.trimmer.useProjectPreferences();
-    inner.trimmer.configuration.restrictTo(t);
+    inner.traversal.useProjectPreferences();
+    inner.traversal.configuration.restrictTo(t);
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ)));
     return this;
   }
@@ -163,16 +149,17 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     return this;
   }
 
-  /** Default settings for all {@link Applicator} components.
-   * @return {@code this} applicator */
-  public NewGUIApplicator defaultSettings() {
-    return defaultListenerSilent().fewPasses().defaultRunContext().defaultSelection().defaultOperationName();
-  }
-
+  public static NewGUIApplicator plain() {
+    return new NewGUIApplicator()//
+        .defaultListenerSilent()//
+        .fewPasses()//
+        .defaultSelection()//
+        .defaultOperationName();
+  }    
   /** Factory method.
    * @return default event applicator */
   public static NewGUIApplicator defaultApplicator() {
-    return new NewGUIApplicator().defaultSettings();
+    return NewGUIApplicator.plain();
   }
 
   /** Printing definition of events that occur during spartanization.

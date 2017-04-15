@@ -31,7 +31,7 @@ public class TrimmerLogTest {
     assert u != null;
     final IDocument d = new Document(wrap);
     assert d != null;
-    final TrimmerImplementation a = new TrimmerImplementation();
+    final Traversalmplementation a = new Traversalmplementation();
     try {
       a.go(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {
@@ -49,7 +49,7 @@ public class TrimmerLogTest {
     assert u != null;
     final IDocument d = new Document(wrap);
     assert d != null;
-    final TrimmerImplementation a = new TrimmerImplementation();
+    final Traversalmplementation a = new Traversalmplementation();
     try {
       a.go(u).rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | BadLocationException ¢) {

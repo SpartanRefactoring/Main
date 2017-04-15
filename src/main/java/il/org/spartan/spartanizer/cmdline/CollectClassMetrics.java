@@ -25,7 +25,7 @@ enum CollectClassMetrics {
   }
 
   static CompilationUnit spartanize(final CompilationUnit u) {
-    final Trimmer t = new TrimmerImplementation();
+    final Traversal t = new Traversalmplementation();
     t.go(u);
     return u;
   }

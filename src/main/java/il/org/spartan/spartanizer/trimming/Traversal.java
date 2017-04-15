@@ -18,13 +18,13 @@ import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 
 /** A smorgasboard containing lots of stuff factored out of
- * {@link TrimmerImplementation}
+ * {@link Traversalmplementation}
  * <ol>
  * <li>Configuration: sometime you wish to disable some of the tippers.
  * </ol>
  * @author Yossi Gil
  * @since 2015/07/10 */
-public abstract class Trimmer implements Selfie<Trimmer> {
+public abstract class Traversal implements Selfie<Traversal> {
   public Tip auxiliaryTip() {
     return auxiliaryTip;
   }
@@ -67,7 +67,7 @@ public abstract class Trimmer implements Selfie<Trimmer> {
     return notify.pop();
   }
 
-  public Trimmer push(final TrimmingTapper ¢) {
+  public Traversal push(final TrimmingTapper ¢) {
     notify.push(¢);
     return this;
   }
@@ -76,7 +76,7 @@ public abstract class Trimmer implements Selfie<Trimmer> {
     return getRewrite();
   }
 
-  @Override public Trimmer self() {
+  @Override public Traversal self() {
     return this;
   }
 
@@ -89,7 +89,7 @@ public abstract class Trimmer implements Selfie<Trimmer> {
     notify.setNode();
   }
 
-  public Trimmer setRange(final Range ¢) {
+  public Traversal setRange(final Range ¢) {
     return self(() -> range = ¢);
   }
 
@@ -107,7 +107,7 @@ public abstract class Trimmer implements Selfie<Trimmer> {
 
   public abstract ASTVisitor tipsCollector(Tips $);
 
-  public Trimmer useProjectPreferences() {
+  public Traversal useProjectPreferences() {
     useProjectPreferences = true;
     configurations.clear();
     return this;
@@ -186,8 +186,8 @@ public abstract class Trimmer implements Selfie<Trimmer> {
   protected boolean useProjectPreferences;
 
   public abstract class With {
-    public Trimmer current() {
-      return Trimmer.this;
+    public Traversal current() {
+      return Traversal.this;
     }
   }
 }

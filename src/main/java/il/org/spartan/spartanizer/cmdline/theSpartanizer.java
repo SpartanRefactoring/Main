@@ -25,7 +25,7 @@ public interface theSpartanizer {
     if (n != null)
       n.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
-          return searching && go(trimmer.configuration.firstTipper(¢));
+          return searching && go(traversal.configuration.firstTipper(¢));
         }
 
         <N extends ASTNode> boolean go(final Tipper<N> ¢) {
@@ -45,7 +45,7 @@ public interface theSpartanizer {
    * @return trimmed text, or null in case of error or no more applicable
    *         tippers */
   @SuppressWarnings("hiding") static String once(final String from) {
-    final Trimmer trimmer = new TrimmerImplementation();
+    final Traversal traversal = new Traversalmplementation();
     final IDocument $ = new Document(from);
     final ASTNode root = make.ast(from);
     if (root != null)
@@ -70,7 +70,7 @@ public interface theSpartanizer {
           try {
             e.apply($);
           } catch (final MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-            note.bug(trimmer, ¢);
+            note.bug(traversal, ¢);
           }
         }
 
@@ -88,11 +88,11 @@ public interface theSpartanizer {
     }
   }
 
-  Trimmer trimmer = new TrimmerImplementation();
+  Traversal traversal = new Traversalmplementation();
 
   static <N extends ASTNode> Tipper<N> safeFirstTipper(final N $) {
     try {
-      return trimmer.configuration.firstTipper($);
+      return traversal.configuration.firstTipper($);
     } catch (final Exception ¢) {
       return note.bug(¢);
     }

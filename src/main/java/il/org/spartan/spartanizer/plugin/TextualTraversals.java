@@ -12,7 +12,7 @@ import il.org.spartan.utils.fluent.*;
  * @author Yossi Gil
  * @since 2017-04-14 */
 public class TextualTraversals {
-  public final Trimmer trimmer = new TrimmerImplementation()//
+  public final Traversal traversal = new Traversalmplementation()//
       .push(new TrimmingTapper() {
         @Override public void begin() {
           TrimmingTapper.super.begin();
@@ -35,7 +35,7 @@ public class TextualTraversals {
    * @throws AssertionError */
   public TextEdit once(final IDocument d) throws AssertionError {
     try {
-      final TextEdit $ = trimmer.go((CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get())).rewriteAST(d, null);
+      final TextEdit $ = traversal.go((CompilationUnit) makeAST.COMPILATION_UNIT.from(d.get())).rewriteAST(d, null);
       $.apply(d);
       return $;
     } catch (final NullPointerException | MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {

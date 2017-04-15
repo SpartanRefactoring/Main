@@ -55,6 +55,7 @@ public final class SingleFlater {
    * @return {@code this} flater */
   @Deprecated public SingleFlater limit(final TextSelection ¢) {
     // TODO Ori Roth --yg
+    ¢.hashCode();
     return this;
   }
 
