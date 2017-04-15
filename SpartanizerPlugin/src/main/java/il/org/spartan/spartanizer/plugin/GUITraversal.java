@@ -412,7 +412,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
    * @param n the node which needs to be within the range of {@code m}
    * @return whether the node is within range */
   public boolean inRange(final IMarker m, final ASTNode n) {
-    return m == null ? !isTextSelected() || !isNotSelected(n) : !wizard.disjoint(n, m);
+    return m != null ? !wizard.disjoint(n, m) : !isTextSelected() || !isNotSelected(n);
   }
 
   public final Trimmer trimmer = new TrimmerImplementation().push((TrimmingTickingTapper) λ -> getProgressMonitor().worked(λ))
