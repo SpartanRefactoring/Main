@@ -53,7 +53,13 @@ public class BatchApplicator extends Applicator {
           break;
         final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), done = new ArrayList<>();
         for (final WrappedCompilationUnit ¢ : alive) {
-          final int tipsInvoked = runAction().apply(¢.build()).intValue();
+          Function<WrappedCompilationUnit, Integer> runAction = runAction();
+          assert runAction != null;
+          WrappedCompilationUnit build = ¢.build();
+          assert build != null;
+          Integer apply = runAction.apply(build);
+          assert apply != null;
+          final int tipsInvoked = apply.intValue();
           if (tipsInvoked <= 0)
             done.add(¢);
           ¢.dispose();
