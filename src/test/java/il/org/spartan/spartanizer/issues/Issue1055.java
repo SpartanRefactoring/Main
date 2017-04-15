@@ -2,11 +2,8 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
-import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
-
-import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for Issue 1055
  * @author Yossi Gil

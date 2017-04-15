@@ -34,6 +34,39 @@ import il.org.spartan.utils.fluent.*;
  * @since 2015-07-16 */
 @SuppressWarnings("ClassWithTooManyMethods")
 public interface iz {
+  interface literal {
+    /** @param ¢ JD
+     * @return */
+    static boolean classInstanceCreation(final ASTNode ¢) {
+      return ¢ != null && iz.nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
+    }
+
+    /** @param ¢ JD
+     * @return whether the given node is a literal false or false otherwise */
+    static boolean false¢(final ASTNode ¢) {
+      return iz.literal(¢, false);
+    }
+
+    /** @param ¢ JD
+     * @return */
+    static boolean fieldAccess(final Expression ¢) {
+      return ¢ != null && iz.nodeTypeEquals(¢, FIELD_ACCESS);
+    }
+
+    /** @param ¢ JD
+     * @return whether the given node is a literal true or false otherwise */
+    static boolean true¢(final ASTNode ¢) {
+      return iz.literal(¢, true);
+    }
+
+    static boolean xliteral(final String s, final ASTNode ¢) {
+      return iz.literal(az.stringLiteral(¢), s);
+    }
+  }
+
+  List<String> defaultLiterals = as.list("null", "0", "false", "0.", "0L");
+  int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
+
   static boolean abstract¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.ABSTRACT) != 0;
   }
@@ -297,8 +330,8 @@ public interface iz {
     return (Modifier.DEFAULT & node.getModifiers()) != 0;
   }
 
-  static boolean defaultLiteral(final ASTNode ¢) {
-    return defaultLiterals.contains(¢ + "");
+  static boolean defaultLiteral(ASTNode ¢2) {
+    return iz.nullLiteral(¢2) || iz.literal0(¢2) || literal.false¢(¢2) || iz.literal(¢2, 0.0) || iz.literal(¢2, 0L);
   }
 
   static boolean definiteLoop(final ASTNode n) {
@@ -1298,9 +1331,6 @@ public interface iz {
     return iz.nodeTypeEquals(¢, WILDCARD_TYPE);
   }
 
-  List<String> defaultLiterals = as.list("null", "0", "false", "0.", "0L");
-  int[] sequencerTypes = { RETURN_STATEMENT, BREAK_STATEMENT, CONTINUE_STATEMENT, THROW_STATEMENT };
-
   /** @param ¢ JD
    * @return whether the given node is a literal or false otherwise */
   default boolean parsesTo(final String $, final double d) {
@@ -1330,36 +1360,6 @@ public interface iz {
     } catch (final IllegalArgumentException ¢) {
       note.bug(box(l), ¢);
       return false;
-    }
-  }
-
-  interface literal {
-    /** @param ¢ JD
-     * @return */
-    static boolean classInstanceCreation(final ASTNode ¢) {
-      return ¢ != null && iz.nodeTypeEquals(¢, CLASS_INSTANCE_CREATION);
-    }
-
-    /** @param ¢ JD
-     * @return whether the given node is a literal false or false otherwise */
-    static boolean false¢(final ASTNode ¢) {
-      return iz.literal(¢, false);
-    }
-
-    /** @param ¢ JD
-     * @return */
-    static boolean fieldAccess(final Expression ¢) {
-      return ¢ != null && iz.nodeTypeEquals(¢, FIELD_ACCESS);
-    }
-
-    /** @param ¢ JD
-     * @return whether the given node is a literal true or false otherwise */
-    static boolean true¢(final ASTNode ¢) {
-      return iz.literal(¢, true);
-    }
-
-    static boolean xliteral(final String s, final ASTNode ¢) {
-      return iz.literal(az.stringLiteral(¢), s);
     }
   }
 }

@@ -42,7 +42,7 @@ public final class LocalInitializedAssignment extends $FragmentAndStatement//
     if (a == null || !wizard.eq(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
     final Expression newInitializer = copy.of(from(a));
-    if (Fragment.doesUseForbiddenSiblings(f, newInitializer))
+    if (FragmentPattern.doesUseForbiddenSiblings(f, newInitializer))
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
