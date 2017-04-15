@@ -25,14 +25,6 @@ import il.org.spartan.utils.fluent.*;
  * @author Yossi Gil
  * @since 2015/07/10 */
 public abstract class Trimmer implements Selfie<Trimmer> {
-  @SafeVarargs public final <N extends ASTNode> Trimmer addSingleTipper(final Class<N> c, final Tipper<N>... ts) {
-    if (firstAddition) {
-      firstAddition = false;
-      globalConfiguration = new Configuration();
-    }
-    globalConfiguration.add(c, ts);
-    return this;
-  }
 
   public Tip auxiliaryTip() {
     return auxiliaryTip;
@@ -56,10 +48,6 @@ public abstract class Trimmer implements Selfie<Trimmer> {
 
   public abstract ASTRewrite go(CompilationUnit u);
 
-
-  public Configuration currentConfiguration() {
-    return currentConfiguration;
-  }
 
   public TextEditGroup currentEditGroup() {
     return currentEditGroup;
@@ -98,10 +86,6 @@ public abstract class Trimmer implements Selfie<Trimmer> {
     return this.auxiliaryTip = auxiliaryTip;
   }
 
-  public Trimmer setCurrentConfiguration(final Configuration currentConfiguration) {
-    this.currentConfiguration = currentConfiguration;
-    return this;
-  }
 
   public void setNode(final ASTNode currentNode) {
     node = currentNode;
@@ -166,7 +150,6 @@ public abstract class Trimmer implements Selfie<Trimmer> {
   }
 
   protected void setCompilationUnit(final CompilationUnit ¢) {
-    setCurrentConfiguration(!useProjectPreferences ? globalConfiguration : getPreferredConfiguration(¢));
     fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
   }
 
@@ -180,7 +163,6 @@ public abstract class Trimmer implements Selfie<Trimmer> {
 
   public final Int rewriteCount = new Int();
   public final Configuration configuration = Configurations.allClone();
-  public Configuration globalConfiguration = Configurations.all();
   public final TrimmingTappers notify = new TrimmingTappers()//
       .push(new TrimmerMonitor(this)) //
       .push(new TrimmingTapper() {
@@ -194,7 +176,6 @@ public abstract class Trimmer implements Selfie<Trimmer> {
       });
   private Tip auxiliaryTip;
   private CompilationUnit compilationUnit;
-  private Configuration currentConfiguration;
   private TextEditGroup currentEditGroup;
   private Range range;
   private Tips tips;
