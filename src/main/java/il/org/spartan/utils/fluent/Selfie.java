@@ -14,6 +14,5 @@ public interface Selfie<Self extends Selfie<Self>> {
   Self self();
 
   default <U> void change(final U ¢) {
-    ¢.hashCode();
   }
 }
