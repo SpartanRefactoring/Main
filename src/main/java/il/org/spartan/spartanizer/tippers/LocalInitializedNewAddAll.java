@@ -31,19 +31,19 @@ public final class LocalInitializedNewAddAll extends LocalInitialized //
 
   public LocalInitializedNewAddAll() {
     andAlso("Initializer is a 'new Type(...)' expression", //
-        () -> not.null¢(newExpression = az.classInstanceCreation(initializer)));
+        () -> not.nil(newExpression = az.classInstanceCreation(initializer)));
     andAlso("Instance creation takes no argments ", //
         () -> newExpression.arguments().isEmpty()); //
     andAlso("Extract type", //
-        () -> not.null¢(type = newExpression.getType()));
+        () -> not.nil(type = newExpression.getType()));
     andAlso("Next statement is a method invocation", //
-        () -> not.null¢(methodInvocation = az.methodInvocation(nextStatement)));
+        () -> not.nil(methodInvocation = az.methodInvocation(nextStatement)));
     andAlso("Receiver of invocation is current variable", //
         () -> wizard.eq(name, methodInvocation.getExpression()));
     andAlso("Method name is 'addAll'", //
         () -> "addAll".equals(methodInvocation.getName() + ""));
     andAlso("Method has only one argument", //
-        () -> not.null¢(argument = onlyOne(arguments(methodInvocation))));
+        () -> not.nil(argument = onlyOne(arguments(methodInvocation))));
   }
 
   @Override public String description() {

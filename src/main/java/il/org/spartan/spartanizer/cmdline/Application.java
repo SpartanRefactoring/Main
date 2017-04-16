@@ -211,7 +211,7 @@ public final class Application implements IApplication {
         if (a.startsWith("-C"))
           optRounds = Integer.parseUnsignedInt(a.substring(2));
       } catch (@SuppressWarnings("unused") final NumberFormatException __) {
-        // Forget
+        // forget
       }
       if ("-V".equals(a))
         optVerbose = true;

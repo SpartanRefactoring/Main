@@ -49,7 +49,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   };
   private static final Comparator<Expression> specificity = new specificity();
   /** Threshold for comparing nodes; a difference in the number of nodes between
-   * two nodes is considered Zero, if it is the less than this value, */
+   * two nodes is considered zero, if it is the less than this value, */
   public static final int NODES_THRESHOLD = 1;
 
   /** Compare the length of the left and right arguments of an infix expression
@@ -72,7 +72,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /** Lexicographical comparison expressions by their number of characters
    * @param e1 JD
    * @param e2 JD
-   * @return an integer which is either negative, Zero, or positive, if the
+   * @return an integer which is either negative, zero, or positive, if the
    *         number of characters in the first argument occurs before, at the
    *         same place, or after then the second argument in lexicographical
    *         order. */
@@ -91,7 +91,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   /** Compare expressions by their number of characters
    * @param e1 JD
    * @param e2 JD
-   * @return an integer which is either negative, Zero, or positive, if the
+   * @return an integer which is either negative, zero, or positive, if the
    *         number of characters in the first argument is less than, equal to,
    *         or greater than the number of characters in the second argument. */
   static int characterCompare(final Expression e1, final Expression e2) {

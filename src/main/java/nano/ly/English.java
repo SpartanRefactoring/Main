@@ -15,12 +15,36 @@ import il.org.spartan.utils.*;
  * @author Ori Roth
  * @since 2.6 */
 public interface English {
-  /** Error string, replacing null/error value. */
-  String UNKNOWN = "???";
-  String SEPARATOR = ", ";
+  interface Inflection {
+    static Inflection stem(final String base) {
+      return new Inflection() {
+        @Override public String get() {
+          return base;
+        }
+
+        @Override public String getEd() {
+          return base + "ed";
+        }
+
+        @Override public String getIng() {
+          return base + "ing";
+        }
+      };
+    }
+
+    String get();
+
+    String getEd();
+
+    String getIng();
+  }
   String DOUBLE_FORMAT = "0.00";
+  String SEPARATOR = ", ";
   String TRIM_SUFFIX = "...";
   int TRIM_THRESHOLD = 50;
+
+  /** Error string, replacing null/error value. */
+  String UNKNOWN = "???";
 
   static String indefinite(final Object ¢) {
     return indefinite(English.name(¢));
@@ -45,12 +69,16 @@ public interface English {
         : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + last(¢);
   }
 
-  static String upperFirstLetter(final String input) {
-    return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toUpperCase() + input.substring(1);
-  }
-
   static String lowerFirstLetter(final String input) {
     return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toLowerCase() + input.substring(1);
+  }
+
+  static String name(final Class<?> ¢) {
+    return ¢.getEnclosingClass() == null ? English.selfName(¢) : English.selfName(¢) + "." + name(¢.getEnclosingClass());
+  }
+
+  static String name(final Object ¢) {
+    return English.name(¢.getClass());
   }
 
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
@@ -164,6 +192,11 @@ public interface English {
     return String.valueOf(new char[i]).replace('\0', c);
   }
 
+  static String selfName(final Class<?> ¢) {
+    return ¢.isAnonymousClass() ? "{}"
+        : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
+  }
+
   static String time(final long $) {
     return new DecimalFormat(DOUBLE_FORMAT).format($ / 1000000000.0);
   }
@@ -200,40 +233,7 @@ public interface English {
     return x == null ? UNKNOWN : f.apply(x) + "";
   }
 
-  static String name(final Object ¢) {
-    return English.name(¢.getClass());
-  }
-
-  static String name(final Class<?> ¢) {
-    return ¢.getEnclosingClass() == null ? English.selfName(¢) : English.selfName(¢) + "." + name(¢.getEnclosingClass());
-  }
-
-  static String selfName(final Class<?> ¢) {
-    return ¢.isAnonymousClass() ? "{}"
-        : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
-  }
-
-  interface Inflection {
-    static Inflection stem(final String base) {
-      return new Inflection() {
-        @Override public String get() {
-          return base;
-        }
-
-        @Override public String getEd() {
-          return base + "ed";
-        }
-
-        @Override public String getIng() {
-          return base + "ing";
-        }
-      };
-    }
-
-    String get();
-
-    String getEd();
-
-    String getIng();
+  static String upperFirstLetter(final String input) {
+    return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toUpperCase() + input.substring(1);
   }
 }

@@ -699,7 +699,7 @@ public interface wizard {
   static <N extends ASTNode> int nodeType(final Class<N> ¢) {
     final Integer $ = classToNodeType.get(¢);
     return $ != null ? $.intValue()
-        : Zero.voidAll(note.bug(fault.dump() + //
+        : zero.voidAll(note.bug(fault.dump() + //
             "\n c = " + ¢ + //
             "\n c.getSimpleName() = " + ¢.getSimpleName() + //
             "\n classForNodeType.keySet() = " + wizard.classToNodeType.keySet() + //

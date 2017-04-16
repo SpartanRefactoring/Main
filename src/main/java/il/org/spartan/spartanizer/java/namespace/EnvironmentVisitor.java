@@ -210,7 +210,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   /** Order of the searched {@link Statement} in its parent {@link ASTNode},
-   * among nodes of the same kind. Zero based.
+   * among nodes of the same kind. zero based.
    * @param s
    * @return The nodes index, according to order of appearance, among nodes
    *         ofthe same type. [[SuppressWarningsSpartan]] */

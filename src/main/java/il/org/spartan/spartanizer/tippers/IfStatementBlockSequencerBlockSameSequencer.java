@@ -35,11 +35,11 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
     andAlso("Next statement exists", //
         () -> nextStatement != null);
     andAlso("Then part is a block", //
-        () -> not.null¢(block = az.block(then)));
+        () -> not.nil(block = az.block(then)));
     andAlso("Then part contains a list of statements", //
-        () -> not.null¢(thenStatements = statements(block)));
+        () -> not.nil(thenStatements = statements(block)));
     andAlso("List of statements ends with a sequencer", //
-        () -> not.null¢(sequencer = az.sequencer(last(thenStatements))));
+        () -> not.nil(sequencer = az.sequencer(last(thenStatements))));
     andAlso("Last in subsequent statements ends with the same sequencer", //
         () -> wizard.eq(sequencer, last(subsequentStatements)));
   }

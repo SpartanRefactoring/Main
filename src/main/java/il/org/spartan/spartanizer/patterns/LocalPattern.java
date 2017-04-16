@@ -23,7 +23,7 @@ public abstract class LocalPattern extends FragmentAmongFragmentsPattern {
 
   public LocalPattern() {
     andAlso("Must be local variable", //
-        () -> not.null¢(declaration = az.variableDeclarationStatement(parent)));
+        () -> not.nil(declaration = az.variableDeclarationStatement(parent)));
   }
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment

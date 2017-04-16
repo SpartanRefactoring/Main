@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1067 {
   @Test public void t1() {
-    trimminKof("int Zero = 0, result = 8 / Zero;f(++result);").stays();
+    trimminKof("int zero = 0, result = 8 / zero;f(++result);").stays();
   }
 
   @Test public void t2() {
