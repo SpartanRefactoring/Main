@@ -20,6 +20,7 @@ import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** An application of the Bloater project. Augment java code to be more clear
  * and debugable. TODO Ori Roth: add progress monitor support TODO Ori Roth: add

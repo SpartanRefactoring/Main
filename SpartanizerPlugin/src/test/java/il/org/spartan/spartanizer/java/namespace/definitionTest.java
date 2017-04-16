@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.java.namespace.ZZZ___Fixture_ModelClass.InnerE
 import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** @formatter:off */
 @Target(ElementType.TYPE) @annotation @interface annotation { /**/ }

@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Utility class for dialogs management.
  * @author Ori Roth

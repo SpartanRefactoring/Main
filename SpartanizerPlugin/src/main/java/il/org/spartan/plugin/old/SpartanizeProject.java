@@ -14,6 +14,7 @@ import org.eclipse.ui.progress.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** executes all safe Tips on all Java files in the current project.
  * @author Ofir Elmakias <code><elmakias [at] outlook.com></code>

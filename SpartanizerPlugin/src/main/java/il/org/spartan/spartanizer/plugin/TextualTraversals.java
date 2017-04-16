@@ -7,6 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

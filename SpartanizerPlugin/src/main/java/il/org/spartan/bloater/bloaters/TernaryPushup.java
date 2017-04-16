@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
 import il.org.spartan.zoomer.zoomin.expanders.*;
+import nano.ly.*;
 
 /** Example in {@link #examples} Test case is {@link Issue1049}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>

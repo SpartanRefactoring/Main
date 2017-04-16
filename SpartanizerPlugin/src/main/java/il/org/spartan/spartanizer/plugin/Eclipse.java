@@ -20,6 +20,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Eclipse common utilities.
  * @author Ori Roth {@code ori.rothh@gmail.com}

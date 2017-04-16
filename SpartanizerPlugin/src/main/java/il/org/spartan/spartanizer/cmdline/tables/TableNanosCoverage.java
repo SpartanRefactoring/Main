@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Table representing coverage for methods up to 30 statements
  * @author orimarco {@code marcovitch.ori@gmail.com}

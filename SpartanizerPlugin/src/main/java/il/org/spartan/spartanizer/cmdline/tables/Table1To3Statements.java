@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Table representing coverage for methods with 1 to 3 statements
  * @deprecated
