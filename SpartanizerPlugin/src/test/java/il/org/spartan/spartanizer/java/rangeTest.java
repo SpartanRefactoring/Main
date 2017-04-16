@@ -6,7 +6,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.range.*;
 import nano.ly.*;
 
 /** Test cases for the fluent API of Range
