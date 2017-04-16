@@ -1,7 +1,7 @@
-package il.org.spartan.utils.fluent;
+package nano.ly;
 
-import static il.org.spartan.utils.fluent.English.*;
 import static java.lang.String.*;
+import static nano.ly.English.*;
 
 import static java.util.stream.Collectors.*;
 

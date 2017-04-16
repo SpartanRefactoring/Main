@@ -16,7 +16,6 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.Example.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Examples tests for bloaters.

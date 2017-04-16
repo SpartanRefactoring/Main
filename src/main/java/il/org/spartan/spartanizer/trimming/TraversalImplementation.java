@@ -11,7 +11,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Apply a {@link Configuration} to a tree. Issues are
