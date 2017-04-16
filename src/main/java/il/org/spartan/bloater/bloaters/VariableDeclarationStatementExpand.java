@@ -46,7 +46,7 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
     return $.isEmpty() ? null : new Tip("Verbosify parameter names", getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final VariableDeclarationFragment ss : $)
-          action.rename(ss.getName(),
+          misc.rename(ss.getName(),
               make.from(s).identifier(in(ss.getName().getIdentifier(), "$") ? "result" : scope.newName(s, step.type(s), prefix(step.type(s)))),
               s.getParent(), r, g);
       }

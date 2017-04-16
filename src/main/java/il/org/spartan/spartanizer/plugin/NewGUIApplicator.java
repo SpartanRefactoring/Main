@@ -124,7 +124,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
 
   GUITraversal inner = new GUITraversal();
 
-  /** Default run action configuration of . Spartanize the
+  /** Default run misc configuration of . Spartanize the
    * {@link ICompilationUnit} using received {@link AbstractGUIApplicator}.
    * @param a JD
    * @return {@code this} applicator */
@@ -133,7 +133,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     return this;
   }
 
-  /** Default run action configuration of . Spartanize the
+  /** Default run misc configuration of . Spartanize the
    * {@link ICompilationUnit} using received {@link GUITraversal}.
    * @param t JD
    * @return {@code this} applicator */

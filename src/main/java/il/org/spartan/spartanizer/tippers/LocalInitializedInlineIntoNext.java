@@ -57,10 +57,10 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
     if (parent == null//
         || iz.forStatement(parent))
       return null;
-    final SimpleName n = action.peelIdentifier(nextStatement, identifier(name(f)));
+    final SimpleName n = misc.peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//
         || anyFurtherUsage(parent, nextStatement, identifier(n))//
-        || action.leftSide(nextStatement, identifier(n))//
+        || misc.leftSide(nextStatement, identifier(n))//
         || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();

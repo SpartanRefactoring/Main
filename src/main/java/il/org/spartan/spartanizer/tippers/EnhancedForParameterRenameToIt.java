@@ -47,7 +47,7 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     final SimpleName ¢ = newCurrent(s);
     return new Tip(description(s), myClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        action.rename($, ¢, s, r, g);
+        misc.rename($, ¢, s, r, g);
       }
     }.spanning(s);
   }

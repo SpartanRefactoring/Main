@@ -49,7 +49,7 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     final SimpleName ¢ = Namer.newCent(x);
     return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        action.rename(n, ¢, $, r, g);
+        misc.rename(n, ¢, $, r, g);
       }
     }.spanning($);
   }

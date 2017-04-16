@@ -429,10 +429,9 @@ interface DummyInterface {/**/ }
 }
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
-@interface try¢ {
-  /**/ }
+@interface try¢ { /**/ }
 
-@org.junit.Ignore
+@Ignore
 @class¢
 @knows("type definitionTest")
 @SuppressWarnings("ALL")

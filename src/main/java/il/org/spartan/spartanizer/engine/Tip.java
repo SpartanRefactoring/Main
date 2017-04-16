@@ -56,7 +56,7 @@ public abstract class Tip {
    * @param description a textual description of the changes described by
    *        this instance
    * @param highlight the node on which change is to be marked
-   * @param ns additional nodes, defining the scope of this action. */
+   * @param ns additional nodes, defining the scope of this misc. */
   public <N1 extends ASTNode, N2 extends ASTNode> Tip(final String description, //
       final Class<Tipper<N1>> tipperClass, //
       final N2 highlight, final ASTNode... ns) {
@@ -106,7 +106,7 @@ public abstract class Tip {
     }
   }
 
-  /** A textual description of the action to be performed */
+  /** A textual description of the misc to be performed */
   public final String description;
   /** What text range to highlight in the marker of this instance */
   public final Range highlight;
