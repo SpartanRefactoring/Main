@@ -23,7 +23,6 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Generates files after nano spartanization+replacing

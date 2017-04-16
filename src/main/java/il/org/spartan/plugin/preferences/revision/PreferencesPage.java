@@ -29,7 +29,6 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tippers.Names.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Revised global preferences page for the plugin.

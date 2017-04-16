@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
-import static il.org.spartan.utils.fluent.note.*;
+import static nano.ly.note.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;

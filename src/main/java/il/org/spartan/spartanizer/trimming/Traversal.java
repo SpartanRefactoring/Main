@@ -15,7 +15,6 @@ import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** A smorgasboard containing lots of stuff factored out of

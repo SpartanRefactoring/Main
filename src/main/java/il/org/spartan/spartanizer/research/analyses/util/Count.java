@@ -4,7 +4,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Counting utility

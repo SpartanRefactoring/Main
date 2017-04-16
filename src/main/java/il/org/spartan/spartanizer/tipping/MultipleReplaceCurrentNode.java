@@ -10,6 +10,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.utils.range.*;
+import nano.ly.*;
 
 /** MultipleReplaceCurrentNode replaces multiple nodes in current statement with
  * multiple nodes (or a single node).

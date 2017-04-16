@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.plugin.Eclipse.*;
-import static il.org.spartan.utils.fluent.English.*;
+import static nano.ly.English.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -15,7 +15,6 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations

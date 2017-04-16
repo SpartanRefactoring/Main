@@ -3,7 +3,7 @@
  * @author orimarco <marcovitch.ori@gmail.com>
  *
  * @since Dec 19, 2016 */
-package il.org.spartan.utils.fluent;
+package nano.ly;
 
 public enum safe {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
