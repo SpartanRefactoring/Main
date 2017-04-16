@@ -15,6 +15,10 @@ public interface the {
     return -1;
   }
 
+  static <T> T nil() {
+    return null;
+  }
+
   static String nth(final int i, final Collection<?> os) {
     return the.nth(i, os.size());
   }
@@ -25,10 +29,6 @@ public interface the {
 
   static String nth(final String s, final String n) {
     return " #" + s + "/" + n;
-  }
-
-  static <T> T null¢() {
-    return null;
   }
 
   static <T> T penultimate(final List<T> ¢) {

@@ -31,14 +31,14 @@ public final class TernaryPushup extends InfixExpressionPattern implements Tippe
 
   public TernaryPushup() {
     andAlso(OR("Right or left operand is ternary expression",
-        () -> not.null¢(operandConditional = az.conditionalExpression(extract.core(right))) //
-            && not.null¢(operandCondition = step.expression(operandConditional)) //
-            && not.null¢(operandThen = step.then(operandConditional)) //
-            && not.null¢(operandElze = step.elze(operandConditional)),
-        () -> not.null¢(leftConditional = az.conditionalExpression(extract.core(left)))
-            && not.null¢(operandCondition = step.expression(leftConditional)) //
-            && not.null¢(operandThen = step.then(leftConditional)) //
-            && not.null¢(operandElze = step.elze(leftConditional))));
+        () -> not.nil(operandConditional = az.conditionalExpression(extract.core(right))) //
+            && not.nil(operandCondition = step.expression(operandConditional)) //
+            && not.nil(operandThen = step.then(operandConditional)) //
+            && not.nil(operandElze = step.elze(operandConditional)),
+        () -> not.nil(leftConditional = az.conditionalExpression(extract.core(left)))
+            && not.nil(operandCondition = step.expression(leftConditional)) //
+            && not.nil(operandThen = step.then(leftConditional)) //
+            && not.nil(operandElze = step.elze(leftConditional))));
     andAlso("Condition has no side effect", //
         () -> !haz.sideEffects(operandCondition));
   }

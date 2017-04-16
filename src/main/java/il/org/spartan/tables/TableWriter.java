@@ -78,7 +78,7 @@ public class TableWriter implements Closeable {
   private String writeHeaderInner(final Map<String, Object> m) {
     final Separator s = new Separator(renderer.headerSeparator());
     final StringBuilder $ = new StringBuilder();
-    m.keySet().forEach(λ -> $.append(s).append(λ != null ? λ : renderer.null¢()));
+    m.keySet().forEach(λ -> $.append(s).append(λ != null ? λ : renderer.nil()));
     return $ + "";
   }
 }
