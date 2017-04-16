@@ -24,7 +24,6 @@ import il.org.spartan.utils.fluent.*;
 
 /** @formatter:off */
 @Target(ElementType.TYPE) @annotation @interface annotation { /**/ }
-
 @Target(ElementType.METHOD) @annotation @interface annotationMemberDeclaration { /**/ }
 @Target({ ElementType.METHOD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE }) @annotation @interface catch¢ { /**/ }
 @Target({ ElementType.LOCAL_VARIABLE, ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.TYPE }) @annotation @interface class¢ { /**/ }
@@ -40,7 +39,7 @@ public class definitionTest extends MetaFixture {
     @field static final long serialVersionUID = 1;
     {
       put("@Test", null);
-      put("@Forget", null);
+      put("@Ignore", null);
       put("@Override", null);
       put("@annotation", null);
       put("@class¢", null);
@@ -122,7 +121,7 @@ public class definitionTest extends MetaFixture {
 
   @Test @method public void a16() {
     markers().forEach(λ -> annotations.put(λ + "", λ));
-    assert annotations.get("@Forget") != null;
+    assert annotations.get("@Ignore") != null;
   }
 
   @Test @method public void a17() {
