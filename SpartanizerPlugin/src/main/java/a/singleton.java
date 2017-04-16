@@ -1,4 +1,4 @@
-package nano.a;
+package a;
 
 import java.util.*;
 
