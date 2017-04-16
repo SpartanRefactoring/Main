@@ -19,7 +19,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** An application of the Bloater project. Augment java code to be more clear

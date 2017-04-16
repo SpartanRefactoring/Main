@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.methods.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Coercion pattern <br>

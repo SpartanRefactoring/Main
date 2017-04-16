@@ -12,7 +12,6 @@ import org.osgi.framework.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.revision.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** TODO Artium Nihamkin please add a description
