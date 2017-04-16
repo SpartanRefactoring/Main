@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Checking that the tipper handling multiplication with Zero is working well
+/** Checking that the tipper handling multiplication with zero is working well
  * @author Dor Ma'ayan
  * @since 2016-09-25 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

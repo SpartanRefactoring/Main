@@ -91,6 +91,28 @@ public interface note {
             "\n o = " + o + "'"));
   }
 
+  static <T> T ignore(final Class<?> o, final Throwable t) {
+    return info(//
+        "A static method of " + English.name(o) + //
+            "was hit by " + indefinite(t) + "\n" + //
+            "exception. This is expected and printed only for the purpose of debugging" + //
+            "x = '" + t + "'" + //
+            "o = " + o + "'");
+  }
+
+  static <T> T ignore(final Object o, final Throwable t) {
+    return info(//
+        "An instance of " + English.name(o) + //
+            "\n was hit by " + indefinite(t) + //
+            " exception. This is expected and printed only for the purpose of debugging" + //
+            "\n x = '" + t + "'" + //
+            "\n o = " + o + "'");
+  }
+
+  static <T> T info(final String message) {
+    return nulling.ly(() -> logger.info(message));
+  }
+
   static <T> T io(final Exception ¢) {
     return nulling.ly(() -> logger.config(//
         "   Got an exception of type : " + English.name(¢) + //
@@ -116,28 +138,6 @@ public interface note {
     ));
   }
 
-  static <T> T ignore(final Class<?> o, final Throwable t) {
-    return info(//
-        "A static method of " + English.name(o) + //
-            "was hit by " + indefinite(t) + "\n" + //
-            "exception. This is expected and printed only for the purpose of debugging" + //
-            "x = '" + t + "'" + //
-            "o = " + o + "'");
-  }
-
-  static <T> T ignore(final Object o, final Throwable t) {
-    return info(//
-        "An instance of " + English.name(o) + //
-            "\n was hit by " + indefinite(t) + //
-            " exception. This is expected and printed only for the purpose of debugging" + //
-            "\n x = '" + t + "'" + //
-            "\n o = " + o + "'");
-  }
-
-  static <T> T info(final String message) {
-    return nulling.ly(() -> logger.info(message));
-  }
-
   /** logs an error in the plugin into an external file
    * @param tipper an error */
   static <T> T logToFile(final Throwable t, final Object... os) {
@@ -149,7 +149,7 @@ public interface note {
     nos[1] = (w + "").trim();
     info(separate.these(nos).by(FILE_SUB_SEPARATOR)); //
     info(FILE_SEPARATOR);
-    return the.null¢();
+    return the.nil();
   }
   static void set(final Level ¢) {
     levels.push(¢);

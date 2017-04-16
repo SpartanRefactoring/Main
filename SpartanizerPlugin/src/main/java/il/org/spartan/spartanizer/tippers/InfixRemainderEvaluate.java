@@ -40,7 +40,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
           throw new NumberFormatException();
         final int int¢ = az.throwing.int¢(¢);
         if (int¢ == 0)
-          throw new IllegalArgumentException("remainder in division by Zero is undefined");
+          throw new IllegalArgumentException("remainder in division by zero is undefined");
         $ %= int¢;
       }
     } catch (final NumberFormatException ¢) {
@@ -59,7 +59,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
       for (final Expression ¢ : rest(xs)) {
         final long long¢ = az.throwing.long¢(¢);
         if (long¢ == 0)
-          throw new IllegalArgumentException("Remainder in division by Zero is undefined");
+          throw new IllegalArgumentException("Remainder in division by zero is undefined");
         $ %= long¢;
       }
     } catch (final NumberFormatException ¢) {

@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.plugin.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -39,7 +38,7 @@ public enum compute {
       }
 
       @Override public List<ReturnStatement> reduce() {
-        return empty.list();
+        return an.empty.list();
       }
 
       @Override public List<ReturnStatement> reduce(final List<ReturnStatement> ss1, final List<ReturnStatement> ss2) {
@@ -56,7 +55,7 @@ public enum compute {
   public static List<String> usedNames(final Expression x) {
     return new ASTMapReducer<List<String>>() {
       @Override public List<String> reduce() {
-        return empty.list();
+        return an.empty.list();
       }
 
       @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {
@@ -84,7 +83,7 @@ public enum compute {
   public static List<String> useSpots(final Expression x) {
     return new ASTMapReducer<List<String>>() {
       @Override public List<String> reduce() {
-        return empty.list();
+        return an.empty.list();
       }
 
       @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {
@@ -116,7 +115,7 @@ public enum compute {
   public static List<ASTNode> updateSpots(final ASTNode x) {
     final List<ASTNode> $ = new ASTMapReducer<List<ASTNode>>() {
       @Override public List<ASTNode> reduce() {
-        return empty.list();
+        return an.empty.list();
       }
 
       public List<ASTNode> reduce(final ASTNode n, final List<ASTNode> ns) {
@@ -149,6 +148,6 @@ public enum compute {
         return reduce(!iz.updating(¢) ? reduce() : as.list(¢.getOperand()), super.map(¢));
       }
     }.map(x);
-    return $ != null ? $ : empty.list();
+    return $ != null ? $ : an.empty.list();
   }
 }

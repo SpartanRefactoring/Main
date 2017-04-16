@@ -29,7 +29,7 @@ public interface TableRenderer {
         return "\\toprule" + NL;
       }
 
-      @Override public String null¢() {
+      @Override public String nil() {
         return "$\\#$";
       }
 
@@ -172,7 +172,7 @@ public interface TableRenderer {
 
   default String headerSeparator() { return recordSeparator(); }
 
-  default String null¢() { return "Nº"; }
+  default String nil() { return "Nº"; }
   // @formatter:on
   default String recordBegin() {
     return empty();

@@ -7,74 +7,14 @@ import java.util.stream.*;
  * @author Dor Ma'ayan
  * @since 26-11-2016 */
 public class range {
-  public static <T> RangeIterator<?> of(final T[] ¢) {
-    return from(0).to(¢.length);
-  }
-
-  public static BeforeTo from(final int ¢) {
-    return makeFrom(¢).new BeforeTo();
-  }
-
-  public static Iterable<Integer> infinite(final int ¢) {
-    return from(¢).to(¢).step(0).inclusive();
-  }
-
-  public static Infinite infinite() {
-    return infiniteFrom(0, 1);
-  }
-
-  static Infinite infiniteFrom(final int ¢, final int ¢2) {
-    final Infinite $ = makeFrom(¢).new Infinite().infiniteRange();
-    $.step(¢2);
-    return $;
-  }
-
-  public static RangeIterator<?> naturals() {
-    return from(0).to(-1).step(1);
-  }
-
-  public static RangeIterator<?> numerals() {
-    return from(1).to(-1).step(1);
-  }
-
-  public static RangeIterator<?> odds() {
-    return from(1).to(-1).step(2);
-  }
-
-  public static AfterTo to(final int to) {
-    return makeTo(to).new AfterTo();
-  }
-
-  private static range makeFrom(final int ¢) {
-    return new range() {
-      {
-        from = ¢;
-      }
-    };
-  }
-
-  private static range makeTo(final int ¢) {
-    return new range() {
-      {
-        to = ¢;
-      }
-    };
-  }
-
-  int from;
-  int to = -1;
-  boolean inclusive;
-  int step = 1;
-  boolean infinite;
-
   public class AfterTo extends RangeIterator<AfterTo> {
-    public Stream<Integer> stream() {
-      return StreamSupport.stream(spliterator(), false);
-    }
-
     public AfterTo from(final int ¢) {
       to = ¢;
       return this;
+    }
+
+    public Iterable<Integer> infinite() {
+      return range.infiniteFrom(from, step);
     }
 
     public AfterTo step(final int ¢) {
@@ -82,8 +22,8 @@ public class range {
       return this;
     }
 
-    public Iterable<Integer> infinite() {
-      return range.infiniteFrom(from, step);
+    public Stream<Integer> stream() {
+      return StreamSupport.stream(spliterator(), false);
     }
 
     @Override AfterTo self() {
@@ -92,6 +32,10 @@ public class range {
   }
 
   public class BeforeTo extends RangeIterator<BeforeTo> {
+    public Infinite infinite() {
+      return range.infiniteFrom(from, step);
+    }
+
     public AfterTo step(final int ¢) {
       step = ¢;
       return new AfterTo();
@@ -102,24 +46,20 @@ public class range {
       return new AfterTo();
     }
 
-    public Infinite infinite() {
-      return range.infiniteFrom(from, step);
-    }
-
     @Override BeforeTo self() {
       return this;
     }
   }
 
   public class Infinite extends RangeIterator<Infinite> {
-    public Iterable<Integer> step(final int ¢) {
-      step = ¢;
-      return this;
-    }
-
     public Infinite from(final int ¢) {
       from = ¢;
       step = 1;
+      return this;
+    }
+
+    public Iterable<Integer> step(final int ¢) {
+      step = ¢;
       return this;
     }
 
@@ -164,4 +104,64 @@ public class range {
 
     abstract Self self();
   }
+
+  public static BeforeTo from(final int ¢) {
+    return makeFrom(¢).new BeforeTo();
+  }
+
+  public static Infinite infinite() {
+    return infiniteFrom(0, 1);
+  }
+
+  public static Iterable<Integer> infinite(final int ¢) {
+    return from(¢).to(¢).step(0).inclusive();
+  }
+
+  public static RangeIterator<?> naturals() {
+    return from(0).to(-1).step(1);
+  }
+
+  public static RangeIterator<?> numerals() {
+    return from(1).to(-1).step(1);
+  }
+
+  public static RangeIterator<?> odds() {
+    return from(1).to(-1).step(2);
+  }
+
+  public static <T> RangeIterator<?> of(final T[] ¢) {
+    return from(0).to(¢.length);
+  }
+
+  public static AfterTo to(final int to) {
+    return makeTo(to).new AfterTo();
+  }
+  private static range makeFrom(final int ¢) {
+    return new range() {
+      {
+        from = ¢;
+      }
+    };
+  }
+  private static range makeTo(final int ¢) {
+    return new range() {
+      {
+        to = ¢;
+      }
+    };
+  }
+  static Infinite infiniteFrom(final int ¢, final int ¢2) {
+    final Infinite $ = makeFrom(¢).new Infinite().infiniteRange();
+    $.step(¢2);
+    return $;
+  }
+  int from;
+
+  boolean inclusive;
+
+  boolean infinite;
+
+  int step = 1;
+
+  int to = -1;
 }

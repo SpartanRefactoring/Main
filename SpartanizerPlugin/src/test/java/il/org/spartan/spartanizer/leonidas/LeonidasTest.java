@@ -221,7 +221,7 @@ public class LeonidasTest {
   }
 
   @Test public void testTips5() {
-    leonidasSays.tipper("if($X == null) return null;", "if($X == null) return Null;", "assertNotNull")
+    leonidasSays.tipper("if($X == null) return null;", "if($X == null) return nil;", "assertNotNull")
         .tips("if(g().f.b.c(1,g(), 7) == null) return null;");
   }
 
