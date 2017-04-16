@@ -15,7 +15,6 @@ import org.eclipse.ui.progress.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.ast.navigate.wizard.*;
-import il.org.spartan.utils.range.*;
 import nano.ly.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
