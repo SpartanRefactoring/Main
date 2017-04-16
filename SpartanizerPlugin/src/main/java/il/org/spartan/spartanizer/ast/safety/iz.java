@@ -144,10 +144,10 @@ public interface iz {
     final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
         || !eq(s, az.astNode(first(statements(az.block(elze($))))))//
-        || action.recursiveElse(s) != null//
+        || misc.recursiveElse(s) != null//
         || elze($) == null)//
-        && $ != null && (elze($) == null || action.recursiveElse(s) == null)
-        && (elze($) != null || action.recursiveElse(s) != null || blockRequiredInReplacement($, s));
+        && $ != null && (elze($) == null || misc.recursiveElse(s) == null)
+        && (elze($) != null || misc.recursiveElse(s) != null || blockRequiredInReplacement($, s));
   }
 
   /** @param subject JD

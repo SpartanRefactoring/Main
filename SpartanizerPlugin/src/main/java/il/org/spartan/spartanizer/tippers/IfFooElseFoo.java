@@ -21,8 +21,8 @@ public final class IfFooElseFoo extends IfAbstractPattern implements TipperCateg
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
-    action.insertBefore(current(), wizard.decompose(current().getExpression()), r, g);
-    action.insertAfter(current(), as.list(then), r, g);
+    misc.insertBefore(current(), wizard.decompose(current().getExpression()), r, g);
+    misc.insertAfter(current(), as.list(then), r, g);
     remove.statement(current(), r, g);
     return r;
   }

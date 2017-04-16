@@ -21,7 +21,7 @@ public abstract class InfixExpressionSortingRest extends InfixExpressionSorting 
     if (!suitable(¢))
       return false;
     final List<Expression> $ = extract.allOperands(¢);
-    return $.size() > 2 && !action.mixedLiteralKind($) && sort(chop($));
+    return $.size() > 2 && !misc.mixedLiteralKind($) && sort(chop($));
   }
 
   @Override public final Expression replacement(final InfixExpression $) {

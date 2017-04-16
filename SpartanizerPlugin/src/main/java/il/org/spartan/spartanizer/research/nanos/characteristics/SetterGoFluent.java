@@ -46,7 +46,7 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
         n.setReturnType2(copy.of(getType(yieldAncestors.untilContainingType().from(d))));
         final ReturnStatement s = n.getAST().newReturnStatement();
         s.setExpression(n.getAST().newThisExpression());
-        action.addStatement(n, s, r, g);
+        misc.addStatement(n, s, r, g);
         r.replace(d, n, g);
       }
     };

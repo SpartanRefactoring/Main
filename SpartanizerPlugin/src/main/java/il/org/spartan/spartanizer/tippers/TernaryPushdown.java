@@ -40,7 +40,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
   }
 
   @SuppressWarnings("unchecked") private static <T extends Expression> T p(final ASTNode n, final T $) {
-    return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) action.parenthesize($);
+    return !precedence.is.legal(precedence.of(n)) || precedence.of(n) >= precedence.of($) ? $ : (T) misc.parenthesize($);
   }
 
   private static Expression pushdown(final ConditionalExpression x, final ClassInstanceCreation e1, final ClassInstanceCreation e2) {
@@ -83,7 +83,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     if (!eq(name(e1), name(e2)))
       return null;
     final FieldAccess $ = copy.of(e1);
-    $.setExpression(action.parenthesize(subject.pair(expression(e1), expression(e2)).toCondition(expression(x))));
+    $.setExpression(misc.parenthesize(subject.pair(expression(e1), expression(e2)).toCondition(expression(x))));
     return $;
   }
 
@@ -113,7 +113,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
       if (receiver1 == null || receiver2 == null || !same(es1, es2) || guessName.isClassName(receiver1) || guessName.isClassName(receiver2))
         return null;
       assert $ != null;
-      $.setExpression(action.parenthesize(subject.pair(receiver1, receiver2).toCondition(expression(x))));
+      $.setExpression(misc.parenthesize(subject.pair(receiver1, receiver2).toCondition(expression(x))));
     } else {
       if (es1.size() != es2.size())
         return null;

@@ -62,7 +62,7 @@ public final class LocalVariableIntializedInlineIntoNext extends GoToNextStateme
     final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//
         || anyFurtherUsage(parent, nextStatement, identifier(n))//
-        || action.leftSide(nextStatement, identifier(n))//
+        || misc.leftSide(nextStatement, identifier(n))//
         || preOrPostfix(n))
       return null;
     Expression e = !iz.castExpression(initializer) ? initializer : subject.operand(initializer).parenthesis();
