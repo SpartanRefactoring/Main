@@ -8,8 +8,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import an.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 
 /** An almost fully compatible, but more sane version of {@link ASTVisitor}

@@ -30,9 +30,9 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
 
   public IfAssignToFooElseAssignToFoo() {
     andAlso("Then part is an assignment", //
-        () -> not.null¢(thenAssignment = extract.assignment(then)));
+        () -> not.nil(thenAssignment = extract.assignment(then)));
     andAlso("Else part is an assignment", //
-        () -> not.null¢(elzeAssignment = extract.assignment(elze)));
+        () -> not.nil(elzeAssignment = extract.assignment(elze)));
     andAlso("Both assignments are to the same target", //
         () -> wizard.eq(to = to(thenAssignment), to(elzeAssignment)));
     andAlso("Assignment operators are compatible", //

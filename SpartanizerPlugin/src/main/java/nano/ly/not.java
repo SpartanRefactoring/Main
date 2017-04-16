@@ -7,7 +7,7 @@ public interface not {
     return !iz.in(t, ts);
   }
 
-  static boolean null¢(final Object ¢) {
+  static boolean nil(final Object ¢) {
     return ¢ != null;
   }
 }

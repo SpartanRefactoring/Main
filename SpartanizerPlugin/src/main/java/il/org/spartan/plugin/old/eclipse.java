@@ -63,7 +63,7 @@ public enum eclipse {
    * @param m A standard {@link IProgressMonitor} - if you don't care about
    *        operation times use {@link op#nullProgressMonitor}
    * @return List of all compilation units in the current project
-   * @throws JavaModelException don't Forget to catch */
+   * @throws JavaModelException don't forget to catch */
   public static List<ICompilationUnit> compilationUnits(final IJavaElement u, final IProgressMonitor m) throws JavaModelException {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
     final List<ICompilationUnit> $ = new ArrayList<>();

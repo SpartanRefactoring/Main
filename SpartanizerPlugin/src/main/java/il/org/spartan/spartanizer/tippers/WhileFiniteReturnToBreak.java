@@ -24,10 +24,10 @@ public final class WhileFiniteReturnToBreak extends AbstractPattern<WhileStateme
     andAlso("Loop must be finite", //
         () -> iz.finiteLoop(current));
     andAlso("Loop must be followed by return", //
-        () -> not.null¢(nextReturn = //
+        () -> not.nil(nextReturn = //
             az.returnStatement(nextStatement)));
     andAlso("Loop a return that can be converted to break", //
-        () -> not.null¢(convertToBreak = //
+        () -> not.nil(convertToBreak = //
             compute//
                 .returns(current.getBody())//
                 .stream().filter(λ -> wizard.eq(λ, nextReturn))//

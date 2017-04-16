@@ -20,7 +20,7 @@ public class SpartanizerTest {
   public static void main(final String[] args) {
     final ASTNode u = makeAST.COMPILATION_UNIT.from("package test;import static il.org.spartan.plugin.demos.Inline.*;"
         + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{"
-        + " @Forget(\"comment\") @Test public void testMethod(){int i = 1;assert (i>0);} }");
+        + " @forget(\"comment\") @Test public void testMethod(){int i = 1;assert (i>0);} }");
     assert u != null;
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
@@ -84,11 +84,11 @@ public class SpartanizerTest {
   String method = "";
   private final String test1 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
       + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{"
-      + " @Forget(\"comment\") @Test public void aTestMethod(){int i = 1;assert (i>0);} "
+      + " @forget(\"comment\") @Test public void aTestMethod(){int i = 1;assert (i>0);} "
       + " public void notATestMethod(){int i = 1;assert (i>0);} }";
   private final String test2 = "package test;import static il.org.spartan.plugin.demos.Inline.*;"
       + "import static il.org.spartan.azzert.*;import org.junit.*;public class Test{"
-      + " @Forget(\"comment\") @Test public void aTestMethod(){int i = 1;assert (i>0);} "
+      + " @forget(\"comment\") @Test public void aTestMethod(){int i = 1;assert (i>0);} "
       + " public void notATestMethod(){int i = 1;assert (i>0);} public void ASecondNotTestMethod(){ int i = 1;assert (i>0);} }";
 
   boolean countMethods() {

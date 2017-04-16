@@ -32,7 +32,7 @@ public final class StringFromStringBuilder extends MethodInvocationPattern//
 
   public StringFromStringBuilder() {
     andAlso("Not toString", () -> !"toString".equals(name + ""));
-    andAlso("Can be simplified toString", () -> not.null¢(simplification = simplification()));
+    andAlso("Can be simplified toString", () -> not.nil(simplification = simplification()));
   }
 
   private static Expression replacement(final MethodInvocation i, final List<Expression> xs) {

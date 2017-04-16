@@ -89,7 +89,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
       }
     } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
       // This is not a bug: exception must be ignored; it tells us, e.g.,
-      // that we cannot divide by Zero.
+      // that we cannot divide by zero.
       // Uncomment next code line to debug; comment it out in production mode.
       // /* Logging Java code */ monitor.logEvaluationError(this,e);
       return null;

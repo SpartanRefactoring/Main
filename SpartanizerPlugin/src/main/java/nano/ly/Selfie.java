@@ -6,14 +6,14 @@ import java.util.function.*;
  * @author Yossi Gil
  * @since 2017-04-14 */
 public interface Selfie<Self extends Selfie<Self>> {
-  default <F> Self self(final Supplier<F> t) {
-    change(t.get());
-    return self();
+  default <U> void change(final U ¢) {
+    forget.it(¢);
   }
 
   Self self();
 
-  default <U> void change(final U ¢) {
-    Forget.it(¢);
+  default <F> Self self(final Supplier<F> t) {
+    change(t.get());
+    return self();
   }
 }
