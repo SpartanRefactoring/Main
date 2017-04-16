@@ -10,6 +10,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Test class for {@link English}
  * @author yonzarecki

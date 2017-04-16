@@ -26,6 +26,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** base class for all GUI applicators contains common functionality. The class
  * combines this features: GUI, including extension of and the ability to

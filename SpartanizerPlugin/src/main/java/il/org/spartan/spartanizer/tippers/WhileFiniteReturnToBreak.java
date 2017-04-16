@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Convert Finite loops with return sideEffects to shorter ones : toList
  * Convert {@code for (..) { does(something); return XX; } return XX; } to :

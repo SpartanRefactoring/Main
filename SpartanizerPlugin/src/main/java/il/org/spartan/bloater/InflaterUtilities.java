@@ -15,6 +15,7 @@ import il.org.spartan.bloater.bloaters.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Helper functions for the inflater
  * @author Raviv Rachmiel

@@ -4,6 +4,7 @@ import java.util.function.*;
 
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Configurable applicator.
  * @author Ori Roth
