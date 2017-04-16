@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Method Creating new object and returning it

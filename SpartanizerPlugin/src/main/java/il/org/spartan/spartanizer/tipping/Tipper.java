@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Examples.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** A tipper is a transformation that works on an AstNode. Such a transformation

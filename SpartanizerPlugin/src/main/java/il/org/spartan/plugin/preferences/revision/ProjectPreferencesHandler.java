@@ -29,7 +29,6 @@ import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Example.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** An handler for project configuration. User configuration is saved in a

@@ -1,4 +1,4 @@
-package il.org.spartan.utils.range;
+package nano.ly;
 
 import java.util.*;
 import java.util.stream.*;

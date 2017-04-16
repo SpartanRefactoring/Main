@@ -11,7 +11,6 @@ import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.navigate.wizard.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:

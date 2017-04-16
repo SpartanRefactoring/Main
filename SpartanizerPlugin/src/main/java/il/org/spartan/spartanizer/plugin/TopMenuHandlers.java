@@ -6,7 +6,6 @@ import java.util.function.*;
 import org.eclipse.core.commands.*;
 
 import il.org.spartan.bloater.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Some simple handlers to be used by the GUI.

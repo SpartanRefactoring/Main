@@ -16,7 +16,6 @@ import org.junit.runners.Parameterized.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.Example.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** A test generator for {@link Tipper}s, creating tests from their declared

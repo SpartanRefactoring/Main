@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import static il.org.spartan.utils.fluent.note.*;
+import static nano.ly.note.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {

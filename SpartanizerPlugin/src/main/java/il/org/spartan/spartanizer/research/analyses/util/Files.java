@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** File utils

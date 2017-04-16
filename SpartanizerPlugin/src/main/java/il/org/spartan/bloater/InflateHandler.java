@@ -26,7 +26,6 @@ import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.bloater.collateral.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.fluent.*;
 import nano.ly.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
