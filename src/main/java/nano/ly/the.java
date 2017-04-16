@@ -4,8 +4,6 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
-import il.org.spartan.utils.range.*;
-
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-12 */
