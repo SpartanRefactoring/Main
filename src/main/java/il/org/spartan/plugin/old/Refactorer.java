@@ -16,6 +16,7 @@ import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth
