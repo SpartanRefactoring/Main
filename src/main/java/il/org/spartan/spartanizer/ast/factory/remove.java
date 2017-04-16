@@ -89,6 +89,6 @@ public enum remove {
   }
 
   public static void statement(final Statement s, final ASTRewrite r, final TextEditGroup g) {
-    action.statementRewriter(r, s).remove(s, g);
+    misc.statementRewriter(r, s).remove(s, g);
   }
 }

@@ -54,12 +54,12 @@ public abstract class Applicator {
     return this;
   }
 
-  /** @return run action for this applicator */
+  /** @return run misc for this applicator */
   protected Function<WrappedCompilationUnit, Integer> runAction() {
     return runAction;
   }
 
-  /** Determines run action for this applicator.
+  /** Determines run misc for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
   public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {

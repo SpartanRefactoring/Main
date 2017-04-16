@@ -26,7 +26,7 @@ import il.org.spartan.utils.fluent.*;
 /** A number of utility functions common to all tippers.
  * @author Yossi Gil
  * @since 2015-07-17 */
-public enum action {
+public enum misc {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static void addAllReplacing(final Collection<Statement> to, final Iterable<Statement> from, final Statement substitute, final Statement by1,
       final Iterable<Statement> by2) {
@@ -66,7 +66,7 @@ public enum action {
       final IDocument d = new Document(str);
       final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
       final ASTRewrite r = ASTRewrite.create(t.getAST());
-      action.addMethodToType(t, m, r, null);
+      misc.addMethodToType(t, m, r, null);
       r.rewriteAST(d, null).apply(d);
       writeToFile(fileName, d.get());
     } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
@@ -100,7 +100,7 @@ public enum action {
 
   public static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
     final List<Expression> $ = extract.allOperands(x);
-    action.removeAll(b, $);
+    misc.removeAll(b, $);
     switch ($.size()) {
       case 1:
         return copy.of(first($));
@@ -128,16 +128,30 @@ public enum action {
     return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
   }
 
+  public static boolean leftSide(final Statement nextStatement, final String id) {
+    final Bool $ = new Bool();
+    // noinspection SameReturnValue
+    nextStatement.accept(new ASTVisitor(true) {
+      @Override public boolean visit(final Assignment ¢) {
+        if (iz.simpleName(left(¢))//
+            && identifier(az.simpleName(left(¢))).equals(id))
+          $.inner = true;
+        return true;
+      }
+    });
+    return $.inner;
+  }
+
   public static IfStatement makeShorterIf(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
-    final IfStatement $ = action.invert(s);
+    final IfStatement $ = misc.invert(s);
     if (then.isEmpty())
       return $;
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = action.sequencerRank(last(then)), rankElse = action.sequencerRank(last(elze));
-    return rankElse > rankThen || rankThen == rankElse && !action.thenIsShorter(s) ? $ : main;
+    final int rankThen = misc.sequencerRank(last(then)), rankElse = misc.sequencerRank(last(elze));
+    return rankElse > rankThen || rankThen == rankElse && !misc.thenIsShorter(s) ? $ : main;
   }
 
   public static boolean mixedLiteralKind(final Collection<Expression> xs) {
@@ -164,21 +178,9 @@ public enum action {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
 
-  public static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s)
-            : iz.parenthesizedExpression(from)
-                ? LocalVariableIntializedStatementToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
-  }
-
-  /** Make a duplicate, suitable for tree rewrite, of the parameter
-   * @param ¢ JD
-   * @param ¢ JD
-   * @return a duplicate of the parameter, downcasted to the returned type.
-   * @see ASTNode#copySubtree
-   * @see ASTRewrite */
-  @SuppressWarnings("unchecked") public static <N extends ASTNode> N rebase(final N n, final AST t) {
-    return (N) copySubtree(t, n);
+  public static SimpleName peelIdentifier(final Statement s, final String id) {
+    final List<SimpleName> $ = find.occurencesOf(s, id);
+    return $.size() != 1 ? null : first($);
   }
 
   /** As {@link elze(ConditionalExpression)} but returns the last else statement
@@ -206,12 +208,76 @@ public enum action {
     r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
 
+  public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode where, final ASTRewrite r, final TextEditGroup g) {
+    new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));
+  }
+
+  public static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
+    final Block parent = az.block(what.getParent());
+    final List<Statement> siblings = extract.statements(parent);
+    final int i = siblings.indexOf(what);
+    siblings.remove(i);
+    siblings.remove(i);
+    siblings.add(i, by);
+    final Block $ = parent.getAST().newBlock();
+    copy.into(siblings, statements($));
+    r.replace(parent, $, g);
+    return r;
+  }
+
+  public static ListRewrite statementRewriter(final ASTRewrite r, final Statement s) {
+    return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
+        : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
+            : note.bug("Weird type of %s under %s", s, parent(s));
+  }
+
+  static boolean thenIsShorter(final IfStatement s) {
+    final Statement then = then(s), elze = elze(s);
+    if (elze == null)
+      return true;
+    final int s1 = count.lines(then), s2 = count.lines(elze);
+    if (s1 < s2)
+      return true;
+    if (s1 > s2)
+      return false;
+    assert s1 == s2;
+    final int n2 = extract.statements(elze).size(), n1 = extract.statements(then).size();
+    if (n1 < n2)
+      return true;
+    if (n1 > n2)
+      return false;
+    assert n1 == n2;
+    final IfStatement $ = misc.invert(s);
+    return positivePrefixLength($) >= positivePrefixLength(misc.invert($));
+  }
+
+  static int positivePrefixLength(final IfStatement $) {
+    return metrics.length($.getExpression(), then($));
+  }
+
+   static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+    return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
+        : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s)
+            : iz.parenthesizedExpression(from)
+                ? LocalVariableIntializedStatementToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
+  }
+
+  /** Make a duplicate, suitable for tree rewrite, of the parameter
+   * @param ¢ JD
+   * @param ¢ JD
+   * @return a duplicate of the parameter, downcasted to the returned type.
+   * @see ASTNode#copySubtree
+   * @see ASTRewrite */
+  @SuppressWarnings("unchecked")  static <N extends ASTNode> N rebase(final N n, final AST t) {
+    return (N) copySubtree(t, n);
+  }
+
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
    * <p>
    * @param ¢ JD
    * @param xs JD */
-  public static void removeAll(final boolean ¢, final List<Expression> xs) {
+   private static void removeAll(final boolean ¢, final List<Expression> xs) {
     // noinspection ForLoopReplaceableByWhile
     for (;;) {
       final Expression x = wizard.find(¢, xs);
@@ -221,17 +287,17 @@ public enum action {
     }
   }
 
-  public static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
+   private static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
     final List<Statement> $ = new ArrayList<>();
     for (final Statement ¢ : ss) {
-      final Statement s = action.removeBreakSequencer(¢);
+      final Statement s = misc.removeBreakSequencer(¢);
       if (s != null)
         $.add(s);
     }
     return $;
   }
 
-  public static Statement removeBreakSequencer(final Statement s) {
+   private static Statement removeBreakSequencer(final Statement s) {
     if (s == null)
       return null;
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
@@ -252,94 +318,7 @@ public enum action {
     return $;
   }
 
-  /** @param from JD (already duplicated)
-   * @param to is the list that will contain the pulled out initializations from
-   *        the given expression.
-   * @return expression to the new for loop, without the initializers. */
-  public static Expression removeInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
-    return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s)
-        : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s) : from;
-  }
-
-  public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode where, final ASTRewrite r, final TextEditGroup g) {
-    new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));
-  }
-
-  /** replaces an ASTNode with another
-   * @param n
-   * @param with */
-  public static <N extends ASTNode> void replace(final N n, final N with, final ASTRewrite r) {
-    r.replace(n, with, null);
-  }
-
-  public static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
-    final Block parent = az.block(what.getParent());
-    final List<Statement> siblings = extract.statements(parent);
-    final int i = siblings.indexOf(what);
-    siblings.remove(i);
-    siblings.remove(i);
-    siblings.add(i, by);
-    final Block $ = parent.getAST().newBlock();
-    copy.into(siblings, statements($));
-    r.replace(parent, $, g);
-    return r;
-  }
-
-  public static int sequencerRank(final ASTNode ¢) {
+  private static int sequencerRank(final ASTNode ¢) {
     return the.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
-  }
-
-  public static boolean shoudlInvert(final IfStatement s) {
-    final int $ = sequencerRank(hop.lastStatement(then(s))), rankElse = sequencerRank(hop.lastStatement(elze(s)));
-    return rankElse > $ || $ == rankElse && !action.thenIsShorter(s);
-  }
-
-  public static boolean thenIsShorter(final IfStatement s) {
-    final Statement then = then(s), elze = elze(s);
-    if (elze == null)
-      return true;
-    final int s1 = count.lines(then), s2 = count.lines(elze);
-    if (s1 < s2)
-      return true;
-    if (s1 > s2)
-      return false;
-    assert s1 == s2;
-    final int n2 = extract.statements(elze).size(), n1 = extract.statements(then).size();
-    if (n1 < n2)
-      return true;
-    if (n1 > n2)
-      return false;
-    assert n1 == n2;
-    final IfStatement $ = action.invert(s);
-    return positivePrefixLength($) >= positivePrefixLength(action.invert($));
-  }
-
-  public static int positivePrefixLength(final IfStatement $) {
-    return metrics.length($.getExpression(), then($));
-  }
-
-  public static ListRewrite statementRewriter(final ASTRewrite r, final Statement s) {
-    return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
-        : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
-            : note.bug("Weird type of %s under %s", s, parent(s));
-  }
-
-  public static boolean leftSide(final Statement nextStatement, final String id) {
-    final Bool $ = new Bool();
-    // noinspection SameReturnValue
-    nextStatement.accept(new ASTVisitor(true) {
-      @Override public boolean visit(final Assignment ¢) {
-        if (iz.simpleName(left(¢))//
-            && identifier(az.simpleName(left(¢))).equals(id))
-          $.inner = true;
-        return true;
-      }
-    });
-    return $.inner;
-  }
-
-  public static SimpleName peelIdentifier(final Statement s, final String id) {
-    final List<SimpleName> $ = find.occurencesOf(s, id);
-    return $.size() != 1 ? null : first($);
   }
 }

@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 import static java.util.stream.Collectors.*;
-import static il.org.spartan.spartanizer.ast.factory.action.*;
+import static il.org.spartan.spartanizer.ast.factory.misc.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 

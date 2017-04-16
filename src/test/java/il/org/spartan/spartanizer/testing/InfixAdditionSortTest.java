@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit tests for {@link action#ADDITION_SORTER} .
+/** Unit tests for {@link misc#ADDITION_SORTER} .
  * @author Yossi Gil
  * @since 2014-07-13 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

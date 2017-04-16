@@ -44,7 +44,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
     final IfStatement then = az.ifStatement(extract.singleThen($));
     return then == null || !iz.vacuousElse(then) ? null : new Tip(description($), getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        collapse(action.blockIfNeeded($, r, g), r, g);
+        collapse(misc.blockIfNeeded($, r, g), r, g);
       }
     }.spanning(then);
   }

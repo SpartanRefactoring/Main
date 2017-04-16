@@ -27,7 +27,7 @@ public class Issue0777 {
     final IDocument $ = new Document(type);
     final TypeDeclaration d = findFirst.typeDeclaration(makeAST.COMPILATION_UNIT.from($));
     final ASTRewrite r = ASTRewrite.create(d.getAST());
-    action.addMethodToType(d, az.methodDeclaration(make.ast(method)), r, null);
+    misc.addMethodToType(d, az.methodDeclaration(make.ast(method)), r, null);
     r.rewriteAST($, null).apply($);
     return $.get();
   }

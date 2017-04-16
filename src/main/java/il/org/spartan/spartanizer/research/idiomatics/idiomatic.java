@@ -36,7 +36,7 @@ public interface idiomatic {
     d.setStatic(true);
     d.setOnDemand(true);
     d.setName(u.getAST().newName("il.org.spartan.spartanizer.research.idiomatic"));
-    action.addImport(u, r, d);
+    misc.addImport(u, r, d);
   }
 
   /** @param <T> JD
@@ -95,7 +95,7 @@ public interface idiomatic {
   }
 
   /** @param <T> JD
-   * @param condition when should the action take place
+   * @param condition when should the misc take place
    * @param t JD
    * @return non-boolean parameter, in case the boolean parameter is true, or
    *         null, otherwise */

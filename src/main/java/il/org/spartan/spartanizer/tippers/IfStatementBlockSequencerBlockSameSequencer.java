@@ -76,7 +76,7 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
     final List<Statement> move = lisp2.chopLast(subsequentStatements);
     for (final Statement x : move)
       listRewrite2.insertLast(copy.of(x), g);
-    final ListRewrite listRewrite3 = action.statementRewriter(r, current);
+    final ListRewrite listRewrite3 = misc.statementRewriter(r, current);
     for (final Statement x : move)
       listRewrite3.remove(x, g);
     return r;
