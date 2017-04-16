@@ -48,7 +48,7 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     return b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty() ? null
         : new Tip(description(c), myClass(), c.getException().getName(), c) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            action.rename($, Namer.newCent($), c, r, g);
+            misc.rename($, Namer.newCent($), c, r, g);
           }
         };
   }

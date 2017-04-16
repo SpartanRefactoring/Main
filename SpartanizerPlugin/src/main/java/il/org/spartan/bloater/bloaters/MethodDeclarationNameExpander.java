@@ -49,7 +49,7 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
     return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final SingleVariableDeclaration ¢ : $)
-          action.rename(¢.getName(),
+          misc.rename(¢.getName(),
               make.from(d).identifier(in(¢.getName().getIdentifier(), "$") ? "result" : scope.newName(body(d), step.type(¢), prefix(step.type(¢)))),
               d, r, g);
       }

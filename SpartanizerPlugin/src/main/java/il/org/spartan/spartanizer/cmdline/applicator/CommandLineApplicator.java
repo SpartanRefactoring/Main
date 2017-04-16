@@ -49,7 +49,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  // TODO Matteo: I have changed the "run action" to return number of tips
+  // TODO Matteo: I have changed the "run misc" to return number of tips
   // committed instead of whether tips were committed (Boolean -> Integer).
   // Added a quick fix to your code. Also I do not understand why you wrote this
   // - we will inspect it once we meet. --or
@@ -61,7 +61,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** Default run action configuration of . Spartanize the
+  /** Default run misc configuration of . Spartanize the
    * {@link CompilationUnit} using received TODO maybe this method are going to
    * die (as well as Spartanize$Applicator) {@link Spartanizer$Applicator}.
    * @param a JD
@@ -72,7 +72,7 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** Default run action configuration of . Spartanize the
+  /** Default run misc configuration of . Spartanize the
    * {@link CompilationUnit} using received {@link CommandLine$Applicator}.
    * @param a JD
    * @return {@code this} instance */

@@ -54,7 +54,7 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
   }
 
   static void addizMethod(final InstanceofExpression ¢, final ASTRewrite r, final TextEditGroup g) {
-    action.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
+    misc.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
   }
 
   private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
