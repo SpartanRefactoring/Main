@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import il.org.spartan.utils.range.*;
 import nano.ly.*;
 
 /** Possible events during spartanization process
