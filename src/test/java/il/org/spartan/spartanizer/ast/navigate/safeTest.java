@@ -8,6 +8,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 import org.junit.*;
 
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 @SuppressWarnings("static-method")
 public class safeTest {

@@ -1,4 +1,4 @@
-package il.org.spartan.utils.fluent;
+package nano.ly;
 
 import static il.org.spartan.azzert.*;
 
@@ -6,6 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
+import il.org.spartan.utils.fluent.*;
 
 public class TestFluent_null¢ {
   static String helloString = "Hello";

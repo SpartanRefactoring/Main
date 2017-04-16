@@ -16,6 +16,7 @@ import java.util.stream.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 public enum LogToTest {
   ;

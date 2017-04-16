@@ -15,6 +15,7 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** A shortcut to textually insert a new special character/s.
  * @author Ori Roth {@code ori.rothh@gmail.com}

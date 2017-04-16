@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Batch testing - run the spartinizer on itself with no errors
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>

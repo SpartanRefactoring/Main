@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** simple no-gimmicks singleton service that does the simple job of applying a
  * {@link Configuration} {@link #once(String)}, {@link #twice(String)},

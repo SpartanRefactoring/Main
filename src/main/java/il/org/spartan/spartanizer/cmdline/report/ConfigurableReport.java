@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.report.ReportGenerator.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Configurable Report that uses {@link Listener.S}
  * @author Yossi Gil

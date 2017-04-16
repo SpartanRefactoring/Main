@@ -22,6 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.fluent.*;
+import nano.ly.*;
 
 /** Support for plugin's XML configurations file for projects. Currently
  * describes what tippers are enabled for the project.
