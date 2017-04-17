@@ -131,7 +131,7 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
   private Nanonizer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
-        new ArgumentsTuple(), //
+        new MyArguments(), //
         new ConstantReturner(), //
         new FactoryMethod(), //
         new Default(), //

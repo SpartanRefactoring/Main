@@ -212,7 +212,7 @@ class LightWeightMethodRecord {
   public void mark(final ASTNode ¢, final String np) {
     if (np.equals(LetItBeIn.class.getSimpleName()))
       markLetItBeIn(¢);
-    else if (np.equals(ArgumentsTuple.class.getSimpleName()))
+    else if (np.equals(MyArguments.class.getSimpleName()))
       markArgumentsTuple();
     else {
       mark(¢);
