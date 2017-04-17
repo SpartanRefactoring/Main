@@ -41,10 +41,6 @@ public final class Reduction extends NanoPatternTipper<MethodInvocation> {
     };
   }
 
-  @Override public Category category() {
-    return Category.Iterative;
-  }
-
   @Override public String description() {
     return "Invocation for a method with same name of containing method but different number of parameters";
   }
