@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * Find if(null == X) return null; <br>
  * @author Ori Marcovitch
  * @since Jan 8, 2017 */
-public final class GeneralizedSwitch<N extends ASTNode> extends NanoPatternTipper<N> {
+public final class WhenHoldsOn<N extends ASTNode> extends NanoPatternTipper<N> {
   private static final long serialVersionUID = 0x756026178DF4792BL;
 
   @Override public String description(@SuppressWarnings("unused") final N __) {

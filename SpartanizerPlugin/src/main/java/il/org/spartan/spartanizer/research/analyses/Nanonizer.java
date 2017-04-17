@@ -31,10 +31,10 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
                 null)//
             .add(ConditionalExpression.class, //
                 new DefaultsTo(), //
-                new GeneralizedSwitch<>(), //
+                new WhenHoldsOn<>(), //
                 new Unless(), //
                 new SafeReference(), //
-                new TakeDefaultTo(), //
+                new QuestionQuestion(), //
                 null) //
             .add(EnhancedForStatement.class, //
                 new Aggregate(), //
@@ -58,7 +58,7 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
                 new NotNullOrThrow(), //
                 new NotNullAssumed(), //
                 new ExecuteUnless(), //
-                new GeneralizedSwitch<>(), //
+                new WhenHoldsOn<>(), //
                 new PreconditionNotNull(), //
                 new NotHoldsOrThrow(), //
                 null) //
