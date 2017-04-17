@@ -5,21 +5,21 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/** Tests {@link Unless}
+/** Tests {@link EvaluateUnlessDefaultsTo}
  * @author Ori Marcovitch
  * @since Dec 13, 2016 */
 @SuppressWarnings("static-method")
 public class UnlessTest {
   @Test public void basic() {
     trimminKof("return k == null ? null : new SynchronizedEntry<K,V>(k,mutex);")//
-        .using(new Unless(), ConditionalExpression.class)//
+        .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
         .gives("return unless(k==null).eval(() -> new SynchronizedEntry<K,V>(k,mutex)).defaultTo(null);")//
         .stays();
   }
 
   @Test public void basic2() {
     trimminKof("return ($ == null) ? null : $.size();")//
-        .using(new Unless(), ConditionalExpression.class)//
+        .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
         .gives("return unless(($==null)).eval(()->$.size()).defaultTo(null);")//
         .gives("return unless($==null).eval(()->$.size()).defaultTo(null);")//
         .stays();
@@ -27,7 +27,7 @@ public class UnlessTest {
 
   @Test public void respect() {
     trimminKof("return ¢ != null ? ¢ : \"\";")//
-        .using(new Unless(), ConditionalExpression.class)//
+        .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
         .using(new DefaultsTo(), ConditionalExpression.class)//
         .gives("return defaults(¢).to(\"\");")//
         .stays();
@@ -35,7 +35,7 @@ public class UnlessTest {
 
   @Test public void respect2() {
     trimminKof("return ¢ != null ? ¢ : \"\";")//
-        .using(new Unless(), ConditionalExpression.class)//
+        .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
         .stays();
   }
 }
