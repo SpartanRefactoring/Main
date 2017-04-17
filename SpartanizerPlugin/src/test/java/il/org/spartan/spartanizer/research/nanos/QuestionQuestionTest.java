@@ -9,7 +9,7 @@ import org.junit.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-01 */
 @SuppressWarnings("static-method")
-public class TakeDefaultToTest {
+public class QuestionQuestionTest {
   @Test public void basic() {
     trimminKof("return hiChars == null ? 1 : hiChars.length;")//
         .using(new QuestionQuestion(), ConditionalExpression.class)//
