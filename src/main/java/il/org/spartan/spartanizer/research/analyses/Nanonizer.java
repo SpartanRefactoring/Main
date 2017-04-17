@@ -66,7 +66,7 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
                 new Infix.SafeNavigation(), //
                 null)//
             .add(MethodInvocation.class, //
-                new Reduction(), //
+                new MyName(), //
                 null) //
             .add(VariableDeclarationFragment.class, //
                 new LetItBeIn(), //
