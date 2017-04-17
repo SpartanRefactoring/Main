@@ -37,16 +37,4 @@ public final class IgnoringExceptions extends NanoPatternTipper<CatchClause> {
   private static TryStatement parentAsTryStatement(final CatchClause ¢) {
     return az.tryStatement(parent(¢));
   }
-
-  @Override public String technicalName() {
-    return "catchXIgnore";
-  }
-
-  @Override public String example() {
-    return firstPattern(tippers);
-  }
-
-  @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
-  }
 }
