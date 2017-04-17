@@ -24,7 +24,7 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
   private Nanonizer addNanoPatterns() {
     addMethodPatterns();//
     add(CatchClause.class, //
-        new SuppressException(), //
+        new IgnoringExceptions(), //
         null)//
             .add(CastExpression.class, //
                 new SafeCast(), //
