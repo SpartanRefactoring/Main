@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
 /** X == null ? Y : Z
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-01 */
-public final class TakeDefaultTo extends NanoPatternTipper<ConditionalExpression> {
+public final class QuestionQuestion extends NanoPatternTipper<ConditionalExpression> {
   private static final long serialVersionUID = -0x1F274A91525D3383L;
   private static final NanoPatternContainer<ConditionalExpression> tippers = new NanoPatternContainer<ConditionalExpression>()
       .add("$X1 != null ? $X2 : $X3", "take($X2).default¢($X1).to($X3)", "takeDfaultTo pattern: Go fluent") //
