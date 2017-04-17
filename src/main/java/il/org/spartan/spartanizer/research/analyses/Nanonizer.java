@@ -55,12 +55,12 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
                 new ForEachInRange(), //
                 null) //
             .add(IfStatement.class, //
-                new NotNullOrThrow(), //
+                new ThrowOnNull(), //
                 new NotNullAssumed(), //
                 new ExecuteUnless(), //
                 new WhenHoldsOn<>(), //
                 new PreconditionNotNull(), //
-                new NotHoldsOrThrow(), //
+                new ThrowOnFalse(), //
                 null) //
             .add(InfixExpression.class, //
                 new Infix.SafeNavigation(), //

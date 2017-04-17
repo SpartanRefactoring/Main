@@ -28,7 +28,7 @@ public class GetOrElseThrowTest {
 
   @Ignore @Test public void c() {
     trimminKof("s1(); if(x == null) throw new Error(); return x; s2();")//
-        .using(IfStatement.class, new NotNullOrThrow(), new GetOrElseThrow())//
+        .using(IfStatement.class, new ThrowOnNull(), new GetOrElseThrow())//
         .gives("s1(); notNull(x).get(x); s2();")//
         .stays();
   }
