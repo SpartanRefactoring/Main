@@ -28,19 +28,7 @@ public final class ThrowOnNull extends NanoPatternTipper<IfStatement> {
     return firstTip(tippers, ¢);
   }
 
-  @Override public Category category() {
-    return Category.Exception;
-  }
-
   @Override public String description() {
     return "Throw if variable is null";
-  }
-
-  @Override public String example() {
-    return firstPattern(tippers);
-  }
-
-  @Override public String symbolycReplacement() {
-    return firstReplacement(tippers);
   }
 }
