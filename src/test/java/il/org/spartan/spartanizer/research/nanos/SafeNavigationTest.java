@@ -104,12 +104,12 @@ public class SafeNavigationTest {
   @Test public void respect() {
     trimminKof("return x ==null ? null : x.field;")//
         .using(ConditionalExpression.class, //
-            new Unless(), //
+            new EvaluateUnlessDefaultsTo(), //
             new DefaultsTo(), //
             new SafeNavigation())//
         .gives("return safe(x).get(()->x.field);")//
         .using(ConditionalExpression.class, //
-            new Unless(), //
+            new EvaluateUnlessDefaultsTo(), //
             new DefaultsTo(), //
             new SafeNavigation())//
         .stays();
