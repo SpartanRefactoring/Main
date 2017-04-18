@@ -15,6 +15,6 @@ public class Empty extends JavadocMarkerNanoPattern {
   }
 
   @Override public String tipperName() {
-    return DefaultMethod.class.getSimpleName();
+    return DefaultValue.class.getSimpleName();
   }
 }
