@@ -4,13 +4,13 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** Tests {@link DefaultMethod}
+/** Tests {@link DefaultValue}
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-28 */
 @SuppressWarnings("static-method")
-public class DefaultTest extends JavadocerTest {
+public class DefaultValueTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    setNano(new DefaultMethod());
+    setNano(new DefaultValue());
   }
 
   @Test public void a() {
