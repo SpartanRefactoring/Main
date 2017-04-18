@@ -9,7 +9,7 @@ import org.junit.*;
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
 @SuppressWarnings("static-method")
-public class NotNullOrReturnTest {
+public class NotNullAssumedTest {
   @Test public void a() {
     trimminKof("statement(); if(x == null) return; use(); use();")//
         .using(new NotNullAssumed(), IfStatement.class)//
