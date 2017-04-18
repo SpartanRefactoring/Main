@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -47,6 +48,10 @@ public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
     convert("int x = 1; ++x;")//
         .to("int x = 1+1;")//
         .ignores("int x = 1, y = x; ++x;");
+  }
+  
+  @Override protected ASTNode[] span() {
+    return as.array(current,nextStatement);
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
