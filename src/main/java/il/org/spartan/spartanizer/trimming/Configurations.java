@@ -257,6 +257,7 @@ public interface Configurations {
           new LocalVariableInitializedUnusedRemove(), //
           new LocalInitializedIncrementDecrementInline(), //
           new LocalInitializedNewAddAll(), //
+          new LocalInitializedArithmeticsInline(),//
           null) //
   );
 
