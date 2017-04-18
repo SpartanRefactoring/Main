@@ -53,4 +53,12 @@ public class Issue1146 extends TipperTest<VariableDeclarationFragment> {
     trimmingOf("int x = 1; ++x;")//
         .givesEither("int x = 2;", "int x = 1+1;", "", null);
   }
+  
+  //issue #1125
+  @Test public void e() {
+    TestsUtilsSpartanizer.trimminKof("int $ = f(x);++$;return $;")//
+    .using(tipper(),new PrefixIncrementDecrementReturn())//
+    .gives("int $ = f(x) + 1;return $;")//
+    ;
+  }
 }
