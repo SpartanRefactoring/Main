@@ -78,6 +78,8 @@ public enum SuppressWarningsOnOff {
    * @return whether the node is disabled by an ancestor
    *         {@link BodyDeclaration}, containing a disabler in its JavaDoc. */
   static boolean disabledByAncestor(final ASTNode n) {
+    if (n == null)
+      return false;
     for (ASTNode p = n.getParent(); p != null; p = p.getParent())
       if (iz.bodyDeclaration(p)) {
         final BodyDeclaration d = (BodyDeclaration) p;
@@ -150,7 +152,7 @@ public enum SuppressWarningsOnOff {
       boolean b;
 
       @Override public void preVisit(final ASTNode n) {
-        if (b || wizard.disjoint(n, m))
+        if (b || wizard.disjoint(n, m) || !wizard.contained(n, m))
           return;
         final BodyDeclaration d;
         switch (t) {
@@ -166,10 +168,12 @@ public enum SuppressWarningsOnOff {
           default:
             return;
         }
+        if (d == null)
+          return;
+        b = true; // may consider setting before null check
         recursiveUnEnable($, d);
         if (!disabledByAncestor(d))
           disable.accept($, d);
-        b = true;
       }
     });
   }
