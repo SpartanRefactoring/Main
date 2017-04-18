@@ -131,6 +131,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
    * @return {@code this} applicator */
   public NewGUIApplicator defaultRunAction() {
     inner.traversal.useProjectPreferences();
+    name(inner.getName());
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
     return this;
   }

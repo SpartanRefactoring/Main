@@ -363,7 +363,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     if (selection != null)
       traversal.setRange(selection);
     final ASTRewrite $ = traversal.go(¢);
-    traversal.pop();
+    // traversal.pop(); // TODO Yossi: pop without push
     getProgressMonitor().done();
     return $;
   }
