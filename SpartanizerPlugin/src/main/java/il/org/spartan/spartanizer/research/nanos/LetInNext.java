@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * assignment could not be inlined
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-03-01 */
-public final class LetItBeIn extends NanoPatternTipper<VariableDeclarationFragment> {
+public final class LetInNext extends NanoPatternTipper<VariableDeclarationFragment> {
   private static final long serialVersionUID = -0x6932FA8215A65359L;
   private static final LetInliner letInliner = new LetInliner();
   private static final LocalVariableIntializedInlineIntoNext fragmentInliner = new LocalVariableIntializedInlineIntoNext();
