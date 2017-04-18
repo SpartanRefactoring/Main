@@ -23,12 +23,11 @@ public final class GuessedContextTest {
         .gives("public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); S.x.f($.j); return $;}");
   }
 
-  @Ignore // TODO Yuval Simon --yg
   @Test public void a2() {
-    trimminKof(
-        "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final L s = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); ")
-            .gives(
-                "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final L $ = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); ");
+    trimminKof("@O public IMarkerResolution[] getResolutions(final IMarker m) { try { "
+        + "final L s = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); }finally{} return s;}")//
+    .gives(
+            "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final L $ = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); }finally{} return $;}");
   }
 
   @Ignore // TODO Yuval Simon --yg
@@ -39,20 +38,18 @@ public final class GuessedContextTest {
                 " public C(int i) { j = 2*i; public final int j; public int yada7(final String blah) { final C $ = new C(blah.length()); if (blah.contains(0xDEAD)) return $.j; int $ = blah.length()/2; if ($==3) return $; $ = y($.j - $); return $; ");
   }
 
-  @Ignore // TODO Yuval Simon --yg
   @Test public void a6() {
     trimminKof(
-        " public final int j; public void y() { final C $ = new C(6); final R r = new R() { @O public void system() { final C res2 = new C($.j); S.x.f(res2.j); doStuff(res2); private int doStuff(final C r) { final C $ = new C(r.j); return $.j + 1; S.x.f($.j); ")
+        " public final int j;public void y() {final C $ = new C(6);final R r = new R() {@O public void system() { final C res2 = new C($.j);S.x.f(res2.j);doStuff(res2);}private int doStuff(final C r) {final C $ = new C(r.j);return $.j + 1;S.x.f($.j);}};}} ")
             .gives(
-                " j = 2*i; } public final int j; public void y() { final C $ = new C(6); final R r = new R() { @O public void system() { final C res2 = new C($.j); S.x.f(res2.j); doStuff(res2); private int doStuff(final C r) { final C $ = new C(r.j); return $.j + 1; S.x.f($.j); ");
+                " public final int j;public void y() {final C $ = new C(6);new R() {@O public void system() { final C res2 = new C($.j);S.x.f(res2.j);doStuff(res2);}private int doStuff(final C r) {final C $ = new C(r.j);return $.j + 1;S.x.f($.j);}};}} ");
   }
 
-  @Ignore // TODO Yuval Simon --yg
   @Test public void a7() {
     trimminKof(
-        " public final int j; public C y() { final C $ = new C(6); final R r = new R() { @O public void system() { $ = new C(8); S.x.f($.j); doStuff($); private void doStuff(C res2) { S.x.f(res2.j); private C $; S.x.f($.j); return $; ")
+        " public final int j;public void y() {final C $ = new C(6);final R r = new R() {@O public void system() { $ = new C(8);S.x.f($.j);doStuff($);}private int doStuff(final C r) {final C $ = new C(r.j);return $.j + 1;S.x.f($.j);}};}}")
             .gives(
-                " j = 2*i; } public final int j; public C y() { final C $ = new C(6); final R r = new R() { @O public void system() { $ = new C(8); S.x.f($.j); doStuff($); private void doStuff(C res2) { S.x.f(res2.j); private C $; S.x.f($.j); return $; ");
+                " public final int j;public void y() {final C $ = new C(6);new R() {@O public void system() { $ = new C(8);S.x.f($.j);doStuff($);}private int doStuff(final C r) {final C $ = new C(r.j);return $.j + 1;S.x.f($.j);}};}} ");
   }
 
   @Ignore // TODO Yuval Simon --yg
