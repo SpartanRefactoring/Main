@@ -69,7 +69,7 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
                 new MyName(), //
                 null) //
             .add(VariableDeclarationFragment.class, //
-                new LetItBeIn(), //
+                new LetInNext(), //
                 null)
             .add(WhileStatement.class, //
                 new While.CountIf(), //
@@ -140,7 +140,7 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
         new Empty(), //
         new Examiner(), //
         new Getter(), //
-        new LetItBeInMethod(), //
+        new LetInMethod(), //
         new PojoConstructor(), //
         new Cascading.FluentSetter(), ///
         new Setter(), //
