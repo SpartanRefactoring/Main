@@ -134,7 +134,7 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
         new MyArguments(), //
         new ConstantReturner(), //
         new FactoryMethod(), //
-        new Default(), //
+        new DefaultMethod(), //
         new DefaultParametersAdder(), //
         new Delegator(), //
         new Empty(), //
