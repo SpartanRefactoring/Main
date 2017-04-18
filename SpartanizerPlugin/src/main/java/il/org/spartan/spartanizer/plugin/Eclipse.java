@@ -11,6 +11,7 @@ import java.util.stream.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.swt.events.*;
@@ -19,6 +20,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
+import il.org.spartan.spartanizer.tipping.*;
 import nano.ly.*;
 
 /** Eclipse common utilities.
@@ -136,5 +138,20 @@ public class Eclipse {
    * @param ¢ JD */
   public static void runAsynchronouslyInUIThread(final Runnable ¢) {
     Display.getDefault().asyncExec(¢);
+  }
+
+  /** @param m spartan marker
+   * @return tipper class of marker */
+  @SuppressWarnings("unchecked") public static Class<? extends Tipper<? extends ASTNode>> markerClass(final IMarker m) {
+    if (m == null)
+      return null;
+    Object $ = null;
+    try {
+      $ = m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
+      return !($ instanceof Class) ? null : (Class<? extends Tipper<? extends ASTNode>>) $;
+    } catch (CoreException ¢) {
+      note.trace(¢);
+      return null;
+    }
   }
 }
