@@ -10,7 +10,7 @@ import nano.ly.*;
  * @since Jan 8, 2017 */
 public class ConstantReturner extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 0x5A16C72C5FD1507EL;
-  private static final lazy<JavadocMarkerNanoPattern> rival = lazy.get(Default::new);
+  private static final lazy<JavadocMarkerNanoPattern> rival = lazy.get(DefaultMethod::new);
   private static final lazy<NanoPatternContainer<Statement>> tippers = lazy.get(//
       () -> new NanoPatternContainer<Statement>().add("return $L;").add("return -$L;")//
   );
