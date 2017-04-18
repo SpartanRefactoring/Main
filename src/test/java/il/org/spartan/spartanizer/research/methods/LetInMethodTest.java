@@ -4,13 +4,13 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.research.nanos.methods.*;
 
-/** Tests {@link LetItBeInMethod}
+/** Tests {@link LetInMethod}
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-13 */
 @SuppressWarnings("static-method")
-public class LetItBeInMethodTest extends JavadocerTest {
+public class LetInMethodTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
-    setNano(new LetItBeInMethod());
+    setNano(new LetInMethod());
   }
 
   @Test public void a() {

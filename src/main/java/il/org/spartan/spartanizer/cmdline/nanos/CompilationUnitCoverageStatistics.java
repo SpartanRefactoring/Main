@@ -210,7 +210,7 @@ class LightWeightMethodRecord {
 
   /** makes sure we don't exceed 100% of nodes of a method */
   public void mark(final ASTNode ¢, final String np) {
-    if (np.equals(LetItBeIn.class.getSimpleName()))
+    if (np.equals(LetInNext.class.getSimpleName()))
       markLetItBeIn(¢);
     else if (np.equals(MyArguments.class.getSimpleName()))
       markArgumentsTuple();
