@@ -39,7 +39,10 @@ public class LocalInitializedArithmeticsInline extends LocalInitialized//
       rightHandSide = $.getRightHandSide();
       return o != ASSIGN //
           && az.simpleName($.getLeftHandSide()).getIdentifier().equals(name.getIdentifier())
-          && collect.usesOf(name).in(extract.fragments(declaration)).size() == 1;
+          && collect.usesOf(name).in(extract.fragments(declaration)).size() == 1
+          && collect.usesOf(name).in(rightHandSide).isEmpty()
+          //check whether any variable declared in the current declaration is used in the next statement, for safety
+          && extract.fragments(declaration).stream().allMatch((VariableDeclarationFragment f)->collect.usesOf(f.getName()).in(rightHandSide).isEmpty());
     });
   }
 
@@ -63,7 +66,7 @@ public class LocalInitializedArithmeticsInline extends LocalInitialized//
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationFragment $ = copy.of(current());
     $.setInitializer(subject.operands(subject.operand(initializer).parenthesis(), //
-        rightHandSide).to(assign2infix(o)));
+        subject.operand(rightHandSide).parenthesis()).to(assign2infix(o)));
     r.replace(current(), $, g);
     r.remove(nextStatement, g);
     return r;

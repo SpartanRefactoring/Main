@@ -61,4 +61,20 @@ public class Issue0187 extends TipperTest<VariableDeclarationFragment> {
     trimmingOf("int x = 3; x<<=2;")//
     .gives("int x = 3<<2;");
   }
+  
+  @Test public void i(){
+    trimmingOf("int x = 0; x += x++;")//
+    .stays();
+  }
+  
+  @Ignore("see issue #1257")
+  @Test public void j(){
+    trimmingOf("int x = 0; x += ++b;")//
+    .gives("int x = 0 + (++b);");
+  }
+  
+  @Test public void k(){
+    trimmingOf("int x = 0, y = 1; x += y")//
+    .stays();
+  }
 }
