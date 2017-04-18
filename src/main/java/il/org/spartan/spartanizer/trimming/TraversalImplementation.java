@@ -92,7 +92,6 @@ public class TraversalImplementation extends Traversal {
     final Tips tips = Tips.empty();
     setRewrite(ASTRewrite.create(u.getAST()));
     final Range range = getRange();
-    System.out.println(range);
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
