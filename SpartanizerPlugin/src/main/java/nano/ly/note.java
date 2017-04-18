@@ -18,6 +18,14 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since Nov 13, 2016 */
 public interface note {
+ class __ {
+   static String trace(final Throwable ¢) {
+     return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
+   }
+   static String trace() {
+     return trace(new Throwable()); 
+   }
+ }
   String FILE_SEPARATOR = "\n**\n";
   String FILE_SUB_SEPARATOR = "\n********\n";
   /** @formatter:off */
@@ -50,13 +58,15 @@ public interface note {
     ) + //
         format(" %s = '%s'\n", English.name(o), o) + //
         format(" %s = '%s'\n", English.name(t), t) + //
-        format(" trace(%s) = '%s'\n", English.name(t), trace(t)) //
+        format(" trace(%s) = '%s'\n", English.name(t), __.trace(t)) //
     ));
   }
 
   static <T> T bug(final String format, final Object... os) {
     return nulling.ly(() -> logger.info(format(//
-        "A bug was detected in the vicinty of %s\n", system.myCallerFullClassName()) + //
+        "A bug was detected in the vicinty of %s; trace =%s\n", 
+        __.trace(),//
+        system.myCallerFullClassName()) + //
         format(format, os)));
   }
 
@@ -65,7 +75,7 @@ public interface note {
         "A static method was hit by " + indefinite(¢) + " exception.\n" + //
             "This is an indication of a bug.\n" + //
             format("%s = '%s'\n", English.name(¢), ¢) + //
-            format("trace(%s) = '%s'\n", English.name(¢), trace(¢)) //
+            format("trace(%s) = '%s'\n", English.name(¢), __.trace(¢)) //
     ));
   }
   /** To be invoked whenever you do not know what to do with an exception
@@ -154,9 +164,7 @@ public interface note {
   static void set(final Level ¢) {
     levels.push(¢);
   }
-  static String trace(final Throwable ¢) {
-    return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
-  }
+
   static void unset() {
     levels.pop();
   }
