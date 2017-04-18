@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.plugin.NewGUIApplicator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.core.resources.*;
@@ -23,25 +24,27 @@ import nano.ly.*;
 // TODO OriRoth can we eliminate some of these many fields? --yg
 @SuppressWarnings("unused")
 public final class QuickFixer implements IMarkerResolutionGenerator {
+  private final IMarkerResolution[] solutions = new IMarkerResolution[] { //
+      quickFix("Apply", λ -> NewGUIApplicator.plain().restrictTo(Eclipse.markerClass(λ)).selection(Selection.Util.by(λ)).go()), //
+      // applyPreview, //
+      // laconizeFile, //
+      quickFix("Spartanize function", λ -> applicator(λ).selection(Selection.Util.expand(λ, MethodDeclaration.class)).go()), //
+      quickFix("Spartanize class", λ -> applicator(λ).selection(Selection.Util.expand(λ, AbstractTypeDeclaration.class)).go()), //
+      // singleTipperFunction, //
+      quickFix("Apply to compilation unit",
+          λ -> applicator(λ).restrictTo(Tipper.materialize(λ)).selection(Selection.Util.getCurrentCompilationUnit(λ)).go()), //
+      quickFix("Apply to entire project",
+          λ -> SpartanizationHandler.applicator().restrictTo(Tipper.materialize(λ)).manyPasses().selection(Selection.Util.getAllCompilationUnit(λ))
+              .go()), //
+      quickFix("Disable tip", DisableTipper::disable), //
+      fixers.disableFunctionFix(), //
+      fixers.disableClassFix(), //
+      // disableFile, //
+      fixers.disableClassAnnotationFix() //
+  };
+
   @Override public IMarkerResolution[] getResolutions(final IMarker __) {
-    return new IMarkerResolution[] { //
-        quickFix("Apply", λ -> NewGUIApplicator.plain().selection(Selection.Util.by(λ)).go()), //
-        // applyPreview, //
-        // laconizeFile, //
-        quickFix("Spartanize function", λ -> applicator(λ).selection(Selection.Util.expand(λ, MethodDeclaration.class)).go()), //
-        quickFix("Spartanize class", λ -> applicator(λ).selection(Selection.Util.expand(λ, AbstractTypeDeclaration.class)).go()), //
-        // singleTipperFunction, //
-        quickFix("Apply to compilation unit",
-            λ -> applicator(λ).restrictTo(Tipper.materialize(λ)).selection(Selection.Util.getCurrentCompilationUnit(λ)).go()), //
-        quickFix("Apply to entire project",
-            λ -> SpartanizationHandler.applicator().restrictTo(Tipper.materialize(λ)).manyPasses().selection(Selection.Util.getAllCompilationUnit(λ))
-                .go()), //
-        quickFix("Disable tip", DisableTipper::disable), //
-        fixers.disableFunctionFix(), //
-        fixers.disableClassFix(), //
-        // disableFile, //
-        fixers.disableClassAnnotationFix() //
-    };
+    return Arrays.copyOf(solutions, solutions.length);
   }
 
   private static NewGUIApplicator applicator(final IMarker λ) {

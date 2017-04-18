@@ -6,9 +6,11 @@ import java.util.function.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.trimming.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 
@@ -128,6 +130,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
    * @param a JD
    * @return {@code this} applicator */
   public NewGUIApplicator defaultRunAction() {
+    inner.traversal.useProjectPreferences();
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
     return this;
   }
@@ -143,6 +146,10 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     inner.traversal.configuration.restrictTo(t);
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ)));
     return this;
+  }
+
+  public Applicator restrictTo(Class<? extends Tipper<? extends ASTNode>> tipperClass) {
+    return restrictTo(Tippers.cache.TipperObjectByClassCache.get(tipperClass));
   }
 
   /** Default operation name.
