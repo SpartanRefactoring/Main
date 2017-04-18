@@ -53,7 +53,7 @@ public class LocalInitializedArithmeticsInline extends LocalInitialized//
     return //
     convert("int x = 1; x+=1;")//
         .to("int x = 1+1;")//
-        .ignores("int x = 1, y = x; ++x;");
+        .ignores("int x = 1, y = x; x*=3;");
   }
   
   @Override protected ASTNode[] span() {
