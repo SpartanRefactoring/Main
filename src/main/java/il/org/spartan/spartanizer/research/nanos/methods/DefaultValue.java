@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  *       default value of some type.
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-28 */
-public class DefaultMethod extends JavadocMarkerNanoPattern {
+public class DefaultValue extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = -0x7857488D8A7F1AEBL;
   private static final UserDefinedTipper<Statement> returnDefault = patternTipper("return $D;", "", "");
 
