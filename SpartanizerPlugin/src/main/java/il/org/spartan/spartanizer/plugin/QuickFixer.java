@@ -21,11 +21,12 @@ import nano.ly.*;
  * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
  * @author Ori Roth
  * @since 2013/07/01 */
-// TODO OriRoth can we eliminate some of these many fields? --yg
+// XXX OriRoth can we eliminate some of these many fields? --yg
+// I want lazy solutions creation, see my solution.
 @SuppressWarnings("unused")
 public final class QuickFixer implements IMarkerResolutionGenerator {
   private final IMarkerResolution[] solutions = new IMarkerResolution[] { //
-      quickFix("Apply", λ -> NewGUIApplicator.plain().restrictTo(Eclipse.markerClass(λ)).selection(Selection.Util.by(λ)).go()), //
+      quickFix("Apply", λ -> NewGUIApplicator.plain().restrictTo(Tipper.materialize(λ)).selection(Selection.Util.by(λ)).go()), //
       // applyPreview, //
       // laconizeFile, //
       quickFix("Spartanize function", λ -> applicator(λ).selection(Selection.Util.expand(λ, MethodDeclaration.class)).go()), //

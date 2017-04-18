@@ -144,7 +144,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     inner.setName(t.description());
     inner.traversal.useProjectPreferences();
     inner.traversal.configuration.restrictTo(t);
-    setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ)));
+    setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
     return this;
   }
 
@@ -164,7 +164,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
         .defaultRunAction()//
         .defaultListenerSilent()//
         .fewPasses()//
-        .defaultSelection()//
+        //.defaultSelection()// We don't want this here --or
         .defaultOperationName();
   }
 
