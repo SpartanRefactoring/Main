@@ -415,6 +415,10 @@ public interface wizard {
     return r != null && from(n) >= r.from && to(n) <= r.to;
   }
 
+  static boolean contained(ASTNode n, IMarker m) {
+    return contained(n, range(m));
+  }
+
   /** Determines if we can be certain that a {@link Statement} ends with a
    * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
    * {@link BreakStatement}, {@link ContinueStatement}).
@@ -509,7 +513,7 @@ public interface wizard {
 
   static int from(final IMarker $) {
     try {
-      return ((Integer) $.getAttribute(IMarker.CHAR_END)).intValue();
+      return ((Integer) $.getAttribute(IMarker.CHAR_START)).intValue();
     } catch (CoreException | ClassCastException ¢) {
       note.bug(¢);
       return Integer.MIN_VALUE;
