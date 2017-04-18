@@ -75,8 +75,8 @@ public class Version300 {
   interface Replace extends Find {
     void replace();
   }
-
-  Replace xxx = new Replace() {
+  public Replace getXxx() {
+    return new Replace() {
     {
       andAlso(() -> {/**/});
       andIs(() -> S(1), () -> {
@@ -101,6 +101,7 @@ public class Version300 {
         S(1);
     }
   };
+    }
 
   @Test public void abcd() {
     trimminKof("a = !(b ? c : d)") //
@@ -418,4 +419,5 @@ public class Version300 {
     statements($).addAll(wizard.decompose(¢));
     return $;
   }
+
 }

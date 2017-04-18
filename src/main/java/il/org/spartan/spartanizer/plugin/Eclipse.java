@@ -150,8 +150,7 @@ public class Eclipse {
       $ = m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
       return !($ instanceof Class) ? null : (Class<? extends Tipper<? extends ASTNode>>) $;
     } catch (CoreException ¢) {
-      note.trace(¢);
-      return null;
+      return note.bug(¢);
     }
   }
 }
