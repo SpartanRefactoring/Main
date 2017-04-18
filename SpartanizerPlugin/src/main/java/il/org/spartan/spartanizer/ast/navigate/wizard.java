@@ -411,6 +411,10 @@ public interface wizard {
     return r != null && (from(n) >= r.to || to(n) <= r.from);
   }
 
+  static boolean contained(ASTNode n, Range r) {
+    return r != null && from(n) >= r.from && to(n) <= r.to;
+  }
+
   /** Determines if we can be certain that a {@link Statement} ends with a
    * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
    * {@link BreakStatement}, {@link ContinueStatement}).
