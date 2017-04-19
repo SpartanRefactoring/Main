@@ -42,7 +42,7 @@ public abstract class Traversal implements Selfie<Traversal> {
   private CompilationUnit compilationUnit;
   private TextEditGroup editGroup;
   private Range range;
-  protected Tips tips;
+  protected final Tips tips = Tips.empty();
   protected final Map<IProject, Configuration> configurations = new HashMap<>();
   protected String fileName;
   protected boolean firstAddition = true;
@@ -59,7 +59,7 @@ public abstract class Traversal implements Selfie<Traversal> {
    * @return a collection of {@link Tip} objects each containing a
    *         spartanization tip */
   public Tips collectTips(final CompilationUnit ¢) {
-    tips = Tips.empty();
+    tips.clear();
     ¢.accept(tipsCollector());
     return tips;
   }
