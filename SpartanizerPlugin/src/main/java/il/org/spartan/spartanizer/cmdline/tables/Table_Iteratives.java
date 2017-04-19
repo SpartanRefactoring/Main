@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Generates a table for analyzing loops distribution and nano pattern applied
  * to loops.
@@ -61,8 +62,8 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
     if (!excludeMethod(¢))
       try {
         log(spartanalyze(¢ + ""));
-      } catch (@SuppressWarnings("unused") final MalformedTreeException | AssertionError | IllegalArgumentException __) {
-        System.out.print("X");
+      } catch (final MalformedTreeException | AssertionError | IllegalArgumentException x) {
+        note.bug(x);
       }
     return false;
   }

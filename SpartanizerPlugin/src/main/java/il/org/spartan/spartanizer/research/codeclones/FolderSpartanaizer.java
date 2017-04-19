@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Spartanaize a given folder
  * @author oran1248
@@ -17,8 +18,8 @@ class FolderSpartanaizer {
       @Override protected void visit(final File f) {
         try {
           FileUtils.writeToFile(f.getAbsolutePath(), new NoBrainDamagedTippersSpartanizer().fixedPoint(FileUtils.read(f)));
-        } catch (@SuppressWarnings("unused") final Exception ¢) {
-          System.exit(1); // exception - fail
+        } catch (final Exception x) {
+          note.bug(x);
         }
       }
     }.fire(new ASTVisitor() {/**/});
