@@ -33,10 +33,10 @@ public final class FieldInitializedDefaultValue extends FieldPattern implements 
     return convert("public int i =0;").to("public int i;").ignores("public Integer i=0;");
   }
 
-  @Override public ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override public ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final VariableDeclarationFragment f = copy.of(current);
     f.setInitializer(null);
-    r.replace(current, f, g);
-    return r;
+    $.replace(current, f, g);
+    return $;
   }
 }

@@ -62,20 +62,16 @@ public enum misc {
    * @param m */
   public static void addMethodToFile(final String fileName, final MethodDeclaration m) {
     try {
-      final String str = readFromFile(fileName);
-      final IDocument d = new Document(str);
+      final String s = readFromFile(fileName);
+      final IDocument d = new Document(s);
       final AbstractTypeDeclaration t = findFirst.abstractTypeDeclaration(makeAST.COMPILATION_UNIT.from(d));
       final ASTRewrite r = ASTRewrite.create(t.getAST());
       misc.addMethodToType(t, m, r, null);
       r.rewriteAST(d, null).apply(d);
       writeToFile(fileName, d.get());
-    } catch (final IOException x) {
-      note.io(x);
-    } catch (final MalformedTreeException x) {
-      note.bug(x);
-    } catch (final IllegalArgumentException x) {
-      note.bug(x);
-    } catch (final BadLocationException ¢) {
+    } catch (final IOException ¢) {
+      note.io(¢);
+    } catch (final BadLocationException | IllegalArgumentException | MalformedTreeException ¢) {
       note.bug(¢);
     }
   }
