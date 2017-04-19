@@ -41,7 +41,7 @@ public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclaratio
   }
 
   @Override public String description(@SuppressWarnings("unused") final VariableDeclarationStatement __) {
-    return "Unify two variable declarations of the same type into one";
+    return "Unify two variable declarations of the same __ into one";
   }
 
   @Override public Examples examples() {

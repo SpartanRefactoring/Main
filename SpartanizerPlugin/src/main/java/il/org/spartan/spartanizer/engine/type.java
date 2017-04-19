@@ -26,20 +26,19 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
-/** An interface for fluent api, used to determine the type of an expression
- * from it's structure and context. Use type.get to find the type of an
- * expression.
+/** An interface for fluent api, used to determine the __ of an expression from
+ * it's structure and context. Use __.get to find the __ of an expression.
  * @author Yossi Gil
  * @author Dor Maayan
  * @author Niv Shalmon
  * @since 2016 */
 public interface type {
-  /** adds a new type to the system */
+  /** adds a new __ to the system */
   static inner.implementation baptize(final String name) {
     return baptize(name, "anonymously born");
   }
 
-  /** adds a new type to the system, with fitting description */
+  /** adds a new __ to the system, with fitting description */
   static inner.implementation baptize(final String name, final String description) {
     return have(name) ? bring(name) : new inner.implementation() {
       @Override public String description() {
@@ -56,13 +55,13 @@ public interface type {
     }.join();
   }
 
-  /** @return the type object with a given name, or null if no such name exists
-   *         in the system */
+  /** @return the __ object with a given name, or null if no such name exists in
+   *         the system */
   static inner.implementation bring(final String name) {
     return inner.types.get(name);
   }
 
-  /** @return whether a type with a given name exists in the system */
+  /** @return whether a __ with a given name exists in the system */
   static boolean have(final String name) {
     return inner.types.containsKey(name);
   }
@@ -80,8 +79,8 @@ public interface type {
   }
 
   /** @param x JD
-   * @return {@code true} <i>if</i> the parameter is an expression whose type is
-   *         provably not of type {@link String}, in the sense used in applying
+   * @return {@code true} <i>if</i> the parameter is an expression whose __ is
+   *         provably not of __ {@link String}, in the sense used in applying
    *         the {@code +} operator to concatenate strings. If returns true, can
    *         safely assume that {@code +} is used for addition in this
    *         context */
@@ -94,7 +93,7 @@ public interface type {
   }
 
   // TODO Matteo: Nano-pattern of values: not implemented
-  /** @return the type object of the expression */
+  /** @return the __ object of the expression */
   @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
     return inner.get(¢);
   }
@@ -126,7 +125,7 @@ public interface type {
   }
 
   /** @return whethereither a Primitive.Certain, Primitive.Odd.NULL or a
-   *         baptized type */
+   *         baptized __ */
   default boolean isCertain() {
     return this == NULL || have(key()) || asPrimitiveCertain() != null;
   }
@@ -145,14 +144,53 @@ public interface type {
     return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
 
-  /** @return the formal name of this type, the key under which it is stored in
+  /** @return the formal name of this __, the key under which it is stored in
    *         {@link #types}, e.g., "Object", "int", "String", etc. */
   String key();
 
-  /** An interface with one method- type, overloaded for many different
-   * parameter types. Can be used to find the type of an expression thats known
-   * at compile time by using overloading. Only use for testing, mainly for
-   * testing of type.
+  static boolean isBoxedType(final String typeName) {
+    return __.boxedTypes.contains(typeName);
+  }
+
+  static boolean isObject(final Type ¢) {
+    if (¢ == null)
+      return false;
+    switch (¢ + "") {
+      case "Object":
+      case "java.lang.Object":
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  static boolean isString(final String typeName) {
+    if (typeName == null)
+      return false;
+    switch (typeName) {
+      case "String":
+      case "java.lang.String":
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  static boolean isString(final Type ¢) {
+    return isString(¢ + "");
+  }
+
+  static boolean isValueType(final String typeName) {
+    return __.valueTypes.contains(typeName);
+  }
+
+  static boolean isValueType(final Type ¢) {
+    return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
+  }
+
+  /** An interface with one method- __, overloaded for many different parameter
+   * types. Can be used to find the __ of an expression thats known at compile
+   * time by using overloading. Only use for testing, mainly for testing of __.
    * @author Niv Shalmon
    * @since 2016 */
   @SuppressWarnings("unused")
@@ -200,8 +238,8 @@ public interface type {
 
   enum inner {
     ;
-    private static final String propertyName = "spartan type";
-    /** All type that were ever born , as well as all primitive types */
+    private static final String propertyName = "spartan __";
+    /** All __ that were ever born , as well as all primitive types */
     static final Map<String, implementation> types = new LinkedHashMap<>();
 
     private static implementation get(final Expression ¢) {
@@ -311,10 +349,10 @@ public interface type {
     }
 
     /** @param x JD
-     * @param i most specific type information already known, usually from
+     * @param i most specific __ information already known, usually from
      *        lookdown
-     * @return most spefici type information for x, based on the currently known
-     *         type information and the context in which x appears */
+     * @return most spefici __ information for x, based on the currently known
+     *         __ information and the context in which x appears */
     private static implementation lookUp(final Expression x, final implementation i) {
       if (i.isCertain())
         return i;
@@ -347,7 +385,7 @@ public interface type {
 
     // an interface for inner methods that shouldn'tipper be public
     private interface implementation extends type {
-      /** To be used to determine the type of something that o was used on
+      /** To be used to determine the __ of something that o was used on
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
        *         case it cannot decide */
@@ -396,7 +434,7 @@ public interface type {
         return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
       }
 
-      /** used to determine whether an integral type behaves as itself under
+      /** used to determine whether an integral __ behaves as itself under
        * operations or as an INT.
        * @return whether one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or
        *         false otherwise. */
@@ -411,12 +449,12 @@ public interface type {
       }
 
       default implementation join() {
-        assert !have(key()) : "fault: the dictionary should not have type " + key() + "\n receiver is " + this + "\n This is all I know";
+        assert !have(key()) : "fault: the dictionary should not have __ " + key() + "\n receiver is " + this + "\n This is all I know";
         inner.types.put(key(), this);
         return this;
       }
 
-      /** To be used to determine the type of the result of o being used on the
+      /** To be used to determine the __ of the result of o being used on the
        * caller
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #INTEGRAL} or {@link #NUMERIC} , in
@@ -511,7 +549,7 @@ public interface type {
      * themselves */
     enum Types implements Odd {
       /** TOOD: Dor, take note that in certain situations, null could be a
-       * {@link Boolean} type */
+       * {@link Boolean} __ */
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
       NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
       ;
@@ -533,11 +571,11 @@ public interface type {
     }
   }
 
-  /** Primitive type or a set of primitive types
+  /** Primitive __ or a set of primitive types
    * @author Yossi Gil
    * @since 2016 */
   interface Primitive extends inner.implementation {
-    /** @return All {@link Certain} types that an expression of this type can
+    /** @return All {@link Certain} types that an expression of this __ can
      *         be **/
     Iterable<Certain> options();
 
@@ -592,7 +630,7 @@ public interface type {
       }
     }
 
-    /** A set of {@link Primitive.Certain} types, where the expressions type
+    /** A set of {@link Primitive.Certain} types, where the expressions __
      * cannot be determined for certain
      * @author Yossi Gil
      * @author Niv Shalmon
@@ -629,4 +667,24 @@ public interface type {
       }
     }
   }
-} // end of interface type
+
+  interface __ {
+    Collection<String> valueTypes = new LinkedHashSet<String>(__.boxedTypes) {
+      static final long serialVersionUID = -0x134495F1CC662D60L;
+      {
+        for (final String ¢ : new String[] { "String" }) {
+          add(¢);
+          add("java.lang." + ¢);
+        }
+      }
+    };
+    @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
+      {
+        for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
+          add(¢);
+          add("java.lang." + ¢);
+        }
+      }
+    };
+  }
+} // end of interface __

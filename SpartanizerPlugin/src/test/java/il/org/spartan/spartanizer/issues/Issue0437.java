@@ -4,7 +4,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 /** Failing tests from {@link InfixIndexOfToStringContainsTest} The reason these
- * tests fail is because {@link type.isString()} cannot infer types of variables
+ * tests fail is because {@link __.isString()} cannot infer types of variables
  * as strings unless they are string literals...
  * @author Yossi Gil
  * @since 2016 */

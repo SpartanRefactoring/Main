@@ -40,9 +40,9 @@ public final class Names {
   };
   public static BiFunction<Type, MethodDeclaration, String> methodSingleParameterName = (x, y) -> "¢";
 
-  /** Extracts type from ¢, for example for type SomeArray[][] it returns
-   * SomeArray. Returns null in case of type name which can not be decided
-   * properly, such as union type. */
+  /** Extracts __ from ¢, for example for __ SomeArray[][] it returns SomeArray.
+   * Returns null in case of __ name which can not be decided properly, such as
+   * union __. */
   private static String extractType(final Type ¢) {
     if (¢ == null)
       return null;

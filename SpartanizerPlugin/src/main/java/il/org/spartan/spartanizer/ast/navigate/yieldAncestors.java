@@ -136,7 +136,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
 
   /** Factory method, returning an instance which can search by the integer
    * present on a node.
-   * @param type JD
+   * @param __ JD
    * @return a newly created instance
    * @see ASTNode#getNodeType() */
   public static yieldAncestors<ASTNode> untilNodeType(final int type) {
@@ -152,15 +152,15 @@ public abstract class yieldAncestors<N extends ASTNode> {
   }
 
   /** @param n JD
-   * @return closest ancestor whose type matches the given type. */
+   * @return closest ancestor whose __ matches the given __. */
   public abstract N from(ASTNode n);
 
   /** @param n JD
-   * @return closest ancestor whose type matches the given type. */
+   * @return closest ancestor whose __ matches the given __. */
   public abstract ASTNode inclusiveFrom(ASTNode n);
 
   /** @param ¢ JD
-   * @return furtherest ancestor whose type matches the given type. */
+   * @return furtherest ancestor whose __ matches the given __. */
   public ASTNode inclusiveLastFrom(final ASTNode ¢) {
     for (ASTNode $ = inclusiveFrom(¢), p = $;; $ = p, p = from(p.getParent()))
       if (p == null)
@@ -168,7 +168,7 @@ public abstract class yieldAncestors<N extends ASTNode> {
   }
 
   /** @param n JD
-   * @return furtherest ancestor whose type matches the given type. */
+   * @return furtherest ancestor whose __ matches the given __. */
   public ASTNode lastFrom(final ASTNode n) {
     // TODO Alex: Polish this loop manually and add a test case for future
     // generations

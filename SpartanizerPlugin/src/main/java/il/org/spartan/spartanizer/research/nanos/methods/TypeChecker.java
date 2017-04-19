@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
-/** One statement method checking a parameter is of certain type
+/** One statement method checking a parameter is of certain __
  * @author Ori Marcovitch */
 public class TypeChecker extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 0x2A4AF30BA4892265L;

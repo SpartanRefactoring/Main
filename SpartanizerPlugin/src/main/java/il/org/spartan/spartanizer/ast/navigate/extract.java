@@ -155,8 +155,8 @@ public enum extract {
         return "field";
       case INITIALIZER:
         if (Modifier.isStatic(((BodyDeclaration) $).getModifiers()))
-          return "static type initializer";
-        return "type initializer";
+          return "static __ initializer";
+        return "__ initializer";
       case METHOD_DECLARATION:
         final Statement body = body(az.methodDeclaration($));
         if (body == null)

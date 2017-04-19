@@ -433,7 +433,7 @@ interface DummyInterface {/**/ }
 
 @Ignore
 @class¢
-@knows("type definitionTest")
+@knows("__ definitionTest")
 @SuppressWarnings("ALL")
 class ZZZ___Fixture_ModelClass {
   /** This code is never used, it is to model our test */
@@ -527,7 +527,7 @@ class ZZZ___Fixture_ModelClass {
 
   @annotation
   @interface foo {
-    @ScopeSize(5) @field @knows({ "bar", "type Bar", "foo", "fubar" }) int bar = 12;
+    @ScopeSize(5) @field @knows({ "bar", "__ Bar", "foo", "fubar" }) int bar = 12;
     @ScopeSize(5) @field int foo = bar;
     @ScopeSize(5) @field int fubar = foo << bar;
     @ScopeSize(5) @field Bar acuda = Bar.abra, cadbara = Bar.cadabra;
@@ -584,7 +584,7 @@ class ZZZ___Fixture_ModelClass {
 
     @ScopeSize(6)
     abstract class ClassInAnEnum {
-      @ScopeSize(1) @knows({ "type ClassInAnEnum", "b" }) @method abstract void abstractMethodInClass(@parameter @ScopeSize(0) int a,
+      @ScopeSize(1) @knows({ "__ ClassInAnEnum", "b" }) @method abstract void abstractMethodInClass(@parameter @ScopeSize(0) int a,
           @parameter @ScopeSize(0) int b);
     }
 

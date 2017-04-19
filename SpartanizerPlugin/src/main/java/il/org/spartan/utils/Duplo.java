@@ -2,7 +2,7 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
-/** encapsulates elements of the type parameter, to be organizable in a
+/** encapsulates elements of the __ parameter, to be organizable in a
  * hierarchical structure
  * @param <T> Type stored in each element
  * @author Yossi Gil

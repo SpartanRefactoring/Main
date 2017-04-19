@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** @nano a method which is empty or contains one statement which return a
- *       default value of some type.
+ *       default value of some __.
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2016-12-28 */
 public class DefaultValue extends JavadocMarkerNanoPattern {

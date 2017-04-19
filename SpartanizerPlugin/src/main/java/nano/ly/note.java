@@ -127,7 +127,7 @@ public interface note {
 
   static <T> T io(final Exception ¢) {
     return nulling.ly(() -> logger.config(//
-        "   Got an exception of type : " + English.name(¢) + //
+        "   Got an exception of __ : " + English.name(¢) + //
             "\n      (probably I/O exception)" //
             + "\n   The exception says: '" + ¢ + "'" //
     ));
@@ -135,7 +135,7 @@ public interface note {
 
   static <T> T io(final Exception x, final String message) {
     return nulling.ly(() -> logger.info(//
-        "   Got an exception of type : " + English.name(x) + //
+        "   Got an exception of __ : " + English.name(x) + //
             "\n      (probably I/O exception)" + //
             "\n   The exception says: '" + x + "'" + //
             "\n   The associated message is " + //
@@ -145,7 +145,7 @@ public interface note {
 
   static <T> T io(final IOException ¢) {
     return nulling.ly(() -> logger.info(//
-        "   Got an exception of type : " + English.name(¢) + //
+        "   Got an exception of __ : " + English.name(¢) + //
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
     ));
   }

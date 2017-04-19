@@ -86,7 +86,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   Binding createInformation(final VariableDeclarationFragment ¢, final type t) {
     // VariableDeclarationFragment, that comes from either FieldDeclaration,
     // VariableDeclarationStatement or VariableDeclarationExpression,
-    // does not contain its type. Hence, the type is sent from the parent in
+    // does not contain its __. Hence, the __ is sent from the parent in
     // the convertToEntry calls.
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
   }
@@ -213,7 +213,7 @@ final class EnvironmentVisitor extends ASTVisitor {
    * among nodes of the same kind. zero based.
    * @param s
    * @return The nodes index, according to order of appearance, among nodes
-   *         ofthe same type. [[SuppressWarningsSpartan]] */
+   *         ofthe same __. [[SuppressWarningsSpartan]] */
   static int statementOrderAmongTypeInParent(final Statement s) {
     // extract.statements wouldn't work here - we need a shallow extract,
     // not a deep one.

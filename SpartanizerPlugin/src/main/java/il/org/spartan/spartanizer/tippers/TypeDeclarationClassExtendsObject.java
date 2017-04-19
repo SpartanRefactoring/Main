@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Converts {@code class C extends Object {...}} to {@code class C {...}} to
@@ -14,7 +14,7 @@ public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<
   private static final long serialVersionUID = -0x5CD20EAB91E0B816L;
 
   @Override public ASTNode replacement(final TypeDeclaration ¢) {
-    if (¢.isInterface() || !wizard.isObject(¢.getSuperclassType()))
+    if (¢.isInterface() || !type.isObject(¢.getSuperclassType()))
       return null;
     final TypeDeclaration $ = copy.of(¢);
     $.setSuperclassType(null);

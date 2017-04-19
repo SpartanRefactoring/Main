@@ -178,9 +178,9 @@ public abstract class MetaFixture {
     return $;
   }
 
-  /** Finds the first element of type ¢ in current runtime class's cu
+  /** Finds the first element of __ ¢ in current runtime class's cu
    * @param ¢ the wanted class
-   * @return the first element of this type */
+   * @return the first element of this __ */
   protected final <N extends ASTNode> N find(final Class<N> ¢) {
     return first(descendants.whoseClassIs(¢).from(reflectedCompilationUnit()));
   }

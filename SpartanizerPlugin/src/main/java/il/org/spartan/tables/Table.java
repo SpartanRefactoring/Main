@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
 
-/** A relation is just another name for a table that contains elements of type
+/** A relation is just another name for a table that contains elements of __
  * {@link Record}. This class provides fluent API for generating tables,
  * including aggregation information.
  * @author Yossi Gil

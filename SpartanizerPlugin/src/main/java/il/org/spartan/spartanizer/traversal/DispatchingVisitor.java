@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.traversal;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** A visitor hack converting the type specific visit functions, into a single
+/** A visitor hack converting the __ specific visit functions, into a single
  * call to {@link #go(ASTNode)}. Needless to say, this is foolish! You can use
  * {@link #preVisit(ASTNode)} or {@link #preVisit2(ASTNode)} instead. Currently,
  * we do not because some of the tests rely on the functions here returning

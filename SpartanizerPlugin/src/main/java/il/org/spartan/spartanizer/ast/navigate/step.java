@@ -319,14 +319,14 @@ public enum step {
     return ¢ == null ? null : ¢.extendedOperands();
   }
 
-  /** FieldDeclarations of type
+  /** FieldDeclarations of __
    * @param ¢ JD
    * @return */
   public static FieldDeclaration[] fieldDeclarations(final TypeDeclaration ¢) {
     return ¢ == null ? null : ¢.getFields();
   }
 
-  /** FieldDeclarations names of type
+  /** FieldDeclarations names of __
    * @param ¢ JD
    * @return */
   public static Collection<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
@@ -634,7 +634,7 @@ public enum step {
   /** Expose the list of parameters in a {@link MethodDeclaration}
    * @param ¢ JD
    * @return result of method {@link MethodDeclaration#parameters} downcasted to
-   *         its correct type */
+   *         its correct __ */
   @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> parameters(final MethodDeclaration ¢) {
     return ¢ == null ? null : ¢.parameters();
   }
@@ -679,7 +679,7 @@ public enum step {
     return ¢ == null ? null : ¢.resources();
   }
 
-  /** Returns the return type of the function
+  /** Returns the return __ of the function
    * @param ¢ JD
    * @return */
   public static Type returnType(final MethodDeclaration ¢) {
@@ -863,7 +863,7 @@ public enum step {
   /** @param ¢ JD
    * @return */
   @SuppressWarnings("unchecked")
-  // public static Type type(final VariableDeclarationStatement ¢) {
+  // public static Type __(final VariableDeclarationStatement ¢) {
   // return ¢ == null ? null : ¢.getType();
   // }
   public static List<Type> typeArguments(final ParameterizedType ¢) {
