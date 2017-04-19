@@ -30,10 +30,10 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
 
   @Override public Examples examples() {
     return //
-    convert("try {f();} catch (Exception e) {e.printStackTrace();}") //
-        .to("try {f();} catch (Exception ¢) {¢.printStackTrace();}") //
-        .ignores("Exception ¢; try {f();} catch (Exception e) {e.printStackTrace();}") //
-        .ignores("try {f();} catch (Exception e) {int ¢; e.printStackTrace();}") //
+    convert("try {f();} catch (Exception e) {e.f();}") //
+        .to("try {f();} catch (Exception ¢) {¢.f();}") //
+        .ignores("Exception ¢; try {f();} catch (Exception e) {e.f();}") //
+        .ignores("try {f();} catch (Exception e) {int ¢; e.f();}") //
     ;
   }
 

@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import nano.ly.*;
 
 /** An empty {@code enum} with a variety of {@code public
  * static} utility functions of reasonably wide use.
@@ -68,8 +69,7 @@ public interface idiomatic {
     try {
       return $.λ();
     } catch (final Exception ¢) {
-      ¢.printStackTrace();
-      return null;
+      return note.bug(¢);
     }
   }
 
@@ -373,10 +373,9 @@ public interface idiomatic {
       return () -> {
         try {
           return cls.getConstructor().newInstance();
-        } catch (final Exception $) {
-          $.printStackTrace();
+        } catch (final Exception x) {
+          return note.bug(x);
         }
-        return null;
       };
     }
 

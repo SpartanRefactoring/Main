@@ -97,7 +97,7 @@ final class BindingFun implements IApplication {
       javaProject.close();
       javaProject.getProject().delete(true, null);
     } catch (final CoreException ¢) {
-      ¢.printStackTrace();
+      note.bug(¢);
     }
   }
 

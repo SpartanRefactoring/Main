@@ -1345,8 +1345,8 @@ public interface iz {
   default boolean parsesTo(final String $, final int i) {
     try {
       return iz.parseInt($) == i;
-    } catch (final NumberFormatException __) {
-      ___.unused(__);
+    } catch (final NumberFormatException ¢) {
+      note.bug(this, ¢);
       return false;
     } catch (final IllegalArgumentException ¢) {
       note.bug(this, ¢);

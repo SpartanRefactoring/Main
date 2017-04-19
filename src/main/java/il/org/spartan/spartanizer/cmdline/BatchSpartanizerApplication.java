@@ -36,61 +36,6 @@ final class BatchSpartanizerApplication implements IApplication {
    * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.
    * IApplicationContext) */
   @Override public Object start(@SuppressWarnings("unused") final IApplicationContext __) {
-    // if(arg0.getArguments().size() == 0)
-    // optPath = ".";
-    // // place here instructions from command line
-    //// if (!a.startsWith("-"))
-    //// optPath = a;
-    //// ;
-    //// optPath = ".";
-    // try {
-    // prepareTempIJavaProject();
-    // } catch (CoreException x) {
-    // x.printStackTrace();
-    // }
-    // int done = 0, failed = 0;
-    // for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
-    // ICompilationUnit u = null;
-    // try {
-    // u = openCompilationUnit(f);
-    // new EventApplicator().defaultListenerSilent()
-    // .defaultPassesFew()
-    // .defaultRunContext()
-    // .defaultSelection()
-    // .defaultRunAction()
-    // .passes(1)
-    // .go();
-    // .defaultRunAction(getSpartanizer(¢))
-    // .passes(1)
-    // .selection(Selection.Util.by(¢).buildAll())
-    // .go());
-    // final FileStats s = new FileStats(f);
-    // for (int i = 0; i <optRounds; ++i) {
-    // final int n = new SpartanizeProject().countTips();
-    // if (n == 0)
-    // break;
-    //// s.addRoundStat(n);
-    // new Traversal().apply(u);
-    // }
-    // FileUtils.writeToFile(determineOutputFilename(f.getAbsolutePath()),
-    // u.getSource());
-    // if (optVerbose)
-    // System.out.println("Spartanized file " + f.getAbsolutePath());
-    // s.countLinesAfter();
-    // fileStats.add(s);
-    // ++done;
-    // } catch (final JavaModelException | IOException e) {
-    // System.err.println(f + ": " + e.getMessage());
-    // ++failed;
-    // } catch (final Exception e) {
-    // System.err.println("An unexpected error has occurred on file " + f + ": "
-    // + e.getMessage());
-    // e.printStackTrace();
-    // ++failed;
-    // } finally {
-    // discardCompilationUnit(u);
-    // }
-    // }
     return IApplication.EXIT_OK;
   }
 
