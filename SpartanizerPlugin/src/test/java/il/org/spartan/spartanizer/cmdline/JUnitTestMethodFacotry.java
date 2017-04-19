@@ -217,7 +217,7 @@ public enum JUnitTestMethodFacotry {
   static String tipperBody(final String input) {
     for (String $ = format("    trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
-      if (theSpartanizer.same(to, from))
+      if (Trivia.same(to, from))
         return $ + "         .stays() //\n  ;";
       final Tipper<?> t = theSpartanizer.firstTipper(from);
       assert t != null;

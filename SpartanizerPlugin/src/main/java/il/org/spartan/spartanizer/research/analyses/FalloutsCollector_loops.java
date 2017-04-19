@@ -29,15 +29,15 @@ public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
     DeprecatedFolderASTVisitor.main(args);
   }
 
-  @Override public boolean visit(final CompilationUnit ¢) {
-    ¢.accept(new CleanerVisitor());
+  @Override public boolean visit(final CompilationUnit u) {
+    u.accept(new CleanerVisitor());
     try {
-      descendants.whoseClassIs(EnhancedForStatement.class).from(into.cu(nanonizer.fixedPoint(¢))).stream().filter(iz::simpleLoop)
+      descendants.whoseClassIs(EnhancedForStatement.class).from(into.cu(nanonizer.fixedPoint(u))).stream().filter(iz::simpleLoop)
           .forEach(λ -> appendFile(out, λ + ""));
     } catch (final AssertionError x) {
       note.bug(x);
-    } catch (final IllegalArgumentException x) {
-      note.bug(x);
+    } catch (final IllegalArgumentException ¢) {
+      note.bug(¢);
     }
     return true;
   }

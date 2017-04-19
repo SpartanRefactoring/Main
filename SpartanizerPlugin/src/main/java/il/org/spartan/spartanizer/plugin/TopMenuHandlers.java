@@ -43,7 +43,7 @@ public class TopMenuHandlers extends AbstractHandler {
     if (handlers.containsKey(id))
       handlers.get(id).accept(¢);
     else
-      note.logger.info("Handler " + id + " is not registered in " + getClass().getName());
+      note.bug("Handler " + id + " is not registered in " + getClass().getName());
     return null;
   }
 

@@ -50,10 +50,8 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
             .in(make.ast(WrapIntoComilationUnit.Method.off(nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""))))));
       } catch (final AssertionError x) {
         note.bug(x);
-      } catch (final NullPointerException x) {
-        note.bug(x);
-      } catch (final IllegalArgumentException x) {
-        note.bug(x);
+      } catch (final IllegalArgumentException | NullPointerException ¢) {
+        note.bug(¢);
       }
     return super.visit($);
   }
