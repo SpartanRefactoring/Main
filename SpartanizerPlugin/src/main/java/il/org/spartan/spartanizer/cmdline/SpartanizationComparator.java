@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** TODO Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description
  * @author Matteo Orru' <matteo.orru@cs.technion.ac.il>
@@ -55,7 +56,7 @@ public enum SpartanizationComparator {
       collect(input, "before");
       collect(new InteractiveSpartanizer().fixedPoint(input), "after");
     } catch (final IOException ¢) {
-      System.err.println(¢.getMessage());
+      note.bug(¢);
     }
   }
 

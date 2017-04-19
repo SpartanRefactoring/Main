@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil
@@ -35,7 +36,7 @@ enum CollectClassMetrics {
       output.put("File", f.getName());
       go(FileUtils.read(f));
     } catch (final IOException ¢) {
-      System.err.println(¢.getMessage());
+      note.bug(¢);
     }
   }
 
