@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
+import il.org.spartan.spartanizer.ast.navigate.op;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.tables.*;
@@ -145,7 +145,7 @@ public class Table_ReusabilityIndices {
     as.list(op.assignment).forEach(λ -> addIfNecessary("ASSIGNMENT", Vocabulary.mangle(λ)));
     as.list(op.prefix).forEach(λ -> addIfNecessary("PREFIX", Vocabulary.mangle(λ)));
     as.list(op.postfix).forEach(λ -> addIfNecessary("POSTFIX", Vocabulary.mangle(λ)));
-    for (final Operator ¢ : wizard.infixOperators)
+    for (final Operator ¢ : op.infixOperators)
       for (int arity = 2; arity <= maxArity; ++arity)
         addIfNecessary("INFIX", Vocabulary.mangle(¢, arity));
   }

@@ -23,7 +23,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 
@@ -118,7 +117,7 @@ public interface type {
     return this + "=" + key() + " (" + description() + ")";
   }
 
-  /** @return whetherone of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+  /** @return whether one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
    *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
    *         {@link #INTEGRAL} or {@link #NUMERIC} , {@link #STRING} ,
    *         {@link #ALPHANUMERIC} or false otherwise */
@@ -132,14 +131,14 @@ public interface type {
     return this == NULL || have(key()) || asPrimitiveCertain() != null;
   }
 
-  /** @return whetherone of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+  /** @return whether one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
    *         {@link BYTE} , {@link SHORT} , {@link #INTEGRAL} or false
    *         otherwise */
   default boolean isIntegral() {
     return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
   }
 
-  /** @return whetherone of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
+  /** @return whether one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
    *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
    *         {@link #INTEGRAL} , {@link #NUMERIC} or false otherwise */
   default boolean isNumeric() {
@@ -358,7 +357,7 @@ public interface type {
 
       default implementation aboveBinaryOperator(final InfixExpression.Operator ¢) {
         return in(¢, EQUALS, NOT_EQUALS) ? this
-            : ¢ == op.PLUS2 ? asAlphaNumeric() : wizard.isBitwise(¢) ? asBooleanIntegral() : wizard.isShift(¢) ? asIntegral() : asNumeric();
+            : ¢ == op.PLUS2 ? asAlphaNumeric() : op.isBitwise(¢) ? asBooleanIntegral() : op.isShift(¢) ? asIntegral() : asNumeric();
       }
 
       default implementation asAlphaNumeric() {
@@ -399,13 +398,13 @@ public interface type {
 
       /** used to determine whether an integral type behaves as itself under
        * operations or as an INT.
-       * @return whetherone of {@link #CHAR}, {@link BYTE}, {@link SHORT} or
+       * @return whether one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or
        *         false otherwise. */
       default boolean isIntUnderOperation() {
         return in(this, CHAR, BYTE, SHORT);
       }
 
-      /** @return whetherone of {@link #NOTHING}, {@link #NULL} or false
+      /** @return whether one of {@link #NOTHING}, {@link #NULL} or false
        *         otherwise */
       default boolean isNoInfo() {
         return in(this, NOTHING, NULL);
@@ -435,9 +434,9 @@ public interface type {
       default implementation underBinaryOperator(final InfixExpression.Operator o, final implementation k) {
         if (o == op.PLUS2)
           return underPlus(k);
-        if (wizard.isComparison(o))
+        if (op.isComparison(o))
           return BOOLEAN;
-        if (wizard.isBitwise(o))
+        if (op.isBitwise(o))
           return underBitwiseOperation(k);
         if (o == REMAINDER)
           return underIntegersOnlyOperator(k);

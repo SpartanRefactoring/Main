@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.lisp.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -72,6 +70,6 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
   }
 
   @Override Operator operator() {
-    return op.MINUS2;
+    return il.org.spartan.spartanizer.ast.navigate.op.MINUS2;
   }
 }

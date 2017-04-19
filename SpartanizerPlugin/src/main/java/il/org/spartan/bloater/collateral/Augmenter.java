@@ -56,7 +56,7 @@ public class Augmenter implements Application {
    * @return selection as list of lists of statements */
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
     final List<List<Statement>> $ = new ArrayList<>();
-    Range r = Ranger.make(s);
+    final Range r = Ranger.make(s);
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Block b) {

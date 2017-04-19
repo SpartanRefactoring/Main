@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.plugin;
 import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.utils.fault.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 import java.util.List;
 
@@ -444,7 +442,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private ICompilationUnit iCompilationUnit;
   private IMarker marker;
   private String name;
-  private IProgressMonitor progressMonitor = op.nullProgressMonitor;
+  private IProgressMonitor progressMonitor = wizard.nullProgressMonitor;
   private ITextSelection selection;
   private int totalTips;
 }

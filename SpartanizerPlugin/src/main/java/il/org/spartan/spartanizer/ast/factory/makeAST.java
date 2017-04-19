@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import nano.ly.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
@@ -26,7 +25,7 @@ public enum makeAST {
     }
 
     @Override public CompilationUnit from(final IFile ¢) {
-      return (CompilationUnit) make.COMPILATION_UNIT.parser(¢).createAST(op.nullProgressMonitor);
+      return (CompilationUnit) make.COMPILATION_UNIT.parser(¢).createAST(wizard.nullProgressMonitor);
     }
 
     @Override public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
@@ -37,7 +36,7 @@ public enum makeAST {
       final char[] charArray = ¢.toCharArray();
       final ASTParser $ = wizard.parser(ASTParser.K_COMPILATION_UNIT);
       $.setSource(charArray);
-      final ASTNode createAST = $.createAST(op.nullProgressMonitor);
+      final ASTNode createAST = $.createAST(wizard.nullProgressMonitor);
       return (CompilationUnit) createAST;
     }
   },
@@ -48,7 +47,7 @@ public enum makeAST {
     }
 
     @Override public Expression from(final IFile ¢) {
-      return (Expression) make.EXPRESSION.parser(¢).createAST(op.nullProgressMonitor);
+      return (Expression) make.EXPRESSION.parser(¢).createAST(wizard.nullProgressMonitor);
     }
 
     @Override public Expression from(final IMarker m, final IProgressMonitor pm) {
@@ -56,7 +55,7 @@ public enum makeAST {
     }
 
     @Override public Expression from(final String ¢) {
-      return (Expression) makeParser(¢).createAST(op.nullProgressMonitor);
+      return (Expression) makeParser(¢).createAST(wizard.nullProgressMonitor);
     }
   },
   /** Constant used in order to get the source as a sequence of sideEffects. */
@@ -132,7 +131,7 @@ public enum makeAST {
   /** @param function IFile
    * @return ASTNode */
   public ASTNode from(final IFile ¢) {
-    return make.from(this).parser(¢).createAST(op.nullProgressMonitor);
+    return make.from(this).parser(¢).createAST(wizard.nullProgressMonitor);
   }
 
   /** IMarker, SubProgressMonitor -> ASTNode converter
@@ -147,7 +146,7 @@ public enum makeAST {
    * @param s String
    * @return ASTNode */
   public ASTNode from(final String ¢) {
-    return makeParser(¢).createAST(op.nullProgressMonitor);
+    return makeParser(¢).createAST(wizard.nullProgressMonitor);
   }
 
   /** Creates a no-binding parser for a given text

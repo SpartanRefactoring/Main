@@ -1,6 +1,8 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -149,5 +151,42 @@ public enum compute {
       }
     }.map(x);
     return $ != null ? $ : an.empty.list();
+  }
+
+  public static List<Statement> decompose(final Expression x) {
+    return new ASTMapReducer<List<Statement>>() {
+      @Override public List<Statement> reduce() {
+        return new ArrayList<>();
+      }
+
+      @Override public List<Statement> reduce(final List<Statement> $, final List<Statement> ss) {
+        $.addAll(ss);
+        return $;
+      }
+
+      @Override protected List<Statement> map(final Assignment ¢) {
+        return wizard.listMe(¢);
+      }
+
+      @Override protected List<Statement> map(final ClassInstanceCreation ¢) {
+        return wizard.listMe(¢);
+      }
+
+      @Override protected List<Statement> map(final MethodInvocation ¢) {
+        return wizard.listMe(¢);
+      }
+
+      @Override protected List<Statement> map(final PostfixExpression ¢) {
+        return wizard.listMe(¢);
+      }
+
+      @Override protected List<Statement> map(final PrefixExpression ¢) {
+        return iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? wizard.listMe(¢) : reduce();
+      }
+
+      @Override protected List<Statement> map(final SuperMethodInvocation ¢) {
+        return wizard.listMe(¢);
+      }
+    }.map(x);
   }
 }

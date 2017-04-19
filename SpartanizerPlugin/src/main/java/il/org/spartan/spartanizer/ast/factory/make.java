@@ -23,7 +23,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -94,7 +93,7 @@ public enum make {
     }
 
     private boolean noParenthesisRequiredIn(final ASTNode host) {
-      return precedence.greater(host, inner) || precedence.equal(host, inner) && !wizard.nonAssociative(host);
+      return precedence.greater(host, inner) || precedence.equal(host, inner) && !op.nonAssociative(host);
     }
 
     private ParenthesizedExpression parenthesize(final Expression ¢) {
@@ -131,7 +130,7 @@ public enum make {
 
   public static Expression assignmentAsExpression(final Assignment ¢) {
     final Operator $ = ¢.getOperator();
-    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(wizard.assign2infix($));
+    return $ == ASSIGN ? copy.of(step.from(¢)) : subject.pair(step.to(¢), step.from(¢)).to(op.assign2infix($));
   }
 
   /** Converts a string into an AST, depending on it's form, as determined
@@ -158,7 +157,7 @@ public enum make {
             ASTParser.K_COMPILATION_UNIT)) {
           final ASTParser p = wizard.parser(guess);
           p.setSource(javaSnippet.toCharArray());
-          final ASTNode $ = p.createAST(op.nullProgressMonitor);
+          final ASTNode $ = p.createAST(wizard.nullProgressMonitor);
           if (wizard.valid($))
             return $;
         }
@@ -184,7 +183,7 @@ public enum make {
   public static InfixExpression conjugate(final InfixExpression ¢) {
     if (¢.hasExtendedOperands())
       throw new IllegalArgumentException(¢ + ": flipping undefined for an expression with extra operands ");
-    return subject.pair(right(¢), left(¢)).to(wizard.conjugate(¢.getOperator()));
+    return subject.pair(right(¢), left(¢)).to(op.conjugate(¢.getOperator()));
   }
 
   public static EmptyStatement emptyStatement(final ASTNode ¢) {

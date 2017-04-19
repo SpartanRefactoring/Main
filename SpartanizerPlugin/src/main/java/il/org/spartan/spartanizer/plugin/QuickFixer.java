@@ -86,7 +86,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
 
         @Override public void run(final IMarker m) {
           try {
-            new SingleTipperApplicator().go(op.nullProgressMonitor, m, t);
+            new SingleTipperApplicator().go(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException ¢) {
             note.bug(this, ¢);
           }
@@ -130,7 +130,7 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
 
         @Override public void run(final IMarker m) {
           try {
-            disabler.deactivate(op.nullProgressMonitor, m, t);
+            disabler.deactivate(nullProgressMonitor, m, t);
           } catch (IllegalArgumentException | CoreException ¢) {
             note.bug(this, ¢);
           }

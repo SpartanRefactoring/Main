@@ -117,18 +117,18 @@ public final class izTest {
   }
 
   @Test public void nonAssociative() {
-    final boolean b = wizard.nonAssociative(e("1"));
+    final boolean b = op.nonAssociative(e("1"));
     assert !b;
-    final boolean b1 = wizard.nonAssociative(e("-1"));
+    final boolean b1 = op.nonAssociative(e("-1"));
     assert !b1;
-    final boolean b2 = wizard.nonAssociative(e("-1+2"));
+    final boolean b2 = op.nonAssociative(e("-1+2"));
     assert !b2;
-    final boolean b3 = wizard.nonAssociative(e("1+2"));
+    final boolean b3 = op.nonAssociative(e("1+2"));
     assert !b3;
-    assert wizard.nonAssociative(e("2-1"));
-    assert wizard.nonAssociative(e("2/1"));
-    assert wizard.nonAssociative(e("2%1"));
-    assert !wizard.nonAssociative(e("2*1"));
+    assert op.nonAssociative(e("2-1"));
+    assert op.nonAssociative(e("2/1"));
+    assert op.nonAssociative(e("2%1"));
+    assert !op.nonAssociative(e("2*1"));
   }
 
   @Test public void numericLiteralFalse1() {
