@@ -38,11 +38,11 @@ public interface English {
 
     String getIng();
   }
+
   String DOUBLE_FORMAT = "0.00";
   String SEPARATOR = ", ";
   String TRIM_SUFFIX = "...";
   int TRIM_THRESHOLD = 50;
-
   /** Error string, replacing null/error value. */
   String UNKNOWN = "???";
 

@@ -149,7 +149,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     return this;
   }
 
-  public Applicator restrictTo(Class<? extends Tipper<? extends ASTNode>> tipperClass) {
+  public Applicator restrictTo(final Class<? extends Tipper<? extends ASTNode>> tipperClass) {
     return restrictTo(Tippers.cache.TipperObjectByClassCache.get(tipperClass));
   }
 
@@ -165,7 +165,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
         .defaultRunAction()//
         .defaultListenerSilent()//
         .fewPasses()//
-        //.defaultSelection()// We don't want this here --or
+        // .defaultSelection()// We don't want this here --or
         .defaultOperationName();
   }
 

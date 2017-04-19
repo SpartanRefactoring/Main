@@ -75,33 +75,34 @@ public class Version300 {
   interface Replace extends Find {
     void replace();
   }
+
   public Replace getXxx() {
     return new Replace() {
-    {
-      andAlso(() -> {/**/});
-      andIs(() -> S(1), () -> {
-        if (B(1))
+      {
+        andAlso(() -> {/**/});
+        andIs(() -> S(1), () -> {
+          if (B(1))
+            S(1);
+          else if (B(2))
+            S(new Object());
+        });
+      }
+
+      @Override public void find() {
+        if (B(0))
           S(1);
-        else if (B(2))
-          S(new Object());
-      });
-    }
+        else
+          S(1);
+      }
 
-    @Override public void find() {
-      if (B(0))
-        S(1);
-      else
-        S(1);
-    }
-
-    @Override public void replace() {
-      if (B(0))
-        S();
-      else
-        S(1);
-    }
-  };
-    }
+      @Override public void replace() {
+        if (B(0))
+          S();
+        else
+          S(1);
+      }
+    };
+  }
 
   @Test public void abcd() {
     trimminKof("a = !(b ? c : d)") //
@@ -419,5 +420,4 @@ public class Version300 {
     statements($).addAll(wizard.decompose(¢));
     return $;
   }
-
 }

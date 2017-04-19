@@ -41,8 +41,8 @@ public class Issue1146 extends TipperTest<VariableDeclarationFragment> {
   }
 
   /** an example of the difference between TipperTest's trimmingOf and
-   * TestUtilsSpartanizer trimmingOf. {@link LocalInitializedUnusedRemove} is used
-   * here */
+   * TestUtilsSpartanizer trimmingOf. {@link LocalInitializedUnusedRemove} is
+   * used here */
   @Test public void c2() {
     TestsUtilsSpartanizer.trimminKof("int x = 1, y = x; ++x;")//
         .gives("int x = 1; ++x;")//
@@ -53,12 +53,12 @@ public class Issue1146 extends TipperTest<VariableDeclarationFragment> {
     trimmingOf("int x = 1; ++x;")//
         .givesEither("int x = 2;", "int x = 1+1;", "", null);
   }
-  
-  //issue #1125
+
+  // issue #1125
   @Test public void e() {
     TestsUtilsSpartanizer.trimminKof("int $ = f(x);++$;return $;")//
-    .using(tipper(),new PrefixIncrementDecrementReturn())//
-    .gives("int $ = f(x) + 1;return $;")//
+        .using(tipper(), new PrefixIncrementDecrementReturn())//
+        .gives("int $ = f(x) + 1;return $;")//
     ;
   }
 }

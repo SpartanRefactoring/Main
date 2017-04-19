@@ -136,6 +136,7 @@ public class range {
   public static AfterTo to(final int to) {
     return makeTo(to).new AfterTo();
   }
+
   private static range makeFrom(final int ¢) {
     return new range() {
       {
@@ -143,6 +144,7 @@ public class range {
       }
     };
   }
+
   private static range makeTo(final int ¢) {
     return new range() {
       {
@@ -150,18 +152,16 @@ public class range {
       }
     };
   }
+
   static Infinite infiniteFrom(final int ¢, final int ¢2) {
     final Infinite $ = makeFrom(¢).new Infinite().infiniteRange();
     $.step(¢2);
     return $;
   }
+
   int from;
-
   boolean inclusive;
-
   boolean infinite;
-
   int step = 1;
-
   int to = -1;
 }

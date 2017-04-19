@@ -10,8 +10,8 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.note;
 
-/** __ this class you can spartanize a directory easly. Or you can extends
- * this class and configure it to fit to your own needs.
+/** __ this class you can spartanize a directory easly. Or you can extends this
+ * class and configure it to fit to your own needs.
  * @author oran1248
  * @since 2017-04-11 */
 public class GeneralCmdSpartanizer {
@@ -30,7 +30,7 @@ public class GeneralCmdSpartanizer {
     /**/
   }
 
-  @SuppressWarnings("static-method") protected boolean spartanize(@SuppressWarnings("unused") File __) {
+  @SuppressWarnings("static-method") protected boolean spartanize(@SuppressWarnings("unused") final File __) {
     return true;
   }
 
@@ -38,19 +38,19 @@ public class GeneralCmdSpartanizer {
     return new ASTVisitor() {/**/};
   }
 
-  protected String perform(String fileContent) {
+  protected String perform(final String fileContent) {
     return fixedPoint(fileContent);
   }
 
-  protected void analyze(@SuppressWarnings("unused") String before, String after) {
+  protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
     try {
       FileUtils.writeToFile(current().getAbsolutePath(), after);
-    } catch (FileNotFoundException ¢) {
+    } catch (final FileNotFoundException ¢) {
       note.io(¢);
     }
   }
 
-  public final void go(String dirPath) {
+  public final void go(final String dirPath) {
     setUp();
     new ASTInFilesVisitor(new String[] { dirPath }) {
       @Override protected void visit(final File f) {
@@ -61,7 +61,7 @@ public class GeneralCmdSpartanizer {
         try {
           beforeChange = FileUtils.read(f);
           analyze(beforeChange, perform(beforeChange));
-        } catch (IOException ¢) {
+        } catch (final IOException ¢) {
           note.io(¢);
         }
       }
