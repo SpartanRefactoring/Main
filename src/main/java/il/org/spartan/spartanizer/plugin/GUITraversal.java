@@ -4,7 +4,6 @@ import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.utils.fault.*;
 
 import java.util.*;
-import java.util.List;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -23,6 +22,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.traversal.*;
+import il.org.spartan.utils.*;
 import nano.ly.*;
 
 /** base class for all GUI applicators contains common functionality. The class
@@ -165,10 +165,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return progressMonitor;
   }
 
-  public ITextSelection getSelection() {
-    return selection;
-  }
-
   public int go() {
     getProgressMonitor().beginTask("Creating change for " + compilationUnitName(), IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = textFileChange();
@@ -202,22 +198,11 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return self();
   }
 
-  /** Determines if the node is outside of the selected text.
-   * @return whether the node is not inside selection. If there is no selection
-   *         at all will return false. */
-  public boolean isNotSelected(final ASTNode ¢) {
-    return !isSelected(¢.getStartPosition());
-  }
-
-  public boolean isTextSelected() {
-    return selection != null && !selection.isEmpty();
-  }
 
   public int run(final ICompilationUnit $, final ITextSelection s) {
     try {
       iCompilationUnit($);
       setSelection(s);
-      traversal.setRange(Ranger.make(getSelection()));
       getProgressMonitor().beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
       final TextFileChange textChange = new TextFileChange($.getElementName(), (IFile) $.getResource());
       textChange.setTextType("java");
@@ -269,7 +254,13 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   }
 
   public GUITraversal setSelection(final ITextSelection ¢) {
-    return self(() -> selection = ¢ != null && ¢.getLength() > 0 && !¢.isEmpty() ? ¢ : null);
+    return setSelection(Ranger.make(¢));
+  }
+  
+
+  private GUITraversal setSelection(Range r) {
+    traversal.setRange(r); 
+    return this;
   }
 
   public void setSelection(final TrackerSelection ¢) {
@@ -327,11 +318,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   }
 
   private Collection<ICompilationUnit> getUnits() throws JavaModelException {
-    if (!isTextSelected())
-      return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(getProgressMonitor()));
-    final List<ICompilationUnit> $ = new ArrayList<>();
-    $.add(iCompilationUnit);
-    return $;
+   return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(getProgressMonitor()));
   }
 
   private TextFileChange init(final WrappedCompilationUnit ¢) {
@@ -351,17 +338,11 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return new RefactoringStatus();
   }
 
-  private boolean isSelected(final int offset) {
-    return isTextSelected() && offset >= selection.getOffset() && offset < selection.getLength() + selection.getOffset();
-  }
 
   private ASTRewrite go(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
-    if (selection != null)
-      traversal.setRange(Ranger.make(selection));
     final ASTRewrite $ = traversal.go(¢);
-    // traversal.pop(); // TODO Yossi: pop without push
     getProgressMonitor().done();
     return $;
   }
@@ -421,13 +402,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return iCompilationUnit.getElementName();
   }
 
-  /** @param m marker which represents the range to apply the tipper within
-   * @param n the node which needs to be within the range of {@code m}
-   * @return whether the node is within range */
-  public boolean inRange(final IMarker m, final ASTNode n) {
-    return m != null ? !Ranger.disjoint(n, m) : !isTextSelected() || !isNotSelected(n);
-  }
-
   public final Traversal traversal = new TraversalImplementation().push((TraversalTickingTapper) λ -> getProgressMonitor().worked(λ))
       .push(new TraversalTapper() {
         @Override public void begin() {
@@ -443,6 +417,5 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private IMarker marker;
   private String name;
   private IProgressMonitor progressMonitor = wizard.nullProgressMonitor;
-  private ITextSelection selection;
   private int totalTips;
 }
