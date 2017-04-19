@@ -779,7 +779,7 @@ public interface wizard {
   }
 
   static Range range(final ITextSelection ¢) {
-    return new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength());
+    return ¢ == null? null: new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength());
   }
 
   /** replaces an ASTNode with another
