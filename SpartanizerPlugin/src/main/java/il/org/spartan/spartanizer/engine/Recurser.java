@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import nano.ly.*;
 
 /** The Recurser gives programmer the option to scan the AST while doing
  * operations over the nodes. the recurser currently offers pre-visit and
@@ -60,8 +61,7 @@ public final class Recurser<T> {
     try {
       return marchingList($);
     } catch (final NullPointerException ¢) {
-      assert ¢ != null;
-      return null;
+      return note.bug(¢);
     }
   }
 

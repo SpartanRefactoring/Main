@@ -111,7 +111,7 @@ public final class Builder extends IncrementalProjectBuilder {
         return !m.isCanceled() && !isInterrupted();
       });
     } catch (final CoreException ¢) {
-      note.cancel(this, ¢);
+      note.bug(this, ¢);
     }
   }
 

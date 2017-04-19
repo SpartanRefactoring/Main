@@ -58,8 +58,8 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
           .in(make.ast(WrapIntoComilationUnit.Method.off(nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
       Count.after(after);
       m.after = after;
-    } catch (final AssertionError __) {
-      ___.unused(__);
+    } catch (final AssertionError x) {
+      note.bug(x);
     }
     return true;
   }
@@ -164,8 +164,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     try {
       return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
-      note.io(¢, "opening report file");
-      return null;
+      return note.io(¢, "opening report file");
     }
   }
 

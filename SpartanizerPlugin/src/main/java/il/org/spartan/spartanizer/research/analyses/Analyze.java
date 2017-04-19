@@ -63,8 +63,7 @@ public enum Analyze {
     try {
       return new CSVStatistics($, "property");
     } catch (final IOException ¢) {
-      note.io(¢, "opening report file");
-      return null;
+      return note.io(¢, "opening report file");
     }
   }
 

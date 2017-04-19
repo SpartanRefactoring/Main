@@ -58,12 +58,12 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
       definites.logNPInfo(n, np);
   }
 
-  @Override public boolean visit(final MethodDeclaration ¢) {
-    if (!excludeMethod(¢))
+  @Override public boolean visit(final MethodDeclaration d) {
+    if (!excludeMethod(d))
       try {
-        log(spartanalyze(¢ + ""));
-      } catch (final MalformedTreeException | AssertionError | IllegalArgumentException x) {
-        note.bug(x);
+        log(spartanalyze(d + ""));
+      } catch (final MalformedTreeException | AssertionError | IllegalArgumentException ¢) {
+        note.bug(¢);
       }
     return false;
   }
