@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 
 /** Unit tests for {@link SequencerNotLastInBlock}
  * @author Yossi Gil

@@ -27,7 +27,7 @@ import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tippers.Names.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 

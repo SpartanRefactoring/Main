@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.bloater.SingleFlater.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 
 /** a wrapper for the original tippers configuration
  * @author Raviv Rachmiel

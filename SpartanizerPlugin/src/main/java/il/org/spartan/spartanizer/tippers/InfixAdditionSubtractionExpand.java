@@ -20,7 +20,7 @@ public final class InfixAdditionSubtractionExpand extends ReplaceCurrentNode<Inf
     if (TermsCollector.isLeafTerm(¢))
       return null;
     final Expression $ = TermsExpander.simplify(¢);
-    return !wizard.same2($, ¢) ? $ : null;
+    return !wizard.eq2($, ¢) ? $ : null;
   }
 
   @Override @SuppressWarnings("unused") protected boolean prerequisite(final InfixExpression __) {

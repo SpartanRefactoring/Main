@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.trimming;
+package il.org.spartan.spartanizer.traversal;
 
 import static java.util.stream.Collectors.*;
 
@@ -87,7 +87,7 @@ public abstract class Traversal implements Selfie<Traversal> {
     return tipper;
   }
 
-  public abstract ASTVisitor tipsCollector();
+  protected abstract ASTVisitor tipsCollector();
 
   public Traversal useProjectPreferences() {
     useProjectPreferences = true;

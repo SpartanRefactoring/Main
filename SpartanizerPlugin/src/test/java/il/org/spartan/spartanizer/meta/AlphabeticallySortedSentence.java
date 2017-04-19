@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 
 /** Represents a test case, in conjunction with {@link ReflectiveTester}.

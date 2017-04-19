@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 

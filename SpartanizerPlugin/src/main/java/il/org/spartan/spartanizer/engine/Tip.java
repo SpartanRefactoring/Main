@@ -18,23 +18,10 @@ import nano.ly.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public abstract class Tip {
-  @UnderConstruction("yogi -- 10/04/2017") public static boolean overlap(final Range r1, final Range r2) {
-    if (r1 == null || r2 == null)
-      return false;
-    if (r1 == r2)
-      return true;
-    if (r1.from < r2.from)
-      return r1.to > r2.from;
-    if (r2.from < r1.from)
-      return r2.to > r1.from;
-    assert r1.from == r2.from;
-    return true;
-  }
-
   private static Range range(final Range r, final ASTNode... ns) {
     Range $ = r;
     for (final ASTNode ¢ : ns)
-      $ = $.merge(wizard.range(¢));
+      $ = $.merge(il.org.spartan.spartanizer.ast.navigate.Ranger.make(¢));
     return $;
   }
 
@@ -42,7 +29,7 @@ public abstract class Tip {
       final String description, //
       final Class<? extends Tipper<N1>> tipperClass, //
       final N2 center) {
-    this(description, tipperClass, containing.compilationUnit(center), wizard.range(center));
+    this(description, tipperClass, containing.compilationUnit(center), il.org.spartan.spartanizer.ast.navigate.Ranger.make(center));
   }
 
   public <N extends ASTNode> Tip(final String description, final Class<? extends Tipper<N>> tipperClass, final CompilationUnit u,

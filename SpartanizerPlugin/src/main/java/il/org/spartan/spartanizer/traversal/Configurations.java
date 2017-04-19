@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.trimming;
+package il.org.spartan.spartanizer.traversal;
 
 import static java.util.stream.Collectors.*;
 
