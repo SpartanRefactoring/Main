@@ -18,11 +18,10 @@ class FolderSpartanaizer {
       @Override protected void visit(final File f) {
         try {
           FileUtils.writeToFile(f.getAbsolutePath(), new NoBrainDamagedTippersSpartanizer().fixedPoint(FileUtils.read(f)));
-        } catch (final Exception x) {
-          note.bug(x);
+        } catch (final Exception ¢) {
+          note.bug(¢);
         }
       }
     }.fire(new ASTVisitor() {/**/});
-    System.exit(0); // success
   }
 }
