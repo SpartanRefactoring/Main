@@ -4,8 +4,6 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -50,7 +48,7 @@ public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement
     final Expression to = to(a1);
     if (!wizard.eq(to, to(a2)) || !sideEffects.free(to))
       return null;
-    $.replace(from(a1), subject.operands(from(a1), from(a2)).to(assign2infix(o)), g);
+    $.replace(from(a1), subject.operands(from(a1), from(a2)).to(op.assign2infix(o)), g);
     $.remove(nextStatement, g);
     return $;
   }

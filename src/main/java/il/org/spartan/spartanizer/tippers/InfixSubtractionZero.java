@@ -6,8 +6,6 @@ import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.lisp.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.hop.*;
 
 import java.util.*;
@@ -47,7 +45,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     if ($.size() == 1)
       return !iz.literal0(first) ? first : make.minus(first($));
     assert $.size() >= 2;
-    return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(op.MINUS2);
+    return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
 
   @Override public String description(final InfixExpression ¢) {

@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -7,7 +9,6 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -77,7 +78,7 @@ public class fluentTraverasalApplication extends TraversalImplementation {
   /** creates an ASTRewrite which contains the changes
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite() {
-    return createRewrite(op.nullProgressMonitor);
+    return createRewrite(nullProgressMonitor);
   }
 
   /** creates an ASTRewrite which contains the changes

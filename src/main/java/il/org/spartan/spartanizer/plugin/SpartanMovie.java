@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.plugin;
 
+import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.List;
@@ -14,7 +16,6 @@ import org.eclipse.ui.ide.*;
 import org.eclipse.ui.progress.*;
 
 import il.org.spartan.plugin.old.*;
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import nano.ly.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
@@ -102,7 +103,7 @@ public class SpartanMovie extends AbstractHandler {
 
   private static List<ICompilationUnit> getCompilationUnits() {
     try {
-      return eclipse.compilationUnits(eclipse.currentCompilationUnit(), op.nullProgressMonitor);
+      return eclipse.compilationUnits(eclipse.currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException ¢) {
       note.bug(¢);
       return new ArrayList<>();

@@ -41,7 +41,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
-    final List<Expression> es = hop.operands(x), $ = !nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
+    final List<Expression> es = hop.operands(x), $ = !op.nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
     return $ == null ? null : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(operator(x));
   }
 
@@ -49,7 +49,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
     if (iz.arrayAccess(to) || !sideEffects.free(to))
       return null;
     final Expression $ = reduce(from, to);
-    return $ == null ? null : subject.pair(to, $).to(infix2assign(operator(from)));
+    return $ == null ? null : subject.pair(to, $).to(op.infix2assign(operator(from)));
   }
 
   @Override public String description(final Assignment ¢) {

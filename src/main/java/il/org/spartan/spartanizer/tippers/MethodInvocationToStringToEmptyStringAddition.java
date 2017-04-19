@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -29,7 +27,7 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
     final Expression receiver = receiver(i);
     if (receiver == null)
       return null;
-    final InfixExpression $ = subject.pair(make.emptyString(i), receiver).to(op.PLUS2);
+    final InfixExpression $ = subject.pair(make.emptyString(i), receiver).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
     return !iz.methodInvocation(parent(i)) ? $ : make.parethesized($);
   }
 }
