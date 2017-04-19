@@ -96,7 +96,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     try {
       u.accept(this);
     } catch (final NullPointerException ¢) {
-      ¢.printStackTrace();
+      note.bug(this,¢);
     }
   }
 
