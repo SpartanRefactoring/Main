@@ -18,7 +18,11 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 
-/** The interface of * {@link TraversalImplementation}
+/** The interface of * {@link TraversalImplementation} The search is restricted
+ * by the {@link #range} field. If the field is null, no restriction. Otherwise,
+ * search only within the tree range specified by this field.
+ * <ol>
+ * <li>
  * @author Yossi Gil
  * @since 2015/07/10 */
 public abstract class Traversal implements Selfie<Traversal> {
@@ -184,27 +188,18 @@ public abstract class Traversal implements Selfie<Traversal> {
   }
 
   public abstract class __ {
-    public ASTRewrite rewrite() {
-      return self().getRewrite();
-    }
 
-    // @fomatter:off
-    public Traversal self() {
-      return Traversal.this;
-    }
-
-    protected Tip auxiliaryTip() {
-      return self().getAuxiliaryTip();
-    }
-
+    // @formatter:off
+    protected Tip auxiliaryTip() { return self().getAuxiliaryTip(); }
+    protected ASTRewrite rewrite() { return self().getRewrite(); }
+    protected Traversal self() { return Traversal.this.self(); }
+    protected Tip tip() { return self().getTip(); }
     // @fomatter:on
+
     protected String node() {
       final ASTNode $ = self().getNode();
       return String.format("%s(%s)", English.name($), Trivia.gist($));
     }
 
-    protected Tip tip() {
-      return self().getTip();
-    }
   }
 }
