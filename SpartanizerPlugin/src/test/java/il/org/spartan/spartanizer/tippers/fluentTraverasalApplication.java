@@ -182,7 +182,7 @@ public class fluentTraverasalApplication extends TraversalImplementation {
     if (difference != null)
       azzert.fail(//
           "Should not change" //
-              + "\n With guessed context of " //
+              + "\n __ guessed context of " //
               + guessedContext //
               + "\n this '" + codeFragment + "' does not stay." //
               + "\n It converts instead to  '" + difference + "'" //
