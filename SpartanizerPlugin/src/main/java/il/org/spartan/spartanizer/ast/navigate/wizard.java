@@ -22,14 +22,12 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.compiler.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -207,11 +205,6 @@ public interface wizard {
     }
   };
   List<Predicate<Modifier>> visibilityModifiers = as.list(ModifierRedundant.isPublic, ModifierRedundant.isPrivate, ModifierRedundant.isProtected);
-
-  static Range range(final ASTNode ¢) {
-    final int $ = ¢.getStartPosition();
-    return new Range($, $ + ¢.getLength());
-  }
 
   static Expression addParenthesisIfNeeded(final Expression x) {
     final AST a = x.getAST();
@@ -403,22 +396,6 @@ public interface wizard {
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
 
-  static boolean disjoint(final ASTNode n, final IMarker m) {
-    return disjoint(n, range(m));
-  }
-
-  static boolean disjoint(final ASTNode n, final Range r) {
-    return r != null && (from(n) >= r.to || to(n) <= r.from);
-  }
-
-  static boolean contained(final ASTNode n, final Range r) {
-    return r != null && from(n) >= r.from && to(n) <= r.to;
-  }
-
-  static boolean contained(final ASTNode n, final IMarker m) {
-    return contained(n, range(m));
-  }
-
   /** Determines if we can be certain that a {@link Statement} ends with a
    * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
    * {@link BreakStatement}, {@link ContinueStatement}).
@@ -507,19 +484,6 @@ public interface wizard {
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
 
-  static int from(final ASTNode ¢) {
-    return ¢.getStartPosition();
-  }
-
-  static int from(final IMarker $) {
-    try {
-      return ((Integer) $.getAttribute(IMarker.CHAR_START)).intValue();
-    } catch (CoreException | ClassCastException ¢) {
-      note.bug(¢);
-      return Integer.MIN_VALUE;
-    }
-  }
-
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
     final Collection<MethodDeclaration> $ = new ArrayList<>();
     // noinspection SameReturnValue
@@ -561,16 +525,6 @@ public interface wizard {
     return $;
   }
 
-  /** @param n JD
-   * @param s JD
-   * @return true iff node is inside selection */
-  static boolean inRange(final ASTNode n, final ITextSelection s) {
-    if (n == null || s == null)
-      return false;
-    final int $ = from(n);
-    return $ >= s.getOffset() && $ < s.getLength() + s.getOffset();
-  }
-
   static String intToClassName(final int $) {
     try {
       return ASTNode.nodeClassForType($).getSimpleName();
@@ -583,7 +537,7 @@ public interface wizard {
    * @return whetherone of {@link #InfixExpression.Operator.XOR},
    *         {@link #InfixExpression.Operator.OR},
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
-  static boolean isBitwiseOperator(final InfixExpression.Operator ¢) {
+  static boolean isBitwise(final InfixExpression.Operator ¢) {
     return in(¢, XOR, OR, AND);
   }
 
@@ -774,14 +728,6 @@ public interface wizard {
     return Stream.of(v).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
 
-  static Range range(final IMarker ¢) {
-    return ¢ == null ? null : new Range(from(¢), to(¢));
-  }
-
-  static Range range(final ITextSelection ¢) {
-    return ¢ == null? null: new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength());
-  }
-
   /** replaces an ASTNode with another
    * @param n
    * @param with */
@@ -793,7 +739,7 @@ public interface wizard {
    * @param ¢ string to compare all names to
    * @param xs SimplesNames to compare by their string value to cmpTo
    * @return whether all names are the same (string wise) or false otherwise */
-  static boolean same(final Expression x, final Expression... xs) {
+  static boolean eq(final Expression x, final Expression... xs) {
     return Stream.of(xs).allMatch(λ -> eq(λ, x));
   }
 
@@ -802,7 +748,7 @@ public interface wizard {
    * @param ns1 first list to compare
    * @param ns2 second list to compare
    * @return are the lists equal string-wise */
-  @SuppressWarnings("boxing") static <N extends ASTNode> boolean same(final List<N> ns1, final List<N> ns2) {
+  @SuppressWarnings("boxing") static <N extends ASTNode> boolean eq(final List<N> ns1, final List<N> ns2) {
     return ns1 == ns2 || ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(λ -> eq(ns1.get(λ), ns2.get(λ)));
   }
 
@@ -817,7 +763,7 @@ public interface wizard {
    * @return {@code true} if the parameters are the same.
    * @author matteo
    * @since 15/3/2017 */
-  static boolean same2(final ASTNode n1, final ASTNode n2) {
+  static boolean eq2(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType()
         && tide.clean(Trivia.cleanForm(n1) + "").equals(tide.clean(Trivia.cleanForm(n2) + ""));
   }
@@ -864,19 +810,6 @@ public interface wizard {
     assert n1 == n2;
     final IfStatement $ = make.invert(s);
     return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(make.invert($));
-  }
-
-  static int to(final ASTNode ¢) {
-    return ¢.getLength() + from(¢);
-  }
-
-  static int to(final IMarker $) {
-    try {
-      return ((Integer) $.getAttribute(IMarker.CHAR_END)).intValue();
-    } catch (CoreException | ClassCastException ¢) {
-      note.bug(¢);
-      return Integer.MAX_VALUE;
-    }
   }
 
   static boolean valid(final ASTNode ¢) {

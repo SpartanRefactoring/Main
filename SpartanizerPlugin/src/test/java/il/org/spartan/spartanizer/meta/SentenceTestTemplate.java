@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.testing.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.spartanizer.utils.*;
 
 /** A demo on testing with a {!@link {@link MetaFixture}
