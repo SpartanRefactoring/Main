@@ -1,8 +1,4 @@
-/* TODO Yossi Gil LocalVariableInitializedStatement description
- *
- * @author Yossi Gil
- *
- * @since Sep 7, 2016 */
+
 package il.org.spartan.spartanizer.utils;
 
 import java.util.*;

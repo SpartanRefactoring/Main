@@ -1,8 +1,3 @@
-/* TODO Yossi Gil LocalVariableInitializedStatement description
- *
- * @author Yossi Gil
- *
- * @since Sep 26, 2016 */
 package il.org.spartan.spartanizer.tipping;
 
 public abstract class TipperFailure extends Exception {
