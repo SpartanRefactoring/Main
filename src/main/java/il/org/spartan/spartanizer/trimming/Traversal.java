@@ -13,25 +13,41 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 
-/** A smorgasboard containing lots of stuff factored out of
- * {@link TraversalImplementation}
- * <ol>
- * <li>Configuration: sometime you wish to disable some of the tippers.
- * </ol>
+/** The interface of * {@link TraversalImplementation}
  * @author Yossi Gil
  * @since 2015/07/10 */
 public abstract class Traversal implements Selfie<Traversal> {
-  public Tip auxiliaryTip() {
-    return auxiliaryTip;
-  }
+  public final Configuration configuration = Configurations.allClone();
+  public final TraversalTappers notify = new TraversalTappers()//
+      .push(new TraversalMonitor(this)) //
+      .push(new TraversalTapper() {
+        @Override public void begin() {
+          rewriteCount.clear();
+        }
 
-  public void clearTipper() {
-    tipper = null;
-  }
+        @Override public void tipRewrite() {
+          rewriteCount.step();
+        }
+      });
+  public final Int rewriteCount = new Int();
+  private Tip otherTip;
+  private CompilationUnit compilationUnit;
+  private TextEditGroup editGroup;
+  private Range range;
+  private Tips tips;
+  protected final Map<IProject, Configuration> configurations = new HashMap<>();
+  protected String fileName;
+  protected boolean firstAddition = true;
+  protected ASTNode node;
+  protected ASTRewrite rewrite;
+  protected Tip tip;
+  protected Tipper<?> tipper;
+  protected boolean useProjectPreferences;
 
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * tipper tips
@@ -47,22 +63,6 @@ public abstract class Traversal implements Selfie<Traversal> {
 
   public abstract ASTRewrite go(CompilationUnit u);
 
-  public TextEditGroup currentEditGroup() {
-    return currentEditGroup;
-  }
-
-  public Range getRange() {
-    return range;
-  }
-
-  public ASTRewrite getRewrite() {
-    return rewrite;
-  }
-
-  public ASTNode node() {
-    return node;
-  }
-
   public TraversalTappers pop() {
     return notify.pop();
   }
@@ -72,37 +72,16 @@ public abstract class Traversal implements Selfie<Traversal> {
     return this;
   }
 
-  public ASTRewrite rewrite() {
-    return getRewrite();
-  }
-
   @Override public Traversal self() {
     return this;
-  }
-
-  public Tip setAuxiliaryTip(final Tip auxiliaryTip) {
-    return this.auxiliaryTip = auxiliaryTip;
-  }
-
-  public void setNode(final ASTNode currentNode) {
-    node = currentNode;
-    notify.setNode();
-  }
-
-  public Traversal setRange(final Range ¢) {
-    return self(() -> range = ¢);
   }
 
   public Traversal setRange(final ITextSelection ¢) {
     return self(() -> range = ¢ == null ? null : new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength()));
   }
 
-  public void setRewrite(final ASTRewrite currentRewrite) {
-    rewrite = currentRewrite;
-  }
-
-  public Tip tip() {
-    return tip;
+  public Traversal setRange(final Range ¢) {
+    return self(() -> range = ¢);
   }
 
   public Tipper<?> tipper() {
@@ -121,8 +100,24 @@ public abstract class Traversal implements Selfie<Traversal> {
     return true;
   }
 
+  protected void clearTipper() {
+    tipper = null;
+  }
+
   protected CompilationUnit compilationUnit() {
     return compilationUnit;
+  }
+
+  protected Tip getAuxiliaryTip() {
+    return otherTip;
+  }
+
+  protected TextEditGroup getCurrentEditGroup() {
+    return editGroup;
+  }
+
+  protected ASTNode getNode() {
+    return node;
   }
 
   /** @param u JD
@@ -150,9 +145,34 @@ public abstract class Traversal implements Selfie<Traversal> {
     return $;
   }
 
+  protected Range getRange() {
+    return range;
+  }
+
+  protected ASTRewrite getRewrite() {
+    return rewrite;
+  }
+
+  protected Tip getTip() {
+    return tip;
+  }
+
+  protected Tip setAuxiliaryTip(final Tip auxiliaryTip) {
+    return this.otherTip = auxiliaryTip;
+  }
+
   protected void setCompilationUnit(final CompilationUnit ¢) {
     fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
     notify.begin();
+  }
+
+  protected void setNode(final ASTNode currentNode) {
+    node = currentNode;
+    notify.setNode();
+  }
+
+  protected void setRewrite(final ASTRewrite currentRewrite) {
+    rewrite = currentRewrite;
   }
 
   protected void setTipper(final Tipper<?> currentTipper) {
@@ -163,36 +183,28 @@ public abstract class Traversal implements Selfie<Traversal> {
       notify.tipperAccepts();
   }
 
-  public final Int rewriteCount = new Int();
-  public final Configuration configuration = Configurations.allClone();
-  public final TraversalTappers notify = new TraversalTappers()//
-      .push(new TraversalMonitor(this)) //
-      .push(new TraversalTapper() {
-        @Override public void begin() {
-          rewriteCount.clear();
-        }
+  public abstract class __ {
+    public ASTRewrite rewrite() {
+      return self().getRewrite();
+    }
 
-        @Override public void tipRewrite() {
-          rewriteCount.step();
-        }
-      });
-  private Tip auxiliaryTip;
-  private CompilationUnit compilationUnit;
-  private TextEditGroup currentEditGroup;
-  private Range range;
-  private Tips tips;
-  protected final Map<IProject, Configuration> configurations = new HashMap<>();
-  protected String fileName;
-  protected boolean firstAddition = true;
-  protected ASTNode node;
-  protected ASTRewrite rewrite;
-  protected Tip tip;
-  protected Tipper<?> tipper;
-  protected boolean useProjectPreferences;
-
-  public abstract class With {
-    public Traversal current() {
+    // @fomatter:off
+    public Traversal self() {
       return Traversal.this;
+    }
+
+    protected Tip auxiliaryTip() {
+      return self().getAuxiliaryTip();
+    }
+
+    // @fomatter:on
+    protected String node() {
+      final ASTNode $ = self().getNode();
+      return String.format("%s(%s)", English.name($), Trivia.gist($));
+    }
+
+    protected Tip tip() {
+      return self().getTip();
     }
   }
 }
