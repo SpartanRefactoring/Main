@@ -42,6 +42,31 @@ import nano.ly.*;
  * @since 2014 */
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
+  @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
+    {
+      for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
+        add(¢);
+        add("java.lang." + ¢);
+      }
+    }
+  };
+  @SuppressWarnings({ "unchecked", "serial" }) Map<Class<? extends ASTNode>, Integer> //
+  classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
+    {
+      for (int nodeType = 1;; ++nodeType)
+        try {
+          // monitor.debug("Found node type number of " + nodeClassForType);
+          put(ASTNode.nodeClassForType(nodeType), Integer.valueOf(nodeType));
+        } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
+          // We must suffer this exception; no other way to find the first
+          // unused node type
+          break;
+        } catch (final Exception ¢) {
+          note.bug(this, ¢);
+          break;
+        }
+    }
+  };
   String[] keywords = { //
       "synchronized", //
       "instanceof", //
@@ -97,8 +122,10 @@ public interface wizard {
       "do", //
       "if", //
   };
+  Class<?>[] np = { InfixExpression.class };
+  IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
   Bool resolveBinding = Bool.valueOf(false);
-  Collection<String> valueTypes = new LinkedHashSet<String>(il.org.spartan.spartanizer.ast.navigate.wizard.boxedTypes) {
+  Collection<String> valueTypes = new LinkedHashSet<String>(boxedTypes) {
     static final long serialVersionUID = -0x134495F1CC662D60L;
     {
       for (final String ¢ : new String[] { "String" }) {
@@ -108,33 +135,6 @@ public interface wizard {
     }
   };
   List<Predicate<Modifier>> visibilityModifiers = as.list(ModifierRedundant.isPublic, ModifierRedundant.isPrivate, ModifierRedundant.isProtected);
-  IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
-  Class<?>[] np = { InfixExpression.class };
-  @SuppressWarnings({ "unchecked", "serial" }) Map<Class<? extends ASTNode>, Integer> //
-  classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
-    {
-      for (int nodeType = 1;; ++nodeType)
-        try {
-          // monitor.debug("Found node type number of " + nodeClassForType);
-          put(ASTNode.nodeClassForType(nodeType), Integer.valueOf(nodeType));
-        } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
-          // We must suffer this exception; no other way to find the first
-          // unused node type
-          break;
-        } catch (final Exception ¢) {
-          note.bug(this, ¢);
-          break;
-        }
-    }
-  };
-  @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
-    {
-      for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
-        add(¢);
-        add("java.lang." + ¢);
-      }
-    }
-  };
 
   static Expression addParenthesisIfNeeded(final Expression x) {
     final AST a = x.getAST();
