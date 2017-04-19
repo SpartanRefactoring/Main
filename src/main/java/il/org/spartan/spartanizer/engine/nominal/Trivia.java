@@ -99,4 +99,8 @@ public enum Trivia {
   public static String squeeze(final String ¢) {
     return ¢.trim().replaceAll("\\s+", " ");
   }
+
+  public static boolean same(final String s1, final String s2) {
+    return s1 == null || s2 == null || s2.equals(s1) || essence(s1).equals(essence(s2));
+  }
 }
