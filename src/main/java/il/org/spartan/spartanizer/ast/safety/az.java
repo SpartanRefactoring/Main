@@ -9,8 +9,6 @@ import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 import java.util.stream.*;
 
@@ -66,7 +64,7 @@ public enum az {
     }
 
     static NumberLiteral negativeLiteral(final PrefixExpression ¢) {
-      return operator(¢) != op.MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
+      return operator(¢) != il.org.spartan.spartanizer.ast.navigate.op.MINUS1 || !iz.numericLiteral(operand(¢)) ? null : numberLiteral(operand(¢));
     }
 
     static String token(final Expression ¢) {

@@ -39,7 +39,7 @@ public final class LocalVariableInitializedUpdateAssignment extends LocalInitial
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
-    final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(wizard.assign2infix(o));
+    final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(op.assign2infix(o));
     final InlinerWithValue i = new Inliner(name, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;

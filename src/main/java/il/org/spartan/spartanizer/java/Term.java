@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.java;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 /** An additive term, which might be either negative or positive
  * @author Yossi Gil
  * @since 2016 */
@@ -33,7 +31,7 @@ class Term {
       return expression;
     final PrefixExpression $ = expression.getAST().newPrefixExpression();
     $.setOperand(expression);
-    $.setOperator(op.MINUS1);
+    $.setOperator(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
     return $;
   }
 

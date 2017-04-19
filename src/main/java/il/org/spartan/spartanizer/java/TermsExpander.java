@@ -4,8 +4,6 @@ import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -27,11 +25,11 @@ public enum TermsExpander {
   }
 
   private static InfixExpression appendMinus(final Term ¢, final InfixExpression $) {
-    return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(op.PLUS2);
+    return ¢.negative() ? subject.append($, ¢.expression) : subject.pair($, ¢.expression).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
   }
 
   private static InfixExpression appendPlus(final Term t, final InfixExpression $) {
-    return t.positive() ? subject.append($, t.expression) : subject.pair($, t.expression).to(op.MINUS2);
+    return t.positive() ? subject.append($, t.expression) : subject.pair($, t.expression).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
 
   private static Expression base(final List<Term> ts) {
@@ -48,12 +46,13 @@ public enum TermsExpander {
 
   private static InfixExpression base(final Term t1, final Term t2) {
     if (t1.positive())
-      return subject.pair(t1.expression, t2.expression).to(t2.positive() ? op.PLUS2 : op.MINUS2);
+      return subject.pair(t1.expression, t2.expression)
+          .to(t2.positive() ? il.org.spartan.spartanizer.ast.navigate.op.PLUS2 : il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
     assert t1.negative();
     return (//
     t2.positive() ? subject.pair(t2.expression, t1.expression) : //
-        subject.pair(subject.operand(t1.expression).to(op.MINUS1), t2.expression)//
-    ).to(op.MINUS2);
+        subject.pair(subject.operand(t1.expression).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS1), t2.expression)//
+    ).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
 
   private static Expression base(final TermsCollector ¢) {
@@ -81,10 +80,10 @@ public enum TermsExpander {
     assert !ts.isEmpty();
     final Operator o = operator($);
     assert o != null;
-    assert o == op.PLUS2 || o == op.MINUS2;
+    assert o == il.org.spartan.spartanizer.ast.navigate.op.PLUS2 || o == il.org.spartan.spartanizer.ast.navigate.op.MINUS2;
     final Term first = first(ts);
     assert first != null;
-    return recurse(chop(ts), o == op.PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
+    return recurse(chop(ts), o == il.org.spartan.spartanizer.ast.navigate.op.PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
   }
 
   private static Expression step(final List<Term> ¢, final Expression $) {

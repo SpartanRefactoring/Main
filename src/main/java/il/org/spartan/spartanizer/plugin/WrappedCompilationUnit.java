@@ -46,7 +46,7 @@ public class WrappedCompilationUnit {
     if (compilationUnit == null)
       try {
         compilationUnit = (CompilationUnit) (!useBinding ? make.COMPILATION_UNIT.parser(descriptor)
-            : make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(op.nullProgressMonitor);
+            : make.COMPILATION_UNIT.parserWithBinding(descriptor)).createAST(nullProgressMonitor);
       } catch (final Throwable x) {
         note.bug(x);
       }
@@ -55,7 +55,7 @@ public class WrappedCompilationUnit {
 
   public WrappedCompilationUnit buildWithBinding() {
     if (compilationUnit == null)
-      compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(op.nullProgressMonitor);
+      compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
     return this;
   }
 
