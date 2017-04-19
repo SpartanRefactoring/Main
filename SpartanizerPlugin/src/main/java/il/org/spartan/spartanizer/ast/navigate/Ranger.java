@@ -36,7 +36,7 @@ public interface Ranger {
   }
 
   static Range make(final ITextSelection ¢) {
-    return ¢ == null ? null : new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength());
+    return ¢ == null || ¢.isEmpty() ? null : new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength());
   }
 
   static boolean disjoint(final ASTNode n, final Range r) {
