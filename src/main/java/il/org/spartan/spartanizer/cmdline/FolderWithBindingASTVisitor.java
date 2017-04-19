@@ -31,7 +31,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
       parser.setSource(u);
       collect(az.compilationUnit(parser.createAST(null)));
     } catch (final JavaModelException ¢) {
-      ¢.printStackTrace();
+      note.bug(¢);
     } catch (final IOException ¢) {
       note.io(¢, f + "");
     }
@@ -82,7 +82,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
       javaProject.close();
       javaProject.getProject().delete(true, null);
     } catch (final CoreException ¢) {
-      ¢.printStackTrace();
+      note.bug(this,¢);
     }
   }
 

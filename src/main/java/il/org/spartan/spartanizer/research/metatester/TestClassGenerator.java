@@ -9,6 +9,7 @@ import java.util.*;
 import javax.tools.*;
 
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** @author Oren Afek
  * @since 2017-04-12 **/
@@ -52,8 +53,10 @@ public interface TestClassGenerator {
     try {
       return new URLClassLoader(new URL[] { new File(generatedClassPath(testClass)).toURI().toURL() })
           .loadClass(packageName("\\.", testClass) + "." + $);
-    } catch (IOException | ClassNotFoundException ignore) {
-      ignore.printStackTrace();
+    } catch (IOException x) {
+      note.io(x);
+    } catch (ClassNotFoundException x) {
+      note.bug(x);
     }
     return Object.class;
   }

@@ -11,6 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
+import nano.ly.*;
 
 /** Generic applicator
  * @author Matteo Orru'
@@ -28,7 +29,7 @@ public class GenericApplicator {
       for (final String ¢ : ss) // NANO - but throws...
         $.add((Class<? extends ASTNode>) Class.forName("org.eclipse.jdt.core.dom." + ¢));
     } catch (final ClassNotFoundException ¢) {
-      ¢.printStackTrace();
+      note.bug(¢);
     }
     return as.list($); // useless?
   }

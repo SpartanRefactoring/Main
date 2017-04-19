@@ -108,7 +108,7 @@ public final class Application implements IApplication {
       try {
         s.nextLine();
       } catch (final Exception x) {
-        note.bug(x); 
+        note.bug(x);
       }
     }
     return $;
@@ -187,7 +187,7 @@ public final class Application implements IApplication {
       javaProject.close();
       javaProject.getProject().delete(true, null);
     } catch (final CoreException ¢) {
-      ¢.printStackTrace();
+      note.bug(this, ¢);
     }
   }
 
