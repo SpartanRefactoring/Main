@@ -85,7 +85,6 @@ public interface wizard {
       put(RIGHT_SHIFT_UNSIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED);
     }
   };
-
   @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
     {
       for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
@@ -208,6 +207,7 @@ public interface wizard {
     }
   };
   List<Predicate<Modifier>> visibilityModifiers = as.list(ModifierRedundant.isPublic, ModifierRedundant.isPrivate, ModifierRedundant.isProtected);
+
   static Range range(final ASTNode ¢) {
     final int $ = ¢.getStartPosition();
     return new Range($, $ + ¢.getLength());
@@ -411,11 +411,11 @@ public interface wizard {
     return r != null && (from(n) >= r.to || to(n) <= r.from);
   }
 
-  static boolean contained(ASTNode n, Range r) {
+  static boolean contained(final ASTNode n, final Range r) {
     return r != null && from(n) >= r.from && to(n) <= r.to;
   }
 
-  static boolean contained(ASTNode n, IMarker m) {
+  static boolean contained(final ASTNode n, final IMarker m) {
     return contained(n, range(m));
   }
 
@@ -831,9 +831,11 @@ public interface wizard {
     if (resolveBinding.inner)
       $.setEnvironment(null, null, null, true);
   }
+
   static void setParserResolveBindings() {
     resolveBinding.inner = true;
   }
+
   static boolean shoudlInvert(final IfStatement s) {
     final int $ = wizard.sequencerRank(hop.lastStatement(then(s))), rankElse = wizard.sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !thenIsShorter(s);

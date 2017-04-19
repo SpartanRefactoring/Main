@@ -428,7 +428,8 @@ interface DummyInterface {/**/ }
 }
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, })
-@interface try¢ { /**/ }
+@interface try¢ {
+  /**/ }
 
 @Ignore
 @class¢

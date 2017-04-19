@@ -255,7 +255,7 @@ public enum misc {
     return metrics.length($.getExpression(), then($));
   }
 
-   static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
+  static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from)
@@ -268,7 +268,7 @@ public enum misc {
    * @return a duplicate of the parameter, downcasted to the returned type.
    * @see ASTNode#copySubtree
    * @see ASTRewrite */
-  @SuppressWarnings("unchecked")  static <N extends ASTNode> N rebase(final N n, final AST t) {
+  @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
 
@@ -277,7 +277,7 @@ public enum misc {
    * <p>
    * @param ¢ JD
    * @param xs JD */
-   private static void removeAll(final boolean ¢, final List<Expression> xs) {
+  private static void removeAll(final boolean ¢, final List<Expression> xs) {
     // noinspection ForLoopReplaceableByWhile
     for (;;) {
       final Expression x = wizard.find(¢, xs);
@@ -287,7 +287,7 @@ public enum misc {
     }
   }
 
-   private static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
+  private static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
     final List<Statement> $ = new ArrayList<>();
     for (final Statement ¢ : ss) {
       final Statement s = misc.removeBreakSequencer(¢);
@@ -297,7 +297,7 @@ public enum misc {
     return $;
   }
 
-   private static Statement removeBreakSequencer(final Statement s) {
+  private static Statement removeBreakSequencer(final Statement s) {
     if (s == null)
       return null;
     if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))

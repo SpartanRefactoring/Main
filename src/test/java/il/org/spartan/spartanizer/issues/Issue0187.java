@@ -39,42 +39,40 @@ public class Issue0187 extends TipperTest<VariableDeclarationFragment> {
         .stays();
   }
 
-
   @Test public void d() {
     trimmingOf("int x = 1; x&=12;")//
         .gives("int x = 1 & 12;");
   }
-  
+
   @Test public void e() {
     trimmingOf("int $ = f(x);$^=55;return $;")//
-      .gives("int $ = f(x) ^ 55;return $;")//
+        .gives("int $ = f(x) ^ 55;return $;")//
     ;
   }
-  
-  @Test public void f(){
+
+  @Test public void f() {
     trimmingOf("int a = 3*2+7;a/=55;")//
-    .gives("int a = (3*2+7)/55;")//
-  ;
+        .gives("int a = (3*2+7)/55;")//
+    ;
   }
-  
-  @Test public void h(){
+
+  @Test public void h() {
     trimmingOf("int x = 3; x<<=2;")//
-    .gives("int x = 3<<2;");
+        .gives("int x = 3<<2;");
   }
-  
-  @Test public void i(){
+
+  @Test public void i() {
     trimmingOf("int x = 0; x += x++;")//
-    .stays();
+        .stays();
   }
-  
-  @Ignore("see issue #1257")
-  @Test public void j(){
+
+  @Ignore("see issue #1257") @Test public void j() {
     trimmingOf("int x = 0; x += ++b;")//
-    .gives("int x = 0 + (++b);");
+        .gives("int x = 0 + (++b);");
   }
-  
-  @Test public void k(){
+
+  @Test public void k() {
     trimmingOf("int x = 0, y = 1; x += y;")//
-    .stays();
+        .stays();
   }
 }

@@ -18,14 +18,16 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since Nov 13, 2016 */
 public interface note {
- class __ {
-   static String trace(final Throwable ¢) {
-     return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
-   }
-   static String trace() {
-     return trace(new Throwable()); 
-   }
- }
+  class __ {
+    static String trace(final Throwable ¢) {
+      return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
+    }
+
+    static String trace() {
+      return trace(new Throwable());
+    }
+  }
+
   String FILE_SEPARATOR = "\n**\n";
   String FILE_SUB_SEPARATOR = "\n********\n";
   /** @formatter:off */
@@ -64,7 +66,7 @@ public interface note {
 
   static <T> T bug(final String format, final Object... os) {
     return nulling.ly(() -> logger.info(format(//
-        "A bug was detected in the vicinty of %s; trace =%s\n", 
+        "A bug was detected in the vicinty of %s; trace =%s\n",
         __.trace(),//
         system.myCallerFullClassName()) + //
         format(format, os)));

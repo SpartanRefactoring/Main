@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.lisp.*;
 
@@ -26,7 +27,7 @@ public final class BlockSingletonEliminate extends AbstractPattern<Block> implem
     andAlso("Parent is a statement", //
         () -> not.nil(container = az.statement(parent)));
     andAlso("Parent is not a try, catch or synchronized", //
-        () -> !iz.nodeTypeIn(container, TRY_STATEMENT, CATCH_CLAUSE, SYNCHRONIZED_STATEMENT)); 
+        () -> !iz.nodeTypeIn(container, TRY_STATEMENT, CATCH_CLAUSE, SYNCHRONIZED_STATEMENT));
     andAlso("Block has only one statement", //
         () -> not.nil(onlyStatement = onlyOne(statements(current))));
     andAlso("Block is not essential", //
@@ -38,14 +39,14 @@ public final class BlockSingletonEliminate extends AbstractPattern<Block> implem
   private static final long serialVersionUID = 0x9FD71EDA4C3056AL;
 
   @Override protected ASTNode highlight() {
-    return null; 
+    return null;
   }
 
   @Override public String description() {
     return "Remove redundant curly braces";
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(current, copy.of(onlyStatement), g);
     return r;
   }
