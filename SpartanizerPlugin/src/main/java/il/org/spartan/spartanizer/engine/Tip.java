@@ -45,7 +45,8 @@ public abstract class Tip {
     this(description, tipperClass, containing.compilationUnit(center), wizard.range(center));
   }
 
-  public <N extends ASTNode> Tip(final String description, final Class<? extends Tipper<N>> tipperClass, final CompilationUnit u, final Range highlight) {
+  public <N extends ASTNode> Tip(final String description, final Class<? extends Tipper<N>> tipperClass, final CompilationUnit u,
+      final Range highlight) {
     this.description = description;
     this.tipperClass = tipperClass;
     span = range(this.highlight = highlight); // Ensure two distinct ranges
@@ -53,8 +54,8 @@ public abstract class Tip {
   }
 
   /** Instantiates this class
-   * @param description a textual description of the changes described by
-   *        this instance
+   * @param description a textual description of the changes described by this
+   *        instance
    * @param highlight the node on which change is to be marked
    * @param ns additional nodes, defining the scope of this misc. */
   public <N1 extends ASTNode, N2 extends ASTNode> Tip(final String description, //

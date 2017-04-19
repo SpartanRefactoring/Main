@@ -52,7 +52,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     } catch (final AssertionError x) {
       note.bug(dump() + //
           "\n x=" + x + //
-          "\n $=" + traversal.rewriteCount.get() + //
+          "\n $=" + traversal.rewriteCount() + //
           "\n u=" + u + //
           "\n u.name=" + u.name() + //
           "\n r=" + r + //
@@ -63,7 +63,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     } finally {
       getProgressMonitor().done();
     }
-    return traversal.rewriteCount.get();
+    return traversal.rewriteCount();
   }
 
   public int apply(final WrappedCompilationUnit $, final AbstractSelection<?> s) {
@@ -186,11 +186,11 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     if (textChange.getEdit().getLength() != 0)
       try {
         textChange.perform(newSubProgressMonitor());
-      } catch (CoreException $) {
+      } catch (final CoreException $) {
         return zero.voidAll(note.bug($));
       }
     getProgressMonitor().done();
-    return traversal.rewriteCount.get();
+    return traversal.rewriteCount();
   }
 
   private IProgressMonitor newSubProgressMonitor() {
@@ -237,7 +237,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     } catch (final CoreException ¢) {
       note.bug(this, ¢);
     }
-    return traversal.rewriteCount.get();
+    return traversal.rewriteCount();
   }
 
   /** @param pm a progress monitor in which to display the progress of the
@@ -361,7 +361,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
     if (selection != null)
-      traversal.setRange(selection);
+      traversal.setRange(wizard.range(selection));
     final ASTRewrite $ = traversal.go(¢);
     // traversal.pop(); // TODO Yossi: pop without push
     getProgressMonitor().done();
@@ -380,7 +380,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       changes.add(textChange);
     totalTips += traversal.collectTips(cu).size();
     m.done();
-    return traversal.rewriteCount.get();
+    return traversal.rewriteCount();
   }
 
   private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {

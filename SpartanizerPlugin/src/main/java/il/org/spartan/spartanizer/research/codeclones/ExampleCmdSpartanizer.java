@@ -14,7 +14,7 @@ public class ExampleCmdSpartanizer extends GeneralCmdSpartanizer {
 
   @Override protected ASTVisitor astVisitor() {
     return new ASTVisitor() {
-      @Override public boolean visit(@SuppressWarnings("unused") WhileStatement node) {
+      @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement node) {
         ++whileCounter;
         return true;
       }

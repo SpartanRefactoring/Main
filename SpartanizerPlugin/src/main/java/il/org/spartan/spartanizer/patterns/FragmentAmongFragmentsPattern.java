@@ -12,8 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 public abstract class FragmentAmongFragmentsPattern extends FragmentPattern {
   private static final long serialVersionUID = 1;
 
-  public FragmentAmongFragmentsPattern() {
-  }
+  public FragmentAmongFragmentsPattern() {}
 
   protected final int currentIndex() {
     return siblings().indexOf(current);

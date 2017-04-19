@@ -61,9 +61,9 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** Default run misc configuration of . Spartanize the
-   * {@link CompilationUnit} using received TODO maybe this method are going to
-   * die (as well as Spartanize$Applicator) {@link Spartanizer$Applicator}.
+  /** Default run misc configuration of . Spartanize the {@link CompilationUnit}
+   * using received TODO maybe this method are going to die (as well as
+   * Spartanize$Applicator) {@link Spartanizer$Applicator}.
    * @param a JD
    * @return {@code this} instance */
   public CommandLineApplicator defaultRunAction(final Spartanizer$Applicator a) {
@@ -72,8 +72,8 @@ public class CommandLineApplicator extends Applicator {
     return this;
   }
 
-  /** Default run misc configuration of . Spartanize the
-   * {@link CompilationUnit} using received {@link CommandLine$Applicator}.
+  /** Default run misc configuration of . Spartanize the {@link CompilationUnit}
+   * using received {@link CommandLine$Applicator}.
    * @param a JD
    * @return {@code this} instance */
   @Override public CommandLineApplicator defaultRunAction(final CommandLine$Applicator a) {

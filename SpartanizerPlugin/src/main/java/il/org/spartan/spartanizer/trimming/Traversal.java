@@ -8,7 +8,6 @@ import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
-import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.plugin.preferences.revision.*;
@@ -38,12 +37,12 @@ public abstract class Traversal implements Selfie<Traversal> {
           rewriteCount.step();
         }
       });
-  public final Int rewriteCount = new Int();
+  protected final Int rewriteCount = new Int();
   private Tip otherTip;
   private CompilationUnit compilationUnit;
   private TextEditGroup editGroup;
   private Range range;
-  private Tips tips;
+  protected Tips tips;
   protected final Map<IProject, Configuration> configurations = new HashMap<>();
   protected String fileName;
   protected boolean firstAddition = true;
@@ -61,7 +60,7 @@ public abstract class Traversal implements Selfie<Traversal> {
    *         spartanization tip */
   public Tips collectTips(final CompilationUnit ¢) {
     tips = Tips.empty();
-    ¢.accept(tipsCollector(tips));
+    ¢.accept(tipsCollector());
     return tips;
   }
 
@@ -80,10 +79,6 @@ public abstract class Traversal implements Selfie<Traversal> {
     return this;
   }
 
-  public Traversal setRange(final ITextSelection ¢) {
-    return self(() -> range = ¢ == null ? null : new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength()));
-  }
-
   public Traversal setRange(final Range ¢) {
     return self(() -> range = ¢);
   }
@@ -92,7 +87,7 @@ public abstract class Traversal implements Selfie<Traversal> {
     return tipper;
   }
 
-  public abstract ASTVisitor tipsCollector(Tips $);
+  public abstract ASTVisitor tipsCollector();
 
   public Traversal useProjectPreferences() {
     useProjectPreferences = true;
@@ -162,7 +157,7 @@ public abstract class Traversal implements Selfie<Traversal> {
   }
 
   protected Tip setAuxiliaryTip(final Tip auxiliaryTip) {
-    return this.otherTip = auxiliaryTip;
+    return otherTip = auxiliaryTip;
   }
 
   protected void setCompilationUnit(final CompilationUnit ¢) {
@@ -188,7 +183,6 @@ public abstract class Traversal implements Selfie<Traversal> {
   }
 
   public abstract class __ {
-
     // @formatter:off
     protected Tip auxiliaryTip() { return self().getAuxiliaryTip(); }
     protected ASTRewrite rewrite() { return self().getRewrite(); }
@@ -201,5 +195,9 @@ public abstract class Traversal implements Selfie<Traversal> {
       return String.format("%s(%s)", English.name($), Trivia.gist($));
     }
 
+  }
+
+  public int rewriteCount() {
+    return rewriteCount.get();
   }
 }
