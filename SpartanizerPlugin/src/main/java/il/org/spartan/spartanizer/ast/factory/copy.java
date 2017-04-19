@@ -9,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 /** An empty {@code enum} with a variety of {@code public
  * static} functions for restructuring expressions.
  * @author Yossi Gil
@@ -18,7 +16,8 @@ import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 public enum copy {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   static Iterable<Expression> adjust(final Operator o, final Collection<Expression> xs) {
-    return o != op.MINUS2 ? xs : xs.stream().map(λ -> subject.operand(λ).to(op.MINUS1)).collect(toList());
+    return o != il.org.spartan.spartanizer.ast.navigate.op.MINUS2 ? xs
+        : xs.stream().map(λ -> subject.operand(λ).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS1)).collect(toList());
   }
 
   /** Duplicate all {@link ASTNode} objects found in a given list into another

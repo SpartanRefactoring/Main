@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -49,7 +50,7 @@ public final class StringFromStringBuilder extends MethodInvocationPattern//
       t = (InfixExpression) t.getRightOperand();
     }
     t.setLeftOperand(copy.of(the.penultimate(xs)));
-    t.setOperator(op.PLUS2);
+    t.setOperator(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
     t.setRightOperand(copy.of(last(xs)));
     return $;
   }

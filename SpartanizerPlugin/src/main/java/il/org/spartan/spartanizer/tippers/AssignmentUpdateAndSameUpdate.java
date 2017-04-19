@@ -6,8 +6,6 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -56,7 +54,7 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
   }
 
   private static Operator unifying(final Assignment ¢) {
-    final Operator $ = wizard.assign2infix(¢.getOperator());
+    final Operator $ = op.assign2infix(¢.getOperator());
     return $ == op.MINUS2 ? op.PLUS2 : $ == DIVIDE ? TIMES : $;
   }
 }

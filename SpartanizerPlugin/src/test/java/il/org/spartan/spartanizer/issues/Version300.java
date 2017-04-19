@@ -417,7 +417,7 @@ public class Version300 {
 
   @UnderConstruction private Block kill(final Expression ¢) {
     final Block $ = ¢.getAST().newBlock();
-    statements($).addAll(wizard.decompose(¢));
+    statements($).addAll(compute.decompose(¢));
     return $;
   }
 }

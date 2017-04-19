@@ -61,7 +61,7 @@ public enum eclipse {
    *        compilation unit from the project and I'll find the root of the
    *        project and do my magic.
    * @param m A standard {@link IProgressMonitor} - if you don't care about
-   *        operation times use {@link op#nullProgressMonitor}
+   *        operation times use {@link __#nullProgressMonitor}
    * @return List of all compilation units in the current project
    * @throws JavaModelException don't forget to catch */
   public static List<ICompilationUnit> compilationUnits(final IJavaElement u, final IProgressMonitor m) throws JavaModelException {
@@ -158,7 +158,7 @@ public enum eclipse {
   }
 
   private static ASTNode createAST(final ICompilationUnit ¢) {
-    return make.COMPILATION_UNIT.parser(¢).createAST(op.nullProgressMonitor);
+    return make.COMPILATION_UNIT.parser(¢).createAST(nullProgressMonitor);
   }
 
   private static int int¢(final IMarker m, final String name) throws CoreException {
@@ -217,7 +217,7 @@ public enum eclipse {
   /** @return List of all compilation units in the current project */
   List<ICompilationUnit> compilationUnits() {
     try {
-      return compilationUnits(currentCompilationUnit(), op.nullProgressMonitor);
+      return compilationUnits(currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException $) {
       return note.bug(this, $);
     }
@@ -225,7 +225,7 @@ public enum eclipse {
 
   Collection<ICompilationUnit> compilationUnits(final IJavaElement $) {
     try {
-      return compilationUnits($, op.nullProgressMonitor);
+      return compilationUnits($, nullProgressMonitor);
     } catch (final JavaModelException ¢) {
       return note.bug(this, ¢);
     }

@@ -110,14 +110,14 @@ public final class precedenceTest {
   }
 
   @Test public void nonAssociative() {
-    assert !wizard.nonAssociative(e("1"));
-    assert !wizard.nonAssociative(e("-1"));
-    assert !wizard.nonAssociative(e("-1+2"));
-    assert !wizard.nonAssociative(e("1+2"));
-    assert wizard.nonAssociative(e("2-1"));
-    assert wizard.nonAssociative(e("2/1"));
-    assert wizard.nonAssociative(e("2%1"));
-    assert !wizard.nonAssociative(e("2*1"));
+    assert !op.nonAssociative(e("1"));
+    assert !op.nonAssociative(e("-1"));
+    assert !op.nonAssociative(e("-1+2"));
+    assert !op.nonAssociative(e("1+2"));
+    assert op.nonAssociative(e("2-1"));
+    assert op.nonAssociative(e("2/1"));
+    assert op.nonAssociative(e("2%1"));
+    assert !op.nonAssociative(e("2*1"));
   }
 
   @Test public void objectCreation() {

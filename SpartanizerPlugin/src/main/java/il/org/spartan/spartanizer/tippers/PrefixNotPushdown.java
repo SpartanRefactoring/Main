@@ -68,7 +68,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   }
 
   private static Expression comparison(final InfixExpression ¢) {
-    return pair(left(¢), right(¢)).to(negate(¢.getOperator()));
+    return pair(left(¢), right(¢)).to(op.negate(¢.getOperator()));
   }
 
   private static boolean hasOpportunity(final Expression inner) {

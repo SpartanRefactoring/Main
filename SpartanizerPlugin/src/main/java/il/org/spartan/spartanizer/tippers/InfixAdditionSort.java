@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -26,6 +24,6 @@ public final class InfixAdditionSort extends InfixExpressionSortingFull//
   }
 
   @Override protected boolean suitable(final InfixExpression ¢) {
-    return in(¢.getOperator(), op.PLUS2) && type.isNotString(¢);
+    return in(¢.getOperator(), il.org.spartan.spartanizer.ast.navigate.op.PLUS2) && type.isNotString(¢);
   }
 }

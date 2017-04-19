@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -68,7 +66,7 @@ public class LocalInitializedArithmeticsInline extends LocalInitialized//
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationFragment $ = copy.of(current());
     $.setInitializer(subject.operands(subject.operand(initializer).parenthesis(), //
-        subject.operand(rightHandSide).parenthesis()).to(assign2infix(o)));
+        subject.operand(rightHandSide).parenthesis()).to(op.assign2infix(o)));
     r.replace(current(), $, g);
     r.remove(nextStatement, g);
     return r;

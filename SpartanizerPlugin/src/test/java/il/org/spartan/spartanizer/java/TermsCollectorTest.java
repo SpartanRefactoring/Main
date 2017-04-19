@@ -17,7 +17,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 @SuppressWarnings("static-method")
@@ -50,7 +49,7 @@ public final class TermsCollectorTest {
 
   @Test public void test04() {
     final InfixExpression i = i("a-c");
-    azzert.that(i.getOperator(), is(op.MINUS2));
+    azzert.that(i.getOperator(), is(il.org.spartan.spartanizer.ast.navigate.op.MINUS2));
     azzert.that(left(i), iz("a"));
     azzert.that(right(i), iz("c"));
     c.collect(i);
@@ -60,7 +59,7 @@ public final class TermsCollectorTest {
 
   @Test public void test05() {
     final InfixExpression i = i("a-c");
-    azzert.that(i.getOperator(), is(op.MINUS2));
+    azzert.that(i.getOperator(), is(il.org.spartan.spartanizer.ast.navigate.op.MINUS2));
     azzert.that(left(i), iz("a"));
     azzert.that(right(i), iz("c"));
     c.collectPlusNonLeaf(i);
@@ -70,8 +69,8 @@ public final class TermsCollectorTest {
 
   @Test public void test06() {
     final InfixExpression i = i("a + b -c");
-    azzert.that(i.getOperator(), is(op.MINUS2));
-    azzert.that(az.infixExpression(left(i)).getOperator(), is(op.PLUS2));
+    azzert.that(i.getOperator(), is(il.org.spartan.spartanizer.ast.navigate.op.MINUS2));
+    azzert.that(az.infixExpression(left(i)).getOperator(), is(il.org.spartan.spartanizer.ast.navigate.op.PLUS2));
     c.collect(i);
     azzert.that(c.plus().size(), is(2));
     azzert.that(c.minus().size(), is(1));

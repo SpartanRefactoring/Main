@@ -266,7 +266,7 @@ public enum haz {
   }
 
   /** @param ns unknown number of nodes to check
-   * @return whetherone of the nodes is an Expression Statement of type Post or
+   * @return whether one of the nodes is an Expression Statement of type Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
    *         if the given parameter is null. */
   public static boolean containIncOrDecExp(final ASTNode... ns) {
