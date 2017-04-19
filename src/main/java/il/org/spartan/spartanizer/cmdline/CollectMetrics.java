@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil
@@ -52,7 +53,7 @@ enum CollectMetrics {
       Tips.put("File", f.getName());
       go(FileUtils.read(f));
     } catch (final IOException ¢) {
-      System.err.println(¢.getMessage());
+      note.bug(¢);
     }
   }
 

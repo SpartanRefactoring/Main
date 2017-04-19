@@ -57,7 +57,7 @@ final class BindingFun implements IApplication {
     try {
       prepareTempIJavaProject();
     } catch (final CoreException ¢) {
-      System.err.println(¢.getMessage());
+      note.bug(¢);
       return IApplication.EXIT_OK;
     }
     for (final File f : new FilesGenerator(".java", ".JAVA").from(C_USERS_SORIMAR_WORKSPACE_TEST_ADD_COMMENTS))

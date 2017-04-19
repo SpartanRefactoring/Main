@@ -67,8 +67,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     try {
       prepareTempIJavaProject();
     } catch (final CoreException ¢) {
-      System.err.println(¢.getMessage());
-      return IApplication.EXIT_OK;
+      note.bug(¢);
     }
     return IApplication.EXIT_OK;
   }
