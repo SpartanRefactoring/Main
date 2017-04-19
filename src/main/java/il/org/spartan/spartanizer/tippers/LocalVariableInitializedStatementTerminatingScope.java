@@ -68,7 +68,7 @@ public final class LocalVariableInitializedStatementTerminatingScope extends $Fr
       return null;
     $.replace(nextStatement, newStatement, g);
     i.inlineInto(newStatement);
-    misc.remove(f, $, g);
+    remove.local(f, $, g);
     return $;
   }
 }

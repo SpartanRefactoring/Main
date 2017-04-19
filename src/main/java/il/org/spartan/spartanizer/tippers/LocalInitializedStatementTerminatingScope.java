@@ -68,7 +68,7 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
       return null;
     $.replace(nextStatement, newStatement, g);
     i.inlineInto(newStatement);
-    misc.remove(f, $, g);
+    remove.local(f, $, g);
     return $;
   }
 }
