@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 import nano.ly.*;
 
 /** base class for all GUI applicators contains common functionality. The class
@@ -219,7 +219,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     try {
       iCompilationUnit($);
       setSelection(s);
-      traversal.setRange(range(getSelection()));
+      traversal.setRange(Ranger.make(getSelection()));
       getProgressMonitor().beginTask("Creating change for a single compilation unit...", IProgressMonitor.UNKNOWN);
       final TextFileChange textChange = new TextFileChange($.getElementName(), (IFile) $.getResource());
       textChange.setTextType("java");
@@ -254,7 +254,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   }
 
   public GUITraversal setMarker(final IMarker ¢) {
-    traversal.setRange(range(¢));
+    traversal.setRange(Ranger.make(¢));
     return self(() -> marker = ¢);
   }
 
@@ -361,7 +361,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
     if (selection != null)
-      traversal.setRange(wizard.range(selection));
+      traversal.setRange(Ranger.make(selection));
     final ASTRewrite $ = traversal.go(¢);
     // traversal.pop(); // TODO Yossi: pop without push
     getProgressMonitor().done();
@@ -427,7 +427,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
    * @param n the node which needs to be within the range of {@code m}
    * @return whether the node is within range */
   public boolean inRange(final IMarker m, final ASTNode n) {
-    return m != null ? !wizard.disjoint(n, m) : !isTextSelected() || !isNotSelected(n);
+    return m != null ? !Ranger.disjoint(n, m) : !isTextSelected() || !isNotSelected(n);
   }
 
   public final Traversal traversal = new TraversalImplementation().push((TraversalTickingTapper) λ -> getProgressMonitor().worked(λ))

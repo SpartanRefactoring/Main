@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 
@@ -216,7 +216,7 @@ public final class SingleTipperApplicator {
     @Override protected <N extends ASTNode> boolean go(final N n) {
       if (doneTraversing)
         return false;
-      if (wizard.disjoint(n, marker))
+      if (Ranger.disjoint(n, marker))
         return true;
       final Tipper<N> t = Configurations.all().firstTipper(n);
       if (t != null)

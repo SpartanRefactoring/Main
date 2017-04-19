@@ -19,6 +19,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.bloater.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.utils.*;
 import nano.ly.*;
 
 /** An application of the Bloater project. Augment java code to be more clear
@@ -55,17 +56,18 @@ public class Augmenter implements Application {
    * @return selection as list of lists of statements */
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
     final List<List<Statement>> $ = new ArrayList<>();
+    Range r = Ranger.make(s);
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Block b) {
         if (discardOptimization(b))
           return false;
-        if (wizard.inRange(b, s))
+        if (Ranger.contained(b, r))
           $.add(statements(b));
         else {
-          final List<Statement> l = new ArrayList<>(statements(b).stream().filter(λ -> wizard.inRange(λ, s)).collect(toList()));
-          if (!discardOptimization(l))
-            $.add(l);
+          final List<Statement> ss = new ArrayList<>(statements(b).stream().filter(λ -> Ranger.contained(λ, r)).collect(toList()));
+          if (!discardOptimization(ss))
+            $.add(ss);
         }
         return false;
       }

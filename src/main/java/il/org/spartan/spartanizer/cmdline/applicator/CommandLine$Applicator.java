@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 import nano.ly.*;
 
 /** Specific applicator
@@ -171,7 +171,7 @@ public class CommandLine$Applicator extends GenericApplicator {
    * @param r
    * @param u */
   private void consolidateTips(final ASTRewrite r, final CompilationUnit u) {
-    configuration = il.org.spartan.spartanizer.trimming.Configurations.all();
+    configuration = il.org.spartan.spartanizer.traversal.Configurations.all();
     u.accept(new DispatchingVisitor() {
       @Override @SuppressWarnings("boxing") protected <N extends ASTNode> boolean go(final N n) {
         TraversalMonitor.visitation(n);
