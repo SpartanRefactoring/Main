@@ -83,7 +83,7 @@ public interface theSpartanizer {
     int n = 0;
     for (String $ = from, next;; $ = next) {
       next = once($);
-      if (same($, next) || ++n > 20)
+      if (Trivia.same($, next) || ++n > 20)
         return $;
     }
   }
@@ -96,10 +96,6 @@ public interface theSpartanizer {
     } catch (final Exception ¢) {
       return note.bug(¢);
     }
-  }
-
-  static boolean same(final String s1, final String s2) {
-    return s1 == null || s2 == null || s2.equals(s1) || Trivia.essence(s1).equals(Trivia.essence(s2));
   }
 
   static String thrice(final String javaCode) {

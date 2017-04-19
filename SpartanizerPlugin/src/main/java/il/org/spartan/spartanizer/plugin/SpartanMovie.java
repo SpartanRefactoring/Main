@@ -132,8 +132,8 @@ public class SpartanMovie extends AbstractHandler {
     try {
       Thread.sleep((int) (1000 * howMuch));
       return true;
-    } catch (final InterruptedException x) {
-      note.bug(x);
+    } catch (final InterruptedException ¢) {
+      note.bug(¢);
       return false;
     }
   }
