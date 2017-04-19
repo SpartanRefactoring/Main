@@ -20,7 +20,6 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil {@code    Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@RunWith(MetaTester.class)
 @SuppressWarnings("static-method")
 public class PropositionTest {
   private static boolean ignoreNext() {
