@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.plugin;
 
 import org.eclipse.core.commands.*;
 
-import il.org.spartan.bloater.*;
-import il.org.spartan.bloater.collateral.*;
+import il.org.spartan.athenizer.*;
+import il.org.spartan.athenizer.collateral.*;
 
 /** Handler for the Renamig thesis of Dor. Uses {@link BloaterGUIApplicator} as
  * an {@link Applicator} and {@link Augmenter} as an {@link Application}.
