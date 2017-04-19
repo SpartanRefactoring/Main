@@ -34,7 +34,7 @@ public class TraversalImplementation extends Traversal {
         setNode(¢);
         if (Ranger.disjoint(¢, range))
           return false;
-        if (range != null && !Ranger.contained(¢, range) || !check(¢) || disabling.on(¢))
+        if (!check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
         if (getTip() == null)
@@ -94,7 +94,7 @@ public class TraversalImplementation extends Traversal {
         setNode(¢);
         if (Ranger.disjoint(¢, range))
           return false;
-        if (range != null && !Ranger.contained(¢, range) || !check(¢) || disabling.on(¢))
+        if (!check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
         if (getTip() == null)
