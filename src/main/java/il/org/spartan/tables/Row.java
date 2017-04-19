@@ -8,7 +8,7 @@ import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
 
 /** Represents a row of a {@link Table}
- * @param <Self> uses for fluent API, type of subclass
+ * @param <Self> uses for fluent API, __ of subclass
  * @author Yossi Gil
  * @since 2017-01-04 */
 public abstract class Row<Self extends Row<?>> extends LinkedHashMap<String, Object> {

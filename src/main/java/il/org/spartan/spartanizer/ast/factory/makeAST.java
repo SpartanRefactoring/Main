@@ -88,8 +88,7 @@ public enum makeAST {
         if (¢ == null)
           return $;
     } catch (final IOException ¢) {
-      note.io(¢, f + "");
-      return null;
+      return note.io(¢, f + "");
     }
   }
 

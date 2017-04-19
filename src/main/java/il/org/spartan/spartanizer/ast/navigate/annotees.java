@@ -43,7 +43,7 @@ public interface annotees {
       case ASTNode.VARIABLE_DECLARATION_STATEMENT:
         return of((VariableDeclarationStatement) $);
       default:
-        assert fault.unreachable() : fault.specifically("Unexpected type", wizard.nodeName($));
+        assert fault.unreachable() : fault.specifically("Unexpected __", wizard.nodeName($));
         return null;
     }
   }

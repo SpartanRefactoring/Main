@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -23,8 +21,8 @@ public final class FieldInitializedDefaultValue extends FieldPattern implements 
     andAlso("Initializer must be a literal", () -> iz.literal(initializer));
     andAlso("Initializer must be a default litral value", () -> iz.defaultLiteral(initializer));
     andAlso("Not inside an interface ", () -> !iz.interface¢(containing.typeDeclaration(declaration)));
-    andAlso("Not an initialization of a boxed type, e.g. public Integer a = 0;",
-        () -> !isBoxedType(declaration.getType() + "") || iz.nullLiteral(initializer));
+    andAlso("Not an initialization of a boxed __, e.g. public Integer a = 0;",
+        () -> !il.org.spartan.spartanizer.engine.type.isBoxedType(declaration.getType() + "") || iz.nullLiteral(initializer));
   }
 
   @Override public String description() {

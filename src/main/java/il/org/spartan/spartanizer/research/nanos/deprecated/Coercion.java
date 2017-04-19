@@ -28,7 +28,7 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
   private static final long serialVersionUID = 0x3D5C100636B14340L;
   private static final String API_LEVEL_FILE = "file";
   private static final String API_LEVEL_PACKAGE = "package";
-  private static final String API_LEVEL_TYPE = "type";
+  private static final String API_LEVEL_TYPE = "__";
   private static final String API_FILE = "apiFile";
   private static final String API_LEVEL = "apiLevel";
   private static final Down.Caster c = new Down.Caster();

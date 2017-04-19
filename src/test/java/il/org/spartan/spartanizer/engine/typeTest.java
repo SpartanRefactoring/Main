@@ -16,7 +16,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** unit tests for {@link type} , as well as tests for the types of certain
+/** unit tests for {@link __} , as well as tests for the types of certain
  * expression using {@link Axiom} .
  * @Since 2016-09
  * @author Niv Shalmon

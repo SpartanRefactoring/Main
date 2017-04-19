@@ -57,7 +57,7 @@ public enum misc {
           g);
   }
 
-  /** Adds method m to the first type in file.
+  /** Adds method m to the first __ in file.
    * @param fileName
    * @param m */
   public static void addMethodToFile(final String fileName, final MethodDeclaration m) {
@@ -69,8 +69,14 @@ public enum misc {
       misc.addMethodToType(t, m, r, null);
       r.rewriteAST(d, null).apply(d);
       writeToFile(fileName, d.get());
-    } catch (IOException | MalformedTreeException | IllegalArgumentException | BadLocationException x2) {
-      x2.printStackTrace();
+    } catch (final IOException x) {
+      note.io(x);
+    } catch (final MalformedTreeException x) {
+      note.bug(x);
+    } catch (final IllegalArgumentException x) {
+      note.bug(x);
+    } catch (final BadLocationException ¢) {
+      note.bug(¢);
     }
   }
 
@@ -228,7 +234,7 @@ public enum misc {
   public static ListRewrite statementRewriter(final ASTRewrite r, final Statement s) {
     return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
         : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
-            : note.bug("Weird type of %s under %s", s, parent(s));
+            : note.bug("Weird __ of %s under %s", s, parent(s));
   }
 
   static boolean thenIsShorter(final IfStatement s) {
@@ -265,7 +271,7 @@ public enum misc {
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @param ¢ JD
-   * @return a duplicate of the parameter, downcasted to the returned type.
+   * @return a duplicate of the parameter, downcasted to the returned __.
    * @see ASTNode#copySubtree
    * @see ASTRewrite */
   @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {

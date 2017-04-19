@@ -45,14 +45,14 @@ public enum copy {
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
-   * @return a duplicate of the parameter, downcasted to the returned type. */
+   * @return a duplicate of the parameter, downcasted to the returned __. */
   @SuppressWarnings("unchecked") public static <N extends ASTNode> N of(final N ¢) {
     return ¢ == null ? null : (N) ASTNode.copySubtree(¢.getAST(), ¢);
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
-   * @return a duplicate of the parameter, downcasted to the returned type. */
+   * @return a duplicate of the parameter, downcasted to the returned __. */
   public static <N extends ASTNode> Collection<N> of(final Collection<N> ¢) {
     return ¢.stream().map(copy::of).collect(toList());
   }

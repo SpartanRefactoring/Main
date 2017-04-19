@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -37,7 +38,7 @@ public final class ClassInstanceCreationBoxedValueTypes extends ReplaceCurrentNo
     if (e == null)
       return null;
     final Type t = c.getType();
-    if (!wizard.isValueType(t))
+    if (!type.isValueType(t))
       return null;
     final MethodInvocation $ = subject.operand(copy.of(hop.simpleName(t))).toMethod("valueOf");
     arguments($).add(copy.of(e));

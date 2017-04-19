@@ -5,10 +5,9 @@ import java.util.stream.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import junit.framework.*;
 
-/** Organizes objects of the type parameter in a tree, supplying a
+/** Organizes objects of the __ parameter in a tree, supplying a
  * {@link #descendants()} of all objects contained in a sub-tree. Object of the
- * type parameter may present on all nodes on of this tree, including inner
- * nodes.
+ * __ parameter may present on all nodes on of this tree, including inner nodes.
  * <p>
  * TODO Dor Maayan & Oran Gilboa: first assignment TODO Oren Afek & Ori Roth &
  * Matan Peled: first assignments

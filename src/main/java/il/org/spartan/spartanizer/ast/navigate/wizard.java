@@ -31,7 +31,6 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
@@ -42,24 +41,15 @@ import nano.ly.*;
  * @since 2014 */
 @SuppressWarnings("OverlyComplexClass")
 public interface wizard {
-  @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
-    {
-      for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
-        add(¢);
-        add("java.lang." + ¢);
-      }
-    }
-  };
   @SuppressWarnings({ "unchecked", "serial" }) Map<Class<? extends ASTNode>, Integer> //
   classToNodeType = new LinkedHashMap<Class<? extends ASTNode>, Integer>() {
     {
       for (int nodeType = 1;; ++nodeType)
         try {
-          // monitor.debug("Found node type number of " + nodeClassForType);
           put(ASTNode.nodeClassForType(nodeType), Integer.valueOf(nodeType));
         } catch (@SuppressWarnings("unused") final IllegalArgumentException ¢) {
           // We must suffer this exception; no other way to find the first
-          // unused node type
+          // unused node __
           break;
         } catch (final Exception ¢) {
           note.bug(this, ¢);
@@ -125,15 +115,6 @@ public interface wizard {
   Class<?>[] np = { InfixExpression.class };
   IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
   Bool resolveBinding = Bool.valueOf(false);
-  Collection<String> valueTypes = new LinkedHashSet<String>(boxedTypes) {
-    static final long serialVersionUID = -0x134495F1CC662D60L;
-    {
-      for (final String ¢ : new String[] { "String" }) {
-        add(¢);
-        add("java.lang." + ¢);
-      }
-    }
-  };
   List<Predicate<Modifier>> visibilityModifiers = as.list(ModifierRedundant.isPublic, ModifierRedundant.isPrivate, ModifierRedundant.isProtected);
 
   static Expression addParenthesisIfNeeded(final Expression x) {
@@ -207,7 +188,7 @@ public interface wizard {
   }
 
   /** @param ns unknown number of nodes to check
-   * @return whether one of the nodes is an Expression Statement of type Post or
+   * @return whether one of the nodes is an Expression Statement of __ Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
    *         if the given parameter is null. */
   static boolean containIncOrDecExp(final ASTNode... ns) {
@@ -373,22 +354,6 @@ public interface wizard {
     }
   }
 
-  static boolean isBoxedType(final String typeName) {
-    return il.org.spartan.spartanizer.ast.navigate.wizard.boxedTypes.contains(typeName);
-  }
-
-  static boolean isObject(final Type ¢) {
-    if (¢ == null)
-      return false;
-    switch (¢ + "") {
-      case "Object":
-      case "java.lang.Object":
-        return true;
-      default:
-        return false;
-    }
-  }
-
   /** Checks if an expression need parenthesis in order to be interpreted
    * correctly @param x an Expression
    * @return whether or not this expression need parenthesis when put together
@@ -400,32 +365,8 @@ public interface wizard {
     return Stream.of(np).anyMatch(λ -> λ.isInstance(x));
   }
 
-  static boolean isString(final String typeName) {
-    if (typeName == null)
-      return false;
-    switch (typeName) {
-      case "String":
-      case "java.lang.String":
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  static boolean isString(final Type ¢) {
-    return isString(¢ + "");
-  }
-
-  static boolean isValueType(final String typeName) {
-    return valueTypes.contains(typeName);
-  }
-
-  static boolean isValueType(final Type ¢) {
-    return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
-  }
-
   static List<Statement> listMe(final Expression ¢) {
-    return as.list(¢.getAST().newExpressionStatement(copy.of(¢)));
+    return a.singleton.list(¢.getAST().newExpressionStatement(copy.of(¢)));
   }
 
   static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final Collection<VariableDeclarationFragment> fs) {
@@ -485,13 +426,6 @@ public interface wizard {
 
   static int positivePrefixLength(final IfStatement $) {
     return metrics.length($.getExpression(), then($));
-  }
-
-  static <T> T previous(final T t, final List<T> ts) {
-    if (ts == null)
-      return null;
-    final int $ = ts.indexOf(t);
-    return $ < 1 ? null : ts.get($ - 1);
   }
 
   static String problems(final ASTNode ¢) {

@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 public enum BindingUtils {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   /** @param pattern an {@link ASTNode}
-   * @return type in which n is placed, or null if there is none */
+   * @return __ in which n is placed, or null if there is none */
   private static ITypeBinding container(final ASTNode ¢) {
     final ASTNode $ = containing.typeDeclaration(¢);
     return eval(((AbstractTypeDeclaration) $)::resolveBinding).when($ instanceof TypeDeclaration);
@@ -29,7 +29,7 @@ public enum BindingUtils {
   }
 
   /** Finds visible method in hierarchy.
-   * @param b base type
+   * @param b base __
    * @param methodName method name
    * @param bs method parameters
    * @param n original {@link ASTNode} containing the method invocation. Used in

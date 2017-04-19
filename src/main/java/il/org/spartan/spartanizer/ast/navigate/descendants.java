@@ -19,11 +19,11 @@ public abstract class descendants<N extends ASTNode> {
   }
 
   /** @param n JD
-   * @return descendants whose type matches the given type. */
+   * @return descendants whose __ matches the given __. */
   public abstract List<N> from(ASTNode n);
 
   /** @param n JD
-   * @return descendants whose type matches the given type. */
+   * @return descendants whose __ matches the given __. */
   public abstract List<N> inclusiveFrom(ASTNode n);
 
   /** @param ¢ JD

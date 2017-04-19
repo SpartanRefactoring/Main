@@ -112,7 +112,7 @@ public interface TipperCategory {
     }
   }
 
-  /** Auxiliary type: non public intentionally */
+  /** Auxiliary __: non public intentionally */
   interface Modular extends TipperCategory {
     String toString = "Make modular changes to code";
 

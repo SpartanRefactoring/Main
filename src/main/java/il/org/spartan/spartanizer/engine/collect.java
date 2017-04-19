@@ -179,7 +179,7 @@ public enum collect {
       /** Tries to add to the list provided by the closure (into) the
        * identifiers from all the {@link VariableDeclarationExpression}s from
        * the given list (es).
-       * @param xs is a {@link List} of any type which extends a
+       * @param xs is a {@link List} of any __ which extends a
        *        {@link Expression}
        * @return whether addFragment() succeeds with the
        *         {@link VariableDeclarationFragment}s from each (extended)

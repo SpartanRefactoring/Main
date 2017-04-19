@@ -64,7 +64,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return ¢ instanceof MarkerAnnotation ? map((MarkerAnnotation) ¢) //
         : ¢ instanceof NormalAnnotation ? map((NormalAnnotation) ¢) //
             : ¢ instanceof SingleMemberAnnotation ? map((SingleMemberAnnotation) ¢) //
-                : bug("Unrecognized Annotation; type=%s", English.name(¢.getClass())) //
+                : bug("Unrecognized Annotation; __=%s", English.name(¢.getClass())) //
     ;
   }
 
@@ -218,7 +218,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   protected R map(final IExtendedModifier ¢) {
     return ¢.isAnnotation() ? map((Annotation) ¢) //
         : ¢.isModifier() ? map((Modifier) ¢) //
-            : bug("Unrecognized IExtendedModifier; type=%s", English.name(¢.getClass()));
+            : bug("Unrecognized IExtendedModifier; __=%s", English.name(¢.getClass()));
   }
 
   protected R map(final IfStatement ¢) {
