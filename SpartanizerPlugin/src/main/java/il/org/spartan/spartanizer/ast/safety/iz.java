@@ -1345,10 +1345,7 @@ public interface iz {
   default boolean parsesTo(final String $, final int i) {
     try {
       return iz.parseInt($) == i;
-    } catch (final NumberFormatException ¢) {
-      note.bug(this, ¢);
-      return false;
-    } catch (final IllegalArgumentException ¢) {
+    } catch (IllegalArgumentException ¢) {
       note.bug(this, ¢);
       return false;
     }
