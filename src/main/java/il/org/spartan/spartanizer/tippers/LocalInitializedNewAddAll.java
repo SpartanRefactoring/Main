@@ -34,7 +34,7 @@ public final class LocalInitializedNewAddAll extends LocalInitialized //
         () -> not.nil(newExpression = az.classInstanceCreation(initializer)));
     andAlso("Instance creation takes no argments ", //
         () -> newExpression.arguments().isEmpty()); //
-    andAlso("Extract type", //
+    andAlso("Extract __", //
         () -> not.nil(type = newExpression.getType()));
     andAlso("Next statement is a method invocation", //
         () -> not.nil(methodInvocation = az.methodInvocation(nextStatement)));

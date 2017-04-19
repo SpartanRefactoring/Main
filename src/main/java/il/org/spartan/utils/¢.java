@@ -10,6 +10,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 @Documented
 @Target(ElementType.PARAMETER)
 public @interface ¢ {
-  /** Add here brief documentation if you like; return type may change though */
+  /** Add here brief documentation if you like; return __ may change though */
   String value() default "J(ohn)|(ane) Doe";
 }

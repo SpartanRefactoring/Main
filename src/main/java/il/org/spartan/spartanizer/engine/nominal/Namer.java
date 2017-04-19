@@ -70,7 +70,7 @@ public interface Namer {
   }
 
   static String shorten(final IntersectionType ¢) {
-    assert fault.unreachable() : fault.specifically("Should not shorten intersection type", ¢);
+    assert fault.unreachable() : fault.specifically("Should not shorten intersection __", ¢);
     return ¢ + "";
   }
 

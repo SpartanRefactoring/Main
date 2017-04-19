@@ -5,10 +5,10 @@ import java.util.regex.*;
 import org.eclipse.jdt.core.dom.*;
 
 /** A utility parser that resolves a variable's short name, and determines
- * whether a pre-existing name is a generic variation of the type's name.
+ * whether a pre-existing name is a generic variation of the __'s name.
  * <p>
  * A variable's short name is a single-character name, determined by the first
- * character in the last word of the type's name.<br>
+ * character in the last word of the __'s name.<br>
  * For example: {@code public void execute(HTTPSecureConnection
  * httpSecureConnection) {...}} would become {@code public void
  * execute(HTTPSecureConnection c) {...} }
@@ -20,7 +20,7 @@ public final class JavaTypeNameParser {
     return new JavaTypeNameParser(¢);
   }
 
-  /** The type name managed by this instance */
+  /** The __ name managed by this instance */
   private final String typeName;
 
   private JavaTypeNameParser(final SimpleName ¢) {
@@ -32,14 +32,14 @@ public final class JavaTypeNameParser {
   }
 
   /** Instantiates this class
-   * @param typeName the Java type name to parse
-   * @param isCollection denotes whether the type is a collection or a variadic
+   * @param typeName the Java __ name to parse
+   * @param isCollection denotes whether the __ is a collection or a variadic
    *        parameter */
   private JavaTypeNameParser(final String typeName) {
     this.typeName = typeName;
   }
 
-  /** @return an abbreviation of the type name */
+  /** @return an abbreviation of the __ name */
   public String abbreviate() {
     String $ = "";
     for (final Matcher ¢ = Pattern.compile("[A-Z]").matcher(typeName);; $ += ¢.group())
@@ -51,13 +51,13 @@ public final class JavaTypeNameParser {
     return isGenericVariation(¢.getName());
   }
 
-  /** Checks whether a variable name is a generic variation of its type name. A
-   * variable name is considered to be a generic variation of its type name if
-   * the variable name is equal to the type name, either one of them is
-   * contained within the other, or it is an abbreviation of the type name (For
-   * example: {@code sb} is a generic variation of {@link StringBuilder})
+  /** Checks whether a variable name is a generic variation of its __ name. A
+   * variable name is considered to be a generic variation of its __ name if the
+   * variable name is equal to the __ name, either one of them is contained
+   * within the other, or it is an abbreviation of the __ name (For example:
+   * {@code sb} is a generic variation of {@link StringBuilder})
    * @param variableName the name of the variable
-   * @return whether the variable name is a generic variation of the type name,
+   * @return whether the variable name is a generic variation of the __ name,
    *         false otherwise */
   public boolean isGenericVariation(final String variableName) {
     return typeName.equalsIgnoreCase(variableName) || lowerCaseContains(typeName, variableName)
@@ -66,13 +66,13 @@ public final class JavaTypeNameParser {
 
   /** Shorthand for n.equals(this.shortName())
    * @param subject JD
-   * @return whether the provided name equals the type's short name */
+   * @return whether the provided name equals the __'s short name */
   public boolean isShort(final String ¢) {
     return ¢.equals(shortName());
   }
 
-  /** Returns the calculated short name for the type
-   * @return type's short name */
+  /** Returns the calculated short name for the __
+   * @return __'s short name */
   public String shortName() {
     return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }

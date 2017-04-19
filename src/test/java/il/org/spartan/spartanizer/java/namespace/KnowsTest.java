@@ -46,8 +46,8 @@ public class KnowsTest extends MetaFixture {
   }
 
   final String repository;
-  @knows({ "type KnowsTest", "KnowsTest/3", "shouldKnow", "shouldKnow" }) private final String shouldKnow;
-  @knows({ "type KnowsTest", "knows/0", "name" }) private final SimpleName name;
+  @knows({ "__ KnowsTest", "KnowsTest/3", "shouldKnow", "shouldKnow" }) private final String shouldKnow;
+  @knows({ "__ KnowsTest", "knows/0", "name" }) private final SimpleName name;
 
   public KnowsTest(final SimpleName name, final String shouldKnow, final String repository) {
     this.name = name;

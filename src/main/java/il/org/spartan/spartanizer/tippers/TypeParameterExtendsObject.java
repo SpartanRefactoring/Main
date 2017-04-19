@@ -2,13 +2,12 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -30,7 +29,7 @@ public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypePar
     if (!haz.hasObject(ts))
       return null;
     for (final Iterator<Type> ¢ = ts.iterator(); ¢.hasNext();)
-      if (isObject(¢.next()))
+      if (type.isObject(¢.next()))
         ¢.remove();
     return $;
   }

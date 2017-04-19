@@ -199,7 +199,7 @@ public interface iz {
   }
 
   /** @param ¢ JD
-   * @return is boxed type */
+   * @return is boxed __ */
   static boolean boxedType(final Type ¢) {
     return ¢ instanceof SimpleType && Arrays.asList("Boolean", "Byte", "Character", "Float", "Integer", "Long", "Short", "Double")
         .contains(step.identifier(step.name((SimpleType) ¢)));
@@ -903,7 +903,7 @@ public interface iz {
     return n != null && type == n.getNodeType();
   }
 
-  /** Determine whether the type of an {@link ASTNode} node is one of given list
+  /** Determine whether the __ of an {@link ASTNode} node is one of given list
    * @param n a node
    * @param types a list of types
    * @return whether function #ASTNode.getNodeType returns one of the types
@@ -1071,7 +1071,7 @@ public interface iz {
   }
 
   /** @param ¢
-   * @param type Type of sequencer
+   * @param __ Type of sequencer
    * @return true if ¢ contains this sequencer (only for if-else and blocks) In
    *         contrast to sequencerComplex(ASTNode) above, this method not
    *         necessarily checks the following statements are not reachable. */
@@ -1239,7 +1239,7 @@ public interface iz {
   }
 
   /** @param pattern JD
-   * @return whether the node is an Expression Statement of type Post or Pre
+   * @return whether the node is an Expression Statement of __ Post or Pre
    *         Expression with ++ or -- operator false if node is not an
    *         Expression Statement or its a Post or Pre fix expression that its
    *         operator is not ++ or -- */

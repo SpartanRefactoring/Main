@@ -353,7 +353,7 @@ public interface idiomatic {
     // }
   }
 
-  /** A class to collect collections without need to specify their type. should
+  /** A class to collect collections without need to specify their __. should
    * work for most of common collections.
    * @author Ori Marcovitch
    * @since 2016 */

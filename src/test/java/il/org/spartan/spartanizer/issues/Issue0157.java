@@ -85,7 +85,7 @@ public final class Issue0157 {
                 + "}");
   }
 
-  // Parameterized that are not of some Collection type, don'tipper get an
+  // Parameterized that are not of some Collection __, don'tipper get an
   // 's' if
   // they're not an array.
   @Test public void test06() {

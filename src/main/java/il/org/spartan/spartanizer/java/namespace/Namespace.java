@@ -253,14 +253,14 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final AnnotationTypeDeclaration ¢) {
-    return put("type " + step.name(¢), step.name(¢));
+    return put("__ " + step.name(¢), step.name(¢));
   }
 
   private Namespace put(final AnnotationTypeMemberDeclaration ¢) {
     return put("annotation member" + step.name(¢), ¢.getType());
   }
 
-  /** Add to the NameSpace a new name according to its type, we habdle each kind
+  /** Add to the NameSpace a new name according to its __, we habdle each kind
    * of node with a different function */
   @SuppressWarnings({}) protected Namespace put(final BodyDeclaration ¢) {
     return iz.methodDeclaration(¢) ? put(az.methodDeclaration(¢))
@@ -273,7 +273,7 @@ public final class Namespace implements Environment {
   }
 
   private Namespace put(final EnumDeclaration ¢) {
-    return put("type " + step.name(¢), step.name(¢));
+    return put("__ " + step.name(¢), step.name(¢));
   }
 
   private Namespace put(final FieldDeclaration d) {
@@ -320,7 +320,7 @@ public final class Namespace implements Environment {
   }
 
   protected Namespace put(final TypeDeclaration ¢) {
-    @knows("¢") final String key = "type " + step.name(¢);
+    @knows("¢") final String key = "__ " + step.name(¢);
     put(key, new Binding(key, type.baptize(step.name(¢) + "", !iz.interface¢(¢) ? "class" : "interface")));
     return this;
   }

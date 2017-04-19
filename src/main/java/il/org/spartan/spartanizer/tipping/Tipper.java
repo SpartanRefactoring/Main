@@ -19,7 +19,7 @@ import nano.ly.*;
 /** A tipper is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A tipper is so small that it is
  * idempotent: Applying a tipper to the output of itself is the empty operation.
- * @param <N> type of node which triggers the transformation.
+ * @param <N> __ of node which triggers the transformation.
  * @author Yossi Gil
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
  * @since 2015-07-09 */
@@ -67,7 +67,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   /** Heuristics to find the class of operands on which this class works.
-   * @return a guess for the type of the node. */
+   * @return a guess for the __ of the node. */
   public final Class<N> getAbstractOperandClass() {
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
@@ -118,7 +118,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     if (o == null)
       return nil.forgetting(note.bug("Missing attribute"));
     if (!(o instanceof Class))
-      return nil.forgetting(note.bug("Attribute of wrong type"));
+      return nil.forgetting(note.bug("Attribute of wrong __"));
     @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> tipperClass = (Class<? extends Tipper<N>>) (Class<?>) o;
     return Tipper.instantiate(tipperClass);
   }

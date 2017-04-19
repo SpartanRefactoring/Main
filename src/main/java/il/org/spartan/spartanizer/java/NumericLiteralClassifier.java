@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.java;
 
 import il.org.spartan.spartanizer.engine.type.*;
 
-/** A utility to determine the exact type of a Java character or numerical
+/** A utility to determine the exact __ of a Java character or numerical
  * literal.
  * @author Yossi Gil
  * @since 2015-08-30 */
@@ -19,7 +19,7 @@ public final class NumericLiteralClassifier {
     inner = literal;
   }
 
-  /** @return the type of this literal.
+  /** @return the __ of this literal.
    * @see PrudentType */
   public Primitive.Certain type() {
     if (inner.charAt(0) == '\'')

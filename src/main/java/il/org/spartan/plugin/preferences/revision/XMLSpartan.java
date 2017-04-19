@@ -139,8 +139,7 @@ public class XMLSpartan {
     try {
       return getFileInner($);
     } catch (final ParserConfigurationException | CoreException | SAXException | IOException ¢) {
-      note.bug(¢);
-      return null;
+      return note.bug(¢);
     }
   }
 

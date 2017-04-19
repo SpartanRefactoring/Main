@@ -17,7 +17,7 @@ import nano.ly.*;
 /** Possible events during spartanization process
  * <p>
  * Why do we need to make such a strong binding between the event generator and
- * the listener? Why should they agree on a common type of events? We should let
+ * the listener? Why should they agree on a common __ of events? We should let
  * the listener take, say strings, and just record them. */
 @Deprecated
 enum event {

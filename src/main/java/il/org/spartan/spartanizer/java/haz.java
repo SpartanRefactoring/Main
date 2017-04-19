@@ -36,7 +36,7 @@ public enum haz {
       case ASTNode.VARIABLE_DECLARATION_STATEMENT:
         return haz.annotation((VariableDeclarationStatement) $);
       default:
-        assert fault.unreachable() : fault.specifically("Unexpected node type", $, ¢);
+        assert fault.unreachable() : fault.specifically("Unexpected node __", $, ¢);
         return false;
     }
   }
@@ -71,7 +71,7 @@ public enum haz {
     return ¢ != null && ¢.getAST() != null && ¢.getAST().hasResolvedBindings();
   }
 
-  /** Determines whether the method's return type is boolean.
+  /** Determines whether the method's return __ is boolean.
    * @param ¢ method
    * @return */
   public static boolean booleanReturnType(final MethodDeclaration ¢) {
@@ -258,7 +258,7 @@ public enum haz {
   }
 
   public static boolean hasObject(final List<Type> ¢) {
-    return ¢ != null && ¢.stream().anyMatch(wizard::isObject);
+    return ¢ != null && ¢.stream().anyMatch(type::isObject);
   }
 
   public static boolean hasSafeVarags(final MethodDeclaration d) {
@@ -266,7 +266,7 @@ public enum haz {
   }
 
   /** @param ns unknown number of nodes to check
-   * @return whether one of the nodes is an Expression Statement of type Post or
+   * @return whether one of the nodes is an Expression Statement of __ Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
    *         if the given parameter is null. */
   public static boolean containIncOrDecExp(final ASTNode... ns) {

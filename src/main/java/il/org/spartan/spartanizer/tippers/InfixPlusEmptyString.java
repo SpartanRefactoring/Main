@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.tipping.*;
 import nano.ly.*;
 
-/** Converts {@code ""+"foo"} to {@code "foo"} when x is of type String
+/** Converts {@code ""+"foo"} to {@code "foo"} when x is of __ String
  * @author Stav Namir
  * @author Niv Shalmon
  * @since 2016-08-29 */

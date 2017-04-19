@@ -174,7 +174,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
   /** Required due to bug in eclipse (seams so). Given
    * {@code T extends MyObject}, {@code T[]} turns with binding into
-   * {@code ? extends E[]}. The problem is this type is considered as
+   * {@code ? extends E[]}. The problem is this __ is considered as
    * {@link ArrayType} rather than {@link WildcardType}! Thus the manual fix.
    * Real world example: <code>
    * class C<E extends Enum<?>> {

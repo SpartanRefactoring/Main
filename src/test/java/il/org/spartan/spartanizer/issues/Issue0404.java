@@ -26,7 +26,7 @@ public class Issue0404 {
     assert ¢ != null;
   }
 
-  /** Ensure that there is a type named {@link dig}
+  /** Ensure that there is a __ named {@link dig}
    * <p>
    * Meta information: There are no established rules on names of test methods.
    * This class demonstrates the <b>Dewey</b> notation: A pattern, with many

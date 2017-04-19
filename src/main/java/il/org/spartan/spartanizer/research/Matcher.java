@@ -25,12 +25,12 @@ import il.org.spartan.utils.*;
  * as their descendants. each pattern variable matches a family of ASTNodes.<br>
  * To specify that a given ASTNode is a pattern variable, it should be of the
  * appropriate<br>
- * type, and its identifier should start with a special prefix and might
- * continue with a sequence of digits.<br>
+ * __, and its identifier should start with a special prefix and might continue
+ * with a sequence of digits.<br>
  * <br>
  * The currently available pattern variables ('i' denotes a sequence of digits):
  * <ul>
- * <li>{@code $Xi, $Mi, $Ni, $Li}: Should be of type {@link Name} within the
+ * <li>{@code $Xi, $Mi, $Ni, $Li}: Should be of __ {@link Name} within the
  * pattern. Corresponds<br>
  * to: {@link Expression}, {@link MethodInvokation}, {@link Name},
  * {@link Literal}.</li>
