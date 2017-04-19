@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Find all loops not matched by a nano pattern
  * @author orimarco <marcovitch.ori@gmail.com>
@@ -33,10 +34,10 @@ public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
     try {
       descendants.whoseClassIs(EnhancedForStatement.class).from(into.cu(nanonizer.fixedPoint(¢))).stream().filter(iz::simpleLoop)
           .forEach(λ -> appendFile(out, λ + ""));
-    } catch (@SuppressWarnings("unused") final AssertionError __) {
-      System.err.print("X");
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      System.err.print("I");
+    } catch (final AssertionError x) {
+      note.bug(x);
+    } catch (final IllegalArgumentException x) {
+      note.bug(x);
     }
     return true;
   }

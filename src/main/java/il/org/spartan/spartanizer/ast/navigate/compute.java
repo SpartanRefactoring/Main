@@ -181,7 +181,7 @@ public enum compute {
       }
 
       @Override protected List<Statement> map(final PrefixExpression ¢) {
-        return iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? wizard.listMe(¢) : reduce();
+        return !iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? reduce() : wizard.listMe(¢);
       }
 
       @Override protected List<Statement> map(final SuperMethodInvocation ¢) {

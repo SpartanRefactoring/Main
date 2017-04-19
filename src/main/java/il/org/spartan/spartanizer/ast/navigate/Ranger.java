@@ -81,7 +81,7 @@ public interface Ranger {
     return true;
   }
 
-  public static Range start(final ASTNode n) {
-    return new Range(n.getStartPosition(), n.getStartPosition() + 1);
+  static Range start(final ASTNode ¢) {
+    return new Range(¢.getStartPosition(), ¢.getStartPosition() + 1);
   }
 }

@@ -349,8 +349,8 @@ public interface wizard {
   static String intToClassName(final int $) {
     try {
       return ASTNode.nodeClassForType($).getSimpleName();
-    } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-      return "???";
+    } catch (final IllegalArgumentException x) {
+      return note.bug(x); 
     }
   }
 
