@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 import nano.ly.*;
 
 /** Apply a {@link Configuration} to a tree. Issues are
@@ -30,12 +31,13 @@ public class TraversalImplementation extends Traversal {
   public ASTRewrite bottomUp(final CompilationUnit u) {
     setCompilationUnit(u);
     final Tips tips = Tips.empty();
+    final Range range = getRange();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
-        if (wizard.disjoint(¢, getRange()))
+        if (wizard.disjoint(¢, range))
           return false;
-        if (!check(¢) || disabling.on(¢))
+        if (range != null && !wizard.contained(¢, range) || !check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
         if (getTip() == null)
@@ -89,12 +91,13 @@ public class TraversalImplementation extends Traversal {
   private void topDown(final CompilationUnit u) {
     final Tips tips = Tips.empty();
     setRewrite(ASTRewrite.create(u.getAST()));
+    final Range range = getRange();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
-        if (wizard.disjoint(¢, getRange()))
+        if (wizard.disjoint(¢, range))
           return false;
-        if (!check(¢) || disabling.on(¢))
+        if (range != null && !wizard.contained(¢, range) || !check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
         if (getTip() == null)
