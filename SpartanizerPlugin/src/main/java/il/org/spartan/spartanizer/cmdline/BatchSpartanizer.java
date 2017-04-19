@@ -238,7 +238,7 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       System.err.println("Word Count Essentialized after: " + numWordEssentialAfter);
       System.err.println("Difference: " + (numWordEssentialAfter - numWordEssentialBefore));
     } catch (final IOException ¢) {
-      System.err.println(¢.getMessage());
+      note.bug(¢);
     }
   }
 

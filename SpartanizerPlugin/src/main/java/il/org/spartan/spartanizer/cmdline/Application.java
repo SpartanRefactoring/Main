@@ -120,7 +120,7 @@ public final class Application implements IApplication {
     try {
       prepareTempIJavaProject();
     } catch (final CoreException ¢) {
-      System.err.println(¢.getMessage());
+      note.bug(¢);
       return IApplication.EXIT_OK;
     }
     int done = 0, failed = 0;

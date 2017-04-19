@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Demonstrates iteration through files.
  * @year 2015
@@ -59,7 +60,7 @@ public enum TypeNamesCollector {
     try {
       collect(FileUtils.read(f));
     } catch (final IOException ¢) {
-      System.err.println(¢.getMessage());
+      note.bug(¢);
     }
   }
 
