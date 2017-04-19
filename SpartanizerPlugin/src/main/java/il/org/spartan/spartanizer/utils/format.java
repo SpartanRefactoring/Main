@@ -21,7 +21,7 @@ public enum format {
       if (textEdit != null)
         textEdit.apply($);
     } catch (final BadLocationException | MalformedTreeException ¢) {
-      ¢.printStackTrace();
+      note.bug(¢);
     }
     return $.get();
   }
