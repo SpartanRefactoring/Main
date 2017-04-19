@@ -20,13 +20,14 @@ import il.org.spartan.utils.*;
 import org.eclipse.jdt.core.dom.Assignment.Operator;
 
 /** inline arithmetics into variable initialization tests in {@link Issue0187}
- *  such as += and -=
+ * such as += and -=
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-04-18 */
 public class LocalInitializedArithmeticsInline extends LocalInitialized//
     implements TipperCategory.Inlining {
   Operator o;
   Expression rightHandSide;
+
   public LocalInitializedArithmeticsInline() {
     andAlso("Has arithmetics of variable afterwards", () -> {
       final ExpressionStatement s = az.expressionStatement(nextStatement);
@@ -39,10 +40,11 @@ public class LocalInitializedArithmeticsInline extends LocalInitialized//
       rightHandSide = $.getRightHandSide();
       return o != ASSIGN //
           && az.simpleName($.getLeftHandSide()).getIdentifier().equals(name.getIdentifier())
-          && collect.usesOf(name).in(extract.fragments(declaration)).size() == 1
-          && collect.usesOf(name).in(rightHandSide).isEmpty()
-          //check whether any variable declared in the current declaration is used in the next statement, for safety
-          && extract.fragments(declaration).stream().allMatch((VariableDeclarationFragment f)->collect.usesOf(f.getName()).in(rightHandSide).isEmpty());
+          && collect.usesOf(name).in(extract.fragments(declaration)).size() == 1 && collect.usesOf(name).in(rightHandSide).isEmpty()
+      // check whether any variable declared in the current declaration is used
+      // in the next statement, for safety
+          && extract.fragments(declaration).stream()
+              .allMatch((final VariableDeclarationFragment f) -> collect.usesOf(f.getName()).in(rightHandSide).isEmpty());
     });
   }
 
@@ -58,9 +60,9 @@ public class LocalInitializedArithmeticsInline extends LocalInitialized//
         .to("int x = 1+1;")//
         .ignores("int x = 1, y = x; x*=3;");
   }
-  
+
   @Override protected ASTNode[] span() {
-    return as.array(current,nextStatement);
+    return as.array(current, nextStatement);
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {

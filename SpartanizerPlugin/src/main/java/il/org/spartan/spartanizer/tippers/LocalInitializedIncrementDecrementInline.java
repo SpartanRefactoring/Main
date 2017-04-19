@@ -49,9 +49,9 @@ public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
         .to("int x = 1+1;")//
         .ignores("int x = 1, y = x; ++x;");
   }
-  
+
   @Override protected ASTNode[] span() {
-    return as.array(current,nextStatement);
+    return as.array(current, nextStatement);
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {

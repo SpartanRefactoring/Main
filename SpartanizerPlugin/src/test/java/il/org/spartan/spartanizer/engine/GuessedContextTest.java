@@ -18,14 +18,14 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class GuessedContextTest {
   @Test public void a1() {
-    trimminKof("public class C{public C(int i) {j = 2*i;} public final int j; public C y() { final C $ = new C(6); S.x.f($.j);return $;}}")
-        .stays();
+    trimminKof("public class C{public C(int i) {j = 2*i;} public final int j; public C y() { final C $ = new C(6); S.x.f($.j);return $;}}").stays();
   }
+
   @Test public void a2() {
     trimminKof("@O public IMarkerResolution[] getResolutions(final IMarker m) { try { "
         + "final L s = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); }finally{} return s;}")//
-    .gives(
-            "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final L $ = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); }finally{} return $;}");
+            .gives(
+                "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final L $ = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); }finally{} return $;}");
   }
 
   @Test public void a3() {

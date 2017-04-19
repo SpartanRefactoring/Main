@@ -30,7 +30,6 @@ public class TraversalImplementation extends Traversal {
   /** Instantiates this class */
   public ASTRewrite bottomUp(final CompilationUnit u) {
     setCompilationUnit(u);
-    final Tips tips = Tips.empty();
     final Range range = getRange();
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
@@ -89,7 +88,6 @@ public class TraversalImplementation extends Traversal {
   }
 
   private void topDown(final CompilationUnit u) {
-    final Tips tips = Tips.empty();
     setRewrite(ASTRewrite.create(u.getAST()));
     final Range range = getRange();
     u.accept(new DispatchingVisitor() {
@@ -127,7 +125,7 @@ public class TraversalImplementation extends Traversal {
     }, λ -> note.bug(λ));
   }
 
-  @Override public ASTVisitor tipsCollector(final Tips into) {
+  @Override public ASTVisitor tipsCollector() {
     fileName = English.unknownIfNull(compilationUnit(), λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -139,8 +137,8 @@ public class TraversalImplementation extends Traversal {
           setTip($.tip(n));
           if (getTip() == null)
             return;
-          into.removeIf(λ -> Tip.overlap(λ.highlight, getTip().highlight));
-          into.add(getTip());
+          tips.removeIf(λ -> Tip.overlap(λ.highlight, getTip().highlight));
+          tips.add(getTip());
         }, note::bug);
       }
 

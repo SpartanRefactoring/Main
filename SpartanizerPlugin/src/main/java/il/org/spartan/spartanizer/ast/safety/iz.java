@@ -330,7 +330,7 @@ public interface iz {
     return (Modifier.DEFAULT & node.getModifiers()) != 0;
   }
 
-  static boolean defaultLiteral(ASTNode ¢2) {
+  static boolean defaultLiteral(final ASTNode ¢2) {
     return iz.nullLiteral(¢2) || iz.literal0(¢2) || literal.false¢(¢2) || iz.literal(¢2, 0.0) || iz.literal(¢2, 0L);
   }
 
