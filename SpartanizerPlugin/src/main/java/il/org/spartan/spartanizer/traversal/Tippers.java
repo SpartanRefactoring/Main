@@ -54,8 +54,8 @@ public interface Tippers {
     return $.tip(n);
   }
 
-  static long find(final Tipper<? extends ASTNode> t) {
-    return ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID();
+  static long find(final Tipper<? extends ASTNode> ¢) {
+    return ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID();
   }
 
   @SafeVarargs static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {

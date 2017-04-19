@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** TODO orenafek: document class
  * @author orenafek
@@ -158,7 +159,8 @@ public class ASTTestClassGenerator implements TestClassGenerator {
         line = linesStream.readLine();
       }
       return $ + "";
-    } catch (@SuppressWarnings("unused") final IOException ignore) {/**/}
-    return "";
+    } catch (final IOException x) {
+      return note.bug(x);
+    }
   }
 }

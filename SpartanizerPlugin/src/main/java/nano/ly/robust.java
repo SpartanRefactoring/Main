@@ -35,28 +35,28 @@ public interface robust {
     return robust.ly(t, __ -> null);
   }
 
-  static <T> T lyNull(final Supplier<T> t, final Consumer<Exception> x) {
-    return robust.ly(t, λ -> nulling.ly(() -> x.accept(λ)));
+  static <T> T lyNull(final Supplier<T> t, final Consumer<Exception> c) {
+    return robust.ly(t, λ -> nulling.ly(() -> c.accept(λ)));
   }
 
   static <T> T lyNull(final Supplier<T> t, final Runnable r) {
     return robust.ly(t, __ -> nulling.ly(r));
   }
 
-  static boolean lyTrue(final BooleanSupplier s, final Consumer<Exception> x) {
+  static boolean lyTrue(final BooleanSupplier s, final Consumer<Exception> c) {
     try {
       return s.getAsBoolean();
-    } catch (final Exception $) {
-      x.accept($);
+    } catch (final Exception ¢) {
+      c.accept(¢);
       return true;
     }
   }
 
-  static boolean lyTrue(final Runnable r, final Consumer<Exception> x) {
+  static boolean lyTrue(final Runnable r, final Consumer<Exception> c) {
     try {
       r.run();
-    } catch (final Exception $) {
-      x.accept($);
+    } catch (final Exception ¢) {
+      c.accept(¢);
     }
     return true;
   }
