@@ -82,7 +82,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link AbstractTypeDeclaration}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static AbstractTypeDeclaration abstractTypeDeclaration(final ASTNode $) {
     return eval(() -> ((AbstractTypeDeclaration) $)).when($ instanceof AbstractTypeDeclaration);
@@ -90,7 +90,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link Annotation}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static Annotation annotation(final IExtendedModifier $) {
     return !iz.annotation($) ? null : (Annotation) $;
@@ -114,7 +114,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link ArrayInitializer}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static ArrayInitializer arrayInitializer(final Expression $) {
     return !iz.nodeTypeEquals($, ARRAY_INITIALIZER) ? null : (ArrayInitializer) $;
@@ -161,7 +161,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link BooleanLiteral}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static BooleanLiteral booleanLiteral(final ASTNode $) {
     return !iz.nodeTypeEquals($, BOOLEAN_LITERAL) ? null : (BooleanLiteral) $;
@@ -183,7 +183,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link ClassInstanceCreation}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static ClassInstanceCreation classInstanceCreation(final ASTNode $) {
     return !($ instanceof ClassInstanceCreation) ? null : (ClassInstanceCreation) $;
@@ -238,7 +238,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link EnumConstantDeclaration}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static EnumConstantDeclaration enumConstantDeclaration(final ASTNode $) {
     return !($ instanceof EnumConstantDeclaration) ? null : (EnumConstantDeclaration) $;
@@ -252,7 +252,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link Expression}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static Expression expression(final ASTNode $) {
     return !($ instanceof Expression) ? null : (Expression) $;
@@ -260,7 +260,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link ExpressionStatement}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static ExpressionStatement expressionStatement(final ASTNode $) {
     return !iz.nodeTypeEquals($, EXPRESSION_STATEMENT) ? null : (ExpressionStatement) $;
@@ -282,7 +282,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link ForStatement}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static ForStatement forStatement(final ASTNode $) {
     return !iz.nodeTypeEquals($, FOR_STATEMENT) ? null : (ForStatement) $;
@@ -290,7 +290,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link IfStatement}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static IfStatement ifStatement(final ASTNode $) {
     return !iz.nodeTypeEquals($, IF_STATEMENT) ? null : (IfStatement) $;
@@ -298,7 +298,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link InfixExpression}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static InfixExpression infixExpression(final ASTNode $) {
     return !iz.nodeTypeEquals($, INFIX_EXPRESSION) ? null : (InfixExpression) $;
@@ -310,7 +310,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link InstanceofExpression}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static InstanceofExpression instanceofExpression(final Expression $) {
     return !iz.nodeTypeEquals($, INSTANCEOF_EXPRESSION) ? null : (InstanceofExpression) $;
@@ -334,7 +334,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link MethodInvocation}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static MethodInvocation methodInvocation(final ASTNode $) {
     return !($ instanceof MethodInvocation) ? null : (MethodInvocation) $;
@@ -350,7 +350,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link Modifier}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static Modifier modifier(final ASTNode $) {
     return !iz.modifier($) ? null : (Modifier) $;
@@ -368,7 +368,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link NormalAnnotation}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static NormalAnnotation normalAnnotation(final Annotation $) {
     return !($ instanceof NormalAnnotation) ? null : (NormalAnnotation) $;
@@ -389,7 +389,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link NumberLiteral}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static NumberLiteral numberLiteral(final ASTNode $) {
     return !iz.numberLiteral($) ? null : (NumberLiteral) $;
@@ -413,7 +413,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link ParenthesizedExpression}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static ParenthesizedExpression parenthesizedExpression(final Expression $) {
     return !iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? null : (ParenthesizedExpression) $;
@@ -421,7 +421,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link InfixExpression}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static PostfixExpression postfixExpression(final ASTNode $) {
     return eval(() -> (PostfixExpression) $).when($ instanceof PostfixExpression);
@@ -429,7 +429,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link PrefixExpression}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static PrefixExpression prefixExpression(final ASTNode $) {
     return eval(() -> (PrefixExpression) $).when($ instanceof PrefixExpression);
@@ -449,7 +449,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link ReturnStatement}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static ReturnStatement returnStatement(final ASTNode $) {
     return $ == null || !iz.nodeTypeEquals($, RETURN_STATEMENT) ? null : (ReturnStatement) $;
@@ -479,7 +479,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link SingleMemberAnnotation}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static SingleMemberAnnotation singleMemberAnnotation(final Annotation $) {
     return !($ instanceof SingleMemberAnnotation) ? null : (SingleMemberAnnotation) $;
@@ -491,7 +491,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link Statement}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static Statement statement(final ASTNode $) {
     return !iz.statement($) ? null : (Statement) $;
@@ -503,7 +503,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link StringLiteral}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static StringLiteral stringLiteral(final ASTNode $) {
     return !iz.nodeTypeEquals($, STRING_LITERAL) ? null : (StringLiteral) $;
@@ -567,7 +567,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link UnionType}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static UnionType UnionType(final ASTNode $) {
     return !($ instanceof UnionType) ? null : (UnionType) $;
@@ -575,7 +575,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link IntersectionType}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static IntersectionType intersectionType(final ASTNode $) {
     return !($ instanceof IntersectionType) ? null : (IntersectionType) $;
@@ -611,7 +611,7 @@ public enum az {
 
   /** Down-cast, if possible, to {@link WhileStatement}
    * @param $ result
-   * @return parameter down-casted to the returned type, or
+   * @return parameter down-casted to the returned __, or
    *         {@code null if no such down-casting is possible. */
   public static WhileStatement whileStatement(final ASTNode $) {
     return !iz.whileStatement($) ? null : (WhileStatement) $;

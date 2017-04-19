@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;
 
-/** Various metrics, which can be written fluent API style with this type's name
+/** Various metrics, which can be written fluent API style with this __'s name
  * prefix.
  * @author Yossi Gil
  * @since 2016 */

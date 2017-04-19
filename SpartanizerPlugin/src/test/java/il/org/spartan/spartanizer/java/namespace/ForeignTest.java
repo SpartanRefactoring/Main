@@ -25,8 +25,8 @@ public class ForeignTest extends MetaFixture {
   }
 
   final String repository;
-  @knows({ "type KnowsTest", "KnowsTest/2", "foreign", "foreign" }) private final String foreign;
-  @knows({ "type KnowsTest", "recognizes/0", "name" }) private final SimpleName name;
+  @knows({ "__ KnowsTest", "KnowsTest/2", "foreign", "foreign" }) private final String foreign;
+  @knows({ "__ KnowsTest", "recognizes/0", "name" }) private final SimpleName name;
 
   public ForeignTest(final SimpleName name, final String foreign, final String repository) {
     this.name = name;

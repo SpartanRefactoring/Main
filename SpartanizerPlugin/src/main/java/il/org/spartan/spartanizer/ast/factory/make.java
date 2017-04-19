@@ -59,10 +59,10 @@ public enum make {
 
   public static class PlantingExpression {
     /** Determines whether an infix expression can be added to String concating
-     * without parenthesis type wise.
+     * without parenthesis __ wise.
      * @param Expression
      * @return whethere is an infix expression and if it's first operand is of
-     *         type String and false otherwise */
+     *         __ String and false otherwise */
     public static boolean isStringConactingSafe(final Expression ¢) {
       return infixExpression(¢) && isStringConcatingSafe(az.infixExpression(¢));
     }
@@ -231,7 +231,7 @@ public enum make {
   }
 
   /** Converts the {@link makeAST} value to its corresponding enum value
-   * @param tipper The {@link makeAST} type
+   * @param tipper The {@link makeAST} __
    * @return corresponding value to the argument */
   public static make from(final makeAST ¢) {
     switch (¢) {

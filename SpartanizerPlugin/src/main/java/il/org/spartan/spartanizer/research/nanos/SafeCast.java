@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** A cast which is inside an IfStatement body which checks the casted
- * expression is actually of the casted to type
+ * expression is actually of the casted to __
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-23 */
 public class SafeCast extends NanoPatternTipper<CastExpression> {

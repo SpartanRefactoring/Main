@@ -25,9 +25,9 @@ public enum GuessedContext {
       "\n /* END compilation unit */\n"//
   ), OUTER_TYPE_LOOKALIKE(//
       COMPILATION_UNIT_LOOK_ALIKE.before + //
-          "\n\t package p466876; /* BEGIN Outer type in a compilation unit */\n"//
+          "\n\t package p466876; /* BEGIN Outer __ in a compilation unit */\n"//
       , //
-      "\n\t /* END outer type in a compilation unit */\n" + //
+      "\n\t /* END outer __ in a compilation unit */\n" + //
           COMPILATION_UNIT_LOOK_ALIKE.after //
   ), METHOD_LOOK_ALIKE( //
       OUTER_TYPE_LOOKALIKE.before + //
