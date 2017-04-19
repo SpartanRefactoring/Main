@@ -57,8 +57,8 @@ public class OperandBloating extends TestOperand {
       final IDocument $ = new Document(wrap);
       r.rewriteAST($, null).apply($);
       return w.off($.get());
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException x) {
-      return note.bug(x);
+    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
+      return note.bug(¢);
     }
   }
 

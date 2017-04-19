@@ -449,8 +449,8 @@ public class Selection extends AbstractSelection<Selection> {
       try {
         return $.getSourceRange();
       } catch (final JavaModelException ¢) {
+        return 
         note.bug(¢);
-        return null;
       }
     }
 
@@ -461,8 +461,7 @@ public class Selection extends AbstractSelection<Selection> {
         final int $ = ((Integer) m.getAttribute(Builder.SPARTANIZATION_CHAR_START)).intValue();
         return new TextSelection($, ((Integer) m.getAttribute(Builder.SPARTANIZATION_CHAR_END)).intValue() - $);
       } catch (final CoreException ¢) {
-        note.bug(¢);
-        return null;
+        return note.bug(¢);
       }
     }
 
@@ -474,8 +473,8 @@ public class Selection extends AbstractSelection<Selection> {
         final int $ = ((Integer) m.getAttribute(IMarker.CHAR_START)).intValue();
         return new NodeFinder(u.build().compilationUnit, $, ((Integer) m.getAttribute(IMarker.CHAR_END)).intValue() - $).getCoveredNode();
       } catch (final CoreException ¢) {
+        return
         note.bug(¢);
-        return null;
       }
     }
 
