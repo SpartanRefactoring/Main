@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}
@@ -49,10 +50,10 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
     if (!excludeMethod($))
       try {
         nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""));
-      } catch (@SuppressWarnings("unused") final AssertionError __) {
-        System.err.print("X");
-      } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {
-        System.err.print("I");
+      } catch (final AssertionError x) {
+        note.bug(x);
+      } catch (final IllegalArgumentException x) {
+        note.bug(x);
       }
     return super.visit($);
   }

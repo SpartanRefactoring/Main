@@ -107,8 +107,8 @@ public final class Application implements IApplication {
     try (Scanner s = new Scanner(System.in)) {
       try {
         s.nextLine();
-      } catch (@SuppressWarnings("unused") final Exception __) {
-        //
+      } catch (final Exception x) {
+        note.bug(x); 
       }
     }
     return $;
@@ -210,8 +210,8 @@ public final class Application implements IApplication {
       try {
         if (a.startsWith("-C"))
           optRounds = Integer.parseUnsignedInt(a.substring(2));
-      } catch (@SuppressWarnings("unused") final NumberFormatException __) {
-        // forget
+      } catch (final NumberFormatException x) {
+        note.bug(x);
       }
       if ("-V".equals(a))
         optVerbose = true;

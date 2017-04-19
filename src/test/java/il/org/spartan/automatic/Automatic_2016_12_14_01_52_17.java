@@ -14,7 +14,7 @@ public class Automatic_2016_12_14_01_52_17 {
    * while testing some test file. Originated at
    * il.org.spartan.spartanizer.ast.navigate.extract.nextPrefix at line #343. */
   @Test public void nextPrefixTest() {
-    trimminKof("package a;public final class A { public void b(){ try { B.c(d).e().f(g -> h[i++]=j(g)); }" + " catch ( C k) { return null; } }}")
+    trimminKof("package a;public final class A { public void b(){ try { B.c(d).e().f(g -> h[i++]=j(g)); } catch ( C k) { return null; } }}")
         .doesNotCrash();
   }
 
@@ -23,7 +23,7 @@ public class Automatic_2016_12_14_01_52_17 {
    * il.org.spartan.spartanizer.tippers.LambdaExpressionRemoveRedundantCurlyBraces.prerequisite
    * at line #45. */
   @Test public void prerequisiteTest() {
-    trimminKof("package a;public final class A { public void b(){ try { B.c(d).e().f(g -> h[i++]=j(g)); }" + " catch (C k) { return null; } }}")
+    trimminKof("package a;public final class A { public void b(){ try { B.c(d).e().f(g -> h[i++]=j(g)); } catch (C k) { return null; } }}")
         .doesNotCrash();
   }
 
