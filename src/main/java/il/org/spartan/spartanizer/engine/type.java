@@ -33,6 +33,24 @@ import il.org.spartan.spartanizer.java.*;
  * @author Niv Shalmon
  * @since 2016 */
 public interface type {
+  @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
+    {
+      for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
+        add(¢);
+        add("java.lang." + ¢);
+      }
+    }
+  };
+  Collection<String> valueTypes = new LinkedHashSet<String>(type.boxedTypes) {
+    static final long serialVersionUID = -0x134495F1CC662D60L;
+    {
+      for (final String ¢ : new String[] { "String" }) {
+        add(¢);
+        add("java.lang." + ¢);
+      }
+    }
+  };
+
   /** adds a new __ to the system */
   static inner.implementation baptize(final String name) {
     return baptize(name, "anonymously born");
@@ -45,12 +63,12 @@ public interface type {
         return description;
       }
 
-      @Override public String toString() {
-        return name + "";
-      }
-
       @Override public String key() {
         return name;
+      }
+
+      @Override public String toString() {
+        return name + "";
       }
     }.join();
   }
@@ -64,6 +82,10 @@ public interface type {
   /** @return whether a __ with a given name exists in the system */
   static boolean have(final String name) {
     return inner.types.containsKey(name);
+  }
+
+  static boolean isBoxedType(final String typeName) {
+    return type.boxedTypes.contains(typeName);
   }
 
   static boolean isDouble(final Expression ¢) {
@@ -88,8 +110,44 @@ public interface type {
     return !in(of(¢), STRING, ALPHANUMERIC);
   }
 
+  static boolean isObject(final Type ¢) {
+    if (¢ == null)
+      return false;
+    switch (¢ + "") {
+      case "Object":
+      case "java.lang.Object":
+        return true;
+      default:
+        return false;
+    }
+  }
+
   static boolean isString(final Expression ¢) {
     return of(¢) == STRING;
+  }
+
+  static boolean isString(final String typeName) {
+    if (typeName == null)
+      return false;
+    switch (typeName) {
+      case "String":
+      case "java.lang.String":
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  static boolean isString(final Type ¢) {
+    return isString(¢ + "");
+  }
+
+  static boolean isValueType(final String typeName) {
+    return type.valueTypes.contains(typeName);
+  }
+
+  static boolean isValueType(final Type ¢) {
+    return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
   }
 
   // TODO Matteo: Nano-pattern of values: not implemented
@@ -147,46 +205,6 @@ public interface type {
   /** @return the formal name of this __, the key under which it is stored in
    *         {@link #types}, e.g., "Object", "int", "String", etc. */
   String key();
-
-  static boolean isBoxedType(final String typeName) {
-    return __.boxedTypes.contains(typeName);
-  }
-
-  static boolean isObject(final Type ¢) {
-    if (¢ == null)
-      return false;
-    switch (¢ + "") {
-      case "Object":
-      case "java.lang.Object":
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  static boolean isString(final String typeName) {
-    if (typeName == null)
-      return false;
-    switch (typeName) {
-      case "String":
-      case "java.lang.String":
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  static boolean isString(final Type ¢) {
-    return isString(¢ + "");
-  }
-
-  static boolean isValueType(final String typeName) {
-    return __.valueTypes.contains(typeName);
-  }
-
-  static boolean isValueType(final Type ¢) {
-    return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
-  }
 
   /** An interface with one method- __, overloaded for many different parameter
    * types. Can be used to find the __ of an expression thats known at compile
@@ -548,10 +566,10 @@ public interface type {
     /** Those anonymous characters that know little or nothing about
      * themselves */
     enum Types implements Odd {
+      NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
       /** TOOD: Dor, take note that in certain situations, null could be a
        * {@link Boolean} __ */
       NULL("null", "when it is certain to be null: null, (null), ((null)), etc. but nothing else"), //
-      NOTHING("none", "when nothing can be said, e.g., f(f(),f(f(f()),f()))"), //
       ;
       private final String description;
       private final String key;
@@ -636,11 +654,11 @@ public interface type {
      * @author Niv Shalmon
      * @since 2016-08-XX */
     enum Uncertain implements Primitive {
-      INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG)//
-      , INTEGRAL("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT, BYTE)//
-      , NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE)//
-      , ALPHANUMERIC("only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, STRING)//
-      , BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL)//
+      INTEGER("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INT, LONG), //
+      INTEGRAL("must be either int or long: f()%g()^h()<<f()|g()&h(), not 2+(long)f() ", INTEGER, CHAR, SHORT, BYTE), //
+      NUMERIC("must be either f()*g(), 2L*f(), 2.*a(), not 2 %a(), nor 2", INTEGRAL, FLOAT, DOUBLE), //
+      ALPHANUMERIC("only in binary plus: f()+g(), 2 + f(), nor f() + null", NUMERIC, STRING), //
+      BOOLEANINTEGRAL("only in x^y,x&y,x|y", BOOLEAN, INTEGRAL), //
       ;
       final String description;
       final Set<Certain> options = new LinkedHashSet<>();
@@ -666,25 +684,5 @@ public interface type {
         return options;
       }
     }
-  }
-
-  interface __ {
-    Collection<String> valueTypes = new LinkedHashSet<String>(__.boxedTypes) {
-      static final long serialVersionUID = -0x134495F1CC662D60L;
-      {
-        for (final String ¢ : new String[] { "String" }) {
-          add(¢);
-          add("java.lang." + ¢);
-        }
-      }
-    };
-    @SuppressWarnings("serial") Set<String> boxedTypes = new LinkedHashSet<String>() {
-      {
-        for (final String ¢ : new String[] { "Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short" }) {
-          add(¢);
-          add("java.lang." + ¢);
-        }
-      }
-    };
   }
 } // end of interface __
