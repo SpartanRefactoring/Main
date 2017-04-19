@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.note;
 
-/** With this class you can spartanize a directory easly. Or you can extends
+/** __ this class you can spartanize a directory easly. Or you can extends
  * this class and configure it to fit to your own needs.
  * @author oran1248
  * @since 2017-04-11 */

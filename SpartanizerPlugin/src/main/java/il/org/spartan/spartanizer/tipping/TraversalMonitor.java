@@ -23,7 +23,7 @@ import nano.ly.*;
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Yossi Gil
  * @since Sep 20, 2016 */
-public class TraversalMonitor extends TraversalImplementation.With implements TraversalTapper {
+public class TraversalMonitor extends TraversalImplementation.__ implements TraversalTapper {
   public static void off() {
     logger.setLevel(Level.OFF);
   }
@@ -167,24 +167,11 @@ public class TraversalMonitor extends TraversalImplementation.With implements Tr
     logger.log(FINER, "Pruning:\n {0} \n in favor of:\n {1}", as.array(tip(), auxiliaryTip()));
   }
 
-  private Tip auxiliaryTip() {
-    return current().auxiliaryTip();
-  }
-
   @Override public void tipRewrite() {
-    logger.log(FINE, "Rewrite {0}", current().rewrite());
-  }
-
-  private String node() {
-    final ASTNode $ = current().node();
-    return String.format("%s(%s)", English.name($), Trivia.gist($));
-  }
-
-  private Tip tip() {
-    return current().tip();
+    logger.log(FINE, "Rewrite {0}", rewrite());
   }
 
   private String tipper() {
-    return English.name(current().tipper());
+    return English.name(self().tipper());
   }
 }
