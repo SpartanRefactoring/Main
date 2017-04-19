@@ -14,7 +14,7 @@ import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.Example.*;
 import nano.ly.*;
 

@@ -1,6 +1,4 @@
-package il.org.spartan.spartanizer.trimming;
-
-import static il.org.spartan.spartanizer.engine.Tip.*;
+package il.org.spartan.spartanizer.traversal;
 
 import static java.util.stream.Collectors.*;
 
@@ -34,14 +32,14 @@ public class TraversalImplementation extends Traversal {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
-        if (wizard.disjoint(¢, range))
+        if (Ranger.disjoint(¢, range))
           return false;
-        if (range != null && !wizard.contained(¢, range) || !check(¢) || disabling.on(¢))
+        if (range != null && !Ranger.contained(¢, range) || !check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
         if (getTip() == null)
           return true;
-        tips.stream().filter(λ -> overlap(λ.span, getTip().span)).collect(toList()).forEach(λ -> {
+        tips.stream().filter(λ -> Ranger.overlap(λ.span, getTip().span)).collect(toList()).forEach(λ -> {
           setAuxiliaryTip(λ);
           tips.remove(λ);
           notify.tipPrune();
@@ -93,15 +91,15 @@ public class TraversalImplementation extends Traversal {
     u.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N ¢) {
         setNode(¢);
-        if (wizard.disjoint(¢, range))
+        if (Ranger.disjoint(¢, range))
           return false;
-        if (range != null && !wizard.contained(¢, range) || !check(¢) || disabling.on(¢))
+        if (range != null && !Ranger.contained(¢, range) || !check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
         if (getTip() == null)
           return true;
         for (final Tip t : tips)
-          if (setAuxiliaryTip(t) != null && Tip.overlap(t.span, getTip().span)) {
+          if (setAuxiliaryTip(t) != null && Ranger.overlap(t.span, getTip().span)) {
             notify.tipPrune();
             return false;
           }
@@ -125,7 +123,7 @@ public class TraversalImplementation extends Traversal {
     }, λ -> note.bug(λ));
   }
 
-  @Override public ASTVisitor tipsCollector() {
+  @Override protected ASTVisitor tipsCollector() {
     fileName = English.unknownIfNull(compilationUnit(), λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
     return new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -137,7 +135,7 @@ public class TraversalImplementation extends Traversal {
           setTip($.tip(n));
           if (getTip() == null)
             return;
-          tips.removeIf(λ -> Tip.overlap(λ.highlight, getTip().highlight));
+          tips.removeIf(λ -> Ranger.overlap(λ.highlight, getTip().highlight));
           tips.add(getTip());
         }, note::bug);
       }

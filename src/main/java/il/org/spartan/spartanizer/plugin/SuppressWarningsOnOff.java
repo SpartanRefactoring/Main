@@ -19,7 +19,7 @@ import org.eclipse.ltk.core.refactoring.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.trimming.*;
+import il.org.spartan.spartanizer.traversal.*;
 
 /** A utility class used to add enablers/disablers to code automatically, with
  * AST scan based recursive algorithms. The automatic disabling mechanism is
@@ -152,7 +152,7 @@ public enum SuppressWarningsOnOff {
       boolean b;
 
       @Override public void preVisit(final ASTNode n) {
-        if (b || wizard.disjoint(n, m) || !wizard.contained(n, m))
+        if (b || Ranger.disjoint(n, m) || !Ranger.contained(n, m))
           return;
         final BodyDeclaration d;
         switch (t) {

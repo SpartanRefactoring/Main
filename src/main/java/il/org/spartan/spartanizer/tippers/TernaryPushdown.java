@@ -110,7 +110,7 @@ public final class TernaryPushdown extends ReplaceCurrentNode<ConditionalExpress
     final Expression receiver1 = expression(e1), receiver2 = expression(e2);
     final MethodInvocation $ = copy.of(e1);
     if (!eq(receiver1, receiver2)) {
-      if (receiver1 == null || receiver2 == null || !same(es1, es2) || guessName.isClassName(receiver1) || guessName.isClassName(receiver2))
+      if (receiver1 == null || receiver2 == null || !eq(es1, es2) || guessName.isClassName(receiver1) || guessName.isClassName(receiver2))
         return null;
       assert $ != null;
       $.setExpression(misc.parenthesize(subject.pair(receiver1, receiver2).toCondition(expression(x))));

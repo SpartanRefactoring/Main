@@ -180,7 +180,7 @@ public class switchBranch {
   }
 
   public boolean hasSameBody(final switchBranch ¢) {
-    return wizard.same(functionalCommands(), ¢.functionalCommands());
+    return wizard.eq(functionalCommands(), ¢.functionalCommands());
   }
 
   private List<Statement> functionalCommands() {
