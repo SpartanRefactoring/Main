@@ -38,15 +38,15 @@ public class TraversalImplementation extends Traversal {
         if (!check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
-        if (tip() == null)
+        if (getTip() == null)
           return true;
-        tips.stream().filter(λ -> overlap(λ.span, tip().span)).collect(toList()).forEach(λ -> {
+        tips.stream().filter(λ -> overlap(λ.span, getTip().span)).collect(toList()).forEach(λ -> {
           setAuxiliaryTip(λ);
           tips.remove(λ);
           notify.tipPrune();
         });
-        if (tip() != null)
-          tips.add(tip());
+        if (getTip() != null)
+          tips.add(getTip());
         return true;
       }
 
@@ -63,14 +63,14 @@ public class TraversalImplementation extends Traversal {
   }
 
   private void applyTip() {
-    tip().go(getRewrite(), currentEditGroup());
+    getTip().go(getRewrite(), getCurrentEditGroup());
     notify.tipRewrite();
   }
 
   @Override public ASTRewrite go(final CompilationUnit ¢) {
     setCompilationUnit(¢);
     topDown(¢);
-    return rewrite();
+    return getRewrite();
   }
 
   @SafeVarargs public final <N extends ASTNode> Traversal restrictTo(final Tipper<N>... ¢) {
@@ -97,15 +97,15 @@ public class TraversalImplementation extends Traversal {
         if (!check(¢) || disabling.on(¢))
           return true;
         findTip(¢);
-        if (tip() == null)
+        if (getTip() == null)
           return true;
         for (final Tip t : tips)
-          if (setAuxiliaryTip(t) != null && Tip.overlap(t.span, tip().span)) {
+          if (setAuxiliaryTip(t) != null && Tip.overlap(t.span, getTip().span)) {
             notify.tipPrune();
             return false;
           }
-        tips.add(tip());
-        tip().go(rewrite(), currentEditGroup());
+        tips.add(getTip());
+        getTip().go(getRewrite(), getCurrentEditGroup());
         notify.tipRewrite();
         return false;
       }
@@ -134,10 +134,10 @@ public class TraversalImplementation extends Traversal {
         final Tipper<N> $ = findTipper(n);
         return $ == null || robust.lyTrue(() -> {
           setTip($.tip(n));
-          if (tip() == null)
+          if (getTip() == null)
             return;
-          into.removeIf(λ -> Tip.overlap(λ.highlight, tip().highlight));
-          into.add(tip());
+          into.removeIf(λ -> Tip.overlap(λ.highlight, getTip().highlight));
+          into.add(getTip());
         }, note::bug);
       }
 
