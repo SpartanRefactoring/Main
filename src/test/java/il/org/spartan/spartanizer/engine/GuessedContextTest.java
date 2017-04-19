@@ -17,12 +17,10 @@ import il.org.spartan.spartanizer.engine.nominal.*;
  * @since Sep 7, 2016 */
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class GuessedContextTest {
-  @Ignore // TODO Yuval Simon --yg
   @Test public void a1() {
-    trimminKof("public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); S.x.f($.j); return $;}")
-        .gives("public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); S.x.f($.j); return $;}");
+    trimminKof("public class C{public C(int i) {j = 2*i;} public final int j; public C y() { final C $ = new C(6); S.x.f($.j);return $;}}")
+        .stays();
   }
-
   @Test public void a2() {
     trimminKof("@O public IMarkerResolution[] getResolutions(final IMarker m) { try { "
         + "final L s = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); }finally{} return s;}")//
@@ -30,12 +28,11 @@ public final class GuessedContextTest {
             "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final L $ = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); }finally{} return $;}");
   }
 
-  @Ignore // TODO Yuval Simon --yg
   @Test public void a3() {
     trimminKof(
-        " public C(int i) { j = 2*i; public final int j; public int yada7(final String blah) { final C $ = new C(blah.length()); if (blah.contains(0xDEAD)) return $.j; int x = blah.length()/2; if (x==3) return x; x = y($.j - x); return x; ")
+        " public class C { public C(int i) { j = 2*i;} public final int j; public int yada7(final String blah) { final C $ = new C(blah.length()); if (blah.contains(0xDEAD)) return $.j; int x = blah.length()/2; if (x==3) return x; x = y($.j - x); return x;}}")
             .gives(
-                " public C(int i) { j = 2*i; public final int j; public int yada7(final String blah) { final C $ = new C(blah.length()); if (blah.contains(0xDEAD)) return $.j; int $ = blah.length()/2; if ($==3) return $; $ = y($.j - $); return $; ");
+                " public class C{public C(int i) { j = 2*i;} public final int j; public int yada7(final String blah) { final C $ = new C(blah.length()); if (blah.contains(0xDEAD)) return $.j; int x = blah.length()/2; if (x==3) return x; return x=y($.j-x);}}");
   }
 
   @Test public void a6() {
@@ -52,17 +49,15 @@ public final class GuessedContextTest {
                 " public final int j;public void y() {final C $ = new C(6);new R() {@O public void system() { $ = new C(8);S.x.f($.j);doStuff($);}private int doStuff(final C r) {final C $ = new C(r.j);return $.j + 1;S.x.f($.j);}};}} ");
   }
 
-  @Ignore // TODO Yuval Simon --yg
   @Test public void a8() {
     trimminKof(
-        " public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return $; ")
-            .gives(
-                " public C(int i) { j = 2*i; public final int j; public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return $; ");
+        " public class C{public C(int i) { j = 2*i;} public final int j; public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return $;}} ")
+            .stays();
   }
 
-  @Ignore @Test public void a9() {
+  @Test public void a9() {
     trimminKof(
-        " public C(int i){j = 2*i;public final int j;public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return null;}")
+        "public class C{ public C(int i){j = 2*i;}public final int j;public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return null;}}")
             .stays();
   }
 
@@ -108,15 +103,9 @@ public final class GuessedContextTest {
         .stays();
   }
 
-  @Ignore @Test public void e03() {
+  @Test public void e03() {
     trimminKof("/* * This is a comment */ int i = 5; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
-        .gives("/* * This is a comment */ int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + (5)); ");
-  }
-
-  @Ignore @Test public void e09() {
-    trimminKof(
-        " final A a = new D().new A(V){ ABRA { CADABRA {V;); w.a(5, a.new Context().lineCount()); final PureIterable&lt;Mutant&gt; ms = a.generateMutants(); w.a(2, count(ms)); final PureIterator&lt;Mutant&gt; i = ms.iterator(); assert (i.hasNext()); w.a(V;{ ABRA ABRA { CADABRA { V;, i.next().text); assert (i.hasNext()); w.a(V;{ ABRA { CADABRA CADABRA { V;, i.next().text); assert !(i.hasNext()); ")
-            .stays();
+        .gives("/* * This is a comment */ int i = 5, j = 3; int k = j+2, m = k + j -19; y(2*m - k/m + i);");
   }
 
   @Test public void e10() {
@@ -125,7 +114,6 @@ public final class GuessedContextTest {
             .stays();
   }
 
-  @Ignore // TODO Yuval Simon --yg
   @Test(expected = AssertionError.class) public void error2() {
     GuessedContext.find("r ? ls : I.m().s().e(¢ -> l.s(e));");
   }
