@@ -100,19 +100,6 @@ public enum misc {
     return (IfStatement) first(statements($));
   }
 
-  public static Expression eliminateLiteral(final InfixExpression x, final boolean b) {
-    final List<Expression> $ = extract.allOperands(x);
-    misc.removeAll(b, $);
-    switch ($.size()) {
-      case 1:
-        return copy.of(first($));
-      case 0:
-        return x.getAST().newBooleanLiteral(b);
-      default:
-        return subject.operands($).to(x.getOperator());
-    }
-  }
-
   public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (int ¢ = what.size() - 1;; $.insertAfter(what.get(¢--), where, g))
@@ -195,21 +182,6 @@ public enum misc {
         return $;
   }
 
-  public static void remove(final ASTRewrite r, final Statement s, final TextEditGroup g) {
-    r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY).remove(s, g);
-  }
-
-  /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
-   * fragment fragments in the containing {@link VariabelDeclarationStatement} .
-   * Still, if the containing node is left empty, it is removed as well.
-   * @param f
-   * @param r
-   * @param g */
-  public static void remove(final VariableDeclarationFragment f, final ASTRewrite r, final TextEditGroup g) {
-    final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
-    r.remove(parent.fragments().size() > 1 ? f : parent, g);
-  }
-
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode where, final ASTRewrite r, final TextEditGroup g) {
     new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));
   }
@@ -272,52 +244,6 @@ public enum misc {
    * @see ASTRewrite */
   @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
-  }
-
-  /** Remove all occurrences of a boolean literal from a list of
-   * {@link Expression}¢
-   * <p>
-   * @param ¢ JD
-   * @param xs JD */
-  private static void removeAll(final boolean ¢, final List<Expression> xs) {
-    // noinspection ForLoopReplaceableByWhile
-    for (;;) {
-      final Expression x = wizard.find(¢, xs);
-      if (x == null)
-        return;
-      xs.remove(x);
-    }
-  }
-
-  private static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
-    final List<Statement> $ = new ArrayList<>();
-    for (final Statement ¢ : ss) {
-      final Statement s = misc.removeBreakSequencer(¢);
-      if (s != null)
-        $.add(s);
-    }
-    return $;
-  }
-
-  private static Statement removeBreakSequencer(final Statement s) {
-    if (s == null)
-      return null;
-    if (!iz.sequencerComplex(s, ASTNode.BREAK_STATEMENT))
-      return copy.of(s);
-    final AST a = s.getAST();
-    Statement $ = null;
-    if (iz.ifStatement(s)) {
-      final IfStatement t = az.ifStatement(s);
-      $ = subject.pair(removeBreakSequencer(then(t)), removeBreakSequencer(elze(t))).toIf(copy.of(expression(t)));
-    } else if (!iz.block(s)) {
-      if (iz.breakStatement(s) && iz.block(s.getParent()))
-        $ = a.newEmptyStatement();
-    } else {
-      final Block b = subject.ss(removeBreakSequencer(statements(az.block(s)))).toBlock();
-      statements(b).addAll(removeBreakSequencer(statements(az.block(s))));
-      $ = b;
-    }
-    return $;
   }
 
   private static int sequencerRank(final ASTNode ¢) {
