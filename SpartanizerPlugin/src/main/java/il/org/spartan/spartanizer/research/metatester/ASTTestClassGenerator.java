@@ -8,6 +8,7 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
@@ -93,7 +94,7 @@ public class ASTTestClassGenerator implements TestClassGenerator {
   }
 
   private void removeUnnecessaryImports() {
-    final List<Class<?>> importsToRemove = Arrays.asList(MetaTester.class);
+    final List<Class<?>> importsToRemove = as.list(MetaTester.class);
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final ImportDeclaration node) {
         if (importsToRemove.stream().map(x -> x.getPackage().getName()).anyMatch(x -> node.getName().toString().contains(x))

@@ -201,7 +201,7 @@ public interface iz {
   /** @param ¢ JD
    * @return is boxed __ */
   static boolean boxedType(final Type ¢) {
-    return ¢ instanceof SimpleType && Arrays.asList("Boolean", "Byte", "Character", "Float", "Integer", "Long", "Short", "Double")
+    return ¢ instanceof SimpleType && as.list("Boolean", "Byte", "Character", "Float", "Integer", "Long", "Short", "Double")
         .contains(step.identifier(step.name((SimpleType) ¢)));
   }
 

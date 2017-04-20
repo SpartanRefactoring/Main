@@ -26,7 +26,7 @@ public interface Nested<T> extends Duplo<T> {
     Nested<T> parent();
 
     @Override default Iterable<Duplo<T>> neighbors() {
-      return Arrays.asList(parent());
+      return a.singleton.list(parent());
     }
   }
 }
