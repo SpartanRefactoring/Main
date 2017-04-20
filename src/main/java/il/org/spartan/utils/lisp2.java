@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil {@code yogi@cs.technion.ac.il}
+ * @author Yossi Gil 
  * @since 2017-03-19 */
 public interface lisp2 extends lisp {
   /** @param o the assignment operator to compare all to
