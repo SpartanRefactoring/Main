@@ -8,6 +8,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import an.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import nano.ly.*;
@@ -505,7 +506,7 @@ public enum step {
    * @return */
   @SuppressWarnings("unchecked") public static Collection<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
-        : iz.typeDeclaration(¢) ? Arrays.asList(az.typeDeclaration(¢).getMethods())
+        : iz.typeDeclaration(¢) ? as.list(az.typeDeclaration(¢).getMethods())
             : iz.enumDeclaration(¢) ? (Collection<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
                 .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
   }

@@ -116,6 +116,7 @@ public interface wizard {
   IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
   Bool resolveBinding = Bool.valueOf(false);
   List<Predicate<Modifier>> visibilityModifiers = as.list(ModifierRedundant.isPublic, ModifierRedundant.isPrivate, ModifierRedundant.isProtected);
+  public List<Integer> loopTypes = as.list(WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT);
 
   static Expression addParenthesisIfNeeded(final Expression x) {
     final AST a = x.getAST();
