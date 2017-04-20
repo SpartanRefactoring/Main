@@ -145,7 +145,7 @@ public class Configuration {
   }
 
   public Configuration clear() {
-    Stream.of(implementation).filter(Objects::nonNull).forEach(λ -> λ.clear());
+    Stream.of(implementation).filter(Objects::nonNull).forEach(List::clear);
     return this;
   }
 }
