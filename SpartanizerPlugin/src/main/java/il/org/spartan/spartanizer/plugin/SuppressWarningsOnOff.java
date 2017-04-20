@@ -32,11 +32,11 @@ public enum SuppressWarningsOnOff {
     final Javadoc j = d.getJavadoc();
     String s = enablersRemoved(j);
     if (getDisablers(s).isEmpty())
-      s = s.replaceFirst("\\*/$", (s.matches("(?s).*\n\\s*\\*/$") ? "" : "\n ") + "* " + disabling.ByComment.disabler + "\n */");
+      s = s.replaceFirst("\\*/$", (s.matches("(?s).*\n\\s*\\*/$") ? "" : "\n ") + "* " + disabling.ByComment.disabler +"\n */");
     if (j != null)
       r.replace(j, r.createStringPlaceholder(s, ASTNode.JAVADOC), null);
     else
-      r.replace(d, r.createGroupNode(new ASTNode[] { r.createStringPlaceholder(s + fixNL(d), ASTNode.JAVADOC), r.createCopyTarget(d) }), null);
+      r.set(d, d.getJavadocProperty(), r.createGroupNode(new ASTNode[] { r.createStringPlaceholder(s, ASTNode.JAVADOC) }), null);
   }), ByAnnotation((r, d) -> {
     final StringLiteral s = d.getAST().newStringLiteral();
     s.setLiteralValue(Eclipse.user() + " -- " + Eclipse.date());
@@ -68,10 +68,6 @@ public enum SuppressWarningsOnOff {
     textChange.setEdit(createRewrite(newSubMonitor(pm), m, t).rewriteAST());
     textChange.perform(pm);
     pm.done();
-  }
-
-  private static String fixNL(final BodyDeclaration ¢) {
-    return ¢ instanceof EnumDeclaration || ¢ instanceof MethodDeclaration || ¢ instanceof EnumConstantDeclaration ? "\n" : "";
   }
 
   /** @param n an {@link ASTNode}
