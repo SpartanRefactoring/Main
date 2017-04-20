@@ -88,16 +88,18 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
 
   /** [[SuppressWarningsSpartan]] - name has meaning --or */
   private static boolean needPreliminaryString(List<Expression> xs) {
-    boolean previousIsString = true, containsString = false;
+    if (xs.isEmpty() || xs.size() == 1 && !iz.stringLiteral(first(xs)))
+      return true;
+    boolean previousIsString = true;
     for (Expression ¢ : xs)
       if (iz.stringLiteral(¢))
-        previousIsString = containsString = true;
+        previousIsString = true;
       else {
         if (!previousIsString)
           return true;
         previousIsString = false;
       }
-    return !containsString;
+    return false;
   }
 
   private static List<Expression> arguments(List<?> argumentz) {
