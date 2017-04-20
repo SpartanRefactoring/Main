@@ -15,11 +15,13 @@ import org.eclipse.swt.custom.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.texteditor.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
+import il.org.spartan.utils.*;
 import nano.ly.*;
 
 /** A tool for committing a single change to a {@link CompilationUnit}.
@@ -47,15 +49,6 @@ public final class SingleFlater {
    * @return {@code this} flater */
   public SingleFlater from(final OperationsProvider ¢) {
     operationsProvider = ¢;
-    return this;
-  }
-
-  /** Sets text selection limits for this flater.
-   * @param ¢ JD
-   * @return {@code this} flater */
-  @Deprecated public SingleFlater limit(final TextSelection ¢) {
-    // TODO Ori Roth --yg
-    ¢.hashCode();
     return this;
   }
 
@@ -108,17 +101,21 @@ public final class SingleFlater {
     });
     if (operations.isEmpty())
       return false;
+    final Outer<Range> touched = new Outer<>(new Range(-1, -1));
     for (final Operation ¢ : operationsProvider.getFunction().apply(operations))
-      perform(¢, g);
+      perform(¢, g, touched);
     return true;
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final TextEditGroup g) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final TextEditGroup g, Outer<Range> touched) {
     robust.ly(() -> {
       setTipper(o.tipper);
       setNode(o.node);
       o.tipper.check(o.node);
       setTip(o.tipper.tip(o.node));
+      if (!Ranger.disjoint(tip().span, touched.inner))
+        return;
+      touched.inner = touched.inner.merge(tip().span);
       tip().go(rewrite(), g);
       notify.tipRewrite();
     }, λ -> note.bug(this, λ));

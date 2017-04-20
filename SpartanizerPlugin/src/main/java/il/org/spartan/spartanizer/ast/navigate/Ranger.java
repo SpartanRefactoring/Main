@@ -39,6 +39,10 @@ public interface Ranger {
     return ¢ == null || ¢.isEmpty() ? null : new Range(¢.getOffset(), ¢.getOffset() + ¢.getLength());
   }
 
+  static boolean disjoint(final Range r1, final Range r2) {
+    return r1 != null && r2 != null && (r1.from >= r2.to || r1.to <= r2.from);
+  }
+
   static boolean disjoint(final ASTNode n, final Range r) {
     return r != null && (from(n) >= r.to || to(n) <= r.from);
   }
