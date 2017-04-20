@@ -59,8 +59,12 @@ public class Configuration {
     ts.removeIf(λ -> c.isAssignableFrom(λ.getClass()));
   }
 
-  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final Collection<Tipper<?>> ts) {
-    return ts.stream().map(λ -> (Tipper<N>) λ).filter(λ -> λ.check(n)).findFirst().orElse(null);
+  @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
+    return ts.stream()//
+        .map(λ -> (Tipper<N>) λ)//
+        .filter(λ -> λ.check(n))//
+        .findFirst()//
+        .orElse(null);
   }
 
   /** Implementation */
@@ -118,7 +122,7 @@ public class Configuration {
     return firstTipper(¢, get(¢));
   }
 
-  public Collection<Tipper<? extends ASTNode>> get(final int ¢) {
+  public List<Tipper<? extends ASTNode>> get(final int ¢) {
     return implementation[¢] = implementation[¢] == null ? an.empty.list() : implementation[¢];
   }
 
@@ -130,7 +134,7 @@ public class Configuration {
     return Stream.of(implementation).filter(Objects::nonNull).count();
   }
 
-  Collection<Tipper<? extends ASTNode>> get(final ASTNode ¢) {
+  List<Tipper<? extends ASTNode>> get(final ASTNode ¢) {
     return get(¢.getNodeType());
   }
 
