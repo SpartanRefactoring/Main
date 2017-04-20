@@ -44,6 +44,7 @@ public final class LocalInitializedUnusedRemove extends LocalInitialized impleme
                 + "  int number = 1;\n" //
                 + "  System.out.println(number);\n" //
                 + "}") //
+            .ignores("int a = 0, b = 0, c = a++ + b; f(a,b); g(a,b);")
     ;
   }
 
