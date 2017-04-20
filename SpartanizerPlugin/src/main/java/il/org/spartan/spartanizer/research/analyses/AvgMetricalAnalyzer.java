@@ -28,7 +28,7 @@ public abstract class AvgMetricalAnalyzer extends MetricalAnalyzer<List<Int>> {
   }
 
   private static Collection<Int> getSafe(final Map<Integer, List<Int>> m, final Integer i) {
-    m.putIfAbsent(i, new ArrayList<>());
+    m.putIfAbsent(i, an.empty.list());
     return m.get(i);
   }
 

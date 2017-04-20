@@ -37,7 +37,7 @@ public class issue0713 {
   }
 
   @Test public void listContainsRightNames() {
-    final List<String> names = new ArrayList<>();
+    final List<String> names = an.empty.list();
     names.add("x");
     names.add("y");
     azzert.that(getAll.publicFields(notCountingMethods), is(names));
@@ -72,7 +72,7 @@ public class issue0713 {
   }
 
   @Test public void rightNamesReturned() {
-    final List<String> names = new ArrayList<>();
+    final List<String> names = an.empty.list();
     names.add("x");
     names.add("ch");
     azzert.that(getAll.publicFields(notOnlyPublic), is(names));

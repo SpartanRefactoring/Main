@@ -100,7 +100,7 @@ public class Configuration {
   }
 
   public Collection<Tipper<? extends ASTNode>> getAllTippers() {
-    final Collection<Tipper<? extends ASTNode>> $ = new ArrayList<>();
+    final Collection<Tipper<? extends ASTNode>> $ = an.empty.list();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
     return $;
@@ -119,7 +119,7 @@ public class Configuration {
   }
 
   public Collection<Tipper<? extends ASTNode>> get(final int ¢) {
-    return implementation[¢] = implementation[¢] == null ? new ArrayList<>() : implementation[¢];
+    return implementation[¢] = implementation[¢] == null ? an.empty.list() : implementation[¢];
   }
 
   public int tippersCount() {

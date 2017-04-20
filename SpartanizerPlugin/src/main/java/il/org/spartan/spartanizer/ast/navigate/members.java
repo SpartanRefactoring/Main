@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** Collect members of classes and the such
@@ -13,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @since 2016-12-22 */
 public interface members {
   static List<BodyDeclaration> of(final EnumDeclaration ¢) {
-    final List<BodyDeclaration> $ = new ArrayList<>(enumConstants(¢));
+    final List<BodyDeclaration> $ = as.list(enumConstants(¢));
     $.addAll(step.bodyDeclarations(¢));
     return $;
   }

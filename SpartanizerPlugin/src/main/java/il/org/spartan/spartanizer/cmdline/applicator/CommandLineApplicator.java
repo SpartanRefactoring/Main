@@ -120,7 +120,7 @@ public class CommandLineApplicator extends Applicator {
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;
-        final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), dead = new ArrayList<>();
+        final List<WrappedCompilationUnit> selected = selection().inner, alive = as.list(selected), dead = an.empty.list();
         for (final WrappedCompilationUnit ¢ : alive) {
           final int tipsInvoked = runAction().apply(¢).intValue();
           if (tipsInvoked <= 0)

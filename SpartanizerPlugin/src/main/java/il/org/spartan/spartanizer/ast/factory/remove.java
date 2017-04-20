@@ -67,7 +67,7 @@ public enum remove {
   }
 
   private static List<Statement> breakSequencer(final Iterable<Statement> ss) {
-    final List<Statement> $ = new ArrayList<>();
+    final List<Statement> $ = an.empty.list();
     for (final Statement ¢ : ss) {
       final Statement s = remove.breakSequencer(¢);
       if (s != null)
@@ -113,7 +113,7 @@ public enum remove {
   }
 
   private static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
-    final List<Statement> $ = new ArrayList<>();
+    final List<Statement> $ = an.empty.list();
     for (final Statement ¢ : ss) {
       final Statement s = removeBreakSequencer(¢);
       if (s != null)

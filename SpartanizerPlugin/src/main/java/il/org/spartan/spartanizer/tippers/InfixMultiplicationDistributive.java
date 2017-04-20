@@ -10,6 +10,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -73,7 +74,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert es1 != null;
     final List<Expression> es2 = extract.allOperands(e2);
     assert es2 != null;
-    final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
+    final List<Expression> $ = an.empty.list(), different = an.empty.list();
     for (final Expression ¢ : es1) {
       assert ¢ != null;
       (isIn(¢, es2) ? $ : different).add(¢);
@@ -104,8 +105,8 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
       return az.infixExpression(first(xs)).getOperator() != TIMES ? null : first(xs);
     if (xs.size() == 2)
       return replacement(az.infixExpression(first(xs)), az.infixExpression(second(xs)));
-    final List<Expression> $ = new ArrayList<>(), different = new ArrayList<>();
-    List<Expression> temp = new ArrayList<>(xs);
+    final List<Expression> $ = an.empty.list(), different = an.empty.list();
+    List<Expression> temp = as.list(xs);
     for (final Integer i : range.from(0).to(xs.size())) {
       temp = the.rest(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b

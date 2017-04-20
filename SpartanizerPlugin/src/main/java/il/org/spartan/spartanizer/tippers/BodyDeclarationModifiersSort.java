@@ -10,6 +10,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.java.*;
@@ -61,9 +62,9 @@ public final class BodyDeclarationModifiersSort<N extends BodyDeclaration> //
   }
 
   private N go(final N $) {
-    final Collection<IExtendedModifier> as = new ArrayList<>(extract.annotations($)), ms = new ArrayList<>(sortedModifiers($));
+    final Collection<IExtendedModifier> ies = as.list(extract.annotations($)), ms = as.list(sortedModifiers($));
     extendedModifiers($).clear();
-    extendedModifiers($).addAll(as);
+    extendedModifiers($).addAll(ies);
     extendedModifiers($).addAll(ms);
     return $;
   }

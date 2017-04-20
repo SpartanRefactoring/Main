@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -65,7 +66,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static void setUpdaters(final ForStatement $) {
-    final Collection<Expression> oldUpdaters = new ArrayList<>(step.updaters($));
+    final Collection<Expression> oldUpdaters = as.list(step.updaters($));
     updaters($).clear();
     updaters($).add(updaterFromBody($));
     updaters($).addAll(oldUpdaters);

@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
- * T a = new ArrayList<>() / new HashSet();
+ * T a = an.empty.list() / new HashSet();
  * a.addAll(x)
  * } to {@code
  * T a = new ArrayList

@@ -39,7 +39,7 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
   }
 
   public static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
-    final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
+    final Collection<VariableDeclarationFragment> $ = an.empty.list();
     boolean collecting = false;
     for (final VariableDeclarationFragment sibling : fragments((VariableDeclarationStatement) f.getParent())) {
       if (sibling == f) {

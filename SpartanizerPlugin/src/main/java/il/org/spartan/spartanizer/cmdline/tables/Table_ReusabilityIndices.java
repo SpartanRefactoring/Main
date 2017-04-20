@@ -171,7 +171,7 @@ public class Table_ReusabilityIndices {
 
   protected static int rInternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
-    new ArrayList<>($.keySet()).stream().filter(λ -> !defined.contains(λ)).forEach($::remove);
+    $.keySet().stream().filter(λ -> !defined.contains(λ)).forEach($::remove);
     return rindex(ranks($));
   }
 

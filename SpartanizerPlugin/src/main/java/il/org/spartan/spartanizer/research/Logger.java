@@ -23,7 +23,7 @@ public final class Logger {
   public static int numMethods;
   private static String currentFile;
   private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
-  private static final Collection<BiConsumer<ASTNode, String>> subscribers = new ArrayList<>();
+  private static final Collection<BiConsumer<ASTNode, String>> subscribers = an.empty.list();
 
   private Logger() {}
 

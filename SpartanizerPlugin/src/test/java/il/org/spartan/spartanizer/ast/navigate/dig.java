@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016-10-07 */
 public interface dig {
   static List<String> stringLiterals(final ASTNode n) {
-    final List<String> $ = new ArrayList<>();
+    final List<String> $ = an.empty.list();
     if (n == null)
       return $;
     // noinspection SameReturnValue

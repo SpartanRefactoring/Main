@@ -122,7 +122,7 @@ public enum Analyze {
 
   /** THE analysis */
   private static void spartanizeMethodsAndSort() {
-    final List<MethodDeclaration> methods = new ArrayList<>();
+    final List<MethodDeclaration> methods = an.empty.list();
     for (final File f : inputFiles()) {
       final CompilationUnit cu = az.compilationUnit(compilationUnit(f));
       Logger.logCompilationUnit(cu);

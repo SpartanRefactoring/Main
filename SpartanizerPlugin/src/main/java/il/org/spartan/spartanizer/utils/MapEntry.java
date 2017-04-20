@@ -1,4 +1,3 @@
-
 package il.org.spartan.spartanizer.utils;
 
 import java.util.*;

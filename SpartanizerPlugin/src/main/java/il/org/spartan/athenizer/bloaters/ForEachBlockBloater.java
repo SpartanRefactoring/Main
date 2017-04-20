@@ -29,7 +29,7 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
 
   public ForEachBlockBloater() {
     andAlso("Valid when not a block", () -> {
-      final Collection<Boolean> $ = new ArrayList<>();
+      final Collection<Boolean> $ = an.empty.list();
       // TODO Raviv Use class descendants, or yieldDescendants or something
       // similar, what are u trying to find? --yg
       body(current).accept(new ASTVisitor(true) {

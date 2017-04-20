@@ -1,4 +1,3 @@
-
 package il.org.spartan.spartanizer.research.nanos.common;
 
 import org.eclipse.jdt.core.dom.*;

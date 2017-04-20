@@ -66,7 +66,7 @@ public enum eclipse {
    * @throws JavaModelException don't forget to catch */
   public static List<ICompilationUnit> compilationUnits(final IJavaElement u, final IProgressMonitor m) throws JavaModelException {
     m.beginTask("Collection compilation units ", IProgressMonitor.UNKNOWN);
-    final List<ICompilationUnit> $ = new ArrayList<>();
+    final List<ICompilationUnit> $ = an.empty.list();
     if (u == null)
       return done(m, $, "Cannot find current compilation unit " + null);
     final IJavaProject javaProject = u.getJavaProject();

@@ -48,10 +48,10 @@ public class CleanerVisitorTest {
   }
 
   private static class ASTNodeWrapper {
-    public final ArrayList<ASTNode> inner;
+    public final List<ASTNode> inner;
 
     ASTNodeWrapper() {
-      inner = new ArrayList<>();
+      inner = an.empty.list();
     }
   }
 }

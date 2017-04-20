@@ -50,7 +50,7 @@ public class TrackerSelection extends Selection {
   }
 
   private static List<WrappedCompilationUnit> asList(final WrappedCompilationUnit ¢) {
-    final List<WrappedCompilationUnit> $ = new ArrayList<>();
+    final List<WrappedCompilationUnit> $ = an.empty.list();
     if (¢ != null)
       $.add(¢);
     return $;

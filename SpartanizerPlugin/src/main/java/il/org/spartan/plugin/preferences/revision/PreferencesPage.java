@@ -78,7 +78,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   /** @return open projects in workspace */
   private static List<Entry<String, Object>> getProjects() {
-    final List<Entry<String, Object>> $ = new ArrayList<>();
+    final List<Entry<String, Object>> $ = an.empty.list();
     final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
     for (final IProject p : workspaceRoot.getProjects())
       try {
@@ -133,7 +133,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     ListSelectionEditor(final String name, final String labelText, final Composite parent, final List<Map.Entry<String, Object>> elements,
         final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
       super(name, labelText, parent);
-      this.elements = new ArrayList<>(elements);
+      this.elements = as.list(elements);
       final Composite buttonBox = new Composite(parent, SWT.NULL);
       final GridLayout layout = new GridLayout();
       layout.marginWidth = 0;

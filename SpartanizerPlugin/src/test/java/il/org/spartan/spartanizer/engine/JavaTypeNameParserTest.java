@@ -1,4 +1,3 @@
-
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.azzert.*;

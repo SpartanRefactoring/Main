@@ -62,7 +62,7 @@ public enum compute {
 
       @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {
         if (ss1 == null && ss2 == null)
-          return new ArrayList<>();
+          return an.empty.list();
         if (ss1 == null)
           return ss2;
         if (ss2 == null)
@@ -90,7 +90,7 @@ public enum compute {
 
       @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {
         if (ss1 == null && ss2 == null)
-          return new ArrayList<>();
+          return an.empty.list();
         if (ss1 == null)
           return ss2;
         if (ss2 == null)
@@ -156,7 +156,7 @@ public enum compute {
   public static List<Statement> decompose(final Expression x) {
     return new ASTMapReducer<List<Statement>>() {
       @Override public List<Statement> reduce() {
-        return new ArrayList<>();
+        return an.empty.list();
       }
 
       @Override public List<Statement> reduce(final List<Statement> $, final List<Statement> ss) {

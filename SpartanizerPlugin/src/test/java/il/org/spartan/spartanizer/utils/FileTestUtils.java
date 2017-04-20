@@ -175,7 +175,7 @@ public class FileTestUtils {
     public final Collection<Object[]> go() {
       assert location != null;
       assert location.listFiles() != null;
-      final List<Object[]> $ = new ArrayList<>();
+      final List<Object[]> $ = an.empty.list();
       for (final File ¢ : location.listFiles()) {
         assert ¢ != null;
         go($, ¢);

@@ -22,13 +22,13 @@ public final class Recurser<T> {
    * @return a list of n's children */
   public static List<? extends ASTNode> children(final ASTNode n) {
     if (n == null)
-      return new ArrayList<>();
+      return an.empty.list();
     if (iz.block(n))
       return statements(az.block(n));
     final InfixExpression ¢ = az.infixExpression(n);
     if (¢ == null)
       return march(n);
-    final List<ASTNode> $ = new ArrayList<>();
+    final List<ASTNode> $ = an.empty.list();
     $.add(left(¢));
     $.add(right(¢));
     $.addAll(extendedOperands(¢));
@@ -97,7 +97,7 @@ public final class Recurser<T> {
       f.accept(this);
       return;
     }
-    final List<Recurser<T>> rs = new ArrayList<>();
+    final List<Recurser<T>> rs = an.empty.list();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
@@ -112,7 +112,7 @@ public final class Recurser<T> {
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return current = $.apply(this);
-    final List<Recurser<T>> rs = new ArrayList<>();
+    final List<Recurser<T>> rs = an.empty.list();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : rs) {
@@ -128,7 +128,7 @@ public final class Recurser<T> {
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return;
-    final List<Recurser<T>> rs = new ArrayList<>();
+    final List<Recurser<T>> rs = an.empty.list();
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     rs.forEach(λ -> λ.preVisit(f));
   }
@@ -138,7 +138,7 @@ public final class Recurser<T> {
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
       return current;
-    final List<Recurser<T>> $ = new ArrayList<>();
+    final List<Recurser<T>> $ = an.empty.list();
     children.forEach(λ -> $.add(new Recurser<>(λ)));
     int index = 0;
     for (final Recurser<T> ¢ : $) {
