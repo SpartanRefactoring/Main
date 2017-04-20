@@ -268,7 +268,7 @@ public interface Configurations {
   static Stream<Tipper<? extends ASTNode>> allTippers() {
     return Stream.of(all().implementation)//
         .filter(λ -> λ != null && !λ.isEmpty())//
-        .flatMap(λ -> λ.stream()) //
+        .flatMap(Collection::stream) //
     ;
   }
 

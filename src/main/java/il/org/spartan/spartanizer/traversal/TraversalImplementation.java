@@ -12,6 +12,8 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 
+import java.util.function.Consumer;
+
 /** Apply a {@link Configuration} to a tree. Issues are
  * <ol>
  * <li>Top down or bottom up traversal
@@ -121,7 +123,7 @@ public class TraversalImplementation extends Traversal {
       final Tipper<N> $ = configuration.firstTipper(¢);
       setTipper($);
       return $;
-    }, λ -> note.bug(λ));
+    }, (Consumer<Exception>) note::bug);
   }
 
   @Override protected ASTVisitor tipsCollector() {
@@ -154,7 +156,7 @@ public class TraversalImplementation extends Traversal {
       if ($ == null)
         return;
       setTip($.tip(¢));
-    }, λ -> note.bug(λ));
+    }, (Consumer<Exception>) note::bug);
   }
 
   void setTip(final Tip ¢) {
