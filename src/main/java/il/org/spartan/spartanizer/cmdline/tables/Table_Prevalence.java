@@ -29,8 +29,8 @@ class Table_Prevalence extends NanoTable {
         $.accept(new AnnotationCleanerVisitor());
         statistics.logCompilationUnit($);
         analyze.apply(spartanizer.fixedPoint($));
-      } catch (final AssertionError | MalformedTreeException | IllegalArgumentException x) {
-        note.bug(x);
+      } catch (final AssertionError | MalformedTreeException | IllegalArgumentException ¢) {
+        note.bug(¢);
       }
       return super.visit($);
     }
