@@ -13,8 +13,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** Rename parameter names in constructor, to match fields, if they are
- * assigned to them for example: <br/>
+/** Rename parameter names in constructor, to match fields, if they are assigned
+ * to them for example: <br/>
  * {@code class A {int x;A(int y,int z) {this.x = z;}}} <br/>
  * to: <br/>
  * {@code class A {int x;A(int y,int x) {this.x = x;}}} <br/>
@@ -35,15 +35,15 @@ public class ConstructorRenameParameters extends EagerTipper<MethodDeclaration> 
       final SimpleName parameter = az.simpleName(step.from(a));
       if (parameter == null || !parameterNames.contains(parameter + ""))
         continue;
-      FieldAccess fieldAccess = az.fieldAccess(step.to(a));
+      final FieldAccess fieldAccess = az.fieldAccess(step.to(a));
       if (fieldAccess == null)
         continue;
-      SimpleName field = fieldAccess.getName();
+      final SimpleName field = fieldAccess.getName();
       if (!parameterNames.contains(field + ""))
         return new Tip(description(d), getClass(), d) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            SimpleName to1 = d.getAST().newSimpleName(field + "");
-            SimpleName $ = d.getAST().newSimpleName(parameter + "");
+            final SimpleName to1 = d.getAST().newSimpleName(field + "");
+            final SimpleName $ = d.getAST().newSimpleName(parameter + "");
             for (final SingleVariableDeclaration q : step.parameters(d))
               misc.rename($, to1, q, r, g);
             misc.rename($, to1, d.getBody(), r, g);

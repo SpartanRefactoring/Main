@@ -47,7 +47,7 @@ public abstract class Traversal implements Selfie<Traversal> {
         @Override public void begin() {
           if (!useProjectPreferences)
             return;
-          Configuration $ = getPreferredConfiguration(compilationUnit());
+          final Configuration $ = getPreferredConfiguration(compilationUnit());
           configuration = $ != null ? $ : configuration;
         }
       });
