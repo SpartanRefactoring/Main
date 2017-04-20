@@ -38,8 +38,8 @@ public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
           .stream()//
           .filter(iz::simpleLoop)//
           .forEach(λ -> appendFile(out, λ + ""));
-    } catch (final AssertionError | IllegalArgumentException x) {
-      note.bug(x);
+    } catch (final AssertionError | IllegalArgumentException ¢) {
+      note.bug(¢);
     }
     return true;
   }

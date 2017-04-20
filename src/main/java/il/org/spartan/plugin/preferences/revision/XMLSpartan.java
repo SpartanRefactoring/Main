@@ -63,15 +63,13 @@ public class XMLSpartan {
   public static Set<Class<Tipper<? extends ASTNode>>> enabledTippers(final IProject p) {
     final Set<Class<Tipper<? extends ASTNode>>> $ = //
         Configurations.allTippers()//
-            .map(x -> x.getClass())//
+            .map(λ -> λ.getClass())//
             .map(XMLSpartan::unchecked)//
             .collect(toSet());
     if (p == null)
       return $;
-    final Map<SpartanCategory, SpartanTipper[]> m = getTippersByCategories(p);
-    if (m == null)
-      return $;
-    final Set<String> ets = m.values()//
+    final Set<String> ets = getTippersByCategories(p)//
+        .values()//
         .stream()//
         .flatMap(Arrays::stream)//
         .filter(SpartanElement::enabled)//
