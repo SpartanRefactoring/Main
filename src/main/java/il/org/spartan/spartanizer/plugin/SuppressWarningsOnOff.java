@@ -32,7 +32,7 @@ public enum SuppressWarningsOnOff {
     final Javadoc j = d.getJavadoc();
     String s = enablersRemoved(j);
     if (getDisablers(s).isEmpty())
-      s = s.replaceFirst("\\*/$", (s.matches("(?s).*\n\\s*\\*/$") ? "" : "\n ") + "* " + disabling.ByComment.disabler +"\n */");
+      s = s.replaceFirst("\\*/$", (s.matches("(?s).*\n\\s*\\*/$") ? "" : "\n ") + "* " + disabling.ByComment.disabler + "\n */");
     if (j != null)
       r.replace(j, r.createStringPlaceholder(s, ASTNode.JAVADOC), null);
     else
