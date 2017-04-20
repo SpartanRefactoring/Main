@@ -3,8 +3,8 @@ package il.org.spartan.utils;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-03-21 */
-public abstract class Outer<Inner> {
-  public final Inner inner;
+public class Outer<Inner> {
+  public Inner inner;
 
   public Outer(final Inner inner) {
     this.inner = inner;
