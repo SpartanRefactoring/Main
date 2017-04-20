@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.ast.safety;
 
 import org.eclipse.jdt.core.dom.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since 2016-12-27 */
 public enum property {

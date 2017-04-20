@@ -1,8 +1,3 @@
-/* TODO Yossi Gil LocalVariableInitializedStatement description
- *
- * @author Yossi Gil
- *
- * @since Oct 2, 2016 */
 package il.org.spartan.spartanizer.utils;
 
 import static il.org.spartan.azzert.*;
@@ -26,6 +21,9 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 
+/** TODO Yossi Gil Document Class
+ * @author Yossi Gil
+ * @since Oct 2, 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public final class TippersTest {

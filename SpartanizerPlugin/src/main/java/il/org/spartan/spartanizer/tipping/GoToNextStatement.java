@@ -7,7 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper<N> {
