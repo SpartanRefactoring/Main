@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yuval Simon
  * @since 2017-04-19 */
 @SuppressWarnings("static-method")
-@Ignore("Dor Maayan") 
+@Ignore("Dor Maayan")
 public class Issue1259 {
   @Test(timeout = 2500) public void test() {
     trimminKof("class Element extends AccessibleObject implements Member {" + //
