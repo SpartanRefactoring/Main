@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import org.junit.*;
 
 /** Tests for the GitHub issue thus numbered
- * @author Yossi Gil {@code yogi@cs.technion.ac.il}
+ * @author Yossi Gil 
  * @since 2017-03-22 */
 @SuppressWarnings("static-method")
 public class Issue0292 {
