@@ -258,8 +258,8 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   }
   
 
-  private GUITraversal setSelection(Range r) {
-    traversal.setRange(r); 
+  private GUITraversal setSelection(Range ¢) {
+    traversal.setRange(¢); 
     return this;
   }
 
