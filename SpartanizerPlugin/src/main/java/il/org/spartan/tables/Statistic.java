@@ -4,7 +4,7 @@ import java.util.*;
 
 import il.org.spartan.statistics.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since 2016-12-26 */
 public enum Statistic {

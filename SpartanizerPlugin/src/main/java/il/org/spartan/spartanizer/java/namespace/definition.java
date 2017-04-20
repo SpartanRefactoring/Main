@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since 2016-12-22 */
 public interface definition {

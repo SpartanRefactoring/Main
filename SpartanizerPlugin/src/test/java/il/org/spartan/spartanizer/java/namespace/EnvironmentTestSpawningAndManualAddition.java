@@ -7,7 +7,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Dec 26, 2016 */
 public final class EnvironmentTestSpawningAndManualAddition {

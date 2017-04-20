@@ -5,7 +5,7 @@ import java.util.*;
 
 import il.org.spartan.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since 2016-12-25 */
 public class TableWriter implements Closeable {

@@ -1,8 +1,4 @@
-/* TODO Yossi Gil LocalVariableInitializedStatement description
- *
- * @author Yossi Gil
- *
- * @since Jan 8, 2017 */
+
 package il.org.spartan.spartanizer.research.nanos.common;
 
 import org.eclipse.jdt.core.dom.*;

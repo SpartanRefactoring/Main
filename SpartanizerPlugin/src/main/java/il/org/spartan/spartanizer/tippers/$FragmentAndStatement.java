@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDeclarationFragment> {
@@ -41,13 +41,13 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
   public static Collection<VariableDeclarationFragment> forbiddenSiblings(final VariableDeclarationFragment f) {
     final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
     boolean collecting = false;
-    for (final VariableDeclarationFragment brother : fragments((VariableDeclarationStatement) f.getParent())) {
-      if (brother == f) {
+    for (final VariableDeclarationFragment sibling : fragments((VariableDeclarationStatement) f.getParent())) {
+      if (sibling == f) {
         collecting = true;
         continue;
       }
       if (collecting)
-        $.add(brother);
+        $.add(sibling);
     }
     return $;
   }

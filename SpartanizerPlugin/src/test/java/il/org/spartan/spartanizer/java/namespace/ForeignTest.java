@@ -1,4 +1,4 @@
-/* TODO Yossi Gil LocalVariableInitializedStatement description
+/* TODO Yossi Gil Document Class
  *
  * @author Yossi Gil
  *
