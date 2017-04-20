@@ -12,6 +12,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -80,7 +81,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       s.setExpression(i);
       statements(d1).add(s);
     }
-    final List<ASTNode> $ = new ArrayList<>();
+    final List<ASTNode> $ = an.empty.list();
     $.add(d1);
     final MethodDeclaration d2 = copy.of(d);
     fixStatements(d, d2, r);
@@ -134,7 +135,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     final List<String> ns = ds.stream().map(λ -> λ.getName() + "").collect(toList());
     boolean noParameterTags = true;
     int tagPosition = -1;
-    final Collection<TagElement> xs = new ArrayList<>();
+    final Collection<TagElement> xs = an.empty.list();
     for (final TagElement ¢ : ts)
       if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(fragments(¢)) instanceof SimpleName) {
         noParameterTags = false;
@@ -172,8 +173,8 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     public MethodVariablesScanner(final MethodDeclaration method) {
       super(method);
       uses = new HashMap<>();
-      active = new ArrayList<>();
-      inactive = new ArrayList<>();
+      active = an.empty.list();
+      inactive = an.empty.list();
       variablesTerminated = 0;
       for (final SingleVariableDeclaration ¢ : parameters(method)) {
         setUsesMapping(¢, 0);
@@ -189,7 +190,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
 
     @SuppressWarnings("unchecked") public void update() {
-      final Iterable<VariableDeclaration> vs = new ArrayList<>(uses.keySet());
+      final Iterable<VariableDeclaration> vs = as.list(uses.keySet());
       for (final VariableDeclaration ¢ : vs) {
         if ((!(currentStatement instanceof ExpressionStatement) || !(((ExpressionStatement) currentStatement).getExpression() instanceof Assignment))
             && inactive.contains(¢) && uses.get(¢).contains(currentStatement)) {
@@ -227,7 +228,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     private void setUsesMapping(final VariableDeclaration d, final Statement s) {
       if (collect.usesOf(d.getName()).in(s).isEmpty())
         return;
-      uses.putIfAbsent(d, new ArrayList<>());
+      uses.putIfAbsent(d, an.empty.list());
       uses.get(d).add(s);
     }
   }
@@ -239,7 +240,7 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     NaturalVariablesOrder(final MethodDeclaration method) {
       assert method != null;
       ps = parameters(method);
-      ss = body(method) == null ? new ArrayList<>() : statements(method);
+      ss = body(method) == null ? an.empty.list() : statements(method);
     }
 
     @Override public int compare(final VariableDeclaration d1, final VariableDeclaration d2) {

@@ -36,7 +36,7 @@ public class StringTestClassGenerator implements TestClassGenerator {
   }
 
   @SuppressWarnings({ "unused", "resource" }) private List<SourceLine> readAllLines() {
-    final List<SourceLine> $ = new ArrayList<>();
+    final List<SourceLine> $ = an.empty.list();
     try {
       final BufferedReader linesStream = new BufferedReader(new FileReader(originalSourceFile));
       String line = linesStream.readLine();
@@ -51,7 +51,7 @@ public class StringTestClassGenerator implements TestClassGenerator {
       $.remove(SourceLine.EMPTY);
       return $;
     } catch (final IOException ignore) {/**/}
-    return new ArrayList<>();
+    return an.empty.list();
   }
 
   private String getClassString(final Collection<TestLine> testsLines, final Collection<ImportLine> ls, final String className) {

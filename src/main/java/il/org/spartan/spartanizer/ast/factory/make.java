@@ -291,7 +291,7 @@ public enum make {
   }
 
   static List<Expression> minus(final List<Expression> ¢) {
-    final List<Expression> $ = new ArrayList<>();
+    final List<Expression> $ = an.empty.list();
     $.add(first(¢));
     $.addAll(az.stream(rest(¢)).map(make::minusOf).collect(toList()));
     return $;

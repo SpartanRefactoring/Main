@@ -49,7 +49,7 @@ public interface hop {
   static List<ASTNode> descendants(final ASTNode root) {
     if (root == null)
       return null;
-    final List<ASTNode> $ = new ArrayList<>();
+    final List<ASTNode> $ = an.empty.list();
     root.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         $.add(¢);

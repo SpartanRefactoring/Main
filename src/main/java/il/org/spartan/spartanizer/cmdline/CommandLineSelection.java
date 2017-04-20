@@ -8,6 +8,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import an.*;
+import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -74,7 +75,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
      * @author Matteo Orru'
      * @return */
     public static AbstractSelection<CommandLineSelection> getFromPath(final String path) {
-      // final List<WrappedCompilationUnit> cuList = new ArrayList<>();
+      // final List<WrappedCompilationUnit> cuList = an.empty.list();
       // for (final File ¢ : new FilesGenerator(".java").from(path))
       // cuList.add(WrappedCompilationUnit.of((CompilationUnit)
       // makeAST.COMPILATION_UNIT.from(¢), ¢.getName(), ¢.getAbsolutePath()));
@@ -93,7 +94,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
     }
 
     public static Collection<CompilationUnit> getAllCompilationUnits(final String path) {
-      final Collection<CompilationUnit> $ = new ArrayList<>();
+      final Collection<CompilationUnit> $ = an.empty.list();
       for (final File ¢ : new FilesGenerator(".java").from(path)) {
         System.out.println(¢.getName());
         // System.out.println("Free memory (bytes): " +
@@ -116,7 +117,7 @@ public final class CommandLineSelection extends AbstractSelection<CommandLineSel
   public void createSelectionFromProjectDir(final String presentSourcePath) {
     System.err.println("Loading selection ...");
     // compilationUnits = cuList;
-    inner = new ArrayList<>(az.stream(new FilesGenerator(".java").from(presentSourcePath))
+    inner = as.list(az.stream(new FilesGenerator(".java").from(presentSourcePath))
         .map(λ -> WrappedCompilationUnit.of(az.compilationUnit(makeAST.COMPILATION_UNIT.from(λ)))).collect(toList()));
     System.err.println("Loading selection: done!");
   }

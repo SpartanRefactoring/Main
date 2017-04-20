@@ -38,7 +38,7 @@ public enum extract {
 
   public static Collection<InfixExpression.Operator> allOperators(final InfixExpression ¢) {
     assert ¢ != null;
-    final List<InfixExpression.Operator> $ = new ArrayList<>();
+    final List<InfixExpression.Operator> $ = an.empty.list();
     extract.findOperators(¢, $);
     return $;
   }
@@ -96,7 +96,7 @@ public enum extract {
     if (¢ == null)
       return null;
     ConditionalExpression s = ¢;
-    final Collection<ConditionalExpression> $ = new ArrayList<>();
+    final Collection<ConditionalExpression> $ = an.empty.list();
     $.add(s);
     while (iz.conditionalExpression(elze(s)))
       $.add(s = az.conditionalExpression(elze(s)));
@@ -120,7 +120,7 @@ public enum extract {
     if (¢ == null)
       return null;
     IfStatement s = ¢;
-    final Collection<IfStatement> $ = new ArrayList<>();
+    final Collection<IfStatement> $ = an.empty.list();
     $.add(s);
     while (iz.ifStatement(elze(s)))
       $.add(s = az.ifStatement(elze(s)));
@@ -132,7 +132,7 @@ public enum extract {
     final int ind = indexOf(ll, c);
     if (ind < 0)
       return null;
-    final List<SwitchCase> $ = new ArrayList<>();
+    final List<SwitchCase> $ = an.empty.list();
     $.add(c);
     for (int ¢ = ind + 1; ¢ < ll.size() && iz.switchCase(ll.get(¢)); ++¢)
       $.add(az.switchCase(ll.get(¢)));
@@ -251,7 +251,7 @@ public enum extract {
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   public static List<VariableDeclarationFragment> fragments(final Statement ¢) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    final List<VariableDeclarationFragment> $ = an.empty.list();
     switch (¢.getNodeType()) {
       case BLOCK:
         return fragmentsInto((Block) ¢, $);
@@ -302,7 +302,7 @@ public enum extract {
    * @param ¢ JD
    * @return reference to the list of fragments in the argument */
   public static Collection<IfStatement> ifStatements(final Statement ¢) {
-    final List<IfStatement> $ = new ArrayList<>();
+    final List<IfStatement> $ = an.empty.list();
     switch (¢.getNodeType()) {
       case BLOCK:
         return ifsInto((Block) ¢, $);
@@ -419,7 +419,7 @@ public enum extract {
   }
 
   public static Collection<VariableDeclarationFragment> nextFragmentsOf(final VariableDeclarationStatement ¢) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    final List<VariableDeclarationFragment> $ = an.empty.list();
     copy.into(fragments(¢), $);
     return chop($);
   }
@@ -548,7 +548,7 @@ public enum extract {
    * @param pattern JD
    * @return list of such sideEffects. */
   public static List<Statement> statements(final ASTNode ¢) {
-    final List<Statement> $ = new ArrayList<>();
+    final List<Statement> $ = an.empty.list();
     return !(¢ instanceof Statement) ? $ : //
         extract.statementsInto((Statement) ¢, $);
   }

@@ -12,6 +12,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -27,7 +28,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   private static final long serialVersionUID = -0x5517BB99E5F22453L;
 
   private static List<Expression> dropAnyIfSame(final List<Expression> xs, final Expression left) {
-    final List<Expression> $ = new ArrayList<>(xs);
+    final List<Expression> $ = as.list(xs);
     for (final Expression ¢ : xs)
       if (eq(¢, left)) {
         $.remove(¢);

@@ -19,7 +19,7 @@ public class MethodRecord {
   private int numNPStatements;
   private int numNPNodes;
   int numNPExpressions;
-  public final Collection<String> nps = new ArrayList<>();
+  public final Collection<String> nps = an.empty.list();
   public final int numParameters;
   public final int numStatements;
   public final int numExpressions;

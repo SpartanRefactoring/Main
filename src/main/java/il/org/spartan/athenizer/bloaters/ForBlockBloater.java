@@ -29,7 +29,7 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
 
   public ForBlockBloater() {
     andAlso("Valid not an only return", () -> {
-      final Collection<Boolean> $ = new ArrayList<>();
+      final Collection<Boolean> $ = an.empty.list();
       // TODO Raviv Use class descendants, or yieldDescendants or something
       // similar, what are u trying to find? --yg
       body(current).accept(new ASTVisitor(true) {

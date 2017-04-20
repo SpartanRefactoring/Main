@@ -65,8 +65,8 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
     try {
       final Integer key = box.it(measure.commands($));
       //
-      CUStatistics.putIfAbsent(key, new ArrayList<>());
-      classStatistics.putIfAbsent(key, new ArrayList<>());
+      CUStatistics.putIfAbsent(key, an.empty.list());
+      classStatistics.putIfAbsent(key, an.empty.list());
       //
       final ClassRecord c = new ClassRecord($);
       classRecords.push(c);

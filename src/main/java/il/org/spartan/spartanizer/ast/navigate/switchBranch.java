@@ -145,12 +145,12 @@ public class switchBranch {
     assert iz.switchCase(first(l));
     List<SwitchCase> c = null;
     List<Statement> s = null;
-    final List<switchBranch> $ = new ArrayList<>();
+    final List<switchBranch> $ = an.empty.list();
     boolean nextBranch = true;
     for (int ¢ = 0; ¢ < l.size() - 1; ++¢) {
       if (nextBranch) {
-        c = new ArrayList<>();
-        s = new ArrayList<>();
+        c = an.empty.list();
+        s = an.empty.list();
         $.add(new switchBranch(c, s));
         nextBranch = false;
         // TODO Yuval = make this into a decent for loop --yg
@@ -171,7 +171,7 @@ public class switchBranch {
       if (!nextBranch)
         s.add(lisp.last(l));
       else {
-        $.add(new switchBranch(c = new ArrayList<>(), s = new ArrayList<>()));
+        $.add(new switchBranch(c = an.empty.list(), s = an.empty.list()));
         c.add(az.switchCase(lisp.last(l)));
       }
       s.add(n.getAST().newBreakStatement());

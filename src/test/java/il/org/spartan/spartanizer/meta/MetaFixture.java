@@ -60,7 +60,7 @@ public abstract class MetaFixture {
    * @param fs the metafixtures to search
    * @return a collection of arrays as described */
   protected static Collection<Object[]> collect(final String annotationName, final MetaFixture... fs) {
-    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = new ArrayList<>();
+    @knows({ "ts", "shouldKnow", "collect/1", "h/2" }) final Collection<Object[]> $ = an.empty.list();
     for (@knows({ "t", "ts", "$" }) final MetaFixture t : fs)
       if (t != null)
         for (@knows({ "t", "a", "$" }) final SingleMemberAnnotation a : t.singleMemberAnnotations())

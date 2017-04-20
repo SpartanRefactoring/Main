@@ -303,7 +303,7 @@ public enum subject {
      * @param operands a list of expression, these are the operands */
     public Several(final List<Expression> operands) {
       super(first(operands));
-      this.operands = new ArrayList<>();
+      this.operands = an.empty.list();
       this.operands.addAll(operands.stream().map(this::claim).collect(toList()));
     }
 
@@ -333,7 +333,7 @@ public enum subject {
      * @param inner a list of sideEffects */
     public SeveralStatements(final List<Statement> inner) {
       super(first(inner));
-      this.inner = new ArrayList<>();
+      this.inner = an.empty.list();
       this.inner.addAll(inner.stream().map(this::claim).collect(toList()));
     }
 

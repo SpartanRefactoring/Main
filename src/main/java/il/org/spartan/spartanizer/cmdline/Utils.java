@@ -5,7 +5,7 @@ import static il.org.spartan.utils.Box.*;
 import java.io.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-03-19 */
 public interface Utils {
   static boolean always() {

@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class VanillaCollectionTest {
   @Test public void a() {
-    trimminKof("class C{public static final List<Int> li = new ArrayList<>();}")//
+    trimminKof("class C{public static final List<Int> li = an.empty.list();}")//
         .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();

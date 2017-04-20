@@ -20,7 +20,7 @@ public final class ReplaceForWithRange extends Tipper<ForStatement>//
   private static final long serialVersionUID = -0x7AFE12D1A8CD3E90L;
   private static final String DESCRIPTION_NON_INCLUSIVE = "replace inclusive for loop with the matching range";
   private static final String DESCRIPTION_INCLUSIVE = "replace non-inclusive for loop with the matching range";
-  private static final Collection<UserDefinedTipper<ForStatement>> tippers = new ArrayList<>();
+  private static final Collection<UserDefinedTipper<ForStatement>> tippers = an.empty.list();
 
   public ReplaceForWithRange() {
     if (!tippers.isEmpty())

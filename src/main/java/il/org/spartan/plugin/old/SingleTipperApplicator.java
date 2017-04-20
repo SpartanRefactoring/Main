@@ -104,7 +104,7 @@ public final class SingleTipperApplicator {
         ps.run(true, true, px -> {
           px.beginTask("Applying " + w.description() + " to " + jp.getElementName() + " ; pass #" + pn.get(), todo.size());
           int n = 0;
-          final Collection<ICompilationUnit> exhausted = new ArrayList<>();
+          final Collection<ICompilationUnit> exhausted = an.empty.list();
           for (final ICompilationUnit u : todo) {
             if (px.isCanceled()) {
               canelled.set();

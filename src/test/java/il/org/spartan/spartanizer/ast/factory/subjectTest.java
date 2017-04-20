@@ -113,7 +113,7 @@ public final class subjectTest {
 
   @Test public void refitPreservesOrder() {
     final InfixExpression e = i("1 + 2 * 3");
-    final List<Expression> operands = new ArrayList<>();
+    final List<Expression> operands = an.empty.list();
     operands.add(copy.of(e("3*4")));
     operands.add(copy.of(e("5")));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());

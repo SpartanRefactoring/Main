@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.plugin.Eclipse.*;
 
 import static java.util.stream.Collectors.*;
 
-import java.util.*;
 import java.util.List;
 import java.util.function.*;
 
@@ -64,7 +63,7 @@ public class InflateHandler extends AbstractHandler {
   }
 
   private static List<Listener> getListeners(final StyledText t) {
-    final List<Listener> $ = new ArrayList<>();
+    final List<Listener> $ = an.empty.list();
     if (t == null)
       return $;
     final List<Listener> ls = as.list(t.getListeners(SWT.KeyDown));

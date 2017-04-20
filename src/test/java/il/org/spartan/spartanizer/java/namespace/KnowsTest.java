@@ -1,4 +1,3 @@
-
 package il.org.spartan.spartanizer.java.namespace;
 
 import java.util.*;
@@ -12,8 +11,7 @@ import org.junit.runners.Parameterized.*;
 
 import il.org.spartan.spartanizer.meta.*;
 
-/** TODO Yossi Gil: document class 
- * 
+/** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-20 */
 @RunWith(Parameterized.class)

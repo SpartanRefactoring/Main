@@ -28,7 +28,7 @@ import il.org.spartan.utils.*;
 public final class GroupFieldEditor extends FieldEditor {
   private static final int GROUP_PADDING = 8;
   private int numColumns;
-  private final Collection<FieldEditor> members = new ArrayList<>();
+  private final Collection<FieldEditor> members = an.empty.list();
   private final Group group;
   private final Composite parent;
   private boolean initialized;

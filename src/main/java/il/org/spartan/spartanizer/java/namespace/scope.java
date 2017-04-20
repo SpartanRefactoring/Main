@@ -28,7 +28,7 @@ public interface scope {
   }
 
   static List<ASTNode> of(final SingleVariableDeclaration x) {
-    final List<ASTNode> $ = new ArrayList<>();
+    final List<ASTNode> $ = an.empty.list();
     $.add(x);
     return $;
   }

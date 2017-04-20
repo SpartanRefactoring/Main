@@ -331,7 +331,7 @@ public enum step {
    * @param ¢ JD
    * @return */
   public static Collection<String> fieldDeclarationsNames(final TypeDeclaration ¢) {
-    return ¢ == null ? null : Stream.of(¢.getFields()).map(step::names).reduce(new ArrayList<>(), (x, y) -> {
+    return ¢ == null ? null : Stream.of(¢.getFields()).map(step::names).reduce(an.empty.list(), (x, y) -> {
       x.addAll(y);
       return x;
     });
@@ -479,7 +479,7 @@ public enum step {
   }
 
   public static List<ASTNode> marchingList(final ASTNode ¢) {
-    final List<ASTNode> $ = new ArrayList<>();
+    final List<ASTNode> $ = an.empty.list();
     for (final Object s : ¢.structuralPropertiesForType()) {
       final Object child = ¢.getStructuralProperty((StructuralPropertyDescriptor) s);
       if (iz.astNode(child))
@@ -497,7 +497,7 @@ public enum step {
   public static Collection<String> methodNames(final CompilationUnit u) {
     if (u == null)
       return null;
-    final List<String> $ = new ArrayList<>();
+    final List<String> $ = an.empty.list();
     types(u).forEach(λ -> $.addAll(methodNames(λ)));
     return $;
   }
@@ -523,7 +523,7 @@ public enum step {
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    final List<MethodDeclaration> $ = new ArrayList<>();
+    final List<MethodDeclaration> $ = an.empty.list();
     types(u).forEach(λ -> $.addAll(methods(λ)));
     return $;
   }
@@ -644,14 +644,14 @@ public enum step {
    * @param d JD
    * @return */
   public static List<String> parametersNames(final MethodDeclaration d) {
-    return d == null ? null : new ArrayList<>(step.parameters(d).stream().map(λ -> λ.getName() + "").collect(toList()));
+    return d == null ? null : step.parameters(d).stream().map(λ -> λ.getName() + "").collect(toList());
   }
 
   /** Expose the list of parameters types in a {@link MethodDeclaration}
    * @param ¢ JD
    * @return */
   public static List<Type> parametersTypes(final MethodDeclaration ¢) {
-    return new ArrayList<>(step.parameters(¢).stream().map(step::type).collect(toList()));
+    return step.parameters(¢).stream().map(step::type).collect(toList());
   }
 
   /** Shorthand for {@link ASTNode#getParent()}

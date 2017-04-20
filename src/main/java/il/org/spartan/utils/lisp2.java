@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 
 /** TODO Yossi Gil: document class
- * @author Yossi Gil 
+ * @author Yossi Gil
  * @since 2017-03-19 */
 public interface lisp2 extends lisp {
   /** @param o the assignment operator to compare all to
@@ -21,7 +21,7 @@ public interface lisp2 extends lisp {
   }
 
   static <T> List<T> chopLast(final List<T> ¢) {
-    final List<T> $ = new ArrayList<>(¢);
+    final List<T> $ = as.list(¢);
     $.remove($.size() - 1);
     return $;
   }

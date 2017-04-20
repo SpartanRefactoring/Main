@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.research.metatester;
 import static il.org.spartan.spartanizer.research.metatester.FileUtils.*;
 
 import java.io.*;
-import java.util.*;
 
 import org.junit.runner.*;
 import org.junit.runner.notification.*;
@@ -43,7 +42,7 @@ public class MetaTester extends BlockJUnit4ClassRunner {
     suite.run(new TestResult());
     try {
       new BlockJUnit4ClassRunnerWithParametersFactory()
-          .createRunnerForTestWithParameters(new TestWithParameters(" ", new TestClass(newTestClass), new ArrayList<>())).run(n);
+          .createRunnerForTestWithParameters(new TestWithParameters(" ", new TestClass(newTestClass), an.empty.list())).run(n);
     } catch (final InitializationError ignore) {/**/}
     // Uncomment this to run the original test as well
     /* super.runChild(method, notifier); */

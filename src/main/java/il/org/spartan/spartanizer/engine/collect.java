@@ -56,7 +56,7 @@ public enum collect {
   public static Collector declarationsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        final List<SimpleName> $ = an.empty.list();
         as.list(ns).forEach(λ -> λ.accept(declarationsCollector($, name)));
         return $;
       }
@@ -66,7 +66,7 @@ public enum collect {
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        final List<SimpleName> $ = an.empty.list();
         as.list(ns).forEach(λ -> λ.accept(definitionsCollector($, name)));
         return $;
       }
@@ -80,7 +80,7 @@ public enum collect {
   public static Collector forAllOccurencesExcludingDefinitions(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        final List<SimpleName> $ = an.empty.list();
         as.list(ns).forEach(λ -> λ.accept(new UsesCollectorIgnoreDefinitions($, name)));
         return $;
       }
@@ -94,7 +94,7 @@ public enum collect {
   public static Collector unsafeUsesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        final List<SimpleName> $ = an.empty.list();
         as.list(ns).forEach(λ -> λ.accept(new UnsafeUsesCollector($, name)));
         return $;
       }
@@ -110,7 +110,7 @@ public enum collect {
   public static Collector usesOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
-        final List<SimpleName> $ = new ArrayList<>();
+        final List<SimpleName> $ = an.empty.list();
         Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new UsesCollector($, name)));
         return $;
       }
@@ -124,7 +124,7 @@ public enum collect {
       }
 
       @Override public List<String> inside(final ASTNode... ns) {
-        final List<String> $ = new ArrayList<>();
+        final List<String> $ = an.empty.list();
         Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
         return $;
       }
@@ -393,7 +393,7 @@ public enum collect {
       }
 
       Collection<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
-        final Collection<VariableDeclarationFragment> $ = new ArrayList<>();
+        final Collection<VariableDeclarationFragment> $ = an.empty.list();
         // noinspection SameReturnValue
         classNode.accept(new ASTVisitor(true) {
           @Override public boolean visit(final FieldDeclaration ¢) {
@@ -436,7 +436,7 @@ public enum collect {
    * @param ns the n in which to counted
    * @return list of uses */
   List<SimpleName> uses(final SimpleName what, final ASTNode... ns) {
-    final List<SimpleName> $ = new ArrayList<>();
+    final List<SimpleName> $ = an.empty.list();
     as.list(ns).forEach(λ -> as.list(collectors(what, $)).forEach(λ::accept));
     removeDuplicates($);
     $.sort(Comparator.comparingInt(ASTNode::getStartPosition));
@@ -470,7 +470,7 @@ public enum collect {
     }
 
     @SuppressWarnings("static-method") public List<String> inside(@SuppressWarnings("unused") final ASTNode... __) {
-      return new ArrayList<>();
+      return an.empty.list();
     }
 
     public final Collection<SimpleName> in(final Collection<? extends ASTNode> ¢) {

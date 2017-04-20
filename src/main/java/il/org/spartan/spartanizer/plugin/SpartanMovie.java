@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.plugin;
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import java.lang.reflect.*;
-import java.util.*;
 import java.util.List;
 
 import org.eclipse.core.commands.*;
@@ -105,7 +104,7 @@ public class SpartanMovie extends AbstractHandler {
       return eclipse.compilationUnits(eclipse.currentCompilationUnit(), nullProgressMonitor);
     } catch (final JavaModelException ¢) {
       note.bug(¢);
-      return new ArrayList<>();
+      return an.empty.list();
     }
   }
 

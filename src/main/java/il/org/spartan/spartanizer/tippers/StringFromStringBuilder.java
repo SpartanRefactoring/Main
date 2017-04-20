@@ -65,7 +65,7 @@ public final class StringFromStringBuilder extends MethodInvocationPattern//
   }
 
   private Expression simplification() {
-    final List<Expression> $ = new ArrayList<>();
+    final List<Expression> $ = an.empty.list();
     MethodInvocation r = current;
     for (boolean hs = false;;) {
       final Expression e = r.getExpression();

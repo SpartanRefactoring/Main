@@ -114,7 +114,7 @@ public enum determineIf {
   public static boolean returnsNull(final MethodDeclaration mDec) {
     if (mDec == null)
       return false;
-    final Collection<ReturnStatement> $ = new ArrayList<>();
+    final Collection<ReturnStatement> $ = an.empty.list();
     // noinspection
     // SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue
     mDec.accept(new ASTVisitor(true) {
