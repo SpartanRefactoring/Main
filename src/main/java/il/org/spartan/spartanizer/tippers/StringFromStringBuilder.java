@@ -32,17 +32,15 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
   private static final long serialVersionUID = -0x27A02FA5B2C416E2L;
   private Expression simplification;
   private List<MethodInvocation> invocations;
-  private boolean plusStringConvertion;
 
   public StringFromStringBuilder() {
     andAlso("StringBuilder/StringBuffer instance creation", () -> iz.in(name, "StringBuilder", "StringBuffer"));
     andAlso("Converted to String", () -> {
-      invocations = ancestors.until((p, c) -> !iz.methodInvocation(c) || p != null && p != az.methodInvocation(c).getExpression()).from(parent).stream()
-          .map(az::methodInvocation).collect(toList());
+      invocations = ancestors.until((p, c) -> !iz.methodInvocation(c) || p != null && p != az.methodInvocation(c).getExpression()).from(parent)
+          .stream().map(az::methodInvocation).collect(toList());
       final Expression $ = az.expression((invocations.isEmpty() ? current : last(invocations)).getParent());
-      return !invocations.isEmpty() && "toString".equals(last(invocations).getName().getIdentifier())
-          || (plusStringConvertion = not.nil($) && iz.infixPlus($)
-              && (iz.stringLiteral(az.infixExpression($).getLeftOperand()) || iz.stringLiteral(az.infixExpression($).getRightOperand())));
+      return !invocations.isEmpty() && "toString".equals(last(invocations).getName().getIdentifier()) || (not.nil($) && iz.infixPlus($)
+          && (iz.stringLiteral(az.infixExpression($).getLeftOperand()) || iz.stringLiteral(az.infixExpression($).getRightOperand())));
     });
     andAlso("All invocations are append/toString",
         () -> invocations.stream().filter(λ -> !iz.in(λ.getName().getIdentifier(), "append", "toString")).count() == 0);
@@ -56,6 +54,8 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
   @Override public Examples examples() {
     return convert("x.print(new StringBuilder(\"Description:\\t\").append(x+1).append(\"\\n\").toString())") //
         .to("x.print(\"Description:\\t\" + (x+1) + \"\\n\")") //
+        .convert("x.print(new StringBuilder(1).append(x+1).append(\"\\n\").toString())") //
+        .to("x.print(\"\" + 1 + (x+1) + \"\\n\")") //
         .ignores("x.print(new StringBuilder(\"Description:\\t\").append(x+1).append(\"\\n\"))");
   }
 
@@ -81,9 +81,23 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
       l1.addAll(l2);
       return l1;
     }));
-    if (!plusStringConvertion && $.stream().filter(λ -> iz.stringLiteral(λ)).count() == 0)
-      $.add(make.emptyString(current));
+    if (needPreliminaryString($))
+      $.add(0, make.emptyString(current));
     return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(Operator.PLUS);
+  }
+
+  /** [[SuppressWarningsSpartan]] - name has meaning --or */
+  private static boolean needPreliminaryString(List<Expression> xs) {
+    boolean previousIsString = true, containsString = false;
+    for (Expression ¢ : xs)
+      if (iz.stringLiteral(¢))
+        previousIsString = containsString = true;
+      else {
+        if (!previousIsString)
+          return true;
+        previousIsString = false;
+      }
+    return !containsString;
   }
 
   private static List<Expression> arguments(List<?> argumentz) {

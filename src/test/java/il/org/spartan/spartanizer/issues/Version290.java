@@ -111,11 +111,8 @@ public class Version290 {
         .using(InfixExpression.class, new InfixConcatenationEmptyStringLeft()) //
         .gives("new StringBuilder(f()).append(1+1)+\"\"") //
         .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
-        .gives("f() + (1+1) + \"\"") //
-        .using(InfixExpression.class, new InfixAdditionEvaluate()) //
-        .gives("f() + (2) + \"\"") //
-        .using(InfixExpression.class, new InfixPlusRemoveParenthesis()) //
-        .gives("f() + 2 + \"\"");
+        .gives("\"\" + f() + (1+1) + \"\"") //
+        .gives("\"\" + f() + (1+1)");
   }
 
   @Test public void stringFromBuilderGeneral() {
@@ -128,19 +125,21 @@ public class Version290 {
   @Test public void stringFromBuilderNoStringComponents() {
     trimminKof("new StringBuilder(0).append(1).toString()") //
         .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
-        .gives("0+1+\"\"");
+        .gives("\"\"+0+1");
   }
 
   @Test public void stringFromBuilderSimple() {
     trimminKof("new StringBuilder(1).toString()") //
         .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
-        .gives("1 + \"\"");
+        .gives("\"\"+1");
   }
 
+  // Note by Roth: the tipper may convert it directly to `1 + ""` instead of
+  // `"" + 1 + ""` with a little bit of work in {@link StringFromStringBuilder}.
   @Test public void stringFromBuilderSimple2() {
     trimminKof("new StringBuilder(1) + \"\"") //
         .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
-        .gives("1 + \"\"");
+        .gives("\"\" + 1 + \"\"");
   }
 
   @Test public void stringFromBuilderSimplest() {
