@@ -147,7 +147,7 @@ public interface Configurations {
           new BodyDeclarationModifiersSort<>(), //
           new MethodDeclarationRenameSingleParameterToCent(), //
           new MethodDeclarationConstructorMoveToInitializers(), //
-          new RenameConstructorParameters(), //
+          new ConstructorRenameParameters(), //
           null)
       .add(MethodInvocation.class, //
           new MethodInvocationEqualsWithLiteralString(), //
