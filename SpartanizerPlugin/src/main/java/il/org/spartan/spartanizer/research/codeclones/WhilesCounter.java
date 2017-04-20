@@ -13,7 +13,7 @@ public class WhilesCounter {
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTVisitor() {
       @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement node) {
-        whiles++;
+        ++whiles;
         return true;
       }
     });
