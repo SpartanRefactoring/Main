@@ -17,15 +17,21 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 
-/** The interface of * {@link TraversalImplementation} The search is restricted
- * by the {@link #range} field. If the field is null, no restriction. Otherwise,
- * search only within the tree range specified by this field.
+/** The interface of * {@link TraversalImplementation}, conducting a traversal
+ * of an AST for two distinct purposes, {@link #collectTips(CompilationUnit)},
+ * to present the tips in the problems view, and {@link #go(CompilationUnit)},
+ * which collects a maximal set of tips for rewriting.
+ * <p>
+ * The search is restricted by the {@link #range} field. If the field is null,
+ * no restriction. Otherwise, search only within the tree range specified by
+ * this field.
  * <ol>
  * <li>
  * @author Yossi Gil
  * @since 2015/07/10 */
 public abstract class Traversal implements Selfie<Traversal> {
   public final Configuration configuration = Configurations.allClone();
+  /** A list of all listeners to actions carried out by this instance. */
   public final TraversalTappers notify = new TraversalTappers()//
       .push(new TraversalMonitor(this)) //
       .push(new TraversalTapper() {
@@ -55,9 +61,8 @@ public abstract class Traversal implements Selfie<Traversal> {
   /** Checks a Compilation Unit (outermost ASTNode in the Java Grammar) for
    * tipper tips
    * @param u what to check
-   * @param ¢ TODO
-   * @return a collection of {@link Tip} objects each containing a
-   *         spartanization tip */
+   * @return a collection of non-overlapping {@link Tip} objects each containing
+   *         a spartanization tip */
   public Tips collectTips(final CompilationUnit ¢) {
     tips.clear();
     ¢.accept(tipsCollector());
@@ -184,17 +189,16 @@ public abstract class Traversal implements Selfie<Traversal> {
 
   public abstract class __ {
     // @formatter:off
-    protected Tip auxiliaryTip() { return self().getAuxiliaryTip(); }
-    protected ASTRewrite rewrite() { return self().getRewrite(); }
+    protected Tip auxiliaryTip() { return getAuxiliaryTip(); }
+    protected ASTRewrite rewrite() { return getRewrite(); }
     protected Traversal self() { return Traversal.this.self(); }
-    protected Tip tip() { return self().getTip(); }
-    // @fomatter:on
+    protected Tip tip() { return getTip(); }
+    // @formatter:on
 
     protected String node() {
       final ASTNode $ = self().getNode();
       return String.format("%s(%s)", English.name($), Trivia.gist($));
     }
-
   }
 
   public int rewriteCount() {

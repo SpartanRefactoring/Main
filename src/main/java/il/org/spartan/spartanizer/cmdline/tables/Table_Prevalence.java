@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Generates a table that shows for every nano it's prevalence in corpus
  * @author orimarco {@code marcovitch.ori@gmail.com}
@@ -28,8 +29,8 @@ class Table_Prevalence extends NanoTable {
         $.accept(new AnnotationCleanerVisitor());
         statistics.logCompilationUnit($);
         analyze.apply(spartanizer.fixedPoint($));
-      } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
-        ___.unused(__);
+      } catch (final AssertionError | MalformedTreeException | IllegalArgumentException x) {
+        note.bug(x);
       }
       return super.visit($);
     }
@@ -42,10 +43,14 @@ class Table_Prevalence extends NanoTable {
 
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
-      @Override protected void done(@SuppressWarnings("unused") final String path) {
-        initializeWriter();
-        summarize();
-        clear();
+      {
+        listen(new Listener() {
+          @Override public void endLocation() {
+            initializeWriter();
+            summarize();
+            clear();
+          }
+        });
       }
 
       void summarize() {
@@ -62,7 +67,7 @@ class Table_Prevalence extends NanoTable {
         if (table == null)
           table = new Table(Table.classToNormalizedFileName(Table_Prevalence.class) + "-" + corpus, outputFolder);
       }
-    }.fire(visitor);
+    }.visitAll(visitor);
     for (final String ¢ : prevalence.keySet()) {
       table.put("Nano", ¢);
       table.put("Prevalence", Double.valueOf(format.decimal(prevalence.get(¢).inner / 6.0)));

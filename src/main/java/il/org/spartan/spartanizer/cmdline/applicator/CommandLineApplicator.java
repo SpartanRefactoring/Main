@@ -115,8 +115,7 @@ public class CommandLineApplicator extends Applicator {
       return;
     final Int totalTipsInvoked = new Int();
     runContext().accept(() -> {
-      final int l = passes();
-      for (int pass = 1; pass <= l; ++pass) {
+      for (int pass = 1; pass <= passes(); ++pass) {
         listener().push(message.run_pass.get(Integer.valueOf(pass)));
         if (!shouldRun())
           break;

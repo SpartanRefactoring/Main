@@ -373,9 +373,9 @@ public final class Matcher {
     else if (isBlockVariable(p))
       $.put(blockVariableName(p), n);
     else {
-      final List<ASTNode> pChildren = allChildren(p, p);
-      for (int ¢ = 0; ¢ < pChildren.size(); ++¢)
-        collectEnviromentNodes(pChildren.get(¢), allChildren(n, p).get(¢), $);
+      final List<ASTNode> ns = allChildren(p, p);
+      for (int ¢ = 0; ¢ < ns.size(); ++¢)
+        collectEnviromentNodes(ns.get(¢), allChildren(n, p).get(¢), $);
     }
     return $;
   }
@@ -417,10 +417,10 @@ public final class Matcher {
   }
 
   @SuppressWarnings("boxing") public ASTNode[] getMatchedNodes(final Block b) {
-    final Pair<Integer, Integer> idxs = getBlockMatching(wrapStatementIfOne(pattern()), b);
-    final ASTNode[] $ = new ASTNode[idxs.second - idxs.first];
-    for (int ¢ = idxs.first; ¢ < idxs.second; ++¢)
-      $[¢ - idxs.first] = statements(b).get(idxs.first);
+    final Pair<Integer, Integer> fromTo = getBlockMatching(wrapStatementIfOne(pattern()), b);
+    final ASTNode[] $ = new ASTNode[fromTo.second - fromTo.first];
+    for (int ¢ = fromTo.first; ¢ < fromTo.second; ++¢)
+      $[¢ - fromTo.first] = statements(b).get(fromTo.first);
     return $;
   }
 

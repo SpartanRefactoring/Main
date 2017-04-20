@@ -24,7 +24,7 @@ public class ASTTrotter extends ASTVisitor {
       dispatch = (List<Rule<? extends ASTNode, ?>>[]) new List<?>[nodeTypesCount()];
   }
 
-  <N extends ASTNode, T> ASTTrotter hookClassOnRule(final Class<N> c, final Rule<N, T> r) {
+  protected <N extends ASTNode, T> ASTTrotter hookClassOnRule(final Class<N> c, final Rule<N, T> r) {
     init();
     get(wizard.nodeType(c)).add(r);
     return this;

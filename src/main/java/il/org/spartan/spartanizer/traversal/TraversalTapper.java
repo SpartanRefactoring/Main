@@ -4,7 +4,7 @@ public interface TraversalTapper {
   /** @formatter:off */
   default void begin() {/**/}
   default void end() {/**/}
-  default void noTipper() {/**/}
+  default void noTipper()      {/**/}
   default void setNode()       {/**/}
   default void tipperAccepts() {/**/}
   default void tipperRejects() {/**/}
