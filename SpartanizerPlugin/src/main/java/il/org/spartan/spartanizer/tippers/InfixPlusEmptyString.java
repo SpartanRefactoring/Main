@@ -37,7 +37,7 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
       return null;
     final List<Expression> es = hop.operands(x);
     assert es.size() > 1;
-    final List<Expression> $ = new ArrayList<>();
+    final List<Expression> $ = an.empty.list();
     boolean isArithmetic = true;
     for (final Integer i : range.from(0).to(es.size())) {
       final Expression e = es.get(i);

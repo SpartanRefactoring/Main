@@ -102,11 +102,11 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
-    final Collection<ASTNode> excludedParents = new ArrayList<>();
+    final Collection<ASTNode> excludedParents = an.empty.list();
     // TODO Ori Roth: check *what* needed
     if (s instanceof ExpressionStatement)
       excludedParents.add(s);
-    final List<Expression> $ = new ArrayList<>();
+    final List<Expression> $ = an.empty.list();
     s.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
         if (¢ instanceof Expression)
@@ -158,7 +158,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param g
    * @param ilr */
   static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
-    final Collection<String> idns = new ArrayList<>();
+    final Collection<String> idns = an.empty.list();
     if (r.getAddedImports() != null)
       idns.addAll(as.list(r.getAddedImports()));
     if (r.getAddedStaticImports() != null)

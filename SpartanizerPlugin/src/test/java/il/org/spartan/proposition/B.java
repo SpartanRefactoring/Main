@@ -37,7 +37,7 @@ public class B {
   B left, right;
 
   static List<B> enumerate(final int n) {
-    final List<B> $ = new ArrayList<>();
+    final List<B> $ = an.empty.list();
     if (n <= 0)
       $.add(null);
     else

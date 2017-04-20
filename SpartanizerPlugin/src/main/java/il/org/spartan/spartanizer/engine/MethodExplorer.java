@@ -28,7 +28,7 @@ public final class MethodExplorer {
    * just as local variables defined within a try and catch clauses.
    * @return a list of {@link SimpleName} from the given method. */
   public List<SimpleName> localVariables() {
-    final List<SimpleName> $ = new ArrayList<>();
+    final List<SimpleName> $ = an.empty.list();
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
     inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(final CatchClause ¢) {
@@ -75,7 +75,7 @@ public final class MethodExplorer {
    * This method correctly ignores return sideEffects found within nested types.
    * @return a list of {@link ReturnStatement} from the given method. */
   public List<ReturnStatement> returnStatements() {
-    final List<ReturnStatement> $ = new ArrayList<>();
+    final List<ReturnStatement> $ = an.empty.list();
     // noinspection SameReturnValue
     inner.accept(new IgnoreNestedMethods() {
       @Override public boolean visit(final ReturnStatement ¢) {

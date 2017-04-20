@@ -198,7 +198,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     return self();
   }
 
-
   public int run(final ICompilationUnit $, final ITextSelection s) {
     try {
       iCompilationUnit($);
@@ -256,10 +255,9 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   public GUITraversal setSelection(final ITextSelection ¢) {
     return setSelection(Ranger.make(¢));
   }
-  
 
-  private GUITraversal setSelection(Range ¢) {
-    traversal.setRange(¢); 
+  private GUITraversal setSelection(final Range ¢) {
+    traversal.setRange(¢);
     return this;
   }
 
@@ -318,7 +316,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   }
 
   private Collection<ICompilationUnit> getUnits() throws JavaModelException {
-   return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(getProgressMonitor()));
+    return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(getProgressMonitor()));
   }
 
   private TextFileChange init(final WrappedCompilationUnit ¢) {
@@ -337,7 +335,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     getProgressMonitor().done();
     return new RefactoringStatus();
   }
-
 
   private ASTRewrite go(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
@@ -412,7 +409,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
           TraversalTapper.super.end();
         }
       });
-  private final Collection<TextFileChange> changes = new ArrayList<>();
+  private final Collection<TextFileChange> changes = an.empty.list();
   private ICompilationUnit iCompilationUnit;
   private IMarker marker;
   private String name;

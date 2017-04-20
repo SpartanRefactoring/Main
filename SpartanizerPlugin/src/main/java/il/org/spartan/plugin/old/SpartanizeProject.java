@@ -25,9 +25,9 @@ public final class SpartanizeProject extends BaseHandler {
   private final StringBuilder status = new StringBuilder();
   private ICompilationUnit currentCompilationUnit;
   IJavaProject javaProject;
-  final List<ICompilationUnit> todo = new ArrayList<>();
+  final List<ICompilationUnit> todo = an.empty.list();
   private int initialCount;
-  private final Collection<ICompilationUnit> done = new ArrayList<>();
+  private final Collection<ICompilationUnit> done = an.empty.list();
   private int passNumber;
 
   /** Returns the number of spartanization tips for a compilation unit.

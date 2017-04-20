@@ -69,14 +69,14 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static List<Expression> getAllExpressions(final IfStatement s) {
-    final List<Expression> $ = new ArrayList<>();
+    final List<Expression> $ = an.empty.list();
     for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
       $.add(expression(az.ifStatement(p)));
     return $;
   }
 
   private static List<Block> getAllBlocks(final IfStatement s) {
-    final List<Block> $ = new ArrayList<>();
+    final List<Block> $ = an.empty.list();
     final Statement p = addAllBlocks(s, $);
     if (p == null)
       return $;

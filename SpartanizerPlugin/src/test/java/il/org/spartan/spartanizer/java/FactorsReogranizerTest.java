@@ -1,4 +1,3 @@
-
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.azzert.*;

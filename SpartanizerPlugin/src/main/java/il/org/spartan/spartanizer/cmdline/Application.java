@@ -124,7 +124,7 @@ public final class Application implements IApplication {
       return IApplication.EXIT_OK;
     }
     int done = 0, failed = 0;
-    final Collection<FileStats> fileStats = new ArrayList<>();
+    final Collection<FileStats> fileStats = an.empty.list();
     for (final File f : new FilesGenerator(".java", ".JAVA").from(optPath)) {
       ICompilationUnit u = null;
       try {
@@ -287,7 +287,7 @@ public final class Application implements IApplication {
     final File file;
     final int linesBefore;
     int linesAfter;
-    final List<Integer> roundStats = new ArrayList<>();
+    final List<Integer> roundStats = an.empty.list();
 
     FileStats(final File file) throws IOException {
       linesBefore = countLines(this.file = file);

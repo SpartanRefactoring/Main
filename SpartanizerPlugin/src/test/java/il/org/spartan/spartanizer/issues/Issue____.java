@@ -145,7 +145,7 @@ public class Issue____ {
 
   /** Correct way of checking types */
   @Test public void Z$080() {
-    azzert.that(new ArrayList<>(), instanceOf(List.class));
+    azzert.that(an.empty.list(), instanceOf(List.class));
   }
 
   /** Correct way of checking for inequality of values */

@@ -25,8 +25,8 @@ public interface ConfigurableReport {
     private static final long serialVersionUID = 0x28DACCB0125DA79L;
     private static String reportFileName;
     private static String header;
-    private static ArrayList<ASTNode> inputList = new ArrayList<>();
-    private static ArrayList<ASTNode> outputList = new ArrayList<>();
+    private static List<ASTNode> inputList = an.empty.list();
+    private static List<ASTNode> outputList = an.empty.list();
 
     public static void addInput(final ASTNode input) {
       getInputList().add(input);

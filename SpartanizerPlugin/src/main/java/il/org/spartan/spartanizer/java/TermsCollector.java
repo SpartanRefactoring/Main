@@ -21,9 +21,9 @@ public final class TermsCollector {
     return !iz.infixPlus(¢) && !iz.infixMinus(¢);
   }
 
-  private final List<Expression> positive = new ArrayList<>();
-  private final List<Expression> negative = new ArrayList<>();
-  private final List<Term> all = new ArrayList<>();
+  private final List<Expression> positive = an.empty.list();
+  private final List<Expression> negative = an.empty.list();
+  private final List<Term> all = an.empty.list();
 
   public TermsCollector(final InfixExpression e) {
     collect(e);

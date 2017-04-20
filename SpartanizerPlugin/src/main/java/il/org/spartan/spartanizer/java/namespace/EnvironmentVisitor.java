@@ -51,7 +51,7 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
-    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
+    final Collection<Entry<String, Binding>> $ = an.empty.list();
     final type t = type.baptize(Trivia.condense(d.getType()));
     $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
@@ -62,14 +62,14 @@ final class EnvironmentVisitor extends ASTVisitor {
   }
 
   @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
-    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
+    final Collection<Entry<String, Binding>> $ = an.empty.list();
     final type t = type.baptize(Trivia.condense(x.getType()));
     $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
 
   @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
-    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
+    final Collection<Entry<String, Binding>> $ = an.empty.list();
     final type t = type.baptize(Trivia.condense(s.getType()));
     $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;

@@ -4,6 +4,8 @@ import static il.org.spartan.lisp.*;
 
 import java.util.*;
 
+import il.org.spartan.*;
+
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-12 */
@@ -43,7 +45,7 @@ public interface the {
   }
 
   static <T> List<T> rest(final List<T> ¢) {
-    final List<T> $ = new ArrayList<>(¢);
+    final List<T> $ = as.list(¢);
     $.remove(first($));
     return $;
   }
@@ -54,7 +56,7 @@ public interface the {
 
   static <T> List<T> rest(final T t, final Iterable<T> ts) {
     boolean add = false;
-    final List<T> $ = new ArrayList<>();
+    final List<T> $ = an.empty.list();
     for (final T x : ts)
       if (add)
         $.add(x);

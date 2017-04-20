@@ -39,7 +39,7 @@ public interface hIndex {
         ++ranking.get(key).second.inner;
       });
     }
-    final List<Pair<String, Int>> rs = new ArrayList<>();
+    final List<Pair<String, Int>> rs = an.empty.list();
     rs.addAll(ranking.values());
     rs.sort((x, y) -> x.second.inner > y.second.inner ? -1 : as.bit(x.second.inner < y.second.inner));
     System.out.println("Max: " + first(rs).first + " [" + first(rs).second.inner + "]");

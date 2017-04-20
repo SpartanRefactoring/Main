@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2016-12-23 */
 public interface ancestors {
   static List<ASTNode> path(final ASTNode n) {
-    final List<ASTNode> $ = new ArrayList<>();
+    final List<ASTNode> $ = an.empty.list();
     for (ASTNode parent = n; parent != null; parent = n.getParent())
       $.add(parent);
     Collections.reverse($);

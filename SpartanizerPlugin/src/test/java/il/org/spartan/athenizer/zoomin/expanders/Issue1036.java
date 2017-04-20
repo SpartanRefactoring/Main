@@ -22,8 +22,8 @@ public class Issue1036 {
   }
 
   static class TestClass extends MetaFixture {
-    final List<Integer> children1 = new ArrayList<>();
-    List<Integer> children2 = new ArrayList<>();
+    final List<Integer> children1 = an.empty.list();
+    List<Integer> children2 = an.empty.list();
     String $ = "";
 
     public String check1() {

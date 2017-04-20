@@ -90,7 +90,7 @@ public abstract class AbstractSelection<Self extends AbstractSelection<?>> {
     if (¢ == null || ¢.inner == null)
       return self();
     if (inner == null)
-      inner = new ArrayList<>();
+      inner = an.empty.list();
     inner.addAll(¢.inner);
     return self();
   }

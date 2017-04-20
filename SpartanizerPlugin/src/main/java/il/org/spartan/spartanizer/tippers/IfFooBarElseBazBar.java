@@ -32,7 +32,7 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
   private static final long serialVersionUID = -0x333F3DD43690324EL;
 
   private static List<Statement> commmonSuffix(final List<Statement> ss1, final List<Statement> ss2) {
-    final List<Statement> $ = new ArrayList<>();
+    final List<Statement> $ = an.empty.list();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(ss2.size() - 1)) {
       final Statement s1 = last(ss1);
       if (!wizard.eq(s1, last(ss2)))

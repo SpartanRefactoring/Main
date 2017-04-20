@@ -116,7 +116,7 @@ public enum JUnitTestMethodFacotry {
     try {
       r.rewriteAST(d, null).apply(d);
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      note.bug(¢); 
+      note.bug(¢);
     }
   }
 

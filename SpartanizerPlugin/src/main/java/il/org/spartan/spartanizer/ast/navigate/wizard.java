@@ -318,7 +318,7 @@ public interface wizard {
   }
 
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
-    final Collection<MethodDeclaration> $ = new ArrayList<>();
+    final Collection<MethodDeclaration> $ = an.empty.list();
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
@@ -351,7 +351,7 @@ public interface wizard {
     try {
       return ASTNode.nodeClassForType($).getSimpleName();
     } catch (final IllegalArgumentException ¢) {
-      return note.bug(¢); 
+      return note.bug(¢);
     }
   }
 
@@ -371,7 +371,7 @@ public interface wizard {
   }
 
   static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final Collection<VariableDeclarationFragment> fs) {
-    final List<VariableDeclarationFragment> $ = new ArrayList<>();
+    final List<VariableDeclarationFragment> $ = an.empty.list();
     fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
     return $;
   }

@@ -84,7 +84,7 @@ public class ASTTestClassGenerator implements TestClassGenerator {
   }
 
   private static List<String> prefixes(final Test t) {
-    final List<String> $ = new ArrayList<>();
+    final List<String> $ = an.empty.list();
     final StringBuilder prefix = new StringBuilder();
     step.statements((MethodDeclaration) t.source).stream().map(λ -> {
       prefix.append(λ + "\n");
@@ -131,7 +131,7 @@ public class ASTTestClassGenerator implements TestClassGenerator {
   }
 
   private List<Test> allTestMethods() {
-    final List<Test> $ = new ArrayList<>();
+    final List<Test> $ = an.empty.list();
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final MethodDeclaration node) {
         final Annotation a = extract.annotations(node).stream().filter(λ -> haz.name(λ, "Test")).findAny().orElse(null);

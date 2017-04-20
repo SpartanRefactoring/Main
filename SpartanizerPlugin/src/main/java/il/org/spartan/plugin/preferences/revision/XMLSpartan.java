@@ -102,7 +102,7 @@ public class XMLSpartan {
       final Examples preview = Tippers.cache.tipperToExamples.get(tc);
       final TipperGroup g = Tippers.cache.TipperObjectByClassCache.get(tc).tipperGroup();
       if (!tgs.containsKey(g)) {
-        tgs.put(g, new ArrayList<>());
+        tgs.put(g, an.empty.list());
         tcs.put(g, new SpartanCategory(g.name(), false));
       }
       final SpartanTipper st = new SpartanTipper(//
@@ -285,7 +285,7 @@ public class XMLSpartan {
 
     public SpartanCategory(final String name, final boolean enabled) {
       super(name, enabled);
-      children = new ArrayList<>();
+      children = an.empty.list();
     }
 
     public void addChild(final SpartanTipper ¢) {

@@ -53,9 +53,9 @@ public interface TestClassGenerator {
     try {
       return new URLClassLoader(new URL[] { new File(generatedClassPath(testClass)).toURI().toURL() })
           .loadClass(packageName("\\.", testClass) + "." + $);
-    } catch (IOException x) {
+    } catch (final IOException x) {
       note.io(x);
-    } catch (ClassNotFoundException x) {
+    } catch (final ClassNotFoundException x) {
       note.bug(x);
     }
     return Object.class;

@@ -44,7 +44,7 @@ public enum SentenceTestTemplate {
   @RunWith(Parameterized.class)
   public static class Changes {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      final Collection<Object[]> $ = new ArrayList<>();
+      final Collection<Object[]> $ = an.empty.list();
       allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(toList())));
       return $;
     }
@@ -73,7 +73,7 @@ public enum SentenceTestTemplate {
   @RunWith(Parameterized.class)
   public static class ChangesTo {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      final Collection<Object[]> $ = new ArrayList<>();
+      final Collection<Object[]> $ = an.empty.list();
       for (final List<MethodDeclaration> sentence : allSentences())
         for (int ¢ = 0; ¢ < sentence.size() - 1; ++¢)
           if (disabling.specificallyDisabled(sentence.get(¢)))
@@ -120,7 +120,7 @@ public enum SentenceTestTemplate {
   @RunWith(Parameterized.class)
   public static class Stays {
     @Parameters(name = "{index}. {0} ") public static Collection<Object[]> ____() {
-      final Collection<Object[]> $ = new ArrayList<>();
+      final Collection<Object[]> $ = an.empty.list();
       allSentences()
           .forEach(sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
       return $;

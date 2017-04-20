@@ -17,10 +17,10 @@ import il.org.spartan.utils.*;
 import nano.ly.*;
 
 /** convert {@code
- * T a = new ArrayList<>()
+ * T a = an.empty.list()
  * a.addAll(x)
  * } to {@code
- * T a = new ArrayList<>(x)
+ * T a = as.list(x)
  * }
  * @author Yossi Gil
  * @author Yossi Gil
@@ -62,7 +62,7 @@ public final class LocalInitializedNewAddAll extends LocalInitialized //
   private MethodInvocation methodInvocation;
 
   @Override public Examples examples() {
-    return convert("T a = new ArrayList<>(); a.addAll(x);")//
+    return convert("T a = an.empty.list(); a.addAll(x);")//
         .to("new ArrayList<>(x)");
   }
 }

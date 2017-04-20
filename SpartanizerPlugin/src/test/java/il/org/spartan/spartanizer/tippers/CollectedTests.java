@@ -15,7 +15,7 @@ import org.junit.runners.*;
 public final class CollectedTests {
   @Test public void a() {
     trimminKof(
-        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() <x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.x.f(coes.size()); ")
+        "   final Collection<Integer> outdated = an.empty.list();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = an.empty.list();     for (final Integer pi : coes)      if (pi.intValue() <x - y)       outdated.add(pi);     for (final Integer pi : outdated)      coes.remove(pi);     S.x.f(coes.size()); ")
             .stays();
   }
 
@@ -26,7 +26,7 @@ public final class CollectedTests {
 
   @Test public void c() {
     trimminKof(
-        "   final Collection<Integer> outdated = new ArrayList<>();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = new ArrayList<>();     for (final Integer pi : coes)      if (pi.intValue() <x - y)       outdated.add(pi);     S.x.f(coes.size());     S.x.f(outdated.size()); ")
+        "   final Collection<Integer> outdated = an.empty.list();     int x = 6, y = 7;     S.x.f(x+y);     final Collection<Integer> coes = an.empty.list();     for (final Integer pi : coes)      if (pi.intValue() <x - y)       outdated.add(pi);     S.x.f(coes.size());     S.x.f(outdated.size()); ")
             .stays();
   }
 

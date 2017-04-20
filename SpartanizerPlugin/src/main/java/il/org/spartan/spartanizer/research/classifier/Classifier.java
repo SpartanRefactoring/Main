@@ -21,12 +21,11 @@ import il.org.spartan.utils.*;
  * @since Nov 13, 2016 */
 public class Classifier extends ASTVisitor {
   private final Map<String, List<String>> forLoops = new HashMap<>();
-  private final Collection<ASTNode> forLoopsList = new ArrayList<>();
+  private final Collection<ASTNode> forLoopsList = an.empty.list();
   private int forLoopsAmount;
   private static final Scanner input = new Scanner(System.in);
   private static final Collection<Tipper<EnhancedForStatement>> enhancedForKnownPatterns = as.list(new ForEach());
-  private static final Collection<Tipper<ForStatement>> forKnownPatterns = new ArrayList<>(
-      as.list(new CopyArray(), new ForEachEnhanced(), new InitArray()));
+  private static final Collection<Tipper<ForStatement>> forKnownPatterns = as.list(as.list(new CopyArray(), new ForEachEnhanced(), new InitArray()));
   private Map<String, Int> patterns;
 
   @Override public boolean visit(final ForStatement node) {
@@ -72,13 +71,14 @@ public class Classifier extends ASTVisitor {
     System.out.println("Lets classify them together!");
   }
 
+  /** [[SuppressWarningsSpartan]] */
   private Map<String, Int> filterAllIntrestingPatterns() {
     final Map<String, Int> $ = new HashMap<>();
     for (boolean again = true; again;) {
       again = false;
       for (final ASTNode ¢ : forLoopsList) {
         final UserDefinedTipper<ASTNode> t = TipperFactory.patternTipper(format.code(generalize.code(¢ + "")), "FOR();", "");
-        final Collection<ASTNode> toRemove = new ArrayList<>(forLoopsList.stream().filter(t::check).collect(toList()));
+        final Collection<ASTNode> toRemove = as.list(forLoopsList.stream().filter(t::check).collect(toList()));
         if (toRemove.size() <= 4)
           forLoopsList.remove(¢);
         else {
@@ -108,7 +108,7 @@ public class Classifier extends ASTVisitor {
     if ("q".equals(classification) || "Q".equals(classification))
       return false;
     System.out.println(tipperize(code, classification));
-    forLoops.putIfAbsent(classification, new ArrayList<>());
+    forLoops.putIfAbsent(classification, an.empty.list());
     forLoops.get(classification).add(¢);
     return true;
   }

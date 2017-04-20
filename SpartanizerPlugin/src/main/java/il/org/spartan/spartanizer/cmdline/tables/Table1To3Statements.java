@@ -51,7 +51,7 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
       return false;
     try {
       final Integer key = Integer.valueOf(measure.commands(¢));
-      statementsCoverageStatistics.putIfAbsent(key, new ArrayList<>());
+      statementsCoverageStatistics.putIfAbsent(key, an.empty.list());
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       statementsCoverageStatistics.get(key).add(m);
