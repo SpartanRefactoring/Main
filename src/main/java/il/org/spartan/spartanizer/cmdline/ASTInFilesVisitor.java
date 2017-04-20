@@ -117,8 +117,8 @@ public class ASTInFilesVisitor {
     notify.beginBatch();
     astVisitor = ¢;
     locations.forEach(
-        x -> {
-          setCurrentLocation(x);
+        λ -> {
+          setCurrentLocation(λ);
           visitLocation();
         }
         );
@@ -295,8 +295,8 @@ public class ASTInFilesVisitor {
     }
   }
 
-  public ASTInFilesVisitor listen(final Listener t) {
-    notify.push(t);
+  public ASTInFilesVisitor listen(final Listener ¢) {
+    notify.push(¢);
     return this;
   }
 
