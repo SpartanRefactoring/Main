@@ -1,14 +1,15 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.lisp.*;
+import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -26,79 +27,64 @@ import nano.ly.*;
  * can be replaced with {@code String s = myName + "'s grade is " + 100;}
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-04-11 */
-public final class StringFromStringBuilder extends MethodInvocationPattern//
+public final class StringFromStringBuilder extends ClassInstanceCreationPattern //
     implements TipperCategory.Idiomatic {
   private static final long serialVersionUID = -0x27A02FA5B2C416E2L;
   private Expression simplification;
+  private List<MethodInvocation> invocations;
+  private boolean plusStringConvertion;
 
   public StringFromStringBuilder() {
-    andAlso("Not toString", () -> !"toString".equals(name + ""));
-    andAlso("Can be simplified toString", () -> not.nil(simplification = simplification()));
-  }
-
-  private static Expression replacement(final MethodInvocation i, final List<Expression> xs) {
-    if (xs.isEmpty())
-      return make.emptyString(i);
-    if (xs.size() == 1)
-      return copy.of(first(xs));
-    final InfixExpression $ = i.getAST().newInfixExpression();
-    InfixExpression t = $;
-    for (final Expression ¢ : xs.subList(0, xs.size() - 2)) {
-      t.setLeftOperand(copy.of(¢));
-      t.setOperator(op.PLUS2);
-      t.setRightOperand(i.getAST().newInfixExpression());
-      t = (InfixExpression) t.getRightOperand();
-    }
-    t.setLeftOperand(copy.of(the.penultimate(xs)));
-    t.setOperator(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
-    t.setRightOperand(copy.of(last(xs)));
-    return $;
+    andAlso("StringBuilder/StringBuffer instance creation", () -> iz.in(name, "StringBuilder", "StringBuffer"));
+    andAlso("Converted to String", () -> {
+      invocations = ancestors.until(λ -> !iz.methodInvocation(λ)).from(parent).stream().map(az::methodInvocation).collect(toList());
+      final Expression $ = az.expression((invocations.isEmpty() ? current : last(invocations)).getParent());
+      return !invocations.isEmpty() && "toString".equals(last(invocations).getName().getIdentifier())
+          || (plusStringConvertion = not.nil($) && iz.infixPlus($)
+              && (iz.stringLiteral(az.infixExpression($).getLeftOperand()) || iz.stringLiteral(az.infixExpression($).getRightOperand())));
+    });
+    andAlso("All invocations are append/toString",
+        () -> invocations.stream().filter(λ -> !iz.in(λ.getName().getIdentifier(), "append", "toString")).count() == 0);
+    andAlso("Can be simplified", () -> not.nil(simplification = simplification()));
   }
 
   @Override public String description() {
     return "Use \"+\" operator to concatenate strings";
   }
 
+  @Override public Examples examples() {
+    return convert("new StringBuilder(\"Description:\\t\").append(x+1).append(\"\\n\").toString()") //
+        .to("\"Description:\\t\" + (x+1) + \"\\n\"");
+  }
+
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
-    r.replace(current, simplification, g);
+    r.replace(invocations.isEmpty() ? current : last(invocations), simplification, g);
     return r;
   }
 
-  private Expression simplification() {
-    final List<Expression> $ = an.empty.list();
-    MethodInvocation r = current;
-    for (boolean hs = false;;) {
-      final Expression e = r.getExpression();
-      final ClassInstanceCreation c = az.classInstanceCreation(e);
-      if (c != null) {
-        final String t = c.getType() + "";
-        if (!"StringBuffer".equals(t) && !"StringBuilder".equals(t))
-          return null;
-        if (!c.arguments().isEmpty() && "StringBuilder".equals(t)) {
-          final Expression a = onlyOne(arguments(c));
-          if (a == null)
-            return null;
-          $.add(0, addParenthesisIfNeeded(a));
-          hs |= iz.stringLiteral(a);
-        }
-        if (!hs)
-          $.add(0, make.emptyString(e));
-        break;
-      }
-      final MethodInvocation mi = az.methodInvocation(e);
-      if (mi == null || !"append".equals(mi.getName() + "") || mi.arguments().isEmpty())
-        return null;
-      final Expression a = onlyOne(arguments(mi));
-      if (a == null)
-        return null;
-      $.add(0, addParenthesisIfNeeded(a));
-      hs |= iz.stringLiteral(a);
-      r = mi;
-    }
-    return replacement(current, $);
+  @Override protected ASTNode[] span() {
+    return new Expression[] { invocations.isEmpty() ? current : last(invocations) };
   }
 
-  @Override public Examples examples() {
-    return null;
+  @Override protected ASTNode highlight() {
+    return invocations.isEmpty() ? current : last(invocations);
+  }
+
+  private Expression simplification() {
+    final List<Expression> $ = arguments(current.arguments());
+    $.addAll(invocations.stream().reduce(an.empty.list(), (l, i) -> {
+      l.addAll(arguments(i.arguments()));
+      return l;
+    }, (l1, l2) -> {
+      l1.addAll(l2);
+      return l1;
+    }));
+    if (!plusStringConvertion && $.stream().filter(λ -> iz.stringLiteral(λ)).count() == 0)
+      $.add(make.emptyString(current));
+    return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(Operator.PLUS);
+  }
+
+  private static List<Expression> arguments(List<?> argumentz) {
+    return argumentz.stream().filter(λ -> λ instanceof Expression).map(λ -> addParenthesisIfNeeded((Expression) λ)).collect(toList());
   }
 }

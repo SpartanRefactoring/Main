@@ -104,23 +104,55 @@ public class Version290 {
         .stays();
   }
 
-  @Ignore("Ori Roth") @Test public void stringFromBuilderAddParenthesis() {
-    trimminKof("new StringBuilder(f()).append(1+1).toString()")//
+  @Test public void stringFromBuilderAddParenthesis() {
+    trimminKof("new StringBuilder(f()).append(1+1).toString()") //
+        .using(MethodInvocation.class, new MethodInvocationToStringToEmptyStringAddition()) //
         .gives("\"\"+new StringBuilder(f()).append(1+1)") //
+        .using(InfixExpression.class, new InfixConcatenationEmptyStringLeft()) //
         .gives("new StringBuilder(f()).append(1+1)+\"\"") //
-        .gives("\"\"+f() + (1+1)+\"\"") //
-        .gives("\"\"+f() + 2+\"\"") //
-        .stays();
+        .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
+        .gives("f() + (1+1) + \"\"") //
+        .using(InfixExpression.class, new InfixAdditionEvaluate()) //
+        .gives("f() + (2) + \"\"") //
+        .using(InfixExpression.class, new InfixPlusRemoveParenthesis()) //
+        .gives("f() + 2 + \"\"");
   }
 
-  @Ignore("Ori Roth") @Test public void stringFromBuilderGeneral() {
-    trimminKof("new StringBuilder(myName).append(\"\'s grade is\").append(100).toString()")//
+  @Test public void stringFromBuilderGeneral() {
+    trimminKof("new StringBuilder(myName).append(\"\'s grade is\").append(100).toString()") //
+        .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
         .gives("myName+\"\'s grade is\"+100") //
         .stays();
   }
 
-  @Ignore("Ori Roth") @Test public void stringFromBuilderNoStringComponents() {
-    trimminKof("new StringBuilder(0).append(1).toString()")//
-        .gives("\"\"+0+1");
+  @Test public void stringFromBuilderNoStringComponents() {
+    trimminKof("new StringBuilder(0).append(1).toString()") //
+        .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
+        .gives("0+1+\"\"");
+  }
+
+  @Test public void stringFromBuilderSimple() {
+    trimminKof("new StringBuilder(1).toString()") //
+        .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
+        .gives("1 + \"\"");
+  }
+
+  @Test public void stringFromBuilderSimple2() {
+    trimminKof("new StringBuilder(1) + \"\"") //
+        .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
+        .gives("1 + \"\"");
+  }
+
+  @Test public void stringFromBuilderSimplest() {
+    trimminKof("new StringBuilder().toString()") //
+        .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
+        .gives("\"\"");
+  }
+
+  @Test public void stringFromBuilderSimplest2() {
+    trimminKof("new StringBuilder() + \"\"") //
+        .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
+        .gives("\"\" + \"\"") //
+        .gives("\"\"");
   }
 }
