@@ -34,27 +34,43 @@ public interface ancestors {
       }
     };
   }
-  
+
   static Until until(final Predicate<ASTNode> ¢) {
     return new Until(¢);
   }
-  
+
+  // previous node / current node
+  static Until until(final BiPredicate<ASTNode, ASTNode> ¢) {
+    return new Until(¢);
+  }
+
   static Until whil(final Predicate<ASTNode> ¢) {
     return new Until(λ -> !¢.test(λ));
   }
 
   class Until {
     final Predicate<ASTNode> predicate;
+    final BiPredicate<ASTNode, ASTNode> bipredicate;
 
     Until(Predicate<ASTNode> predicate) {
       this.predicate = predicate;
+      bipredicate = null;
+    }
+
+    Until(BiPredicate<ASTNode, ASTNode> bipredicate) {
+      predicate = null;
+      this.bipredicate = bipredicate;
     }
 
     public List<ASTNode> from(final ASTNode n) {
       final List<ASTNode> $ = an.empty.list();
-      for (ASTNode current = n ; current != null && !predicate.test(current) ; current = current.getParent())
+      for (ASTNode current = n, previous = null; current != null && !test(previous, current); previous = current, current = current.getParent())
         $.add(current);
       return $;
+    }
+
+    private boolean test(ASTNode previous, ASTNode current) {
+      return predicate != null ? predicate.test(current) : bipredicate != null && bipredicate.test(previous, current);
     }
   }
 }

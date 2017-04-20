@@ -78,6 +78,7 @@ public class TestOperand extends Wrapper<String> {
       return new TestOperand($);
     copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", Trivia.escapeQuotes(Trivia.essence(peeled)),
         Trivia.escapeQuotes(Trivia.essence($)));
+    azzert.that(Trivia.essence(peeled), is(Trivia.essence($)));
     return new TestOperand($);
   }
 

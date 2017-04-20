@@ -19,6 +19,10 @@ public class Examples implements Iterable<Example> {
     return inner.iterator();
   }
 
+  @Override public Spliterator<Example> spliterator() {
+    return inner.spliterator();
+  }
+
   public Converter convert(final String from) {
     return to -> add(new Example.Converts() {
       @Override public String from() {
