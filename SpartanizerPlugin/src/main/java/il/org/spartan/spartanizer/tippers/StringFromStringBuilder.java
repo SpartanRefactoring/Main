@@ -86,7 +86,6 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
     return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(Operator.PLUS);
   }
 
-  /** [[SuppressWarningsSpartan]] - name has meaning --or */
   private static boolean needPreliminaryString(List<Expression> xs) {
     if (xs.isEmpty() || xs.size() == 1 && !iz.stringLiteral(first(xs)))
       return true;
