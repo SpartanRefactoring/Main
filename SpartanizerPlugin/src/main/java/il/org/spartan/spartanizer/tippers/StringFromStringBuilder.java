@@ -81,12 +81,14 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
       l1.addAll(l2);
       return l1;
     }));
-    if (needPreliminaryString($))
+    if (needPreliminaryStringSafe($))
       $.add(0, make.emptyString(current));
     return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(Operator.PLUS);
   }
 
-  private static boolean needPreliminaryString(List<Expression> xs) {
+  // An alternative approach - may not be safe, consider
+  // `1 + new StringBuilder().toString()`
+  public static boolean needPreliminaryStringUnsafe(List<Expression> xs) {
     if (xs.isEmpty() || xs.size() == 1 && !iz.stringLiteral(first(xs)))
       return true;
     boolean previousIsString = true;
@@ -99,6 +101,10 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
         previousIsString = false;
       }
     return false;
+  }
+
+  public static boolean needPreliminaryStringSafe(List<Expression> ¢) {
+    return ¢.isEmpty() || !iz.stringLiteral(first(¢));
   }
 
   private static List<Expression> arguments(List<?> argumentz) {
