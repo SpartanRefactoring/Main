@@ -45,7 +45,7 @@ public interface Tippers {
   Map<String, String> TipperIDNameTranslationTable = anonymous.ly(() -> {
     final Map<String, String> $ = new HashMap<>();
     for (final Tipper<? extends ASTNode> ¢ : Configurations.allClone().getAllTippers())
-      $.put(find(¢) + "", ¢.myClass() + "");
+      $.put(find(¢) + "", ¢.tipperName());
     return $;
   });
 
