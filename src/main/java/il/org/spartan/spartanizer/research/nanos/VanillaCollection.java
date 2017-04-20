@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
@@ -19,8 +20,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-03-07 */
 public final class VanillaCollection extends NanoPatternTipper<FieldDeclaration> {
   private static final long serialVersionUID = 0x69F91FBBFC879D62L;
-  private static final List<String> abstractTypes = Arrays.asList("List", "Set", "Map");
-  private static final List<String> specificTypes = Arrays.asList("ArrayList", "HashSet", "TreeSet", "HashMap");
+  private static final List<String> abstractTypes = as.list("List", "Set", "Map");
+  private static final List<String> specificTypes = as.list("ArrayList", "HashSet", "TreeSet", "HashMap");
 
   @Override public boolean canTip(final FieldDeclaration $) {
     return abstractTypes.contains(type(az.parameterizedType(type($))) + "")

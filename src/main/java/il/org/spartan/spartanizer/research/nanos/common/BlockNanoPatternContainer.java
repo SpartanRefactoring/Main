@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 
 /** List that can contain {@link NanoPatternTipper<Block>}
@@ -13,7 +14,7 @@ public class BlockNanoPatternContainer extends NanoPatternContainer<Block> {
   private static final long serialVersionUID = 0x539A0A2C3A6717BDL;
 
   @SafeVarargs public BlockNanoPatternContainer(final UserDefinedTipper<Block>... ts) {
-    addAll(Arrays.asList(ts));
+    addAll(as.list(ts));
   }
 
   public BlockNanoPatternContainer statementsPattern(final String pattern, final String replacement, final String description) {

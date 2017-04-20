@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.cmdline.nanos;
 
-import java.util.*;
+import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
 
@@ -12,19 +13,13 @@ import il.org.spartan.utils.*;
  * @since Jan 21, 2017 */
 public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
   private static final long serialVersionUID = -0x2E8F85DE0AF69FEBL;
-  @SuppressWarnings("boxing") private static final List<Integer> loopTypes = Arrays.asList(ASTNode.WHILE_STATEMENT, ASTNode.FOR_STATEMENT,
-      ASTNode.ENHANCED_FOR_STATEMENT, ASTNode.DO_STATEMENT);
-
-  @Override public void clear() {
-    super.clear();
-  }
 
   public int total() {
-    return loopTypes.stream().mapToInt(λ -> total(Unbox.it(λ))).sum();
+    return wizard.loopTypes.stream().mapToInt(λ -> total(Unbox.it(λ))).sum();
   }
 
   public int covered() {
-    return loopTypes.stream().mapToInt(λ -> covered(Unbox.it(λ))).sum();
+    return wizard.loopTypes.stream().mapToInt(λ -> covered(Unbox.it(λ))).sum();
   }
 
   public double coverage() {
@@ -36,18 +31,18 @@ public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
   }
 
   public int totalDoWhile() {
-    return total(ASTNode.DO_STATEMENT);
+    return total(DO_STATEMENT);
   }
 
   public int totalWhile() {
-    return total(ASTNode.WHILE_STATEMENT);
+    return total(WHILE_STATEMENT);
   }
 
   public int totalFor() {
-    return total(ASTNode.FOR_STATEMENT);
+    return total(FOR_STATEMENT);
   }
 
   public int totalEnhanced() {
-    return total(ASTNode.ENHANCED_FOR_STATEMENT);
+    return total(ENHANCED_FOR_STATEMENT);
   }
 }
