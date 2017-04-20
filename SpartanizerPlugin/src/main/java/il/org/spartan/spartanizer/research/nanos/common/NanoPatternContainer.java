@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 
@@ -16,7 +17,7 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
   private static final long serialVersionUID = 0x58B3F750F70F92FCL;
 
   @SafeVarargs public NanoPatternContainer(final UserDefinedTipper<N>... ts) {
-    addAll(Arrays.asList(ts));
+    addAll(as.list(ts));
   }
 
   public NanoPatternContainer<N> add(final String pattern) {
