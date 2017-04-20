@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -32,5 +33,28 @@ public interface ancestors {
         return $;
       }
     };
+  }
+  
+  static Until until(final Predicate<ASTNode> ¢) {
+    return new Until(¢);
+  }
+  
+  static Until whil(final Predicate<ASTNode> ¢) {
+    return new Until(λ -> !¢.test(λ));
+  }
+
+  class Until {
+    final Predicate<ASTNode> predicate;
+
+    Until(Predicate<ASTNode> predicate) {
+      this.predicate = predicate;
+    }
+
+    public List<ASTNode> from(final ASTNode n) {
+      final List<ASTNode> $ = an.empty.list();
+      for (ASTNode current = n ; current != null && !predicate.test(current) ; current = current.getParent())
+        $.add(current);
+      return $;
+    }
   }
 }
