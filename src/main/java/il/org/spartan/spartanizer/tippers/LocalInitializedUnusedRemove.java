@@ -20,14 +20,14 @@ public final class LocalInitializedUnusedRemove extends LocalInitialized impleme
   private static final long serialVersionUID = -0xBDF3E9975A1F125L;
 
   public LocalInitializedUnusedRemove() {
-    andAlso("Local is unused",//
+    andAlso("Local is unused", //
         () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
-    andAlso("Local does not use variables defined in previous fragments",//
+    andAlso("Local does not use variables defined in previous fragments", //
         () -> youngerSiblings()//
-        .stream()//
-        .map(x->x.getName()) //
-        .allMatch(x -> collect.usesOf(x).in(initializer).isEmpty())//
-        );
+            .stream()//
+            .map(x -> x.getName()) //
+            .allMatch(x -> collect.usesOf(x).in(initializer).isEmpty())//
+    );
   }
 
   @Override public String description() {
@@ -51,7 +51,8 @@ public final class LocalInitializedUnusedRemove extends LocalInitialized impleme
                 + "  int number = 1;\n" //
                 + "  System.out.println(number);\n" //
                 + "}") //
-            .ignores("int a = 0, b = 0, c = a++ + b; f(a,b); g(a,b);");
+            .ignores("int a = 0, b = 0, c = a++ + b; f(a,b); g(a,b);") //
+    ;
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
