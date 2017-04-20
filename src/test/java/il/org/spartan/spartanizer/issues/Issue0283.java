@@ -9,7 +9,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Jan 6, 2017 */
 @SuppressWarnings("static-method")

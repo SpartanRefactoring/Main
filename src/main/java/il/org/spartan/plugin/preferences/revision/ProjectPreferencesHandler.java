@@ -145,7 +145,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       }
 
       @Override public Object getParent(final Object ¢) {
-        return !(¢ instanceof SpartanTipper) ? null : ((SpartanTipper) ¢).parent();
+        return !(¢ instanceof SpartanTipper) ? null : ((SpartanTipper) ¢).parent;
       }
 
       @Override public Object[] getElements(@SuppressWarnings("unused") final Object __) {
@@ -216,7 +216,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           tooltips.values().forEach(λ -> λ.setVisible(false));
           if (!tooltips.containsKey(t)) {
             final ToolTip tt = new ToolTip(getShell(), SWT.ICON_INFORMATION);
-            tt.setMessage(t.description());
+            tt.setMessage(t.description);
             tt.setAutoHide(true);
             tooltips.put(t, tt);
           }
@@ -248,10 +248,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (!(o instanceof SpartanTipper))
             return;
           final SpartanTipper st = (SpartanTipper) o;
-          final String before = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).from()));
+          final String before = getPreviewString(st.preview, λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).from()));
           final IDocument d = new Document(before);
           try {
-            final String after = getPreviewString(st.preview(), λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).to()));
+            final String after = getPreviewString(st.preview, λ -> Boolean.valueOf(λ instanceof Converts), λ -> prettify(((Converts) λ).to()));
             if (new RefactoringWizardOpenOperation(new Wizard(new Refactoring() {
               @Override public String getName() {
                 return st.name();

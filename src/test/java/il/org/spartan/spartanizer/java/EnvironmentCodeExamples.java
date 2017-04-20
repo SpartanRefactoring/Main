@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.java;
 
 import il.org.spartan.spartanizer.annotations.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Sep 7, 2016 */
 @SuppressWarnings("all")

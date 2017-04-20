@@ -1,8 +1,4 @@
-/* TODO Yossi Gil LocalVariableInitializedStatement description
- *
- * @author Yossi Gil
- *
- * @since Sep 12, 2016 */
+
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.azzert.*;

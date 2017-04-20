@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.meta.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since 2017-01-01 */
 @RunWith(Parameterized.class)
