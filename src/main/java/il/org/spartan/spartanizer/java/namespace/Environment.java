@@ -11,6 +11,7 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -33,7 +34,7 @@ public interface Environment {
   List<Entry<String, Binding>> entries();
 
   default Collection<Entry<String, Binding>> fullEntries() {
-    final Collection<Entry<String, Binding>> $ = new ArrayList<>(entries());
+    final Collection<Entry<String, Binding>> $ = as.list(entries());
     if (nest() != null)
       $.addAll(nest().fullEntries());
     return $;
@@ -144,7 +145,7 @@ public interface Environment {
    *         {@link Block}, (also IfStatement, ForStatement and so on...) return
    *         empty Collection. */
   static Collection<Entry<String, Binding>> declarationsOf(final Statement ¢) {
-    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
+    final Collection<Entry<String, Binding>> $ = an.empty.list();
     if (¢.getNodeType() != VARIABLE_DECLARATION_STATEMENT)
       return $;
     $.addAll(declarationsOf(az.variableDeclrationStatement(¢)));
@@ -152,7 +153,7 @@ public interface Environment {
   }
 
   static Collection<Entry<String, Binding>> declarationsOf(final VariableDeclarationStatement s) {
-    final Collection<Entry<String, Binding>> $ = new ArrayList<>();
+    final Collection<Entry<String, Binding>> $ = an.empty.list();
     final type t = type.baptize(Trivia.condense(type(s)));
     final String path = fullName(s);
     $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(path + "." + λ.getName(), makeBinding(λ, t))).collect(toList()));

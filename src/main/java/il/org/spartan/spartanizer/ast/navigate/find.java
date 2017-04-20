@@ -71,13 +71,13 @@ public enum find {
   }
 
   public static <N extends ASTNode> List<String> singleAtomicDifferences(final List<N> ¢) {
-    final List<String> $ = new ArrayList<>();
+    final List<String> $ = an.empty.list();
     ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleAtomicDifference(λ, lisp.first(¢)) : singleAtomicDifference(lisp.first(¢), second(¢))));
     return $;
   }
 
   public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(final List<N> ¢) {
-    final List<Expression> $ = new ArrayList<>();
+    final List<Expression> $ = an.empty.list();
     ¢.forEach(λ -> $.add(λ != lisp.first(¢) ? singleExpressionDifference(λ, lisp.first(¢)) : singleExpressionDifference(lisp.first(¢), second(¢))));
     return $;
   }

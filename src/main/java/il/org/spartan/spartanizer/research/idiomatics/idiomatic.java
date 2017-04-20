@@ -342,7 +342,7 @@ public interface idiomatic {
       return (CR) ¢.stream().map(mapper).collect(new GenericCollector<>(¢.getClass()));
     }
     // @SuppressWarnings("boxing") @Test public void useNewMapper() {
-    // final List<Integer> before = new ArrayList<>();
+    // final List<Integer> before = an.empty.list();
     // before.add(1);
     // before.add(2);
     // before.add(3);

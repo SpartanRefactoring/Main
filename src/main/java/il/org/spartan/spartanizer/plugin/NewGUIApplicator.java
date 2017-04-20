@@ -54,7 +54,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
         listener().push(message.run_pass.get(pass));
         if (!shouldRun())
           break;
-        final List<WrappedCompilationUnit> selected = selection().inner, alive = new ArrayList<>(selected), done = new ArrayList<>();
+        final List<WrappedCompilationUnit> selected = selection().inner, alive = as.list(selected), done = an.empty.list();
         for (final WrappedCompilationUnit ¢ : alive) {
           final Function<WrappedCompilationUnit, Integer> runAction = runAction();
           assert runAction != null;

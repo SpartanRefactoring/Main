@@ -62,7 +62,7 @@ public class Table extends Row<Table> implements Closeable {
   public final String name;
   Statistic[] statisics = Statistic.values();
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
-  private final List<RecordWriter> writers = new ArrayList<>();
+  private final List<RecordWriter> writers = an.empty.list();
 
   public String baseName() {
     return system.tmp + name + ".*";

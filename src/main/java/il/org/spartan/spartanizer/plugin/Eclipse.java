@@ -122,7 +122,7 @@ public class Eclipse {
   /** @return opened text editors */
   public static Iterable<ITextEditor> openedTextEditors() {
     final IWorkbenchPage $ = getPage();
-    return $ == null ? new ArrayList<>()
+    return $ == null ? an.empty.list()
         : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
             .collect(toList());
   }

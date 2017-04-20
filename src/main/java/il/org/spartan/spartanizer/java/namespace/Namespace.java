@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.java.namespace.definition.*;
  * @author Yossi Gil
  * @since 2016-12-28 */
 public final class Namespace implements Environment {
-  private final List<Namespace> children = new ArrayList<>();
+  private final List<Namespace> children = an.empty.list();
   public final Map<String, Binding> flat = new LinkedHashMap<>();
   public final String name;
   public final Environment nest;

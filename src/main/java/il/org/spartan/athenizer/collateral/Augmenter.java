@@ -16,6 +16,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.plugin.*;
@@ -55,7 +56,7 @@ public class Augmenter implements Application {
   /** @param u JD
    * @return selection as list of lists of statements */
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
-    final List<List<Statement>> $ = new ArrayList<>();
+    final List<List<Statement>> $ = an.empty.list();
     final Range r = Ranger.make(s);
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
@@ -65,7 +66,7 @@ public class Augmenter implements Application {
         if (Ranger.contained(b, r))
           $.add(statements(b));
         else {
-          final List<Statement> ss = new ArrayList<>(statements(b).stream().filter(λ -> Ranger.contained(λ, r)).collect(toList()));
+          final List<Statement> ss = as.list(statements(b).stream().filter(λ -> Ranger.contained(λ, r)).collect(toList()));
           if (!discardOptimization(ss))
             $.add(ss);
         }

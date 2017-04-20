@@ -48,7 +48,7 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     Count.before(¢);
     try {
       final Integer key = Integer.valueOf(measure.commands(¢));
-      methods.putIfAbsent(key, new ArrayList<>());
+      methods.putIfAbsent(key, an.empty.list());
       final MethodRecord m = new MethodRecord(¢);
       scope.push(m);
       methods.get(key).add(m);

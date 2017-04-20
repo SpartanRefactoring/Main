@@ -74,7 +74,7 @@ public class idiomaticTest {
   }
 
   @Test public void useMapper() {
-    final List<String> before = new ArrayList<>();
+    final List<String> before = an.empty.list();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -85,7 +85,7 @@ public class idiomaticTest {
   }
 
   @Test @SuppressWarnings("boxing") public void useMapper2() {
-    final List<Integer> before = new ArrayList<>();
+    final List<Integer> before = an.empty.list();
     before.add(1);
     before.add(2);
     before.add(3);
@@ -96,7 +96,7 @@ public class idiomaticTest {
   }
 
   @Test @SuppressWarnings("boxing") public void useFilter() {
-    final List<Integer> before = new ArrayList<>();
+    final List<Integer> before = an.empty.list();
     before.add(1);
     before.add(2);
     before.add(3);
@@ -106,7 +106,7 @@ public class idiomaticTest {
   }
 
   @Test public void useReduce() {
-    final List<String> before = new ArrayList<>();
+    final List<String> before = an.empty.list();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -114,7 +114,7 @@ public class idiomaticTest {
   }
 
   @Test public void useMax() {
-    final List<String> before = new ArrayList<>();
+    final List<String> before = an.empty.list();
     before.add("1");
     before.add("2");
     before.add("3");
@@ -122,7 +122,7 @@ public class idiomaticTest {
   }
 
   @Test public void useMin() {
-    final List<String> before = new ArrayList<>();
+    final List<String> before = an.empty.list();
     before.add("1");
     before.add("2");
     before.add("3");

@@ -1,4 +1,3 @@
-
 package il.org.spartan.spartanizer.java;
 
 import static il.org.spartan.lisp.*;
@@ -19,9 +18,9 @@ final class FactorsCollector {
     return !iz.infixTimes(¢) && !iz.infixDivide(¢);
   }
 
-  private final List<Expression> multipliers = new ArrayList<>();
-  private final List<Expression> dividers = new ArrayList<>();
-  private final List<Factor> all = new ArrayList<>();
+  private final List<Expression> multipliers = an.empty.list();
+  private final List<Expression> dividers = an.empty.list();
+  private final List<Factor> all = an.empty.list();
 
   FactorsCollector(final InfixExpression e) {
     collect(e);

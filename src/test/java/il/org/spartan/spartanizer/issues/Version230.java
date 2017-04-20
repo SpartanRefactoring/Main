@@ -1168,7 +1168,7 @@ public final class Version230 {
 
   @Test public void inlineSingleUse07() {
     trimminKof(
-        " final Collection<Integer> outdated=new ArrayList<>();int x=6, y=7;S.h(x+y);final Collection<Integer> coes=new ArrayList<>();for(final Integer pi : coes){ if(pi.intValue()<x - y)outdated.add(pi);command();} S.h(coes.size());")
+        " final Collection<Integer> outdated=an.empty.list();int x=6, y=7;S.h(x+y);final Collection<Integer> coes=an.empty.list();for(final Integer pi : coes){ if(pi.intValue()<x - y)outdated.add(pi);command();} S.h(coes.size());")
             .stays();
   }
 

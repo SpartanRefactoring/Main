@@ -8,7 +8,7 @@ import il.org.spartan.utils.Example.*;
  * @author Yossi Gil
  * @since 2017-04-01 */
 public class Examples implements Iterable<Example> {
-  private final List<Example> inner = new ArrayList<>();
+  private final List<Example> inner = an.empty.list();
 
   public Examples add(final Example ¢) {
     inner.add(¢);

@@ -281,7 +281,7 @@ public interface Configurations {
   }
 
   static List<String> get(final TipperGroup ¢) {
-    final List<String> $ = new ArrayList<>();
+    final List<String> $ = an.empty.list();
     if (¢ == null)
       return $;
     final Configuration t = allClone();

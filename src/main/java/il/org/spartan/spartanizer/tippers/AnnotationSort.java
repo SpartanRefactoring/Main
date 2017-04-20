@@ -74,9 +74,9 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
 
   @Override public ASTNode replacement(final N d) {
     final N $ = copy.of(d);
-    final List<IExtendedModifier> as = new ArrayList<>(sort(extract.annotations($))), ms = new ArrayList<>(extract.modifiers($));
+    final List<IExtendedModifier> ies = as.list(sort(extract.annotations($))), ms = as.list(extract.modifiers($));
     extendedModifiers($).clear();
-    extendedModifiers($).addAll(as);
+    extendedModifiers($).addAll(ies);
     extendedModifiers($).addAll(ms);
     return !wizard.eq($, d) ? $ : null;
   }

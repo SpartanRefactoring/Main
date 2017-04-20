@@ -198,7 +198,7 @@ public interface Proposition extends BooleanSupplier {
    * @since 2017-03-19 */
   abstract class Some extends Aggregate<List<BooleanSupplier>> {
     public Some(final String toString) {
-      super(toString, new ArrayList<>());
+      super(toString, an.empty.list());
     }
 
     protected Stream<BooleanSupplier> stream() {

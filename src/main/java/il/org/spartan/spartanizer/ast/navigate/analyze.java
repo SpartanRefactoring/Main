@@ -48,7 +48,7 @@ public enum analyze {
       if (iz.name(¢))
         $.add(az.name(¢) + "");
     }
-    return new ArrayList<>($);
+    return $;
   }
 
   public static String type(final Name n) {

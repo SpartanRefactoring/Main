@@ -23,7 +23,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
   private static final long serialVersionUID = 0x7AAE85AAEB6D72C8L;
 
   private static ASTNode replacement(final List<Expression> ¢) {
-    final List<Expression> $ = new ArrayList<>(¢.stream().filter(λ -> !iz.literal1(λ)).collect(toList()));
+    final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal1(λ)).collect(toList());
     return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(first(¢)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(TIMES);
   }
 

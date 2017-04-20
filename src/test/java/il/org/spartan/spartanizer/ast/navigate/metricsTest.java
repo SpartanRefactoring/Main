@@ -60,7 +60,7 @@ public final class metricsTest {
     azzert.that(metrics.horizontalComplexity(0, s), is(0));
     azzert.that(metrics.horizontalComplexity(0, (List<Statement>) null), is(0));
     // Test a list with one null statement
-    final List<Statement> statements = new ArrayList<>();
+    final List<Statement> statements = an.empty.list();
     statements.add(s);
     azzert.that(metrics.horizontalComplexity(0, statements), is(0));
     statements.add(az.statement(make.ast("if(true) return 1;")));

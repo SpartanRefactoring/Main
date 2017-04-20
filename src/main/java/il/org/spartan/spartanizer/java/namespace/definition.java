@@ -65,7 +65,7 @@ public interface definition {
         assert e != null;
         final ForStatement s = az.forStatement(parent(e));
         assert s != null;
-        final List<ASTNode> $ = new ArrayList<>(the.rest(f, fragments(e)));
+        final List<ASTNode> $ = as.list(the.rest(f, fragments(e)));
         $.addAll(the.rest(e, initializers(s)));
         $.add(expression(s));
         $.addAll(updaters(s));
@@ -96,7 +96,7 @@ public interface definition {
     },
     local {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
-        final List<ASTNode> $ = new ArrayList<>();
+        final List<ASTNode> $ = an.empty.list();
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(¢));
         if (f.getInitializer() != null)
           $.add(f.getInitializer());
@@ -121,7 +121,7 @@ public interface definition {
     parameter {
       @Override public List<? extends ASTNode> specificScope(final SimpleName ¢) {
         final MethodDeclaration $ = az.methodDeclaration(parent(parent(¢)));
-        return $.getBody() == null ? new ArrayList<>() : as.list($.getBody());
+        return $.getBody() == null ? an.empty.list() : as.list($.getBody());
       }
     },
     try¢ {
@@ -129,7 +129,7 @@ public interface definition {
         final VariableDeclarationFragment f = az.variableDeclrationFragment(parent(n));
         final VariableDeclarationExpression e = az.variableDeclarationExpression(parent(f));
         final TryStatement s = az.tryStatement(parent(e));
-        final List<ASTNode> $ = new ArrayList<>();
+        final List<ASTNode> $ = an.empty.list();
         $.addAll(the.rest(f, fragments(e)));
         $.addAll(the.rest(e, resources(s)));
         $.add(body(s));

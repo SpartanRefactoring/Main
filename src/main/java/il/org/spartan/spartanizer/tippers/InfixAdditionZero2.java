@@ -38,7 +38,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   private static final long serialVersionUID = -0x77D6982A51CFF797L;
 
   @Override @SuppressWarnings("boxing") public ASTNode replacement(final InfixExpression x) {
-    gather(x, new ArrayList<>());
+    gather(x, an.empty.list());
     x.getOperator();
     allOperands(x);
     allOperators(x);

@@ -14,6 +14,7 @@ import org.eclipse.jface.operation.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.plugin.*;
 import nano.ly.*;
 
@@ -182,7 +183,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     return pm -> {
       final int $ = passesCount();
       int pass, totalTips = 0;
-      final Collection<ICompilationUnit> doneCompilationUnits = new ArrayList<>(), modifiedCompilationUnits = new HashSet<>();
+      final Collection<ICompilationUnit> doneCompilationUnits = an.empty.list(), modifiedCompilationUnits = new HashSet<>();
       for (pass = 0; pass < $ && !finish(pm); ++pass) {
         pm.beginTask(getProgressMonitorMessage(s.getCompilationUnits(), pass), getProgressMonitorWork(s.getCompilationUnits()));
         final List<ICompilationUnit> currentCompilationUnits = currentCompilationUnits(s.getCompilationUnits(), doneCompilationUnits);
@@ -236,7 +237,7 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   }
 
   private static List<ICompilationUnit> currentCompilationUnits(final Collection<ICompilationUnit> us, final Collection<ICompilationUnit> ds) {
-    final List<ICompilationUnit> $ = new ArrayList<>(us);
+    final List<ICompilationUnit> $ = as.list(us);
     $.removeAll(ds);
     return $;
   }

@@ -20,7 +20,7 @@ public class Issue0965 {
   }
 
   static class TestClass extends MetaFixture {
-    final List<Integer> is = new ArrayList<>();
+    final List<Integer> is = an.empty.list();
 
     public String check1() {
       return is + "";

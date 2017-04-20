@@ -88,7 +88,7 @@ public enum InflaterUtilities {
    *         of statements we might need for the Bloater SHOULD BE CHANGED when
    *         we add more expanders */
   static List<ASTNode> getStatements(final WrappedCompilationUnit u) {
-    final List<ASTNode> $ = new ArrayList<>();
+    final List<ASTNode> $ = an.empty.list();
     // noinspection
     // SameReturnValue,SameReturnValue,SameReturnValue,SameReturnValue
     u.compilationUnit.accept(new ASTVisitor(true) {

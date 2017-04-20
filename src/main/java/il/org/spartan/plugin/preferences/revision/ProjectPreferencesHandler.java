@@ -161,7 +161,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     $.setEmptyListMessage("No tippers available...");
     $.setContainerMode(true);
     $.setInput(new Object()); // vio: very important object
-    final Collection<SpartanElement> et = new ArrayList<>();
+    final Collection<SpartanElement> et = an.empty.list();
     for (final SpartanCategory c : m.keySet()) {
       boolean enabled = true;
       for (final SpartanTipper ¢ : m.get(c))

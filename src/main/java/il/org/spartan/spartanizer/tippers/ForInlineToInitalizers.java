@@ -19,8 +19,8 @@ import il.org.spartan.utils.*;
  * @since 2017-04-06 */
 public class ForInlineToInitalizers extends ForStatementPattern implements TipperCategory.Inlining {
   private static final long serialVersionUID = -0x185A5E964CCBD32L;
-  List<SimpleName> updatedNotDeclared = new ArrayList<>();
-  List<SimpleName> candidates = new ArrayList<>();
+  List<SimpleName> updatedNotDeclared = an.empty.list();
+  List<SimpleName> candidates = an.empty.list();
 
   public ForInlineToInitalizers() {
     updaters.forEach(λ -> candidates.addAll(updatedVars(λ)));
@@ -31,7 +31,7 @@ public class ForInlineToInitalizers extends ForStatementPattern implements Tippe
   }
 
   private static List<SimpleName> updatedVars(final Expression u) {
-    final List<SimpleName> $ = new ArrayList<>();
+    final List<SimpleName> $ = an.empty.list();
     final Expression e = extract.core(u);
     Expression d;
     if ((d = step.operand(az.postfixExpression(e))) != null || (d = step.operand(az.prefixExpression(e))) != null

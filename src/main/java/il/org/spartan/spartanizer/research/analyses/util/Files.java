@@ -46,7 +46,7 @@ public enum Files {
     try (PrintWriter p = new PrintWriter(s)) {
       p.close();
     } catch (final FileNotFoundException ¢) {
-     note.io(¢); 
+      note.io(¢);
     }
   }
 
@@ -54,7 +54,7 @@ public enum Files {
     try (PrintWriter p = new PrintWriter(f)) {
       p.close();
     } catch (final FileNotFoundException ¢) {
-      note.io(¢); 
+      note.io(¢);
     }
   }
 

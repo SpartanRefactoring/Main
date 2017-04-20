@@ -25,7 +25,7 @@ public class HasEnvironmentTest extends MetaFixture {
 
   private static Collection<Object[]> collect(final MetaFixture... fs) {
     signature.clear();
-    final Collection<Object[]> $ = new ArrayList<>();
+    final Collection<Object[]> $ = an.empty.list();
     as.list(fs).forEach(t -> descendants.whoseClassIs(ASTNode.class).from(t.reflectedCompilationUnit()).stream()
         .filter(λ -> !signature.contains(signature(λ))).forEach(λ -> {
           signature.add(signature(λ));

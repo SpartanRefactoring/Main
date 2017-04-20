@@ -34,7 +34,7 @@ public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
   private static final long serialVersionUID = -0x4A8DBCAB922657DBL;
 
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
-    final List<Statement> $ = new ArrayList<>();
+    final List<Statement> $ = an.empty.list();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(0)) {
       final Statement s1 = first(ss1);
       if (!wizard.eq(s1, first(ss2)))

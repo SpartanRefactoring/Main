@@ -71,7 +71,7 @@ public enum getAll {
   public static List<Name> names(final Block b) {
     if (b == null)
       return null;
-    final List<Name> $ = new ArrayList<>();
+    final List<Name> $ = an.empty.list();
     // noinspection SameReturnValue
     b.accept(new ASTVisitor(true) {
       @Override public boolean visit(final SimpleName ¢) {
@@ -89,7 +89,7 @@ public enum getAll {
   public static List<InstanceofExpression> instanceofs(final MethodDeclaration d) {
     if (d == null)
       return null;
-    final List<InstanceofExpression> $ = new ArrayList<>();
+    final List<InstanceofExpression> $ = an.empty.list();
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final InstanceofExpression node) {
@@ -109,7 +109,7 @@ public enum getAll {
   public static Collection<CastExpression> casts(final MethodDeclaration d) {
     if (d == null)
       return null;
-    final Collection<CastExpression> $ = new ArrayList<>();
+    final Collection<CastExpression> $ = an.empty.list();
     // noinspection SameReturnValue
     d.accept(new ASTVisitor(true) {
       @Override public boolean visit(final CastExpression node) {
@@ -128,7 +128,7 @@ public enum getAll {
   public static List<VariableDeclaration> stringVariables(final MethodDeclaration d) {
     if (d == null)
       return null;
-    final List<VariableDeclaration> $ = new ArrayList<>();
+    final List<VariableDeclaration> $ = an.empty.list();
     d.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
         if (¢ instanceof SingleVariableDeclaration && "String".equals(((SingleVariableDeclaration) ¢).getType() + ""))
@@ -147,7 +147,7 @@ public enum getAll {
   public static List<String> publicFields(final TypeDeclaration ¢) {
     if (¢ == null)
       return null;
-    final List<String> $ = new ArrayList<>();
+    final List<String> $ = an.empty.list();
     ¢.accept(publicFieldsCollector($));
     return $;
   }
@@ -171,7 +171,7 @@ public enum getAll {
   public static List<MethodDeclaration> methods(final CompilationUnit u) {
     if (u == null)
       return null;
-    final List<MethodDeclaration> $ = new ArrayList<>();
+    final List<MethodDeclaration> $ = an.empty.list();
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         $.add(¢);
@@ -188,7 +188,7 @@ public enum getAll {
    * @author rodedzats
    * @author zivizhar */
   public static List<String> privateFields(final TypeDeclaration d) {
-    final List<String> $ = new ArrayList<>();
+    final List<String> $ = an.empty.list();
     if (d == null)
       return $;
     // noinspection SameReturnValue
