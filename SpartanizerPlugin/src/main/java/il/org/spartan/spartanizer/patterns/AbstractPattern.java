@@ -20,6 +20,9 @@ import il.org.spartan.utils.*;
  * @since 2017-03-25 */
 public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 1;
+  private Proposition prerequisite;
+  @Property protected Statement nextStatement;
+  @Property protected ASTNode parent;
 
   public AbstractPattern() {
     this.prerequisite = Proposition.that("Extract parent and next statement", () -> {
@@ -62,14 +65,6 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     return containing.compilationUnit(current);
   }
 
-  protected Range start() {
-    return Ranger.start(current);
-  }
-
-  protected ASTNode highlight() {
-    return current;
-  }
-
   protected final AbstractPattern<N> andAlso(final Proposition ¢) {
     this.prerequisite = prerequisite.and(¢);
     return this;
@@ -86,6 +81,10 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
 
   protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
 
+  protected ASTNode highlight() {
+    return current;
+  }
+
   protected final AbstractPattern<N> orElse(final Proposition ¢) {
     this.prerequisite = prerequisite.or(¢);
     return this;
@@ -95,7 +94,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     return as.array(current);
   }
 
-  private Proposition prerequisite;
-  @Property protected Statement nextStatement;
-  @Property protected ASTNode parent;
+  protected Range start() {
+    return Ranger.start(current);
+  }
 }
