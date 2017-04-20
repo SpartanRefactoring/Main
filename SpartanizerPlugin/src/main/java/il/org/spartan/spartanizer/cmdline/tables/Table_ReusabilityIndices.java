@@ -24,8 +24,15 @@ public class Table_ReusabilityIndices {
 
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
-      @Override protected void done(final String path) {
-        dotter.end();
+      {
+        listen(new Listener() {
+          @Override public void endLocation() {
+            done(getCurrentLocation());
+          }
+        });
+      }
+
+      protected void done(final String path) {
         addMissingKeys();
         initializeWriter();
         writer.col("Project", presentSourceName);
@@ -53,7 +60,7 @@ public class Table_ReusabilityIndices {
         if (writer == null)
           writer = new Table(Table.classToNormalizedFileName(Table_ReusabilityIndices.class) + "-" + corpus, outputFolder);
       }
-    }.fire(new RIndicesVisitor());
+    }.visitAll(new RIndicesVisitor());
     writer.close();
   }
 

@@ -6,16 +6,15 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import nano.ly.note;
+import nano.ly.*;
 
-/** __ this class you can spartanize a directory easly. Or you can extends this
+/** __ this class you can spartanize a directory easily. Or you can extends this
  * class and configure it to fit to your own needs.
  * @author oran1248
  * @since 2017-04-11 */
-public class GeneralCmdSpartanizer {
-  final TextualTraversals traversals = new TextualTraversals();
+public class HeadlesSpartanizer {
+  public final TextualTraversals traversals = new TextualTraversals();
   File current;
 
   protected final File current() {
@@ -53,7 +52,7 @@ public class GeneralCmdSpartanizer {
   public final void go(final String dirPath) {
     setUp();
     new ASTInFilesVisitor(new String[] { dirPath }) {
-      @Override protected void visit(final File f) {
+      @Override public void visitFile(final File f) {
         current = f;
         if (!spartanize(f))
           return;
@@ -65,23 +64,8 @@ public class GeneralCmdSpartanizer {
           note.io(¢);
         }
       }
-    }.fire(astVisitor());
+    }.visitAll(astVisitor());
     tearDown();
-  }
-
-  public final GeneralCmdSpartanizer disable(final Class<? extends TipperCategory> ¢) {
-    traversals.traversal.configuration.disable(¢);
-    return this;
-  }
-
-  @SafeVarargs public final <N extends ASTNode> GeneralCmdSpartanizer add(final Class<N> c, final Tipper<N>... ts) {
-    traversals.traversal.configuration.add(c, ts);
-    return this;
-  }
-
-  @SafeVarargs public final <N extends ASTNode> GeneralCmdSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
-    traversals.traversal.configuration.remove(c, ts);
-    return this;
   }
 
   public final String fixedPoint(final String from) {
