@@ -29,12 +29,16 @@ public class ExamplesTests {
 
   /** Redirects examples to tests according to __ */
   @Test public void converts() {
-    Stream.of(tipper.examples()).filter(Converts.class::isInstance).map(Converts.class::cast).forEachOrdered(this::converts);
+    if (tipper.examples() != null)
+      StreamSupport.stream(tipper.examples().spliterator(), false).filter(Converts.class::isInstance).map(Converts.class::cast)
+          .forEachOrdered(this::converts);
   }
 
   /** Redirects examples to tests according to __ */
   @Test public void ignores() {
-    Stream.of(tipper.examples()).filter(Ignores.class::isInstance).map(Ignores.class::cast).forEachOrdered(this::ignores);
+    if (tipper.examples() != null)
+      StreamSupport.stream(tipper.examples().spliterator(), false).filter(Ignores.class::isInstance).map(Ignores.class::cast)
+          .forEachOrdered(this::ignores);
   }
 
   protected void ignores(final Ignores ¢) {
