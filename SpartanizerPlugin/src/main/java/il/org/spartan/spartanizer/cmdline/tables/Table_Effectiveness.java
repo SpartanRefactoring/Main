@@ -45,7 +45,15 @@ class Table_Effectiveness extends NanoTable {
 
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
-      @Override protected void done(final String path) {
+      {
+        listen(new Listener() {
+          @Override public void endLocation() {
+            done(getCurrentLocation());
+          }
+        });
+      }
+
+      protected void done(final String path) {
         initializeWriter();
         summarize(path);
         clear();
@@ -66,7 +74,7 @@ class Table_Effectiveness extends NanoTable {
         if (table == null)
           table = new Table(Table.classToNormalizedFileName(Table_Effectiveness.class) + "-" + corpus, outputFolder);
       }
-    }.fire(visitor);
+    }.visitAll(visitor);
     table.close();
   }
 

@@ -30,14 +30,10 @@ import nano.ly.*;
  * @author Yossi Gil
  * @since 2017-03-09 */
 public class ASTInFilesVisitor {
-  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
-  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
-  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
-  @External(alias = "s", value = "silent") protected boolean silent;
   protected static final String[] defaultArguments = as.array("..");
-  static BufferedWriter out;
+  protected static BufferedWriter out;
 
-  /** Check whether given string containing Jave code contains {@link Test}
+  /** Check whether given string containing Java code contains {@link Test}
    * annotations
    * <p>
    * @param f
@@ -57,14 +53,10 @@ public class ASTInFilesVisitor {
     return $.get();
   }
 
-  static boolean letItBeIn(final List<Statement> ¢) {
-    return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
-  }
-
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
       /* Override here which ever method you like */
-    }.fire(new ASTVisitor(true) {
+    }.visitAll(new ASTVisitor(true) {
       /* OVerride here which ever method you like */
     });
   }
@@ -82,15 +74,37 @@ public class ASTInFilesVisitor {
     }
   }
 
-  protected String absolutePath;
+  static boolean letItBeIn(final List<Statement> ¢) {
+    return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
+  }
+
+  public final Tappers notify = new Tappers()//
+      .push(new Listener() {
+        /** @formatter:off */
+        Dotter dotter = new Dotter();
+        @Override public void beginBatch() { dotter.click(); }
+        @Override public void beginFile() { dotter.click(); }
+        @Override public void beginLocation() { dotter.click(); }
+        @Override public void endBatch() { dotter.end(); }
+        @Override public void endFile() { dotter.click(); }
+        @Override public void endLocation() { dotter.clear(); }
+        }
+      );
   private ASTVisitor astVisitor;
-  protected Dotter dotter;
+
   private final List<String> locations;
-  protected File presentFile;
+
+  protected String absolutePath;
+
+  @External(alias = "c", value = "corpus name") @SuppressWarnings("CanBeFinal") protected String corpus = "";
+  @External(alias = "i", value = "input folder") @SuppressWarnings("CanBeFinal") protected String inputFolder = system.isWindows() ? "" : ".";
+  @External(alias = "o", value = "output folder") @SuppressWarnings("CanBeFinal") protected String outputFolder = system.tmp;
+  protected File currentFile;
   protected String presentSourceName;
   protected String presentSourcePath;
   protected String relativePath;
-
+  @External(alias = "s", value = "silent") protected boolean silent;
+  private String currentLocation;
   public ASTInFilesVisitor() {
     this(null);
   }
@@ -99,66 +113,60 @@ public class ASTInFilesVisitor {
     locations = External.Introspector.extract(args != null && args.length != 0 ? args : defaultArguments, this);
   }
 
+  public void visitAll(final ASTVisitor ¢) {
+    notify.beginBatch();
+    astVisitor = ¢;
+    locations.forEach(
+        x -> {
+          setCurrentLocation(x);
+          visitLocation();
+        }
+        );
+    notify.endBatch();
+  }
+
   private void collect(final CompilationUnit ¢) {
     if (¢ != null)
       ¢.accept(astVisitor);
   }
 
-  void collect(final String javaCode) {
-    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
-  }
-
-  @SuppressWarnings("static-method") protected void done(final String path) {
-    ___.______unused(path);
-  }
-
-  public void fire(final ASTVisitor ¢) {
-    astVisitor = ¢;
-    locations.forEach(this::visitLocation);
-  }
-
-  @SuppressWarnings("static-method") protected void init(final String path) {
-    ___.______unused(path);
-  }
-
-  protected void visit(final File f) {
-    note.info("Visiting: " + f.getName());
-    if (!silent)
-      dotter.click();
+  public void visitFile(final File f) {
+    notify.beginFile();
     if (Utils.isProductionCode(f) && productionCode(f))
       try {
         absolutePath = f.getAbsolutePath();
         relativePath = f.getPath();
         collect(FileUtils.read(f));
-        if (!silent)
-          dotter.click();
       } catch (final IOException ¢) {
         note.io(¢, "File = " + f);
       }
+    notify.endFile();
   }
 
-  protected void visitLocation(final String path) {
-    init(path);
-    presentSourceName = system.folder2File(presentSourcePath = inputFolder + File.separator + path);
-    System.err.println("Processing: " + presentSourcePath);
-    if (!silent)
-      (dotter = new Dotter()).click();
-    new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> visit(presentFile = λ));
-    done(path);
+  protected void visitLocation() {
+    notify.beginLocation();
+    presentSourceName = system.folder2File(presentSourcePath = inputFolder + File.separator + getCurrentLocation());
+    new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> visitFile(currentFile = λ));
+    notify.endLocation();
+  }
+
+    void collect(final String javaCode) {
+    collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
 
   public static class BucketMethods {
-    static boolean letItBeIn(final List<Statement> ¢) {
-      return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
-    }
-
     public static void main(final String[] args) {
       out = system.callingClassUniqueWriter();
-      new ASTInFilesVisitor(args) {
-        {
-          silent = true;
+      new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
+        @Override protected void record(final String summary) {
+          try {
+            out.write(summary);
+          } catch (final IOException ¢) {
+            System.err.println("Error: " + ¢.getMessage());
+          }
+          super.record(summary);
         }
-      }.fire(new ASTTrotter() {
+
         boolean interesting(final List<Statement> ¢) {
           return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
         }
@@ -175,27 +183,18 @@ public class ASTInFilesVisitor {
         boolean leaking(final Stream<ASTNode> ¢) {
           return ¢.noneMatch(this::leaking);
         }
-
-        @Override protected void record(final String summary) {
-          try {
-            out.write(summary);
-          } catch (final IOException ¢) {
-            System.err.println("Error: " + ¢.getMessage());
-          }
-          super.record(summary);
-        }
       });
+    }
+
+    static boolean letItBeIn(final List<Statement> ¢) {
+      return ¢.size() == 2 && first(¢) instanceof VariableDeclarationStatement;
     }
   }
 
   public static class ExpressionChain {
     public static void main(final String[] args) {
       out = system.callingClassUniqueWriter();
-      new ASTInFilesVisitor(args) {
-        {
-          silent = true;
-        }
-      }.fire(new ASTTrotter() {
+      new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
         {
           hookClassOnRule(ExpressionStatement.class, new Rule.Stateful<ExpressionStatement, Void>() {
             @Override public Void fire() {
@@ -222,7 +221,7 @@ public class ASTInFilesVisitor {
 
   public static class FieldsOnly {
     public static void main(final String[] args) {
-      new ASTInFilesVisitor(args).fire(new ASTVisitor(true) {
+      new ASTInFilesVisitor(args).visitAll(new ASTVisitor(true) {
         @Override public boolean visit(final FieldDeclaration ¢) {
           System.out.println(¢);
           return true;
@@ -235,11 +234,7 @@ public class ASTInFilesVisitor {
     public static void main(final String[] args) {
       out = system.callingClassUniqueWriter();
       MethodHandles.lookup();
-      new ASTInFilesVisitor(args) {
-        {
-          silent = true;
-        }
-      }.fire(new ASTTrotter() {
+      new ASTInFilesVisitor(args) {/**/}.visitAll(new ASTTrotter() {
         {
           final Rule<TypeDeclaration, Object> r = Rule.on((final TypeDeclaration t) -> t.isInterface()).go(λ -> System.out.println(λ.getName()));
           final Predicate<TypeDeclaration> p = λ -> λ.isInterface(), q = λ -> {
@@ -251,5 +246,65 @@ public class ASTInFilesVisitor {
         }
       });
     }
+  }
+
+  public interface Listener extends Tapper {
+    @Override default void beginBatch() {/**/}
+    //@formatter:off
+    @Override default  void  beginFile()      {/**/}
+    @Override default  void  beginLocation()  {/**/}
+    @Override default void endBatch() {/**/}
+    @Override default  void  endFile()        {/**/}
+    @Override default  void  endLocation()    {/**/}
+    //@formatter:on
+  }
+
+  interface Tapper {
+    void beginBatch();
+
+    //@formatter:off
+    void beginFile();
+    void beginLocation();
+    void endBatch();
+    void endFile();
+    void endLocation();
+    //@formatter:on
+  }
+
+  /** @formatter:on */
+  static class Tappers implements Tapper {
+    /** @formatter:on */
+    private final List<Tapper> inner = new LinkedList<>();
+
+  /** @formatter:off */
+  @Override public void beginBatch() { inner.forEach(Tapper::beginBatch); }
+  @Override public void beginFile() { inner.forEach(Tapper::beginFile); }
+  @Override public void beginLocation() { inner.forEach(Tapper::beginLocation); }
+  @Override public void endBatch() { inner.forEach(Tapper::endBatch); }
+  @Override public void endFile() { inner.forEach(Tapper::endFile); }
+  @Override public void endLocation() { inner.forEach(Tapper::endLocation); }
+
+    public Tappers pop() {
+      inner.remove(inner.size() - 1);
+      return this;
+    }
+
+    public Tappers push(final Tapper ¢) {
+      inner.add(¢);
+      return this;
+    }
+  }
+
+  public ASTInFilesVisitor listen(final Listener t) {
+    notify.push(t);
+    return this;
+  }
+
+  public String getCurrentLocation() {
+    return currentLocation;
+  }
+
+  public void setCurrentLocation(final String currentLocation) {
+    this.currentLocation = currentLocation;
   }
 }
