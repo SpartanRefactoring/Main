@@ -37,7 +37,8 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
   public StringFromStringBuilder() {
     andAlso("StringBuilder/StringBuffer instance creation", () -> iz.in(name, "StringBuilder", "StringBuffer"));
     andAlso("Converted to String", () -> {
-      invocations = ancestors.until(λ -> !iz.methodInvocation(λ)).from(parent).stream().map(az::methodInvocation).collect(toList());
+      invocations = ancestors.until((p, c) -> !iz.methodInvocation(c) || p != null && p != az.methodInvocation(c).getExpression()).from(parent).stream()
+          .map(az::methodInvocation).collect(toList());
       final Expression $ = az.expression((invocations.isEmpty() ? current : last(invocations)).getParent());
       return !invocations.isEmpty() && "toString".equals(last(invocations).getName().getIdentifier())
           || (plusStringConvertion = not.nil($) && iz.infixPlus($)
@@ -53,8 +54,9 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
   }
 
   @Override public Examples examples() {
-    return convert("new StringBuilder(\"Description:\\t\").append(x+1).append(\"\\n\").toString()") //
-        .to("\"Description:\\t\" + (x+1) + \"\\n\"");
+    return convert("x.print(new StringBuilder(\"Description:\\t\").append(x+1).append(\"\\n\").toString())") //
+        .to("x.print(\"Description:\\t\" + (x+1) + \"\\n\")") //
+        .ignores("x.print(new StringBuilder(\"Description:\\t\").append(x+1).append(\"\\n\"))");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
