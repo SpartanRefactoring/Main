@@ -26,11 +26,15 @@ public class Table_Nodes_Coverage {
 
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
-      @Override protected void done(final String path) {
-        summarizeStatistics(path);
-        statistics.clear();
+      {
+        listen(new Listener() {
+          @Override public void endLocation() {
+            summarizeStatistics(getCurrentLocation());
+            statistics.clear();
+          }
+        });
       }
-    }.fire(new ASTVisitor(true) {
+    }.visitAll(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
         ¢.accept(new AnnotationCleanerVisitor());
         try {

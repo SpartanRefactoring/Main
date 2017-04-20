@@ -94,13 +94,13 @@ public enum find {
       return n1 + "";
     if (areSelfDifferent(n1, n2))
       return null;
-    final List<ASTNode> children1 = Recurser.allChildren(n1), children2 = Recurser.allChildren(n2);
-    if (children1.size() != children2.size())
+    final List<ASTNode> ns1 = Recurser.allChildren(n1), ns2 = Recurser.allChildren(n2);
+    if (ns1.size() != ns2.size())
       return null;
-    String $ = singleAtomicDifference(lisp.first(children1), lisp.first(children2));
+    String $ = singleAtomicDifference(lisp.first(ns1), lisp.first(ns2));
     $ = $ != null ? $ : "";
-    for (int i = 1; i < children1.size(); ++i) {
-      final String diff = singleAtomicDifference(children1.get(i), children2.get(i));
+    for (int i = 1; i < ns1.size(); ++i) {
+      final String diff = singleAtomicDifference(ns1.get(i), ns2.get(i));
       $ = !Objects.equals($, "") || diff == null ? $ : diff;
       if (!$.equals(diff) && diff != null && !diff.isEmpty())
         return null;

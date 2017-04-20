@@ -21,7 +21,15 @@ public class Table_Summary extends NanoTable {
 
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
-      @Override protected void done(final String path) {
+      {
+        listen(new Listener() {
+          @Override public void endLocation() {
+            done(getCurrentLocation());
+          }
+        });
+      }
+
+      protected void done(final String path) {
         summarize(path);
         reset();
         System.err.println(" " + path + " Done"); // we need to know if the
@@ -49,7 +57,7 @@ public class Table_Summary extends NanoTable {
         if (table == null)
           table = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" + corpus, outputFolder);
       }
-    }.fire(new ASTVisitor(true) {
+    }.visitAll(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
         try {
           ¢.accept(new AnnotationCleanerVisitor());

@@ -24,13 +24,13 @@ public class Issue1190 {
 
   @Test(timeout = 30000) public void runTheSpartinizerOnItself() {
     new ASTInFilesVisitor(new String[] { "-i", ".", "." }) {
-      @Override protected void visit(final File f) {
+      @Override public void visitFile(final File f) {
         try {
           trimmer.fixed(FileUtils.read(f));
         } catch (final IOException ¢) {
           note.io(¢, "Cannot read: " + f);
         }
       }
-    }.fire(new ASTVisitor() {/**/});
+    }.visitAll(new ASTVisitor() {/**/});
   }
 }

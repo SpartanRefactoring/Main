@@ -15,13 +15,13 @@ import nano.ly.*;
 class FolderSpartanaizer {
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
-      @Override protected void visit(final File f) {
+      @Override public void visitFile(final File f) {
         try {
           FileUtils.writeToFile(f.getAbsolutePath(), new NoBrainDamagedTippersSpartanizer().fixedPoint(FileUtils.read(f)));
         } catch (final Exception ¢) {
           note.bug(¢);
         }
       }
-    }.fire(new ASTVisitor() {/**/});
+    }.visitAll(new ASTVisitor() {/**/});
   }
 }
