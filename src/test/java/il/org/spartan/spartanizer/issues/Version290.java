@@ -118,7 +118,9 @@ public class Version290 {
   @Test public void stringFromBuilderGeneral() {
     trimminKof("new StringBuilder(myName).append(\"\'s grade is\").append(100).toString()") //
         .using(ClassInstanceCreation.class, new StringFromStringBuilder()) //
-        .gives("myName+\"\'s grade is\"+100") //
+        .gives("\"\" + myName+\"\'s grade is\"+100") //
+        .gives("myName + \"\" + \"\'s grade is\" + 100") //
+        .gives("myName + \"\'s grade is\" + 100") //
         .stays();
   }
 
