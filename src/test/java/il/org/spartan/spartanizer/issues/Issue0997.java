@@ -5,7 +5,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** TODO Yossi Gil LocalVariableInitializedStatement description
+/** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since 2016-12-23 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
