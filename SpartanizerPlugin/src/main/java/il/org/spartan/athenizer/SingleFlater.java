@@ -107,7 +107,7 @@ public final class SingleFlater {
     return true;
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final TextEditGroup g, Outer<Range> touched) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final TextEditGroup g, final Outer<Range> touched) {
     robust.ly(() -> {
       setTipper(o.tipper);
       setNode(o.node);

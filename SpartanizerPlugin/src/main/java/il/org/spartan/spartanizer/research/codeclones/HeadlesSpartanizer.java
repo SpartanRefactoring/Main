@@ -13,7 +13,7 @@ import nano.ly.*;
  * class and configure it to fit to your own needs.
  * @author oran1248
  * @since 2017-04-11 */
-public class HeadlesSpartanizer extends  ASTInFilesVisitor{
+public class HeadlesSpartanizer extends ASTInFilesVisitor {
   public final TextualTraversals traversals = new TextualTraversals();
   File current;
 
