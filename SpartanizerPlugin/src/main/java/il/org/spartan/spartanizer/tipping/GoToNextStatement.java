@@ -24,7 +24,7 @@ public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         GoToNextStatement.this.go(r, n, $, g);
       }
-    }.spanning($);
+    }.spanning(n,$);
   }
 
   protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);

@@ -78,14 +78,13 @@ public class TestOperand extends Wrapper<String> {
       return new TestOperand($);
     copyPasteReformat("  .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", Trivia.escapeQuotes(Trivia.essence(peeled)),
         Trivia.escapeQuotes(Trivia.essence($)));
-    azzert.that(Trivia.essence(peeled), is(Trivia.essence($)));
     return new TestOperand($);
   }
 
   protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
-    System.out.printf(QUICK + format, os);
-    System.out.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeTipperUnitTest(get()));
+    System.err.printf(QUICK + format, os);
+    System.err.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeTipperUnitTest(get()));
   }
 
   /** Check whether one of the code options is correct
