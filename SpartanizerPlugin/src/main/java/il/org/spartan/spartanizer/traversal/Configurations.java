@@ -34,7 +34,10 @@ public interface Configurations {
       .add(TypeParameter.class, new TypeParameterExtendsObject()) //
       .add(WildcardType.class, new WildcardTypeExtendsObjectTrim()) //
       .add(VariableDeclarationExpression.class, new ForRenameInitializerToIt()) //
-      .add(ClassInstanceCreation.class, new ClassInstanceCreationBoxedValueTypes()) //
+      .add(ClassInstanceCreation.class, //
+          new ClassInstanceCreationBoxedValueTypes(), //
+          new StringFromStringBuilder(), //
+          null) //
       .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
       .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse(), new ExpressionStatementThatIsBooleanLiteral(), null) //
       .add(ReturnStatement.class, new ReturnLastInMethod(), //
@@ -153,7 +156,6 @@ public interface Configurations {
           new MethodInvocationEqualsWithLiteralString(), //
           new MethodInvocationValueOfBooleanConstant(), //
           new MethodInvocationToStringToEmptyStringAddition(), //
-          new StringFromStringBuilder(), //
           null)//
       .add(TryStatement.class, //
           new TryBodyEmptyLeaveFinallyIfExists(), //
