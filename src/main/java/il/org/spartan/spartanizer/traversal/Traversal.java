@@ -30,7 +30,7 @@ import nano.ly.*;
  * @author Yossi Gil
  * @since 2015/07/10 */
 public abstract class Traversal implements Selfie<Traversal> {
-  public final Configuration configuration = Configurations.allClone();
+  public Configuration configuration = Configurations.allClone();
   /** A list of all listeners to actions carried out by this instance. */
   public final TraversalTappers notify = new TraversalTappers()//
       .push(new TraversalMonitor(this)) //
@@ -41,6 +41,14 @@ public abstract class Traversal implements Selfie<Traversal> {
 
         @Override public void tipRewrite() {
           rewriteCount.step();
+        }
+      }) //
+      .push(new TraversalTapper() {
+        @Override public void begin() {
+          if (!useProjectPreferences)
+            return;
+          Configuration $ = getPreferredConfiguration(compilationUnit());
+          configuration = $ != null ? $ : configuration;
         }
       });
   protected final Int rewriteCount = new Int();
@@ -65,6 +73,7 @@ public abstract class Traversal implements Selfie<Traversal> {
    *         a spartanization tip */
   public Tips collectTips(final CompilationUnit ¢) {
     tips.clear();
+    setCompilationUnit(¢);
     ¢.accept(tipsCollector());
     return tips;
   }
@@ -166,6 +175,7 @@ public abstract class Traversal implements Selfie<Traversal> {
   }
 
   protected void setCompilationUnit(final CompilationUnit ¢) {
+    compilationUnit = ¢;
     fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
     notify.begin();
   }
