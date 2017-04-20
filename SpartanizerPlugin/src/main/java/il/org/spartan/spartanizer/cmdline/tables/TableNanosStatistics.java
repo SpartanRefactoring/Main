@@ -50,10 +50,8 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
     if (!excludeMethod($))
       try {
         nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""));
-      } catch (final AssertionError x) {
+      } catch (final AssertionError | IllegalArgumentException x) {
         note.bug(x);
-      } catch (final IllegalArgumentException ¢) {
-        note.bug(¢);
       }
     return super.visit($);
   }

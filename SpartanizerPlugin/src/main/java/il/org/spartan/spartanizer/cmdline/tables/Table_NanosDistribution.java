@@ -48,10 +48,8 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
       try {
         npStatistics.logNode(findFirst.instanceOf(MethodDeclaration.class)
             .in(make.ast(WrapIntoComilationUnit.Method.off(nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on($ + ""))))));
-      } catch (final AssertionError x) {
+      } catch (final AssertionError | IllegalArgumentException | NullPointerException x) {
         note.bug(x);
-      } catch (final IllegalArgumentException | NullPointerException ¢) {
-        note.bug(¢);
       }
     return super.visit($);
   }
