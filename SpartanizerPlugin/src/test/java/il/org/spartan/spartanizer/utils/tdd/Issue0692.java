@@ -44,7 +44,7 @@ public class Issue0692 {
   }
 
   @Test public void test6() {
-    final Set<String> tmp = new TreeSet<>(as.list("a", "b", "c", "h", "fizz", "x"));
-    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(make.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))")))));
+    azzert.that(new TreeSet<>(as.list("a", "b", "c", "h", "fizz", "x")),
+        is(getAll.invocations(az.methodInvocation(make.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))")))));
   }
 }
