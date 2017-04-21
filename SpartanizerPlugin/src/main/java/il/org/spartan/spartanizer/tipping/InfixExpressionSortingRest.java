@@ -9,8 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
-/** Base class for arithmetics sorting such as minus, in which the first element
- * cannot be moved
+/** Yossi Gil Document Class
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 public abstract class InfixExpressionSortingRest extends InfixExpressionSorting {
