@@ -108,9 +108,7 @@ public interface hop {
     Assignment ¢ = a;
     for (Expression $ = ¢;; $ = from(¢)) {
       ¢ = az.assignment($);
-      if (¢ == null)
-        return $;
-      if (¢.getOperator() != ASSIGN)
+      if (¢ == null || ¢.getOperator() != ASSIGN)
         return $;
     }
   }
