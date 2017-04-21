@@ -206,7 +206,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
-    return "Replace ternarization with more clever one";
+    return "Extract common prefix/postfix of string";
   }
 
   @Override public Expression replacement(final ConditionalExpression ¢) {

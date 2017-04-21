@@ -24,7 +24,7 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
   private static final long serialVersionUID = 0x38C70470EE42ECEBL;
 
   @Override public Examples examples() {
-    return convert("for(Double i : lili) a=5; b=7;").to("for(int i=0;i<5;i++){a=5;}b=7;");
+    return convert("for(Double i : lili) a=5; b=7;").to("for(Double i : lili){a=5;}b=7;");
   }
 
   public ForEachBlockBloater() {

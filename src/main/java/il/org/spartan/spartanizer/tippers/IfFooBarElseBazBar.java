@@ -44,7 +44,7 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Consolidate commmon suffix of then and else branches to just after if statement";
+    return "Extract commmon suffix of then and else branches to just after if statement";
   }
 
   @Override public Tip tip(final IfStatement s) {

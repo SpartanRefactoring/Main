@@ -46,7 +46,7 @@ public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Condolidate commmon prefix of then and else branches to just before if statement";
+    return "Extract commmon prefix of then and else branches to just before if statement";
   }
 
   @Override public Tip tip(final IfStatement s) {

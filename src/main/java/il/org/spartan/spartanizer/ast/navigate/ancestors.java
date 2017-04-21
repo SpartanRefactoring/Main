@@ -52,12 +52,12 @@ public interface ancestors {
     final Predicate<ASTNode> predicate;
     final BiPredicate<ASTNode, ASTNode> bipredicate;
 
-    Until(Predicate<ASTNode> predicate) {
+    Until(final Predicate<ASTNode> predicate) {
       this.predicate = predicate;
       bipredicate = null;
     }
 
-    Until(BiPredicate<ASTNode, ASTNode> bipredicate) {
+    Until(final BiPredicate<ASTNode, ASTNode> bipredicate) {
       predicate = null;
       this.bipredicate = bipredicate;
     }
@@ -69,7 +69,7 @@ public interface ancestors {
       return $;
     }
 
-    private boolean test(ASTNode previous, ASTNode current) {
+    private boolean test(final ASTNode previous, final ASTNode current) {
       return predicate != null ? predicate.test(current) : bipredicate != null && bipredicate.test(previous, current);
     }
   }

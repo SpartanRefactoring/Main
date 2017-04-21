@@ -192,19 +192,11 @@ public final class SingleTipperApplicator {
       applyLocal(w, yieldAncestors.untilClass(BodyDeclaration.class).inclusiveLastFrom(n));
     }
 
-    protected void applyLocal(@SuppressWarnings("rawtypes") final Tipper w, final ASTNode b) {
-      b.accept(new DispatchingVisitor() {
-        @Override protected <N extends ASTNode> boolean go(final N n) {
-          if (disabling.on(n) || !w.getAbstractOperandClass().isInstance(n))
-            return true;
-          Configurations.all();
-          @SuppressWarnings("unchecked") final Tipper<N> x = Tippers.findTipper(n, w);
-          if (x == null)
-            return true;
-          final Tip make = x.tip(n);
-          if (make != null)
-            make.go(rewrite, null);
-          return true;
+    protected void applyLocal(final Tipper<? extends ASTNode> t, final ASTNode root) {
+      final Class<? extends ASTNode> c = t.getAbstractOperandClass();
+      root.accept(new DispatchingVisitor() {
+        @Override protected <N extends ASTNode> boolean go(final N ¢) {
+          return disabling.on(¢) || !c.isInstance(¢) || foo(t, ¢);
         }
 
         @Override protected void initialization(final ASTNode ¢) {
@@ -223,6 +215,16 @@ public final class SingleTipperApplicator {
         apply(t, n);
       doneTraversing = true;
       return false;
+    }
+
+    <N extends ASTNode> boolean foo(final Tipper<? extends ASTNode> t, final N n) {
+      @SuppressWarnings("unchecked") final Tipper<N> tipper1 = (Tipper<N>) t;
+      if (!tipper1.check(n))
+        return true;
+      final Tip tip = tipper1.tip(n);
+      if (tip != null)
+        tip.go(rewrite, null);
+      return true;
     }
   }
 }

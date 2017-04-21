@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.plugin;
 
+import static il.org.spartan.plugin.old.RefreshAll.*;
+
 import java.util.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -115,13 +116,11 @@ public final class Builder extends IncrementalProjectBuilder {
     }
   }
 
-  private void build(final IProgressMonitor m) throws CoreException {
-    final IResourceDelta d = getDelta(getProject());
-    final IResourceDelta[] acs = d == null ? null : d.getAffectedChildren();
-    if (d == null || acs == null || acs.length == 0 || acs.length == 1 && XMLSpartan.FILE_NAME.equals(acs[0].getResource().getName()))
-      fullBuild(m);
+  private void build(final IProgressMonitor ¢) throws CoreException {
+    if (waitingForRefresh.remove(getProject()))
+      fullBuild(¢);
     else
-      incrementalBuild(d);
+      incrementalBuild(getDelta(getProject()));
   }
 
   private void build(final int kind, final IProgressMonitor m) throws CoreException {

@@ -23,8 +23,8 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -0x45FEEB5174E9151DL;
 
-  @Override public String description(@SuppressWarnings("unused") final ArrayAccess ¢) {
-    return "Inline the prefix expression after the access to the array";
+  @Override public String description(final ArrayAccess ¢) {
+    return "Inline next increment/decrement of " + ¢.getIndex() + " into array access";
   }
 
   @Override public Examples examples() {

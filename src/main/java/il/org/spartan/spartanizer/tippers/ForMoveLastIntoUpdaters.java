@@ -20,7 +20,7 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> implemen
   }
 
   @Override public String description(final ForStatement ¢) {
-    return "Convert loop: 'for(?;" + ¢.getExpression() + ";?)' to something else (buggy)";
+    return "Move last statement into updaters of 'for(?;" + ¢.getExpression() + ";?)' ";
   }
 
   @Override public boolean prerequisite(final ForStatement ¢) {
