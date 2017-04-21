@@ -1,6 +1,6 @@
 package il.org.spartan.athenizer.zoomin.expanders;
 
-import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
+import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -25,12 +25,12 @@ import nano.ly.*;
 public class BloatersExamplesTests extends ExamplesTests {
   @Override protected void ignores(final Ignores ¢) {
     final Tipper<?>[] ¢1 = { tipper };
-    wrap(() -> trimminKof(¢.get()).using(¢1).stays());
+    wrap(() -> bloatingOf(¢.get()).using(¢1).stays());
   }
 
   @Override protected void converts(final Converts ¢) {
     final Tipper<?>[] ¢1 = { tipper };
-    wrap(() -> trimminKof(¢.from()).using(¢1).gives(¢.to()));
+    wrap(() -> bloatingOf(¢.from()).using(¢1).gives(¢.to()));
   }
 
   public BloatersExamplesTests(final Tipper<? extends ASTNode> tipper, final String name) {
