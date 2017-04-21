@@ -42,8 +42,7 @@ public class ConstructorRenameParameters extends EagerTipper<MethodDeclaration> 
       if (!parameterNames.contains(field + ""))
         return new Tip(description(d), getClass(), d) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            final SimpleName to1 = d.getAST().newSimpleName(field + "");
-            final SimpleName $ = d.getAST().newSimpleName(parameter + "");
+            final SimpleName to1 = d.getAST().newSimpleName(field + ""), $ = d.getAST().newSimpleName(parameter + "");
             for (final SingleVariableDeclaration q : step.parameters(d))
               misc.rename($, to1, q, r, g);
             misc.rename($, to1, d.getBody(), r, g);

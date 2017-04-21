@@ -25,8 +25,8 @@ public final class LocalInitializedUnusedRemove extends LocalInitialized impleme
     andAlso("Local does not use variables defined in previous fragments", //
         () -> youngerSiblings()//
             .stream()//
-            .map(x -> x.getName()) //
-            .allMatch(x -> collect.usesOf(x).in(initializer).isEmpty())//
+            .map(λ -> λ.getName()) //
+            .allMatch(λ -> collect.usesOf(λ).in(initializer).isEmpty())//
     );
   }
 
