@@ -86,21 +86,8 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
     return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(Operator.PLUS);
   }
 
-  // An alternative approach - may not be safe, consider
-  // `1 + new StringBuilder().toString()`
-  public static boolean needPreliminaryStringUnsafe(List<Expression> xs) {
-    if (xs.isEmpty() || xs.size() == 1 && !iz.stringLiteral(first(xs)))
-      return true;
-    boolean previousIsString = true;
-    for (Expression ¢ : xs)
-      if (iz.stringLiteral(¢))
-        previousIsString = true;
-      else {
-        if (!previousIsString)
-          return true;
-        previousIsString = false;
-      }
-    return false;
+  public static boolean needPreliminaryStringUnsafe(List<Expression> ¢) {
+    return ¢.isEmpty() || !iz.stringLiteral(first(¢)) && !iz.name(first(¢)) && !iz.methodInvocation(first(¢));
   }
 
   public static boolean needPreliminaryStringSafe(List<Expression> ¢) {
