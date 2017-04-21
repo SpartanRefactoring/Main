@@ -1,8 +1,3 @@
-/* TODO Yossi Gil Document Class
- *
- * @author Yossi Gil
- *
- * @since Sep 25, 2016 */
 package il.org.spartan.spartanizer.tipping;
 
 import static il.org.spartan.lisp.*;
@@ -14,6 +9,9 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
+/** Yossi Gil Document Class
+ * @author Yossi Gil
+ * @since Sep 25, 2016 */
 public abstract class InfixExpressionSortingRest extends InfixExpressionSorting {
   private static final long serialVersionUID = -0x110FB52AE2E828EFL;
 

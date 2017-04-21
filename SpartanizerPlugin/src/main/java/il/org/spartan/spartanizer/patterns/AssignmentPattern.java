@@ -8,15 +8,15 @@ import org.eclipse.jdt.core.dom.Assignment.*;
  * @since 2017-03-31 */
 public abstract class AssignmentPattern extends AbstractPattern<Assignment> {
   private static final long serialVersionUID = 0x6BAA0D9033D78EDEL;
-  protected Expression left, right;
+  protected Expression to, from;
   protected Operator operator;
 
   public AssignmentPattern() {
-    andAlso("Must bre legal assignment", () -> {
-      left = current.getLeftHandSide();
-      right = current.getLeftHandSide();
+    andAlso("Must be legal assignment", () -> {
+      to = current.getLeftHandSide();
+      from = current.getLeftHandSide();
       operator = current.getOperator();
-      return left != null && right != null && operator != null;
+      return to != null && from != null && operator != null;
     });
   }
 }

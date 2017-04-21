@@ -100,7 +100,7 @@ public interface Configurations {
           new AssignmentToFromInfixIncludingTo(), //
           new AssignmentToPrefixIncrement(), //
           new AssignmentUpdateAndSameUpdate(), //
-          new AssignmentAndAssignmentOfSameVariable(), //
+          new AssignmentAndAssignmentToSameKill(), //
           new PlusAssignToPostfix(), null) //
       .add(Block.class, //
           new BlockSimplify(), //
@@ -242,7 +242,7 @@ public interface Configurations {
       .add(VariableDeclarationFragment.class, //
           new FieldInitializedDefaultValue(), //
           new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
-          new LocalUnintializedAssignmentToSame(), //
+          new LocalUnintializedAssignmentToIt(), //
           new LocalInitializedReturnExpression(), //
           new LocalVariableIntializedUpdateAssignment(), //
           new LocalVariableIntializedIfAssignment(), //
