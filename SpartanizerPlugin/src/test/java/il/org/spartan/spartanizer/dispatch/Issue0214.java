@@ -85,8 +85,4 @@ public final class Issue0214 {
   @Test public void a12_TipperReturnsCorrectConcreteValueBlockSimplify() {
     azzert.that(blockSimplify.myActualOperandsClass(), is(Block.class));
   }
-
-  @Test public void a13_TipperReturnsCorrectConcreteValueAssignmentAssignment() {
-    azzert.that(new AssignmentAndAssignmentOfSameValue().myActualOperandsClass(), is(Assignment.class));
-  }
 }
