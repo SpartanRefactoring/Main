@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2017-04-21 */
 @SuppressWarnings("static-method")
 public class Issue1271 {
-  @Test public void vanilla() {
+  @Test public void a() {
     trimminKof("a=13;b=13;")//
         .gives("b=a=13;");
   }

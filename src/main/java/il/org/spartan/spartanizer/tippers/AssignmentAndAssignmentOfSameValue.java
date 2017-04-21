@@ -24,6 +24,9 @@ public final class AssignmentAndAssignmentOfSameValue extends AssignmentPattern/
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = 0x69CDEE55CA481121L;
   private Assignment nextAssignment;
+  private ExpressionStatement nextExpressionStatement;
+  private Expression origin;
+  private Expression nextOrigin;
 
   @Override public Examples examples() {
     return convert("a=3;b=3;").to("b=a=3;") //
@@ -34,18 +37,20 @@ public final class AssignmentAndAssignmentOfSameValue extends AssignmentPattern/
   public AssignmentAndAssignmentOfSameValue() {
     andAlso("Assignment is an expression statement", //
         () -> iz.expressionStatement(parent));
-    andAlso("Simple assignment", //
-        () -> operator == ASSIGN);
-    andAlso("Assigned value is not null", //
-        () -> !iz.nullLiteral(from));
+    andAlso("Has origin", //
+        () -> not.nil(origin = hop.origin(current)));
+    andAlso("Origin is not null", //
+        () -> !iz.nullLiteral(origin));
+    andAlso("Next statement is expression statement", //
+        () -> not.nil(nextExpressionStatement = az.expressionStatement(nextStatement))); 
     andAlso("Next statement is assignmet", //
-        () -> not.nil(nextAssignment = az.assignment(nextStatement))); 
-    andAlso("Next assignment is plain assignmnet", //
-        () -> (nextAssignment.getOperator() == ASSIGN)); 
-    andAlso("Assigned value is identical", //
-        () -> wizard.eq(from, from(nextAssignment))); 
+        () -> not.nil(nextAssignment = az.assignment(nextExpressionStatement.getExpression()))); 
+    andAlso("Next assignment has origin", //
+        () -> not.nil(nextOrigin = hop.origin(nextAssignment)));
+    andAlso("Origins are identical value is identical", //
+        () -> wizard.eq(origin, (nextOrigin))); 
     andAlso("Assigned value is deterministic", //
-        () -> sideEffects.deterministic(from)); 
+        () -> sideEffects.deterministic(origin)); 
   }
 
   @Override public String description() {
@@ -54,7 +59,7 @@ public final class AssignmentAndAssignmentOfSameValue extends AssignmentPattern/
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     $.remove(parent, g);
-    $.replace(from(nextAssignment), copy.of(current), g);
+    $.replace(nextOrigin, copy.of(current), g);
     return $;
   }
 
