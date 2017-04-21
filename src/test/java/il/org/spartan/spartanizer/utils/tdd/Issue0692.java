@@ -29,20 +29,14 @@ public class Issue0692 {
     azzert.that(1, is(getAll.invocations(az.methodInvocation(make.ast("example(1,2,i)"))).size()));
   }
 
+  final Set<String> iAndJ = new TreeSet<>(as.list("j", "i"));
+
   @Test public void test3() {
-    // TODO Vivian/Ward: you may simplify the code by writing something such
-    // as new TreeSet(az.list("a","b")) --yg
-    final Set<String> tmp = new TreeSet<>();
-    tmp.add("j");
-    tmp.add("i");
-    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(make.ast("example(1,foo(2,j),i)")))));
+    azzert.that(iAndJ, is(getAll.invocations(az.methodInvocation(make.ast("example(1,foo(2,j),i)")))));
   }
 
   @Test public void test4() {
-    final Set<String> tmp = new TreeSet<>();
-    tmp.add("j");
-    tmp.add("i");
-    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(make.ast("example(1,foo(2,m(j)),i)")))));
+    azzert.that(iAndJ, is(getAll.invocations(az.methodInvocation(make.ast("example(1,foo(2,m(j)),i)")))));
   }
 
   @Test public void test5() {
@@ -50,13 +44,7 @@ public class Issue0692 {
   }
 
   @Test public void test6() {
-    final Set<String> tmp = new TreeSet<>();
-    tmp.add("a");
-    tmp.add("b");
-    tmp.add("c");
-    tmp.add("h");
-    tmp.add("fizz");
-    tmp.add("x");
-    azzert.that(tmp, is(getAll.invocations(az.methodInvocation(make.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))")))));
+    azzert.that(new TreeSet<>(as.list("a", "b", "c", "h", "fizz", "x")),
+        is(getAll.invocations(az.methodInvocation(make.ast("foo(a+b,x, y(c), 1, bar(h,j(fizz)))")))));
   }
 }
