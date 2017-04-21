@@ -3516,7 +3516,7 @@ public final class Version230 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_inta0b0cd0e0fabIfabcdceg() {
     trimminKof("int a = 0, b = 0, c, d = 0, e = 0; f(a, b); if (a < b) { c = d; c = e; } g();") //
-        .using(new AssignmentAndAssignmentOfSameVariable(), Assignment.class) //
+        .using(new AssignmentAndAssignmentToSameKill(), Assignment.class) //
         .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b){c=e;}g();") //
         .using(new BlockSingletonEliminate(), Block.class) //
         .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b)c=e;g();") //
@@ -3549,7 +3549,7 @@ public final class Version230 {
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
         .using(new IfAssignToFooElseAssignToFoo(), IfStatement.class) //
         .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}") //
-        .using(new AssignmentAndAssignmentOfSameVariable(), Assignment.class) //
+        .using(new AssignmentAndAssignmentToSameKill(), Assignment.class) //
         .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3;}") //
         .using(new IfAssignToFooElseAssignToFoo(), IfStatement.class) //
         .gives("int b=5;if(3==4)b=b==3?2:(b=3);else b=b==3?2:3;") //
