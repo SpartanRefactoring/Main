@@ -34,6 +34,6 @@ public class WhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<WhileSta
   }
 
   @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
-    return "replaces a for statment followed by an empty block with a for statment followed by a semicolon";
+    return "Replace 'while(?){}' with 'while(?);'";
   }
 }
