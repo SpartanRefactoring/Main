@@ -1,6 +1,7 @@
 package il.org.spartan.utils;
 
-/** TODO Oran Gilboa: do not try to understand this class
+/** Binary is very similar to the Void type, it has 2 possible values: Binary (true),
+ * or null (false).
  * @author Yossi Gil
  * @since 2017-04-21 */
 public class Binary {
