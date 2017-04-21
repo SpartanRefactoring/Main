@@ -12,8 +12,8 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Test case for bug in {@link AssignmentAndAssignmentOfSameValue}
  * @author Yuval Simon
  * @since 2017-04-19 */
-@SuppressWarnings("static-method")
 @Ignore("Dor Maayan")
+@SuppressWarnings("static-method")
 public class Issue1259 {
   @Test(timeout = 2500) public void test() {
     trimminKof("class Element extends AccessibleObject implements Member {" + //

@@ -45,8 +45,8 @@ public final class MethodExplorerTest {
 
   @Test public void localVariablesNone() {
     azzert.that(new MethodExplorer(into.d(" int f() { return new Object() { @Override public boolean equals(Object obj) { "
-        + " return super.equals(obj); } @Override public int hashCode() { return super.hashCode(); " + " } }.hashCode(); }")).localVariables().size(),
-        is(0));
+        + " return super.equals(obj); } @Override public int hashCode() { return super.hashCode(); " //
+        + " } }.hashCode(); }")).localVariables().size(), is(0));
   }
 
   @Test public void localVariablesRepeatedNestedFragments() {
@@ -56,9 +56,8 @@ public final class MethodExplorerTest {
   @Test public void localVariablesTryClause() {
     azzert.that(new MethodExplorer(into.d(" void f() { final File f = new File(\"f\"); "
         + " try (final InputStream s = new FileInputStream(f); final InputStreamReader is = new InputStreamReader(s)) { f(); "
-        + " } catch (final FileNotFoundException e) { e.f(); } catch (final IOException e) { " + " e.f(); } finally { f(); } } ")).localVariables()
-            .size(),
-        is(5));
+        + " } catch (final FileNotFoundException e) { e.f(); } catch (final IOException e) { " //
+        + " e.f(); } finally { f(); } } ")).localVariables().size(), is(5));
   }
 
   @Test public void localVariablesVanilla() {
@@ -122,9 +121,8 @@ public final class MethodExplorerTest {
   }
 
   @Test public void returnStatementsWithNestedEnum() {
-    azzert.that(new MethodExplorer(into.d(" int f() { return new Object() { @Override public boolean equals(Object obj) { "
-        + " return super.equals(obj); } @Override public int hashCode() { return super.hashCode(); " + " } }.hashCode(); }")).returnStatements()
-            .size(),
-        is(1));
+    azzert.that(new MethodExplorer(into.d("int f() { return new Object() { @Override public boolean equals(Object obj) { "
+        + " return super.equals(obj); } @Override public int hashCode() { return super.hashCode(); " //
+        + " } }.hashCode(); }")).returnStatements().size(), is(1));
   }
 }
