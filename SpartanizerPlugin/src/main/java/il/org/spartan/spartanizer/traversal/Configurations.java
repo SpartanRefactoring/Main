@@ -45,6 +45,7 @@ public interface Configurations {
       .add(EnhancedForStatement.class, //
           new EnhancedForRedundantContinue(), //
           new EnhancedForEliminateConditionalContinue(), //
+          new EnhancedForEmptyBlock(), //
           new EnhancedForParameterRenameToIt(), //
           null)//
       .add(LambdaExpression.class, //
