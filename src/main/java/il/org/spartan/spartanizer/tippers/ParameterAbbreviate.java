@@ -91,7 +91,7 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
         }
       }.spanning($);
     final Block b = az.methodDeclaration(d.getParent()).getBody();
-    return getAll.names(b).stream().map(λ -> λ + "").collect(toList()).contains(newName) || Environment.of(b).has(newName) ? null
+    return (b != null && (getAll.names(b).stream().map(λ -> λ + "").collect(toList()).contains(newName) || Environment.of(b).has(newName))) ? null
         : new Tip("Abbreviate parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d.getName()) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
             rename(oldName, make.from(d).identifier(newName), $, r, g);
