@@ -39,8 +39,8 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
       invocations = ancestors.until((p, c) -> !iz.methodInvocation(c) || p != null && p != az.methodInvocation(c).getExpression()).from(parent)
           .stream().map(az::methodInvocation).collect(toList());
       final Expression $ = az.expression((invocations.isEmpty() ? current : last(invocations)).getParent());
-      return !invocations.isEmpty() && "toString".equals(last(invocations).getName().getIdentifier()) || (not.nil($) && iz.infixPlus($)
-          && (iz.stringLiteral(az.infixExpression($).getLeftOperand()) || iz.stringLiteral(az.infixExpression($).getRightOperand())));
+      return !invocations.isEmpty() && "toString".equals(last(invocations).getName().getIdentifier()) || not.nil($) && iz.infixPlus($)
+          && (iz.stringLiteral(az.infixExpression($).getLeftOperand()) || iz.stringLiteral(az.infixExpression($).getRightOperand()));
     });
     andAlso("All invocations are append/toString",
         () -> invocations.stream().filter(λ -> !iz.in(λ.getName().getIdentifier(), "append", "toString")).count() == 0);
@@ -86,15 +86,15 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
     return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(Operator.PLUS);
   }
 
-  public static boolean needPreliminaryStringUnsafe(List<Expression> ¢) {
+  public static boolean needPreliminaryStringUnsafe(final List<Expression> ¢) {
     return ¢.isEmpty() || !iz.stringLiteral(first(¢)) && !iz.name(first(¢)) && !iz.methodInvocation(first(¢));
   }
 
-  public static boolean needPreliminaryStringSafe(List<Expression> ¢) {
+  public static boolean needPreliminaryStringSafe(final List<Expression> ¢) {
     return ¢.isEmpty() || !iz.stringLiteral(first(¢));
   }
 
-  private static List<Expression> arguments(List<?> argumentz) {
+  private static List<Expression> arguments(final List<?> argumentz) {
     return argumentz.stream().filter(λ -> λ instanceof Expression).map(λ -> addParenthesisIfNeeded((Expression) λ)).collect(toList());
   }
 }

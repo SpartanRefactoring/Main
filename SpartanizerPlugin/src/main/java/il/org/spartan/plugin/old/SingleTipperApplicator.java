@@ -193,7 +193,7 @@ public final class SingleTipperApplicator {
     }
 
     protected void applyLocal(final Tipper<? extends ASTNode> t, final ASTNode root) {
-          final Class<? extends ASTNode> c = t.getAbstractOperandClass();
+      final Class<? extends ASTNode> c = t.getAbstractOperandClass();
       root.accept(new DispatchingVisitor() {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
           return disabling.on(¢) || !c.isInstance(¢) || foo(t, ¢);
@@ -218,7 +218,7 @@ public final class SingleTipperApplicator {
     }
 
     <N extends ASTNode> boolean foo(final Tipper<? extends ASTNode> t, final N n) {
-      @SuppressWarnings("unchecked") Tipper<N> tipper1 =(Tipper<N>) t;
+      @SuppressWarnings("unchecked") final Tipper<N> tipper1 = (Tipper<N>) t;
       if (!tipper1.check(n))
         return true;
       final Tip tip = tipper1.tip(n);
