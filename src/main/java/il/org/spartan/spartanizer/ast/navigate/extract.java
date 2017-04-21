@@ -163,9 +163,9 @@ public enum extract {
           return "abstract";
         final List<Statement> ss = extract.statements(body);
         if (ss.isEmpty())
-          return "empty";
+          return "empty method";
         if (ss.size() == 1)
-          return "singleton";
+          return "singleton method";
         return "method";
       case TYPE_DECLARATION:
         return category((TypeDeclaration) $);
