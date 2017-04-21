@@ -15,7 +15,8 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** TODO Yossi Gil: document class
+/** An abstract class that all the specific pattern classes inherits from.
+ * Containing fluent API for constructing a logic tree of prerequisites.
  * @author Yossi Gil
  * @since 2017-03-25 */
 public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N> {
@@ -32,39 +33,6 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     });
   }
 
-  @Override public final String description(@SuppressWarnings("unused") final N __) {
-    return description();
-  }
-
-  @Override public abstract Examples examples();
-
-  @Override public final boolean prerequisite(final N ¢) {
-    assert current() == ¢ : "class = " + this.getClass() + "n = " + ¢;
-    return prerequisite.eval();
-  }
-
-  public final void setCurrent(final N c) {
-    current = c;
-  }
-
-  @Override public final Tip tip(final N n) {
-    assert n != null;
-    assert n == current();
-    return (highlight() != null ? new Tip(description(), myClass(), highlight()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        AbstractPattern.this.go(r, g);
-      }
-    } : new Tip(description(), myClass(), containingCompilationUnit(), start()) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        AbstractPattern.this.go(r, g);
-      }
-    }).spanning(span());
-  }
-
-  private CompilationUnit containingCompilationUnit() {
-    return containing.compilationUnit(current);
-  }
-
   protected final AbstractPattern<N> andAlso(final Proposition ¢) {
     this.prerequisite = prerequisite.and(¢);
     return this;
@@ -79,6 +47,16 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     return this;
   }
 
+  private CompilationUnit containingCompilationUnit() {
+    return containing.compilationUnit(current);
+  }
+
+  @Override public final String description(@SuppressWarnings("unused") final N __) {
+    return description();
+  }
+
+  @Override public abstract Examples examples();
+
   protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
 
   protected ASTNode highlight() {
@@ -90,11 +68,34 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     return this;
   }
 
+  @Override public final boolean prerequisite(final N ¢) {
+    assert current() == ¢ : "class = " + this.getClass() + "n = " + ¢;
+    return prerequisite.eval();
+  }
+
+  public final void setCurrent(final N c) {
+    current = c;
+  }
+
   protected ASTNode[] span() {
     return as.array(current);
   }
 
   protected Range start() {
     return Ranger.start(current);
+  }
+
+  @Override public final Tip tip(final N n) {
+    assert n != null;
+    assert n == current();
+    return (highlight() != null ? new Tip(description(), myClass(), highlight()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        AbstractPattern.this.go(r, g);
+      }
+    } : new Tip(description(), myClass(), containingCompilationUnit(), start()) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        AbstractPattern.this.go(r, g);
+      }
+    }).spanning(span());
   }
 }
