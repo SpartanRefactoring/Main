@@ -56,7 +56,7 @@ public abstract class LocalPattern extends FragmentAmongFragmentsPattern {
   }
 
   protected boolean usedInSubsequentInitializers() {
-    return youngerSiblings().stream().anyMatch(λ -> !collect.usesOf(name()).in(λ.getInitializer()).isEmpty());
+    return olderSiblings().stream().anyMatch(λ -> !collect.usesOf(name()).in(λ.getInitializer()).isEmpty());
   }
 
   final boolean doesUseForbiddenSiblings(final ASTNode... ns) {
