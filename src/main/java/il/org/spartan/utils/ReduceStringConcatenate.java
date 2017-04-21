@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-/** TODO Yossi Gil: document class
+/** Reducer that concatenate strings
  * @author Yossi Gil
  * @since 2017-03-19 */
 public class ReduceStringConcatenate extends Reduce<String> {
