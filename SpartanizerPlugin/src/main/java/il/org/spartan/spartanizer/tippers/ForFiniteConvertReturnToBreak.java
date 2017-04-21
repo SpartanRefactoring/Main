@@ -6,6 +6,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
@@ -37,7 +38,7 @@ public final class ForFiniteConvertReturnToBreak extends ForStatementPattern//
   }
 
   @Override public String description() {
-    return "Convert " + convertToBreak + " to loop break";
+    return "Convert " + Trivia.gist(convertToBreak) + " to loop break";
   }
 
   @Override public Examples examples() {
