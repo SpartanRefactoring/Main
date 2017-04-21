@@ -100,7 +100,7 @@ public interface Configurations {
           new AssignmentToFromInfixIncludingTo(), //
           new AssignmentToPrefixIncrement(), //
           new AssignmentUpdateAndSameUpdate(), //
-          new AssignmentAndAssignmentOfSameVariable(), //
+          new AssignmentAndAssignmentToSameKill(), //
           new PlusAssignToPostfix(), null) //
       .add(Block.class, //
           new BlockSimplify(), //
