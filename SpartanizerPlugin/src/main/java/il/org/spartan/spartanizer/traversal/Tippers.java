@@ -18,25 +18,25 @@ public interface Tippers {
   interface cache {
     Map<String, Class<? extends Tipper<?>>> serivalVersionUIDToTip = anonymous.ly(() -> {
       final Map<String, Class<? extends Tipper<?>>> $ = new HashMap<>();
-      for (final Tipper<? extends ASTNode> ¢ : Configurations.allClone().getAllTippers())
+      for (final Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
         $.put(find(¢) + "", ¢.myClass());
       return $;
     });
     Map<Class<? extends Tipper<?>>, Tipper<?>> TipperObjectByClassCache = anonymous.ly(() -> {
       final Map<Class<? extends Tipper<?>>, Tipper<?>> $ = new HashMap<>();
-      for (final Tipper<? extends ASTNode> ¢ : Configurations.allClone().getAllTippers())
+      for (final Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
         $.put(¢.myClass(), ¢);
       return $;
     });
     Map<Class<? extends Tipper<?>>, String> tipperToDescription = anonymous.ly(() -> {
       final Map<Class<? extends Tipper<?>>, String> $ = new HashMap<>();
-      for (final Tipper<? extends ASTNode> ¢ : Configurations.allClone().getAllTippers())
+      for (final Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
         $.put(¢.myClass(), ¢.description());
       return $;
     });
     Map<Class<? extends Tipper<?>>, Examples> tipperToExamples = anonymous.ly(() -> {
       final Map<Class<? extends Tipper<?>>, Examples> $ = new HashMap<>();
-      for (final Tipper<? extends ASTNode> ¢ : Configurations.allClone().getAllTippers())
+      for (final Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
         $.put(¢.myClass(), ¢.examples());
       return $;
     });
@@ -44,7 +44,7 @@ public interface Tippers {
 
   Map<String, String> TipperIDNameTranslationTable = anonymous.ly(() -> {
     final Map<String, String> $ = new HashMap<>();
-    for (final Tipper<? extends ASTNode> ¢ : Configurations.allClone().getAllTippers())
+    for (final Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
       $.put(find(¢) + "", ¢.tipperName());
     return $;
   });
