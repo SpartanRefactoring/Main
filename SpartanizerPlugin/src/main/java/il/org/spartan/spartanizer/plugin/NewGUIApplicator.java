@@ -151,7 +151,7 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
   }
 
   public Applicator restrictTo(final Class<? extends Tipper<? extends ASTNode>> tipperClass) {
-    return restrictTo(Tippers.cache.TipperObjectByClassCache.get(tipperClass));
+    return restrictTo(Tippers.cache.tipperClassToTipperInstance.get(tipperClass));
   }
 
   /** Default operation name.
