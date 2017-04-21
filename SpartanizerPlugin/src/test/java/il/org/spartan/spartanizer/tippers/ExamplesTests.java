@@ -30,14 +30,18 @@ public class ExamplesTests {
   /** Redirects examples to tests according to __ */
   @Test public void converts() {
     if (tipper.examples() != null)
-      StreamSupport.stream(tipper.examples().spliterator(), false).filter(Converts.class::isInstance).map(Converts.class::cast)
+      StreamSupport.stream(tipper.examples().spliterator(), false)//
+          .filter(Converts.class::isInstance)//
+          .map(Converts.class::cast)//
           .forEachOrdered(this::converts);
   }
 
   /** Redirects examples to tests according to __ */
   @Test public void ignores() {
     if (tipper.examples() != null)
-      StreamSupport.stream(tipper.examples().spliterator(), false).filter(Ignores.class::isInstance).map(Ignores.class::cast)
+      StreamSupport.stream(tipper.examples().spliterator(), false)//
+          .filter(Ignores.class::isInstance)//
+          .map(Ignores.class::cast)//
           .forEachOrdered(this::ignores);
   }
 
@@ -63,7 +67,9 @@ public class ExamplesTests {
 
   @Parameters(name = "{index}. {1}") //
   public static Collection<Object[]> data() {
-    return allTippers().stream().map(λ -> new Object[] { λ, English.name(λ) }).collect(toList());
+    return allTippers().stream()//
+        .map(λ -> new Object[] { λ, English.name(λ) })//
+        .collect(toList());
   }
 
   /** Get all tippers from {@link Configuration}. Removes duplicate tippers
@@ -72,6 +78,7 @@ public class ExamplesTests {
    * @return all tippers to be tested */
   private static Collection<?> allTippers() {
     return Configurations.allClone().getAllTippers() //
-        .stream().collect(toMap(Tipper::getClass, λ -> λ, (t1, t2) -> t1)).values();
+        .stream()//
+        .collect(toMap(Tipper::getClass, λ -> λ, (t1, t2) -> t1)).values();
   }
 }

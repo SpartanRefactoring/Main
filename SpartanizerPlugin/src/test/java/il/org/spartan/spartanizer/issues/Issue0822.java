@@ -35,7 +35,7 @@ public class Issue0822 {
       fail(¢.getMessage());
     }
     assert sb != null;
-    azzert.that(sb + "", is(new StringBuilder() + ""));
+    azzert.that(sb + "", is(""));
   }
 
   @Test public void testBuilderFromFile() throws IOException {
