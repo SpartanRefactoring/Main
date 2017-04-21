@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
+
 import static il.org.spartan.Utils.last;
 
 import static il.org.spartan.lisp.*;
@@ -44,6 +46,14 @@ public interface hop {
     };
   }
 
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
+    return fs.stream().filter(λ -> wizard.eq(¢, λ.getName())).findFirst().orElse(null);
+  }
+
+  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, final SimpleName n) {
+    return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
+  }
+
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
   static List<ASTNode> descendants(final ASTNode root) {
@@ -57,14 +67,6 @@ public interface hop {
     });
     $.remove(0);
     return $;
-  }
-
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, final SimpleName n) {
-    return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
-  }
-
-  static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
-    return fs.stream().filter(λ -> wizard.eq(¢, λ.getName())).findFirst().orElse(null);
   }
 
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
@@ -102,11 +104,15 @@ public interface hop {
     return $;
   }
 
-  /** @param ¢ JD
-   * @return conversion of {@link Statement} , which is previous to the
-   *         firstLastStatement in the loop body. */
-  static VariableDeclarationFragment penultimateFragment(final ForStatement ¢) {
-    return penultimate(body(¢));
+  static Expression origin(final Assignment a) {
+    Assignment ¢ = a;
+    for (Expression $ = ¢;; $ = from(¢)) {
+      ¢ = az.assignment($);
+      if (¢ == null)
+        return $;
+      if (¢.getOperator() != ASSIGN)
+        return $;
+    }
   }
 
   /** [[SuppressWarningsSpartan]] - see #1246 */
@@ -121,6 +127,13 @@ public interface hop {
    *         LastStatement in the loop body. */
   static VariableDeclarationFragment penultimate(final WhileStatement $) {
     return penultimate(body($));
+  }
+
+  /** @param ¢ JD
+   * @return conversion of {@link Statement} , which is previous to the
+   *         firstLastStatement in the loop body. */
+  static VariableDeclarationFragment penultimateFragment(final ForStatement ¢) {
+    return penultimate(body(¢));
   }
 
   static VariableDeclarationFragment previous(final Statement ¢) {
