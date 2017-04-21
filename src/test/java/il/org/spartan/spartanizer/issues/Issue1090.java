@@ -1,8 +1,9 @@
 package il.org.spartan.spartanizer.issues;
 
 import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit tests for {@link
+/** Unit tests for {@link AssignmentAndAssignmentOfSameValue} 
  * @author Yossi Gil
  * @since 2017-01-17 */
 public class Issue1090 extends MetaFixture {
