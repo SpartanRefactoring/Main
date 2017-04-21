@@ -1,9 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -42,15 +38,15 @@ public final class AssignmentAndAssignmentOfSameValue extends AssignmentPattern/
     andAlso("Origin is not null", //
         () -> !iz.nullLiteral(origin));
     andAlso("Next statement is expression statement", //
-        () -> not.nil(nextExpressionStatement = az.expressionStatement(nextStatement))); 
+        () -> not.nil(nextExpressionStatement = az.expressionStatement(nextStatement)));
     andAlso("Next statement is assignmet", //
-        () -> not.nil(nextAssignment = az.assignment(nextExpressionStatement.getExpression()))); 
+        () -> not.nil(nextAssignment = az.assignment(nextExpressionStatement.getExpression())));
     andAlso("Next assignment has origin", //
         () -> not.nil(nextOrigin = hop.origin(nextAssignment)));
     andAlso("Origins are identical value is identical", //
-        () -> wizard.eq(origin, (nextOrigin))); 
+        () -> wizard.eq(origin, nextOrigin));
     andAlso("Assigned value is deterministic", //
-        () -> sideEffects.deterministic(origin)); 
+        () -> sideEffects.deterministic(origin));
   }
 
   @Override public String description() {
@@ -62,5 +58,4 @@ public final class AssignmentAndAssignmentOfSameValue extends AssignmentPattern/
     $.replace(nextOrigin, copy.of(current), g);
     return $;
   }
-
 }

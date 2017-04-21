@@ -15,7 +15,7 @@ import nano.ly.*;
  * @since Oct 16, 2016 */
 public final class RefreshAll extends BaseHandler {
   public static Set<IProject> waitingForRefresh = Collections.synchronizedSet(new HashSet<>());
-  
+
   public static void go() {
     as.list(ResourcesPlugin.getWorkspace().getRoot().getProjects()).forEach(λ -> go(λ));
   }
