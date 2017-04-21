@@ -12,7 +12,12 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2017-04-21 */
 @SuppressWarnings("static-method")
 public class Issue1271 {
-@Test public void assignmentAssignmentChain1() {
+  @Test public void vanilla() {
+    trimminKof("a=13;b=13;")//
+        .gives("b=a=13;");
+  }
+
+  @Test public void assignmentAssignmentChain1() {
     trimminKof("c=a=13;b=13;")//
         .gives("b=c=a=13;");
   }
@@ -78,5 +83,4 @@ public class Issue1271 {
   @Test public void assignmentAssignmentVanillaScopeIncludesNull() {
     included("a=null;b=null;", Assignment.class).notIn(new AssignmentAndAssignmentOfSameValue());
   }
-
 }
