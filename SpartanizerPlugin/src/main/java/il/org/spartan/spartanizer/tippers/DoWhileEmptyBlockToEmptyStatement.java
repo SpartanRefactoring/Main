@@ -35,6 +35,6 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
   }
 
   @Override public String description(@SuppressWarnings("unused") final DoStatement __) {
-    return "replaces a do statment followed by an empty block with a for statment followed by a semicolon";
+    return "Replace 'do {} while(?)' with 'do ; while(?)'";
   }
 }

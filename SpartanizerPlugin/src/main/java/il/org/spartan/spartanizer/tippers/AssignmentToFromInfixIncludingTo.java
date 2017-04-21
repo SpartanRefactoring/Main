@@ -54,7 +54,7 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   @Override public String description(final Assignment ¢) {
-    return "Replace x = x " + operator(¢) + "a; with x " + operator(¢) + "= a;";
+    return "Replace " + to(¢) + " = + with " + to(¢) + "  =? "; 
   }
 
   @Override public ASTNode replacement(final Assignment ¢) {
