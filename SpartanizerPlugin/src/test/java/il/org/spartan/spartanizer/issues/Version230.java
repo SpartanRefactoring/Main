@@ -87,7 +87,6 @@ public final class Version230 {
         .gives("@SuppressWarnings(\"something\")void m(){}");
   }
 
-  
   @Test public void assignmentReturn0() {
     trimminKof("a=3;return a;")//
         .gives("return a=3;");
