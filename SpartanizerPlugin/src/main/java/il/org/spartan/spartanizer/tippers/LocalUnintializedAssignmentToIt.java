@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalUnintializedAssignmentToSame extends $FragmentAndStatement//
+public final class LocalUnintializedAssignmentToIt extends $FragmentAndStatement//
     implements TipperCategory.Unite {
   private static final long serialVersionUID = 0xCE4CF4E3910F992L;
 
@@ -26,6 +26,9 @@ public final class LocalUnintializedAssignmentToSame extends $FragmentAndStateme
 
   @Override public Examples examples() {
     return convert("int a;a=3;").to("int a=3;");
+  }
+  @Override public String description() {
+    return "Consolidate uninitialized declaration with subsequent initialization";
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

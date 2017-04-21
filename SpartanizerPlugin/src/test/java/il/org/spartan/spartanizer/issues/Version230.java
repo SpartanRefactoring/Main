@@ -87,73 +87,6 @@ public final class Version230 {
         .gives("@SuppressWarnings(\"something\")void m(){}");
   }
 
-  @Test public void assignmentAssignmentChain1() {
-    trimminKof("c=a=13;b=13;")//
-        .gives("b=c=a=13;");
-  }
-
-  @Test public void assignmentAssignmentChain2() {
-    trimminKof("a=13;b=c=13;")//
-        .gives("b=c=a=13;");
-  }
-
-  @Test public void assignmentAssignmentChain3() {
-    trimminKof("a=b=13;c=d=13;")//
-        .gives("c=d=a=b=13;");
-  }
-
-  @Test public void assignmentAssignmentChain4() {
-    trimminKof("a1=a2=a3=a4=13;b1=b2=b3=b4=b5=13;")//
-        .gives("b1=b2=b3=b4=b5=a1=a2=a3=a4=13;");
-  }
-
-  @Test public void assignmentAssignmentChain5() {
-    trimminKof("a1=(a2=(a3=(a4=13)));b1=b2=b3=((((b4=(b5=13)))));")//
-        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=(((b4=(b5=13))));") //
-        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=((b4=(b5=13)));") //
-        .gives("a1=(a2=(a3=(a4=13)));b1=b2=b3=(b4=(b5=13));") //
-        .stays()//
-    ;
-  }
-
-  @Test public void assignmentAssignmentNew() {
-    trimminKof("a=new B();b=new B();")//
-        .stays();
-  }
-
-  @Test public void assignmentAssignmentNewArray() {
-    trimminKof("a=new A[3];b=new A[3];")//
-        .stays();
-  }
-
-  @Test public void assignmentAssignmentNull() {
-    trimminKof("c=a=null;b=null;")//
-        .stays();
-  }
-
-  @Test public void assignmentAssignmentSideEffect() {
-    trimminKof("a=f();b=f();")//
-        .stays();
-  }
-
-  @Test public void assignmentAssignmentVanilla() {
-    trimminKof("a=13;b=13;")//
-        .gives("b=a=13;");
-  }
-
-  @Test public void assignmentAssignmentVanilla0() {
-    trimminKof("a=0;b=0;")//
-        .gives("b=a=0;");
-  }
-
-  @Test public void assignmentAssignmentVanillaScopeIncludes() {
-    included("a=3;b=3;", Assignment.class).in(new AssignmentAndAssignmentOfSameValue());
-  }
-
-  @Test public void assignmentAssignmentVanillaScopeIncludesNull() {
-    included("a=null;b=null;", Assignment.class).notIn(new AssignmentAndAssignmentOfSameValue());
-  }
-
   @Test public void assignmentReturn0() {
     trimminKof("a=3;return a;")//
         .gives("return a=3;");
@@ -382,7 +315,7 @@ public final class Version230 {
 
   @Test public void canonicalFragementExample1() {
     trimminKof("int a;a=3;")//
-        .using(new LocalUnintializedAssignmentToSame(), VariableDeclarationFragment.class) //
+        .using(new LocalUnintializedAssignmentToIt(), VariableDeclarationFragment.class) //
         .gives("int a=3;");
   }
 
@@ -3582,7 +3515,7 @@ public final class Version230 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_inta0b0cd0e0fabIfabcdceg() {
     trimminKof("int a = 0, b = 0, c, d = 0, e = 0; f(a, b); if (a < b) { c = d; c = e; } g();") //
-        .using(new AssignmentAndAssignmentOfSameVariable(), Assignment.class) //
+        .using(new AssignmentAndAssignmentToSameKill(), Assignment.class) //
         .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b){c=e;}g();") //
         .using(new BlockSingletonEliminate(), Block.class) //
         .gives("int a=0,b=0,c,d=0,e=0;f(a,b);if(a<b)c=e;g();") //
@@ -3605,9 +3538,9 @@ public final class Version230 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_intaba3b5Ifa4Ifb3b2Elsebab3ElseIfb3b2Elsebaab3() {
     trimminKof("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = 2; else { b = a; b = 3; } else if (b == 3) b = 2; else { b = a * a; b = 3; }") //
-        .using(new LocalUnintializedAssignmentToSame(), VariableDeclarationFragment.class) //
+        .using(new LocalUnintializedAssignmentToIt(), VariableDeclarationFragment.class) //
         .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
-        .using(new LocalUnintializedAssignmentToSame(), VariableDeclarationFragment.class) //
+        .using(new LocalUnintializedAssignmentToIt(), VariableDeclarationFragment.class) //
         .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
@@ -3615,7 +3548,7 @@ public final class Version230 {
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
         .using(new IfAssignToFooElseAssignToFoo(), IfStatement.class) //
         .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3*3;b=3;}") //
-        .using(new AssignmentAndAssignmentOfSameVariable(), Assignment.class) //
+        .using(new AssignmentAndAssignmentToSameKill(), Assignment.class) //
         .gives("int b=5;if(3==4)b=b==3?2:(b=3);else if(b==3)b=2;else{b=3;}") //
         .using(new IfAssignToFooElseAssignToFoo(), IfStatement.class) //
         .gives("int b=5;if(3==4)b=b==3?2:(b=3);else b=b==3?2:3;") //

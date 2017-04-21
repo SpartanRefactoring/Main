@@ -15,7 +15,7 @@ import il.org.spartan.utils.*;
 
 /** converts {@code (a?b:c;)} to {@code (if(a) b; else c;)} relevant for
  * assignment <em>ternary</em> also relevant for assignment (<em>ternary</em>)
- * s.e $ = (<ternary) Issue #883 {@link Issue883}
+ * s.e $ = (<ternary) Issue #883 {@link Issue0883}
  * @author Raviv Rachmiel
  * @since 23-12-16 */
 public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
@@ -25,8 +25,7 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
   @Override public Examples examples() {
     return //
     convert("temp = (a == 0 ? b:c);") //
-        .to("if(a==0) temp = b; else temp = c;"). //
-        ignores("if(a==0) temp = b; else temp= c;") //
+        .to("if(a==0) temp = b; else temp = c;") //
     ;
   }
 

@@ -95,12 +95,12 @@ public class XMLSpartan {
     final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
     for (int i = 0; i < ns.getLength(); ++i) {
       final Element e = (Element) ns.item(i);
-      final Class<?> tc = Tippers.cache.serivalVersionUIDToTip.get(e.getAttribute(TIPPER_ID));
+      final Class<?> tc = Tippers.cache.serivalVersionUIDToTipper.get(e.getAttribute(TIPPER_ID));
       if (tc == null)
         continue;
       final String description = Tippers.cache.tipperToDescription.get(tc);
       final Examples preview = Tippers.cache.tipperToExamples.get(tc);
-      final TipperGroup g = Tippers.cache.TipperObjectByClassCache.get(tc).tipperGroup();
+      final TipperGroup g = Tippers.cache.tipperClassToTipperInstance.get(tc).tipperGroup();
       if (!tgs.containsKey(g)) {
         tgs.put(g, an.empty.list());
         tcs.put(g, new SpartanCategory(g.name(), false));
@@ -129,7 +129,7 @@ public class XMLSpartan {
       return;
     for (int i = 0; i < ns.getLength(); ++i) {
       final Element e = (Element) ns.item(i);
-      final String nameByID = Tippers.TipperIDNameTranslationTable.get(e.getAttribute(TIPPER_ID));
+      final String nameByID = Tippers.cache.idToNameOriWhatsThisFindAGoodName.get(e.getAttribute(TIPPER_ID));
       e.setAttribute(ENABLED, nameByID != null && ss.contains(nameByID) ? "true" : "false");
     }
     commit(p, d);
