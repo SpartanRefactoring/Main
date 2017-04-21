@@ -58,6 +58,14 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     return this;
   }
 
+  /** Gives the ability to perform an action on object {@code T} t, only if
+   * predicate(t) takes place.
+   * @param <T> __ of elements for which the rule is applicable
+   * @param <R> __ of result of applying this rule
+   * @param p a predicate
+   * @return a lambda of type {@link OnApplicator}
+   * @author Yossi Gil
+   * @since 2017-03-10 */
   static <T, R> OnApplicator<T, R> on(final Predicate<T> p) {
     return c -> new Rule.Stateful<T, R>() {
       @Override public R fire() {
@@ -71,6 +79,15 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     };
   }
 
+  interface OnApplicator<T, R> {
+    Rule<T, R> go(Consumer<T> c);
+  }
+
+  /** {@code afterCheck} functions supply a fluent API for:<br>
+   * 1. performing an action after {@link Rule.check}<br>
+   * 2. add a prerequisite to check after {@link Rule.check}
+   * @author oran1248
+   * @since 2017-04-21 */
   @Check default Rule<T, R> afterCheck(final boolean b) {
     return afterCheck((final T t) -> b);
   }
@@ -100,6 +117,11 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
    * @return result of application of this instance on the given subject */
   @Override @Apply R apply(T ¢);
 
+  /** {@code beforeCheck} functions supply a fluent API for: 1. performing an
+   * action before {@link Rule.check}<br>
+   * 2. add a prerequisite to check before {@link Rule.check}
+   * @author oran1248
+   * @since 2017-04-21 */
   default Rule<T, R> beforeCheck(final boolean b) {
     return beforeCheck((final T t) -> b);
   }
@@ -174,6 +196,9 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     String value() default "A boolean method for checking prior to application of this instance";
   }
 
+  /** For counting Strings
+   * @author oran1248
+   * @since 2017-04-21 */
   abstract class CountingDelegator<T, R> extends Interceptor<T, R> {
     final Map<String, Integer> count = new LinkedHashMap<>();
 
@@ -188,6 +213,9 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     }
   }
 
+  /** Wrapper for Rule
+   * @author oran1248
+   * @since 2017-04-21 */
   class Interceptor<T, R> implements Rule<T, R> {
     public final Rule<T, R> inner;
 
@@ -242,10 +270,6 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
     default String listenVerb(final Supplier<String> $) {
       return $.get();
     }
-  }
-
-  interface OnApplicator<T, R> {
-    Rule<T, R> go(Consumer<T> c);
   }
 
   /** Default implementation of {@link Rule},

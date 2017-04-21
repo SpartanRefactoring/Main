@@ -109,6 +109,12 @@ public abstract class Traversal implements Selfie<Traversal> {
     return this;
   }
 
+  public Traversal notUseProjectPreferences() {
+    useProjectPreferences = false;
+    configurations.clear();
+    return this;
+  }
+
   @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N __) {
     return true;
   }

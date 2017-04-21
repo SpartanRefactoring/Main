@@ -31,7 +31,7 @@ enum event {
 public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplicator> {
   protected NewGUIApplicator() {}
 
-  private static final String DEFAULT_STEM = "Opera";
+  private static final String DEFAULT_STEM = "Operat";
   /** Few passes for the applicator to conduct. */
   private static final int PASSES_FEW = 1;
   /** Many passes for the applicator to conduct. */
@@ -143,9 +143,10 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
   public NewGUIApplicator restrictTo(final Tipper<?> t) {
     inner.setSelection(selection());
     inner.setName(t.description());
-    inner.traversal.useProjectPreferences();
+    inner.traversal.notUseProjectPreferences();
     inner.traversal.configuration.restrictTo(t);
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
+    name(t.tipperName());
     return this;
   }
 
