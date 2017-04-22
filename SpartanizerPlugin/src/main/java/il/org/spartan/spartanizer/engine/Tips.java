@@ -8,6 +8,7 @@ import java.util.*;
 public class Tips extends ArrayList<Tip> {
   private static final long serialVersionUID = 1;
 
+  /** Suppresses default constructor, ensuring non-instantiability */
   private Tips() {/**/}
 
   public static Tips empty() {

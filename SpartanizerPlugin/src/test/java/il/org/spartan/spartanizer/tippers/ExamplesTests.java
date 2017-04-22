@@ -30,7 +30,8 @@ public class ExamplesTests {
   /** Redirects examples to tests according to __ */
   @Test public void converts() {
     if (tipper.examples() != null)
-      StreamSupport.stream(tipper.examples().spliterator(), false)//
+      StreamSupport//
+          .stream(tipper.examples().spliterator(), false)//
           .filter(Converts.class::isInstance)//
           .map(Converts.class::cast)//
           .forEachOrdered(this::converts);

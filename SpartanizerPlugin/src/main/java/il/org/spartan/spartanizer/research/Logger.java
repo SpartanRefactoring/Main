@@ -25,6 +25,7 @@ public final class Logger {
   private static Stack<AbstractTypeDeclaration> currentType = new Stack<>();
   private static final Collection<BiConsumer<ASTNode, String>> subscribers = an.empty.list();
 
+  /** Suppresses default constructor, ensuring non-instantiability */
   private Logger() {}
 
   /** subscribe to logNP. Every time an NP will hit, the subscriber will be
