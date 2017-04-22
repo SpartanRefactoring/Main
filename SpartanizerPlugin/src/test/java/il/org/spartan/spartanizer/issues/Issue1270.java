@@ -25,6 +25,6 @@ public class Issue1270 extends TipperTest<SingleVariableDeclaration> {
 
   @Test public void b() {
     trimmingOf("public abstract List<ReguessableValue> reguesses(AssumptionViolatedException a);") //
-        .gives("public abstract List<ReguessableValue> reguesses(AssumptionViolatedException e);");
+        .gives("public abstract List<ReguessableValue> reguesses(AssumptionViolatedException x);");
   }
 }

@@ -166,6 +166,36 @@ public final class Namespace implements Environment {
         }
         return false;
       }
+      
+      @Override public boolean visit(final SwitchStatement b) {
+        Namespace n = Namespace.this;
+        for (final Statement s : statements(b)) {
+          if (iz.tryStatement(s)) {
+            spawnAndFill(n, az.tryStatement(s));
+            continue;
+          }
+          if (iz.forStatement(s)) {
+            spawnFor(n, az.forStatement(s)).fillScope(s);
+            continue;
+          }
+          if (iz.enhancedFor(s)) {
+            spawnEnhancedFor(n, az.enhancedFor(s)).fillScope(s);
+            continue;
+          }
+          if (iz.typeDeclaration(s)) {
+            final TypeDeclaration d = az.typeDeclaration(s);
+            n.spawn(definition.kind(d)).put(d).fillScope(s);
+          }
+          if (iz.variableDeclarationStatement(s)) {
+            final VariableDeclarationStatement vds = az.variableDeclarationStatement(s);
+            n = n.spawn(local);
+            for (final VariableDeclarationFragment ¢ : fragments(vds))
+              n.put(step.name(¢), type(vds));
+          }
+          n.fillScope(s);
+        }
+        return false;
+      }
 
       @Override public boolean visit(final CatchClause ¢) {
         return ¢ == root || spawn(catch¢).put(exception(¢)).fillScope(¢);

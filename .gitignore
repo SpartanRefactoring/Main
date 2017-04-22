@@ -1,3 +1,4 @@
+    spartanizer.xml
 # Weirdos // vim: +,/^\s*$/-1!sort -u
 ~$*
 __.*
@@ -148,3 +149,4 @@ il.org.spartan.spartanizer
 .Rhistory
 /logs
 /scrapbook.jpage
+/spartanizer.xml

@@ -31,6 +31,7 @@ import il.org.spartan.spartanizer.ast.safety.iz.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
@@ -119,12 +120,9 @@ public interface wizard {
   List<Integer> loopTypes = as.list(WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT);
 
   static Expression addParenthesisIfNeeded(final Expression x) {
-    final AST a = x.getAST();
     if (!isParethesisNeeded(x))
       return x;
-    final ParenthesizedExpression $ = a.newParenthesizedExpression();
-    $.setExpression(copy.of(x));
-    return $;
+    return make.parethesized(x);
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
@@ -495,5 +493,9 @@ public interface wizard {
   static boolean valid(final ASTNode ¢) {
     final CompilationUnit $ = az.compilationUnit(¢.getRoot());
     return $ == null || $.getProblems().length == 0;
+  }
+
+  public static boolean parenthesisRequiredIn(final Expression in, final ASTNode out) {
+    return precedence.greater(out, in) || precedence.equal(out, in) && !op.nonAssociative(out);
   }
 }
