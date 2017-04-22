@@ -22,7 +22,7 @@ public class SuperConstructorTest extends JavadocerTest {
   }
 
   @Test public void c() {
-    assert is("public class Foo{@Override public Foo() {super();}}");
+    assert is("public class Foo{public Foo(int a) {super(a);}}");
   }
 
   @Test public void d() {
