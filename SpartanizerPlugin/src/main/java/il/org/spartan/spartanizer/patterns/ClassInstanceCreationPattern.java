@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** {@link ClassInstanceCreation} pattern.
  * @author Ori Roth
  * @since 2017-04-20 */
-public abstract class ClassInstanceCreationPattern extends AbstractPattern<ClassInstanceCreation> {
+public abstract class ClassInstanceCreationPattern extends NodePattern<ClassInstanceCreation> {
   private static final long serialVersionUID = 0x319433183A0507AEL;
   @Property protected Expression expression;
   @Property protected List<Expression> arguments;

@@ -16,7 +16,7 @@ import nano.ly.*;
  * {@code for (..) { does(something); break; } return XX; }
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
-public final class WhileFiniteReturnToBreak extends AbstractPattern<WhileStatement>//
+public final class WhileFiniteReturnToBreak extends NodePattern<WhileStatement>//
     implements TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -0x70481BF1FE1E5DFBL;
 

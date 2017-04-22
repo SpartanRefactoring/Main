@@ -16,9 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * of ReplaceCurrentNodeExclude
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
-public final class ParameterAnonymize extends ReplaceCurrentNodeExclude<SingleVariableDeclaration>
-    //
-    implements TipperCategory.Annonimization {
+public final class ParameterAnonymize extends ParameterPattern implements TipperCategory.Annonimization {
   private static final long serialVersionUID = 0x238DC1F9DD6723DAL;
   static final boolean BY_ANNOTATION = false;
 

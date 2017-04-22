@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
-public abstract class FragmentPattern extends AbstractPattern<VariableDeclarationFragment> {
+public abstract class FragmentPattern extends NodePattern<VariableDeclarationFragment> {
   private static final long serialVersionUID = -0x5D2F121B3027EFA6L;
   protected Expression initializer;
   protected SimpleName name;
