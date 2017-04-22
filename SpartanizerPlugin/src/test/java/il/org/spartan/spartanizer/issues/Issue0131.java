@@ -91,7 +91,7 @@ public final class Issue0131 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void booleanaFalseForIntb4bcdbIfb5e9ReturnfElseReturngh15ReturnfReturnf() {
     trimminKof("boolean a = false; for (int b = 4; b < c.d(); ++b) { if (b == 5) { e += 9; return f; } else return g; h += 15; return f; } return f;") //
-        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedUnusedRemove2(), VariableDeclarationFragment.class) //
         .gives("for(int b=4;b<c.d();++b){if(b==5){e+=9;return f;}else return g;h+=15;return f;}return f;") //
         .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int b=4;b<c.d();++b){if(b==5){e+=9;break;}else return g;h+=15;return f;}return f;") //

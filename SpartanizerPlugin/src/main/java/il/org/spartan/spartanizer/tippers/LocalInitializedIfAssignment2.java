@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalVariableInitializedIfAssignment extends $FragmentAndStatement//
+public final class LocalInitializedIfAssignment2 extends $FragmentAndStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0xA6354D94D79638FL;
 
