@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yossi Gil
  * @since 2017-04-22 */
 public abstract class ReturnValuePattern extends AbstractPattern<ReturnStatement> {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
   protected Expression value;
   protected MethodDeclaration methodDeclaration;
 
