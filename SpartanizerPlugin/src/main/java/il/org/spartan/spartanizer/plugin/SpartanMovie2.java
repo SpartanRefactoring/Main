@@ -33,7 +33,7 @@ public class SpartanMovie2 extends AbstractHandler {
         protected IStatus run(IProgressMonitor monitor) {
           try {
             monitor.beginTask("Preparing", 5000);
-            for(int i=0;i<5;i++) {
+            for(int i=0;i<50;i++) {
               Thread.sleep(100);
               monitor.worked(100);
             }
