@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.utils.Proposition.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -10,26 +11,41 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** Use {@link #examples()} for documentation
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-02 */
-public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<ParenthesizedExpression>//
+public class ParenthesizedRemoveExtraParenthesis extends AbstractPattern<ParenthesizedExpression>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x3B30C2A8E5E15900L;
+  private Expression inner;
 
-  @Override public Tip tip(final ParenthesizedExpression x) {
-    return new Tip(description(x), getClass(), x) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(x, copy.of(expression(x)), g);
-      }
-    };
+  public ParenthesizedRemoveExtraParenthesis() {
+    notNil("Extract inner", () -> inner = current.getExpression());
+    andAlso(OR(//
+        that("Around literal", () -> iz.literal(inner)), //
+        that("Around simple name", () -> iz.simpleName(inner)), //
+        that("Double parenthesis", () -> iz.parenthesizedExpression(parent)), //
+        that("Method argument", () -> iz.methodInvocation(parent) && arguments(az.methodInvocation(parent)).contains(current)), //
+        that("Method receiver", () -> iz.methodInvocation(parent) && expression(az.methodInvocation(parent)) == current), //
+        that("Field access", () -> iz.fieldAccess(parent) && expression(az.fieldAccess(parent)) == current), //
+        that("Double parenthesis", () -> iz.parenthesizedExpression(parent)), F));
   }
 
-  @Override public String description(final ParenthesizedExpression ¢) {
-    return "Remove redundant parenthesis " + Trivia.gist(¢);
+  @Override protected ASTNode highlight() {
+    return null;
+  }
+
+  @Override public ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+    r.replace(current, copy.of(inner), g);
+    return r;
+  }
+
+  @Override public String description() {
+    return "Remove redundant parenthesis around " + Trivia.gist(inner);
   }
 
   @Override public Examples examples() {
@@ -40,28 +56,7 @@ public class ParenthesizedRemoveExtraParenthesis extends CarefulTipper<Parenthes
         .to("x.f();"). //
         convert("f((x));") //
         .to("f(x);") //
-    // TODO Marco: does not pass
-    // converts("int i = (x).y;")
-    // .to("int i = x.y;")
-    ;
-  }
-
-  @Override protected boolean prerequisite(final ParenthesizedExpression ¢) {
-    return doubleParenthesis(¢)//
-        || fluental(¢);
-  }
-
-  private static boolean doubleParenthesis(final ParenthesizedExpression ¢) {
-    return iz.parenthesizedExpression(parent(¢))//
-        || iz.methodInvocation(parent(¢))//
-            && arguments(az.methodInvocation(parent(¢))).contains(¢);
-  }
-
-  private static boolean fluental(final ParenthesizedExpression ¢) {
-    return iz.methodInvocation(parent(¢))//
-        && expression(az.methodInvocation(parent(¢))) == ¢//
-        && (iz.methodInvocation(expression(¢))//
-            || iz.name(expression(¢))//
-            || iz.literal(expression(¢)));
+        .convert("int i = (x).y;")//
+        .to("int i = x.y;");
   }
 }
