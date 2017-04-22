@@ -72,8 +72,8 @@ public class SpartanMovie extends AbstractHandler {
           sleep(SLEEP_END);
           pm.done();
        });
-    } catch (InvocationTargetException | InterruptedException x) {
-      x.printStackTrace();
+    } catch (InvocationTargetException | InterruptedException ¢) {
+      ¢.printStackTrace();
     }
     sleep(1);
     return null;
