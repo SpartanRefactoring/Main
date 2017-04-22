@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit test for {@link LocalInitializedStatementTerminatingScope2}
+/** Unit test for {@link LocalInitializedStatementTerminatingScope}
  * Remark: those are tests for issue #54 from bitbucket.
  * @author Ori Roth
  * @since 2016 */

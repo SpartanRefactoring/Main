@@ -20,38 +20,29 @@ public final class LocalInitializedUnusedRemove extends LocalInitialized impleme
   private static final long serialVersionUID = -0xBDF3E9975A1F125L;
 
   public LocalInitializedUnusedRemove() {
-    andAlso("Local is unused", //
-        () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
-    andAlso("Local does not use variables defined in previous fragments", //
-        () -> youngerSiblings()//
-            .stream()//
-            .map(λ -> λ.getName()) //
-            .allMatch(λ -> collect.usesOf(λ).in(initializer).isEmpty())//
-    );
+    andAlso("Local is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
   }
 
   @Override public String description() {
     return "Remove unused local " + name;
   }
 
-  /** [[SuppressWarningsSpartan]] */
   @Override public Examples examples() {
     return //
-    convert("" //
+    convert("\f" //
         + "int print() {\n" //
         + "  int number = 1;\n" //
         + "  System.out.println(\"number\");\n" //
         + "}")
-            .to("" //
+            .to("\f" //
                 + "int print() {\n" //
                 + "  System.out.println(\"number\");\n" //
                 + "}") //
-            .ignores("" //
+            .ignores("\f" //
                 + "int print() {\n" //
                 + "  int number = 1;\n" //
                 + "  System.out.println(number);\n" //
                 + "}") //
-            .ignores("int a = 0, b = 0, c = a++ + b; f(a,b); g(a,b);") //
     ;
   }
 

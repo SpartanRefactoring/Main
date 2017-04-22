@@ -245,19 +245,19 @@ public interface Configurations {
           new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
           new LocalUnintializedAssignmentToIt(), //
           new LocalInitializedReturnExpression(), //
-          new LocalIntializedUpdateAssignment2(), //
-          new LocalInitializedIfAssignment2(), //
+          new LocalInitializedUpdateAssignment(), //
+          new LocalInitializedIfAssignment(), //
           new LocalInitializedUpdateAssignment(), //
           new LocalInitializedStatementReturnVariable(), //
           new LocalInitializedStatementReturnAssignment(), //
           new LocalInitializedReturn(), //
-          new LocalInitializedStatementTerminatingScope2(), //
+          new LocalInitializedStatementTerminatingScope(), //
           new LocalInitializedAssignment(), //
-          new LocalUninitializedDead2(), //
-          new LocalInitializedInlineIntoNext2(), //
+          new LocalUninitializedDead(), //
+          new LocalInitializedInlineIntoNext(), //
           new LocalInitializedStatementWhile(), //
           new LocalInitializedStatementToForInitializers(), //
-          new LocalInitializedUnusedRemove2(), //
+          new LocalInitializedUnusedRemove(), //
           new LocalIncrementDecrementInline(), //
           new LocalInitializedNewAddAll(), //
           new LocalInitializedArithmeticsInline(), //
