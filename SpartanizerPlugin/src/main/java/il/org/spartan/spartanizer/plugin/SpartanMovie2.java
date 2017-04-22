@@ -36,6 +36,11 @@ public class SpartanMovie2 extends AbstractHandler {
           } catch (InterruptedException e) {
           }
           MessageDialog.openInformation(null, "Hello", "World");
+          Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+              MessageDialog.openInformation(null, "Hello", "World");
+            }
+          });
           return Status.OK_STATUS;
         }
       };
