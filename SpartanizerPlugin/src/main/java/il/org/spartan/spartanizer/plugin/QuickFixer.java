@@ -26,7 +26,7 @@ import nano.ly.*;
 @SuppressWarnings("unused")
 public final class QuickFixer implements IMarkerResolutionGenerator {
   private final IMarkerResolution[] solutions = new IMarkerResolution[] { //
-      quickFix("Apply", λ -> NewGUIApplicator.plain().restrictTo(Tipper.materialize(λ)).selection(Selection.Util.by(λ)).go()), //
+      quickFix("Apply Ctrl+5", λ -> NewGUIApplicator.plain().restrictTo(Tipper.materialize(λ)).selection(Selection.Util.by(λ)).go()), //
       // applyPreview, //
       // laconizeFile, //
       quickFix("Spartanize function", λ -> applicator(λ).selection(Selection.Util.expand(λ, MethodDeclaration.class)).go()), //
