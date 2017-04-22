@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.meta.*;
 @SuppressWarnings("static-method")
 public class Issue1001 {
   @Test public void basic() {
-    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
+    bloatingOf(Aux.instance()).givesWithBinding("" //
         + "void f1() {\n" //
         + "  int a;\n" //
         + "  a = 0;\n" //
@@ -22,7 +22,7 @@ public class Issue1001 {
   }
 
   @Test public void inclusion() {
-    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
+    bloatingOf(Aux.instance()).givesWithBinding("" //
         + "void f2() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -33,7 +33,7 @@ public class Issue1001 {
   }
 
   @Test public void inclusion2() {
-    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
+    bloatingOf(Aux.instance()).givesWithBinding("" //
         + "void f22() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -44,7 +44,7 @@ public class Issue1001 {
   }
 
   @Test public void inclusion3() {
-    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
+    bloatingOf(Aux.instance()).givesWithBinding("" //
         + "void f3() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -55,11 +55,11 @@ public class Issue1001 {
   }
 
   @Test public void nonMatchingPrimitives() {
-    bloatingOf(Issue1001Aux.instance()).staysWithBinding();
+    bloatingOf(Aux.instance()).staysWithBinding();
   }
 
   @Test public void operators() {
-    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
+    bloatingOf(Aux.instance()).givesWithBinding("" //
         + "void f4() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -70,7 +70,7 @@ public class Issue1001 {
   }
 
   @Test public void operators2() {
-    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
+    bloatingOf(Aux.instance()).givesWithBinding("" //
         + "void f44() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -82,9 +82,9 @@ public class Issue1001 {
 
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings({ "unused", "TooBroadScope" })
-  public static class Issue1001Aux extends MetaFixture {
-    public static Issue1001Aux instance() {
-      return new Issue1001Aux();
+  public static class Aux extends MetaFixture {
+    public static Aux instance() {
+      return new Aux();
     }
 
     void f1() { /**/ }
