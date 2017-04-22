@@ -39,7 +39,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     return this;
   }
 
-  protected final <T> AbstractPattern<N> andAlso(final String description, final Supplier<T> t) {
+  public final <T> AbstractPattern<N> andAlso(final String description, final Supplier<T> t) {
     return andAlso(description, () -> not.nil(t.get()));
   }
 

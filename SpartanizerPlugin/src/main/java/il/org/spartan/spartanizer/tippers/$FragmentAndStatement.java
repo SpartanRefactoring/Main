@@ -81,7 +81,7 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
   }
 
   @Override public final Tip tip(final VariableDeclarationFragment f) {
-    return new Tip(description(), myClass(), f) {
+    return new Tip(description(f), myClass(), f) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         $FragmentAndStatement.this.go(r, f, extract.nextStatement(f.getParent()), g);
       }

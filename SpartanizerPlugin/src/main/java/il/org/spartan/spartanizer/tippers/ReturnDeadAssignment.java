@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.patterns;
+package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
@@ -13,13 +13,15 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-22 */
-public final class ReturnDeadAssignment extends ReturnValuePattern {
-  private static final long serialVersionUID = 2597846433179905741L;
+public final class ReturnDeadAssignment extends ReturnValuePattern implements TipperCategory.Deadcode {
+  private static final long serialVersionUID = 0x240D679126B42ECDL;
   private Assignment assignment;
   private SimpleName to;
   private Operator operator;
@@ -43,17 +45,16 @@ public final class ReturnDeadAssignment extends ReturnValuePattern {
   @Override public Examples examples() {
     return convert("int f() {int a = 2; return a = 3;}")//
         .to("int f() {int a = 2; return 3;}")//
-        .convert("int f() {int a = 2; return a += 3;}").to("int f() {int a = 2; return a + 3;}")//
+        .convert("int f() {int a = 2; return a += 3;}")//
+        .to("int f() {int a = 2; return a + 3;}")//
         .convert("int f(int a) { return a = 3;}")//
-        .to("int f(int a) {return a;}").convert("int f() {int a = 2; return a = 3;}")//
+        .to("int f(int a) {return 3;}")//
+        .convert("int f() {int a = 2; return a = 3;}")//
         .to("int f() {int a = 2; return 3;}");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
-    if (operator == ASSIGN)
-      r.replace(assignment, copy.of(from), g);
-    else
-      r.replace(assignment, subject.pair(to, from).to(op.assign2infix(operator)), g);
+    r.replace(assignment, operator == ASSIGN ? copy.of(from) : subject.pair(to, from).to(op.assign2infix(operator)), g);
     return r;
   }
 }
