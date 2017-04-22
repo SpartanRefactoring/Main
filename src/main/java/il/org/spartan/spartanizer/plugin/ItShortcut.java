@@ -20,7 +20,7 @@ import nano.ly.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-02-10 */
 @SuppressWarnings("boxing")
-public class CharacterShortcut extends AbstractHandler {
+public class ItShortcut extends AbstractHandler {
   private static final Function<Character, Character> key = λ -> (char) ((int) λ - (int) 'a' + 1);
   private static final Map<Character, Character> shortcutsMap = new HashMap<>();
   static {
@@ -28,10 +28,6 @@ public class CharacterShortcut extends AbstractHandler {
     shortcutsMap.put(key.apply('l'), 'λ');
   }
 
-  /* (non-Javadoc)
-   *
-   * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.
-   * ExecutionEvent) */
   @Override public Object execute(final ExecutionEvent e) {
     if (e == null)
       return null;
