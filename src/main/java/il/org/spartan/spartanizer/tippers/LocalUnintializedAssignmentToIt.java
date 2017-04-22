@@ -27,6 +27,7 @@ public final class LocalUnintializedAssignmentToIt extends $FragmentAndStatement
   @Override public Examples examples() {
     return convert("int a;a=3;").to("int a=3;");
   }
+
   @Override public String description() {
     return "Consolidate uninitialized declaration with subsequent initialization";
   }

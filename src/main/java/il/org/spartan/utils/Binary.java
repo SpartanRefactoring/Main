@@ -1,7 +1,7 @@
 package il.org.spartan.utils;
 
-/** Binary is very similar to the Void type, it has 2 possible values: Binary (true),
- * or null (false).
+/** Binary is very similar to the Void type, it has 2 possible values: Binary
+ * (true), or null (false).
  * @author Yossi Gil
  * @since 2017-04-21 */
 public class Binary {
@@ -31,6 +31,7 @@ public class Binary {
     return of(b1 != null || b2 != null);
   }
 
+  /** Suppresses default constructor, ensuring non-instantiability */
   private Binary() {/**/}
 
   @Override public boolean equals(final Object ¢) {
