@@ -1,22 +1,27 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
+import java.util.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Rename unused parameter to double underscore "__" VariableChangeName instead
- * of ReplaceCurrentNodeExclude
+ * of ReplaceCurrentNodeSpanning
  * @author Ori Roth <code><ori.rothh [at] gmail.com></code>
  * @since 2016-05-08 */
-public final class ParameterAnonymize extends ReplaceCurrentNodeExclude<SingleVariableDeclaration>
+public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleVariableDeclaration>
     //
     implements TipperCategory.Annonimization {
   private static final long serialVersionUID = 0x238DC1F9DD6723DAL;
@@ -36,6 +41,11 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeExclude<SingleVa
         return true;
     }
     return false;
+  }
+
+  @Override protected ASTNode[] span() {
+    List<SingleVariableDeclaration> ps = step.parameters(getMethod(current));
+    return new ASTNode[] {first(ps), last(ps)}; 
   }
 
   static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {

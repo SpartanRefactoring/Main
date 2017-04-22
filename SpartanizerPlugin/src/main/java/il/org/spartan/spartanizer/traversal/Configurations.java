@@ -43,8 +43,7 @@ public interface Configurations {
       .add(ReturnStatement.class, //
           new ReturnLastInMethod(), //
           new ReturnDeadAssignment(), //
-          new SequencerNotLastInBlock<>(),
-          null) //
+          new SequencerNotLastInBlock<>(), null) //
       .add(EnhancedForStatement.class, //
           new EnhancedForRedundantContinue(), //
           new EnhancedForEliminateConditionalContinue(), //
@@ -153,9 +152,10 @@ public interface Configurations {
           new MethodDeclarationRenameReturnToDollar(), //
           new BodyDeclarationModifiersSort<>(), //
           new MethodDeclarationRenameSingleParameterToCent(), //
-          new MethodDeclarationConstructorMoveToInitializers(), //
           new ConstructorRenameParameters(), //
-          new MethodDeclarationOverrideDegenerateRemove(),
+          new ConstructorEmptyRemove(), //
+          new MethodDeclarationConstructorMoveToInitializers(), //
+          new MethodDeclarationOverrideDegenerateRemove(), //
           null)
       .add(MethodInvocation.class, //
           new MethodInvocationEqualsWithLiteralString(), //
