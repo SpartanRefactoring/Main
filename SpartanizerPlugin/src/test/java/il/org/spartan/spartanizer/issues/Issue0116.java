@@ -2,15 +2,29 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-/** Unit tests for {@link NameYourClassHere}
+import il.org.spartan.spartanizer.testing.*;
+import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tipping.*;
+
+/** Unit tests for {@link InfixConcatenationEmptyStringLeft}
  * @author Niv Shalmon
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
-public final class Issue0116 {
+public final class Issue0116 extends TipperTest<InfixExpression>{
+  
+  @Override public Tipper<InfixExpression> tipper() {
+    return new InfixConcatenationEmptyStringLeft();
+  }
+  
+  @Override public Class<InfixExpression> tipsOn() {
+    return InfixExpression.class;
+  }
+  
   @Test public void issue116_01() {
     trimminKof("\"\" + x")//
         .gives("x + \"\"")//
@@ -50,5 +64,9 @@ public final class Issue0116 {
         .gives("return \"Use \" + (x == null ? \"\" : x +\"\" + \".\")+\"isEmpty()\";")
         .gives("return \"Use \" + (x == null ? \"\" : x + \".\")+\"isEmpty()\";")//
         .stays();
+  }
+  
+  @Test public void issue1245() {
+    trimmingOf("\"\"+\"abc\"").stays();
   }
 }
