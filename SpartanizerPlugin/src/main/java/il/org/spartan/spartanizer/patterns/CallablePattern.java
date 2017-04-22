@@ -11,7 +11,7 @@ import java.util.*;
 /** Either constructor or {@link MethodDeclaration}
  * @author Yossi Gil
  * @since 2017-04-22 */
-public abstract class CallablePattern extends AbstractPattern<MethodDeclaration> {
+public abstract class CallablePattern extends NodePattern<MethodDeclaration> {
   private static final long serialVersionUID = 1L;
   protected List<SingleVariableDeclaration> parameters;
   protected SimpleName name;

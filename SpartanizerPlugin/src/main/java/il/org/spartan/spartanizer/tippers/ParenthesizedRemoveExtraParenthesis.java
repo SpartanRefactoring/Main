@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
 /** Use {@link #examples()} for documentation
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-02 */
-public class ParenthesizedRemoveExtraParenthesis extends AbstractPattern<ParenthesizedExpression>//
+public class ParenthesizedRemoveExtraParenthesis extends NodePattern<ParenthesizedExpression>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x3B30C2A8E5E15900L;
   private Expression inner;

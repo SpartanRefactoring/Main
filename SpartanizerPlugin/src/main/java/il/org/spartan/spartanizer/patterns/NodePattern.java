@@ -20,13 +20,13 @@ import nano.ly.*;
  * Containing fluent API for constructing a logic tree of prerequisites.
  * @author Yossi Gil
  * @since 2017-03-25 */
-public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N> {
+public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 1;
   private Proposition prerequisite;
   @Property protected Statement nextStatement;
   @Property protected ASTNode parent;
 
-  public AbstractPattern() {
+  public NodePattern() {
     this.prerequisite = Proposition.that("Extract parent and next statement", () -> {
       parent = current.getParent();
       nextStatement = extract.nextStatement(current);
@@ -34,20 +34,20 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     });
   }
 
-  protected final AbstractPattern<N> andAlso(final Proposition ¢) {
+  protected final NodePattern<N> andAlso(final Proposition ¢) {
     this.prerequisite = prerequisite.and(¢);
     return this;
   }
 
-  public final <T> AbstractPattern<N> notNil(final String description, final Supplier<T> t) {
+  public final <T> NodePattern<N> notNil(final String description, final Supplier<T> t) {
     return andAlso(description, () -> not.nil(t.get()));
   }
 
-  public final AbstractPattern<N> andAlso(final String description, final BooleanSupplier s) {
+  public final NodePattern<N> andAlso(final String description, final BooleanSupplier s) {
     return andAlso(prerequisite.and(Proposition.that(description, s)));
   }
 
-  protected final AbstractPattern<N> butNot(final Proposition ¢) {
+  protected final NodePattern<N> butNot(final Proposition ¢) {
     this.prerequisite = prerequisite.and(not(¢));
     return this;
   }
@@ -68,7 +68,7 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     return current;
   }
 
-  protected final AbstractPattern<N> orElse(final Proposition ¢) {
+  protected final NodePattern<N> orElse(final Proposition ¢) {
     this.prerequisite = prerequisite.or(¢);
     return this;
   }
@@ -95,16 +95,16 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
     assert n == current();
     return (highlight() != null ? new Tip(description(), myClass(), highlight()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        AbstractPattern.this.go(r, g);
+        NodePattern.this.go(r, g);
       }
     } : new Tip(description(), myClass(), containingCompilationUnit(), start()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        AbstractPattern.this.go(r, g);
+        NodePattern.this.go(r, g);
       }
     }).spanning(span());
   }
 
-  protected AbstractPattern<N> property(String fieldName, Runnable r) {
+  protected NodePattern<N> property(String fieldName, Runnable r) {
     return andAlso("Extract " + fieldName, ()->yes.forgetting(()->r.run()));
   }
 }

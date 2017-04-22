@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.java.*;
 /** A nonempty method declaration
  * @author Raviv Rachmiel <tt>raviv.rachmiel@gmail.com</tt>
  * @since 2017-03-30 */
-public abstract class NonEmptyMethodDeclaration extends AbstractPattern<MethodDeclaration> {
+public abstract class NonEmptyMethodDeclaration extends NodePattern<MethodDeclaration> {
   private static final long serialVersionUID = 0x480901F48385E850L;
   protected Javadoc jdoc;
   protected SimpleName name;
