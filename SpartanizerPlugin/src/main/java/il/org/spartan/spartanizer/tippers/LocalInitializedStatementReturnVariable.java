@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * } https://docs.oracle.com/javase/tutorial/java/nutsandbolts/op1.html
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalVariableIntializedStatementReturnVariable extends $FragmentAndStatement//
+public final class LocalInitializedStatementReturnVariable extends $FragmentAndStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -0x65EBE495955DBE47L;
 

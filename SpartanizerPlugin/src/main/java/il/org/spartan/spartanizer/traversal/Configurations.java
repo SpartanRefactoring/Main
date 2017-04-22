@@ -246,19 +246,19 @@ public interface Configurations {
           new LocalUnintializedAssignmentToIt(), //
           new LocalInitializedReturnExpression(), //
           new LocalVariableIntializedUpdateAssignment(), //
-          new LocalVariableIntializedIfAssignment(), //
+          new LocalVariableInitializedIfAssignment(), //
           new LocalInitializedUpdateAssignment(), //
-          new LocalVariableIntializedStatementReturnVariable(), //
-          new LocalVariableIntializedStatementReturnAssignment(), //
-          new LocalVariableIntializedReturn(), //
+          new LocalInitializedStatementReturnVariable(), //
+          new LocalInitializedStatementReturnAssignment(), //
+          new LocalIntializedReturn(), //
           new LocalVariableInitializedStatementTerminatingScope(), //
-          new LocalVariableIntializedAssignment(), //
+          new LocalVariableInitializedAssignment(), //
           new LocalVariableUninitializedDead(), //
-          new LocalVariableIntializedInlineIntoNext(), //
-          new LocalVariableIntializedStatementWhile(), //
-          new LocalVariableIntializedStatementToForInitializers(), //
+          new LocalVariableInitializedInlineIntoNext(), //
+          new LocalInitializedStatementWhile(), //
+          new LocalInitializedStatementToForInitializers(), //
           new LocalVariableInitializedUnusedRemove(), //
-          new LocalInitializedIncrementDecrementInline(), //
+          new LocalIncrementDecrementInline(), //
           new LocalInitializedNewAddAll(), //
           new LocalInitializedArithmeticsInline(), //
           null) //
