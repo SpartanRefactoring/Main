@@ -64,7 +64,7 @@ public class SpartanMovie extends AbstractHandler {
                                // difference
                                // actually it removes the markers after the traversal
                                // and avoid the infinite loop (it descreases markers.length at
-                               // each round
+                               // each round -- mo
               refresh(page);
               sleep(SLEEP_BETWEEN);
             }
