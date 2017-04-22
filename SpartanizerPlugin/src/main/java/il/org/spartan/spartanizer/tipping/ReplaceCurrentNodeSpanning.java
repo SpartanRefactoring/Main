@@ -10,8 +10,8 @@ import il.org.spartan.utils.*;
 /** Similar to {@link ReplaceCurrentNode}, but with an {@link ExclusionManager}
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends ReplaceCurrentNode<N> {
-  private static final long serialVersionUID = 0x71A27A5DF828CE68L;
+public abstract class ReplaceCurrentNodeSpanning<N extends ASTNode> extends ReplaceCurrentNode<N> {
+  private static final long serialVersionUID = 1;
 
   @Override public final Tip tip(final N n) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + "\n" + fault.done();
@@ -20,7 +20,11 @@ public abstract class ReplaceCurrentNodeExclude<N extends ASTNode> extends Repla
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(n, $, g);
       }
-    };
+    }.spanning(span());
+  }
+
+  protected ASTNode[] span() {
+    return new ASTNode[] { current };
   }
 
   @Override protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
