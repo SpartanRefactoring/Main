@@ -23,7 +23,7 @@ import nano.ly.*;
  * @since 2016 */
 public class SpartanMovie extends AbstractHandler {
   private static final String NAME = "Spartan movie";
-  private static final double SLEEP_BETWEEN = 5;
+  private static final double SLEEP_BETWEEN = 0.5;
   private static final double SLEEP_END = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
@@ -38,7 +38,7 @@ public class SpartanMovie extends AbstractHandler {
     try {
       progressService.run(false, true, pm -> {
         moveProgressDialog();
-//        pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
+        pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
         int changes = 0, filesModified = 0;
         // TODO Ori Roth: this function is much much too large. Try to break it
         // --yg
@@ -52,8 +52,8 @@ public class SpartanMovie extends AbstractHandler {
               ++filesModified;
             for (; markers.length > 0; markers = getMarkers(file)) {
               final IMarker marker = getFirstMarker(markers);
-//                pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
-//                    + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+                pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
+                    + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
               IDE.openEditor(page, marker, true);
               refresh(page);
               sleep(SLEEP_BETWEEN);
@@ -68,9 +68,9 @@ public class SpartanMovie extends AbstractHandler {
             note.bug(¢);
           }
         }
-//          pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
-//          sleep(SLEEP_END);
-//          pm.done();
+          pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
+          sleep(SLEEP_END);
+          pm.done();
        });
     } catch (InvocationTargetException | InterruptedException x) {
       x.printStackTrace();
