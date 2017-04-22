@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import nano.ly.*;
@@ -40,8 +41,11 @@ public interface Configurations {
           null) //
       .add(SuperConstructorInvocation.class, new SuperConstructorInvocationRemover()) //
       .add(ExpressionStatement.class, new ExpressionStatementAssertTrueFalse(), new ExpressionStatementThatIsBooleanLiteral(), null) //
-      .add(ReturnStatement.class, new ReturnLastInMethod(), //
-          new SequencerNotLastInBlock<>()) //
+      .add(ReturnStatement.class, //
+          new ReturnLastInMethod(), //
+          new ReturnDeadAssignment(), //
+          new SequencerNotLastInBlock<>(),
+          null) //
       .add(EnhancedForStatement.class, //
           new EnhancedForRedundantContinue(), //
           new EnhancedForEliminateConditionalContinue(), //
