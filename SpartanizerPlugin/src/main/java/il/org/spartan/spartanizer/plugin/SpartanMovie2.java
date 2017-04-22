@@ -35,7 +35,7 @@ public class SpartanMovie2 extends AbstractHandler {
             Thread.sleep(5000);
           } catch (InterruptedException e) {
           }
-          MessageDialog.openInformation(null, "Hello", "World");
+          //MessageDialog.openInformation(null, "Hello", "World");
           Display.getDefault().asyncExec(new Runnable() {
             public void run() {
               MessageDialog.openInformation(null, "Hello", "World");
