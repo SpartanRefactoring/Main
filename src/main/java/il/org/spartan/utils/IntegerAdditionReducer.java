@@ -8,7 +8,7 @@ public class IntegerAdditionReducer extends Reduce<Integer> {
     return i1 + i2;
   }
 
-  @SuppressWarnings("boxing") @Override public Integer reduce() {
+  @Override @SuppressWarnings("boxing") public Integer reduce() {
     return 0;
   }
 }

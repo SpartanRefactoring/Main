@@ -38,7 +38,7 @@ public final class CachingPattern extends NanoPatternTipper<IfStatement> {
   }
 
   @Override public String technicalName() {
-    return "IfX₁IsNullIntializeWithX₂ReturnX₁";
+    return "IfX₁IsNullInitializeWithX₂ReturnX₁";
   }
 
   @Override public String example() {

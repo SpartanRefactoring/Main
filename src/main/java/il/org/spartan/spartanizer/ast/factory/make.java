@@ -197,8 +197,8 @@ public enum make {
   public static ForStatement forStatement(final VariableDeclarationFragment f, final WhileStatement ¢) {
     final ForStatement $ = ¢.getAST().newForStatement();
     $.setBody(copy.of(body(¢)));
-    $.setExpression(misc.pullInitializersFromExpression(copy.ofWhileExpression(¢), LocalVariableIntializedStatementWhile.parent(f)));
-    initializers($).add(LocalVariableIntializedStatementWhile.Initializers(f));
+    $.setExpression(misc.pullInitializersFromExpression(copy.ofWhileExpression(¢), LocalInitializedStatementWhile.parent(f)));
+    initializers($).add(LocalInitializedStatementWhile.Initializers(f));
     return $;
   }
 

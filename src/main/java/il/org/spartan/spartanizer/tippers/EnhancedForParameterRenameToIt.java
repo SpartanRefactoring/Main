@@ -27,7 +27,7 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
   private static final long serialVersionUID = -0x36C1EB27B944CF5DL;
 
   @Override public String description(final EnhancedForStatement ¢) {
-    return "Rename '" + ¢.getParameter().getName() + "' to ¢ in enhanced for loop";
+    return "Rename iterator '" + ¢.getParameter().getName() + "' to ¢ in " + Trivia.gist(¢);
   }
 
   @Override public Tip tip(final EnhancedForStatement s) {
