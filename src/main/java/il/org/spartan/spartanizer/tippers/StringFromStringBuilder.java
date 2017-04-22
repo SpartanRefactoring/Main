@@ -43,7 +43,11 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
           && (iz.stringLiteral(az.infixExpression($).getLeftOperand()) || iz.stringLiteral(az.infixExpression($).getRightOperand()));
     });
     andAlso("All invocations are append/toString",
-        () -> invocations.stream().filter(λ -> !iz.in(λ.getName().getIdentifier(), "append", "toString")).count() == 0);
+        () -> invocations.stream().allMatch(λ -> iz.in(λ.getName().getIdentifier(), "append", "toString")));
+    andAlso("All append invocation have one parameter",
+        () -> invocations.stream().filter(λ -> "append".equals(λ.getName().getIdentifier())).allMatch(λ -> λ.arguments().size() == 1));
+    andAlso("All to toString have zero parameters",
+        () -> invocations.stream().filter(λ -> "toString".equals(λ.getName().getIdentifier())).allMatch(λ -> λ.arguments().isEmpty()));
     andAlso("Can be simplified", () -> not.nil(simplification = simplification()));
   }
 
@@ -56,7 +60,9 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
         .to("x.print(\"Description:\\t\" + (x+1) + \"\\n\")") //
         .convert("x.print(new StringBuilder(1).append(x+1).append(\"\\n\").toString())") //
         .to("x.print(\"\" + 1 + (x+1) + \"\\n\")") //
-        .ignores("x.print(new StringBuilder(\"Description:\\t\").append(x+1).append(\"\\n\"))");
+        .ignores("x.print(new StringBuilder(\"Description:\\t\").append(x+1).append(\"\\n\"))") //
+        .ignores("new StringBuilder(\"Description:\\t\").append(x,y,z)") //
+        .ignores("new StringBuilder(\"Description:\\t\").toString(x)");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
