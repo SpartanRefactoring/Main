@@ -315,7 +315,7 @@ public final class Version230 {
 
   @Test public void canonicalFragementExample1() {
     trimminKof("int a;a=3;")//
-        .using(new LocalUnintializedAssignmentToIt(), VariableDeclarationFragment.class) //
+        .using(new LocalUninitializedAssignmentToIt(), VariableDeclarationFragment.class) //
         .gives("int a=3;");
   }
 
@@ -3538,9 +3538,9 @@ public final class Version230 {
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_intaba3b5Ifa4Ifb3b2Elsebab3ElseIfb3b2Elsebaab3() {
     trimminKof("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = 2; else { b = a; b = 3; } else if (b == 3) b = 2; else { b = a * a; b = 3; }") //
-        .using(new LocalUnintializedAssignmentToIt(), VariableDeclarationFragment.class) //
+        .using(new LocalUninitializedAssignmentToIt(), VariableDeclarationFragment.class) //
         .gives("int a=3,b;b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
-        .using(new LocalUnintializedAssignmentToIt(), VariableDeclarationFragment.class) //
+        .using(new LocalUninitializedAssignmentToIt(), VariableDeclarationFragment.class) //
         .gives("int a=3,b=5;if(a==4)if(b==3)b=2;else{b=a;b=3;}else if(b==3)b=2;else{b=a*a;b=3;}") //
         .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int b=5;if(3==4)if(b==3)b=2;else{b=3;b=3;}else if(b==3)b=2;else{b=3*3;b=3;}") //
