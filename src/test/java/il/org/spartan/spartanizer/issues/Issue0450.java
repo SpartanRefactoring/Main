@@ -26,13 +26,13 @@ public class Issue0450 {
 
   @Test public void test0a() {
     trimminKof(SEPARATOR_CASE)//
-        .using(new LocalInitializedStatementTerminatingScope2(), VariableDeclarationFragment.class)//
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class)//
         .stays();
   }
 
   @Test public void test0b() {
     trimminKof(SEPARATOR_CASE)//
-        .using(new LocalInitializedInlineIntoNext2(), VariableDeclarationFragment.class).stays();
+        .using(new LocalInitializedInlineIntoNext(), VariableDeclarationFragment.class).stays();
   }
 
   @Test public void test1() {

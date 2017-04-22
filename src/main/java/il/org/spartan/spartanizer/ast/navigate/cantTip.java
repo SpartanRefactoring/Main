@@ -17,12 +17,12 @@ public enum cantTip {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
   public static boolean declarationInitializerStatementTerminatingScope(final ForStatement ¢) {
     final VariableDeclarationFragment $ = hop.penultimateFragment(¢);
-    return $ == null || new LocalInitializedStatementTerminatingScope2().cantTip($);
+    return $ == null || new LocalInitializedStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
     final VariableDeclarationFragment $ = hop.penultimate(¢);
-    return $ == null || new LocalInitializedStatementTerminatingScope2().cantTip($);
+    return $ == null || new LocalInitializedStatementTerminatingScope().cantTip($);
   }
 
   public static boolean declarationRedundantInitializer(final ForStatement s) {
