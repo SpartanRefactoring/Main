@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** An abstract class that all the specific pattern classes inherits from.
  * Containing fluent API for constructing a logic tree of prerequisites.
@@ -36,6 +37,10 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
   protected final AbstractPattern<N> andAlso(final Proposition ¢) {
     this.prerequisite = prerequisite.and(¢);
     return this;
+  }
+
+  protected final <T> AbstractPattern<N> andAlso(final String description, final Supplier<T> t) {
+    return andAlso(description, () -> not.nil(t.get()));
   }
 
   protected final AbstractPattern<N> andAlso(final String description, final BooleanSupplier s) {
