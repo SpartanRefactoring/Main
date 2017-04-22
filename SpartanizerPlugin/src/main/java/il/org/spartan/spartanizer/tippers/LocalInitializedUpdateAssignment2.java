@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** convert {@code
  * int a;
@@ -24,35 +25,31 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalVariableIntializedUpdateAssignment extends $FragmentAndStatement//
-    implements TipperCategory.Unite {
+public final class LocalInitializedUpdateAssignment2 extends LocalInitializedStatement implements TipperCategory.Unite {
   private static final long serialVersionUID = -0x601DD969FC862E65L;
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
-  }
-
   @Override public String description() {
-    return "Consolidate declaration of variable with its subsequent initialization";
+    return "Consolidate declaration of " + name + " with its subsequent initialization";
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null)
-      return null;
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.eq(n, to(a)) || FragmentPattern.doesUseForbiddenSiblings(f, from(a)))
+    if (a == null || !wizard.eq(name, to(a)))
       return null;
     final Operator o = a.getOperator();
     if (o == ASSIGN)
       return null;
     final InfixExpression newInitializer = subject.pair(to(a), from(a)).to(op.assign2infix(o));
-    final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
+    final InlinerWithValue i = new Inliner(name, $, g).byValue(initializer);
     if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
       return null;
     $.replace(initializer, newInitializer, g);
     i.inlineInto(newInitializer);
     $.remove(nextStatement, g);
     return $;
+  }
+
+  @Override public Examples examples() {
+    return convert("int a;a=3;").to("int a=3;");
   }
 }

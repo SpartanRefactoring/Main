@@ -12,10 +12,10 @@ import il.org.spartan.utils.*;
 /** See {@link #examples()}
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalVariableUninitializedDead extends LocalVariableUninitialized implements TipperCategory.Deadcode {
+public final class LocalUninitializedDead2 extends LocalVariableUninitialized implements TipperCategory.Deadcode {
   private static final long serialVersionUID = 0x14812B0904DFB002L;
 
-  public LocalVariableUninitializedDead() {
+  public LocalUninitializedDead2() {
     andAlso("Local variable is not used anywhere", //
         () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
   }

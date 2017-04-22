@@ -30,7 +30,7 @@ public class issue0411 {
   EnhancedForStatement seriesA$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
   final BooleanLiteral seriesA$step3 = findFirst.instanceOf(BooleanLiteral.class).in(seriesA$step1);
   EnhancedForStatement seriesB$step2 = findFirst.instanceOf(EnhancedForStatement.class).in(seriesA$step1);
-  final LocalVariableInitializedStatementTerminatingScope tipper = new LocalVariableInitializedStatementTerminatingScope();
+  final LocalInitializedStatementTerminatingScope2 tipper = new LocalInitializedStatementTerminatingScope2();
   final VariableDeclarationFragment variableDeclarationFragment = findFirst.instanceOf(VariableDeclarationFragment.class).in(input1);
 
   @Test public void A$c() {

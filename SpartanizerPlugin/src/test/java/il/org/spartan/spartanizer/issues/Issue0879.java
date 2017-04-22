@@ -30,9 +30,9 @@ public class Issue0879 {
         .using(new InfixAdditionEvaluate(), InfixExpression.class) //
         .gives("void a(){int b=4;if(b>3)b+=7;else b+=60;return;}") //
         .gives("void a(){int b=4;b+=b>3?7:60;}") //
-        .using(new LocalVariableIntializedUpdateAssignment(), VariableDeclarationFragment.class) //
+        .using(new LocalIntializedUpdateAssignment2(), VariableDeclarationFragment.class) //
         .gives("void a(){int b=4+(4>3?7:60);}") //
-        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedUnusedRemove2(), VariableDeclarationFragment.class) //
         .gives("void a(){}") //
         .stays() //
     ;
@@ -46,11 +46,11 @@ public class Issue0879 {
         .gives("int a(){int b=9;int $=7;b+=4;$=b+b;return $;}") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a(){int b=9,$=7;b+=4;$=b+b;return $;}") //
-        .using(new LocalVariableIntializedUpdateAssignment(), VariableDeclarationFragment.class) //
+        .using(new LocalIntializedUpdateAssignment2(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=9+4,$=7;$=b+b;return $;}") //
         .using(new InfixAdditionEvaluate(), InfixExpression.class) //
         .gives("int a(){int b=13,$=7;$=b+b;return $;}") //
-        .using(new LocalVariableInitializedAssignment(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedAssignment(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=13,$=b+b;return $;}") //
         .using(new LocalInitializedStatementReturnVariable(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=13;return b+b;}") //

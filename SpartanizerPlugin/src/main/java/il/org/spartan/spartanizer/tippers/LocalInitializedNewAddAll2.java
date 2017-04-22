@@ -18,19 +18,30 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
- * a = 3;
- * whatever(a);
+ * T a = an.empty.list() / new HashSet();
+ * a.addAll(x)
  * } to {@code
- * whatever(3);
+ * T a = new ArrayList
  * }
- * @author Ori Marcovitch
- * @since 2016-11-27 */
-public final class LocalVariableInitializedInlineIntoNext extends GoToNextStatement<VariableDeclarationFragment>//
+ * @author Yossi Gil
+ * @author Yossi Gil
+ * @since 2017-03-02 */
+public final class LocalInitializedNewAddAll2 extends GoToNextStatement<VariableDeclarationFragment>//
     implements TipperCategory.Inlining {
+  @SuppressWarnings({ "unused", "FieldCanBeLocal" }) private Type type;
+
+  @Override public boolean prerequisite(final VariableDeclarationFragment f) {
+    final ClassInstanceCreation instanceCreation = az.classInstanceCreation(f.getInitializer());
+    if (instanceCreation == null)
+      return false;
+    type = instanceCreation.getType();
+    return true;
+  }
+
   private static final long serialVersionUID = -0x32A5C56237F0DE7L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Inline variable " + name(¢) + " into next statement";
+    return "Inline variable '" + name(¢) + "' into next statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
