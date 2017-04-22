@@ -8,7 +8,7 @@ public class FirstNotNullReducer<T> extends Reduce<T> {
     return null;
   }
 
-  @Override public T reduce(T r1, T r2) {
+  @Override public T reduce(final T r1, final T r2) {
     return r1 == null ? r2 : r1;
   }
 }

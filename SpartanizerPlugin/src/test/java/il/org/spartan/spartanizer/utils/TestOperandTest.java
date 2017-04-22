@@ -13,15 +13,13 @@ import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 
-/** Yossi Gil LocalVariableInitializedStatement description
- * @author Yossi Gil
- * @since Sep 25, 2016 */
+/** Tests of {@link TraversalMonitor}
+ * @author AnnaBel7
+ * @author michalcohen
+ * @since Nov 10, 2016 */
 @SuppressWarnings("static-method") //
 public class TestOperandTest {
-  /** Tests of {@link TraversalMonitor}
-   * @author AnnaBel7
-   * @author michalcohen
-   * @since Nov 10, 2016 */
+
   @Test public void test02() {
     final TestOperand o = trimminKof("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());

@@ -8,7 +8,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for
- * {@link LocalVariableInitializedStatementTerminatingScope}Inlining of
+ * {@link LocalInitializedStatementTerminatingScope}Inlining of
  * {@link ArrayInitializer}
  * @author Ori Roth
  * @since 2016 */

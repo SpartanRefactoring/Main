@@ -26,7 +26,7 @@ public class Version290 {
         .gives("int a=b(0),c=3;int d=c+2,e=d+c-19;b(e*2-d/e+a);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a=b(0),c=3,d=c+2,e=d+c-19;b(e*2-d/e+a);") //
-        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int c=3,d=c+2,e=d+c-19;b(e*2-d/e+b(0));") //
         .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("int c=3,d=c+2,e=c+d-19;b(e*2-d/e+b(0));") //
@@ -44,13 +44,13 @@ public class Version290 {
         .gives("int a=5,b=3,c=b+2;int d=c+b-19+a;e(c);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a=5,b=3,c=b+2,d=c+b-19+a;e(c);") //
-        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int a=5,b=3,c=b+2;e(c);") //
-        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int b=3,c=b+2;e(c);") //
-        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int b=3;e((b+2));") //
-        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("e((3+2));") //
         .using(new ParenthesizedRemoveExtraParenthesis(), ParenthesizedExpression.class) //
         .gives("e(3+2);") //
@@ -68,7 +68,7 @@ public class Version290 {
         .gives("int a=5,b=3;int c=b+2,d=c+b-19;e(d*2-c/d+a);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a=5,b=3,c=b+2,d=c+b-19;e(d*2-c/d+a);") //
-        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int b=3,c=b+2,d=c+b-19;e(d*2-c/d+5);") //
         .using(new InfixAdditionSort(), InfixExpression.class) //
         .gives("int b=3,c=b+2,d=b+c-19;e(d*2-c/d+5);") //
@@ -82,7 +82,7 @@ public class Version290 {
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta6FinalAbNewAaIntc2dccacca() {
     trimminKof("int a = 6; final A b = new A(a); int c = 2 + d; c(c + a); c(c * a);") //
-        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("int a=6;new A(a);int c=2+d;c(c+a);c(c*a);") //
         .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("int a=6;new A(a);int c=2+d;c(c+a);c(a*c);") //

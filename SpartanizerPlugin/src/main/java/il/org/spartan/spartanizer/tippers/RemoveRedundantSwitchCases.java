@@ -7,6 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -35,7 +36,7 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
     return $ != null && ($.isDefault() || n.isDefault());
   }
 
-  @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
-    return "remove redundant switch case";
+  @Override public String description(final SwitchCase n) {
+    return "Remove switch case " + Trivia.gist(n);
   }
 }

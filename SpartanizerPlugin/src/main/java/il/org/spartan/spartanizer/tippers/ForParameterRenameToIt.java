@@ -56,7 +56,7 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
     if (uses.isEmpty())
       return null;
     final SimpleName ¢ = Namer.newCent(d);
-    return isNameDefined($, ¢) ? null : new Tip("Rename '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
+    return isNameDefined($, ¢) ? null : new Tip("Rename iterator '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename(n, ¢, $, r, g);
       }

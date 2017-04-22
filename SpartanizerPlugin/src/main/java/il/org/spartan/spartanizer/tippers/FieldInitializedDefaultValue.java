@@ -30,7 +30,9 @@ public final class FieldInitializedDefaultValue extends FieldPattern implements 
   }
 
   @Override public Examples examples() {
-    return convert("public int i =0;").to("public int i;").ignores("public Integer i=0;");
+    return convert("public int i =0;")//
+        .to("public int i;")//
+        .ignores("public Integer i=0;");
   }
 
   @Override public ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {

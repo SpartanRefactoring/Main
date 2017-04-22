@@ -7,7 +7,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Test class for issue #1057, see
- * {@link LocalVariableIntializedStatementToForInitializers}.
+ * {@link LocalInitializedStatementToForInitializers}.
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-01-16 */
 @SuppressWarnings("static-method")

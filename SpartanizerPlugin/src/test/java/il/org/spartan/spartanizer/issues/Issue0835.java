@@ -15,12 +15,12 @@ import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Various tests upgraded from an old class replaced by
- * {@link LocalVariableUninitializedDead}
+ * {@link LocalUninitializedDead}
  * @author Yossi Gil
  * @since 2017-03-26 */
 @SuppressWarnings("static-method")
 public class Issue0835 {
-  final Tipper<VariableDeclarationFragment> tipper = new LocalVariableUninitializedDead();
+  final Tipper<VariableDeclarationFragment> tipper = new LocalUninitializedDead();
 
   @Test public void descriptionNotNull() {
     assert tipper.description() != null;

@@ -35,7 +35,7 @@ public final class IfThenIfThenNoElseNoElse extends EagerTipper<IfStatement>//
   }
 
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
-    return "Merge conditionals of nested if staement";
+    return "Merge nested if staements, &&ing their conditions";
   }
 
   @Override public Tip tip(final IfStatement $) {

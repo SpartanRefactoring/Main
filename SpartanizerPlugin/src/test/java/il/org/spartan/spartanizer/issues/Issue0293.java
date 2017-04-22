@@ -23,11 +23,11 @@ public class Issue0293 {
         .gives("int a=6,b=2;int c=a+2;A.e(a-b+c);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a=6,b=2,c=a+2;A.e(a-b+c);") //
-        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int a=6,c=a+2;A.e(a-2+c);") //
-        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("int a=6;A.e(a-2+(a+2));") //
-        .using(new LocalVariableInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class) //
         .gives("A.e(6-2+(6+2));") //
         .using(new InfixAdditionSubtractionExpand(), InfixExpression.class) //
         .gives("A.e(6-2+6+2);") //
