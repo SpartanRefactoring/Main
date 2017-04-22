@@ -34,8 +34,8 @@ public class SpartanMovie2 extends AbstractHandler {
           try {
             monitor.beginTask("Preparing", 5000);
             for(int i=0;i<5;i++) {
-              Thread.sleep(1000);
-              monitor.worked(1000);
+              Thread.sleep(100);
+              monitor.worked(100);
             }
           } catch (InterruptedException e) {
             note.bug(e);
