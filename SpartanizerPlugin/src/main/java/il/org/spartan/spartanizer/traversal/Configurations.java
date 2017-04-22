@@ -243,7 +243,7 @@ public interface Configurations {
       .add(VariableDeclarationFragment.class, //
           new FieldInitializedDefaultValue(), //
           new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
-          new LocalUnintializedAssignmentToIt(), //
+          new LocalUninitializedAssignmentToIt(), //
           new LocalInitializedReturnExpression(), //
           new LocalInitializedUpdateAssignment(), //
           new LocalInitializedIfAssignment(), //
