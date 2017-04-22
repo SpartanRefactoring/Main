@@ -13,9 +13,9 @@ public abstract class ReturnValuePattern extends AbstractPattern<ReturnStatement
   protected MethodDeclaration methodDeclaration;
 
   public ReturnValuePattern() {
-    super.andAlso("Extract returned value", //
+    super.notNil("Extract returned value", //
         () -> value = current.getExpression() //
-    ).andAlso("Return is from a method", //
+    ).notNil("Return is from a method", //
         () -> methodDeclaration = containing.methodDeclaration(current));
   }
 }
