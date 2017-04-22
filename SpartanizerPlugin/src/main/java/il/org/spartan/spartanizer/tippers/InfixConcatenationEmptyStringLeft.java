@@ -9,10 +9,12 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** Convert {@code ""+x} to {@code x+""}
+ * tests in {@link Issue0116}
  * @author Dan Greenstein
  * @author Niv Shalmon
  * @since 2016 */
@@ -31,6 +33,6 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
   }
 
   @Override public ASTNode replacement(final InfixExpression ¢) {
-    return !iz.emptyStringLiteral(left(¢)) || !iz.infixPlus(¢) ? null : replace(¢);
+    return !iz.emptyStringLiteral(left(¢)) || !iz.infixPlus(¢) || iz.stringLiteral(right(¢)) ? null : replace(¢);
   }
 }
