@@ -35,45 +35,42 @@ public class SpartanMovie extends AbstractHandler {
     final GUITraversal traversal = new GUITraversal();
     if (compilationUnits == null || page == null || progressService == null)
       return null;
-    try {
-      progressService.run(false, true, pm -> {
-        moveProgressDialog();
-        pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
-        int changes = 0, filesModified = 0;
-        // TODO Ori Roth: this function is much much too large. Try to break it
-        // --yg
-        for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-          mightNotBeSlick(page);
-          final IResource file = currentCompilationUnit.getResource();
-          try {
-            IMarker[] markers = getMarkers(file);
-            if (markers.length > 0)
-              ++filesModified;
-            for (; markers.length > 0; markers = getMarkers(file)) {
-              final IMarker marker = getFirstMarker(markers);
-              pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
-                  + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
-              IDE.openEditor(page, marker, true);
-              refresh(page);
-              sleep(SLEEP_BETWEEN);
-              traversal.runAsMarkerFix(marker);
-              ++changes;
-              marker.delete(); // TODO Ori Roth: does not seem to make a
-                               // difference
-              refresh(page);
-              sleep(SLEEP_BETWEEN);
-            }
-          } catch (final CoreException ¢) {
-            note.bug(¢);
+    //progressService.run(false, true, pm -> {
+      moveProgressDialog();
+//        pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
+      int changes = 0, filesModified = 0;
+      // TODO Ori Roth: this function is much much too large. Try to break it
+      // --yg
+      for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
+        System.out.println(currentCompilationUnit.getElementName());
+        mightNotBeSlick(page);
+        final IResource file = currentCompilationUnit.getResource();
+        try {
+          IMarker[] markers = getMarkers(file);
+          if (markers.length > 0)
+            ++filesModified;
+          for (; markers.length > 0; markers = getMarkers(file)) {
+            final IMarker marker = getFirstMarker(markers);
+//              pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
+//                  + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+            IDE.openEditor(page, marker, true);
+            refresh(page);
+            sleep(SLEEP_BETWEEN);
+            traversal.runAsMarkerFix(marker);
+            ++changes;
+            marker.delete(); // TODO Ori Roth: does not seem to make a
+                             // difference
+            refresh(page);
+            sleep(SLEEP_BETWEEN);
           }
+        } catch (final CoreException ¢) {
+          note.bug(¢);
         }
-        pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
-        sleep(SLEEP_END);
-        pm.done();
-      });
-    } catch (InvocationTargetException | InterruptedException ¢) {
-      note.bug(¢);
-    }
+      }
+//        pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
+//        sleep(SLEEP_END);
+//        pm.done();
+//      });
     sleep(1);
     return null;
   }
