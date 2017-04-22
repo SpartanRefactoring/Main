@@ -120,9 +120,7 @@ public interface wizard {
   List<Integer> loopTypes = as.list(WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT);
 
   static Expression addParenthesisIfNeeded(final Expression x) {
-    if (!isParethesisNeeded(x))
-      return x;
-    return make.parethesized(x);
+    return !isParethesisNeeded(x) ? x : make.parethesized(x);
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
