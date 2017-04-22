@@ -23,7 +23,7 @@ import nano.ly.*;
  * @since 2016 */
 public class SpartanMovie extends AbstractHandler {
   private static final String NAME = "Spartan movie";
-  private static final double SLEEP_BETWEEN = 5;
+  private static final double SLEEP_BETWEEN = 0.5;
   private static final double SLEEP_END = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
@@ -38,7 +38,7 @@ public class SpartanMovie extends AbstractHandler {
     try {
 //      progressService.run(false, true, pm -> {
       progressService.runInUI(PlatformUI.getWorkbench().getProgressService(), pm -> {
-        moveProgressDialog();
+        //moveProgressDialog();
         pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
         int changes = 0, filesModified = 0;
         // TODO Ori Roth: this function is much much too large. Try to break it
