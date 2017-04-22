@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
 
-/** TODO Yossi Gil: document class
+/** Manager of modifiers's redundancy
  * @author Yossi Gil
  * @since 2017-03-28 */
 public enum ModifiersRedundancy {
