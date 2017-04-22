@@ -29,15 +29,15 @@ public final class ReturnDeadAssignment extends ReturnValuePattern implements Ti
 
   public ReturnDeadAssignment() {
     super//
-    .andAlso("Returned value must be an assignment", //
+    .notNil("Returned value must be an assignment", //
         () -> assignment = az.assignment(value) //
-    ).andAlso("Assigment is to a variable", //
+    ).notNil("Assigment is to a variable", //
         () -> to = az.simpleName(to(assignment)) //
     ).andAlso("Variable is a local variable", //
         () -> Environment.of(methodDeclaration).nest.doesntHave(to + "")//
-    ).andAlso("Extract from", //
+    ).notNil("Extract from", //
         () -> from = from(assignment) //
-    ).andAlso("Extract operator", //
+    ).notNil("Extract operator", //
         () -> operator = assignment.getOperator() //
     );
   }

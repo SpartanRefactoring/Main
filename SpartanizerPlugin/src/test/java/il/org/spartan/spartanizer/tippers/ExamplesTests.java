@@ -27,7 +27,7 @@ public class ExamplesTests {
   /** Current tipper, loaded dynamically. */
   protected final Tipper<? extends ASTNode> tipper;
 
-  /** Redirects examples to tests according to __ */
+  /** Redirects examples to tests according to example type */
   @Test public void converts() {
     if (tipper.examples() != null)
       StreamSupport//
@@ -37,7 +37,7 @@ public class ExamplesTests {
           .forEachOrdered(this::converts);
   }
 
-  /** Redirects examples to tests according to __ */
+  /** Redirects examples to tests according to example type */
   @Test public void ignores() {
     if (tipper.examples() != null)
       StreamSupport.stream(tipper.examples().spliterator(), false)//
