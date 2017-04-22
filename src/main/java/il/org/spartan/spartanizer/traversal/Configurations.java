@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import nano.ly.*;
@@ -156,6 +155,7 @@ public interface Configurations {
           new MethodDeclarationRenameSingleParameterToCent(), //
           new MethodDeclarationConstructorMoveToInitializers(), //
           new ConstructorRenameParameters(), //
+          new MethodDeclarationOverrideDegenerateRemove(),
           null)
       .add(MethodInvocation.class, //
           new MethodInvocationEqualsWithLiteralString(), //
@@ -251,7 +251,6 @@ public interface Configurations {
           new LocalInitializedReturnExpression(), //
           new LocalInitializedUpdateAssignment(), //
           new LocalInitializedIfAssignment(), //
-          new LocalInitializedUpdateAssignment(), //
           new LocalInitializedStatementReturnVariable(), //
           new LocalInitializedStatementReturnAssignment(), //
           new LocalInitializedReturn(), //

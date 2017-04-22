@@ -49,7 +49,7 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeExclude<SingleVa
 
   private static ASTNode replace(final SingleVariableDeclaration ¢) {
     final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
-    $.setName(¢.getAST().newSimpleName(unusedVariableName()));
+    $.setName(¢.getAST().newSimpleName(Namer.anonymous));
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(copy.of(¢.getType()));
@@ -74,10 +74,6 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeExclude<SingleVa
     return suppressing(¢.getValue());
   }
 
-  private static String unusedVariableName() {
-    return "__";
-  }
-
   @Override public String description(final SingleVariableDeclaration ¢) {
     return "Anonymize parameter " + ¢.getName().getIdentifier();
   }
@@ -87,7 +83,7 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeExclude<SingleVa
     if (method == null || body(method) == null)
       return null;
     for (final SingleVariableDeclaration ¢ : parameters(method))
-      if (unusedVariableName().equals(¢.getName().getIdentifier()))
+      if (Namer.anonymous.equals(¢.getName().getIdentifier()))
         return null;
     return BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()) ? null : replace($);
   }
