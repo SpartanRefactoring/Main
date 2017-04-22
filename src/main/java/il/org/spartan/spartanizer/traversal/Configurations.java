@@ -250,7 +250,7 @@ public interface Configurations {
           new LocalInitializedUpdateAssignment(), //
           new LocalInitializedStatementReturnVariable(), //
           new LocalInitializedStatementReturnAssignment(), //
-          new LocalIntializedReturn(), //
+          new LocalInitializedReturn(), //
           new LocalVariableInitializedStatementTerminatingScope(), //
           new LocalVariableInitializedAssignment(), //
           new LocalVariableUninitializedDead(), //
