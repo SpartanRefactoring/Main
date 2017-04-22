@@ -231,9 +231,9 @@ public enum misc {
 
   static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
-        : iz.assignment(from) ? LocalVariableIntializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s)
+        : iz.assignment(from) ? LocalInitializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from)
-                ? LocalVariableIntializedStatementToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
+                ? LocalInitializedStatementToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
 
   /** Make a duplicate, suitable for tree rewrite, of the parameter

@@ -73,7 +73,7 @@ public final class Issue0131 {
         "void a() { int b = 5; int c = 2; for (int d = 4; d < e.f(); ++d) { if (c == d) { b += 9; return g; } h += 15; return g; } return g; }") //
             .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
             .gives("void a(){int b=5,c=2;for(int d=4;d<e.f();++d){if(c==d){b+=9;return g;}h+=15;return g;}return g;}") //
-            .using(new LocalVariableIntializedStatementToForInitializers(), VariableDeclarationFragment.class) //
+            .using(new LocalInitializedStatementToForInitializers(), VariableDeclarationFragment.class) //
             .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d){b+=9;return g;}h+=15;return g;}return g;}") //
             .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
             .gives("void a(){for(int b=5,c=2,d=4;d<e.f();++d){if(c==d){b+=9;break;}h+=15;return g;}return g;}") //

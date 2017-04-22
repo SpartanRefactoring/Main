@@ -50,9 +50,9 @@ public class Issue0879 {
         .gives("int a(){int b=9+4,$=7;$=b+b;return $;}") //
         .using(new InfixAdditionEvaluate(), InfixExpression.class) //
         .gives("int a(){int b=13,$=7;$=b+b;return $;}") //
-        .using(new LocalVariableIntializedAssignment(), VariableDeclarationFragment.class) //
+        .using(new LocalVariableInitializedAssignment(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=13,$=b+b;return $;}") //
-        .using(new LocalVariableIntializedStatementReturnVariable(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedStatementReturnVariable(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=13;return b+b;}") //
         .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
         .gives("int a(){int $=13;return $+$;}") //

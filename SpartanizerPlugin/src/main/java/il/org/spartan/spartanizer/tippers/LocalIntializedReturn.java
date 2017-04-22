@@ -25,7 +25,7 @@ import il.org.spartan.utils.*;
  * }
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalVariableIntializedReturn extends $FragmentAndStatement//
+public final class LocalIntializedReturn extends $FragmentAndStatement//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 0x5D2F5CEC2756BC9DL;
 
