@@ -152,9 +152,11 @@ public interface Configurations {
           new MethodDeclarationRenameReturnToDollar(), //
           new BodyDeclarationModifiersSort<>(), //
           new MethodDeclarationRenameSingleParameterToCent(), //
-          new MethodDeclarationConstructorMoveToInitializers(), //
           new ConstructorRenameParameters(), //
-          new MethodDeclarationOverrideDegenerateRemove(), null)
+          new ConstructorEmptyRemove(), //
+          new MethodDeclarationConstructorMoveToInitializers(), //
+          new MethodDeclarationOverrideDegenerateRemove(), //
+          null)
       .add(MethodInvocation.class, //
           new MethodInvocationEqualsWithLiteralString(), //
           new MethodInvocationValueOfBooleanConstant(), //

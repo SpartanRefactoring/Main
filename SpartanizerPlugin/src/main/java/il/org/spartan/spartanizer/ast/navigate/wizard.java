@@ -116,7 +116,6 @@ public interface wizard {
   Class<?>[] np = { InfixExpression.class };
   IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
   Bool resolveBinding = Bool.valueOf(false);
-  List<Predicate<Modifier>> visibilityModifiers = as.list(ModifierRedundant.isPublic, ModifierRedundant.isPrivate, ModifierRedundant.isProtected);
   List<Integer> loopTypes = as.list(WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT);
 
   static Expression addParenthesisIfNeeded(final Expression x) {
@@ -387,7 +386,7 @@ public interface wizard {
   static <N extends ASTNode> int nodeType(final Class<N> ¢) {
     final Integer $ = il.org.spartan.spartanizer.ast.navigate.wizard.classToNodeType.get(¢);
     return $ != null ? $.intValue()
-        : zero.voidAll(note.bug(fault.dump() + //
+        : zero.forgetting(note.bug(fault.dump() + //
             "\n c = " + ¢ + //
             "\n c.getSimpleName() = " + ¢.getSimpleName() + //
             "\n classForNodeType.keySet() = " + il.org.spartan.spartanizer.ast.navigate.wizard.classToNodeType.keySet() + //
