@@ -36,7 +36,8 @@ public class SpartanMovie extends AbstractHandler {
     if (compilationUnits == null || page == null || progressService == null)
       return null;
     try {
-      progressService.run(false, true, pm -> {
+//      progressService.run(false, true, pm -> {
+      progressService.runInUI(PlatformUI.getWorkbench().getProgressService(), pm -> {
         moveProgressDialog();
         pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
         int changes = 0, filesModified = 0;
@@ -71,7 +72,8 @@ public class SpartanMovie extends AbstractHandler {
           pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
           sleep(SLEEP_END);
           pm.done();
-       });
+      }, null);
+//       });
     } catch (InvocationTargetException | InterruptedException ¢) {
       note.bug(¢);
     }
