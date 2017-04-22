@@ -23,7 +23,7 @@ import nano.ly.*;
  * @since 2016 */
 public class SpartanMovie extends AbstractHandler {
   private static final String NAME = "Spartan movie";
-  private static final double SLEEP_BETWEEN = 0.5;
+  private static final double SLEEP_BETWEEN = 5;
   private static final double SLEEP_END = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
