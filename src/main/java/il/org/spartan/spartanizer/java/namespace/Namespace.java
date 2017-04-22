@@ -166,7 +166,7 @@ public final class Namespace implements Environment {
         }
         return false;
       }
-      
+
       @Override public boolean visit(final SwitchStatement b) {
         Namespace n = Namespace.this;
         for (final Statement s : statements(b)) {
