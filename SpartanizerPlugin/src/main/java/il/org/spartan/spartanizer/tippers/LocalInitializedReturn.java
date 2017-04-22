@@ -34,7 +34,7 @@ public final class LocalInitializedReturn extends $FragmentAndStatement//
   }
 
   @Override public Examples examples() {
-    return convert("int a = 3; return a += 2;").to("return a + 5;");
+    return convert("int a = 3; return a += 2;").to("return 3 + 2;");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
