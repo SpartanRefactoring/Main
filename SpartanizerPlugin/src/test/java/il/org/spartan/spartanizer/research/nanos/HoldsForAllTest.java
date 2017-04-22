@@ -29,6 +29,7 @@ public class HoldsForAllTest {
         .using(new HoldsForAll(), EnhancedForStatement.class)//
         .gives("returnIf(Y.stream().allMatch(x -> !(whatever)));")//
         .gives("returnIf(Y.stream().allMatch(λ -> !(whatever)));")//
+        .gives("returnIf(Y.stream().allMatch(λ -> !whatever));")//
         .stays();
   }
 
@@ -37,6 +38,7 @@ public class HoldsForAllTest {
         .using(new HoldsForAll(), EnhancedForStatement.class)//
         .gives("$ = Y.stream().allMatch(x -> !(whatever));")//
         .gives("$ = Y.stream().allMatch(λ -> !(whatever));")//
+        .gives("$ = Y.stream().allMatch(λ -> !whatever);")//
         .stays();
   }
 
