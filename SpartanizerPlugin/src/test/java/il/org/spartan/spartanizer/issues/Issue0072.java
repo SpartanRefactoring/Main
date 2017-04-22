@@ -21,15 +21,18 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0072 {
   @Test public void a() {
+    (System.out).println();
     trimminKof("(x-0)-0")//
         .gives("(x-0)")//
         .gives("(x)")//
+        .gives("x")//
         .stays();
   }
 
   @Test public void a1() {
     trimminKof("-(x-0)")//
         .gives("-(x)")//
+        .gives("-x")//
         .stays();
   }
 
@@ -81,6 +84,7 @@ public class Issue0072 {
     trimminKof("0-(x-0)")//
         .gives("-(x-0)")//
         .gives("-(x)")//
+        .gives("-x")//
         .stays();
   }
 
@@ -103,6 +107,7 @@ public class Issue0072 {
   @Test public void meA() {
     trimminKof("(x-0)")//
         .gives("(x)")//
+        .gives("x")//
         .stays();
   }
 
@@ -116,6 +121,7 @@ public class Issue0072 {
     trimminKof("0-(x-0)")//
         .gives("-(x-0)")//
         .gives("-(x)")//
+        .gives("-x")//
         .stays();
   }
 
@@ -123,6 +129,7 @@ public class Issue0072 {
     assert iz.simple(into.e("x"));
     trimminKof("-(x-0)")//
         .gives("-(x)")//
+        .gives("-x")//
         .stays();
   }
 

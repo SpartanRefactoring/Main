@@ -27,11 +27,11 @@ public class ParenthesizedRemoveExtraParenthesis extends AbstractPattern<Parenth
     notNil("Extract inner", () -> inner = current.getExpression());
     andAlso(OR(//
         that("Around literal", () -> iz.literal(inner)), //
-        that("Around simple name", () -> iz.simpleName(inner)), //
+        that("Around simple name", () -> iz.name(inner)), //
         that("Double parenthesis", () -> iz.parenthesizedExpression(parent)), //
         that("Method argument", () -> iz.methodInvocation(parent) && arguments(az.methodInvocation(parent)).contains(current)), //
-        that("Method receiver", () -> iz.methodInvocation(parent) && expression(az.methodInvocation(parent)) == current), //
-        that("Field access", () -> iz.fieldAccess(parent) && expression(az.fieldAccess(parent)) == current), //
+        that("Method receiver", () -> iz.methodInvocation(inner) && iz.methodInvocation(parent) && expression(az.methodInvocation(parent)) == current), //
+//        that("Field access", () -> iz.fieldAccess(parent) && expression(az.fieldAccess(parent)) == current), //
         that("Double parenthesis", () -> iz.parenthesizedExpression(parent)), F));
   }
 
