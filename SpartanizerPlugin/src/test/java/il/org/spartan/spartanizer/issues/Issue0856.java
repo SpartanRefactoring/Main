@@ -16,23 +16,23 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue0856 {
   @Test public void a() {
     trimminKof("A a(){A b=\"one expression\";B.d(b);return \"and another\";}") //
-        .using(new LocalInitializedInlineIntoNext2(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedInlineIntoNext(), VariableDeclarationFragment.class) //
         .gives("A a(){B.d(\"one expression\");return \"and another\";}")//
         .stays();
   }
 
   @Test public void b() {
     trimminKof("A foo(){A a=\"one expression\";C c=B.d(a);print(c);return \"and another\";}")
-        .using(new LocalInitializedInlineIntoNext2(), VariableDeclarationFragment.class)
+        .using(new LocalInitializedInlineIntoNext(), VariableDeclarationFragment.class)
         .gives("A foo(){C c=B.d(\"one expression\");print(c);return \"and another\";}")
-        .using(new LocalInitializedInlineIntoNext2(), VariableDeclarationFragment.class)
+        .using(new LocalInitializedInlineIntoNext(), VariableDeclarationFragment.class)
         .gives("A foo(){print(B.d(\"one expression\"));return \"and another\";}")//
         .stays();
   }
 
   @Test public void c() {
     trimminKof("A a(){A b=\"one expression\";B.d(b);print(b);return \"and another\";}")
-        .using(new LocalInitializedInlineIntoNext2(), VariableDeclarationFragment.class)//
+        .using(new LocalInitializedInlineIntoNext(), VariableDeclarationFragment.class)//
         .stays();
   }
 

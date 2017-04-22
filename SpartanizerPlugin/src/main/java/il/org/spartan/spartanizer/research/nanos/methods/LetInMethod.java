@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2017-02-13 */
 public class LetInMethod extends JavadocMarkerNanoPattern {
   private static final long serialVersionUID = 0x7AD0FA01D9BA4849L;
-  private static final LocalInitializedStatementTerminatingScope2 rival = new LocalInitializedStatementTerminatingScope2();
+  private static final LocalInitializedStatementTerminatingScope rival = new LocalInitializedStatementTerminatingScope();
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazTwoStatements(¢) //

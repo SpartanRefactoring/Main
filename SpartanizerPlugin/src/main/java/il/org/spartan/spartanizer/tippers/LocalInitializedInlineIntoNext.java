@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static il.org.spartan.lisp.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -57,7 +59,7 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
     if (parent == null//
         || iz.forStatement(parent))
       return null;
-    final SimpleName n = misc.peelIdentifier(nextStatement, identifier(name(f)));
+    final SimpleName n = peelIdentifier(nextStatement, identifier(name(f)));
     if (n == null//
         || anyFurtherUsage(parent, nextStatement, identifier(n))//
         || misc.leftSide(nextStatement, identifier(n))//
@@ -113,11 +115,20 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
         if (!¢.equals(nextStatement)//
             && !¢.equals(originalStatement)//
             && iz.statement(¢)//
-            && !find.occurencesOf(az.statement(¢), id).isEmpty())
+            && !occurencesOf(az.statement(¢), id).isEmpty())
           $.inner = true;
         return false;
       }
     });
     return $.inner;
+  }
+
+  private static SimpleName peelIdentifier(final Statement s, final String id) {
+    final List<SimpleName> $ = occurencesOf(s, id);
+    return $.size() != 1 ? null : first($);
+  }
+
+  static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
+    return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
 }
