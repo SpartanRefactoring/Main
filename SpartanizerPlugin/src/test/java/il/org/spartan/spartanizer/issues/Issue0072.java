@@ -21,7 +21,6 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0072 {
   @Test public void a() {
-    (System.out).println();
     trimminKof("(x-0)-0")//
         .gives("(x-0)")//
         .gives("(x)")//

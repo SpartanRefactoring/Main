@@ -30,7 +30,7 @@ public abstract class JavadocerTest {
     spartanizer.add(MethodDeclaration.class, JAVADOCER = ¢);
   }
 
-  private static String spartanized(final String ¢) {
+  protected static String spartanized(final String ¢) {
     return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
   }
 }

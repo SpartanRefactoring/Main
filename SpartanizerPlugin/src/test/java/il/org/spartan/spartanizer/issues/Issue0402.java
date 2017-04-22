@@ -7,8 +7,8 @@ import org.junit.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** A test class regarding a bug with
- * {@link LocalInitializedStatementToForInitializers}. Desired behavior
- * is not to allow inlining if the modifiers are different.
+ * {@link LocalInitializedStatementToForInitializers}. Desired behavior is not
+ * to allow inlining if the modifiers are different.
  * @author Dan Greenstein
  * @since 2016 */
 @SuppressWarnings("static-method")

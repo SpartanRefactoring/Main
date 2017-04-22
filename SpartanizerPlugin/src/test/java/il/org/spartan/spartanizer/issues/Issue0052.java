@@ -117,6 +117,7 @@ public class Issue0052 {
 
   @Test public void A$k() {
     trimminKof("public final class ClassTest{public ClassTest(){}}")//
+        .gives("public final class ClassTest{}")//
         .stays();
   }
 

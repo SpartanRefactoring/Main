@@ -9,7 +9,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -18,7 +17,7 @@ import il.org.spartan.utils.*;
 /** Use {@link #examples()} for documentation
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-02 */
-public class ParenthesizedRemoveExtraParenthesis extends AbstractPattern<ParenthesizedExpression>//
+public class ParenthesizedRemoveExtraParenthesis extends NodePattern<ParenthesizedExpression>//
     implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x3B30C2A8E5E15900L;
   private Expression inner;
@@ -30,8 +29,10 @@ public class ParenthesizedRemoveExtraParenthesis extends AbstractPattern<Parenth
         that("Around simple name", () -> iz.name(inner)), //
         that("Double parenthesis", () -> iz.parenthesizedExpression(parent)), //
         that("Method argument", () -> iz.methodInvocation(parent) && arguments(az.methodInvocation(parent)).contains(current)), //
-        that("Method receiver", () -> iz.methodInvocation(inner) && iz.methodInvocation(parent) && expression(az.methodInvocation(parent)) == current), //
-//        that("Field access", () -> iz.fieldAccess(parent) && expression(az.fieldAccess(parent)) == current), //
+        that("Method receiver",
+            () -> iz.methodInvocation(inner) && iz.methodInvocation(parent) && expression(az.methodInvocation(parent)) == current), //
+        // that("Field access", () -> iz.fieldAccess(parent) &&
+        // expression(az.fieldAccess(parent)) == current), //
         that("Double parenthesis", () -> iz.parenthesizedExpression(parent)), F));
   }
 
