@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public final class LetInNext extends NanoPatternTipper<VariableDeclarationFragment> {
   private static final long serialVersionUID = -0x6932FA8215A65359L;
   private static final LetInliner letInliner = new LetInliner();
-  private static final LocalVariableInitializedInlineIntoNext fragmentInliner = new LocalVariableInitializedInlineIntoNext();
+  private static final LocalInitializedInlineIntoNext2 fragmentInliner = new LocalInitializedInlineIntoNext2();
 
   @Override public boolean canTip(final VariableDeclarationFragment ¢) {
     return letInliner.canTip(¢)//

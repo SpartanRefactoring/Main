@@ -16,10 +16,10 @@ import il.org.spartan.utils.*;
 /** Remove unused local
  * @author Yossi Gil
  * @since 2017-01-23 */
-public final class LocalVariableInitializedUnusedRemove extends LocalInitialized implements TipperCategory.Deadcode {
+public final class LocalInitializedUnusedRemove2 extends LocalInitialized implements TipperCategory.Deadcode {
   private static final long serialVersionUID = -0xBDF3E9975A1F125L;
 
-  public LocalVariableInitializedUnusedRemove() {
+  public LocalInitializedUnusedRemove2() {
     andAlso("Local is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
   }
 

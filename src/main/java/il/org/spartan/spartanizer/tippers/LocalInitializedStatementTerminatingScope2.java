@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalVariableInitializedStatementTerminatingScope extends $FragmentAndStatement //
+public final class LocalInitializedStatementTerminatingScope2 extends $FragmentAndStatement //
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = -0x313DC98AF0199E9L;
 
