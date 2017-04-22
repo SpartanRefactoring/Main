@@ -251,7 +251,6 @@ public interface Configurations {
           new LocalInitializedReturnExpression(), //
           new LocalInitializedUpdateAssignment(), //
           new LocalInitializedIfAssignment(), //
-          new LocalInitializedUpdateAssignment(), //
           new LocalInitializedStatementReturnVariable(), //
           new LocalInitializedStatementReturnAssignment(), //
           new LocalInitializedReturn(), //
