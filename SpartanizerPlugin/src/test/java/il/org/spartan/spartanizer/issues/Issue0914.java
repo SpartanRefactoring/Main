@@ -16,7 +16,6 @@ public class Issue0914 {
         + "while (!iz.methodDeclaration($) && $ != null)$ = $.getParent();return az.methodDeclaration($);}")//
             .stays();
   }
-
   @Test public void challenge_while_d() {
     trimminKof("static X f(final S ¢) {X $ = ¢.elze();" + //
         "while ($ instanceof S)$ = ((S) $).elze();return $;}")//
