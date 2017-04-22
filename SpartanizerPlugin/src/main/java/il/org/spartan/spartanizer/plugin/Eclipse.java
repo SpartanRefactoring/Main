@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.plugin;
 
 import static java.util.stream.Collectors.*;
+import static il.org.spartan.plugin.old.RefreshAll.*;
 
 import java.lang.reflect.*;
 import java.text.*;
@@ -85,6 +86,7 @@ public class Eclipse {
         new Job("Refreshing " + p.getName()) {
           @Override protected IStatus run(final IProgressMonitor m) {
             try {
+              waitingForRefresh.add(p);
               p.touch(m);
               return Status.OK_STATUS;
             } catch (final CoreException ¢) {
