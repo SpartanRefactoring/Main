@@ -26,9 +26,9 @@ public class Issue0905 {
     trimminKof("if (a == true) { int b = 5, c = d(); }") //
         .using(new InfixComparisonBooleanLiteral(), InfixExpression.class) //
         .gives("if(a){int b=5,c=d();}") //
-        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("if(a){d(); int b=5;}") //
-        .using(new LocalVariableInitializedUnusedRemove(), VariableDeclarationFragment.class) //
+        .using(new LocalInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("if(a){d();}") //
         .using(new BlockSingletonEliminate(), Block.class) //
         .gives("if(a)d();") //

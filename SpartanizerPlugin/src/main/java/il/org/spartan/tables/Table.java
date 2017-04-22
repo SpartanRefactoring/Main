@@ -29,6 +29,11 @@ public class Table extends Row<Table> implements Closeable {
     this(name, TableRenderer.builtin.values());
   }
 
+  /** @param name output file name
+   * @param rs {@code TableRenderer}'s to use when writing to files (e.g. CSV,
+   *        TEX, TXT).
+   * @author oran1248
+   * @since 2017-04-21 */
   @SuppressWarnings("resource") public Table(final String name, final TableRenderer... rs) {
     this.name = name.toLowerCase();
     as.list(rs).forEach(r -> {
@@ -68,6 +73,9 @@ public class Table extends Row<Table> implements Closeable {
     return system.tmp + name + ".*";
   }
 
+  /** Close operation from {@link Closeable} for saving output files.
+   * @author oran1248
+   * @since 2017-04-21 */
   @Override public void close() {
     if (!stats.isEmpty())
       for (final Statistic s : statisics) {

@@ -35,6 +35,6 @@ public class ForEmptyBlockToEmptyStatement extends ReplaceCurrentNode<ForStateme
   }
 
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
-    return "replaces a for statment followed by an empty block with a for statment followed by a semicolon";
+    return "Replace 'for(?;?;?){}' with 'for(?;?;?);'";
   }
 }

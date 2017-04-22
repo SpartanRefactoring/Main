@@ -45,6 +45,7 @@ public interface Configurations {
       .add(EnhancedForStatement.class, //
           new EnhancedForRedundantContinue(), //
           new EnhancedForEliminateConditionalContinue(), //
+          new EnhancedForEmptyBlock(), //
           new EnhancedForParameterRenameToIt(), //
           null)//
       .add(LambdaExpression.class, //
@@ -242,22 +243,22 @@ public interface Configurations {
       .add(VariableDeclarationFragment.class, //
           new FieldInitializedDefaultValue(), //
           new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
-          new LocalUnintializedAssignmentToIt(), //
+          new LocalUninitializedAssignmentToIt(), //
           new LocalInitializedReturnExpression(), //
-          new LocalVariableIntializedUpdateAssignment(), //
-          new LocalVariableIntializedIfAssignment(), //
           new LocalInitializedUpdateAssignment(), //
-          new LocalVariableIntializedStatementReturnVariable(), //
-          new LocalVariableIntializedStatementReturnAssignment(), //
-          new LocalVariableIntializedReturn(), //
-          new LocalVariableInitializedStatementTerminatingScope(), //
-          new LocalVariableIntializedAssignment(), //
-          new LocalVariableUninitializedDead(), //
-          new LocalVariableIntializedInlineIntoNext(), //
-          new LocalVariableIntializedStatementWhile(), //
-          new LocalVariableIntializedStatementToForInitializers(), //
-          new LocalVariableInitializedUnusedRemove(), //
-          new LocalInitializedIncrementDecrementInline(), //
+          new LocalInitializedIfAssignment(), //
+          new LocalInitializedUpdateAssignment(), //
+          new LocalInitializedStatementReturnVariable(), //
+          new LocalInitializedStatementReturnAssignment(), //
+          new LocalInitializedReturn(), //
+          new LocalInitializedStatementTerminatingScope(), //
+          new LocalInitializedAssignment(), //
+          new LocalUninitializedDead(), //
+          new LocalInitializedInlineIntoNext(), //
+          new LocalInitializedStatementWhile(), //
+          new LocalInitializedStatementToForInitializers(), //
+          new LocalInitializedUnusedRemove(), //
+          new LocalIncrementDecrementInline(), //
           new LocalInitializedNewAddAll(), //
           new LocalInitializedArithmeticsInline(), //
           null) //

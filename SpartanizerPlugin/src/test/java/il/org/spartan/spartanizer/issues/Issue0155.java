@@ -7,7 +7,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Unit tests for {@link LocalVariableInitializedStatementTerminatingScope}
+/** Unit tests for {@link LocalInitializedStatementTerminatingScope}
  * @author Ori Roth
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)

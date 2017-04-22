@@ -14,7 +14,7 @@ public class ForDeadRemove extends ReplaceCurrentNode<ForStatement>//
   private static final long serialVersionUID = 0x1B284864E9B0C8D8L;
 
   @Override public String description(final ForStatement ¢) {
-    return "remove :" + ¢;
+    return "Remove dead loop" + ¢;
   }
 
   @Override protected boolean prerequisite(final ForStatement ¢) {

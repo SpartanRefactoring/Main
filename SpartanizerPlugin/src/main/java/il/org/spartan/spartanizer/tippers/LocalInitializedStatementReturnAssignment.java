@@ -10,46 +10,37 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 
-/** See {@link #examples()}
+/** Converts {@code int a=3;return a;} into {@code return 3;}
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalVariableIntializedAssignment extends $FragmentAndStatement//
+public final class LocalInitializedStatementReturnAssignment extends $FragmentAndStatement//
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = 0x14812B0904DFB002L;
+  private static final long serialVersionUID = 0x1283F5075F4BE6FFL;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Consolidate declaration of " + Trivia.gist(¢.getName()) + " with its subsequent initialization";
-  }
-
-  @Override public Examples examples() {
-    return //
-    convert("int a; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
-        .to("int a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);");
+    return "Eliminate local '" + ¢.getName() + "', inlining its value into the subsequent return statement";
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
-    if (initializer == null)
+    if (initializer == null || haz.annotation(f))
       return null;
-    final Assignment a = extract.assignment(nextStatement);
+    final Assignment a = az.assignment(expression(az.returnStatement(nextStatement)));
     if (a == null || !wizard.eq(n, to(a)) || a.getOperator() != ASSIGN)
       return null;
-    final Expression newInitializer = copy.of(from(a));
-    if (FragmentPattern.doesUseForbiddenSiblings(f, newInitializer))
-      return null;
+    final Expression newReturnValue = copy.of(from(a));
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
-    if (!i.canInlineinto(newInitializer) || i.replacedSize(newInitializer) - metrics.size(nextStatement, initializer) > 0)
+    if (!i.canInlineinto(newReturnValue) || i.replacedSize(newReturnValue) - eliminationSaving(f) - metrics.size(newReturnValue) > 0)
       return null;
-    $.replace(initializer, newInitializer, g);
-    i.inlineInto(newInitializer);
-    $.remove(nextStatement, g);
+    $.replace(a, newReturnValue, g);
+    i.inlineInto(newReturnValue);
+    remove.deadFragment(f, $, g);
     return $;
   }
 }
