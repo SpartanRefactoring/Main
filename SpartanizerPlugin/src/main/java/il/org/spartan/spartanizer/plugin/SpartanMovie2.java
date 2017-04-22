@@ -32,8 +32,15 @@ public class SpartanMovie2 extends AbstractHandler {
       Job job = new Job("About to say hello") {
         protected IStatus run(IProgressMonitor monitor) {
           try {
-            Thread.sleep(5000);
+            monitor.beginTask("Preparing", 5000);
+            for(int i=0;i<5;i++) {
+              Thread.sleep(1000);
+              monitor.worked(1000);
+            }
           } catch (InterruptedException e) {
+            note.bug(e);
+          } finally {
+            monitor.done();
           }
           //MessageDialog.openInformation(null, "Hello", "World");
           Display.getDefault().asyncExec(new Runnable() {
