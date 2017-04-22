@@ -15,16 +15,15 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016 */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "static-method", "javadoc" })
-public final class Issue0116 extends TipperTest<InfixExpression>{
-  
+public final class Issue0116 extends TipperTest<InfixExpression> {
   @Override public Tipper<InfixExpression> tipper() {
     return new InfixConcatenationEmptyStringLeft();
   }
-  
+
   @Override public Class<InfixExpression> tipsOn() {
     return InfixExpression.class;
   }
-  
+
   @Test public void issue116_01() {
     trimminKof("\"\" + x")//
         .gives("x + \"\"")//
@@ -65,7 +64,7 @@ public final class Issue0116 extends TipperTest<InfixExpression>{
         .gives("return \"Use \" + (x == null ? \"\" : x + \".\")+\"isEmpty()\";")//
         .stays();
   }
-  
+
   @Test public void issue1245() {
     trimmingOf("\"\"+\"abc\"").stays();
   }

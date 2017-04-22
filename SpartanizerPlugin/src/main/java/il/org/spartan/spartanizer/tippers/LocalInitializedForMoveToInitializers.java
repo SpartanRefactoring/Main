@@ -87,7 +87,7 @@ public final class LocalInitializedForMoveToInitializers extends ReplaceToNextSt
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Move into initializers list of loop " + Trivia.gist(¢); 
+    return "Move into initializers list of loop " + Trivia.gist(¢);
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {

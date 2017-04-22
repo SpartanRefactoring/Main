@@ -13,8 +13,7 @@ import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** Convert {@code ""+x} to {@code x+""}
- * tests in {@link Issue0116}
+/** Convert {@code ""+x} to {@code x+""} tests in {@link Issue0116}
  * @author Dan Greenstein
  * @author Niv Shalmon
  * @since 2016 */
