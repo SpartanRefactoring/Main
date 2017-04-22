@@ -26,7 +26,7 @@ public final class LocalUninitializedDead extends LocalUninitialized implements 
 
   @Override public Examples examples() {
     return //
-    convert("int c; int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);}")//
+    convert("int c; int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);")//
         .to("int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);");
   }
 
