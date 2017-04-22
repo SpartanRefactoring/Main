@@ -103,4 +103,8 @@ public abstract class AbstractPattern<N extends ASTNode> extends CarefulTipper<N
       }
     }).spanning(span());
   }
+
+  protected AbstractPattern<N> property(String fieldName, Runnable r) {
+    return andAlso("Extract " + fieldName, ()->yes.forgetting(()->r.run()));
+  }
 }

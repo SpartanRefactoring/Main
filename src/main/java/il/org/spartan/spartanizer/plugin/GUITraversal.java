@@ -175,13 +175,13 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     try {
       textChange.setEdit(go(u).rewriteAST());
     } catch (JavaModelException | IllegalArgumentException $) {
-      return zero.voidAll(note.bug($));
+      return zero.forgetting(note.bug($));
     }
     if (textChange.getEdit().getLength() != 0)
       try {
         textChange.perform(newSubProgressMonitor());
       } catch (final CoreException $) {
-        return zero.voidAll(note.bug($));
+        return zero.forgetting(note.bug($));
       }
     getProgressMonitor().done();
     return traversal.rewriteCount();
