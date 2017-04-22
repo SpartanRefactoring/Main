@@ -19,7 +19,6 @@ import il.org.spartan.spartanizer.traversal.*;
  * @since Nov 10, 2016 */
 @SuppressWarnings("static-method") //
 public class TestOperandTest {
-
   @Test public void test02() {
     final TestOperand o = trimminKof("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());

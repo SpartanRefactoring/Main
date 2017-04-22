@@ -63,7 +63,7 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     if (iz.enumDeclaration(¢))
       $.addAll(as.list(isStatic, isAbstract, isFinal));
     if (iz.enumConstantDeclaration(¢)) {
-      $.addAll(wizard.visibilityModifiers);
+      $.addAll(ModifiersRedundancy.visibilityModifiers);
       if (iz.isMethodDeclaration(¢))
         $.addAll(as.list(isFinal, isStatic, isAbstract));
     }
@@ -83,12 +83,12 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     if (iz.enumDeclaration(container)) {
       $.add(isProtected);
       if (iz.constructor(¢))
-        $.addAll(wizard.visibilityModifiers);
+        $.addAll(ModifiersRedundancy.visibilityModifiers);
       if (iz.isMethodDeclaration(¢))
         $.add(isFinal);
     }
     if (iz.interface¢(container)) {
-      $.addAll(wizard.visibilityModifiers);
+      $.addAll(ModifiersRedundancy.visibilityModifiers);
       if (iz.isMethodDeclaration(¢)) {
         $.add(isAbstract);
         $.add(isFinal);
@@ -102,7 +102,7 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
     }
     if (iz.anonymousClassDeclaration(container)) {
       if (iz.fieldDeclaration(¢))
-        $.addAll(wizard.visibilityModifiers);
+        $.addAll(ModifiersRedundancy.visibilityModifiers);
       $.add(isPrivate);
       if (iz.isMethodDeclaration(¢))
         $.add(isFinal);
