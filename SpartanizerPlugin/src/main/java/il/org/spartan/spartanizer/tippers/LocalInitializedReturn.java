@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** convert {@code
  * int a = 3;
@@ -30,6 +31,10 @@ public final class LocalInitializedReturn extends $FragmentAndStatement//
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
+  }
+
+  @Override public Examples examples() {
+    return convert("int a = 3; return a += 2;").to("return a + 5;");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,

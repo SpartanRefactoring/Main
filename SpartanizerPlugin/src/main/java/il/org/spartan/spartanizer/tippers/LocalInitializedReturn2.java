@@ -15,7 +15,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 
 /** convert {@code
  * int a = 3;
@@ -25,16 +24,12 @@ import il.org.spartan.utils.*;
  * }
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalIntializedReturn extends $FragmentAndStatement//
+public final class LocalInitializedReturn2 extends $FragmentAndStatement//
     implements TipperCategory.Shortcircuit {
   private static final long serialVersionUID = 0x5D2F5CEC2756BC9DL;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
-  }
-
-  @Override public Examples examples() {
-    return convert("int a = 3; return a += 2;").to("return a + 5;");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
