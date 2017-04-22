@@ -19,7 +19,7 @@ import nano.ly.*;
 /** convert {@code if (a){g();}} into {@code if(a)g();}
  * @author Yossi Gil
  * @since 2015-09-09 */
-public final class BlockSingletonEliminate extends AbstractPattern<Block> implements TipperCategory.SyntacticBaggage {
+public final class BlockSingletonEliminate extends NodePattern<Block> implements TipperCategory.SyntacticBaggage {
   private Statement onlyStatement;
   private Statement container;
 
