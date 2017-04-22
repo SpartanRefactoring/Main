@@ -61,7 +61,7 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   }
 
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
-    return "Convert ternary expression into Boolean"; 
+    return "Convert ternary expression into Boolean";
   }
 
   @Override public boolean prerequisite(final ConditionalExpression ¢) {

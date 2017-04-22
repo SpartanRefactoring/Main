@@ -33,6 +33,7 @@ public final class SingleFlater {
   private boolean usesDisabling = true;
   private WindowInformation windowInformation;
 
+  /** Suppresses default constructor, ensuring non-instantiability */
   private SingleFlater() {}
 
   /** Creates a new for a {@link CompilationUnit}.
