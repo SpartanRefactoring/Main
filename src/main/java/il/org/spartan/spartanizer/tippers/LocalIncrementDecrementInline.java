@@ -20,9 +20,9 @@ import il.org.spartan.utils.*;
 /** inline inc/decrement into variable initialization tests in {@link Issue1146}
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-03-26 */
-public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
+public class LocalIncrementDecrementInline extends LocalInitialized//
     implements TipperCategory.Inlining {
-  public LocalInitializedIncrementDecrementInline() {
+  public LocalIncrementDecrementInline() {
     andAlso("Has increment/decrement of variable afterwards", () -> {
       final ExpressionStatement s = az.expressionStatement(nextStatement);
       if (s == null)

@@ -28,8 +28,8 @@ public class EnhancedForEmptyBlock extends ReplaceCurrentNode<EnhancedForStateme
 
   @Override public Examples examples() {
     return //
-    convert("for(x: xs){}").to("for(x:xs);") //
-        .ignores("for(x:xs){y();z();}")//
+    convert("for(int x: xs){}").to("for(int x:xs);") //
+        .ignores("for(int x:xs){y();z();}")//
     ;
   }
 

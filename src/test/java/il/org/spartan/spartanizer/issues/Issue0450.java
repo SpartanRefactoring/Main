@@ -32,7 +32,7 @@ public class Issue0450 {
 
   @Test public void test0b() {
     trimminKof(SEPARATOR_CASE)//
-        .using(new LocalVariableIntializedInlineIntoNext(), VariableDeclarationFragment.class).stays();
+        .using(new LocalVariableInitializedInlineIntoNext(), VariableDeclarationFragment.class).stays();
   }
 
   @Test public void test1() {
