@@ -130,7 +130,8 @@ public class XMLSpartan {
     for (int i = 0; i < ns.getLength(); ++i) {
       final Element e = (Element) ns.item(i);
       final String nameByID = Tippers.cache.idToNameOriWhatsThisFindAGoodName.get(e.getAttribute(TIPPER_ID));
-      e.setAttribute(ENABLED, nameByID != null && ss.contains(nameByID) ? "true" : "false");
+      if (nameByID != null)
+        e.setAttribute(ENABLED, ss.contains(nameByID) ? "true" : "false");
     }
     commit(p, d);
   }
@@ -272,8 +273,8 @@ public class XMLSpartan {
    * @param version document's version
    * @return true iff the document is valid, and does not require
    *         initialization */
-  private static boolean validate(@SuppressWarnings("unused") final Document $, final String version) {
-    return CURRENT_VERSION.equals(version);
+  private static boolean validate(@SuppressWarnings("unused") final Document $, @SuppressWarnings("unused") final String version) {
+    return true;
   }
 
   /** Describes an XML category element for plugin's XML file. The category has
