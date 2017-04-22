@@ -13,6 +13,7 @@ import org.junit.runners.*;
 public class Issue0050 {
   @Test public void a$50_Constructors1() {
     trimminKof("public final class ClassTest{public ClassTest(){}}")//
+    .gives("public final class ClassTest{}")//
         .stays();
   }
 
