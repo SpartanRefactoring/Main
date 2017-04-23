@@ -2,85 +2,116 @@ package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import java.lang.reflect.*;
 import java.util.List;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jdt.core.*;
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.ide.*;
-import org.eclipse.ui.progress.*;
-
 import il.org.spartan.plugin.old.*;
 import nano.ly.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.
- * @author Ori Roth
+ * @author Matteo Orru'
  * @since 2016 */
-public class SpartanMovie extends AbstractHandler {
+@SuppressWarnings("all")
+public class SpartanMovie2 extends AbstractHandler {
   private static final String NAME = "Spartan movie";
   private static final double SLEEP_BETWEEN = 0.5;
   private static final double SLEEP_END = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    final IWorkbench workbench = PlatformUI.getWorkbench();
-    final List<ICompilationUnit> compilationUnits = getCompilationUnits();
-    final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
-    final IWorkbenchPage page = window == null ? null : window.getActivePage();
-    final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
-    final GUITraversal traversal = new GUITraversal();
-    if (compilationUnits == null || page == null || progressService == null)
-      return null;
-    try {
-//      progressService.run(false, true, pm -> {
-      progressService.runInUI(PlatformUI.getWorkbench().getProgressService(), pm -> {
-        //moveProgressDialog();
-        pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
-        int changes = 0, filesModified = 0;
-        // TODO Ori Roth: this function is much much too large. Try to break it
-        // --yg
-        for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-          System.out.println(currentCompilationUnit.getElementName());
-          mightNotBeSlick(page);
-          final IResource file = currentCompilationUnit.getResource();
-          try {
-            IMarker[] markers = getMarkers(file);
-            if (markers.length > 0)
-              ++filesModified;
-            for (; markers.length > 0; markers = getMarkers(file)) {
-              final IMarker marker = getFirstMarker(markers);
-                pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
-                    + ((Class<?>) marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
-              IDE.openEditor(page, marker, true);
-              refresh(page);
-              sleep(SLEEP_BETWEEN);
-              traversal.runAsMarkerFix(marker);
-              ++changes;
-              marker.delete(); // TODO Ori Roth: does not seem to make a
-                               // difference
-                               // actually it removes the markers after the traversal
-                               // and avoid the infinite loop (it descreases markers.length at
-                               // each round -- mo
-              refresh(page);
-              sleep(SLEEP_BETWEEN);
-            }
-          } catch (final CoreException ¢) {
-            note.bug(¢);
+    Job job = new Job("About to say hello") {
+      protected IStatus run(IProgressMonitor monitor) {
+        try {
+          monitor.beginTask("Preparing", 5000);
+          for (int i = 0; i < 50 && !monitor.isCanceled(); i++) {
+            Thread.sleep(100);
+            monitor.worked(100);
           }
+        } catch (InterruptedException e) {
+          note.bug(e);
+        } finally {
+          monitor.done();
         }
-          pm.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
-          sleep(SLEEP_END);
-          pm.done();
-      }, null);
-//       });
-    } catch (InvocationTargetException | InterruptedException ¢) {
-      note.bug(¢);
-    }
-    sleep(1);
+        // MessageDialog.openInformation(null, "Hello", "World");
+        if (!monitor.isCanceled()) {
+          Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+              MessageDialog.openInformation(null, "Hello", "World");
+            }
+          });
+        }
+        return Status.OK_STATUS;
+      }
+    };
+    job.schedule();
+    // final IWorkbench workbench = PlatformUI.getWorkbench();
+    // final List<ICompilationUnit> compilationUnits = getCompilationUnits();
+    // final IWorkbenchWindow window = workbench == null ? null :
+    // workbench.getActiveWorkbenchWindow();
+    // final IWorkbenchPage page = window == null ? null :
+    // window.getActivePage();
+    // final IProgressService progressService = workbench == null ? null :
+    // workbench.getProgressService();
+    // final GUITraversal traversal = new GUITraversal();
+    // if (compilationUnits == null || page == null || progressService == null)
+    // return null;
+    // try {
+    //// progressService.run(false, true, pm -> {
+    // progressService.runInUI(PlatformUI.getWorkbench().getProgressService(),
+    // pm -> {
+    // //moveProgressDialog();
+    // pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
+    // int changes = 0, filesModified = 0;
+    // // TODO Ori Roth: this function is much much too large. Try to break it
+    // // --yg
+    // for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
+    // System.out.println(currentCompilationUnit.getElementName());
+    // mightNotBeSlick(page);
+    // final IResource file = currentCompilationUnit.getResource();
+    // try {
+    // IMarker[] markers = getMarkers(file);
+    // if (markers.length > 0)
+    // ++filesModified;
+    // for (; markers.length > 0; markers = getMarkers(file)) {
+    // final IMarker marker = getFirstMarker(markers);
+    // pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
+    // + ((Class<?>)
+    // marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+    // IDE.openEditor(page, marker, true);
+    // refresh(page);
+    // sleep(SLEEP_BETWEEN);
+    // //traversal.runAsMarkerFix(marker);
+    // ++changes;
+    // marker.delete(); // TODO Ori Roth: does not seem to make a
+    // // difference
+    // // actually it removes the markers after the traversal
+    // // and avoid the infinite loop (it descreases markers.length at
+    // // each round -- mo
+    // refresh(page);
+    // sleep(SLEEP_BETWEEN);
+    // }
+    // } catch (final CoreException ¢) {
+    // note.bug(¢);
+    // }
+    // }
+    // pm.subTask("Done: Commited " + changes + " changes in " + filesModified +
+    // " " + English.plurals("file", filesModified));
+    // sleep(SLEEP_END);
+    // pm.done();
+    // }, null);
+    //// });
+    // } catch (InvocationTargetException | InterruptedException ¢) {
+    // note.bug(¢);
+    // }
+    // sleep(1);
     return null;
   }
 
