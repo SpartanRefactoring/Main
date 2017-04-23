@@ -70,7 +70,7 @@ public interface Configurations {
           new ForDeadRemove(), //
           new ContinueCoditinalInForEliminate(), //
           new InfiniteForBreakToReturn(), //
-          new ForFiniteConvertReturnToBreak(), //
+          // new ForFiniteConvertReturnToBreak(), // TODO Dor: your bug
           new ForToForUpdaters(), //
           new ForTrueConditionRemove(), //
           new ForAndReturnToFor(), //
