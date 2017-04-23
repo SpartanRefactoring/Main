@@ -15,7 +15,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
