@@ -672,7 +672,7 @@ public final class Version230 {
         .gives("int a=2+3+b>2+3<<b?(2+3)*7<<2+3:2+3;");
   }
 
-  @Test public void delcartionIfAssignmentNotPlain() {
+  @Test public void declartionIfAssignmentNotPlain() {
     trimminKof("int a=0;if(y)a+=3;")//
         .gives("int a=y ? 0 + 3 : 0;");
   }

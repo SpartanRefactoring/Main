@@ -1,4 +1,4 @@
-  package il.org.spartan.spartanizer.tippers;
+package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** Remove empty constructor 
+/** Remove empty constructor
  * @author Yossi Gil
  * @since 2017-04-22 */
 public class ConstructorEmptyRemove extends ConstructorPattern implements TipperCategory.SyntacticBaggage {
@@ -25,12 +25,11 @@ public class ConstructorEmptyRemove extends ConstructorPattern implements Tipper
   public ConstructorEmptyRemove() {
     andAlso("Constructor is empty", //
         () -> statements(body).isEmpty());
-    notNil("Containing class", 
-        () -> typeDelcaration = az.typeDeclaration(parent));
-    andAlso("Visibility is no lesser than of containing class",  
-        ()->visibility.of(current) >= visibility.of(typeDelcaration));
+    notNil("Containing class", () -> typeDelcaration = az.typeDeclaration(parent));
+    andAlso("Visibility is no lesser than of containing class", () -> visibility.of(current) >= visibility.of(typeDelcaration));
   }
- private static final long serialVersionUID = 1L;
+
+  private static final long serialVersionUID = 1L;
 
   @Override public Examples examples() {
     return convert("class A { A(){}}").to("class A{}") //
@@ -42,7 +41,7 @@ public class ConstructorEmptyRemove extends ConstructorPattern implements Tipper
         .ignores("protected class A { private A(){}}");
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.remove(current, g);
     return r;
   }
