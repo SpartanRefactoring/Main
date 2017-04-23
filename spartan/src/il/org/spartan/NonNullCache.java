@@ -2,13 +2,11 @@
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
-
-import il.org.spartan.fapi.*;
 
 /** A class for lazy, memoizing evaluation of objects of arbitrary type. The
  * evaluation must never return <code><b>null</b></code>.
@@ -32,7 +30,7 @@ public abstract class NonNullCache<T> {
    * @return value to be cached */
   @NotNull protected abstract T ____();
 
-    //
+  //
   public static class TEST extends NonNullCache<String> {
     private static final int SOME_OFFSET = 17;
     private int evaluations;

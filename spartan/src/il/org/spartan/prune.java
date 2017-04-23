@@ -1,8 +1,8 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan.fapi;
+package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.*;
@@ -11,8 +11,6 @@ import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
-
-import il.org.spartan.*;
 
 /** A <b>Utility class</b> providing functions to remove
  * <code><b>null</b></code> elements from arrays and iterable collections. For
@@ -29,11 +27,6 @@ import il.org.spartan.*;
  * @since 27/08/2008 */
 public enum prune {
   ;
-  private static void addNonEmpty(@NotNull final Collection<String> ss, @NotNull final String s) {
-    if (s.length() > 0)
-      ss.add(s);
-  }
-
   @NotNull private static String[] asArrray(@NotNull final List<String> $) {
     return cantBeNull($.toArray(new String @NonNull [0]));
   }

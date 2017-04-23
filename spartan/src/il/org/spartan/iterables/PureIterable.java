@@ -1,8 +1,6 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import java.util.*;
-
 import org.eclipse.jdt.annotation.*;
 import org.jetbrains.annotations.*;
 
@@ -38,9 +36,8 @@ public interface PureIterable<@NonNull T> extends Iterable<T> {
    * @since 2014-06-20
    * @param <T> some arbitrary type */
   abstract class Sized<T> implements PureIterable<T> {
-    /**
-     * see @see il.org.spartan.iterables.PureIterable#iterator() (auto-generated) 
-     */
+    /** see @see il.org.spartan.iterables.PureIterable#iterator()
+     * (auto-generated) */
     @Override @NotNull @NonNull public PureIterator<@NonNull T> iterator() {
       return null;
     }

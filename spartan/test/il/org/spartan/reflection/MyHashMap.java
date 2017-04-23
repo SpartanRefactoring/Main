@@ -158,10 +158,17 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return false;
   }
 
-  /**
-   * Returns a  {@link Set}  view of the mappings contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa. If the map is modified while an iteration over the set is in progress (except through the iterator's own <tt>remove</tt> operation, or through the <tt>setValue</tt> operation on a map entry returned by the iterator) the results of the iteration are undefined. The set supports element removal, which removes the corresponding mapping from the map, via the <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt> , <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the <tt>add</tt> or <tt>addAll</tt> operations.
-   * @return  a set view of the mappings contained in this map 
-   */
+  /** Returns a {@link Set} view of the mappings contained in this map. The set
+   * is backed by the map, so changes to the map are reflected in the set, and
+   * vice-versa. If the map is modified while an iteration over the set is in
+   * progress (except through the iterator's own <tt>remove</tt> operation, or
+   * through the <tt>setValue</tt> operation on a map entry returned by the
+   * iterator) the results of the iteration are undefined. The set supports
+   * element removal, which removes the corresponding mapping from the map, via
+   * the <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt> ,
+   * <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the
+   * <tt>add</tt> or <tt>addAll</tt> operations.
+   * @return a set view of the mappings contained in this map */
   @Override @NotNull public Set<Map.Entry<K, V>> entrySet() {
     return entrySet0();
   }
@@ -199,9 +206,15 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return size == 0;
   }
 
-  /**
-   * Returns a  {@link Set}  view of the keys contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and vice-versa. If the map is modified while an iteration over the set is in progress (except through the iterator's own <tt>remove</tt> operation), the results of the iteration are undefined. The set supports element removal, which removes the corresponding mapping from the map, via the <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the <tt>add</tt> or <tt>addAll</tt> operations. 
-   */
+  /** Returns a {@link Set} view of the keys contained in this map. The set is
+   * backed by the map, so changes to the map are reflected in the set, and
+   * vice-versa. If the map is modified while an iteration over the set is in
+   * progress (except through the iterator's own <tt>remove</tt> operation), the
+   * results of the iteration are undefined. The set supports element removal,
+   * which removes the corresponding mapping from the map, via the
+   * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>,
+   * <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the
+   * <tt>add</tt> or <tt>addAll</tt> operations. */
   @Override @NotNull public Set<K> keySet() {
     return keySet != null ? keySet : (keySet = new KeySet());
   }
@@ -300,9 +313,16 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     return table;
   }
 
-  /**
-   * Returns a  {@link Collection}  view of the values contained in this map. The collection is backed by the map, so changes to the map are reflected in the collection, and vice-versa. If the map is modified while an iteration over the collection is in progress (except through the iterator's own <tt>remove</tt> operation), the results of the iteration are undefined. The collection supports element removal, which removes the corresponding mapping from the map, via the <tt>Iterator.remove</tt>, <tt>Collection.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the <tt>add</tt> or <tt>addAll</tt> operations. 
-   */
+  /** Returns a {@link Collection} view of the values contained in this map. The
+   * collection is backed by the map, so changes to the map are reflected in the
+   * collection, and vice-versa. If the map is modified while an iteration over
+   * the collection is in progress (except through the iterator's own
+   * <tt>remove</tt> operation), the results of the iteration are undefined. The
+   * collection supports element removal, which removes the corresponding
+   * mapping from the map, via the <tt>Iterator.remove</tt>,
+   * <tt>Collection.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and
+   * <tt>clear</tt> operations. It does not support the <tt>add</tt> or
+   * <tt>addAll</tt> operations. */
   @Override @NotNull @SuppressWarnings("synthetic-access") public Collection<V> values() {
     return values != null ? values : (values = new Values());
   }

@@ -2,7 +2,7 @@
 package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
@@ -10,7 +10,6 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
 /** No values in an 'enum' used as name space for a collection of 'static'
  * functions.
@@ -68,8 +67,7 @@ public enum iterables {
    * @author Yossi Gil
    * @since 2014-05-31 */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings("static-method")
-  public static class TEST {
+  @SuppressWarnings("static-method") public static class TEST {
     @Test public void containsDegenerate() {
       azzert.nay(contains("Hello"));
     }

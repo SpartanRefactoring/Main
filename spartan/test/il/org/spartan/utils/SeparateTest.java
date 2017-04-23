@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Box.*;
 
 import java.util.*;
@@ -9,10 +9,8 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
-@SuppressWarnings("static-method")
-public class SeparateTest {
+@SuppressWarnings("static-method") public class SeparateTest {
   @NotNull private static <T> Collection<T> makeCollection(@NotNull final T... ts) {
     @NotNull final ArrayList<T> $ = new ArrayList<>();
     for (final T ¢ : ts)

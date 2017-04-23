@@ -8,7 +8,6 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.external.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;

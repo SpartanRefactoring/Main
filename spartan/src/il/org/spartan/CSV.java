@@ -59,7 +59,7 @@ public enum CSV {
   @NotNull public static <T extends Enum<T>> String combine(@NotNull final T[] parts) {
     @NotNull final String[] $ = new String[parts.length];
     for (int ¢ = 0; ¢ < $.length; ++¢) {
-      @NotNull T t = parts[¢];
+      @NotNull final T t = parts[¢];
       $[¢] = t == null ? null : t.name();
     }
     return combine($);

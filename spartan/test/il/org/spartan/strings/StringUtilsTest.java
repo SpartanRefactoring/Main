@@ -1,11 +1,10 @@
 package il.org.spartan.strings;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") //

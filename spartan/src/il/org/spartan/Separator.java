@@ -3,7 +3,6 @@ package il.org.spartan;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.fapi.*;
 import il.org.spartan.iterables.*;
 
 /** A class representing a separator string, which can be used for separating

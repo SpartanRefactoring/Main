@@ -1,4 +1,4 @@
-package il.org.spartan.fapi;
+package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
 
@@ -9,8 +9,6 @@ import org.hamcrest.core.*;
 import org.hamcrest.number.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
-
-import il.org.spartan.*;
 
 /** @author Yossi Gil
  * @since 2015-07-18 */

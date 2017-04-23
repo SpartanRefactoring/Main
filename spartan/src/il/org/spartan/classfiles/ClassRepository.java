@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartanl.testing.Assert.*;
 
 import java.io.*;
@@ -14,7 +14,6 @@ import org.junit.*;
 import il.org.sparan.classfiles.*;
 import il.org.sparan.classfiles.ClassRepositoryTest.*;
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
 
@@ -198,10 +197,8 @@ public class ClassRepository implements Iterable<String> {
     return Arrays.copyOf(files, files.length);
   }
 
-  /**
-   * Obtain an iterator over all class names found in the class path
-   * @return  a new iterator object 
-   */
+  /** Obtain an iterator over all class names found in the class path
+   * @return a new iterator object */
   @Override @NotNull public Iterator<String> iterator() {
     try {
       return getClasses().iterator();

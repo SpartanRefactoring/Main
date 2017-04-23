@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.___.*;
 
 import java.util.*;
@@ -10,11 +10,9 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
-import il.org.spartan.fapi.prune;
+import il.org.spartan.prune;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.Separate.*;
-import il.org.spatan.iteration.*;
 
 /** A <b>Utility Class</b> providing services of converting a collection or an
  * array into a {@link String}, with means for omitting <code><b>null</b></code>

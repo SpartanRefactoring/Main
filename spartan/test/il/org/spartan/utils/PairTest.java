@@ -1,18 +1,16 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
 @SuppressWarnings("static-method") public class PairTest {
   @Test public void testSymmetry() {
     @NotNull final Pair<Integer, Integer> //
-    p1 = new NamedPair("a", Integer.valueOf(1001), Integer.valueOf(-5017)),
-        p2 = new Pair<>(Integer.valueOf(1001), Integer.valueOf(-5017));
+    p1 = new NamedPair("a", Integer.valueOf(1001), Integer.valueOf(-5017)), p2 = new Pair<>(Integer.valueOf(1001), Integer.valueOf(-5017));
     azzert.that(p2.equals(p1), is(p1.equals(p2)));
   }
 

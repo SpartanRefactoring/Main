@@ -34,9 +34,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     return cache;
   }
 
-  /**
-   * see @see java.util.function.Supplier#get() (auto-generated) 
-   */
+  /** see @see java.util.function.Supplier#get() (auto-generated) */
   @Override @Nullable public abstract T get();
 
   /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the current
@@ -100,9 +98,11 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   interface Internal {
-    /**
-     * @return  never! The <code><b>none</b></code> type. There is no legal value that this function can return, since the type <code>@NonNull</code>  {@link Void}  is empty. ( <code><b>null</b></code> is the single vale of  {@link Void} , but it does not obey the  {@link  @NonNull}  annotation. 
-     */
+    /** @return never! The <code><b>none</b></code> type. There is no legal
+     *         value that this function can return, since the type
+     *         <code>@NonNull</code> {@link Void} is empty. (
+     *         <code><b>null</b></code> is the single vale of {@link Void} , but
+     *         it does not obey the {@link @NonNull} annotation. */
     @NotNull @NonNull static Void shouldNeverBeCalled() {
       assert false;
       throw new RuntimeException();

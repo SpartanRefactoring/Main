@@ -41,8 +41,7 @@ import il.org.spartan.streotypes.*;
     return $;
   }
 
-  @SuppressWarnings("static-method")
-  public static class TEST {
+  @SuppressWarnings("static-method") public static class TEST {
     @Test public void fullSum() {
       Assert.assertEquals(21, sum(doubles(0, 1, 2, 3, 4, 5, 6)), 1E-5);
     }

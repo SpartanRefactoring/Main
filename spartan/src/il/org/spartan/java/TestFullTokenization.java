@@ -1,6 +1,6 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import java.io.*;
 import java.util.*;
@@ -11,7 +11,6 @@ import org.junit.experimental.theories.*;
 import org.junit.runner.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.files.visitors.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.utils.*;

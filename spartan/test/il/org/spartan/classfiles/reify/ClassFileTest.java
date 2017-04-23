@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles.reify;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import java.io.*;
 import java.lang.reflect.*;
@@ -14,7 +14,6 @@ import il.org.spartan.bench.*;
 import il.org.spartan.classfiles.*;
 import il.org.spartan.classfiles.reify.ClassInfo.*;
 import il.org.spartan.external.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.files.visitors.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;

@@ -42,7 +42,7 @@ public enum SystemProperty {
 
   @NotNull private static TreeSet<String> objectsToStrings(@NotNull final Set<Object> ¢) {
     @NotNull final TreeSet<String> $ = ¢.stream().map(λ -> (String) λ).collect(Collectors.toCollection(TreeSet::new));
-      return $;
+    return $;
   }
 
   @NotNull public final String key;

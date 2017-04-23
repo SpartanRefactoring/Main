@@ -3,7 +3,6 @@ package il.org.spartan.sequence;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil

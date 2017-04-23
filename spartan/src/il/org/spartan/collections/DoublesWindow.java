@@ -1,6 +1,6 @@
 package il.org.spartan.collections;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.*;
@@ -9,7 +9,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
 /** Manage a window of doubles of a certain size, supporting
  * {@link #add(double)} operations in such a fashion that the oldest value

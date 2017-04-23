@@ -1,9 +1,7 @@
 package il.org.spartan;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.idiomatic.*;
-import static org.junit.Assert.*;
-
 import java.io.*;
 import java.util.*;
 import java.util.function.*;
@@ -15,7 +13,6 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.Utils.FoundHandleForT.*;
-import il.org.spartan.fapi.*;
 
 /** An empty <code><b>interface</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.

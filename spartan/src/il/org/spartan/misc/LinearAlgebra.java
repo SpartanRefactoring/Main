@@ -1,6 +1,6 @@
 package il.org.spartan.misc;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spatan.iteration.Iterables.*;
 
 import java.util.*;
@@ -9,7 +9,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.statistics.*;
 
 /** Offers a number of operations on two dimensional matrices and vectors. A

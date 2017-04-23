@@ -1,6 +1,6 @@
 package il.org.spartan.xy;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.misc.LinearAlgebra.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static java.lang.Math.log;
@@ -12,7 +12,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 /** An interface for processing a sequence of X-Y points

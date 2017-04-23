@@ -2,7 +2,7 @@
 package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
@@ -26,7 +26,6 @@ public abstract class NonNegativeCache {
    * @return value to be cached */
   protected abstract int ____();
 
-   
   public static class TEST extends NonNegativeCache {
     private static final int SOME_OFFSET = 17;
     private int evaluations;

@@ -1,8 +1,8 @@
 package il.org.spartan.bench;
 
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
-import static il.org.spartan.fapi.azzert.*;
 import static il.org.spartan.strings.StringUtils.*;
 import static il.org.spartan.utils.Box.*;
 import static il.org.spartan.utils.___.*;
@@ -15,7 +15,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Accumulator.Counter;

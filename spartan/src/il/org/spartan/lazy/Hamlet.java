@@ -1,16 +1,15 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.lazy;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.lazy.Environment.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
-@SuppressWarnings({ "boxing",  "null" }) //
+@SuppressWarnings({ "boxing", "null" }) //
 public class Hamlet implements Environment {
   private final Property<Boolean> $ = function(init());
   private final Function0<@Nullable Boolean> permanent = () -> !$.get();

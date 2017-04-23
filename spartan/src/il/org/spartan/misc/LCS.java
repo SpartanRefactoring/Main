@@ -2,7 +2,7 @@
 package il.org.spartan.misc;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
@@ -12,7 +12,6 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.text.*;
 
 /** Utility functions for computing the "Longest Common Subsequence" for two
@@ -113,7 +112,7 @@ public class LCS {
   }
 
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method",  "synthetic-access" }) //
+  @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST {
     /** Dumb implementation, yeah, I know. --yg. */
     private static String[] chars2Lines(@NotNull final String s) {
