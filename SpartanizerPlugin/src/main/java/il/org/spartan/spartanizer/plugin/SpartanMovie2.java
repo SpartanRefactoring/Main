@@ -34,6 +34,8 @@ public class SpartanMovie2 extends AbstractHandler {
           for (int i = 0; i < 50 && !monitor.isCanceled(); i++) {
             if(i==0) {
               monitor.subTask("Doing something");
+            } else if (i == 12) {
+              checkDozen(monitor);            
             } else if (i == 25) {
               monitor.subTask("Doing something elese");
             } else if (i == 40) {
@@ -56,6 +58,20 @@ public class SpartanMovie2 extends AbstractHandler {
           });
         }
         return Status.OK_STATUS;
+      }
+
+      private void checkDozen(IProgressMonitor monitor) {
+        try {
+          monitor.beginTask("Checking a dozen", 12);
+          for (int i = 0; i < 12; i++) {
+            Thread.sleep(10);
+            monitor.worked(1);
+          }
+        } catch (InterruptedException e) {
+           e.printStackTrace();
+        } finally {
+          monitor.done();
+        }
       }
     };
     job.schedule();
