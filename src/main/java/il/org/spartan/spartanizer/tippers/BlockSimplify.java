@@ -53,7 +53,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
   }
 
   @Override public String description(final Block ¢) {
-    return "Simplify block with  " + extract.statements(¢).size() + " statement" + "s";
+    return "Simplify block with  " + extract.statements(¢).size() + " statements";
   }
 
   @Override public Statement replacement(final Block b) {
