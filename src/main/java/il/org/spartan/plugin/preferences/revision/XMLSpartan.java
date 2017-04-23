@@ -31,7 +31,7 @@ import nano.ly.*;
 public class XMLSpartan {
   public static final String FILE_NAME = "spartanizer.xml";
   private static final String BASE = "spartan";
-  private static final String CURRENT_VERSION = "4.0";
+  private static final String CURRENT_VERSION = "5.0";
   private static final Examples EMPTY_PREVIEW = new Examples()//
       .convert("[no available preview]")//
       .to("[no available preview]");
