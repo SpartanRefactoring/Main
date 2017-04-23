@@ -45,7 +45,7 @@ public class SpartanMovie2 extends AbstractHandler {
               subMonitor.subTask("Nearly there");
             }
             Thread.sleep(100);
-            monitor.worked(100);
+            subMonitor.worked(100);
           }
         } catch (InterruptedException e) {
           note.bug(e);
