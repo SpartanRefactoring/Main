@@ -2,10 +2,12 @@ package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import java.rmi.activation.*;
 import java.util.List;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.internal.content.Activator;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -39,6 +41,7 @@ public class SpartanMovie2 extends AbstractHandler {
 //          monitor.beginTask("Preparing", 5000);
           SubMonitor subMonitor = 
               SubMonitor.convert(monitor,"Prepring", 5000);
+          subMonitor = null;
           for (int i = 0; i < 50 && !subMonitor.isCanceled(); i++) {
             if(i==0) {
               subMonitor.subTask("Doing something");
@@ -52,8 +55,11 @@ public class SpartanMovie2 extends AbstractHandler {
             Thread.sleep(100);
             subMonitor.worked(100);
           }
-        } catch (InterruptedException e) {
-          note.bug(e);
+        } catch (InterruptedException $) {
+          note.bug($);
+        } catch (NullPointerException $) {
+          return new Status(IStatus.ERROR,
+             org.eclipse.core.internal.runtime.Activator.PLUGIN_ID, "Programming bug?", $);          
         } finally {
           monitor.done();
         }
@@ -94,6 +100,8 @@ public class SpartanMovie2 extends AbstractHandler {
             ParameterizedCommand.generateCommand(command, null));
       job.setProperty(IProgressConstants2.ICON_PROPERTY,
           ImageDescriptor.createFromURL(SpartanMovie2.class.getResource("/icons/sample.gif")));
+      job.setProperty(IProgressConstants2.SHOW_IN_TASKBAR_ICON_PROPERTY,
+          Boolean.TRUE);
     }
     
     job.schedule();
