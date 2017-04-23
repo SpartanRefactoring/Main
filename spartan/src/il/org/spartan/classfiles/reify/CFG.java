@@ -175,11 +175,11 @@ public class CFG {
       }
       offset = r.position();
     }
-    if (currBlock != null) {
-      currBlock.endOffset = offset;
-      b.newVertex(currBlock);
-      $.add(currBlock);
-    }
+    if (currBlock == null)
+      return $;
+    currBlock.endOffset = offset;
+    b.newVertex(currBlock);
+    $.add(currBlock);
     return $;
   }
 

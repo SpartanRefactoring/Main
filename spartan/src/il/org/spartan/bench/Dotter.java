@@ -6,7 +6,7 @@ import static il.org.spartan.utils.Box.*;
  * @since 01/05/2011 */
 public class Dotter implements java.io.Serializable {
   public static final int DOTS_IN_LINE = 60;
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
   private final long initTime;
   private int n;
   private int line;

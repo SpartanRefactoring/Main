@@ -992,16 +992,13 @@ public class RawTokenizer {
       zzEndRead += numRead;
       return false;
     }
-    // unlikely but not impossible: read 0 characters, but not at end of stream
-    if (numRead == 0) {
-      final int c = zzReader.read();
-      if (c == -1)
-        return true;
-      zzBuffer[zzEndRead++] = (char) c;
-      return false;
-    }
-    // numRead <0
-    return true;
+    if (numRead != 0)
+      return true;
+    final int c = zzReader.read();
+    if (c == -1)
+      return true;
+    zzBuffer[zzEndRead++] = (char) c;
+    return false;
   }
 
   /** Reports an error that occured while scanning. In a wellformed scanner (no

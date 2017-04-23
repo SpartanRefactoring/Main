@@ -78,7 +78,7 @@ public enum Unit {
   };
   /** A field for identifying a streamed version of objects of this class; we
    * use the values of <code>1L</code> to maintain upward compatibility. */
-  public static final long serialVersionUID = 1L;
+  public static final long serialVersionUID = 1;
   public static final double PERCENT = 0.01;
   public static final int NANOSECOND = 1;
   public static final int MICROSECOND = 1000 * NANOSECOND;

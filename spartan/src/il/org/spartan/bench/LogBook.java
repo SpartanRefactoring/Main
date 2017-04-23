@@ -46,7 +46,7 @@ import il.org.spatan.iteration.*;
 public abstract class LogBook implements Serializable {
   /** A field for identifying a streamed version of objects of this class; we
    * use the values of <code>1L</code> to maintain upward compatibility. */
-  public static final long serialVersionUID = 1L;
+  public static final long serialVersionUID = 1;
 
   public static void removeKeys(@NotNull final Iterable<Entry> es, @NotNull final Keys exclude) {
     for (@NotNull final Entry ¢ : es)
@@ -248,7 +248,7 @@ public abstract class LogBook implements Serializable {
   public static class Entries extends ArrayList<LogBook.Entry> {
     /** A field for identifying a streamed version of objects of this class; we
      * use the values of <code>1L</code> to maintain upward compatibility. */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
     @Override @NotNull public Entries clone() {
       return (Entries) super.clone();
@@ -258,7 +258,7 @@ public abstract class LogBook implements Serializable {
   public final class Entry extends Setting {
     /** A field for identifying a streamed version of objects of this class; we
      * use the values of <code>1L</code> to maintain upward compatibility. */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
     public Unit unit;
     public final RealStatistics records = new RealStatistics();
 
@@ -307,7 +307,7 @@ public abstract class LogBook implements Serializable {
   }
 
   public static final class Keys extends LinkedHashSet<String> {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
     @Override @NotNull public String toString() {
       return size() != 1 ? super.toString() : Iterables.first(this) + "";
@@ -317,7 +317,7 @@ public abstract class LogBook implements Serializable {
   public static class Mutable extends LogBook {
     /** A field for identifying a streamed version of objects of this class; we
      * use the values of <code>1L</code> to maintain upward compatibility. */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
     @NotNull public static Mutable readFrom(@NotNull final File f) throws IOException, ClassNotFoundException {
       @NotNull final ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
@@ -643,7 +643,7 @@ public abstract class LogBook implements Serializable {
   public static class Setting extends LinkedHashMap<String, String> {
     /** A field for identifying a streamed version of objects of this class; we
      * use the values of <code>1L</code> to maintain upward compatibility. */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
     public final void demote(final String key) {
       if (!containsKey(key))
@@ -661,7 +661,7 @@ public abstract class LogBook implements Serializable {
   }
 
   public static final class Values extends ArrayList<String> {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
 
     @Override @NotNull public String toString() {
       return size() != 1 ? super.toString() : Iterables.first(this) + "";
@@ -688,10 +688,10 @@ public abstract class LogBook implements Serializable {
           println(prefix(removeKeys(¢, exclude)) + ¢.format());
       if (mode == SUMMARY || mode == BOTH || mode == ENDS && $.size() > 1)
         summary($);
-      if (mode == ENDS || $.size() > 1) {
-        final Entry min = min($), max = max($);
-        System.out.println(shortForm(min) + compare(min, max) + ratio(min, max) + shortForm(max));
-      }
+      if (mode != ENDS && $.size() <= 1)
+        return LogBook.this;
+      final Entry min = min($), max = max($);
+      System.out.println(shortForm(min) + compare(min, max) + ratio(min, max) + shortForm(max));
       return LogBook.this;
     }
 

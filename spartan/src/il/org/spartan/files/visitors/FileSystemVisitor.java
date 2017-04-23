@@ -334,7 +334,7 @@ public class FileSystemVisitor {
     /** @author Yossi Gil
      * @since 21/05/2007 */
     class StopTraversal extends Exception {
-      private static final long serialVersionUID = -4658857180021394864L;
+      private static final long serialVersionUID = -0x40A795EBEA740DB0L;
 
       /** Create a new {@link StopTraversal} object */
       public StopTraversal() {

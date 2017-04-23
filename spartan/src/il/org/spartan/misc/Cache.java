@@ -51,12 +51,10 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
   public T get(final String key) {
     nonnull(key);
     T $ = map.get(key);
-    if ($ != null)
+    if ($ != null || exhaustive)
       return $;
-    if (!exhaustive) {
-      $ = factory.make(key);
-      map.put(key, $);
-    }
+    $ = factory.make(key);
+    map.put(key, $);
     return $;
   }
 

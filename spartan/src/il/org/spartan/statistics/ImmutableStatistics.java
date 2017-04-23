@@ -13,7 +13,7 @@ import il.org.spartan.bench.*;
 public abstract class ImmutableStatistics extends Statistics implements java.io.Serializable {
   /** A field for identifying a streamed version of objects of this class; we
    * use the values of <code>1L</code> to maintain upward compatibility. */
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 
   private static StringBuilder appendValue(@NotNull final StringBuilder b, final String name, final double v, @NotNull final Unit u) {
     return b.append(name).append('=').append(u.format(v));

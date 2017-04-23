@@ -14,7 +14,7 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil
  * @param <T> type of encoded elements */
 public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
-  private static final long serialVersionUID = -6058325247331073511L;
+  private static final long serialVersionUID = -0x54137EB6CCF2FDE7L;
   @NotNull private final Vector<T> int2objects;
   @NotNull private final Map<T, Integer> objects2ints;
 

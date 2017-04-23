@@ -8,7 +8,7 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil
  * @since 01/05/2007 */
 public class Strings extends ArrayList<String> {
-  private static final long serialVersionUID = 8720456759509032187L;
+  private static final long serialVersionUID = 0x7905493845B09CFBL;
 
   /** Create an empty list of Strings. */
   public Strings() {

@@ -126,10 +126,10 @@ public class ExecutableEntity extends TypedEntity {
 
   private int[] getClassRefsByComponents(final String className) {
     int[] $ = class2refsByComponents.get(className);
-    if ($ == null) {
-      $ = new int[LinkComponents.values().length];
-      class2refsByComponents.put(className, $);
-    }
+    if ($ != null)
+      return $;
+    $ = new int[LinkComponents.values().length];
+    class2refsByComponents.put(className, $);
     return $;
   }
 

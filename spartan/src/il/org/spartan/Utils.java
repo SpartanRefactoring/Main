@@ -476,7 +476,7 @@ public interface Utils {
 
     /** Instantiates this class
      * @param function which function to apply? */
-    Applicator(final Function<F, T> function) {
+    public Applicator(final Function<F, T> function) {
       this.function = function;
     }
 

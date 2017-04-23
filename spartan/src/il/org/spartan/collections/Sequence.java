@@ -14,7 +14,7 @@ import il.org.spatan.iteration.*;
  * assume that the collection does not contain null elements
  * @param <E> Type of elements in the sequence */
 public class Sequence<E> implements Iterable<E>, Serializable {
-  private static final long serialVersionUID = 8259437798546027307L;
+  private static final long serialVersionUID = 0x729F6AEADAC5332BL;
 
   @NotNull public static <T> Sequence<T> make(@NotNull final Sequence<T> s, final int begin) {
     return make(s.es, begin, s.end);
