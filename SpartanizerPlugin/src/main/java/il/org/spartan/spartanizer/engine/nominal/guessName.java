@@ -5,6 +5,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Quick hack to guess the kind of stuff a name denotes based on cameCasing and
  * other conventions
@@ -14,7 +15,7 @@ public enum guessName {
   STATIC_CONSTANT, //
   CLASS_NAME() {
     @Override boolean special(final String name) {
-      return iz.in(name, "extract", "into", "azzert", "iz", "az", "is", "az", "has", "haz");
+      return is.in(name, "extract", "into", "azzert", "iz", "az", "is", "az", "has", "haz");
     }
   }, //
   SETTTER_METHOD, //

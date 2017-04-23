@@ -26,15 +26,15 @@ public abstract class LocalInitializedIfAssignmentPattern extends LocalInitializ
   protected Expression from;
 
   public LocalInitializedIfAssignmentPattern() {
-   require("Next statement is an if", () -> nextIf = az.ifStatement(nextStatement));
+    require("Next statement is an if", () -> nextIf = az.ifStatement(nextStatement));
     andAlso("Else is empty", () -> iz.vacuousElse(nextIf));
     require("Then part is an assignment", () -> assignment = extract.assignment(then(nextIf)));
     andAlso("Assignment is to current variable", () -> wizard.eq(name, to(assignment)));
     property("Operator", () -> operator = assignment.getOperator());
     property("Condition", () -> condition = nextIf.getExpression());
-    property("From", () -> from =  from(assignment));
-//    andAlso("Not used in older siblings", () -> !usedInOlderSiblings());
-//    andAlso("Not used in condition ", () -> !usedInOlderSiblings());
+    property("From", () -> from = from(assignment));
+    // andAlso("Not used in older siblings", () -> !usedInOlderSiblings());
+    // andAlso("Not used in condition ", () -> !usedInOlderSiblings());
   }
 
   @Override public String description() {

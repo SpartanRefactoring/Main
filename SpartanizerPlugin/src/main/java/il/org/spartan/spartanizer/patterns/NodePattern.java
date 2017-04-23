@@ -108,7 +108,7 @@ public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
     return Ranger.start(current);
   }
 
-  protected <T> NodePattern<N> require(String name, Supplier<T> t) {
+  protected <T> NodePattern<N> require(final String name, final Supplier<T> t) {
     return notNil(String.format("Require %s ", name), t);
   }
 }

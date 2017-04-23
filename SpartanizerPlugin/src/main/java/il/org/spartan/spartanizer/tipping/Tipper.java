@@ -12,7 +12,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Examples.*;
@@ -55,7 +54,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   }
 
   @Override public String description() {
-    return separate.these(Namer.components(tipperName())).bySpaces();
+    return separate.these(cCamelCase.components(tipperName())).bySpaces();
   }
 
   public abstract String description(N n);

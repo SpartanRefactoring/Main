@@ -15,7 +15,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
@@ -115,7 +114,7 @@ public class TraversalMonitor extends TraversalImplementation.__ implements Trav
           return String.format("%2d. %s %s#%s %s: %s\n", //
               box.it(¢.getSequenceNumber()), //
               new SimpleDateFormat("hh:mm:ss").format(new Date(¢.getMillis())), //
-              Namer.lastComponent(¢.getSourceClassName()), //
+              cCamelCase.lastComponent(¢.getSourceClassName()), //
               ¢.getSourceMethodName(), //
               ¢.getLevel(), //
               formatMessage(¢)//

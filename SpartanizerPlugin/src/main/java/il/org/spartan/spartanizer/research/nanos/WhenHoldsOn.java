@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 
 /** Find if(X == null) return null; <br>
@@ -47,11 +47,11 @@ public final class WhenHoldsOn<N extends ASTNode> extends NanoPatternTipper<N> {
       @Override @SuppressWarnings("unchecked") public void go(final ASTRewrite r, final TextEditGroup g) {
         final List<Expression> branchesExpressions = branchesExpressions(¢);
         r.replace(¢,
-            make.ast("holds(" + Namer.cent + " ->"
+            make.ast("holds(" + notation.cent + " ->"
                 + (differsInSingleAtomic(branchesExpressions(¢))
-                    ? replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), Namer.cent) + ")"
+                    ? replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), notation.cent) + ")"
                         + createOns(singleAtomicDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢)
-                    : replaceAll(first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", Namer.cent) + ")"
+                    : replaceAll(first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", notation.cent) + ")"
                         + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢))),
             g);
       }

@@ -12,7 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.utils.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
@@ -79,11 +79,11 @@ public enum haz {
   }
 
   public static boolean cent(final ASTNode ¢) {
-    return !collect.usesOf(Namer.cent).inside(¢).isEmpty();
+    return !collect.usesOf(notation.cent).inside(¢).isEmpty();
   }
 
   public static boolean it(final ASTNode ¢) {
-    return !collect.usesOf(Namer.it).inside(¢).isEmpty();
+    return !collect.usesOf(notation.it).inside(¢).isEmpty();
   }
 
   /** Determine whether an {@link ASTNode} contains as a children a

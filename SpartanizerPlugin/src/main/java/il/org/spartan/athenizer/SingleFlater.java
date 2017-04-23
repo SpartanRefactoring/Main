@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
+import nano.ly.note;
 
 /** A tool for committing a single change to a {@link CompilationUnit}.
  * @author Ori Roth {@code ori.rothh@gmail.com}

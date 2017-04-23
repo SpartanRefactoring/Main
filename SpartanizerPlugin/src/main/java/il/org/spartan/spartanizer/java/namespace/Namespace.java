@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.java.namespace.definition.Kind.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -15,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.definition.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 
 /** Dictionary with a parent. Insertions go the current node, searches start at
  * the current node and delegate to the parent unless it is null.
@@ -395,7 +395,7 @@ public final class Namespace implements Environment {
 
   public static Iterable<String> namesGenerator(final SimpleType t) {
     return () -> new Iterator<String>() {
-      final String base = Namer.variableName(t);
+      final String base = abbreviate.variableName(t);
       int n = -1;
 
       @Override public String next() {
@@ -409,7 +409,7 @@ public final class Namespace implements Environment {
   }
 
   public String generateName(final Type ¢) {
-    return generateName(Namer.shorten(¢));
+    return generateName(abbreviate.it(¢));
   }
 
   public String generateName(final String ¢) {
@@ -429,7 +429,7 @@ public final class Namespace implements Environment {
   }
 
   public boolean allowsCurrentRecursive() {
-    return flat.keySet().stream().noneMatch(λ -> isVariable(λ) && !in(λ, Namer.specials))
+    return flat.keySet().stream().noneMatch(λ -> isVariable(λ) && !notation.isSpecial(λ))
         && children.stream().allMatch(Namespace::allowsCurrentRecursive);
   }
 

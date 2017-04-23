@@ -4,9 +4,9 @@ import java.io.*;
 import java.util.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** A relation is just another name for a table that contains elements of __
  * {@link Record}. This class provides fluent API for generating tables,
@@ -188,6 +188,6 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   static String classToNormalizedFileName(final String className) {
-    return separate.these(lisp.rest(as.iterable(Namer.components(className)))).by('-').toLowerCase();
+    return separate.these(lisp.rest(as.iterable(cCamelCase.components(className)))).by('-').toLowerCase();
   }
 }

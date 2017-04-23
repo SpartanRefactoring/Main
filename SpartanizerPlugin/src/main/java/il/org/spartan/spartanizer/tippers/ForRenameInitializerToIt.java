@@ -9,8 +9,6 @@
  * @see ExclusionManager */
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.Utils.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -23,6 +21,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
@@ -41,12 +40,12 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
     if ($ == null)
       return null;
     final SimpleName n = extract.onlyName(x);
-    if (n == null || in(n.getIdentifier(), Namer.specials) || !JohnDoe.property(x.getType(), n))
+    if (n == null || notation.isSpecial(n) || !JohnDoe.property(x.getType(), n))
       return null;
     final Statement body = $.getBody();
     if (body == null || haz.variableDefinition(body) || haz.cent(body) || !Inliner.variableUsedInFor($, n))
       return null;
-    final SimpleName ¢ = Namer.newCent(x);
+    final SimpleName ¢ = make.newCent(x);
     return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename(n, ¢, $, r, g);
