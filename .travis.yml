@@ -1,4 +1,3 @@
-warnings_are_errors: false
 language: java
 install: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B -V
 jdk:
