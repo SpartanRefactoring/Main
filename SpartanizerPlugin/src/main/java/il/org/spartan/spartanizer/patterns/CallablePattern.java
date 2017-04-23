@@ -1,12 +1,10 @@
 package il.org.spartan.spartanizer.patterns;
 
-import org.eclipse.jdt.core.dom.*;
-
-import nano.ly.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+
+import org.eclipse.jdt.core.dom.*;
 
 /** Either constructor or {@link MethodDeclaration}
  * @author Yossi Gil
