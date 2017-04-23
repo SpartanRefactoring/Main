@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2017-04-23 */
 public abstract class LocalInitializedIfAssignmentPattern extends LocalInitialized implements TipperCategory.Inlining {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
   protected Assignment assignment;
   protected Expression condition;
   protected IfStatement nextIf;
