@@ -34,26 +34,8 @@ public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
     });
   }
 
-  protected final NodePattern<N> andAlso(final Proposition ¢) {
-    this.prerequisite = prerequisite.and(¢);
-    return this;
-  }
-
-  public final <T> NodePattern<N> notNil(final String description, final Supplier<T> t) {
-    return andAlso(description, () -> not.nil(t.get()));
-  }
-
   public final NodePattern<N> andAlso(final String description, final BooleanSupplier s) {
     return andAlso(prerequisite.and(Proposition.that(description, s)));
-  }
-
-  protected final NodePattern<N> butNot(final Proposition ¢) {
-    this.prerequisite = prerequisite.and(not(¢));
-    return this;
-  }
-
-  private CompilationUnit containingCompilationUnit() {
-    return containing.compilationUnit(current);
   }
 
   @Override public final String description(@SuppressWarnings("unused") final N __) {
@@ -62,15 +44,8 @@ public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
 
   @Override public abstract Examples examples();
 
-  protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
-
-  protected ASTNode highlight() {
-    return current;
-  }
-
-  protected final NodePattern<N> orElse(final Proposition ¢) {
-    this.prerequisite = prerequisite.or(¢);
-    return this;
+  public final <T> NodePattern<N> notNil(final String description, final Supplier<T> t) {
+    return andAlso(description, () -> not.nil(t.get()));
   }
 
   @Override public final boolean prerequisite(final N ¢) {
@@ -80,14 +55,6 @@ public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
 
   public final void setCurrent(final N c) {
     current = c;
-  }
-
-  protected ASTNode[] span() {
-    return as.array(current);
-  }
-
-  protected Range start() {
-    return Ranger.start(current);
   }
 
   @Override public final Tip tip(final N n) {
@@ -104,7 +71,44 @@ public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
     }).spanning(span());
   }
 
+  private CompilationUnit containingCompilationUnit() {
+    return containing.compilationUnit(current);
+  }
+
+  protected final NodePattern<N> andAlso(final Proposition ¢) {
+    this.prerequisite = prerequisite.and(¢);
+    return this;
+  }
+
+  protected final NodePattern<N> butNot(final Proposition ¢) {
+    this.prerequisite = prerequisite.and(not(¢));
+    return this;
+  }
+
+  protected abstract ASTRewrite go(ASTRewrite r, TextEditGroup g);
+
+  protected ASTNode highlight() {
+    return current;
+  }
+
+  protected final NodePattern<N> orElse(final Proposition ¢) {
+    this.prerequisite = prerequisite.or(¢);
+    return this;
+  }
+
   protected NodePattern<N> property(final String fieldName, final Runnable r) {
     return andAlso("Extract " + fieldName, () -> yes.forgetting(() -> r.run()));
+  }
+
+  protected ASTNode[] span() {
+    return as.array(current);
+  }
+
+  protected Range start() {
+    return Ranger.start(current);
+  }
+
+  protected <T> NodePattern<N> require(String name, Supplier<T> t) {
+    return notNil(String.format("Require %s ", name), t);
   }
 }
