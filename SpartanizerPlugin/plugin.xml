@@ -383,7 +383,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.ZoomSelection" name="Selection"/>
      <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off"/>
      <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
-     <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
+     <!--<command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />-->
      <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
      <command id="il.org.spartan.AthensInflate" name="Athenize" />
      <command id="il.org.spartan.PreferencesChooser" name="Preferences..." />
@@ -481,7 +481,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
     <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
     <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="C" label="¢" />
-    <command commandId="il.org.spartan.SpartanMovie" style="push" mnemonic="M" label="The Spartan Movie" />
+    <!--<command commandId="il.org.spartan.SpartanMovie" style="push" mnemonic="M" label="The Spartan Movie" />-->
   </menu>
 </menuContribution>
 
@@ -563,7 +563,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		commandId="il.org.spartan.ItShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+L"
-		commandId="il.org.spartan.ItShortcut"
+		commandId="il.org.spartan.LambdaShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+I"
 		commandId="il.org.spartan.CentificationShortcut"

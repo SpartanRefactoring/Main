@@ -412,7 +412,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   private final Collection<TextFileChange> changes = an.empty.list();
   private ICompilationUnit iCompilationUnit;
   private IMarker marker;
-  private String name;
+  private String name = "Spartanizing";
   private IProgressMonitor progressMonitor = wizard.nullProgressMonitor;
   private int totalTips;
 }
