@@ -33,7 +33,7 @@ public class SpartanMovie2 extends AbstractHandler {
         protected IStatus run(IProgressMonitor monitor) {
           try {
             monitor.beginTask("Preparing", 5000);
-            for(int i=0;i<50;i++) {
+            for(int i=0;i<50 && !monitor.isCanceled();i++) {
               Thread.sleep(100);
               monitor.worked(100);
             }
@@ -43,11 +43,13 @@ public class SpartanMovie2 extends AbstractHandler {
             monitor.done();
           }
           //MessageDialog.openInformation(null, "Hello", "World");
-          Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-              MessageDialog.openInformation(null, "Hello", "World");
-            }
-          });
+          if(!monitor.isCanceled()){
+            Display.getDefault().asyncExec(new Runnable() {
+              public void run() {
+                MessageDialog.openInformation(null, "Hello", "World");
+              }
+            });
+          }
           return Status.OK_STATUS;
         }
       };
