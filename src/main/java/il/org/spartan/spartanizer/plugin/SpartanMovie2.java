@@ -48,6 +48,44 @@ public class SpartanMovie2 extends AbstractHandler {
       protected IStatus run(IProgressMonitor monitor) {
         try {
 //          monitor.beginTask("Preparing", 5000);
+          
+          monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
+          int changes = 0, filesModified = 0;
+          
+          for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
+            System.out.println(currentCompilationUnit.getElementName());
+            mightNotBeSlick(page);
+            final IResource file = currentCompilationUnit.getResource();
+            try {
+              IMarker[] markers = getMarkers(file);
+              if (markers.length > 0)
+                ++filesModified;
+                for (; markers.length > 0; markers = getMarkers(file)) {
+                  final IMarker marker = getFirstMarker(markers);
+                  monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
+                  marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+                  IDE.openEditor(page, marker, true);
+                  refresh(page);
+                  sleep(SLEEP_BETWEEN);
+                  traversal.runAsMarkerFix(marker);
+                  ++changes;
+                  marker.delete(); // TODO Ori Roth: does not seem to make a 
+                                   // difference
+                                   // actually it removes the markers after the traversal
+                                   // and avoid the infinite loop (it descreases markers.length at
+                                   // each round -- mo
+                  refresh(page);
+                  sleep(SLEEP_BETWEEN);
+                }
+              } catch (final CoreException ¢) {
+                note.bug(¢);
+              }
+           }
+           monitor.subTask("Done: Commited " + changes + " changes in " + filesModified +
+           " " + English.plurals("file", filesModified));
+           sleep(SLEEP_END);
+           monitor.done();
+          
           SubMonitor subMonitor = 
               SubMonitor.convert(monitor,"Prepring", 5000);
           subMonitor = null;
@@ -83,20 +121,30 @@ public class SpartanMovie2 extends AbstractHandler {
         return Status.OK_STATUS;
       }
 
-      private void checkDozen(IProgressMonitor monitor) {
-        if(monitor == null){
-          monitor = new NullProgressMonitor();
+      Boolean sleep(double howMuch) {
+        try {
+          Thread.sleep((int) (1000 * howMuch));
+          return true;
+        } catch (final InterruptedException ¢) {
+          note.bug(¢);
+          return false;
+        }
+      }
+
+      private void checkDozen(IProgressMonitor m) {
+        if(m == null){
+          m = new NullProgressMonitor();
         }
         try {
-          monitor.beginTask("Checking a dozen", 12);
+          m.beginTask("Checking a dozen", 12);
           for (int i = 0; i < 12; i++) {
             Thread.sleep(10);
-            monitor.worked(1);
+            m.worked(1);
           }
         } catch (InterruptedException e) {
            e.printStackTrace();
         } finally {
-          monitor.done();
+          m.done();
         }
       }
     };
