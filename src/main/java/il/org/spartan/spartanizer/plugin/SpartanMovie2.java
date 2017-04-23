@@ -114,17 +114,6 @@ public class SpartanMovie2 extends AbstractHandler {
     }
     
     job.schedule();
-    // final IWorkbench workbench = PlatformUI.getWorkbench();
-    // final List<ICompilationUnit> compilationUnits = getCompilationUnits();
-    // final IWorkbenchWindow window = workbench == null ? null :
-    // workbench.getActiveWorkbenchWindow();
-    // final IWorkbenchPage page = window == null ? null :
-    // window.getActivePage();
-    // final IProgressService progressService = workbench == null ? null :
-    // workbench.getProgressService();
-    // final GUITraversal traversal = new GUITraversal();
-    // if (compilationUnits == null || page == null || progressService == null)
-    // return null;
     // try {
     //// progressService.run(false, true, pm -> {
     // progressService.runInUI(PlatformUI.getWorkbench().getProgressService(),
