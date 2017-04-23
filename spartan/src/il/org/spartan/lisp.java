@@ -23,7 +23,7 @@ public interface lisp {
   }
 
   @Contract("null -> null") @Nullable static <T> T first(@Nullable final List<T> ¢) {
-    return ¢ == null || ¢.isEmpty() ? null : first(¢);
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
   }
 
   static char first(@NotNull final String ¢) {
