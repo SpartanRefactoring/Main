@@ -672,10 +672,6 @@ public final class Version230 {
         .gives("int a=2+3+b>2+3<<b?(2+3)*7<<2+3:2+3;");
   }
 
-  @Test public void declartionIfAssignmentNotPlain() {
-    trimminKof("int a=0;if(y)a+=3;")//
-        .gives("int a=y ? 0 + 3 : 0;");
-  }
 
   @Test public void doNotConsolidateNewArrayActual() {
     trimminKof("occupied=new boolean[capacity]; placeholder=new boolean[capacity];")//
@@ -1598,9 +1594,6 @@ public final class Version230 {
         .gives("int a=x ? 2*2: 2;");
   }
 
-  @Test public void localIfUpdateAssignment() {
-    trimminKof("String u=s;if(s.equals(y))u +=s + blah;S.h(u);").gives("String u=s.equals(y)? s +(s + blah):s;S.h(u);");
-  }
 
   @Test public void localIfUsesLaterVariable() {
     trimminKof("int a=0, b=0;if(b==3)a=4;")//
@@ -1707,10 +1700,6 @@ public final class Version230 {
         .gives("return 3 + 2;");
   }
 
-  @Test public void localUpdateReturnNone() {
-    trimminKof("int a=f();return a +=2 * a;")//
-        .stays();
-  }
 
   @Test public void localUpdateReturnTwice() {
     trimminKof("int a=3;return a +=2 * a;")//
