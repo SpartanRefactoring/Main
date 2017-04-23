@@ -35,6 +35,15 @@ public class SpartanMovie2 extends AbstractHandler {
   private static final double SLEEP_END = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
+    
+     final IWorkbench workbench = PlatformUI.getWorkbench();
+     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
+     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
+     final IWorkbenchPage page = window == null ? null : window.getActivePage();
+     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
+     final GUITraversal traversal = new GUITraversal();
+     if (compilationUnits == null || page == null || progressService == null) return null;
+    
     Job job = new Job("About to say hello") {
       protected IStatus run(IProgressMonitor monitor) {
         try {
