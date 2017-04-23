@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import org.eclipse.jdt.core.dom.*;
 
-import nano.ly.*;
-
 /** Convert visibility levels into comparable integers
  * @author Yossi Gil
  * @since 2017-04-22 */
@@ -18,6 +16,6 @@ public interface visibility {
       return 2;
     if (Modifier.isPrivate(m))
       return 1;
-    return zero.forgetting(note.bug(d));
+    return 0;
   }
 }
