@@ -504,10 +504,10 @@ public enum step {
 
   /** @param ¢ JD
    * @return */
-  @SuppressWarnings("unchecked") public static Collection<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
+  @SuppressWarnings("unchecked") public static List<MethodDeclaration> methods(final AbstractTypeDeclaration ¢) {
     return ¢ == null ? null
         : iz.typeDeclaration(¢) ? as.list(az.typeDeclaration(¢).getMethods())
-            : iz.enumDeclaration(¢) ? (Collection<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
+            : iz.enumDeclaration(¢) ? (List<MethodDeclaration>) az.enumDeclaration(¢).bodyDeclarations().stream()
                 .filter(λ -> iz.methodDeclaration(az.astNode(λ))).collect(toList()) : null;
   }
 
