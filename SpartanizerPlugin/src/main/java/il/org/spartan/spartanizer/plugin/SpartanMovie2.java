@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jface.dialogs.*;
+import org.eclipse.jface.resource.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.commands.*;
@@ -88,8 +89,13 @@ public class SpartanMovie2 extends AbstractHandler {
         PlatformUI.getWorkbench().getService(ICommandService.class);
     Command command = service == null ? null : 
       service.getCommand("il.org.spartan.SpartanMovie");
-    if(command != null)
-      job.setProperty(IProgressConstants2.COMMAND_PROPERTY, command);
+    if(command != null){
+      job.setProperty(IProgressConstants2.COMMAND_PROPERTY, 
+            ParameterizedCommand.generateCommand(command, null));
+      job.setProperty(IProgressConstants2.ICON_PROPERTY,
+          ImageDescriptor.createFromURL(SpartanMovie2.class.getResource("/icons/sample.gif")));
+    }
+    
     job.schedule();
     // final IWorkbench workbench = PlatformUI.getWorkbench();
     // final List<ICompilationUnit> compilationUnits = getCompilationUnits();
