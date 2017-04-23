@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Spartan Refactoring
 Bundle-SymbolicName: il.org.spartan.plugin;singleton:=true
-Bundle-Version: 2.11.2
+Bundle-Version: 2.11.3
 Bundle-Activator: il.org.spartan.spartanizer.plugin.Plugin
 Bundle-Vendor: Technion--Israel Institute of Technology
 Require-Bundle: org.eclipse.ui;bundle-version="[3.108.0,4.0.0]",
@@ -24,11 +24,11 @@ Bundle-ClassPath: .,
  lib/mockito-all-2.0.2-beta.jar,
  lib/hamcrest-all-1.3.jar,
  lib/annotations-12.0.jar
-Export-Package: il.org.spartan.athenizer;version="2.11.2";,
- il.org.spartan.athenizer.collateral;version="2.11.2";,
- il.org.spartan.athenizer.inflate.expanders;version="2.11.2";,
- il.org.spartan.athenizer.inflate;version="2.11.2";,
- il.org.spartan.plugin;version="2.11.2";
+Export-Package: il.org.spartan.athenizer;version="2.11.3";,
+ il.org.spartan.athenizer.collateral;version="2.11.3";,
+ il.org.spartan.athenizer.inflate.expanders;version="2.11.3";,
+ il.org.spartan.athenizer.inflate;version="2.11.3";,
+ il.org.spartan.plugin;version="2.11.3";
   uses:="org.eclipse.jdt.core,
    org.eclipse.jdt.core.dom.rewrite,
    org.eclipse.ltk.core.refactoring,
