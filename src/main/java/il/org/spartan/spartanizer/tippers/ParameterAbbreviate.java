@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
+import nano.ly.*;
 
 /** Abbreviates the name of a method parameter that is a viable candidate for
  * abbreviation (meaning that its name is suitable for renaming, and isn'tipper
@@ -51,15 +52,15 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
 
   private static boolean isShort(final SingleVariableDeclaration ¢) {
     final String identifier = ¢.getName().getIdentifier();
-    if (iz.in(identifier, shortNames))
+    if (is.in(identifier, shortNames))
       return true;
-    final String $ = Namer.shorten(¢.getType());
+    final String $ = abbreviate.it(¢.getType());
     return $ != null && ($ + pluralVariadic(¢)).equals(identifier);
   }
 
   private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
     final List<SimpleName> localVariables = new MethodExplorer(d).localVariables();
-    final String shortName = Namer.shorten($.getType());
+    final String shortName = abbreviate.it($.getType());
     return shortName != null && localVariables.stream().noneMatch(λ -> λ.getIdentifier().equals(shortName + pluralVariadic($)))
         && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(shortName + pluralVariadic($)))
         && !d.getName().getIdentifier().equalsIgnoreCase(shortName + pluralVariadic($));
@@ -82,7 +83,7 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))
       return null;
     final SimpleName oldName = d.getName();
-    final String newName = Namer.shorten(d.getType()) + pluralVariadic(d);
+    final String newName = abbreviate.it(d.getType()) + pluralVariadic(d);
     if (!iz.methodDeclaration(d.getParent()))
       return new Tip("Abbreviate parameter " + oldName + " to " + newName + " in method " + $.getName().getIdentifier(), getClass(), d.getName()) {
         @Override public void go(final ASTRewrite r, final TextEditGroup g) {

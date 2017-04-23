@@ -34,7 +34,7 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
   private List<MethodInvocation> invocations;
 
   public StringFromStringBuilder() {
-    andAlso("StringBuilder/StringBuffer instance creation", () -> iz.in(name, "StringBuilder", "StringBuffer"));
+    andAlso("StringBuilder/StringBuffer instance creation", () -> is.in(name, "StringBuilder", "StringBuffer"));
     andAlso("Converted to String", () -> {
       invocations = ancestors.until((p, c) -> !iz.methodInvocation(c) || p != null && p != az.methodInvocation(c).getExpression()).from(parent)
           .stream().map(az::methodInvocation).collect(toList());
@@ -43,7 +43,7 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
           && (iz.stringLiteral(az.infixExpression($).getLeftOperand()) || iz.stringLiteral(az.infixExpression($).getRightOperand()));
     });
     andAlso("All invocations are append/toString",
-        () -> invocations.stream().allMatch(λ -> iz.in(λ.getName().getIdentifier(), "append", "toString")));
+        () -> invocations.stream().allMatch(λ -> is.in(λ.getName().getIdentifier(), "append", "toString")));
     andAlso("All append invocation have one parameter",
         () -> invocations.stream().filter(λ -> "append".equals(λ.getName().getIdentifier())).allMatch(λ -> λ.arguments().size() == 1));
     andAlso("All to toString have zero parameters",

@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.ast.safety;
 
+import nano.ly.*;
+
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.utils.Box.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
@@ -25,7 +27,6 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like
@@ -230,11 +231,11 @@ public interface iz {
   /** @param x JD
    * @return whether the parameter is a comparison expression. */
   static boolean comparison(final InfixExpression ¢) {
-    return ¢ != null && in(¢.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
+    return ¢ != null && is.in(¢.getOperator(), EQUALS, GREATER, GREATER_EQUALS, LESS, LESS_EQUALS, NOT_EQUALS);
   }
 
   static boolean comparison(final Operator ¢) {
-    return in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
+    return is.in(¢, EQUALS, NOT_EQUALS, GREATER_EQUALS, GREATER, LESS, LESS_EQUALS);
   }
 
   static boolean compilationUnit(final ASTNode ¢) {
@@ -377,7 +378,7 @@ public interface iz {
    * @return whether the parameter is an operator on which the de Morgan laws
    *         apply. */
   static boolean deMorgan(final Operator ¢) {
-    return in(¢, CONDITIONAL_AND, CONDITIONAL_OR);
+    return is.in(¢, CONDITIONAL_AND, CONDITIONAL_OR);
   }
 
   static boolean deterministic(final ArrayAccess $) {
@@ -443,7 +444,7 @@ public interface iz {
   }
 
   static boolean deterministic(final PrefixExpression ¢) {
-    return !in(¢.getOperator(), op.INCREMENT_PRE, op.DECREMENT_PRE) && deterministic(¢.getOperand());
+    return !is.in(¢.getOperator(), op.INCREMENT_PRE, op.DECREMENT_PRE) && deterministic(¢.getOperand());
   }
 
   static boolean deterministic(final Stream<Expression> ¢) {
@@ -573,7 +574,7 @@ public interface iz {
    * @return True - if the operator have opposite one in terms of operands
    *         swap. */
   static boolean flipable(final Operator ¢) {
-    return in(¢, AND, EQUALS, GREATER, GREATER_EQUALS, LESS_EQUALS, LESS, NOT_EQUALS, OR, PLUS, TIMES, XOR, null);
+    return is.in(¢, AND, EQUALS, GREATER, GREATER_EQUALS, LESS_EQUALS, LESS, NOT_EQUALS, OR, PLUS, TIMES, XOR, null);
   }
 
   /** @param pattern the statement or block to check if it is an for statement
@@ -602,15 +603,6 @@ public interface iz {
 
   static boolean ifStatement(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, IF_STATEMENT);
-  }
-
-  /** Determine if an item can be found in a list of values
-   * @param < T > JD
-   * @param candidate what to search for
-   * @param ts where to search
-   * @return true if the the item is found in the list */
-  @SafeVarargs static <T> boolean in(final T candidate, final T... ts) {
-    return Stream.of(ts).anyMatch(λ -> λ != null && λ.equals(candidate));
   }
 
   static boolean incrementedOrDecremented(final ASTNode id) {
@@ -1235,7 +1227,7 @@ public interface iz {
   }
 
   static boolean updater(final PrefixExpression ¢) {
-    return in(¢.getOperator(), op.INCREMENT_PRE, op.DECREMENT_PRE);
+    return is.in(¢.getOperator(), op.INCREMENT_PRE, op.DECREMENT_PRE);
   }
 
   /** @param pattern JD
@@ -1260,11 +1252,11 @@ public interface iz {
   }
 
   static boolean updating(final PostfixExpression ¢) {
-    return in(¢.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+    return is.in(¢.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
   }
 
   static boolean updating(final PrefixExpression ¢) {
-    return in(¢.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
+    return is.in(¢.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT);
   }
 
   /** @param ¢ JD

@@ -16,7 +16,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.utils.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -33,7 +32,7 @@ public enum az {
     static double double¢(final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return !iz.longType(¢) ? !iz.prefixExpression(¢) ? double¢(token(¢)) : -double¢(token(¢))
-          : iz.numberLiteral(¢) ? double¢(lisp2.chopLast(token(az.numberLiteral(¢)))) : -double¢(lisp2.chopLast(token(az.prefixExpression(¢))));
+          : iz.numberLiteral(¢) ? double¢(lisp.chopLast(token(az.numberLiteral(¢)))) : -double¢(lisp.chopLast(token(az.prefixExpression(¢))));
     }
 
     static double double¢(final String token) throws NumberFormatException {
@@ -52,7 +51,7 @@ public enum az {
     static long long¢(final Expression ¢) throws NumberFormatException {
       assert iz.pseudoNumber(¢);
       return iz.prefixExpression(¢) && iz.intType(¢) ? long¢(token(¢))
-          : !iz.numberLiteral(¢) ? -long¢(lisp2.chopLast(token(¢))) : long¢(iz.intType(¢) ? token(¢) : lisp2.chopLast(token(¢)));
+          : !iz.numberLiteral(¢) ? -long¢(lisp.chopLast(token(¢))) : long¢(iz.intType(¢) ? token(¢) : lisp.chopLast(token(¢)));
     }
 
     static long long¢(final String token) throws NumberFormatException {

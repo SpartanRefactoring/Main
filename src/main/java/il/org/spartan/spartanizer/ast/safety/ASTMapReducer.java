@@ -41,8 +41,8 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   protected final R foldl(final Iterable<? extends ASTNode> ns) {
     R $ = reduce();
     if (ns != null)
-    for (final ASTNode ¢ : ns)
-      $ = reduce($, map(¢));
+      for (final ASTNode ¢ : ns)
+        $ = reduce($, map(¢));
     return $;
   }
 

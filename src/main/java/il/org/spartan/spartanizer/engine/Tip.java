@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
@@ -75,7 +74,7 @@ public abstract class Tip {
         ", s=" + span + //
         ", d=" + description + //
         ", n=" + lineNumber + //
-        ", c=" + Namer.lastComponent(tipperClass + "") + "]";
+        ", c=" + cCamelCase.lastComponent(tipperClass + "") + "]";
   }
 
   public void intoMarker(final IMarker $) {

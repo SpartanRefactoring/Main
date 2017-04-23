@@ -17,9 +17,12 @@ public class LocalInitializedIfAssignmentUpdating extends LocalInitializedIfAssi
   public LocalInitializedIfAssignmentUpdating() {
     andAlso("Assignment must be updating", () -> operator != ASSIGN);
     andAlso("Initializer has no side effects", () -> sideEffects.free(initializer));
-//    andAlso("Initializer is deterministic ", () -> sideEffects.deterministic(initializer));
-//    andAlso("Condition does not use initializer", () -> compute.usedNames(condition).contains(name + ""));
-//    andAlso("From does not use initializer", () -> compute.usedNames(from).contains(name + ""));
+    // andAlso("Initializer is deterministic ", () ->
+    // sideEffects.deterministic(initializer));
+    // andAlso("Condition does not use initializer", () ->
+    // compute.usedNames(condition).contains(name + ""));
+    // andAlso("From does not use initializer", () ->
+    // compute.usedNames(from).contains(name + ""));
   }
 
   private static final long serialVersionUID = -0x3B3BD65F8057A88DL;
@@ -28,11 +31,11 @@ public class LocalInitializedIfAssignmentUpdating extends LocalInitializedIfAssi
     return convert("int a = 2;if (b) a += 3;").to("int a = y ? 2 + 3 : 2");
   }
 
-  @Override protected ASTRewrite go(ASTRewrite $, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     remove.statement(nextIf, $, g);
     $.replace(initializer,
         subject.pair(//
-            subject.pair(initializer, from).to(op.assign2infix(operator)),//
+            subject.pair(initializer, from).to(op.assign2infix(operator)), //
             initializer //
         ).toCondition(condition), g);
     return $;

@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -63,7 +64,7 @@ public final class FieldInitializedSerialVersionUIDToHexadecimal extends Tipper<
     if (NumericLiteralClassifier.of($) != Certain.LONG || $.matches("^0[xX]?.*"))
       return false;
     if ($.matches(".*[lL]$"))
-      $ = lisp2.chopLast($);
+      $ = lisp.chopLast($);
     return parse($, $.matches("^0.*") ? 8 : 10);
   }
 

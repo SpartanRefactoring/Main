@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
-
+import nano.ly.English;
 import java.util.function.Consumer;
 
 /** Apply a {@link Configuration} to a tree. Issues are

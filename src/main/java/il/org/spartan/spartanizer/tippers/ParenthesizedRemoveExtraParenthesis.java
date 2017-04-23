@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.utils.Proposition.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;

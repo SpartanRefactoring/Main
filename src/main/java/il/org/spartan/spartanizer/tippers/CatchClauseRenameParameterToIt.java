@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -24,7 +25,7 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     return String.format("Rename caught %s (%s) to %s", //
         ¢.getException().getName(), //
         ¢.getException().getType(), //
-        Namer.cent //
+        notation.cent //
     );
   }
 
@@ -42,13 +43,13 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     if (!JohnDoe.property(d))
       return null;
     final SimpleName $ = d.getName();
-    if (Namer.isSpecial($))
+    if (notation.isSpecial($))
       return null;
     final Block b = body(c);
     return b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty() ? null
         : new Tip(description(c), myClass(), c.getException().getName(), c) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-            misc.rename($, Namer.newCent($), c, r, g);
+            misc.rename($, make.newCent($), c, r, g);
           }
         };
   }

@@ -28,7 +28,7 @@ public abstract class Applicator {
   private boolean shouldRun = true;
   /** Applicator's name. */
   private String name;
-  /** Applicator's operation Namer. */
+  /** Applicator's operation cCamelCase. */
   private English.Inflection operationName;
 
   /** Tell this applicator it should not run. */

@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.spartanizer.engine.nominal.Namer.*;
 import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
 import static java.lang.String.*;
-
+import static nano.ly.English.*;
+import nano.ly.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.*;
@@ -23,7 +24,6 @@ import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -31,6 +31,13 @@ import nano.ly.*;
  * @since 2017-03-24 */
 public enum JUnitTestMethodFacotry {
   ;
+  static String signature(final String code) {
+    String $ = code;
+    for (final String keyword : wizard.keywords)
+      $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
+    return lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
+  }
+
   static String from(final String name, final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
@@ -180,7 +187,7 @@ public enum JUnitTestMethodFacotry {
         "twice: " + theSpartanizer.twice(s) + "\n" + //
         "thrice: " + theSpartanizer.thrice(s) + "\n" + //
         "fixed: " + theSpartanizer.repetitively(s) + "\n" + //
-        JUnitTestMethodFacotry.from(Namer.signature(s), s) + "\n" + //
+        JUnitTestMethodFacotry.from(signature(s), s) + "\n" + //
         "");
       }
     });

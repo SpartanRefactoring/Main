@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Rename unused parameter to double underscore "__" VariableChangeName instead
@@ -59,7 +60,7 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
 
   private static ASTNode replace(final SingleVariableDeclaration ¢) {
     final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
-    $.setName(¢.getAST().newSimpleName(Namer.anonymous));
+    $.setName(¢.getAST().newSimpleName(notation.anonymous));
     $.setFlags($.getFlags());
     $.setInitializer($.getInitializer());
     $.setType(copy.of(¢.getType()));
@@ -93,7 +94,7 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
     if (method == null || body(method) == null)
       return null;
     for (final SingleVariableDeclaration ¢ : parameters(method))
-      if (Namer.anonymous.equals(¢.getName().getIdentifier()))
+      if (notation.anonymous.equals(¢.getName().getIdentifier()))
         return null;
     return BY_ANNOTATION && !suppressing($) || isUsed(method, $.getName()) || !JohnDoe.property($.getType(), $.getName()) ? null : replace($);
   }
