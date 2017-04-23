@@ -34,7 +34,7 @@ public class SuperConstructorTest extends JavadocerTest {
   }
 
   @Test public void f() {
-    assert is("public class Foo{ public Foo(int x, int _y) {super();}}");
+    assert is("public class Foo{ public Foo(int x, int _y) {super(x);}}");
   }
 
   @Test public void g() {
