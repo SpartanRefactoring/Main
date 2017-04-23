@@ -51,7 +51,8 @@ public class XMLSpartan {
           ParameterAnonymize.class, //
           ForParameterRenameToIt.class, //
           LambdaRenameSingleParameterToLambda.class, //
-          ConstructorEmptyRemove.class //
+          ConstructorEmptyRemove.class, //
+          ReturnDeadAssignment.class //
       ));
   private static final String TIPPER = "tipper";
   private static final String TIPPER_ID = "id";
