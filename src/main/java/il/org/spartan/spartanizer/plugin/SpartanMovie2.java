@@ -131,18 +131,17 @@ public class SpartanMovie2 extends AbstractHandler {
         }
       }
 
-      private void checkDozen(IProgressMonitor m) {
-        if(m == null){
+      void checkDozen(IProgressMonitor m) {
+        if(m == null)
           m = new NullProgressMonitor();
-        }
         try {
           m.beginTask("Checking a dozen", 12);
-          for (int i = 0; i < 12; i++) {
+          for (int ¢ = 0; ¢ < 12; ¢++) {
             Thread.sleep(10);
             m.worked(1);
           }
-        } catch (InterruptedException e) {
-           e.printStackTrace();
+        } catch (InterruptedException ¢) {
+           ¢.printStackTrace();
         } finally {
           m.done();
         }
