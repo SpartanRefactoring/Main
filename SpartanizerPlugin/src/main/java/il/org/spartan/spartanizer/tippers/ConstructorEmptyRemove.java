@@ -16,6 +16,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2017-04-22 */
 public class ConstructorEmptyRemove extends ConstructorPattern implements TipperCategory.SyntacticBaggage {
+  private static final long serialVersionUID = 0x89C6E0CA1CEC52BL;
   private TypeDeclaration typeDelcaration;
 
   @Override public String description() {
@@ -28,8 +29,6 @@ public class ConstructorEmptyRemove extends ConstructorPattern implements Tipper
     notNil("Containing class", () -> typeDelcaration = az.typeDeclaration(parent));
     andAlso("Visibility is no lesser than of containing class", () -> visibility.of(current) >= visibility.of(typeDelcaration));
   }
-
-  private static final long serialVersionUID = 1L;
 
   @Override public Examples examples() {
     return convert("class A { A(){}}").to("class A{}") //
