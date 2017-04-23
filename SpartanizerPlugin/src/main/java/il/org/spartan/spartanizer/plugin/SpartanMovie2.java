@@ -28,20 +28,20 @@ public class SpartanMovie2 extends AbstractHandler {
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     Job job = new Job("About to say hello") {
-      protected IStatus run(IProgressMonitor monitor) {
+      protected IStatus run(IProgressMonitor m) {
         try {
-          monitor.beginTask("Preparing", 5000);
-          for (int i = 0; i < 50 && !monitor.isCanceled(); i++) {
+          m.beginTask("Preparing", 5000);
+          for (int i = 0; i < 50 && !m.isCanceled(); i++) {
             Thread.sleep(100);
-            monitor.worked(100);
+            m.worked(100);
           }
         } catch (InterruptedException e) {
           note.bug(e);
         } finally {
-          monitor.done();
+          m.done();
         }
         // MessageDialog.openInformation(null, "Hello", "World");
-        if (!monitor.isCanceled()) {
+        if (!m.isCanceled()) {
           Display.getDefault().asyncExec(new Runnable() {
             public void run() {
               MessageDialog.openInformation(null, "Hello", "World");
