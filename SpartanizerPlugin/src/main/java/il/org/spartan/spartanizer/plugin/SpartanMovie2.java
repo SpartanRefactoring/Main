@@ -61,6 +61,9 @@ public class SpartanMovie2 extends AbstractHandler {
       }
 
       private void checkDozen(IProgressMonitor monitor) {
+        if(monitor == null){
+          monitor = new NullProgressMonitor();
+        }
         try {
           monitor.beginTask("Checking a dozen", 12);
           for (int i = 0; i < 12; i++) {
