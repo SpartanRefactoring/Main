@@ -10,7 +10,7 @@ import org.jetbrains.annotations.*;
 
 /** @noinspection unused */
 public interface lisp {
-  @Nullable static <T> @Nullable List<T> chop(@NotNull final List<T> ¢) {
+  @Nullable static <T> List<T> chop(@NotNull final List<T> ¢) {
     if (¢.isEmpty())
       return null;
     ¢.remove(0);
@@ -45,7 +45,7 @@ public interface lisp {
     return false;
   }
 
-  @Contract("null -> null") @Nullable static <@Nullable T> @Nullable T last(@Nullable final List<T> ¢) {
+  @Contract("null -> null") @Nullable static <@Nullable T> T last(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(¢.size() - 1);
   }
 
