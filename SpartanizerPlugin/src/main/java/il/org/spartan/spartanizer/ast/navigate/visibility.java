@@ -8,7 +8,7 @@ import nano.ly.*;
  * @author Yossi Gil
  * @since 2017-04-22 */
 public interface visibility {
-  static int of(BodyDeclaration d) {
+  static int of(final BodyDeclaration d) {
     final int m = d.getModifiers();
     if (Modifier.isPublic(m))
       return 4;

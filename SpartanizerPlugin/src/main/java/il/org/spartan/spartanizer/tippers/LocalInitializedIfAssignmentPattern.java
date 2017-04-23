@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** An abstract tipper pattern for something like {@code  
+/** An abstract tipper pattern for something like {@code
  * int a = 2;
  * if (b)
  *   a ?= 3;

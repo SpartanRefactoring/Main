@@ -7,10 +7,12 @@ public interface yes {
   interface On<T, R> {
     R on(T t);
   }
-  static boolean forgetting(Runnable r) {
+
+  static boolean forgetting(final Runnable r) {
     r.run();
     return true;
   }
+
   @SuppressWarnings("unused") static boolean forgetting(final Object _1, final Object... _2) {
     return true;
   }

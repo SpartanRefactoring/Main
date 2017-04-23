@@ -44,8 +44,8 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
   }
 
   @Override protected ASTNode[] span() {
-    List<SingleVariableDeclaration> ps = step.parameters(getMethod(current));
-    return new ASTNode[] {first(ps), last(ps)}; 
+    final List<SingleVariableDeclaration> ps = step.parameters(getMethod(current));
+    return new ASTNode[] { first(ps), last(ps) };
   }
 
   static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {

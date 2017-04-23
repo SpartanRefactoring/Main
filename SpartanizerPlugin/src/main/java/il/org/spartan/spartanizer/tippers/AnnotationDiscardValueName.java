@@ -25,7 +25,7 @@ public final class AnnotationDiscardValueName extends NodePattern<NormalAnnotati
   private SimpleName name;
 
   @Override protected ASTNode highlight() {
-    return name; 
+    return name;
   }
 
   public AnnotationDiscardValueName() {
