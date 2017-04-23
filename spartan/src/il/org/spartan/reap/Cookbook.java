@@ -936,6 +936,7 @@ public interface Cookbook {
     /** by overriding this function, inheriting classes can ask to be notified
      * when this cell was set. */
     void uponForcedSet() {
+      //
     }
 
     private long oldestDependent() {
@@ -950,7 +951,7 @@ public interface Cookbook {
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  class Ingredient<@Nullable T> extends Cell<T> {
+  class Ingredient<T> extends Cell<T> {
     /** Instantiates this class.* */
     public Ingredient() {
     }

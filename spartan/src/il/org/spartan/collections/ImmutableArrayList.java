@@ -161,7 +161,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * @param __ collection containing elements to be added to this list
    * @return <tt>true</tt> if this list changed as a result of the call
    * @throws NullPointerException if the specified collection is null */
-  @Override public boolean addAll(final Collection<? extends E> __) {
+  @Override public boolean addAll(final @Nullable Collection<? extends E> __) {
     return fail();
   }
 
@@ -176,7 +176,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * @return <tt>true</tt> if this list changed as a result of the call
    * @throws IndexOutOfBoundsException {@inheritDoc}
    * @throws NullPointerException if the specified collection is null */
-  @Override public boolean addAll(final int index, final Collection<? extends E> __) {
+  @Override public boolean addAll(final int index, final @Nullable Collection<? extends E> __) {
     return fail();
   }
 
@@ -199,14 +199,14 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>.
    * @param ¢ element whose presence in this list is to be tested
    * @return <tt>true</tt> if this list contains the specified element */
-  @Override public boolean contains(final Object ¢) {
+  @Override public boolean contains(final @Nullable Object ¢) {
     return indexOf(¢) >= 0;
   }
 
   /* (non-Javadoc)
    *
    * @see java.util.List#containsAll(java.util.Collection) */
-  @Override public boolean containsAll(final Collection<?> os) {
+  @Override public boolean containsAll(final @Nullable Collection<?> os) {
     for (final Object ¢ : os)
       if (!contains(¢))
         return false;
@@ -217,7 +217,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * to ensure that it can hold at least the number of elements specified by the
    * minimum capacity argument.
    * @param minCapacity the desired minimum capacity */
-  @SuppressWarnings("static-method") //
+  @SuppressWarnings({ "static-method", "unused" }) //
   public void ensureCapacity(final int minCapacity) {
     fail();
   }
@@ -324,7 +324,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * the call).
    * @param __ to be removed from this list, if present
    * @return <tt>true</tt> if this list contained the specified element */
-  @Override public boolean remove(final Object __) {
+  @Override public boolean remove(final @Nullable Object __) {
     return fail();
   }
 
@@ -338,7 +338,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    *         specified collection does not permit null elements (optional), or
    *         if the specified collection is null
    * @see Collection#contains(Object) */
-  @Override public boolean removeAll(final Collection<?> __) {
+  @Override public boolean removeAll(final @Nullable Collection<?> __) {
     return fail();
   }
 
@@ -353,7 +353,7 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    *         specified collection does not permit null elements (optional), or
    *         if the specified collection is null
    * @see Collection#contains(Object) */
-  @Override public boolean retainAll(final Collection<?> __) {
+  @Override public boolean retainAll(final @Nullable Collection<?> __) {
     return fail();
   }
 

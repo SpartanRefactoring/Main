@@ -12,6 +12,7 @@ public class WelchT {
   /** Empty for now */
   /** Instantiates this class. @param s1 /** Instantiates this class. @param
    * s2 */
-  public WelchT(final Statistics s1, final Statistics s2) {
+  @SuppressWarnings("unused") public WelchT(final Statistics s1, final Statistics s2) {
+    //
   }
 }

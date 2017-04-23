@@ -73,9 +73,11 @@ public abstract class Bencheon extends NamedOperation {
     }
 
     @Override public final void beforeAllRuns() {
+      //
     }
 
     @Override public final void beforeEachRun() {
+      //
     }
 
     @Override public long netRunTime(final int runs) {

@@ -15,9 +15,11 @@ public class BenchEmptyFinalBencheon {
     @NotNull final LogBook.Mutable l = new LogBook.Mutable(BenchEmptyFinalBencheon.class);
     @NotNull final Bencheon b = new Bencheon("empty", 1) {
       @Override public void beforeAllRuns() {
+        //
       }
 
       @Override public void beforeEachRun() {
+        //
       }
 
       @Override public Object call() {

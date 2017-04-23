@@ -69,8 +69,10 @@ interface Cat {
     interface the {
       interface Hat {
         Thing thing1 = new Thing() {
+          //
         };
         Thing thing2 = new Thing() {
+          //
         };
         Thing[] things = { thing1, thing2 };
 
