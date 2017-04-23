@@ -249,9 +249,11 @@ public interface Environment {
       }
 
       @Test public void seriesA7() {
+        //
       }
 
       @Test public void seriesA8() {
+        //
       }
 
       @Test public void seriesA9() {
@@ -355,7 +357,7 @@ public interface Environment {
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-    @NotNull public <@Nullable A> Property<@Nullable T> bind(@NotNull final Function0<T> ¢) {
+    @NotNull public Property<@Nullable T> bind(@NotNull final Function0<T> ¢) {
       return ϑ(() -> ¢.¢());
     }
 
@@ -430,7 +432,7 @@ public interface Environment {
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-    @NotNull public <@Nullable A> Property<@Nullable T> bind2(@NotNull final Function0<T> ¢) {
+    @NotNull public Property<@Nullable T> bind2(@NotNull final Function0<T> ¢) {
       this.ϑ = (Function0<@Nullable T>) () -> ¢.¢();
       prerequisites.clear();
       ingredients(this);
@@ -507,11 +509,11 @@ public interface Environment {
       return this;
     }
 
-    @NotNull public Property<T> push(final Function0<T> __) {
+    @NotNull public Property<T> push(@SuppressWarnings("unused") final Function0<T> __) {
       return this;
     }
 
-    @NotNull public Property<T> push(final T __) {
+    @NotNull public Property<T> push(@SuppressWarnings("unused") final T __) {
       return this;
     }
 

@@ -210,7 +210,7 @@ public class Integers {
   }
 
   /** @param capacity new hash table size */
-  protected void subclassReset(final int capacity) {
+  @SuppressWarnings("unused") protected void subclassReset(final int capacity) {
     //
   }
 

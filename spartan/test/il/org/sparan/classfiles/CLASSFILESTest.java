@@ -12,6 +12,7 @@ import il.org.spartan.utils.*;
 @SuppressWarnings("static-method") public class CLASSFILESTest {
   @Test public void testFindAnonymous() {
     assert CLASSFILES.open(new Object() {
+      //
     }.getClass()) != null;
   }
 

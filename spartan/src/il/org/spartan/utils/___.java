@@ -673,7 +673,7 @@ import il.org.spartan.utils.___.Bug.Contract.*;
    * function, and to suppress the warning.
    * @param __ the unused parameter
    * @param ____ more unused parameters */
-  public static void ______unused(final long __, final Object... ____) {
+  @SuppressWarnings("unused") public static void ______unused(final long __, final Object... ____) {
     // empty
   }
 
@@ -1229,20 +1229,11 @@ import il.org.spartan.utils.___.Bug.Contract.*;
    * function, and to suppress the warning.
    * @param __ the unused parameter
    * @param ____ more unused parameters */
-  public static void unused(final double __, final double... ____) {
+  @SuppressWarnings("unused") public static void unused(final double __, final double... ____) {
     // empty
   }
 
-  public static void unused(final double __, final Object... ____) {
-    // empty
-  }
-
-  /** A do nothing method to document the fact that a <code><b>long</b></code>
-   * parameter, along with a optional list of {@link Object}s are not used by a
-   * function, and to suppress the warning.
-   * @param __ the unused parameter
-   * @param ____ more unused parameters */
-  public static void unused(final int __, final int... ____) {
+  @SuppressWarnings("unused") public static void unused(final double __, final Object... ____) {
     // empty
   }
 
@@ -1251,11 +1242,20 @@ import il.org.spartan.utils.___.Bug.Contract.*;
    * function, and to suppress the warning.
    * @param __ the unused parameter
    * @param ____ more unused parameters */
-  public static void unused(final long __, final long... ____) {
+  @SuppressWarnings("unused") public static void unused(final int __, final int... ____) {
     // empty
   }
 
-  public static void unused(final long __, final Object... ____) {
+  /** A do nothing method to document the fact that a <code><b>long</b></code>
+   * parameter, along with a optional list of {@link Object}s are not used by a
+   * function, and to suppress the warning.
+   * @param __ the unused parameter
+   * @param ____ more unused parameters */
+  @SuppressWarnings("unused") public static void unused(final long __, final long... ____) {
+    // empty
+  }
+
+  @SuppressWarnings("unused") public static void unused(final long __, final Object... ____) {
     // empty
   }
 
@@ -1268,7 +1268,7 @@ import il.org.spartan.utils.___.Bug.Contract.*;
     empty(____);
   }
 
-  public static void empty(final Object... __) {
+  @SuppressWarnings("unused") public static void empty(final Object... __) {
     // TODO Auto-generated method stub
   }
 

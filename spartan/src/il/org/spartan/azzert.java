@@ -600,6 +600,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static class ____META {
+    //
   }
 
   public static class Asserter {

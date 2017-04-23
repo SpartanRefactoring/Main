@@ -3,6 +3,7 @@ package il.org.spartan.collections;
 import java.io.*;
 import java.util.*;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
 /** A collection class that allows addition, counting, iteration, but noting
@@ -43,7 +44,7 @@ public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
     return data.containsAll(¢);
   }
 
-  @Override public boolean equals(@Nullable final Object ¢) {
+  @Override public boolean equals(final @Nullable Object ¢) {
     if (¢ == this)
       return true;
     if (¢ == null || getClass() != ¢.getClass())

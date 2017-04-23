@@ -9,7 +9,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
 @SuppressWarnings({ "unchecked", "static-method" }) //
-public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
+public final class MyHashMap<K, V> implements Map<K, V> {
   /** The default initial capacity - MUST be a power of two. */
   static final int DEFAULT_INITIAL_CAPACITY = 16;// ProbesTest.HASH_MAP_SIZE;
   /** The maximum capacity, used if a higher value is implicitly specified by
@@ -151,7 +151,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
     if (value == null)
       return containsNullValue();
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
-    for (final Entry element : tab)
+    for (final Entry<?, ?> element : tab)
       for (@SuppressWarnings("rawtypes") Entry ¢ = element; ¢ != null; ¢ = ¢.next)
         if (value.equals(¢.value))
           return true;
@@ -477,7 +477,7 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
   /** Special-case code for containsValue with null argument */
   private boolean containsNullValue() {
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
-    for (final Entry element : tab)
+    for (final Entry<?, ?> element : tab)
       for (@SuppressWarnings("rawtypes") Entry ¢ = element; ¢ != null; ¢ = ¢.next)
         if (¢.value == null)
           return true;

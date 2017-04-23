@@ -158,18 +158,21 @@ import il.org.spartan.utils.*;
 
   @Test public void codeAttributeExists() {
     class __ {
+      //
     }
     assert ClassInfo.make(__.class).methods[0].getCode() != null;
   }
 
   @Test public void codeAttributeMaxLocals() {
     class __ {
+      //
     }
     azzert.that(ClassInfo.make(__.class).methods[0].getCode().maxLocals, is(1));
   }
 
   @Test public void codeAttributeMaxStack() {
     class __ {
+      //
     }
     azzert.that(ClassInfo.make(__.class).methods[0].getCode().maxStack, is(0));
   }
@@ -448,12 +451,14 @@ import il.org.spartan.utils.*;
 
   @Test public void methodExceptionsLength() {
     class __ {
+      //
     }
     azzert.that(ClassInfo.make(__.class).methods[0].exceptions.length, is(2));
   }
 
   @Test public void methodExceptionsName() {
     class __ {
+      //
     }
     azzert.that(ClassInfo.make(__.class).methods[0].exceptions[0] + "", is(IOException.class.getName()));
     azzert.that(ClassInfo.make(__.class).methods[0].exceptions[1] + "", is(ArrayIndexOutOfBoundsException.class.getName()));
@@ -494,18 +499,21 @@ import il.org.spartan.utils.*;
 
   @Test public void noByteCodeEmptyConstructor() {
     class __ {
+      //
     }
     azzert.isNull(ClassInfo.make(__.class).constructors[0].code);
   }
 
   @Test public void noByteCodeEmptyConstructorCallingSuper() {
     class __ {
+      //
     }
     azzert.isNull(ClassInfo.make(__.class).constructors[0].code);
   }
 
   @Test public void noExceptionsCount() {
     class __ {
+      //
     }
     azzert.that(ClassInfo.make(__.class).methods[0].exceptions.length, is(2));
   }
@@ -646,6 +654,7 @@ import il.org.spartan.utils.*;
 
   @Test public void parseComplexMethod() {
     class ClassWithComplexMethod {
+      //
     }
     ClassInfo.make(ClassWithComplexMethod.class).methods[0].getCode().instructionsCount();
   }
@@ -657,6 +666,7 @@ import il.org.spartan.utils.*;
 
   @Test public void parseTableSwitch() {
     class __ {
+      //
     }
     azzert.that(ClassInfo.make(__.class).methods[0].name, is("tableSwitch"));
     assert ClassInfo.make(__.class).methods[0].getCode().instructionsCount() > 20;

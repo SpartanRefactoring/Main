@@ -9,7 +9,7 @@ import il.org.spartan.*;
  * @param <T> JD
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
-public class Ingredient<@Nullable T> extends Cell<T> {
+public class Ingredient<T> extends Cell<T> {
   /** Instantiates this class.* */
   public Ingredient() {
     // Make sure we have a public constructor
