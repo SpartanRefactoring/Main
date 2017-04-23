@@ -482,7 +482,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
     <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
     <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="C" label="¢" />
-    <command commandId="il.org.spartan.SpartanMovie" style="push" mnemonic="M" label="The Spartan Movie" />
+    <!--<command commandId="il.org.spartan.SpartanMovie" style="push" mnemonic="M" label="The Spartan Movie" />-->
   </menu>
 </menuContribution>
 
@@ -563,9 +563,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+Alt+C"
 		commandId="il.org.spartan.ItShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<key sequence="Ctrl+Alt+L"
+	<!--<key sequence="Ctrl+Alt+L"
 		commandId="il.org.spartan.LambdaShortcut"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
 	<key sequence="Ctrl+Alt+I"
 		commandId="il.org.spartan.CentificationShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
