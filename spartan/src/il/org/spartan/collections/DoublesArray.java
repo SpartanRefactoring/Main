@@ -17,11 +17,11 @@ public class DoublesArray {
    * @param i a non-negative array index
    * @return <code><b>this</b></code> */
   @NotNull public DoublesArray access(final int i) {
-    if (i >= length) {
-      final int n = inner.length;
-      inner = i < n ? inner : Arrays.copyOf(inner, 1 + Math.max(i, n + (n >> 1)));
-      length = i + 1;
-    }
+    if (i < length)
+      return this;
+    final int n = inner.length;
+    inner = i < n ? inner : Arrays.copyOf(inner, 1 + Math.max(i, n + (n >> 1)));
+    length = i + 1;
     return this;
   }
 

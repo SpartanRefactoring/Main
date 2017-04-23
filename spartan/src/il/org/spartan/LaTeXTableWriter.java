@@ -47,11 +47,11 @@ public class LaTeXTableWriter extends CSVLineWriter {
   }
 
   @Override public String close() {
-    if (aggregating()) {
-      writer.writeln(super.renderer.headerEnd());
-      for (@NotNull final Aggregation ¢ : aggregations())
-        writer.writeln(makeLine(collect(¢).values()));
-    }
+    if (!aggregating())
+      return super.close();
+    writer.writeln(super.renderer.headerEnd());
+    for (@NotNull final Aggregation ¢ : aggregations())
+      writer.writeln(makeLine(collect(¢).values()));
     return super.close();
   }
 

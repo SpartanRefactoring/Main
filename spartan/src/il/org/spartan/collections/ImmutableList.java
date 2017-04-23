@@ -11,7 +11,7 @@ import org.jetbrains.annotations.*;
  * @param <T> Type of elements in the collection.
  * @since 01/05/2007 */
 public abstract class ImmutableList<T> implements Iterable<T>, Serializable {
-  private static final long serialVersionUID = 3846444108525783786L;
+  private static final long serialVersionUID = 0x356150899112CAEAL;
   @NotNull protected List<T> data = new ArrayList<>();
 
   /** Add an element to the collection.

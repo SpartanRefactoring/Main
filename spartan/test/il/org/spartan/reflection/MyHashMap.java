@@ -560,12 +560,10 @@ public final class MyHashMap<K, @Nullable V> implements Map<K, V> {
         return false;
       @NotNull @SuppressWarnings("rawtypes") final Map.Entry e = (Map.Entry) o;
       final Object k1 = getKey(), k2 = e.getKey();
-      if (k1 == k2 || k1 != null && k1.equals(k2)) {
-        final Object v1 = getValue(), v2 = e.getValue();
-        if (v1 == v2 || v1 != null && v1.equals(v2))
-          return true;
-      }
-      return false;
+      if (k1 != k2 && (k1 == null || !k1.equals(k2)))
+        return false;
+      final Object v1 = getValue(), v2 = e.getValue();
+      return v1 == v2 || v1 != null && v1.equals(v2) ? true : false;
     }
 
     @Override public final K getKey() {

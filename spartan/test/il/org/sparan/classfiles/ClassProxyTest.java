@@ -15,7 +15,7 @@ import il.org.spartan.fapi.*;
 
 @SuppressWarnings("static-method")
 public class ClassProxyTest {
-  private static final long serialVersionUID = 8455039288585824990L;
+  private static final long serialVersionUID = 0x7556556FAE212ADEL;
   private final String stringSignature = "My String Signature";
   public final long publicInstanceLong = 123456789011L * serialVersionUID;
   public final float someFloat = 4.91F;

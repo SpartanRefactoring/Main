@@ -93,7 +93,7 @@ import org.jetbrains.annotations.*;
  * @see Vector
  * @since 1.2 */
 public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 
   @NotNull public static <E> ImmutableArrayList<E> make(@NotNull final Collection<? extends E> ¢) {
     return new ImmutableArrayList<>(¢);

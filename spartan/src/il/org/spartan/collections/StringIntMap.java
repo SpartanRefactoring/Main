@@ -14,7 +14,7 @@ import java.util.*;
  * @author Yossi Gil
  * @since 21/08/2007 */
 public class StringIntMap extends HashMap<String, Integer> {
-  private static final long serialVersionUID = 7259813398645658988L;
+  private static final long serialVersionUID = 0x64C009D269E5556CL;
 
   public boolean contains(final String key) {
     return super.containsKey(key);

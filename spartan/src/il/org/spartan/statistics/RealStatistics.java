@@ -17,7 +17,7 @@ import il.org.spartan.fapi.*;
 public class RealStatistics extends ImmutableStatistics {
   /** A field for identifying a streamed version of objects of this class; we
    * use the values of <code>1L</code> to maintain upward compatibility. */
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 
   public static double[] increase(@NotNull final double[] ¢) {
     return Arrays.copyOf(¢, 2 * ¢.length + 1);

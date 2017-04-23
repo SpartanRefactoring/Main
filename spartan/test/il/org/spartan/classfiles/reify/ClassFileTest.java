@@ -993,7 +993,7 @@ import il.org.spartan.utils.*;
   }
 
   static class LargeClass implements Serializable, Cloneable, Interface {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
     private static int field1;
     @NotNull static Random field4 = new Random();
     static {

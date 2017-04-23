@@ -5,7 +5,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.bench.operations.*;
 
 public class Bencher extends LogBook.Mutable {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
   private transient Operation after;
 
   public Bencher(final Object initiator) {

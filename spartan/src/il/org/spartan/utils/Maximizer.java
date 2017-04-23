@@ -14,10 +14,10 @@ public class Maximizer<T> {
   }
 
   @NotNull public Maximizer<T> next(final T t, final double next) {
-    if (Double.isNaN(max) || next > max) {
-      max = next;
-      value = t;
-    }
+    if (!Double.isNaN(max) && next <= max)
+      return this;
+    max = next;
+    value = t;
     return this;
   }
 

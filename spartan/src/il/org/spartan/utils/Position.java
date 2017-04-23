@@ -7,7 +7,7 @@ import org.jetbrains.annotations.*;
 /** Represents a position in a file, including a column and line number.
  * @author Yossi Gil <yogi@cs.technion.ac.il> 13/06/2007 */
 public final class Position implements Comparable<Position>, Serializable {
-  private static final long serialVersionUID = -9094620074260625651L;
+  private static final long serialVersionUID = -0x7E3694C5AD70F8F3L;
   public final int line;
   public final int column;
 

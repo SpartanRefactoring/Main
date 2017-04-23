@@ -392,7 +392,7 @@ public enum separate {
     }
 
     @Test public final void byFOfTTArrayChar() {
-      @NotNull final Applicator<Object, String> f = new Applicator<>(λ -> "'" + λ + "'");
+      @NotNull final Applicator<Object, String> f = new Applicator<Object, String>(λ -> "'" + λ + "'");
       assert f != null : "Function literals should never by null.";
       @NotNull final Collection<String> c = as.list("Hello", "World");
       azzert.that(c.size(), is(2));
