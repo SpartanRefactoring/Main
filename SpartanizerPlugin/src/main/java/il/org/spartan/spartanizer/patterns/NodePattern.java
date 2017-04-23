@@ -104,7 +104,7 @@ public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
     }).spanning(span());
   }
 
-  protected NodePattern<N> property(String fieldName, Runnable r) {
-    return andAlso("Extract " + fieldName, ()->yes.forgetting(()->r.run()));
+  protected NodePattern<N> property(final String fieldName, final Runnable r) {
+    return andAlso("Extract " + fieldName, () -> yes.forgetting(() -> r.run()));
   }
 }
