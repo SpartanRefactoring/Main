@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** convert {@code
  * int a = 2;
@@ -29,6 +30,10 @@ public final class LocalInitializedIfAssignment extends $FragmentAndStatement//
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate initialization of " + ¢.getName() + " with the subsequent conditional assignment to it";
+  }
+
+  @Override public Examples examples() {
+    return convert("int a = 2;if (b)a = 3;").to("int a = b ? 3 : 2;");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
