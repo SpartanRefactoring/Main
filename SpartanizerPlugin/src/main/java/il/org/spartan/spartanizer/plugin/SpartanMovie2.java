@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 import java.util.List;
 
 import org.eclipse.core.commands.*;
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -12,7 +13,10 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.eclipse.ui.commands.*;
 import org.eclipse.ui.ide.*;
+import org.eclipse.ui.progress.*;
+
 import il.org.spartan.plugin.old.*;
 import nano.ly.*;
 
@@ -80,6 +84,12 @@ public class SpartanMovie2 extends AbstractHandler {
         }
       }
     };
+    ICommandService service = (ICommandService) 
+        PlatformUI.getWorkbench().getService(ICommandService.class);
+    Command command = service == null ? null : 
+      service.getCommand("il.org.spartan.SpartanMovie");
+    if(command != null)
+      job.setProperty(IProgressConstants2.COMMAND_PROPERTY, command);
     job.schedule();
     // final IWorkbench workbench = PlatformUI.getWorkbench();
     // final List<ICompilationUnit> compilationUnits = getCompilationUnits();
