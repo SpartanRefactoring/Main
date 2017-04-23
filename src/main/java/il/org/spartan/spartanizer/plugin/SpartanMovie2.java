@@ -35,7 +35,7 @@ public class SpartanMovie2 extends AbstractHandler {
             if(i==0) {
               monitor.subTask("Doing something");
             } else if (i == 12) {
-              checkDozen(monitor);            
+              checkDozen(new SubProgressMonitor(monitor, 100));            
             } else if (i == 25) {
               monitor.subTask("Doing something elese");
             } else if (i == 40) {
