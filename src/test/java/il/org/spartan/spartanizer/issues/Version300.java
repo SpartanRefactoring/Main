@@ -20,7 +20,6 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Misc unit tests with no better other place for version 3.00
  * @author Yossi Gil
@@ -298,6 +297,7 @@ public class Version300 {
 
   @Test public void localIfUpdate3() {
     trimminKof("int a=f();return a +=2 * a;")//
+    .gives("int a=f();return a + 2 * a;")//
         .stays();
   }
 
