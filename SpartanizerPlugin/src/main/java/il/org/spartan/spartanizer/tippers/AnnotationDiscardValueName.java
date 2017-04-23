@@ -35,7 +35,7 @@ public final class AnnotationDiscardValueName extends NodePattern<NormalAnnotati
   }
 
   @Override public String description() {
-    return "Remove 'value' tag preserving value contents in @" + current.getTypeName().getFullyQualifiedName() + " annotation";
+    return "Remove 'value' tag preserving value contents in @annotation";
   }
 
   @Override public Examples examples() {
