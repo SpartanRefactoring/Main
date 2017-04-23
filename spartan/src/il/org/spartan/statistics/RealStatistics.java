@@ -1,6 +1,6 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.*;
@@ -9,7 +9,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
 /** A class to compute statistics, e.g., the minimal and maximal value, the mean
  * and the standard deviation, of a sequence of real numbers.

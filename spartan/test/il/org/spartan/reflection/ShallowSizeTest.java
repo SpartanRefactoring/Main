@@ -1,6 +1,6 @@
 package il.org.spartan.reflection;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
@@ -8,7 +8,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
 @SuppressWarnings("static-method") public class ShallowSizeTest {
   @Test public void align_9() {

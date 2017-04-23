@@ -1,6 +1,6 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.java.Token.*;
 
 import java.io.*;
@@ -9,7 +9,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
 @SuppressWarnings("static-method")
 //
@@ -110,7 +109,8 @@ public class TokenizerTest {
   }
 
   @Test public void doc_comment_keyword() throws IOException {
-    reset("/**\n" + "* A suite of metrics over Java code.\n" + "* \n" + "* @author Yossi Gil <yogi@cs.technion.ac.il> 21/04/2007\n" + "*/\n" + "public");
+    reset("/**\n" + "* A suite of metrics over Java code.\n" + "* \n" + "* @author Yossi Gil <yogi@cs.technion.ac.il> 21/04/2007\n" + "*/\n"
+        + "public");
     azzert.that(t.next(), is(PARTIAL_DOC_COMMENT));
     azzert.that(t.next(), is(NL_DOC_COMMENT));
     azzert.that(t.next(), is(PARTIAL_DOC_COMMENT));

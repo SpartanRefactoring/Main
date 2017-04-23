@@ -1,15 +1,6 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spatan.iteration;
 
-import static il.org.spartan.fapi.azzert.*;
-
-import java.util.*;
-
-import org.jetbrains.annotations.*;
-import org.junit.*;
-
-import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.streotypes.*;
 
 /** import il.org.spartan.stereotypes.Utility; /** A <b>Utility class</b>

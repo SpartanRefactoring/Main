@@ -10,7 +10,6 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.streotypes.*;
 
 /** A utility class providing library functions that take an array or a

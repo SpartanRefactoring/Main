@@ -1,8 +1,8 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan.fapi;
+package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -12,9 +12,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.*;
-import il.org.spartan.Utils.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.iterables.*;
 
 /** A utility class providing library functions that take an array or a
@@ -163,11 +160,9 @@ public enum separate {
     return these(box.it(¢));
   }
 
-  /**
-   * Separate a variable length list of arguments by a comma character.
-   * @param < T >  type of items
-   * @param ¢  the objects to be separated. 
-   */
+  /** Separate a variable length list of arguments by a comma character.
+   * @param < T > type of items
+   * @param ¢ the objects to be separated. */
   @SafeVarargs @NotNull public static <T> SeparationSubject these(final T... ¢) {
     return new SeparationSubject(¢);
   }
@@ -319,7 +314,7 @@ public enum separate {
   }
 
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings({ "static-method",  "synthetic-access" }) //
+  @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST {
     private static final Function<Object, String> quote = λ -> "'" + λ + "'";
 
@@ -392,7 +387,7 @@ public enum separate {
     }
 
     @Test public final void byFOfTTArrayChar() {
-      @NotNull final Applicator<Object, String> f = new Applicator<Object, String>(λ -> "'" + λ + "'");
+      @NotNull final Applicator<Object, String> f = new Applicator<>(λ -> "'" + λ + "'");
       assert f != null : "Function literals should never by null.";
       @NotNull final Collection<String> c = as.list("Hello", "World");
       azzert.that(c.size(), is(2));

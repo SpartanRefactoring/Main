@@ -4,8 +4,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
-import il.org.spartan.fapi.*;
-
 /** @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @param <T> JD
  * @since @{year}-@{month}-@{day} */

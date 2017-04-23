@@ -2,7 +2,7 @@
 package il.org.spartan.reap;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.max;
 
@@ -14,7 +14,6 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.reap.Cookbook.Internal.*;
 import il.org.spartan.reap.Cookbook.Recipe.*;
 
@@ -318,58 +317,42 @@ public interface Cookbook {
       /** the actual cell behind {@link #d()} */
       @SuppressWarnings("null") final Cell<@Nullable Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
 
-      /**
-       * @return  contents of cell a 
-       */
+      /** @return contents of cell a */
       @Nullable public final Integer a() {
         return a.get();
       }
 
-      /**
-       * @return  contents of cell a^2 := (a)^2 
-       */
+      /** @return contents of cell a^2 := (a)^2 */
       @Nullable public final Integer aPower02() {
         return aPower02.get();
       }
 
-      /**
-       * @return  contents of cell a^3 := a^2 * a 
-       */
+      /** @return contents of cell a^3 := a^2 * a */
       @Nullable public final Integer aPower03() {
         return aPower03.get();
       }
 
-      /**
-       * @return  contents of cell a^5 := a^2 * a^3 
-       */
+      /** @return contents of cell a^5 := a^2 * a^3 */
       @Nullable public final Integer aPower05() {
         return aPower05.get();
       }
 
-      /**
-       * @return  contents of cell a^17 := (a)^4 * (a^2)^4 * (a^3)^3 
-       */
+      /** @return contents of cell a^17 := (a)^4 * (a^2)^4 * (a^3)^3 */
       @Nullable public final Integer aPower17NullSafe() {
         return aPower17NullSafe.get();
       }
 
-      /**
-       * @return  contents of valued cell <code>b</code> 
-       */
+      /** @return contents of valued cell <code>b</code> */
       @Nullable public final Integer b() {
         return b.get();
       }
 
-      /**
-       * @return  contents of valued cell <code>c</code> 
-       */
+      /** @return contents of valued cell <code>c</code> */
       @Nullable public final Integer c() {
         return c.get();
       }
 
-      /**
-       * @return  contents of cell d := a + b + c 
-       */
+      /** @return contents of cell d := a + b + c */
       @Nullable public final Integer d() {
         return d.get();
       }
@@ -905,9 +888,7 @@ public interface Cookbook {
       return cache;
     }
 
-    /**
-     * see @see java.util.function.Supplier#get() (auto-generated) 
-     */
+    /** see @see java.util.function.Supplier#get() (auto-generated) */
     @Override @Nullable public abstract T get();
 
     /** Used for fluent API, synonym of {@link Cell#set(Object)} . sets the
@@ -1013,9 +994,11 @@ public interface Cookbook {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   interface Internal {
-    /**
-     * @return  never! The <code><b>none</b></code> type. There is no legal value that this function can return, since the type <code>@NonNull</code>  {@link Void}  is empty. ( <code><b>null</b></code> is the single vale of  {@link Void} , but it does not obey the  {@link  @NonNull}  annotation. 
-     */
+    /** @return never! The <code><b>none</b></code> type. There is no legal
+     *         value that this function can return, since the type
+     *         <code>@NonNull</code> {@link Void} is empty. (
+     *         <code><b>null</b></code> is the single vale of {@link Void} , but
+     *         it does not obey the {@link @NonNull} annotation. */
     @org.jetbrains.annotations.NotNull @NonNull static Void shouldNeverBeCalled() {
       assert false;
       throw new RuntimeException();
@@ -1153,11 +1136,9 @@ public interface Cookbook {
         return (NotNull<T>) super.clone();
       }
 
-      /**
-       * Add another cell on which this instance depends
-       * @param ¢  JD
-       * @return  <code><b>this</b></code> 
-       */
+      /** Add another cell on which this instance depends
+       * @param ¢ JD
+       * @return <code><b>this</b></code> */
       @Override @org.jetbrains.annotations.NotNull public NotNull<T> ingredients(final Cookbook.Cell<?>... ¢) {
         return (NotNull<T>) super.ingredients(¢);
       }
@@ -1205,11 +1186,9 @@ public interface Cookbook {
         }
       }
 
-      /**
-       * Add another cell on which this instance depends
-       * @param ¢  JD
-       * @return  <code><b>this</b></code> 
-       */
+      /** Add another cell on which this instance depends
+       * @param ¢ JD
+       * @return <code><b>this</b></code> */
       @Override @org.jetbrains.annotations.NotNull public NullRobust<T> ingredients(final Cookbook.Cell<?>... ¢) {
         super.ingredients(¢);
         return this;

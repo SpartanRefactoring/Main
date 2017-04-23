@@ -11,10 +11,8 @@ import il.org.spartan.bench.*;
  * granularity of loop execution, function calls, and the other instructions
  * required for timing. */
 public abstract class Operation implements Callable<Object> {
-  /**
-   * The body of this operation; to be filled in by sub-classes.
-   * @return  whatever 
-   */
+  /** The body of this operation; to be filled in by sub-classes.
+   * @return whatever */
   @Override @Nullable public abstract Object call();
 
   @NotNull @SuppressWarnings("static-method") //

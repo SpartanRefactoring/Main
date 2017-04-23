@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.*;
 import org.eclipse.jdt.annotation.*;
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.fapi.*;
+import il.org.spartan.*;
 import il.org.spartan.utils.___.*;
 
 /** An unsorted set of integers supporting the basic set operations:
@@ -239,6 +239,7 @@ public class Integers {
       return $;
     }
   }
+
   /** Find the index in the hash table of the parameter
    * @param i some integer
    * @return index of the element if the parameter is in the table, otherwise,

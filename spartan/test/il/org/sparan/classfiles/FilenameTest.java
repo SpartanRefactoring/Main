@@ -1,6 +1,6 @@
 package il.org.sparan.classfiles;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.jetbrains.annotations.*;
@@ -8,7 +8,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.classfiles.*;
-import il.org.spartan.fapi.*;
 
 @SuppressWarnings("static-method") public class FilenameTest {
   @Test public void Head() {

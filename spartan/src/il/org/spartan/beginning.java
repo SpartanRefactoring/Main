@@ -1,16 +1,15 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan.fapi;
+package il.org.spartan;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 
-  public interface beginning {
+public interface beginning {
   String COMMA = ",";
   String DOT = ".";
   String NL = "\n";

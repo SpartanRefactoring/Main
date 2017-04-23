@@ -1,6 +1,6 @@
 package il.org.spartan.graph;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -8,7 +8,6 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.graph.Graph.*;
 
 public class GraphsSamplesGenerator {

@@ -1,17 +1,15 @@
 package il.org.spartan.reflection;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.reflection.DeepSize.*;
 import il.org.spartan.sequence.*;
 
-@SuppressWarnings("static-method")
-public class DeepSizeTest {
+@SuppressWarnings("static-method") public class DeepSizeTest {
   @NotNull private static MyHashMap<String, String> createHashTable(final int i) {
     @NotNull final MyHashMap<String, String> $ = new MyHashMap<>();
     for (int ¢ = 0; ¢ < i; ++¢)

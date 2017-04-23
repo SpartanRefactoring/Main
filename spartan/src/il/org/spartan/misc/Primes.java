@@ -1,7 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.misc;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import java.io.*;
 import java.util.*;
@@ -10,7 +10,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
 /** Primality testing and generation of primes.
  * @author Yossi Gil
@@ -53,8 +52,7 @@ public class Primes {
         return current;
   }
 
-  @SuppressWarnings("static-method")
-  public static class TEST {
+  @SuppressWarnings("static-method") public static class TEST {
     @Test public void firstIsTwo() {
       azzert.that(new Primes().next(), is(2));
     }

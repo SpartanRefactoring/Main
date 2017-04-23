@@ -2,8 +2,6 @@
 package il.org.spartan.files.visitors;
 
 import java.io.*;
-import java.util.*;
-
 import org.jetbrains.annotations.*;
 
 /** A class realizing a traversal of the file system, where the traversal is

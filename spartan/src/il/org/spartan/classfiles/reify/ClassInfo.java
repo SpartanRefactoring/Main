@@ -239,9 +239,8 @@ public final class ClassInfo extends ConstantPoolEntity {
     @NotNull final ClassInfo $ = (ClassInfo) ¢;
     return $.name().equals(name()) && $.fieldsCount() == fieldsCount() && $.methodCount() == methodCount()
         && $.constructorsCount() == constructorsCount() && $.referencedClasses() == referencedClasses()
-        && $.referencedDoubles() == referencedDoubles() && $.referencedInts() == referencedInts()
-        && $.referencedFloats() == referencedFloats() && $.referencedStrings() == referencedStrings()
-        && $.referencedLongs() == referencedLongs() && $.codeSize() == codeSize();
+        && $.referencedDoubles() == referencedDoubles() && $.referencedInts() == referencedInts() && $.referencedFloats() == referencedFloats()
+        && $.referencedStrings() == referencedStrings() && $.referencedLongs() == referencedLongs() && $.codeSize() == codeSize();
   }
 
   @Attribute public int fieldsCount() {

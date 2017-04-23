@@ -1,15 +1,13 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.function.*;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
-
-import il.org.spartan.fapi.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -108,20 +106,18 @@ public interface idiomatic {
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
   interface Holder<T> extends Supplier<T> {
-    /**
-     * Return value when condition is <code><b>true</b></code>
-     * @param unless  condition on which value is returned
-     * @return   {@link #get()}  when the parameter is <code><b>true</b></code> , otherwise code><b>null</b></code>. 
-     */
+    /** Return value when condition is <code><b>true</b></code>
+     * @param unless condition on which value is returned
+     * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
+     *         otherwise code><b>null</b></code>. */
     @Nullable default T unless(final boolean unless) {
       return when(!unless);
     }
 
-    /**
-     * Return value when condition is <code><b>true</b></code>
-     * @return   {@link #get()}  when the parameter is <code><b>true</b></code> , otherwise code><b>null</b></code>.
-     * @param when  condition on which value is returned 
-     */
+    /** Return value when condition is <code><b>true</b></code>
+     * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
+     *         otherwise code><b>null</b></code>.
+     * @param when condition on which value is returned */
     @Nullable default T when(final boolean when) {
       return when ? get() : null;
     }

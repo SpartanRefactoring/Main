@@ -1,6 +1,6 @@
 package il.org.spartan.graph;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.graph.GraphsSamplesGenerator.*;
 import static org.junit.Assert.assertEquals;
 
@@ -11,11 +11,9 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
-import il.org.spartan.fapi.*;
 import il.org.spatan.iteration.*;
 
-@SuppressWarnings("static-method")
-public class GraphTest {
+@SuppressWarnings("static-method") public class GraphTest {
   static void verifyEdge(@NotNull final Graph<String> s, final int from, final int to) {
     assert s.vertices().get(from) != null;
     assert s.vertices().get(to) != null;

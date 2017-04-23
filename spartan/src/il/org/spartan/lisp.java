@@ -1,8 +1,9 @@
-package il.org.spartan.fapi;
+package il.org.spartan;
 
 import static il.org.spartan.Utils.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
@@ -33,12 +34,10 @@ public interface lisp {
     return s.charAt(i);
   }
 
-  /**
-   * Determine if an integer can be found in a list of values
-   * @param candidate  what to search for
-   * @param is  where to search
-   * @return  true if the the item is found in the list 
-   */
+  /** Determine if an integer can be found in a list of values
+   * @param candidate what to search for
+   * @param is where to search
+   * @return true if the the item is found in the list */
   @SafeVarargs @Contract(pure = true) static boolean intIsIn(final int candidate, @NotNull final int... is) {
     for (final int ¢ : is)
       if (¢ == candidate)
@@ -89,13 +88,11 @@ public interface lisp {
     return ts.get(i < 1 ? 0 : i - 1);
   }
 
-  /**
-   * Replace the element of a specific index in a list
-   * @param ts  the indexed list
-   * @param element  the element to be added to the list
-   * @param index  the index that should be replaced
-   * @return  the list after the replacement 
-   */
+  /** Replace the element of a specific index in a list
+   * @param ts the indexed list
+   * @param element the element to be added to the list
+   * @param index the index that should be replaced
+   * @return the list after the replacement */
   @Contract("null, _, _ -> null") @Nullable static <T> List<T> replace(@Nullable final List<T> ts, final T element, final int index) {
     if (ts != null && index >= 0 && index < ts.size()) {
       ts.remove(index);
@@ -104,22 +101,18 @@ public interface lisp {
     return ts;
   }
 
-  /**
-   * Replace the first element of a in a list
-   * @param ts  the indexed list
-   * @param element  the element to be added to the list
-   * @return  the list after the replacement 
-   */
+  /** Replace the first element of a in a list
+   * @param ts the indexed list
+   * @param element the element to be added to the list
+   * @return the list after the replacement */
   @Contract("null, _ -> null") @Nullable static <T> List<T> replaceFirst(final List<T> ts, final T element) {
     return replace(ts, element, 0);
   }
 
-  /**
-   * Replace the last element of a in a list
-   * @param ts  the indexed list
-   * @param element  the element to be added to the list
-   * @return  the list after the replacement 
-   */
+  /** Replace the last element of a in a list
+   * @param ts the indexed list
+   * @param element the element to be added to the list
+   * @return the list after the replacement */
   @Contract("null, _ -> null") @Nullable static <T> List<T> replaceLast(@NotNull final List<T> ts, final T element) {
     return replace(ts, element, ts.size() - 1);
   }
@@ -147,5 +140,44 @@ public interface lisp {
 
   @Contract("null -> null") @Nullable static <T> T second(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
+  }
+
+  /** @param o the assignment operator to compare all to
+   * @param os A unknown number of assignments operators
+   * @return whether all the operator are the same or false otherwise */
+  static boolean areEqual(final Object o, final Object... os) {
+    return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ == o);
+  }
+
+  static <T> List<T> chopLast(final List<T> ¢) {
+    final List<T> $ = as.list(¢);
+    $.remove($.size() - 1);
+    return $;
+  }
+
+  static String chopLast(final String ¢) {
+    return ¢.substring(0, ¢.length() - 1);
+  }
+
+  static <T> void removeFromList(final Iterable<T> items, final List<T> from) {
+    items.forEach(from::remove);
+  }
+
+  static <T> void removeLast(final List<T> ¢) {
+    ¢.remove(¢.size() - 1);
+  }
+
+  /** swaps two elements in an indexed list in given indexes, if they are legal
+   * @param ts the indexed list
+   * @param i1 the index of the first element
+   * @param i2 the index of the second element
+   * @return the list after swapping the elements */
+  static <T> List<T> swap(final List<T> $, final int i1, final int i2) {
+    if (i1 >= $.size() || i2 >= $.size())
+      return $;
+    final T t = $.get(i1);
+    replace($, $.get(i2), i1);
+    replace($, t, i2);
+    return $;
   }
 }

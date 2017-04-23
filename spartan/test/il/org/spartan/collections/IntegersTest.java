@@ -1,8 +1,6 @@
 package il.org.spartan.collections;
 
-import il.org.spartan.collections.IntegersMap.INVARIANT;
-
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import java.util.*;
 
@@ -10,7 +8,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") //

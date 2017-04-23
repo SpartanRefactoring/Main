@@ -7,7 +7,6 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.utils.___.*;
 
 /** An unsorted map of integers.

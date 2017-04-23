@@ -1,22 +1,18 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.*;
 
-import javax.xml.bind.*;
-
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
-import il.org.spartan.reap.Cookbook.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Property}s. A {@link Property} is either
@@ -56,7 +52,7 @@ import il.org.spartan.reap.Cookbook.*;
  * apply
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
-  public interface Environment {
+public interface Environment {
   @NotNull static <@Nullable T, @Nullable A> Binder1<T, A> bind(@NotNull final Function1<T, A> ¢) {
     return new Property<T>().bind(¢);
   }
@@ -519,11 +515,11 @@ import il.org.spartan.reap.Cookbook.*;
       return this;
     }
 
-    /**
-     * forcibly set the value stored in this instance, ignoring the function used for computing it, and marks this instance as updated with respect to all prerequisites.
-     * @param ¢  JD
-     * @return  <code><b>this</b></code> 
-     */
+    /** forcibly set the value stored in this instance, ignoring the function
+     * used for computing it, and marks this instance as updated with respect to
+     * all prerequisites.
+     * @param ¢ JD
+     * @return <code><b>this</b></code> */
     @Nullable public T set(final T ¢) {
       version = latestPrequisiteVersion() + 1;
       return cache(¢);

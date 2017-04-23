@@ -110,11 +110,9 @@ public class Recipe<@Nullable T> extends Cell<T> {
       return (Recipe.NotNull<T>) super.clone();
     }
 
-    /**
-     * Add another cell on which this instance depends
-     * @param ¢  JD
-     * @return  <code><b>this</b></code> 
-     */
+    /** Add another cell on which this instance depends
+     * @param ¢ JD
+     * @return <code><b>this</b></code> */
     @Override @org.jetbrains.annotations.NotNull public Recipe.NotNull<T> ingredients(final Cell<?>... ¢) {
       return (Recipe.NotNull<T>) super.ingredients(¢);
     }
@@ -162,11 +160,9 @@ public class Recipe<@Nullable T> extends Cell<T> {
       }
     }
 
-    /**
-     * Add another cell on which this instance depends
-     * @param ¢  JD
-     * @return  <code><b>this</b></code> 
-     */
+    /** Add another cell on which this instance depends
+     * @param ¢ JD
+     * @return <code><b>this</b></code> */
     @Override @org.jetbrains.annotations.NotNull public Recipe.NullRobust<T> ingredients(final Cell<?>... ¢) {
       super.ingredients(¢);
       return this;

@@ -1,6 +1,6 @@
 package il.org.spartan.reflection;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Permutation.*;
 
 import java.util.*;
@@ -9,7 +9,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") public class PermutationTest {
@@ -38,8 +37,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testIsPermutationLarge() {
-    @NotNull
-    final int N = 1000, a[] = Permutation.random(N);
+    @NotNull final int N = 1000, a[] = Permutation.random(N);
     Arrays.sort(a);
     for (int ¢ = 0; ¢ < N; ++¢)
       azzert.that(Arrays.binarySearch(a, ¢), is(¢));

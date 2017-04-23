@@ -1,6 +1,6 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.math.*;
@@ -8,7 +8,6 @@ import java.math.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */

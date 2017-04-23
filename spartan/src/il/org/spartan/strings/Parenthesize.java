@@ -6,7 +6,6 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 

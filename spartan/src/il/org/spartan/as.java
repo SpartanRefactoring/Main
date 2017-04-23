@@ -1,9 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan.fapi;
+package il.org.spartan;
 
-import static il.org.spartan.fapi.azzert.*;
-import static org.junit.Assert.*;
-
+import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
@@ -12,8 +10,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
-import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.iterables.*;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
@@ -123,12 +119,10 @@ public enum as {
     return $;
   }
 
-  /**
-   * Creates an iterable for an array of objects
-   * @param < T >  an arbitrary type
-   * @param ts  what to iterate on
-   * @return  an  {@link Iterable}  over the parameter 
-   */
+  /** Creates an iterable for an array of objects
+   * @param < T > an arbitrary type
+   * @param ts what to iterate on
+   * @return an {@link Iterable} over the parameter */
   @SafeVarargs @NotNull public static <@Nullable T> PureIterable.Sized<T> iterable(@NotNull final T... ts) {
     return new PureIterable.Sized<T>() {
       @Override @NotNull public PureIterator<T> iterator() {
@@ -186,12 +180,10 @@ public enum as {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
 
-  /**
-   * Creates an iterable for an array of objects
-   * @param < T >  an arbitrary type
-   * @param ts  what to iterate on
-   * @return  an  {@link Iterable}  over the parameter 
-   */
+  /** Creates an iterable for an array of objects
+   * @param < T > an arbitrary type
+   * @param ts what to iterate on
+   * @return an {@link Iterable} over the parameter */
   @SafeVarargs @NotNull public static <T> PureIterable.Sized<T> nonNullIterable(@NotNull final T... ts) {
     return new PureIterable.Sized<T>() {
       @Override @NotNull public PureIterator<T> iterator() {
@@ -274,8 +266,7 @@ public enum as {
    * @author Yossi Gil
    * @since 2014-05-31 */
   @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
-  @SuppressWarnings("static-method")
-  public static class TEST {
+  @SuppressWarnings("static-method") public static class TEST {
     @Test public void asBitOfFalse() {
       azzert.that(as.bit(false), is(0));
     }

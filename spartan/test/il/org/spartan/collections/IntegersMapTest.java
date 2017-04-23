@@ -1,12 +1,11 @@
 package il.org.spartan.collections;
 
-import static il.org.spartan.fapi.azzert.*;
+import static il.org.spartan.azzert.*;
 
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 
 public final class IntegersMapTest {
   final IntegersMap m = new IntegersMap();

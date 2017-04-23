@@ -56,8 +56,7 @@ import il.org.spartan.utils.*;
       return s;
     final int firstDigitIndex = s.length() - $;
     @NotNull final String ZEROS = "0000000";
-    return $ >= ZEROS.length() ? s
-        : s.substring(0, firstDigitIndex) + ZEROS.substring(0, ZEROS.length() - $) + s.substring(firstDigitIndex);
+    return $ >= ZEROS.length() ? s : s.substring(0, firstDigitIndex) + ZEROS.substring(0, ZEROS.length() - $) + s.substring(firstDigitIndex);
   }
 
   /** Return the largest prefix of a String the does not contain a certain

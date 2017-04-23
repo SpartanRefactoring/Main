@@ -10,7 +10,6 @@ import java.util.Map.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
-import il.org.spartan.fapi.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.utils.*;
 
