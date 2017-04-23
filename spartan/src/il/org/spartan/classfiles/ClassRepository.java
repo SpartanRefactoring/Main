@@ -1,7 +1,7 @@
 package il.org.spartan.classfiles;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartanl.testing.Assert.*;
+import static il.org.spartanl.testing.Assert.assertContains;
 
 import java.io.*;
 import java.net.*;
