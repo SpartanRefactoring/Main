@@ -50,7 +50,8 @@ public class XMLSpartan {
           ModifierRedundant.class, //
           ParameterAnonymize.class, //
           ForParameterRenameToIt.class, //
-          LambdaRenameSingleParameterToLambda.class //
+          LambdaRenameSingleParameterToLambda.class, //
+          ConstructorEmptyRemove.class //
       ));
   private static final String TIPPER = "tipper";
   private static final String TIPPER_ID = "id";
@@ -274,7 +275,7 @@ public class XMLSpartan {
    * @return true iff the document is valid, and does not require
    *         initialization */
   private static boolean validate(@SuppressWarnings("unused") final Document $, final String version) {
-    return version != null && Double.parseDouble(version) < 3.0;
+    return version != null && Double.parseDouble(version) >= 3.0;
   }
 
   /** Describes an XML category element for plugin's XML file. The category has
