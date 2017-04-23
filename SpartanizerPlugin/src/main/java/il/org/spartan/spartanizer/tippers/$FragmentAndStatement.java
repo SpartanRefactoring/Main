@@ -87,4 +87,8 @@ public abstract class $FragmentAndStatement extends GoToNextStatement<VariableDe
       }
     }.spanning(extract.nextStatement(f.getParent()));
   }
+
+  public static boolean doesUseForbiddenSiblings(final VariableDeclarationFragment f, final ASTNode... ns) {
+    return forbiddenSiblings(f).stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
+  }
 }
