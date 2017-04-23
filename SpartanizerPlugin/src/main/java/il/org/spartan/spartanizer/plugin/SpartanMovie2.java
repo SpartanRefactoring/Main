@@ -44,14 +44,11 @@ public class SpartanMovie2 extends AbstractHandler {
      final GUITraversal traversal = new GUITraversal();
      if (compilationUnits == null || page == null || progressService == null) return null;
     
-    Job job = new Job("About to say hello") {
+    Job job = new Job(NAME) {
       protected IStatus run(IProgressMonitor monitor) {
-        try {
 //          monitor.beginTask("Preparing", 5000);
-          
           monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
           int changes = 0, filesModified = 0;
-          
           for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
             System.out.println(currentCompilationUnit.getElementName());
             mightNotBeSlick(page);
@@ -81,46 +78,47 @@ public class SpartanMovie2 extends AbstractHandler {
                 note.bug(¢);
               }
            }
-           monitor.subTask("Done: Commited " + changes + " changes in " + filesModified +
-           " " + English.plurals("file", filesModified));
+           monitor.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
            sleep(SLEEP_END);
            monitor.done();
+           return Status.OK_STATUS;
+        
           
-          SubMonitor subMonitor = 
-              SubMonitor.convert(monitor,"Prepring", 5000);
-          subMonitor = null;
-          for (int i = 0; i < 50 && !subMonitor.isCanceled(); i++) {
-            if(i==0) {
-              subMonitor.subTask("Doing something");
-            } else if (i == 12) {
-              checkDozen(new SubProgressMonitor(subMonitor, 100));            
-            } else if (i == 25) {
-              subMonitor.subTask("Doing something elese");
-            } else if (i == 40) {
-              subMonitor.subTask("Nearly there");
-            }
-            Thread.sleep(100);
-            subMonitor.worked(100);
-          }
-        } catch (InterruptedException $) {
-          note.bug($);
-        } catch (NullPointerException $) {
-          return new Status(IStatus.ERROR,
-             org.eclipse.core.internal.runtime.Activator.PLUGIN_ID, "Programming bug?", $);          
-        } finally {
-          monitor.done();
-        }
-        // MessageDialog.openInformation(null, "Hello", "World");
-        if (!monitor.isCanceled()) {
-          Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-              MessageDialog.openInformation(null, "Hello", "World");
-            }
-          });
-        }
-        return Status.OK_STATUS;
+//          SubMonitor subMonitor = 
+//              SubMonitor.convert(monitor,"Prepring", 5000);
+//          subMonitor = null;
+//          for (int i = 0; i < 50 && !subMonitor.isCanceled(); i++) {
+//            if(i==0) {
+//              subMonitor.subTask("Doing something");
+//            } else if (i == 12) {
+//              checkDozen(new SubProgressMonitor(subMonitor, 100));            
+//            } else if (i == 25) {
+//              subMonitor.subTask("Doing something elese");
+//            } else if (i == 40) {
+//              subMonitor.subTask("Nearly there");
+//            }
+//            Thread.sleep(100);
+//            subMonitor.worked(100);
+//          }
+//        } catch (InterruptedException $) {
+//          note.bug($);
+//        } catch (NullPointerException $) {
+//          return new Status(IStatus.ERROR,
+//             org.eclipse.core.internal.runtime.Activator.PLUGIN_ID, "Programming bug?", $);          
+//        } finally {
+//          monitor.done();
+//        }
+//        // MessageDialog.openInformation(null, "Hello", "World");
+//        if (!monitor.isCanceled()) {
+//          Display.getDefault().asyncExec(new Runnable() {
+//            public void run() {
+//              MessageDialog.openInformation(null, "Hello", "World");
+//            }
+//          });
+//        }
+//        return Status.OK_STATUS;
       }
-
+      
       Boolean sleep(double howMuch) {
         try {
           Thread.sleep((int) (1000 * howMuch));
@@ -146,7 +144,9 @@ public class SpartanMovie2 extends AbstractHandler {
           m.done();
         }
       }
-    };
+    }; // end job
+    
+    
     ICommandService service = (ICommandService) 
         PlatformUI.getWorkbench().getService(ICommandService.class);
     Command command = service == null ? null : 
