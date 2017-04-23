@@ -31,7 +31,7 @@ import nano.ly.*;
 public class XMLSpartan {
   public static final String FILE_NAME = "spartanizer.xml";
   private static final String BASE = "spartan";
-  private static final String CURRENT_VERSION = "3.0";
+  private static final String CURRENT_VERSION = "4.0";
   private static final Examples EMPTY_PREVIEW = new Examples()//
       .convert("[no available preview]")//
       .to("[no available preview]");
@@ -50,7 +50,9 @@ public class XMLSpartan {
           ModifierRedundant.class, //
           ParameterAnonymize.class, //
           ForParameterRenameToIt.class, //
-          LambdaRenameSingleParameterToLambda.class //
+          LambdaRenameSingleParameterToLambda.class, //
+          ConstructorEmptyRemove.class, //
+          ReturnDeadAssignment.class //
       ));
   private static final String TIPPER = "tipper";
   private static final String TIPPER_ID = "id";
@@ -273,8 +275,8 @@ public class XMLSpartan {
    * @param version document's version
    * @return true iff the document is valid, and does not require
    *         initialization */
-  private static boolean validate(@SuppressWarnings("unused") final Document $, @SuppressWarnings("unused") final String version) {
-    return true;
+  private static boolean validate(@SuppressWarnings("unused") final Document $, final String version) {
+    return version != null && Double.parseDouble(version) >= 3.0;
   }
 
   /** Describes an XML category element for plugin's XML file. The category has
