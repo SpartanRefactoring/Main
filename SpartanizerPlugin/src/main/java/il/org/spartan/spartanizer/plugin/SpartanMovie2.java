@@ -31,23 +31,22 @@ public class SpartanMovie2 extends AbstractHandler {
       protected IStatus run(IProgressMonitor m) {
         try {
           m.beginTask("Preparing", 5000);
-          for (int i = 0; i < 50 && !m.isCanceled(); i++) {
+          for (int ¢ = 0; ¢ < 50 && !m.isCanceled(); ¢++) {
             Thread.sleep(100);
             m.worked(100);
           }
-        } catch (InterruptedException e) {
-          note.bug(e);
+        } catch (InterruptedException ¢) {
+          note.bug(¢);
         } finally {
           m.done();
         }
         // MessageDialog.openInformation(null, "Hello", "World");
-        if (!m.isCanceled()) {
+        if (!m.isCanceled())
           Display.getDefault().asyncExec(new Runnable() {
             public void run() {
               MessageDialog.openInformation(null, "Hello", "World");
             }
           });
-        }
         return Status.OK_STATUS;
       }
     };

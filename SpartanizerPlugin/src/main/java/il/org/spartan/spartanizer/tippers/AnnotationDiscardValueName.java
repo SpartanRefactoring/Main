@@ -44,11 +44,11 @@ public final class AnnotationDiscardValueName extends NodePattern<NormalAnnotati
     ;
   }
 
-  @Override public ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
+  @Override public ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final SingleMemberAnnotation a = current.getAST().newSingleMemberAnnotation();
     a.setTypeName(copy.of(current.getTypeName()));
     a.setValue(copy.of(member.getValue()));
-    r.replace(current, a, g);
-    return r;
+    $.replace(current, a, g);
+    return $;
   }
 }
