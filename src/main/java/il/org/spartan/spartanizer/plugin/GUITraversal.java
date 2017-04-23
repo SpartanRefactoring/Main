@@ -224,7 +224,7 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
 
   /** @param pm a progress monitor in which to display the progress of the
    *        refactoring
-   * @param m the marker for which the refactoring needs to system
+   * @param ¢ the marker for which the refactoring needs to system
    * @return a RefactoringStatus
    * @throws CoreException the JDT core throws it */
   public RefactoringStatus runAsMarkerFix(final IMarker ¢) throws CoreException {
