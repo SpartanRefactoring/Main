@@ -29,9 +29,11 @@ public abstract class FragmentAmongFragmentsPattern extends FragmentPattern {
   protected final List<VariableDeclarationFragment> otherSiblings() {
     return siblings().stream().filter(λ -> λ != current()).collect(toList());
   }
+
   public boolean usedInOlderSiblings() {
-    return olderSiblings().stream().anyMatch(λ -> compute.usedNames(λ.getInitializer()).contains(name + "")); 
+    return olderSiblings().stream().anyMatch(λ -> compute.usedNames(λ.getInitializer()).contains(name + ""));
   }
+
   protected final List<VariableDeclarationFragment> youngerSiblings() {
     return siblings().subList(0, currentIndex());
   }

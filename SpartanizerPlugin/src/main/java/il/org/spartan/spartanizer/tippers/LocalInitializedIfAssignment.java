@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -48,8 +49,7 @@ public final class LocalInitializedIfAssignment extends $FragmentAndStatement//
     if (condition == null)
       return null;
     final Assignment a = extract.assignment(then(s));
-    if (a == null || !wizard.eq(to(a), n) || a.getOperator() != ASSIGN
-        || $FragmentAndStatement.doesUseForbiddenSiblings(f, condition, from(a)))
+    if (a == null || !wizard.eq(to(a), n) || a.getOperator() != ASSIGN || $FragmentAndStatement.doesUseForbiddenSiblings(f, condition, from(a)))
       return null;
     final InlinerWithValue i = new Inliner(n, $, g).byValue(initializer);
     if (!i.canInlineinto(condition, from(a)))

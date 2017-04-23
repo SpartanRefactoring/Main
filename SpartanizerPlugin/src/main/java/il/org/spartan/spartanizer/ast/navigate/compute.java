@@ -6,12 +6,11 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
+import nano.ly.*;
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -180,8 +179,9 @@ public enum compute {
         return wizard.listMe(¢);
       }
 
+      /** the operator is not in INCREMENT DECREMENT x \not\in \{\} */
       @Override protected List<Statement> map(final PrefixExpression ¢) {
-        return !iz.in(¢.getOperator(), INCREMENT, DECREMENT) ? reduce() : wizard.listMe(¢);
+        return !is.in(¢.getOperator(), INCREMENT, DECREMENT) ? reduce() : wizard.listMe(¢);
       }
 
       @Override protected List<Statement> map(final SuperMethodInvocation ¢) {

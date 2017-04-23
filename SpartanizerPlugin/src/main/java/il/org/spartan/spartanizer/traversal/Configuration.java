@@ -9,9 +9,9 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Singleton containing all {@link Tipper}s which are active. This class does
  * minimal dispatching at the node level, selecting and applying the most
@@ -139,7 +139,7 @@ public class Configuration {
   }
 
   @SafeVarargs public final Configuration restrictTo(final Tipper<?>... ts) {
-    Stream.of(implementation).filter(Objects::nonNull).forEach(x -> x.removeIf(λ -> !iz.in(λ, ts)));
+    Stream.of(implementation).filter(Objects::nonNull).forEach(x -> x.removeIf(λ -> !is.in(λ, ts)));
     return this;
   }
 

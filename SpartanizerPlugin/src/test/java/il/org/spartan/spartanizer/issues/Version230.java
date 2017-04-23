@@ -672,7 +672,6 @@ public final class Version230 {
         .gives("int a=2+3+b>2+3<<b?(2+3)*7<<2+3:2+3;");
   }
 
-
   @Test public void doNotConsolidateNewArrayActual() {
     trimminKof("occupied=new boolean[capacity]; placeholder=new boolean[capacity];")//
         .stays();
@@ -1594,7 +1593,6 @@ public final class Version230 {
         .gives("int a=x ? 2*2: 2;");
   }
 
-
   @Test public void localIfUsesLaterVariable() {
     trimminKof("int a=0, b=0;if(b==3)a=4;")//
         .gives("int a=0;if(0==3)a=4;")//
@@ -1699,7 +1697,6 @@ public final class Version230 {
     trimminKof("int a=3;return a +=2;")//
         .gives("return 3 + 2;");
   }
-
 
   @Test public void localUpdateReturnTwice() {
     trimminKof("int a=3;return a +=2 * a;")//

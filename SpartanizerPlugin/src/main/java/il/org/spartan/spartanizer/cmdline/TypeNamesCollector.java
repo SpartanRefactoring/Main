@@ -26,12 +26,12 @@ public enum TypeNamesCollector {
     collect(where.length != 0 ? where : as.array("."));
     final CSVStatistics w = new CSVStatistics("types.csv", "property");
     for (final String s : longNames.keySet()) {
-      final String shortName = Namer.shorten(s);
+      final String shortName = abbreviate.it(s);
       w.put("Count", longNames.get(s).intValue());
       w.put("Log(Count)", Math.log(longNames.get(s).intValue()));
       w.put("Sqrt(Count)", Math.sqrt(longNames.get(s).intValue()));
       w.put("Collisions", shortToFull.get(shortName).size());
-      w.put("Short", Namer.shorten(s));
+      w.put("Short", abbreviate.it(s));
       w.put("Original", s);
       w.nl();
     }
@@ -49,7 +49,7 @@ public enum TypeNamesCollector {
       void record(final String longName) {
         longNames.putIfAbsent(longName, Integer.valueOf(0));
         longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
-        final String shortName = Namer.shorten(longName);
+        final String shortName = abbreviate.it(longName);
         shortToFull.putIfAbsent(shortName, new HashSet<>());
         shortToFull.get(shortName).add(longName);
       }

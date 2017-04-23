@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
-import static il.org.spartan.utils.Proposition.that;
 
 import java.util.function.*;
 

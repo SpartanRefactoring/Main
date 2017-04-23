@@ -115,7 +115,7 @@ public class SingleFlaterMonitor extends SingleFlater.With implements SingleFlat
           return String.format("%2d. %s %s#%s %s: %s\n", //
               box.it(¢.getSequenceNumber()), //
               new SimpleDateFormat("hh:mm:ss").format(new Date(¢.getMillis())), //
-              Namer.lastComponent(¢.getSourceClassName()), //
+              cCamelCase.lastComponent(¢.getSourceClassName()), //
               ¢.getSourceMethodName(), //
               ¢.getLevel(), //
               formatMessage(¢)//

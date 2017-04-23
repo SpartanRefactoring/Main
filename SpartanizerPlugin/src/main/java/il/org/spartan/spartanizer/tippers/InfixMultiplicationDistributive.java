@@ -15,7 +15,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 import nano.ly.*;
 
 /** Apply the distributive rule to multiplication: {@code
@@ -117,7 +116,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
             addDifferent(op, different);
         if (temp.size() == 1)
           extract.allOperands(az.infixExpression(first(temp))).stream().filter(λ -> !isIn(λ, $)).forEach(λ -> addDifferent(λ, different));
-        lisp2.removeFromList(different, $);
+        lisp.removeFromList(different, $);
       }
     }
     Expression addition = null;

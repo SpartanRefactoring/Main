@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
@@ -35,11 +36,11 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     if (p == null)
       return null;
     final SimpleName sn = name(onlyOne(parameters(p)));
-    if (sn == null || in(sn.getIdentifier(), Namer.cent))
+    if (sn == null || in(sn.getIdentifier(), notation.cent))
       return null;
     final SingleVariableDeclaration d = s.getParameter();
     final SimpleName $ = d.getName();
-    if (Namer.isSpecial($) || !JohnDoe.property(d))
+    if (notation.isSpecial($) || !JohnDoe.property(d))
       return null;
     final Statement body = body(s);
     if (haz.variableDefinition(body) || haz.cent(body) || collect.usesOf($).in(body).isEmpty())
@@ -53,6 +54,6 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
   }
 
   public static SimpleName newCurrent(final EnhancedForStatement ¢) {
-    return ¢.getAST().newSimpleName(Namer.cent);
+    return ¢.getAST().newSimpleName(notation.cent);
   }
 }

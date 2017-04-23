@@ -11,10 +11,10 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -195,7 +195,7 @@ public enum op {
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNull(a1, a2) || !lisp2.areEqual(a1.getOperator(), a2.getOperator()) || !wizard.eq(step.to(a1), step.to(a2));
+    return hasNull(a1, a2) || !lisp.areEqual(a1.getOperator(), a2.getOperator()) || !wizard.eq(step.to(a1), step.to(a2));
   }
 
   /** Determine whether an InfixExpression.Operator is a comparison operator or

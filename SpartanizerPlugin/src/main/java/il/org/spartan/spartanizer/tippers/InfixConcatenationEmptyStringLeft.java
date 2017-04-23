@@ -6,12 +6,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 
 /** Convert {@code ""+x} to {@code x+""} tests in {@link Issue0116}
  * @author Dan Greenstein
@@ -23,7 +23,7 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
 
   private static InfixExpression replace(final InfixExpression ¢) {
     final List<Expression> $ = extract.allOperands(¢);
-    lisp2.swap($, 0, 1);
+    lisp.swap($, 0, 1);
     return subject.operands($).to(op.PLUS2);
   }
 

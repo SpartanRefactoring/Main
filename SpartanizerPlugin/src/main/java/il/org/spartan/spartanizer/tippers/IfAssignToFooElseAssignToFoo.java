@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -36,7 +37,7 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
     andAlso("Both assignments are to the same target", //
         () -> wizard.eq(to = to(thenAssignment), to(elzeAssignment)));
     andAlso("Assignment operators are compatible", //
-        () -> lisp2.areEqual(thenOperator = thenAssignment.getOperator(), elzeAssignment.getOperator()));
+        () -> lisp.areEqual(thenOperator = thenAssignment.getOperator(), elzeAssignment.getOperator()));
   }
 
   @Override public String description() {

@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** TODO Doron Meshulam: this is a redundant tipper, see #750 Convert
@@ -41,7 +42,7 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
       for (final SingleVariableDeclaration x : parameters((MethodDeclaration) p1)) {
         final SimpleName sn = x.getName();
         assert sn != null;
-        if (in(sn.getIdentifier(), Namer.cent))
+        if (in(sn.getIdentifier(), notation.cent))
           return null;
       }
     final Statement body = $.getBody();
@@ -49,13 +50,13 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
       return null;
     final SimpleName n = d.getName();
     assert n != null;
-    if (in(n.getIdentifier(), Namer.specials) || haz.variableDefinition(body) || haz.cent(body))
+    if (notation.isSpecial(n) || haz.variableDefinition(body) || haz.cent(body))
       return null;
     final List<SimpleName> uses = collect.usesOf(n).in(body);
     assert uses != null;
     if (uses.isEmpty())
       return null;
-    final SimpleName ¢ = Namer.newCent(d);
+    final SimpleName ¢ = make.newCent(d);
     return isNameDefined($, ¢) ? null : new Tip("Rename iterator '" + n + "' to ¢ in enhanced for loop", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename(n, ¢, $, r, g);

@@ -62,6 +62,6 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
   }
 
   static String prefix(final Type ¢) {
-    return Namer.shorten(¢);
+    return abbreviate.it(¢);
   }
 }

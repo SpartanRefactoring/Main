@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -73,7 +74,7 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
     final Block newBlock = $.getAST().newBlock();
     $.setElseStatement(newBlock);
     final ListRewrite listRewrite2 = r.getListRewrite(newBlock, Block.STATEMENTS_PROPERTY);
-    final List<Statement> move = lisp2.chopLast(subsequentStatements);
+    final List<Statement> move = lisp.chopLast(subsequentStatements);
     for (final Statement x : move)
       listRewrite2.insertLast(copy.of(x), g);
     final ListRewrite listRewrite3 = misc.statementRewriter(r, current);

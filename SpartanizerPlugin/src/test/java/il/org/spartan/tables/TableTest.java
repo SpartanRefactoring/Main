@@ -5,7 +5,7 @@ import static il.org.spartan.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
+import nano.ly.*;
 
 /** Unit test for {@link Table#classToNormalizedFileName(String)}
  * @author Yossi Gil
@@ -17,7 +17,7 @@ public class TableTest {
   }
 
   @Test public void test2() {
-    final String[] components = Namer.components("Table_NanosByCategories");
+    final String[] components = cCamelCase.components("Table_NanosByCategories");
     azzert.that(components, is(new String[] { "Table", "Nanos", "By", "Categories" }));
     azzert.that(separate.these(lisp.rest(as.iterable(components))).by('-').toLowerCase(), is("nanos-by-categories"));
   }

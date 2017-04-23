@@ -13,8 +13,8 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Tested by {@link Issue1115}
@@ -25,7 +25,7 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
   private static final long serialVersionUID = -0x2CF705A7699A0E07L;
 
   @Override public String description(final LambdaExpression ¢) {
-    return "Rename lambda parameter " + onlyOne(parameters(¢)) + " to " + Namer.lambda;
+    return "Rename lambda parameter " + onlyOne(parameters(¢)) + " to " + notation.lambda;
   }
 
   @Override public Tip tip(final LambdaExpression x) {
@@ -33,12 +33,12 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
     if (f == null)
       return null;
     final SimpleName $ = f.getName();
-    if (in($.getIdentifier(), Namer.lambda, Namer.anonymous, Namer.forbidden))
+    if (in($.getIdentifier(), notation.lambda, notation.anonymous, notation.forbidden))
       return null;
     final Namespace n = Environment.of(x);
-    if (n.has(Namer.lambda) || n.hasChildren())
+    if (n.has(notation.lambda) || n.hasChildren())
       return null;
-    final SimpleName ¢ = x.getAST().newSimpleName(Namer.lambda);
+    final SimpleName ¢ = x.getAST().newSimpleName(notation.lambda);
     return new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, x, r, g);

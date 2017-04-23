@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
@@ -39,12 +40,12 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
     if (!JohnDoe.property(parameter))
       return null;
     final SimpleName $ = parameter.getName();
-    if (Namer.isSpecial($))
+    if (notation.isSpecial($))
       return null;
     final Block b = body(c);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    final SimpleName ¢ = Namer.newCent(c);
+    final SimpleName ¢ = make.newCent(c);
     return new Tip(description(c), getClass(), c.getException().getName()) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, c, r, g);

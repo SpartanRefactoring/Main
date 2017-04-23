@@ -57,12 +57,19 @@ public enum precedence {
     return !precedence.known(e1) || !precedence.known(e2) || precedence.of(e1) > precedence.of(e2);
   }
 
+  /** determine whether an integer falls within the legal range of precedences.
+   * @param precedence JD
+   * @return whether the parameter is a legal precedence of Java. */
+  public static boolean isLegal(final int of2) {
+    return of2 >= 1 && of2 <= 15;
+  }
+
   /** determine whether the precedence of a given {@link Expression} can be
    * determined.
    * @param n JD
    * @return whether the parameter a legal precedence of Java. */
   public static boolean known(final ASTNode ¢) {
-    return is.legal(precedence.of(¢));
+    return precedence.isLegal(precedence.of(¢));
   }
 
   /** Determine the precedence of an arbitrary {@link ASTNode}
@@ -129,21 +136,5 @@ public enum precedence {
 
   private static int of(final String key) {
     return !of.containsKey(key) ? UNDEFINED : of.get(key);
-  }
-
-  /** An empty {@code enum} for fluent programming. The name should say it all:
-   * The name, followed by a dot, followed by a method name, should read like a
-   * sentence phrase.
-   * @author Yossi Gil
-   * @since 2015-07-14 */
-  public enum is {
-    ;
-    /** determine whether an integer falls within the legal range of
-     * precedences.
-     * @param precedence JD
-     * @return whether the parameter is a legal precedence of Java. */
-    public static boolean legal(final int precedence) {
-      return precedence >= 1 && precedence <= 15;
-    }
   }
 }

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.Utils.*;
-
 import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -15,6 +13,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code void f(int a){}} to {@code void f(int ¢){}}
@@ -37,12 +36,12 @@ public final class MethodDeclarationRenameSingleParameterToCent extends EagerTip
       return null;
     final SimpleName $ = parameter.getName();
     assert $ != null;
-    if (in($.getIdentifier(), Namer.specials))
+    if (notation.isSpecial($))
       return null;
     final Block b = body(d);
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    final SimpleName ¢ = Namer.newCent(d);
+    final SimpleName ¢ = make.newCent(d);
     return new Tip("Rename paraemter " + $ + " to ¢ ", getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, d, r, g);

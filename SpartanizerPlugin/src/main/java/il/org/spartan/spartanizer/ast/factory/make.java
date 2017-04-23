@@ -28,6 +28,7 @@ import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
 
@@ -482,5 +483,13 @@ public enum make {
     $.setSource(¢);
     $.setResolveBindings(true);
     return $;
+  }
+
+  public static SimpleName newCent(final ASTNode ¢) {
+    return from(¢).identifier(notation.cent);
+  }
+
+  public static SimpleName newIt(final ASTNode ¢) {
+    return from(¢).identifier(notation.it);
   }
 }
