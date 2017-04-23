@@ -383,7 +383,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.ZoomSelection" name="Selection"/>
      <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off"/>
      <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
-     <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
+     <command id="il.org.spartan.SpartanMovie2" name="Start Spartan movie" />
      <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
      <command id="il.org.spartan.AthensInflate" name="Athenize" />
      <command id="il.org.spartan.PreferencesChooser" name="Preferences..." />
