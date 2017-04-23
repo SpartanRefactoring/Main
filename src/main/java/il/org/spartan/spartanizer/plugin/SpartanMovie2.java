@@ -18,6 +18,7 @@ import nano.ly.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.
+ * @author Ori Roth
  * @author Matteo Orru'
  * @since 2016 */
 @SuppressWarnings("all")
@@ -30,16 +31,18 @@ public class SpartanMovie2 extends AbstractHandler {
     Job job = new Job("About to say hello") {
       protected IStatus run(IProgressMonitor monitor) {
         try {
-          monitor.beginTask("Preparing", 5000);
-          for (int i = 0; i < 50 && !monitor.isCanceled(); i++) {
+//          monitor.beginTask("Preparing", 5000);
+          SubMonitor subMonitor = 
+              SubMonitor.convert(monitor,"Prepring", 5000);
+          for (int i = 0; i < 50 && !subMonitor.isCanceled(); i++) {
             if(i==0) {
-              monitor.subTask("Doing something");
+              subMonitor.subTask("Doing something");
             } else if (i == 12) {
-              checkDozen(new SubProgressMonitor(monitor, 100));            
+              checkDozen(new SubProgressMonitor(subMonitor, 100));            
             } else if (i == 25) {
-              monitor.subTask("Doing something elese");
+              subMonitor.subTask("Doing something elese");
             } else if (i == 40) {
-              monitor.subTask("Nearly there");
+              subMonitor.subTask("Nearly there");
             }
             Thread.sleep(100);
             monitor.worked(100);
