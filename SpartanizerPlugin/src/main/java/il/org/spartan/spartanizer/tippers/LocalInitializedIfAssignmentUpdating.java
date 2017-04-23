@@ -22,7 +22,7 @@ public class LocalInitializedIfAssignmentUpdating extends LocalInitializedIfAssi
 //    andAlso("From does not use initializer", () -> compute.usedNames(from).contains(name + ""));
   }
 
-  private static final long serialVersionUID = -4268240777527142541L;
+  private static final long serialVersionUID = -0x3B3BD65F8057A88DL;
 
   @Override public Examples examples() {
     return convert("int a = 2;if (b) a += 3;").to("int a = y ? 2 + 3 : 2");

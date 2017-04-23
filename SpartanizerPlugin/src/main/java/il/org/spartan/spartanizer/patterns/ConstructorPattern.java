@@ -8,5 +8,5 @@ public abstract class ConstructorPattern extends CallablePattern {
     andAlso("Must be constructor ", () -> current.isConstructor());
   }
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1;
 }
