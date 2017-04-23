@@ -402,7 +402,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.ZoomTool" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.spartanizer.plugin.TipsOnOffToggle" />
    <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.old.RefreshAll"/>
-   <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.spartanizer.plugin.SpartanMovie"/>
+   <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.spartanizer.plugin.SpartanMovie2"/>
    <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.spartanizer.plugin.SpartanizationHandler"/>
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.athenizer.InflateHandler" />
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
