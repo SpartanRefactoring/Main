@@ -45,7 +45,7 @@ public class SpartanMovie extends AbstractHandler {
           final IResource file = currentCompilationUnit.getResource();
           try {
             IMarker[] markers = getMarkers(file);
-            if (markers.length > 0) {}
+            if (markers.length > 0) {/**/}
             for (; markers.length > 0; markers = getMarkers(file)) {
               final IMarker marker = getFirstMarker(markers);
               // pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
