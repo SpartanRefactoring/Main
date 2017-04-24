@@ -30,7 +30,7 @@ public interface lisp {
    * @return following item in the list, if such such an item exists, otherwise,
    *         the last node */
   @Nullable static <T> T next(final int i, @NotNull final List<T> ts) {
-    return !inRange(i + 1, ts) ? the.last(ts) : ts.get(i + 1);
+    return !inRange(i + 1, ts) ? the.lastOf(ts) : ts.get(i + 1);
   }
 
   /** Determine if an item is not included in a list of values
@@ -81,7 +81,7 @@ public interface lisp {
   }
 
   @NotNull static <T> Iterable<T> rest2(@NotNull final Iterable<T> ¢) {
-    return the.rest(the.rest(¢));
+    return the.lastOf(the.lastOf(¢));
   }
 
   /** @param o the assignment operator to compare all to

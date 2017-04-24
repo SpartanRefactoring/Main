@@ -13,7 +13,7 @@ public enum Tandem {
   @NotNull public static String arrays(@NotNull final double[] x, @NotNull final double[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
-        return String.format("<%,6g:%,6g>", Box.it(x[i()]), Box.it(y[i()]));
+        return String.format("<%,6g:%,6g>", box.it(x[i()]), box.it(y[i()]));
       }
     }, ";");
   }
@@ -21,7 +21,7 @@ public enum Tandem {
   @NotNull public static String arrays(@NotNull final double[] x, @NotNull final int[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
-        return String.format("<%,g:%,d>", Box.it(x[i()]), Box.it(y[i()]));
+        return String.format("<%,g:%,d>", box.it(x[i()]), box.it(y[i()]));
       }
     }, ";");
   }
@@ -29,7 +29,7 @@ public enum Tandem {
   @NotNull public static String arrays(@NotNull final int[] x, @NotNull final double[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
-        return String.format("<%,d:%,g>", Box.it(x[i()]), Box.it(y[i()]));
+        return String.format("<%,d:%,g>", box.it(x[i()]), box.it(y[i()]));
       }
     }, ";");
   }
@@ -37,7 +37,7 @@ public enum Tandem {
   @NotNull public static String arrays(@NotNull final int[] x, @NotNull final int[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
-        return String.format("<%,d:%,d>", Box.it(x[i()]), Box.it(y[i()]));
+        return String.format("<%,d:%,d>", box.it(x[i()]), box.it(y[i()]));
       }
     }, ";");
   }

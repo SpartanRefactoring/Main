@@ -1,7 +1,7 @@
 package il.org.spartan.classfiles.reify;
 
-import static nano.ly.Box.*;
-import static nano.ly.Unbox.*;
+import static nano.ly.box.*;
+import static nano.ly.unbox.*;
 
 import java.util.*;
 

@@ -1,6 +1,6 @@
 package il.org.spartan;
 
-import static nano.ly.Box.*;
+import static nano.ly.box.*;
 
 import java.util.*;
 

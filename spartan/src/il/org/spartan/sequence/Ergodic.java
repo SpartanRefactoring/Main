@@ -79,7 +79,7 @@ public class Ergodic {
         break;
       $.add(d);
     }
-    return Unbox.unbox($.toArray(new Double[$.size()]));
+    return unbox.unbox($.toArray(new Double[$.size()]));
   }
 
   @NotNull private static int[] makeInt(final int n, @NotNull final List<Integer> $) {
@@ -91,7 +91,7 @@ public class Ergodic {
         break;
       $.add(i);
     }
-    return Unbox.it($);
+    return unbox.it($);
   }
 
   private static Integer mid(@NotNull final List<Integer> is, final int i) {

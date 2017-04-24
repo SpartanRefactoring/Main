@@ -210,7 +210,7 @@ public class Aggregator {
 
     public String retreive(final RealStatistics $, @NotNull final String format) {
       try {
-        return String.format(format, Box.it(retreive($)));
+        return String.format(format, nano.ly.box.it(retreive($)));
       } catch (@NotNull final ArithmeticException e) {
         return ""; //
       }

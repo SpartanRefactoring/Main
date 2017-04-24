@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import static nano.ly.Box.*;
+import static nano.ly.box.*;
 
 /** @author Yossi Gil
  * @since 01/05/2011 */

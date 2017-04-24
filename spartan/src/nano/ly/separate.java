@@ -314,7 +314,7 @@ public enum separate {
     }
   }
 
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+
   @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST {
     private static final Function<Object, String> quote = λ -> "'" + λ + "'";

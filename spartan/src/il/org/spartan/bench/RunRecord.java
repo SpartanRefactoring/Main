@@ -24,7 +24,7 @@ public class RunRecord extends AbstractRunRecord {
   }
 
   public boolean ok() {
-    Log.f("Checking %s entry: runs=%d, netTime=%s (%s), grossTime=%s (%s)", getClass().getSimpleName(), Box.it(runs), Unit.formatNanoseconds(netTime),
+    Log.f("Checking %s entry: runs=%d, netTime=%s (%s), grossTime=%s (%s)", getClass().getSimpleName(), box.it(runs), Unit.formatNanoseconds(netTime),
         Unit.formatRelative(netTime, BenchingPolicy.getBenchingTime()), Unit.formatNanoseconds(grossTime),
         Unit.formatRelative(grossTime, BenchingPolicy.MAX_TIME));
     return runs > BenchingPolicy.MAX_RUNS

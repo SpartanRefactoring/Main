@@ -11,12 +11,12 @@ import nano.ly.*;
 
 @SuppressWarnings("static-method") public class ClassPredicatesTest {
   @Test public void testBoxFields() {
-    dump.go(Box.class.getSuperclass());
-    azzert.that(nFields(Box.class), is(2));
+    dump.go(box.class.getSuperclass());
+    azzert.that(nFields(box.class), is(2));
   }
 
   @Test public void testBoxImmutable() {
-    assert !isImmutable(Box.class);
+    assert !isImmutable(box.class);
   }
 
   @Test public void testEmptyEnumFields() {
