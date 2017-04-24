@@ -24,8 +24,8 @@ public class RunMyMainAndRightClickOnMyButtons {
         display.sleep();
   }
 
-  private static void applyOnce(Shell shell) {
-    Button bn = new Button(shell, SWT.FLAT);
+  private static void applyOnce(Shell s) {
+    Button bn = new Button(s, SWT.FLAT);
     bn.setText("&Apply (single scan)...");
     Menu popupMenu = new Menu(bn);
     MenuItem i1 = new MenuItem(popupMenu, SWT.NONE);
@@ -41,8 +41,8 @@ public class RunMyMainAndRightClickOnMyButtons {
   }
 
 
-  private static void fully(Shell shell) {
-    Button bn = new Button(shell, SWT.FLAT);
+  private static void fully(Shell s) {
+    Button bn = new Button(s, SWT.FLAT);
     bn.setText("&Fully spartanize...");
     Menu popupMenu = new Menu(bn);
     MenuItem i1 = new MenuItem(popupMenu, SWT.NONE);
@@ -58,8 +58,8 @@ public class RunMyMainAndRightClickOnMyButtons {
   }
 
 
-  private static void applyRepeatedly(Shell shell) {
-    Button bn = new Button(shell, SWT.FLAT);
+  private static void applyRepeatedly(Shell s) {
+    Button bn = new Button(s, SWT.FLAT);
     bn.setText("&Repeatedly apply ...");
     Menu popupMenu = new Menu(bn);
     MenuItem i1 = new MenuItem(popupMenu, SWT.NONE);
@@ -75,8 +75,8 @@ public class RunMyMainAndRightClickOnMyButtons {
   }
 
 
-  private static void suppress(Shell shell) {
-    Button bn = new Button(shell, SWT.FLAT);
+  private static void suppress(Shell s) {
+    Button bn = new Button(s, SWT.FLAT);
     bn.setText("&Silence...");
     Menu popupMenu = new Menu(bn);
     MenuItem i0 = new MenuItem(popupMenu, SWT.NONE);
@@ -99,12 +99,12 @@ public class RunMyMainAndRightClickOnMyButtons {
 
   private static void addAction(MenuItem i, Consumer<SelectionEvent> c) {
     i.addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(SelectionEvent e) {
-        c.accept(e);
+      @Override public void widgetSelected(SelectionEvent ¢) {
+        c.accept(¢);
       }
 
-      @Override public void widgetDefaultSelected(SelectionEvent e) {
-        widgetSelected(e);
+      @Override public void widgetDefaultSelected(SelectionEvent ¢) {
+        widgetSelected(¢);
       }
     });
   }

@@ -49,10 +49,7 @@ public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
   }
 
   @Override public String explain(N ¢) {
-    if (prerequisite(¢))
-      return null;
-    // evaluate prerequisites tree here
-    return super.explain(¢);
+    return prerequisite(¢) ? null : super.explain(¢);
   }
 
   @Override public final boolean prerequisite(final N ¢) {
