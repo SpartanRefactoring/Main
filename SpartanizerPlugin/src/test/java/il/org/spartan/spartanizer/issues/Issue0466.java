@@ -7,7 +7,7 @@ import org.junit.*;
 /** Unit tests for the GitHub issue thus numbered
  * @author Raviv Rachmiel
  * @since 22-11-2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0466 {
   @Test public void TestDoesUseShouldntChange() {

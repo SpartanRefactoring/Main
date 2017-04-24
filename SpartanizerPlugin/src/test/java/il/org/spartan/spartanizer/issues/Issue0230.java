@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link BodyDeclarationModifiersSort}
  * @author Alex Kopzon
  * @since 2016-09 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0230 {
   @Test public void a() {

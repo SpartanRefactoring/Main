@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** @author Yossi Gil
  * @since 2014-07-10 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Version290 {
   public void doNotInlineDeclarationWithAnnotationSimplified() {

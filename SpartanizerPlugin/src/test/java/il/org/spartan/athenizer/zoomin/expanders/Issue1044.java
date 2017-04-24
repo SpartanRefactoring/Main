@@ -15,7 +15,6 @@ import il.org.spartan.spartanizer.meta.*;
 /** Test class for name generation from Namespace (Environments)
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2017-01-10 */
-
 @SuppressWarnings("javadoc")
 public class Issue1044 extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);

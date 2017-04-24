@@ -14,7 +14,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 import il.org.spartan.*;
 
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class SpecificityTest {
   private static final Comparator<Expression> SPECIFICITY = new specificity();

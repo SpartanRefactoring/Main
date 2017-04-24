@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
  * @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */
-
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class EnvironmentTestUse {

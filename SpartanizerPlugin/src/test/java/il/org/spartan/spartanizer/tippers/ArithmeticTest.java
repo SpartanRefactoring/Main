@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.java.*;
 /** * Unit tests for Arithmetic Operations Calculations
  * @author Dor Ma'ayan <code><dor.d.ma [at] gmail.com></code>
  * @since 2016-08-26 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 final class ArithmeticTest {
   public static class Working {

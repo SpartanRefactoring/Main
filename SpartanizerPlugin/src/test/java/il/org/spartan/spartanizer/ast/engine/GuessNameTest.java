@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 /** Tests of {@link guessName}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class GuessNameTest {
   @Test public void anonymous1() {

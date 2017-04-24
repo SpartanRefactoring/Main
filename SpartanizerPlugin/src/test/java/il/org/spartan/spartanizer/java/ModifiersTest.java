@@ -8,7 +8,6 @@ import il.org.spartan.*;
 /** Tests {@link IExtendedModifiersRank}
  * @author Alex Kopzon
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class ModifiersTest {
   @Test public void modifierUse_01() {

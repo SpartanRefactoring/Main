@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.java.*;
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2015-07-17 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class precedenceTest {
   @Test public void addition() {

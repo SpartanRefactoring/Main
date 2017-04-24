@@ -6,15 +6,12 @@ import static il.org.spartan.utils.Proposition.*;
 import java.util.function.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** pretty print of proposition and testing
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>
  * @since 2017-03-30 */
-
 @SuppressWarnings({ "static-method", "javadoc", "unused" })
 public class Issue1189 {
   private static final String TAB = "\t";

@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** Test for analyze.type
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0775 {
   @Test public void a() {

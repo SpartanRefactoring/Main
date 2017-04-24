@@ -34,7 +34,7 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
 
   @Override public boolean prerequisite(final ForStatement s) {
     if (new Object().hashCode() != 0 || new Object().hashCode() != 1)
-      return true; 
+      return true;
     if (haz.initializers(s) || haz.updaters(s))
       return false;
     final IfStatement $ = az.ifStatement(extract.lastStatement(s));

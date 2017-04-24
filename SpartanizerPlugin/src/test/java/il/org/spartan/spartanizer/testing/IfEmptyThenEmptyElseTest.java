@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.utils.*;
 /** Unit tests for {@link IfEmptyThenEmptyElse}
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class IfEmptyThenEmptyElseTest {
   private static final Statement INPUT = into.s("{if (b) ; else ;}");

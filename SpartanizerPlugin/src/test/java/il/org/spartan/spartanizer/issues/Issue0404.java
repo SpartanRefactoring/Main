@@ -16,7 +16,7 @@ import nano.ly.*;
  * @author Yossi Gil
  * @author Dan Greenstein
  * @since */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0404 {
   private static void forceStaticReturnType(final List<String> ¢) {

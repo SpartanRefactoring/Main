@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link CastToLong2Multiply1L}
  * @author Niv Shalmon
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0216 {
   @Test public void issue216_01() {

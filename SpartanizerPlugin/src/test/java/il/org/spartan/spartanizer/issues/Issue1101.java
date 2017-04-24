@@ -7,7 +7,7 @@ import org.junit.*;
 /** Unit tests of
  * @author Yossi Gil
  * @since 2017-01-17 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1101 {
   @Ignore @Test public void a() {

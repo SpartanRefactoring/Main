@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * expression of an enhanced for
  * @author Yossi Gil
  * @since 2017-03-16 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0293 {
   /** Introduced by Yogi on Thu-Apr-13-00:39:17-IDT-2017 (code automatically in

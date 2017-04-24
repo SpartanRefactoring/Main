@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.cmdline.*;
  * </ul>
  * @author Yossi Gil
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0413 {
   /** There are no established rules on names of test methods. Here are some

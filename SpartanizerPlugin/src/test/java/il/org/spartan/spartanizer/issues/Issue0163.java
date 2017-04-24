@@ -7,7 +7,6 @@ import org.junit.*;
 /** Unit tests for {@link NameYourClassHere}
  * @author Niv Shalmon
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0163 {
   @Test public void issue163_01() {

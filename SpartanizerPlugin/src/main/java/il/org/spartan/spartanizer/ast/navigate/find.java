@@ -76,7 +76,8 @@ public enum find {
 
   public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(final List<N> ¢) {
     final List<Expression> $ = an.empty.list();
-    ¢.forEach(λ -> $.add(λ != the.headOf(¢) ? singleExpressionDifference(λ, the.headOf(¢)) : singleExpressionDifference(the.headOf(¢), the.secondOf(¢))));
+    ¢.forEach(
+        λ -> $.add(λ != the.headOf(¢) ? singleExpressionDifference(λ, the.headOf(¢)) : singleExpressionDifference(the.headOf(¢), the.secondOf(¢))));
     return $;
   }
 

@@ -6,7 +6,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
-
 @SuppressWarnings("ALL")
 public final class AtomicConversionsTest {
   private byte b = (byte) hashCode();

@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests of {@link TryBodyNotEmptyNoCatchesNoFinallyRemove}
  * @author Yossi Gil
  * @since 2017-01-17 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1094 extends MetaFixture {
   @Test public void b() {

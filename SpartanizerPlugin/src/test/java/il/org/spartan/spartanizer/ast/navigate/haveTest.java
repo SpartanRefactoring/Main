@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @author Kfir Marx
  * @authoe Raviv Rachmiel
  * @since 10-11-2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class haveTest {
   @Test public void booleanFalseLiteralTestFalse() {

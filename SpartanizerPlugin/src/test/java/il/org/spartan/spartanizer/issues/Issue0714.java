@@ -14,7 +14,7 @@ import nano.ly.*;
  * @author Assaf Lustig
  * @author Arthur Sapozhnikov
  * @since 16-11-02 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0714 {
   static void auxBool(@SuppressWarnings("unused") final boolean __) {

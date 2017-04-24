@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Tests of {@link ParameterAnonymize}
  * @author Yossi Gil
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0442 {
   @Test public void a() {

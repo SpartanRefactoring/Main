@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Sep 7, 2016 */
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class ExtractStatementTest {
   @Test public void declarationCorrectSize() {

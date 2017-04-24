@@ -14,7 +14,7 @@ import nano.ly.*;
  * @author Alexander Kaplan
  * @author Ariel Kolikant
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0686 {
   @Test public void a() {
@@ -60,8 +60,9 @@ public class Issue0686 {
   }
 
   @Test public void k() {
-    azzert.that(the.headOf(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
-        .getName().getIdentifier(), is("s1"));
+    azzert
+        .that(the.headOf(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
+            .getName().getIdentifier(), is("s1"));
   }
 
   public static class NotAString<T> extends ArrayList<T> {

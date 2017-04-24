@@ -8,7 +8,6 @@ import org.junit.*;
 /** Tests {@link ForEachSuchThat}
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-08 */
-
 @SuppressWarnings("static-method")
 public class ForEachSuchThatTest {
   @Test public void a() {

@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.java.*;
  * @author Yossi Gil
  * @since 2.6 */
 // @forget //
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0500 {
   @Test public void a() {

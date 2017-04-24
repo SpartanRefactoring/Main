@@ -7,7 +7,7 @@ import org.junit.*;
 /** Tests for the GitHub issue thus numbered
  * @author Alex Kopzon
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0443 {
   @Test public void a() {

@@ -10,7 +10,6 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import org.junit.*;
 import il.org.spartan.spartanizer.java.*;
 
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class sideEffectsTest {
   @Test public void deterministicArray1() {

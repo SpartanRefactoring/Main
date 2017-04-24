@@ -10,7 +10,6 @@ import il.org.spartan.*;
  * @author Alex Kopzon
  * @author Dan Greenstein
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc", "PointlessBooleanExpression" })
 public class Issue0177 {
   @Test @SuppressWarnings("unused") public void BitWiseAnd_withSideEffectsEXT() {

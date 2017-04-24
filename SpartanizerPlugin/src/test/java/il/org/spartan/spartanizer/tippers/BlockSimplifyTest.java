@@ -7,7 +7,6 @@ import org.junit.*;
 /** Unit tests for {@link NameYourClassHere}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class BlockSimplifyTest {
   @Test public void complexEmpty0() {

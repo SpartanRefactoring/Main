@@ -8,7 +8,7 @@ import org.junit.*;
  * example
  * @author Yossi Gil
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0857 {
   @Test public void report234() {

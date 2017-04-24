@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link InfixTermsZero}
  * @author Niv Shalmon
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue0172 {
   @Test public void a01() {
