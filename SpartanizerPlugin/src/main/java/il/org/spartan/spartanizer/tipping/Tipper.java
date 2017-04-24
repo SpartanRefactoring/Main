@@ -88,6 +88,9 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
 
   public abstract Tip tip(N ¢);
 
+  /**
+   * @return a string that represents why the tipper failed to tip on the given node.
+   */
   @SuppressWarnings("unused") public String explain(N ¢) {
     return null;
   }

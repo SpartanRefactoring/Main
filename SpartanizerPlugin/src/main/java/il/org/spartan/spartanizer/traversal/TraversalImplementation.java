@@ -163,7 +163,7 @@ public class TraversalImplementation extends Traversal {
     tip = ¢;
     if (¢ != null)
       notify.tipperTip();
-    // else
-    // notify.tipperRejects();
+    else
+      notify.tipperRejects();
   }
 }
