@@ -51,19 +51,16 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allPrimitiveFieldsAttributes() {
-    final FlaggedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    for (final FlaggedEntity f : fields)
+    for (final FlaggedEntity f : ClassInfo.make(AllPrimitiveFields.class).fields)
       assertEquals(0, f.attributes.length);
   }
 
   @Test public void allPrimitiveFieldsCount() {
-    final NamedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    assertEquals(7, fields.length);
+    assertEquals(7, ClassInfo.make(AllPrimitiveFields.class).fields.length);
   }
 
   @Test public void allPrimitiveFieldsModifiers() {
-    final FlaggedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    for (final FlaggedEntity f : fields)
+    for (final FlaggedEntity f : ClassInfo.make(AllPrimitiveFields.class).fields)
       assertEquals(Modifier.FINAL | Modifier.PUBLIC, f.flags);
   }
 
@@ -79,21 +76,21 @@ import il.org.spartan.utils.*;
 
   @Test public void allPrimitiveFieldsTypes() {
     final TypedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    assertEquals("byte", fields[0].type.toString());
-    assertEquals("short", fields[1].type.toString());
-    assertEquals("long", fields[2].type.toString());
-    assertEquals("float", fields[3].type.toString());
-    assertEquals("double", fields[4].type.toString());
-    assertEquals("char", fields[5].type.toString());
-    assertEquals("boolean", fields[6].type.toString());
+    assertEquals("byte", (fields[0].type + ""));
+    assertEquals("short", (fields[1].type + ""));
+    assertEquals("long", (fields[2].type + ""));
+    assertEquals("float", (fields[3].type + ""));
+    assertEquals("double", (fields[4].type + ""));
+    assertEquals("char", (fields[5].type + ""));
+    assertEquals("boolean", (fields[6].type + ""));
   }
 
   @Test public void annotationCounts() {
-    final ClassInfo _ = ClassInfo.make(Annotation.class);
-    assertEquals(0, _.constructors.length);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.fields.length);
-    assertEquals(0, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(Annotation.class);
+    assertEquals(0, __.constructors.length);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.fields.length);
+    assertEquals(0, __.initializers.length);
   }
 
   @Test public void annotationFlags() {
@@ -120,17 +117,15 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(ArrayField.class).fields[0];
     assertEquals("fieldName", field.name);
     assertEquals("[[[[I", field.descriptor);
-    assertEquals("int[][][][]", field.type.toString());
+    assertEquals("int[][][][]", (field.type + ""));
   }
 
   @Test public void badFile() {
-    final File f = new File(BAD_FILE_PATH);
-    assert null != f;
+    assert new File(BAD_FILE_PATH) != null;
   }
 
   @Test(expected = FileNotFoundException.class) public void badFileInputStream() throws FileNotFoundException {
-    final File f = new File(BAD_FILE_PATH);
-    assert null != new FileInputStream(f);
+    assert new FileInputStream(new File(BAD_FILE_PATH)) != null;
   }
 
   @Test public void badInputStream() {
@@ -155,13 +150,13 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(ClassWithCapitalL.class).fields[0];
     assertEquals("fieldName", field.name);
     assertEquals("Lil/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest$ClassWithCapitalL;", field.descriptor);
-    assertEquals("il.org.spartan.classfiles.reify.ClassFileTest$ClassWithCapitalL", field.type.toString());
+    assertEquals("il.org.spartan.classfiles.reify.ClassFileTest$ClassWithCapitalL", (field.type + ""));
   }
 
   @Test public void codeAttributeExists() {
     class _ {
     }
-    assert null != ClassInfo.make(_.class).methods[0].getCode();
+    assert ClassInfo.make(_.class).methods[0].getCode() != null;
   }
 
   @Test public void codeAttributeMaxLocals() {
@@ -177,38 +172,31 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void complexClassConstructorCounts() {
-    final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(5, c.constructorsCount());
+    assertEquals(5, ClassInfo.make(LargeClass.class).constructorsCount());
   }
 
   @Test public void complexClassCounts() {
-    final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(1, c.initializersCount());
+    assertEquals(1, ClassInfo.make(LargeClass.class).initializersCount());
   }
 
   @Test public void complexClassFieldsCounts() {
-    final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(6, c.fieldsCount());
+    assertEquals(6, ClassInfo.make(LargeClass.class).fieldsCount());
   }
 
   @Test public void complexClassFieldsInterfaceCounts() {
-    final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(3, c.interfacesCount());
+    assertEquals(3, ClassInfo.make(LargeClass.class).interfacesCount());
   }
 
   @Test public void complexClassFileAbstraction() {
-    final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(Abstraction.PLAIN, c.abstraction());
+    assertEquals(Abstraction.PLAIN, ClassInfo.make(LargeClass.class).abstraction());
   }
 
   @Test public void complexClassFileKind() {
-    final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(Kind.CLASS, c.kind());
+    assertEquals(Kind.CLASS, ClassInfo.make(LargeClass.class).kind());
   }
 
   @Test public void complexClassMethodCounts() {
-    final ClassInfo c = ClassInfo.make(LargeClass.class);
-    assertEquals(8, c.methodCount());
+    assertEquals(8, ClassInfo.make(LargeClass.class).methodCount());
   }
 
   @Test public void complexClassMethodNames() {
@@ -226,11 +214,11 @@ import il.org.spartan.utils.*;
 
   @Test public void complexMethod() {
     assertEquals("java.lang.Object[][][] (java.lang.Void, java.lang.Object, int, float, double[][])",
-        ClassInfo.make(ComplexMethod.class).methods[0].type.toString());
+        (ClassInfo.make(ComplexMethod.class).methods[0].type + ""));
   }
 
   @Test public void dataInputStreamFromPath() throws FileNotFoundException {
-    assert null != new DataInputStream(new FileInputStream(new File(GOOD_FILE_PATH)));
+    assert new DataInputStream(new FileInputStream(new File(GOOD_FILE_PATH))) != null;
   }
 
   @Test public void deprecatedClassIsDeprecated() {
@@ -244,10 +232,10 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptlyClassInteface() {
-    final ClassInfo _ = ClassInfo.make(EmptyClass.class);
-    assert !_.isAbstract();
-    assert !_.isInterface();
-    assert _.isClass();
+    final ClassInfo __ = ClassInfo.make(EmptyClass.class);
+    assert !__.isAbstract();
+    assert !__.isInterface();
+    assert __.isClass();
   }
 
   @Test public void emptyClassConstructorExceptions() {
@@ -279,7 +267,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptyClassDefaultConstructorType() {
-    assertEquals("()", ClassInfo.make(EmptyClass.class).constructors[0].type.toString());
+    assertEquals("()", (ClassInfo.make(EmptyClass.class).constructors[0].type + ""));
   }
 
   @Test public void emptyClassDescriptor() {
@@ -289,7 +277,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptyClassDGetConstructors() {
-    assert null != ClassInfo.make(EmptyClass.class).constructors;
+    assert ClassInfo.make(EmptyClass.class).constructors != null;
   }
 
   @Test public void emptyClassFlags() {
@@ -322,20 +310,18 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void enumClassFile() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assert !_.isAbstract();
-    assert !_.isInterface();
-    assert !_.isStatic();
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assert !__.isAbstract();
+    assert !__.isInterface();
+    assert !__.isStatic();
   }
 
   @Test public void enumClassFileIsAnnotation() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assert !_.isAnnotation();
+    assert !ClassInfo.make(Enum.class).isAnnotation();
   }
 
   @Test public void enumClassFileIsEnum() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assert _.isEnum();
+    assert ClassInfo.make(Enum.class).isEnum();
   }
 
   @Test public void enumConstructorIsSynthetic() {
@@ -343,8 +329,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void enumConstructorsCounts() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assertEquals(1, _.constructors.length);
+    assertEquals(1, ClassInfo.make(Enum.class).constructors.length);
   }
 
   @Test public void enumIsDeprecated() {
@@ -357,33 +342,33 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void enumMethod() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.constructors.length);
-    assertEquals(0, _.initializers.length);
-    assert _.methods[0].isAbstract();
-    assert _.methods[0].isPublic();
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.constructors.length);
+    assertEquals(0, __.initializers.length);
+    assert __.methods[0].isAbstract();
+    assert __.methods[0].isPublic();
   }
 
   @Test public void enumMethodCounts() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assertEquals(2, _.methods.length);
-    assertEquals(0, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assertEquals(2, __.methods.length);
+    assertEquals(0, __.initializers.length);
   }
 
   @Test public void enumMethodName() {
-    final ClassInfo _ = ClassInfo.make(Enum.class);
-    assertEquals("myMethod", _.methods[0].name);
-    assertEquals("values", _.methods[1].name);
-    assert _.methods[1].isSynthetic();
+    final ClassInfo __ = ClassInfo.make(Enum.class);
+    assertEquals("myMethod", __.methods[0].name);
+    assertEquals("values", __.methods[1].name);
+    assert __.methods[1].isSynthetic();
   }
 
   @Test public void fileFromPath() {
-    assert null != new File(GOOD_FILE_PATH);
+    assert new File(GOOD_FILE_PATH) != null;
   }
 
   @Test public void findSelf() {
-    assert null != this.getClass();
+    assert this.getClass() != null;
   }
 
   @Test public void InitializerConstructors() {
@@ -394,13 +379,13 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void inputStreamFromPath() throws FileNotFoundException {
-    assert null != new FileInputStream(new File(GOOD_FILE_PATH));
+    assert new FileInputStream(new File(GOOD_FILE_PATH)) != null;
   }
 
   @Test public void interfaceClassFile() {
-    final ClassInfo _ = ClassInfo.make(Interface.class);
-    assert _.isAbstract();
-    assert _.isInterface();
+    final ClassInfo __ = ClassInfo.make(Interface.class);
+    assert __.isAbstract();
+    assert __.isInterface();
   }
 
   @Test public void interfaceIsDeprecated() {
@@ -412,12 +397,12 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void interfaceMethod() {
-    final ClassInfo _ = ClassInfo.make(Interface.class);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.constructors.length);
-    assertEquals(0, _.initializers.length);
-    assert _.methods[0].isAbstract();
-    assert _.methods[0].isPublic();
+    final ClassInfo __ = ClassInfo.make(Interface.class);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.constructors.length);
+    assertEquals(0, __.initializers.length);
+    assert __.methods[0].isAbstract();
+    assert __.methods[0].isPublic();
   }
 
   @Test public void interfaceSuperClassName() {
@@ -428,7 +413,7 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(IntField.class).fields[0];
     assertEquals("fieldName", field.name);
     assertEquals("I", field.descriptor);
-    assertEquals("int", field.type.toString());
+    assertEquals("int", (field.type + ""));
   }
 
   @Test public void isClass() {
@@ -443,8 +428,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void meHasCorrectInteface() {
-    final ClassInfo _ = ClassInfo.make(this.getClass());
-    assertEquals(Serializable.class.getCanonicalName(), _.interfaces[0].toString());
+    assertEquals(Serializable.class.getCanonicalName(), (ClassInfo.make(this.getClass()).interfaces[0] + ""));
   }
 
   @Test public void meHasOneInteface() {
@@ -468,8 +452,8 @@ import il.org.spartan.utils.*;
   @Test public void methodExceptionsName() {
     class _ {
     }
-    assertEquals(IOException.class.getName(), ClassInfo.make(_.class).methods[0].exceptions[0].toString());
-    assertEquals(ArrayIndexOutOfBoundsException.class.getName(), ClassInfo.make(_.class).methods[0].exceptions[1].toString());
+    assertEquals(IOException.class.getName(), (ClassInfo.make(_.class).methods[0].exceptions[0] + ""));
+    assertEquals(ArrayIndexOutOfBoundsException.class.getName(), (ClassInfo.make(_.class).methods[0].exceptions[1] + ""));
   }
 
   @Test public void methodWithParameters() {
@@ -479,8 +463,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void nameOneField() {
-    final ClassInfo _ = ClassInfo.make(OneField.class);
-    assertEquals("fieldName", _.fields[0].name);
+    assertEquals("fieldName", ClassInfo.make(OneField.class).fields[0].name);
   }
 
   @Test public void namesTwoAnnotatedFields() {
@@ -496,10 +479,10 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void nameTwoMethods() {
-    final ClassInfo _ = ClassInfo.make(TwoMethods.class);
-    assertEquals("", _.constructors[0].name);
-    assertEquals("firstMethod", _.methods[0].name);
-    assertEquals("secondMethod", _.methods[1].name);
+    final ClassInfo __ = ClassInfo.make(TwoMethods.class);
+    assertEquals("", __.constructors[0].name);
+    assertEquals("firstMethod", __.methods[0].name);
+    assertEquals("secondMethod", __.methods[1].name);
   }
 
   @Test public void noByteCodeEmptyClassConstructor() {
@@ -525,14 +508,14 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void objecClassCreate() {
-    assert null != ClassInfo.make(Object.class);
+    assert ClassInfo.make(Object.class) != null;
   }
 
   @Test public void objectFieldName() {
     final TypedEntity field = ClassInfo.make(ObjectField.class).fields[0];
     assertEquals("fieldName", field.name);
     assertEquals("Ljava/lang/Object;", field.descriptor);
-    assertEquals("java.lang.Object", field.type.toString());
+    assertEquals("java.lang.Object", (field.type + ""));
   }
 
   @Test public void objectSuperClassName() {
@@ -556,8 +539,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void oneFieldFlags() {
-    final int flags = ClassInfo.make(OneField.class).fields[0].flags;
-    assertEquals(Modifier.FINAL | Modifier.PUBLIC | FlaggedEntity.DEPRECATED, flags);
+    assertEquals(Modifier.FINAL | Modifier.PUBLIC | FlaggedEntity.DEPRECATED, ClassInfo.make(OneField.class).fields[0].flags);
   }
 
   @Test public void oneFieldIsDeperecated() {
@@ -569,22 +551,21 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void oneMethodFlags() {
-    final int flags = ClassInfo.make(OneMethod.class).methods[0].flags;
-    assertEquals(Modifier.FINAL | Modifier.PUBLIC, flags);
+    assertEquals(Modifier.FINAL | Modifier.PUBLIC, ClassInfo.make(OneMethod.class).methods[0].flags);
   }
 
   @Test public void oneMethodLengths() {
-    final ClassInfo _ = ClassInfo.make(OneMethod.class);
-    assertEquals(1, _.constructors.length);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.fields.length);
-    assertEquals(0, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(OneMethod.class);
+    assertEquals(1, __.constructors.length);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.fields.length);
+    assertEquals(0, __.initializers.length);
   }
 
   @Test public void oneMethodName() {
-    final ClassInfo _ = ClassInfo.make(OneMethod.class);
-    assertEquals("", _.constructors[0].name);
-    assertEquals("methodName", _.methods[0].name);
+    final ClassInfo __ = ClassInfo.make(OneMethod.class);
+    assertEquals("", __.constructors[0].name);
+    assertEquals("methodName", __.methods[0].name);
   }
 
   @Test public void oneMethodSize() {
@@ -600,15 +581,15 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openEmptyClass() {
-    assert null != ClassInfo.make(EmptyClass.class);
+    assert ClassInfo.make(EmptyClass.class) != null;
   }
 
   @Test public void openPath() {
-    assert null != ClassInfo.make(GOOD_FILE_PATH);
+    assert ClassInfo.make(GOOD_FILE_PATH) != null;
   }
 
   @Test public void openPathCLASSFILES() {
-    assert null != ClassInfo.make(this.getClass());
+    assert ClassInfo.make(this.getClass()) != null;
   }
 
   @Test public void openPathCLASSFILESBadPath() {
@@ -616,7 +597,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void openSelf() {
-    assert null != CLASSFILES.open(this.getClass());
+    assert CLASSFILES.open(this.getClass()) != null;
   }
 
   @Test public void openSelfNoErrors() {
@@ -644,23 +625,20 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void parseByteCodesSelfFirstMethod() {
-    final CodeEntity c = ClassInfo.make(this.getClass()).methods[0].getCode();
-    assert 0 < c.instructionsCount();
+    assert ClassInfo.make(this.getClass()).methods[0].getCode().instructionsCount() > 0;
   }
 
   @Test public void parseByteCodesTwoMethods() {
     class _ {
-      boolean __(final int _) {
-        return _ % 1 == 0 ? __(_ * _) : __(_ % 7) != ___(_ * _ % 3);
+      boolean __(final int __) {
+        return __ % 1 == 0 ? __(__ * __) : __(__ % 7) != ___(__ * __ % 3);
       }
 
-      boolean ___(final int _) {
-        return _ == 1 == __(_);
+      boolean ___(final int __) {
+        return __ == 1 == __(__);
       }
     }
-    final CodeEntity c0 = ClassInfo.make(_.class).methods[0].getCode();
-    final CodeEntity c1 = ClassInfo.make(_.class).methods[1].getCode();
-    assert c0.instructionsCount() > c1.instructionsCount();
+    assert ClassInfo.make(_.class).methods[0].getCode().instructionsCount() > ClassInfo.make(_.class).methods[1].getCode().instructionsCount();
   }
 
   @Test public void parseComplexMethod() {
@@ -696,7 +674,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void selfMakeNotNull() {
-    assert null != ClassInfo.make(this.getClass());
+    assert ClassInfo.make(this.getClass()) != null;
   }
 
   @Test public void selfSource() {
@@ -704,38 +682,35 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void selfSourceNotNul() {
-    assert null != ClassInfo.make(this.getClass()).source;
+    assert ClassInfo.make(this.getClass()).source != null;
   }
 
   @Test public void singleStaticInitilizerLengths() {
-    final ClassInfo _ = ClassInfo.make(SingleStaticInitializer.class);
-    assertEquals(1, _.constructors.length);
-    assertEquals(0, _.methods.length);
-    assertEquals(0, _.fields.length);
-    assertEquals(1, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(SingleStaticInitializer.class);
+    assertEquals(1, __.constructors.length);
+    assertEquals(0, __.methods.length);
+    assertEquals(0, __.fields.length);
+    assertEquals(1, __.initializers.length);
   }
 
   @Test public void staticInitializerIsPrivate() {
-    final InitializerInfo[] initializers = ClassInfo.make(StaticInitializer.class).initializers;
-    assert initializers[0].isDefault();
+    assert ClassInfo.make(StaticInitializer.class).initializers[0].isDefault();
   }
 
   @Test public void staticInitializerIsStatic() {
-    final InitializerInfo[] initializers = ClassInfo.make(StaticInitializer.class).initializers;
-    assert initializers[0].isStatic();
+    assert ClassInfo.make(StaticInitializer.class).initializers[0].isStatic();
   }
 
   @Test public void staticInitializerNames() {
-    final ClassInfo _ = ClassInfo.make(StaticInitializer.class);
-    assertEquals(0, _.methods.length);
-    assertEquals("", _.initializers[0].name);
-    assertEquals("", _.constructors[0].name);
-    assertEquals("", _.constructors[1].name);
+    final ClassInfo __ = ClassInfo.make(StaticInitializer.class);
+    assertEquals(0, __.methods.length);
+    assertEquals("", __.initializers[0].name);
+    assertEquals("", __.constructors[0].name);
+    assertEquals("", __.constructors[1].name);
   }
 
   @Test public void staticInitializerType() {
-    final InitializerInfo[] initializers = ClassInfo.make(StaticInitializer.class).initializers;
-    assertEquals("()", initializers[0].type.toString());
+    assertEquals("()", (ClassInfo.make(StaticInitializer.class).initializers[0].type + ""));
   }
 
   @Test public void twoFieldsAreNotPrimtive() {
@@ -750,11 +725,11 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void twoMethodLengths() {
-    final ClassInfo _ = ClassInfo.make(OneMethod.class);
-    assertEquals(1, _.constructors.length);
-    assertEquals(1, _.methods.length);
-    assertEquals(0, _.fields.length);
-    assertEquals(0, _.initializers.length);
+    final ClassInfo __ = ClassInfo.make(OneMethod.class);
+    assertEquals(1, __.constructors.length);
+    assertEquals(1, __.methods.length);
+    assertEquals(0, __.fields.length);
+    assertEquals(0, __.initializers.length);
   }
 
   @Test public void twoMethodsCount() {
@@ -769,10 +744,10 @@ import il.org.spartan.utils.*;
 
   @Test public void voidMethod() {
     assertEquals("()V", ClassInfo.make(VoidMethod.class).methods[0].descriptor);
-    assertEquals("void ()", ClassInfo.make(VoidMethod.class).methods[0].type.toString());
+    assertEquals("void ()", (ClassInfo.make(VoidMethod.class).methods[0].type + ""));
   }
 
-  public static abstract class AllAccessLevels {
+  public abstract static class AllAccessLevels {
     public abstract void f4();
 
     protected abstract void f3();
@@ -805,9 +780,9 @@ import il.org.spartan.utils.*;
   }
 
   public static class ComplexMethod {
-    public final Object[][][] m(final Void v, final Object a, final int b, final float c, final double[][] d) {
+    public final Object[][][] m(final Void v, final Object a, final int b, final float c, final double[][] dss) {
       ___.unused(v, a, Box.it(b), Box.it(c));
-      return new Object[d.length][][];
+      return new Object[dss.length][][];
     }
   }
 
@@ -827,7 +802,7 @@ import il.org.spartan.utils.*;
     }
   }
 
-  public static abstract class Initializer {
+  public abstract static class Initializer {
     {
       System.getenv();
       System.getenv("PATH");
@@ -837,7 +812,6 @@ import il.org.spartan.utils.*;
     }
 
     Initializer() {
-      // Empty constructor
     }
 
     Initializer(final String s) {
@@ -849,13 +823,13 @@ import il.org.spartan.utils.*;
     int fieldName = 5;
   }
 
-  public static abstract class MethodWithParametrs {
+  public abstract static class MethodWithParametrs {
     public MethodWithParametrs() {
       super();
     }
 
     public final Integer method(final int a, final int b, final int c) {
-      return new Integer(a + b + c + hashCode());
+      return Integer.valueOf(a + b + c + hashCode());
     }
   }
 
@@ -874,7 +848,7 @@ import il.org.spartan.utils.*;
   }
 
   public static class OneStaticMethod {
-    public final static String methodName() {
+    public static final String methodName() {
       return null;
     }
   }
@@ -887,27 +861,18 @@ import il.org.spartan.utils.*;
     Stopper s = new Stopper();
 
     @Override public String toString() {
-      final long stop = s.time();
-      return String
-          .format(
-              //
-              "Processed %s files, consisting of %s methods with %s code blocks\n" + //
-                  "comprising a total of %s bytecode instructions in %s.", //
-              Unit.INTEGER.format(nFiles), //
-              Unit.INTEGER.format(nMethods), //
-              Unit.INTEGER.format(nCodes), //
-              Unit.INTEGER.format(nInstructions), //
-              Unit.NANOSECONDS.format(stop)) //
-          .toString();
+      return String.format("Processed %s files, consisting of %s methods with %s code blocks\n" + "comprising a total of %s bytecode instructions in %s.",
+          Unit.INTEGER.format(nFiles), Unit.INTEGER.format(nMethods), Unit.INTEGER.format(nCodes), Unit.INTEGER.format(nInstructions),
+          Unit.NANOSECONDS.format(s.time())) + "";
     }
 
-    void parse(final ClassInfo c) {
-      parse(c.methods);
+    void parse(final ClassInfo i) {
+      parse(i.methods);
     }
 
-    void parse(final MethodInfo[] methods) {
-      nFiles++;
-      for (final MethodInfo m : methods)
+    void parse(final MethodInfo[] is) {
+      ++nFiles;
+      for (final MethodInfo m : is)
         parseMethod(m);
     }
 
@@ -920,7 +885,7 @@ import il.org.spartan.utils.*;
             try {
               parse(ClassInfo.make(f));
             } catch (final RuntimeException e) {
-              System.out.println("\n** " + f.toString() + ": " + e);
+              System.out.println("\n** " + "" + f + ": " + e);
             }
           }
 
@@ -943,19 +908,19 @@ import il.org.spartan.utils.*;
       }
     }
 
-    private void parse(final CodeEntity c) {
-      nCodes++;
-      nInstructions += c.instructionsCount();
+    private void parse(final CodeEntity e) {
+      ++nCodes;
+      nInstructions += e.instructionsCount();
     }
 
-    private void parseMethod(final MethodInfo m) {
-      nMethods++;
-      if (m.getCode() != null)
-        parse(m.getCode());
+    private void parseMethod(final MethodInfo i) {
+      ++nMethods;
+      if (i.getCode() != null)
+        parse(i.getCode());
     }
   }
 
-  public static abstract class SingleStaticInitializer {
+  public abstract static class SingleStaticInitializer {
     static {
       System.getenv();
       System.getenv("PATH");
@@ -965,7 +930,7 @@ import il.org.spartan.utils.*;
     }
   }
 
-  public static abstract class StaticInitializer {
+  public abstract static class StaticInitializer {
     static {
       System.getenv();
       System.getenv("PATH");
@@ -983,7 +948,7 @@ import il.org.spartan.utils.*;
   }
 
   public static class TwoAnnotatedFields {
-    @External @Deprecated static private final String firstField = null;
+    @Deprecated @External private static final String firstField = null;
     @Deprecated final String secondField = null;
   }
 
@@ -996,7 +961,7 @@ import il.org.spartan.utils.*;
     }
   }
 
-  public static abstract class TwoMethods {
+  public abstract static class TwoMethods {
     public static final String secondMethod() {
       return null;
     }
@@ -1026,22 +991,22 @@ import il.org.spartan.utils.*;
   }
 
   static class LargeClass implements Serializable, Cloneable, Interface {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1;
     private static int field1;
     static Random field4 = new Random();
     static {
       field4 = new Random(field4.nextLong());
-      for (int i = 1; i < 10; i++)
+      for (int i = 1; i < 10; ++i)
         field4.nextDouble();
     }
     static Random field5 = new Random(field4.nextLong() + method3());
     static {
-      for (int i = 1; i < 20; i++)
+      for (int i = 1; i < 20; ++i)
         field5.nextDouble();
     }
     static Random field6 = new Random(field5.nextLong());
     static {
-      for (int i = 1; i < 20; i++)
+      for (int i = 1; i < 20; ++i)
         field4 = new Random(field6.nextLong());
     }
 

@@ -11,16 +11,16 @@ public final class IntegersMapTest {
   final IntegersMap m = new IntegersMap();
 
   @Test public void containsMany() {
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 10000; ++i)
       m.put(IntegersMap.hash(i), i);
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 10000; ++i)
       assert m.contains(IntegersMap.hash(i));
   }
 
   @Test public void doesNotContain() {
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 10000; ++i)
       m.put(i, i);
-    for (int i = 10000; i < 100000; i++)
+    for (int i = 10000; i < 100000; ++i)
       assert !m.contains(i);
   }
 
@@ -36,9 +36,9 @@ public final class IntegersMapTest {
   }
 
   @Test public void get1000() {
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 1000; ++i)
       m.put(i, 2 * i + 1);
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 1000; ++i)
       assertEquals(2 * i + 1, m.get(i));
   }
 
@@ -64,135 +64,134 @@ public final class IntegersMapTest {
   }
 
   @Test public void increment1000() {
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 1000; ++i)
       m.increment(i);
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 1000; ++i)
       assertEquals(1, m.get(i));
   }
 
   @Test public void incrementMany() {
-    for (int i = 0; i < 100; i++)
-      for (int j = 0; j <= i; j++)
+    for (int i = 0; i < 100; ++i)
+      for (int j = 0; j <= i; ++j)
         m.increment(i);
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 100; ++i)
       assertEquals(i + 1, m.get(i));
   }
 
   @Test public void init1000() {
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 1000; ++i)
       m.init(i);
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 1000; ++i)
       assertEquals(0, m.get(i));
   }
 
   @Test public void initDoesClear() {
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 1000; ++i)
       m.put(i, IntegersMap.hash(i));
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 1000; ++i)
       m.init(i);
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 1000; ++i)
       assertEquals(0, m.get(i));
   }
 
-  @SuppressWarnings("static-method") //
-  @Test public void insert1() {
+  @Test @SuppressWarnings("static-method") public void insert1() {
     new IntegersMap().put(10, 100);
   }
 
   @Test public void keys() {
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 10000; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 10000; i++)
+    for (int i = 0; i < 10000; ++i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys10() {
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.keys();
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 10; ++i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys100() {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 100; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 100; ++i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys15() {
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 15; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.keys();
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 15; ++i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys15rehash() {
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 15; ++i)
       m.put(i, IntegersMap.hash(i));
     m.rehash();
     final int[] keys = m.keys();
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 15; ++i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys17() {
-    for (int i = 0; i < 17; i++)
+    for (int i = 0; i < 17; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.keys();
-    for (int i = 0; i < 17; i++)
+    for (int i = 0; i < 17; ++i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys18() {
-    for (int i = 0; i < 18; i++)
+    for (int i = 0; i < 18; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 18; i++)
+    for (int i = 0; i < 18; ++i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys18inverse() {
-    for (int i = 0; i < 18; i++)
+    for (int i = 0; i < 18; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 17; i >= 0; i--)
+    for (int i = 17; i >= 0; --i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys20inverse() {
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 20; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 19; i >= 0; i--)
+    for (int i = 19; i >= 0; --i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys22() {
-    for (int i = 0; i < 22; i++)
+    for (int i = 0; i < 22; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 22; i++)
+    for (int i = 0; i < 22; ++i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys30() {
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < 30; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < 30; ++i)
       assertEquals(i, keys[i]);
   }
 
   @Test public void keys30inverse() {
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < 30; ++i)
       m.put(i, IntegersMap.hash(i));
     final int[] keys = m.sortedKeys();
-    for (int i = 29; i >= 0; i--)
+    for (int i = 29; i >= 0; --i)
       assertEquals(i, keys[i]);
   }
 
@@ -272,9 +271,9 @@ public final class IntegersMapTest {
   }
 
   private void location(final int n) {
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; ++i)
       m.put(IntegersMap.hash(i), 2 * i + 1);
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; ++i)
       assert m.location(IntegersMap.hash(i)) >= 0;
   }
 }

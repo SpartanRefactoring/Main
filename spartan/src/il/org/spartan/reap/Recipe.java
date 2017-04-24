@@ -97,7 +97,7 @@ public class Recipe<@Nullable T> extends Cell<T> {
    * @since 2016 */
   @SuppressWarnings("null") public static class NotNull<T> extends Recipe<T> {
     private final List<Cell<?>> prerequisites = new ArrayList<>();
-    private @Nullable Supplier<? extends @Nullable T> supplier;
+    @Nullable private Supplier<? extends @Nullable T> supplier;
 
     /** Instantiates this class.
      * @param supplier JD */

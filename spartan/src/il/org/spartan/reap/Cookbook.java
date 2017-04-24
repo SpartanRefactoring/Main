@@ -1124,7 +1124,7 @@ public interface Cookbook {
      * @since 2016 */
     @SuppressWarnings("null") public static class NotNull<T> extends Cookbook.Recipe<T> {
       private final List<Cookbook.Cell<?>> prerequisites = new ArrayList<>();
-      private @Nullable Supplier<? extends @Nullable T> supplier;
+      @Nullable private Supplier<? extends @Nullable T> supplier;
 
       /** Instantiates this class.
        * @param supplier JD */
