@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "unused", "javadoc" })
 public class EnvironmentTestEngineTest {
   private LinkedHashSet<Entry<String, Binding>> s;

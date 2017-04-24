@@ -4,9 +4,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 /* Tests {@link CopyCollection}
  *
  * @author orimarco {@code marcovitch.ori@gmail.com}

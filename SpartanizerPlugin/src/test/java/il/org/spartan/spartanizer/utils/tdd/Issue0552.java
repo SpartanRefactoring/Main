@@ -4,8 +4,6 @@ import static il.org.spartan.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.util.*;
@@ -13,7 +11,7 @@ import il.org.spartan.spartanizer.research.util.*;
 /** Tests of {@link measure.expressions}
  * @author Ori Marcovitch
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0552 {
   static ASTNode ast(final String ¢) {

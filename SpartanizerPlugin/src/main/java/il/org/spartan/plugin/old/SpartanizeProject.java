@@ -1,7 +1,5 @@
 package il.org.spartan.plugin.old;
 
-import static il.org.spartan.lisp.*;
-
 import java.lang.reflect.*;
 import java.util.*;
 

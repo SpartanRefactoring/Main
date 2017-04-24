@@ -4,8 +4,6 @@ import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
@@ -14,7 +12,7 @@ import nano.ly.*;
 /** Batch testing - run the spartinizer on itself with no errors
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>
  * @since 2017-04-01 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 public class Issue1190 {
   TextualTraversals trimmer;
 

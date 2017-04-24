@@ -4,12 +4,11 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
 
 /** Tests {@link GetOrElseThrow}
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-29 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("static-method")
 public class GetOrElseThrowTest {
   @Test public void a() {

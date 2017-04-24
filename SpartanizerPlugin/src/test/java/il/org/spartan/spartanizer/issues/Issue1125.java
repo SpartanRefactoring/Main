@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.tippers.*;
 
 /** See GitHub issue with thus numbered unit test for
@@ -14,7 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue1125 {
   @Test public void forLoop() {

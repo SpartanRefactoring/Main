@@ -3,12 +3,11 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
 
 /** Unit tests for the GitHub issue thus numbered
  * @author Doron Meshulam
  * @since 06-Dec-16 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0750 {
   @Test public void testDidntSpoiledAnything() {

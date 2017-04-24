@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.java.namespace;
 
 import static il.org.spartan.azzert.*;
 
-import static il.org.spartan.lisp.*;
-
 import java.io.*;
 import java.lang.annotation.*;
 import java.util.*;
@@ -11,8 +9,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -30,7 +26,7 @@ import nano.ly.*;
 /** TDD of {@link definition}
  * @author Yossi Gil
  * @since 2016-12-15 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class definitionTest extends MetaFixture {
   @field private final Initializer initializer = find(Initializer.class);

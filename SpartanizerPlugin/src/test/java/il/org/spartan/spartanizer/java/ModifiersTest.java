@@ -3,14 +3,12 @@ package il.org.spartan.spartanizer.java;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 
 /** Tests {@link IExtendedModifiersRank}
  * @author Alex Kopzon
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class ModifiersTest {
   @Test public void modifierUse_01() {

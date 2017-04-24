@@ -4,12 +4,11 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
 
 /** Between nano
  * @author Ori Marcovitch
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @Ignore
 @SuppressWarnings("static-method")
 public class BetweenTest {

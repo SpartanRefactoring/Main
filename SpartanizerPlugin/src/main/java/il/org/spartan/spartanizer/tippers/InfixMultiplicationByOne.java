@@ -4,8 +4,6 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

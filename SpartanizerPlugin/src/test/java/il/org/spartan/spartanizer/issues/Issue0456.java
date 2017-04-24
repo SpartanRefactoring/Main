@@ -4,14 +4,12 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for the GitHub issue thus numbered: of inlining into for
  * @author Yossi Gil
  * @since 2017-03-16 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @Ignore("This requires more work")
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0456 {

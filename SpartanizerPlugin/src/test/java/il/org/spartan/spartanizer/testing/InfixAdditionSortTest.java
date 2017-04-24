@@ -5,8 +5,6 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -17,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link misc#ADDITION_SORTER} .
  * @author Yossi Gil
  * @since 2014-07-13 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class InfixAdditionSortTest {
   private static final String input = "1+a*b+2+b*c+3+d*e+4";

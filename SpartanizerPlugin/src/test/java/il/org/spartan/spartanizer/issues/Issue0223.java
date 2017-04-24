@@ -7,8 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -22,7 +20,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Unit tests for {@link ClassInstanceCreation}
  * @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public final class Issue0223 {
   private static final Class<ClassInstanceCreation> SUBJECT_CLASS = ClassInstanceCreation.class;

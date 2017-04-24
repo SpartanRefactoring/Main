@@ -4,8 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -15,7 +13,7 @@ import nano.ly.*;
  * @author Yossi Gil
  * @since 2015-07-18
  * @see step */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class namerTest {
   @Test public void arrayOfInts() {

@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

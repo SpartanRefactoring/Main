@@ -5,8 +5,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -17,7 +15,7 @@ import il.org.spartan.spartanizer.meta.*;
 /** Test class for name generation from Namespace (Environments)
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2017-01-10 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("javadoc")
 public class Issue1044 extends MetaFixture {
   private final Namespace fixtureClass = Environment.of(reflectedCompilationUnit()).getChild(1);

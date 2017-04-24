@@ -22,7 +22,7 @@ import nano.ly.*;
  * @Since 2016-09
  * @author Niv Shalmon
  * @since Sep 7, 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "javadoc", "static-method", "unused" })
 public final class typeTest {
   /** Ideally this class is empty, but still {@link forget} d.

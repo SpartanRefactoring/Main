@@ -4,14 +4,10 @@ import static il.org.spartan.azzert.*;
 
 import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,7 +17,7 @@ import nano.ly.*;
  * @author Vivian Shehadeh
  * @author Ward Mattar
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class analyzeTest {
   private static final ASTNode AST = make.ast("public void m(int y){ y=5;}");

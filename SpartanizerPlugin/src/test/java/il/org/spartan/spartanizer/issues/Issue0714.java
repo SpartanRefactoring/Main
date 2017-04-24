@@ -1,13 +1,9 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
@@ -18,7 +14,7 @@ import nano.ly.*;
  * @author Assaf Lustig
  * @author Arthur Sapozhnikov
  * @since 16-11-02 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0714 {
   static void auxBool(@SuppressWarnings("unused") final boolean __) {

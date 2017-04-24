@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.Utils.*;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -35,7 +33,7 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     assert f != null;
-    if (iz.loop(nextStatement)) {
+    if (iz.loop(nextStatement) && !iz.simple(f.getInitializer())) {
       Statement body = step.body(nextStatement);
       assert body != null;
       if (compute.usedNames(body).contains(f.getName() + ""))
@@ -43,7 +41,7 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
     }
     assert f != null;
     assert f != null;
-    if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
+    if (extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
             && !iz.literal(initializer)

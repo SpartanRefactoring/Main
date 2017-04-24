@@ -3,15 +3,13 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for {@link LocalInitializedStatementTerminatingScope} Remark:
  * those are tests for issue #54 from bitbucket.
  * @author Ori Roth
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("static-method")
 public class Issue0117 {
   @Test public void issue54ForPlainUseInCondition() {

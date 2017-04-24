@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.research.nanos.methods;
 
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;

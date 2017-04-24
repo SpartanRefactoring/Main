@@ -1,7 +1,5 @@
 package il.org.spartan.athenizer.bloaters;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
