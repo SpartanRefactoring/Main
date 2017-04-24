@@ -28,6 +28,6 @@ public class ForEachApplier extends JavadocMarkerNanoPattern {
 
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return hazOneStatement(¢)//
-        && anyTips(tippers, the.onlyOne(statements(¢)));
+        && anyTips(tippers, the.onlyOneOf(statements(¢)));
   }
 }

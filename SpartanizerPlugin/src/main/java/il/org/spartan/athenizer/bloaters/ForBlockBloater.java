@@ -34,7 +34,7 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
       // similar, what are u trying to find? --yg
       body(current).accept(new ASTVisitor(true) {
         @Override public boolean visit(final Block ¢) {
-          $.add(box.it(¢.hashCode() == ¢.hashCode()));
+          $.add(nano.ly.box.it(¢.hashCode() == ¢.hashCode()));
           return true;
         }
       });

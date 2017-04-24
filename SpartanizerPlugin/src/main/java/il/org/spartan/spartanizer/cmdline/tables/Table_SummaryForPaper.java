@@ -63,7 +63,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
   @Override @SuppressWarnings("unused") public boolean visit(final TypeDeclaration $) {
     // if (!excludeMethod($))
     try {
-      final Integer key = box.it(measure.commands($));
+      final Integer key = nano.ly.box.it(measure.commands($));
       //
       CUStatistics.putIfAbsent(key, an.empty.list());
       classStatistics.putIfAbsent(key, an.empty.list());

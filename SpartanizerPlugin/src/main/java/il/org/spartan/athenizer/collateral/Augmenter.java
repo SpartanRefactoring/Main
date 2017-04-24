@@ -83,10 +83,10 @@ public class Augmenter implements Application {
    * @param textEditGroup JD
    * @return true iff rewrite object should be applied */
   private static boolean rewrite(final ASTRewrite r, final List<List<Statement>> sss, @SuppressWarnings("unused") final TextEditGroup __) {
-    if (sss.isEmpty() || the.first(sss).isEmpty())
+    if (sss.isEmpty() || the.headOf(sss).isEmpty())
       return false;
-    r.replace(((TypeDeclaration) the.first(types((CompilationUnit) the.first(the.first(sss)).getRoot()))).getName(),
-        the.first(the.first(sss)).getAST().newName("CollateralIsFun"), null);
+    r.replace(((TypeDeclaration) the.headOf(types((CompilationUnit) the.headOf(the.headOf(sss)).getRoot()))).getName(),
+        the.headOf(the.headOf(sss)).getAST().newName("CollateralIsFun"), null);
     return true;
   }
 
@@ -130,7 +130,7 @@ public class Augmenter implements Application {
    * @param ¢ JD
    * @return true iff service is available */
   private static boolean checkServiceAvailableAfterCalculation(final AbstractSelection<?> ¢) {
-    return LibrariesManagement.checkLibrary(the.first(¢.inner).descriptor.getJavaProject());
+    return LibrariesManagement.checkLibrary(the.headOf(¢.inner).descriptor.getJavaProject());
   }
 
   // TODO Ori Roth improve

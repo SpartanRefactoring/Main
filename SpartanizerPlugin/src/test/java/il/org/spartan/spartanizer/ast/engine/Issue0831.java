@@ -46,7 +46,7 @@ public class Issue0831 {
   }
 
   @Test public void oneStatementInScanner() {
-    assert "int a;\n".equals(the.first(new MethodScannerIExt(oneStatMethod).availableStatements()) + "");
+    assert "int a;\n".equals(the.headOf(new MethodScannerIExt(oneStatMethod).availableStatements()) + "");
   }
 
   @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {

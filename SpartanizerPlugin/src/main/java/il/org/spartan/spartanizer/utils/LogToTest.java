@@ -56,7 +56,7 @@ public enum LogToTest {
           } else if (l.equals(note.FILE_SUB_SEPARATOR.trim()))
             es.add("");
           else
-            es.set(es.size() - 1, the.last(es) + "\n" + l);
+            es.set(es.size() - 1, the.lastOf(es) + "\n" + l);
       } catch (final IOException ¢) {
         note.io(¢, f + "");
         return;
@@ -87,7 +87,7 @@ public enum LogToTest {
       nu.put(errorLocationFileClean, Integer.valueOf(nu.get(s[s.length - 1]).intValue() + 1));
       errorLocationFileClean += nu.get(errorLocationFileClean).intValue() + 1;
     }
-    buildTest(ts, errorLocationFileClean, errorLocationUnparsed.replaceFirst(".*:", "").replaceFirst("\\)", ""), the.first(ss),
+    buildTest(ts, errorLocationFileClean, errorLocationUnparsed.replaceFirst(".*:", "").replaceFirst("\\)", ""), the.headOf(ss),
         ss.get(2).trim().equals(English.UNKNOWN) ? "some test file" : ss.get(2).trim(), ss.get(3), ss.get(4), errorLocationFile);
   }
 

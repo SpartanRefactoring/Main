@@ -237,7 +237,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   private static Expression choose(final List<Expression> ¢) {
-    return the.onlyOne(¢);
+    return the.onlyOneOf(¢);
   }
 
   // TODO Ori Roth: move class to utility file

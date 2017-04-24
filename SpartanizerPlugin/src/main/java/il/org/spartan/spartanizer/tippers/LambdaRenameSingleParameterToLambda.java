@@ -26,11 +26,11 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
   private static final long serialVersionUID = -0x2CF705A7699A0E07L;
 
   @Override public String description(final LambdaExpression ¢) {
-    return "Rename lambda parameter " + the.onlyOne(parameters(¢)) + " to " + notation.lambda;
+    return "Rename lambda parameter " + the.onlyOneOf(parameters(¢)) + " to " + notation.lambda;
   }
 
   @Override public Tip tip(final LambdaExpression x) {
-    final VariableDeclarationFragment f = az.variableDeclrationFragment(the.onlyOne(parameters(x)));
+    final VariableDeclarationFragment f = az.variableDeclrationFragment(the.onlyOneOf(parameters(x)));
     if (f == null)
       return null;
     final SimpleName $ = f.getName();

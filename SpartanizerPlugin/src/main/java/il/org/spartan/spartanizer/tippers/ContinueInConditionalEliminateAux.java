@@ -28,10 +28,10 @@ enum ContinueInConditionalEliminateAux {
     final IfStatement continueStatement = az.ifStatement($.get($.size() - 2));
     if (continueStatement == null || !iz.continueStatement(continueStatement.getThenStatement()))
       return null;
-    final IfStatement replacementIf = subject.pair(the.last($), null).toNot(continueStatement.getExpression());
+    final IfStatement replacementIf = subject.pair(the.lastOf($), null).toNot(continueStatement.getExpression());
     return new Tip("Eliminate conditional continue before last statement in the for loop", c, s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.remove(the.last($), g);
+        r.remove(the.lastOf($), g);
         r.replace(continueStatement, replacementIf, g);
       }
     };

@@ -34,6 +34,6 @@ public class DeflaterProvider extends OperationsProvider {
   }
 
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
-    return λ -> Collections.singletonList(the.last(λ));
+    return λ -> Collections.singletonList(the.lastOf(λ));
   }
 }

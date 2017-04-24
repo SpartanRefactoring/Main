@@ -47,7 +47,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
-    return ops2.size() != 1 ? $ : the.first(ops2);
+    return ops2.size() != 1 ? $ : the.headOf(ops2);
   }
 
   private static boolean containsZeroOperand(final InfixExpression ¢) {
@@ -64,7 +64,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     InfixExpression $ = null;
     for (final Integer ¢ : range.from(0).to(ops2.size() - 1))
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
-    return ops2.size() != 1 ? $ : the.first(ops2);
+    return ops2.size() != 1 ? $ : the.headOf(ops2);
   }
 
   @Override public boolean prerequisite(final InfixExpression $) {

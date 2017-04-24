@@ -33,7 +33,7 @@ public class Issue0778 {
 
   @Test @SuppressWarnings("static-method") public void test3() {
     azzert.that("foo",
-        is(the.first(getAll2.methods(az.compilationUnit(make.ast("public class Dog {public void foo() {} }")))).getName().getIdentifier()));
+        is(the.headOf(getAll2.methods(az.compilationUnit(make.ast("public class Dog {public void foo() {} }")))).getName().getIdentifier()));
   }
 
   @Test @SuppressWarnings("static-method") public void test4() {
@@ -52,7 +52,7 @@ public class Issue0778 {
   @Test @SuppressWarnings("static-method") public void test6() {
     final List<MethodDeclaration> res = getAll
         .methods(az.compilationUnit(make.ast("public class Dog2 { public int foo0(){return 1;} private void foo1(){} protected void foo2(){}")));
-    azzert.that("foo0", is(the.first(res).getName().getIdentifier()));
+    azzert.that("foo0", is(the.headOf(res).getName().getIdentifier()));
     azzert.that("foo1", is(res.get(1).getName().getIdentifier()));
     azzert.that("foo2", is(res.get(2).getName().getIdentifier()));
   }

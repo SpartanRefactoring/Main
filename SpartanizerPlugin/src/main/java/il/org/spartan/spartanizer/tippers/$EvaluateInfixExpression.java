@@ -71,7 +71,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
           if (str != null)
             return subject
                 .pair(az.expression(x.getAST().newNumberLiteral(str)),
-                    afterExpressionOperands.size() == 1 ? the.first(afterExpressionOperands) : subject.operands(afterExpressionOperands).to(operator()))
+                    afterExpressionOperands.size() == 1 ? the.headOf(afterExpressionOperands) : subject.operands(afterExpressionOperands).to(operator()))
                 .to(operator());
         }
       }
@@ -84,7 +84,7 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
           final String s = opportunisticReplacement(cuttedExpression);
           if (s != null)
             return subject.pair(
-                beforeExpressionOperands.size() == 1 ? the.first(beforeExpressionOperands) : subject.operands(beforeExpressionOperands).to(operator()),
+                beforeExpressionOperands.size() == 1 ? the.headOf(beforeExpressionOperands) : subject.operands(beforeExpressionOperands).to(operator()),
                 az.expression(x.getAST().newNumberLiteral(s))).to(operator());
         }
       }

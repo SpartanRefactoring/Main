@@ -29,11 +29,11 @@ public class CompilationUnitCoverageStatistics extends ArrayList<CompilationUnit
   }
 
   public void logAfterSpartanization(final CompilationUnit ¢) {
-    the.last(this).logAfterSpartanization(¢);
+    the.lastOf(this).logAfterSpartanization(¢);
   }
 
   public void markNP(final ASTNode n, final String np) {
-    the.last(this).markNP(n, np);
+    the.lastOf(this).markNP(n, np);
   }
 
   public double nodesCoverage() {

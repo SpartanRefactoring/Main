@@ -40,9 +40,9 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
     andAlso("Then part contains a list of statements", //
         () -> not.nil(thenStatements = statements(block)));
     andAlso("List of statements ends with a sequencer", //
-        () -> not.nil(sequencer = az.sequencer(the.last(thenStatements))));
+        () -> not.nil(sequencer = az.sequencer(the.lastOf(thenStatements))));
     andAlso("Last in subsequent statements ends with the same sequencer", //
-        () -> wizard.eq(sequencer, the.last(subsequentStatements)));
+        () -> wizard.eq(sequencer, the.lastOf(subsequentStatements)));
   }
 
   private static final long serialVersionUID = 0x6F3B3E10E4F678DFL;
@@ -70,7 +70,7 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final IfStatement $ = copy.of(current);
     r.replace(current, $, g);
-    r.getListRewrite(az.block(then($)), Block.STATEMENTS_PROPERTY).remove(the.last(statements(az.block(then($)))), g);
+    r.getListRewrite(az.block(then($)), Block.STATEMENTS_PROPERTY).remove(the.lastOf(statements(az.block(then($)))), g);
     final Block newBlock = $.getAST().newBlock();
     $.setElseStatement(newBlock);
     final ListRewrite listRewrite2 = r.getListRewrite(newBlock, Block.STATEMENTS_PROPERTY);

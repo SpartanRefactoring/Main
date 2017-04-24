@@ -75,7 +75,7 @@ public class ASTInFilesVisitor {
   }
 
   static boolean letItBeIn(final List<Statement> ¢) {
-    return ¢.size() == 2 && the.first(¢) instanceof VariableDeclarationStatement;
+    return ¢.size() == 2 && the.headOf(¢) instanceof VariableDeclarationStatement;
   }
 
   public final Tappers notify = new Tappers()//
@@ -187,7 +187,7 @@ public class ASTInFilesVisitor {
     }
 
     static boolean letItBeIn(final List<Statement> ¢) {
-      return ¢.size() == 2 && the.first(¢) instanceof VariableDeclarationStatement;
+      return ¢.size() == 2 && the.headOf(¢) instanceof VariableDeclarationStatement;
     }
   }
 

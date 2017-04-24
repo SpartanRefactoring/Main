@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.ast.safety;
 import nano.ly.*;
 
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
-import static nano.ly.Box.*;
+import static nano.ly.box.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -144,7 +144,7 @@ public interface iz {
       return false;
     final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
-        || !eq(s, az.astNode(the.first(statements(az.block(elze($))))))//
+        || !eq(s, az.astNode(the.headOf(statements(az.block(elze($))))))//
         || misc.recursiveElse(s) != null//
         || elze($) == null)//
         && $ != null && (elze($) == null || misc.recursiveElse(s) == null)

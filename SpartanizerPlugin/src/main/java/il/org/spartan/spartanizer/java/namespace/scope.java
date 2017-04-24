@@ -56,7 +56,7 @@ public interface scope {
   static Namespace getScopeNamespace(final ASTNode ¢) {
     final ASTNode delimiter = delimiter(¢);
     final List<Statement> statements = statements(delimiter);
-    final Statement last = the.last(statements);
+    final Statement last = the.lastOf(statements);
     final Namespace of = Environment.of(last);
     return new Namespace(of);
   }

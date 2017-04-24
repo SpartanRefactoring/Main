@@ -25,12 +25,12 @@ public class LetInMethod extends JavadocMarkerNanoPattern {
     return hazTwoStatements(¢) //
         && iz.variableDeclarationStatement(firstStatement(¢)) //
         && preDelegation(secondStatement(¢)) //
-        && rival.cantTip(the.first(fragments(az.variableDeclarationStatement(firstStatement(¢))))) //
+        && rival.cantTip(the.headOf(fragments(az.variableDeclarationStatement(firstStatement(¢))))) //
         && usesAssignment(¢);
   }
 
   private boolean usesAssignment(final MethodDeclaration ¢) {
-    return !collect.usesOf(name(the.first(fragments(az.variableDeclarationStatement(firstStatement(¢)))))).in(secondStatement(¢)).isEmpty();
+    return !collect.usesOf(name(the.headOf(fragments(az.variableDeclarationStatement(firstStatement(¢)))))).in(secondStatement(¢)).isEmpty();
   }
 
   private static boolean preDelegation(final Statement secondStatement) {

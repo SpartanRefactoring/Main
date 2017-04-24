@@ -35,14 +35,14 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
   }
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
-    return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) the.first(fragments(¢))).getInitializer() != null
-        && ((VariableDeclaration) the.first(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
+    return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer() != null
+        && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢);
-    ((VariableDeclaration) the.first(fragments($))).setInitializer(null);
-    final VariableDeclarationFragment f2 = the.first(fragments(¢));
+    ((VariableDeclaration) the.headOf(fragments($))).setInitializer(null);
+    final VariableDeclarationFragment f2 = the.headOf(fragments(¢));
     final Assignment a = subject.pair(copy.of(az.expression(f2.getName())), copy.of(az.expression(f2.getInitializer())))
         .to(Assignment.Operator.ASSIGN);
     return new Tip(description(¢), getClass(), ¢) {

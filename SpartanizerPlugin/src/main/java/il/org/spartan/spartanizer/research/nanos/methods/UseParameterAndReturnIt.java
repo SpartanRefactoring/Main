@@ -21,6 +21,6 @@ public class UseParameterAndReturnIt extends JavadocMarkerNanoPattern {
         && notEmpty(¢)//
         && !iz.constructor(¢)//
         && !iz.voidType(returnType(¢))
-        && returnStatements(¢).stream().map(λ -> expression(λ) + "").allMatch(λ -> λ.equals(identifier(name(the.onlyOne(parameters(¢))))));
+        && returnStatements(¢).stream().map(λ -> expression(λ) + "").allMatch(λ -> λ.equals(identifier(name(the.onlyOneOf(parameters(¢))))));
   }
 }

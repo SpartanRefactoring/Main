@@ -28,7 +28,7 @@ public abstract class MethodScanner {
       currentStatement = null;
     } else {
       statements = step.statements(body(method));
-      currentStatement = the.first(statements);
+      currentStatement = the.headOf(statements);
     }
     currentIndex = -1;
   }

@@ -35,7 +35,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
       case 0:
         return make.emptyStatement(¢);
       case 1:
-        return copy.of(the.first($));
+        return copy.of(the.headOf($));
       default:
         return reorganizeStatement(¢);
     }
@@ -69,7 +69,7 @@ public final class BlockSimplify extends ReplaceCurrentNode<Block>//
       case 0:
         return make.emptyStatement(b);
       case 1:
-        final Statement $ = the.first(ss);
+        final Statement $ = the.headOf(ss);
         if (iz.blockEssential($))
           return subject.statement($).toBlock();
         return copy.of($);

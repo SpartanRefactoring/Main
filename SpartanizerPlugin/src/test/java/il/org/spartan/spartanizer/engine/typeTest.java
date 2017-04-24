@@ -754,8 +754,8 @@ public final class typeTest {
     @Test @SuppressWarnings("unchecked") public void context20() {
       final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(of(fs.getExpression()), is(BOOLEAN));
-      azzert.that(of((Expression) the.first(fs.initializers())), is(INT));
-      azzert.that(of((Expression) the.first(fs.updaters())), is(NUMERIC));
+      azzert.that(of((Expression) the.headOf(fs.initializers())), is(INT));
+      azzert.that(of((Expression) the.headOf(fs.updaters())), is(NUMERIC));
     }
 
     @Test public void context22() {

@@ -177,7 +177,7 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     }
 
     static boolean letItBeIn(final List<Statement> ¢) {
-      return ¢.size() == 2 && the.first(¢) instanceof VariableDeclarationStatement;
+      return ¢.size() == 2 && the.headOf(¢) instanceof VariableDeclarationStatement;
     }
 
     private static boolean leaking(final ASTNode ¢) {

@@ -69,7 +69,7 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     final int totalNegation = minus.level(x);
     return totalNegation == 0 || totalNegation == 1 && minus.level(left(x)) == 1 ? null : new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Expression first = totalNegation % 2 == 0 ? null : the.first($);
+        final Expression first = totalNegation % 2 == 0 ? null : the.headOf($);
         $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
             .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)

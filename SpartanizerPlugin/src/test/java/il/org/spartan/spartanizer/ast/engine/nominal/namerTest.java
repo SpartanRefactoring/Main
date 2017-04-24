@@ -85,6 +85,6 @@ public final class namerTest {
   @Test public void test2() {
     final String[] components = cCamelCase.components("Table_NanosByCategories");
     azzert.that(components, is(new String[] { "Table", "Nanos", "By", "Categories" }));
-    azzert.that(separate.these(the.rest(as.iterable(components))).by('-').toLowerCase(), is("nanos-by-categories"));
+    azzert.that(separate.these(the.lastOf(as.iterable(components))).by('-').toLowerCase(), is("nanos-by-categories"));
   }
 }

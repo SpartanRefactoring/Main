@@ -51,7 +51,7 @@ public class Issue0686 {
   }
 
   @Test public void h() {
-    azzert.that(the.first(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(String s1, int s2, int i1, int s3);")))).getName()
+    azzert.that(the.headOf(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(String s1, int s2, int i1, int s3);")))).getName()
         .getIdentifier(), is("s1"));
   }
 
@@ -64,7 +64,7 @@ public class Issue0686 {
   }
 
   @Test public void k() {
-    azzert.that(the.first(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
+    azzert.that(the.headOf(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
         .getName().getIdentifier(), is("s1"));
   }
 

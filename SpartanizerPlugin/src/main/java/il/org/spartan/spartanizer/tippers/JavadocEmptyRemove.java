@@ -16,7 +16,7 @@ public final class JavadocEmptyRemove extends RemovingTipper<Javadoc>//
   private static final long serialVersionUID = 0x46D49EDB4E92226AL;
 
   @Override public String description(final Javadoc ¢) {
-    return String.format("Remove empty Javadoc comment of %d characters", box.it(metrics.length(¢)));
+    return String.format("Remove empty Javadoc comment of %d characters", nano.ly.box.it(metrics.length(¢)));
   }
 
   @Override public Examples examples() {

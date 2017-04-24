@@ -126,11 +126,11 @@ public final class subjectTest {
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = hop.operands(flatten.of(e));
     azzert.that(operands.size(), is(2));
-    azzert.that(the.first(operands) + "", is("1"));
-    azzert.that(the.second(operands) + "", is("2 * 3"));
+    azzert.that(the.headOf(operands) + "", is("1"));
+    azzert.that(the.secondOf(operands) + "", is("2 * 3"));
     assert ExpressionComparator.ADDITION.sort(operands);
-    azzert.that(the.first(operands) + "", is("2 * 3"));
-    azzert.that(the.second(operands) + "", is("1"));
+    azzert.that(the.headOf(operands) + "", is("2 * 3"));
+    azzert.that(the.secondOf(operands) + "", is("1"));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit, is(not(e)));
     azzert.that(refit + "", is("2 * 3 + 1"));

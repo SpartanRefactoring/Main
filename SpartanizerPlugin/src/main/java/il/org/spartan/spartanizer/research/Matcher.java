@@ -101,11 +101,11 @@ public final class Matcher {
 
   private boolean lastInBlock(final Block ¢) {
     final ASTNode[] $ = getMatchedNodes(¢);
-    return $[$.length - 1].equals(the.last(statements(¢)));
+    return $[$.length - 1].equals(the.lastOf(statements(¢)));
   }
 
   private boolean firstInBlock(final Block ¢) {
-    return getMatchedNodes(¢)[0].equals(the.first(statements(¢)));
+    return getMatchedNodes(¢)[0].equals(the.headOf(statements(¢)));
   }
 
   private boolean containsOption(final Option o) {
@@ -236,11 +236,11 @@ public final class Matcher {
 
   private static boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName(), ids)
-        && consistent(ids, the.first(arguments(az.methodInvocation(p))) + "", az.methodInvocation(n).arguments() + "");
+        && consistent(ids, the.headOf(arguments(az.methodInvocation(p))) + "", az.methodInvocation(n).arguments() + "");
   }
 
   private static boolean isMethodInvocationAndHas$AArgument(final ASTNode p) {
-    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1 && (the.first(arguments(az.methodInvocation(p))) + "").startsWith($A);
+    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1 && (the.headOf(arguments(az.methodInvocation(p))) + "").startsWith($A);
   }
 
   private static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {
@@ -250,12 +250,12 @@ public final class Matcher {
   public static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c,
       final Map<String, String> ids) {
     return iz.classInstanceCreation(n) && sameName(c.getType(), az.classInstanceCreation(n).getType(), ids)
-        && consistent(ids, the.first(arguments(c)) + "", az.classInstanceCreation(n).arguments() + "");
+        && consistent(ids, the.headOf(arguments(c)) + "", az.classInstanceCreation(n).arguments() + "");
   }
 
   private static boolean isClassInstanceCreationAndHas$AArgument(final ASTNode p) {
     return iz.classInstanceCreation(p) && az.classInstanceCreation(p).arguments().size() == 1
-        && (the.first(arguments(az.classInstanceCreation(p))) + "").startsWith($A);
+        && (the.headOf(arguments(az.classInstanceCreation(p))) + "").startsWith($A);
   }
 
   private static boolean sameLiteral(final ASTNode p, final ASTNode n) {
@@ -267,13 +267,13 @@ public final class Matcher {
   }
 
   private static String blockVariableName(final ASTNode p) {
-    return az.methodInvocation(az.expressionStatement(the.first(statements(az.block(p)))).getExpression()).getName().getFullyQualifiedName();
+    return az.methodInvocation(az.expressionStatement(the.headOf(statements(az.block(p)))).getExpression()).getName().getFullyQualifiedName();
   }
 
   private static boolean isBlockVariable(final ASTNode p) {
     if (!iz.block(p) || statements(az.block(p)).size() != 1)
       return false;
-    final Statement $ = the.first(statements(az.block(p)));
+    final Statement $ = the.headOf(statements(az.block(p)));
     return iz.expressionStatement($) && iz.methodInvocation(az.expressionStatement($).getExpression()) && blockVariableName(p).startsWith($B);
   }
 
@@ -382,7 +382,7 @@ public final class Matcher {
   }
 
   private static String argumentsId(final ASTNode p) {
-    return the.first(arguments(az.methodInvocation(p))) + "";
+    return the.headOf(arguments(az.methodInvocation(p))) + "";
   }
 
   private static String matchingArguments(final ASTNode ¢) {
@@ -395,7 +395,7 @@ public final class Matcher {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : the.first(statements(az.block(¢)));
+    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : the.headOf(statements(az.block(¢)));
   }
 
   <N extends ASTNode> ASTNode replacement(final N n) {
@@ -427,7 +427,7 @@ public final class Matcher {
 
   ASTNode blockReplacement(final Block n) {
     final Pair<Integer, Integer> p = getBlockMatching(wrapStatementIfOne(pattern()), az.block(n));
-    final String matching = stringifySubBlock(n, Unbox.it(p.first), Unbox.it(p.second));
+    final String matching = stringifySubBlock(n, unbox.it(p.first), unbox.it(p.second));
     final Map<String, String> enviroment = collectEnviroment(make.ast(matching), new HashMap<>());
     final Wrapper<String> $ = new Wrapper<>(replacement);
     enviroment.keySet().stream().filter(Matcher::needsSpecialReplacement).forEach(λ -> $.set($.get().replace(λ, enviroment.get(λ) + "")));

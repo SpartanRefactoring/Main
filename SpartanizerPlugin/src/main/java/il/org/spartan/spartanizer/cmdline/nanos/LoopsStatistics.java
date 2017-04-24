@@ -16,11 +16,11 @@ public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
   private static final long serialVersionUID = -0x2E8F85DE0AF69FEBL;
 
   public int total() {
-    return wizard.loopTypes.stream().mapToInt(λ -> total(Unbox.it(λ))).sum();
+    return wizard.loopTypes.stream().mapToInt(λ -> total(unbox.it(λ))).sum();
   }
 
   public int covered() {
-    return wizard.loopTypes.stream().mapToInt(λ -> covered(Unbox.it(λ))).sum();
+    return wizard.loopTypes.stream().mapToInt(λ -> covered(unbox.it(λ))).sum();
   }
 
   public double coverage() {

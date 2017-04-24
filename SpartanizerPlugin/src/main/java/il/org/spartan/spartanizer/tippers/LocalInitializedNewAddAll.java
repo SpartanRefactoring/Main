@@ -43,7 +43,7 @@ public final class LocalInitializedNewAddAll extends LocalInitialized //
     andAlso("Method name is 'addAll'", //
         () -> "addAll".equals(methodInvocation.getName() + ""));
     andAlso("Method has only one argument", //
-        () -> not.nil(argument = the.onlyOne(arguments(methodInvocation))));
+        () -> not.nil(argument = the.onlyOneOf(arguments(methodInvocation))));
   }
 
   @Override public String description() {

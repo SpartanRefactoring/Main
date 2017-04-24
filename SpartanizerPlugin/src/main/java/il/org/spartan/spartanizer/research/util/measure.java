@@ -89,7 +89,7 @@ public enum measure {
     )//
         .contains(¢.getClass()) //
         || iz.variableDeclarationStatement(¢)//
-            && initializer(the.onlyOne(fragments(az.variableDeclarationStatement(¢)))) == null;
+            && initializer(the.onlyOneOf(fragments(az.variableDeclarationStatement(¢)))) == null;
   }
 
   static boolean excluded(final Expression ¢) {

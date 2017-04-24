@@ -29,7 +29,7 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
 
   private static ASTNode replacement(final List<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
-    return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(the.first(¢)) : $.size() == 1 ? copy.of(the.first($)) : subject.operands($).to(PLUS);
+    return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(the.headOf(¢)) : $.size() == 1 ? copy.of(the.headOf($)) : subject.operands($).to(PLUS);
   }
 
   @Override public String description(final InfixExpression ¢) {

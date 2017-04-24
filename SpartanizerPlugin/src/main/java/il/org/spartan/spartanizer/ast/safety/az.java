@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import static nano.ly.Unbox.*;
+import static nano.ly.unbox.*;
 import static nano.ly.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -592,7 +592,7 @@ public enum az {
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
-    return az.variableDeclarationExpression(the.first(initializers($)));
+    return az.variableDeclarationExpression(the.headOf(initializers($)));
   }
 
   /** @param ¢ JD
