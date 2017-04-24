@@ -45,10 +45,10 @@ public class SpartanMovie2 extends AbstractHandler {
     final GUITraversal traversal = new GUITraversal();
     if (compilationUnits == null || page == null || progressService == null) return null;
 
-    UIJob job = new UIJob(NAME) {
-      @Override public IStatus runInUIThread(IProgressMonitor monitor) {
+//    UIJob job = new UIJob(NAME) {
+//      @Override public IStatus runInUIThread(IProgressMonitor monitor) {
 //          monitor.beginTask("Preparing", 5000);
-          monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
+//          monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
           int changes = 0, filesModified = 0;
           for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
 //            System.out.println(currentCompilationUnit.getElementName());
@@ -60,10 +60,10 @@ public class SpartanMovie2 extends AbstractHandler {
                 ++filesModified;
                 for (; markers.length > 0; markers = getMarkers(file)) {
                   final IMarker marker = getFirstMarker(markers);
-                  monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
-                                  marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+//                  monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
+//                                  marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
                   printout(marker);
-                  IDE.openEditor(page, marker, true);
+                  delegateUIJob(page, marker);
                   //refresh(page);
                   //sleep(SLEEP_BETWEEN);
                   traversal.runAsMarkerFix(marker);
@@ -80,23 +80,12 @@ public class SpartanMovie2 extends AbstractHandler {
                 note.bug(¢);
               }
            }
-           monitor.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
+//           monitor.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
            sleep(SLEEP_END);
-           monitor.done();
-           return Status.OK_STATUS;
-      }
-      
-      Boolean sleep(double howMuch) {
-        try {
-          Thread.sleep((int) (1000 * howMuch));
-          return true;
-        } catch (final InterruptedException ¢) {
-          note.bug(¢);
-          return false;
-        }
-      }
-
-    }; // end job
+//           monitor.done();
+//           return Status.OK_STATUS;
+//      }
+//    }; // end job
     
     
 //    ICommandService service = (ICommandService) 
@@ -113,92 +102,139 @@ public class SpartanMovie2 extends AbstractHandler {
 //          Boolean.TRUE);
 //    }
     
-    job.schedule();
+//    job.schedule();
     return null;
   }
+
+
+private void delegateUIJob(final IWorkbenchPage page, final IMarker marker) throws PartInitException {
+  UIJob job = new UIJob(NAME) {
+    @Override public IStatus runInUIThread(IProgressMonitor monitor) {
+      try {
+        IDE.openEditor(page, marker, true);
+      } catch (PartInitException x) {
+        x.printStackTrace();
+      }
+      return Status.OK_STATUS;
+    }
+  };
+  job.schedule();  
+}
+
+//Boolean sleep(double howMuch) {
+//  try {
+//    Thread.sleep((int) (1000 * howMuch));
+//    return true;
+//  } catch (final InterruptedException ¢) {
+//    note.bug(¢);
+//    return false;
+//  }
+//}
   
-  private Object foo(){
-    
-    final IWorkbench workbench = PlatformUI.getWorkbench();
-    final List<ICompilationUnit> compilationUnits = getCompilationUnits();
-    final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
-    final IWorkbenchPage page = window == null ? null : window.getActivePage();
-    final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
-    final GUITraversal traversal = new GUITraversal();
-    if (compilationUnits == null || page == null || progressService == null) return null;
-
-    UIJob job = new UIJob(NAME) {
-      @Override public IStatus runInUIThread(IProgressMonitor monitor) {
-//          monitor.beginTask("Preparing", 5000);
-          monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
-          int changes = 0, filesModified = 0;
-          for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-//            System.out.println(currentCompilationUnit.getElementName());
-            //mightNotBeSlick(page);
-            final IResource file = currentCompilationUnit.getResource();
-            try {
-              IMarker[] markers = getMarkers(file);
-              if (markers.length > 0)
-                ++filesModified;
-                for (; markers.length > 0; markers = getMarkers(file)) {
-                  final IMarker marker = getFirstMarker(markers);
-                  monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
-                                  marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
-                  printout(marker);
-                  IDE.openEditor(page, marker, true);
-                  //refresh(page);
-                  //sleep(SLEEP_BETWEEN);
-                  traversal.runAsMarkerFix(marker);
-                  ++changes;
-                  marker.delete(); // TODO Ori Roth: does not seem to make a 
-                                   // difference
-                                   // actually it removes the markers after the traversal
-                                   // and avoid the infinite loop (it descreases markers.length at
-                                   // each round -- mo
-                  refresh(page);
-                  sleep(SLEEP_BETWEEN);
-                }
-              } catch (final CoreException ¢) {
-                note.bug(¢);
-              }
-           }
-           monitor.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
-           sleep(SLEEP_END);
-           monitor.done();
-           return Status.OK_STATUS;
-      }
-      
-      Boolean sleep(double howMuch) {
-        try {
-          Thread.sleep((int) (1000 * howMuch));
-          return true;
-        } catch (final InterruptedException ¢) {
-          note.bug(¢);
-          return false;
-        }
-      }
-
-    }; // end job
-    
-    
-//    ICommandService service = (ICommandService) 
-//        PlatformUI.getWorkbench().getService(ICommandService.class);
-//    Command command = service == null ? null : 
-//      service.getCommand("il.org.spartan.SpartanMovie");
+//  private Object foo(){
 //    
-//    if(command != null){
-//      job.setProperty(IProgressConstants2.COMMAND_PROPERTY, 
-//            ParameterizedCommand.generateCommand(command, null));
-//      job.setProperty(IProgressConstants2.ICON_PROPERTY,
-//          ImageDescriptor.createFromURL(SpartanMovie2.class.getResource("/icons/sample.gif")));
-//      job.setProperty(IProgressConstants2.SHOW_IN_TASKBAR_ICON_PROPERTY,
-//          Boolean.TRUE);
+//    final IWorkbench workbench = PlatformUI.getWorkbench();
+//    final List<ICompilationUnit> compilationUnits = getCompilationUnits();
+//    final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
+//    final IWorkbenchPage page = window == null ? null : window.getActivePage();
+//    final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
+//    final GUITraversal traversal = new GUITraversal();
+//    if (compilationUnits == null || page == null || progressService == null) return null;
+//
+//    int changes = 0, filesModified = 0;
+//    for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
+////      System.out.println(currentCompilationUnit.getElementName());
+//      //mightNotBeSlick(page);
+//      final IResource file = currentCompilationUnit.getResource();
+//      
+//        IMarker[] markers = getMarkers(file);
+//        if (markers.length > 0)
+//          ++filesModified;
+//    
+//        UIJob job = new UIJob(NAME) {
+//          @Override public IStatus runInUIThread(IProgressMonitor monitor) {
+//    //          monitor.beginTask("Preparing", 5000);
+//              monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
+//              
+//                    for (; markers.length > 0; markers = getMarkers(file)) {
+//                      final IMarker marker = getFirstMarker(markers);
+//                      try {
+//                        monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
+//                                        marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+//                      } catch (CoreException x) {
+//                        x.printStackTrace();
+//                      }
+//                      printout(marker);
+//                      try {
+//                        UIJob job2 = new UIJob(NAME) {
+//                          @Override public IStatus runInUIThread(IProgressMonitor monitor) {
+//                            IDE.openEditor(page, marker, true);
+//                            return Status.OK_STATUS;
+//                        }
+//                        job2.schedule();
+//                      } catch (PartInitException x) {
+//                        x.printStackTrace();
+//                      }
+//                      refresh(page);
+//                      sleep(SLEEP_BETWEEN);
+//                      try {
+//                        traversal.runAsMarkerFix(marker);
+//                      } catch (CoreException x) {
+//                        x.printStackTrace();
+//                      }
+//                      ++changes;
+//                      try {
+//                        marker.delete();
+//                      } catch (CoreException x) {
+//                        // TODO Auto-generated catch block
+//                        x.printStackTrace();
+//                      } // TODO Ori Roth: does not seem to make a 
+//                                       // difference
+//                                       // actually it removes the markers after the traversal
+//                                       // and avoid the infinite loop (it descreases markers.length at
+//                                       // each round -- mo
+//                      refresh(page);
+//                      sleep(SLEEP_BETWEEN);
+//                    }
+//    
+//               monitor.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
+//               sleep(SLEEP_END);
+//               monitor.done();
+//               return Status.OK_STATUS;
+//          }
+//          
+//          Boolean sleep(double howMuch) {
+//            try {
+//              Thread.sleep((int) (1000 * howMuch));
+//              return true;
+//            } catch (final InterruptedException ¢) {
+//              note.bug(¢);
+//              return false;
+//            }
+//          }
+//    
+//        }; // end job
+//    
+//    job.schedule();
+//    return null;
+//    
 //    }
-    
-    job.schedule();
-    return null;
-    
-  }
+//        
+////    ICommandService service = (ICommandService) 
+////        PlatformUI.getWorkbench().getService(ICommandService.class);
+////    Command command = service == null ? null : 
+////      service.getCommand("il.org.spartan.SpartanMovie");
+////    
+////    if(command != null){
+////      job.setProperty(IProgressConstants2.COMMAND_PROPERTY, 
+////            ParameterizedCommand.generateCommand(command, null));
+////      job.setProperty(IProgressConstants2.ICON_PROPERTY,
+////          ImageDescriptor.createFromURL(SpartanMovie2.class.getResource("/icons/sample.gif")));
+////      job.setProperty(IProgressConstants2.SHOW_IN_TASKBAR_ICON_PROPERTY,
+////          Boolean.TRUE);
+////    }
+//     
+//  }
 
   private void printout(final IMarker marker) {
     try {
