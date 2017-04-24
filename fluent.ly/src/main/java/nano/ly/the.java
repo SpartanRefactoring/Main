@@ -116,7 +116,7 @@ public interface the {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
 
-  static @NotNull boolean[] rest(@NotNull PureIterable.Sized<@Nullable String> iterable) {
+  static @NotNull boolean[] rest(@SuppressWarnings("unused") @NotNull PureIterable.Sized<@Nullable String> iterable) {
     // TODO Yossi complete
     return null;
   }
