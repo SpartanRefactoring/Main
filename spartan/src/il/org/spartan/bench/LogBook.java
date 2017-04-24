@@ -699,8 +699,7 @@ public abstract class LogBook implements Serializable {
     }
 
     @NotNull private String compare(final Statistics s1, final Statistics s2) {
-      final double $ = new WelchT(s1, s2).p;
-      return $ < 0.001 ? "==" : "~" + ($ > 0.1 ? "" : RELATIVE.format($) + "") + "~";
+      return new WelchT(s1, s2).p < 0.001 ? "==" : "~" + (new WelchT(s1, s2).p > 0.1 ? "" : RELATIVE.format(new WelchT(s1, s2).p) + "") + "~";
     }
 
     private boolean equals(@Nullable final String s1, @Nullable final String s2) {

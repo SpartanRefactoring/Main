@@ -229,8 +229,7 @@ public final class ConstantPool {
       @Nullable String $ = getUTF8(contentIndex);
       if ($ == null)
         return null;
-      $ = $.replaceFirst("^[\\[]+L", "");
-      $ = $.replaceAll(";$", "");
+      $ = $.replaceFirst("^[\\[]+L", "").replaceAll(";$", "");
       return $.startsWith("[") ? null : $.substring($.lastIndexOf('/') + 1).replace('$', '.');
     }
 

@@ -38,15 +38,15 @@ import il.org.spartan.utils.*;
   @Test public void testIsPermutationLarge() {
     final int N = 1000, a[] = Permutation.random(N);
     Arrays.sort(a);
-    for (int i = 0; i < N; ++i)
-      assertEquals(i, Arrays.binarySearch(a, i));
+    for (int ¢ = 0; ¢ < N; ++¢)
+      assertEquals(¢, Arrays.binarySearch(a, ¢));
   }
 
   @Test public void testIsRandomPermutation() {
     final int a[] = Permutation.random(10000);
     int count = 0;
-    for (int i = 0; i < a.length; ++i)
-      count += As.binary(i == a[i]);
+    for (int ¢ = 0; ¢ < a.length; ++¢)
+      count += As.binary(¢ == a[¢]);
     System.out.println(count);
     assert !(count > a.length / 2);
   }

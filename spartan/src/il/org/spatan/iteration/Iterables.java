@@ -416,10 +416,8 @@ public class Iterables {
 
   public static String toString(@NotNull final Iterable<String> items, final String sep) {
     String $ = "";
-    for (final String ¢ : items) {
-      $ += ¢;
-      $ += sep;
-    }
+    for (final String ¢ : items)
+      $ += ¢ + sep;
     return $;
   }
 

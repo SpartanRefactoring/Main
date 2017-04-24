@@ -16,8 +16,8 @@ import il.org.spartan.utils.Separate.*;
 public class SeparateTest {
   private static <T> Collection<T> makeCollection(final T... ts) {
     final ArrayList<T> $ = new ArrayList<>();
-    for (final T t : ts)
-      $.add(t);
+    for (final T ¢ : ts)
+      $.add(¢);
     return $;
   }
 
@@ -66,19 +66,19 @@ public class SeparateTest {
   }
 
   @Test public final void testByFOfTIterableOfTChar() {
-    assertEquals("<A> <B>", Separate.by((F<String>) a -> "<" + a + '>', new String[] { "A", "B" }, ' '));
+    assertEquals("<A> <B>", Separate.by((F<String>) λ -> "<" + λ + '>', new String[] { "A", "B" }, ' '));
   }
 
   @Test public final void testByFOfTIterableOfTString() {
-    assertEquals("'Hello', 'World'", Separate.by((F<String>) a -> "'" + a + '\'', makeCollection("Hello", "World"), ", "));
+    assertEquals("'Hello', 'World'", Separate.by((F<String>) λ -> "'" + λ + '\'', makeCollection("Hello", "World"), ", "));
   }
 
   @Test public final void testByFOfTTArrayChar() {
-    assertEquals("'Hello' 'World'", Separate.by((F<String>) a -> "'" + a + '\'', makeCollection("Hello", "World"), ' '));
+    assertEquals("'Hello' 'World'", Separate.by((F<String>) λ -> "'" + λ + '\'', makeCollection("Hello", "World"), ' '));
   }
 
   @Test public final void testByFOfTTArrayString() {
-    assertEquals("'Hello', 'World'", Separate.by((F<String>) a -> "'" + a + '\'', new String[] { "Hello", "World" }, ", "));
+    assertEquals("'Hello', 'World'", Separate.by((F<String>) λ -> "'" + λ + '\'', new String[] { "Hello", "World" }, ", "));
   }
 
   @Test public final void testByIntArrayChar() {

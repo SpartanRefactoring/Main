@@ -51,8 +51,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allPrimitiveFieldsAttributes() {
-    for (final FlaggedEntity f : ClassInfo.make(AllPrimitiveFields.class).fields)
-      assertEquals(0, f.attributes.length);
+    for (final FlaggedEntity ¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
+      assertEquals(0, ¢.attributes.length);
   }
 
   @Test public void allPrimitiveFieldsCount() {
@@ -60,8 +60,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allPrimitiveFieldsModifiers() {
-    for (final FlaggedEntity f : ClassInfo.make(AllPrimitiveFields.class).fields)
-      assertEquals(Modifier.FINAL | Modifier.PUBLIC, f.flags);
+    for (final FlaggedEntity ¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
+      assertEquals(Modifier.FINAL | Modifier.PUBLIC, ¢.flags);
   }
 
   @Test public void allPrimitiveFieldsNames() {
@@ -76,13 +76,13 @@ import il.org.spartan.utils.*;
 
   @Test public void allPrimitiveFieldsTypes() {
     final TypedEntity[] fields = ClassInfo.make(AllPrimitiveFields.class).fields;
-    assertEquals("byte", (fields[0].type + ""));
-    assertEquals("short", (fields[1].type + ""));
-    assertEquals("long", (fields[2].type + ""));
-    assertEquals("float", (fields[3].type + ""));
-    assertEquals("double", (fields[4].type + ""));
-    assertEquals("char", (fields[5].type + ""));
-    assertEquals("boolean", (fields[6].type + ""));
+    assertEquals("byte", fields[0].type + "");
+    assertEquals("short", fields[1].type + "");
+    assertEquals("long", fields[2].type + "");
+    assertEquals("float", fields[3].type + "");
+    assertEquals("double", fields[4].type + "");
+    assertEquals("char", fields[5].type + "");
+    assertEquals("boolean", fields[6].type + "");
   }
 
   @Test public void annotationCounts() {
@@ -117,7 +117,7 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(ArrayField.class).fields[0];
     assertEquals("fieldName", field.name);
     assertEquals("[[[[I", field.descriptor);
-    assertEquals("int[][][][]", (field.type + ""));
+    assertEquals("int[][][][]", field.type + "");
   }
 
   @Test public void badFile() {
@@ -150,7 +150,7 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(ClassWithCapitalL.class).fields[0];
     assertEquals("fieldName", field.name);
     assertEquals("Lil/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest$ClassWithCapitalL;", field.descriptor);
-    assertEquals("il.org.spartan.classfiles.reify.ClassFileTest$ClassWithCapitalL", (field.type + ""));
+    assertEquals("il.org.spartan.classfiles.reify.ClassFileTest$ClassWithCapitalL", field.type + "");
   }
 
   @Test public void codeAttributeExists() {
@@ -214,7 +214,7 @@ import il.org.spartan.utils.*;
 
   @Test public void complexMethod() {
     assertEquals("java.lang.Object[][][] (java.lang.Void, java.lang.Object, int, float, double[][])",
-        (ClassInfo.make(ComplexMethod.class).methods[0].type + ""));
+        ClassInfo.make(ComplexMethod.class).methods[0].type + "");
   }
 
   @Test public void dataInputStreamFromPath() throws FileNotFoundException {
@@ -267,7 +267,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void emptyClassDefaultConstructorType() {
-    assertEquals("()", (ClassInfo.make(EmptyClass.class).constructors[0].type + ""));
+    assertEquals("()", ClassInfo.make(EmptyClass.class).constructors[0].type + "");
   }
 
   @Test public void emptyClassDescriptor() {
@@ -413,7 +413,7 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(IntField.class).fields[0];
     assertEquals("fieldName", field.name);
     assertEquals("I", field.descriptor);
-    assertEquals("int", (field.type + ""));
+    assertEquals("int", field.type + "");
   }
 
   @Test public void isClass() {
@@ -428,7 +428,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void meHasCorrectInteface() {
-    assertEquals(Serializable.class.getCanonicalName(), (ClassInfo.make(this.getClass()).interfaces[0] + ""));
+    assertEquals(Serializable.class.getCanonicalName(), ClassInfo.make(this.getClass()).interfaces[0] + "");
   }
 
   @Test public void meHasOneInteface() {
@@ -452,8 +452,8 @@ import il.org.spartan.utils.*;
   @Test public void methodExceptionsName() {
     class _ {
     }
-    assertEquals(IOException.class.getName(), (ClassInfo.make(_.class).methods[0].exceptions[0] + ""));
-    assertEquals(ArrayIndexOutOfBoundsException.class.getName(), (ClassInfo.make(_.class).methods[0].exceptions[1] + ""));
+    assertEquals(IOException.class.getName(), ClassInfo.make(_.class).methods[0].exceptions[0] + "");
+    assertEquals(ArrayIndexOutOfBoundsException.class.getName(), ClassInfo.make(_.class).methods[0].exceptions[1] + "");
   }
 
   @Test public void methodWithParameters() {
@@ -515,7 +515,7 @@ import il.org.spartan.utils.*;
     final TypedEntity field = ClassInfo.make(ObjectField.class).fields[0];
     assertEquals("fieldName", field.name);
     assertEquals("Ljava/lang/Object;", field.descriptor);
-    assertEquals("java.lang.Object", (field.type + ""));
+    assertEquals("java.lang.Object", field.type + "");
   }
 
   @Test public void objectSuperClassName() {
@@ -648,8 +648,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void parseSelfAllMethods() {
-    for (final MethodInfo m : ClassInfo.make(this.getClass()).methods)
-      m.getCode().instructionsCount();
+    for (final MethodInfo ¢ : ClassInfo.make(this.getClass()).methods)
+      ¢.getCode().instructionsCount();
   }
 
   @Test public void parseTableSwitch() {
@@ -710,7 +710,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void staticInitializerType() {
-    assertEquals("()", (ClassInfo.make(StaticInitializer.class).initializers[0].type + ""));
+    assertEquals("()", ClassInfo.make(StaticInitializer.class).initializers[0].type + "");
   }
 
   @Test public void twoFieldsAreNotPrimtive() {
@@ -744,7 +744,7 @@ import il.org.spartan.utils.*;
 
   @Test public void voidMethod() {
     assertEquals("()V", ClassInfo.make(VoidMethod.class).methods[0].descriptor);
-    assertEquals("void ()", (ClassInfo.make(VoidMethod.class).methods[0].type + ""));
+    assertEquals("void ()", ClassInfo.make(VoidMethod.class).methods[0].type + "");
   }
 
   public abstract static class AllAccessLevels {
@@ -788,7 +788,6 @@ import il.org.spartan.utils.*;
 
   @Deprecated public static class DeprecatedClass {
     @Deprecated DeprecatedClass() {
-      super();
     }
   }
 
@@ -825,7 +824,6 @@ import il.org.spartan.utils.*;
 
   public abstract static class MethodWithParametrs {
     public MethodWithParametrs() {
-      super();
     }
 
     public final Integer method(final int a, final int b, final int c) {
@@ -848,7 +846,7 @@ import il.org.spartan.utils.*;
   }
 
   public static class OneStaticMethod {
-    public static final String methodName() {
+    public static String methodName() {
       return null;
     }
   }
@@ -872,8 +870,8 @@ import il.org.spartan.utils.*;
 
     void parse(final MethodInfo[] is) {
       ++nFiles;
-      for (final MethodInfo m : is)
-        parseMethod(m);
+      for (final MethodInfo ¢ : is)
+        parseMethod(¢);
     }
 
     void parse(final String... path) {
@@ -962,7 +960,7 @@ import il.org.spartan.utils.*;
   }
 
   public abstract static class TwoMethods {
-    public static final String secondMethod() {
+    public static String secondMethod() {
       return null;
     }
 
@@ -987,7 +985,7 @@ import il.org.spartan.utils.*;
   }
 
   interface Interface {
-    public void method0();
+    void method0();
   }
 
   static class LargeClass implements Serializable, Cloneable, Interface {
@@ -996,17 +994,17 @@ import il.org.spartan.utils.*;
     static Random field4 = new Random();
     static {
       field4 = new Random(field4.nextLong());
-      for (int i = 1; i < 10; ++i)
+      for (int ¢ = 1; ¢ < 10; ++¢)
         field4.nextDouble();
     }
     static Random field5 = new Random(field4.nextLong() + method3());
     static {
-      for (int i = 1; i < 20; ++i)
+      for (int ¢ = 1; ¢ < 20; ++¢)
         field5.nextDouble();
     }
     static Random field6 = new Random(field5.nextLong());
     static {
-      for (int i = 1; i < 20; ++i)
+      for (int ¢ = 1; ¢ < 20; ++¢)
         field4 = new Random(field6.nextLong());
     }
 
