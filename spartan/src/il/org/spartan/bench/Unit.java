@@ -105,9 +105,9 @@ public enum Unit {
   }
 
   @NotNull public static String format2(final double ¢) {
-    if (¢ < 0)
-      return "-" + format2(-¢);
-    return "%" + (100 * ¢ < 0.01 ? ".0f" : 100 * ¢ < 0.1 ? ".2f" : 100 * ¢ < 1 || 100 * ¢ < 10 ? ".1f" : 100 * ¢ < 100 || 100 * ¢ < 1000 ? ".0f" : "5.0g");
+    return ¢ < 0 ? "-" + format2(-¢)
+        : "%" + (100 * ¢ < 0.01 ? ".0f"
+            : 100 * ¢ < 0.1 ? ".2f" : 100 * ¢ < 1 || 100 * ¢ < 10 ? ".1f" : 100 * ¢ < 100 || 100 * ¢ < 1000 ? ".0f" : "5.0g");
   }
 
   public static String format3(final double ¢) {
