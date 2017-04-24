@@ -406,7 +406,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.spartanizer.plugin.SpartanizationHandler"/>
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.athenizer.InflateHandler" />
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
-   <handler commandId="il.org.spartan.ItShortcut" class="il.org.spartan.spartanizer.plugin.ItShortcut" />
+   <handler commandId="il.org.spartan.ItShortcut" class="il.org.spartan.spartanizer.plugin.KeyboardShortcuts" />
    <handler commandId="il.org.spartan.CentificationShortcut" class="il.org.spartan.spartanizer.plugin.RenamingHandler" />
    <handler commandId="il.org.spartan.SpartanWidget" class="il.org.spartan.plugin.widget.SpartanWidgetHandler" />
 </extension>
@@ -461,8 +461,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
   <!-- Top line, main menu -->
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
-  <menu id="il.org.spartan" label="Spartanizer" mnemonic="S">
-    <menu label="Spartanize..." mnemonic="S">
+  <menu id="il.org.spartan" label="Spartanizer" mnemonic="Z">
+    <menu label="Spartanize..." mnemonic="Z">
       <command commandId="il.org.spartan.SpartanizeSelection" style="push" mnemonic="S"/>
       <command commandId="il.org.spartan.SpartanizeCurrent" style="push" mnemonic="C"/>       
       <command commandId="il.org.spartan.SpartanizeAll" style="push" mnemonic="A"/>
@@ -473,14 +473,10 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
       <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
     </menu>
-    <menu label="Keys..." mnemonic="A">
-    <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="C" label="¢" />
-    <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="$" label="$" />
-    <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="L" label="λ" />
-    </menu>
     <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
     <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
     <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="C" label="¢" />
+    <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="L" label="λ" />
     <command commandId="il.org.spartan.SpartanMovie" style="push" mnemonic="M" label="The Spartan Movie" />
   </menu>
 </menuContribution>
