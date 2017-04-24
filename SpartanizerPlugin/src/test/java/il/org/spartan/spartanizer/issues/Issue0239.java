@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
+import nano.ly.*;
 
 /** *
  * @author Matteo Orru'
@@ -103,7 +104,7 @@ public class Issue0239 {
     assert !sideEffects.free(f.getInitializer());
     final List<SimpleName> uses = collect.usesOf(name).in(nextStatement);
     assert uses.size() == 1;
-    final SimpleName use = onlyOne(uses);
+    final SimpleName use = the.onlyOne(uses);
     assert use != null;
     assert !Coupling.unknownNumberOfEvaluations(use, nextStatement);
     assert !Inliner.never(name, nextStatement);

@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Test case is {@link Issue0976} Issue #976 Convert: {@code if (a == b && c ==
  * d) { a = 5; } } to: {@code if (a == b) { if (c == d) { a = 5; } } }
@@ -37,7 +38,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static Expression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
-    final InfixExpression $ = subject.pair(¢.getRightOperand(), first(extendedOperands(¢))).to(¢.getOperator());
+    final InfixExpression $ = subject.pair(¢.getRightOperand(), the.first(extendedOperands(¢))).to(¢.getOperator());
     subject.append($, step.extendedOperands(¢));
     if (!$.extendedOperands().isEmpty())
       $.extendedOperands().remove(0);

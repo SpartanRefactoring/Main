@@ -12,6 +12,7 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import nano.ly.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -43,7 +44,7 @@ public enum remove {
     remove.removeAll(b, $);
     switch ($.size()) {
       case 1:
-        return copy.of(first($));
+        return copy.of(the.first($));
       case 0:
         return x.getAST().newBooleanLiteral(b);
       default:

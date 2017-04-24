@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import nano.ly.*;
 
 /** Trait with useful fluent conditions on {@link MethodDeclaration}
  * @author Ori Marcovitch
@@ -61,15 +62,15 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default Statement onlyStatement(final MethodDeclaration ¢) {
-    return onlyOne(statements(¢));
+    return the.onlyOne(statements(¢));
   }
 
   default Statement onlyStatement(final SynchronizedStatement ¢) {
-    return onlyOne(statements(¢));
+    return the.onlyOne(statements(¢));
   }
 
   default SingleVariableDeclaration onlyParameter(final MethodDeclaration ¢) {
-    return onlyOne(parameters(¢));
+    return the.onlyOne(parameters(¢));
   }
 
   default boolean notConstructor(final MethodDeclaration ¢) {
@@ -101,7 +102,7 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default ASTNode lastStatement(final MethodDeclaration ¢) {
-    return last(statements(¢));
+    return the.last(statements(¢));
   }
 
   default boolean returnsThis(final MethodDeclaration ¢) {
@@ -117,11 +118,11 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default Statement firstStatement(final MethodDeclaration ¢) {
-    return first(statements(¢));
+    return the.first(statements(¢));
   }
 
   default Statement secondStatement(final MethodDeclaration ¢) {
-    return second(statements(¢));
+    return the.second(statements(¢));
   }
 
   default boolean safeEquals(final Object o1, final Object o2) {

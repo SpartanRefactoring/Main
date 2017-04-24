@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import nano.ly.*;
 
 // TOOD Niv: Who wrote this class?
 final class FactorsCollector {
@@ -61,8 +62,8 @@ final class FactorsCollector {
     assert !isLeafFactor(¢);
     assert iz.infixDivide(¢);
     final List<Expression> $ = hop.operands(¢);
-    addMultiplierFactor(core(first($)));
-    return collectDividersFactors(rest($));
+    addMultiplierFactor(core(the.first($)));
+    return collectDividersFactors(the.rest($));
   }
 
   private Void addDivide(final Expression x) {
@@ -109,8 +110,8 @@ final class FactorsCollector {
   private Void collectDividePrefixDivideExprssion(final InfixExpression ¢) {
     assert ¢ != null;
     final List<Expression> $ = hop.operands(¢);
-    collectDividerFactor(core(first($)));
-    return collectMultiplierFactors(rest($));
+    collectDividerFactor(core(the.first($)));
+    return collectMultiplierFactors(the.rest($));
   }
 
   private Void collectDividePrefixTimesExpression(final InfixExpression ¢) {

@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** As per {@link Issue1008}
  * @author Yossi Gil
@@ -33,7 +34,7 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
   }
 
   @Override public Tip tip(final MethodDeclaration ¢) {
-    return tip(first(statements(¢)));
+    return tip(the.first(statements(¢)));
   }
 
   private static Tip tip(final Statement s) {

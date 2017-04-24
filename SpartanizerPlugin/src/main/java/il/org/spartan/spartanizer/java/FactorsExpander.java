@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import nano.ly.*;
 
 /** Expands terms of * or / expressions without reordering.
  * <p>
@@ -52,9 +53,9 @@ enum FactorsExpander {
   private static Expression base(final List<Factor> fs) {
     assert fs != null;
     assert !fs.isEmpty();
-    final Factor first = first(fs);
+    final Factor first = the.first(fs);
     assert first != null;
-    final Factor second = second(fs);
+    final Factor second = the.second(fs);
     assert second != null;
     final Expression $ = base(first, second);
     assert $ != null;
@@ -83,7 +84,7 @@ enum FactorsExpander {
     final Operator o = $.getOperator();
     assert o != null;
     assert o == TIMES || o == DIVIDE;
-    final Factor first = first(fs);
+    final Factor first = the.first(fs);
     assert first != null;
     return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), chop(fs));
   }

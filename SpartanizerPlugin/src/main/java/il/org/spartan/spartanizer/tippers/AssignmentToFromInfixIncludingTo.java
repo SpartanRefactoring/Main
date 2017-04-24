@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Replace {@code x = x # a } by {@code x #= a } where # can be any operator.
  * Tested in {@link Issue103}
@@ -38,12 +39,12 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
   }
 
   private static List<Expression> dropFirstIfSame(final Expression ¢, final List<Expression> xs) {
-    return !eq(¢, first(xs)) ? null : chop(new ArrayList<>(xs));
+    return !eq(¢, the.first(xs)) ? null : chop(new ArrayList<>(xs));
   }
 
   private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
     final List<Expression> es = hop.operands(x), $ = !op.nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
-    return $ == null ? null : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(operator(x));
+    return $ == null ? null : $.size() == 1 ? copy.of(the.first($)) : subject.operands($).to(operator(x));
   }
 
   private static ASTNode replacement(final Expression to, final InfixExpression from) {

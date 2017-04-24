@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Replace {@code X-0} by {@code X} and {@code 0-X} by {@code -X}
  * @author Alex Kopzon
@@ -26,7 +27,7 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   private static final long serialVersionUID = -0x1DD7EC059CC8417AL;
 
   private static List<Expression> minusFirst(final List<Expression> prune) {
-    return cons(make.minus(first(prune)), chop(prune));
+    return cons(make.minus(the.first(prune)), chop(prune));
   }
 
   private static List<Expression> prune(final Collection<Expression> ¢) {
@@ -38,12 +39,12 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     final List<Expression> $ = prune(xs);
     if ($ == null)
       return null;
-    final Expression first = first(xs);
+    final Expression first = the.first(xs);
     if ($.isEmpty())
       return make.from(first).literal(0);
     assert !$.isEmpty();
     if ($.size() == 1)
-      return !iz.literal0(first) ? first : make.minus(first($));
+      return !iz.literal0(first) ? first : make.minus(the.first($));
     assert $.size() >= 2;
     return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }

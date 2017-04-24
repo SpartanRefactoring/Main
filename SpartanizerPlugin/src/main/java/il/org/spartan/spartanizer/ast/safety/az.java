@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import static il.org.spartan.idiomatic.*;
-import static il.org.spartan.utils.Unbox.*;
+import static nano.ly.Unbox.*;
+import static nano.ly.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -16,6 +16,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import nano.ly.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -591,7 +592,7 @@ public enum az {
   }
 
   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
-    return az.variableDeclarationExpression(first(initializers($)));
+    return az.variableDeclarationExpression(the.first(initializers($)));
   }
 
   /** @param ¢ JD

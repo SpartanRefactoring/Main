@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.idiomatic.*;
+import static nano.ly.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static java.util.stream.Collectors.*;
@@ -215,7 +215,7 @@ public enum extract {
       case 0:
         return null;
       case 1:
-        return first($);
+        return the.first($);
       default:
         return ¢;
     }
@@ -481,7 +481,7 @@ public enum extract {
   }
 
   private static Expression onlyExpression(final List<Expression> $) {
-    return core(onlyOne($));
+    return core(the.onlyOne($));
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
@@ -489,7 +489,7 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {
-    return lisp.onlyOne(fragments(¢)).getName();
+    return the.onlyOne(fragments(¢)).getName();
   }
 
   /** Finds the expression returned by a return statement
@@ -532,7 +532,7 @@ public enum extract {
    * @return if b is a block with just 1 statement it returns that statement, if
    *         b is statement it returns b and if b is null it returns a null */
   public static Statement singleStatement(final ASTNode ¢) {
-    return onlyOne(extract.statements(¢));
+    return the.onlyOne(extract.statements(¢));
   }
 
   /** Finds the single statement in the "then" branch of an {@link IfStatement}

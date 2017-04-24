@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import nano.ly.*;
 
 /** Find if(X == null) return null; <br>
  * Find if(null == X) return null; <br>
@@ -49,9 +50,9 @@ public final class WhenHoldsOn<N extends ASTNode> extends NanoPatternTipper<N> {
         r.replace(¢,
             make.ast("holds(" + notation.cent + " ->"
                 + (differsInSingleAtomic(branchesExpressions(¢))
-                    ? replaceAll(first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), notation.cent) + ")"
+                    ? replaceAll(the.first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), notation.cent) + ")"
                         + createOns(singleAtomicDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢)
-                    : replaceAll(first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", notation.cent) + ")"
+                    : replaceAll(the.first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", notation.cent) + ")"
                         + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢))),
             g);
       }

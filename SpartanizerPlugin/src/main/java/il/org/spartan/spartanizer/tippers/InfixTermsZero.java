@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Replace {@code 0+X}, {@code X+0}
  * @author Alex Kopzon
@@ -28,7 +29,7 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
 
   private static ASTNode replacement(final List<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
-    return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(first(¢)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(PLUS);
+    return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(the.first(¢)) : $.size() == 1 ? copy.of(the.first($)) : subject.operands($).to(PLUS);
   }
 
   @Override public String description(final InfixExpression ¢) {

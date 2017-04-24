@@ -20,6 +20,7 @@ import il.org.spartan.athenizer.SingleFlater.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Listener for code inflation/deflation using mouse and CTRL key.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
@@ -96,14 +97,14 @@ public class InflaterListener implements KeyListener, Listener {
 
   private void inflate() {
     text.setSelectionBackground(INFLATE_COLOR.apply(Display.getCurrent()));
-    final WrappedCompilationUnit wcu = first(selection.inner).build();
+    final WrappedCompilationUnit wcu = the.first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
   }
 
   private void deflate() {
     text.setSelectionBackground(DEFLATE_COLOR.apply(Display.getCurrent()));
-    final WrappedCompilationUnit wcu = first(selection.inner).build();
+    final WrappedCompilationUnit wcu = the.first(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
   }

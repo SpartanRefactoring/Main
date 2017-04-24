@@ -9,6 +9,7 @@ import java.util.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import nano.ly.*;
 
 /** Created by yogi on 10/02/17. */
 @SuppressWarnings({ "javadoc", "static-method" })
@@ -79,7 +80,7 @@ public class idiomaticTest {
     before.add("2");
     before.add("3");
     final List<String> after = idiomatic.on(before).map(this::mapper);
-    azzert.that(first(after), is("11"));
+    azzert.that(the.first(after), is("11"));
     azzert.that(after.get(1), is("22"));
     azzert.that(after.get(2), is("33"));
   }
@@ -90,7 +91,7 @@ public class idiomaticTest {
     before.add(2);
     before.add(3);
     final List<String> after = idiomatic.on(before).map(this::mapper);
-    azzert.that(first(after), is("1"));
+    azzert.that(the.first(after), is("1"));
     azzert.that(after.get(1), is("2"));
     azzert.that(after.get(2), is("3"));
   }
@@ -101,7 +102,7 @@ public class idiomaticTest {
     before.add(2);
     before.add(3);
     final List<Integer> after = idiomatic.on(before).filter(λ -> λ % 2 == 1);
-    azzert.that(first(after).intValue(), is(1));
+    azzert.that(the.first(after).intValue(), is(1));
     azzert.that(after.get(1).intValue(), is(3));
   }
 

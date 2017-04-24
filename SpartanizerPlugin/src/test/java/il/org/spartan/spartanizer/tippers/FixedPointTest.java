@@ -36,9 +36,9 @@ public final class FixedPointTest {
       fail("Nothing done on " + from);
     final String peeled = u.off(unpeeled);
     if (peeled.equals(from))
-      assertNotEquals("No similification of " + from, from, peeled);
+      azzert.assertNotEquals("No similification of " + from, from, peeled);
     if (tide.clean(peeled).equals(tide.clean(from)))
-      assertNotEquals("Simpification of " + from + "is just reformatting", tide.clean(peeled), tide.clean(from));
+      azzert.assertNotEquals("Simpification of " + from + "is just reformatting", tide.clean(peeled), tide.clean(from));
     assertSimilar(expected, peeled);
   }
 

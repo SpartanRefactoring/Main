@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Converts {@code if (X) { foo(); bar(); } else { foo(); baz(); } } into
  * {@code
@@ -36,8 +37,8 @@ public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = an.empty.list();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(0)) {
-      final Statement s1 = first(ss1);
-      if (!wizard.eq(s1, first(ss2)))
+      final Statement s1 = the.first(ss1);
+      if (!wizard.eq(s1, the.first(ss2)))
         break;
       $.add(s1);
       ss1.remove(0);

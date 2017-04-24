@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Remove curly braces from a lambda expression if and only if toList its body
  * has only one statement.
@@ -32,9 +33,9 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
   }
 
   public static ASTNode replacement(final LambdaExpression x, final ASTRewrite r, final TextEditGroup g) {
-    if (onlyOne(statements(body(x))) == null)
+    if (the.onlyOne(statements(body(x))) == null)
       return null;
-    final Statement s = first(statements(x));
+    final Statement s = the.first(statements(x));
     final LambdaExpression $ = x.getAST().newLambdaExpression();
     parameters(x).forEach(λ -> r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast(λ, g));
     r.replace(body($), iz.expressionStatement(s) ? expression(s)
@@ -50,8 +51,8 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
   @Override protected boolean prerequisite(final LambdaExpression ¢) {
     return !iz.expression(body(¢))//
         && !iz.methodInvocation(body(¢))//
-        && onlyOne(statements(¢)) != null//
-        && iz.expressionStatement(onlyOne(statements(¢)))//
-        || iz.returnStatement(onlyOne(statements(¢)));
+        && the.onlyOne(statements(¢)) != null//
+        && iz.expressionStatement(the.onlyOne(statements(¢)))//
+        || iz.returnStatement(the.onlyOne(statements(¢)));
   }
 }

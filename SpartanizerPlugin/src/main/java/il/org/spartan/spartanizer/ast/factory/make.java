@@ -31,6 +31,8 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
+import nano.ly.the.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -152,7 +154,7 @@ public enum make {
       case STATEMENTS_LOOK_ALIKE:
         return into.s(javaSnippet);
       case BLOCK_LOOK_ALIKE:
-        return az.astNode(first(statements(az.block(into.s(javaSnippet)))));
+        return az.astNode(the.first(statements(az.block(into.s(javaSnippet)))));
       default:
         for (final int guess : as.intArray(ASTParser.K_EXPRESSION, ASTParser.K_STATEMENTS, ASTParser.K_CLASS_BODY_DECLARATIONS,
             ASTParser.K_COMPILATION_UNIT)) {
@@ -172,7 +174,7 @@ public enum make {
       return s;
     final Block $ = subject.statement(s).toBlock();
     r.replace(s, $, g);
-    return (IfStatement) first(statements($));
+    return (IfStatement) the.first(statements($));
   }
 
   /** Swap the order of the left and right operands to an expression, changing
@@ -259,11 +261,11 @@ public enum make {
 
   static Expression infix(final List<Expression> xs, final AST t) {
     if (xs.size() == 1)
-      return first(xs);
+      return the.first(xs);
     final InfixExpression $ = t.newInfixExpression();
     $.setOperator(op.PLUS2);
-    $.setLeftOperand(copy.of(first(xs)));
-    $.setRightOperand(copy.of(second(xs)));
+    $.setLeftOperand(copy.of(the.first(xs)));
+    $.setRightOperand(copy.of(the.second(xs)));
     for (int ¢ = 2;; ++¢, extendedOperands($).add(copy.of(xs.get(¢)))) // NANO
       if (¢ >= xs.size())
         return $;
@@ -293,8 +295,8 @@ public enum make {
 
   static List<Expression> minus(final List<Expression> ¢) {
     final List<Expression> $ = an.empty.list();
-    $.add(first(¢));
-    $.addAll(az.stream(rest(¢)).map(make::minusOf).collect(toList()));
+    $.add(the.first(¢));
+    $.addAll(az.stream(the.rest(¢)).map(make::minusOf).collect(toList()));
     return $;
   }
 
@@ -371,7 +373,7 @@ public enum make {
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = wizard.sequencerRank(last(then)), rankElse = wizard.sequencerRank(last(elze));
+    final int rankThen = wizard.sequencerRank(the.last(then)), rankElse = wizard.sequencerRank(the.last(elze));
     return rankElse > rankThen || rankThen == rankElse && !misc.thenIsShorter(s) ? $ : main;
   }
 
@@ -404,7 +406,7 @@ public enum make {
   public static VariableDeclarationExpression variableDeclarationExpression(final VariableDeclarationStatement ¢) {
     if (¢ == null)
       return null;
-    final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(first(fragments(copy.of(¢)))));
+    final VariableDeclarationExpression $ = ¢.getAST().newVariableDeclarationExpression(copy.of(the.first(fragments(copy.of(¢)))));
     fragments($).addAll(extract.nextFragmentsOf(¢));
     $.setType(copy.of(step.type(¢)));
     extendedModifiers($).addAll(az.modifiersOf(¢));

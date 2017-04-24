@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** A {@link Tipper} which represents a NanoPattern.
  * @author Ori Marcovitch
@@ -38,15 +39,15 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
   }
 
   public static <N extends ASTNode> String firstPattern(final List<UserDefinedTipper<N>> ¢) {
-    return first(¢).pattern().replaceAll("\\$", "");
+    return the.first(¢).pattern().replaceAll("\\$", "");
   }
 
   public static <N extends ASTNode> String firstReplacement(final List<UserDefinedTipper<N>> ¢) {
-    return first(¢).replacement().replaceAll("\\$", "");
+    return the.first(¢).replacement().replaceAll("\\$", "");
   }
 
   public static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final List<UserDefinedTipper<N>> ¢) {
-    return first(¢);
+    return the.first(¢);
   }
 
   protected static Block containingBlock(final ASTNode ¢) {

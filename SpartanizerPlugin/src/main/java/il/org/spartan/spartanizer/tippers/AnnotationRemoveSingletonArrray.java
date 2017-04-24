@@ -9,6 +9,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Use {@link #examples()} for documentation
  * @author Yossi Gil
@@ -31,7 +32,7 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
   }
 
   @Override public ASTNode replacement(final SingleMemberAnnotation a) {
-    final Expression x = lisp.onlyOne(expressions(az.arrayInitializer(a.getValue())));
+    final Expression x = the.onlyOne(expressions(az.arrayInitializer(a.getValue())));
     if (x == null)
       return null;
     final SingleMemberAnnotation $ = copy.of(a);

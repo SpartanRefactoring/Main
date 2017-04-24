@@ -135,7 +135,7 @@ public interface hop {
   }
 
   static VariableDeclarationFragment previous(final Statement ¢) {
-    return first(fragments(az.variableDeclrationStatement(previousStatementInBody(¢))));
+    return the.first(fragments(az.variableDeclrationStatement(previousStatementInBody(¢))));
   }
 
   static SimpleName simpleName(final Type ¢) {

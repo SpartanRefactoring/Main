@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Replace {@code s.equals("s")} by {@code "s".equals(s)}
  * @author Ori Roth
@@ -29,14 +30,14 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
   }
 
   @Override public String description(final MethodInvocation ¢) {
-    return "Write " + first(arguments(¢)) + "." + name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
+    return "Write " + the.first(arguments(¢)) + "." + name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {
     final SimpleName $ = name(i);
     if (!mns.contains($ + ""))
       return null;
-    final Expression ¢ = onlyOne(arguments(i));
+    final Expression ¢ = the.onlyOne(arguments(i));
     if (!(¢ instanceof StringLiteral))
       return null;
     final Expression e = receiver(i);

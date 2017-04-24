@@ -9,6 +9,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import nano.ly.*;
 
 /** Like {@link NotNullAssumed} but in the beginning of a method.
  * @author orimarco {@code marcovitch.ori@gmail.com}
@@ -18,6 +19,6 @@ public final class NotNullRequired extends NotNullAssumed {
 
   @Override public boolean canTip(final IfStatement ¢) {
     return nullCheck(expression(¢))//
-        && first(statements(az.methodDeclaration(parent(parent(¢))))) == ¢;
+        && the.first(statements(az.methodDeclaration(parent(parent(¢))))) == ¢;
   }
 }

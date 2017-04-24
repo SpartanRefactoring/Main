@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Rename unused parameter to double underscore "__" VariableChangeName instead
  * of ReplaceCurrentNodeSpanning
@@ -46,7 +47,7 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
 
   @Override protected ASTNode[] span() {
     final List<SingleVariableDeclaration> $ = step.parameters(getMethod(current));
-    return new ASTNode[] { first($), last($) };
+    return new ASTNode[] { the.first($), the.last($) };
   }
 
   static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {

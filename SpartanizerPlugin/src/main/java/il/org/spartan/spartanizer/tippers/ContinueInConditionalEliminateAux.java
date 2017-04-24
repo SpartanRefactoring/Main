@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Auxilary class for all tippers toList Issue #1014
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
@@ -27,10 +28,10 @@ enum ContinueInConditionalEliminateAux {
     final IfStatement continueStatement = az.ifStatement($.get($.size() - 2));
     if (continueStatement == null || !iz.continueStatement(continueStatement.getThenStatement()))
       return null;
-    final IfStatement replacementIf = subject.pair(last($), null).toNot(continueStatement.getExpression());
+    final IfStatement replacementIf = subject.pair(the.last($), null).toNot(continueStatement.getExpression());
     return new Tip("Eliminate conditional continue before last statement in the for loop", c, s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.remove(last($), g);
+        r.remove(the.last($), g);
         r.replace(continueStatement, replacementIf, g);
       }
     };

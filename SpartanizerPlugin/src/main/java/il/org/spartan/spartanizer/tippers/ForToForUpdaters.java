@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** See {@link #description()}
  * @author Alex Kopzon
@@ -73,7 +74,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
   }
 
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
-    return fragments(az.variableDeclarationExpression(first(initializers(s)))).stream().anyMatch(λ -> (name(λ) + "").equals(n + ""));
+    return fragments(az.variableDeclarationExpression(the.first(initializers(s)))).stream().anyMatch(λ -> (name(λ) + "").equals(n + ""));
   }
 
   private static Expression updaterFromBody(final ForStatement ¢) {

@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import nano.ly.*;
 
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil
@@ -35,7 +36,7 @@ public enum TermsReorganizer {
   }
 
   private static Expression buildMinus(final List<Expression> ¢) {
-    final Expression $ = subject.operand(first(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
+    final Expression $ = subject.operand(the.first(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
     if (¢.size() == 1)
       return $;
     ¢.remove(0);
@@ -48,9 +49,9 @@ public enum TermsReorganizer {
       case 0:
         return null;
       case 1:
-        return first(¢);
+        return the.first(¢);
       case 2:
-        return subject.pair(first(¢), second(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
+        return subject.pair(the.first(¢), the.second(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
       default:
         return subject.operands(¢).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
     }

@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** An expander to extract complex arguments from {@link Statement}: {@code
  * f(1 + a[b ? 1 : 2]);
@@ -236,7 +237,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
 
   private static Expression choose(final List<Expression> ¢) {
-    return onlyOne(¢);
+    return the.onlyOne(¢);
   }
 
   // TODO Ori Roth: move class to utility file

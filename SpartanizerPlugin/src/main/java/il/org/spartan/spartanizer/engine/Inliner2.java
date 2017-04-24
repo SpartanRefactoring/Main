@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Encapsulates the operation of replacing a variable with an expression in a
  * certain location.
@@ -196,7 +197,7 @@ public final class Inliner2 {
             THIS_EXPRESSION, //
             TYPE_LITERAL))
           return true;
-        final SimpleName occurrence = lisp.onlyOne(occurrences);
+        final SimpleName occurrence = the.onlyOne(occurrences);
         if (occurrence == null)
           return false;
         switch (Coupling.of(occurrence).withRespectTo(commonAncestor(occurrence, with))) {
