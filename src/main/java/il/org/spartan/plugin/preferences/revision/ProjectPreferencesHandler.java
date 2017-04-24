@@ -157,8 +157,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       }
     });
     $.setTitle("Spartanization Preferences");
-    $.setMessage("Choose the tippers you would like to use:");
-    $.setEmptyListMessage("No tippers available...");
+    $.setMessage("Choose the tippers you would like to use:\n(Tip: double click a tipper to see usage examples)");
+    $.setEmptyListMessage("No tippers available... something went totally wrong!");
     $.setContainerMode(true);
     $.setInput(new Object()); // vio: very important object
     final Collection<SpartanElement> et = an.empty.list();
@@ -289,8 +289,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * @param converter Example --> String converter
    * @return unified examples string */
   static String getPreviewString(final Examples preview, final Function<Example, Boolean> filter, final Function<Example, String> converter) {
-    if (preview == null)
-      return null;
+    if (preview == null || StreamSupport.stream(preview.spliterator(), false).filter(λ -> filter.apply(λ).booleanValue()).count() == 0)
+      return "[no available examples]";
     final StringBuilder $ = new StringBuilder();
     int c = 1;
     for (final Example ¢ : preview)

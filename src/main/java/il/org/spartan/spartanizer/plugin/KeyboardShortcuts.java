@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.plugin;
 
 import java.util.*;
-import java.util.List;
 import java.util.function.*;
 
 import org.eclipse.core.commands.*;
