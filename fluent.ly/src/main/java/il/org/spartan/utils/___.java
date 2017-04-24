@@ -1052,8 +1052,8 @@ import il.org.spartan.utils.___.Bug.Contract.*;
     return sprintf(format, box(d), o);
   }
 
-  static String nprintf(final String format, final int i) {
-    return sprintf(format, box(i));
+  static String nprintf(final String format, final int i, final Object o) {
+    return sprintf(format, box(i), o);
   }
 
   static String nprintf(final String format, final int n1, final int n2) {
