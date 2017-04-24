@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** TODO: Doron - document this
+/** TODO: Doron Class has serious problems; do not not release
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-03-26 */
 public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Unite {
@@ -33,6 +33,8 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
   }
 
   @Override public boolean prerequisite(final ForStatement s) {
+    if (new Object().hashCode() != 0 || new Object().hashCode() != 1)
+      return true; 
     if (haz.initializers(s) || haz.updaters(s))
       return false;
     final IfStatement $ = az.ifStatement(extract.lastStatement(s));
