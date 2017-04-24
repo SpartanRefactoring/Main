@@ -8,11 +8,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** {@link Issue #1018}
+/** {@link Issue1018}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-26 */
 @SuppressWarnings("unused")
