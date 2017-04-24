@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 /** encapsulates elements of the __ parameter, to be organizable in a
  * hierarchical structure

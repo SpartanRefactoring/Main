@@ -1,7 +1,5 @@
 package nano.ly;
 
-import static il.org.spartan.lisp.*;
-
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like
  * a sentence phrase.
@@ -21,7 +19,7 @@ public interface cCamelCase {
   }
 
   static boolean usefulTypeName(final String typeName) {
-    return typeName.length() > 1 || !Character.isUpperCase(first(typeName));
+    return typeName.length() > 1 || !Character.isUpperCase(the.first(typeName));
   }
 
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";

@@ -1,7 +1,5 @@
 package il.org.spartan.utils;
 
-import il.org.spartan.utils.Reduce;
-
 /** Reducer that concatenate strings
  * @author Yossi Gil
  * @since 2017-03-19 */

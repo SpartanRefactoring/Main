@@ -1,7 +1,5 @@
 package nano.ly;
 
-import static il.org.spartan.lisp.*;
-
 import java.text.*;
 import java.util.*;
 import java.util.function.*;
@@ -51,7 +49,7 @@ public interface English {
 
   static String indefinite(final String className) {
     final String $ = cCamelCase.components(className)[0];
-    final char openingLetter = first($);
+    final char openingLetter = the.first($);
     return isAcronym($) ? indefinite(pronounce(openingLetter)) : //
         (Utils.intIsIn(openingLetter, 'i', 'e', 'o', 'u', 'y') ? "an" : "a") + " " + className;
   }
@@ -65,7 +63,7 @@ public interface English {
    * @return a linguistic list of the items */
   static String list(final List<String> ¢) {
     return ¢ == null || ¢.isEmpty() ? "nothing"
-        : ¢.size() == 1 ? first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + last(¢);
+        : ¢.size() == 1 ? the.first(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + the.last(¢);
   }
 
   static String lowerFirstLetter(final String input) {

@@ -1,7 +1,5 @@
 package il.org.spartan.utils;
 
-import il.org.spartan.utils.Outer;
-
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-03-21 */

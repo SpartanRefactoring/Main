@@ -9,8 +9,6 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.Tab;
-import il.org.spartan.utils.___;
 
 /** Prefix text with varying indentation level. Class can be used for an
  * indented printout of a hierarchical tree data structure, e.g.,:

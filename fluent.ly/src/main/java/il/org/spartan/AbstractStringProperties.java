@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.jetbrains.annotations.*;
 
+import nano.ly.*;
+
 /** @author Yossi Gil
  * @since Apr 8, 2012 */
 public abstract class AbstractStringProperties {

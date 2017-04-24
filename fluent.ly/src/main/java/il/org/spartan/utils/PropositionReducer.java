@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.function.*;
 
-import il.org.spartan.utils.Proposition;
-import il.org.spartan.utils.Reduce;
 import il.org.spartan.utils.Proposition.*;
 
 /** TODO Yossi Gil: document class

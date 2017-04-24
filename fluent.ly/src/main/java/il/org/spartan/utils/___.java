@@ -1,7 +1,7 @@
 package il.org.spartan.utils;
 
 import static il.org.spartan.strings.StringUtils.*;
-import static il.org.spartan.utils.Box.*;
+import static nano.ly.Box.*;
 import static org.junit.Assert.*;
 
 import java.util.*;
@@ -9,8 +9,6 @@ import java.util.*;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.STOP;
-import il.org.spartan.utils.___;
 import il.org.spartan.utils.___.Bug.*;
 import il.org.spartan.utils.___.Bug.Assertion.*;
 import il.org.spartan.utils.___.Bug.Assertion.Value.*;

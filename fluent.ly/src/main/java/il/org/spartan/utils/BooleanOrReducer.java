@@ -1,7 +1,5 @@
 package il.org.spartan.utils;
 
-import il.org.spartan.utils.Reduce;
-
 /** Boolean or reducer
  * @author oran1248
  * @since 2017-04-20 */

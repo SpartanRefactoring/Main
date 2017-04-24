@@ -1,7 +1,5 @@
 package il.org.spartan.utils;
 
-import il.org.spartan.utils.Reduce;
-
 /** Return the first element that is not null
  * @author oran1248
  * @since 2017-04-20 */
