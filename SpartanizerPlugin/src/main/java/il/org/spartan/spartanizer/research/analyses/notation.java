@@ -14,7 +14,7 @@ public interface notation {
   String it = "it"; //
   String lambda = "λ"; //
   String return¢ = "$"; //
-  public String[] specials = { forbidden, return¢, anonymous, cent, lambda, it };
+  String[] specials = { forbidden, return¢, anonymous, cent, lambda, it };
 
   static boolean isSpecial(final SimpleName $) {
     return isSpecial($.getIdentifier());

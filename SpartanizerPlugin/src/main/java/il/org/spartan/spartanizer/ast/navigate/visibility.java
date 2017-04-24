@@ -6,8 +6,8 @@ import org.eclipse.jdt.core.dom.*;
  * @author Yossi Gil
  * @since 2017-04-22 */
 public interface visibility {
-  static int of(final BodyDeclaration d) {
-    final int m = d.getModifiers();
-    return Modifier.isPublic(m) ? 4 : Modifier.isProtected(m) ? 3 : Modifier.isPrivate(m) ? 1 : 2;
+  static int of(final BodyDeclaration ¢) {
+    final int $ = ¢.getModifiers();
+    return Modifier.isPublic($) ? 4 : Modifier.isProtected($) ? 3 : Modifier.isPrivate($) ? 1 : 2;
   }
 }
