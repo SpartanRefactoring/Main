@@ -94,10 +94,10 @@ public interface lisp {
    * @param index the index that should be replaced
    * @return the list after the replacement */
   @Contract("null, _, _ -> null") @Nullable static <T> List<T> replace(@Nullable final List<T> ts, final T element, final int index) {
-    if (ts != null && index >= 0 && index < ts.size()) {
-      ts.remove(index);
-      ts.add(index, element);
-    }
+    if (ts == null || index < 0 || index >= ts.size())
+      return ts;
+    ts.remove(index);
+    ts.add(index, element);
     return ts;
   }
 

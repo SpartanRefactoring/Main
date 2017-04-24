@@ -200,10 +200,7 @@ public final class JVM {
     }
 
     @NotNull public static String format(@NotNull final MemoryManagerMXBean ¢) {
-      return new StringBuffer().append(¢.getName()) //
-          .append(¢.isValid() ? "" : "/invalid") //
-          .append("(").append(Separate.by(¢.getMemoryPoolNames(), ",")).append(")") //
-          + "";
+      return ¢.getName() + (¢.isValid() ? "" : "/invalid") + "(" + Separate.by(¢.getMemoryPoolNames(), ",") + ")";
     }
   }
 
