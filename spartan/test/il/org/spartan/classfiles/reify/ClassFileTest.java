@@ -860,7 +860,8 @@ import nano.ly.*;
     Stopper s = new Stopper();
 
     @Override public String toString() {
-      return String.format("Processed %s files, consisting of %s methods with %s code blocks\n" + "comprising a total of %s bytecode instructions in %s.",
+      return String.format(
+          "Processed %s files, consisting of %s methods with %s code blocks\n" + "comprising a total of %s bytecode instructions in %s.",
           Unit.INTEGER.format(nFiles), Unit.INTEGER.format(nMethods), Unit.INTEGER.format(nCodes), Unit.INTEGER.format(nInstructions),
           Unit.NANOSECONDS.format(s.time())) + "";
     }

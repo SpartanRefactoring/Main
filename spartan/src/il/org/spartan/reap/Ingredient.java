@@ -3,7 +3,6 @@ package il.org.spartan.reap;
 
 import org.eclipse.jdt.annotation.*;
 
-import il.org.spartan.*;
 import nano.ly.*;
 
 /** cell which does not depend on others

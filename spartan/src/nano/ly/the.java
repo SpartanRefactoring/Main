@@ -1,7 +1,5 @@
 package nano.ly;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.annotation.Nullable;
@@ -98,11 +96,11 @@ public interface the {
       {
         $.next();
       }
-  
+
       @Override public boolean hasNext() {
         return $.hasNext();
       }
-  
+
       @Override public T next() {
         return $.next();
       }

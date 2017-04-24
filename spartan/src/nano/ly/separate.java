@@ -13,9 +13,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
-import il.org.spartan.Utils.*;
 import il.org.spartan.iterables.*;
-import nano.ly.*;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this

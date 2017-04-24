@@ -2,7 +2,6 @@ package il.org.spartan.utils;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.*;
 import il.org.spatan.iteration.*;
 import nano.ly.*;
 

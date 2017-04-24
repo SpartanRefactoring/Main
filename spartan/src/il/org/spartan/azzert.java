@@ -210,8 +210,6 @@ public class azzert extends org.junit.Assert {
     assertThat("", o1, CoreMatchers.not(o2));
   }
 
-
-
   public static void assertNotEquals(final String message, @NotNull final Object o1, final Object o2) {
     assert !o1.equals(o2);
   }
