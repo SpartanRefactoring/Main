@@ -11,6 +11,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.*;
+import nano.ly.*;
 
 /** A trivial utility module with functions to scatter a text into an array of
  * lines, and, conversely, gather an array of lines into text. Scattering and

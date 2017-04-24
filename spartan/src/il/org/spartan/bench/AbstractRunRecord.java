@@ -1,6 +1,7 @@
 package il.org.spartan.bench;
 
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 public class AbstractRunRecord {
   protected int runs;

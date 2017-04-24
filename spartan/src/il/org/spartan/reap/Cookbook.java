@@ -3,8 +3,8 @@ package il.org.spartan.reap;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.max;
+import static nano.ly.idiomatic.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -16,6 +16,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.reap.Cookbook.Internal.*;
 import il.org.spartan.reap.Cookbook.Recipe.*;
+import nano.ly.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Cell}s. A {@link Cell} is either an

@@ -4,8 +4,8 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
 import static il.org.spartan.strings.StringUtils.*;
-import static il.org.spartan.utils.Box.*;
 import static il.org.spartan.utils.___.*;
+import static nano.ly.Box.*;
 
 import java.io.*;
 import java.util.*;
