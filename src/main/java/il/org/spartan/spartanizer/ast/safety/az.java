@@ -223,7 +223,7 @@ public enum az {
     return ¢ == null || !iz.continueStatement(¢) ? null : (ContinueStatement) ¢;
   }
 
-  static DoStatement doStatement(final ASTNode $) {
+  public static DoStatement doStatement(final ASTNode $) {
     return !iz.nodeTypeEquals($, DO_STATEMENT) ? null : (DoStatement) $;
   }
 
