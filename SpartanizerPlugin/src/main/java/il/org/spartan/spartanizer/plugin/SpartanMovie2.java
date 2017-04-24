@@ -2,22 +2,30 @@ package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import java.rmi.activation.*;
 import java.util.List;
 
 import org.eclipse.core.commands.*;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.internal.content.Activator;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jface.dialogs.*;
+import org.eclipse.jface.resource.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
+import org.eclipse.ui.commands.*;
 import org.eclipse.ui.ide.*;
+import org.eclipse.ui.progress.*;
+
 import il.org.spartan.plugin.old.*;
 import nano.ly.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.
+ * @author Ori Roth
  * @author Matteo Orru'
  * @since 2016 */
 @SuppressWarnings("all")
@@ -27,41 +35,132 @@ public class SpartanMovie2 extends AbstractHandler {
   private static final double SLEEP_END = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    Job job = new Job("About to say hello") {
-      protected IStatus run(IProgressMonitor m) {
+    
+     final IWorkbench workbench = PlatformUI.getWorkbench();
+     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
+     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
+     final IWorkbenchPage page = window == null ? null : window.getActivePage();
+     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
+     final GUITraversal traversal = new GUITraversal();
+     if (compilationUnits == null || page == null || progressService == null) return null;
+    
+    Job job = new Job(NAME) {
+      protected IStatus run(IProgressMonitor monitor) {
+//          monitor.beginTask("Preparing", 5000);
+          monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
+          int changes = 0, filesModified = 0;
+          for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
+            System.out.println(currentCompilationUnit.getElementName());
+            mightNotBeSlick(page);
+            final IResource file = currentCompilationUnit.getResource();
+            try {
+              IMarker[] markers = getMarkers(file);
+              if (markers.length > 0)
+                ++filesModified;
+                for (; markers.length > 0; markers = getMarkers(file)) {
+                  final IMarker marker = getFirstMarker(markers);
+                  monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
+                  marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+                  IDE.openEditor(page, marker, true);
+                  refresh(page);
+                  sleep(SLEEP_BETWEEN);
+                  traversal.runAsMarkerFix(marker);
+                  ++changes;
+                  marker.delete(); // TODO Ori Roth: does not seem to make a 
+                                   // difference
+                                   // actually it removes the markers after the traversal
+                                   // and avoid the infinite loop (it descreases markers.length at
+                                   // each round -- mo
+                  refresh(page);
+                  sleep(SLEEP_BETWEEN);
+                }
+              } catch (final CoreException ¢) {
+                note.bug(¢);
+              }
+           }
+           monitor.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
+           sleep(SLEEP_END);
+           monitor.done();
+           return Status.OK_STATUS;
+        
+          
+//          SubMonitor subMonitor = 
+//              SubMonitor.convert(monitor,"Prepring", 5000);
+//          subMonitor = null;
+//          for (int i = 0; i < 50 && !subMonitor.isCanceled(); i++) {
+//            if(i==0) {
+//              subMonitor.subTask("Doing something");
+//            } else if (i == 12) {
+//              checkDozen(new SubProgressMonitor(subMonitor, 100));            
+//            } else if (i == 25) {
+//              subMonitor.subTask("Doing something elese");
+//            } else if (i == 40) {
+//              subMonitor.subTask("Nearly there");
+//            }
+//            Thread.sleep(100);
+//            subMonitor.worked(100);
+//          }
+//        } catch (InterruptedException $) {
+//          note.bug($);
+//        } catch (NullPointerException $) {
+//          return new Status(IStatus.ERROR,
+//             org.eclipse.core.internal.runtime.Activator.PLUGIN_ID, "Programming bug?", $);          
+//        } finally {
+//          monitor.done();
+//        }
+//        // MessageDialog.openInformation(null, "Hello", "World");
+//        if (!monitor.isCanceled()) {
+//          Display.getDefault().asyncExec(new Runnable() {
+//            public void run() {
+//              MessageDialog.openInformation(null, "Hello", "World");
+//            }
+//          });
+//        }
+//        return Status.OK_STATUS;
+      }
+      
+      Boolean sleep(double howMuch) {
         try {
-          m.beginTask("Preparing", 5000);
-          for (int ¢ = 0; ¢ < 50 && !m.isCanceled(); ¢++) {
-            Thread.sleep(100);
-            m.worked(100);
+          Thread.sleep((int) (1000 * howMuch));
+          return true;
+        } catch (final InterruptedException ¢) {
+          note.bug(¢);
+          return false;
+        }
+      }
+
+      void checkDozen(IProgressMonitor m) {
+        if(m == null)
+          m = new NullProgressMonitor();
+        try {
+          m.beginTask("Checking a dozen", 12);
+          for (int ¢ = 0; ¢ < 12; ¢++) {
+            Thread.sleep(10);
+            m.worked(1);
           }
         } catch (InterruptedException ¢) {
-          note.bug(¢);
+           ¢.printStackTrace();
         } finally {
           m.done();
         }
-        // MessageDialog.openInformation(null, "Hello", "World");
-        if (!m.isCanceled())
-          Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-              MessageDialog.openInformation(null, "Hello", "World");
-            }
-          });
-        return Status.OK_STATUS;
       }
-    };
+    }; // end job
+    
+    
+    ICommandService service = (ICommandService) 
+        PlatformUI.getWorkbench().getService(ICommandService.class);
+    Command command = service == null ? null : 
+      service.getCommand("il.org.spartan.SpartanMovie");
+    if(command != null){
+      job.setProperty(IProgressConstants2.COMMAND_PROPERTY, 
+            ParameterizedCommand.generateCommand(command, null));
+      job.setProperty(IProgressConstants2.ICON_PROPERTY,
+          ImageDescriptor.createFromURL(SpartanMovie2.class.getResource("/icons/sample.gif")));
+      job.setProperty(IProgressConstants2.SHOW_IN_TASKBAR_ICON_PROPERTY,
+          Boolean.TRUE);
+    }
+    
     job.schedule();
-    // final IWorkbench workbench = PlatformUI.getWorkbench();
-    // final List<ICompilationUnit> compilationUnits = getCompilationUnits();
-    // final IWorkbenchWindow window = workbench == null ? null :
-    // workbench.getActiveWorkbenchWindow();
-    // final IWorkbenchPage page = window == null ? null :
-    // window.getActivePage();
-    // final IProgressService progressService = workbench == null ? null :
-    // workbench.getProgressService();
-    // final GUITraversal traversal = new GUITraversal();
-    // if (compilationUnits == null || page == null || progressService == null)
-    // return null;
     // try {
     //// progressService.run(false, true, pm -> {
     // progressService.runInUI(PlatformUI.getWorkbench().getProgressService(),
