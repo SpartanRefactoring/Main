@@ -33,7 +33,6 @@ public abstract class Traversal implements Selfie<Traversal> {
   public Configuration configuration = Configurations.allClone();
   /** A list of all listeners to actions carried out by this instance. */
   public final TraversalTappers notify = new TraversalTappers()//
-      .push(new TraversalMonitor(this)) //
       .push(new TraversalTapper() {
         @Override public void begin() {
           rewriteCount.clear();
@@ -97,7 +96,7 @@ public abstract class Traversal implements Selfie<Traversal> {
     return self(() -> range = ¢);
   }
 
-  public Tipper<?> tipper() {
+  public Tipper<? extends ASTNode> tipper() {
     return tipper;
   }
 

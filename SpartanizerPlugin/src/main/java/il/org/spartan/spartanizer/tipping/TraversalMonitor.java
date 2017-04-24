@@ -155,12 +155,7 @@ public class TraversalMonitor extends TraversalImplementation.__ implements Trav
   }
 
   @Override public void tipperRejects() {
-    // String explanation = self().tipper().explain(self().getNode());
-    // if (explanation == null)
     logger.log(FINER, "{0} rejects {1}", as.array(tipper(), node()));
-    // else
-    // logger.log(FINER, "{0} rejects {1}, explanation: {2}", as.array(tipper(),
-    // node(), explanation));
   }
 
   @Override public void tipperTip() {
