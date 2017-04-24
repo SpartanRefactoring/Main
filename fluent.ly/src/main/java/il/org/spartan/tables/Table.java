@@ -188,6 +188,6 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   static String classToNormalizedFileName(final String className) {
-    return separate.these(the.rest(as.iterable(cCamelCase.components(className)))).by('-').toLowerCase();
+    return separate.these(the.lastOf(as.iterable(cCamelCase.components(className)))).by('-').toLowerCase();
   }
 }

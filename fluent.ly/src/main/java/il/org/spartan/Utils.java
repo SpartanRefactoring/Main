@@ -549,11 +549,11 @@ public interface Utils {
    * test methods begin with the name of the method they check.
    * @author Yossi Gil
    * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings("static-method") class TEST {
+   @SuppressWarnings("static-method") class TEST {
     @NotNull public static Integer[] intToIntegers(@NotNull final int... is) {
       final Integer @NonNull [] $ = new Integer @NonNull [is.length];
       for (int ¢ = 0; ¢ < is.length; ++¢)
-        $[¢] = box.it(is[¢]);
+        $[¢] = nano.ly.box.it(is[¢]);
       return $;
     }
 

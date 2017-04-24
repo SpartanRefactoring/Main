@@ -151,7 +151,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void assertEquals(final int expected, final int actual) {
-    assertEquals(box.it(expected), box.it(actual));
+    assertEquals(nano.ly.box.it(expected), nano.ly.box.it(actual));
   }
 
   public static void assertEquals(final int a, final Integer b) {
@@ -175,7 +175,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void assertEquals(final String reason, final int i1, final int i2) {
-    assertThat(reason, box.it(i1), CoreMatchers.equalTo(box.it(i2)));
+    assertThat(reason, nano.ly.box.it(i1), CoreMatchers.equalTo(nano.ly.box.it(i2)));
   }
 
   public static void assertEquals(final String message, final int a, final Integer b) {
