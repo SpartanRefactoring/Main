@@ -25,7 +25,7 @@ public interface TipperCategory {
     }
   }
 
-  interface Annonimization extends Nominal {
+  interface Anonymization extends Nominal {
     String toString = "Unused arguments";
 
     @Override default String description() {

@@ -6,7 +6,7 @@ import il.org.spartan.plugin.widget.*;
  * @author tomerdragucki
  * @since 2017-04-24 */
 public class SpartanizationOperation extends WidgetOperation {
-  private static final long serialVersionUID = -4656510109908909403L;
+  private static final long serialVersionUID = -0x409F3F461222BD5BL;
 
   @Override public String imageURL() {
     return null;
