@@ -135,7 +135,7 @@ public abstract class Traversal implements Selfie<Traversal> {
     return editGroup;
   }
 
-  protected ASTNode getNode() {
+  public ASTNode getNode() {
     return node;
   }
 

@@ -88,6 +88,10 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
 
   public abstract Tip tip(N ¢);
 
+  @SuppressWarnings("unused") public String explain(N ¢) {
+    return null;
+  }
+
   public String tipperName() {
     return English.name(myClass());
   }

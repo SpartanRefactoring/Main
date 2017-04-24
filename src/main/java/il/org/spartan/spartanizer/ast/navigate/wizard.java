@@ -117,8 +117,8 @@ public interface wizard {
   Bool resolveBinding = Bool.valueOf(false);
   List<Integer> loopTypes = as.list(WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT);
 
-  static Expression addParenthesisIfNeeded(final Expression x) {
-    return !isParethesisNeeded(x) ? x : make.parethesized(x);
+  static Expression addParenthesisIfNeeded(final Expression ¢) {
+    return !isParethesisNeeded(¢) ? ¢ : make.parethesized(¢);
   }
 
   static Expression applyDeMorgan(final InfixExpression $) {
@@ -491,7 +491,7 @@ public interface wizard {
     return $ == null || $.getProblems().length == 0;
   }
 
-  public static boolean parenthesisRequiredIn(final Expression in, final ASTNode out) {
+  static boolean parenthesisRequiredIn(final Expression in, final ASTNode out) {
     return precedence.greater(out, in) || precedence.equal(out, in) && !op.nonAssociative(out);
   }
 }
