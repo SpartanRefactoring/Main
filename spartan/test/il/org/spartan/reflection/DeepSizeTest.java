@@ -10,7 +10,7 @@ import il.org.spartan.sequence.*;
 @SuppressWarnings("static-method") public class DeepSizeTest {
   private static MyHashMap<String, String> createHashTable(final int n) {
     final MyHashMap<String, String> $ = new MyHashMap<>();
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n; ++i)
       $.put(String.valueOf(i * i + 1), String.valueOf((i + 5) * (i - 9) + 1));
     return $;
   }
@@ -97,7 +97,7 @@ import il.org.spartan.sequence.*;
 
   @Test public void of_array_of_objects() {
     final Object[] os = new Object[8];
-    for (int i = 0; i < os.length; i++)
+    for (int i = 0; i < os.length; ++i)
       os[i] = os;
     assertEquals(48, DeepSize.of(os));
   }
@@ -106,7 +106,7 @@ import il.org.spartan.sequence.*;
     final ClassWithArray o = new ClassWithArray();
     final Object[] os = makeRecursiveArray(79);
     o.os = os;
-    for (int i = 0; i < os.length; i++)
+    for (int i = 0; i < os.length; ++i)
       if (i % 2 == 1)
         os[i] = o;
     assertEquals(ShallowSize.of(os) + ShallowSize.of(o), DeepSize.of(o));
@@ -169,8 +169,7 @@ import il.org.spartan.sequence.*;
 
   @Test public void of_MyHashMap_table() {
     final MyHashMap<Object, Object> m = new MyHashMap<>();
-    final int shallow = ShallowSize.of(m);
-    final int deep = DeepSize.of(m);
+    final int shallow = ShallowSize.of(m), deep = DeepSize.of(m);
     assertEquals(ShallowSize.of(m.table) + DeepSize.of(m.keySet), deep - shallow);
   }
 
@@ -237,7 +236,7 @@ import il.org.spartan.sequence.*;
 
   Object[] makeRecursiveArray(final int n) {
     final Object[] $ = new Object[n];
-    for (int i = 0; i < $.length; i++)
+    for (int i = 0; i < $.length; ++i)
       $[i] = $;
     return $;
   }

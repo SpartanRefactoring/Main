@@ -244,8 +244,7 @@ public final class IntegersMap {
   @NotNull private IntegersMap rehash(final int newCapacity) {
     assert (newCapacity & newCapacity - 1) == 0;
     assert newCapacity >= MIN_CAPACITY;
-    @NotNull final int[] keys = keys();
-    @NotNull final int[] oldValues = get(keys);
+    @NotNull final int[] keys = keys(), oldValues = get(keys);
     reset(newCapacity);
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       put(keys[¢], oldValues[¢]);

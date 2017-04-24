@@ -14,8 +14,7 @@ import org.junit.*;
  * @author Yossi Gil
  * @since 2014-06-20 */
 public abstract class NonNullCache<T> {
-  /** The cached value, null when the cache was not populated */
-  private @Nullable T value;
+  @Nullable private T value;
 
   /** Compute the cached value, either by looking up the memoized valued, or by
    * actual computation

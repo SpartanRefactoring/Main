@@ -50,7 +50,7 @@ public enum has {
   }
 
   public static class TEST {
-    private final @Nullable String nul = null;
+    @Nullable private final String nul = null;
 
     @Test public void seriesA01() {
       azzert.aye(has.nulls(nul));

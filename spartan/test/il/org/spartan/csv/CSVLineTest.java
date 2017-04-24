@@ -11,7 +11,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 
-@SuppressWarnings("static-method") @TestCase public class CSVLineTest {
+@TestCase @SuppressWarnings("static-method") public class CSVLineTest {
   @Test public void anObjectTest() {
     final CSVLine c = new CSVLine.Sorterd().put("Some Object", new Object() {
       @Override public String toString() {
@@ -203,6 +203,6 @@ import il.org.spartan.streotypes.*;
   }
 
   static enum Week {
-    Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday;
+    Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
   }
 }
