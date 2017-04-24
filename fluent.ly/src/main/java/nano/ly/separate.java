@@ -317,7 +317,7 @@ public enum separate {
 
   @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST {
-    private static final Function<Object, String> quote = λ -> "'" + λ + "'";
+    private static final Function<String, String> quote = λ -> "'" + λ + "'";
 
     static <T> void assertEquals(final String reason, final T t1, final T t2) {
       azzert.that(reason, t2, is(t1));
@@ -384,7 +384,7 @@ public enum separate {
     }
 
     @Test public final void byFOfTIterableOfTString() {
-      azzert.that(separate.these(new Applicator<>(quote).to(as.list("Hello", "World"))).by(", "), is("'Hello', 'World'"));
+      azzert.that(separate.these(new Applicator<String, String>(quote).to(as.list("Hello", "World"))).by(", "), is("'Hello', 'World'"));
     }
 
     @Test public final void byFOfTTArrayChar() {

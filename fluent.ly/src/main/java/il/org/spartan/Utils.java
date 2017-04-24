@@ -489,7 +489,7 @@ public interface Utils {
 
     /** @param <FS> JD
      * @param s JD */
-    @NotNull <FS extends Iterable<? extends F>> Iterable<T> to(@NotNull final FS s) {
+    @NotNull public <FS extends Iterable<? extends F>> Iterable<T> to(@NotNull final FS s) {
       final List<T> $ = new ArrayList<>();
       for (final @Nullable F ¢ : s)
         if (¢ != null)
