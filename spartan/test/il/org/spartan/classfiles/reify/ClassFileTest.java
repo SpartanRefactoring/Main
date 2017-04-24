@@ -773,7 +773,7 @@ import nano.ly.*;
   }
 
   public static class ArrayField {
-    int[][][][] fieldName = null;
+    int[][][][] fieldName;
   }
 
   public static class ClassWithCapitalL {
@@ -853,10 +853,10 @@ import nano.ly.*;
   }
 
   public static class Parser {
-    int nFiles = 0;
-    int nMethods = 0;
-    int nCodes = 0;
-    int nInstructions = 0;
+    int nFiles;
+    int nMethods;
+    int nCodes;
+    int nInstructions;
     Stopper s = new Stopper();
 
     @Override public String toString() {
@@ -865,8 +865,8 @@ import nano.ly.*;
           Unit.NANOSECONDS.format(s.time())) + "";
     }
 
-    void parse(final ClassInfo i) {
-      parse(i.methods);
+    void parse(final ClassInfo ¢) {
+      parse(¢.methods);
     }
 
     void parse(final MethodInfo[] is) {
@@ -878,13 +878,13 @@ import nano.ly.*;
     void parse(final String... path) {
       try {
         new ClassFilesVisitor(path, new FileOnlyAction() {
-          File zipFile = null;
+          File zipFile;
 
           @Override public void visitFile(final File f) {
             try {
               parse(ClassInfo.make(f));
-            } catch (final RuntimeException e) {
-              System.out.println("\n** " + "" + f + ": " + e);
+            } catch (final RuntimeException ¢) {
+              System.out.println("\n** " + "" + f + ": " + ¢);
             }
           }
 
@@ -900,22 +900,22 @@ import nano.ly.*;
             }
           }
         }).go();
-      } catch (final IOException e) {
-        e.printStackTrace();
-      } catch (final StopTraversal e) {
-        e.printStackTrace();
+      } catch (final IOException ¢) {
+        ¢.printStackTrace();
+      } catch (final StopTraversal ¢) {
+        ¢.printStackTrace();
       }
     }
 
-    private void parse(final CodeEntity e) {
+    private void parse(final CodeEntity ¢) {
       ++nCodes;
-      nInstructions += e.instructionsCount();
+      nInstructions += ¢.instructionsCount();
     }
 
-    private void parseMethod(final MethodInfo i) {
+    private void parseMethod(final MethodInfo ¢) {
       ++nMethods;
-      if (i.getCode() != null)
-        parse(i.getCode());
+      if (¢.getCode() != null)
+        parse(¢.getCode());
     }
   }
 
@@ -1066,8 +1066,8 @@ import nano.ly.*;
       return method2(11);
     }
 
-    private int method2(final int i) {
-      return i * i + field3;
+    private int method2(final int ¢) {
+      return ¢ * ¢ + field3;
     }
   }
 }

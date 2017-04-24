@@ -49,7 +49,7 @@ import il.org.spartan.utils.*;
     for (int ¢ = 0; ¢ < a.length; ++¢)
       count += as.bit(¢ == a[¢]);
     System.out.println(count);
-    assert !(count > a.length / 2);
+    assert count <= a.length / 2;
   }
 
   @Test public void testPermutation0() {

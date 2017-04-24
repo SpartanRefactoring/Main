@@ -424,10 +424,8 @@ public class Iterables {
 
   public static String toString(@NotNull final Set<Entry<String, String>> entrySet, final String sep) {
     String $ = "";
-    for (final Entry<String, String> ¢ : entrySet) {
-      $ += ¢ + "";
-      $ += sep;
-    }
+    for (final Entry<String, String> ¢ : entrySet)
+      $ += ¢ + sep;
     return $;
   }
 

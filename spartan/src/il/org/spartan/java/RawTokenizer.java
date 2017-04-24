@@ -121,102 +121,105 @@ public class RawTokenizer {
       + "\1\11\1\1\13\11\2\1\1\0\2\1\1\11\1\1" + "\2\11\1\1\1\11\6\1";
 
   private static int[] zzUnpackAction() {
-    final int[] result = new int[115];
+    final int[] $ = new int[115];
     int offset = 0;
-    offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
-    return result;
+    offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, $);
+    return $;
   }
 
   private static int zzUnpackAction(final String packed, final int offset, final int[] result) {
     int i = 0; /* index in packed string */
-    int j = offset; /* index in unpacked array */
+    int $ = offset; /* index in unpacked array */
     final int l = packed.length();
     while (i < l) {
       int count = packed.charAt(i++);
       final int value = packed.charAt(i++);
       do
-        result[j++] = value;
+        result[$++] = value;
       while (--count > 0);
     }
-    return j;
+    return $;
   }
 
   private static int[] zzUnpackAttribute() {
-    final int[] result = new int[115];
+    final int[] $ = new int[115];
     int offset = 0;
-    offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
-    return result;
+    offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, $);
+    return $;
   }
 
   private static int zzUnpackAttribute(final String packed, final int offset, final int[] result) {
     int i = 0; /* index in packed string */
-    int j = offset; /* index in unpacked array */
+    int $ = offset; /* index in unpacked array */
     final int l = packed.length();
     while (i < l) {
       int count = packed.charAt(i++);
       final int value = packed.charAt(i++);
       do
-        result[j++] = value;
+        result[$++] = value;
       while (--count > 0);
     }
-    return j;
+    return $;
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   /** Unpacks the compressed character translation table.
    * @param packed the packed character translation table
    * @return the unpacked character translation table */
   private static char[] zzUnpackCMap(final String packed) {
-    final char[] map = new char[0x10000];
+    final char[] $ = new char[0x10000];
     int i = 0; /* index in packed string */
     int j = 0; /* index in unpacked array */
     while (i < 1764) {
       int count = packed.charAt(i++);
       final char value = packed.charAt(i++);
       do
-        map[j++] = value;
+        $[j++] = value;
       while (--count > 0);
     }
-    return map;
+    return $;
   }
 
   private static int[] zzUnpackRowMap() {
-    final int[] result = new int[115];
+    final int[] $ = new int[115];
     int offset = 0;
-    offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
-    return result;
+    offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, $);
+    return $;
   }
 
   private static int zzUnpackRowMap(final String packed, final int offset, final int[] result) {
     int i = 0; /* index in packed string */
-    int j = offset; /* index in unpacked array */
+    int $ = offset; /* index in unpacked array */
     final int l = packed.length();
     while (i < l) {
       final int high = packed.charAt(i++) << 16;
-      result[j++] = high | packed.charAt(i++);
+      result[$++] = high | packed.charAt(i++);
     }
-    return j;
+    return $;
   }
 
   private static int[] zzUnpackTrans() {
-    final int[] result = new int[3162];
+    final int[] $ = new int[3162];
     int offset = 0;
-    offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
-    return result;
+    offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, $);
+    return $;
   }
 
   private static int zzUnpackTrans(final String packed, final int offset, final int[] result) {
     int i = 0; /* index in packed string */
-    int j = offset; /* index in unpacked array */
+    int $ = offset; /* index in unpacked array */
     final int l = packed.length();
     while (i < l) {
       int count = packed.charAt(i++);
       int value = packed.charAt(i++);
       value--;
       do
-        result[j++] = value;
+        result[$++] = value;
       while (--count > 0);
     }
-    return j;
+    return $;
   }
 
   /** the input device */
@@ -271,8 +274,8 @@ public class RawTokenizer {
     return yycolumn + 1;
   }
 
-  public void error(final String s) {
-    System.err.println(notify(s));
+  public void error(final String ¢) {
+    System.err.println(notify(¢));
     reset();
   }
 
@@ -730,8 +733,8 @@ public class RawTokenizer {
     }
   }
 
-  public String notify(final String s) {
-    return location() + s + " " + token();
+  public String notify(final String ¢) {
+    return location() + ¢ + " " + token();
   }
 
   public void reset() {
@@ -794,8 +797,8 @@ public class RawTokenizer {
    * <b>cannot</b> be reused (internal buffer is discarded and lost). Lexical
    * state is set to <tt>ZZ_INITIAL</tt>.
    * @param reader the new input stream */
-  public final void yyreset(final java.io.Reader r) {
-    zzReader = r;
+  public final void yyreset(final java.io.Reader ¢) {
+    zzReader = ¢;
     zzAtEOF = false;
     zzEndRead = zzStartRead = 0;
     zzCurrentPos = zzMarkedPos = 0;
@@ -854,6 +857,9 @@ public class RawTokenizer {
     $.setLength(0);
   }
 
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
   /**
    * [[SuppressWarningsSpartan]]
    */

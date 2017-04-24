@@ -169,8 +169,7 @@ import il.org.spartan.sequence.*;
 
   @Test public void of_MyHashMap_table() {
     final MyHashMap<Object, Object> m = new MyHashMap<>();
-    final int shallow = ShallowSize.of(m), deep = DeepSize.of(m);
-    assertEquals(ShallowSize.of(m.table) + DeepSize.of(m.keySet), deep - shallow);
+    assertEquals(ShallowSize.of(m.table) + DeepSize.of(m.keySet), DeepSize.of(m) - ShallowSize.of(m));
   }
 
   @Test public void of_MyHashMap_table_size() {
@@ -179,8 +178,7 @@ import il.org.spartan.sequence.*;
   }
 
   @Test public void of_MyHashMap_table_size_80() {
-    final MyHashMap<Object, Object> m = new MyHashMap<>();
-    assertEquals(80, ShallowSize.of(m.table));
+    assertEquals(80, ShallowSize.of((new MyHashMap<>()).table));
   }
 
   @Test public void of_object() {
@@ -219,10 +217,8 @@ import il.org.spartan.sequence.*;
   }
 
   @Test public void shallow_of_MyHashMap() {
-    final MyHashMap<Object, Object> m = new MyHashMap<>();
-    final int baseSize = ShallowSize.of(m);
     for (final Sequence f = new Fibonacci(1000); f.more(); f.advance())
-      assertEquals(baseSize, ShallowSize.of(createHashTable(f.current())));
+      assertEquals(ShallowSize.of((new MyHashMap<>())), ShallowSize.of(createHashTable(f.current())));
   }
 
   @Test public void ShallowSize_of_Array_non_null() {

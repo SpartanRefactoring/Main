@@ -36,13 +36,13 @@ import il.org.spartan.utils.*;
   }
 
   private static boolean processOption(final String option) {
-    if ("-n".equals(option)) {
+    if ("-n".equals(option))
       reportCounts = true;
-      return true;
+    else {
+      if (!"-f".equals(option))
+        return false;
+      findFirstOnly = true;
     }
-    if (!"-f".equals(option))
-      return false;
-    findFirstOnly = true;
     return true;
   }
 
