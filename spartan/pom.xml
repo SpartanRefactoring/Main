@@ -76,6 +76,7 @@
 	</dependencies>
 
 	<build>
+		<!-- should be "." for Travis, "src" for Eclipse 25/4/17 Roth -->
 		<sourceDirectory>.</sourceDirectory>
 		<plugins>
 			<plugin>
