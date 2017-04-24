@@ -5,8 +5,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -16,7 +14,7 @@ import il.org.spartan.spartanizer.meta.*;
 
 /** @author Yossi Gil
  * @since 2017-01-28 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @Ignore("Yossi Gil")
 @SuppressWarnings("javadoc")
 public class mayShortcircuitTest extends MetaFixture {

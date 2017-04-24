@@ -3,12 +3,11 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
 
 /** Tests of {@link ThisClass#thatFunction}
  * @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class issue0445 {
   @Test public void a() {

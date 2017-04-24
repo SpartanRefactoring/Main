@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.ast.factory;
 import static il.org.spartan.utils.FileUtils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.io.*;

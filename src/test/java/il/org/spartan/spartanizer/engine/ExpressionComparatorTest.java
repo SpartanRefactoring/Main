@@ -7,8 +7,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
@@ -18,7 +16,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Dan Abramovich
  * @author Arthur Spozhnikov
  * @since 2015-07-17 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class ExpressionComparatorTest {
   @Test public void additionSortTest() {

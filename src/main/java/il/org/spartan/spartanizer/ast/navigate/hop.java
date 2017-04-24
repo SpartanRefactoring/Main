@@ -4,8 +4,6 @@ import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.Utils.last;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;

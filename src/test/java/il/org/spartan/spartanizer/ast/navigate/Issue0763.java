@@ -2,12 +2,8 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.azzert.*;
 
-import static il.org.spartan.lisp.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -16,7 +12,7 @@ import nano.ly.*;
 /** Test for analyze.type
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0763 {
   @Test public void a() {

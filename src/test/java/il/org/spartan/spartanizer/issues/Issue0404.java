@@ -3,14 +3,10 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -20,7 +16,7 @@ import nano.ly.*;
  * @author Yossi Gil
  * @author Dan Greenstein
  * @since */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0404 {
   private static void forceStaticReturnType(final List<String> ¢) {

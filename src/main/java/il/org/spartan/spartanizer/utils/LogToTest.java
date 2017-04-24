@@ -5,8 +5,6 @@
  * @since Dec 14, 2016 */
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.lisp.*;
-
 import java.io.*;
 import java.text.*;
 import java.util.*;

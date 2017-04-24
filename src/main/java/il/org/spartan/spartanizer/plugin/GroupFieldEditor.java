@@ -8,7 +8,6 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
-import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** A {@link FieldEditor} designed to store multiple controls within a group

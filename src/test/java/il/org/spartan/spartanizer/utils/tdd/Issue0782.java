@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static il.org.spartan.azzert.*;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;

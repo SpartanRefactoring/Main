@@ -4,14 +4,12 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.tippers.*;
 
 /** TUnit tests for the GitHub issue thus numbered
  * @author Oren Afek
  * @since 2016 Testing {@link LambdaRemoveRedundantCurlyBraces } */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("static-method")
 public class Issue0455 {
   @Test public void assertStatementShouldntTip() {

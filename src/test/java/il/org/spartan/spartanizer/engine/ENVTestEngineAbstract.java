@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.lisp.*;
-
 import java.io.*;
 import java.util.*;
 import java.util.Map.*;

@@ -12,8 +12,6 @@ import java.util.logging.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -24,7 +22,7 @@ import il.org.spartan.utils.*;
 /** Misc unit tests with no better other place for version 3.00
  * @author Yossi Gil
  * @since 2017-03-09 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Version300 {
   @FunctionalInterface

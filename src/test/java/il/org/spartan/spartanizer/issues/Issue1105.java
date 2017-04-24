@@ -4,14 +4,12 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests of {@link IfStatementBlockSequencerBlockSameSequencer}
  * @author Yossi Gil
  * @since Jan 22, 2017 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1105 {
   /** Introduced by Yogi on Fri-Mar-31-00:33:42-IDT-2017 (code automatically in

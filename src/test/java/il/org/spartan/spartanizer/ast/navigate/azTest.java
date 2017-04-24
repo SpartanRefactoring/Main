@@ -6,15 +6,13 @@ import static org.mockito.Mockito.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Oct 7, 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class azTest {
   @Test public void asComparisonPrefixlExpression() {

@@ -4,8 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.ast.factory.misc.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -13,8 +11,6 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -25,7 +21,7 @@ import nano.ly.*;
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Oct 2, 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "javadoc", "static-method" }) //
 public final class TippersTest {
   @Test public void countInEnhancedFor() {

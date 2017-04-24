@@ -5,15 +5,13 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Sep 7, 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class ExtractStatementTest {
   @Test public void declarationCorrectSize() {

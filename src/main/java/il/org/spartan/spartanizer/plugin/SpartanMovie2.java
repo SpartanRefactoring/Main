@@ -2,22 +2,15 @@ package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
-import java.lang.reflect.*;
-import java.rmi.activation.*;
 import java.util.List;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.internal.content.Activator;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
-import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.jface.dialogs.*;
-import org.eclipse.jface.resource.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
-import org.eclipse.ui.commands.*;
 import org.eclipse.ui.ide.*;
 import org.eclipse.ui.progress.*;
 
@@ -36,92 +29,86 @@ public class SpartanMovie2 extends AbstractHandler {
   private static final double SLEEP_END = 2;
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
-    
     final IWorkbench workbench = PlatformUI.getWorkbench();
     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
     final IWorkbenchPage page = window == null ? null : window.getActivePage();
     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
     final GUITraversal traversal = new GUITraversal();
-    if (compilationUnits == null || page == null || progressService == null) return null;
-
-
-          int changes = 0, filesModified = 0;
-          for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-            //mightNotBeSlick(page);
-            final IResource file = currentCompilationUnit.getResource();
-            try {
-              IMarker[] markers = getMarkers(file);
-              if (markers.length > 0)
-                ++filesModified;
-                for (; markers.length > 0; markers = getMarkers(file)) {
-                  final IMarker marker = getFirstMarker(markers);
-
-                  delegateUIJob(page, marker, file, traversal);
-                  ++changes;
-                  marker.delete(); // TODO Ori Roth: does not seem to make a 
-                                   // difference
-                                   // actually it removes the markers after the traversal
-                                   // and avoid the infinite loop (it descreases markers.length at
-                                   // each round -- mo
-                  refresh(page);
-                  sleep(SLEEP_BETWEEN);
-                }
-              } catch (final CoreException ¢) {
-                note.bug(¢);
-              }
-           }
-//           monitor.subTask("Done: Commited " + changes + " changes in " + filesModified + " " + English.plurals("file", filesModified));
-           sleep(SLEEP_END);
-//           monitor.done();
-//           return Status.OK_STATUS;
-//      }
-//    }; // end job
-
+    if (compilationUnits == null || page == null || progressService == null)
+      return null;
+    for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
+      // mightNotBeSlick(page);
+      final IResource file = currentCompilationUnit.getResource();
+      try {
+        IMarker[] markers = getMarkers(file);
+        if (markers.length > 0) {}
+        for (; markers.length > 0; markers = getMarkers(file)) {
+          final IMarker marker = getFirstMarker(markers);
+          delegateUIJob(page, marker, file, traversal);
+          marker.delete(); // TODO Ori Roth: does not seem to make a
+                           // difference
+                           // actually it removes the markers after the
+                           // traversal
+                           // and avoid the infinite loop (it descreases
+                           // markers.length at
+                           // each round -- mo
+          refresh(page);
+          sleep(SLEEP_BETWEEN);
+        }
+      } catch (final CoreException ¢) {
+        note.bug(¢);
+      }
+    }
+    // monitor.subTask("Done: Commited " + changes + " changes in " +
+    // filesModified + " " + English.plurals("file", filesModified));
+    sleep(SLEEP_END);
+    // monitor.done();
+    // return Status.OK_STATUS;
+    // }
+    // }; // end job
     return null;
   }
 
-
-private void delegateUIJob(final IWorkbenchPage page, final IMarker marker, final IResource file, final GUITraversal traversal) throws PartInitException {
-  UIJob job = new UIJob(NAME) {
-    @Override public IStatus runInUIThread(IProgressMonitor monitor) {
-    monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
-    try {
-      monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
-                marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
-        printout(marker);
-        IDE.openEditor(page, marker, true);
-        refresh(page);
-        sleep(SLEEP_BETWEEN);
-        traversal.runAsMarkerFix(marker);
-      } catch (CoreException x) {
-        x.printStackTrace();
+  private void delegateUIJob(final IWorkbenchPage p, final IMarker m, final IResource file, final GUITraversal t) throws PartInitException {
+    new UIJob(NAME) {
+      @Override public IStatus runInUIThread(final IProgressMonitor monitor) {
+        monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
+        try {
+          monitor.subTask(
+              "Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+          printout(m);
+          IDE.openEditor(p, m, true);
+          refresh(p);
+          sleep(SLEEP_BETWEEN);
+          t.runAsMarkerFix(m);
+        } catch (final CoreException x) {
+          x.printStackTrace();
+        }
+        return Status.OK_STATUS;
       }
-      return Status.OK_STATUS;
-    }
-    
-    /** The current SpartanMovie is not releaseable. Some big changes should be
-     * made.
-     * @author Ori Roth
-     * @param howMuch
-     * @return */
-    boolean sleep(final double howMuch) {
-      try {
-        Thread.sleep((int) (1000 * howMuch));
-        return true;
-      } catch (final InterruptedException ¢) {
-        note.bug(¢);
-        return false;
-      }
-    }
-  };
-  job.schedule();  
-}
 
-  private void printout(final IMarker marker) {
+      /** The current SpartanMovie is not releaseable. Some big changes should
+       * be made.
+       * @author Ori Roth
+       * @param howMuch
+       * @return */
+      boolean sleep(final double howMuch) {
+        try {
+          Thread.sleep((int) (1000 * howMuch));
+          return true;
+        } catch (final InterruptedException ¢) {
+          note.bug(¢);
+          return false;
+        }
+      }
+    }.schedule();
+  }
+
+  private void printout(final IMarker m) {
     try {
-      System.out.println("Resource: " + marker.getResource().getName() + "; Type: " + marker.getType());
-    } catch (CoreException x) {
+      System.out.println("Resource: " + m.getResource().getName() + "; Type: " + m.getType());
+    } catch (final CoreException x) {
       x.printStackTrace();
     }
   }

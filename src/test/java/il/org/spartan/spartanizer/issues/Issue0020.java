@@ -3,12 +3,11 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
 
 /** TODO test class for renaming constructor parameters
  * @author Dor Ma'ayan
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0020 {
   /** Correct way of trimming does not change */

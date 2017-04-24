@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.research.utils;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 import java.util.function.*;
 

@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.utils;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;

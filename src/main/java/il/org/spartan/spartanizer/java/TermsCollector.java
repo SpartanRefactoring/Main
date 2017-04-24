@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.java;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
 import java.util.*;

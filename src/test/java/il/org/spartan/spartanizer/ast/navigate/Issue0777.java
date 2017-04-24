@@ -7,8 +7,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -16,7 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** Test for analyze.type
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0777 {
   @Test public void a() throws Exception {

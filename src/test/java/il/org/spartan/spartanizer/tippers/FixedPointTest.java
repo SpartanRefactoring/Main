@@ -6,8 +6,6 @@ import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.utils.*;
@@ -17,7 +15,7 @@ import il.org.spartan.spartanizer.utils.*;
  * prefix. b) test methods begin with the name of the method they check.
  * @author Yossi Gil
  * @since 2014-07-10 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class FixedPointTest {
   private static void assertConvertsTo(final String from, final String expected) {

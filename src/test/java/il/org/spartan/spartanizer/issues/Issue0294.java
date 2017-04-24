@@ -4,8 +4,6 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -15,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * of inlining into the expression of an enhanced for
  * @author Yossi Gil
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0294 {
   final Statement s = into.s("A a=new A();for (A b: g.f(a,true))sum+=b;");

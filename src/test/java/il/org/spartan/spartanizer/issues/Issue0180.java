@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for: {@link MethodDeclarationRenameReturnToDollar}
@@ -13,7 +11,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Ori Roth
  * @since 2016
  * @see ParameterAbbreviate#fixJavadoc testing for comments */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("static-method") //
 public class Issue0180 {
   @Test public void renameToCent() {

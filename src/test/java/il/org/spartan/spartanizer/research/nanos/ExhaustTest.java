@@ -4,11 +4,9 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 /* Tests {@link Exhaust}
  *
  * @author orimarco {@code marcovitch.ori@gmail.com}

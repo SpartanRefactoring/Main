@@ -8,11 +8,9 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.java.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class sideEffectsTest {
   @Test public void deterministicArray1() {

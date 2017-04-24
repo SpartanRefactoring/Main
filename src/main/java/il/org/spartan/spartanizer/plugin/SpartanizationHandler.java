@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 

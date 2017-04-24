@@ -3,12 +3,11 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
 
 /** Checking that the tipper handling multiplication with zero is working well
  * @author Dor Ma'ayan
  * @since 2016-09-25 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0193 {
   @Test public void t10() {

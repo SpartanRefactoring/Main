@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.util.*;
 import java.util.stream.*;
 
-import il.org.spartan.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;

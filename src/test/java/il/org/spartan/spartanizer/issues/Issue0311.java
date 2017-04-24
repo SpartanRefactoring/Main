@@ -3,12 +3,11 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
 
 /** Tests for the GitHub issue thus numbered
  * @author Alex Kopzon
  * @since 2016-09-23 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0311 {
   @Test public void a() {
