@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
+import java.lang.reflect.*;
 import java.rmi.activation.*;
 import java.util.List;
 
@@ -36,22 +37,60 @@ public class SpartanMovie2 extends AbstractHandler {
 
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     
-     final IWorkbench workbench = PlatformUI.getWorkbench();
-     final List<ICompilationUnit> compilationUnits = getCompilationUnits();
-     final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
-     final IWorkbenchPage page = window == null ? null : window.getActivePage();
-     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
-     final GUITraversal traversal = new GUITraversal();
-     if (compilationUnits == null || page == null || progressService == null) return null;
+    final IWorkbench workbench = PlatformUI.getWorkbench();
+    final List<ICompilationUnit> compilationUnits = getCompilationUnits();
+    final IWorkbenchWindow window = workbench == null ? null : workbench.getActiveWorkbenchWindow();
+    final IWorkbenchPage page = window == null ? null : window.getActivePage();
+    final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
+    final GUITraversal traversal = new GUITraversal();
+    if (compilationUnits == null || page == null || progressService == null) return null;
     
-    Job job = new Job(NAME) {
-      protected IStatus run(IProgressMonitor monitor) {
+//    try {
+//      progressService.run(false, true, pm -> {
+//        for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
+//          System.out.println(currentCompilationUnit.getElementName());
+//           final IResource file = currentCompilationUnit.getResource();
+//           IMarker[] markers = getMarkers(file);
+//           for (; markers.length > 0; markers = getMarkers(file)) {
+//             final IMarker marker = getFirstMarker(markers);
+//             printout(marker);
+//             try {
+//               IDE.openEditor(page, marker, true);
+//            } catch (PartInitException x) {
+//              x.printStackTrace();
+//            }
+//            refresh(page);
+//            sleep(SLEEP_BETWEEN);
+//            try {
+//              traversal.runAsMarkerFix(marker);
+//            } catch (CoreException x) {
+//              x.printStackTrace();
+//            }
+//            //++changes;
+//            try {
+//              marker.delete();
+//            } catch (CoreException x) {
+//              x.printStackTrace();
+//            } 
+//            refresh(page);
+//            sleep(SLEEP_BETWEEN); 
+//           }
+//         }
+//      });
+//    } catch (InvocationTargetException x) {
+//      x.printStackTrace();
+//    } catch (InterruptedException x) {
+//      x.printStackTrace();
+//    }
+    
+    UIJob job = new UIJob(NAME) {
+      @Override public IStatus runInUIThread(IProgressMonitor monitor) {
 //          monitor.beginTask("Preparing", 5000);
           monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
           int changes = 0, filesModified = 0;
           for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-            System.out.println(currentCompilationUnit.getElementName());
-            mightNotBeSlick(page);
+//            System.out.println(currentCompilationUnit.getElementName());
+            //mightNotBeSlick(page);
             final IResource file = currentCompilationUnit.getResource();
             try {
               IMarker[] markers = getMarkers(file);
@@ -61,6 +100,7 @@ public class SpartanMovie2 extends AbstractHandler {
                   final IMarker marker = getFirstMarker(markers);
                   monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
                   marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+                  printout(marker);
                   IDE.openEditor(page, marker, true);
                   refresh(page);
                   sleep(SLEEP_BETWEEN);
@@ -151,6 +191,7 @@ public class SpartanMovie2 extends AbstractHandler {
         PlatformUI.getWorkbench().getService(ICommandService.class);
     Command command = service == null ? null : 
       service.getCommand("il.org.spartan.SpartanMovie");
+    
     if(command != null){
       job.setProperty(IProgressConstants2.COMMAND_PROPERTY, 
             ParameterizedCommand.generateCommand(command, null));
@@ -211,6 +252,14 @@ public class SpartanMovie2 extends AbstractHandler {
     // }
     // sleep(1);
     return null;
+  }
+
+  private void printout(final IMarker marker) {
+    try {
+      System.out.println("Resource: " + marker.getResource().getName() + "; Type: " + marker.getType());
+    } catch (CoreException x) {
+      x.printStackTrace();
+    }
   }
 
   /** Just in case, so that editors don't pile up. Not sure this is the right
