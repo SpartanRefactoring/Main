@@ -51,8 +51,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allPrimitiveFieldsAttributes() {
-    for (final FlaggedEntity ¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
-      assertEquals(0, ¢.attributes.length);
+    for (final FlaggedEntity Â¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
+      assertEquals(0, Â¢.attributes.length);
   }
 
   @Test public void allPrimitiveFieldsCount() {
@@ -60,8 +60,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void allPrimitiveFieldsModifiers() {
-    for (final FlaggedEntity ¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
-      assertEquals(Modifier.FINAL | Modifier.PUBLIC, ¢.flags);
+    for (final FlaggedEntity Â¢ : ClassInfo.make(AllPrimitiveFields.class).fields)
+      assertEquals(Modifier.FINAL | Modifier.PUBLIC, Â¢.flags);
   }
 
   @Test public void allPrimitiveFieldsNames() {
@@ -648,8 +648,8 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void parseSelfAllMethods() {
-    for (final MethodInfo ¢ : ClassInfo.make(this.getClass()).methods)
-      ¢.getCode().instructionsCount();
+    for (final MethodInfo Â¢ : ClassInfo.make(this.getClass()).methods)
+      Â¢.getCode().instructionsCount();
   }
 
   @Test public void parseTableSwitch() {
@@ -870,8 +870,8 @@ import il.org.spartan.utils.*;
 
     void parse(final MethodInfo[] is) {
       ++nFiles;
-      for (final MethodInfo ¢ : is)
-        parseMethod(¢);
+      for (final MethodInfo Â¢ : is)
+        parseMethod(Â¢);
     }
 
     void parse(final String... path) {
@@ -994,17 +994,17 @@ import il.org.spartan.utils.*;
     static Random field4 = new Random();
     static {
       field4 = new Random(field4.nextLong());
-      for (int ¢ = 1; ¢ < 10; ++¢)
+      for (int Â¢ = 1; Â¢ < 10; ++Â¢)
         field4.nextDouble();
     }
     static Random field5 = new Random(field4.nextLong() + method3());
     static {
-      for (int ¢ = 1; ¢ < 20; ++¢)
+      for (int Â¢ = 1; Â¢ < 20; ++Â¢)
         field5.nextDouble();
     }
     static Random field6 = new Random(field5.nextLong());
     static {
-      for (int ¢ = 1; ¢ < 20; ++¢)
+      for (int Â¢ = 1; Â¢ < 20; ++Â¢)
         field4 = new Random(field6.nextLong());
     }
 

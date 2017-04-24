@@ -103,8 +103,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   @Override public void clear() {
     ++modCount;
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
-    for (int ¢ = 0; ¢ < tab.length; ++¢)
-      tab[¢] = null;
+    for (int Â¢ = 0; Â¢ < tab.length; ++Â¢)
+      tab[Â¢] = null;
     size = 0;
   }
 
@@ -146,8 +146,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       return containsNullValue();
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
     for (final Entry element : tab)
-      for (@SuppressWarnings("rawtypes") Entry ¢ = element; ¢ != null; ¢ = ¢.next)
-        if (value.equals(¢.value))
+      for (@SuppressWarnings("rawtypes") Entry Â¢ = element; Â¢ != null; Â¢ = Â¢.next)
+        if (value.equals(Â¢.value))
           return true;
     return false;
   }
@@ -265,8 +265,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       if (newCapacity > table.length)
         resize(newCapacity);
     }
-    for (final java.util.Map.Entry<? extends K, ? extends V> ¢ : m.entrySet())
-      put(¢.getKey(), ¢.getValue());
+    for (final java.util.Map.Entry<? extends K, ? extends V> Â¢ : m.entrySet())
+      put(Â¢.getKey(), Â¢.getValue());
   }
 
   /** Removes the mapping for the specified key from this map if present.
@@ -460,8 +460,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   private boolean containsNullValue() {
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
     for (final Entry element : tab)
-      for (@SuppressWarnings("rawtypes") Entry ¢ = element; ¢ != null; ¢ = ¢.next)
-        if (¢.value == null)
+      for (@SuppressWarnings("rawtypes") Entry Â¢ = element; Â¢ != null; Â¢ = Â¢.next)
+        if (Â¢.value == null)
           return true;
     return false;
   }
@@ -475,15 +475,15 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * performance in the two most commonly used operations (get and put), but
    * incorporated with conditionals in others. */
   private V getForNullKey() {
-    for (Entry<K, V> ¢ = table[0]; ¢ != null; ¢ = ¢.next)
-      if (¢.key == null)
-        return ¢.value;
+    for (Entry<K, V> Â¢ = table[0]; Â¢ != null; Â¢ = Â¢.next)
+      if (Â¢.key == null)
+        return Â¢.value;
     return null;
   }
 
   private void putAllForCreate(final Map<? extends K, ? extends V> m) {
-    for (final java.util.Map.Entry<? extends K, ? extends V> ¢ : m.entrySet())
-      putForCreate(¢.getKey(), ¢.getValue());
+    for (final java.util.Map.Entry<? extends K, ? extends V> Â¢ : m.entrySet())
+      putForCreate(Â¢.getKey(), Â¢.getValue());
   }
 
   /** This method is used instead of put by constructors and pseudoconstructors
@@ -678,7 +678,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     HashIterator() {
       expectedModCount = modCount;
       if (size > 0)
-        for (@SuppressWarnings("rawtypes") final Entry[] ¢ = table; index < ¢.length && (next = ¢[index++]) == null;)
+        for (@SuppressWarnings("rawtypes") final Entry[] Â¢ = table; index < Â¢.length && (next = Â¢[index++]) == null;)
           nothing();
     }
 
@@ -704,7 +704,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       if (e == null)
         throw new NoSuchElementException();
       if ((next = e.next) == null)
-        for (@SuppressWarnings("rawtypes") final Entry[] ¢ = table; index < ¢.length && (next = ¢[index++]) == null;)
+        for (@SuppressWarnings("rawtypes") final Entry[] Â¢ = table; index < Â¢.length && (next = Â¢[index++]) == null;)
           nothing();
       current = e;
       return e;
