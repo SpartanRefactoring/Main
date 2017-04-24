@@ -53,7 +53,7 @@ public enum compute {
     }.map(n);
   }
 
-  public static List<String> usedNames(final Expression x) {
+  public static List<String> usedNames(final ASTNode x) {
     return new ASTMapReducer<List<String>>() {
       @Override public List<String> reduce() {
         return an.empty.list();
