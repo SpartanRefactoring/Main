@@ -44,47 +44,7 @@ public class SpartanMovie2 extends AbstractHandler {
     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
     final GUITraversal traversal = new GUITraversal();
     if (compilationUnits == null || page == null || progressService == null) return null;
-    
-//    try {
-//      progressService.run(false, true, pm -> {
-//        for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-//          System.out.println(currentCompilationUnit.getElementName());
-//           final IResource file = currentCompilationUnit.getResource();
-//           IMarker[] markers = getMarkers(file);
-//           for (; markers.length > 0; markers = getMarkers(file)) {
-//             final IMarker marker = getFirstMarker(markers);
-//             printout(marker);
-//             try {
-//               IDE.openEditor(page, marker, true);
-//            } catch (PartInitException x) {
-//              x.printStackTrace();
-//            }
-//            refresh(page);
-//            sleep(SLEEP_BETWEEN);
-//            try {
-//              traversal.runAsMarkerFix(marker);
-//            } catch (CoreException x) {
-//              x.printStackTrace();
-//            }
-//            //++changes;
-//            try {
-//              marker.delete();
-//            } catch (CoreException x) {
-//              x.printStackTrace();
-//            } 
-//            refresh(page);
-//            sleep(SLEEP_BETWEEN); 
-//           }
-//         }
-//      });
-//    } catch (InvocationTargetException x) {
-//      x.printStackTrace();
-//    } catch (InterruptedException x) {
-//      x.printStackTrace();
-//    }
-    
-    
-    
+
     UIJob job = new UIJob(NAME) {
       @Override public IStatus runInUIThread(IProgressMonitor monitor) {
 //          monitor.beginTask("Preparing", 5000);
@@ -124,41 +84,6 @@ public class SpartanMovie2 extends AbstractHandler {
            sleep(SLEEP_END);
            monitor.done();
            return Status.OK_STATUS;
-        
-          
-//          SubMonitor subMonitor = 
-//              SubMonitor.convert(monitor,"Prepring", 5000);
-//          subMonitor = null;
-//          for (int i = 0; i < 50 && !subMonitor.isCanceled(); i++) {
-//            if(i==0) {
-//              subMonitor.subTask("Doing something");
-//            } else if (i == 12) {
-//              checkDozen(new SubProgressMonitor(subMonitor, 100));            
-//            } else if (i == 25) {
-//              subMonitor.subTask("Doing something elese");
-//            } else if (i == 40) {
-//              subMonitor.subTask("Nearly there");
-//            }
-//            Thread.sleep(100);
-//            subMonitor.worked(100);
-//          }
-//        } catch (InterruptedException $) {
-//          note.bug($);
-//        } catch (NullPointerException $) {
-//          return new Status(IStatus.ERROR,
-//             org.eclipse.core.internal.runtime.Activator.PLUGIN_ID, "Programming bug?", $);          
-//        } finally {
-//          monitor.done();
-//        }
-//        // MessageDialog.openInformation(null, "Hello", "World");
-//        if (!monitor.isCanceled()) {
-//          Display.getDefault().asyncExec(new Runnable() {
-//            public void run() {
-//              MessageDialog.openInformation(null, "Hello", "World");
-//            }
-//          });
-//        }
-//        return Status.OK_STATUS;
       }
       
       Boolean sleep(double howMuch) {
@@ -204,55 +129,6 @@ public class SpartanMovie2 extends AbstractHandler {
     }
     
     job.schedule();
-    // try {
-    //// progressService.run(false, true, pm -> {
-    // progressService.runInUI(PlatformUI.getWorkbench().getProgressService(),
-    // pm -> {
-    // //moveProgressDialog();
-    // pm.beginTask(NAME, IProgressMonitor.UNKNOWN);
-    // int changes = 0, filesModified = 0;
-    // // TODO Ori Roth: this function is much much too large. Try to break it
-    // // --yg
-    // for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-    // System.out.println(currentCompilationUnit.getElementName());
-    // mightNotBeSlick(page);
-    // final IResource file = currentCompilationUnit.getResource();
-    // try {
-    // IMarker[] markers = getMarkers(file);
-    // if (markers.length > 0)
-    // ++filesModified;
-    // for (; markers.length > 0; markers = getMarkers(file)) {
-    // final IMarker marker = getFirstMarker(markers);
-    // pm.subTask("Working on " + file.getName() + "\nCurrent tip: "
-    // + ((Class<?>)
-    // marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
-    // IDE.openEditor(page, marker, true);
-    // refresh(page);
-    // sleep(SLEEP_BETWEEN);
-    // //traversal.runAsMarkerFix(marker);
-    // ++changes;
-    // marker.delete(); // TODO Ori Roth: does not seem to make a
-    // // difference
-    // // actually it removes the markers after the traversal
-    // // and avoid the infinite loop (it descreases markers.length at
-    // // each round -- mo
-    // refresh(page);
-    // sleep(SLEEP_BETWEEN);
-    // }
-    // } catch (final CoreException ¢) {
-    // note.bug(¢);
-    // }
-    // }
-    // pm.subTask("Done: Commited " + changes + " changes in " + filesModified +
-    // " " + English.plurals("file", filesModified));
-    // sleep(SLEEP_END);
-    // pm.done();
-    // }, null);
-    //// });
-    // } catch (InvocationTargetException | InterruptedException ¢) {
-    // note.bug(¢);
-    // }
-    // sleep(1);
     return null;
   }
 
