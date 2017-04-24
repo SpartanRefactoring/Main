@@ -11,17 +11,17 @@ public final class IntegersMapTest {
   final IntegersMap m = new IntegersMap();
 
   @Test public void containsMany() {
-    for (int i = 0; i < 10000; ++i)
-      m.put(IntegersMap.hash(i), i);
-    for (int i = 0; i < 10000; ++i)
-      assert m.contains(IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 10000; ++¢)
+      m.put(IntegersMap.hash(¢), ¢);
+    for (int ¢ = 0; ¢ < 10000; ++¢)
+      assert m.contains(IntegersMap.hash(¢));
   }
 
   @Test public void doesNotContain() {
-    for (int i = 0; i < 10000; ++i)
-      m.put(i, i);
-    for (int i = 10000; i < 100000; ++i)
-      assert !m.contains(i);
+    for (int ¢ = 0; ¢ < 10000; ++¢)
+      m.put(¢, ¢);
+    for (int ¢ = 10000; ¢ < 100000; ++¢)
+      assert !m.contains(¢);
   }
 
   @Test public void find() {
@@ -36,10 +36,10 @@ public final class IntegersMapTest {
   }
 
   @Test public void get1000() {
-    for (int i = 0; i < 1000; ++i)
-      m.put(i, 2 * i + 1);
-    for (int i = 0; i < 1000; ++i)
-      assertEquals(2 * i + 1, m.get(i));
+    for (int ¢ = 0; ¢ < 1000; ++¢)
+      m.put(¢, 2 * ¢ + 1);
+    for (int ¢ = 0; ¢ < 1000; ++¢)
+      assertEquals(2 * ¢ + 1, m.get(¢));
   }
 
   @Test public void get2() {
@@ -64,34 +64,34 @@ public final class IntegersMapTest {
   }
 
   @Test public void increment1000() {
-    for (int i = 0; i < 1000; ++i)
-      m.increment(i);
-    for (int i = 0; i < 1000; ++i)
-      assertEquals(1, m.get(i));
+    for (int ¢ = 0; ¢ < 1000; ++¢)
+      m.increment(¢);
+    for (int ¢ = 0; ¢ < 1000; ++¢)
+      assertEquals(1, m.get(¢));
   }
 
   @Test public void incrementMany() {
     for (int i = 0; i < 100; ++i)
       for (int j = 0; j <= i; ++j)
         m.increment(i);
-    for (int i = 0; i < 100; ++i)
-      assertEquals(i + 1, m.get(i));
+    for (int ¢ = 0; ¢ < 100; ++¢)
+      assertEquals(¢ + 1, m.get(¢));
   }
 
   @Test public void init1000() {
-    for (int i = 0; i < 1000; ++i)
-      m.init(i);
-    for (int i = 0; i < 1000; ++i)
-      assertEquals(0, m.get(i));
+    for (int ¢ = 0; ¢ < 1000; ++¢)
+      m.init(¢);
+    for (int ¢ = 0; ¢ < 1000; ++¢)
+      assertEquals(0, m.get(¢));
   }
 
   @Test public void initDoesClear() {
-    for (int i = 0; i < 1000; ++i)
-      m.put(i, IntegersMap.hash(i));
-    for (int i = 0; i < 1000; ++i)
-      m.init(i);
-    for (int i = 0; i < 1000; ++i)
-      assertEquals(0, m.get(i));
+    for (int ¢ = 0; ¢ < 1000; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
+    for (int ¢ = 0; ¢ < 1000; ++¢)
+      m.init(¢);
+    for (int ¢ = 0; ¢ < 1000; ++¢)
+      assertEquals(0, m.get(¢));
   }
 
   @Test @SuppressWarnings("static-method") public void insert1() {
@@ -99,100 +99,100 @@ public final class IntegersMapTest {
   }
 
   @Test public void keys() {
-    for (int i = 0; i < 10000; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 10000; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 10000; ++i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 0; ¢ < 10000; ++¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys10() {
-    for (int i = 0; i < 10; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 10; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.keys();
-    for (int i = 0; i < 10; ++i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 0; ¢ < 10; ++¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys100() {
-    for (int i = 0; i < 100; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 100; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 100; ++i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 0; ¢ < 100; ++¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys15() {
-    for (int i = 0; i < 15; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 15; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.keys();
-    for (int i = 0; i < 15; ++i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 0; ¢ < 15; ++¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys15rehash() {
-    for (int i = 0; i < 15; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 15; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     m.rehash();
     final int[] keys = m.keys();
-    for (int i = 0; i < 15; ++i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 0; ¢ < 15; ++¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys17() {
-    for (int i = 0; i < 17; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 17; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.keys();
-    for (int i = 0; i < 17; ++i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 0; ¢ < 17; ++¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys18() {
-    for (int i = 0; i < 18; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 18; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 18; ++i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 0; ¢ < 18; ++¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys18inverse() {
-    for (int i = 0; i < 18; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 18; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.sortedKeys();
-    for (int i = 17; i >= 0; --i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 17; ¢ >= 0; --¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys20inverse() {
-    for (int i = 0; i < 20; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 20; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.sortedKeys();
-    for (int i = 19; i >= 0; --i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 19; ¢ >= 0; --¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys22() {
-    for (int i = 0; i < 22; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 22; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 22; ++i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 0; ¢ < 22; ++¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys30() {
-    for (int i = 0; i < 30; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 30; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.sortedKeys();
-    for (int i = 0; i < 30; ++i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 0; ¢ < 30; ++¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void keys30inverse() {
-    for (int i = 0; i < 30; ++i)
-      m.put(i, IntegersMap.hash(i));
+    for (int ¢ = 0; ¢ < 30; ++¢)
+      m.put(¢, IntegersMap.hash(¢));
     final int[] keys = m.sortedKeys();
-    for (int i = 29; i >= 0; --i)
-      assertEquals(i, keys[i]);
+    for (int ¢ = 29; ¢ >= 0; --¢)
+      assertEquals(¢, keys[¢]);
   }
 
   @Test public void loaction1000() {
@@ -271,9 +271,9 @@ public final class IntegersMapTest {
   }
 
   private void location(final int n) {
-    for (int i = 0; i < n; ++i)
-      m.put(IntegersMap.hash(i), 2 * i + 1);
-    for (int i = 0; i < n; ++i)
-      assert m.location(IntegersMap.hash(i)) >= 0;
+    for (int ¢ = 0; ¢ < n; ++¢)
+      m.put(IntegersMap.hash(¢), 2 * ¢ + 1);
+    for (int ¢ = 0; ¢ < n; ++¢)
+      assert m.location(IntegersMap.hash(¢)) >= 0;
   }
 }

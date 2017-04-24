@@ -11,13 +11,13 @@ public interface is {
    * @param candidate what to search for
    * @param ts where to search
    * @return true if the the item is found in the list */
-  @SafeVarargs public static <T> boolean in(final T candidate, final T... ts) {
+  @SafeVarargs static <T> boolean in(final T candidate, final T... ts) {
     return Stream.of(ts).anyMatch(λ -> λ != null && λ.equals(candidate));
   }
 
   interface not {
     /** the candidate is not in ts */
-    @SafeVarargs public static <T> boolean in(final T candidate, final T... ts) {
+    @SafeVarargs static <T> boolean in(final T candidate, final T... ts) {
       return !is.in(candidate, ts);
     }
   }

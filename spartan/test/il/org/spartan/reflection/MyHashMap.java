@@ -22,11 +22,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * hashCodes that do not differ in lower bits. Note: Null keys always map to
    * hash 0, thus index 0. */
   static int hash(final int h) {
-    // This function ensures that hashCodes that differ only by
-    // constant multiples at each bit position have a bounded
-    // number of collisions (approximately 8 at default load factor).
-    final int $ = h ^ h >>> 12 ^ h >>> 20;
-    return $ ^ $ >>> 4 ^ $ >>> 7;
+    return h ^ h >>> 12 ^ h >>> 20 ^ (h ^ h >>> 12 ^ h >>> 20) >>> 4 ^ (h ^ h >>> 12 ^ h >>> 20) >>> 7;
   }
 
   /** Returns index for hash code h. */
@@ -107,8 +103,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   @Override public void clear() {
     ++modCount;
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
-    for (int i = 0; i < tab.length; ++i)
-      tab[i] = null;
+    for (int ¢ = 0; ¢ < tab.length; ++¢)
+      tab[¢] = null;
     size = 0;
   }
 
@@ -150,8 +146,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       return containsNullValue();
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
     for (final Entry element : tab)
-      for (@SuppressWarnings("rawtypes") Entry e = element; e != null; e = e.next)
-        if (value.equals(e.value))
+      for (@SuppressWarnings("rawtypes") Entry ¢ = element; ¢ != null; ¢ = ¢.next)
+        if (value.equals(¢.value))
           return true;
     return false;
   }
@@ -214,8 +210,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the
    * <tt>add</tt> or <tt>addAll</tt> operations. */
   @Override public Set<K> keySet() {
-    final Set<K> ks = keySet;
-    return ks != null ? ks : (keySet = new KeySet());
+    return keySet != null ? keySet : (keySet = new KeySet());
   }
 
   /** Associates the specified value with the specified key in this map. If the
@@ -270,8 +265,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       if (newCapacity > table.length)
         resize(newCapacity);
     }
-    for (final java.util.Map.Entry<? extends K, ? extends V> e : m.entrySet())
-      put(e.getKey(), e.getValue());
+    for (final java.util.Map.Entry<? extends K, ? extends V> ¢ : m.entrySet())
+      put(¢.getKey(), ¢.getValue());
   }
 
   /** Removes the mapping for the specified key from this map if present.
@@ -285,19 +280,19 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     return e == null ? null : e.value;
   }
 
-  public final int selfBytes() {
+  public int selfBytes() {
     return 0;
   }
 
-  public final int selfIntegers() {
+  public int selfIntegers() {
     return 4;
   }
 
-  public final int selfObjects() {
+  public int selfObjects() {
     return 2;
   }
 
-  public final int selfReferences() {
+  public int selfReferences() {
     return 1;
   }
 
@@ -312,8 +307,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   }
 
   @Override @SuppressWarnings("synthetic-access") public Collection<V> values() {
-    final Collection<V> vs = values;
-    return vs != null ? vs : (values = new Values());
+    return values != null ? values : (values = new Values());
   }
 
   /** Adds a new entry with the specified key, value and hash code to the
@@ -345,7 +339,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
 
   /** Returns the entry associated with the specified key in the HashMap.
    * Returns null if the HashMap contains no mapping for the key. */
-  final Entry<K, V> getEntry(final Object key) {
+  Entry<K, V> getEntry(final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     for (Entry<K, V> e = table[indexFor(hash, table.length)]; e != null; e = e.next) {
       Object k;
@@ -374,7 +368,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
 
   /** Removes and returns the entry associated with the specified key in the
    * HashMap. Returns null if the HashMap contains no mapping for this key. */
-  final Entry<K, V> removeEntryForKey(final Object key) {
+  Entry<K, V> removeEntryForKey(final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode()), i = indexFor(hash, table.length);
     Entry<K, V> prev = table[i], e = prev;
     while (e != null) {
@@ -397,7 +391,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   }
 
   /** Special version of remove for EntrySet. */
-  final Entry<K, V> removeMapping(final Object o) {
+  Entry<K, V> removeMapping(final Object o) {
     if (!(o instanceof Map.Entry))
       return null;
     final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
@@ -466,15 +460,14 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   private boolean containsNullValue() {
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
     for (final Entry element : tab)
-      for (@SuppressWarnings("rawtypes") Entry e = element; e != null; e = e.next)
-        if (e.value == null)
+      for (@SuppressWarnings("rawtypes") Entry ¢ = element; ¢ != null; ¢ = ¢.next)
+        if (¢.value == null)
           return true;
     return false;
   }
 
   private Set<Map.Entry<K, V>> entrySet0() {
-    final Set<Map.Entry<K, V>> es = entrySet;
-    return es != null ? es : (entrySet = new EntrySet());
+    return entrySet != null ? entrySet : (entrySet = new EntrySet());
   }
 
   /** Offloaded version of get() to look up null keys. Null keys map to index 0.
@@ -482,15 +475,15 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * performance in the two most commonly used operations (get and put), but
    * incorporated with conditionals in others. */
   private V getForNullKey() {
-    for (Entry<K, V> e = table[0]; e != null; e = e.next)
-      if (e.key == null)
-        return e.value;
+    for (Entry<K, V> ¢ = table[0]; ¢ != null; ¢ = ¢.next)
+      if (¢.key == null)
+        return ¢.value;
     return null;
   }
 
   private void putAllForCreate(final Map<? extends K, ? extends V> m) {
-    for (final java.util.Map.Entry<? extends K, ? extends V> e : m.entrySet())
-      putForCreate(e.getKey(), e.getValue());
+    for (final java.util.Map.Entry<? extends K, ? extends V> ¢ : m.entrySet())
+      putForCreate(¢.getKey(), ¢.getValue());
   }
 
   /** This method is used instead of put by constructors and pseudoconstructors
@@ -533,7 +526,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    *             and value (Object) for each key-value mapping. The key-value
    *             mappings are emitted in no particular order. */
   private void writeObject(final java.io.ObjectOutputStream s) throws IOException {
-    final Iterator<Map.Entry<K, V>> i = size > 0 ? entrySet0().iterator() : null;
+    final Iterator<Map.Entry<K, V>> i = size <= 0 ? null : entrySet0().iterator();
     // Write out the threshold, loadfactor, and any hidden stuff
     s.defaultWriteObject();
     // Write out number of buckets
@@ -568,11 +561,11 @@ public final class MyHashMap<K, V> implements Map<K, V> {
         return false;
       @SuppressWarnings("rawtypes") final Map.Entry e = (Map.Entry) o;
       final Object k1 = getKey(), k2 = e.getKey();
-      if (k1 == k2 || k1 != null && k1.equals(k2)) {
-        final Object v1 = getValue(), v2 = e.getValue();
-        if (v1 == v2 || v1 != null && v1.equals(v2))
-          return true;
-      }
+      if (k1 != k2 && (k1 == null || !k1.equals(k2)))
+        return false;
+      final Object v1 = getValue(), v2 = e.getValue();
+      if (v1 == v2 || v1 != null && v1.equals(v2))
+        return true;
       return false;
     }
 
@@ -684,10 +677,9 @@ public final class MyHashMap<K, V> implements Map<K, V> {
 
     HashIterator() {
       expectedModCount = modCount;
-      if (size > 0) { // advance to first entry
-        for (@SuppressWarnings("rawtypes") final Entry[] t = table; index < t.length && (next = t[index++]) == null;)
+      if (size > 0)
+        for (@SuppressWarnings("rawtypes") final Entry[] ¢ = table; index < ¢.length && (next = ¢[index++]) == null;)
           nothing();
-      }
     }
 
     @Override public final boolean hasNext() {
@@ -711,10 +703,9 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       final Entry<K, V> e = next;
       if (e == null)
         throw new NoSuchElementException();
-      if ((next = e.next) == null) {
-        for (@SuppressWarnings("rawtypes") final Entry[] t = table; index < t.length && (next = t[index++]) == null;)
+      if ((next = e.next) == null)
+        for (@SuppressWarnings("rawtypes") final Entry[] ¢ = table; index < ¢.length && (next = ¢[index++]) == null;)
           nothing();
-      }
       current = e;
       return e;
     }

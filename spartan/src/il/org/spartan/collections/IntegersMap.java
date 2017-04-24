@@ -25,8 +25,7 @@ public final class IntegersMap {
   public static final int MIN_CAPACITY = 4;
 
   static int hash(final int ¢) {
-    final int $ = ¢ ^ ¢ >>> 12 ^ ¢ >>> 20;
-    return $ ^ $ >>> 4 ^ $ >>> 7;
+    return ¢ ^ ¢ >>> 12 ^ ¢ >>> 20 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 4 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 7;
   }
 
   private static int roundUp(final int ¢) {
