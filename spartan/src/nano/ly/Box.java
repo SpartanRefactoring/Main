@@ -1,5 +1,5 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
-package il.org.spartan.utils;
+package nano.ly;
 
 import org.jetbrains.annotations.*;
 

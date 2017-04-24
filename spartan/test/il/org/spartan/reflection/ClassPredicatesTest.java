@@ -8,6 +8,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 @SuppressWarnings("static-method") public class ClassPredicatesTest {
   @Test public void testBoxFields() {

@@ -2,8 +2,8 @@
 package il.org.spartan.utils;
 
 import static il.org.spartan.strings.StringUtils.*;
-import static il.org.spartan.utils.Box.*;
 import static il.org.spartan.utils.___.*;
+import static nano.ly.Box.*;
 
 import java.util.*;
 

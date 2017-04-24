@@ -1,7 +1,7 @@
 package il.org.spartan.xy;
 
-import static il.org.spartan.utils.Box.*;
 import static java.lang.String.*;
+import static nano.ly.Box.*;
 
 import java.io.*;
 import java.util.*;
