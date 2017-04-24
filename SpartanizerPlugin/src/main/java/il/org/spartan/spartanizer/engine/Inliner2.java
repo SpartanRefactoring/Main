@@ -197,7 +197,7 @@ public final class Inliner2 {
             THIS_EXPRESSION, //
             TYPE_LITERAL))
           return true;
-        final SimpleName occurrence = the.onlyOne(occurrences);
+        final SimpleName occurrence = the.onlyOneOf(occurrences);
         if (occurrence == null)
           return false;
         switch (Coupling.of(occurrence).withRespectTo(commonAncestor(occurrence, with))) {

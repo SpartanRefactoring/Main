@@ -41,11 +41,11 @@ public class CleanerVisitorTest {
   }
 
   @Test public void test1() {
-    new CleanerVisitor().visit((Javadoc) the.first(getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner));
+    new CleanerVisitor().visit((Javadoc) the.headOf(getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner));
   }
 
   @Test public void test2() {
-    new CleanerVisitor().visit((ImportDeclaration) the.first(getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner));
+    new CleanerVisitor().visit((ImportDeclaration) the.headOf(getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner));
   }
 
   private static class ASTNodeWrapper {

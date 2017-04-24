@@ -183,7 +183,7 @@ public abstract class MetaFixture {
    * @param ¢ the wanted class
    * @return the first element of this __ */
   protected final <N extends ASTNode> N find(final Class<N> ¢) {
-    return the.first(descendants.whoseClassIs(¢).from(reflectedCompilationUnit()));
+    return the.headOf(descendants.whoseClassIs(¢).from(reflectedCompilationUnit()));
   }
 
   /** Gets the name of the most outer class of the current one

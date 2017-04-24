@@ -86,7 +86,7 @@ public class Selection extends AbstractSelection<Selection> {
    * @return name for selection, extracted from the compilation units */
   private static String getName(final List<ICompilationUnit> ¢) {
     // TODO Yuval Simon study the use of lisp.getOnlyOne and apply here.
-    return ¢ == null || ¢.isEmpty() ? null : ¢.size() == 1 ? the.first(¢).getElementName() : the.first(¢).getResource().getProject().getName();
+    return ¢ == null || ¢.isEmpty() ? null : ¢.size() == 1 ? the.headOf(¢).getElementName() : the.headOf(¢).getResource().getProject().getName();
   }
 
   /** @param ¢ JD
@@ -100,7 +100,7 @@ public class Selection extends AbstractSelection<Selection> {
   public Selection fixTextSelection() {
     if (inner == null || inner.size() != 1 || textSelection == null)
       return this;
-    final IResource r = the.first(inner).descriptor.getResource();
+    final IResource r = the.headOf(inner).descriptor.getResource();
     if (!(r instanceof IFile))
       return this;
     final int o = textSelection.getOffset(), l = o + textSelection.getLength();
@@ -328,7 +328,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final ITextSelection ¢) {
       final Selection $ = getCompilationUnit();
       return $ == null || $.inner == null || $.inner.isEmpty() ? null
-          : (¢.getOffset() == 0 && ¢.getLength() == the.first($.inner).build().compilationUnit.getLength() ? $ : $.setTextSelection(¢).fixTextSelection())
+          : (¢.getOffset() == 0 && ¢.getLength() == the.headOf($.inner).build().compilationUnit.getLength() ? $ : $.setTextSelection(¢).fixTextSelection())
               .setName(SELECTION_NAME).setIsTextSelection(true);
     }
 
@@ -356,7 +356,7 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final IStructuredSelection s) {
       final List<?> ss = s.toList();
       if (ss.size() == 1) {
-        final Object o = the.first(ss);
+        final Object o = the.headOf(ss);
         return o == null ? empty()
             : o instanceof MarkerItem ? by((MarkerItem) o)
                 : o instanceof IJavaProject ? by((IJavaProject) o)

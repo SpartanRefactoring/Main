@@ -73,18 +73,18 @@ public final class LocalInitializedForMoveToInitializers extends ReplaceToNextSt
     final List<Expression> initializers = initializers(¢);
     if (initializers.isEmpty())
       return true;
-    if (!iz.variableDeclarationExpression(the.first(initializers)))
+    if (!iz.variableDeclarationExpression(the.headOf(initializers)))
       return false;
-    final VariableDeclarationExpression $ = az.variableDeclarationExpression(the.first(initializers));
+    final VariableDeclarationExpression $ = az.variableDeclarationExpression(the.headOf(initializers));
     assert $ != null : "FragmentToForInitializers -> for initializer is null and not empty?!?";
     return wizard.eq(s.getType(), $.getType()) && fittingModifiers(s, $);
   }
 
   public static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
-    final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(the.first(initializers($)));
+    final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(the.headOf(initializers($)));
     initializers($).clear();
     initializers($).add(make.variableDeclarationExpression(s));
-    fragments(az.variableDeclarationExpression(the.first(initializers($)))).addAll(copy.of(fragments(forInitializer)));
+    fragments(az.variableDeclarationExpression(the.headOf(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
 
   @Override public String description(final VariableDeclarationFragment ¢) {

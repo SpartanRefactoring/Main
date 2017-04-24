@@ -126,7 +126,7 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
 
   private static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = occurencesOf(s, id);
-    return $.size() != 1 ? null : the.first($);
+    return $.size() != 1 ? null : the.headOf($);
   }
 
   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {

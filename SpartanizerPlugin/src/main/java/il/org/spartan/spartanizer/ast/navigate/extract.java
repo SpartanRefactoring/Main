@@ -215,7 +215,7 @@ public enum extract {
       case 0:
         return null;
       case 1:
-        return the.first($);
+        return the.headOf($);
       default:
         return ¢;
     }
@@ -481,7 +481,7 @@ public enum extract {
   }
 
   private static Expression onlyExpression(final List<Expression> $) {
-    return core(the.onlyOne($));
+    return core(the.onlyOneOf($));
   }
 
   public static SimpleName onlyName(final VariableDeclarationExpression ¢) {
@@ -489,7 +489,7 @@ public enum extract {
   }
 
   public static SimpleName onlyName(final VariableDeclarationStatement ¢) {
-    return the.onlyOne(fragments(¢)).getName();
+    return the.onlyOneOf(fragments(¢)).getName();
   }
 
   /** Finds the expression returned by a return statement
@@ -532,7 +532,7 @@ public enum extract {
    * @return if b is a block with just 1 statement it returns that statement, if
    *         b is statement it returns b and if b is null it returns a null */
   public static Statement singleStatement(final ASTNode ¢) {
-    return the.onlyOne(extract.statements(¢));
+    return the.onlyOneOf(extract.statements(¢));
   }
 
   /** Finds the single statement in the "then" branch of an {@link IfStatement}

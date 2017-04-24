@@ -38,8 +38,8 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
     andAlso("Converted to String", () -> {
       invocations = ancestors.until((p, c) -> !iz.methodInvocation(c) || p != null && p != az.methodInvocation(c).getExpression()).from(parent)
           .stream().map(az::methodInvocation).collect(toList());
-      final Expression $ = az.expression((invocations.isEmpty() ? current : the.last(invocations)).getParent());
-      return !invocations.isEmpty() && "toString".equals(the.last(invocations).getName().getIdentifier()) || not.nil($) && iz.infixPlus($)
+      final Expression $ = az.expression((invocations.isEmpty() ? current : the.lastOf(invocations)).getParent());
+      return !invocations.isEmpty() && "toString".equals(the.lastOf(invocations).getName().getIdentifier()) || not.nil($) && iz.infixPlus($)
           && (iz.stringLiteral(az.infixExpression($).getLeftOperand()) || iz.stringLiteral(az.infixExpression($).getRightOperand()));
     });
     andAlso("All invocations are append/toString",
@@ -66,16 +66,16 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
   }
 
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
-    r.replace(invocations.isEmpty() ? current : the.last(invocations), simplification, g);
+    r.replace(invocations.isEmpty() ? current : the.lastOf(invocations), simplification, g);
     return r;
   }
 
   @Override protected ASTNode[] span() {
-    return new Expression[] { invocations.isEmpty() ? current : the.last(invocations) };
+    return new Expression[] { invocations.isEmpty() ? current : the.lastOf(invocations) };
   }
 
   @Override protected ASTNode highlight() {
-    return invocations.isEmpty() ? current : the.last(invocations);
+    return invocations.isEmpty() ? current : the.lastOf(invocations);
   }
 
   private Expression simplification() {
@@ -89,15 +89,15 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
     }));
     if (needPreliminaryStringSafe($))
       $.add(0, make.emptyString(current));
-    return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(the.first($)) : subject.operands($).to(Operator.PLUS);
+    return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(the.headOf($)) : subject.operands($).to(Operator.PLUS);
   }
 
   public static boolean needPreliminaryStringUnsafe(final List<Expression> ¢) {
-    return ¢.isEmpty() || !iz.stringLiteral(the.first(¢)) && !iz.name(the.first(¢)) && !iz.methodInvocation(the.first(¢));
+    return ¢.isEmpty() || !iz.stringLiteral(the.headOf(¢)) && !iz.name(the.headOf(¢)) && !iz.methodInvocation(the.headOf(¢));
   }
 
   public static boolean needPreliminaryStringSafe(final List<Expression> ¢) {
-    return ¢.isEmpty() || !iz.stringLiteral(the.first(¢));
+    return ¢.isEmpty() || !iz.stringLiteral(the.headOf(¢));
   }
 
   private static List<Expression> arguments(final List<?> argumentz) {

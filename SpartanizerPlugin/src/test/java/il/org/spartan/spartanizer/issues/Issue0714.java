@@ -44,7 +44,7 @@ public class Issue0714 {
   }
 
   @Test public void testNoFinal() {
-    assert !determineIf.isImmutable((TypeDeclaration) the.first(types(az.compilationUnit(make.ast("public class A {int x;}")))));
+    assert !determineIf.isImmutable((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class A {int x;}")))));
   }
 
   @Test public void testNull() {
@@ -60,10 +60,10 @@ public class Issue0714 {
   }
 
   @Test public void testSimpleTypeDecleration() {
-    assert determineIf.isImmutable((TypeDeclaration) the.first(types(az.compilationUnit(make.ast("public class A {}")))));
+    assert determineIf.isImmutable((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class A {}")))));
   }
 
   private TypeDeclaration typeConvert(final String $) {
-    return (TypeDeclaration) the.first(types(az.compilationUnit(make.ast($))));
+    return (TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast($))));
   }
 }

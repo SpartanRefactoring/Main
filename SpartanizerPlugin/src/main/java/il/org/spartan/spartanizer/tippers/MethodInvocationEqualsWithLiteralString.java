@@ -30,14 +30,14 @@ public final class MethodInvocationEqualsWithLiteralString extends ReplaceCurren
   }
 
   @Override public String description(final MethodInvocation ¢) {
-    return "Write " + the.first(arguments(¢)) + "." + name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
+    return "Write " + the.headOf(arguments(¢)) + "." + name(¢) + "(" + receiver(¢) + ") instead of " + ¢;
   }
 
   @Override public ASTNode replacement(final MethodInvocation i) {
     final SimpleName $ = name(i);
     if (!mns.contains($ + ""))
       return null;
-    final Expression ¢ = the.onlyOne(arguments(i));
+    final Expression ¢ = the.onlyOneOf(arguments(i));
     if (!(¢ instanceof StringLiteral))
       return null;
     final Expression e = receiver(i);

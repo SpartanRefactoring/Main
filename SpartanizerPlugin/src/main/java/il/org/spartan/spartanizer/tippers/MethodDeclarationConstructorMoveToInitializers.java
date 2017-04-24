@@ -34,7 +34,7 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
   }
 
   @Override public Tip tip(final MethodDeclaration ¢) {
-    return tip(the.first(statements(¢)));
+    return tip(the.headOf(statements(¢)));
   }
 
   private static Tip tip(final Statement s) {

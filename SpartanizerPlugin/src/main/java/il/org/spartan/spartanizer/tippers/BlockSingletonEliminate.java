@@ -29,7 +29,7 @@ public final class BlockSingletonEliminate extends NodePattern<Block> implements
     andAlso("Parent is not a try, catch or synchronized", //
         () -> !iz.nodeTypeIn(container, TRY_STATEMENT, CATCH_CLAUSE, SYNCHRONIZED_STATEMENT));
     andAlso("Block has only one statement", //
-        () -> not.nil(onlyStatement = the.onlyOne(statements(current))));
+        () -> not.nil(onlyStatement = the.onlyOneOf(statements(current))));
     andAlso("Block is not essential", //
         () -> !iz.blockEssential(onlyStatement));
     andAlso("Statement is not a variable declaration", //

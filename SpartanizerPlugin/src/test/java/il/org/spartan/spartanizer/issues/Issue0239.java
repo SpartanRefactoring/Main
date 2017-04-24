@@ -104,7 +104,7 @@ public class Issue0239 {
     assert !sideEffects.free(f.getInitializer());
     final List<SimpleName> uses = collect.usesOf(name).in(nextStatement);
     assert uses.size() == 1;
-    final SimpleName use = the.onlyOne(uses);
+    final SimpleName use = the.onlyOneOf(uses);
     assert use != null;
     assert !Coupling.unknownNumberOfEvaluations(use, nextStatement);
     assert !Inliner.never(name, nextStatement);

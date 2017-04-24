@@ -86,12 +86,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert $ != null;
     if (!$.isEmpty())
       different.remove($);
-    assert the.first($) != null;
-    assert the.first(different) != null;
-    assert the.second(different) != null;
-    return subject.pair(the.first($), //
+    assert the.headOf($) != null;
+    assert the.headOf(different) != null;
+    assert the.secondOf(different) != null;
+    return subject.pair(the.headOf($), //
         subject.pair(//
-            the.first(different), the.second(different)//
+            the.headOf(different), the.secondOf(different)//
         ).to(//
             op.PLUS2)//
     ).to(//
@@ -101,13 +101,13 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
 
   @SuppressWarnings("boxing") private ASTNode replacement(final List<Expression> xs) {
     if (xs.size() == 1)
-      return az.infixExpression(the.first(xs)).getOperator() != TIMES ? null : the.first(xs);
+      return az.infixExpression(the.headOf(xs)).getOperator() != TIMES ? null : the.headOf(xs);
     if (xs.size() == 2)
-      return replacement(az.infixExpression(the.first(xs)), az.infixExpression(the.second(xs)));
+      return replacement(az.infixExpression(the.headOf(xs)), az.infixExpression(the.secondOf(xs)));
     final List<Expression> $ = an.empty.list(), different = an.empty.list();
     List<Expression> temp = as.list(xs);
     for (final Integer i : range.from(0).to(xs.size())) {
-      temp = the.rest(temp);
+      temp = the.tailOf(temp);
       for (final Expression op : extract.allOperands(az.infixExpression(xs.get(i)))) { // b
         for (final Expression ops : temp)
           if (isIn(op, extract.allOperands(az.infixExpression(ops))))
@@ -115,7 +115,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
           else
             addDifferent(op, different);
         if (temp.size() == 1)
-          extract.allOperands(az.infixExpression(the.first(temp))).stream().filter(λ -> !isIn(λ, $)).forEach(λ -> addDifferent(λ, different));
+          extract.allOperands(az.infixExpression(the.headOf(temp))).stream().filter(λ -> !isIn(λ, $)).forEach(λ -> addDifferent(λ, different));
         lisp.removeFromList(different, $);
       }
     }
@@ -125,7 +125,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     if ($.isEmpty())
       return addition;
     if ($.size() == 1)
-      return subject.pair(the.first($), addition).to(TIMES);
+      return subject.pair(the.headOf($), addition).to(TIMES);
     if ($.size() <= 1)
       return null;
     Expression multiplication = null;

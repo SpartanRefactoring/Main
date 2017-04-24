@@ -336,8 +336,8 @@ public interface type {
     private static implementation lookDown(final InfixExpression x) {
       final InfixExpression.Operator o = operator(x);
       final List<Expression> es = hop.operands(x);
-      implementation $ = get(the.first(es));
-      for (final Expression ¢ : the.rest(es))
+      implementation $ = get(the.headOf(es));
+      for (final Expression ¢ : the.tailOf(es))
         $ = $.underBinaryOperator(o, get(¢));
       return $;
     }

@@ -31,7 +31,7 @@ public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNo
     body = loopBody;
     block = az.block(body);
     statements = statements(block);
-    lastStatement = the.last(statements);
+    lastStatement = the.lastOf(statements);
     updater = az.expressionStatement(lastStatement).getExpression();
     updates = compute.updateSpots(updater);
   }

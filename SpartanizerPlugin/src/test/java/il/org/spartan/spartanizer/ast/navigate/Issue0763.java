@@ -20,26 +20,26 @@ import nano.ly.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0763 {
   @Test public void a() {
-    azzert.that(analyze.type(the.first(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "") && iz.methodInvocation(λ.getParent()))
+    azzert.that(analyze.type(the.headOf(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "") && iz.methodInvocation(λ.getParent()))
         .from(make.ast("class C{ Map x; void foo(){ print(x);}}")))), is("Map"));
   }
 
   @Test public void b() {
     azzert.that(
         analyze.type(
-            the.first(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(){Map x; print(x);}}")))),
+            the.headOf(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(){Map x; print(x);}}")))),
         is("Map"));
   }
 
   @Test public void c() {
     azzert.that(
         analyze.type(
-            the.first(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(Map x){ print(x);}}")))),
+            the.headOf(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(Map x){ print(x);}}")))),
         is("Map"));
   }
 
   @Test public void d() {
-    azzert.that(analyze.type(the.first(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + ""))
+    azzert.that(analyze.type(the.headOf(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + ""))
         .from(make.ast("class C{  void foo(Map<String,String> x){ print(x);}}")))), is("Map<String,String>"));
   }
 }

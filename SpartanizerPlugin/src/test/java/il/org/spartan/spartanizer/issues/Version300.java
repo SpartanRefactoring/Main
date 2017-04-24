@@ -40,7 +40,7 @@ public class Version300 {
 
     //@formatter:on
     default boolean B(final int ¢) {
-      return fault.bool(bug(box.it(¢)));
+      return fault.bool(bug(nano.ly.box.it(¢)));
     }
 
     default boolean B(final Object... __) {
@@ -59,7 +59,7 @@ public class Version300 {
 
     //@formatter:off
     default Find prerequisite() { return null; }
-    default void S(final int ¢) { bug(box.it(¢)); }
+    default void S(final int ¢) { bug(nano.ly.box.it(¢)); }
     default void S(final Object ... __) { bug(__); }
   }
   interface Replace extends Find {

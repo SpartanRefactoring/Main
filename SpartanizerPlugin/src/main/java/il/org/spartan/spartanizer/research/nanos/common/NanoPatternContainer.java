@@ -53,10 +53,10 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
   }
 
   public String firstPattern() {
-    return the.first(this).pattern().replaceAll("\\$", "");
+    return the.headOf(this).pattern().replaceAll("\\$", "");
   }
 
   public String firstReplacement() {
-    return the.first(this).replacement().replaceAll("\\$", "");
+    return the.headOf(this).replacement().replaceAll("\\$", "");
   }
 }

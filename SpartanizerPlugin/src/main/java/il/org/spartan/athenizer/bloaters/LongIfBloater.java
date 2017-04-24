@@ -38,7 +38,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static Expression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
-    final InfixExpression $ = subject.pair(¢.getRightOperand(), the.first(extendedOperands(¢))).to(¢.getOperator());
+    final InfixExpression $ = subject.pair(¢.getRightOperand(), the.headOf(extendedOperands(¢))).to(¢.getOperator());
     subject.append($, step.extendedOperands(¢));
     if (!$.extendedOperands().isEmpty())
       $.extendedOperands().remove(0);

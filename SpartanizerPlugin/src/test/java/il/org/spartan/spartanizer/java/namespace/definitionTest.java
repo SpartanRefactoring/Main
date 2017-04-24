@@ -66,7 +66,7 @@ public class definitionTest extends MetaFixture {
   }
 
   @Test public void a05() {
-    assert the.first(descendants.whoseClassIs(AnnotationTypeDeclaration.class).from(reflectedCompilationUnit())) != null;
+    assert the.headOf(descendants.whoseClassIs(AnnotationTypeDeclaration.class).from(reflectedCompilationUnit())) != null;
   }
 
   @Test public void a06() {
@@ -138,7 +138,7 @@ public class definitionTest extends MetaFixture {
     for (final Annotation a : annotations()) {
        final SingleMemberAnnotation ¢ = az.singleMemberAnnotation(a);
       if (¢ != null)
-        assert the.first(annotees.of(az.singleMemberAnnotation(¢))) != null : ¢;
+        assert the.headOf(annotees.of(az.singleMemberAnnotation(¢))) != null : ¢;
     }
   }
 
@@ -176,7 +176,7 @@ public class definitionTest extends MetaFixture {
     for (final Annotation a : annotations()) {
        final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && x.getTypeName().getFullyQualifiedName().endsWith(ScopeSize.class.getSimpleName() + ""))
-        azzert.that(x + ": " + annotees.of(x) + ancestry(the.first(annotees.of(x))), scope.of(the.first(annotees.of(x))).size(),
+        azzert.that(x + ": " + annotees.of(x) + ancestry(the.headOf(annotees.of(x))), scope.of(the.headOf(annotees.of(x))).size(),
             is(value(x)));
     }
   }
@@ -188,7 +188,7 @@ public class definitionTest extends MetaFixture {
         continue;
       final List<SimpleName> ns = annotees.of(¢);
       assert ns != null;
-      final SimpleName n = the.first(ns);
+      final SimpleName n = the.headOf(ns);
       assert n != null;
        final List<? extends ASTNode> s = scope.of(n);
       assert s != null : fault.dump() + //
@@ -207,7 +207,7 @@ public class definitionTest extends MetaFixture {
         continue;
       final List<SimpleName> ns = annotees.of(¢);
       assert ns != null;
-      final SimpleName n = the.first(ns);
+      final SimpleName n = the.headOf(ns);
       assert n != null;
       if (!"hashCode".equals(n + ""))
         continue;
@@ -228,7 +228,7 @@ public class definitionTest extends MetaFixture {
         continue;
       final List<SimpleName> ns = annotees.of(¢);
       assert ns != null;
-      final SimpleName n = the.first(ns);
+      final SimpleName n = the.headOf(ns);
       assert n != null;
       if (!"raisin".equals(n + ""))
         continue;
@@ -249,7 +249,7 @@ public class definitionTest extends MetaFixture {
         continue;
       final List<SimpleName> ns = annotees.of(¢);
       assert ns != null;
-      final SimpleName n = the.first(ns);
+      final SimpleName n = the.headOf(ns);
       assert n != null;
       if (!"enumConstant1".equals(n + ""))
         continue;
@@ -270,7 +270,7 @@ public class definitionTest extends MetaFixture {
         continue;
       final List<SimpleName> ns = annotees.of(¢);
       assert ns != null;
-      final SimpleName n = the.first(ns);
+      final SimpleName n = the.headOf(ns);
       assert n != null;
       if (!"annotation".equals(n + ""))
         continue;
@@ -288,7 +288,7 @@ public class definitionTest extends MetaFixture {
     for (final Annotation a : annotations()) {
        final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
-        final SimpleName n = the.first(annotees.of(x));
+        final SimpleName n = the.headOf(annotees.of(x));
         if (!"fenum".equals(n + ""))
           continue;
         azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
@@ -300,7 +300,7 @@ public class definitionTest extends MetaFixture {
     for (final Annotation a : annotations()) {
        final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
-        final SimpleName n = the.first(annotees.of(x));
+        final SimpleName n = the.headOf(annotees.of(x));
         if (!InterfaceInAnEnum.class.getSimpleName().equals(n + ""))
           continue;
         final int size = scope.of(n).size();
@@ -314,7 +314,7 @@ public class definitionTest extends MetaFixture {
     for (final Annotation a : annotations()) {
        final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
-        final SimpleName n = the.first(annotees.of(x));
+        final SimpleName n = the.headOf(annotees.of(x));
         if (!DummyAnnotation.class.getSimpleName().equals(n + ""))
           continue;
         azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
@@ -326,7 +326,7 @@ public class definitionTest extends MetaFixture {
     for (final Annotation a : annotations()) {
        final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
-        final SimpleName n = the.first(annotees.of(x));
+        final SimpleName n = the.headOf(annotees.of(x));
         if (!DummyInterface.class.getSimpleName().equals(n + ""))
           continue;
         azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));
@@ -338,7 +338,7 @@ public class definitionTest extends MetaFixture {
     for (final Annotation a : annotations()) {
        final SingleMemberAnnotation x = az.singleMemberAnnotation(a);
       if (x != null && (x.getTypeName() + "").equals(ScopeSize.class.getSimpleName() + "")) {
-        final SimpleName n = the.first(annotees.of(x));
+        final SimpleName n = the.headOf(annotees.of(x));
         if (!DummyClass.class.getSimpleName().equals(n + ""))
           continue;
         azzert.that(x + ": " + n + "/" + definition.kind(n), scope.of(n).size(), is(value(x)));

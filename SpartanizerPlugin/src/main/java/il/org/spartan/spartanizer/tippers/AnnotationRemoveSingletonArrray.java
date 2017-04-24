@@ -32,7 +32,7 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
   }
 
   @Override public ASTNode replacement(final SingleMemberAnnotation a) {
-    final Expression x = the.onlyOne(expressions(az.arrayInitializer(a.getValue())));
+    final Expression x = the.onlyOneOf(expressions(az.arrayInitializer(a.getValue())));
     if (x == null)
       return null;
     final SingleMemberAnnotation $ = copy.of(a);

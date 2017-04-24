@@ -28,11 +28,11 @@ public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatem
       return null;
     final Block b = az.block(s.getParent());
     if (b == null || !iz.methodDeclaration(b.getParent()) || !iz.voidType(step.returnType(az.methodDeclaration(b.getParent())))
-        || the.last(statements(b)) != s)
+        || the.lastOf(statements(b)) != s)
       return null;
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (final switchBranch ¢ : $)
-      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.returnStatement(the.first(¢.statements))) {
+      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.returnStatement(the.headOf(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());
       }

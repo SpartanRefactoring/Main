@@ -31,11 +31,11 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     if (b == null) {
       if (!iz.loop(s.getParent()))
         return null;
-    } else if (!iz.loop(b.getParent()) || the.last(statements(b)) != s)
+    } else if (!iz.loop(b.getParent()) || the.lastOf(statements(b)) != s)
       return null;
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (final switchBranch ¢ : $)
-      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.continueStatement(the.first(¢.statements))) {
+      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.continueStatement(the.headOf(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());
       }
