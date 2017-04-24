@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
+
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static java.util.stream.Collectors.*;
 
@@ -62,24 +63,17 @@ public enum step {
         --$;
     return $ == 0;
   }
+
   public static Statement body(final ASTNode n) {
     return body(az.statement(n));
   }
-  public static Statement body(final Statement n) {
-    if (iz.forStatement(n))
-      return az.forStatement(n).getBody();
-    if (iz.whileStatement(n))
-      return az.whileStatement(n).getBody();
-    if (iz.enhancedFor(n))
-      return az.enhancedFor(n).getBody();
-    if (iz.doStatement(n))
-      return az.doStatement(n).getBody();
-    if (iz.switchStatement(n))
-      return null;
-    if (iz.synchronizedStatement(n))
-      return az.synchronizedStatement(n).getBody();
-    return null;
-    
+
+  public static Statement body(final Statement s) {
+    return iz.forStatement(s) ? az.forStatement(s).getBody()
+        : iz.whileStatement(s) ? az.whileStatement(s).getBody()
+            : iz.enhancedFor(s) ? az.enhancedFor(s).getBody()
+                : iz.doStatement(s) ? az.doStatement(s).getBody()
+                    : iz.switchStatement(s) || !iz.synchronizedStatement(s) ? null : az.synchronizedStatement(s).getBody();
   }
 
   public static Block body(final CatchClause ¢) {

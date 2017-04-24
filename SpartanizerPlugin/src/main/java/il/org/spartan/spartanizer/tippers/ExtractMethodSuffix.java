@@ -137,14 +137,14 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     int tagPosition = -1;
     final Collection<TagElement> xs = an.empty.list();
     for (final TagElement ¢ : ts)
-      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && first(fragments(¢)) instanceof SimpleName) {
+      if (TagElement.TAG_PARAM.equals(¢.getTagName()) && ¢.fragments().size() == 1 && the.first(fragments(¢)) instanceof SimpleName) {
         noParameterTags = false;
         if (tagPosition < 0)
           tagPosition = ts.indexOf(¢);
-        if (!ns.contains(first(fragments(¢))))
+        if (!ns.contains(the.first(fragments(¢))))
           xs.add(¢);
         else
-          ns.remove(first(fragments(¢)));
+          ns.remove(the.first(fragments(¢)));
       }
     if (noParameterTags)
       return;

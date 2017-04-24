@@ -9,6 +9,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import nano.ly.*;
 
 /** Unit tests for issue #706
  * @author Sapir Bismot
@@ -45,7 +46,7 @@ public class Issue0706 {
   }
 
   @Test public void test08() {
-    azzert.that("s1", is(first(getAll2.stringVariables(az.methodDeclaration(make.ast("public String stringCopy(String s1, String s2, int size);"))))
+    azzert.that("s1", is(the.first(getAll2.stringVariables(az.methodDeclaration(make.ast("public String stringCopy(String s1, String s2, int size);"))))
         .getName().getIdentifier()));
   }
 

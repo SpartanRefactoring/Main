@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.idiomatic.*;
+import static nano.ly.idiomatic.*;
 
 import java.util.*;
 

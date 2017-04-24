@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** remove redundant continue in switch in loops. for example converts
  * {@code while(b) { switch(x) { case 1: x=2; break; default: continue; } } } to
@@ -30,11 +31,11 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
     if (b == null) {
       if (!iz.loop(s.getParent()))
         return null;
-    } else if (!iz.loop(b.getParent()) || last(statements(b)) != s)
+    } else if (!iz.loop(b.getParent()) || the.last(statements(b)) != s)
       return null;
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (final switchBranch ¢ : $)
-      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.continueStatement(first(¢.statements))) {
+      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.continueStatement(the.first(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());
       }

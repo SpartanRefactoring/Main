@@ -14,6 +14,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import nano.ly.*;
 
 /** Nano matches fields
  * @author orimarco {@code marcovitch.ori@gmail.com}
@@ -25,7 +26,7 @@ public final class VanillaCollection extends NanoPatternTipper<FieldDeclaration>
 
   @Override public boolean canTip(final FieldDeclaration $) {
     return abstractTypes.contains(type(az.parameterizedType(type($))) + "")
-        && specificTypes.contains(type(az.parameterizedType(type(az.classInstanceCreation(initializer(onlyOne(fragments($))))))) + "");
+        && specificTypes.contains(type(az.parameterizedType(type(az.classInstanceCreation(initializer(the.onlyOne(fragments($))))))) + "");
   }
 
   @Override public Tip pattern(final FieldDeclaration ¢) {

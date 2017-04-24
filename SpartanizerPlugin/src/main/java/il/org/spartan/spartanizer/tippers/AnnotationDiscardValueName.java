@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Removes the "value" member from annotations that only have a single member,
  * converting {@code @SuppressWarnings(value = "unchecked")} to
@@ -29,7 +30,7 @@ public final class AnnotationDiscardValueName extends NodePattern<NormalAnnotati
   }
 
   public AnnotationDiscardValueName() {
-    notNil("Has only one member", () -> member = onlyOne(values(current)));
+    notNil("Has only one member", () -> member = the.onlyOne(values(current)));
     notNil("Extract member's name", () -> name = member.getName());
     andAlso("Name equals 'value'", () -> "value".equals(name + ""));
   }

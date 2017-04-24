@@ -25,6 +25,7 @@ import il.org.spartan.iterables.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
+import nano.ly.*;
 
 /** An interface for fluent api, used to determine the __ of an expression from
  * it's structure and context. Use __.get to find the __ of an expression.
@@ -335,8 +336,8 @@ public interface type {
     private static implementation lookDown(final InfixExpression x) {
       final InfixExpression.Operator o = operator(x);
       final List<Expression> es = hop.operands(x);
-      implementation $ = get(first(es));
-      for (final Expression ¢ : rest(es))
+      implementation $ = get(the.first(es));
+      for (final Expression ¢ : the.rest(es))
         $ = $.underBinaryOperator(o, get(¢));
       return $;
     }

@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Expand cases in a {@link SwitchStatement}: {@code switch (x) { case 1: f(1);
  * case 2: f(2); throw new Exception(); default: f(3); } } turns into
@@ -41,7 +42,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
         final Map<String, String> mapNames = getMapOldToNewNames($);
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
         $.forEach(mapNames.isEmpty() ? λ -> l.insertBefore(copy.of(λ), n, g) : λ -> l.insertBefore(replaceNames(copy.of(λ), mapNames), n, g));
-        if (!iz.sequencerComplex(last($)))
+        if (!iz.sequencerComplex(the.last($)))
           l.insertBefore(s.getAST().newBreakStatement(), n, g);
       }
     };

@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** convert {@code
  * b && true
@@ -34,7 +35,7 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
   private static Expression chopHead(final InfixExpression ¢) {
     final List<Expression> $ = allOperands(¢);
     $.remove(0);
-    return $.size() < 2 ? copy.of(first($)) : subject.operands($).to(¢.getOperator());
+    return $.size() < 2 ? copy.of(the.first($)) : subject.operands($).to(¢.getOperator());
   }
 
   private static Operator conjugate(final Operator ¢) {

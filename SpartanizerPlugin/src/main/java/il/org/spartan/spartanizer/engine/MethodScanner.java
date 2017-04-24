@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import nano.ly.*;
 
 /** A utility class used to scan statements of a {@link MethodDeclaration}.
  * @author Ori Roth
@@ -27,7 +28,7 @@ public abstract class MethodScanner {
       currentStatement = null;
     } else {
       statements = step.statements(body(method));
-      currentStatement = first(statements);
+      currentStatement = the.first(statements);
     }
     currentIndex = -1;
   }

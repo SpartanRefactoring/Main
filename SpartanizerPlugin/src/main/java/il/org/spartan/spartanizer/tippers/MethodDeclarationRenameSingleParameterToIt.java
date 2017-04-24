@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Convert {@code void f(int a){}} to {@code void f(int it){}} Test class is
  * Issue1162
@@ -32,7 +33,7 @@ public final class MethodDeclarationRenameSingleParameterToIt extends EagerTippe
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final SingleVariableDeclaration parameter = onlyOne(parameters(d));
+    final SingleVariableDeclaration parameter = the.onlyOne(parameters(d));
     if (!JohnDoe.property(parameter))
       return null;
     final SimpleName $ = parameter.getName();

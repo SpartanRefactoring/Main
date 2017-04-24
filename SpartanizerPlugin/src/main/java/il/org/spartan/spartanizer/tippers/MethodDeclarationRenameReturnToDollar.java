@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** A tipper to rename a method's return value to {@link notation#return¢}
  * @author Artium Nihamkin (original)
@@ -136,7 +137,7 @@ class Conservative extends AbstractRenamePolicy {
     for (final Iterator<SimpleName> $ = localVariables.iterator(); $.hasNext();)
       if (unused($.next()))
         $.remove();
-    return !localVariables.isEmpty() ? first(localVariables)
+    return !localVariables.isEmpty() ? the.first(localVariables)
         : parameters.stream().filter(λ -> !unused(λ.getName())).map(VariableDeclaration::getName).findFirst().orElse(null);
   }
 

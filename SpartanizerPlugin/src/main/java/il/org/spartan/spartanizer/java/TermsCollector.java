@@ -11,6 +11,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import nano.ly.*;
 
 /** Collects the {@link Term} found in an {@link InfixExpression}, organizing
  * them in three output fields: {@link #plus}, {@link #minus} and {@link #all}.
@@ -64,8 +65,8 @@ public final class TermsCollector {
     assert !isLeafTerm(¢);
     assert iz.infixMinus(¢);
     final List<Expression> $ = hop.operands(¢);
-    addPositiveTerm(core(first($)));
-    return collectNegativeTerms(rest($));
+    addPositiveTerm(core(the.first($)));
+    return collectNegativeTerms(the.rest($));
   }
 
   private Void addMinus(final Expression ¢) {
@@ -112,8 +113,8 @@ public final class TermsCollector {
   private Void collectMinusPrefixMinusExprssion(final InfixExpression ¢) {
     assert ¢ != null;
     final List<Expression> $ = hop.operands(¢);
-    collectNegativeTerm(core(first($)));
-    return collectPositiveTerms(rest($));
+    collectNegativeTerm(core(the.first($)));
+    return collectPositiveTerms(the.rest($));
   }
 
   private Void collectMinusPrefixPlusExpression(final InfixExpression ¢) {

@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** convert {@code switch (x) { case a: } switch(x) { default: (some commands) }
  * } into {@code
@@ -39,7 +40,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
             r.replace(s, ss, g);
           return;
         }
-        if (iz.breakStatement(last(ll)))
+        if (iz.breakStatement(the.last(ll)))
           ll.remove(ll.size() - 1);
         ll.remove(0);
         r.replace(s, make.ast((sideEffects.free(expression(s)) ? "" : ss + "") + statementsToString(ll)), g);
@@ -55,7 +56,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
 
   @Override protected boolean prerequisite(final SwitchStatement ¢) {
     final List<SwitchCase> $ = extract.switchCases(¢);
-    return noSideEffectCommands(¢) || $.isEmpty() || $.size() == 1 && first($).isDefault();
+    return noSideEffectCommands(¢) || $.isEmpty() || $.size() == 1 && the.first($).isDefault();
   }
 
   static boolean noSideEffectCommands(final SwitchStatement s) {

@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.factory.subject.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import nano.ly.*;
 
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class SubjectTest {
@@ -121,11 +122,11 @@ public final class SubjectTest {
     final InfixExpression e = i("1 + 2 * 3");
     final List<Expression> operands = hop.operands(flatten.of(e));
     azzert.that(operands.size(), is(2));
-    azzert.that(first(operands) + "", is("1"));
-    azzert.that(second(operands) + "", is("2 * 3"));
+    azzert.that(the.first(operands) + "", is("1"));
+    azzert.that(the.second(operands) + "", is("2 * 3"));
     assert ExpressionComparator.ADDITION.sort(operands);
-    azzert.that(first(operands) + "", is("2 * 3"));
-    azzert.that(second(operands) + "", is("1"));
+    azzert.that(the.first(operands) + "", is("2 * 3"));
+    azzert.that(the.second(operands) + "", is("1"));
     final InfixExpression refit = subject.operands(operands).to(e.getOperator());
     azzert.that(refit, is(not(e)));
     azzert.that(refit + "", is("2 * 3 + 1"));

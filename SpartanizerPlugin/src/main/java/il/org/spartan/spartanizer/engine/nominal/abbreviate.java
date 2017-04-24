@@ -92,9 +92,9 @@ public enum abbreviate {
 
   static String it(final ParameterizedType ¢) {
     if (yielding.contains(¢))
-      return it(first(typeArguments(¢)));
+      return it(the.first(typeArguments(¢)));
     if (pluralizing.contains(¢))
-      return it(first(typeArguments(¢))) + "s";
+      return it(the.first(typeArguments(¢))) + "s";
     if (assuming.contains(¢))
       return it(¢.getType());
     final String $ = it(typeArguments(¢));
@@ -139,8 +139,8 @@ public enum abbreviate {
 
   public static String variableName(final SimpleType t) {
     final List<String> ss = as.list(abbreviate.components(t));
-    String $ = first(ss).toLowerCase();
-    for (final String ¢ : lisp.rest(ss))
+    String $ = the.first(ss).toLowerCase();
+    for (final String ¢ : the.rest(ss))
       $ += ¢;
     return $;
   }

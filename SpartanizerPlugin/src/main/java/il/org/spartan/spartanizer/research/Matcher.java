@@ -17,6 +17,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Performs matching and pairing operations between <b>patterns</b> and
  * <b>ASTNodes</b>.<br>
@@ -100,11 +101,11 @@ public final class Matcher {
 
   private boolean lastInBlock(final Block ¢) {
     final ASTNode[] $ = getMatchedNodes(¢);
-    return $[$.length - 1].equals(last(statements(¢)));
+    return $[$.length - 1].equals(the.last(statements(¢)));
   }
 
   private boolean firstInBlock(final Block ¢) {
-    return getMatchedNodes(¢)[0].equals(first(statements(¢)));
+    return getMatchedNodes(¢)[0].equals(the.first(statements(¢)));
   }
 
   private boolean containsOption(final Option o) {
@@ -235,11 +236,11 @@ public final class Matcher {
 
   private static boolean isMethodInvocationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n, final Map<String, String> ids) {
     return iz.methodInvocation(n) && sameName(az.methodInvocation(p).getName(), az.methodInvocation(n).getName(), ids)
-        && consistent(ids, first(arguments(az.methodInvocation(p))) + "", az.methodInvocation(n).arguments() + "");
+        && consistent(ids, the.first(arguments(az.methodInvocation(p))) + "", az.methodInvocation(n).arguments() + "");
   }
 
   private static boolean isMethodInvocationAndHas$AArgument(final ASTNode p) {
-    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1 && (first(arguments(az.methodInvocation(p))) + "").startsWith($A);
+    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1 && (the.first(arguments(az.methodInvocation(p))) + "").startsWith($A);
   }
 
   private static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {
@@ -249,12 +250,12 @@ public final class Matcher {
   public static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode n, final ClassInstanceCreation c,
       final Map<String, String> ids) {
     return iz.classInstanceCreation(n) && sameName(c.getType(), az.classInstanceCreation(n).getType(), ids)
-        && consistent(ids, first(arguments(c)) + "", az.classInstanceCreation(n).arguments() + "");
+        && consistent(ids, the.first(arguments(c)) + "", az.classInstanceCreation(n).arguments() + "");
   }
 
   private static boolean isClassInstanceCreationAndHas$AArgument(final ASTNode p) {
     return iz.classInstanceCreation(p) && az.classInstanceCreation(p).arguments().size() == 1
-        && (first(arguments(az.classInstanceCreation(p))) + "").startsWith($A);
+        && (the.first(arguments(az.classInstanceCreation(p))) + "").startsWith($A);
   }
 
   private static boolean sameLiteral(final ASTNode p, final ASTNode n) {
@@ -266,13 +267,13 @@ public final class Matcher {
   }
 
   private static String blockVariableName(final ASTNode p) {
-    return az.methodInvocation(az.expressionStatement(first(statements(az.block(p)))).getExpression()).getName().getFullyQualifiedName();
+    return az.methodInvocation(az.expressionStatement(the.first(statements(az.block(p)))).getExpression()).getName().getFullyQualifiedName();
   }
 
   private static boolean isBlockVariable(final ASTNode p) {
     if (!iz.block(p) || statements(az.block(p)).size() != 1)
       return false;
-    final Statement $ = first(statements(az.block(p)));
+    final Statement $ = the.first(statements(az.block(p)));
     return iz.expressionStatement($) && iz.methodInvocation(az.expressionStatement($).getExpression()) && blockVariableName(p).startsWith($B);
   }
 
@@ -381,7 +382,7 @@ public final class Matcher {
   }
 
   private static String argumentsId(final ASTNode p) {
-    return first(arguments(az.methodInvocation(p))) + "";
+    return the.first(arguments(az.methodInvocation(p))) + "";
   }
 
   private static String matchingArguments(final ASTNode ¢) {
@@ -394,7 +395,7 @@ public final class Matcher {
   }
 
   static ASTNode extractStatementIfOne(final ASTNode ¢) {
-    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : first(statements(az.block(¢)));
+    return !iz.block(¢) || statements(az.block(¢)).size() != 1 ? ¢ : the.first(statements(az.block(¢)));
   }
 
   <N extends ASTNode> ASTNode replacement(final N n) {

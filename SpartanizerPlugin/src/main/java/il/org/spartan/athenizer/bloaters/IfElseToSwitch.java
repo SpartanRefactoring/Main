@@ -12,6 +12,7 @@ import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** {@link Issue1018}
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
@@ -27,7 +28,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       return null;
     final AST create = ¢.getAST();
     final SwitchStatement $ = create.newSwitchStatement();
-    $.setExpression(copy.of(az.simpleName(left(az.comparison(first(xs))))));
+    $.setExpression(copy.of(az.simpleName(left(az.comparison(the.first(xs))))));
     final List<Statement> ss = statements($);
     final List<Block> bs = getAllBlocks(¢);
     int i = 0;
@@ -50,9 +51,9 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
   }
 
   private static boolean isMyCase(final List<Expression> xs) {
-    if (xs == null || xs.isEmpty() || !iz.infixEquals(first(xs)))
+    if (xs == null || xs.isEmpty() || !iz.infixEquals(the.first(xs)))
       return false;
-    InfixExpression px = az.comparison(first(xs));
+    InfixExpression px = az.comparison(the.first(xs));
     if (!iz.infixEquals(px))
       return false;
     final SimpleName switchVariable = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));

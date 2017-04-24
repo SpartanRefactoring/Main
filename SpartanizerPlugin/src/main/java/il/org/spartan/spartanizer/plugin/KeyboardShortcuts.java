@@ -52,7 +52,7 @@ public class KeyboardShortcuts extends AbstractHandler {
   private static Void insertCharacter(final char c, final Selection $) {
     if ($ == null || $.isEmpty() || $.textSelection == null)
       return null;
-    final ICompilationUnit u = lisp.onlyOne($.getCompilationUnits());
+    final ICompilationUnit u = the.onlyOne($.getCompilationUnits());
     if (u == null)
       return null;
     final MultiTextEdit m = new MultiTextEdit();

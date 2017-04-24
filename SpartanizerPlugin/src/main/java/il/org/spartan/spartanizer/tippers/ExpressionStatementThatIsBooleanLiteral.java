@@ -12,6 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Replace {@code ?.that(M?, X, is(boolean)); } by {@code assert x == M?; }
  * @author Yossi Gil
@@ -33,8 +34,8 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
     return set(az.methodInvocation((expressionStatement = ¢).getExpression())) //
         && set(methodInvocation.getName()) //
         && set(arguments(methodInvocation)) //
-        && setFirst(first(arguments)) //
-        && setSecond(second(arguments));
+        && setFirst(the.first(arguments)) //
+        && setSecond(the.second(arguments));
   }
 
   @Override public AssertStatement replacement(final ExpressionStatement ¢) {
@@ -60,6 +61,6 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
 
   boolean setSecond(final Expression ¢) {
     final MethodInvocation $ = az.methodInvocation(¢);
-    return as.set("is").contains($.getName() + "") && (booleanLiteral = az.booleanLiteral(first(arguments($)))) != null;
+    return as.set("is").contains($.getName() + "") && (booleanLiteral = az.booleanLiteral(the.first(arguments($)))) != null;
   }
 }
