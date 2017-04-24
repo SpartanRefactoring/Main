@@ -73,6 +73,13 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/cli-1.01.jar</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>il.org.spartan</groupId>
+			<artifactId>fluent.ly</artifactId>
+			<version>1.01</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/fluent.ly-0.0.1.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
