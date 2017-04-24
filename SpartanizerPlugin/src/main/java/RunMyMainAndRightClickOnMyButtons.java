@@ -29,14 +29,14 @@ public class RunMyMainAndRightClickOnMyButtons {
     bn.setText("&Apply (single scan)...");
     Menu popupMenu = new Menu(bn);
     MenuItem i1 = new MenuItem(popupMenu, SWT.NONE);
-    addAction(i1, λ -> {});
+    addAction(i1, λ -> {/**/});
     i1.setText("To &Function");
     MenuItem i2 = new MenuItem(popupMenu, SWT.NONE);
     i2.setText("To &Window");
-    addAction(i2, λ -> {});
+    addAction(i2, λ -> {/**/});
     MenuItem i3 = new MenuItem(popupMenu, SWT.NONE);
     i3.setText("To &Project ");
-    addAction(i3, λ -> {});
+    addAction(i3, λ -> {/**/});
     bn.setMenu(popupMenu);
   }
 
@@ -46,14 +46,14 @@ public class RunMyMainAndRightClickOnMyButtons {
     bn.setText("&Fully spartanize...");
     Menu popupMenu = new Menu(bn);
     MenuItem i1 = new MenuItem(popupMenu, SWT.NONE);
-    addAction(i1, λ -> {});
+    addAction(i1, λ -> {/**/});
     i1.setText("&Function");
     MenuItem i2 = new MenuItem(popupMenu, SWT.NONE);
     i2.setText("&Window");
-    addAction(i2, λ -> {});
+    addAction(i2, λ -> {/**/});
     MenuItem i3 = new MenuItem(popupMenu, SWT.NONE);
     i3.setText("&Project ");
-    addAction(i3, λ -> {});
+    addAction(i3, λ -> {/**/});
     bn.setMenu(popupMenu);
   }
 
@@ -63,14 +63,14 @@ public class RunMyMainAndRightClickOnMyButtons {
     bn.setText("&Repeatedly apply ...");
     Menu popupMenu = new Menu(bn);
     MenuItem i1 = new MenuItem(popupMenu, SWT.NONE);
-    addAction(i1, λ -> {});
+    addAction(i1, λ -> {/**/});
     i1.setText("to &Function");
     MenuItem i2 = new MenuItem(popupMenu, SWT.NONE);
     i2.setText("to &Window");
-    addAction(i2, λ -> {});
+    addAction(i2, λ -> {/**/});
     MenuItem i3 = new MenuItem(popupMenu, SWT.NONE);
     i3.setText("to &Project ");
-    addAction(i3, λ -> {});
+    addAction(i3, λ -> {/**/});
     bn.setMenu(popupMenu);
   }
 
@@ -80,20 +80,20 @@ public class RunMyMainAndRightClickOnMyButtons {
     bn.setText("&Silence...");
     Menu popupMenu = new Menu(bn);
     MenuItem i0 = new MenuItem(popupMenu, SWT.NONE);
-    addAction(i0, λ -> {});
+    addAction(i0, λ -> {/**/});
     i0.setText("&Tipper");
     MenuItem i1 = new MenuItem(popupMenu, SWT.NONE);
-    addAction(i1, λ -> {});
+    addAction(i1, λ -> {/**/});
     i1.setText("Tipping on &Function");
     MenuItem i2 = new MenuItem(popupMenu, SWT.NONE);
     i2.setText("Tipping on &Class");
-    addAction(i2, λ -> {});
+    addAction(i2, λ -> {/**/});
     MenuItem i3 = new MenuItem(popupMenu, SWT.NONE);
     i3.setText("The &Spartanizer");
-    addAction(i3, λ -> {});
+    addAction(i3, λ -> {/**/});
     MenuItem i4 = new MenuItem(popupMenu, SWT.NONE);
     i4.setText("Mark as @&UnderConstruction)");
-    addAction(i4, λ -> {});
+    addAction(i4, λ -> {/**/});
     bn.setMenu(popupMenu);
   }
 
