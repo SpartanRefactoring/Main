@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Oct 7, 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class azTest {
   @Test public void asComparisonPrefixlExpression() {

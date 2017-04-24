@@ -12,7 +12,7 @@ import nano.ly.*;
 /** Test for analyze.type
  * @author Ori Marcovitch
  * @since Nov 3, 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0763 {
   @Test public void a() {
@@ -22,15 +22,15 @@ public class Issue0763 {
 
   @Test public void b() {
     azzert.that(
-        analyze.type(
-            the.headOf(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(){Map x; print(x);}}")))),
+        analyze.type(the.headOf(
+            descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(){Map x; print(x);}}")))),
         is("Map"));
   }
 
   @Test public void c() {
     azzert.that(
-        analyze.type(
-            the.headOf(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(Map x){ print(x);}}")))),
+        analyze.type(the
+            .headOf(descendants.whoseClassIs(Name.class).suchThat(λ -> "x".equals(λ + "")).from(make.ast("class C{  void foo(Map x){ print(x);}}")))),
         is("Map"));
   }
 

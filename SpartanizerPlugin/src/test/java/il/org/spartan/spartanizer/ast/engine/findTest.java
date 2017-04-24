@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 /** TODO orimarco <marcovitch.ori@gmail.com> please add a description
  * @author orimarco <marcovitch.ori@gmail.com>
  * @since Dec 22, 2016 */
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class findTest {
   @Test public void a() {

@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TDD: Unit tests for {@link Tipper#myActualOperandsClass()}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class Issue0214 {
   private static <N extends ASTNode> Class<N> mustBeASTNodeClass(final Class<N> ¢) {

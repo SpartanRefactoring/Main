@@ -8,7 +8,6 @@ import org.junit.*;
  * expression of an enhanced for
  * @author Yossi Gil
  * @since 2017-03-16 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0054 {
   @Test public void forPlainUseInUpdaters() {

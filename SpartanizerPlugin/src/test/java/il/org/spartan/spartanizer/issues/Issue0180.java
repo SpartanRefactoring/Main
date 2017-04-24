@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Ori Roth
  * @since 2016
  * @see ParameterAbbreviate#fixJavadoc testing for comments */
-
 @SuppressWarnings("static-method") //
 public class Issue0180 {
   @Test public void renameToCent() {

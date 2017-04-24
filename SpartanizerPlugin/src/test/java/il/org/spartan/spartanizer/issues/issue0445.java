@@ -7,7 +7,7 @@ import org.junit.*;
 /** Tests of {@link ThisClass#thatFunction}
  * @author Yossi Gil
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class issue0445 {
   @Test public void a() {

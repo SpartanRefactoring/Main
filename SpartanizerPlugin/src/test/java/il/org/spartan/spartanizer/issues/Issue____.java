@@ -57,7 +57,6 @@ import il.org.spartan.*;
  * </ol>
  * @author Yossi Gil // put your name here
  * @since 2016 // put the year/date here */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue____ {
   private static Object object() {

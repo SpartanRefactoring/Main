@@ -14,7 +14,6 @@ import il.org.spartan.spartanizer.meta.*;
 
 /** @author Yossi Gil
  * @since 2017-01-28 */
-
 @Ignore("Yossi Gil")
 @SuppressWarnings("javadoc")
 public class mayShortcircuitTest extends MetaFixture {

@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Tests of {@link InitializerEmptyRemove}
  * @author Yossi Gil
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue1071 {
   @Test public void a() {

@@ -6,12 +6,8 @@ import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
 
-import static il.org.spartan.lisp.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -22,7 +18,6 @@ import nano.ly.*;
  * @Since 2016-09
  * @author Niv Shalmon
  * @since Sep 7, 2016 */
-
 @SuppressWarnings({ "javadoc", "static-method", "unused" })
 public final class typeTest {
   /** Ideally this class is empty, but still {@link forget} d.

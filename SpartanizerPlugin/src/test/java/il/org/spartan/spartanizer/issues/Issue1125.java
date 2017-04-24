@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
  * @author Yossi Gil
  * @author Niv Shalmon
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue1125 {
   @Test public void forLoop() {

@@ -16,7 +16,7 @@ public class GitPullOperation extends GitOperation {
     return "platform:/plugin/org.eclipse.egit.ui/icons/obj16/pull.png";
   }
 
-  @Override protected void gitOperation(Git ¢) throws Throwable {
+  @Override protected void gitOperation(final Git ¢) throws Throwable {
     ¢.pull().call();
   }
 }

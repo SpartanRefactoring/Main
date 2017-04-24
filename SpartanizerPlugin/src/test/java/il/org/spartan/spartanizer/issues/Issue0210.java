@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link InfixDivisionEvaluate}
  * @author Niv Shalmon
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0210 {
   @Test public void issue210_01() {

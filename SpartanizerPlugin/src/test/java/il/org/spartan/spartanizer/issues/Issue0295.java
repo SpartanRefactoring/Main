@@ -18,7 +18,6 @@ import il.org.spartan.utils.*;
  * of inlining into the expression of an enhanced for
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0295 {
   private static final String INPUT1 = "boolean f(){A var=f(1);for(A b: var)if(b.a)return true;return false;}";

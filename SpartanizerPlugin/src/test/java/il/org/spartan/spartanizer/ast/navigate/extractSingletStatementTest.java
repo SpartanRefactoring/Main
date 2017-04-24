@@ -15,7 +15,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class extractSingletStatementTest {
   @Test public void declarationAndStatementIsNull() {

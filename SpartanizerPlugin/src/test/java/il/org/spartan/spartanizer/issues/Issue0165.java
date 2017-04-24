@@ -7,7 +7,6 @@ import org.junit.*;
 /** Unit tests for centification of a single parameter to a function
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0165 {
   @Test public void a01() {

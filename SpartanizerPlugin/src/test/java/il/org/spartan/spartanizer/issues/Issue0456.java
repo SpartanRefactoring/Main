@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit test for the GitHub issue thus numbered: of inlining into for
  * @author Yossi Gil
  * @since 2017-03-16 */
-
 @Ignore("This requires more work")
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0456 {

@@ -8,7 +8,6 @@ import org.junit.*;
 /** Between nano
  * @author Ori Marcovitch
  * @since 2016 */
-
 @Ignore
 @SuppressWarnings("static-method")
 public class BetweenTest {

@@ -13,7 +13,6 @@ import il.org.spartan.utils.*;
 /** Tests class {@link Proposition}
  * @author Yossi Gil {@code    Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
-
 @SuppressWarnings("static-method")
 public class PropositionTest {
   private static boolean ignoreNext() {

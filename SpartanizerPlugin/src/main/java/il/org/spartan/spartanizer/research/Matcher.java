@@ -238,7 +238,8 @@ public final class Matcher {
   }
 
   private static boolean isMethodInvocationAndHas$AArgument(final ASTNode p) {
-    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1 && (the.headOf(arguments(az.methodInvocation(p))) + "").startsWith($A);
+    return iz.methodInvocation(p) && az.methodInvocation(p).arguments().size() == 1
+        && (the.headOf(arguments(az.methodInvocation(p))) + "").startsWith($A);
   }
 
   private static boolean isClassInstanceCreationAndConsistentWith$AArgument(final ASTNode p, final ASTNode n) {

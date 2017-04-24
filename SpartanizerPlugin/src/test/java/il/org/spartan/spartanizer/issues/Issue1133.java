@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Test of {@link AssignmentAndUpdateAssignmentToSame}
  * @author Yossi Gil
  * @since 2017-03-04 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1133 {
   @Test public void and() {

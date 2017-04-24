@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * those are tests for issue #54 from bitbucket.
  * @author Ori Roth
  * @since 2016 */
-
 @SuppressWarnings("static-method")
 public class Issue0117 {
   @Test public void issue54ForPlainUseInCondition() {

@@ -7,7 +7,6 @@ import org.junit.*;
  * as strings unless they are string literals...
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings("static-method")
 public class Issue0437 {
   /** Nothing to test as this issue is defunct: InfixIndexOfToStringContains */

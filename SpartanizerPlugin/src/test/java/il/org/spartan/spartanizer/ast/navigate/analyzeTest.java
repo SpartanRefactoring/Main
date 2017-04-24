@@ -17,7 +17,6 @@ import nano.ly.*;
  * @author Vivian Shehadeh
  * @author Ward Mattar
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class analyzeTest {
   private static final ASTNode AST = make.ast("public void m(int y){ y=5;}");
@@ -81,13 +80,13 @@ public final class analyzeTest {
   }
 
   @Test public void testFindDeclarationInType1() {
-    azzert.that("int", is(analyze
-        .type(the.headOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{int x;public void m(){ x=5;}} "))).getName())));
+    azzert.that("int", is(analyze.type(
+        the.headOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{int x;public void m(){ x=5;}} "))).getName())));
   }
 
   @Test public void testFindDeclarationInType2() {
-    azzert.that("int",
-        is(analyze.type(the.headOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(int y){ int z = 5; }"))).getName())));
+    azzert.that("int", is(analyze
+        .type(the.headOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(int y){ int z = 5; }"))).getName())));
   }
 
   @Test public void testType0() {

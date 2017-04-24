@@ -7,7 +7,6 @@ import org.junit.*;
 /** Unit test for Issue 1055
  * @author Yossi Gil
  * @since 2016-12-23 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1055 {
   @Test public void vanilla() {

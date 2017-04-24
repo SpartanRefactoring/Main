@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link InfixPlusRemoveParenthesis}
  * @author Niv Shalmon
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0162 {
   @Test public void issue162_02() {

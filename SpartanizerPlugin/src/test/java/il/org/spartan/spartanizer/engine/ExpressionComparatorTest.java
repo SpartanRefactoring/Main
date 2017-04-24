@@ -16,7 +16,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Dan Abramovich
  * @author Arthur Spozhnikov
  * @since 2015-07-17 */
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class ExpressionComparatorTest {
   @Test public void additionSortTest() {

@@ -48,7 +48,7 @@ public abstract class WidgetOperation implements Serializable {
    * @param configuration user configuration
    * @return true iff the configuration is valid
    * @see #configurationComponents */
-  public boolean register(Map<?, ?> configuration) {
+  public boolean register(final Map<?, ?> configuration) {
     return true;
   }
 

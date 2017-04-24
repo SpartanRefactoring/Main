@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Tests of {@link WildcardTypeExtendsObjectTrim}
  * @author Yossi Gil
  * @since 2017-01-16 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue1072 {
   @Test public void a() {

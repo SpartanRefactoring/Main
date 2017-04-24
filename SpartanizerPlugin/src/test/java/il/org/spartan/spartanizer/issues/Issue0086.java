@@ -15,7 +15,6 @@ import il.org.spartan.spartanizer.traversal.*;
 /** Unit tests for {@link SequencerNotLastInBlock}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0086 extends Issue____ {
   private static final String INPUT = "{   throw Something();  f(); a = 3; return 2;}";

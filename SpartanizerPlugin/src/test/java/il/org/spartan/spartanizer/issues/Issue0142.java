@@ -7,7 +7,6 @@ import org.junit.*;
 /** Unit tests for {@link DisabledChecker}
  * @author Ori Roth
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0142 {
   @Test public void disableSpartanizaionInClass() {

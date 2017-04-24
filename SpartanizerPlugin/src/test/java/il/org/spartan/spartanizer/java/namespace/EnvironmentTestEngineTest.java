@@ -6,8 +6,6 @@ import java.util.Map.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -17,7 +15,6 @@ import il.org.spartan.spartanizer.utils.*;
  * @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */
-
 @SuppressWarnings({ "unused", "javadoc" })
 public class EnvironmentTestEngineTest {
   private LinkedHashSet<Entry<String, Binding>> s;

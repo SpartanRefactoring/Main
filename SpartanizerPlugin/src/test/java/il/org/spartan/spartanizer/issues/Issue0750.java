@@ -7,7 +7,6 @@ import org.junit.*;
 /** Unit tests for the GitHub issue thus numbered
  * @author Doron Meshulam
  * @since 06-Dec-16 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0750 {
   @Test public void testDidntSpoiledAnything() {

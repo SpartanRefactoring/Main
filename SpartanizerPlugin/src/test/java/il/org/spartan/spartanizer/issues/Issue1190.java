@@ -12,7 +12,6 @@ import nano.ly.*;
 /** Batch testing - run the spartinizer on itself with no errors
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>
  * @since 2017-04-01 */
-
 public class Issue1190 {
   TextualTraversals trimmer;
 

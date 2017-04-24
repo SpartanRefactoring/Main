@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link LocalInitializedStatementTerminatingScope}
  * @author Ori Roth
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0155 {
   @Test public void inlineFinal() {

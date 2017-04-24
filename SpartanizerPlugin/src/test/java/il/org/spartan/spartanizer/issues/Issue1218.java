@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit test for the GitHub issue thus numbered.
  * @author Yossi Gil
  * @since 2017-04-03 */
-
 @SuppressWarnings("static-method")
 public class Issue1218 {
   @Test public void a0() {

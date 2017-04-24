@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Tests for {@link AssignmentToFromInfixIncludingTo}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0103 {
   @Test public void _AND1() {

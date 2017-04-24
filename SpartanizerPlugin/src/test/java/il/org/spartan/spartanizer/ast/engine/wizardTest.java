@@ -14,7 +14,6 @@ import org.junit.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class wizardTest {
   @Test public void astExpression() {

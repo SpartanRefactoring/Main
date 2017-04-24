@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 
 /** @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0131 {
   @Test public void a01() {

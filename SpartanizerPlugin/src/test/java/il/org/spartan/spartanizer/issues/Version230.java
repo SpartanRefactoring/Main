@@ -25,7 +25,6 @@ import il.org.spartan.spartanizer.utils.*;
 /** Unit tests for version 2.30
  * @author Yossi Gil
  * @since 2014-07-10 */
-
 @SuppressWarnings({ "static-method", "javadoc", "OverlyComplexClass" }) //
 public final class Version230 {
   @Test public void actualExampleForSortAddition() {

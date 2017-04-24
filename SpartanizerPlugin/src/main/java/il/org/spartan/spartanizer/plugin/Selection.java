@@ -326,8 +326,8 @@ public class Selection extends AbstractSelection<Selection> {
     private static Selection by(final ITextSelection ¢) {
       final Selection $ = getCompilationUnit();
       return $ == null || $.inner == null || $.inner.isEmpty() ? null
-          : (¢.getOffset() == 0 && ¢.getLength() == the.headOf($.inner).build().compilationUnit.getLength() ? $ : $.setTextSelection(¢).fixTextSelection())
-              .setName(SELECTION_NAME).setIsTextSelection(true);
+          : (¢.getOffset() == 0 && ¢.getLength() == the.headOf($.inner).build().compilationUnit.getLength() ? $
+              : $.setTextSelection(¢).fixTextSelection()).setName(SELECTION_NAME).setIsTextSelection(true);
     }
 
     /** Only support selection by {@link IFile}.

@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * defines a "$"variable
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0222 {
   @Test public void chocolate1() {

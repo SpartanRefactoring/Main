@@ -30,7 +30,7 @@ public class RunOperation extends WidgetOperation {
     };
   }
 
-  @Override public boolean register(@SuppressWarnings("hiding") Map<?, ?> configuration) {
+  @Override public boolean register(@SuppressWarnings("hiding") final Map<?, ?> configuration) {
     return (configurationName = (String) configuration.get(NAME)) != null //
         && (debug = (Boolean) configuration.get(DEBUG)) != null //
         && load();
@@ -45,19 +45,19 @@ public class RunOperation extends WidgetOperation {
   }
 
   private boolean load() {
-    DebugPlugin plugin = DebugPlugin.getDefault();
+    final DebugPlugin plugin = DebugPlugin.getDefault();
     if (plugin == null)
       return false;
-    ILaunchManager manager = plugin.getLaunchManager();
+    final ILaunchManager manager = plugin.getLaunchManager();
     if (manager == null)
       return false;
     final List<ILaunchConfiguration> configurations = an.empty.list();
-    for (ILaunchConfigurationType ¢ : manager.getLaunchConfigurationTypes())
+    for (final ILaunchConfigurationType ¢ : manager.getLaunchConfigurationTypes())
       try {
-        ILaunchConfiguration[] cs = manager.getLaunchConfigurations(¢);
+        final ILaunchConfiguration[] cs = manager.getLaunchConfigurations(¢);
         if (cs != null)
           Collections.addAll(configurations, cs);
-      } catch (CoreException e) {
+      } catch (final CoreException e) {
         note.cancel(e);
       }
     return (configuration = configurations.stream() //
