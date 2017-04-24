@@ -1,7 +1,7 @@
 package il.org.spartan.bench;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.utils.Box.*;
+import static nano.ly.Box.*;
 import static org.junit.Assert.assertEquals;
 
 import java.text.*;

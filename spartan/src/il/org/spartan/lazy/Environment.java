@@ -2,8 +2,8 @@
 package il.org.spartan.lazy;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.*;
+import static nano.ly.idiomatic.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.*;
