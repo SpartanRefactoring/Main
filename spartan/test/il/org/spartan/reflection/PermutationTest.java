@@ -7,6 +7,7 @@ import java.util.*;
 
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 @SuppressWarnings("static-method") public class PermutationTest {
@@ -46,7 +47,7 @@ import il.org.spartan.utils.*;
     final int a[] = Permutation.random(10000);
     int count = 0;
     for (int ¢ = 0; ¢ < a.length; ++¢)
-      count += As.binary(¢ == a[¢]);
+      count += as.bit(¢ == a[¢]);
     System.out.println(count);
     assert !(count > a.length / 2);
   }

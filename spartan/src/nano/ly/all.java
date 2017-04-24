@@ -1,5 +1,5 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
-package il.org.spartan.utils;
+package nano.ly;
 
 import org.jetbrains.annotations.*;
 
@@ -9,7 +9,7 @@ import il.org.spartan.streotypes.*;
  * collection.
  * @author Yossi Gil, the Technion.
  * @since 21/06/2008 */
-@Utility public enum All {
+@Utility public enum all {
   ;
   /** Determine whether all elements in an {@link Iterable} collection are not
    * null.
