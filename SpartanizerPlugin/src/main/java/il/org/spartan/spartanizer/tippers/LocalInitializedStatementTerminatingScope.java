@@ -33,6 +33,15 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
+    assert f != null;
+    if (iz.loop(nextStatement)) {
+      Statement body = step.body(nextStatement);
+      assert body != null;
+      if (compute.usedNames(body).contains(f.getName() + ""))
+        return null;
+    }
+    assert f != null;
+    assert f != null;
     if (f == null || extract.core(f.getInitializer()) instanceof LambdaExpression || initializer == null || haz.annotation(f)
         || iz.enhancedFor(nextStatement) && iz.simpleName(az.enhancedFor(nextStatement).getExpression())
             && !(az.simpleName(az.enhancedFor(nextStatement).getExpression()) + "").equals(n + "") && !iz.simpleName(initializer)
