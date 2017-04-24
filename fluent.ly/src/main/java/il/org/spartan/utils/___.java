@@ -1,7 +1,7 @@
 package il.org.spartan.utils;
 
 import static il.org.spartan.strings.StringUtils.*;
-import static nano.ly.Box.*;
+import static nano.ly.box.*;
 import static org.junit.Assert.*;
 
 import java.util.*;

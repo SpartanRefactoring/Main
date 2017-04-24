@@ -66,7 +66,7 @@ public enum iterables {
    * test methods begin with the name of the method they check.
    * @author Yossi Gil
    * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void containsDegenerate() {
       azzert.nay(contains("Hello"));

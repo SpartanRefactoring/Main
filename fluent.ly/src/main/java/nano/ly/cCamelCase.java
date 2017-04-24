@@ -19,7 +19,7 @@ public interface cCamelCase {
   }
 
   static boolean usefulTypeName(final String typeName) {
-    return typeName.length() > 1 || !Character.isUpperCase(the.first(typeName));
+    return typeName.length() > 1 || !Character.isUpperCase(the.characterOf(typeName));
   }
 
   String JAVA_CAMEL_CASE_SEPARATOR = "[_]|(?<!(^|[_A-Z]))(?=[A-Z])|(?<!(^|_))(?=[A-Z][a-z])";

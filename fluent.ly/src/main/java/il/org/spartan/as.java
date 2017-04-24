@@ -11,6 +11,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.iterables.*;
+import nano.ly.*;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.
@@ -95,7 +96,7 @@ public enum as {
   @NotNull public static List<Integer> ingeterList(@NotNull final int... is) {
     @NotNull final List<Integer> $ = new ArrayList<>();
     for (final int ¢ : is)
-      $.add(box.it(¢));
+      $.add(nano.ly.box.it(¢));
     return $;
   }
 
@@ -159,7 +160,7 @@ public enum as {
    * @return a {@link List} of of all <code><b>int</b></code>s in the
    *         parameter */
   public static List<Integer> list(@NotNull final int... ¢) {
-    return as.list(box.it(¢));
+    return as.list(nano.ly.box.it(¢));
   }
 
   /** Converts an {@link Iterable} of a given type into a {@link List} of values
@@ -265,7 +266,6 @@ public enum as {
    * test methods begin with the name of the method they check.
    * @author Yossi Gil
    * @since 2014-05-31 */
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void asBitOfFalse() {
       azzert.that(as.bit(false), is(0));
@@ -283,9 +283,9 @@ public enum as {
     @Test public void asListSimple() {
       // direct call `as.list(12, 13, 14)` kills Travis --or
       @NotNull final List<Integer> is = as.list(new int[] { 12, 13, 14 });
-      azzert.that(is.get(0), is(box.it(12)));
-      azzert.that(is.get(1), is(box.it(13)));
-      azzert.that(is.get(2), is(box.it(14)));
+      azzert.that(is.get(0), is(nano.ly.box.it(12)));
+      azzert.that(is.get(1), is(nano.ly.box.it(13)));
+      azzert.that(is.get(2), is(nano.ly.box.it(14)));
       azzert.that(is.size(), is(3));
     }
 
