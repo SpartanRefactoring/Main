@@ -3,7 +3,6 @@ package il.org.spartan.utils;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 import nano.ly.*;
 

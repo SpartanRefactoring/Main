@@ -8,8 +8,7 @@ import nano.ly.*;
 /** TODO Yossi Gil Document Classn
  * @author Yossi Gil
  * @since 2016-12-25 */
-@FunctionalInterface
-public interface TableRenderer {
+@FunctionalInterface public interface TableRenderer {
   enum builtin implements TableRenderer {
     TXT, TEX {
       @Override public String afterHeader() {

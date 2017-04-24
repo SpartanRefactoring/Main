@@ -1,9 +1,6 @@
 package il.org.sparan.classfiles;
 
-import static il.org.spartan.AssertToAzzert.*;
 import static il.org.spartan.azzert.*;
-
-import org.junit.*;
 
 import org.junit.*;
 
@@ -45,7 +42,8 @@ import il.org.spartan.classfiles.*;
     azzert.that(Filename.headPart("com.sun.corba.se.impl.encoding.BufferManagerWriteCollect$1"), is("com.sun.corba.se.impl.encoding"));
     azzert.that(Filename.headPart("com.sun.security.auth.callback.DialogCallbackHandler$2"), is("com.sun.security.auth.callback"));
     azzert.that(Filename.headPart("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter"), is("com.sun.corba.se.impl.encoding"));
-    azzert.that(Filename.headPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream"), is("com.sun.corba.se.impl.encoding"));
+    azzert.that(Filename.headPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream"),
+        is("com.sun.corba.se.impl.encoding"));
     azzert.that(Filename.headPart("javax.swing.JSlider$1SmartHashtable$LabelUIResource"), is("javax.swing"));
   }
 
@@ -114,7 +112,8 @@ import il.org.spartan.classfiles.*;
     azzert.that(Filename.name2Canonical("a.b.c"), is("a.b.c"));
     azzert.that(Filename.name2Canonical("a.b.c$d"), is("a.b.c.d"));
     azzert.that(Filename.name2Canonical("a.b$c.x$d"), is("a.b$c.x.d"));
-    azzert.that(Filename.name2Canonical("com.sun.corba.se.impl.io.ValueUtility$IdentityKeyValueStack$KeyValuePair"), is("com.sun.corba.se.impl.io.ValueUtility.IdentityKeyValueStack.KeyValuePair"));
+    azzert.that(Filename.name2Canonical("com.sun.corba.se.impl.io.ValueUtility$IdentityKeyValueStack$KeyValuePair"),
+        is("com.sun.corba.se.impl.io.ValueUtility.IdentityKeyValueStack.KeyValuePair"));
   }
 
   @Test public void Path2Class() {
@@ -154,7 +153,8 @@ import il.org.spartan.classfiles.*;
     azzert.that(Filename.tailPart("a.b.c"), is("c"));
     azzert.that(Filename.tailPart("a.b.c.$.XXX"), is("XXX"));
     azzert.that(Filename.tailPart("a.b$c.x$d"), is("x$d"));
-    azzert.that(Filename.tailPart("com.sun.corba.se.impl.io.ValueUtility$IdentityKeyValueStack$KeyValuePair"), is("ValueUtility$IdentityKeyValueStack$KeyValuePair"));
+    azzert.that(Filename.tailPart("com.sun.corba.se.impl.io.ValueUtility$IdentityKeyValueStack$KeyValuePair"),
+        is("ValueUtility$IdentityKeyValueStack$KeyValuePair"));
     azzert.that(Filename.tailPart("mypackage.Myclass$1"), is("Myclass$1"));
     azzert.that(Filename.tailPart("a$1"), is("a$1"));
     azzert.that(Filename.tailPart("b.a$1"), is("a$1"));
@@ -171,7 +171,8 @@ import il.org.spartan.classfiles.*;
     azzert.that(Filename.tailPart("b.a$b"), is("a$b"));
     azzert.that(Filename.tailPart("b.a$c"), is("a$c"));
     azzert.that(Filename.tailPart("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter"), is("CodeSetConversion$UTF16BTCConverter"));
-    azzert.that(Filename.tailPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream"), is("IDLJavaSerializationInputStream$__ByteArrayInputStream"));
+    azzert.that(Filename.tailPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream"),
+        is("IDLJavaSerializationInputStream$__ByteArrayInputStream"));
     azzert.that(Filename.tailPart("javax.swing.JSlider$1SmartHashtable$LabelUIResource"), is("JSlider$1SmartHashtable$LabelUIResource"));
   }
 
@@ -216,7 +217,8 @@ import il.org.spartan.classfiles.*;
     azzert.that(Filename.trailerPart("b.a$b"), is("b"));
     azzert.that(Filename.trailerPart("b.a$c"), is("c"));
     azzert.that(Filename.trailerPart("com.sun.corba.se.impl.encoding.CodeSetConversion$UTF16BTCConverter"), is("UTF16BTCConverter"));
-    azzert.that(Filename.trailerPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream"), is("__ByteArrayInputStream"));
+    azzert.that(Filename.trailerPart("com.sun.corba.se.impl.encoding.IDLJavaSerializationInputStream$__ByteArrayInputStream"),
+        is("__ByteArrayInputStream"));
     azzert.that(Filename.trailerPart("javax.swing.JSlider$1SmartHashtable$LabelUIResource"), is("LabelUIResource"));
   }
 }

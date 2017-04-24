@@ -7,7 +7,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
 import nano.ly.*;
 
 @TestCase @SuppressWarnings("static-method") public class AllTest {

@@ -10,8 +10,7 @@ import nano.ly.*;
 /** Unit test for {@link Table#classToNormalizedFileName(String)}
  * @author Yossi Gil
  * @since 2017-01-05 */
-@SuppressWarnings("static-method")
-public class TableTest {
+@SuppressWarnings("static-method") public class TableTest {
   @Test public void test() {
     azzert.that(Table.classToNormalizedFileName("Table_NanosByCategories"), is("nanos-by-categories"));
   }

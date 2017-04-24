@@ -1,7 +1,5 @@
 package nano.ly;
 
-import static il.org.spartan.lisp.*;
-
 import java.text.*;
 import java.util.*;
 import java.util.function.*;

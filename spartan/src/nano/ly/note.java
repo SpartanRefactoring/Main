@@ -9,7 +9,6 @@ import java.util.*;
 import java.util.logging.*;
 import java.util.stream.*;
 
-import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
