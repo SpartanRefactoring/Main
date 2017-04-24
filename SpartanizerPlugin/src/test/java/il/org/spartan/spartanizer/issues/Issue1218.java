@@ -4,14 +4,12 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for the GitHub issue thus numbered.
  * @author Yossi Gil
  * @since 2017-04-03 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("static-method")
 public class Issue1218 {
   @Test public void a0() {

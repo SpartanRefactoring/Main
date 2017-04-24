@@ -4,8 +4,6 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.proposition.*;
 import il.org.spartan.utils.*;
@@ -13,7 +11,7 @@ import il.org.spartan.utils.*;
 /** Proposition auto-simplifies tests
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>
  * @since 2017-04-01 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("javadoc")
 public class Issue1200 {
   private final PropositionJavaNotation javaReducer = new PropositionJavaNotation();

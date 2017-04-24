@@ -12,8 +12,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Unit tests for version 2.30
  * @author Yossi Gil
  * @since 2014-07-10 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc", "OverlyComplexClass" }) //
 public final class Version230 {
   @Test public void actualExampleForSortAddition() {

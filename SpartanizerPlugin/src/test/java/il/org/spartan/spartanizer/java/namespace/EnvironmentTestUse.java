@@ -4,15 +4,13 @@ import java.util.*;
 
 import org.eclipse.jface.text.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.ast.factory.*;
 
 /** TODO Dan Greenstein please add a description
  * @author Dan Greenstein
  * @author Alex Kopzon
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class EnvironmentTestUse {

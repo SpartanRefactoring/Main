@@ -14,7 +14,7 @@ import il.org.spartan.utils.*;
 /** pretty print of proposition and testing
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>
  * @since 2017-03-30 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc", "unused" })
 public class Issue1189 {
   private static final String TAB = "\t";

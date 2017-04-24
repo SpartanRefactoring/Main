@@ -3,14 +3,12 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests for {@link MethodInvocationToStringToEmptyStringAddition}
  * @author Niv Shalmon
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0209 {
   @Test public void issue116_05() {

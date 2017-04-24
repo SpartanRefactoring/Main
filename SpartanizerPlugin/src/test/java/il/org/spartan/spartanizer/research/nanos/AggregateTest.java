@@ -4,14 +4,12 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** Tests {@link Aggregate}
  * @author Ori Marcovitch
  * @since Jan 18, 2017 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("static-method")
 public class AggregateTest {
   @Ignore @Test public void a() {

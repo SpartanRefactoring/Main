@@ -7,15 +7,13 @@ import java.util.*;
 import java.util.function.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** Tests class {@link Proposition}
  * @author Yossi Gil {@code    Yossi.Gil@GMail.COM}
  * @since 2017-03-08 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("static-method")
 public class PropositionTest {
   private static boolean ignoreNext() {

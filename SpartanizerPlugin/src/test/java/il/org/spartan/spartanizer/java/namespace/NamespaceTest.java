@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.java.namespace;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.meta.*;
 
 @SuppressWarnings("ALL")
@@ -41,7 +39,7 @@ class NamespaceFixture {
 /** Unit test of {@link Namespace}
  * @author Yossi Gil
  * @since 2016-12-15 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("javadoc")
 public class NamespaceTest extends MetaFixture {
   private final Namespace fixture = Environment.of(reflectedCompilationUnit());

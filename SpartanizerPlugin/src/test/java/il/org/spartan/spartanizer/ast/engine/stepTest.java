@@ -3,16 +3,12 @@ package il.org.spartan.spartanizer.ast.engine;
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import nano.ly.*;
@@ -21,7 +17,7 @@ import nano.ly.*;
  * @author Yossi Gil
  * @since 2015-07-18
  * @see step */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class stepTest {
   @Test public void chainComparison() {

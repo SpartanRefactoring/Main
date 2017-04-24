@@ -4,8 +4,6 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -13,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Unit tests for {@link InfixConcatenationEmptyStringLeft}
  * @author Niv Shalmon
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0116 extends TipperTest<InfixExpression> {
   @Override public Tipper<InfixExpression> tipper() {

@@ -3,13 +3,12 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
-import org.junit.runners.*;
 
 /** Unit test for the GitHub issue thus numbered. case of inlining into the
  * expression of an enhanced for
  * @author Yossi Gil
  * @since 2017-03-16 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0054 {
   @Test public void forPlainUseInUpdaters() {

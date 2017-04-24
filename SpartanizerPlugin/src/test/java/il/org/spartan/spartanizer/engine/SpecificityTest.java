@@ -12,11 +12,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class SpecificityTest {
   private static final Comparator<Expression> SPECIFICITY = new specificity();

@@ -3,12 +3,10 @@ package il.org.spartan.spartanizer.java;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("ALL")
 public final class AtomicConversionsTest {
   private byte b = (byte) hashCode();

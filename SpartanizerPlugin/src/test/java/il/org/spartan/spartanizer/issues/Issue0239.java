@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
-import static il.org.spartan.lisp.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;

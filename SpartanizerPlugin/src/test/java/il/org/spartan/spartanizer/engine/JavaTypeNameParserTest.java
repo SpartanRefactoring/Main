@@ -3,12 +3,10 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class JavaTypeNameParserTest {
   @Test public void Alex_and_Dan_test() {

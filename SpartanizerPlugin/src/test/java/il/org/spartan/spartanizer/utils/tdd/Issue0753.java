@@ -2,14 +2,10 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static il.org.spartan.azzert.*;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -20,7 +16,7 @@ import nano.ly.*;
  * @author RoeiRaz
  * @author RoeyMaor
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings("static-method")
 public class Issue0753 {
   @Test public void a() {

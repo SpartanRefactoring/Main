@@ -6,8 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -17,7 +15,7 @@ import nano.ly.*;
 /** Unit tests for {@link compute}
  * @author Yossi Gil
  * @since 2017-04-01 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings("static-method")
 public class computeTest extends MetaFixture {
   @Test public void updatedSpots() {

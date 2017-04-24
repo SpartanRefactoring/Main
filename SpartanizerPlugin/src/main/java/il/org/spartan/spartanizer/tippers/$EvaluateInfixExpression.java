@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

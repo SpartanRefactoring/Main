@@ -7,15 +7,13 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.engine.*;
 
 /** Tests for {@link have} , regarding issue #807
  * @author Kfir Marx
  * @authoe Raviv Rachmiel
  * @since 10-11-2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class haveTest {
   @Test public void booleanFalseLiteralTestFalse() {

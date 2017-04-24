@@ -4,11 +4,8 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 
-@FixMethodOrder(MethodSorters.JVM)
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class UtilsTest {
   @Test public void compareFF() {

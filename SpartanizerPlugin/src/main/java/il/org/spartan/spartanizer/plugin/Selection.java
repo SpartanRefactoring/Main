@@ -2,8 +2,6 @@ package il.org.spartan.spartanizer.plugin;
 
 import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 import java.util.stream.*;
 

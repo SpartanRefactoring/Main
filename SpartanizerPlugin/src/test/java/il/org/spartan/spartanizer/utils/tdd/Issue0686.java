@@ -2,13 +2,9 @@ package il.org.spartan.spartanizer.utils.tdd;
 
 import static il.org.spartan.azzert.*;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -18,7 +14,7 @@ import nano.ly.*;
  * @author Alexander Kaplan
  * @author Ariel Kolikant
  * @since 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0686 {
   @Test public void a() {

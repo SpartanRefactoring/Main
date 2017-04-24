@@ -13,7 +13,6 @@ import org.eclipse.text.edits.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
-import il.org.spartan.*;
 import nano.ly.*;
 
 /** A shortcut to textually insert a new special character/s.

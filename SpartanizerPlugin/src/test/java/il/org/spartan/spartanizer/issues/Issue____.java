@@ -6,8 +6,6 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import java.util.*;
 
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 
 /** A template for unit tests for {@link NameYourClassHere} , can be used by:
@@ -59,7 +57,7 @@ import il.org.spartan.*;
  * </ol>
  * @author Yossi Gil // put your name here
  * @since 2016 // put the year/date here */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue____ {
   private static Object object() {

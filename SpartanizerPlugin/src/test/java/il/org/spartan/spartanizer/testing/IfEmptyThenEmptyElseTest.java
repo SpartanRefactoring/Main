@@ -7,8 +7,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,7 +18,7 @@ import il.org.spartan.spartanizer.utils.*;
 /** Unit tests for {@link IfEmptyThenEmptyElse}
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class IfEmptyThenEmptyElseTest {
   private static final Statement INPUT = into.s("{if (b) ; else ;}");

@@ -4,15 +4,13 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests of {@link TryBodyNotEmptyNoCatchesNoFinallyRemove}
  * @author Yossi Gil
  * @since 2017-01-17 */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+ //
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1094 extends MetaFixture {
   @Test public void b() {
