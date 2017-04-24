@@ -83,6 +83,8 @@ public class SpartanMovie2 extends AbstractHandler {
 //      x.printStackTrace();
 //    }
     
+    
+    
     UIJob job = new UIJob(NAME) {
       @Override public IStatus runInUIThread(IProgressMonitor monitor) {
 //          monitor.beginTask("Preparing", 5000);
@@ -99,11 +101,11 @@ public class SpartanMovie2 extends AbstractHandler {
                 for (; markers.length > 0; markers = getMarkers(file)) {
                   final IMarker marker = getFirstMarker(markers);
                   monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
-                  marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+                                  marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
                   printout(marker);
                   IDE.openEditor(page, marker, true);
-                  refresh(page);
-                  sleep(SLEEP_BETWEEN);
+                  //refresh(page);
+                  //sleep(SLEEP_BETWEEN);
                   traversal.runAsMarkerFix(marker);
                   ++changes;
                   marker.delete(); // TODO Ori Roth: does not seem to make a 
@@ -276,7 +278,7 @@ public class SpartanMovie2 extends AbstractHandler {
 
   private static IMarker[] getMarkers(final IResource $) {
     try {
-      return $.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
+      return $.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_ONE);
     } catch (final CoreException m) {
       note.bug(m);
       return new IMarker[0];
