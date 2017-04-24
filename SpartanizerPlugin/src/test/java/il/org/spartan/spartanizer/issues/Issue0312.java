@@ -74,8 +74,7 @@ public class Issue0312 {
 
   @Test public void issue54ForPlain() {
     trimminKof("int a  = f(); for (int i = 0; i <100;  ++i) b[i] = a;")//
-        .gives("for (int i = 0; i <100;  ++i) b[i] = f();")//
-        .gives("for (int ¢ = 0; ¢ <100;  ++¢) b[¢] = f();")//
+        .gives("int a=f();for(int ¢=0;¢<100;++¢)b[¢]=a;") //
         .stays();
   }
 
