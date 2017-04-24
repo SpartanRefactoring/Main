@@ -33,7 +33,7 @@ public final class TippersTest {
     final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class)
         .in(makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.Method.intoDocument(input)));
     azzert.that(m, iz(input));
-    final SingleVariableDeclaration p = ((EnhancedForStatement) the.first(statements(body(m)))).getParameter();
+    final SingleVariableDeclaration p = ((EnhancedForStatement) the.headOf(statements(body(m)))).getParameter();
     assert p != null;
     final SimpleName a = p.getName();
     assert a != null;
@@ -89,7 +89,7 @@ public final class TippersTest {
     final MethodDeclaration m = findFirst.instanceOf(MethodDeclaration.class).in(makeAST.COMPILATION_UNIT.from(d));
     azzert.that(m, iz(input));
     final Block b = body(m);
-    final SingleVariableDeclaration p = ((EnhancedForStatement) the.first(statements(b))).getParameter();
+    final SingleVariableDeclaration p = ((EnhancedForStatement) the.headOf(statements(b))).getParameter();
     assert p != null;
     final SimpleName n = p.getName();
     final ASTRewrite r = ASTRewrite.create(b.getAST());

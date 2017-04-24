@@ -43,8 +43,8 @@ public interface hIndex {
     final List<Pair<String, Int>> rs = an.empty.list();
     rs.addAll(ranking.values());
     rs.sort((x, y) -> x.second.inner > y.second.inner ? -1 : as.bit(x.second.inner < y.second.inner));
-    System.out.println("Max: " + the.first(rs).first + " [" + the.first(rs).second.inner + "]");
-    System.out.println("min: " + the.last(rs).first + " [" + the.last(rs).second.inner + "]");
+    System.out.println("Max: " + the.headOf(rs).first + " [" + the.headOf(rs).second.inner + "]");
+    System.out.println("min: " + the.lastOf(rs).first + " [" + the.lastOf(rs).second.inner + "]");
     System.out.println("h-index: " + hindex(rs));
   }
 

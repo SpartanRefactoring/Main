@@ -64,7 +64,7 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
       return null;
     final List<SimpleName> uses = collect.usesOf(n).in(nextStatement);
     if (!sideEffects.free(initializer)) {
-      final SimpleName use = the.onlyOne(uses);
+      final SimpleName use = the.onlyOneOf(uses);
       if (use == null || Coupling.unknownNumberOfEvaluations(use, nextStatement))
         return null;
     }

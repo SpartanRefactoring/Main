@@ -51,6 +51,6 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
     if (clean)
       return null;
     assert !$.isEmpty();
-    return $.size() <= 1 ? the.first($) : subject.operands($).to(op.PLUS2);
+    return $.size() <= 1 ? the.headOf($) : subject.operands($).to(op.PLUS2);
   }
 }

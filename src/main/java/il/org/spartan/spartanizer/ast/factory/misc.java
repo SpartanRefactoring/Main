@@ -97,7 +97,7 @@ public enum misc {
       return s;
     final Block $ = subject.statement(s).toBlock();
     r.replace(s, $, g);
-    return (IfStatement) the.first(statements($));
+    return (IfStatement) the.headOf(statements($));
   }
 
   public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
@@ -139,7 +139,7 @@ public enum misc {
     final IfStatement main = copy.of(s);
     if (elze.isEmpty())
       return main;
-    final int rankThen = misc.sequencerRank(the.last(then)), rankElse = misc.sequencerRank(the.last(elze));
+    final int rankThen = misc.sequencerRank(the.lastOf(then)), rankElse = misc.sequencerRank(the.lastOf(elze));
     return rankElse > rankThen || rankThen == rankElse && !misc.thenIsShorter(s) ? $ : main;
   }
 
@@ -169,7 +169,7 @@ public enum misc {
 
   public static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = find.occurencesOf(s, id);
-    return $.size() != 1 ? null : the.first($);
+    return $.size() != 1 ? null : the.headOf($);
   }
 
   /** As {@link elze(ConditionalExpression)} but returns the last else statement

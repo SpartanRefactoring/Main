@@ -40,7 +40,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
             r.replace(s, ss, g);
           return;
         }
-        if (iz.breakStatement(the.last(ll)))
+        if (iz.breakStatement(the.lastOf(ll)))
           ll.remove(ll.size() - 1);
         ll.remove(0);
         r.replace(s, make.ast((sideEffects.free(expression(s)) ? "" : ss + "") + statementsToString(ll)), g);
@@ -56,7 +56,7 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
 
   @Override protected boolean prerequisite(final SwitchStatement ¢) {
     final List<SwitchCase> $ = extract.switchCases(¢);
-    return noSideEffectCommands(¢) || $.isEmpty() || $.size() == 1 && the.first($).isDefault();
+    return noSideEffectCommands(¢) || $.isEmpty() || $.size() == 1 && the.headOf($).isDefault();
   }
 
   static boolean noSideEffectCommands(final SwitchStatement s) {

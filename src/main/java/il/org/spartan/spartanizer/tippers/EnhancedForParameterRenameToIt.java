@@ -36,7 +36,7 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
-    final SimpleName sn = name(the.onlyOne(parameters(p)));
+    final SimpleName sn = name(the.onlyOneOf(parameters(p)));
     if (sn == null || in(sn.getIdentifier(), notation.cent))
       return null;
     final SingleVariableDeclaration d = s.getParameter();

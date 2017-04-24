@@ -49,7 +49,7 @@ public class switchBranch {
         .compare(lowestLexicoCase(o1), lowestLexicoCase(o2));
 
     private static Expression lowestLexicoCase(final switchBranch b) {
-      Expression $ = expression(the.first(b.cases()));
+      Expression $ = expression(the.headOf(b.cases()));
       for (final SwitchCase ¢ : b.cases())
         if (numericOrder.compare(expression(¢), $) < 0)
           $ = expression(¢);
@@ -120,7 +120,7 @@ public class switchBranch {
 
   public boolean compareTo(final switchBranch ¢) {
     final boolean $ = compare(¢);
-    return $ != ¢.compare(this) ? $ : (the.first(cases) + "").compareTo(the.first(¢.cases) + "") < 0;
+    return $ != ¢.compare(this) ? $ : (the.headOf(cases) + "").compareTo(the.headOf(¢.cases) + "") < 0;
   }
 
   private void addAll(final Collection<Statement> ¢) {
@@ -143,7 +143,7 @@ public class switchBranch {
   // --yg
   @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
     final List<Statement> l = step.statements(n);
-    assert iz.switchCase(the.first(l));
+    assert iz.switchCase(the.headOf(l));
     List<SwitchCase> c = null;
     List<Statement> s = null;
     final List<switchBranch> $ = an.empty.list();
@@ -164,16 +164,16 @@ public class switchBranch {
         nextBranch = true;
       s.add(l.get(¢));
     }
-    if (!iz.switchCase(the.last(l))) {
-      s.add(the.last(l));
-      if (!iz.sequencerComplex(the.last(l)))
+    if (!iz.switchCase(the.lastOf(l))) {
+      s.add(the.lastOf(l));
+      if (!iz.sequencerComplex(the.lastOf(l)))
         s.add(n.getAST().newBreakStatement());
     } else {
       if (!nextBranch)
-        s.add(the.last(l));
+        s.add(the.lastOf(l));
       else {
         $.add(new switchBranch(c = an.empty.list(), s = an.empty.list()));
-        c.add(az.switchCase(the.last(l)));
+        c.add(az.switchCase(the.lastOf(l)));
       }
       s.add(n.getAST().newBreakStatement());
     }
@@ -186,8 +186,8 @@ public class switchBranch {
 
   private List<Statement> functionalCommands() {
     final List<Statement> $ = IntStream.range(0, statements.size() - 1).mapToObj(statements::get).collect(toList());
-    if (!iz.breakStatement(the.last(statements)))
-      $.add(the.last(statements));
+    if (!iz.breakStatement(the.lastOf(statements)))
+      $.add(the.lastOf(statements));
     return $;
   }
 
@@ -196,6 +196,6 @@ public class switchBranch {
   }
 
   public boolean hasStatements() {
-    return !statements.isEmpty() && !iz.breakStatement(the.first(statements));
+    return !statements.isEmpty() && !iz.breakStatement(the.headOf(statements));
   }
 }

@@ -39,15 +39,15 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
   }
 
   public static <N extends ASTNode> String firstPattern(final List<UserDefinedTipper<N>> ¢) {
-    return the.first(¢).pattern().replaceAll("\\$", "");
+    return the.headOf(¢).pattern().replaceAll("\\$", "");
   }
 
   public static <N extends ASTNode> String firstReplacement(final List<UserDefinedTipper<N>> ¢) {
-    return the.first(¢).replacement().replaceAll("\\$", "");
+    return the.headOf(¢).replacement().replaceAll("\\$", "");
   }
 
   public static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final List<UserDefinedTipper<N>> ¢) {
-    return the.first(¢);
+    return the.headOf(¢);
   }
 
   protected static Block containingBlock(final ASTNode ¢) {

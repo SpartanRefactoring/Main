@@ -23,10 +23,10 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
 
   @Override public ASTNode replacement(final InfixExpression x) {
     final List<Expression> es = hop.operands(x);
-    Expression prev = copy.of(the.first(es));
+    Expression prev = copy.of(the.headOf(es));
     final CompilationUnit u = az.compilationUnit(x.getRoot());
     final List<Expression> es2 = new LinkedList<>();
-    for (final Expression e : the.rest(es))
+    for (final Expression e : the.tailOf(es))
       if (u.getLineNumber(prev.getStartPosition()) != u.getLineNumber(e.getStartPosition()) || !iz.stringLiteral(prev) || !iz.stringLiteral(e)) {
         es2.add(prev);
         prev = copy.of(e);
@@ -38,7 +38,7 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     if (es2.size() >= 2)
       return subject.operands(es2).to(op.PLUS2);
     final StringLiteral $ = x.getAST().newStringLiteral();
-    $.setLiteralValue(az.stringLiteral(the.first(es2)).getLiteralValue());
+    $.setLiteralValue(az.stringLiteral(the.headOf(es2)).getLiteralValue());
     return $;
   }
 
@@ -46,11 +46,11 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     if (operator(x) != op.PLUS2)
       return false;
     final List<Expression> es = hop.operands(x);
-    Expression prev = the.first(es);
+    Expression prev = the.headOf(es);
     if (!iz.compilationUnit(x.getRoot()))
       return false;
     final CompilationUnit u = az.compilationUnit(x.getRoot());
-    for (final Expression ¢ : the.rest(es)) {
+    for (final Expression ¢ : the.tailOf(es)) {
       if (u.getLineNumber(prev.getStartPosition()) == u.getLineNumber(¢.getStartPosition()) && iz.stringLiteral(prev) && iz.stringLiteral(¢))
         return true;
       prev = ¢;

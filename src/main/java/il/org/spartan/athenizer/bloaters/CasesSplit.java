@@ -42,7 +42,7 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
         final Map<String, String> mapNames = getMapOldToNewNames($);
         final ListRewrite l = r.getListRewrite(s, SwitchStatement.STATEMENTS_PROPERTY);
         $.forEach(mapNames.isEmpty() ? λ -> l.insertBefore(copy.of(λ), n, g) : λ -> l.insertBefore(replaceNames(copy.of(λ), mapNames), n, g));
-        if (!iz.sequencerComplex(the.last($)))
+        if (!iz.sequencerComplex(the.lastOf($)))
           l.insertBefore(s.getAST().newBreakStatement(), n, g);
       }
     };

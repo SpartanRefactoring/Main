@@ -33,7 +33,7 @@ public final class MethodDeclarationRenameSingleParameterToIt extends EagerTippe
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d))
       return null;
-    final SingleVariableDeclaration parameter = the.onlyOne(parameters(d));
+    final SingleVariableDeclaration parameter = the.onlyOneOf(parameters(d));
     if (!JohnDoe.property(parameter))
       return null;
     final SimpleName $ = parameter.getName();

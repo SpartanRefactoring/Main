@@ -50,13 +50,13 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     if (s1.isEmpty())
       return 0;
     for (int $ = 0, ¢ = 0; ¢ < s1.length(); ++¢) {
-      if (!Character.isAlphabetic(the.first(s1, ¢)) && !Character.isAlphabetic(the.first(s2, ¢))
-          || ¢ == s1.length() - 1 && !Character.isAlphabetic(the.first(s2, ¢)))
-        $ = the.first(s1, ¢) != the.first(s2, ¢) ? ¢ : ¢ + 1;
-      if (the.first(s1, ¢) != the.first(s2, ¢))
+      if (!Character.isAlphabetic(the.ith(s1, ¢)) && !Character.isAlphabetic(the.ith(s2, ¢))
+          || ¢ == s1.length() - 1 && !Character.isAlphabetic(the.ith(s2, ¢)))
+        $ = the.ith(s1, ¢) != the.ith(s2, ¢) ? ¢ : ¢ + 1;
+      if (the.ith(s1, ¢) != the.ith(s2, ¢))
         return $;
     }
-    return s1.length() != s2.length() && Character.isAlphabetic(the.first(s2, s1.length())) && Character.isAlphabetic(the.first(s2, s1.length() - 1)) ? 0
+    return s1.length() != s2.length() && Character.isAlphabetic(the.ith(s2, s1.length())) && Character.isAlphabetic(the.ith(s2, s1.length() - 1)) ? 0
         : s1.length();
   }
 
@@ -87,13 +87,13 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     if (s1.isEmpty())
       return 0;
     for (int $ = 0, ¢ = 0; ¢ < s1.length(); ++¢) {
-      if (!Character.isAlphabetic(the.last(s1, ¢)) && !Character.isAlphabetic(the.last(s2, ¢))
-          || ¢ == s1.length() - 1 && !Character.isAlphabetic(the.last(s2, ¢)))
-        $ = the.last(s1, ¢) != the.last(s2, ¢) ? ¢ : ¢ + 1;
-      if (the.last(s1, ¢) != the.last(s2, ¢))
+      if (!Character.isAlphabetic(the.beforeLastOf(s1, ¢)) && !Character.isAlphabetic(the.beforeLastOf(s2, ¢))
+          || ¢ == s1.length() - 1 && !Character.isAlphabetic(the.beforeLastOf(s2, ¢)))
+        $ = the.beforeLastOf(s1, ¢) != the.beforeLastOf(s2, ¢) ? ¢ : ¢ + 1;
+      if (the.beforeLastOf(s1, ¢) != the.beforeLastOf(s2, ¢))
         return $;
     }
-    return s1.length() != s2.length() && Character.isAlphabetic(the.last(s2, s1.length())) && Character.isAlphabetic(the.last(s2, s1.length() - 1)) ? 0
+    return s1.length() != s2.length() && Character.isAlphabetic(the.beforeLastOf(s2, s1.length())) && Character.isAlphabetic(the.beforeLastOf(s2, s1.length() - 1)) ? 0
         : s1.length();
   }
 
@@ -112,7 +112,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   private static InfixExpression replacePrefix(final InfixExpression x, final int i) {
     assert x.getOperator() == op.PLUS2;
     final List<Expression> $ = extract.allOperands(x);
-    final StringLiteral l = az.stringLiteral(the.first($));
+    final StringLiteral l = az.stringLiteral(the.headOf($));
     assert l != null;
     assert l.getLiteralValue().length() >= i;
     replaceFirst($, getSuffix(l.getLiteralValue(), i, x));
@@ -122,7 +122,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   private static InfixExpression replaceSuffix(final InfixExpression x, final int i) {
     assert x.getOperator() == op.PLUS2;
     final List<Expression> $ = extract.allOperands(x);
-    final StringLiteral l = az.stringLiteral(the.last($));
+    final StringLiteral l = az.stringLiteral(the.lastOf($));
     assert l != null;
     assert l.getLiteralValue().length() >= i : fault.dump() + //
         "\n x = " + x + //
@@ -154,15 +154,15 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     final String $ = then.getLiteralValue();
     assert elze.getOperator() == op.PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
-    if (iz.stringLiteral(the.first(elzeOperands))) {
-      final int commonPrefixIndex = firstDifference($, az.stringLiteral(the.first(elzeOperands)).getLiteralValue());
+    if (iz.stringLiteral(the.headOf(elzeOperands))) {
+      final int commonPrefixIndex = firstDifference($, az.stringLiteral(the.headOf(elzeOperands)).getLiteralValue());
       if (commonPrefixIndex != 0)
         return subject.pair(getPrefix($, commonPrefixIndex, condition), subject.pair(getSuffix($, commonPrefixIndex, condition), //
             replacePrefix(elze, commonPrefixIndex)).toCondition(condition)).to(op.PLUS2);
     }
-    if (!iz.stringLiteral(the.last(elzeOperands)))
+    if (!iz.stringLiteral(the.lastOf(elzeOperands)))
       return null;
-    final String elzeStr = az.stringLiteral(the.last(elzeOperands)).getLiteralValue();
+    final String elzeStr = az.stringLiteral(the.lastOf(elzeOperands)).getLiteralValue();
     final int commonSuffixIndex = lastDifference($, elzeStr);
     if (commonSuffixIndex == 0)
       return null;
@@ -184,9 +184,9 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     final List<Expression> thenOperands = extract.allOperands(then);
     assert elze.getOperator() == op.PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
-    if (iz.stringLiteral(the.first(thenOperands)) && iz.stringLiteral(the.first(elzeOperands))) {
-      final String $ = az.stringLiteral(the.first(thenOperands)).getLiteralValue();
-      final int commonPrefixIndex = firstDifference($, az.stringLiteral(the.first(elzeOperands)).getLiteralValue());
+    if (iz.stringLiteral(the.headOf(thenOperands)) && iz.stringLiteral(the.headOf(elzeOperands))) {
+      final String $ = az.stringLiteral(the.headOf(thenOperands)).getLiteralValue();
+      final int commonPrefixIndex = firstDifference($, az.stringLiteral(the.headOf(elzeOperands)).getLiteralValue());
       if (commonPrefixIndex != 0)
         return subject.pair(getPrefix($, commonPrefixIndex, condition),
             subject
@@ -195,10 +195,10 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
                 .toCondition(condition))
             .to(op.PLUS2);
     }
-    if (!iz.stringLiteral(the.last(thenOperands)) || !iz.stringLiteral(the.last(elzeOperands)))
+    if (!iz.stringLiteral(the.lastOf(thenOperands)) || !iz.stringLiteral(the.lastOf(elzeOperands)))
       return null;
-    final String thenStr = ((StringLiteral) the.last(thenOperands)).getLiteralValue();
-    final int commonSuffixIndex = lastDifference(thenStr, ((StringLiteral) the.last(elzeOperands)).getLiteralValue());
+    final String thenStr = ((StringLiteral) the.lastOf(thenOperands)).getLiteralValue();
+    final int commonSuffixIndex = lastDifference(thenStr, ((StringLiteral) the.lastOf(elzeOperands)).getLiteralValue());
     return commonSuffixIndex == 0 ? null
         : subject.pair(subject.operand(subject
             .pair(replaceSuffix(then, commonSuffixIndex)//

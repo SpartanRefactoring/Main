@@ -36,11 +36,11 @@ public class TrackerSelection extends Selection {
   }
 
   public void update() {
-    the.first(inner).dispose();
+    the.headOf(inner).dispose();
     final ASTNode newTrack = fix(track.getNodeType(),
         track.getLength() > length
-            ? new NodeFinder(the.first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
-            : new NodeFinder(the.first(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
+            ? new NodeFinder(the.headOf(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveringNode()
+            : new NodeFinder(the.headOf(inner).build().compilationUnit, track.getStartPosition(), track.getLength()).getCoveredNode());
     if (!match(track, newTrack)) {
       inner.clear(); // empty selection
       return;

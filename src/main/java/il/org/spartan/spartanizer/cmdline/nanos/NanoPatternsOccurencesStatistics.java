@@ -70,11 +70,11 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
   }
 
   public int total(final int type) {
-    return typeHistogram(Box.it(type)).inner;
+    return typeHistogram(box.it(type)).inner;
   }
 
   public int covered(final int type) {
-    return nanoHistogram(Box.it(type)).values().stream().mapToInt(λ -> λ.inner).sum();
+    return nanoHistogram(box.it(type)).values().stream().mapToInt(λ -> λ.inner).sum();
   }
 
   public double coverage(final int type) {

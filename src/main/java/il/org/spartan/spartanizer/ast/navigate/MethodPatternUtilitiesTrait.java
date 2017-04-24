@@ -62,15 +62,15 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default Statement onlyStatement(final MethodDeclaration ¢) {
-    return the.onlyOne(statements(¢));
+    return the.onlyOneOf(statements(¢));
   }
 
   default Statement onlyStatement(final SynchronizedStatement ¢) {
-    return the.onlyOne(statements(¢));
+    return the.onlyOneOf(statements(¢));
   }
 
   default SingleVariableDeclaration onlyParameter(final MethodDeclaration ¢) {
-    return the.onlyOne(parameters(¢));
+    return the.onlyOneOf(parameters(¢));
   }
 
   default boolean notConstructor(final MethodDeclaration ¢) {
@@ -102,7 +102,7 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default ASTNode lastStatement(final MethodDeclaration ¢) {
-    return the.last(statements(¢));
+    return the.lastOf(statements(¢));
   }
 
   default boolean returnsThis(final MethodDeclaration ¢) {
@@ -118,11 +118,11 @@ public interface MethodPatternUtilitiesTrait {
   }
 
   default Statement firstStatement(final MethodDeclaration ¢) {
-    return the.first(statements(¢));
+    return the.headOf(statements(¢));
   }
 
   default Statement secondStatement(final MethodDeclaration ¢) {
-    return the.second(statements(¢));
+    return the.secondOf(statements(¢));
   }
 
   default boolean safeEquals(final Object o1, final Object o2) {

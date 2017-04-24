@@ -89,6 +89,6 @@ public class InflaterProvider extends OperationsProvider {
   }
 
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
-    return λ -> Collections.singletonList(the.first(λ));
+    return λ -> Collections.singletonList(the.headOf(λ));
   }
 }

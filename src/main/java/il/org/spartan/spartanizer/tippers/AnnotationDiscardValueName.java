@@ -30,7 +30,7 @@ public final class AnnotationDiscardValueName extends NodePattern<NormalAnnotati
   }
 
   public AnnotationDiscardValueName() {
-    notNil("Has only one member", () -> member = the.onlyOne(values(current)));
+    notNil("Has only one member", () -> member = the.onlyOneOf(values(current)));
     notNil("Extract member's name", () -> name = member.getName());
     andAlso("Name equals 'value'", () -> "value".equals(name + ""));
   }

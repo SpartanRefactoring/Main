@@ -34,8 +34,8 @@ public class computeTest extends MetaFixture {
     azzert.that(compute.updateSpots(into.s("return a *=2;")).size(), is(1));
     final List<ASTNode> updateSpots = compute.updateSpots(into.s("return local +=2;"));
     azzert.that(updateSpots.size(), is(1));
-    azzert.that(the.onlyOne(updateSpots) + "", is("local"));
-    assert updateSpots.stream().anyMatch(λ -> wizard.eq(λ, the.onlyOne(updateSpots).getAST().newSimpleName("local")));
+    azzert.that(the.onlyOneOf(updateSpots) + "", is("local"));
+    assert updateSpots.stream().anyMatch(λ -> wizard.eq(λ, the.onlyOneOf(updateSpots).getAST().newSimpleName("local")));
   }
 
   @Test public void a() {

@@ -35,7 +35,7 @@ public final class ClassInstanceCreationBoxedValueTypes extends ReplaceCurrentNo
   }
 
   @Override public ASTNode replacement(final ClassInstanceCreation c) {
-    final Expression e = the.onlyOne(arguments(c));
+    final Expression e = the.onlyOneOf(arguments(c));
     if (e == null)
       return null;
     final Type t = c.getType();

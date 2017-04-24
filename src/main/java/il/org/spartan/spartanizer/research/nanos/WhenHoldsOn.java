@@ -4,8 +4,6 @@ import static il.org.spartan.spartanizer.ast.navigate.find.*;
 
 import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.lisp.first;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -50,9 +48,9 @@ public final class WhenHoldsOn<N extends ASTNode> extends NanoPatternTipper<N> {
         r.replace(¢,
             make.ast("holds(" + notation.cent + " ->"
                 + (differsInSingleAtomic(branchesExpressions(¢))
-                    ? replaceAll(the.first(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), notation.cent) + ")"
+                    ? replaceAll(the.headOf(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), notation.cent) + ")"
                         + createOns(singleAtomicDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢)
-                    : replaceAll(the.first(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", notation.cent) + ")"
+                    : replaceAll(the.headOf(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", notation.cent) + ")"
                         + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢))),
             g);
       }
