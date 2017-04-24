@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Tested by {@link Issue1115}
  * @author Yossi Gil
@@ -25,11 +26,11 @@ public final class LambdaRenameSingleParameterToLambda extends EagerTipper<Lambd
   private static final long serialVersionUID = -0x2CF705A7699A0E07L;
 
   @Override public String description(final LambdaExpression ¢) {
-    return "Rename lambda parameter " + onlyOne(parameters(¢)) + " to " + notation.lambda;
+    return "Rename lambda parameter " + the.onlyOne(parameters(¢)) + " to " + notation.lambda;
   }
 
   @Override public Tip tip(final LambdaExpression x) {
-    final VariableDeclarationFragment f = az.variableDeclrationFragment(onlyOne(parameters(x)));
+    final VariableDeclarationFragment f = az.variableDeclrationFragment(the.onlyOne(parameters(x)));
     if (f == null)
       return null;
     final SimpleName $ = f.getName();

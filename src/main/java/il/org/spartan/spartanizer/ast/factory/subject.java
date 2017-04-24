@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
+import nano.ly.*;
 
 /** Contains subclasses and tools to build expressions and sideEffects
  * @author Yossi Gil
@@ -302,7 +303,7 @@ public enum subject {
      * is the owner
      * @param operands a list of expression, these are the operands */
     public Several(final List<Expression> operands) {
-      super(first(operands));
+      super(the.first(operands));
       this.operands = an.empty.list();
       this.operands.addAll(operands.stream().map(this::claim).collect(toList()));
     }
@@ -314,7 +315,7 @@ public enum subject {
       assert !operands.isEmpty();
       assert operands.size() != 1;
       assert operands.size() >= 2;
-      final InfixExpression $ = subject.pair(first(operands), second(operands)).to(o);
+      final InfixExpression $ = subject.pair(the.first(operands), the.second(operands)).to(o);
       for (int ¢ = 2;; extendedOperands($).add(make.plant(operands.get(¢++)).into($))) // NANO
         if (¢ >= operands.size())
           return $;
@@ -332,7 +333,7 @@ public enum subject {
      * the owner
      * @param inner a list of sideEffects */
     public SeveralStatements(final List<Statement> inner) {
-      super(first(inner));
+      super(the.first(inner));
       this.inner = an.empty.list();
       this.inner.addAll(inner.stream().map(this::claim).collect(toList()));
     }
@@ -363,7 +364,7 @@ public enum subject {
     public Statement toOptionalBlock() {
       switch (inner.size()) {
         case 1:
-          return first(inner);
+          return the.first(inner);
         case 0:
           return ast.newEmptyStatement();
         default:

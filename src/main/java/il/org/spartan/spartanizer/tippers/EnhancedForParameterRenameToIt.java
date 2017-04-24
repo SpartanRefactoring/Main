@@ -18,6 +18,7 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Convert {@code for(int i:as)sum+=i;} to {@code f(int ¢:as)sum+=¢;}
  * @author Yossi Gil
@@ -35,7 +36,7 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
     final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
       return null;
-    final SimpleName sn = name(onlyOne(parameters(p)));
+    final SimpleName sn = name(the.onlyOne(parameters(p)));
     if (sn == null || in(sn.getIdentifier(), notation.cent))
       return null;
     final SingleVariableDeclaration d = s.getParameter();

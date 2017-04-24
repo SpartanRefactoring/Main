@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Replaces, e.g., {@code Integer x=new Integer(2);} with
  * {@code Integer x=Integer.valueOf(2);}, more generally new of of any boxed
@@ -34,7 +35,7 @@ public final class ClassInstanceCreationBoxedValueTypes extends ReplaceCurrentNo
   }
 
   @Override public ASTNode replacement(final ClassInstanceCreation c) {
-    final Expression e = onlyOne(arguments(c));
+    final Expression e = the.onlyOne(arguments(c));
     if (e == null)
       return null;
     final Type t = c.getType();

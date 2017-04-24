@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
+import nano.ly.*;
 
 /** List that can contain nano patterns
  * @author orimarco {@code marcovitch.ori@gmail.com}
@@ -52,10 +53,10 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
   }
 
   public String firstPattern() {
-    return first(this).pattern().replaceAll("\\$", "");
+    return the.first(this).pattern().replaceAll("\\$", "");
   }
 
   public String firstReplacement() {
-    return first(this).replacement().replaceAll("\\$", "");
+    return the.first(this).replacement().replaceAll("\\$", "");
   }
 }

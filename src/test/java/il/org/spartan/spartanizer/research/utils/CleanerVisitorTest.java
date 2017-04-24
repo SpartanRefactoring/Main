@@ -10,6 +10,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.util.*;
+import nano.ly.*;
 
 /** Tests of {@link research.util}
  * @author AnnaBel7
@@ -40,11 +41,11 @@ public class CleanerVisitorTest {
   }
 
   @Test public void test1() {
-    new CleanerVisitor().visit((Javadoc) first(getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner));
+    new CleanerVisitor().visit((Javadoc) the.first(getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner));
   }
 
   @Test public void test2() {
-    new CleanerVisitor().visit((ImportDeclaration) first(getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner));
+    new CleanerVisitor().visit((ImportDeclaration) the.first(getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner));
   }
 
   private static class ASTNodeWrapper {

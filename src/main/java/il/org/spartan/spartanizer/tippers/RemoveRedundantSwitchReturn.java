@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** remove redundant return from switch in void method. convert {@code void a()
  * { switch(x) { case 1: y=2; break; default: return; } } } to {@code void a() {
@@ -27,11 +28,11 @@ public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatem
       return null;
     final Block b = az.block(s.getParent());
     if (b == null || !iz.methodDeclaration(b.getParent()) || !iz.voidType(step.returnType(az.methodDeclaration(b.getParent())))
-        || last(statements(b)) != s)
+        || the.last(statements(b)) != s)
       return null;
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (final switchBranch ¢ : $)
-      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.returnStatement(first(¢.statements))) {
+      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.returnStatement(the.first(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());
       }

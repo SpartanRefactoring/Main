@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Test case is {@link Issue0996} Issue #996 convert {@code
  * int a = 3;
@@ -34,14 +35,14 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
   }
 
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
-    return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) first(fragments(¢))).getInitializer() != null
-        && ((VariableDeclaration) first(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
+    return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) the.first(fragments(¢))).getInitializer() != null
+        && ((VariableDeclaration) the.first(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
   }
 
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢);
-    ((VariableDeclaration) first(fragments($))).setInitializer(null);
-    final VariableDeclarationFragment f2 = first(fragments(¢));
+    ((VariableDeclaration) the.first(fragments($))).setInitializer(null);
+    final VariableDeclarationFragment f2 = the.first(fragments(¢));
     final Assignment a = subject.pair(copy.of(az.expression(f2.getName())), copy.of(az.expression(f2.getInitializer())))
         .to(Assignment.Operator.ASSIGN);
     return new Tip(description(¢), getClass(), ¢) {

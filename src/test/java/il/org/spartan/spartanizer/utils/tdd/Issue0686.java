@@ -12,6 +12,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import nano.ly.*;
 
 /** Unit tests for the GitHub issue thus numbered
  * @author Alexander Kaplan
@@ -50,7 +51,7 @@ public class Issue0686 {
   }
 
   @Test public void h() {
-    azzert.that(first(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(String s1, int s2, int i1, int s3);")))).getName()
+    azzert.that(the.first(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(String s1, int s2, int i1, int s3);")))).getName()
         .getIdentifier(), is("s1"));
   }
 
@@ -63,7 +64,7 @@ public class Issue0686 {
   }
 
   @Test public void k() {
-    azzert.that(first(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
+    azzert.that(the.first(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
         .getName().getIdentifier(), is("s1"));
   }
 

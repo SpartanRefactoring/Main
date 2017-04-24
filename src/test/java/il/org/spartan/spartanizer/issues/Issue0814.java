@@ -9,6 +9,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
+import nano.ly.*;
 
 /** see issue #814 for more details
  * @author yaelAmitay
@@ -24,7 +25,7 @@ public class Issue0814 {
 
   @Test @SuppressWarnings("static-method") public void simpleTest() {
     final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
-    final ReturnStatement s = first(new MethodExplorer(m).returnStatements());
+    final ReturnStatement s = the.first(new MethodExplorer(m).returnStatements());
     // noinspection SameReturnValue
     m.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment a) {

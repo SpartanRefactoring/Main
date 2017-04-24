@@ -22,6 +22,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** A {@link Tipper} to convert an expression such as {@code
  * 0 + X = X
@@ -81,9 +82,9 @@ public final class InfixAdditionZero extends EagerTipper<InfixExpression>//
     if ($.size() < 2)
       return null;
     final int n = minus.level($);
-    return n == 0 || n == 1 && minus.level(first($)) == 1 ? null : new Tip(description(x), getClass(), x) {
+    return n == 0 || n == 1 && minus.level(the.first($)) == 1 ? null : new Tip(description(x), getClass(), x) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        final Expression first = n % 2 == 0 ? null : first($);
+        final Expression first = n % 2 == 0 ? null : the.first($);
         $.stream().filter(λ -> λ != first && minus.level(λ) > 0)
             .forEach(λ -> r.replace(λ, make.plant(copy.of(minus.peel(λ))).into(λ.getParent()), g));
         if (first != null)

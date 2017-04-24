@@ -14,6 +14,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Replace {@code 1*X} by {@code X}
  * @author Yossi Gil
@@ -24,7 +25,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
 
   private static ASTNode replacement(final List<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal1(λ)).collect(toList());
-    return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(first(¢)) : $.size() == 1 ? copy.of(first($)) : subject.operands($).to(TIMES);
+    return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(the.first(¢)) : $.size() == 1 ? copy.of(the.first($)) : subject.operands($).to(TIMES);
   }
 
   @Override public String description(final InfixExpression ¢) {

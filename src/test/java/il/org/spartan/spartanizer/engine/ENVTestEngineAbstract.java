@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.utils.*;
+import nano.ly.*;
 
 /** Abstract class for implementing specific Environment annotation based
  * testers.
@@ -32,8 +33,8 @@ public abstract class ENVTestEngineAbstract {
   /** Adds a new Entry to testSet from the inner annotation.
    * @param ps JD. */
   public static void addTestSet(final List<MemberValuePair> ps) {
-    final String s1 = Trivia.condense(first(ps).getValue()), //
-        s2 = Trivia.condense(second(ps).getValue());
+    final String s1 = Trivia.condense(the.first(ps).getValue()), //
+        s2 = Trivia.condense(the.second(ps).getValue());
     if (testSetContainsVarName(s1.substring(1, s1.length() - 1)))
       azzert.fail("Bad test file - an entity appears twice.");
     testSet.add(new MapEntry<>(s1.substring(1, s1.length() - 1), new Binding(type.baptize(s2.substring(1, s2.length() - 1)))));

@@ -11,6 +11,7 @@ import il.org.spartan.athenizer.SingleFlater.*;
 import il.org.spartan.athenizer.bloaters.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
+import nano.ly.*;
 
 /** holds the new configuration for the expanders and returns them
  * @author Raviv Rachmiel
@@ -88,6 +89,6 @@ public class InflaterProvider extends OperationsProvider {
   }
 
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
-    return λ -> Collections.singletonList(first(λ));
+    return λ -> Collections.singletonList(the.first(λ));
   }
 }

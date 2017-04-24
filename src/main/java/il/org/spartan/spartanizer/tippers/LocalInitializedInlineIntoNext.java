@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** convert {@code
  * a = 3;
@@ -125,7 +126,7 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
 
   private static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = occurencesOf(s, id);
-    return $.size() != 1 ? null : first($);
+    return $.size() != 1 ? null : the.first($);
   }
 
   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {

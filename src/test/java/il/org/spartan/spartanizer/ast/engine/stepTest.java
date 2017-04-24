@@ -15,6 +15,7 @@ import org.junit.runners.*;
 
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import nano.ly.*;
 
 /** A test suite for class {@link step}
  * @author Yossi Gil
@@ -30,19 +31,19 @@ public final class stepTest {
   @Test public void imports() {
     final List<ImportDeclaration> li = step.importDeclarations(cu("import a.b.c; class c{}"));
     azzert.that(li.size(), is(1));
-    azzert.that(first(li).getName() + "", is("a.b.c"));
+    azzert.that(the.first(li).getName() + "", is("a.b.c"));
   }
 
   @Test public void importsNames() {
     final List<String> li = step.importDeclarationsNames(cu("import a.b.c; class c{}"));
     azzert.that(li.size(), is(1));
-    azzert.that(first(li), is("a.b.c"));
+    azzert.that(the.first(li), is("a.b.c"));
   }
 
   @Test public void importsNames2() {
     final List<String> li = step.importDeclarationsNames(cu("import a.b.c; import static f.g.*; import java.util.*; class c{}"));
     azzert.that(li.size(), is(3));
-    azzert.that(first(li), is("a.b.c"));
+    azzert.that(the.first(li), is("a.b.c"));
     azzert.that(li.get(1), is("static f.g.*"));
     azzert.that(li.get(2), is("java.util.*"));
   }

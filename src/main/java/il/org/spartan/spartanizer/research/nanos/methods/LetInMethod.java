@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.tippers.*;
+import nano.ly.*;
 
 /** Let x in S <br>
  * {@link Assignment} followed by {@link ExpressionStatement} or
@@ -24,12 +25,12 @@ public class LetInMethod extends JavadocMarkerNanoPattern {
     return hazTwoStatements(¢) //
         && iz.variableDeclarationStatement(firstStatement(¢)) //
         && preDelegation(secondStatement(¢)) //
-        && rival.cantTip(first(fragments(az.variableDeclarationStatement(firstStatement(¢))))) //
+        && rival.cantTip(the.first(fragments(az.variableDeclarationStatement(firstStatement(¢))))) //
         && usesAssignment(¢);
   }
 
   private boolean usesAssignment(final MethodDeclaration ¢) {
-    return !collect.usesOf(name(first(fragments(az.variableDeclarationStatement(firstStatement(¢)))))).in(secondStatement(¢)).isEmpty();
+    return !collect.usesOf(name(the.first(fragments(az.variableDeclarationStatement(firstStatement(¢)))))).in(secondStatement(¢)).isEmpty();
   }
 
   private static boolean preDelegation(final Statement secondStatement) {

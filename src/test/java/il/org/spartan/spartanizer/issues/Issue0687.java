@@ -12,6 +12,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
+import nano.ly.*;
 
 /** Tests for issue 687
  * @author Raviv Rachmiel
@@ -24,13 +25,13 @@ public class Issue0687 {
   }
 
   @Test public void testCheckActualName() {
-    assert "a".equals(first(getAll.names((Block) make.ast("{a=1+1;}"))) + "");
+    assert "a".equals(the.first(getAll.names((Block) make.ast("{a=1+1;}"))) + "");
   }
 
   @Test public void testCheckNamesFineBlock() {
     // assuming we need to get all names in the block, including repetitions
     final List<Name> n = getAll.names((Block) make.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
-    azzert.that(first(n), iz("a"));
+    azzert.that(the.first(n), iz("a"));
     azzert.that(n.get(1), iz("b"));
     azzert.that(n.get(2), iz("System"));
     azzert.that(n.get(3), iz("out"));
@@ -43,7 +44,7 @@ public class Issue0687 {
 
   @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
     final List<Name> names = getAll.names((Block) make.ast("{aba=1+1; ima = 787-9;}"));
-    assert "aba".equals(first(names) + "") && "ima".equals(names.get(1) + "");
+    assert "aba".equals(the.first(names) + "") && "ima".equals(names.get(1) + "");
   }
 
   @Test public void testGetEmpty() {

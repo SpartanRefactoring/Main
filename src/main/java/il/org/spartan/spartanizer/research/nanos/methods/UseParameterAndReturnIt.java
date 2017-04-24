@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import nano.ly.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -20,6 +21,6 @@ public class UseParameterAndReturnIt extends JavadocMarkerNanoPattern {
         && notEmpty(¢)//
         && !iz.constructor(¢)//
         && !iz.voidType(returnType(¢))
-        && returnStatements(¢).stream().map(λ -> expression(λ) + "").allMatch(λ -> λ.equals(identifier(name(onlyOne(parameters(¢))))));
+        && returnStatements(¢).stream().map(λ -> expression(λ) + "").allMatch(λ -> λ.equals(identifier(name(the.onlyOne(parameters(¢))))));
   }
 }

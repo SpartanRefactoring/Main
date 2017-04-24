@@ -16,6 +16,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import nano.ly.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch
@@ -28,13 +29,13 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor() || !iz.voidType(step.returnType(¢)))
       return false;
     final List<Statement> ss = statements(¢.getBody());
-    if (ss.size() != 1 || !iz.expressionStatement(first(ss)))
+    if (ss.size() != 1 || !iz.expressionStatement(the.first(ss)))
       return false;
-    final Expression e = az.expressionStatement(first(ss)).getExpression();
+    final Expression e = az.expressionStatement(the.first(ss)).getExpression();
     if (!iz.assignment(e))
       return false;
     final Assignment $ = az.assignment(e);
-    return (iz.name(left($)) || tipper.check(left($))) && wizard.eq(right($), first(parameters(¢)).getName());
+    return (iz.name(left($)) || tipper.check(left($))) && wizard.eq(right($), the.first(parameters(¢)).getName());
   }
 
   @Override public Tip pattern(final MethodDeclaration d) {

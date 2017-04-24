@@ -13,6 +13,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Replace {@code assertTrue(X)} by {@code assert X;}
  * @author Yossi Gil
@@ -33,7 +34,7 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
     if (¢ == null)
       return null;
     final List<Expression> $ = arguments(¢);
-    return replacement(¢, first($), second($));
+    return replacement(¢, the.first($), the.second($));
   }
 
   public static ASTNode replacement(final MethodInvocation i, final Expression first, final Expression second) {

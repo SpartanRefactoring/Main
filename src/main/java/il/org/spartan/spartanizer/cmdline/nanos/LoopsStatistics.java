@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Collects statistics of loops, including hits by nano patterns.
  * @author orimarco <marcovitch.ori@gmail.com>

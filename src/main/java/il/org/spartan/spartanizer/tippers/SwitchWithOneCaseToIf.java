@@ -20,6 +20,7 @@ import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** See {@link #examples()} Tested in {@link Issue0916}
  * @author Yuval Simon
@@ -34,7 +35,7 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
 
   public SwitchWithOneCaseToIf() {
     andAlso(Proposition.that("Exactly two cases", () -> (cases.size() == 2)));
-    andAlso(Proposition.that("Has default case", () -> (first(cases).isDefault() || last(cases).isDefault())));
+    andAlso(Proposition.that("Has default case", () -> (the.first(cases).isDefault() || the.last(cases).isDefault())));
     andAlso(Proposition.that("Different branches", () -> {
       assert cases.size() == 2; // I assume this proposition is checked only if
                                 // the first propositions is true
@@ -43,10 +44,10 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    final boolean firstDefault = first(cases()).isDefault();
-    final SwitchCase thenCase = firstDefault ? last(cases()) : first(cases());
-    List<Statement> l1 = removeBreaks(statements.subList(1, statements.indexOf(last(cases())))),
-        l2 = removeBreaks(statements.subList(statements.indexOf(last(cases())) + 1, statements.size()));
+    final boolean firstDefault = the.first(cases()).isDefault();
+    final SwitchCase thenCase = firstDefault ? the.last(cases()) : the.first(cases());
+    List<Statement> l1 = removeBreaks(statements.subList(1, statements.indexOf(the.last(cases())))),
+        l2 = removeBreaks(statements.subList(statements.indexOf(the.last(cases())) + 1, statements.size()));
     if (firstDefault) {
       final List<Statement> tmp = l1;
       l1 = l2;

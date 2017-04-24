@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Concat some strings to one string {@code
  * "abcde"
@@ -50,6 +51,6 @@ public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrent
     if (clean)
       return null;
     assert !$.isEmpty();
-    return $.size() <= 1 ? first($) : subject.operands($).to(op.PLUS2);
+    return $.size() <= 1 ? the.first($) : subject.operands($).to(op.PLUS2);
   }
 }

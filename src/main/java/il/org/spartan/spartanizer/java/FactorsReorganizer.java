@@ -9,6 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import nano.ly.*;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil
@@ -36,7 +37,7 @@ interface FactorsReorganizer {
   }
 
   static Expression buildDividers(final List<Expression> ¢) {
-    final Expression $ = subject.pair(first(¢).getAST().newNumberLiteral("1"), first(¢)).to(DIVIDE);
+    final Expression $ = subject.pair(the.first(¢).getAST().newNumberLiteral("1"), the.first(¢)).to(DIVIDE);
     if (¢.size() == 1)
       return $;
     ¢.remove(0);
@@ -49,9 +50,9 @@ interface FactorsReorganizer {
       case 0:
         return null;
       case 1:
-        return first(¢);
+        return the.first(¢);
       case 2:
-        return subject.pair(first(¢), second(¢)).to(TIMES);
+        return subject.pair(the.first(¢), the.second(¢)).to(TIMES);
       default:
         return subject.operands(¢).to(TIMES);
     }

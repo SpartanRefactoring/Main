@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Convert {@code int a=3;b=a;} into {@code b = a;}
  * @author Yossi Gil
@@ -63,7 +64,7 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
       return null;
     final List<SimpleName> uses = collect.usesOf(n).in(nextStatement);
     if (!sideEffects.free(initializer)) {
-      final SimpleName use = onlyOne(uses);
+      final SimpleName use = the.onlyOne(uses);
       if (use == null || Coupling.unknownNumberOfEvaluations(use, nextStatement))
         return null;
     }

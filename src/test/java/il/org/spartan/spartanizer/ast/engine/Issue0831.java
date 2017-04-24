@@ -12,6 +12,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
+import nano.ly.*;
 
 /** see Issue #831 for more details
  * @author Lidia Piatigorski
@@ -45,7 +46,7 @@ public class Issue0831 {
   }
 
   @Test public void oneStatementInScanner() {
-    assert "int a;\n".equals(first(new MethodScannerIExt(oneStatMethod).availableStatements()) + "");
+    assert "int a;\n".equals(the.first(new MethodScannerIExt(oneStatMethod).availableStatements()) + "");
   }
 
   @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {

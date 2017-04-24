@@ -15,6 +15,7 @@ import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.definition.*;
 import il.org.spartan.spartanizer.research.analyses.*;
+import nano.ly.*;
 
 /** Dictionary with a parent. Insertions go the current node, searches start at
  * the current node and delegate to the parent unless it is null.

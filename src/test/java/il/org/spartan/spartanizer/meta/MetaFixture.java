@@ -21,6 +21,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** An abstract class that allows a class to apply testing on its own code. To
  * use, extend it. See examples of current extenders to see how.
@@ -182,7 +183,7 @@ public abstract class MetaFixture {
    * @param ¢ the wanted class
    * @return the first element of this __ */
   protected final <N extends ASTNode> N find(final Class<N> ¢) {
-    return first(descendants.whoseClassIs(¢).from(reflectedCompilationUnit()));
+    return the.first(descendants.whoseClassIs(¢).from(reflectedCompilationUnit()));
   }
 
   /** Gets the name of the most outer class of the current one

@@ -11,6 +11,7 @@ import org.junit.runners.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
+import nano.ly.*;
 
 /** see issue #714 for more details
  * @author Dan Abramovich
@@ -43,7 +44,7 @@ public class Issue0714 {
   }
 
   @Test public void testNoFinal() {
-    assert !determineIf.isImmutable((TypeDeclaration) first(types(az.compilationUnit(make.ast("public class A {int x;}")))));
+    assert !determineIf.isImmutable((TypeDeclaration) the.first(types(az.compilationUnit(make.ast("public class A {int x;}")))));
   }
 
   @Test public void testNull() {
@@ -59,10 +60,10 @@ public class Issue0714 {
   }
 
   @Test public void testSimpleTypeDecleration() {
-    assert determineIf.isImmutable((TypeDeclaration) first(types(az.compilationUnit(make.ast("public class A {}")))));
+    assert determineIf.isImmutable((TypeDeclaration) the.first(types(az.compilationUnit(make.ast("public class A {}")))));
   }
 
   private TypeDeclaration typeConvert(final String $) {
-    return (TypeDeclaration) first(types(az.compilationUnit(make.ast($))));
+    return (TypeDeclaration) the.first(types(az.compilationUnit(make.ast($))));
   }
 }

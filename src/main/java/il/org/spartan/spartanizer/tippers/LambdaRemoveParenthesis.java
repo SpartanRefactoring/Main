@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** convert {@code (x)->x} to {@code x->x}
  * @author Yossi Gil
@@ -17,11 +18,11 @@ public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpr
   private static final long serialVersionUID = 0x42F7485AF333D006L;
 
   @Override protected boolean prerequisite(final LambdaExpression ¢) {
-    return ¢.hasParentheses() && az.variableDeclrationFragment(onlyOne(parameters(¢))) != null;
+    return ¢.hasParentheses() && az.variableDeclrationFragment(the.onlyOne(parameters(¢))) != null;
   }
 
   @Override public String description(final LambdaExpression ¢) {
-    return "Remove parenthesis around " + onlyOne(parameters(¢)) + " paramter";
+    return "Remove parenthesis around " + the.onlyOne(parameters(¢)) + " paramter";
   }
 
   @Override public LambdaExpression replacement(final LambdaExpression ¢) {
