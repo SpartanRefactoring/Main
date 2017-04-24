@@ -5,9 +5,6 @@ import static il.org.spartan.utils.___.*;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
-
 @SuppressWarnings({ "unchecked", "static-method" }) //
 public final class MyHashMap<K, V> implements Map<K, V> {
   /** The default initial capacity - MUST be a power of two. */
@@ -54,7 +51,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * ConcurrentModificationException). */
   transient volatile int modCount;
   // Views
-  @Nullable private transient Set<Map.Entry<K, V>> entrySet;
+  private transient Set<Map.Entry<K, V>> entrySet = null;
   transient volatile Set<K> keySet;
   transient volatile Collection<V> values;
 
@@ -62,7 +59,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * (16) and the default load factor (0.75). */
   public MyHashMap() {
     this.loadFactor = DEFAULT_LOAD_FACTOR;
-    threshold = (int) (DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+    threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
     table = new Entry[DEFAULT_INITIAL_CAPACITY];
   }
 
@@ -85,7 +82,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
     if (loadFactor <= 0 || Float.isNaN(loadFactor))
       throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
-    // Find a power of 2>= initialCapacity
+    // Find a power of 2 >= initialCapacity
     int capacity = 1;
     while (capacity < Math.min(initialCapacity, MAXIMUM_CAPACITY))
       capacity <<= 1;
@@ -100,7 +97,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * specified <tt>Map</tt>.
    * @param m the map whose mappings are to be placed in this map
    * @throws NullPointerException if the specified map is null */
-  public MyHashMap(@NotNull final Map<? extends K, ? extends V> m) {
+  public MyHashMap(final Map<? extends K, ? extends V> m) {
     this(Math.max((int) (m.size() / DEFAULT_LOAD_FACTOR) + 1, DEFAULT_INITIAL_CAPACITY), DEFAULT_LOAD_FACTOR);
     putAllForCreate(m);
   }
@@ -108,10 +105,10 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   /** Removes all of the mappings from this map. The map will be empty after
    * this call returns. */
   @Override public void clear() {
-    ++modCount;
+    modCount++;
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
-    for (int ¢ = 0; ¢ < tab.length; ++¢)
-      tab[¢] = null;
+    for (int i = 0; i < tab.length; i++)
+      tab[i] = null;
     size = 0;
   }
 
@@ -119,18 +116,19 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * values themselves are not cloned.
    * @return a shallow copy of this map */
   @Override public Object clone() {
-    @Nullable MyHashMap<K, V> $ = null;
+    MyHashMap<K, V> result = null;
     try {
-      $ = (MyHashMap<K, V>) super.clone();
-    } catch (@NotNull final CloneNotSupportedException e) {
+      result = (MyHashMap<K, V>) super.clone();
+    } catch (final CloneNotSupportedException e) {
       assert false;
       return null;
     }
-    $.table = new Entry[table.length];
-    $.entrySet = null;
-    $.size = $.modCount = 0;
-    $.putAllForCreate(this);
-    return $;
+    result.table = new Entry[table.length];
+    result.entrySet = null;
+    result.modCount = 0;
+    result.size = 0;
+    result.putAllForCreate(this);
+    return result;
   }
 
   /** Returns <tt>true</tt> if this map contains a mapping for the specified
@@ -147,13 +145,13 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * @param value value whose presence in this map is to be tested
    * @return <tt>true</tt> if this map maps one or more keys to the specified
    *         value */
-  @Override public boolean containsValue(@Nullable final Object value) {
+  @Override public boolean containsValue(final Object value) {
     if (value == null)
       return containsNullValue();
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
-    for (final Entry<?, ?> element : tab)
-      for (@SuppressWarnings("rawtypes") Entry ¢ = element; ¢ != null; ¢ = ¢.next)
-        if (value.equals(¢.value))
+    for (final Entry element : tab)
+      for (@SuppressWarnings("rawtypes") Entry e = element; e != null; e = e.next)
+        if (value.equals(e.value))
           return true;
     return false;
   }
@@ -169,7 +167,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the
    * <tt>add</tt> or <tt>addAll</tt> operations.
    * @return a set view of the mappings contained in this map */
-  @Override @NotNull public Set<Map.Entry<K, V>> entrySet() {
+  @Override public Set<Map.Entry<K, V>> entrySet() {
     return entrySet0();
   }
 
@@ -186,16 +184,16 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * explicitly maps the key to {@code null}. The {@link #containsKey
    * containsKey} operation may be used to distinguish these two cases.
    * @see #put(Object, Object) */
-  @Override public V get(@Nullable final Object key) {
+  @Override public V get(final Object key) {
     if (key == null)
       return getForNullKey();
     final int hash = hash(key.hashCode());
-    for (Entry<K, V> $ = table[indexFor(hash, table.length)];; $ = $.next) {
-      if ($ == null)
+    for (Entry<K, V> e = table[indexFor(hash, table.length)];; e = e.next) {
+      if (e == null)
         break;
       Object k;
-      if ($.hash == hash && ((k = $.key) == key || key.equals(k)))
-        return $.value;
+      if (e.hash == hash && ((k = e.key) == key || key.equals(k)))
+        return e.value;
     }
     return null;
   }
@@ -215,8 +213,9 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>,
    * <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the
    * <tt>add</tt> or <tt>addAll</tt> operations. */
-  @Override @NotNull public Set<K> keySet() {
-    return keySet != null ? keySet : (keySet = new KeySet());
+  @Override public Set<K> keySet() {
+    final Set<K> ks = keySet;
+    return ks != null ? ks : (keySet = new KeySet());
   }
 
   /** Associates the specified value with the specified key in this map. If the
@@ -227,7 +226,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    *         if there was no mapping for <tt>key</tt>. (A <tt>null</tt> return
    *         can also indicate that the map previously associated <tt>null</tt>
    *         with <tt>key</tt>.) */
-  @Override public V put(@Nullable final K key, final V value) {
+  @Override public V put(final K key, final V value) {
     if (key == null)
       return putForNullKey(value);
     final int hash = hash(key.hashCode());
@@ -235,13 +234,13 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     for (Entry<K, V> e = table[i]; e != null; e = e.next) {
       Object k;
       if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
-        final V $ = e.value;
+        final V oldValue = e.value;
         e.value = value;
         e.recordAccess(this);
-        return $;
+        return oldValue;
       }
     }
-    ++modCount;
+    modCount++;
     addEntry(hash, key, value, i);
     return null;
   }
@@ -257,7 +256,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       return;
     /* Expand the map if the map if the number of mappings to be added is
      * greater than or equal to threshold. This is conservative; the obvious
-     * condition is (m.size() + size)>= threshold, but this condition could
+     * condition is (m.size() + size) >= threshold, but this condition could
      * result in a map with twice the appropriate capacity, if the keys to be
      * added overlap with the keys already in this map. By using the
      * conservative calculation, we subject ourself to at most one extra
@@ -272,8 +271,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       if (newCapacity > table.length)
         resize(newCapacity);
     }
-    for (@NotNull final java.util.Map.Entry<? extends K, ? extends V> ¢ : m.entrySet())
-      put(¢.getKey(), ¢.getValue());
+    for (final java.util.Map.Entry<? extends K, ? extends V> e : m.entrySet())
+      put(e.getKey(), e.getValue());
   }
 
   /** Removes the mapping for the specified key from this map if present.
@@ -283,23 +282,23 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    *         can also indicate that the map previously associated <tt>null</tt>
    *         with <tt>key</tt>.) */
   @Override public V remove(final Object key) {
-    final Entry<K, V> $ = removeEntryForKey(key);
-    return $ == null ? null : $.value;
+    final Entry<K, V> e = removeEntryForKey(key);
+    return e == null ? null : e.value;
   }
 
-  public int selfBytes() {
+  public final int selfBytes() {
     return 0;
   }
 
-  public int selfIntegers() {
+  public final int selfIntegers() {
     return 4;
   }
 
-  public int selfObjects() {
+  public final int selfObjects() {
     return 2;
   }
 
-  public int selfReferences() {
+  public final int selfReferences() {
     return 1;
   }
 
@@ -323,8 +322,9 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * <tt>Collection.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and
    * <tt>clear</tt> operations. It does not support the <tt>add</tt> or
    * <tt>addAll</tt> operations. */
-  @Override @NotNull @SuppressWarnings("synthetic-access") public Collection<V> values() {
-    return values != null ? values : (values = new Values());
+  @SuppressWarnings("synthetic-access") @Override public Collection<V> values() {
+    final Collection<V> vs = values;
+    return vs != null ? vs : (values = new Values());
   }
 
   /** Adds a new entry with the specified key, value and hash code to the
@@ -351,17 +351,17 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   void createEntry(final int hash, final K key, final V value, final int bucketIndex) {
     final Entry<K, V> e = table[bucketIndex];
     table[bucketIndex] = new Entry<>(hash, key, value, e);
-    ++size;
+    size++;
   }
 
   /** Returns the entry associated with the specified key in the HashMap.
    * Returns null if the HashMap contains no mapping for the key. */
-  Entry<K, V> getEntry(@Nullable final Object key) {
+  final Entry<K, V> getEntry(final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode());
-    for (Entry<K, V> $ = table[indexFor(hash, table.length)]; $ != null; $ = $.next) {
+    for (Entry<K, V> e = table[indexFor(hash, table.length)]; e != null; e = e.next) {
       Object k;
-      if ($.hash == hash && ((k = $.key) == key || key != null && key.equals(k)))
-        return $;
+      if (e.hash == hash && ((k = e.key) == key || key != null && key.equals(k)))
+        return e;
     }
     return null;
   }
@@ -370,71 +370,71 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     return loadFactor;
   }
 
-  @NotNull Iterator<Map.Entry<K, V>> newEntryIterator() {
+  Iterator<Map.Entry<K, V>> newEntryIterator() {
     return new EntryIterator();
   }
 
   // Subclass overrides these to alter behavior of views' iterator() method
-  @NotNull Iterator<K> newKeyIterator() {
+  Iterator<K> newKeyIterator() {
     return new KeyIterator();
   }
 
-  @NotNull Iterator<V> newValueIterator() {
+  Iterator<V> newValueIterator() {
     return new ValueIterator();
   }
 
   /** Removes and returns the entry associated with the specified key in the
    * HashMap. Returns null if the HashMap contains no mapping for this key. */
-  Entry<K, V> removeEntryForKey(@Nullable final Object key) {
+  final Entry<K, V> removeEntryForKey(final Object key) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     final int i = indexFor(hash, table.length);
     Entry<K, V> prev = table[i];
-    Entry<K, V> $ = prev;
-    while ($ != null) {
-      final Entry<K, V> next = $.next;
+    Entry<K, V> e = prev;
+    while (e != null) {
+      final Entry<K, V> next = e.next;
       Object k;
-      if ($.hash == hash && ((k = $.key) == key || key != null && key.equals(k))) {
-        ++modCount;
-        --size;
-        if (prev == $)
+      if (e.hash == hash && ((k = e.key) == key || key != null && key.equals(k))) {
+        modCount++;
+        size--;
+        if (prev == e)
           table[i] = next;
         else
           prev.next = next;
-        $.recordRemoval(this);
-        break;
+        e.recordRemoval(this);
+        return e;
       }
-      prev = $;
-      $ = next;
+      prev = e;
+      e = next;
     }
-    return $;
+    return e;
   }
 
   /** Special version of remove for EntrySet. */
-  @Nullable Entry<K, V> removeMapping(final Object o) {
+  final Entry<K, V> removeMapping(final Object o) {
     if (!(o instanceof Map.Entry))
       return null;
-    @NotNull final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
+    final Map.Entry<K, V> entry = (Map.Entry<K, V>) o;
     final Object key = entry.getKey();
     final int hash = key == null ? 0 : hash(key.hashCode());
     final int i = indexFor(hash, table.length);
     Entry<K, V> prev = table[i];
-    Entry<K, V> $ = prev;
-    while ($ != null) {
-      final Entry<K, V> next = $.next;
-      if ($.hash == hash && $.equals(entry)) {
-        ++modCount;
-        --size;
-        if (prev == $)
+    Entry<K, V> e = prev;
+    while (e != null) {
+      final Entry<K, V> next = e.next;
+      if (e.hash == hash && e.equals(entry)) {
+        modCount++;
+        size--;
+        if (prev == e)
           table[i] = next;
         else
           prev.next = next;
-        $.recordRemoval(this);
-        break;
+        e.recordRemoval(this);
+        return e;
       }
-      prev = $;
-      $ = next;
+      prev = e;
+      e = next;
     }
-    return $;
+    return e;
   }
 
   /** Rehashes the contents of this map into a new array with a larger capacity.
@@ -446,26 +446,29 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    *        greater than current capacity unless current capacity is
    *        MAXIMUM_CAPACITY (in which case value is irrelevant). */
   void resize(final int newCapacity) {
-    if (table.length == MAXIMUM_CAPACITY) {
+    @SuppressWarnings("rawtypes") final Entry[] oldTable = table;
+    final int oldCapacity = oldTable.length;
+    if (oldCapacity == MAXIMUM_CAPACITY) {
       threshold = Integer.MAX_VALUE;
       return;
     }
-    @NotNull @SuppressWarnings("rawtypes") final Entry[] newTable = new Entry[newCapacity];
+    @SuppressWarnings("rawtypes") final Entry[] newTable = new Entry[newCapacity];
     transfer(newTable);
     table = newTable;
-    threshold = (int) (loadFactor * newCapacity);
+    threshold = (int) (newCapacity * loadFactor);
   }
 
   /** Transfers all entries from current table to newTable. */
-  void transfer(@NotNull @SuppressWarnings("rawtypes") final Entry[] newTable) {
+  void transfer(@SuppressWarnings("rawtypes") final Entry[] newTable) {
     @SuppressWarnings("rawtypes") final Entry[] src = table;
-    for (int j = 0; j < src.length; ++j) {
+    final int newCapacity = newTable.length;
+    for (int j = 0; j < src.length; j++) {
       Entry<K, V> e = src[j];
       if (e != null) {
         src[j] = null;
         do {
           final Entry<K, V> next = e.next;
-          final int i = indexFor(e.hash, newTable.length);
+          final int i = indexFor(e.hash, newCapacity);
           e.next = newTable[i];
           newTable[i] = e;
           e = next;
@@ -477,15 +480,16 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   /** Special-case code for containsValue with null argument */
   private boolean containsNullValue() {
     @SuppressWarnings("rawtypes") final Entry[] tab = table;
-    for (final Entry<?, ?> element : tab)
-      for (@SuppressWarnings("rawtypes") Entry ¢ = element; ¢ != null; ¢ = ¢.next)
-        if (¢.value == null)
+    for (final Entry element : tab)
+      for (@SuppressWarnings("rawtypes") Entry e = element; e != null; e = e.next)
+        if (e.value == null)
           return true;
     return false;
   }
 
-  @Nullable private Set<Map.Entry<K, V>> entrySet0() {
-    return entrySet != null ? entrySet : (entrySet = new EntrySet());
+  private Set<Map.Entry<K, V>> entrySet0() {
+    final Set<Map.Entry<K, V>> es = entrySet;
+    return es != null ? es : (entrySet = new EntrySet());
   }
 
   /** Offloaded version of get() to look up null keys. Null keys map to index 0.
@@ -493,21 +497,21 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * performance in the two most commonly used operations (get and put), but
    * incorporated with conditionals in others. */
   private V getForNullKey() {
-    for (Entry<K, V> $ = table[0]; $ != null; $ = $.next)
-      if ($.key == null)
-        return $.value;
+    for (Entry<K, V> e = table[0]; e != null; e = e.next)
+      if (e.key == null)
+        return e.value;
     return null;
   }
 
-  private void putAllForCreate(@NotNull final Map<? extends K, ? extends V> m) {
-    for (@NotNull final java.util.Map.Entry<? extends K, ? extends V> ¢ : m.entrySet())
-      putForCreate(¢.getKey(), ¢.getValue());
+  private void putAllForCreate(final Map<? extends K, ? extends V> m) {
+    for (final java.util.Map.Entry<? extends K, ? extends V> e : m.entrySet())
+      putForCreate(e.getKey(), e.getValue());
   }
 
   /** This method is used instead of put by constructors and pseudoconstructors
    * (clone, readObject). It does not resize the table, check for
    * comodification, etc. It calls createEntry rather than addEntry. */
-  private void putForCreate(@Nullable final K key, final V value) {
+  private void putForCreate(final K key, final V value) {
     final int hash = key == null ? 0 : hash(key.hashCode());
     final int i = indexFor(hash, table.length);
     /** Look for preexisting entry for key. This will never happen for clone or
@@ -525,14 +529,14 @@ public final class MyHashMap<K, V> implements Map<K, V> {
 
   /** Offloaded version of put for null keys */
   private V putForNullKey(final V value) {
-    for (Entry<K, V> ¢ = table[0]; ¢ != null; ¢ = ¢.next)
-      if (¢.key == null) {
-        final V $ = ¢.value;
-        ¢.value = value;
-        ¢.recordAccess(this);
-        return $;
+    for (Entry<K, V> e = table[0]; e != null; e = e.next)
+      if (e.key == null) {
+        final V oldValue = e.value;
+        e.value = value;
+        e.recordAccess(this);
+        return oldValue;
       }
-    ++modCount;
+    modCount++;
     addEntry(0, null, value, 0);
     return null;
   }
@@ -544,8 +548,8 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    *             the number of key-value mappings), followed by the key (Object)
    *             and value (Object) for each key-value mapping. The key-value
    *             mappings are emitted in no particular order. */
-  private void writeObject(@NotNull final java.io.ObjectOutputStream s) throws IOException {
-    @NotNull final Iterator<Map.Entry<K, V>> i = size <= 0 ? null : entrySet0().iterator();
+  private void writeObject(final java.io.ObjectOutputStream s) throws IOException {
+    final Iterator<Map.Entry<K, V>> i = size > 0 ? entrySet0().iterator() : null;
     // Write out the threshold, loadfactor, and any hidden stuff
     s.defaultWriteObject();
     // Write out number of buckets
@@ -578,12 +582,16 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     @Override public final boolean equals(final Object o) {
       if (!(o instanceof Map.Entry))
         return false;
-      @NotNull @SuppressWarnings("rawtypes") final Map.Entry e = (Map.Entry) o;
-      final Object k1 = getKey(), k2 = e.getKey();
-      if (k1 != k2 && (k1 == null || !k1.equals(k2)))
-        return false;
-      final Object v1 = getValue(), v2 = e.getValue();
-      return v1 == v2 || v1 != null && v1.equals(v2) ? true : false;
+      @SuppressWarnings("rawtypes") final Map.Entry e = (Map.Entry) o;
+      final Object k1 = getKey();
+      final Object k2 = e.getKey();
+      if (k1 == k2 || k1 != null && k1.equals(k2)) {
+        final Object v1 = getValue();
+        final Object v2 = e.getValue();
+        if (v1 == v2 || v1 != null && v1.equals(v2))
+          return true;
+      }
+      return false;
     }
 
     @Override public final K getKey() {
@@ -599,24 +607,24 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     }
 
     @Override public final V setValue(final V newValue) {
-      final V $ = value;
+      final V oldValue = value;
       value = newValue;
-      return $;
+      return oldValue;
     }
 
-    @Override @NotNull public final String toString() {
+    @Override public final String toString() {
       return getKey() + "=" + getValue();
     }
 
     /** This method is invoked whenever the value in an entry is overwritten by
      * an invocation of put(k,v) for a key k that's already in the HashMap. */
-    void recordAccess(final MyHashMap<K, V> ¢) {
-      unused(¢);
+    void recordAccess(final MyHashMap<K, V> m) {
+      unused(m);
     }
 
     /** This method is invoked whenever the entry is removed from the table. */
-    void recordRemoval(final MyHashMap<K, V> ¢) {
-      unused(¢);
+    void recordRemoval(final MyHashMap<K, V> m) {
+      unused(m);
     }
   }
 
@@ -634,17 +642,17 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     @Override public boolean contains(final Object o) {
       if (!(o instanceof Map.Entry))
         return false;
-      @NotNull final Map.Entry<K, V> $ = (Map.Entry<K, V>) o;
-      @Nullable final Entry<K, V> candidate = getEntry($.getKey());
-      return candidate != null && candidate.equals($);
+      final Map.Entry<K, V> e = (Map.Entry<K, V>) o;
+      final Entry<K, V> candidate = getEntry(e.getKey());
+      return candidate != null && candidate.equals(e);
     }
 
-    @Override @NotNull public Iterator<Map.Entry<K, V>> iterator() {
+    @Override public Iterator<Map.Entry<K, V>> iterator() {
       return newEntryIterator();
     }
 
-    @Override public boolean remove(final Object ¢) {
-      return removeMapping(¢) != null;
+    @Override public boolean remove(final Object o) {
+      return removeMapping(o) != null;
     }
 
     @Override public int size() {
@@ -663,16 +671,16 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       MyHashMap.this.clear();
     }
 
-    @Override public boolean contains(final Object ¢) {
-      return containsKey(¢);
+    @Override public boolean contains(final Object o) {
+      return containsKey(o);
     }
 
-    @Override @NotNull public Iterator<K> iterator() {
+    @Override public Iterator<K> iterator() {
       return newKeyIterator();
     }
 
-    @Override public boolean remove(final Object ¢) {
-      return MyHashMap.this.removeEntryForKey(¢) != null;
+    @Override public boolean remove(final Object o) {
+      return MyHashMap.this.removeEntryForKey(o) != null;
     }
 
     @Override public int size() {
@@ -690,13 +698,15 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     Entry<K, V> next; // next entry to return
     int expectedModCount; // For fast-fail
     int index; // current slot
-    @Nullable Entry<K, V> current; // current entry
+    Entry<K, V> current; // current entry
 
     HashIterator() {
       expectedModCount = modCount;
-      if (size > 0)
-        for (@SuppressWarnings("rawtypes") final Entry[] ¢ = table; index < ¢.length && (next = ¢[index++]) == null;)
+      if (size > 0) { // advance to first entry
+        @SuppressWarnings("rawtypes") final Entry[] t = table;
+        while (index < t.length && (next = t[index++]) == null)
           nothing();
+      }
     }
 
     @Override public final boolean hasNext() {
@@ -717,14 +727,16 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     final Entry<K, V> nextEntry() {
       if (modCount != expectedModCount)
         throw new ConcurrentModificationException();
-      final Entry<K, V> $ = next;
-      if ($ == null)
+      final Entry<K, V> e = next;
+      if (e == null)
         throw new NoSuchElementException();
-      if ((next = $.next) == null)
-        for (@SuppressWarnings("rawtypes") final Entry[] ¢ = table; index < ¢.length && (next = ¢[index++]) == null;)
+      if ((next = e.next) == null) {
+        @SuppressWarnings("rawtypes") final Entry[] t = table;
+        while (index < t.length && (next = t[index++]) == null)
           nothing();
-      current = $;
-      return $;
+      }
+      current = e;
+      return e;
     }
   }
 
@@ -733,11 +745,11 @@ public final class MyHashMap<K, V> implements Map<K, V> {
       MyHashMap.this.clear();
     }
 
-    @Override public boolean contains(final Object ¢) {
-      return containsValue(¢);
+    @Override public boolean contains(final Object o) {
+      return containsValue(o);
     }
 
-    @Override @NotNull public Iterator<V> iterator() {
+    @Override public Iterator<V> iterator() {
       return newValueIterator();
     }
 
