@@ -19,8 +19,8 @@ public class Vertex<E> {
    * @param data to be stored in this vertex
    * @param outgoing vertices incident on outgoing edges
    * @param incoming vertices incident on incoming edges */
-  Vertex(final E data, final Vertex<E>[] outgoing, final Vertex<E>[] incoming) {
-    this.e = data;
+  Vertex(final E e, final Vertex<E>[] outgoing, final Vertex<E>[] incoming) {
+    this.e = e;
     this.incoming = ImmutableArrayList.make(incoming);
     this.outgoing = ImmutableArrayList.make(outgoing);
   }

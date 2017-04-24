@@ -326,8 +326,8 @@ public interface Environment {
 
     /** Instantiates this class.
      * @param λ JD */
-    public Property(final Function0<? extends T> λ) {
-      this.ϑ = λ;
+    public Property(final Function0<? extends T> ϑ) {
+      this.ϑ = ϑ;
     }
 
     /** Instantiates this class.
