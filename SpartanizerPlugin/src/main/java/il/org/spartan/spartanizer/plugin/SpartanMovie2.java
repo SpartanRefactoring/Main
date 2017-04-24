@@ -45,13 +45,9 @@ public class SpartanMovie2 extends AbstractHandler {
     final GUITraversal traversal = new GUITraversal();
     if (compilationUnits == null || page == null || progressService == null) return null;
 
-//    UIJob job = new UIJob(NAME) {
-//      @Override public IStatus runInUIThread(IProgressMonitor monitor) {
-//          monitor.beginTask("Preparing", 5000);
-//          monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
+
           int changes = 0, filesModified = 0;
           for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-//            System.out.println(currentCompilationUnit.getElementName());
             //mightNotBeSlick(page);
             final IResource file = currentCompilationUnit.getResource();
             try {
@@ -60,13 +56,8 @@ public class SpartanMovie2 extends AbstractHandler {
                 ++filesModified;
                 for (; markers.length > 0; markers = getMarkers(file)) {
                   final IMarker marker = getFirstMarker(markers);
-//                  monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
-//                                  marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
-                  printout(marker);
-                  delegateUIJob(page, marker);
-                  //refresh(page);
-                  //sleep(SLEEP_BETWEEN);
-                  traversal.runAsMarkerFix(marker);
+
+                  delegateUIJob(page, marker, file, traversal);
                   ++changes;
                   marker.delete(); // TODO Ori Roth: does not seem to make a 
                                    // difference
@@ -86,36 +77,42 @@ public class SpartanMovie2 extends AbstractHandler {
 //           return Status.OK_STATUS;
 //      }
 //    }; // end job
-    
-    
-//    ICommandService service = (ICommandService) 
-//        PlatformUI.getWorkbench().getService(ICommandService.class);
-//    Command command = service == null ? null : 
-//      service.getCommand("il.org.spartan.SpartanMovie");
-//    
-//    if(command != null){
-//      job.setProperty(IProgressConstants2.COMMAND_PROPERTY, 
-//            ParameterizedCommand.generateCommand(command, null));
-//      job.setProperty(IProgressConstants2.ICON_PROPERTY,
-//          ImageDescriptor.createFromURL(SpartanMovie2.class.getResource("/icons/sample.gif")));
-//      job.setProperty(IProgressConstants2.SHOW_IN_TASKBAR_ICON_PROPERTY,
-//          Boolean.TRUE);
-//    }
-    
-//    job.schedule();
+
     return null;
   }
 
 
-private void delegateUIJob(final IWorkbenchPage page, final IMarker marker) throws PartInitException {
+private void delegateUIJob(final IWorkbenchPage page, final IMarker marker, final IResource file, final GUITraversal traversal) throws PartInitException {
   UIJob job = new UIJob(NAME) {
     @Override public IStatus runInUIThread(IProgressMonitor monitor) {
-      try {
+    monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
+    try {
+      monitor.subTask("Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
+                marker.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+        printout(marker);
         IDE.openEditor(page, marker, true);
-      } catch (PartInitException x) {
+        refresh(page);
+        sleep(SLEEP_BETWEEN);
+        traversal.runAsMarkerFix(marker);
+      } catch (CoreException x) {
         x.printStackTrace();
       }
       return Status.OK_STATUS;
+    }
+    
+    /** The current SpartanMovie is not releaseable. Some big changes should be
+     * made.
+     * @author Ori Roth
+     * @param howMuch
+     * @return */
+    boolean sleep(final double howMuch) {
+      try {
+        Thread.sleep((int) (1000 * howMuch));
+        return true;
+      } catch (final InterruptedException ¢) {
+        note.bug(¢);
+        return false;
+      }
     }
   };
   job.schedule();  
