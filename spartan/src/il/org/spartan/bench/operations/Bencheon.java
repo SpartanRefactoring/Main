@@ -73,9 +73,11 @@ public abstract class Bencheon extends NamedOperation {
     }
 
     @Override public final void beforeAllRuns() {
+      //
     }
 
     @Override public final void beforeEachRun() {
+      //
     }
 
     @Override public long netRunTime(final int runs) {
@@ -142,8 +144,7 @@ public abstract class Bencheon extends NamedOperation {
 
   public static class Hash extends Bencheon {
     static int hash(final int h) {
-      final int $ = h ^ h >>> 12 ^ h >>> 20;
-      return $ ^ $ >>> 4 ^ $ >>> 7;
+      return h ^ h >>> 12 ^ h >>> 20 ^ (h ^ h >>> 12 ^ h >>> 20) >>> 4 ^ (h ^ h >>> 12 ^ h >>> 20) >>> 7;
     }
 
     int a;

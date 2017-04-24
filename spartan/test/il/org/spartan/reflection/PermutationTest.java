@@ -1,11 +1,10 @@
 package il.org.spartan.reflection;
 
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Permutation.*;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -29,22 +28,23 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void scrambleSize() {
-    azzert.that(scramble(100).length, is(100));
+    assertEquals(100, scramble(100).length);
   }
 
   @Test public void testIsPermutation1() {
-    azzert.that(Permutation.random(1)[0], is(0));
+    final int a[] = Permutation.random(1);
+    assertEquals(0, a[0]);
   }
 
   @Test public void testIsPermutationLarge() {
-    @NotNull final int N = 1000, a[] = Permutation.random(N);
+    final int N = 1000, a[] = Permutation.random(N);
     Arrays.sort(a);
     for (int ¢ = 0; ¢ < N; ++¢)
-      azzert.that(Arrays.binarySearch(a, ¢), is(¢));
+      assertEquals(¢, Arrays.binarySearch(a, ¢));
   }
 
   @Test public void testIsRandomPermutation() {
-    @NotNull final int a[] = Permutation.random(10000);
+    final int a[] = Permutation.random(10000);
     int count = 0;
     for (int ¢ = 0; ¢ < a.length; ++¢)
       count += as.bit(¢ == a[¢]);
@@ -53,15 +53,18 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testPermutation0() {
-    azzert.that(Permutation.random(0).length, is(0));
+    final int a[] = Permutation.random(0);
+    assertEquals(0, a.length);
   }
 
   @Test public void testPermutationLength1() {
-    azzert.that(Permutation.random(1).length, is(1));
+    final int a[] = Permutation.random(1);
+    assertEquals(1, a.length);
   }
 
   @Test public void testPermutationLength6() {
-    azzert.that(Permutation.random(6).length, is(6));
+    final int a[] = Permutation.random(6);
+    assertEquals(6, a.length);
   }
 
   @Test public void testrandom() {

@@ -44,5 +44,6 @@ public abstract class Codex<U, T extends U> implements Container<U, T> {
   public abstract int encode(U t);
 
   public abstract static class Anchored<T> extends Codex<T, T> {
+    //
   }
 }

@@ -29,8 +29,8 @@ import il.org.spartan.streotypes.*;
   /** Create an {@link Iterable} from a given enumeration
    * @param implmenetation an enumeration adapted by the newly created
    *        {@link Iterable} */
-  public IterableAdapter(final Enumeration<T> implementation) {
-    this.implementation = implementation;
+  public IterableAdapter(final Enumeration<T> implmenetation) {
+    this.implementation = implmenetation;
   }
 
   @Override @NotNull public Iterator<T> iterator() {

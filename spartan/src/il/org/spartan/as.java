@@ -281,7 +281,8 @@ public enum as {
     }
 
     @Test public void asListSimple() {
-      @NotNull final List<Integer> is = as.list(12, 13, 14);
+      // direct call `as.list(12, 13, 14)` kills Travis --or
+      @NotNull final List<Integer> is = as.list(new int[] { 12, 13, 14 });
       azzert.that(is.get(0), is(box.it(12)));
       azzert.that(is.get(1), is(box.it(13)));
       azzert.that(is.get(2), is(box.it(14)));

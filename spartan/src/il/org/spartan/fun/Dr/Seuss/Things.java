@@ -4,6 +4,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
+import nano.ly.*;
 
 /** Dr. Seuss Nonsense
  * @author Yossi Gil
@@ -69,8 +70,10 @@ interface Cat {
     interface the {
       interface Hat {
         Thing thing1 = new Thing() {
+          //
         };
         Thing thing2 = new Thing() {
+          //
         };
         Thing[] things = { thing1, thing2 };
 

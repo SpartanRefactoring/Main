@@ -1,7 +1,7 @@
 package il.org.spatan.iteration;
 
-import static il.org.spartan.utils.Box.*;
-import static il.org.spartan.utils.Unbox.*;
+import static nano.ly.Box.*;
+import static nano.ly.Unbox.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -12,6 +12,7 @@ import org.jetbrains.annotations.*;
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 public class Iterables {
   @NotNull public static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Iterable<? extends T> ts) {
@@ -416,19 +417,15 @@ public class Iterables {
 
   public static String toString(@NotNull final Iterable<String> items, final String sep) {
     String $ = "";
-    for (final String ¢ : items) {
-      $ += ¢;
-      $ += sep;
-    }
+    for (final String ¢ : items)
+      $ += ¢ + sep;
     return $;
   }
 
   public static String toString(@NotNull final Set<Entry<String, String>> entrySet, final String sep) {
     String $ = "";
-    for (final Entry<String, String> ¢ : entrySet) {
-      $ += ¢ + "";
-      $ += sep;
-    }
+    for (final Entry<String, String> ¢ : entrySet)
+      $ += ¢ + sep;
     return $;
   }
 

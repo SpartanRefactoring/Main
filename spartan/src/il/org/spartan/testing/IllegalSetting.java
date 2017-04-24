@@ -1,4 +1,4 @@
-package il.org.spartanl.testing;
+package il.org.spartan.testing;
 
 import org.jetbrains.annotations.*;
 

@@ -4,8 +4,8 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
 import static il.org.spartan.strings.StringUtils.*;
-import static il.org.spartan.utils.Box.*;
 import static il.org.spartan.utils.___.*;
+import static nano.ly.Box.*;
 
 import java.io.*;
 import java.util.*;
@@ -191,7 +191,7 @@ public abstract class LogBook implements Serializable {
       }
 
       int compare(@Nullable final String s1, @NotNull final String s2) {
-        return s1 == null ? As.binary(s2) : compareNumeric(s1, s2);
+        return s1 == null ? s2 == null ? 0 : 1 : compareNumeric(s1, s2);
       }
 
       int compareNumeric(@NotNull final String s1, @NotNull final String s2) {
@@ -699,8 +699,7 @@ public abstract class LogBook implements Serializable {
     }
 
     @NotNull private String compare(final Statistics s1, final Statistics s2) {
-      final double $ = new WelchT(s1, s2).p;
-      return $ < 0.001 ? "==" : "~" + ($ > 0.1 ? "" : RELATIVE.format($) + "") + "~";
+      return new WelchT(s1, s2).p < 0.001 ? "==" : "~" + (new WelchT(s1, s2).p > 0.1 ? "" : RELATIVE.format(new WelchT(s1, s2).p) + "") + "~";
     }
 
     private boolean equals(@Nullable final String s1, @Nullable final String s2) {

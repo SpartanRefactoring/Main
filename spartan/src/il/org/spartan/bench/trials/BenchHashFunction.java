@@ -23,8 +23,7 @@ public class BenchHashFunction {
 
   public static class Hash extends Operation {
     private static int hash(final int h) {
-      final int $ = h ^ h >>> 12 ^ h >>> 20;
-      return $ ^ $ >>> 4 ^ $ >>> 7;
+      return h ^ h >>> 12 ^ h >>> 20 ^ (h ^ h >>> 12 ^ h >>> 20) >>> 4 ^ (h ^ h >>> 12 ^ h >>> 20) >>> 7;
     }
 
     int a;

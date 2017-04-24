@@ -12,7 +12,7 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil
  * @since 2014-06-03
  * @param <T> some arbitrary type */
-public interface PureIterable<@NonNull T> extends Iterable<T> {
+public interface PureIterable<T> extends Iterable<T> {
   @Override @NotNull PureIterator<@NonNull T> iterator();
 
   /** A kind of {@link PureIterable} which provides an additional

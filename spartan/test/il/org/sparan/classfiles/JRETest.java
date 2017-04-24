@@ -1,6 +1,5 @@
 package il.org.sparan.classfiles;
 
-import static il.org.spartanl.testing.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.io.*;
@@ -9,6 +8,7 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import il.org.spartan.*;
 import il.org.spartan.classfiles.*;
 
 public class JRETest {
@@ -24,6 +24,6 @@ public class JRETest {
   @Test public final void testFromClass() {
     @NotNull final List<File> l = JRE.fromClass(this.getClass());
     assert l != null;
-    assertPositive(l.size());
+    azzert.assertPositive(l.size());
   }
 }

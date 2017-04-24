@@ -192,11 +192,8 @@ public class RawTokenizer {
   private static int zzUnpackRowMap(@NotNull final String packed, final int offset, final int[] result) {
     int i = 0; /* index in packed string */
     int $ = offset; /* index in unpacked array */
-    final int l = packed.length();
-    while (i < l) {
-      final int high = packed.charAt(i++) << 16;
-      result[$++] = high | packed.charAt(i++);
-    }
+    for (final int l = packed.length(); i < l;)
+      result[$++] = packed.charAt(i++) | packed.charAt(i++) << 16;
     return $;
   }
 

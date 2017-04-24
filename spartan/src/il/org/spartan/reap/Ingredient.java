@@ -4,12 +4,13 @@ package il.org.spartan.reap;
 import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.*;
+import nano.ly.*;
 
 /** cell which does not depend on others
  * @param <T> JD
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
-public class Ingredient<@Nullable T> extends Cell<T> {
+public class Ingredient<T> extends Cell<T> {
   /** Instantiates this class.* */
   public Ingredient() {
     // Make sure we have a public constructor

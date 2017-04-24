@@ -1,7 +1,7 @@
 package il.org.spartan.classfiles.reify;
 
-import static il.org.spartan.utils.Box.*;
-import static il.org.spartan.utils.Unbox.*;
+import static nano.ly.Box.*;
+import static nano.ly.Unbox.*;
 
 import java.util.*;
 
@@ -218,8 +218,7 @@ public final class ConstantPool {
       @Nullable String $ = getUTF8(contentIndex);
       if ($ == null)
         return null;
-      $ = $.replaceFirst("^[\\[]+L", "");
-      $ = $.replaceAll(";$", "");
+      $ = $.replaceFirst("^[\\[]+L", "").replaceAll(";$", "");
       if ($.startsWith("["))
         return null;
       final int i = $.lastIndexOf('/');
@@ -230,8 +229,7 @@ public final class ConstantPool {
       @Nullable String $ = getUTF8(contentIndex);
       if ($ == null)
         return null;
-      $ = $.replaceFirst("^[\\[]+L", "");
-      $ = $.replaceAll(";$", "");
+      $ = $.replaceFirst("^[\\[]+L", "").replaceAll(";$", "");
       return $.startsWith("[") ? null : $.substring($.lastIndexOf('/') + 1).replace('$', '.');
     }
 
