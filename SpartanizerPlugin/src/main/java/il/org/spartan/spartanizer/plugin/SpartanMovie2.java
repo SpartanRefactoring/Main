@@ -126,12 +126,12 @@ public class SpartanMovie2 extends AbstractHandler {
     final IProgressService progressService = workbench == null ? null : workbench.getProgressService();
     final GUITraversal traversal = new GUITraversal();
     if (compilationUnits == null || page == null || progressService == null) return null;
-    
+
     UIJob job = new UIJob(NAME) {
       @Override public IStatus runInUIThread(IProgressMonitor monitor) {
 //          monitor.beginTask("Preparing", 5000);
           monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
-          
+          int changes = 0, filesModified = 0;
           for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
 //            System.out.println(currentCompilationUnit.getElementName());
             //mightNotBeSlick(page);
