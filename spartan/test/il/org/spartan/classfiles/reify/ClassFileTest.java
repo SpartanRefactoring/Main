@@ -134,9 +134,9 @@ import nano.ly.*;
   }
 
   @Test public void byteCodeCount() {
-    class _ {
+    class __ {
     }
-    assert ClassInfo.make(_.class).methods[0].getCode().codes.length > 0;
+    assert ClassInfo.make(__.class).methods[0].getCode().codes.length > 0;
   }
 
   @Test public void classInfoFromBadPath() {
@@ -782,7 +782,7 @@ import nano.ly.*;
 
   public static class ComplexMethod {
     public final Object[][][] m(final Void v, final Object a, final int b, final float c, final double[][] dss) {
-      ___.unused(v, a, Box.it(b), Box.it(c));
+      ___.unused(v, a, box.it(b), box.it(c));
       return new Object[dss.length][][];
     }
   }

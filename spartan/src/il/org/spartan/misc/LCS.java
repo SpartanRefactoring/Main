@@ -111,7 +111,7 @@ public class LCS {
     return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j]));
   }
 
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) //
+
   @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST {
     /** Dumb implementation, yeah, I know. --yg. */

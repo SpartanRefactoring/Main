@@ -5,7 +5,7 @@ import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
 import static il.org.spartan.strings.StringUtils.*;
 import static il.org.spartan.utils.___.*;
-import static nano.ly.Box.*;
+import static nano.ly.box.*;
 
 import java.io.*;
 import java.util.*;

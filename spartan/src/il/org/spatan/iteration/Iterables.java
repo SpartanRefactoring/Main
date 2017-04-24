@@ -1,7 +1,7 @@
 package il.org.spatan.iteration;
 
-import static nano.ly.Box.*;
-import static nano.ly.Unbox.*;
+import static nano.ly.box.*;
+import static nano.ly.unbox.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -395,14 +395,14 @@ public class Iterables {
   @NotNull public static List<Double> toList(@NotNull final double... ds) {
     @NotNull final List<Double> $ = new ArrayList<>();
     for (final double ¢ : ds)
-      $.add(Box.it(¢));
+      $.add(box.it(¢));
     return $;
   }
 
   @NotNull public static List<Integer> toList(@NotNull final int... is) {
     @NotNull final List<Integer> $ = new ArrayList<>();
     for (final int ¢ : is)
-      $.add(Box.it(¢));
+      $.add(box.it(¢));
     return $;
   }
 

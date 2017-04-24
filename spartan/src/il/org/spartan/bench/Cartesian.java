@@ -14,11 +14,11 @@ import nano.ly.*;
  * @since 29/05/2011 */
 public class Cartesian {
   @NotNull public static <S> Pair<Integer, S>[] makeObliqueProduct(@NotNull final int[] is, @NotNull final S[] ss) {
-    return makeObliqueProduct(Box.it(is), ss);
+    return makeObliqueProduct(box.it(is), ss);
   }
 
   @NotNull public static <S, T> Triple<Integer, S, T>[] makeObliqueProduct(@NotNull final int[] is, @NotNull final S[] ss, @NotNull final T[] ts) {
-    return makeObliqueProduct(Box.it(is), ss, ts);
+    return makeObliqueProduct(box.it(is), ss, ts);
   }
 
   @NotNull public static <R, S> Pair<R, S>[] makeObliqueProduct(@NotNull final R[] rs, @NotNull final S[] ss) {
@@ -74,11 +74,11 @@ public class Cartesian {
   }
 
   @NotNull public static <S> Pair<Integer, S>[] makeProduct(@NotNull final int[] is, @NotNull final S[] ss) {
-    return makeProduct(Box.it(is), ss);
+    return makeProduct(box.it(is), ss);
   }
 
   @NotNull public static <S, T> Triple<Integer, S, T>[] makeProduct(@NotNull final int[] is, @NotNull final S[] ss, @NotNull final T[] ts) {
-    return makeProduct(Box.it(is), ss, ts);
+    return makeProduct(box.it(is), ss, ts);
   }
 
   @NotNull public static <R, S> Pair<R, S>[] makeProduct(@NotNull final R[] rs, @NotNull final S[] ss) {

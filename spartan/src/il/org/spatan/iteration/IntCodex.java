@@ -1,7 +1,7 @@
 package il.org.spatan.iteration;
 
 import static il.org.spartan.utils.___.*;
-import static nano.ly.Box.*;
+import static nano.ly.box.*;
 
 import java.io.*;
 import java.util.*;

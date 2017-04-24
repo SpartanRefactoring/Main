@@ -25,8 +25,8 @@ import il.org.spartan.streotypes.*;
  * Note that unboxing of a single value of a reference type is easy using a
  * function such as {@link Long#longValue()}
  * @author Yossi Gil.
- * @see Box */
-@Utility public enum Unbox {
+ * @see box */
+@Utility public enum unbox {
   // A namespace: no values to this <code><b>enum</b></code>
   ;
   @NotNull public static double[] it(@NotNull final Double[] ¢) {
@@ -49,7 +49,7 @@ import il.org.spartan.streotypes.*;
     return ¢.booleanValue();
   }
 
-  /** Unbox an array of {@link Boolean}s into an array of
+  /** unbox an array of {@link Boolean}s into an array of
    * <code><b>boolean</b></code>s.
    * @param bs an array of {@link Boolean}s
    * @return an equivalent array of <code><b>boolean</b></code>s. */
@@ -64,7 +64,7 @@ import il.org.spartan.streotypes.*;
     return ¢.byteValue();
   }
 
-  /** Unbox an array of {@link Byte}s into an array of <code><b>byte</b></code>
+  /** unbox an array of {@link Byte}s into an array of <code><b>byte</b></code>
    * s.
    * @param bs an array of {@link Byte}s
    * @return an equivalent array of <code><b>byte</b></code>s. */
@@ -79,7 +79,7 @@ import il.org.spartan.streotypes.*;
     return ¢.charValue();
   }
 
-  /** Unbox an array of {@link Character}s into an array of
+  /** unbox an array of {@link Character}s into an array of
    * <code><b>char</b></code>s.
    * @param cs an array of {@link Character}s
    * @return an equivalent array of <code><b>char</b></code>s. */
@@ -90,7 +90,7 @@ import il.org.spartan.streotypes.*;
     return $;
   }
 
-  /** Unbox a {@link Collection} of {@link Short}s into an array of
+  /** unbox a {@link Collection} of {@link Short}s into an array of
    * <code><b>short</b></code>s.
    * @param ss a {@link Collection} of {@link Integer}s
    * @return an equivalent array of <code><b>short</b></code>s. */
@@ -106,7 +106,7 @@ import il.org.spartan.streotypes.*;
     return ¢.doubleValue();
   }
 
-  /** Unbox an array of {@link Double}s into an array of
+  /** unbox an array of {@link Double}s into an array of
    * <code><b>double</b></code>s.
    * @param ds an array of {@link Double}s
    * @return an equivalent array of <code><b>double</b></code>s. */
@@ -121,7 +121,7 @@ import il.org.spartan.streotypes.*;
     return ¢.floatValue();
   }
 
-  /** Unbox an array of {@link Float}s into an array of
+  /** unbox an array of {@link Float}s into an array of
    * <code><b>float</b></code> s.
    * @param fs an array of {@link Float}s
    * @return an equivalent array of <code><b>float</b></code>s. */
@@ -136,7 +136,7 @@ import il.org.spartan.streotypes.*;
     return ¢.intValue();
   }
 
-  /** Unbox an array of {@link Integer}s into an array of
+  /** unbox an array of {@link Integer}s into an array of
    * <code><b>int</b></code> s.
    * @param is an array of {@link Integer}s
    * @return an equivalent array of <code><b>int</b></code>s. */
@@ -151,7 +151,7 @@ import il.org.spartan.streotypes.*;
     return ¢.longValue();
   }
 
-  /** Unbox an array of {@link Long}s into an array of <code><b>long</b></code>
+  /** unbox an array of {@link Long}s into an array of <code><b>long</b></code>
    * s.
    * @param ls an array of {@link Long}s
    * @return an equivalent array of <code><b>long</b></code>s. */
@@ -166,7 +166,7 @@ import il.org.spartan.streotypes.*;
     return ¢.shortValue();
   }
 
-  /** Unbox an array of {@link Short}s into an array of
+  /** unbox an array of {@link Short}s into an array of
    * <code><b>short</b></code> s.
    * @param ss an array of {@link Integer}s
    * @return an equivalent array of <code><b>short</b></code>s. */

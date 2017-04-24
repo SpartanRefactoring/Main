@@ -4,8 +4,6 @@ import java.util.*;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.*;
-
 /** An immutable integral range, representing all integers between
  * {@link #from}, up to, but not including, {@link #to}, i.e.,
  *
@@ -100,6 +98,6 @@ public class Range {
   }
 
   @Override public String toString() {
-    return String.format("[%d, %d]", box.it(from), box.it(to));
+    return String.format("[%d, %d]", nano.ly.box.it(from), nano.ly.box.it(to));
   }
 }

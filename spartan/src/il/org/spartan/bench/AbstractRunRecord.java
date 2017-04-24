@@ -21,7 +21,7 @@ public class AbstractRunRecord {
 
   @Override public String toString() {
     return String.format("runs=%d, netTime=%s, grossTime=%s, efficacy=%s", //
-        Box.it(runs), //
+        box.it(runs), //
         Unit.formatNanoseconds(netTime), //
         Unit.formatNanoseconds(grossTime), //
         Unit.formatRelative(netTime, grossTime));

@@ -56,8 +56,8 @@ import nano.ly.*;
     @NotNull final List<Double> $ = new ArrayList<>(), Ys = new ArrayList<>();
     for (int ¢ = 0; ¢ < xs.length; ++¢)
       if (!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢])) {
-        $.add(Box.it(xs[¢]));
-        Ys.add(Box.it(ys[¢]));
+        $.add(box.it(xs[¢]));
+        Ys.add(box.it(ys[¢]));
       }
     return tauB_pruned(Iterables.toArray($), Iterables.toArray(Ys));
   }

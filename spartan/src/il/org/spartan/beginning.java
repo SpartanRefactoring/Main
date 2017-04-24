@@ -37,7 +37,7 @@ public interface beginning {
     return new with(¢);
   }
 
-  @FixMethodOrder(MethodSorters.NAME_ASCENDING) @SuppressWarnings("static-method") class TEST {
+   @SuppressWarnings("static-method") class TEST {
     @Test public void with() {
       azzert.that(beginning.with("a").separate("x", "y").by(",").endingWith("c") + "", is("ax,yc"));
     }
