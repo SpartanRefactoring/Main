@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link FieldInitializedDefaultValue}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0221 {
   @Test public void A$01() {

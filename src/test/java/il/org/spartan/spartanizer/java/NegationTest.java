@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @author Yossi Gil
  * @since 2015-07-18
  * @see step */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class NegationTest {
   @Test public void levelComplex() {

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Test of {@link AssignmentUpdateAndSameUpdate}
  * @author Yossi Gil
  * @since 2017-03-04 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1132 {
   public static void main(final String[] args) {

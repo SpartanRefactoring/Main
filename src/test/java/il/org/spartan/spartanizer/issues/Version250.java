@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.tippers.*;
  * prefix. b) test methods begin with the name of the method they check.
  * @author Yossi Gil
  * @since 2014-07-10 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Version250 {
   @Test public void annotationVanilla() {

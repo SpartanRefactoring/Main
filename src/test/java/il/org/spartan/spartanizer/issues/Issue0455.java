@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** TUnit tests for the GitHub issue thus numbered
  * @author Oren Afek
  * @since 2016 Testing {@link LambdaRemoveRedundantCurlyBraces } */
-
 @SuppressWarnings("static-method")
 public class Issue0455 {
   @Test public void assertStatementShouldntTip() {

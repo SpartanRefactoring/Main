@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.util.*;
 /** Tests of {@link measure.expressions}
  * @author Ori Marcovitch
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0552 {
   static ASTNode ast(final String ¢) {

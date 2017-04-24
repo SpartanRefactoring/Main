@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.java.*;
 /** Unit tests for {@link haz}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class hazTest {
   @Test public void seriesA_01() {

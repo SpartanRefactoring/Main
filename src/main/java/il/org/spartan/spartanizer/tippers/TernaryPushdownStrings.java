@@ -93,8 +93,8 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
       if (the.beforeLastOf(s1, ¢) != the.beforeLastOf(s2, ¢))
         return $;
     }
-    return s1.length() != s2.length() && Character.isAlphabetic(the.beforeLastOf(s2, s1.length())) && Character.isAlphabetic(the.beforeLastOf(s2, s1.length() - 1)) ? 0
-        : s1.length();
+    return s1.length() != s2.length() && Character.isAlphabetic(the.beforeLastOf(s2, s1.length()))
+        && Character.isAlphabetic(the.beforeLastOf(s2, s1.length() - 1)) ? 0 : s1.length();
   }
 
   private static Expression replacementPrefix(final String then, final String elze, final int commonPrefixIndex, final Expression condition) {

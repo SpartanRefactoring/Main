@@ -17,7 +17,6 @@ import nano.ly.*;
  * @author Yossi Gil
  * @since 2015-07-18
  * @see step */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class stepTest {
   @Test public void chainComparison() {

@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** unit tests for {@link ParameterAbbreviate}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0141 {
   @Test public void b$01() {

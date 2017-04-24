@@ -16,13 +16,13 @@ public abstract class GitOperation extends WidgetOperation {
 
   protected abstract void gitOperation(Git g) throws Throwable;
 
-  @Override public void onMouseUp(WidgetContext c) throws Throwable {
+  @Override public void onMouseUp(final WidgetContext c) throws Throwable {
     if (c.project == null || !c.project.exists())
       return;
-    File f = c.project.getRawLocation().toFile();
+    final File f = c.project.getRawLocation().toFile();
     if (f == null || !f.exists())
       return;
-    FileRepositoryBuilder builder = new FileRepositoryBuilder().findGitDir(f);
+    final FileRepositoryBuilder builder = new FileRepositoryBuilder().findGitDir(f);
     if (builder != null)
       try (Repository repo = builder.build()) {
         if (repo != null)

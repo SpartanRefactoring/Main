@@ -6,7 +6,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class JavaTypeNameParserTest {
   @Test public void Alex_and_Dan_test() {

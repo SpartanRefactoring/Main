@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit tests for {@link InfixPlusEmptyString}
  * @author Niv Shalmon
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0073 {
   @Test public void a$01() {

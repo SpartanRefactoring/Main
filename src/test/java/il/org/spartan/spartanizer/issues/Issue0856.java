@@ -9,7 +9,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Tests of inline into next statement even if not last in block
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0856 {
   @Test public void a() {

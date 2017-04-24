@@ -10,7 +10,6 @@ import il.org.spartan.spartanizer.leonidas.*;
 /** Failing test, originally from {@link anonimizeTest} .
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings("static-method")
 public class Issue0436 {
   @Test public void testRenamingWithQualified() {

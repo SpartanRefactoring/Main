@@ -15,7 +15,6 @@ import nano.ly.*;
 /** Unit tests for {@link compute}
  * @author Yossi Gil
  * @since 2017-04-01 */
-
 @SuppressWarnings("static-method")
 public class computeTest extends MetaFixture {
   @Test public void updatedSpots() {

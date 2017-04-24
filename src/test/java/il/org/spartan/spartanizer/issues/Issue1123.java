@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit test for {@link ForNoUpdatersNoInitializerToWhile}
  * @author Yossi Gil
  * @since 2017-03-24 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue1123 {
   @Test public void a() {

@@ -15,7 +15,6 @@ import il.org.spartan.spartanizer.engine.*;
 /** Tests for {@Link InfixAdditionZero}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0072 {
   @Test public void a() {

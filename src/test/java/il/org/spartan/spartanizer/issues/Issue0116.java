@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Unit tests for {@link InfixConcatenationEmptyStringLeft}
  * @author Niv Shalmon
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0116 extends TipperTest<InfixExpression> {
   @Override public Tipper<InfixExpression> tipper() {

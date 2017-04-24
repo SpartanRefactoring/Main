@@ -7,7 +7,6 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
-
 @SuppressWarnings({ "javadoc", "static-method" })
 public final class intoTest {
   @Test public void dCorrect() {

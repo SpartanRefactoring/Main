@@ -7,7 +7,6 @@ import org.junit.*;
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since 2016-12-23 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0997 {
   @Test public void a0() {

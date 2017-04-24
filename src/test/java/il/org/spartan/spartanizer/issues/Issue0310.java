@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Tests for the GitHub issue thus numbered
  * @author Alex Kopzon
  * @since 2016-09-23 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0310 {
   @Test public void OrisCode_k() {

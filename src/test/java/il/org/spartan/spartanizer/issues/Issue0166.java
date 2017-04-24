@@ -8,7 +8,6 @@ import il.org.spartan.spartanizer.tippers.*;
 /** Unit test for {@link ForParameterRenameToIt}
  * @author Yossi Gil
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0166 {
   @Test public void dollar() {

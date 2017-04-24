@@ -28,7 +28,9 @@ public class Issue0782 {
   }
 
   @Test @SuppressWarnings("static-method") public void checkAnotherPrivateName() {
-    azzert.that(the.headOf(getAll.privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePrivate{private int y;}")))))),
+    azzert.that(
+        the.headOf(
+            getAll.privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePrivate{private int y;}")))))),
         is("y"));
   }
 
@@ -37,8 +39,8 @@ public class Issue0782 {
   }
 
   @Test @SuppressWarnings("static-method") public void checkFieldsInsideMethods() {
-    final List<String> names = getAll.privateFields(
-        (TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class twoPrivates{private int x; public void foo(int z){ int y; } }")))));
+    final List<String> names = getAll.privateFields((TypeDeclaration) the
+        .headOf(types(az.compilationUnit(make.ast("public class twoPrivates{private int x; public void foo(int z){ int y; } }")))));
     azzert.that(the.headOf(names), is("x"));
     azzert.that(names.size(), is(1));
   }
@@ -53,7 +55,9 @@ public class Issue0782 {
   }
 
   @Test @SuppressWarnings("static-method") public void checkOnePrivateName() {
-    azzert.that(the.headOf(getAll.privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePrivate{private int x;}")))))),
+    azzert.that(
+        the.headOf(
+            getAll.privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePrivate{private int x;}")))))),
         is("x"));
   }
 
@@ -62,18 +66,21 @@ public class Issue0782 {
   }
 
   @Test @SuppressWarnings("static-method") public void onePrivateFieldReturnOneElementList() {
-    azzert.that(getAll.privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePrivate{private int x;}"))))).size(),
+    azzert.that(
+        getAll.privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePrivate{private int x;}"))))).size(),
         is(1));
   }
 
   @Test @SuppressWarnings("static-method") public void onePublicFieldAndOnePrivateFieldReturnOneElementList() {
     azzert.that(getAll
-        .privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePublicOnePrivate{public int x; private int y;}")))))
+        .privateFields(
+            (TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePublicOnePrivate{public int x; private int y;}")))))
         .size(), is(1));
   }
 
   @Test @SuppressWarnings("static-method") public void onePublicFieldReturnEmptyList() {
-    azzert.that(getAll.privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePublic{public int x;}"))))).size(),
+    azzert.that(
+        getAll.privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePublic{public int x;}"))))).size(),
         is(0));
   }
 

@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.java.*;
 /** Tests of {@link ThisClass#thatFunction}
  * @author Yossi Gil
  * @since 2016 */
- //
+//
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0000 {
   @Test public void a() {

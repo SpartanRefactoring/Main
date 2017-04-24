@@ -67,9 +67,8 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         if (iz.validForEvaluation(cuttedExpression)) {
           final String str = opportunisticReplacement(cuttedExpression);
           if (str != null)
-            return subject
-                .pair(az.expression(x.getAST().newNumberLiteral(str)),
-                    afterExpressionOperands.size() == 1 ? the.headOf(afterExpressionOperands) : subject.operands(afterExpressionOperands).to(operator()))
+            return subject.pair(az.expression(x.getAST().newNumberLiteral(str)),
+                afterExpressionOperands.size() == 1 ? the.headOf(afterExpressionOperands) : subject.operands(afterExpressionOperands).to(operator()))
                 .to(operator());
         }
       }
@@ -81,9 +80,8 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         if (iz.validForEvaluation(cuttedExpression)) {
           final String s = opportunisticReplacement(cuttedExpression);
           if (s != null)
-            return subject.pair(
-                beforeExpressionOperands.size() == 1 ? the.headOf(beforeExpressionOperands) : subject.operands(beforeExpressionOperands).to(operator()),
-                az.expression(x.getAST().newNumberLiteral(s))).to(operator());
+            return subject.pair(beforeExpressionOperands.size() == 1 ? the.headOf(beforeExpressionOperands)
+                : subject.operands(beforeExpressionOperands).to(operator()), az.expression(x.getAST().newNumberLiteral(s))).to(operator());
         }
       }
     } catch (@SuppressWarnings("unused") final IllegalArgumentException __) {

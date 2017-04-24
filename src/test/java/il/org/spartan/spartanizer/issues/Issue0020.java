@@ -7,7 +7,6 @@ import org.junit.*;
 /** TODO test class for renaming constructor parameters
  * @author Dor Ma'ayan
  * @since 2016 */
-
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0020 {
   /** Correct way of trimming does not change */

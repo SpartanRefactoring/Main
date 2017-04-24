@@ -8,7 +8,6 @@ import org.junit.*;
 /** Tests {@link GetOrElseThrow}
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-29 */
-
 @SuppressWarnings("static-method")
 public class GetOrElseThrowTest {
   @Test public void a() {
