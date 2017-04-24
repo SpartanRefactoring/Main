@@ -10,8 +10,8 @@ import il.org.spartan.sequence.*;
 @SuppressWarnings("static-method") public class DeepSizeTest {
   private static MyHashMap<String, String> createHashTable(final int i) {
     final MyHashMap<String, String> $ = new MyHashMap<>();
-    for (int ¢ = 0; ¢ < i; ++¢)
-      $.put(String.valueOf(¢ * ¢ + 1), String.valueOf((¢ + 5) * (¢ - 9) + 1));
+    for (int Â¢ = 0; Â¢ < i; ++Â¢)
+      $.put(String.valueOf(Â¢ * Â¢ + 1), String.valueOf((Â¢ + 5) * (Â¢ - 9) + 1));
     return $;
   }
 
@@ -97,8 +97,8 @@ import il.org.spartan.sequence.*;
 
   @Test public void of_array_of_objects() {
     final Object[] os = new Object[8];
-    for (int ¢ = 0; ¢ < os.length; ++¢)
-      os[¢] = os;
+    for (int Â¢ = 0; Â¢ < os.length; ++Â¢)
+      os[Â¢] = os;
     assertEquals(48, DeepSize.of(os));
   }
 
@@ -106,9 +106,9 @@ import il.org.spartan.sequence.*;
     final ClassWithArray o = new ClassWithArray();
     final Object[] os = makeRecursiveArray(79);
     o.os = os;
-    for (int ¢ = 0; ¢ < os.length; ++¢)
-      if (¢ % 2 == 1)
-        os[¢] = o;
+    for (int Â¢ = 0; Â¢ < os.length; ++Â¢)
+      if (Â¢ % 2 == 1)
+        os[Â¢] = o;
     assertEquals(ShallowSize.of(os) + ShallowSize.of(o), DeepSize.of(o));
   }
 
@@ -236,8 +236,8 @@ import il.org.spartan.sequence.*;
 
   Object[] makeRecursiveArray(final int n) {
     final Object[] $ = new Object[n];
-    for (int ¢ = 0; ¢ < $.length; ++¢)
-      $[¢] = $;
+    for (int Â¢ = 0; Â¢ < $.length; ++Â¢)
+      $[Â¢] = $;
     return $;
   }
 
