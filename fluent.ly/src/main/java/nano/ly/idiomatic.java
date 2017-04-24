@@ -1,5 +1,5 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan;
+package nano.ly;
 
 import static il.org.spartan.azzert.*;
 
@@ -8,6 +8,8 @@ import java.util.function.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
+
+import il.org.spartan.*;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.

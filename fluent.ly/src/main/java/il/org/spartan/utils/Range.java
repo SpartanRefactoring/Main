@@ -5,7 +5,6 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.Range;
 
 /** An immutable integral range, representing all integers between
  * {@link #from}, up to, but not including, {@link #to}, i.e.,

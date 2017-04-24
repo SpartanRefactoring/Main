@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.*;
 
-import il.org.spartan.utils.Reduce;
-
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-03-19 */

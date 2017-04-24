@@ -1,7 +1,5 @@
 package il.org.spartan.utils;
 
-import il.org.spartan.utils.Bool;
-
 /** A poor man's approximation of a mutable boolean, which is so much more
  * convenient than {@link Boolean}
  * @author Ori Marcovitch

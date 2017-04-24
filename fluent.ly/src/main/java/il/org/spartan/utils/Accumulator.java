@@ -6,8 +6,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.Accumulator;
-import il.org.spartan.utils.Counter;
 
 public abstract class Accumulator {
   protected int value;

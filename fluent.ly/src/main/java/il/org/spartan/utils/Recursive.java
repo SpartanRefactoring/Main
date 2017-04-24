@@ -2,10 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
-import il.org.spartan.utils.Duplo;
-import il.org.spartan.utils.Nested;
-import il.org.spartan.utils.Recursive;
-
 /** Organizes objects of the __ parameter in a tree, supplying a
  * {@link #descendants()} of all objects contained in a sub-tree. Object of the
  * __ parameter may present on all nodes on of this tree, including inner nodes.

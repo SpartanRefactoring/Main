@@ -5,11 +5,6 @@ import static java.lang.String.*;
 import java.lang.annotation.*;
 import java.util.*;
 import java.util.function.*;
-
-import il.org.spartan.utils.Box;
-import il.org.spartan.utils.Examples;
-import il.org.spartan.utils.Recursive;
-import il.org.spartan.utils.Rule;
 import nano.ly.*;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern

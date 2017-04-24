@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.*;
 
-import il.org.spartan.utils.Example;
-import il.org.spartan.utils.Examples;
 import il.org.spartan.utils.Example.*;
 
 /** A collection of {@link Example}

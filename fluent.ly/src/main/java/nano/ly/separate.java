@@ -1,5 +1,5 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan;
+package nano.ly;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
@@ -12,6 +12,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import il.org.spartan.*;
 import il.org.spartan.iterables.*;
 
 /** A utility class providing library functions that take an array or a

@@ -5,10 +5,6 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.Outer;
-import il.org.spartan.utils.Proposition;
-import il.org.spartan.utils.PropositionReducer;
-import il.org.spartan.utils.Recursive;
 
 /*** Third lecture:
  * <ol>

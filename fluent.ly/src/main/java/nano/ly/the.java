@@ -1,8 +1,9 @@
 package nano.ly;
 
-import static il.org.spartan.lisp.*;
-
 import java.util.*;
+
+import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 
@@ -46,7 +47,7 @@ public interface the {
 
   static <T> List<T> rest(final List<T> ¢) {
     final List<T> $ = as.list(¢);
-    $.remove(first($));
+    $.remove(the.first($));
     return $;
   }
 
@@ -63,5 +64,54 @@ public interface the {
       else
         add = x == t;
     return $;
+  }
+
+  @Contract("null -> null") @Nullable static <T> T first(@Nullable final List<T> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
+  }
+
+  static char first(@NotNull final String ¢) {
+    return the.last(¢, 0);
+  }
+
+  @Contract(pure = true) static char first(@NotNull final String s, final int i) {
+    return s.charAt(i);
+  }
+
+  @Contract("null -> null") @Nullable static <@Nullable T> T last(@Nullable final List<T> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(¢.size() - 1);
+  }
+
+  static char last(@NotNull final String ¢) {
+    return last(¢, 0);
+  }
+
+  static char last(@NotNull final String s, final int i) {
+    return s.charAt(s.length() - i - 1);
+  }
+
+  @NotNull static <T> Iterable<T> rest(@NotNull final Iterable<T> ¢) {
+    return () -> new Iterator<T>() {
+      final Iterator<T> $ = ¢.iterator();
+      {
+        $.next();
+      }
+
+      @Override public boolean hasNext() {
+        return $.hasNext();
+      }
+
+      @Override public T next() {
+        return $.next();
+      }
+    };
+  }
+
+  @Nullable static <T> T onlyOne(@Nullable final List<T> ¢) {
+    return ¢ == null || ¢.size() != 1 ? null : first(¢);
+  }
+
+  @Contract("null -> null") @Nullable static <T> T second(@Nullable final List<T> ¢) {
+    return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
 }

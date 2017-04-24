@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.*;
 
-import il.org.spartan.utils.ReduceCollectionsAdd;
-
 /** Reducer for merging List<T>
  * @author oran1248
  * @since 2017-04-20 */
