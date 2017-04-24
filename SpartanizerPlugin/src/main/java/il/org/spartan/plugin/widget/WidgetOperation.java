@@ -1,6 +1,7 @@
 package il.org.spartan.plugin.widget;
 
 import java.io.*;
+import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.swt.graphics.*;
@@ -10,31 +11,45 @@ import il.org.spartan.spartanizer.plugin.*;
 /** Operation, image, description etc. of a widget button.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-04-06 */
-@SuppressWarnings("unused")
+@SuppressWarnings({ "unused", "static-method" })
 public abstract class WidgetOperation implements Serializable {
   private static final long serialVersionUID = 0x5DEE331D4A6A17CEL;
 
   /** Operation on mouse down. */
-  public void onMouseDown(final WidgetContext __) {
+  public void onMouseDown(final WidgetContext __) throws Throwable {
     // DO noting
   }
 
   /** Operation on mouse up. A simple single click operation should be
    * implemented here. */
-  public void onMouseUp(final WidgetContext __) {
+  public void onMouseUp(final WidgetContext __) throws Throwable {
     // DO noting
   }
 
   /** Operation on mouse hold. Will be called once per
    * {@link SpartanWidgetHandler#OPERATION_HOLD_INTERVAL} ms, unless last
    * holdoperation did not finished. */
-  public void onMouseHold(final WidgetContext __) {
+  public void onMouseHold(final WidgetContext __) throws Throwable {
     // DO noting
   }
 
   /** Operation on mouse double click. */
-  public void onDoubleClick() {
+  public void onDoubleClick(final WidgetContext __) throws Throwable {
     // Do nothing
+  }
+
+  /** @return configuration components for self
+   * @see #register */
+  public String[][] configurationComponents() {
+    return new String[][] {};
+  }
+
+  /** Configure this operation, if needed.
+   * @param configuration user configuration
+   * @return true iff the configuration is valid
+   * @see #configurationComponents */
+  public boolean register(Map<?, ?> configuration) {
+    return true;
   }
 
   /** @return URL of image of this operation. */
@@ -52,7 +67,7 @@ public abstract class WidgetOperation implements Serializable {
 
   /** Scaling the image of the operation, does nothing by default.
    * @return scaler for SWT image of this operation. */
-  @SuppressWarnings("static-method") protected Function<ImageData, ImageData> scale() {
+  protected Function<ImageData, ImageData> scale() {
     return λ -> λ;
   }
 }
