@@ -3,8 +3,8 @@ package il.org.spartan.reap;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.idiomatic.*;
 import static java.lang.Math.max;
+import static nano.ly.idiomatic.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -16,6 +16,7 @@ import org.junit.runners.*;
 import il.org.spartan.*;
 import il.org.spartan.reap.Cookbook.Internal.*;
 import il.org.spartan.reap.Cookbook.Recipe.*;
+import nano.ly.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Cell}s. A {@link Cell} is either an
@@ -936,6 +937,7 @@ public interface Cookbook {
     /** by overriding this function, inheriting classes can ask to be notified
      * when this cell was set. */
     void uponForcedSet() {
+      //
     }
 
     private long oldestDependent() {
@@ -950,7 +952,7 @@ public interface Cookbook {
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  class Ingredient<@Nullable T> extends Cell<T> {
+  class Ingredient<T> extends Cell<T> {
     /** Instantiates this class.* */
     public Ingredient() {
     }
@@ -1123,7 +1125,7 @@ public interface Cookbook {
      * @since 2016 */
     @SuppressWarnings("null") public static class NotNull<T> extends Cookbook.Recipe<T> {
       private final List<Cookbook.Cell<?>> prerequisites = new ArrayList<>();
-      private @Nullable Supplier<? extends @Nullable T> supplier;
+      @Nullable private Supplier<? extends @Nullable T> supplier;
 
       /** Instantiates this class.
        * @param supplier JD */

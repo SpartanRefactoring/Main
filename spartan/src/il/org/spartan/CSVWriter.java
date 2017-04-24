@@ -14,7 +14,7 @@ import il.org.spartan.streotypes.*;
  * a sequence of {@link CSVLine} records.
  * @author Yossi Gil, 2008/06/20 */
 @Instantiable public class CSVWriter {
-  private static @Nullable FileWriter open(@NotNull final File $) {
+  @Nullable private static FileWriter open(@NotNull final File $) {
     try {
       return new FileWriter($);
     } catch (@NotNull final IOException ¢) {
@@ -75,7 +75,7 @@ import il.org.spartan.streotypes.*;
   /** Write a new CSV line into the file. All CSV lines written into the file
    * must have the exact same header.
    * @param cl the CSV line to be written */
-  public void write(@NotNull final CSVLine cl) {
+  @SuppressWarnings({ "unused", "null" }) public void write(@NotNull final CSVLine cl) {
     // TODO: Yossi, I can not find this function. Had it been removed/renamed.
     // Still not working too
     // require(header == null || header.equals(cl.header()), "\n" + header +

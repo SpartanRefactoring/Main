@@ -26,18 +26,23 @@ public class LightWeightParser {
   }
 
   public void field() {
+    //
   }
 
   public void file() {
+    //
   }
 
   public void method() {
+    //
   }
 
   public void statement() {
+    //
   }
 
   public void variable() {
+    //
   }
 
   @NotNull private String getIdentifier() {

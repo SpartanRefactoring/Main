@@ -1,7 +1,7 @@
 package il.org.spartan.bench;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartan.utils.Box.*;
+import static nano.ly.Box.*;
 import static org.junit.Assert.assertEquals;
 
 import java.text.*;
@@ -105,10 +105,9 @@ public enum Unit {
   }
 
   @NotNull public static String format2(final double ¢) {
-    if (¢ < 0)
-      return "-" + format2(-¢);
-    final double $ = 100 * ¢;
-    return "%" + ($ < 0.01 ? ".0f" : $ < 0.1 ? ".2f" : $ < 1 || $ < 10 ? ".1f" : $ < 100 || $ < 1000 ? ".0f" : "5.0g");
+    return ¢ < 0 ? "-" + format2(-¢)
+        : "%" + (100 * ¢ < 0.01 ? ".0f"
+            : 100 * ¢ < 0.1 ? ".2f" : 100 * ¢ < 1 || 100 * ¢ < 10 ? ".1f" : 100 * ¢ < 100 || 100 * ¢ < 1000 ? ".0f" : "5.0g");
   }
 
   public static String format3(final double ¢) {

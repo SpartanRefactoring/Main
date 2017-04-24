@@ -31,6 +31,7 @@ import il.org.spartan.utils.*;
         } catch (@NotNull final IOException ¢) {
           System.err.println(¢.getMessage());
         } catch (@NotNull final StopTraversal e) {
+          //
         }
   }
 

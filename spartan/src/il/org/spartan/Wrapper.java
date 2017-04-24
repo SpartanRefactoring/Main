@@ -8,7 +8,7 @@ import org.jetbrains.annotations.*;
  * @since 2015-08-02
  * @param <T> JD */
 public class Wrapper<T> {
-  protected @Nullable T inner;
+  @Nullable protected T inner;
 
   /** Instantiates this class */
   public Wrapper() {

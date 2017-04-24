@@ -27,8 +27,7 @@ public class Integers {
   public static final float REMOVE_LOAD = 0.20f;
 
   static int hash(final int ¢) {
-    final int $ = ¢ ^ ¢ >>> 12 ^ ¢ >>> 20;
-    return $ ^ $ >>> 4 ^ $ >>> 7;
+    return ¢ ^ ¢ >>> 12 ^ ¢ >>> 20 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 4 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 7;
   }
 
   private static int roundUp(final int ¢) {
@@ -210,7 +209,7 @@ public class Integers {
   }
 
   /** @param capacity new hash table size */
-  protected void subclassReset(final int capacity) {
+  @SuppressWarnings("unused") protected void subclassReset(final int capacity) {
     //
   }
 

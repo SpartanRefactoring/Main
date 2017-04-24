@@ -1,7 +1,6 @@
 package il.org.spartan.classfiles;
 
 import static il.org.spartan.azzert.*;
-import static il.org.spartanl.testing.Assert.*;
 
 import java.io.*;
 import java.net.*;
@@ -267,13 +266,13 @@ public class ClassRepository implements Iterable<String> {
         @NotNull final ClassRepository cpi = new ClassRepository(fs);
         @NotNull final Set<String> classes = new HashSet<>();
         classes.addAll(cpi.getClasses());
-        assertContains(classes, Object.class.getName());
-        assertContains(classes, String.class.getName());
-        assertContains(classes, Class.class.getName());
-        assertContains(classes, ClassRepositoryTest.class.getName());
-        assertContains(classes, Assert.class.getName());
-        assertContains(classes, Test.class.getName());
-        assertContains(classes, MyClass.class.getName());
+        azzert.assertContains(classes, Object.class.getName());
+        azzert.assertContains(classes, String.class.getName());
+        azzert.assertContains(classes, Class.class.getName());
+        azzert.assertContains(classes, ClassRepositoryTest.class.getName());
+        azzert.assertContains(classes, Assert.class.getName());
+        azzert.assertContains(classes, Test.class.getName());
+        azzert.assertContains(classes, MyClass.class.getName());
       } catch (@NotNull final Throwable ¢) {
         ¢.printStackTrace();
         fail(¢.getMessage());
