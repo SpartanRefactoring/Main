@@ -50,6 +50,7 @@
 	</dependencies>
 
 	<build>
+		<sourceDirectory>src/main</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
