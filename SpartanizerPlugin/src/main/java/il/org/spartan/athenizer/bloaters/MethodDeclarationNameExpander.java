@@ -40,7 +40,7 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
 
   @Override public Tip tip(final MethodDeclaration d) {
     assert d != null;
-    if (d.isConstructor() || iz.abstract¢(d))
+    if (d.isConstructor() || iz.abstract¢(d) || d.getBody() == null)
       return null;
     final List<SingleVariableDeclaration> $ = parameters(d).stream()
         .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(body(d), "result")) && !in(λ.getName().getIdentifier(), "result")
