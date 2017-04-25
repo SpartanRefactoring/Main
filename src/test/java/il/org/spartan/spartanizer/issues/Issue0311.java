@@ -2,7 +2,11 @@ package il.org.spartan.spartanizer.issues;
 
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.spartanizer.testing.*;
+import il.org.spartan.spartanizer.tippers.*;
 
 /** Tests for the GitHub issue thus numbered
  * @author Alex Kopzon
@@ -275,12 +279,19 @@ public class Issue0311 {
         .stays();
   }
 
-  @Test public void with_aay_a() {
-    trimminKof("int[] a=new int[]{1,2,3,4,5};for(int i=0;;){a[i]=0;++i;}")//
-        .gives("for(int i=0;;){(new int[]{1,2,3,4,5})[i]=0;++i;}")//
-        .gives("for(int ¢=0;;){(new int[]{1,2,3,4,5})[¢]=0;++¢;}")//
-        .gives("for(int ¢=0;;++¢){(new int[]{1,2,3,4,5})[¢]=0;}")//
-        .gives("for(int ¢=0;;++¢)(new int[]{1,2,3,4,5})[¢]=0;")//
-        .stays();
+  /** Introduced by Yogi on Tue-Apr-25-21:05:24-IDT-2017 
+  (code generate automatically by {@link JUnitTestMethodFacotry})*/
+    @Test public void intaNewInt12345ForIntb0ab0b() {
+       trimmingKof("int[] a = new int[] { 1, 2, 3, 4, 5 }; for (int b = 0;;) { a[b] = 0; ++b; }") //
+           .using(ForStatement.class, new ForToForUpdaters()) //
+           .gives("int[] a=new int[]{1,2,3,4,5};for(int b=0;;++b){a[b]=0;}") //
+           .using(Block.class, new BlockSingletonEliminate()) //
+           .gives("int[] a=new int[]{1,2,3,4,5};for(int b=0;;++b)a[b]=0;") //
+           .stays() //
+    ;
+  }
+
+  private TestOperand trimmingKof(String string) {
+    return null;
   }
 }
