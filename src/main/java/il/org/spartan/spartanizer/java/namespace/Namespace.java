@@ -229,8 +229,7 @@ public final class Namespace implements Environment {
           if (iz.singleVariableDeclaration(¢)) {
             $.put(az.singleVariableDeclaration(¢));
             Namespace.this.put(az.singleVariableDeclaration(¢));
-          }
-          else {
+          } else {
             $.put(step.name(az.variableDeclrationFragment(¢)), null);
             Namespace.this.put(step.name(az.variableDeclrationFragment(¢)), null);
           }

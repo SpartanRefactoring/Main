@@ -57,14 +57,15 @@ public class Issue0979 {
     bloatingOf("class a{void foo(int b, int a){ b = 1; a =3;}}")//
         .needRenaming(false).gives("class a{void foo(int i1, int i2){ i1=1; i2=3;}}");
   }
-  
+
   @Test public void isNameSpaceBug() {
     bloatingOf("void foo(ASTNode input, ASTNode output) { ReportGenerator.write((n1, n2) -> (n1 - n2));}")//
         .needRenaming(false).gives("void foo(ASTNode n3, ASTNode n4) { ReportGenerator.write((n1, n2) -> (n1 - n2));}");
   }
-  
+
   @Test public void isNameSpaceBug2() {
     bloatingOf("void foo() {A a1; a1 = new A() { void foo2(ASTNode input, ASTNode output) {} }; ReportGenerator.write((n1, n2) -> (n1 - n2));}")//
-        .needRenaming(false).gives("void foo() {A a1; a1 = new A() { void foo2(ASTNode n1, ASTNode n2) {} }; ReportGenerator.write((n1, n2) -> (n1 - n2));}");
+        .needRenaming(false)
+        .gives("void foo() {A a1; a1 = new A() { void foo2(ASTNode n1, ASTNode n2) {} }; ReportGenerator.write((n1, n2) -> (n1 - n2));}");
   }
 }
