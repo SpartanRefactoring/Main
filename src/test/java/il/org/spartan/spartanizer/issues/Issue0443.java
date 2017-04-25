@@ -11,13 +11,13 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0443 {
   @Test public void a() {
-    trimminKof("public void f (String[] ss) {}")//
+    trimmingOf("public void f (String[] ss) {}")//
         .gives("public void f (String[] __) {}")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("public void f (String... ss) {}")//
+    trimmingOf("public void f (String... ss) {}")//
         .gives("public void f (String... __) {}")//
         .stays();
   }

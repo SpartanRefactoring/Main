@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class LetInNextTest {
   @Test public void a() {
-    trimminKof("{{A λ = foo(); return bar(λ,λ);} another();}")//
+    trimmingOf("{{A λ = foo(); return bar(λ,λ);} another();}")//
         .using(new LetInNext(), VariableDeclarationFragment.class)//
         .gives("{{{return let(()->foo()).in(λ->bar(λ,λ));}}another();}") //
         .gives("return let(()->foo()).in(λ->bar(λ,λ));another();") //
@@ -20,21 +20,21 @@ public class LetInNextTest {
   }
 
   @Test public void b() {
-    trimminKof("{{A x = foo(); return bar(x,x);} another();}")//
+    trimmingOf("{{A x = foo(); return bar(x,x);} another();}")//
         .gives("A x = foo(); return bar(x,x); another();")//
         .gives("A x = foo(); return bar(x,x);")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("{{A x = foo(); return bar(y,y);} another();}")//
+    trimmingOf("{{A x = foo(); return bar(y,y);} another();}")//
         .gives("A x=foo();return bar(y,y);another();") //
         .gives("foo(); return bar(y,y);") //
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("{{A x = foo(); bar(x,x);} another();}")//
+    trimmingOf("{{A x = foo(); bar(x,x);} another();}")//
         .using(new LetInNext(), VariableDeclarationFragment.class)//
         .gives("{{{let(()->foo()).in(x->bar(x,x));}}another();}") //
         .gives("let(()->foo()).in(x->bar(x,x));another();") //
@@ -43,25 +43,25 @@ public class LetInNextTest {
   }
 
   @Test public void e() {
-    trimminKof("{{A y = bar(), x = foo(); bar(x,x); print(y);} another();}")//
+    trimmingOf("{{A y = bar(), x = foo(); bar(x,x); print(y);} another();}")//
         .using(new LetInNext(), VariableDeclarationFragment.class)//
         .stays();
   }
 
   @Test public void i() {
-    trimminKof("X x = foo(); bar1(x,x); bar2(x);")//
+    trimmingOf("X x = foo(); bar1(x,x); bar2(x);")//
         .using(new LetInNext(), VariableDeclarationFragment.class)//
         .stays();
   }
 
   @Test public void f() {
-    trimminKof("{{A x = foo(); bar(x,x); print(x);} another();}")//
+    trimmingOf("{{A x = foo(); bar(x,x); print(x);} another();}")//
         .using(new LetInNext(), VariableDeclarationFragment.class)//
         .stays();
   }
 
   @Test public void g() {
-    trimminKof("{"//
+    trimmingOf("{"//
         + "    final Object value=m.invoke(a);"//
         + "    if (value == null) {"//
         + "      throw new IllegalStateException(String.format(\"Annotation method %s returned null\",m));"//
@@ -72,7 +72,7 @@ public class LetInNextTest {
   }
 
   @Test public void h() {
-    trimminKof("{"//
+    trimmingOf("{"//
         + "final AtmosphereInterceptor a=(AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass);"//
         + "f.getAtmosphereConfig().startupHook("//
         + "  new AtmosphereConfig.StartupHook(){"//

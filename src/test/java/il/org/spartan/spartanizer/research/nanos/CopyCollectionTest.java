@@ -13,13 +13,13 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class CopyCollectionTest {
   @Test public void a() {
-    trimminKof("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);")//
+    trimmingOf("StatsAccumulator $=new StatsAccumulator();  $.addAll(values);")//
         .using(new CopyCollection(), ClassInstanceCreation.class)//
         .gives("StatsAccumulator $=Create.from(values);");
   }
 
   @Test public void b() {
-    trimminKof("StatsAccumulator<N> $=new StatsAccumulator<>();  $.addAll(values);")//
+    trimmingOf("StatsAccumulator<N> $=new StatsAccumulator<>();  $.addAll(values);")//
         .using(new CopyCollection(), ClassInstanceCreation.class)//
         .gives("StatsAccumulator<N> $=Create.from(values);");
   }

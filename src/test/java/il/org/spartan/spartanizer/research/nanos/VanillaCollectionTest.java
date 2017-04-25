@@ -11,35 +11,35 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class VanillaCollectionTest {
   @Test public void a() {
-    trimminKof("class C{public static final List<Int> li = new ArrayList<>();}")//
+    trimmingOf("class C{public static final List<Int> li = new ArrayList<>();}")//
         .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("class C{public static final List<Int> li = new ArrayList<Int>();}")//
+    trimmingOf("class C{public static final List<Int> li = new ArrayList<Int>();}")//
         .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("class C{public static final Set<Int> li = new HashSet<>();}")//
+    trimmingOf("class C{public static final Set<Int> li = new HashSet<>();}")//
         .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("class C{public static final Set<Int> li = new TreeSet<>();}")//
+    trimmingOf("class C{public static final Set<Int> li = new TreeSet<>();}")//
         .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void e() {
-    trimminKof("class C{public static final Map<Int, String> li = new HashMap<>();}")//
+    trimmingOf("class C{public static final Map<Int, String> li = new HashMap<>();}")//
         .using(new VanillaCollection(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();

@@ -21,7 +21,7 @@ public class Issue0294 {
 
   /** Correct way of trimming does not change */
   @Test public void a() {
-    trimminKof("A a=new A();for (A b: g.f(a,true))sum+=b;") //
+    trimmingOf("A a=new A();for (A b: g.f(a,true))sum+=b;") //
         .gives("for(A b: g.f((new A()),true))sum+=b;") //
         .gives("for(A b: g.f(new A(),true))sum+=b;") //
         .stays();
@@ -49,7 +49,7 @@ public class Issue0294 {
   }
 
   @Test public void f() {
-    trimminKof("for (int a: f(¢)) g(a);") //
+    trimmingOf("for (int a: f(¢)) g(a);") //
         .stays();
   }
 }

@@ -13,18 +13,18 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0903 {
   @Test public void a2() {
-    trimminKof("while(i>9)if(i==5)return x;return x;")//
+    trimmingOf("while(i>9)if(i==5)return x;return x;")//
         .gives("while(i>9)if(i==5)break;return x;");
   }
 
   @Test public void a7() {
-    trimminKof("while(i>5)return x;return x;")//
+    trimmingOf("while(i>5)return x;return x;")//
         .gives("while(i>5)break;return x;")//
         .stays();
   }
 
   @Test public void a8() {
-    trimminKof("while(i>5)if(tipper=4)return x;return x;")//
+    trimmingOf("while(i>5)if(tipper=4)return x;return x;")//
         .gives("while(i>5)if(tipper=4)break;return x;");
   }
 }

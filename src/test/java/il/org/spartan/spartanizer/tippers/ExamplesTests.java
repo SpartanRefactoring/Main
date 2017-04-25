@@ -47,11 +47,11 @@ public class ExamplesTests {
   }
 
   protected void ignores(final Ignores ¢) {
-    wrap(() -> trimminKof(¢.get()).using(tipper).stays());
+    wrap(() -> trimmingOf(¢.get()).using(tipper).stays());
   }
 
   protected void converts(final Converts ¢) {
-    wrap(() -> trimminKof(¢.from()).using(tipper).gives(¢.to()));
+    wrap(() -> trimmingOf(¢.from()).using(tipper).gives(¢.to()));
   }
 
   protected void wrap(final Runnable test) {

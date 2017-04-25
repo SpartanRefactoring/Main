@@ -20,7 +20,7 @@ import il.org.spartan.spartanizer.traversal.*;
 @SuppressWarnings("static-method") //
 public class TestOperandTest {
   @Test public void test02() {
-    final TestOperand o = trimminKof("new Integer(3)");
+    final TestOperand o = trimmingOf("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
@@ -38,7 +38,7 @@ public class TestOperandTest {
   }
 
   @Test public void test03() {
-    final TestOperand o = trimminKof("for(int i=0; i <100; i++){\n\tpr(i);\n}");
+    final TestOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
@@ -56,7 +56,7 @@ public class TestOperandTest {
   }
 
   @Test public void test04() {
-    final TestOperand o = trimminKof("for(int i=0; i <100; i++){\n\tpr(i);\n}");
+    final TestOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find(o.get()).on(o.get()));
     assert u != null;
     assert u.getJavaElement() == null;

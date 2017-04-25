@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0182 {
   @Test public void dollar() {
-    trimminKof("int toString() { int x = 5; System.out.println(x); return x + 7;}")
+    trimmingOf("int toString() { int x = 5; System.out.println(x); return x + 7;}")
         .gives("int toString() { int $ = 5; System.out.println($); return $ + 7;}");
   }
 }
