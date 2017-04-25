@@ -226,10 +226,14 @@ public final class Namespace implements Environment {
           return true;
         final Namespace $ = spawn(lambda + " ");
         for (final VariableDeclaration ¢ : parameters(x))
-          if (iz.singleVariableDeclaration(¢))
+          if (iz.singleVariableDeclaration(¢)) {
             $.put(az.singleVariableDeclaration(¢));
-          else
+            Namespace.this.put(az.singleVariableDeclaration(¢));
+          }
+          else {
             $.put(step.name(az.variableDeclrationFragment(¢)), null);
+            Namespace.this.put(step.name(az.variableDeclrationFragment(¢)), null);
+          }
         return $.fillScope(x);
       }
 
