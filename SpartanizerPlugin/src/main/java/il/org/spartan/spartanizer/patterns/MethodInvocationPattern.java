@@ -13,16 +13,13 @@ import il.org.spartan.spartanizer.tippers.*;
  * @since 2017-04-01 */
 public abstract class MethodInvocationPattern extends NodePattern<MethodInvocation> {
   private static final long serialVersionUID = 0x319433183A0507AEL;
-  @Property protected Expression expression;
+  @Property protected Expression receiver;
   @Property protected List<Expression> arguments;
   @Property protected SimpleName name;
 
   protected MethodInvocationPattern() {
-    andAlso("Must be a Method Invocation", () -> {
-      expression = current.getExpression();
-      arguments = arguments(current);
-      name = current.getName();
-      return name != null;
-    });
+    property("Receiver", () -> receiver =  current.getExpression());
+    property("Arguments", () -> arguments = arguments(current));
+    property("Name", () -> name = current.getName());
   }
 }
