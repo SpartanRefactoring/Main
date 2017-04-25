@@ -10,7 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Unit tests for {@link InfixConcatenationEmptyStringLeft}
  * @author Niv Shalmon
  * @since 2016 */
-@SuppressWarnings({ "static-method", "javadoc" })
+@SuppressWarnings({ "javadoc" })
 public final class Issue0116 extends TipperTest<InfixExpression> {
   @Override public Tipper<InfixExpression> tipper() {
     return new InfixConcatenationEmptyStringLeft();
@@ -41,6 +41,7 @@ public final class Issue0116 extends TipperTest<InfixExpression> {
 
   @Test public void issue116_04() {
     trimmingOf("String s = \"\" + x.foo();")//
+        .gives("String s=x.foo()+\"\";") //
         .gives("x.foo();")//
         .stays();
   }
