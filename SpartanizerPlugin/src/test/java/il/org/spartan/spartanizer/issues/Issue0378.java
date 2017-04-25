@@ -10,13 +10,13 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0378 {
   @Test public void a() {
-    trimminKof("void func(int i) {return something_else;}")//
+    trimmingOf("void func(int i) {return something_else;}")//
         .gives("void func(int __) {return something_else;}")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("void func(int notJD) {return something_else;}")//
+    trimmingOf("void func(int notJD) {return something_else;}")//
         .stays();
   }
 }

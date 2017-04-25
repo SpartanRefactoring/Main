@@ -10,57 +10,57 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ParenthesizedRemoveExtraParenthesisTest {
   @Test public void a() {
-    trimminKof("((a + b))")//
+    trimmingOf("((a + b))")//
         .gives("(a+b)")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("((T)b)")//
+    trimmingOf("((T)b)")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("a((b))")//
+    trimmingOf("a((b))")//
         .gives("a(b)")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("((B)b).f()")//
+    trimmingOf("((B)b).f()")//
         .stays();
   }
 
   @Test public void e() {
-    trimminKof("((B)b).f")//
+    trimmingOf("((B)b).f")//
         .stays();
   }
 
   @Test public void f() {
-    trimminKof("(a).b();")//
+    trimmingOf("(a).b();")//
         .gives("a.b();")//
         .stays();
   }
 
   @Test public void g() {
-    trimminKof("(a.b).c();")//
+    trimmingOf("(a.b).c();")//
         .gives("a.b.c();")//
         .stays();
   }
 
   @Test public void h() {
-    trimminKof("(a.b()).c();")//
+    trimmingOf("(a.b()).c();")//
         .gives("a.b().c();")//
         .stays();
   }
 
   @Test public void i() {
-    trimminKof("(a ? b : c).d()")//
+    trimmingOf("(a ? b : c).d()")//
         .stays();
   }
 
   @Test public void j() {
-    trimminKof("(a.b(x ? y : z)).d()")//
+    trimmingOf("(a.b(x ? y : z)).d()")//
         .gives("a.b(x ? y : z).d()")//
         .stays();
   }

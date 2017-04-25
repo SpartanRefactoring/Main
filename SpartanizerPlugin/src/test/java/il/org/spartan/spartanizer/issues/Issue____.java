@@ -173,13 +173,13 @@ public class Issue____ {
 
   /** Correct way of trimming does not change */
   @Test public void Z$130() {
-    trimminKof("a")//
+    trimmingOf("a")//
         .stays();
   }
 
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
-    trimminKof("a")//
+    trimmingOf("a")//
         .stays();
   }
 }

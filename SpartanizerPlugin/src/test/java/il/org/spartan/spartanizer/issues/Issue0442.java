@@ -19,18 +19,18 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0442 {
   @Test public void a() {
-    trimminKof("public abstract S f( X x);")//
+    trimmingOf("public abstract S f( X x);")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("public S f(X x){return null;}")//
+    trimmingOf("public S f(X x){return null;}")//
         .gives("public S f(X __){return null;}")//
         .stays();
   }
 
   @Test public void c$etc() {
-    trimminKof("interface I{ I f(I i);}")//
+    trimmingOf("interface I{ I f(I i);}")//
         .stays();
   }
 
@@ -68,7 +68,7 @@ public class Issue0442 {
 
   public static class WorkInProgress {
     @Test public void b() {
-      trimminKof("public S f(X x){return null;}")//
+      trimmingOf("public S f(X x){return null;}")//
           .gives("public S f(X __){return null;}")//
           .stays();
     }

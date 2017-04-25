@@ -10,13 +10,13 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1055 {
   @Test public void vanilla() {
-    trimminKof("switch(x) { case 1: { y=2; } } ") //
+    trimmingOf("switch(x) { case 1: { y=2; } } ") //
         .gives("switch(x) { case 1: y = 2; }") //
     ;
   }
 
   @Test public void also() {
-    trimminKof("I x = new I(3),y=null;if(a)synchronized(x){{ y=2;}} return x*y;") //
+    trimmingOf("I x = new I(3),y=null;if(a)synchronized(x){{ y=2;}} return x*y;") //
         .gives("I x = new I(3),y=null;if(a)synchronized(x){y=2;} return x*y;") //
         .stays();
   }

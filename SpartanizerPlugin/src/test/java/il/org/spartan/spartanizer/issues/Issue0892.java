@@ -10,17 +10,17 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0892 {
   @Test public void test0() {
-    trimminKof("b+-3")//
+    trimmingOf("b+-3")//
         .gives("b-3");
   }
 
   @Test public void test1() {
-    trimminKof("x+-3.4")//
+    trimmingOf("x+-3.4")//
         .gives("x-3.4");
   }
 
   @Test public void test2() {
-    trimminKof("x-+3.4")//
+    trimmingOf("x-+3.4")//
         .gives("x-3.4");
   }
 }

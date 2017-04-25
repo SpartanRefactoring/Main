@@ -52,13 +52,13 @@ public class Issue0500 {
 
   /** Correct way of trimming does not change */
   @Test public void demoOfTrimming() {
-    trimminKof("a")//
+    trimmingOf("a")//
         .stays();
   }
 
   @Ignore // TODO Yuval Simon
   @Test public void report1() {
-    trimminKof(
+    trimmingOf(
         "int a(B b){if(b instanceof C){C<?>c=(C<?>)b;D<E<F,C<G>>>d=e.f().g().h();while(d.i()){E<F,C<G>>j=d.k();F l=j.m();C<G>n=o(j.p(),new H(l));if(!n.q()&&c.r(n)){if(n.s()!=j.p().s())n.t();else d.a();return true;} }}return false;}")//
             .gives(
                 "int a(B b){if(b instanceof C){C<?>c=(C<?>)b;for(D<E<F,C<G>>>d=e.f().g().h();d.i();){E<F,C<G>>j=d.k();F l=j.m();C<G>n=o(j.p(),new H(l));if(!n.q()&&c.r(n)){if(n.s()!=j.p().s())n.t();else d.a();return true;}}}return false;}")//
@@ -66,13 +66,13 @@ public class Issue0500 {
   }
 
   @Test public void report2() {
-    trimminKof("public void f(){T e=new Z(){}.g();a(e,new K(){}.s(M.class).g());")//
+    trimmingOf("public void f(){T e=new Z(){}.g();a(e,new K(){}.s(M.class).g());")//
         .gives("public void f(){a(new Z(){}.g(),new K(){}.s(M.class).g());")//
         .stays();
   }
 
   @Test public void report3() {
-    trimminKof("void r(){Iterator<Entry<K,C<V>>>e=f();while (e.g())++a;}") //
+    trimmingOf("void r(){Iterator<Entry<K,C<V>>>e=f();while (e.g())++a;}") //
         .gives("void r(){for(Iterator<Entry<K,C<V>>>e=f();e.g();)++a;}") //
         .gives("void r(){for(Iterator<Entry<K,C<V>>>¢=f();¢.g();)++a;}") //
         .stays();

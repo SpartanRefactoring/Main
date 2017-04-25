@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class PercolateExceptionTest {
   @Test public void a() {
-    trimminKof(//
+    trimmingOf(//
         "try {" + //
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //
@@ -27,7 +27,7 @@ public class PercolateExceptionTest {
   }
 
   @Test public void b() {
-    trimminKof("try{ thing(); } catch(A ¢){ throw ¢;}catch(B ¢){ throw ¢;}")//
+    trimmingOf("try{ thing(); } catch(A ¢){ throw ¢;}catch(B ¢){ throw ¢;}")//
         .gives("try{thing();}catch(B|A ¢){throw ¢;}")//
         .using(new PercolateException(), CatchClause.class)//
         .gives("{try{{thing();}}catch(B|A ¢){percolate(¢);};}")//

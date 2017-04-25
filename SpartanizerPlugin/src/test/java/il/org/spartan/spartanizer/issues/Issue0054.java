@@ -11,14 +11,14 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0054 {
   @Test public void forPlainUseInUpdaters() {
-    trimminKof("int a = f(); for (int i = 0; i <100; i *= a) b[i] = 3;")//
+    trimmingOf("int a = f(); for (int i = 0; i <100; i *= a) b[i] = 3;")//
         .gives("int a=f();for(int ¢=0;¢<100;¢*=a)b[¢]=3;") //
         .gives("for(int a=f(),¢=0;¢<100;¢*=a)b[¢]=3;") //
         .stays();
   }
 
   @Test public void forPlainUseInCondition() {
-    trimminKof("int a = f(); for (int i = 0; a <100; ++i) b[i] = 3;")//
+    trimmingOf("int a = f(); for (int i = 0; a <100; ++i) b[i] = 3;")//
         .gives("int a=f();for(int ¢=0;a<100;++¢)b[¢]=3;") //
         .gives("for(int a=f(),¢=0;a<100;++¢)b[¢]=3;") //
         .stays();

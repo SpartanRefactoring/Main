@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1077 {
   @Test public void t1() {
-    trimminKof(//
+    trimmingOf(//
         "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode ¢, int __) {"//
             + "if (¢ == null)"//
             + "return false;"//
@@ -33,7 +33,7 @@ public class Issue1077 {
   }
 
   @Test public void t2() {
-    trimminKof(//
+    trimmingOf(//
         "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode ¢, int __) {" //
             + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())" //
             + "if (s(s))" //
@@ -43,12 +43,12 @@ public class Issue1077 {
   }
 
   @Test public void t3() {
-    trimminKof("class a { final ASTNode ¢; @SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int __) {"
+    trimmingOf("class a { final ASTNode ¢; @SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int __) {"
         + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())if (s.has())return true;}}").stays();
   }
 
   @Test public void t4() {
-    trimminKof("class a { final ASTNode ¢;final List<Statement> l; "
+    trimmingOf("class a { final ASTNode ¢;final List<Statement> l; "
         + "@SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int __) {"
         + "for (final Statement s : (List<Statement>) ((Block) ¢).statements())if (s.has())return true;}"
         + "@SuppressWarnings(\"unchecked\") static AA sss(final ASTNode k, int __) {"
@@ -57,7 +57,7 @@ public class Issue1077 {
   }
 
   @Test public void t5() {
-    trimminKof("class a { final List<Statement> l; @SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int __) {"
+    trimmingOf("class a { final List<Statement> l; @SuppressWarnings(\"unchecked\") static boolean sequencerComplex(final ASTNode k, int __) {"
         + "final ASTNode ¢;for (final Statement s : (List<Statement>) ((Block) ¢).statements())if (s.has())return true;}"
         + "@SuppressWarnings(\"unchecked\") int sss(final ASTNode k, int __) {for (final Statement s : l)if (s.has())return 1;return 0;}}")
             .gives("class a { final List<Statement> l; "
@@ -68,7 +68,7 @@ public class Issue1077 {
   }
 
   @Test public void t6() {
-    trimminKof("class a { final List<Statement> l; int sss(final ASTNode k, int __) {for (final Statement s : l)if (s.has())"
+    trimmingOf("class a { final List<Statement> l; int sss(final ASTNode k, int __) {for (final Statement s : l)if (s.has())"
         + "return 1;ASTNode ¢ = l.get2(0);l.add(¢);¢=l.get(1);return 0;}}").stays();
   }
 }

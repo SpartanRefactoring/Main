@@ -11,14 +11,14 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Version290 {
   public void doNotInlineDeclarationWithAnnotationSimplified() {
-    trimminKof("@SuppressWarnings()int $=(Class<T>)findClass(className); ")//
+    trimmingOf("@SuppressWarnings()int $=(Class<T>)findClass(className); ")//
         .stays();
   }
 
   /** Introduced by Yogi on Wed-Apr-12-10:49:02-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void intab0Intc3Intdc2Intedc19be2dea() {
-    trimminKof("int a = b(0); int c = 3; int d = c + 2; int e = d + c - 19; b(e * 2 - d / e + a);") //
+    trimmingOf("int a = b(0); int c = 3; int d = c + 2; int e = d + c - 19; b(e * 2 - d / e + a);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a=b(0),c=3;int d=c+2,e=d+c-19;b(e*2-d/e+a);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
@@ -36,7 +36,7 @@ public class Version290 {
   /** Introduced by Yogi on Wed-Apr-12-10:51:24-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta5b3Intcb2Intdcb19aec() {
-    trimminKof("int a = 5, b = 3; int c = b + 2; int d = c + b - 19 + a; e(c);") //
+    trimmingOf("int a = 5, b = 3; int c = b + 2; int d = c + b - 19 + a; e(c);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a=5,b=3,c=b+2;int d=c+b-19+a;e(c);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
@@ -60,7 +60,7 @@ public class Version290 {
   /** Introduced by Yogi on Wed-Apr-12-10:53:05-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta5Intb3Intcb2Intdcb19ed2cda() {
-    trimminKof("int a = 5; int b = 3; int c = b + 2; int d = c + b - 19; e(d * 2 - c / d + a);") //
+    trimmingOf("int a = 5; int b = 3; int c = b + 2; int d = c + b - 19; e(d * 2 - c / d + a);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a=5,b=3;int c=b+2,d=c+b-19;e(d*2-c/d+a);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
@@ -78,7 +78,7 @@ public class Version290 {
   /** Introduced by Yogi on Wed-Apr-12-11:06:45-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta6FinalAbNewAaIntc2dccacca() {
-    trimminKof("int a = 6; final A b = new A(a); int c = 2 + d; c(c + a); c(c * a);") //
+    trimmingOf("int a = 6; final A b = new A(a); int c = 2 + d; c(c + a); c(c * a);") //
         .using(new LocalInitializedUnusedRemove(), VariableDeclarationFragment.class) //
         .gives("int a=6;new A(a);int c=2+d;c(c+a);c(c*a);") //
         .using(new InfixMultiplicationSort(), InfixExpression.class) //
@@ -88,13 +88,13 @@ public class Version290 {
   }
 
   @Test public void renameVariableUnderscore2() {
-    trimminKof("class A{int __;int f(int _){return _;}}")//
+    trimmingOf("class A{int __;int f(int _){return _;}}")//
         .gives("class A{int __;int f(int __){return __;}}") //
         .stays();
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryClassInstanceCreation() {
-    trimminKof("Character x=new Character(new Character(f()));")//
+    trimmingOf("Character x=new Character(new Character(f()));")//
         .gives("new Character(new Character(f()));")//
         .gives("Character.valueOf(new Character(f()));") //
         .gives("Character.valueOf(Character.valueOf(f()));") //

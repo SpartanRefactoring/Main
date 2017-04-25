@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0879 {
   @Test public void a() {
-    trimminKof("void f(){int x; int y;return;}")//
+    trimmingOf("void f(){int x; int y;return;}")//
         .gives("void f(){int x,y;}")//
         .gives("void f(){}")//
         .stays();
@@ -22,7 +22,7 @@ public class Issue0879 {
   /** Introduced by Yogi on Thu-Mar-30-16:21:39-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void daIntb4Ifb3b3b4Elseb5b55Return() {
-    trimminKof("void a() { int b = 4; if (b > 3) { b += 3; b += 4; } else { b += 5; b += 55; } return; }") //
+    trimmingOf("void a() { int b = 4; if (b > 3) { b += 3; b += 4; } else { b += 5; b += 55; } return; }") //
         .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
         .gives("void a(){int b=4;if(b>3){b+=3+4;}else{b+=5+55;}return;}") //
         .using(new BlockSingletonEliminate(), Block.class) //
@@ -41,7 +41,7 @@ public class Issue0879 {
   /** Introduced by Yogi on Thu-Mar-30-16:33:00-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_intaIntb9Intc7b4cbbReturnc() {
-    trimminKof("int a() { int b = 9; int c = 7; b += 4; c = b + b; return c; }") //
+    trimmingOf("int a() { int b = 9; int c = 7; b += 4; c = b + b; return c; }") //
         .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
         .gives("int a(){int b=9;int $=7;b+=4;$=b+b;return $;}") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
@@ -65,13 +65,13 @@ public class Issue0879 {
   }
 
   @Test public void test0() {
-    trimminKof("void f(){return;}")//
+    trimmingOf("void f(){return;}")//
         .gives("void f(){}")//
         .stays();
   }
 
   @Test public void test3() {
-    trimminKof("void f(){int x=9;int y=7; x+=4;y=x+x;return;}")//
+    trimmingOf("void f(){int x=9;int y=7; x+=4;y=x+x;return;}")//
         .gives("void f(){int x=9,y=7;x+=4;y=x+x;}") //
         .gives("void f(){int x=9+4,y=7;y=x+x;}") //
         .gives("void f(){int y=7;y=(9+4)+(9+4);}") //

@@ -10,13 +10,13 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0191 {
   @Test public void test0() {
-    trimminKof("int f(){  return ¢ ? Boolean.TRUE : Boolean.FALSE;}")//
+    trimmingOf("int f(){  return ¢ ? Boolean.TRUE : Boolean.FALSE;}")//
         .gives("int f(){return ¢;}")//
         .stays();
   }
 
   @Test public void test1() {
-    trimminKof("int f(){  return ¢ ? Boolean.FALSE : Boolean.TRUE;}")//
+    trimmingOf("int f(){  return ¢ ? Boolean.FALSE : Boolean.TRUE;}")//
         .gives("int f(){return !¢;}")//
         .stays();
   }

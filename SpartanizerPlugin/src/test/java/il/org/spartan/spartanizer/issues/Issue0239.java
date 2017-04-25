@@ -23,7 +23,7 @@ import nano.ly.*;
 @SuppressWarnings("static-method")
 public class Issue0239 {
   @Test public void a$01() {
-    trimminKof("private void testInteger(final boolean testTransients) {\n" + //
+    trimmingOf("private void testInteger(final boolean testTransients) {\n" + //
         "final Integer i1 = Integer.valueOf(12344);\n" + //
         "final Integer i2 = Integer.valueOf(12345);\n" + //
         "wizard.assertEqualsAndHashCodeContract(i1, i2, testTransients);\n" + //
@@ -44,7 +44,7 @@ public class Issue0239 {
   }
 
   @Test public void a$02() {
-    trimminKof(//
+    trimmingOf(//
         "int f() {\n" + //
             "  final int i1 = Integer.valueOf(1);\n" + //
             "  final int i2 = Integer.valueOf(2);\n" + //
@@ -67,7 +67,7 @@ public class Issue0239 {
   }
 
   @Test public void a$03() {
-    trimminKof(//
+    trimmingOf(//
         "int f() {\n" + //
             "  final int i2 = Integer.valueOf(2);\n" + //
             "  f1(i1,i2);\n" + //

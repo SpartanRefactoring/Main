@@ -14,7 +14,7 @@ public class Automatic_2016_12_14_01_52_17 {
    * while testing some test file. Originated at
    * il.org.spartan.spartanizer.ast.navigate.extract.nextPrefix at line #343. */
   @Test public void nextPrefixTest() {
-    trimminKof("package a;public final class A { public void b(){ try { B.c(d).e().f(g -> h[i++]=j(g)); } catch ( C k) { return null; } }}")
+    trimmingOf("package a;public final class A { public void b(){ try { B.c(d).e().f(g -> h[i++]=j(g)); } catch ( C k) { return null; } }}")
         .doesNotCrash();
   }
 
@@ -23,7 +23,7 @@ public class Automatic_2016_12_14_01_52_17 {
    * il.org.spartan.spartanizer.tippers.LambdaExpressionRemoveRedundantCurlyBraces.prerequisite
    * at line #45. */
   @Test public void prerequisiteTest() {
-    trimminKof("package a;public final class A { public void b(){ try { B.c(d).e().f(g -> h[i++]=j(g)); } catch (C k) { return null; } }}")
+    trimmingOf("package a;public final class A { public void b(){ try { B.c(d).e().f(g -> h[i++]=j(g)); } catch (C k) { return null; } }}")
         .doesNotCrash();
   }
 
@@ -32,7 +32,7 @@ public class Automatic_2016_12_14_01_52_17 {
    * il.org.spartan.spartanizer.ast.navigate.wizard.redundancies at line
    * #466. */
   @Test public void redundanciesTest() {
-    trimminKof("package a;public final class A { public void b(){ for ( final B c : d) if (c.e(f)) f=c; }}").doesNotCrash();
+    trimmingOf("package a;public final class A { public void b(){ for ( final B c : d) if (c.e(f)) f=c; }}").doesNotCrash();
   }
 
   /** Test created automatically due to java.lang.NullPointerException thrown
@@ -40,7 +40,7 @@ public class Automatic_2016_12_14_01_52_17 {
    * il.org.spartan.spartanizer.tippers.ExpressionStatementAssertTrueFalse.replacement
    * at line #31. */
   @Test public void replacement3Test() {
-    trimminKof("package a;public final class A { public void b() { int c = d; d = e; return c; }}").doesNotCrash();
+    trimmingOf("package a;public final class A { public void b() { int c = d; d = e; return c; }}").doesNotCrash();
   }
 
   /** Test created automatically due to java.lang.NullPointerException thrown
@@ -48,6 +48,6 @@ public class Automatic_2016_12_14_01_52_17 {
    * il.org.spartan.spartanizer.tippers.SimplifyComparisionOfAdditions.replacement
    * at line #28. */
   @Test public void replacementTest() {
-    trimminKof("package a;public final class A { public void b() { if (c == null)  return; d(); d(); }}").doesNotCrash();
+    trimmingOf("package a;public final class A { public void b() { if (c == null)  return; d(); d(); }}").doesNotCrash();
   }
 }

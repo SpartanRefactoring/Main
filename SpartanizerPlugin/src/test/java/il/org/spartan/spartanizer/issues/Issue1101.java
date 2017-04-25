@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1101 {
   @Ignore @Test public void a() {
-    trimminKof("/**/" + //
+    trimmingOf("/**/" + //
         "  boolean a(final A b, final A c) {" + //
         "    final String off = off(wrap), $ = Trivia.accurateEssence(inner);" + //
         "    final String essence2 = Trivia.accurateEssence(off);" + //
