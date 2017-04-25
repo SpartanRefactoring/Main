@@ -15,14 +15,14 @@ public class HoldsOrReturnTest {
   private static final NanoPatternTipper<IfStatement> nano = new HoldsOrReturn();
 
   @Test public void a() {
-    trimminKof("if(x.isCute()) return;")//
+    trimmingOf("if(x.isCute()) return;")//
         .using(nano, IfStatement.class)//
         .gives("holds(!(x.isCute())).orReturn();")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("if(x.isCute() || iWant()) return 0;")//
+    trimmingOf("if(x.isCute() || iWant()) return 0;")//
         .using(nano, IfStatement.class)//
         .gives("holds(!(x.isCute()||iWant())).orReturn(0);")//
         .gives("holds(!x.isCute()&&!iWant()).orReturn(0);") //
@@ -30,7 +30,7 @@ public class HoldsOrReturnTest {
   }
 
   @Test public void c() {
-    trimminKof("if(iWant()) return null;")//
+    trimmingOf("if(iWant()) return null;")//
         .using(nano, IfStatement.class)//
         .gives("holds(!(iWant())).orReturn(null);") //
         .stays();

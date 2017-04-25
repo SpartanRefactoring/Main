@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0995 {
   @Test public void a$01() {
-    trimminKof("enum A{@c @b a}")//
+    trimmingOf("enum A{@c @b a}")//
         .gives("enum A{@b @c a}")//
         .stays();
   }

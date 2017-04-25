@@ -11,18 +11,18 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0359 {
   @Test public void b() {
-    trimminKof("int i;++i;")//
+    trimmingOf("int i;++i;")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("int i=f();")//
+    trimmingOf("int i=f();")//
         .gives("f();")//
         .stays();
   }
 
   @Test public void t20() {
-    trimminKof("for(;b==q++;){int i;}")//
+    trimmingOf("for(;b==q++;){int i;}")//
         .gives("while(b==q++){int i;}")//
         .gives("while(b==q++){}")//
         .gives("while(b==q++);")//

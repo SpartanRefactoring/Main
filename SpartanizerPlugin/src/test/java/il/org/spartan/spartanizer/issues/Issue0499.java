@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0499 {
   @Test public void test0() {
-    trimminKof("public S d(final G a) {assert a != null;r(¢ -> Integer.valueOf(a.apply(¢, selection())));return this;}")
+    trimmingOf("public S d(final G a) {assert a != null;r(¢ -> Integer.valueOf(a.apply(¢, selection())));return this;}")
         .gives("public S d(final G a) {assert a != null;r(λ -> Integer.valueOf(a.apply(λ, selection())));return this;}")//
         .stays();
   }
@@ -21,7 +21,7 @@ public class Issue0499 {
   /** Introduced by Yossi on Thu-Mar-23-00:43:14-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_publicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
-    trimminKof("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
+    trimmingOf("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
         .using(new ParameterAnonymize(), SingleVariableDeclaration.class) //
         .gives("public A a(final B __){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
         .using(new LambdaRenameSingleParameterToLambda(), LambdaExpression.class) //
@@ -31,7 +31,7 @@ public class Issue0499 {
   }
 
   @Test public void test1() {
-    trimminKof("public S d(final G a) {assert a != null;r(x -> Integer.valueOf(a.apply(x, selection())));return this;}")//
+    trimmingOf("public S d(final G a) {assert a != null;r(x -> Integer.valueOf(a.apply(x, selection())));return this;}")//
         .gives("public S d(final G a){assert a!=null;r(λ->Integer.valueOf(a.apply(λ,selection())));return this;}") //
         .stays();
   }
@@ -39,7 +39,7 @@ public class Issue0499 {
   /** Introduced by Yossi on Thu-Mar-23-00:44:12-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void publicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
-    trimminKof("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
+    trimmingOf("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
         .using(new ParameterAnonymize(), SingleVariableDeclaration.class) //
         .gives("public A a(final B __){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
         .using(new LambdaRenameSingleParameterToLambda(), LambdaExpression.class) //
@@ -51,7 +51,7 @@ public class Issue0499 {
   /** Introduced by Yossi on Thu-Mar-23-00:44:54-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void ublicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
-    trimminKof("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
+    trimmingOf("public A a(final B b){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
         .using(new ParameterAnonymize(), SingleVariableDeclaration.class) //
         .gives("public A a(final B __){assert a!=null;r(x->Integer.valueOf(a.apply(x,selection())));return this;}") //
         .using(new LambdaRenameSingleParameterToLambda(), LambdaExpression.class) //
@@ -61,7 +61,7 @@ public class Issue0499 {
   }
 
   @Test public void test2() {
-    trimminKof("public S d(final G a) {assert a != null;r(x -> Integer.valueOf(a.apply(x, selection())));return this;}")
+    trimmingOf("public S d(final G a) {assert a != null;r(x -> Integer.valueOf(a.apply(x, selection())));return this;}")
         .gives("public S d(final G a) {assert a != null;r(λ -> Integer.valueOf(a.apply(λ, selection())));return this;}")//
         .stays();
   }

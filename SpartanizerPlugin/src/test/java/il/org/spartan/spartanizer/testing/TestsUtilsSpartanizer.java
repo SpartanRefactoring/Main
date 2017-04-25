@@ -19,8 +19,8 @@ public enum TestsUtilsSpartanizer {
   }
 
   /** About four hundred tests depend on a particular trimming policy. We shall
-   * call it {@link #trimminKof(String)} */
-  public static TestOperand trimminKof(final String from) {
+   * call it {@link #trimmingOf(String)} */
+  public static TestOperand trimmingOf(final String from) {
     return new TestOperand(from);
   }
 

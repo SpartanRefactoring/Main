@@ -12,25 +12,25 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue1073 {
   @Test public void a() {
-    trimminKof("class X { {} }").gives("class X{}")//
+    trimmingOf("class X { {} }").gives("class X{}")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("class X { {} }").gives("class X{}")//
+    trimmingOf("class X { {} }").gives("class X{}")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("class X { static {} }").gives("class X{}")//
+    trimmingOf("class X { static {} }").gives("class X{}")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("class X { /** JavaDOC */ {} }").stays();
+    trimmingOf("class X { /** JavaDOC */ {} }").stays();
   }
 
   @Test public void e() {
-    trimminKof("class X { /** JavaDOC */ static {} }").stays();
+    trimmingOf("class X { /** JavaDOC */ static {} }").stays();
   }
 }

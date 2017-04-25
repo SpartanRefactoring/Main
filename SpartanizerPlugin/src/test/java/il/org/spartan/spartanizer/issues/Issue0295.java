@@ -33,7 +33,7 @@ public class Issue0295 {
 
   /** Correct way of trimming does not change */
   @Test public void A$a() {
-    trimminKof("A a = new A();for (A b: g.f(a,true))sum+=b;") //
+    trimmingOf("A a = new A();for (A b: g.f(a,true))sum+=b;") //
         .gives("for (A b: g.f((new A()),true))sum+=b;") //
         .gives("for (A b: g.f(new A(),true))sum+=b;") //
         .stays();

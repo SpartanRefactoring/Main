@@ -17,7 +17,7 @@ public class Issue1249 {
   private final Tipper<ExpressionStatement> fail = new FailingTipper<>();
 
   @Test(expected = Exception.class) public void a() {
-    trimminKof("f();").using(fail, ExpressionStatement.class).doesNotCrash();
+    trimmingOf("f();").using(fail, ExpressionStatement.class).doesNotCrash();
   }
 
   @Test(expected = Exception.class) public void b() {

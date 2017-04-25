@@ -99,7 +99,7 @@ public final class FixedPointTest {
   }
 
   @Test public void shortestIfBranchFirst02() {
-    trimminKof(
+    trimmingOf(
         "void foo() {if (!s.equals(0xDEAD)) {int $=0; for (int i=0;i<s.length();++i) if (s.charAt(i)=='a') $ += 2; else if (s.charAt(i)=='d') $ -= 1; return $;} else {return 8;}}")
             .gives(
                 "void foo() {if (s.equals(0xDEAD)) return 8; int $ = 0; for (int i = 0;i <s.length();++i) if (s.charAt(i) == 'a') $ += 2; else if (s.charAt(i) == 'd')$-=1; return $;}")

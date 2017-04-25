@@ -12,24 +12,24 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue1071 {
   @Test public void a() {
-    trimminKof("class X extends Object{ }")//
+    trimmingOf("class X extends Object{ }")//
         .gives("class X{}")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("class X extends java.lang.Object { }")//
+    trimmingOf("class X extends java.lang.Object { }")//
         .gives("class X{}")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("public class X extends java.lang.object { }")//
+    trimmingOf("public class X extends java.lang.object { }")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("public class X extends y { }")//
+    trimmingOf("public class X extends y { }")//
         .stays();
   }
 }

@@ -12,28 +12,28 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1218 {
   @Test public void a0() {
-    trimminKof("int a(){int $=13;return $;}") //
+    trimmingOf("int a(){int $=13;return $;}") //
         .using(new LocalInitializedReturnExpression(), VariableDeclarationFragment.class) //
         .gives("int a(){return 13;}") //
     ;
   }
 
   @Test public void a1() {
-    trimminKof("int a(){int $=13;return $+$;}") //
+    trimmingOf("int a(){int $=13;return $+$;}") //
         .using(new LocalInitializedReturnExpression(), VariableDeclarationFragment.class) //
         .gives("int a(){return 13+13;}") //
     ;
   }
 
   @Test public void a2() {
-    trimminKof("int k=1;return 0<k;")//
+    trimmingOf("int k=1;return 0<k;")//
         .gives("return 0<1;");
   }
 
   /** Introduced by Yogi on Tue-Apr-11-12:14:38-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta5b2c4Return3bac() {
-    trimminKof("int a = 5, b = 2, c = 4; return 3 * b * a * c;") //
+    trimmingOf("int a = 5, b = 2, c = 4; return 3 * b * a * c;") //
         .using(new LocalInitializedReturnExpression(), VariableDeclarationFragment.class) //
         .gives("int b=2,c=4;return 3*b*5*c;") //
         .using(new LocalInitializedReturnExpression(), VariableDeclarationFragment.class) //
@@ -47,14 +47,14 @@ public class Issue1218 {
   }
 
   @Test public void a4() {
-    trimminKof("int a=2;return 3*a*4;")//
+    trimmingOf("int a=2;return 3*a*4;")//
         .gives("return 3 * 2 * 4;");
   }
 
   /** Introduced by Yogi on Mon-Apr-03-21:41:40-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_inta5b2c4Return3bac() {
-    trimminKof("int a = 5, b = 2, c = 4; return 3 * b * a * c;") //
+    trimmingOf("int a = 5, b = 2, c = 4; return 3 * b * a * c;") //
         .gives("int b=2,c=4;return 3*b*5*c;") //
         .gives("int c=4;return 3*2*5*c;") //
         .gives("return 3*2*5*4;") //

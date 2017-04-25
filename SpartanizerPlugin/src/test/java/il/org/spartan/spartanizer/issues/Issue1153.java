@@ -36,82 +36,82 @@ public class Issue1153 {
   }
 
   @Test public void c() {
-    trimminKof("class A { private static final long serialVersionUID = 3405687738L;}")//
+    trimmingOf("class A { private static final long serialVersionUID = 3405687738L;}")//
         .gives("class A { private static final long serialVersionUID = 0xCAFEABBAL;}")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("class A { private static final long serialVersionUID = 0x2;}")//
+    trimmingOf("class A { private static final long serialVersionUID = 0x2;}")//
         .stays();
   }
 
   @Test public void e() {
-    trimminKof("class A { private static final long serialVersionUID = 02;}")//
+    trimmingOf("class A { private static final long serialVersionUID = 02;}")//
         .stays();
   }
 
   @Test public void f() {
-    trimminKof("class A { private static final long serialVersionUID = 1;}")//
+    trimmingOf("class A { private static final long serialVersionUID = 1;}")//
         .stays();
   }
 
   @Test public void f1() {
-    trimminKof("class A { private static final long serialVersionUID = 2;}")//
+    trimmingOf("class A { private static final long serialVersionUID = 2;}")//
         .stays();
   }
 
   @Test public void g() {
-    trimminKof("class A { private static final long serialVersionUID = 0x2;}")//
+    trimmingOf("class A { private static final long serialVersionUID = 0x2;}")//
         .stays();
   }
 
   @Test public void h() {
-    trimminKof("class A { private static final long serialVersionUID = 0X2;}")//
+    trimmingOf("class A { private static final long serialVersionUID = 0X2;}")//
         .stays();
   }
 
   @Test public void i() {
-    trimminKof("class A { private static final long serialVersionUID = 10;}")//
+    trimmingOf("class A { private static final long serialVersionUID = 10;}")//
         .stays();
   }
 
   @Test public void j() {
-    trimminKof("class A { private static final long serialVersionUID = 0XDeadL;}")//
+    trimmingOf("class A { private static final long serialVersionUID = 0XDeadL;}")//
         .stays();
   }
 
   @Test public void k() {
-    trimminKof("class A { private long serialVersionUID = 12345677899L;}")//
+    trimmingOf("class A { private long serialVersionUID = 12345677899L;}")//
         .gives("class A { private long serialVersionUID = 0x2DFDC184BL;}")//
         .stays();
   }
 
   @Test public void l() {
-    trimminKof("class A { private long serialVersionUID = -999L;}")//
+    trimmingOf("class A { private long serialVersionUID = -999L;}")//
         .gives("class A { private long serialVersionUID = -0x3E7;}")//
         .stays();
   }
 
   @Test public void m() {
-    trimminKof("class A { private long serialVersionUID = -066L;}")//
+    trimmingOf("class A { private long serialVersionUID = -066L;}")//
         .stays();
   }
 
   @Test public void n() {
-    trimminKof("class A { private long serialVersionUID = -9043350929840336722L;}")//
+    trimmingOf("class A { private long serialVersionUID = -9043350929840336722L;}")//
         .gives("class A { private long serialVersionUID = -0x7D806FC1C854EF52L;}")//
         .stays();
   }
 
   @Test public void o() {
-    trimminKof("class A { private long serialVersionUID = 9043350929840336722L;}")//
+    trimmingOf("class A { private long serialVersionUID = 9043350929840336722L;}")//
         .gives("class A { private long serialVersionUID = 0x7D806FC1C854EF52L;}")//
         .stays();
   }
 
   @Test public void o1() {
-    trimminKof("class A { private long serialVersionUID = -1472927802038098123L;}")//
+    trimmingOf("class A { private long serialVersionUID = -1472927802038098123L;}")//
         .gives("class A { private long serialVersionUID = -0x1470E408344718CBL;}")//
         .stays();
   }
@@ -119,7 +119,7 @@ public class Issue1153 {
   /** Introduced by Yossi on Fri-Mar-24-13:58:53-IDT-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_classAPrivateLonga12345677899L() {
-    trimminKof("class A { private long a = 12345677899L; }") //
+    trimmingOf("class A { private long a = 12345677899L; }") //
         .stays() //
     ;
   }

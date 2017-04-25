@@ -144,7 +144,7 @@ public final class Issue0223 {
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInfixExpression() {
-    trimminKof("Integer x = new Integer(1 + 9);")//
+    trimmingOf("Integer x = new Integer(1 + 9);")//
         .using(new ClassInstanceCreationBoxedValueTypes(), ClassInstanceCreation.class) //
         .gives("Integer x = Integer.valueOf(1+9);")//
         .gives("Integer.valueOf(1+9);")//
@@ -153,37 +153,37 @@ public final class Issue0223 {
   }
 
   @Test public void a1() {
-    trimminKof("Integer x = new Integer(a);")//
+    trimmingOf("Integer x = new Integer(a);")//
         .using(new ClassInstanceCreationBoxedValueTypes(), ClassInstanceCreation.class) //
         .gives("Integer x = Integer.valueOf(a);")//
     ;
   }
 
   @Test public void a2() {
-    trimminKof("new Integer(a);")//
+    trimmingOf("new Integer(a);")//
         .using(new ClassInstanceCreationBoxedValueTypes(), ClassInstanceCreation.class) //
         .gives("Integer.valueOf(a);")//
     ;
   }
 
   @Test public void replaceClassInstanceCreationWithFactoryInvokeMethode() {
-    trimminKof("String x = new String(f());")//
+    trimmingOf("String x = new String(f());")//
         .gives("new String(f());").gives("String.valueOf(f());");
   }
 
   @Test public void vanilla() {
-    trimminKof("new Integer(3)")//
+    trimmingOf("new Integer(3)")//
         .gives("Integer.valueOf(3)")//
         .stays();
   }
 
   @Test public void vanilla01() {
-    trimminKof("new Integer(3)")//
+    trimmingOf("new Integer(3)")//
         .gives("Integer.valueOf(3)");
   }
 
   @Test public void vanilla02() {
-    final TestOperand a = trimminKof("new Integer(3)");
+    final TestOperand a = trimmingOf("new Integer(3)");
     assert "Integer.valueOf(3)" != null;
     final String wrap = WrapIntoComilationUnit.find(a.get()).on(a.get());
     if (wrap.equals(trim.apply(new TraversalImplementation(), wrap)))
@@ -191,7 +191,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla03() {
-    final TestOperand a = trimminKof("new Integer(3)");
+    final TestOperand a = trimmingOf("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(a.get()).on(a.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
@@ -204,7 +204,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla04() {
-    final TestOperand o = trimminKof("new Integer(3)");
+    final TestOperand o = trimmingOf("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;
@@ -222,7 +222,7 @@ public final class Issue0223 {
   }
 
   @Test public void vanilla05() {
-    final TestOperand o = trimminKof("new Integer(3)");
+    final TestOperand o = trimmingOf("new Integer(3)");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
     assert u != null;

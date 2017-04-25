@@ -44,7 +44,7 @@ public class Issue1146 extends TipperTest<VariableDeclarationFragment> {
    * TestUtilsSpartanizer trimmingOf. {@link LocalInitializedUnusedRemove} is
    * used here */
   @Test public void c2() {
-    TestsUtilsSpartanizer.trimminKof("int x = 1, y = x; ++x;")//
+    TestsUtilsSpartanizer.trimmingOf("int x = 1, y = x; ++x;")//
         .gives("int x = 1; ++x;")//
         .gives("int x = 1+1;");
   }
@@ -56,7 +56,7 @@ public class Issue1146 extends TipperTest<VariableDeclarationFragment> {
 
   // issue #1125
   @Test public void e() {
-    TestsUtilsSpartanizer.trimminKof("int $ = f(x);++$;return $;")//
+    TestsUtilsSpartanizer.trimmingOf("int $ = f(x);++$;return $;")//
         .using(tipper(), new PrefixIncrementDecrementReturn())//
         .gives("int $ = f(x) + 1;return $;")//
     ;

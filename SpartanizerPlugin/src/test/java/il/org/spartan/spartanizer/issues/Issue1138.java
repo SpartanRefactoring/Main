@@ -11,6 +11,6 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1138 {
   @Test public void test() {
-    trimminKof("int a = 0; int b;a+=1;").gives("int a=0;int b;a++;");
+    trimmingOf("int a = 0; int b;a+=1;").gives("int a=0;int b;a++;");
   }
 }

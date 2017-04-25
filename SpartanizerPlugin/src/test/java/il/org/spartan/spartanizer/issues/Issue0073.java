@@ -11,60 +11,60 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0073 {
   @Test public void a$01() {
-    trimminKof("x + \"\"")//
+    trimmingOf("x + \"\"")//
         .stays();
   }
 
   @Test public void a$02() {
-    trimminKof("\"\" + \"abc\" + \"\"")//
+    trimmingOf("\"\" + \"abc\" + \"\"")//
         .gives("\"abc\"");
   }
 
   @Test public void a$03() {
-    trimminKof("\"\"+\"abc\"")//
+    trimmingOf("\"\"+\"abc\"")//
         .gives("\"abc\"")//
         .stays();
   }
 
   @Test public void a$04() {
-    trimminKof("\"abc\" + \"\"+\"abc\"")//
+    trimmingOf("\"abc\" + \"\"+\"abc\"")//
         .gives("\"abc\" + \"abc\"");
   }
 
   @Test public void a$05() {
-    trimminKof("x + \"\"+\"abc\"")//
+    trimmingOf("x + \"\"+\"abc\"")//
         .gives("x + \"abc\"")//
         .stays();
   }
 
   @Test public void a$06() {
-    trimminKof("\"abc\" + \"\" + x")//
+    trimmingOf("\"abc\" + \"\" + x")//
         .gives("\"abc\" + x");
   }
 
   @Test public void a$07() {
-    trimminKof("\"abc\" + \"\"")//
+    trimmingOf("\"abc\" + \"\"")//
         .gives("\"abc\"")//
         .stays();
   }
 
   @Test public void a$08() {
-    trimminKof("\"\" + \"abc\"")//
+    trimmingOf("\"\" + \"abc\"")//
         .gives("\"abc\"");
   }
 
   @Test public void a$09() {
-    trimminKof("((String)x) + \"\"")//
+    trimmingOf("((String)x) + \"\"")//
         .gives("((String)x)");
   }
 
   @Test public void a$10() {
-    trimminKof("x + \"\"")//
+    trimmingOf("x + \"\"")//
         .stays();
   }
 
   @Test public void a$11() {
-    trimminKof("\"abc\" + \"\"")//
+    trimmingOf("\"abc\" + \"\"")//
         .gives("\"abc\"");
   }
 }
