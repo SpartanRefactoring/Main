@@ -3,7 +3,6 @@ package fluent.ly;
 import org.junit.*;
 
 import il.org.spartan.*;
-import il.org.spartan.azzert.*;
 import il.org.spartan.iteration.closures.*;
 import nano.ly.*;
 
