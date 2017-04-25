@@ -21,7 +21,7 @@ import nano.ly.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class LocalInitializedForMoveToInitializers extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = -0x777EFAC2AD0575B2L;
 
   private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {

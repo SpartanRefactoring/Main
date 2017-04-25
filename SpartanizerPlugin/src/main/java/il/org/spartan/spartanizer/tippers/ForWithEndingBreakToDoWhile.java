@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
 /** TODO: Doron Class has serious problems; do not not release
  * @author Doron Mehsulam <tt>doronmmm@hotmail.com</tt>
  * @since 2017-03-26 */
-public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Unite {
+public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement> implements TipperCategory.Loops {
   private static final long serialVersionUID = -0x495BE7BBC2F6B88EL;
 
   @Override public ASTNode replacement(final ForStatement s) {

@@ -18,7 +18,7 @@ import nano.ly.*;
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = -0x50B5217BA3948A3EL;
 
   private static ForStatement buildForWithoutLastStatement(final ForStatement $) {

@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016-09-23 */
 public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = -0x550143DCF3BD3B9L;
 
   private static ForStatement buildForWithoutLastStatement(final WhileStatement ¢) {
