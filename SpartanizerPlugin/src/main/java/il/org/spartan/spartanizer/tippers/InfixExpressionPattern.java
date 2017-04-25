@@ -39,7 +39,7 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
     andAlso("Arity", () -> (arity = operands.size()) == 2);
   }
 
-  interface O extends UnaryOperator<List<Expression>> {}
+  interface O extends UnaryOperator<List<Expression>> {/**/}
 
   static class PrependOrAppend extends Z {
     public PrependOrAppend() {
@@ -77,7 +77,7 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
     }
 
     public List<Expression> to(final List<Expression> xs) {
-      List<Expression> $ = new ArrayList<Expression>(xs);
+      List<Expression> $ = new ArrayList<>(xs);
       for (final O o : os)
         $ = o.apply($);
       return $;
