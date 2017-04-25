@@ -75,8 +75,8 @@ public class SpartanMovie2 extends AbstractHandler {
       @Override public IStatus runInUIThread(final IProgressMonitor monitor) {
         monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
         try {
-          monitor.subTask(
-              "Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+//          monitor.subTask(
+//              "Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>) m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
           printout(m);
           IDE.openEditor(p, m, true);
           refresh(p);
@@ -102,6 +102,15 @@ public class SpartanMovie2 extends AbstractHandler {
           return false;
         }
       }
+      
+      private void printout(final IMarker m) {
+        try {
+          System.out.println("Resource: " + m.getResource().getName() + "; Type: " + m.getType());
+        } catch (final CoreException x) {
+          x.printStackTrace();
+        }
+      }
+      
     }.schedule();
   }
 
