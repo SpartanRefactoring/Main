@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
-    implements TipperCategory.SyntacticBaggage {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = 0x6788CE2890CE2390L;
   public static final String DESCRIPTION = "Remove implicit 'true' in 'for(?;true;?)' converting it to 'for(?;;?)'";
 

@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 2016-09-09 */
 public final class WhileInfiniteBreakToReturn extends CarefulTipper<WhileStatement>//
-    implements TipperCategory.Shortcircuit {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = -0x565FA66D15A7881BL;
 
   private static Statement handleBlock(final Block body, final ReturnStatement nextReturn) {

@@ -10,7 +10,7 @@ import il.org.spartan.utils.*;
 /** See {@link #examples()} for documentation
  * @since 2017-03-24 */
 public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForStatement>//
-    implements TipperCategory.SyntacticBaggage {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = -0x796EA5B6F743E568L;
   Expression condition;
 

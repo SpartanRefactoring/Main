@@ -17,7 +17,7 @@ import il.org.spartan.utils.*;
 /** Test case is {@link Issue0456} function documented in {@link #examples}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-04-06 */
-public class ForInlineToInitalizers extends ForStatementPattern implements TipperCategory.Inlining {
+public class ForInlineToInitalizers extends ForStatementPattern implements TipperCategory.Loops {
   private static final long serialVersionUID = -0x185A5E964CCBD32L;
   List<SimpleName> updatedNotDeclared = an.empty.list();
   List<SimpleName> candidates = an.empty.list();

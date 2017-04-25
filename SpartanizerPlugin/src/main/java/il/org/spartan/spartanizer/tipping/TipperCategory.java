@@ -41,6 +41,14 @@ public interface TipperCategory {
     }
   }
 
+  interface Loops extends Structural {
+    String toString = "More efficient use of Java loop structures";
+
+    @Override default String description() {
+      return toString;
+    }
+  }
+
   interface Bloater extends TipperCategory {
     String toString = "Make the code as verbose as possible";
 
