@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
  * @author Doron Meshulam
  * @since 2016-11-26 */
 public class ForRedundantContinue extends NonEmptyForLoop//
-    implements TipperCategory.Shortcircuit {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = 0x1DA2D2D1173F3165L;
 
   @Override public Examples examples() {
