@@ -25,6 +25,7 @@ Bundle-ClassPath: .,
  lib/mockito-all-2.0.2-beta.jar,
  lib/hamcrest-all-1.3.jar,
  lib/annotations-12.0.jar,
+ lib/spartan-1.4.jar,
  lib/fluent.ly-0.0.1.jar
 Export-Package: il.org.spartan.athenizer;version="2.11.5";,
  il.org.spartan.athenizer.collateral;version="2.11.5";,
