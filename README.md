@@ -1,4 +1,4 @@
-# Spartanizer? What is this?
+# <a name="introduction"></a>Spartanizer? What is this?
 
 The Spartanizer is:
 - An eclipse plugin
@@ -10,7 +10,7 @@ simplify your code, e.g, by using fewer variables, factoring out common structur
 
 The Spartanizer help you make a sequence small, nano-refactorings of your code, to make it shorter, and more conforming to a language of nano-patterns. The resulting code is not just shorter, it is more regular. The spartanization process tries to remove as many distracting details and variations from the code, stripping it to its bare bone.
 
-This includes removal of piles of syntactic baggage, which is code that does not nothing, except for being there:  curly brackets around one statement, initializations which reiterate the default, modifiers which do not change the semantics, implicit call to `super()` which every constructor has, fancy, but uselessly long variable names, variables which never vary and contain temporaries and  many more. Overall, the Spartanizer has over 100 tippers.
+This includes removal of piles of _syntactic baggage_, which is code that does nothing, except for being there:  curly brackets around one statement, initializations which reiterate the default, modifiers which do not change the semantics, implicit call to `super()` which every constructor has, fancy, but uselessly long variable names, variables which never vary and contain temporaries and  many more. Overall, the Spartanizer has over 100 tippers.
 
 The Spartanizer is an  Eclipse plugin that automatically applies the principles
 of *[Spartan Programming]* to your Java code. It applies many different tippers,
@@ -22,15 +22,16 @@ of *[Spartan Programming]* to your Java code. It applies many different tippers,
 
 # Contents
 
-* [Introduction]()
-* [
+* [Introduction](#introduction)
+* [Video Demo](#video-demo)
+* [Installation Instructions](#installation)
 * [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background")
 * [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual")
 * [Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background")
 * [Developer Guide](https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide")
 * [List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers")
 
-# Video Demo
+# <a name="video-demo"></a>Video Demo
 
 ![spartanization](https://cloud.githubusercontent.com/assets/15183108/19212649/59d65e3e-8d5e-11e6-9940-ac7a070be7d6.gif)
 
@@ -38,7 +39,7 @@ Click on the picture below to watch a video demonstration on YouTube.
 
 [![IMAGE ALT TEXT](https://img.youtube.com/vi/33npJI-MZ1I/0.jpg)](https://www.youtube.com/watch_popup?v=49M55azHHM0 "Spartanization Demo")
 
-# Installation
+# <a name="installation"></a>Installation<a name="installation"></a>
 
 - Installation button (drag to your eclipse workspace)
 <a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2617709" class="drag" title="Drag to your running Eclipse workspace to install Spartan Refactoring"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install Spartan Refactoring" /></a>
