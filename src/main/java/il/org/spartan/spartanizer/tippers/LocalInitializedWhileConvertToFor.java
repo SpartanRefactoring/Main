@@ -17,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Alex Kopzon
  * @since 2016 */
 public final class LocalInitializedWhileConvertToFor extends ReplaceToNextStatementExclude<VariableDeclarationFragment>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = 0x7B0F45FEAE8DEEA5L;
 
   private static VariableDeclarationStatement fragmentParent(final VariableDeclarationFragment ¢) {

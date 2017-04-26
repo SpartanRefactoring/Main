@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0905 {
   @Test public void t06() {
-    trimminKof("if(b()){int i;}")//
+    trimmingOf("if(b()){int i;}")//
         .gives("if(b()){}")//
     ;
   }
@@ -23,7 +23,7 @@ public class Issue0905 {
   /** Introduced by Yogi on Mon-Mar-27-00:35:21-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_ifaTrueIntb5cd() {
-    trimminKof("if (a == true) { int b = 5, c = d(); }") //
+    trimmingOf("if (a == true) { int b = 5, c = d(); }") //
         .using(new InfixComparisonBooleanLiteral(), InfixExpression.class) //
         .gives("if(a){int b=5,c=d();}") //
         .using(new LocalInitializedUnusedRemove(), VariableDeclarationFragment.class) //
@@ -37,7 +37,7 @@ public class Issue0905 {
   }
 
   @Test public void t15() {
-    trimminKof("if(b==q()){int i;}")//
+    trimmingOf("if(b==q()){int i;}")//
         .gives("if(b==q()){}")//
         .gives("q();")//
         .stays() //
@@ -45,35 +45,35 @@ public class Issue0905 {
   }
 
   @Test public void t17() {
-    trimminKof("while(b==q){if(tipper==q()){int i;}}")//
+    trimmingOf("while(b==q){if(tipper==q()){int i;}}")//
         .gives("while(b==q)if(tipper==q()){int i;}")//
         .gives("while(b==q)if(tipper==q()){}")//
         .stays();
   }
 
   @Test public void t21() {
-    trimminKof("for(i=1;b==q;++i){if(tipper==q()){int i;}}")//
+    trimmingOf("for(i=1;b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=1;b==q;++i)if(tipper==q()){int i;}")//
         .gives("for(i=1;b==q;++i)if(tipper==q()){}")//
         .stays();
   }
 
   @Test public void t23() {
-    trimminKof("for(i=1;b==q();++i){if(tipper==q()){int i;}}")//
+    trimmingOf("for(i=1;b==q();++i){if(tipper==q()){int i;}}")//
         .gives("for(i=1;b==q();++i)if(tipper==q()){int i;}")//
         .gives("for(i=1;b==q();++i)if(tipper==q()){}")//
         .stays();
   }
 
   @Test public void t24() {
-    trimminKof("for(i=tipper();b==q;++i){if(tipper==q()){int i;}}")//
+    trimmingOf("for(i=tipper();b==q;++i){if(tipper==q()){int i;}}")//
         .gives("for(i=tipper();b==q;++i)if(tipper==q()){int i;}")//
         .gives("for(i=tipper();b==q;++i)if(tipper==q()){}")//
         .stays();
   }
 
   @Test public void t25() {
-    trimminKof("for(i=4;b==q;f=i()){if(tipper==q()){int i;}}")//
+    trimmingOf("for(i=4;b==q;f=i()){if(tipper==q()){int i;}}")//
         .gives("for(i=4;b==q;f=i())if(tipper==q()){int i;}")//
         .gives("for(i=4;b==q;f=i())if(tipper==q()){}")//
         .stays();

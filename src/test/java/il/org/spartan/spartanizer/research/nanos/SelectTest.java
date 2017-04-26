@@ -14,21 +14,21 @@ import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 @SuppressWarnings("static-method")
 public class SelectTest {
   @Test public void a() {
-    trimminKof("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
+    trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
         .using(new Select(), EnhancedForStatement.class)//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(toList()));")//
     ;
   }
 
   @Test public void b() {
-    trimminKof("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(peel(¢));")//
+    trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(peel(¢));")//
         .using(new Select(), EnhancedForStatement.class)//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).map(¢->peel(¢)).collect(toList()));")//
     ;
   }
 
   @Test public void respect() {
-    trimminKof("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
+    trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
         .using(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(toList()));")//
     ;

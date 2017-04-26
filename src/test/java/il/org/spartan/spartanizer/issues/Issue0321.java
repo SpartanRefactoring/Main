@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.research.nanos.*;
 @SuppressWarnings("static-method")
 public class Issue0321 {
   @Test public void testCachingPattern() {
-    trimminKof( //
+    trimmingOf( //
         "public static Toolbox defaultInstance() {" + //
             " if (instance == null)" + //
             "   instance = allTippers();" + //

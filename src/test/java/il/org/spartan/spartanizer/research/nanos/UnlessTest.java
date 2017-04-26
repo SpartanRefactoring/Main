@@ -11,14 +11,14 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class UnlessTest {
   @Test public void basic() {
-    trimminKof("return k == null ? null : new SynchronizedEntry<K,V>(k,mutex);")//
+    trimmingOf("return k == null ? null : new SynchronizedEntry<K,V>(k,mutex);")//
         .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
         .gives("return unless(k==null).eval(() -> new SynchronizedEntry<K,V>(k,mutex)).defaultTo(null);")//
         .stays();
   }
 
   @Test public void basic2() {
-    trimminKof("return ($ == null) ? null : $.size();")//
+    trimmingOf("return ($ == null) ? null : $.size();")//
         .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
         .gives("return unless(($==null)).eval(()->$.size()).defaultTo(null);")//
         .gives("return unless($==null).eval(()->$.size()).defaultTo(null);")//
@@ -26,7 +26,7 @@ public class UnlessTest {
   }
 
   @Test public void respect() {
-    trimminKof("return ¢ != null ? ¢ : \"\";")//
+    trimmingOf("return ¢ != null ? ¢ : \"\";")//
         .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
         .using(new DefaultsTo(), ConditionalExpression.class)//
         .gives("return defaults(¢).to(\"\");")//
@@ -34,7 +34,7 @@ public class UnlessTest {
   }
 
   @Test public void respect2() {
-    trimminKof("return ¢ != null ? ¢ : \"\";")//
+    trimmingOf("return ¢ != null ? ¢ : \"\";")//
         .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
         .stays();
   }

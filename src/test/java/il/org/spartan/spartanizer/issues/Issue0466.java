@@ -11,23 +11,23 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0466 {
   @Test public void TestDoesUseShouldntChange() {
-    trimminKof("@SuppressWarnings(\"unused\") public void check__(Object... ¢) { ¢.get2(0);  }")//
+    trimmingOf("@SuppressWarnings(\"unused\") public void check__(Object... ¢) { ¢.get2(0);  }")//
         .stays();
   }
 
   @Test public void TestDoesUseShouldntChange2() {
-    trimminKof("public void check__(@SuppressWarnings(\"unused\") Object... ¢) { ¢.get2(0);  }")//
+    trimmingOf("public void check__(@SuppressWarnings(\"unused\") Object... ¢) { ¢.get2(0);  }")//
         .stays();
   }
 
   @Test public void TestDoubleUnderscore() {
-    trimminKof("@SuppressWarnings(\"unused\") public void check__(Object... os) {  }")//
+    trimmingOf("@SuppressWarnings(\"unused\") public void check__(Object... os) {  }")//
         .gives("@SuppressWarnings(\"unused\") public void check__(Object... __) {  }")//
         .stays();
   }
 
   @Test public void TestDoubleUnderscoreInside() {
-    trimminKof("public void check__(@SuppressWarnings(\"unused\")  Object... os) {  }")//
+    trimmingOf("public void check__(@SuppressWarnings(\"unused\")  Object... os) {  }")//
         .gives("public void check__(@SuppressWarnings(\"unused\")  Object... __) {  }")//
         .stays();
   }

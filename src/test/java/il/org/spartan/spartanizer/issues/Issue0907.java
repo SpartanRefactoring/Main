@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0907 {
   @Test public void issue086_1() {
-    trimminKof("if(false)c();\nint a;")//
+    trimmingOf("if(false)c();\nint a;")//
         .gives("{}")//
         .gives("")//
         .stays();

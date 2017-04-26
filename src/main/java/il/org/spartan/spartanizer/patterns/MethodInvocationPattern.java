@@ -18,7 +18,7 @@ public abstract class MethodInvocationPattern extends NodePattern<MethodInvocati
   @Property protected SimpleName name;
 
   protected MethodInvocationPattern() {
-    property("Receiver", () -> receiver =  current.getExpression());
+    property("Receiver", () -> receiver = current.getExpression());
     property("Arguments", () -> arguments = arguments(current));
     property("Name", () -> name = current.getName());
   }

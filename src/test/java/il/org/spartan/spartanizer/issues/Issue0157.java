@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public final class Issue0157 {
   @Test public void test01() {
-    trimminKof("public static String combine(final Cla$<?>[] cla$es) {  \n" //
+    trimmingOf("public static String combine(final Cla$<?>[] cla$es) {  \n" //
         + "final String[] $ = new String[cla$es.length];  \n" //
         + "for (int i = 0; i <$.length; ++i)  \n" //
         + "$[i] = cla$es[i] == null ? null : cla$es[i].getName(); \n" //
@@ -25,7 +25,7 @@ public final class Issue0157 {
   }
 
   @Test public void test02() {
-    trimminKof("public static String combine(final Uno<?>[] uno) {  \n" //
+    trimmingOf("public static String combine(final Uno<?>[] uno) {  \n" //
         + "final String[] $ = new String[uno.length];  \n" //
         + "for (int i = 0; i <$.length; ++i)  \n" //
         + "$[i] = uno[i] == null ? null : uno[i].getName(); \n" //
@@ -40,7 +40,7 @@ public final class Issue0157 {
   }
 
   @Test public void test03() {
-    trimminKof("public static String combine(final Many<?>[] manies) {  \n" //
+    trimmingOf("public static String combine(final Many<?>[] manies) {  \n" //
         + "final String[] $ = new String[manies.length];  \n" //
         + "for (int i = 0; i <$.length; ++i)  \n" //
         + "$[i] = manies[i] == null ? null : manies[i].getName(); \n" //
@@ -55,7 +55,7 @@ public final class Issue0157 {
   }
 
   @Test public void test04() {
-    trimminKof("public static String combine(final Many<? extends Few>[] fews) {  \n" //
+    trimmingOf("public static String combine(final Many<? extends Few>[] fews) {  \n" //
         + "final String[] $ = new String[fews.length];  \n" //
         + "for (int i = 0; i <$.length; ++i)  \n" //
         + "$[i] = fews[i] == null ? null : fews[i].getName(); \n" //
@@ -71,7 +71,7 @@ public final class Issue0157 {
 
   // same test, with super instead of extends.
   @Test public void test05() {
-    trimminKof("public static String combine(final Many<? super Few>[] fews) {  \n" //
+    trimmingOf("public static String combine(final Many<? super Few>[] fews) {  \n" //
         + "final String[] $ = new String[fews.length];  \n" //
         + "for (int i = 0; i <$.length; ++i)  \n" //
         + "$[i] = fews[i] == null ? null : fews[i].getName(); \n" //
@@ -89,7 +89,7 @@ public final class Issue0157 {
   // 's' if
   // they're not an array.
   @Test public void test06() {
-    trimminKof("public static String combine(final Many<Paranoid> paranoid) {  \n" //
+    trimmingOf("public static String combine(final Many<Paranoid> paranoid) {  \n" //
         + "final String[] $ = new String[paranoid.height()];  \n" //
         + "for (int i = 0; i <$.length; ++i)  \n" //
         + "$[i] = paranoid == null ? null : paranoid.getName(); \n" //
@@ -105,7 +105,7 @@ public final class Issue0157 {
 
   // Parameterized Collections do get an additional 's'.
   @Test public void test07() {
-    trimminKof("public static String combine(final List<Paranoid> paranoid) {  \n" //
+    trimmingOf("public static String combine(final List<Paranoid> paranoid) {  \n" //
         + "final String[] $ = new String[paranoid.length()];  \n" //
         + "for (int i = 0; i <$.length; ++i)  \n" //
         + "$[i] = paranoid[i] == null ? null : paranoid[i].getName(); \n" //
@@ -120,7 +120,7 @@ public final class Issue0157 {
   }
 
   @Test public void test08() {
-    trimminKof("public static String combine(final Set<Paranoid> paranoid) {  \n" //
+    trimmingOf("public static String combine(final Set<Paranoid> paranoid) {  \n" //
         + "final String[] $ = new String[paranoid.size()];  \n" //
         + "for (int i = 0; i <$.length; ++i)  \n" //
         + "$[i] = paranoid[i] == null ? null : paranoid[i].getName(); \n" //
@@ -136,7 +136,7 @@ public final class Issue0157 {
 
   // Collections of collections of arrays of Collections behave as expected.
   @Test public void test09() {
-    trimminKof("public static String combine(final Set<List<HashSet<?>[]>> hash) {  \n" //
+    trimmingOf("public static String combine(final Set<List<HashSet<?>[]>> hash) {  \n" //
         + "final String[] $ = new String[hash.size()];  \n" //
         + "for (int i = 0; i <$.length; ++i)  \n" //
         + "$[i] = hash[i] == null ? null : hash[i].getName(); \n" //

@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 25-11-2016 */
 public class ForAndReturnToFor extends GoToNextStatement<ForStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = 0x371CFCE1FF133A1AL;
 
   @Override protected ASTRewrite go(final ASTRewrite $, final ForStatement s, final Statement nextStatement, final TextEditGroup g) {

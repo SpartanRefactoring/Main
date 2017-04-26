@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1014 {
   @Test public void test0() {
-    trimminKof("for (final MarkerAnnotation a : new definitionTest().markers()) {final String key = (a + \"\").substring(1);"
+    trimmingOf("for (final MarkerAnnotation a : new definitionTest().markers()) {final String key = (a + \"\").substring(1);"
         + "if (!definition.Kind.has(key))continue;for (final SimpleName ¢ : annotees.of(a))$.add(as.array(definition.Kind.valueOf(key), ¢));}") //
             .gives("for (final MarkerAnnotation a : new definitionTest().markers()) {final String key = (a + \"\").substring(1);"
                 + "if (definition.Kind.has(key))for (final SimpleName ¢ : annotees.of(a))$.add(as.array(definition.Kind.valueOf(key), ¢));}")
@@ -19,13 +19,13 @@ public class Issue1014 {
   }
 
   @Test public void test1() {
-    trimminKof("for (int i=0 ;i<length;++i){int a;if(a==b)continue; c= a+3;}") //
+    trimmingOf("for (int i=0 ;i<length;++i){int a;if(a==b)continue; c= a+3;}") //
         .gives("for (int i=0 ;i<length;++i){int a;if(a!=b)c=a+3;}")//
         .stays();
   }
 
   @Test public void test2() {
-    trimminKof("while (q){int a;if(a==b)continue; c= a+3;}") //
+    trimmingOf("while (q){int a;if(a==b)continue; c= a+3;}") //
         .gives("while (q){int a;if(a!=b)c=a+3;}")//
         .stays();
   }

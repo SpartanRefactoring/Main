@@ -11,7 +11,7 @@ import org.junit.*;
 public class Issue0192 {
   @Ignore // TODO Ori Roth
   @Test public void a() {
-    trimminKof("for (A b : c) if (d(b)) { a = true; break; } return a;")//
+    trimmingOf("for (A b : c) if (d(b)) { a = true; break; } return a;")//
         .gives("for (A b : c) if (d(b)) { return true; } return false;")//
         .stays();
   }

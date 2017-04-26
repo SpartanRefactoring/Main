@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0236 {
   @Test public void issue236_01() {
-    trimminKof("b ? \"a long string\" : \"another \"+\"long\"+\" string\"")//
+    trimmingOf("b ? \"a long string\" : \"another \"+\"long\"+\" string\"")//
         .gives("(b ? \"a long\" : \"another \"+\"long\"+\"\") +\" string\"")//
         .gives("(b ? \"a long\" : \"another \"+\"long\") +\" string\"")//
         .gives("((b ? \"a \" : \"another \"+\"\") +\"long\")+\" string\"")//
@@ -25,18 +25,18 @@ public class Issue0236 {
   }
 
   @Test public void issue236_02() {
-    trimminKof("b? \"something\" : \"something\"+\" else\"")//
+    trimmingOf("b? \"something\" : \"something\"+\" else\"")//
         .gives("\"something\" + (b? \"\" : \"\"+\" else\")").gives("\"something\" + (b? \"\" : \" else\")")//
         .stays();
   }
 
   @Test public void issue236_03() {
-    trimminKof("isIncrement(¢) ? \"++\" : \"--\"")//
+    trimmingOf("isIncrement(¢) ? \"++\" : \"--\"")//
         .stays();
   }
 
   @Test public void issue236_04() {
-    trimminKof("isIncrement(¢) ? \"++x\" : \"--x\"")//
+    trimmingOf("isIncrement(¢) ? \"++x\" : \"--x\"")//
         .gives("(isIncrement(¢) ? \"++\" : \"--\")+\"x\"")//
         .stays();
   }

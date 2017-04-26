@@ -11,22 +11,22 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0120 {
   @Test public void a1() {
-    trimminKof("\"a\"+\"b\"")//
+    trimmingOf("\"a\"+\"b\"")//
         .gives("\"ab\"");
   }
 
   @Test public void a2() {
-    trimminKof("\"abc\"+\"de\"+\"fgh\"")//
+    trimmingOf("\"abc\"+\"de\"+\"fgh\"")//
         .gives("\"abcdefgh\"");
   }
 
   @Test public void a3() {
-    trimminKof("\"abc\"+a.toString()+\"de\"+\"fgh\"")//
+    trimmingOf("\"abc\"+a.toString()+\"de\"+\"fgh\"")//
         .gives("\"abc\"+a.toString()+\"defgh\"");
   }
 
   @Test public void a4() {
-    trimminKof("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"")//
+    trimmingOf("c.toString()+\"abc\"+a.toString()+\"de\"+\"fgh\"")//
         .gives("c.toString()+\"abc\"+a.toString()+\"defgh\"");
   }
 }

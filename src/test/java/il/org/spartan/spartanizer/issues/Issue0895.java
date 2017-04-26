@@ -13,7 +13,7 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0895 {
   @Test public void a() {
-    trimminKof("    new C() {" + //
+    trimmingOf("    new C() {" + //
         "     public void d() {" + //
         "       try {" + //
         "         use();" + //
@@ -40,7 +40,7 @@ public class Issue0895 {
   /** Introduced by Yogi on Tue-Mar-28-03:29:43-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_publicFinalClassAPublicStaticVoidaFinalBbCcNewCDPublicVoiddTryeCatchEfFgbCatchGfFgb() {
-    trimminKof(
+    trimmingOf(
         "public final class A{public static void a(final B b){C c=new C(){@D public void d(){try{e();}catch(E f){F.g(b);}catch(G f){F.g(b);}}};}}") //
             .using(new LocalInitializedUnusedRemove(), VariableDeclarationFragment.class) //
             .gives(

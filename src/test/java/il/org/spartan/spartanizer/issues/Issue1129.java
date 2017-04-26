@@ -13,20 +13,20 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1129 {
   @Test public void a() {
-    trimminKof("if(a) f(); else if(b) g(); else f();")//
+    trimmingOf("if(a) f(); else if(b) g(); else f();")//
         .gives("if(a || !b) f(); else if(b) g();")//
         .stays()//
     ;
   }
 
   @Test public void b() {
-    trimminKof("if(a) f(); else if (x()) g(); else f();")//
+    trimmingOf("if(a) f(); else if (x()) g(); else f();")//
         .stays()//
     ;
   }
 
   @Test public void c() {
-    trimminKof("if (b1) if (b2) f1(); else if (b3) f2();" //
+    trimmingOf("if (b1) if (b2) f1(); else if (b3) f2();" //
         + "else f1(); else g();")//
             .gives("if(!b1) g(); else if (b2) f1(); else if (b3) f2(); else f1();")//
             .gives("if (!b1) g(); else if (b2 || !b3) f1(); else if (b3) f2();")//
@@ -35,7 +35,7 @@ public class Issue1129 {
   }
 
   @Test public void d() {
-    trimminKof("if (b1) if (b2) f1(); else if (b3) f2();" //
+    trimmingOf("if (b1) if (b2) f1(); else if (b3) f2();" //
         + "else f1(); else if (a2) g1(); else if (a3) g2();" //
         + "else g1();")//
             .gives("if (b1) {if (b2 || !b3) f1(); else if (b3) f2();}" //

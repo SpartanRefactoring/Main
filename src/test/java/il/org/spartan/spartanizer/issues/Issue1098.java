@@ -12,6 +12,6 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1098 {
   @Test public void t1() {
-    trimminKof("int a() {switch (¢ + \"\") {case \"Object\":case \"java.lang.Object\":return true;default:return false;}}").stays();
+    trimmingOf("int a() {switch (¢ + \"\") {case \"Object\":case \"java.lang.Object\":return true;default:return false;}}").stays();
   }
 }

@@ -10,22 +10,22 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue0087 {
   @Test public void a() {
-    trimminKof("a-b*c - (x - - - (d*e))")//
+    trimmingOf("a-b*c - (x - - - (d*e))")//
         .gives("a  - b*c -x + d*e");
   }
 
   @Test public void b() {
-    trimminKof("a-b*c")//
+    trimmingOf("a-b*c")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("a + (b-c)")//
+    trimmingOf("a + (b-c)")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("a - (b-c)")//
+    trimmingOf("a - (b-c)")//
         .gives("a - b + c");
   }
 }
