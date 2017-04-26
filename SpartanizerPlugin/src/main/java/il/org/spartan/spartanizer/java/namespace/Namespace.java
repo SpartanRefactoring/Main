@@ -113,6 +113,11 @@ public final class Namespace implements Environment {
   @Override public boolean has(final String identifier) {
     return flat.containsKey(identifier) || nest != null && nest.has(identifier);
   }
+  
+  /** Check whether the namespace or any nesting or nested namespace already has the name. */
+  public boolean hasComplex(final String identifier) {
+    return has(identifier) || children.stream().anyMatch(x -> x.hasComplex(identifier));
+  }
 
   static Namespace spawnFor(final Namespace $, final ForStatement s) {
     final VariableDeclarationExpression x = az.variableDeclarationExpression(s);
@@ -418,7 +423,7 @@ public final class Namespace implements Environment {
   public String generateName(final String ¢) {
     int postface = 0;
     String $ = ¢ + "" + ++postface;
-    while (has($))
+    while (hasComplex($))
       $ = ¢ + "" + ++postface;
     return $;
   }
