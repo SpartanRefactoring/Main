@@ -583,5 +583,11 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 </extension>
 
 <extension-point id="il.org.spartan.widgetoperation" name="Widget Operation" schema="schema/il.org.spartan.widgetoperation.exsd"/>
+<extension point="il.org.spartan.widgetoperation">
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.RunOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPullOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPushOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitCommitOperation" />
+</extension>
 
 </plugin>
