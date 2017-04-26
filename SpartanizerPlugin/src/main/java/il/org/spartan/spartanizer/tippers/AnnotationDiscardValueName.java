@@ -38,8 +38,8 @@ public final class AnnotationDiscardValueName extends NodePattern<NormalAnnotati
   }
 
   @Override public Examples examples() {
-    return convert("@SuppressWarnings(value = \"unchecked\")")//
-        .to("@SuppressWarnings(\"unchecked\")") //
+    return convert("@SuppressWarnings(value = \"unchecked\") void f();")//
+        .to("@SuppressWarnings(\"unchecked\") void f();") //
     ;
   }
 

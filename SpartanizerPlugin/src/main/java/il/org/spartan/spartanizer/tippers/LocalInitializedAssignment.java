@@ -28,9 +28,9 @@ public final class LocalInitializedAssignment extends $FragmentAndStatement//
   }
 
   @Override public Examples examples() {
-    return //
-    convert("int a; a = 3; ")//
-        .to("int a = 3; ");
+    return convert("class A {{int a; a = b;}}")//
+        .to("class A {{int a = b;}}")//
+    ;
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
