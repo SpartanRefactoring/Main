@@ -1,5 +1,5 @@
 # <a name="introduction"></a>Spartanizer? What is this?
-
+<img style="float: right;" src="https://www.spartan.org.il/images/logo-header.png"/>
 The Spartanizer is:
 - An Eclipse plugin
 - Offers in the problems view tips for simplifying your code 
