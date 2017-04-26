@@ -12,6 +12,7 @@ import org.osgi.framework.*;
 
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.revision.*;
+import il.org.spartan.spartanizer.plugin.widget.*;
 import nano.ly.*;
 
 /** TODO Artium Nihamkin please add a description
@@ -50,6 +51,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     try {
       startSpartan();
       addPartListener();
+      WidgetOperationPoint.load();
       loadPreferences();
     } catch (final IllegalStateException ¢) {
       note.bug(¢);
