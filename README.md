@@ -10,7 +10,8 @@ This includes removal of piles of syntactic baggage, which is code that does not
 
 # Contents
 
-[List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers")
+* [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual")
+* [List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers")
 
 # Video Demo
 
