@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.widget.operations;
+package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import java.io.*;
 
@@ -6,7 +6,7 @@ import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.storage.file.*;
 
-import il.org.spartan.plugin.widget.*;
+import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** Git pull command.
  * @author Ori Roth
