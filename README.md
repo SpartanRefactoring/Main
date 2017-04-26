@@ -10,12 +10,10 @@ simplify your code, e.g, by using fewer variables, factoring out common structur
 
 The Spartanizer help you make a sequence small, nano-refactorings of your code, to make it shorter, and more conforming to a language of nano-patterns. The resulting code is not just shorter, it is more regular. The spartanization process tries to remove as many distracting details and variations from the code, stripping it to its bare bone.
 
-<p>This includes removal of piles of _syntactic baggage_, which is code that does nothing, except for being there:  curly brackets around one statement, initializations which reiterate the default, modifiers which do not change the semantics, implicit call to `super()` which every constructor has, fancy, but uselessly long variable names, variables which never vary and contain temporaries and  many more. Overall, the Spartanizer has over 100 tippers.
+This includes removal of piles of _syntactic baggage_, which is code that does nothing, except for being there:  curly brackets around one statement, initializations which reiterate the default, modifiers which do not change the semantics, implicit call to `super()` which every constructor has, fancy, but uselessly long variable names, variables which never vary and contain temporaries and  many more. Overall, the Spartanizer has over 100 tippers.
 <img style="float: right;" src="https://cloud.githubusercontent.com/assets/15859817/23854098/7f02ba4e-07f8-11e7-8bd9-8ebe2ccbe9e8.png">
 The Spartanizer is an  Eclipse plugin that automatically applies the principles of *[Spartan Programming]* to your Java code. It applies many different tippers, which are little rules that provide suggestions on how to shorten and simplify your code, e.g, by using fewer variables, 
-factoring out common structures, more efficient use of control flow, etc.</p> 
-
-
+factoring out common structures, more efficient use of control flow, etc.
 
 # Contents
 
