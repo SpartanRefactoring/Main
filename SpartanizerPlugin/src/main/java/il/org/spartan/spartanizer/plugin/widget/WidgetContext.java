@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.widget;
+package il.org.spartan.spartanizer.plugin.widget;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
