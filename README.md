@@ -58,7 +58,7 @@ ACM Symposium on Applied Computing, Marrakesh, Morocco, April 3–7 2017.
 
 <!-- ![spartan resized](https://cloud.githubusercontent.com/assets/15859817/23854098/7f02ba4e-07f8-11e7-8bd9-8ebe2ccbe9e8.png) -->
 
-## A Spartan Developer
+## A (Typical) Spartan Developer
 
 <img style="float: right;" src="https://cloud.githubusercontent.com/assets/15859817/23854098/7f02ba4e-07f8-11e7-8bd9-8ebe2ccbe9e8.png">
 
