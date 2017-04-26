@@ -15,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yuval Simon
  * @since 2016-11-26 */
 public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Collapse {
   private static final long serialVersionUID = 0x6463F526A06F20A9L;
 
   @Override public ASTNode replacement(final SwitchStatement s) {

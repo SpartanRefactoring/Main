@@ -33,7 +33,7 @@ public interface TipperCategory {
     }
   }
 
-  interface Arithmetic extends TipperCategory {
+  interface Arithmetics extends TipperCategory {
     String toString = "Change expression to a more familiar structure (often shorter)";
 
     @Override default String description() {
@@ -65,9 +65,9 @@ public interface TipperCategory {
     }
   }
 
-  /** A specialized {@link Unite} carried out, by factoring out some common
+  /** A specialized {@link Collapse} carried out, by factoring out some common
    * element */
-  interface CommnonFactoring extends Unite { // S2
+  interface CommnonFactoring extends Collapse { // S2
     String toString = "Distributive refactoring";
 
     @Override default String description() {
@@ -198,7 +198,7 @@ public interface TipperCategory {
     }
   }
 
-  interface Unite extends Structural {
+  interface Collapse extends Structural {
     String toString = "Shorten code by merging two adjacent syntactical elements into one";
 
     @Override default String description() {

@@ -20,7 +20,7 @@ import nano.ly.*;
  * @author Yossi Gil
  * @since Sep 25, 2016 */
 abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Arithmetic {
+    implements TipperCategory.Arithmetics {
   private static final long serialVersionUID = 0x11707396245C068EL;
 
   private static int indexForLeftEvaluation(final InfixExpression x) {

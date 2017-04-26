@@ -24,7 +24,7 @@ import nano.ly.*;
  * @since 2016 */
 public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<InfixExpression>
     //
-    implements TipperCategory.Arithmetic, TipperCategory.CommnonFactoring {
+    implements TipperCategory.Arithmetics, TipperCategory.CommnonFactoring {
   private static final long serialVersionUID = -0x381154E4E51D0081L;
 
   private static boolean IsSimpleMultiplication(final Expression $) {

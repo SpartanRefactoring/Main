@@ -23,7 +23,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class PrefixIncrementDecrementReturn extends GoToNextStatement<PrefixExpression>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Collapse {
   private static final long serialVersionUID = -0x6380D3DFEF275DC1L;
 
   @Override public String description(final PrefixExpression ¢) {
