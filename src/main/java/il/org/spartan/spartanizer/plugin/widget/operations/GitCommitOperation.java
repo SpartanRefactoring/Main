@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.widget.operations;
+package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import java.util.*;
 
