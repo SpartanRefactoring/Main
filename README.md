@@ -10,6 +10,7 @@ This includes removal of piles of syntactic baggage, which is code that does not
 
 # Contents
 
+* [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background")
 * [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual")
 * [Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background")
 * [Developer Guide](https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide")
