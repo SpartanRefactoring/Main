@@ -1,11 +1,11 @@
-package il.org.spartan.plugin.widget.operations;
+package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import java.util.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.debug.core.*;
 
-import il.org.spartan.plugin.widget.*;
+import il.org.spartan.spartanizer.plugin.widget.*;
 import nano.ly.*;
 
 /** Runs predefined run/debug configuration.
