@@ -26,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-09 */
 public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDeclaration>
     //
-    implements TipperCategory.Centification {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = 0x477D0D92045512DL;
 
   @Override public String description(final SingleVariableDeclaration ¢) {

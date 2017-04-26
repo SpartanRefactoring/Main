@@ -13,14 +13,14 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue0909 {
   @Test public void b$0() {
-    trimminKof("int a = 3; try { } catch(Exception e) { return -1; } return a;")//
+    trimmingOf("int a = 3; try { } catch(Exception e) { return -1; } return a;")//
         .gives("int a = 3; return a;") //
         .gives("return 3;")//
         .stays();
   }
 
   @Test public void b$03() {
-    trimminKof("int a; try { } catch(Exception e) { return -1; }")//
+    trimmingOf("int a; try { } catch(Exception e) { return -1; }")//
         .gives("")//
         .stays();
   }

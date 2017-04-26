@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class AsBitTest {
   @Test public void a() {
-    trimminKof("(k == 0) ? 1 : 0")//
+    trimmingOf("(k == 0) ? 1 : 0")//
         .using(new AsBit(), ConditionalExpression.class)//
         .gives("as.bit((k == 0))") //
         .gives("as.bit(k == 0)") //
@@ -19,21 +19,21 @@ public class AsBitTest {
   }
 
   @Test public void b() {
-    trimminKof("k == 0 ? 1 : 0")//
+    trimmingOf("k == 0 ? 1 : 0")//
         .using(new AsBit(), ConditionalExpression.class)//
         .gives("as.bit(k == 0)")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("k? 1 : 0")//
+    trimmingOf("k? 1 : 0")//
         .using(new AsBit(), ConditionalExpression.class)//
         .gives("as.bit(k)")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("(0 == x(f,g,h.h(a,b,moo))) ? 1 : 0")//
+    trimmingOf("(0 == x(f,g,h.h(a,b,moo))) ? 1 : 0")//
         .using(new AsBit(), ConditionalExpression.class)//
         .gives("as.bit((0 == x(f,g,h.h(a,b,moo))))")//
         .gives("as.bit(0==x(f,g,h.h(a,b,moo)))")//
@@ -42,7 +42,7 @@ public class AsBitTest {
   }
 
   @Test public void e() {
-    trimminKof("k == 0 ? 0 : 1")//
+    trimmingOf("k == 0 ? 0 : 1")//
         .using(new AsBit(), ConditionalExpression.class)//
         .gives("as.bit(! ( k == 0 ) )")//
         .gives("as.bit(k != 0 )")//

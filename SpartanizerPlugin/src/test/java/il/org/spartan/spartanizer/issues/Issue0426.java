@@ -10,13 +10,13 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0426 {
   @Test public void a() {
-    trimminKof("for(final Integer i: range.to(10)){System.out.println(i);System.out.println(i);}")
+    trimmingOf("for(final Integer i: range.to(10)){System.out.println(i);System.out.println(i);}")
         .gives("for(final Integer ¢: range.to(10)){System.out.println(¢);System.out.println(¢);}")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("for(final Integer i: range.to(10)){System.out.println(¢);System.out.println(i);}")//
+    trimmingOf("for(final Integer i: range.to(10)){System.out.println(¢);System.out.println(i);}")//
         .stays();
   }
 }

@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0292 {
   @Test public void imporant() {
-    trimminKof( //
+    trimmingOf( //
         "A a() {" + //
             " final B b = new B();" + //
             " A c;" + //

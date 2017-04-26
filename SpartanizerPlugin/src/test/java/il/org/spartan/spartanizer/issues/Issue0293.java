@@ -15,7 +15,7 @@ public class Issue0293 {
   /** Introduced by Yogi on Thu-Apr-13-00:39:17-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta6Intb2Intca2Aeabc() {
-    trimminKof("int a = 6; int b = 2; int c = a + 2; A.e(a - b + c);") //
+    trimmingOf("int a = 6; int b = 2; int c = a + 2; A.e(a - b + c);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //
         .gives("int a=6,b=2;int c=a+2;A.e(a-b+c);") //
         .using(new TwoDeclarationsIntoOne(), VariableDeclarationStatement.class) //

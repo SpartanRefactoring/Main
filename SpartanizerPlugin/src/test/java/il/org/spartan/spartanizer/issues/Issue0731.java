@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0731 {
   @Test public void a() {
-    trimminKof("Integer i = 0; i.toString();")//
+    trimmingOf("Integer i = 0; i.toString();")//
         .stays();
   }
 }

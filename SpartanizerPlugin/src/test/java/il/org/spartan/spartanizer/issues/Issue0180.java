@@ -14,12 +14,12 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method") //
 public class Issue0180 {
   @Test public void renameToCent() {
-    trimminKof("/**\n * @param s\n */\nint length(String s) {\n  return s.length();\n}")
+    trimmingOf("/**\n * @param s\n */\nint length(String s) {\n  return s.length();\n}")
         .gives("/**\n * @param ¢\n */\nint length(String ¢) {\n  return ¢.length();\n}");
   }
 
   @Test public void renameToCentRealWorld() {
-    trimminKof("/** Retrieve all operands, including parenthesized ones, under an expression\n * @param x JD\n"
+    trimmingOf("/** Retrieve all operands, including parenthesized ones, under an expression\n * @param x JD\n"
         + " * @return a {@link List} of all operands to the parameter */\n"
         + "public static List<Expression> allOperands(final InfixExpression x) {\n  assert x != null;\n  return hop.operands(flatten.of(x));\n}")
             .gives("/** Retrieve all operands, including parenthesized ones, under an expression\n * @param ¢ JD\n"

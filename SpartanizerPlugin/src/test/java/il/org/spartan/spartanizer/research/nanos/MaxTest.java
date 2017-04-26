@@ -11,28 +11,28 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class MaxTest {
   @Test public void a() {
-    trimminKof("return x > y ? x : y;")//
+    trimmingOf("return x > y ? x : y;")//
         .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("return x >= y ? x : y;")//
+    trimmingOf("return x >= y ? x : y;")//
         .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("return y < x ? x : y;")//
+    trimmingOf("return y < x ? x : y;")//
         .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("return y <= x ? x : y;")//
+    trimmingOf("return y <= x ? x : y;")//
         .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();

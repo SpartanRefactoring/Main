@@ -11,21 +11,21 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class ConstantTest {
   @Test public void a() {
-    trimminKof("class C{public static final int a = 7;}")//
+    trimmingOf("class C{public static final int a = 7;}")//
         .using(new Constant(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("class C{public static final Boolean a = 7;}")//
+    trimmingOf("class C{public static final Boolean a = 7;}")//
         .using(new Constant(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("class C{public static final Boolean a = true;"//
+    trimmingOf("class C{public static final Boolean a = true;"//
         + "public static final Integer b = 7;"//
         + "public static final char b = 7;"//
         + "public static final String b = \"fff\";"//
@@ -36,7 +36,7 @@ public class ConstantTest {
   }
 
   @Test public void d() {
-    trimminKof("class C{public static final Boolean a = true;"//
+    trimmingOf("class C{public static final Boolean a = true;"//
         + "public static final Character b = 7;"//
         + "public static final Int b = 7;"//
         + "public static final char b = 7;"//

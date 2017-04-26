@@ -11,22 +11,22 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class Issue0221 {
   @Test public void A$01() {
-    trimminKof("class D { int a; }")//
+    trimmingOf("class D { int a; }")//
         .stays();
   }
 
   @Test public void A$02() {
-    trimminKof("class D { int a = 3; }")//
+    trimmingOf("class D { int a = 3; }")//
         .stays();
   }
 
   @Test public void A$03() {
-    trimminKof("class D{int a=0;}")//
+    trimmingOf("class D{int a=0;}")//
         .gives("class D{int a;}");
   }
 
   @Test public void A$04() {
-    trimminKof("class D{Integer a=0;}")//
+    trimmingOf("class D{Integer a=0;}")//
         .stays();
   }
 

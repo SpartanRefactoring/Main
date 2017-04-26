@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class IgnoringExceptionsTest {
   @Test public void a() {
-    trimminKof(//
+    trimmingOf(//
         "try {" + //
             "    A.a(b).c().d(e -> f[g++]=h(e));" + //
             "  }" + //
@@ -27,7 +27,7 @@ public class IgnoringExceptionsTest {
   }
 
   @Test public void b() {
-    trimminKof("try{ thing(); } catch(A a){}catch(B b){}")//
+    trimmingOf("try{ thing(); } catch(A a){}catch(B b){}")//
         .gives("try{thing();}catch(B|A a){}")//
         .using(new IgnoringExceptions(), CatchClause.class)//
         .gives("{try{{thing();}}catch(B|A a){forget();};}")//

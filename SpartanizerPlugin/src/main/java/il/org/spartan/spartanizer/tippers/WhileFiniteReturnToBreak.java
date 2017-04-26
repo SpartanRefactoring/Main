@@ -17,7 +17,7 @@ import nano.ly.*;
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
 public final class WhileFiniteReturnToBreak extends NodePattern<WhileStatement>//
-    implements TipperCategory.CommnonFactoring {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = -0x70481BF1FE1E5DFBL;
 
   public WhileFiniteReturnToBreak() {

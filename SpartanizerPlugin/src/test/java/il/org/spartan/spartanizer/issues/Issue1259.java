@@ -16,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
 @SuppressWarnings("static-method")
 public class Issue1259 {
   @Test(timeout = 2500) public void test() {
-    trimminKof("class Element extends AccessibleObject implements Member {" + //
+    trimmingOf("class Element extends AccessibleObject implements Member {" + //
         "private final AccessibleObject accessibleObject;" + //
         "private final Member member;" + //
         "<M extends AccessibleObject & Member> Element(M accessibleObject) {" + //
@@ -36,7 +36,7 @@ public class Issue1259 {
 
   @Test(timeout = 3500) public void t1() {
     TraversalMonitor.logger.setLevel(Level.ALL);
-    trimminKof("class E extends B {" + //
+    trimmingOf("class E extends B {" + //
         "A a;" + //
         "M m;" + //
         "E(M m) {" + //

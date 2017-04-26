@@ -11,25 +11,25 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0849 {
   @Test public void test0() {
-    trimminKof("a-1+2")//
+    trimmingOf("a-1+2")//
         .gives("a+1")//
         .stays();
   }
 
   @Test public void test1() {
-    trimminKof("a-1-2")//
+    trimmingOf("a-1-2")//
         .gives("a-3")//
         .stays();
   }
 
   @Test public void test2() {
-    trimminKof("2+a-1-9")//
+    trimmingOf("2+a-1-9")//
         .gives("2+a-8")//
         .stays();
   }
 
   @Test public void test3() {
-    trimminKof("3+a+1+2")//
+    trimmingOf("3+a+1+2")//
         .gives("a+1")//
         .stays();
   }

@@ -44,7 +44,7 @@ public class issue0411 {
   }
 
   @Test public void B01() {
-    trimminKof(" public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
+    trimmingOf(" public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
         + "List<VariableDeclarationFragment> lst =  fragments(s); for (VariableDeclarationFragment ¢ : lst) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .gives(" public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
@@ -54,7 +54,7 @@ public class issue0411 {
   }
 
   @Test public void B02() {
-    trimminKof("void  f(V s) { List<U> lst =  fragments(s); for (U ¢ : lst) "
+    trimmingOf("void  f(V s) { List<U> lst =  fragments(s); for (U ¢ : lst) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .gives("void f(V v) { for (U ¢ :  fragments(v))   if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer())) "
                 + "    return false; return true; }")
@@ -62,7 +62,7 @@ public class issue0411 {
   }
 
   @Test public void B03() {
-    trimminKof("void  f(V variableDeclarationFragment) { List<U> lst =  fragments(variableDeclarationFragment); for (U ¢ : lst) "
+    trimmingOf("void  f(V variableDeclarationFragment) { List<U> lst =  fragments(variableDeclarationFragment); for (U ¢ : lst) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .gives("void f(V variableDeclarationFragment) { for (U ¢ :  fragments(variableDeclarationFragment);) "
                 + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
@@ -70,7 +70,7 @@ public class issue0411 {
   }
 
   @Test public void B05() {
-    trimminKof("boolean  f(V variableDeclarationFragment) { V x=  fragments(variableDeclarationFragment); for (U ¢ : x) "
+    trimmingOf("boolean  f(V variableDeclarationFragment) { V x=  fragments(variableDeclarationFragment); for (U ¢ : x) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .gives("boolean f(V variableDeclarationFragment) { for (U ¢ :  fragments(variableDeclarationFragment);) "
                 + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
@@ -78,7 +78,7 @@ public class issue0411 {
   }
 
   @Test public void B06() {
-    trimminKof("boolean f() { V x= g(variableDeclarationFragment); for (U ¢ : x) "
+    trimmingOf("boolean f() { V x= g(variableDeclarationFragment); for (U ¢ : x) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .gives("boolean f() { for (U ¢ : g(variableDeclarationFragment))"
                 + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
@@ -86,7 +86,7 @@ public class issue0411 {
   }
 
   @Test public void B07() {
-    trimminKof(INPUT1)//
+    trimmingOf(INPUT1)//
         .gives(OUTPUT1)//
         .stays();
   }

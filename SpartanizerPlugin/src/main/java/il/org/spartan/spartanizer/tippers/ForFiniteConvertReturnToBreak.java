@@ -18,7 +18,7 @@ import nano.ly.*;
  * @author Dor Ma'ayan
  * @since 2016-09-07 */
 public final class ForFiniteConvertReturnToBreak extends ForStatementPattern//
-    implements TipperCategory.CommnonFactoring {
+    implements TipperCategory.Loops {
   private static final long serialVersionUID = -0x307C6039058B998DL;
 
   public ForFiniteConvertReturnToBreak() {

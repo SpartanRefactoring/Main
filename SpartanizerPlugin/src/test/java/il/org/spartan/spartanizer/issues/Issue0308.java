@@ -11,27 +11,27 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0308 {
   @Test public void test0() {
-    trimminKof("try{int a;int b; return a+b;}catch(Exception e){return e;}")//
+    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){return e;}")//
         .gives("try{int a, b; return a+b;}catch(Exception ¢){return ¢;}");
   }
 
   @Test public void test1() {
-    trimminKof("try{int a;int b; return a+b;}catch(Exception e){e.toString();return e;}")//
+    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){e.toString();return e;}")//
         .gives("try{int a, b; return a+b;}catch(Exception ¢){¢.toString();return ¢;}");
   }
 
   @Test public void test2() {
-    trimminKof("try{int a;int b; return a+b;}catch(Exception e){return e;}finally{int c=0; f(++c);}")//
+    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){return e;}finally{int c=0; f(++c);}")//
         .gives("try{int a, b; return a+b;}catch(Exception ¢){return ¢;}finally{int c=0; f(++c);}");
   }
 
   @Test public void test3() {
-    trimminKof("try{int a;int b; return a+b;}catch(Exception e){t.find();return e;}finally{int c=0; f(++c);}")//
+    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){t.find();return e;}finally{int c=0; f(++c);}")//
         .gives("try{int a, b; return a+b;}catch(Exception ¢){t.find();return ¢;}finally{int c=0; f(++c);}");
   }
 
   @Test public void test4() {
-    trimminKof("try{int a;int b; return a+b;}catch(Exception e){t.find();return e;}catch(Exceptional e){return e;}finally{int c=0; f(++c);}")//
+    trimmingOf("try{int a;int b; return a+b;}catch(Exception e){t.find();return e;}catch(Exceptional e){return e;}finally{int c=0; f(++c);}")//
         .gives("try{int a, b; return a+b;}catch(Exception ¢){t.find();return ¢;}catch(Exceptional ¢){return ¢;}finally{int c=0; f(++c);}");
   }
 }

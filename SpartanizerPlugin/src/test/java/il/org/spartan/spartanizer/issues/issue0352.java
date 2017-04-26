@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class issue0352 {
   @Test public void a() {
-    trimminKof("@Override    Iterator<Entry<Cut<C>, Range<C>>> entryIterator() {      if (restriction.isEmpty())"
+    trimmingOf("@Override    Iterator<Entry<Cut<C>, Range<C>>> entryIterator() {      if (restriction.isEmpty())"
         + "        return Iterators.emptyIterator();      final Iterator<Range<C>> completeRangeItr;"
         + "      if (lowerBoundWindow.upperBound.isLessThan(restriction.lowerBound))        return Iterators.emptyIterator();    else"
         + "        completeRangeItr = ((lowerBoundWindow.lowerBound.isLessThan(restriction.lowerBound)"
@@ -73,7 +73,7 @@ public class issue0352 {
   }
 
   @Test public void b() {
-    trimminKof("if (a())     return 0;   if (a())     return 1;   else {     int b = c(5) + 7;     return c(b+b+b);}")
+    trimmingOf("if (a())     return 0;   if (a())     return 1;   else {     int b = c(5) + 7;     return c(b+b+b);}")
         .gives("if (a())   return 0; if (a())   return 1;int b=c(5) + 7;return c(b + b + b);");
   }
 }
