@@ -9,8 +9,10 @@ The Spartanizer help you make a sequence small, nano-refactorings of your code, 
 This includes removal of piles of syntactic baggage, which is code that does not nothing, except for being there:  curly brackets around one statement, initializations which reiterate the default, modifiers which do not change the semantics, implicit call to `super()` which every constructor has, fancy, but uselessly long variable names, variables which never vary and contain temporaries and  many more. Overall, the Spartanizer has over 100 tippers.
 
 # Contents
+
 * [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual")
 * [Theoretical Background] (https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background")
+* [Developer Guide] (https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide")
 * [List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers")
 
 # Video Demo
