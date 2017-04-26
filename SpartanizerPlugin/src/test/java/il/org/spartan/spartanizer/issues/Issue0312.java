@@ -75,7 +75,8 @@ public class Issue0312 {
   @Test public void issue54ForPlain() {
     trimmingOf("int a  = f(); for (int i = 0; i <100;  ++i) b[i] = a;")//
         .gives("int a=f();for(int ¢=0;¢<100;++¢)b[¢]=a;") //
-        .stays();
+        .gives("for(int a=f(),¢=0;¢<100;++¢)b[¢]=a;") //
+     .stays();
   }
 
   @Test public void postfixToPrefixAvoidChangeOnLoopInitializer() {
