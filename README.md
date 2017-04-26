@@ -1,9 +1,11 @@
 # <a name="introduction"></a>Spartanizer? What is this?
-<img style="float: right;" src="https://www.spartan.org.il/images/logo-header.png"/>
+
 The Spartanizer is:
 - An Eclipse plugin
 - Offers in the problems view tips for simplifying your code 
 - Make your code laconic: say much in few words.
+
+<img style="float: right;" src="https://www.spartan.org.il/images/logo-header.png"/>
 
 The Spartanizer applies the principles of *[Spartan Programming]* to your Java code. It applies many different _tippers_, which are little rules that provide suggestions on how to shorten and
 simplify your code, e.g, by using fewer variables, factoring out common structures, more efficient use of control flow, etc. 
