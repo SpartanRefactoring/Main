@@ -49,7 +49,7 @@ of *[Spartan Programming]* to your Java code. It applies many different tippers,
    
 # References
 
-* Y. Gil and M. Orrú, “Code spartanization,” in Proc. of SAC’17, the 32nd
+* Y. Gil and M. Orrú, “Code spartanization: a Rational Approach to Resolve Religious War on Style” in Proc. of SAC’17, the 32nd
 ACM Symposium on Applied Computing, Marrakesh, Morocco, April 3–7 2017.
 
 * Y. Gil and M. Orrù, "The Spartanizer: Massive automatic refactoring," 
