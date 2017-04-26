@@ -61,13 +61,7 @@ public class SpartanMovie2 extends AbstractHandler {
         note.bug(¢);
       }
     }
-    // monitor.subTask("Done: Commited " + changes + " changes in " +
-    // filesModified + " " + English.plurals("file", filesModified));
     sleep(SLEEP_END);
-    // monitor.done();
-    // return Status.OK_STATUS;
-    // }
-    // }; // end job
     return null;
   }
 
