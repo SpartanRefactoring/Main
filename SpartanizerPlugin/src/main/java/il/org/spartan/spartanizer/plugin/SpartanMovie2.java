@@ -76,7 +76,14 @@ public class SpartanMovie2 extends AbstractHandler {
       @Override public IStatus runInUIThread(final IProgressMonitor monitor) {
         monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
         try {
+<<<<<<< HEAD
           // printout(m);
+=======
+          // monitor.subTask(
+          // "Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
+          // m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
+          printout(m);
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
           IDE.openEditor(p, m, true);
           refresh(p);
           sleep(SLEEP_BETWEEN);
@@ -110,6 +117,7 @@ public class SpartanMovie2 extends AbstractHandler {
           x.printStackTrace();
         }
       }
+<<<<<<< HEAD
     }).schedule();
   }
 
@@ -119,6 +127,9 @@ public class SpartanMovie2 extends AbstractHandler {
     } catch (final CoreException x) {
       x.printStackTrace();
     }
+=======
+    }.schedule();
+>>>>>>> branch 'master' of https://github.com/SpartanRefactoring/Spartanizer.git
   }
 
   /** Just in case, so that editors don't pile up. Not sure this is the right

@@ -11,26 +11,26 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue0902 {
   @Test public void a() {
-    trimminKof("void f(){int x; int y;return;}")//
+    trimmingOf("void f(){int x; int y;return;}")//
         .gives("void f(){int x,y;}")//
         .gives("void f(){}")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("void f(){int x; return;}")//
+    trimmingOf("void f(){int x; return;}")//
         .gives("void f(){}")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("void f(){return;}")//
+    trimmingOf("void f(){return;}")//
         .gives("void f(){}")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("void f(){int a;}")//
+    trimmingOf("void f(){int a;}")//
         .gives("void f(){}")//
         .stays();
   }

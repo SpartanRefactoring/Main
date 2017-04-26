@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class CountIfTest {
   @Test public void a() {
-    trimminKof("for (M λ : AA) if (!λ.isCtr()) ++a;")//
+    trimmingOf("for (M λ : AA) if (!λ.isCtr()) ++a;")//
         .using(EnhancedForStatement.class, new CountIf(), new ForEachSuchThat())//
         .gives("a += (AA).stream().filter(λ->!λ.isCtr()).count();")//
         .gives("a += AA.stream().filter(λ->!λ.isCtr()).count();")//
@@ -19,14 +19,14 @@ public class CountIfTest {
   }
 
   @Test public void b() {
-    trimminKof("for (M λ : AA.a() ? b : c) if (!λ.isCtr()) ++a;")//
+    trimmingOf("for (M λ : AA.a() ? b : c) if (!λ.isCtr()) ++a;")//
         .using(EnhancedForStatement.class, new CountIf(), new ForEachSuchThat())//
         .gives("a += (AA.a() ? b : c).stream().filter(λ->!λ.isCtr()).count();")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("while (BlockFalling.canFall(w,i,j - 1,k) && j > 0) --j;")//
+    trimmingOf("while (BlockFalling.canFall(w,i,j - 1,k) && j > 0) --j;")//
         .using(new While.CountIf(), WhileStatement.class)//
         .gives("j+=countWhile(()->BlockFalling.canFall(w,i,j-1,k)&&j>0);")//
         .stays();

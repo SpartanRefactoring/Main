@@ -18,45 +18,45 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class GuessedContextTest {
   @Test public void a1() {
-    trimminKof("public class C{public C(int i) {j = 2*i;} public final int j; public C y() { final C $ = new C(6); S.x.f($.j);return $;}}").stays();
+    trimmingOf("public class C{public C(int i) {j = 2*i;} public final int j; public C y() { final C $ = new C(6); S.x.f($.j);return $;}}").stays();
   }
 
   @Test public void a2() {
-    trimminKof("@O public IMarkerResolution[] getResolutions(final IMarker m) { try { "
+    trimmingOf("@O public IMarkerResolution[] getResolutions(final IMarker m) { try { "
         + "final L s = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); }finally{} return s;}")//
             .gives(
                 "@O public IMarkerResolution[] getResolutions(final IMarker m) { try { final L $ = All.get((String) m.getAttribute(Builder.L_TYPE_KEY)); }finally{} return $;}");
   }
 
   @Test public void a3() {
-    trimminKof(
+    trimmingOf(
         " public class C { public C(int i) { j = 2*i;} public final int j; public int yada7(final String blah) { final C $ = new C(blah.length()); if (blah.contains(0xDEAD)) return $.j; int x = blah.length()/2; if (x==3) return x; x = y($.j - x); return x;}}")
             .gives(
                 " public class C{public C(int i) { j = 2*i;} public final int j; public int yada7(final String blah) { final C $ = new C(blah.length()); if (blah.contains(0xDEAD)) return $.j; int x = blah.length()/2; if (x==3) return x; return x=y($.j-x);}}");
   }
 
   @Test public void a6() {
-    trimminKof(
+    trimmingOf(
         " public final int j;public void y() {final C $ = new C(6);final R r = new R() {@O public void system() { final C res2 = new C($.j);S.x.f(res2.j);doStuff(res2);}private int doStuff(final C r) {final C $ = new C(r.j);return $.j + 1;S.x.f($.j);}};}} ")
             .gives(
                 " public final int j;public void y() {final C $ = new C(6);new R() {@O public void system() { final C res2 = new C($.j);S.x.f(res2.j);doStuff(res2);}private int doStuff(final C r) {final C $ = new C(r.j);return $.j + 1;S.x.f($.j);}};}} ");
   }
 
   @Test public void a7() {
-    trimminKof(
+    trimmingOf(
         " public final int j;public void y() {final C $ = new C(6);final R r = new R() {@O public void system() { $ = new C(8);S.x.f($.j);doStuff($);}private int doStuff(final C r) {final C $ = new C(r.j);return $.j + 1;S.x.f($.j);}};}}")
             .gives(
                 " public final int j;public void y() {final C $ = new C(6);new R() {@O public void system() { $ = new C(8);S.x.f($.j);doStuff($);}private int doStuff(final C r) {final C $ = new C(r.j);return $.j + 1;S.x.f($.j);}};}} ");
   }
 
   @Test public void a8() {
-    trimminKof(
+    trimmingOf(
         " public class C{public C(int i) { j = 2*i;} public final int j; public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return $;}} ")
             .stays();
   }
 
   @Test public void a9() {
-    trimminKof(
+    trimmingOf(
         "public class C{ public C(int i){j = 2*i;}public final int j;public C y() { final C $ = new C(6); if ($.j == 0) return null; S.x.f($.j); return null;}}")
             .stays();
   }
@@ -99,17 +99,17 @@ public final class GuessedContextTest {
   }
 
   public void doNotInlineDeclarationWithAnnotationSimplified() {
-    trimminKof("@SuppressWarnings() int $ = (Class<T>) findClass(className); return $; ")//
+    trimmingOf("@SuppressWarnings() int $ = (Class<T>) findClass(className); return $; ")//
         .stays();
   }
 
   @Test public void e03() {
-    trimminKof("/* * This is a comment */ int i = 5; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
+    trimmingOf("/* * This is a comment */ int i = 5; int j = 3; int k = j+2; int m = k + j -19; y(m*2 - k/m + i); ")
         .gives("/* * This is a comment */ int i = 5, j = 3; int k = j+2, m = k + j -19; y(2*m - k/m + i);");
   }
 
   @Test public void e10() {
-    trimminKof(
+    trimmingOf(
         " final A a = new A(\"{ ABRA { CADABRA {\"); w.a(5, a.new Context().lineCount()); final PureIterable<Mutant> ms = a.mutantsGenerator(); w.a(2, count(ms)); final PureIterator<Mutant> i = ms.iterator(); assert (i.hasNext()); w.a(\"{ ABRA ABRA { CADABRA { \", i.next().text); assert (i.hasNext()); w.assertEquals(\"{ ABRA { CADABRA CADABRA { \", i.next().text); assert !(i.hasNext());")
             .stays();
   }

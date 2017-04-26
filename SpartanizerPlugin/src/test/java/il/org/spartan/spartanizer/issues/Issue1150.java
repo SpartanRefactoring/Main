@@ -13,36 +13,36 @@ import il.org.spartan.spartanizer.tippers.*;
 @SuppressWarnings("static-method")
 public class Issue1150 {
   @Test public void a() {
-    trimminKof("\"abs\"+\"de\"")//
+    trimmingOf("\"abs\"+\"de\"")//
         .gives("\"absde\"")//
         .stays();
   }
 
   @Test public void b() {
-    trimminKof("\"abs\"+3+\"de\"")//
+    trimmingOf("\"abs\"+3+\"de\"")//
         .stays();
   }
 
   @Test public void c() {
-    trimminKof("\"abs\"+\"de\"+\"de\"")//
+    trimmingOf("\"abs\"+\"de\"+\"de\"")//
         .gives("\"absdede\"")//
         .stays();
   }
 
   @Test public void d() {
-    trimminKof("\"a\"+\"b\"+3+\"c\"+\"d\"")//
+    trimmingOf("\"a\"+\"b\"+3+\"c\"+\"d\"")//
         .gives("\"a\"+\"b\"+3+\"cd\"")//
         .gives("\"ab\"+3+\"cd\"")//
         .stays();
   }
 
   @Test public void e() {
-    trimminKof("\"a\"+\n\"b\"")//
+    trimmingOf("\"a\"+\n\"b\"")//
         .stays();
   }
 
   @Test public void f() {
-    trimminKof("String x = \"a\"+\"b\"+f()+\"c\"+\n\"d\"+5;f(x); g(x);")//
+    trimmingOf("String x = \"a\"+\"b\"+f()+\"c\"+\n\"d\"+5;f(x); g(x);")//
         .gives("String x = \"ab\"+f()+\"c\"+\n\"d\"+5;f(x); g(x);")//
         .stays();
   }

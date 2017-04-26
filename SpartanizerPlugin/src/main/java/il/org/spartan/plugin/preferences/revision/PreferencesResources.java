@@ -53,6 +53,7 @@ public enum PreferencesResources {
     EarlyReturn(TipperCategory.EarlyReturn.class), //
     Idiomatic(TipperCategory.Idiomatic.class), //
     Inlining(TipperCategory.Inlining.class), //
+    Loops(TipperCategory.Loops.class), //
     NOOP(TipperCategory.NOP.class), //
     Nanopatterns(TipperCategory.Nanos.class), //
     ScopeReduction(TipperCategory.ScopeReduction.class), //

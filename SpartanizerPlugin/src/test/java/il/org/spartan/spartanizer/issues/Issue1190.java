@@ -9,7 +9,7 @@ import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
 
-/** Batch testing - run the spartinizer on itself with no errors
+/** Batch testing - run the spartanizer on itself with no errors
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>
  * @since 2017-04-01 */
 public class Issue1190 {

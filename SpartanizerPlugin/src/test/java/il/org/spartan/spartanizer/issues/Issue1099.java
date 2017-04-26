@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Issue1099 {
   @Test public void a() {
-    trimminKof("/**/" + //
+    trimmingOf("/**/" + //
         "    @A public void a() {" + //
         "      final B b = a + \"\", c = C.d(b), e = F.f(g, c);" + //
         "      h.i( j, c, k(l(e)));" + //
@@ -23,7 +23,7 @@ public class Issue1099 {
   }
 
   @Test public void b() {
-    trimminKof("/**/" + //
+    trimmingOf("/**/" + //
         "  " + //
         "    final D c = b.d(), e = f.g(e(b)), h = f.g(h(b));" + //
         "    return e == null || h == null ? null : i.j(i.k(e, h).l(c)).m();" + //
@@ -39,7 +39,7 @@ public class Issue1099 {
   }
 
   @Test public void c() {
-    trimminKof("/**/" + //
+    trimmingOf("/**/" + //
         "  " + //
         "    final D c = d(), e = f(c,c), h = g(e, c);" + //
         "    return c + e + h; " + //

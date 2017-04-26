@@ -11,7 +11,7 @@ import org.junit.*;
 public class Issue0006 {
   /** Correct way of trimming does not change */
   @Test public void issue06A() {
-    trimminKof("x/a*-b/-c*- - - d / d")//
+    trimmingOf("x/a*-b/-c*- - - d / d")//
         .gives("-x/a*b/c*d / d")//
         .gives("d*-x/a*b/c/d")//
         .gives("b*d*-x/a/c/d")//
@@ -20,14 +20,14 @@ public class Issue0006 {
   }
 
   @Test public void issue06C2() {
-    trimminKof("-a * b/ c * d/d")//
+    trimmingOf("-a * b/ c * d/d")//
         .gives("d*-a*b/c/d")//
         .gives("-d*a*b/c/d")//
         .stays();
   }
 
   @Test public void issue06C3() {
-    trimminKof("-a * b/ c * d") //
+    trimmingOf("-a * b/ c * d") //
         .gives("d*-a*b/c") //
         .gives("-d*a*b/c") //
         .stays();

@@ -22,7 +22,7 @@ public final class Issue0194 {
   // but what we care about is that early return does not apply.
   // It would have, if it could be, because thats the outer node.
   @Test public void test01() {
-    trimminKof("if(b1){"//
+    trimmingOf("if(b1){"//
         + "x=13.5;"//
         + "if(b2){}\n"//
         + "else\n"//
@@ -48,7 +48,7 @@ public final class Issue0194 {
   // Empty "else".
   // Similar to test01().
   @Test public void test02() {
-    trimminKof("if(b1){"//
+    trimmingOf("if(b1){"//
         + "x=13.5;"//
         + "if(b2)\n"//
         + "return g();"//
@@ -79,7 +79,7 @@ public final class Issue0194 {
   // Empty Block.
   // Similar to test01() and test02().
   @Test public void test03() {
-    trimminKof("/**/" //
+    trimmingOf("/**/" //
         + "if(b1){"//
         + "x=13.5;"//
         + "{}"//
@@ -94,7 +94,7 @@ public final class Issue0194 {
   // Don'tipper do anything if there is more than return sideEffects after the
   // ifstatement.
   @Test public void test04() {
-    trimminKof("if (a == null) { \n" //
+    trimmingOf("if (a == null) { \n" //
         + "a = f(); \n" //
         + "if (g()) \n" //
         + "return f(); \n" //
@@ -108,7 +108,7 @@ public final class Issue0194 {
   }
 
   @Test public void test05() {
-    trimminKof("if(b1){ \n" //
+    trimmingOf("if(b1){ \n" //
         + "if(b2){ \n" //
         + "x = f(); \n" //
         + "return g(); \n" //
@@ -134,7 +134,7 @@ public final class Issue0194 {
   }
 
   @Test public void test06() {
-    trimminKof("if(x> y){ \n" //
+    trimmingOf("if(x> y){ \n" //
         + "x*=y; \n" //
         + "y*=z; \n" //
         + "z*=x*=y*=z; \n" //
@@ -151,7 +151,7 @@ public final class Issue0194 {
   }
 
   @Test public void test07() {
-    trimminKof("if(x == y){ \n" //
+    trimmingOf("if(x == y){ \n" //
         + "x*=y; \n" //
         + "y*=z; \n" //
         + "z*=x*=y*=z; \n" //
@@ -168,7 +168,7 @@ public final class Issue0194 {
   }
 
   @Test public void test08() {
-    trimminKof("if(x != null){ \n" //
+    trimmingOf("if(x != null){ \n" //
         + "x*=y; \n" //
         + "y*=z; \n" //
         + "z*=x*=y*=z; \n" //
@@ -185,7 +185,7 @@ public final class Issue0194 {
   }
 
   @Test public void test09() {
-    trimminKof("if( x != null){"//
+    trimmingOf("if( x != null){"//
         + "x = f();"//
         + "return g();"//
         + "}"//
@@ -197,7 +197,7 @@ public final class Issue0194 {
   }
 
   @Test public void test10() {
-    trimminKof("if(b1){ \n" //
+    trimmingOf("if(b1){ \n" //
         + "x=8;\n"//
         + "myFirstLabel:\n"//
         + "do{\n"//
@@ -227,7 +227,7 @@ public final class Issue0194 {
   }
 
   @Test public void test11() {
-    trimminKof("if(b1){ \n" //
+    trimmingOf("if(b1){ \n" //
         + "x=5; \n" //
         + "{\n" //
         + "return x; \n"//
@@ -241,7 +241,7 @@ public final class Issue0194 {
   }
 
   @Test public void test12() {
-    trimminKof("if(onoes() && omigod()){" //
+    trimmingOf("if(onoes() && omigod()){" //
         + "if(panic())" //
         + "return weGonnaDie();" //
         + "else{" //
@@ -261,7 +261,7 @@ public final class Issue0194 {
   }
 
   @Test public void test13() {
-    trimminKof("if(b1){"//
+    trimmingOf("if(b1){"//
         + "if(b2){"//
         + "while(b3)"//
         + "return x;"//
@@ -296,7 +296,7 @@ public final class Issue0194 {
   }
 
   @Test public void test14() {
-    trimminKof("if(b1){" //
+    trimmingOf("if(b1){" //
         + "x=3;" //
         + "if(b2)" //
         + "return f();"//
@@ -320,7 +320,7 @@ public final class Issue0194 {
   }
 
   @Test public void test15() {
-    trimminKof("/**/" //
+    trimmingOf("/**/" //
         + "if (a != null) {\n" //
         + "  final X a = f();\n" //
         + "  if (g())\n" //

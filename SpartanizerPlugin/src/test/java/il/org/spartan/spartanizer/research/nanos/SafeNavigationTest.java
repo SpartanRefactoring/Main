@@ -11,98 +11,98 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class SafeNavigationTest {
   @Test public void field() {
-    trimminKof("return x !=null ? x.y : null;")//
+    trimmingOf("return x !=null ? x.y : null;")//
         .using(new SafeNavigation(), ConditionalExpression.class)//
         .gives("return safe(x).get(()->x.y);")//
         .stays();
   }
 
   @Test public void field2() {
-    trimminKof("return x ==null ? null : x.field;")//
+    trimmingOf("return x ==null ? null : x.field;")//
         .using(new SafeNavigation(), ConditionalExpression.class)//
         .gives("return safe(x).get(()->x.field);")//
         .stays();
   }
 
   @Test public void field3() {
-    trimminKof("return x == null ? null : x.y.z;")//
+    trimmingOf("return x == null ? null : x.y.z;")//
         .using(new SafeNavigation(), ConditionalExpression.class)//
         .gives("return safe(x).get(()->x.y.z);")//
         .stays();
   }
 
   @Test public void field4() {
-    trimminKof("return x != null && x.y;")//
+    trimmingOf("return x != null && x.y;")//
         .using(new Infix.SafeNavigation(), InfixExpression.class)//
         .gives("return safe(x).get(()->x.y);")//
         .stays();
   }
 
   @Test public void field5() {
-    trimminKof("return x != null && x.y.z.w;")//
+    trimmingOf("return x != null && x.y.z.w;")//
         .using(new Infix.SafeNavigation(), InfixExpression.class)//
         .gives("return safe(x).get(()->x.y.z.w);")//
         .stays();
   }
 
   @Test public void field6() {
-    trimminKof("return x == null ? 0 : x.y.z;")//
+    trimmingOf("return x == null ? 0 : x.y.z;")//
         .using(new SafeNavigation(), ConditionalExpression.class)//
         .gives("return safe(x).get(()->x.y.z);")//
         .stays();
   }
 
   @Test public void method() {
-    trimminKof("return x == null ? null : x.y();")//
+    trimmingOf("return x == null ? null : x.y();")//
         .using(new SafeNavigation(), ConditionalExpression.class)//
         .gives("return safe(x).invoke(()->x.y());")//
         .stays();
   }
 
   @Test public void method2() {
-    trimminKof("return x == null ? null : x.y.z();")//
+    trimmingOf("return x == null ? null : x.y.z();")//
         .using(new SafeNavigation(), ConditionalExpression.class)//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method3() {
-    trimminKof("return x == null ? 0 : x.z();")//
+    trimmingOf("return x == null ? 0 : x.z();")//
         .using(new SafeNavigation(), ConditionalExpression.class)//
         .gives("return safe(x).invoke(()->x.z());")//
         .stays();
   }
 
   @Test public void method4() {
-    trimminKof("return x == null ? 0 : x.y.z();")//
+    trimmingOf("return x == null ? 0 : x.y.z();")//
         .using(new SafeNavigation(), ConditionalExpression.class)//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method5() {
-    trimminKof("return x != null && x.z();")//
+    trimmingOf("return x != null && x.z();")//
         .using(new Infix.SafeNavigation(), InfixExpression.class)//
         .gives("return safe(x).invoke(()->x.z());")//
         .stays();
   }
 
   @Test public void method6() {
-    trimminKof("return x != null && x.y.z();")//
+    trimmingOf("return x != null && x.y.z();")//
         .using(new Infix.SafeNavigation(), InfixExpression.class)//
         .gives("return safe(x).invoke(()->x.y.z());")//
         .stays();
   }
 
   @Test public void method7() {
-    trimminKof("(x != null) && x.y()")//
+    trimmingOf("(x != null) && x.y()")//
         .using(new Infix.SafeNavigation(), InfixExpression.class)//
         .gives("safe(x).invoke(()->x.y())")//
         .stays();
   }
 
   @Test public void respect() {
-    trimminKof("return x ==null ? null : x.field;")//
+    trimmingOf("return x ==null ? null : x.field;")//
         .using(ConditionalExpression.class, //
             new EvaluateUnlessDefaultsTo(), //
             new DefaultsTo(), //

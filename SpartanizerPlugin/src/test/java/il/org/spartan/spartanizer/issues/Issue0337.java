@@ -11,7 +11,7 @@ import org.junit.*;
 @SuppressWarnings({ "static-method", "javadoc" }) //
 public class Issue0337 {
   @Test public void t18() {
-    trimminKof("while(b==q){int i;double tipper; x=tipper+i;}")//
+    trimmingOf("while(b==q){int i;double tipper; x=tipper+i;}")//
         .stays();
   }
 }

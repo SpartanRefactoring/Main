@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Issue1171 {
   @Test public void inlineArrayInitialization2() {
-    trimminKof("final double[] $={ r.z(), r.g()};return $;")//
+    trimmingOf("final double[] $={ r.z(), r.g()};return $;")//
         .gives("return new double[]{r.z(),r.g()};") //
     ;
   }

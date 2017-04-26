@@ -9,8 +9,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.patterns.*;
 
-/**
- * @author Yossi Gil
+/** @author Yossi Gil
  * @since 2017-04-25 */
 public abstract class InfixExpressionPattern extends NodePattern<InfixExpression> {
   private static final long serialVersionUID = 1;
@@ -91,7 +90,7 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
       os = new ArrayList<>();
     }
 
-    public Z(List<O> os) {
+    public Z(final List<O> os) {
       this.os = os;
     }
 

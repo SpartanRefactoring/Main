@@ -9,7 +9,7 @@ import org.junit.*;
  * @since 2016 */
 public class Issue0309 {
   @Test @SuppressWarnings("static-method") public void a() {
-    trimminKof("public String abbreviate() { String ¢ = \"\"; "
+    trimmingOf("public String abbreviate() { String ¢ = \"\"; "
         + "for (final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName); ; ¢ += m.group()) if (!m.find()) return ¢.toLowerCase(); }")
             .gives("public String abbreviate() { String $ = \"\"; "
                 + "for (final Matcher m = Pattern.compile(\"[A-Z]\").matcher(typeName); ; $ += m.group()) if (!m.find()) "
@@ -20,7 +20,7 @@ public class Issue0309 {
   }
 
   @Test @SuppressWarnings("static-method") public void b() {
-    trimminKof("int checkIfCentChangesToDollarWhenNeeded() { Integer ¢ = 2; for (int i = 1; i < 7; ++i) ¢ *= i; return ¢.intValue(); }")
+    trimmingOf("int checkIfCentChangesToDollarWhenNeeded() { Integer ¢ = 2; for (int i = 1; i < 7; ++i) ¢ *= i; return ¢.intValue(); }")
         .gives("int checkIfCentChangesToDollarWhenNeeded() { Integer $ = 2; for (int i = 1; i < 7; ++i) $ *= i; return $.intValue(); }")
         .gives("int checkIfCentChangesToDollarWhenNeeded() { Integer $ = 2; for (int ¢ = 1; ¢ < 7; ++¢) $ *= ¢; return $.intValue(); }");
   }
