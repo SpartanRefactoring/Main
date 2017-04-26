@@ -27,7 +27,7 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2017-03-04 */
 public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement<Assignment>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Collapse {
   private static final long serialVersionUID = 0x5D0C16C013FC1AA3L;
 
   @Override public Examples examples() {

@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-28 */
 public final class AssignmentAndReturn extends GoToNextStatement<Assignment>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Collapse {
   private static final long serialVersionUID = -0x1188F30AF050947AL;
 
   @Override public String description(final Assignment ¢) {

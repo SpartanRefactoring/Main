@@ -12,7 +12,7 @@ import nano.ly.*;
 /** convert {@code (x)->x} to {@code x->x}
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpression> implements TipperCategory.Inlining {
+public final class LambdaRemoveParenthesis extends ReplaceCurrentNode<LambdaExpression> implements TipperCategory.SyntacticBaggage {
   private static final long serialVersionUID = 0x42F7485AF333D006L;
 
   @Override protected boolean prerequisite(final LambdaExpression ¢) {

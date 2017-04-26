@@ -18,7 +18,7 @@ import nano.ly.*;
  * @author Nov Shalmon
  * @since 2016-09-04 */
 public final class InfixExpressionConcatentateCompileTime extends ReplaceCurrentNode<InfixExpression>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Collapse {
   private static final long serialVersionUID = -0x349BFB6422E9DC98L;
 
   @Override public String description() {

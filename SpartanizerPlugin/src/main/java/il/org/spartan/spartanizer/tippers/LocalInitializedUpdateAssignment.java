@@ -24,7 +24,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yossi Gil
  * @since 2015-08-07 */
 public final class LocalInitializedUpdateAssignment extends $FragmentAndStatement//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Collapse {
   private static final long serialVersionUID = -0x601DD969FC862E65L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
