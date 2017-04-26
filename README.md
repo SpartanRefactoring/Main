@@ -1,3 +1,11 @@
+# Contents
+
+* [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background")
+* [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual")
+* [Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background")
+* [Developer Guide](https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide")
+* [List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers")
+
 # Spartanizer? Huh?
 
 The Spartanizer is:
@@ -9,16 +17,14 @@ The Spartanizer help you make a sequence small, nano-refactorings of your code, 
 
 This includes removal of piles of syntactic baggage, which is code that does not nothing, except for being there:  curly brackets around one statement, initializations which reiterate the default, modifiers which do not change the semantics, implicit call to `super()` which every constructor has, fancy, but uselessly long variable names, variables which never vary and contain temporaries and  many more. Overall, the Spartanizer has over 100 tippers.
 
+# What is this?
+The Spartanizer is an  Eclipse plugin that automatically applies the principles
+of *[Spartan Programming]* to your Java code. It applies many different tippers,
+   which are little rules that provide suggestions on how to shorten and
+   simplify your code, e.g, by using fewer variables, factoring out common
+   structures, more efficient use of control flow, etc. 
+
 <img style="float: right;" src="https://cloud.githubusercontent.com/assets/15859817/23854098/7f02ba4e-07f8-11e7-8bd9-8ebe2ccbe9e8.png">
-
-
-# Contents
-
-* [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background")
-* [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual")
-* [Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background")
-* [Developer Guide](https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide")
-* [List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers")
 
 # Video Demo
 
@@ -43,12 +49,6 @@ Click on the picture below to watch a video demonstration on YouTube.
 
 <!-- ![spartan resized](https://cloud.githubusercontent.com/assets/15859817/23854098/7f02ba4e-07f8-11e7-8bd9-8ebe2ccbe9e8.png) -->
 
-# What is this?
-The Spartanizer is an  Eclipse plugin that automatically applies the principles
-of *[Spartan Programming]* to your Java code. It applies many different tippers,
-   which are little rules that provide suggestions on how to shorten and
-   simplify your code, e.g, by using fewer variables, factoring out common
-   structures, more efficient use of control flow, etc. 
    
 # References
 
