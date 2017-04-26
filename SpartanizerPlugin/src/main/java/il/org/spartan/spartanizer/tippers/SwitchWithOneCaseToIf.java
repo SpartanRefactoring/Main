@@ -24,7 +24,7 @@ import nano.ly.*;
  * @author Yuval Simon
  * @since 2016-12-18 */
 public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Collapse {
   private static final long serialVersionUID = 0x513C764E326D1A98L;
 
   @Override public String description() {

@@ -27,7 +27,7 @@ import il.org.spartan.utils.*;
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-13 */
 public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclarationStatement>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Collapse {
   private static final long serialVersionUID = -0x591B454B69ADD31L;
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationStatement s, final Statement nextStatement, final TextEditGroup g) {

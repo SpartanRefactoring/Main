@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dan Abramovich
  * @since 27-11-2016 */
 public class TernaryBranchesAreOppositeBooleans extends ReplaceCurrentNode<ConditionalExpression>//
-    implements TipperCategory.Unite {
+    implements TipperCategory.Collapse {
   private static final long serialVersionUID = -0x7FD835D63A83948AL;
 
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
