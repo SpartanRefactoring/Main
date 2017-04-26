@@ -38,7 +38,7 @@ public class SpartanMovie2 extends AbstractHandler {
     if (compilationUnits == null || page == null || progressService == null)
       return null;
     for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-      // mightNotBeSlick(page);
+      // mightNotBeSlick(page); // it stays here for now
       final IResource file = currentCompilationUnit.getResource();
       try {
         IMarker[] markers = getMarkers(file);
