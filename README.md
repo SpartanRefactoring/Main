@@ -41,13 +41,6 @@ Click on the picture below to watch a video demonstration on YouTube.
 
 - This plugin's <a href="https://www.google.co.il/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwj7p7iPwL7PAhUrI8AKHW87AVsQFggaMAA&url=https%3A%2F%2Fmarketplace.eclipse.org%2Fcontent%2Fspartan-refactoring-0&usg=AFQjCNFaOBCLW8-CKYYnfLFCjakdWM1qjA&sig2=Z1zbbkq96-iECkhmMf5Qcw&bvm=bv.134495766,d.ZGg">page on market place</href>
 
-# Development Status
-
- [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer) [![codecov](https://codecov.io/gh/TechnionYP5777/SmartCity-ParkingManagement/branch/master/graph/badge.svg)](https://codecov.io/gh/SpartanRefactoring/Spartanizer)
-
-<!-- ![spartan resized](https://cloud.githubusercontent.com/assets/15859817/23854098/7f02ba4e-07f8-11e7-8bd9-8ebe2ccbe9e8.png) -->
-
-   
 # References
 
 * Y. Gil and M. Orrú, “Code spartanization: One Rational Approach for Resolving Religious Style Wars” in Proc. of SAC’17, the 32nd
@@ -58,6 +51,12 @@ ACM Symposium on Applied Computing, Marrakesh, Morocco, April 3–7 2017.
 [URL on IEEExplore](http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7884657&isnumber=7884596)
 
 * [The Spartanizer on IEEE Software Blog](http://blog.ieeesoftware.org/2017/03/the-spartanizer.html "IEEE Software Blog")
+
+# Development Status
+
+ [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer) [![codecov](https://codecov.io/gh/TechnionYP5777/SmartCity-ParkingManagement/branch/master/graph/badge.svg)](https://codecov.io/gh/SpartanRefactoring/Spartanizer)
+
+<!-- ![spartan resized](https://cloud.githubusercontent.com/assets/15859817/23854098/7f02ba4e-07f8-11e7-8bd9-8ebe2ccbe9e8.png) -->
 
 ## License
 The project is available under the **[MIT License]**
