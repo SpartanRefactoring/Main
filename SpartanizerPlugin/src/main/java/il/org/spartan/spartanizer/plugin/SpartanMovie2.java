@@ -47,15 +47,15 @@ public class SpartanMovie2 extends AbstractHandler {
           final IMarker marker = getFirstMarker(markers);
           System.out.println("marker: " + marker);
           runUIJob(page, marker, file, traversal);
-          marker.delete(); // TODO Ori Roth: does not seem to make a
-                           // difference
-                           // actually it removes the markers after the
-                           // traversal
-                           // and avoid the infinite loop (it descreases
-                           // markers.length at
-                           // each round -- mo
-          refresh(page);
-          sleep(SLEEP_BETWEEN);
+//          marker.delete(); // TODO Ori Roth: does not seem to make a
+//                           // difference
+//                           // actually it removes the markers after the
+//                           // traversal
+//                           // and avoid the infinite loop (it descreases
+//                           // markers.length at
+//                           // each round -- mo
+////          refresh(page);
+//          sleep(SLEEP_BETWEEN);
         }
       } catch (final CoreException ¢) {
         note.bug(¢);
@@ -75,6 +75,9 @@ public class SpartanMovie2 extends AbstractHandler {
           refresh(p);
           sleep(SLEEP_BETWEEN);
           t.runAsMarkerFix(m);
+          m.delete(); 
+          refresh(p);
+          sleep(SLEEP_BETWEEN);
         } catch (final CoreException x) {
           x.printStackTrace();
         }
