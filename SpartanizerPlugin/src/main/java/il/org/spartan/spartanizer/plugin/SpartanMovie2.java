@@ -46,7 +46,7 @@ public class SpartanMovie2 extends AbstractHandler {
         for (; markers.length > 0; markers = getMarkers(file)) {
           final IMarker marker = getFirstMarker(markers);
           System.out.println("marker: " + marker);
-          delegateUIJob(page, marker, file, traversal);
+          runUIJob(page, marker, file, traversal);
           marker.delete(); // TODO Ori Roth: does not seem to make a
                            // difference
                            // actually it removes the markers after the
@@ -65,7 +65,7 @@ public class SpartanMovie2 extends AbstractHandler {
     return null;
   }
 
-  private void delegateUIJob(final IWorkbenchPage p, final IMarker m, final IResource file, final GUITraversal t) throws PartInitException {
+  private void runUIJob(final IWorkbenchPage p, final IMarker m, final IResource file, final GUITraversal t) throws PartInitException {
     (new UIJob(NAME) {
       @Override public IStatus runInUIThread(final IProgressMonitor monitor) {
         monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
