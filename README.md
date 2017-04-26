@@ -15,6 +15,14 @@ This includes removal of piles of _syntactic baggage_, which is code that does n
 The Spartanizer is an  Eclipse plugin that automatically applies the principles of *[Spartan Programming]* to your Java code. It applies many different tippers, which are little rules that provide suggestions on how to shorten and simplify your code, e.g, by using fewer variables, 
 factoring out common structures, more efficient use of control flow, etc.
 
+This project was conceived as an academic project in the [Technion - Israel
+Institute of Technology], and was later developed for several years by
+different students and members of the Computer Science faculty.
+
+The refactorings made by this plug-in are based on the concept of Spartan
+Programming, which suggests guidelines for writing short, clean code. There's a
+lot of reading material on the subject in the [project wiki].
+
 # Contents
 
 * [Introduction](#introduction)
