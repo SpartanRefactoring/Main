@@ -49,35 +49,40 @@ public interface scope {
     return az.block(delimiter(¢));
   }
 
-  /** Bug in ternary spartanizing, do not remove the suppress spartanization
-   * clause [[SuppressWarningsSpartan]] */
   static Namespace getScopeNamespace(final ASTNode ¢) {
     final ASTNode delimiter = delimiter(¢);
+    if(delimiter.getProperty("Namespace") != null)
+      return (Namespace) delimiter.getProperty("Namespace");
     final List<Statement> statements = statements(delimiter);
     final Statement last = the.lastOf(statements);
-    final Namespace of = Environment.of(last);
-    return new Namespace(of);
+    Namespace of = Environment.of(last);
+    if(of == null)
+      of = new Namespace(of);
+    delimiter.setProperty("Namespace", of);
+    return of;
   }
-
+  
   static String newName(final ASTNode ¢, final Type t) {
-    final ASTNode b = delimiter(¢);
-    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
+    final Namespace n = getScopeNamespace(¢);
     final String $ = n.generateName(t);
     n.addNewName($, t);
-    b.setProperty("Namespace", n);
     return $;
   }
 
   static String newName(final ASTNode ¢, final Type t, final String s) {
-    final ASTNode b = delimiter(¢);
-    final Namespace n = b.getProperty("Namespace") == null ? getScopeNamespace(¢) : (Namespace) b.getProperty("Namespace");
+    final Namespace n = getScopeNamespace(¢);
     final String $ = n.generateName(s);
     n.addNewName($, t);
-    b.setProperty("Namespace", n);
     return $;
   }
-
+  
+  /** returns whether identifier exists in the environment (does not include nested scopes) */
   static boolean hasInScope(final ASTNode ¢, final String identifier) {
     return getScopeNamespace(¢).has(identifier);
+  }
+  
+  /** returns whether identifier exists in the environment (includes nested scopes) */
+  static boolean hasInScopeComplex(final ASTNode ¢, final String identifier) {
+    return getScopeNamespace(¢).hasComplex(identifier);
   }
 }

@@ -38,14 +38,15 @@ public class SpartanMovie2 extends AbstractHandler {
     if (compilationUnits == null || page == null || progressService == null)
       return null;
     for (final ICompilationUnit currentCompilationUnit : compilationUnits) {
-      // mightNotBeSlick(page);
+      // mightNotBeSlick(page); // it stays here for now
       final IResource file = currentCompilationUnit.getResource();
       try {
         IMarker[] markers = getMarkers(file);
         if (markers.length > 0) {}
         for (; markers.length > 0; markers = getMarkers(file)) {
           final IMarker marker = getFirstMarker(markers);
-          delegateUIJob(page, marker, file, traversal);
+          System.out.println("marker: " + marker);
+          runUIJob(page, marker, file, traversal);
           marker.delete(); // TODO Ori Roth: does not seem to make a
                            // difference
                            // actually it removes the markers after the
@@ -60,25 +61,16 @@ public class SpartanMovie2 extends AbstractHandler {
         note.bug(¢);
       }
     }
-    // monitor.subTask("Done: Commited " + changes + " changes in " +
-    // filesModified + " " + English.plurals("file", filesModified));
     sleep(SLEEP_END);
-    // monitor.done();
-    // return Status.OK_STATUS;
-    // }
-    // }; // end job
     return null;
   }
 
-  private void delegateUIJob(final IWorkbenchPage p, final IMarker m, final IResource file, final GUITraversal t) throws PartInitException {
-    new UIJob(NAME) {
+  private void runUIJob(final IWorkbenchPage p, final IMarker m, final IResource file, final GUITraversal t) throws PartInitException {
+    (new UIJob(NAME) {
       @Override public IStatus runInUIThread(final IProgressMonitor monitor) {
         monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
         try {
-          // monitor.subTask(
-          // "Working on " + file.getName() + "\nCurrent tip: " + ((Class<?>)
-          // m.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY)).getSimpleName());
-          printout(m);
+          // printout(m); // it stays here for now
           IDE.openEditor(p, m, true);
           refresh(p);
           sleep(SLEEP_BETWEEN);
@@ -89,11 +81,12 @@ public class SpartanMovie2 extends AbstractHandler {
         return Status.OK_STATUS;
       }
 
-      /** The current SpartanMovie is not releaseable. Some big changes should
-       * be made.
-       * @author Ori Roth
-       * @param howMuch
-       * @return */
+      /**
+      * The current SpartanMovie is not releaseable. Some big changes should be made.
+      * @author  Ori Roth
+      * @param howMuch
+      * @return  
+      */
       boolean sleep(final double howMuch) {
         try {
           Thread.sleep((int) (1000 * howMuch));
@@ -111,7 +104,15 @@ public class SpartanMovie2 extends AbstractHandler {
           x.printStackTrace();
         }
       }
-    }.schedule();
+    }).schedule();
+  }
+
+  private void printout(final IMarker m) {
+    try {
+      System.out.println("Resource: " + m.getResource().getName() + "; Type: " + m.getType());
+    } catch (final CoreException x) {
+      x.printStackTrace();
+    }
   }
 
   /** Just in case, so that editors don't pile up. Not sure this is the right
