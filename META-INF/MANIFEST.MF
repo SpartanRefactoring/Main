@@ -17,6 +17,7 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.108.0,4.0.0]",
  org.junit;bundle-version="[4.12.0,5.0.0]",
  org.eclipse.debug.core;bundle-version="[0.0,100.0)",
  org.eclipse.jgit;bundle-version="[0.0,100.0)",
+ org.eclipse.e4.core.di;bundle-version="[0.0,100.0)",
  org.eclipse.ui.workbench.texteditor;bundle-version="[3.5.0,100.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -27,11 +28,7 @@ Bundle-ClassPath: .,
  lib/annotations-12.0.jar,
  lib/spartan-1.4.jar,
  lib/fluent.ly-0.0.1.jar
-Export-Package: il.org.spartan.athenizer;version="2.11.5";,
- il.org.spartan.athenizer.collateral;version="2.11.5";,
- il.org.spartan.athenizer.inflate.expanders;version="2.11.5";,
- il.org.spartan.athenizer.inflate;version="2.11.5";,
- il.org.spartan.plugin;version="2.11.5";
+Export-Package: il.org.spartan.spartanizer.plugin.widget;version="2.11.5";
   uses:="org.eclipse.jdt.core,
    org.eclipse.jdt.core.dom.rewrite,
    org.eclipse.ltk.core.refactoring,
