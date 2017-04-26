@@ -70,7 +70,7 @@ public class SpartanMovie2 extends AbstractHandler {
       @Override public IStatus runInUIThread(final IProgressMonitor monitor) {
         monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
         try {
-          // printout(m);
+          // printout(m); // it stays here for now
           IDE.openEditor(p, m, true);
           refresh(p);
           sleep(SLEEP_BETWEEN);
