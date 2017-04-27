@@ -34,8 +34,5 @@ public class SelectTest {
     ;
   }
 
-  @Test public void test() {
-    System.out.println(new Nanonizer().fixedPoint(
-        "final List<Expression> operands = an.empty.list();  for (final Expression ¢ : hop.operands(flatten.of($))) operands.add(make.notOf(¢));"));
-  }
+
 }
