@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -8,7 +10,9 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.utils.*;
 
 /** convert {@code
  * int a;
@@ -18,29 +22,43 @@ import il.org.spartan.spartanizer.tipping.*;
  * }
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalUninitializedAssignment extends $FragmentAndStatement//
+public final class LocalUninitializedAssignment extends LocalUninitialized //
     implements TipperCategory.Collapse {
   private static final long serialVersionUID = 0xCE4CF4E3910F992L;
 
-  private static VariableDeclarationFragment makeVariableDeclarationFragement(final VariableDeclarationFragment f, final Expression x) {
-    final VariableDeclarationFragment $ = copy.of(f);
-    $.setInitializer(copy.of(x));
+  private VariableDeclarationFragment makeVariableDeclarationFragement() {
+    final VariableDeclarationFragment $ = copy.of(current);
+    $.setInitializer(copy.of(from));
     return $;
   }
 
-  @Override public String description(final VariableDeclarationFragment ¢) {
-    return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
+  private Assignment assignment;
+  private Expression to;
+  private Expression from;
+
+  public LocalUninitializedAssignment() {
+    require("Next statement is an assignment", () -> assignment = extract.assignment(nextStatement));
+    property("To", () -> to = to(assignment));
+    property("From", () -> from = from(assignment));
+    andAlso("It is a non-update assignment ", () -> assignment.getOperator() == ASSIGN);
+    andAlso("Assignment is to present local", () -> wizard.eq(name, to));
+    andAlso("Local is not assigned in its later siblings", () -> !usedInLaterSiblings());
+    andAlso("New value does not use values of later siblings", () -> compute.usedNames(from).noneMatch(x -> x.equals(identifier)));
   }
 
-  @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
-      final Statement nextStatement, final TextEditGroup g) {
-    if (initializer != null)
-      return null;
-    final Assignment a = extract.assignment(nextStatement);
-    if (a == null || !wizard.eq(n, to(a)) || $FragmentAndStatement.doesUseForbiddenSiblings(f, from(a)))
-      return null;
-    $.replace(f, makeVariableDeclarationFragement(f, from(a)), g);
-    $.remove(containing.statement(a), g);
+  @Override public String description() {
+    return "Consolidate declaration of " + name + " with its subsequent initialization";
+  }
+
+  @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
+    $.replace(current, makeVariableDeclarationFragement(), g);
+    $.remove(nextStatement, g);
     return $;
+  }
+
+  @Override public Examples examples() {
+    return convert("int a; a = b;")//
+        .to("int a = b;")//
+    ;
   }
 }

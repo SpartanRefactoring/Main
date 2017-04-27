@@ -53,13 +53,13 @@ public enum compute {
     }.map(n);
   }
 
-  public static List<String> usedNames(final ASTNode x) {
-    return new ASTMapReducer<List<String>>() {
-      @Override public List<String> reduce() {
+  public static List<ASTNode> usedSpots(final ASTNode x) {
+    return new ASTMapReducer<List<ASTNode>>() {
+      @Override public List<ASTNode> reduce() {
         return an.empty.list();
       }
 
-      @Override public List<String> reduce(final List<String> ss1, final List<String> ss2) {
+      @Override public List<ASTNode> reduce(final List<ASTNode> ss1, final List<ASTNode> ss2) {
         if (ss1 == null && ss2 == null)
           return an.empty.list();
         if (ss1 == null)
@@ -70,15 +70,19 @@ public enum compute {
         return ss1;
       }
 
-      @Override protected List<String> map(final SimpleName ¢) {
+      @Override protected List<ASTNode> map(final SimpleName ¢) {
         final String $ = ¢.getIdentifier();
-        return guessName.of($) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list($);
+        return guessName.of($) != guessName.METHOD_OR_VARIABLE ? reduce() : as.list(¢);
       }
 
-      @Override protected List<String> map(@SuppressWarnings("unused") final ThisExpression ¢) {
+      @Override protected List<ASTNode> map(@SuppressWarnings("unused") final ThisExpression ¢) {
         return reduce();
       }
     }.map(x);
+  }
+
+  public static Stream<String> usedNames(final ASTNode x) {
+    return usedSpots(x).stream().map(y -> y + "");
   }
 
   public static List<String> useSpots(final Expression x) {

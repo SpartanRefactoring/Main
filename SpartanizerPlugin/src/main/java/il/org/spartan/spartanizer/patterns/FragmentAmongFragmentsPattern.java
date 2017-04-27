@@ -3,10 +3,12 @@ package il.org.spartan.spartanizer.patterns;
 import static java.util.stream.Collectors.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.engine.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -15,26 +17,39 @@ public abstract class FragmentAmongFragmentsPattern extends FragmentPattern {
   private static final long serialVersionUID = 1;
 
   public FragmentAmongFragmentsPattern() {}
-
+  public boolean usedInLaterSiblings() {
+    return laterSiblings().anyMatch(λ -> compute.usedNames(λ.getInitializer()).anyMatch(x -> x.equals(identifier))); 
+  }
   protected final int currentIndex() {
     return siblings().indexOf(current);
   }
 
-  protected abstract List<VariableDeclarationFragment> siblings();
+  protected final Stream<VariableDeclarationFragment> laterSiblings() {
 
-  protected final Collection<VariableDeclarationFragment> olderSiblings() {
-    return siblings().subList(currentIndex(), siblings().size());
+    return after(currentIndex(), siblings());
+  }
+  private static <T> Stream<T> after(final int from, final List<T> ts) {
+    return ts.subList(from+1, ts.size()).stream();
+  }
+  protected final Stream<VariableDeclarationFragment> previousSiblings() {
+    return to(currentIndex(), siblings());
+  }
+  private static <T>Stream<T> to(final int to, final List<T> ts) {
+    return ts.subList(0, to).stream();
   }
 
-  protected final List<VariableDeclarationFragment> otherSiblings() {
+  protected final List<VariableDeclarationFragment> remainingSiblings() {
     return siblings().stream().filter(λ -> λ != current()).collect(toList());
   }
 
-  public boolean usedInOlderSiblings() {
-    return olderSiblings().stream().anyMatch(λ -> compute.usedNames(λ.getInitializer()).contains(name + ""));
+  protected abstract List<VariableDeclarationFragment> siblings();
+
+  protected boolean usedInLaterInitializers() {
+    return laterSiblings().anyMatch(λ -> !collect.usesOf(name()).in(λ.getInitializer()).isEmpty());
   }
 
-  protected final List<VariableDeclarationFragment> youngerSiblings() {
-    return siblings().subList(0, currentIndex());
+
+  final boolean doesUseForbiddenSiblings(final ASTNode... ns) {
+    return previousSiblings().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
   }
 }
