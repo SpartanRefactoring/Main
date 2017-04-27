@@ -203,9 +203,9 @@ public class XMLSpartan {
    * @param value JD
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Configuration}, so we should avoid duplications
-   * @param e base element */
-  private static void createNotationChild(final Document d, String kind, final String value, final Collection<String> seen, final Node e) {
-    if (d == null || kind == null || seen == null || value == null || seen.contains(kind) || e == null)
+   * @param n base element */
+  private static void createNotationChild(final Document d, String kind, final String value, final Collection<String> seen, final Node n) {
+    if (d == null || kind == null || seen == null || value == null || seen.contains(kind) || n == null)
       return;
     final Element $ = d.createElement(NOTATION);
     if ($ == null)
@@ -213,7 +213,7 @@ public class XMLSpartan {
     $.setAttribute(KIND, kind);
     $.setAttribute(VALUE, value);
     seen.add(kind);
-    e.appendChild($);
+    n.appendChild($);
   }
 
   /** Return XML file for given project. Creates one if absent.
@@ -279,13 +279,11 @@ public class XMLSpartan {
       return null;
     if ($.getElementById(BASE) != null)
       return $;
-    final Element e = $.createElement("spartan");
-    final Element t = $.createElement("tippers");
-    final Element n = $.createElement("notations");
+    final Element e = $.createElement("spartan"), t = $.createElement("tippers"), n = $.createElement("notations");
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
     Configurations.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
-    createNotationChild($,"Cent","t",seen,n);
+    createNotationChild($,"Cent","¢",seen,n);
     $.appendChild(e);
     e.appendChild(t);
     e.appendChild(n);
