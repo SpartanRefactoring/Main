@@ -47,15 +47,15 @@ public class SpartanMovie2 extends AbstractHandler {
           final IMarker marker = getFirstMarker(markers);
           System.out.println("marker: " + marker);
           runUIJob(page, marker, file, traversal);
-//          marker.delete(); // TODO Ori Roth: does not seem to make a
-//                           // difference
-//                           // actually it removes the markers after the
-//                           // traversal
-//                           // and avoid the infinite loop (it descreases
-//                           // markers.length at
-//                           // each round -- mo
-////          refresh(page);
-//          sleep(SLEEP_BETWEEN);
+          // marker.delete(); // TODO Ori Roth: does not seem to make a
+          // // difference
+          // // actually it removes the markers after the
+          // // traversal
+          // // and avoid the infinite loop (it descreases
+          // // markers.length at
+          // // each round -- mo
+          //// refresh(page);
+          // sleep(SLEEP_BETWEEN);
         }
       } catch (final CoreException ¢) {
         note.bug(¢);
@@ -66,7 +66,7 @@ public class SpartanMovie2 extends AbstractHandler {
   }
 
   private void runUIJob(final IWorkbenchPage p, final IMarker m, final IResource file, final GUITraversal t) throws PartInitException {
-    (new UIJob(NAME) {
+    new UIJob(NAME) {
       @Override public IStatus runInUIThread(final IProgressMonitor monitor) {
         monitor.beginTask(NAME, IProgressMonitor.UNKNOWN);
         try {
@@ -75,7 +75,7 @@ public class SpartanMovie2 extends AbstractHandler {
           refresh(p);
           sleep(SLEEP_BETWEEN);
           t.runAsMarkerFix(m);
-          m.delete(); 
+          m.delete();
           refresh(p);
           sleep(SLEEP_BETWEEN);
         } catch (final CoreException x) {
@@ -84,12 +84,11 @@ public class SpartanMovie2 extends AbstractHandler {
         return Status.OK_STATUS;
       }
 
-      /**
-      * The current SpartanMovie is not releaseable. Some big changes should be made.
-      * @author  Ori Roth
-      * @param howMuch
-      * @return  
-      */
+      /** The current SpartanMovie is not releaseable. Some big changes should
+       * be made.
+       * @author Ori Roth
+       * @param howMuch
+       * @return */
       boolean sleep(final double howMuch) {
         try {
           Thread.sleep((int) (1000 * howMuch));
@@ -99,23 +98,7 @@ public class SpartanMovie2 extends AbstractHandler {
           return false;
         }
       }
-
-      private void printout(final IMarker m) {
-        try {
-          System.out.println("Resource: " + m.getResource().getName() + "; Type: " + m.getType());
-        } catch (final CoreException x) {
-          x.printStackTrace();
-        }
-      }
-    }).schedule();
-  }
-
-  private void printout(final IMarker m) {
-    try {
-      System.out.println("Resource: " + m.getResource().getName() + "; Type: " + m.getType());
-    } catch (final CoreException x) {
-      x.printStackTrace();
-    }
+    }.schedule();
   }
 
   /** Just in case, so that editors don't pile up. Not sure this is the right

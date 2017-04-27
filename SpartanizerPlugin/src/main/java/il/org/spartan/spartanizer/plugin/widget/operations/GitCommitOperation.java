@@ -34,7 +34,7 @@ public class GitCommitOperation extends GitOperation {
     return true;
   }
 
-  @Override protected void gitOperation(Git ¢) throws Throwable {
+  @Override protected void gitOperation(final Git ¢) throws Throwable {
     ¢.commit().setMessage(message).setAll(true).call();
   }
 }

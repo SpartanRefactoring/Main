@@ -15,11 +15,11 @@ import il.org.spartan.utils.*;
 public class SwitchAddDefault extends SwitchStatementAbstractPattern implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x358FADDE74C85B4BL;
 
-  //TODO Yuval Simon - add Examples that work to this bloater
+  // TODO Yuval Simon - add Examples that work to this bloater
   @Override public Examples examples() {
     return null;
   }
-  
+
   // TODO Yuval Simon - please eliminate this
   public SwitchAddDefault() {
     andAlso("Yuval, I disabled this; it keeps on tipping as spartanization", () -> false);
@@ -38,6 +38,4 @@ public class SwitchAddDefault extends SwitchStatementAbstractPattern implements 
   @Override public String description() {
     return "Add default case to switch statement";
   }
-
-
 }

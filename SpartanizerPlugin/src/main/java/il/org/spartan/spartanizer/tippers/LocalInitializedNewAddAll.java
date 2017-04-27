@@ -59,7 +59,7 @@ public final class LocalInitializedNewAddAll extends LocalInitialized //
   private Expression argument;
   private MethodInvocation methodInvocation;
 
-  //TODO: add Example Tests that work 
+  // TODO: add Example Tests that work
   @Override public Examples examples() {
     return null;
   }

@@ -7,7 +7,7 @@ import org.junit.*;
 /** Unit tests for version 2.90
  * @author Yossi Gil
  * @since 2017-04-27 */
-  @SuppressWarnings("static-method")
+@SuppressWarnings("static-method")
 public class Version290 {
   // Spartanizer problem
   @Ignore @Test public void overridenDeclaration() {

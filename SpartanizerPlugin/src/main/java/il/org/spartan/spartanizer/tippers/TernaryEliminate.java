@@ -39,9 +39,9 @@ public final class TernaryEliminate extends NodePattern<ConditionalExpression>//
 
   Expression then, elze, condition;
 
-  //TODO: Ori Roth, exmample test not working, please fix -rr
+  // TODO: Ori Roth, exmample test not working, please fix -rr
   @Override public Examples examples() {
     return null;
-    //return convert("a() ? f() :f()").to("f();");
+    // return convert("a() ? f() :f()").to("f();");
   }
 }
