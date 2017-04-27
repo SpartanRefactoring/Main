@@ -36,6 +36,8 @@ public class XMLSpartan {
       .convert("[no available preview]")//
       .to("[no available preview]");
   private static final String ENABLED = "enabled";
+  private static final String KIND = "kind";
+  private static final String VALUE = "value";
   private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = //
       new HashSet<>(as.list(//
           CatchClauseRenameParameterToIt.class, //
@@ -45,7 +47,7 @@ public class XMLSpartan {
           InfixExpressionConcatentateCompileTime.class, //
           LambdaRenameSingleParameterToLambda.class, //
           MethodDeclarationRenameReturnToDollar.class, //
-          MethodDeclarationRenameSingleParameterToCent.class, //
+          MethodDeclarationRenameSingleParameter.class, //
           MethodInvocationToStringToEmptyStringAddition.class, //
           ModifierRedundant.class, //
           ParameterAnonymize.class, //
@@ -55,6 +57,7 @@ public class XMLSpartan {
           ReturnDeadAssignment.class //
       ));
   private static final String TIPPER = "tipper";
+  private static final String NOTATION = "notation";
   private static final String TIPPER_ID = "id";
   private static final String VERSION = "version";
 
@@ -178,7 +181,7 @@ public class XMLSpartan {
    * @param p JD
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Configuration}, so we should avoid duplications
-   * @param e base element "spartan" */
+   * @param e base element */
   private static void createEnabledNodeChild(final Document d, final Tipper<?> t, final Collection<String> seen, final Node e) {
     if (d == null || t == null || seen == null || e == null)
       return;
@@ -192,6 +195,25 @@ public class XMLSpartan {
     $.setAttribute(TIPPER_ID, ObjectStreamClass.lookup(t.getClass()).getSerialVersionUID() + "");
     seen.add(n);
     e.appendChild($);
+  }
+
+  /** Adds a new notation to the XML document.
+   * @param d JD
+   * @param kind JD
+   * @param value JD
+   * @param seen seen tippers by name. Tippers can appear multiple times in the
+   *        {@link Configuration}, so we should avoid duplications
+   * @param n base element */
+  private static void createNotationChild(final Document d, String kind, final String value, final Collection<String> seen, final Node n) {
+    if (d == null || kind == null || seen == null || value == null || seen.contains(kind) || n == null)
+      return;
+    final Element $ = d.createElement(NOTATION);
+    if ($ == null)
+      return;
+    $.setAttribute(KIND, kind);
+    $.setAttribute(VALUE, value);
+    seen.add(kind);
+    n.appendChild($);
   }
 
   /** Return XML file for given project. Creates one if absent.
@@ -257,11 +279,14 @@ public class XMLSpartan {
       return null;
     if ($.getElementById(BASE) != null)
       return $;
-    final Element e = $.createElement("spartan");
+    final Element e = $.createElement("spartan"), t = $.createElement("tippers"), n = $.createElement("notations");
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
-    Configurations.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, e));
+    Configurations.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
+    createNotationChild($,"Cent","¢",seen,n);
     $.appendChild(e);
+    e.appendChild(t);
+    e.appendChild(n);
     $.setXmlStandalone(true); // TODO Roth: does not seem to work
     return $;
   }
