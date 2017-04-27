@@ -35,6 +35,10 @@ public class TopMenuHandlers extends AbstractHandler {
       });
       put("il.org.spartan.ZoomAll",
           λ -> InflateHandler.applicator().manyPasses().selection(Selection.Util.getAllCompilationUnits().setUseBinding()).go());
+      put("il.org.spartan.ZoomIn", λ -> {/***/
+      });
+      put("il.org.spartan.ZoomOut", λ -> {/***/
+      });
     }
   };
 

@@ -40,7 +40,7 @@ public class Issue0879 {
 
   /** Introduced by Yogi on Thu-Mar-30-16:33:00-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
-  @Test public void test_intaIntb9Intc7b4cbbReturnc() {
+  @Ignore @Test public void test_intaIntb9Intc7b4cbbReturnc() {
     trimmingOf("int a() { int b = 9; int c = 7; b += 4; c = b + b; return c; }") //
         .using(new MethodDeclarationRenameReturnToDollar(), MethodDeclaration.class) //
         .gives("int a(){int b=9;int $=7;b+=4;$=b+b;return $;}") //

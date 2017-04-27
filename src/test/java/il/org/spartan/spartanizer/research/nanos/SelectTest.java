@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** TODO Ori Marcovitch please add a description
@@ -32,10 +31,5 @@ public class SelectTest {
         .using(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(toList()));")//
     ;
-  }
-
-  @Test public void test() {
-    System.out.println(new Nanonizer().fixedPoint(
-        "final List<Expression> operands = an.empty.list();  for (final Expression ¢ : hop.operands(flatten.of($))) operands.add(make.notOf(¢));"));
   }
 }
