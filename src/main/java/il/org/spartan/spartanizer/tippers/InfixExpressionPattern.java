@@ -49,9 +49,9 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
     }
 
     ToCallExpected append(final Expression x) {
-      os.add(t -> {
-        t.add(x);
-        return t;
+      os.add(λ -> {
+        λ.add(x);
+        return λ;
       });
       return new ToCallExpected(this);
     }
@@ -76,8 +76,8 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
 
     public List<Expression> to(final List<Expression> xs) {
       List<Expression> $ = new ArrayList<>(xs);
-      for (final O o : os)
-        $ = o.apply($);
+      for (final O ¢ : os)
+        $ = ¢.apply($);
       return $;
     }
   }
