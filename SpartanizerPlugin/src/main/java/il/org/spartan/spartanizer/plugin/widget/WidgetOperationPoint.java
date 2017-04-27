@@ -18,7 +18,7 @@ public class WidgetOperationPoint {
     if (es == null)
       note.bug(new WidgetOperationPoint());
     else
-      for (IConfigurationElement e : es) {
+      for (final IConfigurationElement e : es) {
         final Object o = e.createExecutableExtension("class");
         if (o instanceof WidgetOperation)
           allOperations.add((WidgetOperation) o);

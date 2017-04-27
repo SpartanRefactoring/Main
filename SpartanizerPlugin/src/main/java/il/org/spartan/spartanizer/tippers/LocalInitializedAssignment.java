@@ -28,8 +28,9 @@ public final class LocalInitializedAssignment extends $FragmentAndStatement//
   }
 
   @Override public Examples examples() {
-    return convert("class A {{int a; a = b;}}")//
-        .to("class A {{int a = b;}}")//
+    return convert("int a = 2; a = b;")//
+        .to("int a = b;")//
+        .ignores("int a, b = 2; a = b;") //
     ;
   }
 

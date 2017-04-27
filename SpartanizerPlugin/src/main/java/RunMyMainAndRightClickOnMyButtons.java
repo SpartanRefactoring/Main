@@ -94,10 +94,10 @@ public class RunMyMainAndRightClickOnMyButtons {
     bn.setMenu(popupMenu);
   }
 
-  private static void addAction(final MenuItem i, final Consumer<SelectionEvent> c) {
+  private static void addAction(final MenuItem i, final Consumer<SelectionEvent> e) {
     i.addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(final SelectionEvent ¢) {
-        c.accept(¢);
+        e.accept(¢);
       }
 
       @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
