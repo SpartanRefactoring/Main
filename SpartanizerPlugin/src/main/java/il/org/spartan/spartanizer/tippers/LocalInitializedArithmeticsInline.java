@@ -20,8 +20,7 @@ import org.eclipse.jdt.core.dom.Assignment.Operator;
  * such as += and -=
  * @author Niv Shalmon <tt>shalmon.niv@gmail.com</tt>
  * @since 2017-04-18 */
-public class LocalInitializedArithmeticsInline extends LocalInitialized//
-    implements TipperCategory.Inlining {
+public class LocalInitializedArithmeticsInline extends LocalInitialized {
   Operator o;
   Expression rightHandSide;
 

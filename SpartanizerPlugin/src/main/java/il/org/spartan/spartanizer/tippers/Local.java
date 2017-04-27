@@ -16,11 +16,11 @@ import nano.ly.*;
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
-public abstract class LocalPattern extends FragmentAmongFragmentsPattern {
+public abstract class Local extends FragmentAmongFragmentsPattern {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
   protected VariableDeclarationStatement declaration;
 
-  public LocalPattern() {
+  public Local() {
     andAlso("Must be local variable", //
         () -> not.nil(declaration = az.variableDeclarationStatement(parent)));
   }

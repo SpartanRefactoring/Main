@@ -42,7 +42,11 @@ public final class LocalUninitializedAssignment extends LocalUninitialized //
     andAlso("It is a non-update assignment ", () -> assignment.getOperator() == ASSIGN);
     andAlso("Assignment is to present local", () -> wizard.eq(name, to));
     andAlso("Local is not assigned in its later siblings", () -> !usedInLaterSiblings());
-    andAlso("New value does not use values of later siblings", () -> compute.usedNames(from).noneMatch(x -> x.equals(identifier)));
+    andAlso("New value does not use values of later siblings",
+        () -> compute//
+            .usedIdentifiers(from)//
+            .allMatch(usedName -> laterSiblings()//
+                .allMatch(sibling -> !usedName.equals(sibling.getName() + ""))));
   }
 
   @Override public String description() {

@@ -246,22 +246,22 @@ public interface Configurations {
       .add(VariableDeclarationFragment.class, //
           new FieldInitializedDefaultValue(), //
           new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
-          new LocalUninitializedAssignmentToIt(), //
-          new LocalInitializedReturnExpression(), //
-          new LocalInitializedUpdateAssignment(), //
-          new LocalInitializedIfAssignment(), //
-          new LocalInitializedIfAssignmentUpdating(), //
-          new LocalInitializedStatementReturnVariable(), //
-          new LocalInitializedStatementReturnAssignment(), //
-          new LocalInitializedReturn(), //
-          new LocalInitializedStatementTerminatingScope(), //
           new LocalUninitializedAssignment(), //
           new LocalUninitializedDead(), //
+          new LocalInitializedAssignment(),
+          new LocalInitializedUpdateAssignment(), //
+          new LocalInitializedReturnExpression(), //
+          new LocalInitializedIfAssignment(), //
+          new LocalInitializedIfAssignmentUpdating(), //
+          new LocalInitializedReturn(), //
+          new LocalInitializedStatementReturnVariable(), //
+          new LocalInitializedStatementReturnAssignment(), //
+          new LocalInitializedStatementTerminatingScope(), //
           new LocalInitializedInlineIntoNext(), //
           new LocalInitializedStatementWhile(), //
           new LocalInitializedStatementToForInitializers(), //
           new LocalInitializedUnusedRemove(), //
-          new LocalIncrementDecrementInline(), //
+          new LocalInitializedIncrementDecrementInline(), //
           new LocalInitializedNewAddAll(), //
           new LocalInitializedArithmeticsInline(), //
           null) //
