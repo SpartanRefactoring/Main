@@ -204,7 +204,7 @@ public class XMLSpartan {
    * @param seen seen tippers by name. Tippers can appear multiple times in the
    *        {@link Configuration}, so we should avoid duplications
    * @param n base element */
-  private static void createNotationChild(final Document d, String kind, final String value, final Collection<String> seen, final Node n) {
+  private static void createNotationChild(final Document d, final String kind, final String value, final Collection<String> seen, final Node n) {
     if (d == null || kind == null || seen == null || value == null || seen.contains(kind) || n == null)
       return;
     final Element $ = d.createElement(NOTATION);
@@ -283,7 +283,7 @@ public class XMLSpartan {
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
     Configurations.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
-    createNotationChild($,"Cent","¢",seen,n);
+    createNotationChild($, "Cent", "¢", seen, n);
     $.appendChild(e);
     e.appendChild(t);
     e.appendChild(n);
