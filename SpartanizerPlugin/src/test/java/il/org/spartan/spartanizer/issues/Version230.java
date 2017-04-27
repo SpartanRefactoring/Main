@@ -326,13 +326,6 @@ public final class Version230 {
         .gives("int a=2 + 3;");
   }
 
-//Spartanizer problem
-  @Ignore
-  @Test public void canonicalFragementExample4() {
-    trimmingOf("int a=2;a=3 * a;")//
-        .gives("int a=3 * 2;");
-  }
-
   @Test public void canonicalFragementExample5() {
     trimmingOf("int a=2;return 3 * a;")//
         .gives("return 3 * 2;");
@@ -343,70 +336,9 @@ public final class Version230 {
         .gives("return 2;");
   }
 
-//Spartanizer problem
-  @Ignore
-  @Test public void canonicalFragementExamples() {
-    trimmingOf("int a;a=3;")//
-        .gives("int a=3;");
-    trimmingOf("int a=2;if(b)a=3;")//
-        .gives("int a=b ? 3 : 2;");
-    trimmingOf("int a=2;a +=3;")//
-        .gives("int a=2 + 3;");
-    trimmingOf("int a=2;a=3 * a;")//
-        .gives("int a=3 * 2;");
-    trimmingOf("int a=2;return 3 * a;")//
-        .gives("return 3 * 2;");
-    trimmingOf("int a=2;return a;")//
-        .gives("return 2;");
-  }
 
-  //Spartanizer problem
-  @Ignore
-  @Test public void canonicalFragementExamplesWithExraFragments() {
-    trimmingOf("int a=2;a=3 * a * b;")//
-        .gives("int a=3 * 2 * b;");
-    trimmingOf("int a=2;a=3 * a;")//
-        .gives("int a=3 * 2;");
-    trimmingOf("int a=2;a +=3;")//
-        .gives("int a=2 + 3;");
-    trimmingOf("int a=2;a +=b;")//
-        .gives("int a=2 + b;");
-    trimmingOf("int a=2, b=11;a=3 * a * b;")//
-        .gives("int a=2;a=3*a*11;")//
-        .gives("int a=3*2*11;");//
-    trimmingOf("int a=2, b=1;a +=b;")//
-        .gives("int a=2;a+=1;")//
-        .gives("int a=2+1;");
-    trimmingOf("int a=2,b=1;if(b)a=3;")//
-        .gives("int a=2;if(1)a=3;")//
-        .gives("int a=1?3:2;");
-    trimmingOf("int a=2, b=1;return a + 3 * b;")//
-        .gives("int b=1;return 2+3*b;");
-    trimmingOf("int a=2, b;a=3 * a * b;")//
-        .gives("int a=2, b;a *=3 * b;")//
-        .stays();
-    trimmingOf("int a=2, b;a +=b;")//
-        .stays();
-    trimmingOf("int a=2, b;return a + 3 * b;")//
-        .gives("return 2 + 3*b;");
-    trimmingOf("int a=2;if(x)a=3*a;")//
-        .gives("int a=x?3*2:2;");
-    trimmingOf("int a=2;return 3 * a * a;")//
-        .gives("return 3 * 2 * 2;");
-    trimmingOf("int a=2;return 3 * a * b;")//
-        .gives("return 3 * 2 * b;");
-    trimmingOf("int a=2;return a;")//
-        .gives("return 2;");
-    trimmingOf("int a,b=2;a=b;")//
-        .gives("int a;a=2;")//
-        .gives("int a=2;");
-    trimmingOf("int a;if(x)a=3;else a++;")//
-        .gives("int a;if(x)a=3;else++a;");
-    trimmingOf("int b=5,a=2,c=4;return 3 * a * b * c;")//
-        .gives("int a=2,c=4;return 3*a*5*c;");
-    trimmingOf("int b=5,a=2,c;return 3 * a * b * c;")//
-        .gives("int a=2;return 3 * a * 5 * c;");
-  }
+
+
 
   @Test public void canonicalFragementExamplesWithExraFragmentsX() {
     trimmingOf("int a;if(x)a=3;else a++;")//
@@ -1103,12 +1035,6 @@ public final class Version230 {
             .stays();
   }
 
-//Spartanizer problem
-  @Ignore
-  @Test public void inlineSingleUseKillingVariable() {
-    trimmingOf("int a,b=2;a=b;")//
-        .gives("int a;a=2;");
-  }
 
   @Test public void inlineSingleUseKillingVariables() {
     trimmingOf("int $, xi=0, xj=0, yi=0, yj=0;if(xi> xj==yi> yj)$++;else $--;").gives("int $, xj=0, yi=0, yj=0;if(0>xj==yi>yj)$++;else $--;");
@@ -1366,12 +1292,7 @@ public final class Version230 {
         .gives("\"ab\".equalsIgnoreCase(a)");
   }
 
-//Spartanizer problem
-  @Ignore
-  @Test public void issue37Simplified() {
-    trimmingOf("int a=3;a=31 * a;")//
-        .gives("int a=31 * 3;");
-  }
+
 
   @Test public void issue37SimplifiedVariant() {
     trimmingOf("int a=3;a +=31 * a;")//
@@ -1420,12 +1341,6 @@ public final class Version230 {
         .gives("int a=f()+2;");
   }
 
-//Spartanizer problem
-  @Ignore
-  @Test public void issue43() {
-    trimmingOf("String tipper=Z2;tipper=tipper.f(A).f(b)+ tipper.f(c);return(tipper + 3);")
-        .gives("String tipper=Z2.f(A).f(b)+ Z2.f(c);return(tipper + 3);");
-  }
 
   @Test public void issue46() {
     trimmingOf("int f(){ x++;y++;if(a){ i++; j++; k++;} }")//
@@ -2153,12 +2068,6 @@ public final class Version230 {
         .gives("true");
   }
 
-  //Spartanizer problem
-  @Ignore
-  @Test public void overridenDeclaration() {
-    trimmingOf("int a=3;a=f()? 3 : 4;")//
-        .gives("int a=f()? 3: 4;");
-  }
 
   @Test public void paramAbbreviateBasic1() {
     trimmingOf("void m(XMLDocument xmlDocument, int abcd){xmlDocument.exec(p);}")//
@@ -3406,12 +3315,7 @@ public final class Version230 {
         .gives("f(m);f();");
   }
 
-//Spartanizer problem
-  @Ignore
-  @Test public void ternarize14() {
-    trimmingOf("String u=m,foo=GY;print(x);if(u.equals(f())==true){foo=M;int k=2;k=8;S.h(foo);}f();")
-        .gives("String u=m,foo=GY;print(x);if(u.equals(f())){foo=M;int k=8;S.h(foo);}f();");
-  }
+
   /* @Test public void ternarize16(){
    * trimmingOf("String u=m;int num2;if(m.equals(f()))num2=2;"). stays();} */
 
@@ -3615,11 +3519,5 @@ public final class Version230 {
         .stays();
   }
 
-  @Ignore
-  static class NotWorking {
-    @Test public void issue74d() {
-      trimmingOf("int[] a=new int[] {2,3};")//
-          .gives("");
-    }
-  }
+
 }
