@@ -51,6 +51,8 @@ public interface scope {
 
   static Namespace getScopeNamespace(final ASTNode ¢) {
     final ASTNode delimiter = delimiter(¢);
+    if(delimiter == null)
+      return null;
     if(delimiter.getProperty("Namespace") != null)
       return (Namespace) delimiter.getProperty("Namespace");
     final List<Statement> statements = statements(delimiter);
@@ -78,7 +80,7 @@ public interface scope {
   
   /** returns whether identifier exists in the environment (does not include nested scopes) */
   static boolean hasInScope(final ASTNode ¢, final String identifier) {
-    return getScopeNamespace(¢).has(identifier);
+    return getScopeNamespace(¢) != null && getScopeNamespace(¢).has(identifier);
   }
   
   /** returns whether identifier exists in the environment (includes nested scopes) */

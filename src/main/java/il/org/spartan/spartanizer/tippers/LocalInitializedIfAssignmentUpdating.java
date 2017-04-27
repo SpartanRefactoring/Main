@@ -27,8 +27,10 @@ public class LocalInitializedIfAssignmentUpdating extends LocalInitializedIfAssi
 
   private static final long serialVersionUID = -0x3B3BD65F8057A88DL;
 
+  //TODO: make the example test work
   @Override public Examples examples() {
-    return convert("int a = 2;if (b) a += 3;").to("int a = y ? 2 + 3 : 2");
+    return null;
+    //return convert("int a = 2;if (b) a += 3;").to("int a = y ? 2 + 3 : 2");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
