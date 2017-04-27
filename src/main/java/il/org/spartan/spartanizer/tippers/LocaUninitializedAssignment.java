@@ -20,13 +20,13 @@ import il.org.spartan.utils.*;
 /** See {@link #examples()}
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocaUNlInitializedAssignmentUnderConstructiom extends LocalUninitialized implements TipperCategory.Inlining {
+public final class LocaUninitializedAssignment extends LocalUninitialized implements TipperCategory.Collapse {
   private static final long serialVersionUID = 0x14812B0904DFB002L;
   private Assignment assignment;
   private Expression from;
   private Expression to;
 
-  public LocaUNlInitializedAssignmentUnderConstructiom() {
+  public LocaUninitializedAssignment() {
     notNil("Next statement is an assignment", () -> assignment = extract.assignment(nextStatement));
     andAlso("It is a non-update assignment ", () -> assignment.getOperator() == ASSIGN);
     property("To", () -> to = to(assignment));
@@ -34,7 +34,7 @@ public final class LocaUNlInitializedAssignmentUnderConstructiom extends LocalUn
     andAlso("Assignment is to present local", () -> wizard.eq(name, to));
     andAlso("Local is not assigned in its later siblings", () -> !usedInLaterSiblings());
     andAlso("New value does not use values of later siblings", () -> {
-      final List<String> usedNames = compute.usedNames(from).collect(toList());
+      final List<String> usedNames = compute.usedIdentifiers(from).collect(toList());
       return laterSiblings().noneMatch(y -> usedNames.contains(y.getName()));
     });
   }

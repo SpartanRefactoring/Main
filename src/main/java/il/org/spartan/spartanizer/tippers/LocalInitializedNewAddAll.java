@@ -22,8 +22,7 @@ import nano.ly.*;
  * @author Yossi Gil
  * @author Yossi Gil
  * @since 2017-03-02 */
-public final class LocalInitializedNewAddAll extends LocalInitialized //
-    implements TipperCategory.Inlining {
+public final class LocalInitializedNewAddAll extends LocalInitialized  {
   private static final long serialVersionUID = -0x32A5C56237F0DE7L;
 
   public LocalInitializedNewAddAll() {

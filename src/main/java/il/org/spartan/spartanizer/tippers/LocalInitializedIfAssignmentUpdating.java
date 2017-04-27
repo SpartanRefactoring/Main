@@ -13,16 +13,18 @@ import il.org.spartan.utils.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-23 */
-public class LocalInitializedIfAssignmentUpdating extends LocalInitializedIfAssignmentPattern {
+public final class LocalInitializedIfAssignmentUpdating extends LocalInitializedIfAssignmentPattern {
   public LocalInitializedIfAssignmentUpdating() {
-    andAlso("Assignment must be updating", () -> operator != ASSIGN);
-    andAlso("Initializer has no side effects", () -> sideEffects.free(initializer));
-    // andAlso("Initializer is deterministic ", () ->
-    // sideEffects.deterministic(initializer));
-    // andAlso("Condition does not use initializer", () ->
-    // compute.usedNames(condition).contains(name + ""));
-    // andAlso("From does not use initializer", () ->
-    // compute.usedNames(from).contains(name + ""));
+    andAlso("Assignment must be updating", //
+        () -> operator != ASSIGN);
+    andAlso("Initializer has no side effects", //
+        () -> sideEffects.free(initializer));
+    andAlso("Initializer is deterministic ", //
+        () -> sideEffects.deterministic(initializer));
+    andAlso("Condition does not use initializer", //
+        () -> compute.usedIdentifiers(condition).noneMatch(x->x.equals(identifier)));
+    andAlso("From does not use initializer", //
+        () -> compute.usedIdentifiers(from).noneMatch(x->x.equals(identifier)));
   }
 
   private static final long serialVersionUID = -0x3B3BD65F8057A88DL;
