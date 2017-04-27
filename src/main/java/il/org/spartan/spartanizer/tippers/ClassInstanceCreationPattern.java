@@ -1,12 +1,10 @@
-package il.org.spartan.spartanizer.patterns;
+package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.tippers.*;
 
 /** {@link ClassInstanceCreation} pattern.
  * @author Ori Roth

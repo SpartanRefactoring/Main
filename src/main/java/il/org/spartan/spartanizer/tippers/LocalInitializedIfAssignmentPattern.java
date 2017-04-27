@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** An abstract tipper pattern for something like {@code
@@ -26,9 +25,9 @@ public abstract class LocalInitializedIfAssignmentPattern extends LocalInitializ
   protected Expression from;
 
   public LocalInitializedIfAssignmentPattern() {
-    require("Next statement is an if", () -> nextIf = az.ifStatement(nextStatement));
+    needs("Next statement is an if", () -> nextIf = az.ifStatement(nextStatement));
     andAlso("Else is empty", () -> iz.vacuousElse(nextIf));
-    require("Then part is an assignment", () -> assignment = extract.assignment(then(nextIf)));
+    needs("Then part is an assignment", () -> assignment = extract.assignment(then(nextIf)));
     andAlso("Assignment is to current variable", () -> wizard.eq(name, to(assignment)));
     property("Operator", () -> operator = assignment.getOperator());
     property("Condition", () -> condition = nextIf.getExpression());

@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.patterns;
+package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.utils.Proposition.*;
 
@@ -11,7 +11,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
-import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;
@@ -112,7 +111,7 @@ public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
     return Ranger.start(current);
   }
 
-  protected <T> NodePattern<N> require(final String name, final Supplier<T> t) {
-    return notNil(String.format("Require %s ", name), t);
+  protected <T> NodePattern<N> needs(final String name, final Supplier<T> t) {
+    return notNil(String.format("Property %s needs to non-null", name), t);
   }
 }
