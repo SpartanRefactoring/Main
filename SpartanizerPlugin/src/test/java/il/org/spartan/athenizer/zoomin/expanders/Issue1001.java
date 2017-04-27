@@ -88,9 +88,6 @@ public class Issue1001 {
     }
 
     void f1() {
-      int a;
-      a = 0;
-      a += 1;
     }
 
     void f2() {
@@ -111,10 +108,8 @@ public class Issue1001 {
 
     void f3() {
       int a;
-      int b;
       a = 0;
-      b = 0;
-      x(a += (b = 1));
+      x(a += 1);
     }
 
     void f4() {

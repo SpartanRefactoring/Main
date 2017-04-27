@@ -248,8 +248,7 @@ public interface Configurations {
           new ParameterRenameUnderscoreToDoubleUnderscore<>(), //
           new LocalUninitializedAssignment(), //
           new LocalUninitializedDead(), //
-          new LocalInitializedAssignment(),
-          new LocalInitializedUpdateAssignment(), //
+          new LocalInitializedAssignment(), new LocalInitializedUpdateAssignment(), //
           new LocalInitializedReturnExpression(), //
           new LocalInitializedIfAssignment(), //
           new LocalInitializedIfAssignmentUpdating(), //

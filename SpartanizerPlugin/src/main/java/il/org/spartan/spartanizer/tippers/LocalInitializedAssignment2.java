@@ -12,14 +12,12 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.Inliner.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** See {@link #examples()}
  * @author Yossi Gil
  * @since 2015-08-07 */
-public final class LocalInitializedAssignment2 extends LocalInitializedStatement
- {
+public final class LocalInitializedAssignment2 extends LocalInitializedStatement {
   private static final long serialVersionUID = 0x1866B79F79A10C90L;
 
   @Override public String description() {
