@@ -11,7 +11,6 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
-@Ignore
 public class Issue1001 {
   @Test public void basic() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
@@ -88,7 +87,11 @@ public class Issue1001 {
       return new Issue1001Aux();
     }
 
-    void f1() { /**/ }
+    void f1() {
+      int a;
+      a = 0;
+      a += 1;
+    }
 
     void f2() {
       int a;
@@ -108,8 +111,10 @@ public class Issue1001 {
 
     void f3() {
       int a;
+      int b;
       a = 0;
-      x(a += 1);
+      b = 0;
+      x(a += (b = 1));
     }
 
     void f4() {
