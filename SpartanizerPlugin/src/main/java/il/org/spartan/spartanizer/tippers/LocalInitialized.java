@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.patterns;
+package il.org.spartan.spartanizer.tippers;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
@@ -7,7 +7,6 @@ public abstract class LocalInitialized extends LocalPattern {
   private static final long serialVersionUID = 0x40D2B631F771C9F4L;
 
   public LocalInitialized() {
-    andAlso("Local must be initialized", //
-        () -> initializer != null);
+    needs("Initializer", () -> initializer);
   }
 }

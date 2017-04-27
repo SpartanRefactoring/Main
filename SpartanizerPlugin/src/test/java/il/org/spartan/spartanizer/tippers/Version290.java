@@ -10,7 +10,7 @@ import org.junit.*;
 @SuppressWarnings("static-method")
 public class Version290 {
   // Spartanizer problem
-  @Ignore @Test public void overridenDeclaration() {
+  @Test public void overridenDeclaration() {
     trimmingOf("int a=3;a=f()? 3 : 4;")//
         .gives("int a=f()? 3: 4;");
   }
