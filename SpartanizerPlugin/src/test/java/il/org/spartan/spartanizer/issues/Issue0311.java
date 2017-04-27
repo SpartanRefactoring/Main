@@ -280,16 +280,16 @@ public class Issue0311 {
         .stays();
   }
 
-  /** Introduced by Yogi on Tue-Apr-25-21:05:24-IDT-2017 (code generate
+  /** Introduced by Yogi on Tue-Apr-25-21:05:24-IDT-2017 (code generated
    * automatically by {@link JUnitTestMethodFacotry}) */
   @Test public void intaNewInt12345ForIntb0ab0b() {
-    TestOperand a = trimmingOf("int[] a = new int[] { 1, 2, 3, 4, 5 }; for (int b = 0;;) { a[b] = 0; ++b; }") //
+    final TestOperand a = trimmingOf("int[] a = new int[] { 1, 2, 3, 4, 5 }; for (int b = 0;;) { a[b] = 0; ++b; }") //
     ;
     assert a != null;
-    TestOperand b = a.using(ForStatement.class, new ForToForUpdaters()) //
+    final TestOperand b = a.using(ForStatement.class, new ForToForUpdaters()) //
     ;
     assert b != null;
-    TestOperand c = b.gives("int[] a=new int[]{1,2,3,4,5};for(int b=0;;++b){a[b]=0;}") //
+    final TestOperand c = b.gives("int[] a=new int[]{1,2,3,4,5};for(int b=0;;++b){a[b]=0;}") //
     ;
     assert c != null;
     c.using(Block.class, new BlockSingletonEliminate()) //
@@ -297,5 +297,4 @@ public class Issue0311 {
         .stays() //
     ;
   }
-
 }
