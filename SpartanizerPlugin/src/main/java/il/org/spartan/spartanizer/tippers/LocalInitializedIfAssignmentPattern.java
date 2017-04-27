@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tipping.*;
 
 /** An abstract tipper pattern for something like {@code
  * int a = 2;
