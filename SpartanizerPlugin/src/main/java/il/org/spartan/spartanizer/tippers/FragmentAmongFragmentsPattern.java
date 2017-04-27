@@ -19,7 +19,7 @@ public abstract class FragmentAmongFragmentsPattern extends FragmentPattern {
   public FragmentAmongFragmentsPattern() {}
 
   public boolean usedInLaterSiblings() {
-    return laterSiblings().anyMatch(λ -> compute.usedNames(λ.getInitializer()).anyMatch(x -> x.equals(identifier)));
+    return laterSiblings().anyMatch(λ -> compute.usedIdentifiers(λ.getInitializer()).anyMatch(x -> x.equals(identifier)));
   }
 
   protected final int currentIndex() {
