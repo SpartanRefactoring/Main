@@ -1,8 +1,6 @@
-package il.org.spartan.spartanizer.patterns;
+package il.org.spartan.spartanizer.tippers;
 
 import org.eclipse.jdt.core.dom.*;
-
-import il.org.spartan.spartanizer.tippers.*;
 
 /** TODO dormaayn: document class Note that Java currently does not allow
  * initializers to single varaible declarations

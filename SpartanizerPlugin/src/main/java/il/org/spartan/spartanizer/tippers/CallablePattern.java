@@ -1,4 +1,4 @@
-package il.org.spartan.spartanizer.patterns;
+package il.org.spartan.spartanizer.tippers;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 

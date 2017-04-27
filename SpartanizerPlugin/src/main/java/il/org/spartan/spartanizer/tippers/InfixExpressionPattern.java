@@ -7,7 +7,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.patterns.*;
 
 /** @author Yossi Gil
  * @since 2017-04-25 */
