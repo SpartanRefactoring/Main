@@ -22,7 +22,7 @@ public interface JohnDoe {
     return n != null && property(t + "", identifier(n));
   }
   static boolean property(final String ¢) {
-    return ¢.length() > 1 && not.in(¢, shortNames); 
+    return ¢.length() == 1 || is.in(¢, shortNames); 
   }
   String[] shortNames = { "idx", "arr", "lst", "integer", "list" };
 }
