@@ -15,11 +15,10 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 import nano.ly.*;
 
-/** Convert {@code void f(int a){}} to {@code void f(int it){}} Test class is
- * Issue1162
- * @author Dor Ma'ayan
- * @since 2017-07-05 */
-public final class MethodDeclarationRenameSingleParameterToIt extends EagerTipper<MethodDeclaration>//
+/** Convert {@code void f(int a){}} to {@code void f(int ¢){}}
+ * @author Yossi Gil
+ * @since 2016-09 */
+public final class MethodDeclarationRenameSingleParameter extends EagerTipper<MethodDeclaration>//
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 0x5583F2C8E00B4000L;
 
@@ -39,10 +38,10 @@ public final class MethodDeclarationRenameSingleParameterToIt extends EagerTippe
     if (notation.isSpecial($))
       return null;
     final Block b = body(d);
-    if (b == null || haz.variableDefinition(b) || haz.it(b) || collect.usesOf($).in(b).isEmpty())
+    if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
-    final SimpleName ¢ = make.newIt(d);
-    return new Tip("Rename paraemter " + $ + " to it ", getClass(), $) {
+    final SimpleName ¢ = make.newCent(d);
+    return new Tip("Rename paraemter " + $ + " to ¢ ", getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, d, r, g);
         ParameterAbbreviate.fixJavadoc(d, $, ¢ + "", r, g);
