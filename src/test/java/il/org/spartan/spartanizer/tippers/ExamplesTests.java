@@ -78,8 +78,11 @@ public class ExamplesTests {
    * @return
    * @return all tippers to be tested */
   private static Collection<?> allTippers() {
-    return Configurations.all().getAllTippers() //
+    return Configurations//
+        .all()//
+        .getAllTippers() //
         .stream()//
-        .collect(toMap(Tipper::getClass, λ -> λ, (t1, t2) -> t1)).values();
+        .collect(toMap(Tipper::getClass, λ -> λ, (t1, t2) -> t1))//
+        .values();
   }
 }

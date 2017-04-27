@@ -32,6 +32,4 @@ public class SelectTest {
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(toList()));")//
     ;
   }
-
-
 }
