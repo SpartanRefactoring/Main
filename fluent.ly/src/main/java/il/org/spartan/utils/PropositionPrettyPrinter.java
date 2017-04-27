@@ -2,7 +2,7 @@ package il.org.spartan.utils;
 
 import java.util.function.BooleanSupplier;
 
-import il.org.spartan.utils.Proposition.And;
+import il.org.spartan.utils.Proposition.Not;
 import il.org.spartan.utils.Proposition.Singleton;
 import il.org.spartan.utils.Proposition.Some;
 import nano.ly.English;
@@ -16,13 +16,11 @@ public class PropositionPrettyPrinter {
     }
 
     public void topDown(BooleanSupplier ¢) {
-      if (¢ instanceof Singleton) {
-        this.listener.in(¢);
+      this.listener.in(¢);
+      if (¢ instanceof Singleton)
         singleton((Singleton) ¢);
-      } else if (¢ instanceof Some) {
-        this.listener.in(¢);
+      else if (¢ instanceof Some)
         some((Some) ¢);
-      }
     }
 
     private void some(Some ¢) {
@@ -36,7 +34,8 @@ public class PropositionPrettyPrinter {
 
     private void singleton(Singleton ¢) {
       listener.down();
-      topDown(¢.inner);
+      if (¢.inner instanceof Proposition)
+        topDown(¢.inner);
       listener.up();
     }
   }
@@ -117,7 +116,7 @@ public class PropositionPrettyPrinter {
 
     @Override public void in(BooleanSupplier ¢) {
       StringBuilder sb = new StringBuilder(aligner + "");
-      if (¢ instanceof Some)
+      if (¢ instanceof Some || ¢ instanceof Not)
         sb.append("(" + English.selfName(¢.getClass()) + ")");
       if (!(¢ + "").contains(¢.getClass().getName()))
         sb.append(" " + ¢);
@@ -184,6 +183,15 @@ public class PropositionPrettyPrinter {
         Proposition.AND( //
             Proposition.F, //
             Proposition.X));
+    System.out.println();
+    // example 6
+    p.present(Proposition.OR("SUB2", //
+        Proposition.T, //
+        Proposition.not(Proposition.not(Proposition.N)), //
+        () -> true, //
+        Proposition.that("OH NO", () -> {
+          throw new RuntimeException();
+        })));
     System.out.println();
   }
 }
