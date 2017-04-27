@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** TODO Ori Marcovitch please add a description
