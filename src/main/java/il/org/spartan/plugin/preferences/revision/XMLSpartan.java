@@ -283,7 +283,7 @@ public class XMLSpartan {
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
     Configurations.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
-    createNotationChild($,"Cent","¢",seen,n);
+    createNotationChild($, "Cent", "¢", seen, n);
     $.appendChild(e);
     e.appendChild(t);
     e.appendChild(n);
