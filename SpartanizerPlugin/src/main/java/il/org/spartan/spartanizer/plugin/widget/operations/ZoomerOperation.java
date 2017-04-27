@@ -2,8 +2,7 @@ package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import il.org.spartan.spartanizer.plugin.widget.*;
 
-/** document class 
- * 
+/** document class
  * @author Raviv Rachmiel
  * @since 2017-04-27 */
 public class ZoomerOperation extends WidgetOperation {

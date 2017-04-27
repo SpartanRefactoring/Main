@@ -215,7 +215,7 @@ public enum JUnitTestMethodFacotry {
   static String comment() {
     return format(
         "/** Introduced by %s on %s \n" + //
-            "(code generate automatically by {@link %s})*/\n", //
+            "(code generated automatically by {@link %s})*/\n", //
         system.userName(), //
         system.now(), //
         system.myShortClassName());

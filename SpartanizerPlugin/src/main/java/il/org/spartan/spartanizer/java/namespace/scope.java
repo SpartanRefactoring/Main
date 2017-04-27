@@ -51,19 +51,19 @@ public interface scope {
 
   static Namespace getScopeNamespace(final ASTNode ¢) {
     final ASTNode delimiter = delimiter(¢);
-    if(delimiter == null)
+    if (delimiter == null)
       return null;
-    if(delimiter.getProperty("Namespace") != null)
+    if (delimiter.getProperty("Namespace") != null)
       return (Namespace) delimiter.getProperty("Namespace");
     final List<Statement> statements = statements(delimiter);
     final Statement last = the.lastOf(statements);
     Namespace of = Environment.of(last);
-    if(of == null)
+    if (of == null)
       of = new Namespace(of);
     delimiter.setProperty("Namespace", of);
     return of;
   }
-  
+
   static String newName(final ASTNode ¢, final Type t) {
     final Namespace n = getScopeNamespace(¢);
     final String $ = n.generateName(t);
@@ -77,13 +77,15 @@ public interface scope {
     n.addNewName($, t);
     return $;
   }
-  
-  /** returns whether identifier exists in the environment (does not include nested scopes) */
+
+  /** returns whether identifier exists in the environment (does not include
+   * nested scopes) */
   static boolean hasInScope(final ASTNode ¢, final String identifier) {
     return getScopeNamespace(¢) != null && getScopeNamespace(¢).has(identifier);
   }
-  
-  /** returns whether identifier exists in the environment (includes nested scopes) */
+
+  /** returns whether identifier exists in the environment (includes nested
+   * scopes) */
   static boolean hasInScopeComplex(final ASTNode ¢, final String identifier) {
     return getScopeNamespace(¢).hasComplex(identifier);
   }

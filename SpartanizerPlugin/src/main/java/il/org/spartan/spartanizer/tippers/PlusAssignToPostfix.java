@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * where binding exists, otherwise doesnothing Tested in {@link Issue096}
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-3-23 */
-public     class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
+public class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
     implements TipperCategory.Arithmetics {
   private static final long serialVersionUID = 0x1F5C3A50D08EA75BL;
 

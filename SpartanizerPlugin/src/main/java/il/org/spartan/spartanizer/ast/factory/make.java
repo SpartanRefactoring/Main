@@ -486,8 +486,4 @@ public enum make {
   public static SimpleName newCent(final ASTNode ¢) {
     return from(¢).identifier(notation.cent);
   }
-
-  public static SimpleName newIt(final ASTNode ¢) {
-    return from(¢).identifier(notation.it);
-  }
 }

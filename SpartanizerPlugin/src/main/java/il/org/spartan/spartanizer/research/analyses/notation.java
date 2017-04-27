@@ -9,12 +9,11 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2017-04-23 */
 public interface notation {
   String anonymous = "__";
-  String cent = "¢"; //
-  String forbidden = "_"; //
-  String it = "it"; //
-  String lambda = "λ"; //
-  String return¢ = "$"; //
-  String[] specials = { forbidden, return¢, anonymous, cent, lambda, it };
+  static String cent = "¢"; //
+  static String forbidden = "_"; //
+  static String lambda = "λ"; //
+  static String return¢ = "$"; //
+  static String[] specials = { forbidden, return¢, anonymous, cent, lambda};
 
   static boolean isSpecial(final SimpleName $) {
     return isSpecial($.getIdentifier());

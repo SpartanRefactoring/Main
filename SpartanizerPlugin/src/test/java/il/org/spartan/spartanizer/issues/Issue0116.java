@@ -51,9 +51,8 @@ public final class Issue0116 extends TipperTest<InfixExpression> {
         .stays();
   }
 
-  //TODO: Niv Shalmon, fix this please
-  @Ignore
-  @Test public void issue116_08() {
+  // TODO: Niv Shalmon, fix this please
+  @Ignore @Test public void issue116_08() {
     trimmingOf("return x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\";")
         .gives("return \"Use \" + (x == null ? \"isEmpty()\" : \"\" + x + \".isEmpty()\");")
         .gives("return \"Use \" + ((x == null ? \"\" : \"\" + x + \".\")+\"isEmpty()\");")

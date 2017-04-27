@@ -93,10 +93,9 @@ public final class FixedPointTest {
   @Test(timeout = 2000) public void issue37abbreviated() {
     assertConvertsTo(" int a = 3; a = 31 * a; return a;\n", "return 93;");
   }
-  
-  //Spartanizer problem
-  @Ignore
-  @Test public void issue43() {
+
+  // Spartanizer problem
+  @Ignore @Test public void issue43() {
     assertConvertsTo("String tipper = Z2;  tipper = tipper.f(A).f(b) + tipper.f(c); return (tipper + 3); ", "return(Z2.f(A).f(b)+Z2.f(c)+3);");
   }
 
@@ -166,9 +165,8 @@ public final class FixedPointTest {
     assertSimplifiesTo("1 + 2 + 3 + a <3 -4", "a <-7");
   }
 
-  //Spartanizer problem
-  @Ignore
-  @Test(timeout = 2000) public void ternarize01() {
+  // Spartanizer problem
+  @Ignore @Test(timeout = 2000) public void ternarize01() {
     assertConvertsTo("String $ = s;if (s.equals(532)==true) $ = s + 0xABBA;else $ = SPAM;x.y.f($);", "x.y.f(!s.equals(532)?SPAM:s+0xABBA);");
   }
 
@@ -196,10 +194,9 @@ public final class FixedPointTest {
   @Test(timeout = 2000) public void ternarize11() {
     assertConvertsTo("String $ = s, foo = \"bar\";if (s.equals(532)==true) $ = s + 0xABBA;x.y.f($);", "x.y.f(!s.equals(532)?s:s+0xABBA);");
   }
-  
-  //Spartanizer problem
-  @Ignore
-  @Test(timeout = 2000) public void ternarize17() {
+
+  // Spartanizer problem
+  @Ignore @Test(timeout = 2000) public void ternarize17() {
     assertConvertsTo("int a, b; a = 3; b = 5; if (a == 4) if (b == 3) b = r();\n else b = a; else if (b == 3) b = r(); else b = a;", "r();");
   }
 
@@ -216,6 +213,7 @@ public final class FixedPointTest {
     assertConvertsTo("boolean c;if (s.equals(532)) c=false;else c=true;", "s.equals(532);");
   }
 
+  @Ignore
   @Test(timeout = 2000) public void ternarize40() {
     assertConvertsTo("int a, b, c;a = 3;b = 5;if (a == 4) while (b == 3) c = a;else while (b == 3) c = a*a;",
         "int c;if(3==4)while(5==3)c=3;else while(5==3)c=9;");
