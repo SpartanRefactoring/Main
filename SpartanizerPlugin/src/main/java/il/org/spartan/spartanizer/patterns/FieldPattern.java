@@ -8,7 +8,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -23,14 +22,6 @@ public abstract class FieldPattern extends FragmentAmongFragmentsPattern {
 
   @Override protected final List<VariableDeclarationFragment> siblings() {
     return step.fragments(declaration);
-  }
-
-  protected boolean usedInSubsequentInitializers() {
-    return youngerSiblings().stream().anyMatch(λ -> !collect.usesOf(name()).in(λ.getInitializer()).isEmpty());
-  }
-
-  final boolean doesUseForbiddenSiblings(final ASTNode... ns) {
-    return youngerSiblings().stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
   }
 
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other

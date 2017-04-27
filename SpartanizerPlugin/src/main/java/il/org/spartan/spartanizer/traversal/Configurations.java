@@ -255,7 +255,7 @@ public interface Configurations {
           new LocalInitializedStatementReturnAssignment(), //
           new LocalInitializedReturn(), //
           new LocalInitializedStatementTerminatingScope(), //
-          new LocalInitializedAssignment(), //
+          new LocalUninitializedAssignment(), //
           new LocalUninitializedDead(), //
           new LocalInitializedInlineIntoNext(), //
           new LocalInitializedStatementWhile(), //
