@@ -20,7 +20,7 @@ public class Issue1159 {
   @Test public void t2() {
     bloatingOf("switch(a){ case 1: y=2; break; default: }").stays();
   }
-  
+
   @Test public void t8() {
     bloatingOf("switch(++x){}")//
         .gives("switch(++x){default:}");
