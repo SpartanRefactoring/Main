@@ -11,6 +11,7 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
+@Ignore("TODO Assignee of #1001")
 public class Issue1001 {
   @Test public void basic() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
@@ -88,6 +89,7 @@ public class Issue1001 {
     }
 
     void f1() {
+      /**/
     }
 
     void f2() {
