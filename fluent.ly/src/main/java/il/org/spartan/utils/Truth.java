@@ -5,19 +5,19 @@ import java.util.function.*;
 public enum Truth {
   T("true"), //
   F("false"), //
-  A("Assertion exception"), //
+  X("Assertion exception"), //
   N("Null pointer exception"), //
-  X("Runtime exception"), //
+  R("Runtime exception"), //
   Ħ("A throwable of unknown kind");
-  public static Truth truthOf(BooleanSupplier s) {
+  public static Truth truthOf(BooleanSupplier $) {
     try {
-      return s.getAsBoolean() ? T : F;
+      return $.getAsBoolean() ? T : F;
     } catch (NullPointerException __) {
       return N;
     } catch (AssertionError __) {
-      return A;
-    } catch (RuntimeException __) {
       return X;
+    } catch (RuntimeException __) {
+      return R;
     } catch (Throwable __) {
       return Ħ;
     }
@@ -37,13 +37,17 @@ public enum Truth {
     return this == F ? this : other;
   }
 
-  public static String letterOf(BooleanSupplier s) {
-    return truthOf(s) + "";
+  public static String letterOf(BooleanSupplier ¢) {
+    return truthOf(¢) + "";
   }
 
-  private String description;
+  public String description;
 
   Truth(String description) {
     this.description = description;
+  }
+
+  @Override public String toString() {
+    return description;
   }
 }
