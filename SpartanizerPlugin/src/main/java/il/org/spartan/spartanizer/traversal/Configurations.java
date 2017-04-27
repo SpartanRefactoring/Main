@@ -150,7 +150,7 @@ public interface Configurations {
           new AnnotationSort<>(), //
           new MethodDeclarationRenameReturnToDollar(), //
           new BodyDeclarationModifiersSort<>(), //
-          new MethodDeclarationRenameSingleParameterToCent(), //
+          new MethodDeclarationRenameSingleParameter(), //
           new ConstructorRenameParameters(), //
           new ConstructorEmptyRemove(), //
           new MethodDeclarationConstructorMoveToInitializers(), //
