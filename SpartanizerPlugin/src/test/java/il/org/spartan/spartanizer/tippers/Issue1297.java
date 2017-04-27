@@ -5,6 +5,8 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import il.org.spartan.spartanizer.cmdline.*;
+
 /** Unit tests for version 2.90
  * @author Yossi Gil
  * @since 2017-04-27 */
