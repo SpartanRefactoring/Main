@@ -336,10 +336,6 @@ public final class Version230 {
         .gives("return 2;");
   }
 
-
-
-
-
   @Test public void canonicalFragementExamplesWithExraFragmentsX() {
     trimmingOf("int a;if(x)a=3;else a++;")//
         .gives("int a;if(x)a=3;else++a;");
@@ -1035,7 +1031,6 @@ public final class Version230 {
             .stays();
   }
 
-
   @Test public void inlineSingleUseKillingVariables() {
     trimmingOf("int $, xi=0, xj=0, yi=0, yj=0;if(xi> xj==yi> yj)$++;else $--;").gives("int $, xj=0, yi=0, yj=0;if(0>xj==yi>yj)$++;else $--;");
   }
@@ -1292,8 +1287,6 @@ public final class Version230 {
         .gives("\"ab\".equalsIgnoreCase(a)");
   }
 
-
-
   @Test public void issue37SimplifiedVariant() {
     trimmingOf("int a=3;a +=31 * a;")//
         .gives("int a=3+31*3;");
@@ -1340,7 +1333,6 @@ public final class Version230 {
     trimmingOf("int a=f();a +=2;")//
         .gives("int a=f()+2;");
   }
-
 
   @Test public void issue46() {
     trimmingOf("int f(){ x++;y++;if(a){ i++; j++; k++;} }")//
@@ -2067,7 +2059,6 @@ public final class Version230 {
     trimmingOf("true && true")//
         .gives("true");
   }
-
 
   @Test public void paramAbbreviateBasic1() {
     trimmingOf("void m(XMLDocument xmlDocument, int abcd){xmlDocument.exec(p);}")//
@@ -3314,8 +3305,6 @@ public final class Version230 {
     trimmingOf("f(m==true);f();")//
         .gives("f(m);f();");
   }
-
-
   /* @Test public void ternarize16(){
    * trimmingOf("String u=m;int num2;if(m.equals(f()))num2=2;"). stays();} */
 
@@ -3518,6 +3507,4 @@ public final class Version230 {
     trimmingOf("f(a,b,c,d)^ BOB")//
         .stays();
   }
-
-
 }

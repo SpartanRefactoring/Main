@@ -113,8 +113,9 @@ public final class Namespace implements Environment {
   @Override public boolean has(final String identifier) {
     return flat.containsKey(identifier) || nest != null && nest.has(identifier);
   }
-  
-  /** Check whether the namespace or any nesting or nested namespace already has the name. */
+
+  /** Check whether the namespace or any nesting or nested namespace already has
+   * the name. */
   public boolean hasComplex(final String identifier) {
     return has(identifier) || children.stream().anyMatch(x -> x.hasComplex(identifier));
   }
