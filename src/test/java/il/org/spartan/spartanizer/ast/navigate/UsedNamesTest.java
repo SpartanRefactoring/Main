@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.ast.navigate;
 
 import static il.org.spartan.azzert.*;
 
-import java.util.*;
+import java.util.stream.*;
 
 import org.junit.*;
 
@@ -15,27 +15,27 @@ import il.org.spartan.spartanizer.engine.*;
 @SuppressWarnings("static-method")
 public class UsedNamesTest {
   @Test public void a() {
-    azzert.that(compute.usedNames(into.e("0")).size(), is(0));
+    azzert.that(compute.usedNames(into.e("0")).count(), is(0L));
   }
 
   @Test public void b() {
-    azzert.that(compute.usedNames(into.e("a")).size(), is(1));
+    azzert.that(compute.usedNames(into.e("a")).count(), is(1L));
   }
 
   @Test public void c() {
-    azzert.that(compute.usedNames(into.e("a+0")).size(), is(1));
+    azzert.that(compute.usedNames(into.e("a+0")).count(), is(1L));
   }
 
   @Test public void d() {
-    azzert.that(compute.usedNames(into.e("f()")).size(), is(0));
+    azzert.that(compute.usedNames(into.e("f()")).count(), is(0L));
   }
 
   @Test public void e() {
-    azzert.that(compute.usedNames(into.e("this.f(a)")).size(), is(1));
+    azzert.that(compute.usedNames(into.e("this.f(a)")).count(), is(1L));
   }
 
   @Test public void f() {
-    final List<String> usedNames = compute.usedNames(into.e("azzert.that(Extract.usedNames(into.e(X)).size(), is(1))"));
-    azzert.that(usedNames + "", usedNames.size(), is(0));
+    final Stream<String> usedNames = compute.usedNames(into.e("azzert.that(Extract.usedNames(into.e(X)).size(), is(1))"));
+    azzert.that(usedNames + "", usedNames.count(), is(0L));
   }
 }

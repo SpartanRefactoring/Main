@@ -50,7 +50,7 @@ public class Issue0879 {
         .gives("int a(){int b=9+4,$=7;$=b+b;return $;}") //
         .using(new InfixAdditionEvaluate(), InfixExpression.class) //
         .gives("int a(){int b=13,$=7;$=b+b;return $;}") //
-        .using(new LocalInitializedAssignment(), VariableDeclarationFragment.class) //
+        .using(new LocalUninitializedAssignment(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=13,$=b+b;return $;}") //
         .using(new LocalInitializedStatementReturnVariable(), VariableDeclarationFragment.class) //
         .gives("int a(){int b=13;return b+b;}") //

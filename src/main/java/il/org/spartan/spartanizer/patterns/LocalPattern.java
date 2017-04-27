@@ -11,7 +11,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.engine.*;
 import nano.ly.*;
 
 /** TODO dormaayn: document class
@@ -32,7 +31,7 @@ public abstract class LocalPattern extends FragmentAmongFragmentsPattern {
    * containing node is eliminated as well.
    * @return */
   protected final ASTRewrite eliminateFragment(final ASTRewrite $, final TextEditGroup g) {
-    final List<VariableDeclarationFragment> live = otherSiblings();
+    final List<VariableDeclarationFragment> live = remainingSiblings();
     if (live.isEmpty())
       $.remove(declaration, g);
     else {
@@ -45,7 +44,7 @@ public abstract class LocalPattern extends FragmentAmongFragmentsPattern {
   }
 
   protected int eliminationSaving() {
-    final List<VariableDeclarationFragment> live = otherSiblings();
+    final List<VariableDeclarationFragment> live = remainingSiblings();
     final int $ = metrics.size(declaration);
     if (live.isEmpty())
       return $;
@@ -55,13 +54,7 @@ public abstract class LocalPattern extends FragmentAmongFragmentsPattern {
     return $ - metrics.size(newParent);
   }
 
-  protected boolean usedInSubsequentInitializers() {
-    return olderSiblings().stream().anyMatch(λ -> !collect.usesOf(name()).in(λ.getInitializer()).isEmpty());
-  }
 
-  final boolean doesUseForbiddenSiblings(final ASTNode... ns) {
-    return youngerSiblings().stream().anyMatch(λ -> collect.BOTH_SEMANTIC.of(λ).existIn(ns));
-  }
 
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .

@@ -27,7 +27,7 @@ public final class LocalInitializedReturnExpression extends LocalInitializedStat
 
   public LocalInitializedReturnExpression() {//
     andAlso("Variable not used in subsequent initializers", //
-        () -> !usedInSubsequentInitializers());//
+        () -> !usedInLaterInitializers());//
     andAlso("Next statement is return", //
         () -> not.nil(returnStatement = az.returnStatement(nextStatement)));//
     andAlso("Next statement returns a value return", //

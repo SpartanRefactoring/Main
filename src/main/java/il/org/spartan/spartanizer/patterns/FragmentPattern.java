@@ -11,19 +11,17 @@ public abstract class FragmentPattern extends NodePattern<VariableDeclarationFra
   private static final long serialVersionUID = -0x5D2F121B3027EFA6L;
   protected Expression initializer;
   protected SimpleName name;
+  protected String identifier;
 
   @Override protected ASTNode highlight() {
     return name;
   }
 
   protected FragmentPattern() {
-    andAlso("Inapplicable on annotated fragments", () -> {
-      if (haz.annotation(current()))
-        return false;
-      name = current().getName();
-      initializer = current().getInitializer();
-      return true;
-    });
+    property("Name", () -> name = current().getName());
+    property("Identifier", () -> identifier = name.getIdentifier());
+    property("Initializer", () -> initializer = current().getInitializer());
+    andAlso("Inapplicable on annotated fragments", () -> !haz.annotation(current()));
   }
 
   protected Expression initializer() {
