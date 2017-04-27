@@ -82,10 +82,6 @@ public enum haz {
     return !collect.usesOf(notation.cent).inside(¢).isEmpty();
   }
 
-  public static boolean it(final ASTNode ¢) {
-    return !collect.usesOf(notation.it).inside(¢).isEmpty();
-  }
-
   /** Determine whether an {@link ASTNode} contains as a children a
    * {@link ContinueStatement}
    * @param ¢ JD
