@@ -8,7 +8,7 @@ import org.junit.*;
  * @author Yossi Gil
  * @since 2017-04-27 */
 @SuppressWarnings("static-method")
-public class Version290 {
+public class Issue1297 {
   // Spartanizer problem
   @Test public void overridenDeclaration() {
     trimmingOf("int a=3;a=f()? 3 : 4;")//
