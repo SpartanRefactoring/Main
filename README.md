@@ -36,13 +36,13 @@ The refactorings made by this plug-in are based on the concept of Spartan Progra
 
 # Contents
 
-* [Installation Instructions](https://github.com/SpartanRefactoring/Spartanizer/wiki/Installation-Instructions "Installation")
-* [Video Demo](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos "Demos")
-* [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background")
-* [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual")
-* [Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background")
-* [Developer Guide](https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide")
-* [List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers")
+| [Installation Instructions](https://github.com/SpartanRefactoring/Spartanizer/wiki/Installation-Instructions "Installation") |
+| [Video Demo](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos "Demos") |
+| [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background") |
+| [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual") |
+| [Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background") |
+| [Developer Guide](https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide") |
+| [List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers") |
 
 ## License
 The project is available under the **[MIT License]**
