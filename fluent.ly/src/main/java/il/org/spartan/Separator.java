@@ -3,6 +3,7 @@ package il.org.spartan;
 
 import org.jetbrains.annotations.*;
 
+import fluent.ly.as;
 import il.org.spartan.iterables.*;
 
 /** A class representing a separator string, which can be used for separating
