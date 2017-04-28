@@ -5,10 +5,11 @@ import static il.org.spartan.azzert.*;
 import java.util.*;
 
 import org.junit.*;
+
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import nano.ly.*;
 
 /** Unit tests for the GitHub issue thus numbered
  * @author Alexander Kaplan

@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import java.util.*;
-import java.util.function.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
@@ -11,7 +10,7 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** @author Yossi Gil
  * @since 2017-04-25 */
-public abstract class InfixExpressionPattern extends NodePattern<InfixExpression> {
+public abstract class Multiciary extends NodePattern<InfixExpression> {
   private static final long serialVersionUID = 1;
 
   protected int arity;
@@ -21,7 +20,7 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
   protected List<Expression> rest;
   protected Expression right;
 
-  public InfixExpressionPattern() {
+  public Multiciary() {
     property("Left", () -> left = current.getLeftOperand());
     property("Right", () -> right = current.getRightOperand());
     property("Operator", () -> operator = current.getOperator());

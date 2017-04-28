@@ -13,7 +13,7 @@ import org.eclipse.text.edits.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
-import nano.ly.*;
+import fluent.ly.*;
 
 /** A shortcut to textually insert a new special character/s.
  * @author Ori Roth {@code ori.rothh@gmail.com}

@@ -7,9 +7,9 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

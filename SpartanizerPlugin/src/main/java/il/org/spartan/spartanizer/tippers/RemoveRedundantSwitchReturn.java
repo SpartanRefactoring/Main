@@ -6,11 +6,11 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
-import nano.ly.*;
 
 /** remove redundant return from switch in void method. convert {@code void a()
  * { switch(x) { case 1: y=2; break; default: return; } } } to {@code void a() {

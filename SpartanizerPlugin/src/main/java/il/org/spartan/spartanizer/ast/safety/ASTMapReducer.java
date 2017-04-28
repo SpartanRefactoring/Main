@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import static nano.ly.note.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -9,10 +8,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   public R map(final ASTNode ¢) {
@@ -65,7 +63,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return ¢ instanceof MarkerAnnotation ? map((MarkerAnnotation) ¢) //
         : ¢ instanceof NormalAnnotation ? map((NormalAnnotation) ¢) //
             : ¢ instanceof SingleMemberAnnotation ? map((SingleMemberAnnotation) ¢) //
-                : bug("Unrecognized Annotation; __=%s", English.name(¢.getClass())) //
+                : note.bug("Unrecognized Annotation; __=%s", English.name(¢.getClass())) //
     ;
   }
 
@@ -188,7 +186,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
       case EXPRESSION_METHOD_REFERENCE:
         return map((ExpressionMethodReference) ¢);
       default:
-        return bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
+        return note.bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
   }
 
@@ -219,7 +217,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   protected R map(final IExtendedModifier ¢) {
     return ¢.isAnnotation() ? map((Annotation) ¢) //
         : ¢.isModifier() ? map((Modifier) ¢) //
-            : bug("Unrecognized IExtendedModifier; __=%s", English.name(¢.getClass()));
+            : note.bug("Unrecognized IExtendedModifier; __=%s", English.name(¢.getClass()));
   }
 
   protected R map(final IfStatement ¢) {

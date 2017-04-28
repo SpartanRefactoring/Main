@@ -2,11 +2,14 @@ package il.org.spartan.proposition;
 
 import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
+import static il.org.spartan.utils.Proposition.not;
+import static il.org.spartan.utils.Proposition.that;
 
 import java.util.*;
 import java.util.function.*;
 
 import org.junit.*;
+
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
 

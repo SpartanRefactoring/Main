@@ -4,10 +4,11 @@ import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Batch testing - run the spartanizer on itself with no errors
  * @author oran1248 <tt>oran.gilboa1@gmail.com</tt>

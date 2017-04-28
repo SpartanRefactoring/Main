@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.plugin;
 
 import java.util.function.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.applicator.*;
-import nano.ly.*;
 
 /** Configurable applicator.
  * @author Ori Roth

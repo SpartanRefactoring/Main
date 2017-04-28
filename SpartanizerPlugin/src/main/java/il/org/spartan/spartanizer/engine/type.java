@@ -18,12 +18,11 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
-import il.org.spartan.iterables.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.java.*;
-import nano.ly.*;
 
 /** An interface for fluent api, used to determine the __ of an expression from
  * it's structure and context. Use __.get to find the __ of an expression.
@@ -643,7 +642,7 @@ public interface type {
       }
 
       @Override public Iterable<Certain> options() {
-        return iterables.singleton(this);
+        return a.singleton.list(this);
       }
     }
 

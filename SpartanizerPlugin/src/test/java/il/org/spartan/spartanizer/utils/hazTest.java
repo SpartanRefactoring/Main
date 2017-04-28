@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.utils;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.junit.*;
+
 import il.org.spartan.spartanizer.java.*;
 
 /** Unit tests for {@link haz}

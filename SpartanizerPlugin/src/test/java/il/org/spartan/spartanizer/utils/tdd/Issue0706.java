@@ -4,10 +4,10 @@ import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import nano.ly.*;
 
 /** Unit tests for issue #706
  * @author Sapir Bismot

@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static nano.ly.box.*;
-
 import java.io.*;
+
+import fluent.ly.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -69,7 +69,7 @@ public interface Utils {
   }
 
   static String formatRelative(final double ¢) {
-    return String.format(format2(¢) + "%%", box(100 * ¢));
+    return String.format(format2(¢) + "%%", box.it(100 * ¢));
   }
 
   static String formatRelative(final double d1, final double d2) {

@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
+
 import il.org.spartan.*;
 
 /** Tests for the GitHub issue thus numbered

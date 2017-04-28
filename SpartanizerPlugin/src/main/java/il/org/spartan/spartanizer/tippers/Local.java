@@ -8,15 +8,15 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import nano.ly.*;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
-public abstract class Local extends FragmentAmongFragmentsPattern {
+public abstract class Local extends FragmentAmongFragments {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
   protected VariableDeclarationStatement declaration;
 
