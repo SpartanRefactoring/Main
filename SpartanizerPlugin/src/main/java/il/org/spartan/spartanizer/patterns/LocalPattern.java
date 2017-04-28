@@ -54,8 +54,6 @@ public abstract class LocalPattern extends FragmentAmongFragmentsPattern {
     return $ - metrics.size(newParent);
   }
 
-
-
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
    * Still, if the containing node is left empty, it is removed as well.

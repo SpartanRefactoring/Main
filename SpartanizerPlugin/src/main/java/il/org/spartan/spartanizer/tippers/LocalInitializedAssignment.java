@@ -1,9 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-
+import static org.eclipse.jdt.core.dom.Assignment.Operator.ASSIGN;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -16,9 +14,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
-/** See {@link #examples()}
- * @author Yossi Gil
- * @since 2015-08-07 */
 public final class LocalInitializedAssignment extends $FragmentAndStatement//
     implements TipperCategory.Inlining {
   private static final long serialVersionUID = 0x14812B0904DFB002L;
@@ -28,9 +23,9 @@ public final class LocalInitializedAssignment extends $FragmentAndStatement//
   }
 
   @Override public Examples examples() {
-    return convert("class A {{int a; a = b;}}")//
-        .to("class A {{int a = b;}}")//
-    ;
+    return //
+    convert("int a = 2; a = 3; ")//
+        .to("int a = 3; ");
   }
 
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
