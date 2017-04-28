@@ -602,6 +602,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPushOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitCommitOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.SpartanizationOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CmdOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CustomWidgetOperation" />
 </extension>
 
 </plugin>
