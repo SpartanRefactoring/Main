@@ -6,6 +6,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import java.util.*;
 
 import org.junit.*;
+
 import il.org.spartan.*;
 
 /** A template for unit tests for {@link NameYourClassHere} , can be used by:

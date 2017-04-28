@@ -8,6 +8,7 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
+import fluent.ly.*;
 import il.org.spartan.utils.*;
 
 /** A {@link FieldEditor} designed to store multiple controls within a group
@@ -118,7 +119,7 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   @Override protected void doFillIntoGrid(final Composite __parent, final int __numColumns) {
-    ___.______unused(__parent, nano.ly.box.it(__numColumns));
+    ___.______unused(__parent, box.it(__numColumns));
   }
 
   @Override protected void doLoad() {

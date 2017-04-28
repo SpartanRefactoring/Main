@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
 

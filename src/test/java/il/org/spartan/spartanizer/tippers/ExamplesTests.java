@@ -13,10 +13,10 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.Example.*;
-import nano.ly.*;
 
 /** A test generator for {@link Tipper}s, creating tests from their declared
  * examples (see {@link Tipper#examples}).

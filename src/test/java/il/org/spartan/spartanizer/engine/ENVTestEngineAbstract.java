@@ -6,6 +6,7 @@ import java.util.Map.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -13,7 +14,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.utils.*;
-import nano.ly.*;
 
 /** Abstract class for implementing specific Environment annotation based
  * testers.

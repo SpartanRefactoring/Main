@@ -8,10 +8,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
-import nano.ly.*;
 
 /** Replace {@code assertTrue(X)} by {@code assert X;}
  * @author Yossi Gil

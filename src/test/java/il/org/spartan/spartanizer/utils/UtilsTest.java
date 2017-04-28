@@ -4,6 +4,7 @@ import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
+
 import il.org.spartan.*;
 
 @SuppressWarnings({ "static-method", "javadoc" })

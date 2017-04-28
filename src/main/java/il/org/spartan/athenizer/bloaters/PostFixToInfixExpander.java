@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @author Raviv Rachmiel
  * @since 2017-01-09 */
-public class PostFixToInfixExpander extends PostfixExpressionPattern//
+public class PostFixToInfixExpander extends Postfix//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x2039A31D98B2AA4CL;
 

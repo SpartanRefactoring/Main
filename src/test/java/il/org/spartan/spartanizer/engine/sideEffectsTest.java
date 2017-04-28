@@ -8,6 +8,7 @@ package il.org.spartan.spartanizer.engine;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.junit.*;
+
 import il.org.spartan.spartanizer.java.*;
 
 @SuppressWarnings({ "static-method", "javadoc" })

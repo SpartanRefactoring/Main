@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 

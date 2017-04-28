@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.azzert.*;
 
 import org.junit.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.leonidas.*;

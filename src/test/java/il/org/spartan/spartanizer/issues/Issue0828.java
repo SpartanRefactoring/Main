@@ -5,9 +5,9 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tippers.*;
-import nano.ly.*;
 
 /** see issue #828 for more details
  * @author Yevgenia Shandalov

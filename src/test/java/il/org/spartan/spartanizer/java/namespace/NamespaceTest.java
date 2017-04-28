@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.java.namespace;
 
 import org.junit.*;
+
 import il.org.spartan.spartanizer.meta.*;
 
 @SuppressWarnings("ALL")

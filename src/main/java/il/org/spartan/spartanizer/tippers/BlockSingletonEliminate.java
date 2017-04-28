@@ -1,17 +1,18 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;
+
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** convert {@code if (a){g();}} into {@code if(a)g();}
  * @author Yossi Gil

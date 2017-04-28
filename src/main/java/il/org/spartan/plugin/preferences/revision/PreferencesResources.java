@@ -4,11 +4,11 @@ import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
 
+import fluent.ly.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** TODO Daniel Mittelman please add a description
  * @author Daniel Mittelman

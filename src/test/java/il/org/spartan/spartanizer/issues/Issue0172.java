@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit tests for {@link InfixTermsZero}

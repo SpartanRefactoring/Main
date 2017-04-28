@@ -4,9 +4,9 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;
-import nano.ly.*;
 
 /** Collects statistics of loops, including hits by nano patterns.
  * @author orimarco <marcovitch.ori@gmail.com>

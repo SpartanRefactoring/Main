@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
+import static fluent.ly.idiomatic.*;
 
-import static nano.ly.idiomatic.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;

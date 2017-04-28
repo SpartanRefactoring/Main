@@ -6,6 +6,7 @@ import java.util.Map.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.junit.*;
+
 import il.org.spartan.spartanizer.annotations.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
