@@ -17,7 +17,7 @@ public class CmdOperation extends WidgetOperation {
   private static final long serialVersionUID = -6060636787579018228L;
   
   @Override public String imageURL() {
-    return null;
+    return "platform:/plugin/org.eclipse.wb.rcp/icons/info/Action/action.gif";
   }
 
   @Override public String description() {
@@ -110,6 +110,8 @@ public class CmdOperation extends WidgetOperation {
    * [[SuppressWarningsSpartan]]
    */
   static void go(String command) {
+    if(command == null || command.isEmpty())
+      return;
     try {
       Process pr = Runtime.getRuntime().exec(command);  
       pr.waitFor(); 
