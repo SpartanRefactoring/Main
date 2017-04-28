@@ -14,7 +14,7 @@ public class SpartanizationOperation extends WidgetOperation {
   private String type;
 
   @Override public String description() {
-    return "Spartanize current selection";
+    return "Spartanize code";
   }
 
   @Override public String[][] configurationComponents() {
