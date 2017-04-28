@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
+import java.io.*;
+
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
@@ -27,7 +29,7 @@ public class CmdOperation extends WidgetOperation {
     super.onMouseUp(__);
   }
   
-  public class CmdWindow {
+  class CmdWindow {
     protected Shell shell;
     Display display;
     Text text;
@@ -77,11 +79,18 @@ public class CmdOperation extends WidgetOperation {
       btnExecute.setText("Execute");
     }
     
+    /**
+     * [[SuppressWarningsSpartan]]
+     */
     void go(String command) {
       try {
-        Process pr = Runtime.getRuntime().exec(command);
-        pr.waitFor();
-        System.out.println(pr.getOutputStream() + ""); // TODO: into window
+        Process pr = Runtime.getRuntime().exec(command);  
+        pr.waitFor(); 
+        BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+        String output;
+        while ((output = input.readLine()) != null) {
+          System.out.println(output);
+        }
       } 
       catch (Exception ¢) {
         System.out.println(¢ + "");
