@@ -24,15 +24,6 @@ import il.org.spartan.iterables.PureIterator;
  * @since Jul 8, 2014 */
 public enum as {
   ;
-  /** Converts a sequence of values into an array.
-   * @param <T> some arbitrary type
-   * @param $ some sequence of values of the type parameter
-   * @return parameter, organized as an array with entries whose type is the
-   *         type parameter */
-  @SafeVarargs public static <T> T[] array(final T... $) {
-    return $;
-  }
-
   /** Convert an array of {@link Integer}s into an {@link Iterable}. For
    * example, to print the first Fibonacci numbers multiplied by the first prime
    * numbers, write:
