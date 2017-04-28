@@ -35,7 +35,8 @@ different students and members of the Computer Science faculty.
 The refactorings made by this plug-in are based on the concept of Spartan Programming, which suggests guidelines for writing short, clean code. There's a lot of reading material on the subject in the [project wiki].
 
 # Contents
-
+| 	  |
+| --- |
 | [Installation Instructions](https://github.com/SpartanRefactoring/Spartanizer/wiki/Installation-Instructions "Installation") |
 | [Video Demo](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos "Demos") |
 | [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background") |
