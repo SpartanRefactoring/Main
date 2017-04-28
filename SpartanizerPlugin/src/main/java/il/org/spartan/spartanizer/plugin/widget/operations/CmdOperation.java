@@ -5,43 +5,71 @@ import java.io.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
-
+import org.eclipse.swt.widgets.Event;
+import static java.awt.MouseInfo.*;
 
 import il.org.spartan.spartanizer.plugin.widget.*;
 
-/** TODO Yuval Simon: document class 
- * 
+/** Widget operation that opens a text window to execute a cmd commmand
  * @author Yuval Simon
  * @since 2017-04-28 */
 public class CmdOperation extends WidgetOperation {
   private static final long serialVersionUID = -0x541BB50C344FDBF4L;
   
   @Override public String imageURL() {
-    return null;
+    return "platform:/plugin/org.eclipse.wb.rcp/icons/info/Action/action.gif";
   }
 
   @Override public String description() {
     return "Execute a CMD command";
   }
   
-  @Override public void onMouseUp(WidgetContext __) throws Throwable {
+  @Override public void onMouseUp(WidgetContext xx) throws Throwable {
     createGui();
-    super.onMouseUp(__);
+    super.onMouseUp(xx);
   }
   
   class CmdWindow {
-    protected Shell shell;
+    Shell shell;
     Display display;
     Text text;
-
+    boolean blnMouseDown;
+    int xPos;
+    int yPos;
+    
     public void open() {
       display = Display.getDefault();
       shell = new Shell(display, SWT.PRIMARY_MODAL);
+      shell.setLocation(getPointerInfo().getLocation().x, getPointerInfo().getLocation().y);
       createContents();
       shell.open();
       shell.layout();
-      shell.setLocation(200, 200); // TODO: change to widget location
-      display.addListener(SWT.FocusOut, new Listener() {
+      
+      shell.addMouseListener(new MouseListener() {
+        @Override
+        public void mouseUp(@SuppressWarnings("unused") MouseEvent arg0) {
+            blnMouseDown=false;
+        }
+
+        @Override
+        public void mouseDown(MouseEvent ¢) {
+            blnMouseDown=true;
+            xPos=¢.x;
+            yPos=¢.y;
+        }
+
+        @Override
+        public void mouseDoubleClick(@SuppressWarnings("unused") MouseEvent arg0) {/***/}
+      });
+      shell.addMouseMoveListener(new MouseMoveListener() {
+        @Override
+        public void mouseMove(MouseEvent ¢) {
+          if(blnMouseDown)
+            shell.setLocation(shell.getLocation().x + (¢.x - xPos), shell.getLocation().y + (¢.y - yPos));
+        }
+      });
+
+      shell.addListener(SWT.FocusOut | SWT.Deactivate, new Listener() {
         @Override public void handleEvent(@SuppressWarnings("unused") Event __) {display.close();}
       });
       
@@ -54,10 +82,7 @@ public class CmdOperation extends WidgetOperation {
       shell.setSize(317, 42);
       shell.setText("SWT Application");
       
-      Composite composite = new Composite(shell, SWT.NONE);
-      composite.setBounds(0, 0, 315, 40);
-      
-      text = new Text(composite, SWT.BORDER);
+      text = new Text(shell, SWT.BORDER);
       text.setBounds(10, 10, 228, 21);
       text.addKeyListener(new KeyListener() {
         @Override public void keyReleased(@SuppressWarnings("unused") KeyEvent __) {/***/}
@@ -68,34 +93,36 @@ public class CmdOperation extends WidgetOperation {
         }
       });
       
-      Button btnExecute = new Button(composite, SWT.NONE);
+      Button btnExecute = new Button(shell, SWT.NONE);
       btnExecute.addSelectionListener(new SelectionAdapter() {
         @Override
         public void widgetSelected(@SuppressWarnings("unused") SelectionEvent __) {
           go(text.getText());
+          shell.close();
         }
       });
       btnExecute.setBounds(244, 8, 60, 25);
       btnExecute.setText("Execute");
     }
-    
-    /**
-     * [[SuppressWarningsSpartan]]
-     */
-    void go(String command) {
-      try {
-        Process pr = Runtime.getRuntime().exec(command);  
-        pr.waitFor(); 
-        BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-        String output;
-        while ((output = input.readLine()) != null) {
-          System.out.println(output);
-        }
-      } 
-      catch (Exception ¢) {
-        System.out.println(¢ + "");
+  }
+  
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
+  static void go(String command) {
+    if(command == null || command.isEmpty())
+      return;
+    try {
+      Process pr = Runtime.getRuntime().exec(command);  
+      pr.waitFor(); 
+      BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+      String output;
+      while ((output = input.readLine()) != null) {
+        System.out.println(output);
       }
-      shell.close();
+    } 
+    catch (Exception ¢) {
+      System.out.println(¢ + "");
     }
   }
   
