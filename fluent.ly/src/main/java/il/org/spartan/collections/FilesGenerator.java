@@ -58,7 +58,7 @@ public class FilesGenerator {
         for (;;) {
           if (!$.hasNext())
             return false;
-          final String name = $.next();
+          final @Nullable String name = $.next();
           if (name == null)
             continue;
           next = new File(directory, name);
