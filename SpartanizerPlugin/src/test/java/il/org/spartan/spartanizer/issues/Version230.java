@@ -349,7 +349,7 @@ public final class Version230 {
     trimmingOf("int a=2;a +=3;")//
         .gives("int a=2 + 3;");
     trimmingOf("int a=2;a=3 * a;")//
-        .gives("int a=3 * 2;");
+        .gives("int a=2; a *= 3;");
     trimmingOf("int a=2;return 3 * a;")//
         .gives("return 3 * 2;");
     trimmingOf("int a=2;return a;")//
