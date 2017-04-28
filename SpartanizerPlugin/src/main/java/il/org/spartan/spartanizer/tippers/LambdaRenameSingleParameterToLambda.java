@@ -33,23 +33,22 @@ public final class LambdaRenameSingleParameterToLambda extends NodePattern<Lambd
     andAlso("Identifier must not be special", //
         () -> not.in(identifier, notation.lambda, notation.anonymous, notation.forbidden));
     andAlso("Identifier must be John Doe", //
-        () -> JohnDoe.property(identifier)); 
-    needs("Namespace", ()->namespace = Environment.of(current));
-    andAlso("New name is free", ()->!namespace.has(notation.lambda)); 
-    andAlso("No nested names", ()->!namespace.hasChildren());
+        () -> JohnDoe.property(identifier));
+    needs("Namespace", () -> namespace = Environment.of(current));
+    andAlso("New name is free", () -> !namespace.has(notation.lambda));
+    andAlso("No nested names", () -> !namespace.hasChildren());
   }
 
   @Override public String description() {
     return "Rename lambda parameter " + name + " to " + notation.lambda;
   }
 
-  @Override protected ASTRewrite go(ASTRewrite r, TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     misc.rename(name, current.getAST().newSimpleName(notation.lambda), current, r, g);
-        return r;
+    return r;
   }
 
   @Override public Examples examples() {
     return null;
   }
-
 }

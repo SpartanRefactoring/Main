@@ -60,8 +60,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ir.setUseContextToFilterImplicitImports(true);
     ir.setFilterImplicitImports(true);
     final Type t = ir.addImport(binding, s.getAST());
-    
-    // TODO Ori Roth: enable assignments extraction + check the fixWildCardType(t), added it since when it returns null we get exception
+    // TODO Ori Roth: enable assignments extraction + check the
+    // fixWildCardType(t), added it since when it returns null we get exception
     return t == null || fixWildCardType(t) == null || $ instanceof Assignment ? null : new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));

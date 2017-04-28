@@ -13,7 +13,7 @@ public interface notation {
   String forbidden = "_"; //
   String lambda = "λ"; //
   String return¢ = "$"; //
-  String[] specials = { forbidden, return¢, anonymous, cent, lambda};
+  String[] specials = { forbidden, return¢, anonymous, cent, lambda };
 
   static boolean isSpecial(final SimpleName $) {
     return isSpecial($.getIdentifier());
