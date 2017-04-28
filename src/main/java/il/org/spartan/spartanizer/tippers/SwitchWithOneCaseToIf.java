@@ -15,7 +15,6 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
-import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import nano.ly.*;

@@ -54,15 +54,15 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final CompilationUnit u = az.compilationUnit(root);
     if (u == null)
       return null;
-    // TODO Ori Roth: use library code
     final ImportRewrite ir = ImportRewrite.create(u, true);
     if (ir == null)
       return null;
-    ir.setUseContextToFilterImplicitImports(true); // solves many issues
-    ir.setFilterImplicitImports(true); // along with this of course
+    ir.setUseContextToFilterImplicitImports(true);
+    ir.setFilterImplicitImports(true);
     final Type t = ir.addImport(binding, s.getAST());
-    // TODO Ori Roth: enable assignments extraction
-    return t == null || $ instanceof Assignment ? null : new Tip(description(s), myClass(), s) {
+    
+    // TODO Ori Roth: enable assignments extraction + check the fixWildCardType(t), added it since when it returns null we get exception
+    return t == null || fixWildCardType(t) == null || $ instanceof Assignment ? null : new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
         final Type tt = fixWildCardType(t);
@@ -82,7 +82,6 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
 
       void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement x,
           final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, final ASTRewrite r, final TextEditGroup g) {
-        // TODO Ori Roth: Use subject to block.
         final Block b = p.getAST().newBlock();
         statements(b).add(x);
         statements(b).add(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug);

@@ -4,6 +4,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import nano.ly.*;
+
 /** Fluent API.
  * @author Yossi Gil
  * @since 2017-01-05 */
@@ -19,4 +21,8 @@ public interface JohnDoe {
   static boolean property(final Type t, final SimpleName n) {
     return n != null && property(t + "", identifier(n));
   }
+  static boolean property(final String ¢) {
+    return ¢.length() == 1 || is.in(¢, shortNames); 
+  }
+  String[] shortNames = { "idx", "arr", "iter", "lst", "integer", "list" };
 }
