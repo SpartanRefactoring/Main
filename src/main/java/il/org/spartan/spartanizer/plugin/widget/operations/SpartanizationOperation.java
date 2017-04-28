@@ -8,7 +8,7 @@ import il.org.spartan.spartanizer.plugin.widget.*;
 public class SpartanizationOperation extends WidgetOperation {
   private static final long serialVersionUID = -0x409F3F461222BD5BL;
 
-  @Override public void onMouseUp(final WidgetContext __) throws Throwable {}
+ // @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext __) throws Throwable {}
 
   @Override public String imageURL() {
     return null;

@@ -137,6 +137,6 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     IProject[] projects = getAllSpartanizerProjects();
     Document doc = XMLSpartan.getXML(projects[0]);
     doc.getDocumentElement().normalize();
-    notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
+   notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
   }
 }
