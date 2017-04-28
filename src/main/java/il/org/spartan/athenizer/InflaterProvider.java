@@ -49,7 +49,7 @@ public class InflaterProvider extends OperationsProvider {
             new PrefixToInfix(), //
             null) //
         .add(SwitchStatement.class, //
-            new CasesSplit(), new SwitchAddDefault(), //
+            new CasesSplit(), new SwitchMissingDefaultAdd(), //
             null)//
         .add(Assignment.class, //
             new AssignmentOperatorBloater(), //

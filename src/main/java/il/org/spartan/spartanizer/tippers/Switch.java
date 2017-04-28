@@ -14,13 +14,13 @@ import il.org.spartan.utils.*;
 /** A pattern for SwitchStatement
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-31 */
-public abstract class SwitchStatementAbstractPattern extends NodePattern<SwitchStatement> {
+public abstract class Switch extends NodePattern<SwitchStatement> {
   private static final long serialVersionUID = 0x7D070AD8D484B480L;
   protected List<Statement> statements;
   protected Expression expression;
   protected List<SwitchCase> cases;
 
-  public SwitchStatementAbstractPattern() {
+  public Switch() {
     andAlso(Proposition.that("Must be switch statement", () -> {
       statements = step.statements(current);
       expression = step.expression(current);
