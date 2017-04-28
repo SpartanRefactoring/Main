@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.plugin.widget.*;
  * @author Yuval Simon
  * @since 2017-04-28 */
 public class CustomWidgetOperation extends WidgetOperation {
-  private static final long serialVersionUID = -8598821174972679263L;
+  private static final long serialVersionUID = -0x7755264CD55A845FL;
   private static final List<String> commands = new ArrayList<>();
   
   @Override public String imageURL() {
