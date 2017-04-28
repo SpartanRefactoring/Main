@@ -78,8 +78,8 @@ public class SpartanMovie2 extends AbstractHandler {
           m.delete();
           refresh(p);
           sleep(SLEEP_BETWEEN);
-        } catch (final CoreException x) {
-          x.printStackTrace();
+        } catch (final CoreException ¢) {
+          ¢.printStackTrace();
         }
         return Status.OK_STATUS;
       }

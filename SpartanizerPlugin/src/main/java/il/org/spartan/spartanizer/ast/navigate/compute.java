@@ -81,8 +81,8 @@ public enum compute {
     }.map(x);
   }
 
-  public static Stream<String> usedNames(final ASTNode x) {
-    return usedSpots(x).stream().map(y -> y + "");
+  public static Stream<String> usedIdentifiers(final ASTNode x) {
+    return usedSpots(x).stream().map(λ -> λ + "");
   }
 
   public static List<String> useSpots(final Expression x) {

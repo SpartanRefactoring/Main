@@ -70,8 +70,7 @@ public class Issue0879 {
         .stays();
   }
 
-  // TODO: Dan Abramovich, please fix
-  @Ignore @Test public void test3() {
+  @Test public void test3() {
     trimmingOf("void f(){int x=9;int y=7; x+=4;y=x+x;return;}")//
         .gives("void f(){int x=9,y=7;x+=4;y=x+x;}") //
         .gives("void f(){int x=9+4,y=7;y=x+x;}") //

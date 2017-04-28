@@ -31,7 +31,6 @@ import nano.ly.*;
 public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclaration>//
     implements TipperCategory.Abbreviation {
   private static final long serialVersionUID = -0x259B3C93867F64ABL;
-  private static String[] shortNames = { "lst", "integer", "list" };
 
   static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
     final List<TagElement> ts = tags(d.getJavadoc());
@@ -52,7 +51,7 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
 
   private static boolean isShort(final SingleVariableDeclaration ¢) {
     final String identifier = ¢.getName().getIdentifier();
-    if (is.in(identifier, shortNames))
+    if (is.in(identifier, JohnDoe.shortNames))
       return true;
     final String $ = abbreviate.it(¢.getType());
     return $ != null && ($ + pluralVariadic(¢)).equals(identifier);
