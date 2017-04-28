@@ -14,7 +14,7 @@ import il.org.spartan.spartanizer.plugin.widget.*;
  * @author Yuval Simon
  * @since 2017-04-28 */
 public class CmdOperation extends WidgetOperation {
-  private static final long serialVersionUID = -6060636787579018228L;
+  private static final long serialVersionUID = -0x541BB50C344FDBF4L;
   
   @Override public String imageURL() {
     return null;
