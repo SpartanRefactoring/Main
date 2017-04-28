@@ -13,7 +13,7 @@ public class AboutAction extends AnAction{
         new AboutLeonidas();
     }
 
-//    public static void main(String[] args) {
-//        new AboutLeonidas();
-//    }
+    public static void main(String[] args) {
+        new AboutLeonidas();
+    }
 }

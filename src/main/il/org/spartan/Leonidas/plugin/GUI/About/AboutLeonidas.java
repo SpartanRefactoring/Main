@@ -11,6 +11,7 @@ import java.awt.*;
 public class AboutLeonidas extends JFrame{
     private JPanel panel1;
     private JTextPane textPane1;
+    private JButton closeButton;
 
     public AboutLeonidas() {
         super("About Leonidas Plugin");
@@ -19,6 +20,7 @@ public class AboutLeonidas extends JFrame{
         setResizable(false);
         pack();
         setVisible(true);
+        closeButton.addActionListener(e -> closeButtonListener());
         textPane1.setFont(textPane1.getFont().deriveFont(16f));
         textPane1.setText("Welcome to IntelliJ Leonidas Plugin.\n\n" +
                 "This Plugin was originally developed by 7 students from the Israeli institute of technology - The Technion.\n" +
@@ -38,5 +40,9 @@ public class AboutLeonidas extends JFrame{
                 "(3) Tipper creator - easily create new tippers by code examples without knowing Leonidas language at all!" +
                 "\n\nWe encourage you all to join us in developing and enjoying the power of our plugin and the Leonidas language.\n\n" +
                 "Leonidas Team.");
+    }
+
+    private void closeButtonListener() {
+        this.dispose();
     }
 }
