@@ -24,5 +24,5 @@ public interface JohnDoe {
   static boolean property(final String ¢) {
     return ¢.length() == 1 || is.in(¢, shortNames); 
   }
-  String[] shortNames = { "idx", "arr", "lst", "integer", "list" };
+  String[] shortNames = { "idx", "arr", "iter", "lst", "integer", "list" };
 }
