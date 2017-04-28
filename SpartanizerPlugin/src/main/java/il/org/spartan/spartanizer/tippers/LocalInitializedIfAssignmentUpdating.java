@@ -22,9 +22,9 @@ public final class LocalInitializedIfAssignmentUpdating extends LocalInitialized
     andAlso("Initializer is deterministic ", //
         () -> sideEffects.deterministic(initializer));
     andAlso("Condition does not use initializer", //
-        () -> compute.usedIdentifiers(condition).noneMatch(x -> x.equals(identifier)));
+        () -> compute.usedIdentifiers(condition).noneMatch(λ -> λ.equals(identifier)));
     andAlso("From does not use initializer", //
-        () -> compute.usedIdentifiers(from).noneMatch(x -> x.equals(identifier)));
+        () -> compute.usedIdentifiers(from).noneMatch(λ -> λ.equals(identifier)));
   }
 
   private static final long serialVersionUID = -0x3B3BD65F8057A88DL;
