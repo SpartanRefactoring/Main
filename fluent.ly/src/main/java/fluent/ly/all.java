@@ -1,5 +1,5 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
-package nano.ly;
+package fluent.ly;
 
 import org.jetbrains.annotations.*;
 

@@ -1,17 +1,22 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import static il.org.spartan.azzert.*;
-import java.util.*;
+import static il.org.spartan.azzert.is;
+import static org.junit.Assert.assertArrayEquals;
 
-import org.eclipse.jdt.annotation.*;
-import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import org.junit.runners.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
-import il.org.spartan.iterables.*;
-import nano.ly.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.junit.Test;
+
+import fluent.ly.accumulate;
+import il.org.spartan.iterables.PureIterable;
+import il.org.spartan.iterables.PureIterator;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.
@@ -96,7 +101,7 @@ public enum as {
   @NotNull public static List<Integer> ingeterList(@NotNull final int... is) {
     @NotNull final List<Integer> $ = new ArrayList<>();
     for (final int ¢ : is)
-      $.add(nano.ly.box.it(¢));
+      $.add(fluent.ly.box.it(¢));
     return $;
   }
 
@@ -114,7 +119,7 @@ public enum as {
    *        <code><b>null</b></code>
    * @return an array of <code><b>int</b></code>. representing the input. */
   @NotNull public static int[] intArray(@NotNull final List<Integer> is) {
-    @NotNull final int @NonNull [] $ = new int @NonNull [is.size()];
+    @NotNull final int @NotNull [] $ = new int @NotNull [is.size()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = is.get(¢).intValue();
     return $;
@@ -160,7 +165,7 @@ public enum as {
    * @return a {@link List} of of all <code><b>int</b></code>s in the
    *         parameter */
   public static List<Integer> list(@NotNull final int... ¢) {
-    return as.list(nano.ly.box.it(¢));
+    return as.list(fluent.ly.box.it(¢));
   }
 
   /** Converts an {@link Iterable} of a given type into a {@link List} of values
@@ -181,32 +186,6 @@ public enum as {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
 
-  /** Creates an iterable for an array of objects
-   * @param < T > an arbitrary type
-   * @param ts what to iterate on
-   * @return an {@link Iterable} over the parameter */
-  @SafeVarargs @NotNull public static <T> PureIterable.Sized<T> nonNullIterable(@NotNull final T... ts) {
-    return new PureIterable.Sized<T>() {
-      @Override @NotNull public PureIterator<T> iterator() {
-        return new PureIterator<T>() {
-          int current;
-
-          @Override public boolean hasNext() {
-            return current < ts.length;
-          }
-
-          @Override public T next() {
-            return ts[current++];
-          }
-        };
-      }
-
-      @Override public int size() {
-        return ts.length;
-      }
-    };
-  }
-
   /** Converts a sequence of objects of a given type into a {@link Set} of
    * values
    * @param <T> type of objects to be converted
@@ -217,7 +196,7 @@ public enum as {
   }
 
   /** Converts a value, which can be either a <code><b>null</b></code> or
-   * references to valid instances, into a {@link NonNull}
+   * references to valid instances, into a {@link NotNull}
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
   @NotNull public static String string(@Nullable final Object $) {
@@ -225,7 +204,7 @@ public enum as {
   }
 
   /** Converts a {@link String}, which can be either a <code><b>null</b></code>
-   * or an actual String, into a {@link NonNull} String.
+   * or an actual String, into a {@link NotNull} String.
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
   @NotNull public static String string(@Nullable final String $) {
@@ -237,11 +216,11 @@ public enum as {
    * @return an array of the parameter values, each converted to i
    *         {@link String} */
   public static String[] strings(@NotNull final Iterable<? extends @Nullable Object> os) {
-    @NotNull final List<@NonNull String> $ = new ArrayList<>();
+    @NotNull final List<@NotNull String> $ = new ArrayList<>();
     for (final @Nullable Object ¢ : os)
       if (¢ != null)
         $.add(¢ + "");
-    return Utils.cantBeNull($.toArray(new String @NonNull [$.size()]));
+    return Utils.cantBeNull($.toArray(new String @NotNull [$.size()]));
   }
 
   static Iterable<Integer> asIterableEssence(@NotNull final Integer... is) {
@@ -276,16 +255,16 @@ public enum as {
     }
 
     @Test public void asIntArraySimple() {
-      final int @NonNull [] is = as.intArray(100, 200, 200, 12, 13, 0);
+      final int @NotNull [] is = as.intArray(100, 200, 200, 12, 13, 0);
       assertArrayEquals(is, as.intArray(as.ingeterList(is)));
     }
 
     @Test public void asListSimple() {
       // direct call `as.list(12, 13, 14)` kills Travis --or
       @NotNull final List<Integer> is = as.list(new int[] { 12, 13, 14 });
-      azzert.that(is.get(0), is(nano.ly.box.it(12)));
-      azzert.that(is.get(1), is(nano.ly.box.it(13)));
-      azzert.that(is.get(2), is(nano.ly.box.it(14)));
+      azzert.that(is.get(0), is(fluent.ly.box.it(12)));
+      azzert.that(is.get(1), is(fluent.ly.box.it(13)));
+      azzert.that(is.get(2), is(fluent.ly.box.it(14)));
       azzert.that(is.size(), is(3));
     }
 

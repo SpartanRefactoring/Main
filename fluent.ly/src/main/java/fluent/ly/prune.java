@@ -1,5 +1,5 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package nano.ly;
+package fluent.ly;
 
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.azzert.*;
@@ -13,6 +13,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import nano.ly.accumulate;
 
 /** A <b>Utility class</b> providing functions to remove
  * <code><b>null</b></code> elements from arrays and iterable collections. For

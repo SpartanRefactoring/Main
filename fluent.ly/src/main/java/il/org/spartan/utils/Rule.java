@@ -5,7 +5,12 @@ import static java.lang.String.*;
 import java.lang.annotation.*;
 import java.util.*;
 import java.util.function.*;
-import nano.ly.*;
+
+import org.eclipse.jdt.annotation.Nullable;
+
+import nano.ly.English;
+import nano.ly.box;
+import nano.ly.note;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern
  * search, logging, computing statistics, etc.
@@ -64,7 +69,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
    * @return a lambda of type {@link OnApplicator}
    * @author Yossi Gil
    * @since 2017-03-10 */
-  static <T, R> OnApplicator<T, R> on(final Predicate<T> p) {
+  static <@Nullable T, R> OnApplicator<T, R> on(final Predicate<T> p) {
     return c -> new Rule.Stateful<T, R>() {
       @Override public R fire() {
         c.accept(current());
@@ -272,7 +277,7 @@ public interface Rule<T, R> extends Function<T, R>, Recursive<Rule<T, R>> {
    * @author Yossi Gil
    * @since 2017-03-13 */
   abstract class Stateful<T, R> implements Rule<T, R> {
-    public T current;
+    @Nullable public T current;
 
     @Override public final R apply(final T ¢) {
       if (!ready())

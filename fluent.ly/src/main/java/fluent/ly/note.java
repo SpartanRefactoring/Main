@@ -1,15 +1,24 @@
-package nano.ly;
+package fluent.ly;
 
-import static java.lang.String.*;
-import static java.util.stream.Collectors.*;
-import static nano.ly.English.*;
+import static fluent.ly.English.indefinite;
+import static java.lang.String.format;
+import static java.util.stream.Collectors.toList;
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import java.util.stream.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.Stack;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.system;
+import nano.ly.English;
+import nano.ly.anonymous;
+import nano.ly.nulling;
+import nano.ly.separate;
+import nano.ly.the;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.

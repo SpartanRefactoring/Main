@@ -1,4 +1,6 @@
-package nano.ly;
+package fluent.ly;
+
+import nano.ly.is;
 
 public interface not {
   @SafeVarargs static <T> boolean in(final T t, final T... ts) {

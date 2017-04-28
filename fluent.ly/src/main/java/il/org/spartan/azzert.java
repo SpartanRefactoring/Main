@@ -125,7 +125,7 @@ public class azzert extends org.junit.Assert {
         break;
       default:
         fail(s + "Element '" + missing.get(0) + "' and '" + missing.get(1) + "'  as well as " + (missing.size() - 2)
-            + " other \n elements were not found in " + c2.size() + " sized-\n" + " collection " + c2);
+            + " other \n elements were not found in " + c2.size() + " sized-\n collection " + c2);
         break;
     }
   }
@@ -151,7 +151,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void assertEquals(final int expected, final int actual) {
-    assertEquals(nano.ly.box.it(expected), nano.ly.box.it(actual));
+    assertEquals(fluent.ly.box.it(expected), fluent.ly.box.it(actual));
   }
 
   public static void assertEquals(final int a, final Integer b) {
@@ -175,7 +175,7 @@ public class azzert extends org.junit.Assert {
   }
 
   public static void assertEquals(final String reason, final int i1, final int i2) {
-    assertThat(reason, nano.ly.box.it(i1), CoreMatchers.equalTo(nano.ly.box.it(i2)));
+    assertThat(reason, fluent.ly.box.it(i1), CoreMatchers.equalTo(fluent.ly.box.it(i2)));
   }
 
   public static void assertEquals(final String message, final int a, final Integer b) {

@@ -1,14 +1,15 @@
 package il.org.spartan;
 // TODO: Yossi: I commented this one too.
 
-import java.io.*;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 
 // import static il.org.spartan.utils.___.*;
-import il.org.spartan.Aggregator.Aggregation.*;
-import il.org.spartan.statistics.*;
+import il.org.spartan.Aggregator.Aggregation.FormatSpecifier;
+import il.org.spartan.statistics.ImmutableStatistics;
+import il.org.spartan.statistics.RealStatistics;
 
 /** Similar to {@link CSVWriter}, except that in addition to the production of
  * output to the main CSV file, this class generates a secondary CSV file,
@@ -35,7 +36,7 @@ public class CSVStatistics extends CSVLine.Ordered {
    * @param keysHeader the name of the column in which the names of the
    *        numerical columns in the principal file
    * @throws IOException */
-  public CSVStatistics(@NotNull final String baseName, @NotNull final String keysHeader) throws IOException {
+  public CSVStatistics(@NotNull final String baseName, @NotNull final String keysHeader) {
     assert baseName != null;
     assert keysHeader != null;
     inner = new CSVWriter(removeExtension(baseName));

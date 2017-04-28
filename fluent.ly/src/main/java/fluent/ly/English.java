@@ -1,4 +1,4 @@
-package nano.ly;
+package fluent.ly;
 
 import java.text.*;
 import java.util.*;
@@ -7,6 +7,9 @@ import java.util.stream.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import nano.ly.cCamelCase;
+import nano.ly.separate;
+import nano.ly.the;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth

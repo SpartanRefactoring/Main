@@ -5,7 +5,9 @@ import java.text.*;
 import java.util.*;
 
 import il.org.spartan.java.*;
-import nano.ly.*;
+import nano.ly.English;
+import nano.ly.cCamelCase;
+import nano.ly.note;
 
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil
