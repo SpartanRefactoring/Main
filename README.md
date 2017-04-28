@@ -36,8 +36,8 @@ The refactorings made by this plug-in are based on the concept of Spartan Progra
 
 # Contents
 
-* [Installation Instructions](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos)
-* [Video Demo](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos)
+* [Installation Instructions](https://github.com/SpartanRefactoring/Spartanizer/wiki/Installation-Instructions "Installation")
+* [Video Demo](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos "Demos")
 * [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background")
 * [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual")
 * [Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background")
