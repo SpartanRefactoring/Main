@@ -30,7 +30,7 @@ public class CmdOperation extends WidgetOperation {
   }
   
   class CmdWindow {
-    protected Shell shell;
+    Shell shell;
     Display display;
     Text text;
     boolean blnMouseDown;
@@ -98,29 +98,29 @@ public class CmdOperation extends WidgetOperation {
         @Override
         public void widgetSelected(@SuppressWarnings("unused") SelectionEvent __) {
           go(text.getText());
+          shell.close();
         }
       });
       btnExecute.setBounds(244, 8, 60, 25);
       btnExecute.setText("Execute");
     }
-    
-    /**
-     * [[SuppressWarningsSpartan]]
-     */
-    void go(String command) {
-      try {
-        Process pr = Runtime.getRuntime().exec(command);  
-        pr.waitFor(); 
-        BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-        String output;
-        while ((output = input.readLine()) != null) {
-          System.out.println(output);
-        }
-      } 
-      catch (Exception ¢) {
-        System.out.println(¢ + "");
+  }
+  
+  /**
+   * [[SuppressWarningsSpartan]]
+   */
+  static void go(String command) {
+    try {
+      Process pr = Runtime.getRuntime().exec(command);  
+      pr.waitFor(); 
+      BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+      String output;
+      while ((output = input.readLine()) != null) {
+        System.out.println(output);
       }
-      shell.close();
+    } 
+    catch (Exception ¢) {
+      System.out.println(¢ + "");
     }
   }
   
