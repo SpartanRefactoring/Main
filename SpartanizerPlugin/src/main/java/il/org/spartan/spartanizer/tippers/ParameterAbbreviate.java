@@ -31,6 +31,7 @@ import nano.ly.*;
 public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclaration>//
     implements TipperCategory.Abbreviation {
   private static final long serialVersionUID = -0x259B3C93867F64ABL;
+
   static void fixJavadoc(final MethodDeclaration d, final SimpleName oldName, final String newName, final ASTRewrite r, final TextEditGroup g) {
     final List<TagElement> ts = tags(d.getJavadoc());
     if (ts != null)
