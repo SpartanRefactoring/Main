@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
 public final class Issue0131 {
   @Test public void a01() {
     trimmingOf("for(int i=4; i<s.g() ; ++i){i+=9;return x;}return x;")//
+        .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int i=4; i<s.g() ; ++i){i+=9;break;}return x;");
   }
 
@@ -22,12 +23,14 @@ public final class Issue0131 {
 
   @Test public void a03() {
     trimmingOf("for(int ¢=4 ; ¢<s.g() ; ++¢)return x;return x;")//
+        .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int ¢=4 ; ¢<s.g() ; ++¢)break;return x;")//
         .stays();
   }
 
   @Test public void a04() {
-    trimmingOf("for(int ¢=4 ; ¢<s.g() ; ++¢)if(t=4)return x;return x;").gives("for(int ¢=4 ; ¢<s.g() ; ++¢)if(t=4)break;return x;")//
+    trimmingOf("for(int ¢=4 ; ¢<s.g() ; ++¢)if(t=4)return x;return x;").using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
+        .gives("for(int ¢=4 ; ¢<s.g() ; ++¢)if(t=4)break;return x;")//
     ;
   }
 
@@ -55,11 +58,13 @@ public final class Issue0131 {
 
   @Test public void a09() {
     trimmingOf("for(int i=4 ; i<s.g() ; ++i)if(i==5)return x;return x;")//
+        .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int i=4 ; i<s.g() ; ++i)if(i==5)break;return x;");
   }
 
   @Test public void a10() {
     trimmingOf("for(int i=4;i<s.g();++i){i+=9;i++;return x;}return x;")//
+        .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int i=4;i<s.g();++i){i+=9;i++;break;}return x;").gives("for(int ¢=4;¢<s.g();++¢){¢+=9;¢++;break;}return x;");
   }
 

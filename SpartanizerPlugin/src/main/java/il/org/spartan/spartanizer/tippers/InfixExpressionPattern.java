@@ -7,19 +7,18 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.patterns.*;
 
 /** @author Yossi Gil
  * @since 2017-04-25 */
 public abstract class InfixExpressionPattern extends NodePattern<InfixExpression> {
   private static final long serialVersionUID = 1;
 
-  public static ToCallExpected append(final Expression x) {
-    return new PrependOrAppend().append(x);
+  public static ToCallExpected append(final Expression ¢) {
+    return new PrependOrAppend().append(¢);
   }
 
-  public static ToCallExpected prepend(final Expression x) {
-    return new PrependOrAppend().prepend(x);
+  public static ToCallExpected prepend(final Expression ¢) {
+    return new PrependOrAppend().prepend(¢);
   }
 
   protected int arity;
@@ -50,9 +49,9 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
     }
 
     ToCallExpected append(final Expression x) {
-      os.add(t -> {
-        t.add(x);
-        return t;
+      os.add(λ -> {
+        λ.add(x);
+        return λ;
       });
       return new ToCallExpected(this);
     }
@@ -77,8 +76,8 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
 
     public List<Expression> to(final List<Expression> xs) {
       List<Expression> $ = new ArrayList<>(xs);
-      for (final O o : os)
-        $ = o.apply($);
+      for (final O ¢ : os)
+        $ = ¢.apply($);
       return $;
     }
   }

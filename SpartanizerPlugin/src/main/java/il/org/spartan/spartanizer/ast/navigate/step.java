@@ -63,16 +63,16 @@ public enum step {
     return $ == 0;
   }
 
-  public static Statement body(final ASTNode n) {
-    return body(az.statement(n));
+  public static Statement body(final ASTNode ¢) {
+    return body(az.statement(¢));
   }
 
-  public static Statement body(final Statement s) {
-    return iz.forStatement(s) ? az.forStatement(s).getBody()
-        : iz.whileStatement(s) ? az.whileStatement(s).getBody()
-            : iz.enhancedFor(s) ? az.enhancedFor(s).getBody()
-                : iz.doStatement(s) ? az.doStatement(s).getBody()
-                    : iz.switchStatement(s) || !iz.synchronizedStatement(s) ? null : az.synchronizedStatement(s).getBody();
+  public static Statement body(final Statement ¢) {
+    return iz.forStatement(¢) ? az.forStatement(¢).getBody()
+        : iz.whileStatement(¢) ? az.whileStatement(¢).getBody()
+            : iz.enhancedFor(¢) ? az.enhancedFor(¢).getBody()
+                : iz.doStatement(¢) ? az.doStatement(¢).getBody()
+                    : iz.switchStatement(¢) || !iz.synchronizedStatement(¢) ? null : az.synchronizedStatement(¢).getBody();
   }
 
   public static Block body(final CatchClause ¢) {
