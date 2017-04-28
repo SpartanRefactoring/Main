@@ -1,9 +1,12 @@
-# <a name="introduction"></a>Spartanizer? What is this?
+## Development Status
+[![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer) [![codecov](https://codecov.io/gh/TechnionYP5777/SmartCity-ParkingManagement/branch/master/graph/badge.svg)](https://codecov.io/gh/SpartanRefactoring/Spartanizer)
 
-The Spartanizer is:
+
+# <a name="introduction"></a>The Spartanizer is:
 - An Eclipse plugin
 - Offers in the problems view tips for simplifying your code 
 - Make your code laconic: say much in few words.
+- Platform for other research: nano-patterns, source to source transformation, and The Athenizer
 
 <!-- <img style="float: right;" src="https://www.spartan.org.il/images/logo-header.png"/> -->
 
@@ -58,9 +61,6 @@ Click on the picture below to watch a video demonstration on YouTube.
 
 - [The Spartanizer on IEEE Software Blog](http://blog.ieeesoftware.org/2017/03/the-spartanizer.html "IEEE Software Blog")
 
-## Development Status
-
- [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer) [![codecov](https://codecov.io/gh/TechnionYP5777/SmartCity-ParkingManagement/branch/master/graph/badge.svg)](https://codecov.io/gh/SpartanRefactoring/Spartanizer)
 
 <!-- ![spartan resized](https://cloud.githubusercontent.com/assets/15859817/23854098/7f02ba4e-07f8-11e7-8bd9-8ebe2ccbe9e8.png) -->
 
