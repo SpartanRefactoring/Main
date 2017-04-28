@@ -6,7 +6,10 @@ import java.util.*;
 import il.org.spartan.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
+import nano.ly.box;
+import nano.ly.cCamelCase;
+import nano.ly.separate;
+import nano.ly.the;
 
 /** A relation is just another name for a table that contains elements of __
  * {@link Record}. This class provides fluent API for generating tables,

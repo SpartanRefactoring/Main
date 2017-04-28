@@ -1,4 +1,4 @@
-package nano.ly;
+package fluent.ly;
 
 import java.util.*;
 
@@ -7,6 +7,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iterables.PureIterable;
+import nano.ly.range;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -116,8 +117,7 @@ public interface the {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
 
-  static @NotNull boolean[] rest(@SuppressWarnings("unused") @NotNull PureIterable.Sized<@Nullable String> iterable) {
-    // TODO Yossi complete
+  @NotNull static boolean[] rest(@SuppressWarnings("unused") @NotNull PureIterable.Sized<@Nullable String> s) {
     return null;
   }
 }

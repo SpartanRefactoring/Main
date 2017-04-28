@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.jetbrains.annotations.*;
 
-import nano.ly.*;
+import nano.ly.separate;
 
 /** @author Yossi Gil
  * @since Apr 8, 2012 */

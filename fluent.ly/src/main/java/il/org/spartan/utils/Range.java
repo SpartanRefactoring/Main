@@ -98,6 +98,6 @@ public class Range {
   }
 
   @Override public String toString() {
-    return String.format("[%d, %d]", nano.ly.box.it(from), nano.ly.box.it(to));
+    return String.format("[%d, %d]", fluent.ly.box.it(from), fluent.ly.box.it(to));
   }
 }

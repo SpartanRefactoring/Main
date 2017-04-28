@@ -1,15 +1,16 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.Utils.contains;
+import static il.org.spartan.azzert.assertEquals;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import org.junit.runners.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
-import il.org.spartan.*;
+import an.iterable;
+import il.org.spartan.as;
+import il.org.spartan.azzert;
 
 /** No values in an 'enum' used as name space for a collection of 'static'
  * functions.
@@ -31,7 +32,7 @@ public enum iterables {
   /** @param <T> JD
    * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
   @NotNull public static <T> PureIterable.Sized<T> empty() {
-    return as.nonNullIterable();
+    return iterable.over();
   }
 
   /** @param os JD */
@@ -42,21 +43,12 @@ public enum iterables {
     return true;
   }
 
-  /** <code>singleton</code>
-   * @param <T> JD
-   * @param ¢ JD
-   * @return PureIterable.Sized<T> for returned value of method
-   *         <code>singleton</code> */
-  @NotNull public static <T> PureIterable.Sized<T> singleton(final T ¢) {
-    return as.nonNullIterable(¢);
-  }
-
   /** wraps a value in a singleton iterator form
    * @param <T> JD
    * @param $ JD
    * @return parameter, but in a singleton iterator form */
   public static <T> PureIterator<T> singletonIterator(final T $) {
-    return singleton($).iterator();
+    return iterable.singleton($).iterator();
   }
 
   //
@@ -97,7 +89,7 @@ public enum iterables {
     }
 
     @Test public void countSingleton() {
-      assertEquals(1, count(singleton(new Object())));
+      assertEquals(1, count(iterable.singleton(new Object())));
     }
 
     @Test public void countThree() {

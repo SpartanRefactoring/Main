@@ -3,7 +3,7 @@ package il.org.spartan.tables;
 import java.util.*;
 
 import il.org.spartan.*;
-import nano.ly.*;
+import nano.ly.separate;
 
 /** TODO Yossi Gil Document Classn
  * @author Yossi Gil

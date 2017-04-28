@@ -1,13 +1,14 @@
 package il.org.spartan.utils;
 
+import static fluent.ly.box.*;
 import static il.org.spartan.strings.StringUtils.*;
-import static nano.ly.box.*;
 import static org.junit.Assert.*;
 
 import java.util.*;
 
 import org.junit.*;
 
+import fluent.ly.box;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.___.Bug.*;
 import il.org.spartan.utils.___.Bug.Assertion.*;
@@ -319,7 +320,7 @@ import il.org.spartan.utils.___.Bug.Contract.*;
           private static final long serialVersionUID = 0x740EDCFDC38B6562L;
 
           public Underflow(final int newValue) {
-            super(nprintf("New variant value (%d) is negative", newValue));
+            super(nprintf("New variant value (%d) is negative", box.it(newValue)));
           }
         }
 

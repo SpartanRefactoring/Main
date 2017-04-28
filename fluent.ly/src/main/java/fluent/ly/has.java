@@ -1,5 +1,5 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package nano.ly;
+package fluent.ly;
 
 import static il.org.spartan.Utils.*;
 

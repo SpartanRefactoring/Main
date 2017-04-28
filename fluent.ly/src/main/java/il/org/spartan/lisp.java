@@ -8,7 +8,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
-import nano.ly.*;
+import nano.ly.the;
 
 /** @noinspection unused */
 public interface lisp {
@@ -30,7 +30,7 @@ public interface lisp {
    * @return following item in the list, if such such an item exists, otherwise,
    *         the last node */
   @Nullable static <T> T next(final int i, @NotNull final List<T> ts) {
-    return !inRange(i + 1, ts) ? the.lastOf(ts) : ts.get(i + 1);
+    return inRange(i + 1, ts) ? ts.get(i + 1) : the.lastOf(ts);
   }
 
   /** Determine if an item is not included in a list of values

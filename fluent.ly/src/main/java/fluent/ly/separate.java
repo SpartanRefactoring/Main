@@ -1,19 +1,29 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package nano.ly;
+package fluent.ly;
 
-import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static il.org.spartan.Utils.apply;
+import static il.org.spartan.Utils.cantBeNull;
+import static il.org.spartan.azzert.is;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import org.junit.runners.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
-import il.org.spartan.*;
-import il.org.spartan.iterables.*;
+import an.iterable;
+import il.org.spartan.Separator;
+import il.org.spartan.Utils.Applicator;
+import il.org.spartan.as;
+import il.org.spartan.azzert;
+import il.org.spartan.iterables.iterables;
+import nano.ly.box;
+import nano.ly.prune;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this
@@ -505,7 +515,7 @@ public enum separate {
     }
 
     @Test public void separateBySpaceOnSingletonIteator() {
-      azzert.that(separateBySpaces(iterables.singleton("Hello")), is("Hello"));
+      azzert.that(separateBySpaces(iterable.singleton("Hello")), is("Hello"));
     }
 
     @Test public void separateBySpaceSimple() {
@@ -513,7 +523,7 @@ public enum separate {
     }
 
     @Test public void separateBySpaceSingletonIterator() {
-      azzert.that(separateBySpaces(iterables.singleton("X")), is("X"));
+      azzert.that(separateBySpaces(iterable.singleton("X")), is("X"));
     }
 
     @Test public void separateBySpaceTwoStrings() {

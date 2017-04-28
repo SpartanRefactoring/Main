@@ -2,10 +2,10 @@ package il.org.spartan.utils;
 
 import java.util.function.BooleanSupplier;
 
+import fluent.ly.English;
 import il.org.spartan.utils.Proposition.Not;
 import il.org.spartan.utils.Proposition.Singleton;
 import il.org.spartan.utils.Proposition.Some;
-import nano.ly.English;
 
 public class PropositionPrettyPrinter {
   static class PropositionTreeTraversal {

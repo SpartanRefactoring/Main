@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan;
 
-import static nano.ly.box.*;
+import static fluent.ly.box.*;
 
 import java.util.*;
 import java.util.Map.*;
