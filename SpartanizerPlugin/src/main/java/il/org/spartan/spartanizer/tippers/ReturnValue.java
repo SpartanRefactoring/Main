@@ -7,12 +7,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 /** Specializes {@link NodePattern} for return statement with value.
  * @author Yossi Gil
  * @since 2017-04-22 */
-public abstract class ReturnValuePattern extends NodePattern<ReturnStatement> {
+public abstract class ReturnValue extends NodePattern<ReturnStatement> {
   private static final long serialVersionUID = 1;
   protected Expression value;
   protected MethodDeclaration methodDeclaration;
 
-  public ReturnValuePattern() {
+  public ReturnValue() {
     super.notNil("Extract returned value", //
         () -> value = current.getExpression() //
     ).notNil("Return is from a method", //

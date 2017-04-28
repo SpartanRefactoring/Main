@@ -4,10 +4,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
-import nano.ly.*;
 
 /** List that can contain nano patterns
  * @author orimarco {@code marcovitch.ori@gmail.com}

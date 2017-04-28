@@ -14,12 +14,11 @@ import org.eclipse.jface.text.*;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** An application of the Bloater project. Augment java code to be more clear
  * and debugable. TODO Ori Roth: add progress monitor support TODO Ori Roth: add

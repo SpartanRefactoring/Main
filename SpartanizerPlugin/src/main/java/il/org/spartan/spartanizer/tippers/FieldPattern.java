@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-15 */
-public abstract class FieldPattern extends FragmentAmongFragmentsPattern {
+public abstract class FieldPattern extends FragmentAmongFragments {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
   protected FieldDeclaration declaration;
 

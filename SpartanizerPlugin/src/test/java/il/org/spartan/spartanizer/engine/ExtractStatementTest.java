@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.engine.into.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import org.junit.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 

@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
 
 import org.junit.*;
+
 import il.org.spartan.*;
 import il.org.spartan.proposition.*;
 import il.org.spartan.utils.*;

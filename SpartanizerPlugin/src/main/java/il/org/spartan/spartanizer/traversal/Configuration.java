@@ -6,12 +6,11 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Singleton containing all {@link Tipper}s which are active. This class does
  * minimal dispatching at the node level, selecting and applying the most

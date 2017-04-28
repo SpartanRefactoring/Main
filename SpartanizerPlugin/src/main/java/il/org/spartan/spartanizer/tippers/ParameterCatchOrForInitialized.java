@@ -6,14 +6,14 @@ import org.eclipse.jdt.core.dom.*;
  * initializers to single varaible declarations
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
-public abstract class SingleVariableDeclarationInitialized extends NodePattern<SingleVariableDeclaration> {
+public abstract class ParameterCatchOrForInitialized extends NodePattern<SingleVariableDeclaration> {
   private static final long serialVersionUID = -0x5D2F121B3027EFA6L;
   protected Expression initializer;
   protected SimpleName name;
   protected Type type;
   @Property protected SingleVariableDeclaration currentDeclaration;
 
-  protected SingleVariableDeclarationInitialized() {
+  protected ParameterCatchOrForInitialized() {
     andAlso("Illegal Definition", () -> {
       if (current().getInitializer() == null)
         return false;

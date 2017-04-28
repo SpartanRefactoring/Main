@@ -5,9 +5,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.op;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.tables.*;

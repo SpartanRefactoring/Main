@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.issues;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
+
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Unit test for {@link ForParameterRenameToIt}

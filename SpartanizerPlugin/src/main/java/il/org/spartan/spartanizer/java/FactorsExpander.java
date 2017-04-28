@@ -9,8 +9,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import nano.ly.*;
 
 /** Expands terms of * or / expressions without reordering.
  * <p>

@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.tippers;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
+
 import il.org.spartan.spartanizer.java.*;
 
 /** * Unit tests for Arithmetic Operations Calculations

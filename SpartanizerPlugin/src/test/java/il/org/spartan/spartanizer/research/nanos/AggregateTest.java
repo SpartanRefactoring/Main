@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
 import il.org.spartan.spartanizer.research.nanos.deprecated.*;
 
 /** Tests {@link Aggregate}

@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.plugin;
 
-import static java.util.stream.Collectors.*;
 import static il.org.spartan.plugin.old.RefreshAll.*;
+
+import static java.util.stream.Collectors.*;
 
 import java.lang.reflect.*;
 import java.text.*;
@@ -20,7 +21,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
-import nano.ly.*;
+import fluent.ly.*;
 
 /** Eclipse common utilities.
  * @author Ori Roth {@code ori.rothh@gmail.com}

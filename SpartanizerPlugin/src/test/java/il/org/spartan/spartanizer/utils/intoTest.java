@@ -4,6 +4,7 @@ import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.junit.*;
+
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 
