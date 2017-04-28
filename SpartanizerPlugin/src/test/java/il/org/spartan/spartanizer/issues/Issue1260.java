@@ -17,12 +17,12 @@ import nano.ly.*;
 @SuppressWarnings("static-method")
 public class Issue1260 {
   @Test public void list() {
-    final ReduceCollectionsAdd<Integer,List<Integer>> r = new ReduceCollectionsAdd<Integer,List<Integer>>() {
+    final ReduceCollectionsAdd<Integer, List<Integer>> r = new ReduceCollectionsAdd<Integer, List<Integer>>() {
       // TODO Oran.--should the class be made non-abstract?
     };
     azzert.that(IntStream.range(1, 31).boxed().collect(Collectors.toList()), is(r.reduce(IntStream.range(1, 11).boxed().collect(Collectors.toList()),
         IntStream.range(11, 21).boxed().collect(Collectors.toList()), IntStream.range(21, 31).boxed().collect(Collectors.toList()))));
-    azzert.that(new LinkedList<Integer>(), is(r.reduce()));
+    azzert.isNull(r.reduce());
     final List<Integer> l = new LinkedList<>();
     azzert.that(l, is(r.reduce(l)));
   }
