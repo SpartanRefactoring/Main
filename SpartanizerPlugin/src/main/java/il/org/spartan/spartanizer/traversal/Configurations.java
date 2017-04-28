@@ -90,7 +90,7 @@ public interface Configurations {
       .add(SwitchStatement.class, //
           new SwitchEmpty(), //
           new MergeSwitchBranches(), //
-          new SwitchWithOneCaseToIf(), //
+          new SwitchSingleCaseToIf(), //
           null)
       .add(SwitchCase.class, //
           new RemoveRedundantSwitchCases(), //

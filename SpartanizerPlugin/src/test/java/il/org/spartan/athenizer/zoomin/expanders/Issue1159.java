@@ -7,13 +7,13 @@ import org.junit.*;
 
 import il.org.spartan.athenizer.bloaters.*;
 
-/** test case for {@link SwitchAddDefault}
+/** test case for {@link SwitchMissingDefaultAdd}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-31 */
 @SuppressWarnings("static-method")
 public class Issue1159 {
   @Test public void t1() {
-    bloatingOf("switch(a){ case 1: switch(b){ default: } }").using(new SwitchAddDefault(), SwitchStatement.class)
+    bloatingOf("switch(a){ case 1: switch(b){ default: } }").using(new SwitchMissingDefaultAdd(), SwitchStatement.class)
         .gives("switch(a){ case 1: switch(b){ default: } default: }");
   }
 
