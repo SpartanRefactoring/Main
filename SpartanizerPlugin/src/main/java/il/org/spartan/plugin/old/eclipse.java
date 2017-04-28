@@ -230,4 +230,8 @@ public enum eclipse {
       return note.bug(this, ¢);
     }
   }
+
+  public static IProject[] getAllSpartanizerProjects() {
+    return ResourcesPlugin.getWorkspace().getRoot().getProjects();
+  }
 }
