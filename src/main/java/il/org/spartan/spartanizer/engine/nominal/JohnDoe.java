@@ -21,8 +21,10 @@ public interface JohnDoe {
   static boolean property(final Type t, final SimpleName n) {
     return n != null && property(t + "", identifier(n));
   }
+
   static boolean property(final String ¢) {
-    return ¢.length() == 1 || is.in(¢, shortNames); 
+    return ¢.length() == 1 || is.in(¢, shortNames);
   }
+
   String[] shortNames = { "idx", "arr", "iter", "lst", "integer", "list" };
 }
