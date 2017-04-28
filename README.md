@@ -36,23 +36,13 @@ The refactorings made by this plug-in are based on the concept of Spartan Progra
 
 # Contents
 
-* [Introduction](#introduction)
-* [Installation Instructions](#installation)
+* [Installation Instructions](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos)
 * [Video Demo](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos)
 * [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background")
 * [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual")
 * [Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background")
 * [Developer Guide](https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide")
 * [List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers")
-
-# <a name="installation"></a>Installation<a name="installation"></a>
-
-- Installation button (drag to your eclipse workspace)
-<a href="http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2617709" class="drag" title="Drag to your running Eclipse workspace to install Spartan Refactoring"><img class="img-responsive" src="https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png" alt="Drag to your running Eclipse workspace to install Spartan Refactoring" /></a>
-
-- This plugin's <a href="https://www.google.co.il/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwj7p7iPwL7PAhUrI8AKHW87AVsQFggaMAA&url=https%3A%2F%2Fmarketplace.eclipse.org%2Fcontent%2Fspartan-refactoring-0&usg=AFQjCNFaOBCLW8-CKYYnfLFCjakdWM1qjA&sig2=Z1zbbkq96-iECkhmMf5Qcw&bvm=bv.134495766,d.ZGg">page on market place</href>
-
-More detailed instructions at the following [link](https://github.com/SpartanRefactoring/Spartanizer/wiki/Installation-Instructions).
 
 ## A (Typical) Spartan Developer
 
