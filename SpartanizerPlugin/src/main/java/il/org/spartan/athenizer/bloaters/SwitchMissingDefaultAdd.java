@@ -12,7 +12,7 @@ import il.org.spartan.utils.*;
 /** examples in {@link #examples} test case is {@link Issue1159}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-31 */
-public class SwitchAddDefault extends SwitchStatementAbstractPattern implements TipperCategory.Bloater {
+public class SwitchMissingDefaultAdd extends Switch implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x358FADDE74C85B4BL;
 
   @Override public Examples examples() {
@@ -23,7 +23,7 @@ public class SwitchAddDefault extends SwitchStatementAbstractPattern implements 
     ;
   }
 
-  public SwitchAddDefault() {
+  public SwitchMissingDefaultAdd() {
     andAlso("Does not have default case", //
         () -> cases().stream().noneMatch(SwitchCase::isDefault));
   }

@@ -22,7 +22,7 @@ import nano.ly.*;
 /** See {@link #examples()} Tested in {@link Issue0916}
  * @author Yuval Simon
  * @since 2016-12-18 */
-public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
+public class SwitchSingleCaseToIf extends Switch//
     implements TipperCategory.Collapse {
   private static final long serialVersionUID = 0x513C764E326D1A98L;
 
@@ -30,7 +30,7 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
     return "Convert switch statement to if-else statement";
   }
 
-  public SwitchWithOneCaseToIf() {
+  public SwitchSingleCaseToIf() {
     andAlso(Proposition.that("Exactly two cases", () -> (cases.size() == 2)));
     andAlso(Proposition.that("Has default case", () -> (the.headOf(cases).isDefault() || the.lastOf(cases).isDefault())));
     andAlso(Proposition.that("Different branches", () -> {
@@ -64,7 +64,7 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
   }
 
   private static List<Statement> removeBreaks(final List<Statement> src) {
-    return src.stream().map(SwitchWithOneCaseToIf::cleanBreaks).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
+    return src.stream().map(SwitchSingleCaseToIf::cleanBreaks).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
   }
 
   // TODO Yuval Simon: use map-reduce
@@ -75,7 +75,7 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
       case BREAK_STATEMENT:
         return ¢.getAST().newEmptyStatement();
       case BLOCK:
-        return subject.ss(statements(az.block(¢)).stream().map(SwitchWithOneCaseToIf::cleanBreaks).collect(Collectors.toList())).toBlock();
+        return subject.ss(statements(az.block(¢)).stream().map(SwitchSingleCaseToIf::cleanBreaks).collect(Collectors.toList())).toBlock();
       case IF_STATEMENT:
         final IfStatement $ = copy.of(az.ifStatement(¢));
         $.setThenStatement(cleanBreaks(then($)));

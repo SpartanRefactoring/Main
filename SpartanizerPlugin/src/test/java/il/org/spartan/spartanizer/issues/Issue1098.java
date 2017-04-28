@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** Test case for bug in {@link SwitchWithOneCaseToIf}
+/** Test case for bug in {@link SwitchSingleCaseToIf}
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-20 */
 @SuppressWarnings("static-method")
