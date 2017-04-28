@@ -36,7 +36,7 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
     if (iz.loop(nextStatement) && !iz.simple(f.getInitializer())) {
       final Statement body = step.body(nextStatement);
       assert body != null;
-      if (compute.usedNames(body).anyMatch(x -> x.equals(n + "")))
+      if (compute.usedIdentifiers(body).anyMatch(λ -> λ.equals(n + "")))
         return null;
     }
     assert f != null;

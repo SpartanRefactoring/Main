@@ -390,6 +390,14 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.ItShortcut" name="'it' variable (¢)" />
      <command id="il.org.spartan.CentificationShortcut" name="Centification Shortcut" />
      <command id="il.org.spartan.SpartanWidget" name="Spartan Widget" />
+     <command
+           id="il.org.spartan.ZoomIn"
+           name="Zoom In">
+     </command>
+     <command
+           id="il.org.spartan.ZoomOut"
+           name="Zoom Out">
+     </command>
 </extension>
 
 <!-- Handlers of commands: which class to activate for each command id -->
@@ -409,6 +417,14 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.ItShortcut" class="il.org.spartan.spartanizer.plugin.KeyboardShortcuts" />
    <handler commandId="il.org.spartan.CentificationShortcut" class="il.org.spartan.spartanizer.plugin.RenamingHandler" />
    <handler commandId="il.org.spartan.SpartanWidget" class="il.org.spartan.spartanizer.plugin.widget.SpartanWidgetHandler" />
+   <handler
+         class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"
+         commandId="il.org.spartan.ZoomIn">
+   </handler>
+   <handler
+         class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"
+         commandId="il.org.spartan.ZoomOut">
+   </handler>
 </extension>
 
 <!-- Menus -->
@@ -567,6 +583,16 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+Alt+W"
 		commandId="il.org.spartan.SpartanWidget"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+ <key
+       commandId="il.org.spartan.ZoomIn"
+       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+       sequence="Ctrl+[">
+ </key>
+ <key
+       commandId="il.org.spartan.ZoomOut"
+       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+       sequence="Ctrl+]">
+ </key>
 </extension>
 
 <extension

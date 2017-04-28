@@ -10,7 +10,6 @@ import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.patterns.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -37,13 +36,17 @@ public final class LocalUninitializedAssignment extends LocalUninitialized //
   private Expression from;
 
   public LocalUninitializedAssignment() {
-    require("Next statement is an assignment", () -> assignment = extract.assignment(nextStatement));
+    needs("Next statement is an assignment", () -> assignment = extract.assignment(nextStatement));
     property("To", () -> to = to(assignment));
     property("From", () -> from = from(assignment));
     andAlso("It is a non-update assignment ", () -> assignment.getOperator() == ASSIGN);
     andAlso("Assignment is to present local", () -> wizard.eq(name, to));
     andAlso("Local is not assigned in its later siblings", () -> !usedInLaterSiblings());
-    andAlso("New value does not use values of later siblings", () -> compute.usedNames(from).noneMatch(x -> x.equals(identifier)));
+    andAlso("New value does not use values of later siblings",
+        () -> compute//
+            .usedIdentifiers(from)//
+            .allMatch(usedName -> laterSiblings()//
+                .allMatch(sibling -> !usedName.equals(sibling.getName() + ""))));
   }
 
   @Override public String description() {
