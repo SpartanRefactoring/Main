@@ -120,4 +120,13 @@ public interface the {
   @NotNull static boolean[] rest(@SuppressWarnings("unused") @NotNull PureIterable.Sized<@Nullable String> s) {
     return null;
   }
+
+  /** Converts a sequence of values into an array.
+   * @param <T> some arbitrary type
+   * @param $ some sequence of values of the type parameter
+   * @return parameter, organized as an array with entries whose type is the
+   *         type parameter */
+  @SafeVarargs static <T> T[] array(final T... $) {
+    return $;
+  }
 }

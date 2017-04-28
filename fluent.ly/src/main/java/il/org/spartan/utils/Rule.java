@@ -1,15 +1,23 @@
 package il.org.spartan.utils;
 
-import static java.lang.String.*;
+import static java.lang.String.format;
 
-import java.lang.annotation.*;
-import java.util.*;
-import java.util.function.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Target;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.eclipse.jdt.annotation.Nullable;
 
+import fluent.ly.box;
 import nano.ly.English;
-import nano.ly.box;
 import nano.ly.note;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern

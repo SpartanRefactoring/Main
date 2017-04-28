@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import fluent.ly.accumulate;
 import fluent.ly.idiomatic;
+import fluent.ly.the;
 import il.org.spartan.Utils.FoundHandleForT.FoundHandleForInt;
 
 /** An empty <code><b>interface</b></code> with a variety of <code>public
@@ -630,15 +631,15 @@ public interface Utils {
     }
 
     @Test public void swapDegenerate() {
-      final String @NonNull [] ss = as.array("A", "B", "C", "D");
+      final String @NonNull [] ss = the.array("A", "B", "C", "D");
       swap(ss, 1, 1);
-      assertArrayEquals(as.array("A", "B", "C", "D"), ss);
+      assertArrayEquals(the.array("A", "B", "C", "D"), ss);
     }
 
     @Test public void swapTypical() {
-      final String @NonNull [] ss = as.array("A", "B", "C", "D");
+      final String @NonNull [] ss = the.array("A", "B", "C", "D");
       swap(ss, 1, 2);
-      assertArrayEquals(as.array("A", "C", "B", "D"), ss);
+      assertArrayEquals(the.array("A", "C", "B", "D"), ss);
     }
 
     @Test public void swapTypicalCase() {

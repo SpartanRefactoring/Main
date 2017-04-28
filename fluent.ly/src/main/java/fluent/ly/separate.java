@@ -22,7 +22,6 @@ import il.org.spartan.Utils.Applicator;
 import il.org.spartan.as;
 import il.org.spartan.azzert;
 import il.org.spartan.iterables.iterables;
-import nano.ly.box;
 import nano.ly.prune;
 
 /** A utility class providing library functions that take an array or a
@@ -334,7 +333,7 @@ public enum separate {
     }
 
     @Test public final void asArrayBetweenChar() {
-      azzert.that(separate.these(as.array("Hello", "World")).by(','), is("Hello,World"));
+      azzert.that(separate.these(the.array("Hello", "World")).by(','), is("Hello,World"));
     }
 
     @Test public final void byArrayString() {
@@ -342,7 +341,7 @@ public enum separate {
     }
 
     @Test public final void byArrayStringUsingLiterals() {
-      azzert.that(separate.these(as.array("Hello", "World")).by(", "), is("Hello, World"));
+      azzert.that(separate.these(the.array("Hello", "World")).by(", "), is("Hello, World"));
     }
 
     @Test public final void byBooleanArrayChar() {
@@ -420,7 +419,7 @@ public enum separate {
     }
 
     @Test public final void byIterableOfChar() {
-      azzert.that(separate.these(as.array("Hello", "World")).by(','), is("Hello,World"));
+      azzert.that(separate.these(the.array("Hello", "World")).by(','), is("Hello,World"));
     }
 
     @Test public final void byIterableOfString() {
@@ -535,19 +534,19 @@ public enum separate {
     }
 
     @Test public final void theseArraySize0() {
-      azzert.that(iterables.count(separate.these(as.array()).os), is(0));
+      azzert.that(iterables.count(separate.these(the.array()).os), is(0));
     }
 
     @Test public final void theseArraySize1() {
-      azzert.that(iterables.count(separate.these(as.array("Rosebud")).os), is(1));
+      azzert.that(iterables.count(separate.these(the.array("Rosebud")).os), is(1));
     }
 
     @Test public final void theseArraySize2() {
-      azzert.that(iterables.count(separate.these(as.array("Hello", "World")).os), is(2));
+      azzert.that(iterables.count(separate.these(the.array("Hello", "World")).os), is(2));
     }
 
     @Test public final void theseArraySize3() {
-      azzert.that(iterables.count(separate.these(as.array("A", "B", "C")).os), is(3));
+      azzert.that(iterables.count(separate.these(the.array("A", "B", "C")).os), is(3));
     }
 
     @Test public final void theseFromOneItem() {

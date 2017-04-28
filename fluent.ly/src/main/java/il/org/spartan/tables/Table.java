@@ -1,12 +1,16 @@
 package il.org.spartan.tables;
 
-import java.io.*;
-import java.util.*;
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import il.org.spartan.*;
-import il.org.spartan.statistics.*;
-import il.org.spartan.utils.*;
-import nano.ly.box;
+import fluent.ly.box;
+import il.org.spartan.as;
+import il.org.spartan.statistics.RealStatistics;
+import il.org.spartan.utils.Int;
+import il.org.spartan.utils.system;
 import nano.ly.cCamelCase;
 import nano.ly.separate;
 import nano.ly.the;
