@@ -11,7 +11,7 @@ import org.eclipse.jdt.core.dom.*;
  * @since 2017-04-28 */
 public interface list {
 
-  public interface O extends UnaryOperator<List<Expression>> {/**/}
+  interface O extends UnaryOperator<List<Expression>> {/**/}
 
   class PrependOrAppend extends list.Z {
     public PrependOrAppend() {
