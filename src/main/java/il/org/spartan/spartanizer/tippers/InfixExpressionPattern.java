@@ -57,9 +57,9 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
     }
 
     ToCallExpected prepend(final Expression x) {
-      os.add(t -> {
-        t.add(0, x);
-        return t;
+      os.add(λ -> {
+        λ.add(0, x);
+        return λ;
       });
       return new ToCallExpected(this);
     }
