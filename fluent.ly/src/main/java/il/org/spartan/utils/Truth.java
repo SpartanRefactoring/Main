@@ -8,7 +8,7 @@ public enum Truth {
   X("Assertion exception"), //
   N("Null pointer exception"), //
   R("Runtime exception"), //
-  Ħ("A throwable of unknown kind");
+  Ħ("Throwable of some other kind");
   public static Truth truthOf(BooleanSupplier $) {
     try {
       return $.getAsBoolean() ? T : F;
