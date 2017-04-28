@@ -62,6 +62,12 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     final String[][] parameterRenameOptions = new String[][] { { "¢", "¢" }, { "it", "it" }, { "param", "param" } };
     final RadioGroupFieldEditor singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3,
         parameterRenameOptions, getFieldEditorParent());
+    singleParameterRadio.setPropertyChangeListener(new IPropertyChangeListener(){ 
+      @Override public void propertyChange(@SuppressWarnings("unused") PropertyChangeEvent __) { 
+        //add here the XML Update...
+        //changes.update(p, able);
+        } 
+        }); 
     addField(singleParameterRadio);
     setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());
     final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" }, { "typeCamelCase", "typeCamelCase" },

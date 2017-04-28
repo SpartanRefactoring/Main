@@ -76,11 +76,6 @@ public class Issue1005 {
         .gives("for(x+=1;x<5;){;}");
   }
 
-  @Ignore("Default switch") @Test public void t8() {
-    bloatingOf("switch(++x){}")//
-        .gives("switch(++x){default:}");
-  }
-
   @Test public void t9() {
     bloatingOf("for(;;) {++x;}")//
         .gives("for(;;){ x+=1;}");

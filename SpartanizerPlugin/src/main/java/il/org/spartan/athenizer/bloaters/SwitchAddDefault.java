@@ -5,7 +5,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.athenizer.zoomin.expanders.*;
-import il.org.spartan.spartanizer.patterns.*;
+import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -23,9 +23,7 @@ public class SwitchAddDefault extends SwitchStatementAbstractPattern implements 
     ;
   }
 
-  // TODO Yuval Simon - please eliminate this
   public SwitchAddDefault() {
-    andAlso("Yuval, I disabled this; it keeps on tipping as spartanization", () -> false);
     andAlso("Does not have default case", //
         () -> cases().stream().noneMatch(SwitchCase::isDefault));
   }

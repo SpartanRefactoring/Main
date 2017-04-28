@@ -280,7 +280,7 @@ public class Issue0311 {
         .stays();
   }
 
-  /** Introduced by Yogi on Tue-Apr-25-21:05:24-IDT-2017 (code generate
+  /** Introduced by Yogi on Tue-Apr-25-21:05:24-IDT-2017 (code generated
    * automatically by {@link JUnitTestMethodFacotry}) */
   @Test public void intaNewInt12345ForIntb0ab0b() {
     final TestOperand a = trimmingOf("int[] a = new int[] { 1, 2, 3, 4, 5 }; for (int b = 0;;) { a[b] = 0; ++b; }") //
