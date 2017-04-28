@@ -18,7 +18,7 @@ public class NoBrainDamagedTippersSpartanizer extends InteractiveSpartanizer {
         new MergeSwitchBranches(), //
         new RemoveRedundantSwitchReturn(), //
         new RemoveRedundantSwitchContinue(), //
-        new SwitchWithOneCaseToIf(), //
+        new SwitchSingleCaseToIf(), //
         new SwitchBranchSort(), //
         null)//
             .remove(SwitchCase.class, //

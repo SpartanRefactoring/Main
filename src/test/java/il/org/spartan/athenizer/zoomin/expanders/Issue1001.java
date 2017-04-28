@@ -11,11 +11,10 @@ import il.org.spartan.spartanizer.meta.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
 @SuppressWarnings("static-method")
-// This Should be ignored because we removed this expander
-@Ignore
+@Ignore("TODO Assignee of #1001")
 public class Issue1001 {
   @Test public void basic() {
-    bloatingOf(Aux.instance()).givesWithBinding("" //
+    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f1() {\n" //
         + "  int a;\n" //
         + "  a = 0;\n" //
@@ -24,7 +23,7 @@ public class Issue1001 {
   }
 
   @Test public void inclusion() {
-    bloatingOf(Aux.instance()).givesWithBinding("" //
+    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f2() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -35,7 +34,7 @@ public class Issue1001 {
   }
 
   @Test public void inclusion2() {
-    bloatingOf(Aux.instance()).givesWithBinding("" //
+    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f22() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -46,7 +45,7 @@ public class Issue1001 {
   }
 
   @Test public void inclusion3() {
-    bloatingOf(Aux.instance()).givesWithBinding("" //
+    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f3() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -57,11 +56,11 @@ public class Issue1001 {
   }
 
   @Test public void nonMatchingPrimitives() {
-    bloatingOf(Aux.instance()).staysWithBinding();
+    bloatingOf(Issue1001Aux.instance()).staysWithBinding();
   }
 
   @Test public void operators() {
-    bloatingOf(Aux.instance()).givesWithBinding("" //
+    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f4() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -72,7 +71,7 @@ public class Issue1001 {
   }
 
   @Test public void operators2() {
-    bloatingOf(Aux.instance()).givesWithBinding("" //
+    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f44() {\n" //
         + "  int a;\n" //
         + "  int b;\n" //
@@ -84,12 +83,14 @@ public class Issue1001 {
 
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings({ "unused", "TooBroadScope" })
-  public static class Aux extends MetaFixture {
-    public static Aux instance() {
-      return new Aux();
+  public static class Issue1001Aux extends MetaFixture {
+    public static Issue1001Aux instance() {
+      return new Issue1001Aux();
     }
 
-    void f1() { /**/ }
+    void f1() {
+      /**/
+    }
 
     void f2() {
       int a;

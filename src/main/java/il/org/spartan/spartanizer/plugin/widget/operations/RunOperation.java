@@ -57,8 +57,8 @@ public class RunOperation extends WidgetOperation {
         final ILaunchConfiguration[] cs = manager.getLaunchConfigurations(¢);
         if (cs != null)
           Collections.addAll(configurations, cs);
-      } catch (final CoreException e) {
-        note.cancel(e);
+      } catch (final CoreException ignore) {
+        note.cancel(ignore);
       }
     return (configuration = configurations.stream() //
         .filter(λ -> configurationName.equals(λ.getName())) //

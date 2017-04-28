@@ -6,7 +6,7 @@ import org.junit.*;
 
 import il.org.spartan.spartanizer.tippers.*;
 
-/** This is a unit test for {@link SwitchWithOneCaseToIf}
+/** This is a unit test for {@link SwitchSingleCaseToIf}
  * @author Yuval Simon
  * @since 2016-12-18 */
 @SuppressWarnings("static-method")

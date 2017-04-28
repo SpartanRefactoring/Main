@@ -57,11 +57,11 @@ public interface scope {
       return (Namespace) delimiter.getProperty("Namespace");
     final List<Statement> statements = statements(delimiter);
     final Statement last = the.lastOf(statements);
-    Namespace of = Environment.of(last);
-    if (of == null)
-      of = new Namespace(of);
-    delimiter.setProperty("Namespace", of);
-    return of;
+    Namespace $ = Environment.of(last);
+    if ($ == null)
+      $ = new Namespace($);
+    delimiter.setProperty("Namespace", $);
+    return $;
   }
 
   static String newName(final ASTNode ¢, final Type t) {
