@@ -134,9 +134,9 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static void loadPreferences() {
     NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(store().getBoolean(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID));
     ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
-    IProject[] projects = getAllSpartanizerProjects();
-    Document doc = XMLSpartan.getXML(projects[0]);
+    final IProject[] projects = getAllSpartanizerProjects();
+    final Document doc = XMLSpartan.getXML(projects[0]);
     doc.getDocumentElement().normalize();
-   notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
+    notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
   }
 }

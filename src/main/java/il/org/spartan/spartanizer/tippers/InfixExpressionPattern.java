@@ -12,7 +12,6 @@ import il.org.spartan.spartanizer.ast.navigate.*;
  * @since 2017-04-25 */
 public abstract class InfixExpressionPattern extends NodePattern<InfixExpression> {
   private static final long serialVersionUID = 1;
-
   protected int arity;
   protected Expression left;
   protected List<Expression> operands;
