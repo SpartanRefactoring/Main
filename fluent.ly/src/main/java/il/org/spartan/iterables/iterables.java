@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import an.iterable;
-import il.org.spartan.as;
+import fluent.ly.as;
 import il.org.spartan.azzert;
 
 /** No values in an 'enum' used as name space for a collection of 'static'

@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import fluent.ly.as;
 import il.org.spartan.*;
 
 /*** Third lecture:

@@ -1,5 +1,5 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
-package il.org.spartan;
+package fluent.ly;
 
 import static il.org.spartan.azzert.is;
 import static org.junit.Assert.assertArrayEquals;
@@ -14,7 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
 
-import fluent.ly.accumulate;
+import il.org.spartan.Utils;
+import il.org.spartan.azzert;
 import il.org.spartan.iterables.PureIterable;
 import il.org.spartan.iterables.PureIterator;
 
@@ -270,5 +271,14 @@ public enum as {
         }
       }), is("null"));
     }
+  }
+
+  /** Converts a sequence of values into an array.
+   * @param <T> some arbitrary type
+   * @param $ some sequence of values of the type parameter
+   * @return parameter, organized as an array with entries whose type is the
+   *         type parameter */
+  @SafeVarargs public static <T> T[] array(final T... $) {
+    return $;
   }
 }

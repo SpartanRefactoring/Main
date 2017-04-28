@@ -8,6 +8,7 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import fluent.ly.as;
 import il.org.spartan.*;
 
 /** A class to compute statistics, e.g., the minimal and maximal value, the mean

@@ -2,7 +2,7 @@ package a;
 
 import java.util.*;
 
-import fluent.ly.the;
+import fluent.ly.as;
 import il.org.spartan.*;
 
 /** Singleton collections.
@@ -16,6 +16,6 @@ public interface singleton {
 
   /** Singleton array. */
   static <T> T[] array(final T ¢) {
-    return the.array(¢);
+    return as.array(¢);
   }
 }
