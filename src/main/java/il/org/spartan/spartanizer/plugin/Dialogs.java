@@ -25,7 +25,7 @@ public enum Dialogs {
   private static final int RIB_ID = 2;
   public static final String ICON = "platform:/plugin/org.eclipse.team.ui/icons/full/obj/changeset_obj.gif";
   public static final String DELTA = "platform:/plugin/org.eclipse.ui/icons/full/obj16/change_obj.png";
-  public static final String LOGO = "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/wizban/createpatch_wizban.png";
+  public static final String LOGO = "platform:/plugin/org.eclipse.wst.xsd.ui/org/eclipse/wst/xsd/ui/internal/editor/icons/regx_wiz.png";
   public static final String CATEGORY = "platform:/plugin/org.eclipse.wst.common.snippets/icons/full/elcl16/new_category.gif";
   /** {@link SWT} images, lazy loading. */
   public static final Map<String, Image> images;
