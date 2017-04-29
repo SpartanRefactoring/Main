@@ -226,7 +226,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @param r             - Rewrite object
      * @return the replaced element
      */
-    public EncapsulatingNode replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
+    private EncapsulatingNode replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
         PsiElement n = getReplacingTree(m, r);
         r.replace(treeToReplace, n);
         return EncapsulatingNode.buildTreeFromPsi(n);

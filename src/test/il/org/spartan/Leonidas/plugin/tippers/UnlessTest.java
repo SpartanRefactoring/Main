@@ -1,10 +1,8 @@
-package il.org.spartan.Leonidas.tippers;
+package il.org.spartan.Leonidas.plugin.tippers;
 
 import com.intellij.psi.PsiConditionalExpression;
-import com.intellij.psi.PsiExpression;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.tippers.Unless;
 
 /**
  * @author michal cohen

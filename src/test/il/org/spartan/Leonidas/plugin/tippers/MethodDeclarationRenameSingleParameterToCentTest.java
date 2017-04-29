@@ -1,7 +1,6 @@
-package il.org.spartan.Leonidas.tippers;
+package il.org.spartan.Leonidas.plugin.tippers;
 
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.tippers.MethodDeclarationRenameSingleParameterToCent;
 
 /**
  * @author amirsagiv

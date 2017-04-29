@@ -1,8 +1,6 @@
-package il.org.spartan.Leonidas.tippers;
+package il.org.spartan.Leonidas.plugin.tippers;
 
-import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.tippers.Delegator;
 import org.junit.Assert;
 
 /**

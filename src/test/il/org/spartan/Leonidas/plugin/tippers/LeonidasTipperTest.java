@@ -1,13 +1,29 @@
-package il.org.spartan.Leonidas.tippers;
+package il.org.spartan.Leonidas.plugin.tippers;
 
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
 /**
- * @author Oren Afek
- * @since 20/01/17
+ * Created by melanyc on 4/29/2017.
  */
 public class LeonidasTipperTest extends PsiTypeHelper {
-/*
+    public void testCanTip() throws Exception {
+
+    }
+
+    public void testDescription() throws Exception {
+
+    }
+
+    public void testTip() throws Exception {
+
+    }
+
+    public void testGetPsiClass() throws Exception {
+
+    }
+
+
+    /*
     private LeonidasTipper $;
     private PsiTreeTipperBuilder builderMock = Mockito.mock(PsiTreeTipperBuilder.class);
     private File fileMock = Mockito.mock(File.class);
@@ -74,5 +90,6 @@ public class LeonidasTipperTest extends PsiTypeHelper {
         assertEquals(mockDescription, $.description(createTestExpressionFromString(expression)));
     }
 */
+
 
 }
