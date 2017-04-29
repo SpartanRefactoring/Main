@@ -4,7 +4,6 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
-import il.org.spartan.Leonidas.plugin.tippers.leonidas.RemoveCurlyBracesFromIfStatement;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
@@ -47,18 +46,18 @@ public enum Utils {
 
     /**
      * @param root psi element that represents code blocks.
-     * @param i identifier
+     * @param id identifier
      * @return list of all the appearance of the identifier.
      */
-    public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier i) {
+    public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier id) {
         List<PsiIdentifier> identifiers = new ArrayList<>();
-        if (root != null && i != null)
-			root.accept(new JavaRecursiveElementVisitor() {
+        if (root != null && id != null)
+            root.accept(new JavaRecursiveElementVisitor() {
 				@Override
 				public void visitIdentifier(PsiIdentifier i) {
 					super.visitIdentifier(i);
-					if (!i.getText().equals(i.getText()))
-						return;
+                    if (!id.getText().equals(i.getText()))
+                        return;
 					PsiElement context = i.getContext();
 					if (iz.variable(context) || iz.referenceExpression(context))
 						identifiers.add(i);
@@ -83,6 +82,12 @@ public enum Utils {
         return ProjectManager.getInstance().getOpenProjects()[0];
     }
 
+    /**
+     * @param e      JD
+     * @param aClass the class of wanted type
+     * @param <T>    the wanted type
+     * @return lists of all the children of the type T of e.
+     */
     public static <T extends PsiElement> List<T> getChildrenOfType(@Nullable PsiElement e, @NotNull Class<T> aClass) {
         Wrapper<List<T>> w = new Wrapper<>(new LinkedList<T>());
         assert e != null;
@@ -91,20 +96,17 @@ public enum Utils {
             public void visitElement(PsiElement e) {
                 super.visitElement(e);
                 if (aClass.isInstance(e))
-					w.get().add((T) e);
+                    w.get().add((T) e);
             }
         });
         return w.get();
     }
 
-    public static void main(String[] args) {
-        try {
-            System.out.println(getSourceCode(RemoveCurlyBracesFromIfStatement.class));
-        } catch (IOException e) {
-            logger.error("", e);
-        }
-    }
-
+    /**
+     * @param c the wanted tipper class
+     * @return the content of the file of the tipper.
+     * @throws IOException
+     */
     public static String getSourceCode(Class<?> c) throws IOException {
         try {
             InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
@@ -124,11 +126,10 @@ public enum Utils {
      * @return fixed path. on error, returns null
      */
     public static String fixSpacesProblemOnPath(String path) {
-        String fixedPath = null;
         try {
-            fixedPath = URLDecoder.decode(path, "UTF-8");
+            return URLDecoder.decode(path, "UTF-8");
         } catch (UnsupportedEncodingException ignore) {
+            return null;
         }
-        return fixedPath;
     }
 }
