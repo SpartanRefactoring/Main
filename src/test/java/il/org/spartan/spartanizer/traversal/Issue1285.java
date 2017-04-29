@@ -9,7 +9,7 @@ import org.junit.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Test that all tippers in {@link Configurations} doesn't have a
- * serialVersionUID equals to 1L (deafualt) and that they're all different-
+ * serialVersionUID equals to 1L (default) and that they're all different-
  * Issue #1285
  * @author tomerdragucki
  * @since 2017-04-29 [[SuppressWarningsSpartan]] */
