@@ -39,6 +39,11 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
     }
 
     @Override
+    public String name() {
+        return "LambdaExpressionRemoveRedundantCurlyBraces";
+    }
+
+    @Override
     public Tip tip(final PsiLambdaExpression element) {
         assert statements(blockBody(element)).size() == 1;
         final PsiStatement s = firstStatement(blockBody(element));

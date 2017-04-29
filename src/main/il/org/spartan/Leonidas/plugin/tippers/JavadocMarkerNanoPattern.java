@@ -54,4 +54,10 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
     private boolean hasTag(PsiMethod m) {
         return step.docCommentString(m).contains(tag());
     }
+
+
+    @Override
+    public String name() {
+        return "JavadocMarkerNanoPattern";
+    }
 }

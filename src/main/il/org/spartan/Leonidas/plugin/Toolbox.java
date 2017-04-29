@@ -34,15 +34,13 @@ public class Toolbox implements ApplicationComponent {
         return (Toolbox) ApplicationManager.getApplication().getComponent(Toolbox.auxGetComponentName());
     }
 
-    public static List<Tipper> getAllTippers() {
+    public List<Tipper> getAllTippers() {
         List<Tipper> list = new ArrayList<>();
-        list.add(new SafeReference());
-        list.add(new Unless());
-        list.add(new LambdaExpressionRemoveRedundantCurlyBraces());
-        list.add(new LispLastElement());
-        list.add(new DefaultsTo());
-        list.add(new MethodDeclarationRenameSingleParameterToCent());
-        list.add(new Delegator());
+        this.tipperMap.values().forEach(element -> {
+            element.forEach(tipper -> {
+                list.add(tipper);
+            });
+        });
         return list;
     }
 

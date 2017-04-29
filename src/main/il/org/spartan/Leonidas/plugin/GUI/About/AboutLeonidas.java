@@ -41,8 +41,8 @@ public class AboutLeonidas extends JFrame {
                 "The resulting code is not just shorter, it is more regular. The spartanization process tries to remove as many distracting details and variations from the code,\n" +
                 "stripping it to its bare bone.\n\n" +
                 "The plugin is based on the PSI library of IntelliJ-IDEA that allowed us to analyze java code by creating Abstract Syntax Trees from existing code and make changes in these trees.\n" +
-                "Each tipper in this plugin was written in a language that we all desinged called - Leonidas.\n" +
-                "Using this language we are able to create code transformations only by writing an example of generic code that represents the 'before' and 'after' states of these tranformation" +
+                "Each tipper in this plugin was written in a language that we all designed called - Leonidas.\n" +
+                "Using this language we are able to create code transformations only by writing an example of generic code that represents the 'before' and 'after' states of these transformation" +
                 "\n\n" +
                 "In addition to the tipping mechanism, We offer you to enjoy our user services which can be found under 'Leonidas' section in the menu bar of IntelliJ.\n" +
                 "There are currently 3 services available:\n" +

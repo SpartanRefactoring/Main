@@ -64,6 +64,11 @@
                 text="ToolBox Controller">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
+        <action class="il.org.spartan.Leonidas.plugin.GUI.About.AboutAction"
+                id="myPlugin7"
+                text="About">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
     </actions>
 
 </idea-plugin>

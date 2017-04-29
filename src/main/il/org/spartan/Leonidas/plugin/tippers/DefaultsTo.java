@@ -54,6 +54,11 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
         return "Replace to ??";
     }
 
+    @Override
+    public String name() {
+        return "DefaultsTo";
+    }
+
     private boolean eqOperator(PsiConditionalExpression x) {
         return iz.equalsOperator(step.operator(az.binaryExpression(step.conditionExpression(x))));
     }

@@ -170,4 +170,9 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
         return tip(¢);
     }
 
+	@Override
+	public String name() {
+		return "SafeReference";
+	}
+
 }

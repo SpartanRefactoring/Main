@@ -9,6 +9,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.the;
 
 /**
  * Remove redundant curly braces
+ * RemoveCurlyBraces
  * author Oren Afek, Shron Kuninin, michalcohen
  * since 06/01/17
  */
