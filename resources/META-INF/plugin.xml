@@ -54,7 +54,7 @@
             <keyboard-shortcut first-keystroke="ctrl m" keymap="$default"/>
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
-        <action class="il.org.spartan.Leonidas.plugin.GUI.PlaygroundSwing.PlaygroungSwingAction"
+        <action class="il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.PlaygroungControllerAction"
                 id="myPlugin5"
                 text="Playground">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
