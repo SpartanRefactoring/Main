@@ -139,5 +139,10 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
         insertImportStatement(e, insertSpartanizerUtils(e));
     }
 
+    @Override
+    public String name() {
+        return "NanoPatternTipper";
+    }
+
     protected abstract Tip pattern(N ¢);
 }

@@ -35,15 +35,11 @@ public class ToolBoxController extends JFrame{
 
     public ToolBoxController() {
         super("Spartanizer ToolBox Controller");
-        setContentPane(mainPanel);
-        setPreferredSize(new Dimension(800, 600));
-        setResizable(false);
-        pack();
-        setVisible(true);
+
         list = new CheckBoxList();
-        List<Tipper> tipsList = Toolbox.getAllTippers();
+        List<Tipper> tipsList = Toolbox.getInstance().getAllTippers();
         tipsList.forEach(tip -> {
-            list.addCheckbox(new JCheckBox(tip.description()));
+            list.addCheckbox(new JCheckBox(tip.name()));
         });
         list.addMouseMotionListener(new MouseMotionListener() {
             @Override
@@ -67,6 +63,11 @@ public class ToolBoxController extends JFrame{
         selectAllButton.addActionListener(e->selectAllListener());
         clearAllButton.addActionListener(e -> clearAllListener());
 
+        setContentPane(mainPanel);
+        setPreferredSize(new Dimension(800, 600));
+        setResizable(false);
+        pack();
+        setVisible(true);
     }
 
     private void clearAllListener() {

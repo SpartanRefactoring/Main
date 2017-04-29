@@ -38,6 +38,11 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
     }
 
     @Override
+    public String name() {
+        return "RenameParameterToCent";
+    }
+
+    @Override
     public Tip tip(PsiMethod ¢) {
         return ¢ == null || !canTip(¢) ? null : new Tip(description(¢), ¢, this.getClass()) {
             @Override

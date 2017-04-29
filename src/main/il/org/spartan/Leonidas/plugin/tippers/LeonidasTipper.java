@@ -31,6 +31,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
 
     String description;
+    String name;
     Matcher matcher;
     Replacer replacer;
     Class<? extends PsiElement> rootType;
@@ -41,6 +42,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         file = getPsiTreeFromString("Tipper" + tipperName, fileContent);
         description = Utils.getClassFromFile(file).getDocComment().getText()
                 .split("\\n")[1].trim()
+                .split("\\*")[1].trim();
+        name = Utils.getClassFromFile(file).getDocComment().getText()
+                .split("\\n")[2].trim()
                 .split("\\*")[1].trim();
         map = getConstraints();
         matcher = new Matcher(getMatcherRootTree(), map);
@@ -205,6 +209,11 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     @Override
     public String description(PsiElement element) {
         return description;
+    }
+
+    @Override
+    public String name() {
+        return name;
     }
 
     @Override
