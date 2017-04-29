@@ -21,6 +21,8 @@ import il.org.spartan.utils.*;
  * @since 2017-03-26 */
 public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
     implements TipperCategory.Inlining {
+  private static final long serialVersionUID = -5672012043383066061L;
+
   public LocalInitializedIncrementDecrementInline() {
     andAlso("Has increment/decrement of variable afterwards", () -> {
       final ExpressionStatement s = az.expressionStatement(nextStatement);
@@ -33,8 +35,6 @@ public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
           && collect.usesOf(name).in(extract.fragments(declaration)).size() == 1;
     });
   }
-
-  private static final long serialVersionUID = 0x6E14426AA4211FFEL;
 
   @Override public String description() {
     return "Consolidate initialization of " + name + " with subsequent increment/decrement";
