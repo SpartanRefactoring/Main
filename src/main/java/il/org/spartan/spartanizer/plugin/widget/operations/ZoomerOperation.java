@@ -41,7 +41,7 @@ public class ZoomerOperation extends WidgetOperation {
   }
 
   @Override public String imageURL() {
-    return "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/obj16/changelog_obj.gif";
+    return "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/obj16/menu.gif";
   }
   @Override public String description() {
     return "zoom in current selection";
