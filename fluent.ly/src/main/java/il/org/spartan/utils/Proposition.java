@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import fluent.ly.as;
 import il.org.spartan.*;
 
 /*** Third lecture:
@@ -89,7 +90,7 @@ public interface Proposition extends BooleanSupplier {
       return toString != null ? toString : inner instanceof Aggregate ? inner + "" : super.toString();
     }
 
-    protected final String toString;
+    public String toString;
   }
 
   interface Operator1 extends Function<BooleanSupplier, BooleanSupplier> {
@@ -206,8 +207,13 @@ public interface Proposition extends BooleanSupplier {
     }
 
     protected void simplify() {
-      final List<BooleanSupplier> newInner = stream().map(λ -> !getClass().isInstance(λ) ? Stream.of(λ) : ((Some) λ).inner.stream()).flatMap(λ -> λ)
-          .collect(Collectors.toList());
+      final List<BooleanSupplier> newInner = stream().map(λ -> {
+        if (!getClass().isInstance(λ))
+          return Stream.of(λ);
+        if (((Some) λ).toString != null)
+          this.toString += ", " + λ;
+        return ((Some) λ).inner.stream();
+      }).flatMap(λ -> λ).collect(Collectors.toList());
       inner.clear();
       inner.addAll(newInner);
     }

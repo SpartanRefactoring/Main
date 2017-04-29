@@ -112,7 +112,7 @@ import il.org.spartan.streotypes.*;
    * @since 05/08/2008 */
   @SuppressWarnings("static-method") public static class TEST {
     @NotNull private static String cat(final String s1, final String s2) {
-      return "[[" + s1 + "]]" + "[[" + s2 + "]]";
+      return "[[" + s1 + "]][[" + s2 + "]]";
     }
 
     @Test public void emptyContent() {

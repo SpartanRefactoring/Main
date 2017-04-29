@@ -1,20 +1,29 @@
 package il.org.spartan;
 
-import static il.org.spartan.azzert.*;
-import static nano.ly.idiomatic.*;
+import static fluent.ly.idiomatic.eval;
+import static il.org.spartan.azzert.is;
+import static il.org.spartan.azzert.isNull;
+import static org.junit.Assert.assertArrayEquals;
 
-import java.io.*;
-import java.util.*;
-import java.util.function.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
 
-import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import org.junit.runners.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
-import il.org.spartan.Utils.FoundHandleForT.*;
-import nano.ly.*;
+import fluent.ly.accumulate;
+import fluent.ly.as;
+import fluent.ly.idiomatic;
+import il.org.spartan.Utils.FoundHandleForT.FoundHandleForInt;
 
 /** An empty <code><b>interface</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -553,7 +562,7 @@ public interface Utils {
     @NotNull public static Integer[] intToIntegers(@NotNull final int... is) {
       final Integer @NonNull [] $ = new Integer @NonNull [is.length];
       for (int ¢ = 0; ¢ < is.length; ++¢)
-        $[¢] = nano.ly.box.it(is[¢]);
+        $[¢] = fluent.ly.box.it(is[¢]);
       return $;
     }
 
