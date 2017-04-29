@@ -3,7 +3,7 @@ package il.org.spartan.utils;
 import java.io.*;
 import java.nio.file.*;
 
-import nano.ly.*;
+import nano.ly.note;
 
 /** File utils
  * @author Ori Marcovitch

@@ -5,6 +5,7 @@ import static il.org.spartan.azzert.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import fluent.ly.as;
 import il.org.spartan.*;
 
 public abstract class Accumulator {
