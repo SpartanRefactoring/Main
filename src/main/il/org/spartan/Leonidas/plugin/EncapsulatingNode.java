@@ -56,7 +56,9 @@ public class EncapsulatingNode implements Cloneable, VisitableNode, Iterable<Enc
      * @return this, for fluent API.
      */
     public EncapsulatingNode replace(EncapsulatingNode newNode, PsiRewrite r) {
-        assert (iz.generic(inner));
+        // this is bad, but better than using 'assert' like before because it can be tested
+        if (!iz.generic(inner))
+            throw new IllegalArgumentException();
         if (parent == null)
             return this;
         inner = r.replace(((GenericPsi) inner).getInner(), newNode.inner);
