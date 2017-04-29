@@ -310,7 +310,6 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the generic tree representing the "from" template
      */
     private EncapsulatingNode getMatcherRootTree() {
-
         PsiMethod method = getInterfaceMethod("matcher");
         giveIdToStubMethodCalls(method);
 

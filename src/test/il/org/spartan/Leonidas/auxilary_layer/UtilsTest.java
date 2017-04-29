@@ -26,7 +26,6 @@ public class UtilsTest extends PsiTypeHelper {
     public void testGetAllReferences() throws Exception {
         PsiMethod m = createTestMethodFromString("int foo() { int x = 0; x++; x--; return x;}");
         PsiIdentifier id = createTestIdentifierFromString("x");
-        System.out.println(Utils.getAllReferences(m, id).size());
         assertEquals(Utils.getAllReferences(m, id).size(), 4);
         id = createTestIdentifierFromString("id");
         PsiIdentifier nonExistent = createTestIdentifierFromString("banana");

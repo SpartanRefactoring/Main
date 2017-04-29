@@ -287,4 +287,8 @@ public class PsiTypeHelper extends PsiTestCase {
     public PsiRequiresStatement createTestRequiresStatement(String module) {
         return (PsiRequiresStatement) getTestFactory().createStatementFromText("requires " + module + ";", getTestFile());
     }
+
+    public PsiReturnStatement createTestReturnStatement(String expression) {
+        return (PsiReturnStatement) getTestFactory().createStatementFromText("return " + expression + ";", getTestFile());
+    }
 }
