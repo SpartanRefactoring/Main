@@ -3,7 +3,7 @@ package il.org.spartan.Leonidas.plugin.tippers;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
 /**
- * Created by melanyc on 4/29/2017.
+ * Created by  on 4/29/2017.
  */
 public class LeonidasTipperTest extends PsiTypeHelper {
     public void testCanTip() throws Exception {

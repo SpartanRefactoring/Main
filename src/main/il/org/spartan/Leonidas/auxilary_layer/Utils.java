@@ -68,7 +68,13 @@ public enum Utils {
         return identifiers;
     }
 
+    /**
+     * @param f
+     * @return
+     */
     public static PsiImportList getImportList(PsiFile f) {
+        PsiJavaFile ff = (PsiJavaFile) f;
+        ff.getImportList();
         return az.importList(PsiTreeUtil.getChildOfType(f, PsiImportList.class));
     }
 
@@ -108,7 +114,6 @@ public enum Utils {
     }
 
     public static String getSourceCode(Class<?> c) throws IOException {
-
         try (InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java")) {
             return IOUtils.toString(new BufferedReader(new InputStreamReader(is)));
         } catch (IOException e) {

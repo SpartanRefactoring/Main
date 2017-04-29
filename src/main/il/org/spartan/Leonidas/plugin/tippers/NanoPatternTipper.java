@@ -1,6 +1,5 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
-import com.google.common.io.Files;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.fileTypes.FileType;
 import com.intellij.openapi.fileTypes.FileTypeRegistry;
@@ -8,19 +7,19 @@ import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
-import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.tipping.TipperCategory;
+import org.apache.commons.io.IOUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Represents a tipper that changes the code of the user to a code that need the creation of
@@ -80,11 +79,12 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     private PsiFile createUtilsFile(PsiElement e, PsiDirectory d) throws IOException {
-        URL is = this.getClass().getResource("/spartanizer/SpartanizerUtils.java");
+        URL is = getClass().getResource("/spartanizer/SpartanizerUtils.java");
         File file = new File(is.getPath());
         FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
-        List<String> ls = Files.readLines(file, StandardCharsets.UTF_8);
-        PsiFile pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, String.join("\n", ls));
+        file.setReadable(true, false);
+        String s = IOUtils.toString(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java"))));
+        PsiFile pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, s);
         d.add(pf);
         Arrays.stream(d.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst().get().getVirtualFile().setWritable(false);
         Toolbox.getInstance().excludeFile(pf);
@@ -123,7 +123,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
     @SuppressWarnings("ConstantConditions")
     private void insertImportStatement(PsiElement e, PsiFile f) {
         PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(f, PsiClass.class), "*");
-        PsiImportList pil = Utils.getImportList(e.getContainingFile());
+        PsiImportList pil = ((PsiJavaFile) e.getContainingFile()).getImportList();
         if (!Arrays.stream(pil.getImportStaticStatements()).anyMatch(x -> x.getText().contains("spartanizer")))
             pil.add(piss);
 

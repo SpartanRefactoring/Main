@@ -1,5 +1,7 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
+import com.intellij.psi.PsiIdentifier;
+import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
 import static il.org.spartan.Leonidas.auxilary_layer.Utils.in;
@@ -18,7 +20,9 @@ public class UtilsTest extends PsiTypeHelper {
     }
 
     public void testGetAllReferences() throws Exception {
-
+        PsiMethod m = createTestMethodFromString("int foo() { int x = 0; x++; x--; return x;}");
+        PsiIdentifier id = createTestIdentifierFromString("x");
+        assertEquals(Utils.getAllReferences(m, id).size(), 4);
     }
 
     public void testGetImportList() throws Exception {
