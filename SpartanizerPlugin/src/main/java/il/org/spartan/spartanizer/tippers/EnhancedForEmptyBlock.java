@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-22 */
 public class EnhancedForEmptyBlock extends ReplaceCurrentNode<EnhancedForStatement> //
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = 0x1BF0F6E7B9886371L;
+  private static final long serialVersionUID = 3689810666505415184L;
 
   @Override public ASTNode replacement(final EnhancedForStatement ¢) {
     final EnhancedForStatement $ = copy.of(¢);
