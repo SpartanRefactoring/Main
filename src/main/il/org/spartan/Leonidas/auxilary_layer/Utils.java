@@ -67,11 +67,18 @@ public enum Utils {
         return identifiers;
     }
 
+    /**
+     * @param e JD
+     * @return the document in which e is.
+     */
     public static Document getDocumentFromPsiElement(PsiElement e) {
         PsiFile associatedFile = e.getContainingFile();
         return PsiDocumentManager.getInstance(associatedFile.getProject()).getDocument(associatedFile);
     }
 
+    /**
+     * @return the project of the user.
+     */
     public static Project getProject() {
         return ProjectManager.getInstance().getOpenProjects()[0];
     }
@@ -99,8 +106,9 @@ public enum Utils {
     }
 
     public static String getSourceCode(Class<?> c) throws IOException {
-        try (InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java")) {
-            return IOUtils.toString(new BufferedReader(new InputStreamReader(is)));
+        try {
+            InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
+            return is != null ? IOUtils.toString(new BufferedReader(new InputStreamReader(is))) : "";
         } catch (IOException e) {
             logger.error("", e);
         }

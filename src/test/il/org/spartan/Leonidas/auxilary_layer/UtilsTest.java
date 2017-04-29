@@ -1,9 +1,11 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.PsiIdentifier;
+import com.intellij.psi.PsiIfStatement;
 import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
+import static il.org.spartan.Leonidas.auxilary_layer.Utils.getDocumentFromPsiElement;
 import static il.org.spartan.Leonidas.auxilary_layer.Utils.in;
 
 /**
@@ -11,7 +13,6 @@ import static il.org.spartan.Leonidas.auxilary_layer.Utils.in;
  * @since 22-12-2016.
  */
 public class UtilsTest extends PsiTypeHelper {
-    private static final String dummyFileName = "test.java";
 
     public void testIn() throws Exception {
         assertTrue(in(5, 3, 4, 5, 6));
@@ -22,19 +23,17 @@ public class UtilsTest extends PsiTypeHelper {
     public void testGetAllReferences() throws Exception {
         PsiMethod m = createTestMethodFromString("int foo() { int x = 0; x++; x--; return x;}");
         PsiIdentifier id = createTestIdentifierFromString("x");
+        System.out.println(Utils.getAllReferences(m, id).size());
         assertEquals(Utils.getAllReferences(m, id).size(), 4);
     }
 
-    public void testGetClassFromFile() throws Exception {
-
-    }
-
     public void testGetDocumentFromPsiElement() throws Exception {
-
+        PsiIfStatement i = createTestIfStatement("x > 2", "x++;");
+        assertNull(getDocumentFromPsiElement(i));
     }
 
     public void testGetProject() throws Exception {
-
+        assertEquals(Utils.getProject().getName(), "testGetProject");
     }
 
     public void testGetChildrenOfType() throws Exception {

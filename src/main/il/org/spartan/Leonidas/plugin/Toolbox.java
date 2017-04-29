@@ -34,6 +34,10 @@ public class Toolbox implements ApplicationComponent {
         return (Toolbox) ApplicationManager.getApplication().getComponent(Toolbox.auxGetComponentName());
     }
 
+    private static String auxGetComponentName() {
+        return Toolbox.class.getSimpleName();
+    }
+
     public List<Tipper> getAllTippers() {
         List<Tipper> list = new ArrayList<>();
         this.tipperMap.values().forEach(element -> {
@@ -42,10 +46,6 @@ public class Toolbox implements ApplicationComponent {
             });
         });
         return list;
-    }
-
-    private static String auxGetComponentName() {
-        return Toolbox.class.getSimpleName();
     }
 
     private void initializeInstance() {
@@ -64,7 +64,9 @@ public class Toolbox implements ApplicationComponent {
         (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class).stream()
                 .forEach(c -> {
                     try {
-                        add(new LeonidasTipper(c.getSimpleName(), Utils.getSourceCode(c)));
+                        String source = Utils.getSourceCode(c);
+                        if (!source.equals(""))
+                            add(new LeonidasTipper(c.getSimpleName(), source));
                     } catch (IOException e) {
                         logger.info("Failed to read file: " + c.getName() + "\n" + Arrays.stream(e.getStackTrace()).map(x -> x.toString()).reduce((e1, e2) -> e1 + "\n" + e2));
                     }
