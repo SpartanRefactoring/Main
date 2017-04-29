@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin.GUI.PlaygroundSwing;
+package il.org.spartan.Leonidas.plugin.GUI.PlaygroundController;
 
 import com.intellij.lang.java.JavaLanguage;
 import com.intellij.psi.PsiFile;
@@ -26,6 +26,7 @@ public class Playground extends JFrame {
     private JPanel buttonPanel;
     private JScrollPane inputScroll;
     private JScrollPane outputScroll;
+    private JButton closeButton;
     private String before = "public class foo{ public void main(){\n";
     private String after = "\n}}";
 
@@ -39,6 +40,7 @@ public class Playground extends JFrame {
         outputArea.setEditable(false);
         spartanizeButton.addActionListener(e -> spartanizeButtonClicked());
         clearButton.addActionListener(e -> clearButtonClicked());
+        closeButton.addActionListener(e -> closeButtonClicked());
     }
 
     private void spartanizeButtonClicked() {
@@ -53,5 +55,9 @@ public class Playground extends JFrame {
 
     private void clearButtonClicked() {
         outputArea.setText("");
+    }
+
+    private void closeButtonClicked() {
+        dispose();
     }
 }
