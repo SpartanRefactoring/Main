@@ -1,13 +1,21 @@
 package il.org.spartan.Leonidas.plugin;
 
 import il.org.spartan.Leonidas.PsiTypeHelper;
+import org.junit.Assert;
 
 /**
- * Created by melanyc on 4/29/2017.
+ * @author melanyc, RoeiRaz
+ * @since 29/4/17
  */
 public class EncapsulatingNodeTest extends PsiTypeHelper {
-    public void testBuildTreeFromPsi() throws Exception {
+    private final String ifStatement1 = "" +
+            "if (expression) {" +
+            "   statement();" +
+            "}";
 
+    public void testRootEncapsulatingNodeIsOrphan() throws Exception {
+        EncapsulatingNode node = EncapsulatingNode.buildTreeFromPsi(createTestStatementFromString(ifStatement1));
+        Assert.assertNull(node.getParent());
     }
 
     public void testReplace() throws Exception {
