@@ -4,7 +4,6 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
-import com.intellij.psi.util.PsiTreeUtil;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.RemoveCurlyBracesFromIfStatement;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.apache.commons.io.IOUtils;
@@ -66,20 +65,6 @@ public enum Utils {
 				}
 			});
         return identifiers;
-    }
-
-    /**
-     * @param f
-     * @return
-     */
-    public static PsiImportList getImportList(PsiFile f) {
-        PsiJavaFile ff = (PsiJavaFile) f;
-        ff.getImportList();
-        return az.importList(PsiTreeUtil.getChildOfType(f, PsiImportList.class));
-    }
-
-    public static PsiClass getClassFromFile(PsiJavaFile f) {
-        return f.getClasses()[0];
     }
 
     public static Document getDocumentFromPsiElement(PsiElement e) {

@@ -40,10 +40,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
 
     public LeonidasTipper(String tipperName, String fileContent) throws IOException {
         file = getPsiTreeFromString("Tipper" + tipperName, fileContent);
-        description = Utils.getClassFromFile(file).getDocComment().getText()
+        description = file.getClasses()[0].getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
-        name = Utils.getClassFromFile(file).getDocComment().getText()
+        name = file.getClasses()[0].getDocComment().getText()
                 .split("\\n")[2].trim()
                 .split("\\*")[1].trim();
         map = getConstraints();

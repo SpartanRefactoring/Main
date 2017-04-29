@@ -25,10 +25,6 @@ public class UtilsTest extends PsiTypeHelper {
         assertEquals(Utils.getAllReferences(m, id).size(), 4);
     }
 
-    public void testGetImportList() throws Exception {
-
-    }
-
     public void testGetClassFromFile() throws Exception {
 
     }
