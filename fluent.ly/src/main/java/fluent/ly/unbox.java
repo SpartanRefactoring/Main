@@ -30,7 +30,9 @@ public enum unbox {
   @NotNull public static double[] it(@NotNull final Double[] ¢) {
     return unbox(¢);
   }
-
+  @NotNull public static float[] it(Float[] fs) {
+    return unbox(fs);
+  }
   public static int it(@NotNull final Integer ¢) {
     return ¢.intValue();
   }
@@ -174,4 +176,6 @@ public enum unbox {
       $[¢] = ss[¢].shortValue();
     return $;
   }
+
+
 }
