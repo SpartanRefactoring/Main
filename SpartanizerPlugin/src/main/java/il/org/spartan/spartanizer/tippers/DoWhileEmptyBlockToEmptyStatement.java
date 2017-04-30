@@ -13,7 +13,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-22 */
 public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStatement> //
     implements TipperCategory.SyntacticBaggage {
-  private static final long serialVersionUID = -2477420682938910320L;
+  private static final long serialVersionUID = -0x226190FC35C78670L;
 
   @Override public ASTNode replacement(final DoStatement ¢) {
     final DoStatement $ = copy.of(¢);

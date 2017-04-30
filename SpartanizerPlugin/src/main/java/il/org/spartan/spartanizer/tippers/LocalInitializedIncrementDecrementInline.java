@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @since 2017-03-26 */
 public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = -5672012043383066061L;
+  private static final long serialVersionUID = -0x4EB708E6DF95CDCDL;
 
   public LocalInitializedIncrementDecrementInline() {
     andAlso("Has increment/decrement of variable afterwards", () -> {
