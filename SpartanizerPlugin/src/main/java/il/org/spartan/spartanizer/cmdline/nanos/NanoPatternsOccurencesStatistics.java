@@ -6,10 +6,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Collects statistics about nano occurrences
  * @author orimarco <marcovitch.ori@gmail.com>

@@ -7,9 +7,9 @@ import java.util.stream.*;
 
 import org.junit.*;
 
-import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Test class for {@link English}
  * @author yonzarecki

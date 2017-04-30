@@ -9,8 +9,8 @@ import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import nano.ly.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a

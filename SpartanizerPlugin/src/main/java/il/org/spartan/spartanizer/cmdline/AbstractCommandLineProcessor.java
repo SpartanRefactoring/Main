@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.external.*;
 
 /** TODO Matteo Orru' <matteo.orru@cs.technion.ac.il> please add a description

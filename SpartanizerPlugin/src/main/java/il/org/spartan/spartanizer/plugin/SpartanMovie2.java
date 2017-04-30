@@ -13,8 +13,8 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.ide.*;
 import org.eclipse.ui.progress.*;
 
-import fluent.ly.*;
 import il.org.spartan.plugin.old.*;
+import nano.ly.*;
 
 /** Even better than 300! A handler that runs the spartanization process step by
  * step until completion.

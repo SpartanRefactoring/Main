@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import java.io.*;
 
-import fluent.ly.*;
+import nano.ly.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

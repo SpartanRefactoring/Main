@@ -8,7 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** Extract items to which a given annotation applies

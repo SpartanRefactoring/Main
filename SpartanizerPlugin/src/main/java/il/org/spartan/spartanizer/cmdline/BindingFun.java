@@ -8,10 +8,10 @@ import org.eclipse.equinox.app.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** An {@link IApplication} extension entry point, allowing execution of ***
  * @author Ori Marcovitch

@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @since 2015-08-07 */
 public final class LocalInitializedAssignment extends $FragmentAndStatement//
     implements TipperCategory.Inlining {
-  private static final long serialVersionUID = 0x14812B0904DFB002L;
+  private static final long serialVersionUID = -2866629311596528031L;
 
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + Trivia.gist(¢.getName()) + " with its subsequent initialization";

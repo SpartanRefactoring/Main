@@ -1,13 +1,12 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
-import static il.org.spartan.spartanizer.research.TipperFactory.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import nano.ly.*;
 
 /** Method Creating new object and returning it
  * @author Ori Marcovitch */

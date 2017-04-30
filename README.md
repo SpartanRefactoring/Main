@@ -1,3 +1,11 @@
+[Installation Instructions](https://github.com/SpartanRefactoring/Spartanizer/wiki/Installation-Instructions "Installation") | 
+[Video Demo](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos "Demos") |
+[Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background") | 
+[User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual") | 
+[Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background") | 
+[Developer Guide](https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide") | 
+[Tippers' List](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers")
+
 ## Development Status
 [![Build Status](https://travis-ci.org/SpartanRefactoring/Spartanizer.svg?branch=master)](https://travis-ci.org/SpartanRefactoring/Spartanizer) [![codecov](https://codecov.io/gh/TechnionYP5777/SmartCity-ParkingManagement/branch/master/graph/badge.svg)](https://codecov.io/gh/SpartanRefactoring/Spartanizer)
 
@@ -33,18 +41,6 @@ Institute of Technology], and was later developed for several years by
 different students and members of the Computer Science faculty.
 
 The refactorings made by this plug-in are based on the concept of Spartan Programming, which suggests guidelines for writing short, clean code. There's a lot of reading material on the subject in the [project wiki].
-
----
-
-| Table of Contents	|
-| --- |
-| [Installation Instructions](https://github.com/SpartanRefactoring/Spartanizer/wiki/Installation-Instructions "Installation") |
-| [Video Demo](https://github.com/SpartanRefactoring/Spartanizer/wiki/Video-Demos "Demos") |
-| [Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Background "Background") |
-| [User Manual](https://github.com/SpartanRefactoring/Spartanizer/wiki/User-Manual "User Manual") |
-| [Theoretical Background](https://github.com/SpartanRefactoring/Spartanizer/wiki/Theoretical-Background "Theoretical Background") |
-| [Developer Guide](https://github.com/SpartanRefactoring/Spartanizer/wiki/Developer-Guide "Developer Guide") |
-| [List of all the tippers](https://github.com/SpartanRefactoring/Spartanizer/wiki/List-of-Tippers "List of the Tippers") |
 
 ## License
 The project is available under the **[MIT License]**

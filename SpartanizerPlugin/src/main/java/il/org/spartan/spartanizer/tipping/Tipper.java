@@ -10,11 +10,11 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Examples.*;
+import nano.ly.*;
 
 /** A tipper is a transformation that works on an AstNode. Such a transformation
  * make a single simplification of the tree. A tipper is so small that it is

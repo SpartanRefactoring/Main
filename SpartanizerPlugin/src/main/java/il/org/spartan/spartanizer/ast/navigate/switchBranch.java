@@ -11,9 +11,10 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import nano.ly.*;
 
 /** TODO YuvalSimon <yuvaltechnion@gmail.com> , this class is duplicate also
  * please add a description

@@ -9,9 +9,9 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Disable tipper, removing it from XML file.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

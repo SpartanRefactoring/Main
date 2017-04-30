@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 import static fluent.ly.idiomatic.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;

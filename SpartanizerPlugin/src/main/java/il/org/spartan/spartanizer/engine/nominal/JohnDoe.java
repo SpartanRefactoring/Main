@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
+import nano.ly.*;
 
 /** Fluent API.
  * @author Yossi Gil
