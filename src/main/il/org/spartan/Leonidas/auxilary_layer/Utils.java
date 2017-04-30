@@ -134,6 +134,11 @@ public enum Utils {
         }
     }
 
+    /**
+     * @param cb JD
+     * @return the first element inside the block that isn't white space or the
+     * enclosing brackets.
+     */
     public static PsiElement getFirstElementInsideBody(PsiCodeBlock cb) {
         PsiElement c;
         for (c = cb.getFirstBodyElement(); c != null && iz.whiteSpace(c); c = c.getNextSibling()) ;

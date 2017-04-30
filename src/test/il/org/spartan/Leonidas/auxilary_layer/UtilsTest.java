@@ -1,5 +1,6 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
+import com.intellij.psi.PsiCodeBlock;
 import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiIfStatement;
 import com.intellij.psi.PsiMethod;
@@ -62,5 +63,10 @@ public class UtilsTest extends PsiTypeHelper {
         assertEquals(Utils.fixSpacesProblemOnPath(s), s);
         s = "C:\\Users\\J%20D";
         assertEquals(Utils.fixSpacesProblemOnPath(s), "C:\\Users\\J D");
+    }
+
+    public void testGetFirstElementInsideBody() throws Exception {
+        PsiCodeBlock cb = createTestCodeBlockFromString("{x++;}");
+        assertEquals(Utils.getFirstElementInsideBody(cb).getText(), "x++;");
     }
 }
