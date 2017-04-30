@@ -12,7 +12,7 @@ import java.awt.*;
  * @author Amir Sagiv
  * @since 28/04/2017
  */
-public class AboutLeonidas extends JFrame {
+class AboutLeonidas extends JFrame {
     private JPanel panel1;
     private JTextPane textPane1;
     private JButton closeButton;

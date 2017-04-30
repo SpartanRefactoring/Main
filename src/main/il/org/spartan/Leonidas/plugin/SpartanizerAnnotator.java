@@ -30,6 +30,7 @@ public class SpartanizerAnnotator implements Annotator {
                 return;
             Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
             annotation.registerFix(new IntentionAction() {
+                @SuppressWarnings("unchecked")
                 @Nls
                 @NotNull
                 @Override

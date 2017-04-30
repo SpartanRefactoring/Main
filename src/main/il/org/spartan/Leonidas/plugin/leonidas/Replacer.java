@@ -13,8 +13,8 @@ import java.util.Map;
  */
 public class Replacer {
 
-    Matcher matcher;
-    EncapsulatingNode root;
+    private Matcher matcher;
+    private EncapsulatingNode root;
 
     public Replacer(Matcher m, EncapsulatingNode r) {
         matcher = m;

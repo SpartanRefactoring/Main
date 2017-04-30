@@ -7,13 +7,13 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
  * @author Amir Sagiv
  * @since 28/04/2017
  */
-public class AboutAction extends AnAction{
-    @Override
-    public void actionPerformed(AnActionEvent anActionEvent) {
+class AboutAction extends AnAction {
+    public static void main(String[] args) {
         new AboutLeonidas();
     }
 
-    public static void main(String[] args) {
+    @Override
+    public void actionPerformed(AnActionEvent anActionEvent) {
         new AboutLeonidas();
     }
 }

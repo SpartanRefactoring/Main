@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
  * @author michalcohen
  * @since 24-02-17
  */
-public class TipperCreator extends JFrame {
+class TipperCreator extends JFrame {
     private JPanel panel1;
     private JTextArea toCode;
     private JTextArea fromCode;

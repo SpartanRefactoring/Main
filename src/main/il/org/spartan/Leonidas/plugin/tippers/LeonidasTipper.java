@@ -30,13 +30,13 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private static final String SHORT_LEONIDAS_ANNOTATION_NAME = Leonidas.class.getSimpleName();
     private static final String LEONIDAS_ANNOTATION_VALUE = "value";
 
-    String description;
-    String name;
-    Matcher matcher;
-    Replacer replacer;
-    Class<? extends PsiElement> rootType;
-    PsiJavaFile file;
-    Map<Integer, List<Matcher.Constraint>> map;
+    private String description;
+    private String name;
+    private Matcher matcher;
+    private Replacer replacer;
+    private Class<? extends PsiElement> rootType;
+    private PsiJavaFile file;
+    private Map<Integer, List<Matcher.Constraint>> map;
 
     public LeonidasTipper(String tipperName, String fileContent) throws IOException {
         file = getPsiTreeFromString("Tipper" + tipperName, fileContent);

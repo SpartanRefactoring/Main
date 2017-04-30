@@ -23,7 +23,7 @@ import java.util.List;
  */
 public enum Utils {
     ;
-    static Logger logger = new Logger(Utils.class);
+    static final Logger logger = new Logger(Utils.class);
 
     /**
      * @param candidate the element that might be in the list
@@ -92,6 +92,7 @@ public enum Utils {
         Wrapper<List<T>> w = new Wrapper<>(new LinkedList<T>());
         assert e != null;
         e.accept(new JavaRecursiveElementVisitor() {
+            @SuppressWarnings("unchecked")
             @Override
             public void visitElement(PsiElement e) {
                 super.visitElement(e);

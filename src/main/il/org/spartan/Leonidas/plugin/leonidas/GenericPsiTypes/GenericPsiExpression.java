@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  * @since 11-01-2017
  */
 public class GenericPsiExpression extends GenericPsi {
-    PsiType t;
+    private PsiType t;
 
     public GenericPsiExpression(PsiType t, PsiElement e) {
         super(e, "GenericExpression");

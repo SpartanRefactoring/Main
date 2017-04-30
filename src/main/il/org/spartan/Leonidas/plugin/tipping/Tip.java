@@ -18,18 +18,18 @@ public abstract class Tip extends Range {
     /**
      * A textual description of the action to be performed
      **/
-    public final String description;
+    private final String description;
 
     /**
      * The tipper class that supplied that tip
      */
     @SuppressWarnings("rawtypes")
-    public final Class<? extends Tipper> tipperClass;
+    private final Class<? extends Tipper> tipperClass;
 
     /**
      * The line number of the first character to be rewritten
      **/
-    public int lineNumber = -1;
+    private int lineNumber = -1;
 
     /**
      * Instantiates this class

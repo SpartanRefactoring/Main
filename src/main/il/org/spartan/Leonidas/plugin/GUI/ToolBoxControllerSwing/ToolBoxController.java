@@ -18,7 +18,7 @@ import java.util.List;
  * @author Amir Sagiv
  * @since 24/04/2017
  */
-public class ToolBoxController extends JFrame {
+class ToolBoxController extends JFrame {
     private JPanel mainPanel;
     private JButton applyButton;
     private JButton clearAllButton;

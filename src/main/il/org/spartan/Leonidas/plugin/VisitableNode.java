@@ -8,7 +8,7 @@ import java.util.function.BinaryOperator;
  * @author michalcohen
  * @since 29-04-2017.
  */
-public interface VisitableNode {
+interface VisitableNode {
 
     /**
      * Enable v visit this node.

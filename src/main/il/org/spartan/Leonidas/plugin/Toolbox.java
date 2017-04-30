@@ -26,9 +26,9 @@ public class Toolbox implements ApplicationComponent {
 
     private static final Logger logger = new Logger(Toolbox.class);
     private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new HashMap<>();
+    private final Set<VirtualFile> excludedFiles = new HashSet<>();
+    private final Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
     public boolean playground = false;
-    Set<VirtualFile> excludedFiles = new HashSet<>();
-    Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
 
     public static Toolbox getInstance() {
         return (Toolbox) ApplicationManager.getApplication().getComponent(Toolbox.auxGetComponentName());
@@ -84,6 +84,7 @@ public class Toolbox implements ApplicationComponent {
         return operableTypes.stream().anyMatch(t -> t.isAssignableFrom(e.getClass()));
     }
 
+    @SuppressWarnings("unchecked")
     public Toolbox executeAllTippers(PsiElement e) {
         if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
             return this;
