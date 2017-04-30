@@ -1,31 +1,21 @@
 package il.org.spartan;
 
-import static fluent.ly.azzert.is;
-import static fluent.ly.azzert.isNull;
-import static fluent.ly.idiomatic.eval;
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.*;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Function;
+import static fluent.ly.azzert.*;
+import static fluent.ly.idiomatic.*;
 
-import org.eclipse.jdt.annotation.NonNull;
+import java.io.*;
+import java.util.*;
+import java.util.function.*;
+
+import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import org.jetbrains.annotations.*;
+import org.junit.*;
 
-import fluent.ly.accumulate;
-import fluent.ly.as;
-import fluent.ly.azzert;
-import fluent.ly.idiomatic;
-import fluent.ly.the;
-import il.org.spartan.Utils.FoundHandleForT.FoundHandleForInt;
+import fluent.ly.*;
+import il.org.spartan.Utils.FoundHandleForT.*;
 
 /** An empty <code><b>interface</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
@@ -283,12 +273,11 @@ public interface Utils {
     return cantBeNull(¢.getName());
   }
 
-
   /** @param <T> JD
    * @param ¢ a list
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */
-  @SuppressWarnings("null") static <T> @Nullable T penultimate(@NotNull final List<T> ¢) {
+  static <T> @Nullable T penultimate(@NotNull final List<T> ¢) {
     return eval(() -> ¢.get(¢.size() - 2)).unless(¢ == null || ¢.size() < 2);
   }
 
@@ -517,7 +506,7 @@ public interface Utils {
    * test methods begin with the name of the method they check.
    * @author Yossi Gil
    * @since 2014-05-31 */
-   @SuppressWarnings("static-method") class TEST {
+  @SuppressWarnings("static-method") class TEST {
     @NotNull public static Integer[] intToIntegers(@NotNull final int... is) {
       final Integer @NonNull [] $ = new Integer @NonNull [is.length];
       for (int ¢ = 0; ¢ < is.length; ++¢)

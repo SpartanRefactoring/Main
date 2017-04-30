@@ -1,22 +1,18 @@
 package fluent.ly;
 
-import static fluent.ly.string.*;
 import static org.junit.Assert.*;
 
 import static fluent.ly.box.*;
-
-import java.util.*;
+import static fluent.ly.string.*;
 
 import org.junit.*;
 
-import fluent.ly.___.*;
 import fluent.ly.___.Bug.*;
 import fluent.ly.___.Bug.Assertion.*;
 import fluent.ly.___.Bug.Assertion.Value.*;
 import fluent.ly.___.Bug.Assertion.Value.Numerical.*;
 import fluent.ly.___.Bug.Assertion.Variant.*;
 import fluent.ly.___.Bug.Contract.*;
-import il.org.spartan.utils.*;
 
 /** A simple implementation of design by contract services. Violations are
  * reported to <code>System.err</code>. Error descriptions are passed by a
@@ -234,7 +230,6 @@ public abstract class ___ {
     for (final double ¢ : ds)
       nonnegative(¢);
   }
-
 
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
@@ -574,25 +569,6 @@ public abstract class ___ {
    * @param ____ the unused parameters */
   public static void unused(final Object... ____) {
     forget.it(____);
-  }
-
-  private static String buildMessage(final String kind, final String... args) {
-    String $ = kind + " ";
-    switch (args.length) {
-      case 0:
-        return $;
-      case 1:
-        $ += args[0];
-        return $;
-      default:
-        final Object os[] = new Object[args.length - 1];
-        for (int ¢ = 1; ¢ < args.length; ++¢)
-          os[¢ - 1] = args[¢];
-        final Formatter f = new Formatter();
-        f.format(args[0], os);
-        $ += f.out();
-        return $;
-    }
   }
 
   /** The base of all exception classes thrown as a result of violations of

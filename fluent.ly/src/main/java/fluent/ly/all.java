@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package fluent.ly;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 /** A utility class to realize universally quantified checks of an entire
  * collection.

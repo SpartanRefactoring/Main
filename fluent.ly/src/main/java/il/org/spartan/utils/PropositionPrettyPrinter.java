@@ -1,29 +1,27 @@
 package il.org.spartan.utils;
 
-import java.util.function.BooleanSupplier;
+import java.util.function.*;
 
-import fluent.ly.English;
-import il.org.spartan.utils.Proposition.Not;
-import il.org.spartan.utils.Proposition.Singleton;
-import il.org.spartan.utils.Proposition.Some;
+import fluent.ly.*;
+import il.org.spartan.utils.Proposition.*;
 
 public class PropositionPrettyPrinter {
   static class PropositionTreeTraversal {
-    private Listener<BooleanSupplier> listener;
+    private final Listener<BooleanSupplier> listener;
 
-    public PropositionTreeTraversal(Listener<BooleanSupplier> listener) {
+    public PropositionTreeTraversal(final Listener<BooleanSupplier> listener) {
       this.listener = listener;
     }
 
-    public void topDown(BooleanSupplier ¢) {
-      this.listener.in(¢);
+    public void topDown(final BooleanSupplier ¢) {
+      listener.in(¢);
       if (¢ instanceof Singleton)
         singleton((Singleton) ¢);
       else if (¢ instanceof Some)
         some((Some) ¢);
     }
 
-    private void some(Some ¢) {
+    private void some(final Some ¢) {
       listener.down();
       ¢.stream().forEach(λ -> {
         topDown(λ);
@@ -32,7 +30,7 @@ public class PropositionPrettyPrinter {
       listener.up();
     }
 
-    private void singleton(Singleton ¢) {
+    private void singleton(final Singleton ¢) {
       listener.down();
       if (¢.inner instanceof Proposition)
         topDown(¢.inner);
@@ -45,19 +43,19 @@ public class PropositionPrettyPrinter {
     default   void  down()                                    {/**/}
     default   void  up()                                      {/**/}
     default   void  next()                                    {/**/}
-    default   void  in(@SuppressWarnings("unused") T __)      {/**/}
+    default   void  in(@SuppressWarnings("unused") final T __)      {/**/}
     //@formatter:on
   }
 
   static class Number {
     private int number;
-    private Number base;
+    private final Number base;
 
     public Number() {
       this(null);
     }
 
-    public Number(Number base) {
+    public Number(final Number base) {
       this.base = base;
       number = 1;
     }
@@ -80,12 +78,12 @@ public class PropositionPrettyPrinter {
   }
 
   static class NumberWithTab {
-    private Tab tab;
+    private final Tab tab;
     private Number number;
 
     public NumberWithTab() {
-      this.tab = new Tab();
-      this.number = new Number();
+      tab = new Tab();
+      number = new Number();
     }
 
     public void more() {
@@ -108,14 +106,14 @@ public class PropositionPrettyPrinter {
   }
 
   class NodePrettyPrinter implements Listener<BooleanSupplier> {
-    private NumberWithTab aligner;
+    private final NumberWithTab aligner;
 
     public NodePrettyPrinter() {
-      this.aligner = new NumberWithTab();
+      aligner = new NumberWithTab();
     }
 
-    @Override public void in(BooleanSupplier ¢) {
-      StringBuilder sb = new StringBuilder(aligner + "");
+    @Override public void in(final BooleanSupplier ¢) {
+      final StringBuilder sb = new StringBuilder(aligner + "");
       if (¢ instanceof Some || ¢ instanceof Not)
         sb.append("(" + English.selfName(¢.getClass()) + ")");
       if (!(¢ + "").contains(¢.getClass().getName()))
@@ -137,18 +135,18 @@ public class PropositionPrettyPrinter {
     }
   }
 
-  private PropositionTreeTraversal traversal;
+  private final PropositionTreeTraversal traversal;
 
   public PropositionPrettyPrinter() {
     traversal = new PropositionTreeTraversal(new NodePrettyPrinter());
   }
 
-  void present(Proposition ¢) {
+  void present(final Proposition ¢) {
     traversal.topDown(¢);
   }
 
-  public static void main(String[] args) {
-    PropositionPrettyPrinter p = new PropositionPrettyPrinter();
+  public static void main(final String[] args) {
+    final PropositionPrettyPrinter p = new PropositionPrettyPrinter();
     // example 1
     p.present( //
         Proposition.AND("MAIN", //

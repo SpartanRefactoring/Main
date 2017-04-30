@@ -1,15 +1,11 @@
 package fluent.ly;
 
-import java.lang.management.ClassLoadingMXBean;
-import java.lang.management.CompilationMXBean;
-import java.lang.management.ManagementFactory;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.Collection;
-import java.util.List;
+import java.lang.management.*;
+import java.lang.reflect.*;
+import java.util.*;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 
@@ -22,77 +18,77 @@ public class dump {
   /** Dump a class object
    * @param ¢ JD */
   public static void go(@NotNull final Class<?> ¢) {
-   out.out("\n\n--IDENTIFICATION--\n");
-   out.out("Simple Name", ¢.getSimpleName());
-   out.out("Canonical Name", ¢.getCanonicalName());
-   out.out("Name", ¢.getName());
-   out.out("toString", ¢ + "");
-   out.out("super class", ¢.getSuperclass());
-   out.out("generic super class", ¢.getGenericSuperclass());
-   out.out("class", ¢.getClass());
-   out.out("component type", ¢.getComponentType());
+    out.out("\n\n--IDENTIFICATION--\n");
+    out.out("Simple Name", ¢.getSimpleName());
+    out.out("Canonical Name", ¢.getCanonicalName());
+    out.out("Name", ¢.getName());
+    out.out("toString", ¢ + "");
+    out.out("super class", ¢.getSuperclass());
+    out.out("generic super class", ¢.getGenericSuperclass());
+    out.out("class", ¢.getClass());
+    out.out("component type", ¢.getComponentType());
     // out("protection domain", c.getProtectionDomain());
-   out.out("class loader", ¢.getClassLoader());
-   out.out("--MODIFIERS--\n");
+    out.out("class loader", ¢.getClassLoader());
+    out.out("--MODIFIERS--\n");
     final int flags = ¢.getModifiers();
-   out.out("Package", ¢.getPackage());
-   out.out("Modifiers (decimal form)", flags);
-   out.out("Modifiers (binary form)", ReflectionAnalyzer.toBinary(flags));
-   out.out("IsSynthetic", ¢.isSynthetic());
-   out.out("IsPrimitive", ¢.isPrimitive());
-   out.out("IsFinal", Modifier.isFinal(flags));
-   out.out("IsAbstract", Modifier.isAbstract(flags));
-   out.out("IsStatic", Modifier.isStatic(flags));
-   out.out("IsStrictfp", Modifier.isStrict(flags));
-   out.out("--Visibility--\n");
-   out.out("IsPublic", Modifier.isPublic(flags));
-   out.out("IsPrivate", Modifier.isPrivate(flags));
-   out.out("IsProtected", Modifier.isProtected(flags));
-   out.out("--MEMBERS\n");
-   out.out("fields", ¢.getFields());
-   out.out("methods", ¢.getMethods());
-   out.out("constructors", ¢.getConstructors());
-   out.out("declared fields", ¢.getDeclaredFields());
-   out.out("declared methods", ¢.getDeclaredMethods());
-   out.out("declared constructors", ¢.getDeclaredConstructors());
-   out.out("--CLASS SIGNATURE--\n");
-   out.out("interfaces", ¢.getInterfaces());
-   out.out("annotations", ¢.getAnnotations());
-   out.out("type parameters", ¢.getTypeParameters());
-   out.out("declared annotations", ¢.getDeclaredAnnotations());
-   out.out("generic interfaces", ¢.getGenericInterfaces());
-   out.out("--CONTAINERS--\n");
-   out.out("declared classes", ¢.getDeclaredClasses());
-   out.out("declaring class", ¢.getDeclaringClass());
-   out.out("enclosing class", ¢.getEnclosingClass());
-   out.out("enclosing constructor", ¢.getEnclosingConstructor());
-   out.out("enclosing method", ¢.getEnclosingMethod());
-   out.out("--CLASS MEMBERS--\n");
-   out.out("public classes", ¢.getClasses());
-   out.out("declared classes", ¢.getDeclaredClasses());
-   out.out("declared annotations", ¢.getDeclaredAnnotations());
-   out.out("---------------------------\n");
+    out.out("Package", ¢.getPackage());
+    out.out("Modifiers (decimal form)", flags);
+    out.out("Modifiers (binary form)", ReflectionAnalyzer.toBinary(flags));
+    out.out("IsSynthetic", ¢.isSynthetic());
+    out.out("IsPrimitive", ¢.isPrimitive());
+    out.out("IsFinal", Modifier.isFinal(flags));
+    out.out("IsAbstract", Modifier.isAbstract(flags));
+    out.out("IsStatic", Modifier.isStatic(flags));
+    out.out("IsStrictfp", Modifier.isStrict(flags));
+    out.out("--Visibility--\n");
+    out.out("IsPublic", Modifier.isPublic(flags));
+    out.out("IsPrivate", Modifier.isPrivate(flags));
+    out.out("IsProtected", Modifier.isProtected(flags));
+    out.out("--MEMBERS\n");
+    out.out("fields", ¢.getFields());
+    out.out("methods", ¢.getMethods());
+    out.out("constructors", ¢.getConstructors());
+    out.out("declared fields", ¢.getDeclaredFields());
+    out.out("declared methods", ¢.getDeclaredMethods());
+    out.out("declared constructors", ¢.getDeclaredConstructors());
+    out.out("--CLASS SIGNATURE--\n");
+    out.out("interfaces", ¢.getInterfaces());
+    out.out("annotations", ¢.getAnnotations());
+    out.out("type parameters", ¢.getTypeParameters());
+    out.out("declared annotations", ¢.getDeclaredAnnotations());
+    out.out("generic interfaces", ¢.getGenericInterfaces());
+    out.out("--CONTAINERS--\n");
+    out.out("declared classes", ¢.getDeclaredClasses());
+    out.out("declaring class", ¢.getDeclaringClass());
+    out.out("enclosing class", ¢.getEnclosingClass());
+    out.out("enclosing constructor", ¢.getEnclosingConstructor());
+    out.out("enclosing method", ¢.getEnclosingMethod());
+    out.out("--CLASS MEMBERS--\n");
+    out.out("public classes", ¢.getClasses());
+    out.out("declared classes", ¢.getDeclaredClasses());
+    out.out("declared annotations", ¢.getDeclaredAnnotations());
+    out.out("---------------------------\n");
   }
 
   public static <T> void go(@NotNull final List<T> ts, @NotNull final String... ss) {
-   out.out("Exploring list");
+    out.out("Exploring list");
     for (final String ¢ : ss)
-     out.out(¢);
+      out.out(¢);
     for (final T ¢ : ts)
       dump.go(¢);
   }
 
   public static void go(final Object os[], @NotNull final String... ss) {
     for (final String ¢ : ss)
-     out.out(¢);
-   out.out("elements", os);
+      out.out(¢);
+    out.out("elements", os);
   }
 
   public static void go(final @Nullable Object o, @NotNull final String... ss) {
     for (final String ¢ : ss)
-     out.out(¢);
+      out.out(¢);
     if (o == null) {
-     out.out("NULL");
+      out.out("NULL");
       return;
     }
     final Class<?> c = o.getClass();

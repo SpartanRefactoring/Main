@@ -1,20 +1,16 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import static fluent.ly.azzert.is;
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import static fluent.ly.azzert.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.junit.Test;
+import java.util.*;
 
-import il.org.spartan.Utils;
+import org.jetbrains.annotations.*;
+import org.junit.*;
+
+import il.org.spartan.*;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.

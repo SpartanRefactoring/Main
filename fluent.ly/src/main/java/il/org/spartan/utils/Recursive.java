@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 /** Organizes objects of the __ parameter in a tree, supplying a
  * {@link #descendants()} of all objects contained in a sub-tree. Object of the

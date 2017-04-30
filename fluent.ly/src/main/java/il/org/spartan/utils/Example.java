@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public interface Example {
   interface Converts extends Example {

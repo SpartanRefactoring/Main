@@ -1,14 +1,13 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static fluent.ly.___.require;
-import static fluent.ly.azzert.is;
+import static fluent.ly.___.*;
+import static fluent.ly.azzert.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import org.jetbrains.annotations.*;
+import org.junit.*;
 
-import fluent.ly.___;
-import fluent.ly.azzert;
+import fluent.ly.*;
 
 /** Prefix text with varying indentation level. Class can be used for an
  * indented printout of a hierarchical tree data structure, e.g.,:

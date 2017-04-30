@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jdt.annotation.*;
 
 /** Provides null value for {@link #reduce()}
  * @param <T>

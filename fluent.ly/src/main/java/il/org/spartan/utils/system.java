@@ -1,21 +1,10 @@
 package il.org.spartan.utils;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.Stack;
+import java.io.*;
+import java.text.*;
+import java.util.*;
 
-import fluent.ly.English;
-import fluent.ly.cCamelCase;
-import fluent.ly.note;
+import fluent.ly.*;
 
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil
@@ -181,7 +170,6 @@ public interface system {
   static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
-
 
   static String userName() {
     return English.upperFirstLetter(System.getProperty("user.name", "User"));

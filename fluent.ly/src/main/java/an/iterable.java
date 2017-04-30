@@ -2,10 +2,9 @@ package an;
 
 import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 public interface iterable {
-
   /** <code>singleton</code>
    * @param <T> JD
    * @param ¢ JD
@@ -24,11 +23,11 @@ public interface iterable {
       @Override @NotNull public Iterator<T> iterator() {
         return new Iterator<T>() {
           int current;
-  
+
           @Override public boolean hasNext() {
             return current < ts.length;
           }
-  
+
           @Override public T next() {
             return ts[current++];
           }

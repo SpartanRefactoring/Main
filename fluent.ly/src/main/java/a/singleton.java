@@ -1,8 +1,8 @@
 package a;
 
-import java.util.List;
+import java.util.*;
 
-import fluent.ly.as;
+import fluent.ly.*;
 
 /** Singleton collections.
  * @author Ori Roth

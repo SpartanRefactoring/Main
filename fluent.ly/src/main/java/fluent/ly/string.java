@@ -7,10 +7,9 @@ import java.util.*;
 
 import org.jetbrains.annotations.*;
 
-
 /** A bunch of string functions.
  * @author Yossi Gil */
- public enum string {
+public enum string {
   // No elements in this name space
   ;
   static final int MAX_FIRST = 20;

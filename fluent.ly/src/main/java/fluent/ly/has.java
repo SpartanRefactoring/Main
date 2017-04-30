@@ -1,13 +1,13 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import static il.org.spartan.Utils.inRange;
+import static il.org.spartan.Utils.*;
 
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import org.jetbrains.annotations.*;
+import org.junit.*;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.
