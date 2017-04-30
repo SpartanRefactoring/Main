@@ -12,10 +12,9 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import nano.ly.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

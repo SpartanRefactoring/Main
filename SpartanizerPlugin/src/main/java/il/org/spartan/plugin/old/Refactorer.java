@@ -14,9 +14,8 @@ import org.eclipse.jface.operation.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.*;
-import nano.ly.*;
 
 /** A meta class containing handler and marker resolution strategies.
  * @author Ori Roth

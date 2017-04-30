@@ -7,7 +7,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;

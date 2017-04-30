@@ -1,6 +1,6 @@
 package il.org.spartan.proposition;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.utils.Proposition.*;
 import static il.org.spartan.utils.Proposition.not;
 import static il.org.spartan.utils.Proposition.that;
@@ -10,7 +10,7 @@ import java.util.function.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.utils.*;
 
 /** Tests class {@link Proposition}

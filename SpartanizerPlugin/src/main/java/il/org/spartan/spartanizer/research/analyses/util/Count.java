@@ -2,9 +2,9 @@ package il.org.spartan.spartanizer.research.analyses.util;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Counting utility
  * @author Ori Marcovitch

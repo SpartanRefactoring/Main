@@ -6,9 +6,9 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import nano.ly.*;
 
 /** sequence of parameters which occur few times together in a method
  * @author orimarco {@code marcovitch.ori@gmail.com}

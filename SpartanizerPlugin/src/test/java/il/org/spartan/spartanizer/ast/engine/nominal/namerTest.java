@@ -1,14 +1,13 @@
 package il.org.spartan.spartanizer.ast.engine.nominal;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import nano.ly.*;
 
 /** A test suite for class {@link cCamelCase}
  * @author Yossi Gil
@@ -83,6 +82,6 @@ public final class namerTest {
   @Test public void test2() {
     final String[] components = cCamelCase.components("Table_NanosByCategories");
     azzert.that(components, is(new String[] { "Table", "Nanos", "By", "Categories" }));
-    azzert.that(separate.these(the.lastOf(as.iterable(components))).by('-').toLowerCase(), is("nanos-by-categories"));
+    azzert.that(separate.these(the.tailOf(components)).by('-').toLowerCase(), is("nanos-by-categories"));
   }
 }

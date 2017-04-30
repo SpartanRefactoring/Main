@@ -4,8 +4,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import nano.ly.*;
 
 /** Reorganizer terms in a canonical way
  * @author Yossi Gil

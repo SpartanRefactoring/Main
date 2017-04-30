@@ -2,11 +2,11 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
 
 /** Generates a table that shows how many times each nano occurred in each
  * project

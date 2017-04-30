@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import java.util.stream.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.*;
 
 /** tests {@link extract#usedIdentifiers(Expression)}

@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings({ "static-method", "javadoc" })

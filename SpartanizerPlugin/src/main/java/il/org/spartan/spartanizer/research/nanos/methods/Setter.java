@@ -2,8 +2,8 @@ package il.org.spartan.spartanizer.research.nanos.methods;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
-import il.org.spartan.utils.*;
 
 /** Including static setters.
  * @author orimarco {@code marcovitch.ori@gmail.com}

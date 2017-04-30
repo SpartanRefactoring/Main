@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import java.util.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 
 /** A template for unit tests for {@link NameYourClassHere} , can be used by:
  * <ul>

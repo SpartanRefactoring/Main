@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.java;
 
 import org.junit.*;
 
-import nano.ly.*;
+import fluent.ly.*;
 
 /** TODO Sapir Bismot please add a description
  * @author Sapir Bismot

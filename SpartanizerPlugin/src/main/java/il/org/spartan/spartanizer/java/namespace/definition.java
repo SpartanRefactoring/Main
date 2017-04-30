@@ -7,11 +7,10 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

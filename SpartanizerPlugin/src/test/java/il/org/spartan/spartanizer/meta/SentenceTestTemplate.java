@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.meta;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -13,6 +13,7 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.nominal.*;

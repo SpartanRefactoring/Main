@@ -7,13 +7,12 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.tables.Table_ReusabilityIndices.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
 
 /** Generates a table representing effectiveness of nanos. <br>
  * For each nano, the level of reusability is measured: <br>

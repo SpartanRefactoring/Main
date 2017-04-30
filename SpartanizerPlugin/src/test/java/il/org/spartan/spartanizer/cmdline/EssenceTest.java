@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.cmdline;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 
 /** TODO Shay Segal please add a description
  * @author Shay Segal

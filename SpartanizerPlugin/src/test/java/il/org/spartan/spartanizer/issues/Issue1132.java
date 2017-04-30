@@ -8,9 +8,8 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.tippers.*;
-import nano.ly.*;
 
 /** Test of {@link AssignmentUpdateAndSameUpdate}
  * @author Yossi Gil

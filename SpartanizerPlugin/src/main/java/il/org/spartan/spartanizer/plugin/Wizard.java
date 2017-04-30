@@ -3,7 +3,7 @@ package il.org.spartan.spartanizer.plugin;
 import org.eclipse.ltk.core.refactoring.*;
 import org.eclipse.ltk.ui.refactoring.*;
 
-import il.org.spartan.utils.*;
+import fluent.ly.*;
 
 /** Relic;
  * @author Artium Nihamkin

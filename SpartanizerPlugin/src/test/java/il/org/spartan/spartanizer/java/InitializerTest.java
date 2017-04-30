@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.java;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
-import il.org.spartan.utils.*;
+import fluent.ly.*;
 
 @SuppressWarnings("static-method") //
 public final class InitializerTest {
