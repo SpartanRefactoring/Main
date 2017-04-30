@@ -182,16 +182,6 @@ public interface system {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
 
-  static int tokens(final String s) {
-    int $ = 0;
-    for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
-      final Token t = tokenizer.next();
-      if (t == null || t == Token.EOF)
-        return $;
-      if (t.kind != Token.Kind.COMMENT && t.kind != Token.Kind.NONCODE)
-        ++$;
-    }
-  }
 
   static String userName() {
     return English.upperFirstLetter(System.getProperty("user.name", "User"));

@@ -11,6 +11,8 @@ import java.util.List;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
+import il.org.spartan.*;
+
 /** A class to print all properties of an arbitrary object which can be
  * retrieved by getters methods (i.e., getXXX()) methods and boolean inspection
  * methods (i.e., isXXX()), as can be determined by reflection information.
