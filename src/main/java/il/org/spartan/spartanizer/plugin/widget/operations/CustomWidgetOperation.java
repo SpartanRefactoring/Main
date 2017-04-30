@@ -24,10 +24,8 @@ public class CustomWidgetOperation extends WidgetOperation {
     getCommands().forEach(λ -> CmdOperation.go(λ));
   }
 
-  @Override
-  @SuppressWarnings("unchecked") public boolean register(final Map<?, ?> configuration) {
-    if(!(configuration.get(COMMANDS) instanceof List) 
-        || !((List<Object>) configuration.get(COMMANDS)).stream().allMatch(λ -> λ instanceof String))
+  @Override @SuppressWarnings("unchecked") public boolean register(final Map<?, ?> configuration) {
+    if (!(configuration.get(COMMANDS) instanceof List) || !((List<Object>) configuration.get(COMMANDS)).stream().allMatch(λ -> λ instanceof String))
       return false;
     commands.clear();
     commands.addAll((List<String>) configuration.get(COMMANDS));
