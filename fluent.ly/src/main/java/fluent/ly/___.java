@@ -1,4 +1,5 @@
 package fluent.ly;
+
 import static fluent.ly.string.*;
 import static org.junit.Assert.*;
 
@@ -24,7 +25,6 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil (
  * @since 11/01/2006) */
 public abstract class ___ {
-
   /** A do nothing method to document the fact that a <code><b>long</b></code>
    * parameter, along with a optional list of {@link Object}s are not used by a
    * function, and to suppress the warning.
@@ -49,9 +49,6 @@ public abstract class ___ {
     ¢.check();
   }
 
-
-
-
   /** A possibly non-returning method to be used for checking postconditions.
    * @param condition if <code><b>false</b></code>, program will halt.
    * @throws Postcondition A {@link RuntimeException} to be thrown in the case
@@ -59,7 +56,6 @@ public abstract class ___ {
   public static void ensure(final boolean condition) throws Postcondition {
     ensure(condition, "");
   }
-
 
   /** A possibly non-returning method to be used for checking postconditions. If
    * the postcondition fails, then a user supplied message is associated with
@@ -72,7 +68,6 @@ public abstract class ___ {
   public static void ensure(final boolean condition, final String message) throws Postcondition {
     ensure(condition, message, "");
   }
-
 
   /** A possibly non-returning method to be used for checking postconditions. If
    * the postcondition fails, then a user supplied formatted message (generated
@@ -98,7 +93,6 @@ public abstract class ___ {
     negative(¢, "");
   }
 
-
   /** A possibly non-returning method to be used for checking integers which
    * must be negative.
    * @param d a value which must be negative
@@ -121,7 +115,6 @@ public abstract class ___ {
     if (d >= 0)
       throw new Negative(d, format, args);
   }
-
 
   /** A possibly non-returning method to be used for checking integers which
    * must be negative.
@@ -162,7 +155,6 @@ public abstract class ___ {
     nonNaN(¢, "");
   }
 
-
   /** A possibly non-returning method to be used for checking integers which
    * must be non-NaN.
    * @param d a value which must be nonnegative
@@ -172,7 +164,6 @@ public abstract class ___ {
   public static void nonNaN(final double d, final String message) throws NonNan {
     nonNaN(d, message, "");
   }
-
 
   /** A possibly non-returning method to be used for checking integers which
    * must be non-NaN.
@@ -194,6 +185,14 @@ public abstract class ___ {
   public static void nonNaN(final double[] ds) throws NonNan {
     for (final double ¢ : ds)
       nonNaN(¢);
+  }
+
+  /** A possibly non-returning method to be used for checking integers which
+   * must be nonnegative.
+   * @param ¢ a value which must be nonnegative
+   * @throws NonNegative in case <code>n</code> was negative */
+  public static void nonnegativ(final int ¢) throws NonNegative {
+    nonnegative(¢, "");
   }
 
   /** A possibly non-returning method to be used for checking integers which
@@ -236,54 +235,6 @@ public abstract class ___ {
       nonnegative(¢);
   }
 
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonnegative.
-   * @param ¢ a value which must be nonnegative
-   * @throws NonNegative in case <code>n</code> was negative */
-  public static void nonnegativ(final int ¢) throws NonNegative {
-    nonnegative(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonnegative.
-   * @param ¢ a value which must be nonnegative
-   * @throws NonNegative in case <code>n</code> was negative */
-  public static void (final int ¢) throws NonNegative {
-    nonnegative(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonnegative.
-   * @param i a value which must be nonnegative
-   * @param message text to be associated with the exception thrown in the case
-   *        of an error.
-   * @throws NonNegative in case <code>n</code> was negative */
-  public static void nonnegative(final int i, final String message) throws NonNegative {
-    nonnegative(i, message, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonnegative.
-   * @param i a value which must be nonnegative
-   * @param message text to be associated with the exception thrown in the case
-   *        of an error.
-   * @throws NonNegative in case <code>n</code> was negative */
-  public static void nonnegative(final int i, final String message) throws NonNegative {
-    nonnegative(i, message, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonnegative.
-   * @param i a value which must be nonnegative
-   * @param format format string to be associated with the exception thrown in
-   *        the case of an error.
-   * @param args <code>printf</code>-like arguments to be used with the format
-   *        string.
-   * @throws NonNegative in case <code>n</code> was negative */
-  public static void nonnegative(final int i, final String format, final Object... args) throws NonNegative {
-    if (i < 0)
-      throw new NonNegative(i, format, args);
-  }
 
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
@@ -307,38 +258,12 @@ public abstract class ___ {
       nonnegative(¢);
   }
 
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonnegative.
-   * @param is a array which must be nonnegative
-   * @throws NonNegative in case <code>n</code> was negative */
-  public static void nonnegative(final int[] is) throws NonNegative {
-    for (final int ¢ : is)
-      nonnegative(¢);
-  }
-
   /** A possibly non-returning method to be used for checking objects that
    * should never be <code><b>null</b></code>.
    * @param o if <code><b>null</b></code>, program will halt.
    * @throws NonNull in case <code>o</code> was <code><b>null</b></code> */
   public static void nonnull(final Object ¢) throws NonNull {
     nonnull(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking objects that
-   * should never be <code><b>null</b></code>.
-   * @param o if <code><b>null</b></code>, program will halt.
-   * @throws NonNull in case <code>o</code> was <code><b>null</b></code> */
-  public static void nonnull(final Object ¢) throws NonNull {
-    nonnull(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking objects that
-   * should never be <code><b>null</b></code>.
-   * @param o if <code><b>null</b></code>, program will halt.
-   * @param message an error message to be associated with the failure
-   * @throws NonNull in case <code>o</code> was <code><b>null</b></code> */
-  public static void nonnull(final Object o, final String message) throws NonNull {
-    nonnull(o, message, "");
   }
 
   /** A possibly non-returning method to be used for checking objects that
@@ -363,43 +288,12 @@ public abstract class ___ {
       throw new NonNull(format, args);
   }
 
-  /** A possibly non-returning method to be used for checking objects that
-   * should never be <code><b>null</b></code>.
-   * @param o if <code><b>null</b></code>, program will halt.
-   * @param format format string to be associated with the exception thrown in
-   *        the case of an error.
-   * @param args <code>printf</code>-like arguments to be used with the format
-   *        string.
-   * @throws NonNull in case <code>o</code> was <code><b>null</b></code> */
-  public static void nonnull(final Object o, final String format, final Object... args) throws NonNull {
-    if (o == null)
-      throw new NonNull(format, args);
-  }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonpositive.
    * @param d a value which must be nonpositive
    * @throws NonPositive in case <code>d</code> was positive */
   public static void nonpositive(final double ¢) throws NonPositive {
     nonpositive(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonpositive.
-   * @param d a value which must be nonpositive
-   * @throws NonPositive in case <code>d</code> was positive */
-  public static void nonpositive(final double ¢) throws NonPositive {
-    nonpositive(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonpositive.
-   * @param d a value which must be nonpositive
-   * @param message text to be associated with the exception thrown in the case
-   *        of an error.
-   * @throws NonPositive in case <code>d</code> was positive */
-  public static void nonpositive(final double d, final String message) throws NonPositive {
-    nonpositive(d, message, "");
   }
 
   /** A possibly non-returning method to be used for checking integers which
@@ -427,41 +321,10 @@ public abstract class ___ {
 
   /** A possibly non-returning method to be used for checking integers which
    * must be nonpositive.
-   * @param d a value which must be nonpositive
-   * @param format format string to be associated with the exception thrown in
-   *        the case of an error.
-   * @param args <code>printf</code>-like arguments to be used with the format
-   *        string.
-   * @throws NonPositive in case <code>d</code> was positive */
-  public static void nonpositive(final double d, final String format, final Object... args) throws NonPositive {
-    if (d > 0)
-      throw new NonPositive(d, format, args);
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonpositive.
    * @param n a value which must be positive
    * @throws NonPositive in case <code>n</code> was positive. */
   public static void nonpositive(final int ¢) throws NonPositive {
     nonpositive(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonpositive.
-   * @param n a value which must be positive
-   * @throws NonPositive in case <code>n</code> was positive. */
-  public static void nonpositive(final int ¢) throws NonPositive {
-    nonpositive(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonpositive.
-   * @param i a value which must be nonpositive
-   * @param message text to be associated with the exception thrown in the case
-   *        of an error.
-   * @throws NonPositive in case <code>n</code> was positive */
-  public static void nonpositive(final int i, final String message) throws NonPositive {
-    nonpositive(i, message, "");
   }
 
   /** A possibly non-returning method to be used for checking integers which
@@ -485,25 +348,6 @@ public abstract class ___ {
   public static void nonpositive(final int i, final String format, final Object... args) throws NonPositive {
     if (i > 0)
       throw new NonPositive(i, format, args);
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be nonpositive.
-   * @param i a value which must be nonpositive
-   * @param format format string to be associated with the exception thrown in
-   *        the case of an error.
-   * @param args <code>printf</code>-like arguments to be used with the format
-   *        string.
-   * @throws NonPositive in case <code>n</code> was positive */
-  public static void nonpositive(final int i, final String format, final Object... args) throws NonPositive {
-    if (i > 0)
-      throw new NonPositive(i, format, args);
-  }
-
-  /** A do nothing method to document the fact that nothing is done, to be used
-   * typically for C style (Yuck) loops. */
-  public static void nothing() {
-    // empty
   }
 
   /** A do nothing method to document the fact that nothing is done, to be used
@@ -536,24 +380,6 @@ public abstract class ___ {
     positive(¢, "");
   }
 
-  /** A possibly non-returning method to be used for checking floating point
-   * numbers which must be positive.
-   * @param d a value which must be positive
-   * @throws Positive in case <code>d</code> was nonpositive */
-  public static void positive(final double ¢) throws Positive {
-    positive(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be positive.
-   * @param d a value which must be positive
-   * @param message text to be associated with the exception thrown in the case
-   *        of an error.
-   * @throws Positive in case <code>n</code> was nonpositive */
-  public static void positive(final double d, final String message) throws Positive {
-    positive(d, message, "");
-  }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be positive.
    * @param d a value which must be positive
@@ -579,41 +405,10 @@ public abstract class ___ {
 
   /** A possibly non-returning method to be used for checking integers which
    * must be positive.
-   * @param d a value which must be positive
-   * @param format format string to be associated with the exception thrown in
-   *        the case of an error.
-   * @param args <code>printf</code>-like arguments to be used with the format
-   *        string.
-   * @throws Positive in case <code>d</code> was not positive */
-  public static void positive(final double d, final String format, final Object... args) throws Positive {
-    if (d <= 0)
-      throw new Positive(d, format, args);
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be positive.
    * @param n a value which must be positive
    * @throws Positive in case <code>n</code> was nonpositive */
   public static void positive(final int ¢) throws Positive {
     positive(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be positive.
-   * @param n a value which must be positive
-   * @throws Positive in case <code>n</code> was nonpositive */
-  public static void positive(final int ¢) throws Positive {
-    positive(¢, "");
-  }
-
-  /** A possibly non-returning method to be used for checking integers which
-   * must be positive.
-   * @param i if negative program will halt.
-   * @param message text to be associated with the exception thrown in the case
-   *        of an error.
-   * @throws Positive in case <code>n</code> was nonpositive */
-  public static void positive(final int i, final String message) throws Positive {
-    positive(i, message, "");
   }
 
   /** A possibly non-returning method to be used for checking integers which
@@ -639,45 +434,12 @@ public abstract class ___ {
       throw new Positive(i, format, args);
   }
 
-  /** A possibly non-returning method to be used for checking integers which
-   * must be positive.
-   * @param i a value which must be positive
-   * @param format format string to be associated with the exception thrown in
-   *        the case of an error.
-   * @param args <code>printf</code>-like arguments to be used with the format
-   *        string.
-   * @throws Positive in case <code>d</code> was nonpositive */
-  public static void positive(final int i, final String format, final Object... args) throws Positive {
-    if (i <= 0)
-      throw new Positive(i, format, args);
-  }
-
   /** A possibly non-returning method to be used for checking preconditions.
    * @param condition if <code><b>false</b></code>, program will halt.
    * @throws Precondition A {@link RuntimeException} to be thrown in the case
    *         <code>condition</code> was <code><b>false</b></code> */
   public static void require(final boolean condition) throws Precondition {
     require(condition, "");
-  }
-
-  /** A possibly non-returning method to be used for checking preconditions.
-   * @param condition if <code><b>false</b></code>, program will halt.
-   * @throws Precondition A {@link RuntimeException} to be thrown in the case
-   *         <code>condition</code> was <code><b>false</b></code> */
-  public static void require(final boolean condition) throws Precondition {
-    require(condition, "");
-  }
-
-  /** A possibly non-returning method to be used for checking preconditions. If
-   * the precondition fails, then a user supplied message is associated with the
-   * thrown exception.
-   * @param condition if <code><b>false</b></code>, program will halt.
-   * @param message text to be associated with the exception thrown in the case
-   *        of an error.
-   * @throws Precondition A {@link RuntimeException} to be thrown in the case
-   *         <code>condition</code> was <code><b>false</b></code> */
-  public static void require(final boolean condition, final String message) throws Precondition {
-    require(condition, message, "");
   }
 
   /** A possibly non-returning method to be used for checking preconditions. If
@@ -708,30 +470,6 @@ public abstract class ___ {
       throw new Precondition(nprintf(format, args));
   }
 
-  /** A possibly non-returning method to be used for checking preconditions. If
-   * the precondition fails, then a user supplied formatted message (generated
-   * from <code>printf</code> like arguments) is associated with the thrown
-   * exception.
-   * @param condition if <code><b>false</b></code>, program will halt.
-   * @param format format string to be associated with the exception thrown in
-   *        the case of an error.
-   * @param args <code>printf</code>-like arguments to be used with the format
-   *        string.
-   * @throws Precondition A {@link RuntimeException} to be thrown in the case
-   *         <code>condition</code> was <code><b>false</b></code> */
-  public static void require(final boolean condition, final String format, final Object... args) throws Precondition {
-    if (!condition)
-      throw new Precondition(nprintf(format, args));
-  }
-
-  /** A possibly non-returning method to be used for checking assertions.
-   * @param condition if <code><b>false</b></code>, program will halt.
-   * @throws Invariant A {@link RuntimeException} to be thrown in the case
-   *         <code>condition</code> was <code><b>false</b></code> */
-  public static void sure(final boolean condition) throws Invariant {
-    sure(condition, "");
-  }
-
   /** A possibly non-returning method to be used for checking assertions.
    * @param condition if <code><b>false</b></code>, program will halt.
    * @throws Invariant A {@link RuntimeException} to be thrown in the case
@@ -750,34 +488,6 @@ public abstract class ___ {
    *         <code>condition</code> was <code><b>false</b></code> */
   public static void sure(final boolean condition, final String message) throws Invariant {
     sure(condition, message, "");
-  }
-
-  /** A possibly non-returning method to be used for checking assertions. If the
-   * postcondition fails, then a user supplied message is associated with the
-   * thrown exception.
-   * @param condition if <code><b>false</b></code>, program will halt.
-   * @param message text to be associated with the exception thrown in the case
-   *        of an error.
-   * @throws Invariant A {@link RuntimeException} to be thrown in the case
-   *         <code>condition</code> was <code><b>false</b></code> */
-  public static void sure(final boolean condition, final String message) throws Invariant {
-    sure(condition, message, "");
-  }
-
-  /** A possibly non-returning method to be used for checking assertions. If the
-   * postcondition fails, then a user supplied formatted message (generated from
-   * <code>printf</code> like arguments) is associated with the thrown
-   * exception.
-   * @param condition if <code><b>false</b></code>, program will halt.
-   * @param format format string to be associated with the exception thrown in
-   *        the case of an error.
-   * @param args <code>printf</code>-like arguments to be used with the format
-   *        string.
-   * @throws Invariant A {@link RuntimeException} to be thrown in the case
-   *         <code>condition</code> was <code><b>false</b></code> */
-  public static void sure(final boolean condition, final String format, final Object... args) throws Invariant {
-    if (!condition)
-      throw new Invariant(nprintf(format, args));
   }
 
   /** A possibly non-returning method to be used for checking assertions. If the
@@ -822,16 +532,16 @@ public abstract class ___ {
     throw new Reachability(nprintf(format, args));
   }
 
+  @SuppressWarnings("unused") public static void unuse(final long __, final Object... ____) {
+    // empty
+  }
+
   /** A do nothing method to document the fact that a <code><b>double</b></code>
    * parameter, along with a optional list of {@link Object}s are not used by a
    * function, and to suppress the warning.
    * @param __ the unused parameter
    * @param ____ more unused parameters */
   @SuppressWarnings("unused") public static void unused(final double __, final double... ____) {
-    // empty
-  }
-
-  @SuppressWarnings("unused") public static void unused(final double __, final Object... ____) {
     // empty
   }
 
@@ -848,7 +558,6 @@ public abstract class ___ {
     // empty
   }
 
-
   /** A do nothing method to document the fact that a <code><b>long</b></code>
    * parameter, along with a optional list of {@link Object}s are not used by a
    * function, and to suppress the warning.
@@ -856,19 +565,6 @@ public abstract class ___ {
    * @param ____ more unused parameters */
   @SuppressWarnings("unused") public static void unused(final long __, final long... ____) {
     // empty
-  }
-
-  @SuppressWarnings("unused") public static void unuse(final long __, final Object... ____) {
-    // empty
-  }
-
-  /** A do nothing method to document the fact that some <code>Object</code>(s)
-   * parameter(s) (or local variable(s)) are not used by a function. Calling
-   * this method saves the caller the trouble of suppressing a "variable unused"
-   * warnings on the argument(s).
-   * @param ____ the unused parameters */
-  public static void unused(final Object... ____) {
-    forget.it(____);
   }
 
   /** A do nothing method to document the fact that some <code>Object</code>(s)
@@ -897,22 +593,6 @@ public abstract class ___ {
         $ += f.out();
         return $;
     }
-  }
-
-  static String nprintf(final String format, final double d, final Object o) {
-    return string.sprintf(format, box(d), o);
-  }
-
-  static String nprintf(final String format, final int n1, final int n2) {
-    return sprintf(format, box(n1), box(n2));
-  }
-
-  static String nprintf(final String format, final int i, final Object o) {
-    return sprintf(format, box(i), o);
-  }
-
-  static String nprintf(final String format, final Object... args) {
-    return format == null ? "" : args == null ? format : sprintf(format, args);
   }
 
   /** The base of all exception classes thrown as a result of violations of
@@ -1482,231 +1162,6 @@ public abstract class ___ {
       }
       try {
         ___.unreachable("unreachable %s message %s", "this", "now");
-      } catch (final Reachability ¢) {
-        assertEquals("unreachable this message now", ¢.getMessage());
-      }
-    }
-
-    @Test public void variant() {
-      {
-        final Variant v = new Variant(10);
-        assertEquals(10, v.value());
-        v.check(9);
-        v.check(8);
-        v.check(4);
-        v.check(2);
-        v.check(1);
-        v.check(0);
-        assertEquals(0, v.value());
-      }
-      try {
-        unused(new Variant(-1));
-      } catch (final Initial e) {
-        assertEquals("Initial variant value (-1) is negative", e.getMessage());
-      }
-      try {
-        final Variant v = new Variant(10);
-        v.check(8);
-        v.check(9);
-      } catch (final Nondecreasing ¢) {
-        assertEquals("New variant value (9) should be less than previous value (8)", ¢.getMessage());
-      }
-      try {
-        final Variant v = new Variant(10);
-        v.check(8);
-        v.check(-2);
-      } catch (final Underflow ¢) {
-        assertEquals("New variant value (-2) is negative", ¢.getMessage());
-      }
-    }
-  }
-
-  @SuppressWarnings("static-method") public static class TEST {
-    @Test public void ensure() {
-      ensure(true);
-      try {
-        ensure(false);
-      } catch (final Postcondition e) {
-        assertEquals("", e.getMessage());
-      }
-      try {
-        ensure(false, "ensure");
-      } catch (final Postcondition e) {
-        assertEquals("ensure", e.getMessage());
-      }
-      try {
-        ensure(false, "ensure %s message %s", "this", "now");
-      } catch (final Postcondition e) {
-        assertEquals("ensure this message now", e.getMessage());
-      }
-    }
-
-    @Test public void negative() {
-      negative(-1);
-      negative(-2);
-      negative(-0.3);
-      try {
-        negative(0);
-      } catch (final Negative ¢) {
-        assertEquals("Found 0 while expecting a negative integer.", ¢.getMessage());
-      }
-      try {
-        negative(0.0);
-      } catch (final Negative ¢) {
-        assertEquals("Found 0.00000 while expecting a negative number.", ¢.getMessage());
-      }
-      try {
-        negative(-1);
-      } catch (final Negative ¢) {
-        assertEquals("Found -1 while expecting a negative integer.", ¢.getMessage());
-      }
-      try {
-        negative(-1.0);
-      } catch (final Negative ¢) {
-        assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
-      }
-    }
-
-    @Test public void nonnegative() {
-      nonnegative(1);
-      nonnegative(2);
-      nonnegative(0);
-      nonnegative(0.3);
-      nonnegative(0.0);
-      try {
-        nonnegative(1);
-      } catch (final NonNegative ¢) {
-        assertEquals("Found -1 while expecting a negative integer.", ¢.getMessage());
-      }
-      try {
-        nonnegative(1.0);
-      } catch (final NonNegative ¢) {
-        assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
-      }
-    }
-
-    @Test public void nonnull() {
-      nonnull(new Object());
-      try {
-        nonnull(null);
-      } catch (final NonNull e) {
-        assertEquals("", e.getMessage());
-      }
-      try {
-        nonnull(null, "nonnull");
-      } catch (final NonNull e) {
-        assertEquals("nonnull", e.getMessage());
-      }
-      try {
-        nonnull(null, "nonnull %s message %s", "this", "now");
-      } catch (final NonNull e) {
-        assertEquals("nonnull this message now", e.getMessage());
-      }
-    }
-
-    @Test public void nonpositive() {
-      nonpositive(-1);
-      nonpositive(-2);
-      nonpositive(-0.3);
-      nonpositive(0);
-      nonpositive(0.0);
-      try {
-        nonpositive(-1);
-      } catch (final NonPositive ¢) {
-        assertEquals("Found -1 while expecting a nonpositive integer.", ¢.getMessage());
-      }
-      try {
-        nonpositive(-1.0);
-      } catch (final NonPositive ¢) {
-        assertEquals("Found -1.00000 while expecting a nonpositive number.", ¢.getMessage());
-      }
-    }
-
-    @Test public void positive() {
-      positive(1);
-      positive(2);
-      positive(0.3);
-      try {
-        positive(0);
-      } catch (final Positive ¢) {
-        assertEquals("Found 0 while expecting a positive integer.", ¢.getMessage());
-      }
-      try {
-        positive(0.0);
-      } catch (final Positive ¢) {
-        assertEquals("Found 0.00000 while expecting a positive number.", ¢.getMessage());
-      }
-      try {
-        positive(-1);
-      } catch (final Positive ¢) {
-        assertEquals("Found -1 while expecting a positive integer.", ¢.getMessage());
-      }
-      try {
-        positive(-1.0);
-      } catch (final Positive ¢) {
-        assertEquals("Found -1.00000 while expecting a positive number.", ¢.getMessage());
-      }
-    }
-
-    @Test public void require() {
-      require(true);
-      try {
-        require(false);
-      } catch (final Precondition ¢) {
-        assertEquals("", ¢.getMessage());
-      }
-      try {
-        require(false, "requireMessage");
-      } catch (final Precondition ¢) {
-        assertEquals("requireMessage", ¢.getMessage());
-      }
-      try {
-        require(false, "require %s message %s", "this", "now");
-      } catch (final Precondition ¢) {
-        assertEquals("require this message now", ¢.getMessage());
-      }
-    }
-
-    @Test(expected = Bug.class) public void requireBug() {
-      require(false);
-    }
-
-    @Test(expected = Precondition.class) public void requirePrecondition() {
-      require(false);
-    }
-
-    @Test public void sure() {
-      sure(true);
-      try {
-        sure(false);
-      } catch (final Invariant e) {
-        assertEquals("", e.getMessage());
-      }
-      try {
-        sure(false, "sure");
-      } catch (final Invariant e) {
-        assertEquals("sure", e.getMessage());
-      }
-      try {
-        sure(false, "sure %s message %s", "this", "now");
-      } catch (final Invariant e) {
-        assertEquals("sure this message now", e.getMessage());
-      }
-    }
-
-    @Test public void unreachable() {
-      try {
-        unreachable();
-      } catch (final Reachability ¢) {
-        assertEquals("", ¢.getMessage());
-      }
-      try {
-        unreachable("unreachable message");
-      } catch (final Reachability ¢) {
-        assertEquals("unreachable message", ¢.getMessage());
-      }
-      try {
-        unreachable("unreachable %s message %s", "this", "now");
       } catch (final Reachability ¢) {
         assertEquals("unreachable this message now", ¢.getMessage());
       }
