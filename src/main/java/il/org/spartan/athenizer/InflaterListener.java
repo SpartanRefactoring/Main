@@ -14,11 +14,11 @@ import org.eclipse.text.undo.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.texteditor.*;
 
-import fluent.ly.*;
 import il.org.spartan.athenizer.SingleFlater.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Listener for code inflation/deflation using mouse and CTRL key.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

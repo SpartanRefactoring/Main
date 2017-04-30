@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.formatter.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import fluent.ly.*;
+import nano.ly.*;
 
 /** Fluet API library for formatting things
  * @author Ori Marcovitch

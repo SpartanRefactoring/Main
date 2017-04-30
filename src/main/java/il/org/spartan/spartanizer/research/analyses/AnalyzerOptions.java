@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.research.analyses;
 
 import java.util.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
 

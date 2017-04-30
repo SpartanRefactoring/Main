@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,6 +21,8 @@ import il.org.spartan.utils.*;
  * @since 2017-03-26 */
 public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
     implements TipperCategory.Inlining {
+  private static final long serialVersionUID = -0x4EB708E6DF95CDCDL;
+
   public LocalInitializedIncrementDecrementInline() {
     andAlso("Has increment/decrement of variable afterwards", () -> {
       final ExpressionStatement s = az.expressionStatement(nextStatement);
@@ -33,8 +35,6 @@ public class LocalInitializedIncrementDecrementInline extends LocalInitialized//
           && collect.usesOf(name).in(extract.fragments(declaration)).size() == 1;
     });
   }
-
-  private static final long serialVersionUID = 0x6E14426AA4211FFEL;
 
   @Override public String description() {
     return "Consolidate initialization of " + name + " with subsequent increment/decrement";

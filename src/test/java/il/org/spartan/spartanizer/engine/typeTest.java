@@ -9,12 +9,12 @@ import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.type.*;
 import il.org.spartan.spartanizer.traversal.Traversal.*;
+import nano.ly.*;
 
 /** unit tests for {@link __} , as well as tests for the types of certain
  * expression using {@link Axiom} .

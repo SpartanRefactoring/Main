@@ -2,6 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
 import static java.lang.String.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -13,7 +14,6 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.text.edits.*;
 
-import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -23,6 +23,7 @@ import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** TODO Ori Marcovitch please add a description
  * @author Ori Marcovitch

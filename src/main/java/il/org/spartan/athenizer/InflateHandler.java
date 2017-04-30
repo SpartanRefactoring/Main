@@ -20,11 +20,12 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.part.*;
 import org.eclipse.ui.texteditor.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.athenizer.SingleFlater.*;
 import il.org.spartan.athenizer.collateral.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Handler for the Bloater project's feature (global Bloater). Uses
  * {@link BloaterGUIApplicator} as an {@link Applicator} and {@link Augmenter}

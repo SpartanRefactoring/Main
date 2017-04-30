@@ -7,11 +7,11 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.util.*;
+import nano.ly.*;
 
 /** Tests of {@link measure.expressions}
  * @author RoeiRaz

@@ -3,12 +3,12 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.util.*;
 import java.util.stream.*;
 
-import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.

@@ -6,8 +6,9 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.plugin.*;
+import nano.ly.*;
 
 /** *
  * @author Yossi Gil

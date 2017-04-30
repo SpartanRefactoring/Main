@@ -6,8 +6,8 @@ import java.util.*;
 
 import org.junit.*;
 
-import fluent.ly.*;
 import il.org.spartan.*;
+import nano.ly.*;
 
 /** Created by yogi on 10/02/17. */
 @SuppressWarnings({ "javadoc", "static-method" })

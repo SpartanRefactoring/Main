@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.eclipse.core.runtime.*;
 
-import fluent.ly.*;
+import nano.ly.*;
 
 /** Collects widget operation extensions.
  * @author Ori Roth

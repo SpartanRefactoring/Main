@@ -7,10 +7,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
+import nano.ly.*;
 
 /** Evaluate the $ of numbers according to the following rules {@code
  * int % int --> int

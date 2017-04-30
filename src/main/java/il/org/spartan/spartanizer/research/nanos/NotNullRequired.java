@@ -6,8 +6,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import nano.ly.*;
 
 /** Like {@link NotNullAssumed} but in the beginning of a method.
  * @author orimarco {@code marcovitch.ori@gmail.com}

@@ -4,8 +4,8 @@ import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
-import fluent.ly.*;
 import il.org.spartan.*;
+import nano.ly.*;
 
 /** Unit test for {@link Table#classToNormalizedFileName(String)}
  * @author Yossi Gil
