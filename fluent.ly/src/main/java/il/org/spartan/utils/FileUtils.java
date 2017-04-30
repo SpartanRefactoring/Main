@@ -43,11 +43,13 @@ public class FileUtils {
    * @param f JD
    * @return a string representing the contents of a file.
    * @throws IOException in case of error */
+  
   @NotNull public static String read(@NotNull final File f) throws IOException {
     final String ls = System.getProperty("line.separator");
+    System.err.println(ls.compareTo("\n"));
     @NotNull final StringBuilder $ = new StringBuilder();
     try (@NotNull BufferedReader reader = new BufferedReader(new FileReader(f))) {
-      for (final String line = reader.readLine(); line != null;)
+      for (String line = reader.readLine(); line != null; line = reader.readLine())
         $.append(line).append(ls);
     }
     return $ + "";
