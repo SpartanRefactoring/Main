@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-import fluent.ly.list.ToCallExpected;
 import il.org.spartan.utils.Outer;
 
 /** TODO Yossi Gil: document class 

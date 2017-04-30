@@ -1,10 +1,8 @@
 package fluent.ly;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
-import org.junit.*;
-
-import il.org.spartan.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
 /** @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @param <T> JD

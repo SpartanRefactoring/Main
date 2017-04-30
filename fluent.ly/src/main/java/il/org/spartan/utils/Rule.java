@@ -16,9 +16,9 @@ import java.util.function.Supplier;
 
 import org.eclipse.jdt.annotation.Nullable;
 
+import fluent.ly.English;
 import fluent.ly.box;
-import nano.ly.English;
-import nano.ly.note;
+import fluent.ly.note;
 
 /** An abstract interface defining tippers, bloaters, and light weight pattern
  * search, logging, computing statistics, etc.

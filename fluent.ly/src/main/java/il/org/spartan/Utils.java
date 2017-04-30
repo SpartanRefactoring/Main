@@ -1,8 +1,8 @@
 package il.org.spartan;
 
+import static fluent.ly.azzert.is;
+import static fluent.ly.azzert.isNull;
 import static fluent.ly.idiomatic.eval;
-import static il.org.spartan.azzert.is;
-import static il.org.spartan.azzert.isNull;
 import static org.junit.Assert.assertArrayEquals;
 
 import java.io.File;
@@ -22,7 +22,9 @@ import org.junit.Test;
 
 import fluent.ly.accumulate;
 import fluent.ly.as;
+import fluent.ly.azzert;
 import fluent.ly.idiomatic;
+import fluent.ly.the;
 import il.org.spartan.Utils.FoundHandleForT.FoundHandleForInt;
 
 /** An empty <code><b>interface</b></code> with a variety of <code>public
@@ -253,43 +255,13 @@ public interface Utils {
     return false;
   }
 
-  /** @param <T> JD
-   * @param ¢ JD
-   * @return last item in a list or <code><b>null</b></code> if the parameter is
-   *         <code><b>null</b></code> or empty */
-  @SuppressWarnings("null") static <T> @Nullable T last(@NotNull final @Nullable List<T> ¢) {
-    return eval(() -> ¢.get(¢.size() - 1)).unless(¢ == null || ¢.isEmpty());
-  }
-
   /** Determine whether an {@link Object} is the last in a {@link List} .
    * @param o JD
    * @param os JD
    * @return <code><b>true</b></code> <i>iff</i> the {@link Object} parameter is
    *         the same as the last element of the {@link List} parameter */
   static boolean lastIn(final Object o, @NotNull final List<?> os) {
-    return last(os) == o;
-  }
-
-  /** Computes the maximum of two or more integers.
-   * @param a some integer
-   * @param is additional integers
-   * @return largest of the parameters */
-  static int max(final int a, @NotNull final int... is) {
-    int $ = a;
-    for (final int ¢ : is)
-      $ = Math.max($, ¢);
-    return $;
-  }
-
-  /** Computes the minimum of two or more integers
-   * @param a some integer
-   * @param is additional
-   * @return smallest of the parameters */
-  static int min(final int a, @NotNull final int... is) {
-    int $ = a;
-    for (final int ¢ : is)
-      $ = Math.min($, ¢);
-    return $;
+    return the.last(os) == o;
   }
 
   /** Aborts in case a given value is <code><b>null</b></code>.
@@ -311,12 +283,6 @@ public interface Utils {
     return cantBeNull(¢.getName());
   }
 
-  /** Convert variadic list of arguments into an array
-   * @param ¢ JD __
-   * @return parameter, as an array. */
-  static Object[] objects(final Object... ¢) {
-    return ¢;
-  }
 
   /** @param <T> JD
    * @param ¢ a list
@@ -410,13 +376,6 @@ public interface Utils {
    * @param ¢ some number
    * @return square of the parameter */
   static double sqr(final double ¢) {
-    return ¢ * ¢;
-  }
-
-  /** Computes the square of a given integer
-   * @param ¢ some integer
-   * @return square of the parameter */
-  static int sqr(final int ¢) {
     return ¢ * ¢;
   }
 

@@ -1,15 +1,13 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package fluent.ly;
 
-import org.jetbrains.annotations.*;
-
-import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.Nullable;
 
 /** A utility class to realize universally quantified checks of an entire
  * collection.
  * @author Yossi Gil, the Technion.
  * @since 21/06/2008 */
-@Utility public enum all {
+public enum all {
   ;
   /** Determine whether all elements in an {@link Iterable} collection are not
    * null.

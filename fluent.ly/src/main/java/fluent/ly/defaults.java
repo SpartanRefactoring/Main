@@ -1,6 +1,6 @@
 package fluent.ly;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.Nullable;
 
 /** A bunch of <code><b>static</b></code> functions to manage the frequent
  * conditional of replacing a <code><b>null</b></code> value with some default.

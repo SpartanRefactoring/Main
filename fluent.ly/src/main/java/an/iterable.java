@@ -1,9 +1,8 @@
 package an;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.*;
 
-import il.org.spartan.iterables.PureIterable;
-import il.org.spartan.iterables.PureIterator;
+import org.jetbrains.annotations.NotNull;
 
 public interface iterable {
 
@@ -12,7 +11,7 @@ public interface iterable {
    * @param ¢ JD
    * @return PureIterable.Sized<T> for returned value of method
    *         <code>singleton</code> */
-  @NotNull static <T> PureIterable.Sized<T> singleton(final T ¢) {
+  @NotNull static <T> Iterable<T> singleton(final T ¢) {
     return iterable.over(¢);
   }
 
@@ -20,10 +19,10 @@ public interface iterable {
    * @param < T > an arbitrary type
    * @param ts what to iterate on
    * @return an {@link Iterable} over the parameter */
-  @SafeVarargs @NotNull static <T> PureIterable.Sized<T> over(@NotNull final T... ts) {
-    return new PureIterable.Sized<T>() {
-      @Override @NotNull public PureIterator<T> iterator() {
-        return new PureIterator<T>() {
+  @SafeVarargs @NotNull static <T> Iterable<T> over(@NotNull final T... ts) {
+    return new Iterable<T>() {
+      @Override @NotNull public Iterator<T> iterator() {
+        return new Iterator<T>() {
           int current;
   
           @Override public boolean hasNext() {
@@ -34,10 +33,6 @@ public interface iterable {
             return ts[current++];
           }
         };
-      }
-  
-      @Override public int size() {
-        return ts.length;
       }
     };
   }

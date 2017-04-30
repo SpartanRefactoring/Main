@@ -2,8 +2,9 @@
 package fluent.ly;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
 import static org.junit.Assert.assertEquals;
+
+import static fluent.ly.azzert.*;
 
 import java.util.*;
 
@@ -11,9 +12,6 @@ import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
-
-import il.org.spartan.*;
-import nano.ly.accumulate;
 
 /** A <b>Utility class</b> providing functions to remove
  * <code><b>null</b></code> elements from arrays and iterable collections. For
@@ -96,28 +94,11 @@ public enum prune {
    * @since 27/08/2008 */
   @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST1 {
-    @Nullable final String[] alternatingArray = new String @Nullable [] { null, "A", null, null, "B", null, null, null, "C", null };
+    final String @Nullable [] alternatingArray = new String @Nullable [] { null, "A", null, null, "B", null, null, null, "C", null };
     final String[] nonNullArray = { "1", "2", "4" };
-    private final NonNullCache<List<String>> sparseCollection = new NonNullCache<List<String>>() {
-      @Override @NotNull protected List<@Nullable String> ____() {
-        @NotNull final List<@Nullable String> $ = new ArrayList<>();
-        $.add(null);
-        $.add(null);
-        $.add(null);
-        $.add(null);
-        $.add(null);
-        $.add("A");
-        $.add(null);
-        $.add(null);
-        $.add(null);
-        $.add("B");
-        $.add(null);
-        $.add("C");
-        $.add(null);
-        $.add(null);
-        $.add(null);
-        $.add(null);
-        return $;
+    private final lazy<List<String>> sparseCollection = new lazy<List<String>>() {
+      @Override @NotNull public List<String> get() {
+        return as.list(null, null, null, null, null, "A", null, null, null, "B", null, "C", null, null, null, null, null);
       }
     };
 
@@ -142,7 +123,7 @@ public enum prune {
     }
 
     @Test public void nullsPruneSparseCollectionContents() {
-      @NotNull final String[] a = nulls(sparseCollection.value()).toArray(new String[3]);
+      @NotNull final String[] a = nulls(sparseCollection.get()).toArray(new String[3]);
       assertEquals("A", a[0]);
       assertEquals("B", a[1]);
       assertEquals("C", a[2]);
@@ -150,11 +131,11 @@ public enum prune {
     }
 
     @Test public void nullsPruneSparseCollectionLength() {
-      assertEquals(3, nulls(sparseCollection.value()).size());
+      assertEquals(3, nulls(sparseCollection.get()).size());
     }
 
     @Test public void nullsPrunNotNull() {
-      assert nulls(sparseCollection.value()) != null;
+      assert nulls(sparseCollection.get()) != null;
     }
 
     @Test public void shrinkArray() {
@@ -178,7 +159,7 @@ public enum prune {
    * @author Yossi Gil, the Technion.
    * @since 27/08/2008 */
   @SuppressWarnings({ "static-method", "synthetic-access" }) public static class TEST2 {
-    @Nullable final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
+    final String @Nullable [] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
     final String[] nonNullArray = { "1", "2", "4" };
     private ArrayList<String> sparseCollection;
 

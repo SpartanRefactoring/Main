@@ -1,15 +1,14 @@
-package il.org.spartan;
+package fluent.ly;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.hasNull;
+import static il.org.spartan.Utils.inRange;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
-
-import fluent.ly.as;
-import nano.ly.the;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /** @noinspection unused */
 public interface lisp {
@@ -32,15 +31,6 @@ public interface lisp {
    *         the last node */
   @Nullable static <T> T next(final int i, @NotNull final List<T> ts) {
     return inRange(i + 1, ts) ? ts.get(i + 1) : the.lastOf(ts);
-  }
-
-  /** Determine if an item is not included in a list of values
-   * @param <T> JD
-   * @param candidate what to search for
-   * @param ts where to search
-   * @return true if the the item is not found in the list */
-  @SafeVarargs static <T> boolean out(final T candidate, final T... ts) {
-    return !in(candidate, ts);
   }
 
   /** Retrieve previous item in a list

@@ -1,12 +1,12 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.is;
 
-import org.jetbrains.annotations.*;
-import org.junit.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
 import fluent.ly.as;
-import il.org.spartan.*;
+import fluent.ly.azzert;
 
 public abstract class Accumulator {
   protected int value;

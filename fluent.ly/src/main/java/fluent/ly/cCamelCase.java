@@ -1,7 +1,5 @@
 package fluent.ly;
 
-import nano.ly.the;
-
 /** An empty {@code interface} for fluent programming. The name should say it
  * all: The name, followed by a dot, followed by a method name, should read like
  * a sentence phrase.

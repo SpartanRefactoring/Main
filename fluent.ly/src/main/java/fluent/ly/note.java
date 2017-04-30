@@ -14,11 +14,6 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import il.org.spartan.utils.system;
-import nano.ly.English;
-import nano.ly.anonymous;
-import nano.ly.nulling;
-import nano.ly.separate;
-import nano.ly.the;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.

@@ -1,15 +1,13 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.is;
 
-import java.util.function.*;
+import java.util.function.Supplier;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
-import org.junit.*;
-
-import il.org.spartan.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
 /** An empty <code><b>enum</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.

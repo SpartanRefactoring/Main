@@ -1,8 +1,6 @@
 package fluent.ly;
 
-import java.util.function.*;
-
-import nano.ly.forget;
+import java.util.function.Supplier;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

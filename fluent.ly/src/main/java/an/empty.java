@@ -1,6 +1,7 @@
 package an;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

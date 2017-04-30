@@ -1,12 +1,11 @@
 package il.org.spartan.utils;
 
-import static il.org.spartan.Utils.*;
+import java.util.Arrays;
 
-import java.util.*;
+import org.jetbrains.annotations.NotNull;
 
-import org.jetbrains.annotations.*;
-
-import il.org.spartan.*;
+import fluent.ly.the;
+import il.org.spartan.tide;
 
 /** Utility class for computing the "Longest Common Subsequence" of two strings.
  * The LCS is computed after removing all spaces from both strings.
@@ -54,6 +53,6 @@ public class LongestCommonSubsequence {
   }
 
   private int threeWayDynamicProgramingStep(final int i, final int j) {
-    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + fluent.ly.as.bit(as[i] == bs[j]));
+    return the.max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + fluent.ly.as.bit(as[i] == bs[j]));
   }
 }

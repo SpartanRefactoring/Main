@@ -1,9 +1,9 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
+import static fluent.ly.azzert.is;
 import static il.org.spartan.Utils.apply;
 import static il.org.spartan.Utils.cantBeNull;
-import static il.org.spartan.azzert.is;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,9 +19,6 @@ import org.junit.Test;
 import an.iterable;
 import il.org.spartan.Separator;
 import il.org.spartan.Utils.Applicator;
-import il.org.spartan.azzert;
-import il.org.spartan.iterables.iterables;
-import nano.ly.prune;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this
@@ -43,7 +40,7 @@ public enum separate {
    * @param $ what needs to be separated
    * @return parameters, separated by {@link #SPACE} */
   @NotNull public static String bySpaces(final String... $) {
-    return separateBySpaces(as.iterable($));
+    return separateBySpaces(as.list($));
   }
 
   /** A simple program demonstrating the use of this class. This program prints
@@ -263,7 +260,7 @@ public enum separate {
     }
 
     public SeparationSubject(final Object[] os) {
-      this.os = as.iterable(os);
+      this.os = as.list(os);
     }
 
     /** Separate elements of a given array of <code><b>boolean</b></code>s by a
@@ -401,7 +398,7 @@ public enum separate {
       @NotNull final Collection<String> c = as.list("Hello", "World");
       azzert.that(c.size(), is(2));
       @NotNull final Iterable<String> ts = f.to(c);
-      azzert.that(iterables.count(ts), is(2));
+      azzert.that(count.of(ts), is(2));
       azzert.that(separate.these(ts).by(' '), is("'Hello' 'World'"));
     }
 
@@ -483,7 +480,7 @@ public enum separate {
       assert these != null : null;
       final Iterable<?> os = these.os;
       assert os != null : null;
-      azzert.aye(iterables.isEmpty(os));
+      azzert.aye(is.empty(os));
       @NotNull final String[] ss = as.strings(os);
       assert ss != null : null;
       azzert.zero(ss.length);
@@ -501,15 +498,17 @@ public enum separate {
     }
 
     @Test public void separateBySpaceEmptyIterator() {
-      azzert.that(separateBySpaces(iterables.empty()), is(""));
+      azzert.that(separateBySpaces(an.empty.list()), is(""));
     }
 
     @Test public void separateBySpaceMultipleIterator() {
-      azzert.that(separateBySpaces(as.iterable("X", "Y", "Z")), is("X Y Z"));
+      @NotNull String[] ts = { "X", "Y", "Z" };
+      azzert.that(separateBySpaces(as.list(ts)), is("X Y Z"));
     }
 
     @Test public void separateBySpaceOnIteator() {
-      azzert.that(separateBySpaces(as.iterable("Hello", "World ")), is("Hello World "));
+      @NotNull String[] ts = { "Hello", "World " };
+      azzert.that(separateBySpaces(as.list(ts)), is("Hello World "));
     }
 
     @Test public void separateBySpaceOnSingletonIteator() {
@@ -533,39 +532,39 @@ public enum separate {
     }
 
     @Test public final void theseArraySize0() {
-      azzert.that(iterables.count(separate.these(as.array()).os), is(0));
+      azzert.that(count.of(separate.these(as.array()).os), is(0));
     }
 
     @Test public final void theseArraySize1() {
-      azzert.that(iterables.count(separate.these(as.array("Rosebud")).os), is(1));
+      azzert.that(count.of(separate.these(as.array("Rosebud")).os), is(1));
     }
 
     @Test public final void theseArraySize2() {
-      azzert.that(iterables.count(separate.these(as.array("Hello", "World")).os), is(2));
+      azzert.that(count.of(separate.these(as.array("Hello", "World")).os), is(2));
     }
 
     @Test public final void theseArraySize3() {
-      azzert.that(iterables.count(separate.these(as.array("A", "B", "C")).os), is(3));
+      azzert.that(count.of(separate.these(as.array("A", "B", "C")).os), is(3));
     }
 
     @Test public final void theseFromOneItem() {
-      azzert.that(iterables.count(separate.these(as.list("Rosebud")).os), is(1));
+      azzert.that(count.of(separate.these(as.list("Rosebud")).os), is(1));
     }
 
     @Test public final void theseFromThreeItems() {
-      azzert.that(iterables.count(separate.these(as.list("A", "B", "C")).os), is(3));
+      azzert.that(count.of(separate.these(as.list("A", "B", "C")).os), is(3));
     }
 
     @Test public final void theseFromTwoItems() {
-      azzert.that(iterables.count(separate.these(as.list("Hello", "World")).os), is(2));
+      azzert.that(count.of(separate.these(as.list("Hello", "World")).os), is(2));
     }
 
     @Test public final void theseFromZeroItems() {
-      azzert.that(iterables.count(separate.these(as.list((Double) null)).os), is(0));
+      azzert.that(count.of(separate.these(as.list((Double) null)).os), is(0));
     }
 
     @Test public final void theseOfNoItemsl() {
-      azzert.aye(iterables.isEmpty(separate.these(new String[] {}).os));
+      azzert.aye(is.empty(separate.these(new String[] {}).os));
     }
 
     @Test public final void theseOfNoItemslSpaceSeparated() {
