@@ -13,8 +13,20 @@ import java.util.function.BinaryOperator;
  * @since 30-04-2017.
  */
 public class PruningTest extends PsiTypeHelper {
-    public void testPrune() throws Exception {
+    public void testPruneExpression() throws Exception {
+        EncapsulatingNode root = EncapsulatingNode.buildTreeFromPsi(createTestIfStatement("x > 2", "booleanExpression(0);"));
+        EncapsulatingNode pruned = Pruning.prune(root);
+        assertEquals(pruned.getChildren().size(), 7);
+        assertTrue(iz.generic(pruned.getChildren().get(6).getChildren().get(0).getChildren().get(1).getChildren().get(0).getInner()));
+        assertFalse(iz.generic(pruned.getChildren().get(3).getInner()));
+    }
 
+    public void testPruneStatement() throws Exception {
+        EncapsulatingNode root = EncapsulatingNode.buildTreeFromPsi(createTestIfStatement("x > 2", "statement(0);"));
+        EncapsulatingNode pruned = Pruning.prune(root);
+        assertEquals(pruned.getChildren().size(), 7);
+        assertTrue(iz.generic(pruned.getChildren().get(6).getChildren().get(0).getChildren().get(1).getInner()));
+        assertFalse(iz.generic(pruned.getChildren().get(3).getInner()));
     }
 
     public void testGetRealParentExpression() throws Exception {
