@@ -139,6 +139,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     Button configureButton;
     Button ableButton;
 
+    
     ListSelectionEditor(final String name, final String labelText, final Composite parent, final List<Map.Entry<String, Object>> elements,
         final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
       super(name, labelText, parent);
@@ -223,6 +224,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       });
     }
 
+
+    
     @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
       super.doFillIntoGrid(parent, numColumns);
       getButtonBoxControl(parent).dispose();
@@ -363,7 +366,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {/**/}
     });
   }
-
+  
   private static void setRenamingButtons(final RadioGroupFieldEditor e, final Composite parent, final StringFieldEditor other) {
     final Control[] cc = e.getRadioBoxControl(parent).getChildren();
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
