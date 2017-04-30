@@ -42,6 +42,16 @@ the program changes: https://goo.gl/sIqIBC
   </page>
 </extension>
 
+<!-- Widget preferences page -->
+<extension point="org.eclipse.ui.preferencePages">
+  <page
+    name="Widget"
+    class="il.org.spartan.plugin.preferences.revision.WidgetPreferencesPage"
+    id="il.org.spartan.plugin.WidgetPreferencesPage"
+    category="il.org.spartan.plugin.PluginPreferencesPage">
+  </page>
+</extension>
+
 <!-- Preferences-->
 <extension point="org.eclipse.core.runtime.preferences">
   <scope 
