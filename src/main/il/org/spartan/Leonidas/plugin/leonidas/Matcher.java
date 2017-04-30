@@ -67,6 +67,10 @@ public class Matcher {
         matcher.getConstraintsMatchers().stream().forEach(im -> buildMatcherTree(im, map));
     }
 
+    public EncapsulatingNode getRoot() {
+        return root;
+    }
+
     private void setRoot(EncapsulatingNode n) {
         root = n;
     }

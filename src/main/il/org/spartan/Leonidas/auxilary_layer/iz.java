@@ -376,9 +376,12 @@ public enum iz {
         return typeCheck(PsiEmptyStatement.class, ¢);
     }
 
-
     static boolean enumDeclaration(final PsiElement ¢) {
         return typeCheck(PsiClass.class, ¢) && (az.classDeclaration(¢).isEnum());
+    }
+
+    public static boolean codeBlock(final PsiElement ¢) {
+        return typeCheck(PsiCodeBlock.class, ¢);
     }
 
     static boolean fieldDeclaration(final PsiMember ¢) {

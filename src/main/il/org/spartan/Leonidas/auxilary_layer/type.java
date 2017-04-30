@@ -76,6 +76,12 @@ public class type {
                 super.visitWhileStatement(s);
                 myClass.set(PsiWhileStatement.class);
             }
+
+            @Override
+            public void visitPrefixExpression(PsiPrefixExpression expression) {
+                super.visitPrefixExpression(expression);
+                myClass.set(PsiPrefixExpression.class);
+            }
         });
         return myClass.get();
     }

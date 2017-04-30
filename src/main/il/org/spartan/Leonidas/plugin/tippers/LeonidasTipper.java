@@ -9,7 +9,10 @@ import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
-import il.org.spartan.Leonidas.plugin.leonidas.*;
+import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
+import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
@@ -33,7 +36,6 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private String description;
     private String name;
     private Matcher matcher;
-    private Replacer replacer;
     private Class<? extends PsiElement> rootType;
     private PsiJavaFile file;
     private Map<Integer, List<Matcher.Constraint>> map;
@@ -48,8 +50,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 .split("\\*")[1].trim();
         map = getConstraints();
         matcher = new Matcher(getMatcherRootTree(), map);
-        replacer = new Replacer(matcher, getReplacerRootTree());
-        rootType = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));
+        Class<? extends PsiElement> t = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));
+        rootType = t != null ? t : (Class<? extends PsiElement>) matcher.getRoot().getInner().getClass().getInterfaces()[0];
     }
 
     /**
@@ -265,7 +267,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                         || SHORT_LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName())) //
                 .map(a -> getAnnotationClass(a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE) //
                         .getText().replace(".class", ""))) //
-                .findFirst().get();
+                .findFirst().orElse(null);
     }
 
     /**
@@ -274,6 +276,16 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the first PsiElement of the type rootElementType
      */
     private PsiElement getTreeFromRoot(PsiMethod method, Class<? extends PsiElement> rootElementType) {
+        PsiNewExpression ne = az.newExpression(az.expressionStatement(method.getBody().getStatements()[0]).getExpression());
+        PsiElement firstElement;
+        if (iz.codeBlock(((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody())) {
+            firstElement = Utils.getFirstElementInsideBody((PsiCodeBlock) (((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody()));
+        } else {
+            firstElement = ((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody();
+        }
+
+        if (rootElementType == null)
+            return firstElement;
         Wrapper<PsiElement> result = new Wrapper<>();
         Wrapper<Boolean> stop = new Wrapper<>(false);
         method.accept(new JavaRecursiveElementVisitor() {

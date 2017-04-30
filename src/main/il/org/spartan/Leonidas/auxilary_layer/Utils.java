@@ -133,4 +133,10 @@ public enum Utils {
             return null;
         }
     }
+
+    public static PsiElement getFirstElementInsideBody(PsiCodeBlock cb) {
+        PsiElement c;
+        for (c = cb.getFirstBodyElement(); c != null && iz.whiteSpace(c); c = c.getNextSibling()) ;
+        return c;
+    }
 }

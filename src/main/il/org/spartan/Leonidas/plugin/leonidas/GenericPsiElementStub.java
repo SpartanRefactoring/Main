@@ -203,6 +203,8 @@ public class GenericPsiElementStub {
          * @return the true iff by the type of the generic element there is a need to go one step upwards.
          */
         public boolean goUpwards(EncapsulatingNode prv, EncapsulatingNode next) {
+            if (next == null)
+                return false;
             switch (this) {
                 default:
                     return prv.getText().equals(next.getText());
