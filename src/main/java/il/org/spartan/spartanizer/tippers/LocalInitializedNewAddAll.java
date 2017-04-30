@@ -22,7 +22,7 @@ import nano.ly.*;
  * @author Yossi Gil
  * @since 2017-03-02 */
 public final class LocalInitializedNewAddAll extends LocalInitialized {
-  private static final long serialVersionUID = 2617178983354697602L;
+  private static final long serialVersionUID = 0x2452166B40798782L;
 
   public LocalInitializedNewAddAll() {
     andAlso("Initializer is a 'new Type(...)' expression", //

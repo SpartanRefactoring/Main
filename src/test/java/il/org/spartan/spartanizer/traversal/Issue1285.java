@@ -16,16 +16,16 @@ import il.org.spartan.spartanizer.tipping.*;
 @SuppressWarnings("static-method")
 public class Issue1285 {
   @Test public void serialVersionUIDNotDefault() {
-    for (Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
+    for (final Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
       Assert.assertNotEquals(1L, ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID());
   }
 
   @Test @SuppressWarnings("boxing") public void allSerialUIDsAreDifferent() {
-    HashSet<Long> serialUIDs = new HashSet<>();
-    Set<Class<?>> distinctTippersClasses = new HashSet<>();
-    for (Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
+    final HashSet<Long> serialUIDs = new HashSet<>();
+    final Set<Class<?>> distinctTippersClasses = new HashSet<>();
+    for (final Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
       distinctTippersClasses.add(¢.getClass());
-    for (Class<?> ¢ : distinctTippersClasses)
+    for (final Class<?> ¢ : distinctTippersClasses)
       assert serialUIDs.add(ObjectStreamClass.lookup(¢).getSerialVersionUID());
   }
 }
