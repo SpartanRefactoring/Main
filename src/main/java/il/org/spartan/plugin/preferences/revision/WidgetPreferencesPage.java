@@ -23,5 +23,6 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
 
   @Override protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
+    addField(new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent()));
   }
 }
