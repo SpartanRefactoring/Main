@@ -10,10 +10,8 @@ import il.org.spartan.spartanizer.plugin.widget.*;
  * @since 2017-04-27 */
 public class ZoomerOperation extends WidgetOperation {
   private static final long serialVersionUID = -0x543A88984C660B4CL;
-
   public static final String TYPE = "type";
   private String type;
-
 
   @Override public String[][] configurationComponents() {
     return new String[][] { //
@@ -34,8 +32,7 @@ public class ZoomerOperation extends WidgetOperation {
         InflateHandler.applicator().manyPasses().selection(¢.allCompilationUnits).go();
         break;
       case "Current selection":
-        InflateHandler.applicator().setPasses(¢.currentSelecetion.textSelection == null ? 1 : 20)
-            .selection(¢.currentSelecetion).go();
+        InflateHandler.applicator().setPasses(¢.currentSelecetion.textSelection == null ? 1 : 20).selection(¢.currentSelecetion).go();
         break;
     }
   }
@@ -43,6 +40,7 @@ public class ZoomerOperation extends WidgetOperation {
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/obj16/menu.gif";
   }
+
   @Override public String description() {
     return "zoom in current selection";
   }

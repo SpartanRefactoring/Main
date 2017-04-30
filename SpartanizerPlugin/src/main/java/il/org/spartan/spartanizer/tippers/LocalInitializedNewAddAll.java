@@ -56,6 +56,6 @@ public final class LocalInitializedNewAddAll extends LocalInitialized {
   private MethodInvocation methodInvocation;
 
   @Override public Examples examples() {
-    return convert("List<T> x = new ArrayList<>(); x.addAll(ys)").to("List<T> x = new ArrayList<>(ys);");
+    return convert("List<T> x = new ArrayList<>(); x.addAll(ys);").to("List<T> x = new ArrayList<>(ys);");
   }
 }
