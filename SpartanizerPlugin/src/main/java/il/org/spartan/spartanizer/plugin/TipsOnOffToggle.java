@@ -6,7 +6,7 @@ import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
-import nano.ly.*;
+import fluent.ly.*;
 
 /** A command handler which toggles the spartanization nature
  * @see IHandler

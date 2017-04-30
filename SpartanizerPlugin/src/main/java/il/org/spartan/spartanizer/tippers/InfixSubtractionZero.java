@@ -4,7 +4,7 @@ import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.lisp.*;
+import static fluent.ly.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.hop.*;
 
@@ -12,10 +12,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
-import nano.ly.*;
 
 /** Replace {@code X-0} by {@code X} and {@code 0-X} by {@code -X}
  * @author Alex Kopzon

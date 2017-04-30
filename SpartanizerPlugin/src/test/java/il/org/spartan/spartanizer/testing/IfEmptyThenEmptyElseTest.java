@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.testing;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
@@ -8,7 +8,7 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;

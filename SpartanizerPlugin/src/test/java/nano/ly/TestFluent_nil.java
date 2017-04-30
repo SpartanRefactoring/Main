@@ -1,11 +1,12 @@
 package nano.ly;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
+
+import java.util.function.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
-import il.org.spartan.iteration.closures.*;
+import fluent.ly.*;
 
 public class TestFluent_nil {
   static String helloString = "Hello";

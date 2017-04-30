@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** TODO Yossi Gil Document Class

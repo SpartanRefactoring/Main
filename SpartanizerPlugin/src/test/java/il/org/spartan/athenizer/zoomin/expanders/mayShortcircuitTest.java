@@ -1,12 +1,12 @@
 package il.org.spartan.athenizer.zoomin.expanders;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;

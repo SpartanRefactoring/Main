@@ -12,7 +12,7 @@ import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import nano.ly.*;
+import fluent.ly.*;
 
 /** Utility class for dialogs management.
  * @author Ori Roth

@@ -6,9 +6,9 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.research.util.*;
-import nano.ly.*;
 
 /** Tests of {@link research.util}
  * @author AnnaBel7

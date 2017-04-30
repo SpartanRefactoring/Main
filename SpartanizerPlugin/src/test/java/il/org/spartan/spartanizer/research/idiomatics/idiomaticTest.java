@@ -1,13 +1,12 @@
 package il.org.spartan.spartanizer.research.idiomatics;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import java.util.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 /** Created by yogi on 10/02/17. */
 @SuppressWarnings({ "javadoc", "static-method" })

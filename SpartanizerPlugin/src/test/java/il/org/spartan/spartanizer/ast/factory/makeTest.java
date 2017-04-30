@@ -5,11 +5,11 @@
  * @since Oct 7, 2016 */
 package il.org.spartan.spartanizer.ast.factory;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.*;
 
 @SuppressWarnings("static-method") //

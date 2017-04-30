@@ -15,10 +15,9 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.meta.*;
-import nano.ly.*;
 
 @RunWith(Parameterized.class)
 public class HasEnvironmentTest extends MetaFixture {

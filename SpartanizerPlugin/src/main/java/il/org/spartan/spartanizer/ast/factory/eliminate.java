@@ -1,11 +1,8 @@
 package il.org.spartan.spartanizer.ast.factory;
-
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 
@@ -13,6 +10,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -54,7 +52,7 @@ public enum eliminate {
   }
 
   public static int level(final InfixExpression ¢) {
-    return out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
+    return is.out(¢.getOperator(), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
   public static Expression peel(final Expression $) {
@@ -66,7 +64,7 @@ public enum eliminate {
   }
 
   public static Expression peel(final InfixExpression ¢) {
-    return out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
+    return is.out(¢.getOperator(), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(¢.getOperator());
   }
 
   public static Expression peel(final NumberLiteral $) {
@@ -74,7 +72,7 @@ public enum eliminate {
   }
 
   public static Expression peel(final PrefixExpression $) {
-    return out($.getOperator(), op.MINUS1, op.PLUS1) ? $ : peel($.getOperand());
+    return is.out($.getOperator(), op.MINUS1, op.PLUS1) ? $ : peel($.getOperand());
   }
 
   private static int level(final PrefixExpression ¢) {

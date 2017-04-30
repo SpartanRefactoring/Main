@@ -4,10 +4,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
-import nano.ly.*;
 
 /** Concat some strings to one string {@code
  * "abcde"

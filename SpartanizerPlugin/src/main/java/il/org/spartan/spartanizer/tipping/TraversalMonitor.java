@@ -13,11 +13,11 @@ import java.util.logging.Formatter;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Yossi Gil

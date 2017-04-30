@@ -8,8 +8,8 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 
+import fluent.ly.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** A {@link FieldEditor} designed to store multiple controls within a group
  * panel widget, to be used in conjunction with an
