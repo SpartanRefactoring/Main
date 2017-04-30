@@ -8,10 +8,11 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.research.*;
 import il.org.spartan.spartanizer.research.nanos.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
+import nano.ly.*;
 
 /** Method with one statement which matches the {@link ForEach} nano
  * @author Ori Marcovitch */

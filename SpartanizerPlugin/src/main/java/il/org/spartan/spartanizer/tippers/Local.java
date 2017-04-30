@@ -8,10 +8,10 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import nano.ly.*;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
@@ -21,8 +21,8 @@ public abstract class Local extends FragmentAmongFragments {
   protected VariableDeclarationStatement declaration;
 
   public Local() {
-    andAlso("Must be local variable", //
-        () -> not.nil(declaration = az.variableDeclarationStatement(parent)));
+    needs("Variable declation", //
+        () -> declaration = az.variableDeclarationStatement(parent));
   }
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment

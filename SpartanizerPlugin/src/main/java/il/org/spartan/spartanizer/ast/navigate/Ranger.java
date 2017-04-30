@@ -5,8 +5,8 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 
-import fluent.ly.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** A utility class for for dealing with {@link Range} in the context of JDT
  * types.

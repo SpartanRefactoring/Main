@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.plugin.Eclipse.*;
+
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.function.*;
@@ -11,8 +12,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.ui.*;
 
-import fluent.ly.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link NewGUIApplicator} as its applicator.

@@ -8,10 +8,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
+import nano.ly.*;
 
 /** A test class constructed by TDD for {@link dig.stringLiterals}
  * @author Yossi Gil

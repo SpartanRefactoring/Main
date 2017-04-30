@@ -15,7 +15,6 @@ import org.eclipse.swt.custom.*;
 import org.eclipse.text.edits.*;
 import org.eclipse.ui.texteditor.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
@@ -23,6 +22,7 @@ import il.org.spartan.spartanizer.research.Matcher.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** A tool for committing a single change to a {@link CompilationUnit}.
  * @author Ori Roth {@code ori.rothh@gmail.com}

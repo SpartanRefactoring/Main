@@ -6,13 +6,13 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.type.Primitive.*;
 import il.org.spartan.spartanizer.tipping.*;
+import nano.ly.*;
 
 /** Converts {@code ""+"foo"} to {@code "foo"} when x is of __ String
  * @author Stav Namir

@@ -5,9 +5,9 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
+import nano.ly.*;
 
 /** see Issue0 #717 for more details
  * @author Lidia Piatigorski

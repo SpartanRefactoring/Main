@@ -595,25 +595,16 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
  </key>
 </extension>
 
-<extension
-      id="product"
-      point="org.eclipse.core.runtime.products">
-   <product
-         application="il.org.spartan.spartanizer.application"
-         name="Spartan Refactoring Desktop Application">
-      <property
-            name="appName"
-            value="Spartan Refactoring Desktop Application">
-      </property>
-   </product>
-</extension>
-
-<extension-point id="il.org.spartan.widgetoperation" name="Widget Operation" schema="schema/il.org.spartan.widgetoperation.exsd"/>
+<extension-point id="il.org.spartan.widgetoperation" name="Widget Operation" schema="plugin/schema/il.org.spartan.widgetoperation.exsd"/>
 <extension point="il.org.spartan.widgetoperation">
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.RunOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPullOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPushOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitCommitOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.SpartanizationOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.ZoomerOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CmdOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CustomWidgetOperation" />
 </extension>
 
 </plugin>

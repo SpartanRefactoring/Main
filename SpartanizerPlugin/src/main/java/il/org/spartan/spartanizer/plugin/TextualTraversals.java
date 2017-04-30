@@ -4,9 +4,9 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.traversal.*;
+import nano.ly.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

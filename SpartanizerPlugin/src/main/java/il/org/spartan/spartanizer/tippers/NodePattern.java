@@ -8,11 +8,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** An abstract class that all the specific pattern classes inherits from.
  * Containing fluent API for constructing a logic tree of prerequisites.
@@ -21,8 +22,8 @@ import il.org.spartan.utils.*;
 public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
   private static final long serialVersionUID = 1;
   private Proposition prerequisite;
-  @Property protected Statement nextStatement;
-  @Property protected ASTNode parent;
+  protected Statement nextStatement;
+  protected ASTNode parent;
 
   public NodePattern() {
     this.prerequisite = Proposition.that("Extract parent and next statement", () -> {

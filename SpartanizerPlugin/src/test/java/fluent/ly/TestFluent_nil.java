@@ -4,6 +4,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
+import nano.ly.*;
 
 public class TestFluent_nil {
   static String helloString = "Hello";

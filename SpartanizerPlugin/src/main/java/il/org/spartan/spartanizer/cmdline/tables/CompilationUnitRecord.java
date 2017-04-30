@@ -4,11 +4,11 @@ import java.io.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}

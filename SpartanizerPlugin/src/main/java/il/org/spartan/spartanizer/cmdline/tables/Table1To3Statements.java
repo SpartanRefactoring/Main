@@ -7,7 +7,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -19,6 +18,7 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
+import nano.ly.*;
 
 /** Table representing coverage for methods with 1 to 3 statements
  * @deprecated

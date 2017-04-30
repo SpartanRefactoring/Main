@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.plugin.Listener.*;
 
-import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.Separator;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.utils.*;

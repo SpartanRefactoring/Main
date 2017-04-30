@@ -4,8 +4,8 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import nano.ly.*;
 
 /** A single parameter method declaration pattern
  * @author Raviv Rachmiel <tt>raviv.rachmiel@gmail.com</tt>
