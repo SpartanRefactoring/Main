@@ -28,7 +28,7 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
 
   @Override public Tip tip(final MethodDeclaration d) {
     assert d != null;
-    if (d.isConstructor() || iz.abstract¢(d))
+    if (d.isConstructor() || iz.abstract¢(d) || d.parameters().isEmpty())
       return null;
     final SingleVariableDeclaration parameter = the.onlyOneOf(parameters(d));
     if (!JohnDoe.property(parameter))

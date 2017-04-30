@@ -1,7 +1,9 @@
 package il.org.spartan.plugin.preferences.revision;
 
+import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
+import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -20,11 +22,13 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.*;
+import org.w3c.dom.*;
 
 import il.org.spartan.*;
-import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tippers.Names.*;
 import il.org.spartan.spartanizer.traversal.*;
@@ -63,8 +67,10 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     final RadioGroupFieldEditor singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3,
         parameterRenameOptions, getFieldEditorParent());
     singleParameterRadio.setPropertyChangeListener((final PropertyChangeEvent __) -> {
-      // add here the XML Update...
-      // changes.update(p, able);
+      final IProject[] projects = getAllSpartanizerProjects();
+      final Document doc = XMLSpartan.getXML(projects[0]);
+      doc.getDocumentElement().normalize();
+      notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
     });
     addField(singleParameterRadio);
     setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());
