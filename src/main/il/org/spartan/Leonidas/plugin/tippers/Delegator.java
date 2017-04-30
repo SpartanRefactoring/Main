@@ -72,6 +72,11 @@ public class Delegator extends JavadocMarkerNanoPattern {
     }
 
     @Override
+    public String name() {
+        return "Delegator";
+    }
+
+    @Override
     public Class<PsiMethod> getPsiClass() {
         return PsiMethod.class;
     }

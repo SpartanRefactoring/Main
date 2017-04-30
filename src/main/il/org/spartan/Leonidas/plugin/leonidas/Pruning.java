@@ -6,7 +6,6 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
@@ -33,26 +32,21 @@ public class Pruning {
 				return;
             PsiMethodCallExpression exp = az.methodCallExpression(e1.getInner());
 
-            Pruning.getStubName(e1).ifPresent(y -> {
+            Optional.ofNullable(GenericPsiElementStub.StubName.valueOfMethodCall(exp)).ifPresent(y -> {
                 EncapsulatingNode prev = Pruning.getRealParent(e1, y);
-                GenericPsi x = y.getGenericPsiType(exp, exp.getUserData(ID));
+                GenericPsi x = y.getGenericPsiType(prev.getInner(), exp.getUserData(ID));
                 if (x != null)
-					prev.replace(EncapsulatingNode.buildTreeFromPsi(x));
+                    prev.setInner(x);
             });
         });
         return n;
     }
 
-    public static Optional<GenericPsiElementStub.StubName> getStubName(EncapsulatingNode n) {
-        if (!iz.methodCallExpression(n.getInner()))
-            return Optional.empty();
-        PsiMethodCallExpression exp = az.methodCallExpression(n.getInner());
-
-        return Arrays.stream(GenericPsiElementStub.StubName.values())
-                .filter(x -> x.stubName().equals(exp.getMethodExpression().getText()))
-                .findFirst(); //assuming there is only one enum value in StubName that fits the stub kind.
-    }
-
+    /**
+     * @param n method call representing generic element.
+     * @param y the type of the generic method call.
+     * @return the highest generic parent.
+     */
     public static EncapsulatingNode getRealParent(EncapsulatingNode n, GenericPsiElementStub.StubName y) {
         EncapsulatingNode prev = n, next = n.getParent();
         for (; y.goUpwards(prev, next); next = next.getParent())

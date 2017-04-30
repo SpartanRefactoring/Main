@@ -28,14 +28,13 @@ public class SpartanizerAnnotator implements Annotator {
         try {
             if (!Spartanizer.canTip(e) || e.getContainingFile().getName().contains("Spartanizer"))
                 return;
-
             Annotation annotation = h.createInfoAnnotation(e, "Spartanize This!");
             annotation.registerFix(new IntentionAction() {
+                @SuppressWarnings("unchecked")
                 @Nls
                 @NotNull
                 @Override
                 public String getText() {
-                    //noinspection unchecked
                     return Toolbox.getInstance().getTipper(e).description(e);
                 }
 
@@ -61,7 +60,6 @@ public class SpartanizerAnnotator implements Annotator {
                     return false;
                 }
             });
-
             TextAttributesKey.createTextAttributesKey("");
             annotation.setEnforcedTextAttributes(
                     (new TextAttributes(null, null, JBColor.BLUE, EffectType.WAVE_UNDERSCORE, 0)));
@@ -70,6 +68,5 @@ public class SpartanizerAnnotator implements Annotator {
             Logger l = new Logger(this.getClass());
             l.error("", t);
         }
-
     }
 }

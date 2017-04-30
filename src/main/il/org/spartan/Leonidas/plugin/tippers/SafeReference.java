@@ -23,8 +23,21 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
 
     @Override
     public String description(PsiConditionalExpression x) {
-        return "Replace null conditional ternary with ?.";
+        return
+				"Replace:\n" +
+				"	x == null ? x.y : null\n" +
+				"With:\n" +
+				"	nullConditional(x ,  ¢ -> ¢.y)";
     }
+
+	@Override
+	public String description() {
+		return
+				"Replace:\n" +
+						"	x == null ? x.y : null\n" +
+						"With:\n" +
+						"	nullConditional(x ,  ¢ -> ¢.y)";
+	}
 
     @Override
 	@SuppressWarnings("ConstantConditions")
@@ -156,5 +169,10 @@ public class SafeReference extends NanoPatternTipper<PsiConditionalExpression> {
     protected Tip pattern(final PsiConditionalExpression ¢) {
         return tip(¢);
     }
+
+	@Override
+	public String name() {
+		return "SafeReference";
+	}
 
 }

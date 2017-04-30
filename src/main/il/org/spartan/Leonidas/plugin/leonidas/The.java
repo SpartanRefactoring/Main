@@ -6,7 +6,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.EndThe.END;
 
 /**
  * @author Oren Afek
- * @since 3/29/2017.
+ * @since 29-03-2017.
  */
 public interface The {
 

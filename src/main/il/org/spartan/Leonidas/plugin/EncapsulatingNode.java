@@ -1,8 +1,9 @@
 package il.org.spartan.Leonidas.plugin;
 
-
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,10 +13,11 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
+ * Encapsulating Psi elements so that non illegal transformation is done on the psi trees of Intellij.
  * @author michalcohen
  * @since 22-02-2017
  */
-public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode> {
+public class EncapsulatingNode implements Cloneable, VisitableNode, Iterable<EncapsulatingNode> {
     private PsiElement inner;
     private EncapsulatingNode parent;
     private List<EncapsulatingNode> children = new LinkedList<>();
@@ -30,19 +32,37 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         this.parent = parent;
     }
 
+    public EncapsulatingNode(EncapsulatingNode n) {
+        this(n, null);
+    }
+
+    private EncapsulatingNode(EncapsulatingNode n, EncapsulatingNode parent) {
+        this.parent = parent;
+        inner = n.inner.copy();
+        children = n.getChildren().stream().map(c -> new EncapsulatingNode(c, this)).collect(Collectors.toList());
+    }
+
+    /**
+     * @param e PsiElement
+     * @return an encapsulating node that hides e.
+     */
     public static EncapsulatingNode buildTreeFromPsi(PsiElement e) {
         return new EncapsulatingNode(e);
     }
 
-    public EncapsulatingNode replace(EncapsulatingNode newNode) {
+    /**
+     * @param newNode the concrete node that replaces the generic node.
+     * @param r       rewrite
+     * @return this, for fluent API.
+     */
+    public EncapsulatingNode replace(EncapsulatingNode newNode, PsiRewrite r) {
+        // this is bad, but better than using 'assert' like before because it can be tested
+        if (!iz.generic(inner))
+            throw new IllegalArgumentException();
         if (parent == null)
-			return this;
-		if (!iz.generic(newNode.inner)) {
-			inner.replace(newNode.inner);
-			inner = newNode.inner;
-		}
-		parent.children.replaceAll(e -> e != this ? e : newNode);
-		return this;
+            return this;
+        inner = r.replace(((GenericPsi) inner).getInner(), newNode.inner);
+        return this;
     }
 
     public List<EncapsulatingNode> getChildren() {
@@ -53,21 +73,30 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         return parent;
     }
 
+    @Override
     public void accept(EncapsulatingNodeVisitor v) {
-        children.forEach(child -> child.accept(v));
         v.visit(this);
+        children.forEach(child -> child.accept(v));
     }
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    public <T> T accept(EncapsulatingNodeValueVisitor v, BinaryOperator<T> accumulator) {
-        return children.stream().map(child -> child != null ? child.accept(v, accumulator) : null)
-                .reduce(accumulator).orElse(null);
+    @Override
+    public <T> T accept(EncapsulatingNodeValueVisitor<T> v, BinaryOperator<T> accumulator) {
+        return accumulator.apply(v.visit(this), children.stream().filter(child -> child != null).map(child -> child.accept(v, accumulator))
+                .reduce(accumulator).orElse(null));
     }
 
     public PsiElement getInner() {
         return inner;
     }
 
+    public void setInner(GenericPsi inner) {
+        this.inner = inner;
+        children = new LinkedList<>();
+    }
+
+    /**
+     * @return the amount of children that are not white space Psi elements.
+     */
     public int getAmountOfNoneWhiteSpaceChildren() {
         return children.stream().filter(child -> !iz.whiteSpace(child.getInner())).collect(Collectors.toList()).size();
     }
@@ -80,9 +109,8 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         return inner.getText();
     }
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
     public EncapsulatingNode clone() {
-        return buildTreeFromPsi(inner);
+        return new EncapsulatingNode(this);
     }
 
     @Override
@@ -95,6 +123,9 @@ public class EncapsulatingNode implements Cloneable, Iterable<EncapsulatingNode>
         children.stream().forEach(action);
     }
 
+    /**
+     * Iterator for iterating over the tree without considering white spaces.
+     */
     public class Iterator implements java.util.Iterator<EncapsulatingNode> {
         int location;
         List<EncapsulatingNode> noSpaceChildren;

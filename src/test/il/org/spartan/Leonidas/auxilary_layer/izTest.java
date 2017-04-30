@@ -10,12 +10,16 @@ import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
-
 /**
  * @author michal cohen, Amir Sagiv
- * @since 12/22/2016.
+ * @since 22-12-2016.
  */
 public class izTest extends PsiTypeHelper {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
+
     public void testNull$() throws Exception {
         assert iz.null$(createTestNullExpression());
     }
@@ -161,11 +165,6 @@ public class izTest extends PsiTypeHelper {
         assert iz.theSameType(y, createTestStatementFromString("apple(x - 4)"));
     }
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
     public void testBlock() throws Exception {
         PsiCodeBlock b = createTestCodeBlockFromString("{ int x = 5; }");
         assert iz.block(b);
@@ -287,7 +286,6 @@ public class izTest extends PsiTypeHelper {
         assert !iz.type(createTestStatementFromString("int x;"));
 
     }
-
 
     public void testExpressionStatement() throws Exception {
         PsiStatement s1 = createTestStatementFromString("2+3");
@@ -612,5 +610,4 @@ public class izTest extends PsiTypeHelper {
         assert iz.conforms(e3, gs);
         assert !iz.conforms(gs, e3);
     }
-
 }

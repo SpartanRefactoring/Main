@@ -29,24 +29,45 @@
         <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>
     </extensions>
 
+    <application-components>
+        <component>
+            <implementation-class>
+                il.org.spartan.Leonidas.plugin.Toolbox
+            </implementation-class>
+        </component>
+    </application-components>
+
     <actions>
+        <group  id="LeonidasGroup" text="Leonidas" description="Group For Leonidas Services" >
+            <add-to-group group-id="MainMenu" relative-to-action="RefactoringMenu" anchor="after"/>
+        </group>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerEnableAction" id="myPlugin2"
                 text="Disable Spartanization">
-            <add-to-group group-id="RefactoringMenu" anchor="last"/>
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.SpartanizerAction" id="myPlugin3"
                 text="Spartanize">
-            <add-to-group group-id="RefactoringMenu" anchor="last"/>
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
         <action class="il.org.spartan.Leonidas.plugin.GUI.TipperCreatorOld.TipperCreatorAction" id="myPlugin4"
                 text="Create new tipper">
             <keyboard-shortcut first-keystroke="ctrl m" keymap="$default"/>
-            <add-to-group group-id="RefactoringMenu" anchor="last"/>
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
-        <action class="il.org.spartan.Leonidas.plugin.GUI.PlaygroundSwing.PlaygroungSwingAction"
+        <action class="il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.PlaygroungControllerAction"
                 id="myPlugin5"
                 text="Playground">
-            <add-to-group group-id="RefactoringMenu" anchor="last"/>
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+        <action class="il.org.spartan.Leonidas.plugin.GUI.ToolBoxControllerSwing.ToolBoxControllerAction"
+                id="myPlugin6"
+                text="ToolBox Controller">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+        <action class="il.org.spartan.Leonidas.plugin.GUI.About.AboutAction"
+                id="myPlugin7"
+                text="About">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
     </actions>
 

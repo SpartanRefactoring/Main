@@ -11,14 +11,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
+ * Generalizes any kind of expression. For example: "x >= 4", "id--", "5 + 3".
  * @author michalcohen
  * @since 11-01-2017
  */
 public class GenericPsiExpression extends GenericPsi {
-    PsiType t;
+    private PsiType t;
 
     public GenericPsiExpression(PsiType t, PsiElement e) {
-        super(e, "generic expression");
+        super(e, "GenericExpression");
         this.t = t;
     }
 
@@ -46,9 +47,11 @@ public class GenericPsiExpression extends GenericPsi {
         return getElementType();
     }
 
-    /*@Override
+    @Override
     public GenericPsiExpression copy() {
-        return new GenericPsiExpression(t, inner.copy());
+        PsiElement psiCopy = inner.copy();
+        psiCopy.putUserData(KeyDescriptionParameters.ID, inner.getUserData(KeyDescriptionParameters.ID));
+        return new GenericPsiExpression(t, psiCopy);
     }
-    */
+
 }

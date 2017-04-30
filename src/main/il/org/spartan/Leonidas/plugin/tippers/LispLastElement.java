@@ -60,4 +60,9 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
     public Class<PsiMethodCallExpression> getPsiClass() {
         return PsiMethodCallExpression.class;
     }
+
+    @Override
+    public String name() {
+        return "LispLastElement";
+    }
 }

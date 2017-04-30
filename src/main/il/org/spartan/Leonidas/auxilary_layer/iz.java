@@ -230,6 +230,7 @@ public enum iz {
     }
 
     public static boolean generic(PsiElement e) {
+        //return iz.methodCallExpression(e) && Arrays.stream(StubName.values()).anyMatch(s ->  az.methodCallExpression(e).getMethodExpression().getText().endsWith(s.stubName()));
         return typeCheck(GenericPsi.class, e);
     }
 

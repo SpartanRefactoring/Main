@@ -13,9 +13,7 @@ import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * @author Roey Maor
- * @author Oren Afek
- * @author Michal Cohen
+ * @author Roey Maor, Oren Afek, michalcohen
  * @since 18-11-2016
  */
 public class SpartanizerAction extends AnAction {
@@ -25,14 +23,12 @@ public class SpartanizerAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         PsiClass psiClass = getPsiClassFromContext(e);
-
         if (psiClass == null)
 			logger.warn("Spartanization action retrieved null PSI class");
 		else {
 			logger.info("Spartanization action on\nPSI class '" + psiClass.getQualifiedName() + "'");
 			Spartanizer.spartanizeFileOnePass(psiClass.getContainingFile());
 		}
-
     }
 
     /**

@@ -64,11 +64,6 @@ public class PreferencesResources {
             return find(¢.getClass());
         }
 
-        /*
-            static IPreferenceStore store() {
-                return Plugin.il.org.spartan.Leonidas.plugin().getPreferenceStore();
-            }
-        */
         private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
             for (final TipperGroup $ : TipperGroup.values())
                 if ($.clazz.isAssignableFrom(¢))
@@ -76,16 +71,10 @@ public class PreferencesResources {
             return null;
         }
 
-        /*  deals with eclipse il.org.spartan.Leonidas.plugin preferences:
-            public boolean isEnabled() {
-                return Plugin.il.org.spartan.Leonidas.plugin() == null || store().getBoolean(id);
-            }
-        */
         private Object getLabel(final Class<? extends TipperCategory> k) {
             try {
                 return k.getField("label").get(null);
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException ¢) {
-                //monitor.logEvaluationError(this, ¢);
                 return null;
             }
         }

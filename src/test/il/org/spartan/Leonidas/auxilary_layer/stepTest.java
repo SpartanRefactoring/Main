@@ -3,11 +3,9 @@ package il.org.spartan.Leonidas.auxilary_layer;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import org.junit.Assert;
 
-// TODO @OrenAfek @RoeiRaz refactor this, stepTest shouldn't extend PsiTypeHelper because it isn't a tipper..
-
 /**
  * @author RoeiRaz
- * @since 2017
+ * @since 10-01-2017
  */
 public class stepTest extends PsiTypeHelper {
     public void testDocCommentA() {

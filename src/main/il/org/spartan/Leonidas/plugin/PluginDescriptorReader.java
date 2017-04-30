@@ -5,7 +5,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
@@ -18,7 +17,7 @@ import java.io.InputStreamReader;
  * Allows to read various values from it later.
  *
  * @author RoeiRaz
- * @since 31/3/17
+ * @since 31-03-17
  */
 public class PluginDescriptorReader {
 
@@ -42,13 +41,10 @@ public class PluginDescriptorReader {
     }
 
     public static String getPluginId() {
-
         NodeList nodeList = document.getElementsByTagName(ID_ELEMENT_NAME);
-        // couldn't figure out how to make a stream out of NodeList. (without making the code unreadable)
-        // if you stumble upon this and have an idea, please try!
         for (int i = 0; i < nodeList.getLength(); ++i)
 			if (ROOT_ELEMENT_NAME.equals(nodeList.item(i).getParentNode().getNodeName()))
 				return nodeList.item(i).getTextContent();
-        throw new RuntimeException("id element wasn't found in plugin.xml");
+        throw new RuntimeException("ID element wasn't found in plugin.xml");
     }
 }

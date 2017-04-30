@@ -8,6 +8,5 @@ package il.org.spartan.Leonidas.plugin.leonidas;
  */
 public enum PsiDescriptionParameters {
     NO_OF_STATEMENTS,
-    ID,
-    GENERIC_NAME
+    ID
 }

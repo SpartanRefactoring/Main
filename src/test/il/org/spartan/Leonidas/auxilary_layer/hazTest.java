@@ -6,7 +6,7 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
 
 /**
  * @author  Amir Sagiv
- * @since 17/01/2017.
+ * @since 17-01-2017.
  */
 public class hazTest extends PsiTypeHelper {
 
@@ -49,11 +49,4 @@ public class hazTest extends PsiTypeHelper {
         assert haz.notEqualsOperator(e2);
         assert !haz.notEqualsOperator((PsiBinaryExpression) createTestExpression("x > y"));
     }
-
-//    public void testHazSyntaxErrors() throws Exception{
-//        PsiBinaryExpression e1 = (PsiBinaryExpression) createTestExpression("x == y");
-//        e1.deleteChildRange(e1.getLOperand(),e1.getLOperand());
-//        assertTrue(haz.syntaxErrors(e1));
-//    }
-
 }

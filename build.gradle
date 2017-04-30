@@ -52,6 +52,7 @@ task copyTippers(type: Copy) {
 }
 
 // Transfer the tippers sources before handling the resources.
+//noinspection GroovyAssignabilityCheck
 processResources.dependsOn copyTippers
 
 // Basic configuration of org.jetbrains.intellij plugin
@@ -69,6 +70,7 @@ jacocoTestReport {
     }
 }
 
+//noinspection GroovyAssignabilityCheck
 check.dependsOn jacocoTestReport
 
 repositories { jcenter() }

@@ -3,6 +3,10 @@ package il.org.spartan.Leonidas.auxilary_layer;
 import com.intellij.psi.*;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
+/**
+ * @author michalcohen
+ * @since 12-01-2017
+ */
 public class typeTest extends PsiTypeHelper {
     public void testCallExpression() {
         assertEquals(type.of(createTestNewExpression("Object", "")), PsiCallExpression.class);
@@ -10,7 +14,7 @@ public class typeTest extends PsiTypeHelper {
 
     public void testMethodReferenceExpression() {
         assertEquals(type.of(createTestMethodReferenceEpression("Object", "toString")),
-				PsiMethodReferenceExpression.class);
+                PsiMethodReferenceExpression.class);
     }
 
     public void testMethodCallExpression() {
@@ -31,7 +35,7 @@ public class typeTest extends PsiTypeHelper {
 
     public void testForeachStatement() {
         assertEquals(type.of(createTestForeachStatementFromString("for(Object x : list) { x.toString(); }")),
-				PsiForeachStatement.class);
+                PsiForeachStatement.class);
     }
 
     public void testLambdaExpression() {

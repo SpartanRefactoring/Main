@@ -32,14 +32,21 @@ public class PsiRewrite {
         return this;
     }
 
-    public void replace(PsiElement element1, PsiElement element2) {
+    /**
+     * @param element1 the tree to replace.
+     * @param element2 the replacing tree.
+     * @return the new tree that was inserted to the path of the tree that was replaced.
+     */
+    public PsiElement replace(PsiElement element1, PsiElement element2) {
+        Wrapper<PsiElement> newElement = new Wrapper<>(null);
         new WriteCommandAction.Simple(project, psiFile) {
             @Override
             protected void run() throws Throwable {
-                element1.replace(element2);
+                newElement.set(element1.replace(element2));
             }
 
         }.execute();
+        return newElement.get();
     }
 
     public PsiFileFactory getFileFactory() {

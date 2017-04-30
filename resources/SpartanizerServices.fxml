@@ -21,7 +21,7 @@
                                  <children>
                                     <ScrollPane layoutX="20.0" layoutY="28.0" prefHeight="359.0" prefWidth="234.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <content>
-                                          <VBox fx:id="tipperList" prefHeight="200.0" prefWidth="100.0" />
+                                          <VBox fx:id="tipperList" prefHeight="200.0" prefWidth="500.0" />
                                        </content>
                                     </ScrollPane>
                                  </children>

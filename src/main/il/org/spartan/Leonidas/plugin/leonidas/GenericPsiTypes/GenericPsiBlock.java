@@ -8,13 +8,14 @@ import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import org.jetbrains.annotations.NotNull;
 
 /**
+ * Generalizes code block as these inside a method of an if statement - Anything enclosed by "{" and "}".
  * @author Roey Maor, Amir sagiv
  * @since 20-01-2017
  */
 public class GenericPsiBlock extends GenericPsi{
 
     public GenericPsiBlock(PsiElement element) {
-        super(element, "generic block");
+        super(element, "GenericBlock");
     }
 
     @Override
@@ -30,12 +31,15 @@ public class GenericPsiBlock extends GenericPsi{
 
     @Override
     public String toString() {
-        return "Generic anyBlock" + inner.getUserData(KeyDescriptionParameters.ID);
+        return "GenericBlock" + inner.getUserData(KeyDescriptionParameters.ID);
     }
 
-    /*@Override
+    @Override
     public GenericPsiBlock copy() {
-        return new GenericPsiBlock(inner.copy());
+        PsiElement psiCopy = inner.copy();
+        psiCopy.putUserData(KeyDescriptionParameters.ID, inner.getUserData(KeyDescriptionParameters.ID));
+        psiCopy.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, inner.getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS));
+        return new GenericPsiBlock(psiCopy);
     }
-    */
+
 }

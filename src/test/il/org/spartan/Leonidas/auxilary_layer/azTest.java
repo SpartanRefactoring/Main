@@ -8,13 +8,9 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
 
 /**
  * @author Amir Sagiv
- * @since 13/01/2017.
+ * @since 13-01-2017.
  */
 public class azTest extends PsiTypeHelper {
-
-    public static boolean typeCheck(Class<? extends PsiElement> type, PsiElement e) {
-        return e != null && type.isAssignableFrom(e.getClass());
-    }
 
     public void testAzStatement() throws Exception{
         PsiElement e1 = createTestStatementFromString("int x");

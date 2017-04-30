@@ -1,5 +1,7 @@
 package il.org.spartan.Leonidas.plugin;
 
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -9,35 +11,45 @@ import il.org.spartan.Leonidas.auxilary_layer.type;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
+import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 /**
- * @author Oren Afek
- * @author Michal Cohen
+ * @author Oren Afek, michalcohen
  * @since 01-12-2016
  */
-public enum Toolbox {
-    INSTANCE;
+public class Toolbox implements ApplicationComponent {
 
-    static boolean wasInitialize;
+    private static final Logger logger = new Logger(Toolbox.class);
     private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new HashMap<>();
-    Set<VirtualFile> excludedFiles = new HashSet<>();
-    Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
-    boolean tmp;
+    private final Set<VirtualFile> excludedFiles = new HashSet<>();
+    private final Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
+    public boolean playground = false;
 
     public static Toolbox getInstance() {
-        if (!wasInitialize)
-			initializeInstance();
-        return INSTANCE;
+        return (Toolbox) ApplicationManager.getApplication().getComponent(Toolbox.auxGetComponentName());
     }
 
-    private static void initializeInstance() {
-        wasInitialize = true;
-        INSTANCE //
+    private static String auxGetComponentName() {
+        return Toolbox.class.getSimpleName();
+    }
+
+    public List<Tipper> getAllTippers() {
+        List<Tipper> list = new ArrayList<>();
+        this.tipperMap.values().forEach(element -> {
+            element.forEach(tipper -> {
+                list.add(tipper);
+            });
+        });
+        return list;
+    }
+
+    private void initializeInstance() {
+        this
                 .add(new SafeReference())
                 .add(new Unless())
                 .add(new LambdaExpressionRemoveRedundantCurlyBraces()) //
@@ -45,35 +57,20 @@ public enum Toolbox {
                 .add(new DefaultsTo())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new Delegator());
-        createLeonidasTipperBuilders2();
+        createLeonidasTippers();
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private static void createLeonidasTipperBuilders() {
-        Arrays.asList(new File(
-				Utils.fixSpacesProblemOnPath(Toolbox.class.getResource("/spartanizer/LeonidasTippers").getPath()))
-						.listFiles())
-				.forEach(f -> INSTANCE.add(new LeonidasTipper(f)));
-    }
-
-    //TODO get Leonidas resources
-    private static void createLeonidasTipperBuilders2() {
-        String x = "";
-        x = Utils.pathToClass(LeonidasTipperDefinition.class);
+    private void createLeonidasTippers() {
         (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class).stream()
-				.forEach(c -> {
-					try {
-						INSTANCE.add(new LeonidasTipper2(c.getSimpleName(), Utils.getSourceCode(c)));
-					} catch (IOException e) {
-						System.out.print("failed to read file: " + c.getName());
-						e.printStackTrace();
-					}
-				});
-    }
-
-    //stub method
-    public static List<LeonidasTipper> getAllTippers() {
-        return new ArrayList<>();
+                .forEach(c -> {
+                    try {
+                        String source = Utils.getSourceCode(c);
+                        if (!source.equals(""))
+                            add(new LeonidasTipper(c.getSimpleName(), source));
+                    } catch (IOException e) {
+                        logger.info("Failed to read file: " + c.getName() + "\n" + Arrays.stream(e.getStackTrace()).map(x -> x.toString()).reduce((e1, e2) -> e1 + "\n" + e2));
+                    }
+                });
     }
 
     private Toolbox add(Tipper<? extends PsiElement> t) {
@@ -87,13 +84,14 @@ public enum Toolbox {
         return operableTypes.stream().anyMatch(t -> t.isAssignableFrom(e.getClass()));
     }
 
+    @SuppressWarnings("unchecked")
     public Toolbox executeAllTippers(PsiElement e) {
-		if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
-			return this;
-		tipperMap.get(type.of(e)).stream().filter(tipper -> tipper.canTip(e)).findFirst()
-				.ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
-		return this;
-	}
+        if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
+            return this;
+        tipperMap.get(type.of(e)).stream().filter(tipper -> tipper.canTip(e)).findFirst()
+                .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
+        return this;
+    }
 
     /**
      * Can element by spartanized
@@ -110,7 +108,7 @@ public enum Toolbox {
         try {
             if (!checkExcluded(e.getContainingFile()) && canTipType(type.of(e)) &&
                     tipperMap.get(type.of(e)).stream().anyMatch(tip -> tip.canTip(e)))
-				return tipperMap.get(type.of(e)).stream().filter(tip -> tip.canTip(e)).findFirst().get();
+                return tipperMap.get(type.of(e)).stream().filter(tip -> tip.canTip(e)).findFirst().get();
         } catch (Exception ignore) {
         }
         return new NoTip<>();
@@ -130,5 +128,25 @@ public enum Toolbox {
 
     private boolean canTipType(Class<? extends PsiElement> c) {
         return tipperMap.keySet().stream().anyMatch(x -> x.equals(c));
+    }
+
+    /**
+     * Called on INTELLIJ initialization
+     */
+    @Override
+    public void initComponent() {
+        initializeInstance();
+        logger.info("Initialized toolbox component");
+    }
+
+    @Override
+    public void disposeComponent() {
+        logger.info("Disposed toolbox component");
+    }
+
+    @NotNull
+    @Override
+    public String getComponentName() {
+        return auxGetComponentName();
     }
 }

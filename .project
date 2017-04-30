@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Leonidas-FTW</name>
-	<comment>Project Leonidas-FTW created by Buildship.</comment>
+	<name>IntelliJ-Spartanizer</name>
+	<comment>Project IntelliJ-Spartanizer created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -15,15 +15,9 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-		<buildCommand>
-			<name>spartan.tipper</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>il.org.spartan.nature</nature>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
 </projectDescription>

@@ -13,13 +13,44 @@ import java.util.stream.Stream;
  * @since 17/01/17
  */
 public class StubNameTest extends PsiTypeHelper {
-
     private final Stream<Pair<StubName, PsiMethodCallExpression>> stubs;
 
     public StubNameTest() {
         stubs = Arrays.stream(GenericPsiElementStub.StubName.values())
                 .map(stub -> new Pair<>(stub, stub.stubName()))
                 .map(p -> new Pair<>(p.first, createTestMethodCallExpression(p.second)));
+
+    }
+
+    public void testValueOfMethodCall() throws Exception {
+
+    }
+
+    public void testValueOfStringExpression() throws Exception {
+
+    }
+
+    public void testGetGeneralTye() throws Exception {
+
+    }
+
+    public void testStubName() throws Exception {
+
+    }
+
+    public void testStubMethodCallExpression() throws Exception {
+
+    }
+
+    public void testStubMethodCallExpressionStatement() throws Exception {
+
+    }
+
+    public void testGetGenericPsiType() throws Exception {
+
+    }
+
+    public void testGoUpwards() throws Exception {
 
     }
 

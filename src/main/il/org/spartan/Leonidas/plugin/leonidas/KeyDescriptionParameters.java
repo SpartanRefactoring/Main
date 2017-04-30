@@ -5,7 +5,7 @@ import com.intellij.openapi.util.Key;
 /**
  * This class helps each place in the code see the same Key object for a specific
  * Key type.
- * @author Michal Cohen
+ * @author michalcohen
  * @since 07-01-2017
  */
 public class KeyDescriptionParameters {
@@ -19,5 +19,4 @@ public class KeyDescriptionParameters {
      * ID of a generic element.
      */
     public static Key<Integer> ID = new Key<>(PsiDescriptionParameters.ID.name());
-    public static Key<String> GENERIC_NAME = new Key<>(PsiDescriptionParameters.GENERIC_NAME.name());
 }

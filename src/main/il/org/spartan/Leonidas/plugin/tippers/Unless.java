@@ -53,4 +53,9 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
         return tip(¢);
     }
 
+    @Override
+    public String name() {
+        return "Unless";
+    }
+
 }

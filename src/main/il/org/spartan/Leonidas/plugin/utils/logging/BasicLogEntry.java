@@ -12,7 +12,7 @@ import java.util.Date;
  * @author RoeiRaz
  * @since 31-3-17
  */
-public class BasicLogEntry {
+class BasicLogEntry {
 
 
     private static final String SPACE = "  ";
