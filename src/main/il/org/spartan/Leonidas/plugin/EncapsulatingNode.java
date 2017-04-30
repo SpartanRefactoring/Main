@@ -80,9 +80,9 @@ public class EncapsulatingNode implements Cloneable, VisitableNode, Iterable<Enc
     }
 
     @Override
-    public <T> T accept(EncapsulatingNodeValueVisitor v, BinaryOperator<T> accumulator) {
-        return children.stream().map(child -> child != null ? child.accept(v, accumulator) : null)
-                .reduce(accumulator).orElse(null);
+    public <T> T accept(EncapsulatingNodeValueVisitor<T> v, BinaryOperator<T> accumulator) {
+        return accumulator.apply(v.visit(this), children.stream().filter(child -> child != null).map(child -> child.accept(v, accumulator))
+                .reduce(accumulator).orElse(null));
     }
 
     public PsiElement getInner() {

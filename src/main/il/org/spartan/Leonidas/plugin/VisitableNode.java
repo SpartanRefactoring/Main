@@ -23,5 +23,5 @@ public interface VisitableNode {
      * @param <T>         - the result type
      * @return the result driven from applying v on every node.
      */
-    <T> T accept(EncapsulatingNodeValueVisitor v, BinaryOperator<T> accumulator);
+    <T> T accept(EncapsulatingNodeValueVisitor<T> v, BinaryOperator<T> accumulator);
 }
