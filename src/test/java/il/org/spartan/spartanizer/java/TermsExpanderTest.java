@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.java;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 
 @SuppressWarnings("static-method")
 public final class TermsExpanderTest {

@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.testing;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 /** TODO Yossi Gil please add a description

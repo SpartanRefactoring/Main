@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.utils.*;
 
 /** Test case for class {@link Int}

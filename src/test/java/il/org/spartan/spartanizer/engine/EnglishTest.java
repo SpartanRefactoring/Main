@@ -1,15 +1,14 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import java.text.*;
 import java.util.stream.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Test class for {@link English}
  * @author yonzarecki

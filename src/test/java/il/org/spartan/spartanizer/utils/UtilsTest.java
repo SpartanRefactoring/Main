@@ -1,11 +1,11 @@
 package il.org.spartan.spartanizer.utils;
 
+import static fluent.ly.azzert.*;
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class UtilsTest {

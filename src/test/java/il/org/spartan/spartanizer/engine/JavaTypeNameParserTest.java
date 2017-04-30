@@ -1,10 +1,10 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
 @SuppressWarnings({ "javadoc", "static-method" })

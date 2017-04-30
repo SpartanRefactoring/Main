@@ -1,17 +1,16 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.research.util.*;
-import nano.ly.*;
 
 /** Tests of {@link measure.expressions}
  * @author RoeiRaz

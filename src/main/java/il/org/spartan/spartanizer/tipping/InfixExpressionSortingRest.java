@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.tipping;
 
-import static il.org.spartan.lisp.*;
+import static fluent.ly.lisp.*;
 
 import java.util.*;
 

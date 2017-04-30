@@ -15,9 +15,8 @@ import org.eclipse.ui.*;
 import org.eclipse.ui.views.markers.*;
 
 import an.*;
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import nano.ly.*;
 
 /** Describes a selection, containing selected compilation unit(s) and text
  * selection

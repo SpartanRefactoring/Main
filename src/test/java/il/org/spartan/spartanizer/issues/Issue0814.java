@@ -5,9 +5,9 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.tippers.*;
-import nano.ly.*;
 
 /** see issue #814 for more details
  * @author yaelAmitay

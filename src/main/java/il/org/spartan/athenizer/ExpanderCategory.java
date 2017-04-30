@@ -4,8 +4,8 @@ import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.*;
-import nano.ly.*;
 
 /** Classification of Expanders
  * @author Raviv Rachmiel

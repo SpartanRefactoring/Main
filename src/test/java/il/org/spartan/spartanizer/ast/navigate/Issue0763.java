@@ -1,14 +1,13 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import nano.ly.*;
 
 /** Test for analyze.type
  * @author Ori Marcovitch

@@ -3,10 +3,9 @@ package il.org.spartan.spartanizer.utils;
 import java.io.*;
 import java.util.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.plugin.*;
-import nano.ly.*;
 
 /** An abstract representation of our test suite, which is represented in
  * directory tree.

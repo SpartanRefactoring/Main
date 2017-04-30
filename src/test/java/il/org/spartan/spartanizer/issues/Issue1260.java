@@ -7,9 +7,8 @@ import java.util.stream.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Tests for reducers
  * @author oran1248

@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 
 /** A class to search in the ancestry line of a given node.
  * @author Yossi Gil

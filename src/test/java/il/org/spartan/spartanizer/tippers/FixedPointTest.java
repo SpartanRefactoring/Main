@@ -1,12 +1,13 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static fluent.ly.azzert.*;
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.utils.*;

@@ -7,11 +7,10 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
-import nano.ly.*;
 
 /** Generic applicator
  * @author Matteo Orru'

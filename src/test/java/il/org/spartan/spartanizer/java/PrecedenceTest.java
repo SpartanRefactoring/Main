@@ -1,12 +1,12 @@
 package il.org.spartan.spartanizer.java;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil

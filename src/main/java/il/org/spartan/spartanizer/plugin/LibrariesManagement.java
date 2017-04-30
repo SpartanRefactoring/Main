@@ -7,8 +7,7 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.internal.core.*;
 
-import il.org.spartan.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 /** A utility class to manage libraries at the users side, in front of the
  * ecilpse machine and specific code. Current implementation makes use of the

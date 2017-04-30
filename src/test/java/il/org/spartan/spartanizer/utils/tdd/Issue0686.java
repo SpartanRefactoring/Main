@@ -1,15 +1,14 @@
 package il.org.spartan.spartanizer.utils.tdd;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import java.util.*;
 
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import nano.ly.*;
 
 /** Unit tests for the GitHub issue thus numbered
  * @author Alexander Kaplan

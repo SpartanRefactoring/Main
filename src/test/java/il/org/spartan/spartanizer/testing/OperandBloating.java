@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.testing;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 
 import java.util.*;
@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.ast.factory.*;
@@ -18,7 +19,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.*;
-import nano.ly.*;
 
 public class OperandBloating extends TestOperand {
   ASTNode ast;
