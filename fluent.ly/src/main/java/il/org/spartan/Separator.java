@@ -3,7 +3,7 @@ package il.org.spartan;
 
 import org.jetbrains.annotations.NotNull;
 
-import fluent.ly.as;
+import fluent.ly.*;
 
 /** A class representing a separator string, which can be used for separating
  * elements of a sequence while printing it, without special case treatment of

@@ -236,20 +236,11 @@ public abstract class ___ {
       nonnegative(¢);
   }
 
-  /** A possibly non-returning method to be used for checking doubles which must
-   * be nonnegative.
-   * @param ds a array which must be nonnegative
-   * @throws NonNegative in case <code>n</code> was negative */
-  public static void nonnegative(final double[] ds) throws NonNegative {
-    for (final double ¢ : ds)
-      nonnegative(¢);
-  }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
    * @param ¢ a value which must be nonnegative
    * @throws NonNegative in case <code>n</code> was negative */
-  public static void nonnegative(final int ¢) throws NonNegative {
+  public static void nonnegativ(final int ¢) throws NonNegative {
     nonnegative(¢, "");
   }
 
@@ -257,7 +248,7 @@ public abstract class ___ {
    * must be nonnegative.
    * @param ¢ a value which must be nonnegative
    * @throws NonNegative in case <code>n</code> was negative */
-  public static void nonnegative(final int ¢) throws NonNegative {
+  public static void (final int ¢) throws NonNegative {
     nonnegative(¢, "");
   }
 
@@ -867,11 +858,7 @@ public abstract class ___ {
     // empty
   }
 
-  @SuppressWarnings("unused") public static void unused(final long __, final Object... ____) {
-    // empty
-  }
-
-  @SuppressWarnings("unused") public static void unused(final long __, final Object... ____) {
+  @SuppressWarnings("unused") public static void unuse(final long __, final Object... ____) {
     // empty
   }
 
