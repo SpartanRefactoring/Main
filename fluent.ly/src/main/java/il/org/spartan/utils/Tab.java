@@ -1,14 +1,14 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.azzert.*;
-import static il.org.spartan.utils.___.*;
+import static fluent.ly.___.require;
+import static fluent.ly.azzert.is;
 
-import org.jetbrains.annotations.*;
-import org.junit.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
-import il.org.spartan.*;
-import il.org.spartan.streotypes.*;
+import fluent.ly.___;
+import fluent.ly.azzert;
 
 /** Prefix text with varying indentation level. Class can be used for an
  * indented printout of a hierarchical tree data structure, e.g.,:
@@ -29,7 +29,7 @@ import il.org.spartan.streotypes.*;
  *
  * @author Adrian Kuhn
  * @since August 4th, 2008 */
-@Instantiable public class Tab {
+public class Tab {
   /** What to add before each indented line of text? */
   private String indentation = "";
   /** Indentation is increased by steps of this {@link String}. */

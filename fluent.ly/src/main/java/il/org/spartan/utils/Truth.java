@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.function.*;
+import java.util.function.BooleanSupplier;
 
 public enum Truth {
   T("true"), //

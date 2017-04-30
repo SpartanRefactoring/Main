@@ -1,10 +1,9 @@
 package fluent.ly;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
-import org.jetbrains.annotations.*;
-
-import il.org.spartan.streotypes.*;
+import org.jetbrains.annotations.NotNull;
 
 /** A utility class, offering a collection of function to unbox arrays and
  * collection of the boxed versions of the primitive types. The input of each
@@ -26,7 +25,7 @@ import il.org.spartan.streotypes.*;
  * function such as {@link Long#longValue()}
  * @author Yossi Gil.
  * @see box */
-@Utility public enum unbox {
+public enum unbox {
   // A namespace: no values to this <code><b>enum</b></code>
   ;
   @NotNull public static double[] it(@NotNull final Double[] ¢) {

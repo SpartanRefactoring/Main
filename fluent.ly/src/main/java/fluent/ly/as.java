@@ -1,7 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import static il.org.spartan.azzert.is;
+import static fluent.ly.azzert.is;
 import static org.junit.Assert.assertArrayEquals;
 
 import java.util.ArrayList;
@@ -15,9 +15,6 @@ import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
 
 import il.org.spartan.Utils;
-import il.org.spartan.azzert;
-import il.org.spartan.iterables.PureIterable;
-import il.org.spartan.iterables.PureIterator;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.
@@ -118,37 +115,11 @@ public enum as {
   }
 
   /** Creates an iterable for an array of objects
-   * @param < T > an arbitrary type
-   * @param ts what to iterate on
-   * @return an {@link Iterable} over the parameter */
-  @SafeVarargs @NotNull public static <@Nullable T> PureIterable.Sized<T> iterable(@NotNull final T... ts) {
-    return new PureIterable.Sized<T>() {
-      @Override @NotNull public PureIterator<T> iterator() {
-        return new PureIterator<T>() {
-          int current;
-
-          @Override public boolean hasNext() {
-            return current < ts.length;
-          }
-
-          @Override public T next() {
-            return ts[current++];
-          }
-        };
-      }
-
-      @Override public int size() {
-        return ts.length;
-      }
-    };
-  }
-
-  /** Creates an iterable for an array of objects
    * @param <T> an arbitrary type
    * @param ¢ what to iterate on
    * @return an {@link Iterable} over the parameter */
-  @SafeVarargs public static <T> PureIterator<T> iterator(final T... ¢) {
-    return iterable(¢).iterator();
+  @SafeVarargs public static <T> Iterator<T> iterator(final T... ¢) {
+    return as.list(¢).iterator();
   }
 
   /** Converts a list of <code><b>int</b></code>s into a {@link List} of
@@ -157,7 +128,7 @@ public enum as {
    * @return a {@link List} of of all <code><b>int</b></code>s in the
    *         parameter */
   public static List<Integer> list(@NotNull final int... ¢) {
-    return as.list(fluent.ly.box.it(¢));
+    return as.list(box.it(¢));
   }
 
   /** Converts an {@link Iterable} of a given type into a {@link List} of values

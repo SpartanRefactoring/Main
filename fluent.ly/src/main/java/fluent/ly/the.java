@@ -1,13 +1,15 @@
 package fluent.ly;
 
-import java.util.*;
+import static fluent.ly.___.*;
+import static fluent.ly.idiomatic.eval;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
-
-import il.org.spartan.*;
-import il.org.spartan.iterables.PureIterable;
-import nano.ly.range;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -117,7 +119,53 @@ public interface the {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
 
-  @NotNull static boolean[] rest(@SuppressWarnings("unused") @NotNull PureIterable.Sized<@Nullable String> s) {
-    return null;
+  /** Computes the maximum of two or more integers.
+   * @param a some integer
+   * @param is additional integers
+   * @return largest of the parameters */
+  static int max(final int a, @NotNull final int... is) {
+    int $ = a;
+    for (final int ¢ : is)
+      $ = Math.max($, ¢);
+    return $;
+  }
+
+  /** Computes the minimum of two or more integers
+   * @param a some integer
+   * @param is additional
+   * @return smallest of the parameters */
+  static int min(final int a, @NotNull final int... is) {
+    int $ = a;
+    for (final int ¢ : is)
+      $ = Math.min($, ¢);
+    return $;
+  }
+
+  static <T> T lastOf(T[] ts) {
+    return ts[ts.length-1];
+  }
+
+  /** @param <T> JD
+   * @param ¢ JD
+   * @return last item in a list or <code><b>null</b></code> if the parameter is
+   *         <code><b>null</b></code> or empty */
+  @SuppressWarnings("null") static <T> @Nullable T last(@NotNull final @Nullable List<T> ¢) {
+    return eval(() -> ¢.get(¢.size() - 1)).unless(¢ == null || ¢.isEmpty());
+  }
+
+  /** Computes the square of a given integer
+   * @param ¢ some integer
+   * @return square of the parameter */
+  static int sqr(final int ¢) {
+    return ¢ * ¢;
+  }
+
+  /** Chop the first character of a string.
+   * @param ¢ a non-<code><b>null</b></code> string of length at least one
+   * @return <code>s</code> but without its first character. */
+  static String rest(@NotNull final String ¢) {
+    nonnull(¢);
+    positive(¢.length());
+    return ¢.substring(1);
   }
 }

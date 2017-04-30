@@ -1,18 +1,42 @@
-package il.org.spartan;
+package fluent.ly;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.cantBeNull;
+import static il.org.spartan.Utils.compressSpaces;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import org.eclipse.jdt.annotation.*;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.hamcrest.*;
-import org.hamcrest.core.*;
-import org.hamcrest.number.*;
-import org.jetbrains.annotations.*;
-import org.junit.*;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.Factory;
+import org.hamcrest.Matcher;
+import org.hamcrest.core.AllOf;
+import org.hamcrest.core.AnyOf;
+import org.hamcrest.core.CombinableMatcher;
+import org.hamcrest.core.DescribedAs;
+import org.hamcrest.core.Every;
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsAnything;
+import org.hamcrest.core.IsCollectionContaining;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsInstanceOf;
+import org.hamcrest.core.IsNot;
+import org.hamcrest.core.IsNull;
+import org.hamcrest.core.IsSame;
+import org.hamcrest.core.StringContains;
+import org.hamcrest.core.StringEndsWith;
+import org.hamcrest.core.StringStartsWith;
+import org.hamcrest.number.OrderingComparison;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
 
-import il.org.spatan.iteration.*;
+import il.org.spartan.Wrapper;
 
 /** Extends {@link org.junit.Assert} with more assertion for equality
  * comparisons. If the comparison yields a "not-equal" result, a JUnit assertion
@@ -310,14 +334,13 @@ public class azzert extends org.junit.Assert {
     return StringEndsWith.endsWith(suffix);
   }
 
-  public static <T> void equals(final String prefix, @NotNull final Set<T> set, @NotNull final Iterable<T> ts) {
-    @NotNull final List<T> list = Iterables.toList(ts);
+  public static <T> void equals(final String prefix, @NotNull final Collection<T> set, @NotNull final Collection<T> ts) {
     @NotNull Set<T> temp = new HashSet<>();
     temp.addAll(set);
-    temp.removeAll(list);
+    temp.removeAll(ts);
     assert temp.isEmpty() : temp;
     temp = new HashSet<>();
-    temp.addAll(list);
+    temp.addAll(ts);
     temp.removeAll(set);
     assert temp.isEmpty() : prefix + " - " + temp;
   }

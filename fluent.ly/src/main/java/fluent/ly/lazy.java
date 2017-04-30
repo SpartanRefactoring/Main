@@ -1,10 +1,12 @@
 package fluent.ly;
 
-import java.util.function.*;
+import java.util.function.Supplier;
 
-import il.org.spartan.utils.*;
+import il.org.spartan.utils.¢;
 
-/** lazy initialization as in {@code
+/** A class for lazy, memoizing evaluation of objects of arbitrary type. The
+ * evaluation must never return <code><b>null</b></code>. Main purpose is for
+ * lazy initialization as in {@code
     static final lazy<Collection<Thing>> things = lazy.get(() -> as.list(//
       new Thing("one"), //
       new Thing("two") //
@@ -13,6 +15,7 @@ import il.org.spartan.utils.*;
  * <p>
  * This class is not expected to be instantiated by clients; use as demonstrated
  * above
+ * @param <T> JD
  * @author Yossi Gil
  * @since 2017-03-10 */
 public interface lazy<T> extends Supplier<T> {

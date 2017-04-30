@@ -1,8 +1,9 @@
 package il.org.spartan.utils;
 
-import java.util.*;
+import java.util.List;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** An immutable integral range, representing all integers between
  * {@link #from}, up to, but not including, {@link #to}, i.e.,

@@ -1,9 +1,8 @@
 package a;
 
-import java.util.*;
+import java.util.List;
 
 import fluent.ly.as;
-import il.org.spartan.*;
 
 /** Singleton collections.
  * @author Ori Roth

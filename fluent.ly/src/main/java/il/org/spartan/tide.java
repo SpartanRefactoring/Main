@@ -1,6 +1,7 @@
 package il.org.spartan;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /** Pun intended: <code>tide.WHITES</code>, <code>tide.clean(s)</code>, cleans
  * all <code>tide.WHITES</code> */

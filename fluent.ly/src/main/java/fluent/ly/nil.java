@@ -1,6 +1,6 @@
 package fluent.ly;
 
-import il.org.spartan.iteration.closures.*;
+import java.util.function.Function;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -15,7 +15,7 @@ public interface nil {
   }
 
   static <T, R> On<T, R> guardingly(final Function<T, R> f) {
-    return λ -> λ == null ? null : f.eval(λ);
+    return λ -> λ == null ? null : f.apply(λ);
   }
 
   @SuppressWarnings("unused") static <T> T ignoring(final boolean __) {

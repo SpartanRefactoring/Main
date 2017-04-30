@@ -1,15 +1,13 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import static il.org.spartan.Utils.*;
+import static il.org.spartan.Utils.inRange;
 
-import java.util.*;
+import java.util.List;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
-import org.junit.*;
-
-import il.org.spartan.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
  * aggregate type to another.
@@ -24,7 +22,7 @@ public enum has {
    * @return following item in the list, if such such an item exists, otherwise,
    *         the last node */
   public static <@Nullable T> @Nullable T next(final int i, @NotNull final List<T> ts) {
-    return !inRange(i + 1, ts) ? last(ts) : ts.get(i + 1);
+    return !inRange(i + 1, ts) ? the.last(ts) : ts.get(i + 1);
   }
 
   /** Determine whether a <code><b>null</b></code> occurs in a sequence of
