@@ -5,7 +5,6 @@ import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.statement;
-import static il.org.spartan.Leonidas.plugin.leonidas.The.the;
 
 /**
  * Remove redundant curly braces
@@ -16,12 +15,7 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
 
     @Override
     public void constraints() {
-        the(booleanExpression(0)).isNot(()-> !booleanExpression(2));
-        the(statement(1)).is(()->{
-            if(booleanExpression(3)){
-                statement(5);
-            }
-        });
+
     }
 
     @Override
@@ -29,7 +23,7 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
     public Template matcher() {
         return new Template(() -> {
             if (booleanExpression(0))
-				statement(1);
+				statement();
         });
     }
 
