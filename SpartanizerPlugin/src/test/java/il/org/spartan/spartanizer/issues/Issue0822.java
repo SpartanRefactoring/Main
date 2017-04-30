@@ -22,7 +22,6 @@ import il.org.spartan.spartanizer.ast.factory.*;
 public class Issue0822 {
   @Test public void returnsNullOnIOException() throws IOException {
     final File f = Files.createTempFile("test_file", ".tmp").toFile();
-    f.setReadable(false);
     if (makeAST.string(f) != null)
       azzert.that(makeAST.string(f), equalTo(""));
   }
