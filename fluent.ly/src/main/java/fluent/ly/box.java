@@ -1,10 +1,10 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package fluent.ly;
 
-import static il.org.spartan.Utils.cantBeNull;
+import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.annotation.NonNull;
-import org.jetbrains.annotations.NotNull;
+import org.eclipse.jdt.annotation.*;
+import org.jetbrains.annotations.*;
 
 /** A utility class, with a collection of function to box primitive types in
  * their reference type equivalent representation. Similarly, this class offers
@@ -243,7 +243,6 @@ public enum box {
       $[¢] = it(cs[¢]);
     return $;
   }
-
 
   /** box a <code><b>double</b></code> into a {@link Double} object.
    * @param ¢ some <code><b>double</b></code> value

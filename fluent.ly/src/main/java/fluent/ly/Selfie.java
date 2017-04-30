@@ -1,6 +1,6 @@
 package fluent.ly;
 
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

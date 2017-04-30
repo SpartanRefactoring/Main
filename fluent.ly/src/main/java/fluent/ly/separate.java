@@ -1,24 +1,19 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package fluent.ly;
 
-import static fluent.ly.azzert.is;
-import static il.org.spartan.Utils.apply;
-import static il.org.spartan.Utils.cantBeNull;
+import static il.org.spartan.Utils.*;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import static fluent.ly.azzert.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
-import an.iterable;
-import il.org.spartan.Separator;
-import il.org.spartan.Utils.Applicator;
+import org.jetbrains.annotations.*;
+import org.junit.*;
+
+import an.*;
+import il.org.spartan.*;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this
@@ -319,7 +314,6 @@ public enum separate {
     }
   }
 
-
   @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST {
     private static final Function<String, String> quote = λ -> "'" + λ + "'";
@@ -389,7 +383,7 @@ public enum separate {
     }
 
     @Test public final void byFOfTIterableOfTString() {
-      azzert.that(separate.these(new Applicator<String, String>(quote).to(as.list("Hello", "World"))).by(", "), is("'Hello', 'World'"));
+      azzert.that(separate.these(new Applicator<>(quote).to(as.list("Hello", "World"))).by(", "), is("'Hello', 'World'"));
     }
 
     @Test public final void byFOfTTArrayChar() {
@@ -502,12 +496,12 @@ public enum separate {
     }
 
     @Test public void separateBySpaceMultipleIterator() {
-      @NotNull String[] ts = { "X", "Y", "Z" };
+      @NotNull final String[] ts = { "X", "Y", "Z" };
       azzert.that(separateBySpaces(as.list(ts)), is("X Y Z"));
     }
 
     @Test public void separateBySpaceOnIteator() {
-      @NotNull String[] ts = { "Hello", "World " };
+      @NotNull final String[] ts = { "Hello", "World " };
       azzert.that(separateBySpaces(as.list(ts)), is("Hello World "));
     }
 

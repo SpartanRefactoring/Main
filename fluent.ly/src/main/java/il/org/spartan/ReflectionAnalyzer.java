@@ -1,7 +1,6 @@
 package il.org.spartan;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 
 class A {
   {

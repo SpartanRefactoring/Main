@@ -1,14 +1,12 @@
 package fluent.ly;
 
-import static il.org.spartan.Utils.hasNull;
-import static il.org.spartan.Utils.inRange;
+import static il.org.spartan.Utils.*;
 
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** @noinspection unused */
 public interface lisp {

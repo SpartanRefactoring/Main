@@ -1,13 +1,12 @@
 package fluent.ly;
 
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
-import java.util.stream.IntStream;
+import java.text.*;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
-import il.org.spartan.Utils;
-import il.org.spartan.utils.Int;
+import il.org.spartan.*;
+import il.org.spartan.utils.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
  * @author Ori Roth

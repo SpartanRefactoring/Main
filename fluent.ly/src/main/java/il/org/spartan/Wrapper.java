@@ -1,7 +1,7 @@
 package il.org.spartan;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** A generic wrapper classes which can store and retrieve values of any type.
  * @author Yossi Gil

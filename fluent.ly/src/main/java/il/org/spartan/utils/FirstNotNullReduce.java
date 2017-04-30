@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jdt.annotation.*;
 
 /** Return the first element that is not null
  * @author oran1248

@@ -1,15 +1,12 @@
 package fluent.ly;
 
 import static fluent.ly.___.*;
-import static fluent.ly.idiomatic.eval;
+import static fluent.ly.idiomatic.*;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
@@ -141,8 +138,8 @@ public interface the {
     return $;
   }
 
-  static <T> T lastOf(T[] ts) {
-    return ts[ts.length-1];
+  static <T> T lastOf(final T[] ts) {
+    return ts[ts.length - 1];
   }
 
   /** @param <T> JD

@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.Collection;
+import java.util.*;
 
 /** TODO Yossi Gil: document class
  * @author Yossi Gil

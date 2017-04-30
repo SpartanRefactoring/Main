@@ -1,10 +1,8 @@
 package il.org.spartan.utils;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Spliterator;
+import java.util.*;
 
-import il.org.spartan.utils.Example.Ignores;
+import il.org.spartan.utils.Example.*;
 
 /** A collection of {@link Example}
  * @author Yossi Gil

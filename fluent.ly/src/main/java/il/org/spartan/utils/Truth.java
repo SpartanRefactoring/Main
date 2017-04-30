@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import java.util.function.BooleanSupplier;
+import java.util.function.*;
 
 public enum Truth {
   T("true"), //
@@ -9,16 +9,16 @@ public enum Truth {
   N("Null pointer exception"), //
   R("Runtime exception"), //
   Ħ("Throwable of some other kind");
-  public static Truth truthOf(BooleanSupplier $) {
+  public static Truth truthOf(final BooleanSupplier $) {
     try {
       return $.getAsBoolean() ? T : F;
-    } catch (NullPointerException __) {
+    } catch (final NullPointerException __) {
       return N;
-    } catch (AssertionError __) {
+    } catch (final AssertionError __) {
       return X;
-    } catch (RuntimeException __) {
+    } catch (final RuntimeException __) {
       return R;
-    } catch (Throwable __) {
+    } catch (final Throwable __) {
       return Ħ;
     }
   }
@@ -29,21 +29,21 @@ public enum Truth {
             this;
   }
 
-  Truth or(Truth other) {
+  Truth or(final Truth other) {
     return this == T ? this : other;
   }
 
-  Truth and(Truth other) {
+  Truth and(final Truth other) {
     return this == F ? this : other;
   }
 
-  public static String letterOf(BooleanSupplier ¢) {
+  public static String letterOf(final BooleanSupplier ¢) {
     return truthOf(¢) + "";
   }
 
   public String description;
 
-  Truth(String description) {
+  Truth(final String description) {
     this.description = description;
   }
 

@@ -1,11 +1,10 @@
 /** Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package fluent.ly;
 
-import java.util.Collection;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.stream.*;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-04-23 */
@@ -45,16 +44,20 @@ public interface is {
   @SafeVarargs static <T> boolean out(final T candidate, final T... ts) {
     return !in(candidate, ts);
   }
-  static boolean empty(String s) {
+
+  static boolean empty(final String s) {
     return s == null || s.isEmpty();
   }
-  static <T> boolean empty(T[] ts) {
+
+  static <T> boolean empty(final T[] ts) {
     return ts == null || ts.length == 0;
   }
-  static <T> boolean empty(Iterable<T> ts) {
+
+  static <T> boolean empty(final Iterable<T> ts) {
     return ts == null || !ts.iterator().hasNext();
   }
-  static <T> boolean empty(Collection<T> ts) {
+
+  static <T> boolean empty(final Collection<T> ts) {
     return ts == null || ts.isEmpty();
   }
 }

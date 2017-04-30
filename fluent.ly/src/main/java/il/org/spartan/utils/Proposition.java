@@ -1,12 +1,10 @@
 package il.org.spartan.utils;
 
-import java.util.List;
-import java.util.function.BooleanSupplier;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
-import fluent.ly.as;
+import fluent.ly.*;
 
 /*** Third lecture:
  * <ol>
@@ -212,7 +210,7 @@ public interface Proposition extends BooleanSupplier {
         if (!getClass().isInstance(λ))
           return Stream.of(λ);
         if (((Some) λ).toString != null)
-          this.toString += ", " + λ;
+          toString += ", " + λ;
         return ((Some) λ).inner.stream();
       }).flatMap(λ -> λ).collect(Collectors.toList());
       inner.clear();

@@ -1,20 +1,11 @@
 package il.org.spartan.utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.nio.charset.*;
+import java.nio.file.*;
+import java.util.*;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 /** A class for utility methods when working with files and directories
  * @author Daniel Mittelman <code><mittelmania [at] gmail.com></code>
@@ -43,7 +34,6 @@ public class FileUtils {
    * @param f JD
    * @return a string representing the contents of a file.
    * @throws IOException in case of error */
-  
   @NotNull public static String read(@NotNull final File f) throws IOException {
     final String ls = System.getProperty("line.separator");
     System.err.println(ls.compareTo("\n"));
