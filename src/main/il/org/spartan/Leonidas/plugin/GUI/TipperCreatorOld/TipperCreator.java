@@ -53,7 +53,7 @@ class TipperCreator extends JFrame {
                 else if (fromCode.getSelectedText() == null)
                     return;
                 PsiElement p = step.getHighestParent(element.findElementAt(focused.getSelectionStart()));
-                StubName givenType = StubName.getGeneralTye(p);
+                StubName givenType = StubName.getGeneralType(p);
                 focused.replaceSelection(givenType.stubMethodCallExpressionStatement());
             }
         });
