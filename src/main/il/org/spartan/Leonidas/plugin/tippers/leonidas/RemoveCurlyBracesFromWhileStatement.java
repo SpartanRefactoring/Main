@@ -1,8 +1,5 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import com.intellij.psi.PsiWhileStatement;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
-
 import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.statement;
 
@@ -25,7 +22,6 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
     }
 
     @Override
-    @Leonidas(PsiWhileStatement.class)
     public void matcher() {
         new Template(() -> {
             while (booleanExpression(0)) {
@@ -35,7 +31,6 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
     }
 
     @Override
-    @Leonidas(PsiWhileStatement.class)
     public void replacer() {
         new Template(() -> {
             while (booleanExpression(0))

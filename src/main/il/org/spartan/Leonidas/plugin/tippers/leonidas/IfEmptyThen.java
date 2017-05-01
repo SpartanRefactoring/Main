@@ -1,8 +1,5 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import com.intellij.psi.PsiIfStatement;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
-
 import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.statement;
 
@@ -25,7 +22,6 @@ public class IfEmptyThen implements LeonidasTipperDefinition {
     }
 
     @Override
-    @Leonidas(PsiIfStatement.class)
     public void matcher() {
         new Template(() -> {
             if (booleanExpression(0))
@@ -36,7 +32,6 @@ public class IfEmptyThen implements LeonidasTipperDefinition {
     }
 
     @Override
-    @Leonidas(PsiIfStatement.class)
     public void replacer() {
         new Template(() -> {
             if (!(booleanExpression(0)))
