@@ -112,14 +112,14 @@ public class GenericPsiElementStub {
         public static StubName valueOfStringExpression(String s) {
             return Arrays.stream(values())
                     .filter(stub -> s.equals(stub.stubMethodCallExpression()))
-                    .findFirst().orElseGet(null);
+                    .findFirst().orElse(null);
         }
 
         /**
          * @param e psi element
          * @return the StubName of the genericType most qualified to the element.
          */
-        public static StubName getGeneralTye(PsiElement e) {
+        public static StubName getGeneralType(PsiElement e) {
             Wrapper<StubName> name = new Wrapper<>(null);
             e.accept(new JavaElementVisitor() {
                 @Override

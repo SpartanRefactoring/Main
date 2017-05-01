@@ -16,7 +16,6 @@ public class InliningPrefix extends GenericPsiElementStub {
     public void from(){
         arrayIdentifier(0)[identifier(1)];
         identifier(1)++;
-
     }
 
     @Leonidas(PsiArrayAccessExpression.class)

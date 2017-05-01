@@ -291,4 +291,8 @@ public class PsiTypeHelper extends PsiTestCase {
     protected PsiReturnStatement createTestReturnStatement(String expression) {
         return (PsiReturnStatement) getTestFactory().createStatementFromText("return " + expression + ";", getTestFile());
     }
+
+    protected PsiArrayAccessExpression createTestArrayaAccess(String arrayName, String accessContent) {
+        return (PsiArrayAccessExpression) getTestFactory().createExpressionFromText(arrayName + "[" + accessContent + "]", getTestFile());
+    }
 }
