@@ -161,11 +161,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
   }
 
   private static CSVStatistics openSummaryFile(final String $) {
-    try {
-      return new CSVStatistics($, "property");
-    } catch (final IOException ¢) {
-      return note.io(¢, "opening report file");
-    }
+    return new CSVStatistics($, "property");
   }
 
   private final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();

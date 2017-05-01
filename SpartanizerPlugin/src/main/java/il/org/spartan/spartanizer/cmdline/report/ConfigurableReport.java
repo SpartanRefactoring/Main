@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.cmdline.report;
 
 import static il.org.spartan.tide.*;
 
-import java.io.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -132,11 +131,7 @@ public interface ConfigurableReport {
     }
 
     public void setReport(final String reportFilename, final String header) {
-      try {
-        report = new CSVStatistics(reportFilename, header);
-      } catch (final IOException ¢) {
-        note.io(¢, header);
-      }
+      report = new CSVStatistics(reportFilename, header);
     }
 
     public void setRobustMode(final boolean robustMode) {
@@ -194,11 +189,7 @@ public interface ConfigurableReport {
       }
 
       public void initialize() {
-        try {
-          report = new CSVStatistics(getFileName(), getHeader());
-        } catch (final IOException ¢) {
-          note.io(¢);
-        }
+        report = new CSVStatistics(getFileName(), getHeader());
       }
 
       private void name(final ASTNode i) {
