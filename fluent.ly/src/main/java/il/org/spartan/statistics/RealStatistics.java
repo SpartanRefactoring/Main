@@ -1,6 +1,7 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.azzert.*;
+import fluent.ly.azzert;
+import static fluent.ly.azzert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.*;

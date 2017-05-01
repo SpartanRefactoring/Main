@@ -2,7 +2,7 @@
 package il.org.spartan.iterables;
 
 import static il.org.spartan.Utils.contains;
-import static il.org.spartan.azzert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.*;
 
@@ -11,8 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
 import an.iterable;
-import fluent.ly.as;
-import il.org.spartan.azzert;
+import fluent.ly.*;
 
 /** No values in an 'enum' used as name space for a collection of 'static'
  * functions.
@@ -60,7 +59,6 @@ public enum iterables {
    * test methods begin with the name of the method they check.
    * @author Yossi Gil
    * @since 2014-05-31 */
-
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void containsDegenerate() {
       azzert.nay(contains("Hello"));
