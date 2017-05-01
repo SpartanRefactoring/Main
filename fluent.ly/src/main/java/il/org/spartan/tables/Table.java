@@ -12,9 +12,9 @@ import fluent.ly.box;
 import il.org.spartan.statistics.RealStatistics;
 import il.org.spartan.utils.Int;
 import il.org.spartan.utils.system;
-import nano.ly.cCamelCase;
-import nano.ly.separate;
-import nano.ly.the;
+import fluent.ly.cCamelCase;
+import fluent.ly.separate;
+import fluent.ly.the;
 
 /** A relation is just another name for a table that contains elements of __
  * {@link Record}. This class provides fluent API for generating tables,
