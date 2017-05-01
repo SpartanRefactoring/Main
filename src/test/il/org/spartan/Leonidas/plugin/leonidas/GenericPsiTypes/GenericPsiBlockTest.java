@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
+import il.org.spartan.Leonidas.plugin.leonidas.Amount;
 import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 
 /**
@@ -14,7 +15,7 @@ public class GenericPsiBlockTest extends PsiTypeHelper {
 
 
     @Override
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
         super.setUp();
         psiElement = createTestStatementFromString("int x;");
         genericPsiBlock = new GenericPsiBlock(psiElement);
@@ -32,16 +33,20 @@ public class GenericPsiBlockTest extends PsiTypeHelper {
     }
 
     public void testToString() throws Exception {
+        assert genericPsiBlock.toString().equals("GenericBlocknull");
         genericPsiBlock.putUserData(KeyDescriptionParameters.ID, 100);
         assert genericPsiBlock.toString().equals("GenericBlock100");
     }
 
     public void testCopy() throws Exception {
+        genericPsiBlock.putUserData(KeyDescriptionParameters.NO_OF_STATEMENTS, Amount.ANY);
+        genericPsiBlock.putUserData(KeyDescriptionParameters.ID, 100);
         GenericPsiBlock copyGenericPsiBlock = genericPsiBlock.copy();
         assert copyGenericPsiBlock.getInner() != psiElement;
         assert copyGenericPsiBlock.getInner().toString().equals(psiElement.toString());
         assert copyGenericPsiBlock != genericPsiBlock;
         assert copyGenericPsiBlock.toString().equals(genericPsiBlock.toString());
+        assert genericPsiBlock.getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS).equals(copyGenericPsiBlock.getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS));
     }
 
     public void testGetProject() {
