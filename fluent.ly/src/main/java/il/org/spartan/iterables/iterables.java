@@ -4,6 +4,8 @@ package il.org.spartan.iterables;
 import static il.org.spartan.Utils.contains;
 import static il.org.spartan.azzert.assertEquals;
 
+import java.util.*;
+
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
@@ -31,7 +33,7 @@ public enum iterables {
 
   /** @param <T> JD
    * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
-  @NotNull public static <T> PureIterable.Sized<T> empty() {
+  @NotNull public static <T> Iterable<T> empty() {
     return iterable.over();
   }
 
@@ -47,7 +49,7 @@ public enum iterables {
    * @param <T> JD
    * @param $ JD
    * @return parameter, but in a singleton iterator form */
-  public static <T> PureIterator<T> singletonIterator(final T $) {
+  public static <T> Iterator<T> singletonIterator(final T $) {
     return iterable.singleton($).iterator();
   }
 
@@ -81,7 +83,7 @@ public enum iterables {
     }
 
     @Test public void countDoesNotIncludeNull() {
-      assertEquals(3, count(as.iterable(null, "One", null, "Two", null, "Three")));
+      assertEquals(3, count(iterable.over(null, "One", null, "Two", null, "Three")));
     }
 
     @Test public void countEmpty() {
@@ -93,7 +95,7 @@ public enum iterables {
     }
 
     @Test public void countThree() {
-      assertEquals(3, count(as.iterable("One", "Two", "Three")));
+      assertEquals(3, count(iterable.over("One", "Two", "Three")));
     }
   }
 }

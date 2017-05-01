@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import an.*;
 import fluent.ly.as;
 import fluent.ly.box;
 import il.org.spartan.statistics.RealStatistics;
@@ -195,6 +196,6 @@ public class Table extends Row<Table> implements Closeable {
   }
 
   static String classToNormalizedFileName(final String className) {
-    return separate.these(the.lastOf(as.iterable(cCamelCase.components(className)))).by('-').toLowerCase();
+    return separate.these(the.lastOf(iterable.over(cCamelCase.components(className)))).by('-').toLowerCase();
   }
 }

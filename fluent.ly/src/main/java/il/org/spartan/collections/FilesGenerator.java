@@ -50,7 +50,6 @@ public class FilesGenerator {
   @Nullable static Iterator<File> directoryIterator(@Nullable final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
-    as.iterable(directory.list());
     @NotNull final Iterator<String> $ = as.list(directory.list()).iterator();
     return new Iterator<File>() {
       @Nullable File next;
@@ -112,7 +111,7 @@ public class FilesGenerator {
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code> */
   @NotNull public From from(final String... from) {
-    return from(as.iterable(from));
+    return from(as.list(from));
   }
 
   /** An internal (yet <code><b>public</b></code>) <code><b>class</b></code>
