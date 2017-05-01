@@ -74,11 +74,7 @@ enum CollectMetrics {
   }
 
   private static CSVStatistics init(final String $, final String property) {
-    try {
-      return new CSVStatistics($, property);
-    } catch (final IOException ¢) {
-      throw new RuntimeException(OUTPUT, ¢);
-    }
+    return new CSVStatistics($, property);
   }
 
   /** fault, what happens if we have many classes in the same file? Also, we do

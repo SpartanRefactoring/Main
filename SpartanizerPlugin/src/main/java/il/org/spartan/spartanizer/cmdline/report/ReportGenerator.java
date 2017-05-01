@@ -176,11 +176,7 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   public static void initializeReport(final String reportFileName, final String id) {
-    try {
-      reports.put(id, new CSVStatistics(reportFileName, id));
-    } catch (final IOException ¢) {
-      note.io(¢, id);
-    }
+    reports.put(id, new CSVStatistics(reportFileName, id));
   }
 
   public static CSVStatistics report(final String key) {

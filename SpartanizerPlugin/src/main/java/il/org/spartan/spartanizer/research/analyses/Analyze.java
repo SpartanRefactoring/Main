@@ -60,11 +60,7 @@ public enum Analyze {
   }
 
   public static CSVStatistics openSummaryFile(final String $) {
-    try {
-      return new CSVStatistics($, "property");
-    } catch (final IOException ¢) {
-      return note.io(¢, "opening report file");
-    }
+    return new CSVStatistics($, "property");
   }
 
   private static void summarizeMethodStatistics(final String outputDir) {

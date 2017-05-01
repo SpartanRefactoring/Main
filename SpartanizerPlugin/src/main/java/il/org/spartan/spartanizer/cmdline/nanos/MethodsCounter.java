@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.cmdline.nanos;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -61,11 +60,7 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
   }
 
   public static CSVStatistics openSummaryFile(final String $) {
-    try {
-      return new CSVStatistics($, "property");
-    } catch (final IOException ¢) {
-      return note.io(¢, "opening report file");
-    }
+    return new CSVStatistics($, "property");
   }
 
   public void summarizeNumbers() {
