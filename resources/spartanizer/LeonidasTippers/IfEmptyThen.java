@@ -14,8 +14,10 @@ public class IfEmptyThen extends GenericPsiElementStub {
 
     @Leonidas(PsiIfStatement.class)
     public void from(){
-        if (!booleanExpression(0))
-			statement(1);
+        if (booleanExpression(0))
+			;
+        else
+            statement(1);
     }
 
     @Leonidas(PsiIfStatement.class)
