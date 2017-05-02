@@ -81,6 +81,26 @@ public class GenericPsiElementStub {
     }
 
     /**
+     * Method stub representing a boolean literal, i.e. <code>true</code> or <code>false</code>
+     *
+     * @param id the serial number to distinguish between several boolean literals in the same
+     *           tipper
+     * @return stub object (no real use)
+     */
+    public static Object booleanLiteral(int id) {
+        return booleanLiteral();
+    }
+
+    /**
+     * Method stub representing a boolean literal, i.e. <code>true</code> or <code>false</code>
+     *
+     * @return stub object (no real use)
+     */
+    public static Object booleanLiteral() {
+        return new Object();
+    }
+
+    /**
      * An enum representing the different coding blocks.
      */
     public enum StubName {
@@ -88,7 +108,8 @@ public class GenericPsiElementStub {
         STATEMENT("statement"),
         IDENTIFIER("identifier"),
         ARRAY_IDENTIFIER("arrayIdentifier"),
-        ANY_BLOCK("anyBlock");
+        ANY_BLOCK("anyBlock"),
+        BOOLEAN_LITERAL("booleanLiteral");
 
         private String stubName;
 
