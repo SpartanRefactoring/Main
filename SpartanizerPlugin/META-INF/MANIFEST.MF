@@ -24,8 +24,8 @@ Bundle-ClassPath: .,
  lib/mockito-all-2.0.2-beta.jar,
  lib/hamcrest-all-1.3.jar,
  lib/annotations-12.0.jar,
- lib/spartan-1.4.jar,
- lib/fluent.ly-0.0.1.jar
+ lib/spartan.jar,
+ lib/fluent.ly.jar
 Export-Package: il.org.spartan.spartanizer.plugin.widget;version="2.11.5";
   uses:="org.eclipse.jdt.core,
    org.eclipse.jdt.core.dom.rewrite,
