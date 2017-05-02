@@ -1,4 +1,4 @@
-package il.org.spartan.utils;
+package fluent.ly;
 
 /** Binary is very similar to the Void type, it has 2 possible values: Binary
  * (true), or null (false).

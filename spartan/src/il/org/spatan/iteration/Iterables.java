@@ -6,6 +6,7 @@ import static fluent.ly.unbox.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.*;
+import java.util.function.*;
 
 import org.jetbrains.annotations.*;
 
@@ -306,7 +307,7 @@ public class Iterables {
   @NotNull public static <F, T> Iterable<T> map(@NotNull final Iterable<? extends F> fs, @NotNull final Function<F, T> f) {
     @NotNull final List<T> $ = new ArrayList<>();
     for (final F ¢ : fs)
-      $.add(f.eval(¢));
+      $.add(f.apply(¢));
     return $;
   }
 
