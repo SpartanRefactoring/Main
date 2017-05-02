@@ -288,9 +288,11 @@ public class XMLSpartan {
     final Collection<String> seen = new HashSet<>();
     Configurations.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
     createNotationChild($, "Cent", "¢", seen, n);
+    e.appendChild(n);
+    createNotationChild($, "Dollar", "$", seen, n);
+    e.appendChild(n);
     $.appendChild(e);
     e.appendChild(t);
-    e.appendChild(n);
     $.setXmlStandalone(true); // TODO Roth: does not seem to work
     return $;
   }

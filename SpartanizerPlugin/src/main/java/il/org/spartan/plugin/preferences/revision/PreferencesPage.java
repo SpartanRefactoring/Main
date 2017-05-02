@@ -22,7 +22,6 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.*;
 import org.w3c.dom.*;
 
@@ -30,7 +29,6 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tippers.Names.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
 
@@ -42,6 +40,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   private final SpartanPropertyListener listener = new SpartanPropertyListener(refreshNeeded);
   private Changes changes;
   private RadioGroupFieldEditor singleParameterRadio;
+  private RadioGroupFieldEditor returnParameterRadio;
 
   public PreferencesPage() {
     super(GRID);
@@ -49,17 +48,23 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   @Override public boolean performOk() {
     final boolean $ = super.performOk();
+    commitNotations();
+    changes.commit();
+    return $;
+  }
+
+  private void commitNotations() {
     final IProject[] projects = getAllSpartanizerProjects();
     for (IProject p : projects) {
       final Document doc = XMLSpartan.getXML(p);
       doc.getDocumentElement().normalize();
       System.out.println(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue());
       doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue(singleParameterRadio.getPreferenceStore().getString("Cent"));
+      doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).setNodeValue(returnParameterRadio.getPreferenceStore().getString("Dollar"));
       XMLSpartan.commit(p, doc);
     }
     notation.cent = singleParameterRadio.getPreferenceStore().getString("Cent");
-    changes.commit();
-    return $;
+    notation.return$ = returnParameterRadio.getPreferenceStore().getString("Dollar");
   }
 
   /** Build the preferences page by adding controls */
@@ -72,20 +77,27 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         λ -> changes.isEnabled((IProject) λ), //
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.isEnabled((IProject) λ).booleanValue())) //
     ));
+    // GUI for renaming single parameter
     final String[][] parameterRenameOptions = new String[][] { { "¢", "¢" }, { "it", "it" }, { "param", "param" } };
     singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3, parameterRenameOptions, getFieldEditorParent());
     addField(singleParameterRadio);
     setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());
-    final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" }, { "typeCamelCase", "typeCamelCase" },
-        { "Function name", "Function's name" }, { "Other", "Other" } };
-    final RadioGroupFieldEditor r = new RadioGroupFieldEditor("Dollars", "Method return variable rename to:", 3, labelAndValues,
-        getFieldEditorParent());
-    final StringFieldEditor other = new StringFieldEditor("TT", "", 17, getFieldEditorParent());
-    addField(r);
-    other.setValidateStrategy(StringFieldEditor.VALIDATE_ON_KEY_STROKE);
-    other.setEnabled(((Button) r.getRadioBoxControl(getFieldEditorParent()).getChildren()[5]).getSelection(), getFieldEditorParent());
-    setTextParams(other);
-    setRenamingButtons(r, getFieldEditorParent(), other);
+    // GUI for renaming return statement variable radio + textbox for others
+    final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" } };
+    /* TODO: Add more advanced options for naming { "typeCamelCase",
+     * "typeCamelCase" }, { "Function name", "Function's name" }, { "Other",
+     * "Other" } }; */
+    returnParameterRadio = new RadioGroupFieldEditor("Dollar", "Method return variable rename to:", 3, labelAndValues, getFieldEditorParent());
+    addField(returnParameterRadio);
+    // TODO: Add more advanced options for naming final StringFieldEditor other
+    // = new StringFieldEditor("TT", "", 17, getFieldEditorParent());
+    // addField(r);
+    // other.setValidateStrategy(StringFieldEditor.VALIDATE_ON_KEY_STROKE);
+    // other.setEnabled(((Button)
+    // r.getRadioBoxControl(getFieldEditorParent()).getChildren()[5]).getSelection(),
+    // getFieldEditorParent());
+    // setTextParams(other);
+    // setRenamingButtons(r, getFieldEditorParent(), other);
   }
 
   /** @return open projects in workspace */
@@ -364,98 +376,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
 
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {/**/}
-    });
-  }
-
-  private static void setRenamingButtons(final RadioGroupFieldEditor e, final Composite parent, final StringFieldEditor other) {
-    final Control[] cc = e.getRadioBoxControl(parent).getChildren();
-    ((Button) cc[0]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.returnName = "$";
-        Names.returnNameSelect = ReturnNameSelect.byConst;
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[1]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.returnName = "result";
-        Names.returnNameSelect = ReturnNameSelect.byConst;
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[2]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.returnName = "ret";
-        Names.returnNameSelect = ReturnNameSelect.byConst;
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[3]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.returnNameSelect = ReturnNameSelect.byCamelCase;
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[4]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        Names.returnNameSelect = ReturnNameSelect.byMethodName;
-        other.setEnabled(false, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-    ((Button) cc[5]).addSelectionListener(new SelectionListener() {
-      @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
-        other.setEnabled(true, parent);
-      }
-
-      @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
-        widgetSelected(¢);
-      }
-    });
-  }
-
-  /** [[SuppressWarningsSpartan]] */
-  private void setTextParams(final StringFieldEditor r) {
-    r.setStringValue("$");
-    final Text t = r.getTextControl(getFieldEditorParent());
-    t.addVerifyListener(e -> {
-      final String val = r.getStringValue();
-      if (val.isEmpty()) {
-        if (!Character.isJavaIdentifierStart(e.character))
-          e.doit = false;
-      } else if (!Character.isJavaIdentifierPart(e.character))
-        e.doit = false;
-    });
-    t.addFocusListener(new FocusListener() {
-      @Override public void focusLost(@SuppressWarnings("unused") final FocusEvent e) {
-        Names.returnNameSelect = ReturnNameSelect.byConst;
-        if (r.getStringValue().isEmpty())
-          Names.returnName = "$";
-        else
-          Names.returnName = r.getStringValue();
-      }
-
-      @Override public void focusGained(@SuppressWarnings("unused") final FocusEvent e) {/***/
-      }
     });
   }
 }
