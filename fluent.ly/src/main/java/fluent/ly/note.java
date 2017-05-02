@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.logging.*;
 import java.util.stream.*;
 
+import org.eclipse.jdt.annotation.*;
+
 import il.org.spartan.utils.*;
 
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
@@ -151,7 +153,7 @@ public interface note {
 
   /** logs an error in the plugin into an external file
    * @param tipper an error */
-  static <T> T logToFile(final Throwable t, final Object... os) {
+  static <@Nullable T> T logToFile(final Throwable t, final Object... os) {
     final StringWriter w = new StringWriter();
     t.printStackTrace(new PrintWriter(w));
     final Object[] nos = new Object[os.length + 2];

@@ -8,6 +8,8 @@ import java.util.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
+import let.*;
+
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-12 */
@@ -166,7 +168,17 @@ public interface the {
     return ¢.substring(1);
   }
 
-  static <T> T[] tailOf(final T[] ts) {
-    return Arrays.copyOfRange(ts, 1, ts.length);
+  static<T> T[] tailOf(T[] ts) {
+    return Arrays.copyOfRange(ts,1, ts.length);
   }
+
+  interface first {
+    default it<String> of(String s) {
+      return new it<>(s.substring(0,1));
+    }
+    default <T> it<T> of(T[] ts) {
+      return new it<>(ts[0]);
+    }
+  }
+  first first = new first() {};
 }

@@ -1,8 +1,9 @@
 package fluent.ly;
+import static java.lang.Math.*;
 
 import java.util.function.*;
 
-import il.org.spartan.utils.*;
+import org.eclipse.jdt.annotation.*;
 
 /** A class for lazy, memoizing evaluation of objects of arbitrary type. The
  * evaluation must never return <code><b>null</b></code>. Main purpose is for
@@ -19,16 +20,16 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2017-03-10 */
 public interface lazy<T> extends Supplier<T> {
-  static <T> lazy<T> get(@¢ final Supplier<T> ¢) {
+  static <T> lazy<T> get(final Supplier<T> ¢) {
     return new lazy<T>() {
       /** Cached value; invalid cache if {@code null} */
-      T $;
+      @Nullable T $;
 
       /** No need to be {@code synchronized} to make it thread safe. Instance is
        * always unique.
        * @Return value of the supplier */
       @Override public T get() {
-        return $ = $ != null ? $ : ¢.get();
+        return $ = $ == null ? ¢.get() : $;
       }
     };
   }
