@@ -113,4 +113,18 @@ public enum step {
 			prev = next;
         return prev;
     }
+
+    /**
+     * Extracts the type of the literal the given literal expression holds. Literal types can be,
+     * for example, <code>NULL_KEYWORD</code>, <code>TRUE_KEYWORD</code>,
+     * <code>INTEGER_LITERAL</code>, etc...
+     *
+     * @see com.intellij.psi.JavaTokenType for a full list of possibly types
+     *
+     * @param e literal expression
+     * @return type of the literal expression
+     */
+    public static IElementType literalType(PsiLiteralExpression e) {
+        return e == null ? null : ((PsiJavaToken) e.getFirstChild()).getTokenType();
+    }
 }

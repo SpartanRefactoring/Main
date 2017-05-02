@@ -1,8 +1,10 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.*;
+import com.intellij.psi.tree.IElementType;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
@@ -10,6 +12,10 @@ import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiExpress
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
 import java.util.Arrays;
+
+import static com.intellij.psi.JavaTokenType.FALSE_KEYWORD;
+import static com.intellij.psi.JavaTokenType.INTEGER_LITERAL;
+import static com.intellij.psi.JavaTokenType.TRUE_KEYWORD;
 
 /**
  * This class defines methods that will represent generic structures of code
@@ -171,6 +177,15 @@ public class GenericPsiElementStub {
                 public void visitArrayAccessExpression(PsiArrayAccessExpression x) {
                     super.visitArrayAccessExpression(x);
                     name.set(ARRAY_IDENTIFIER);
+                }
+
+                @Override
+                public void visitLiteralExpression(PsiLiteralExpression expression) {
+                    super.visitLiteralExpression(expression);
+                    IElementType type = step.literalType(expression);
+                    if (type != null && (type == TRUE_KEYWORD || type == FALSE_KEYWORD)) {
+                        name.set(ARRAY_IDENTIFIER);
+                    }
                 }
             });
             return name.get();
