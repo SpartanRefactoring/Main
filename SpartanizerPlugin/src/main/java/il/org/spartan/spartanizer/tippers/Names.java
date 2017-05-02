@@ -6,6 +6,7 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 
 /** Contains methods for renaming return variables, parameters, etc.
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
@@ -20,7 +21,7 @@ public final class Names {
       "continue", "default", "do", "double", "else", "enum", "extends", "false", "final", "finally", "float", "for", "if", "goto", "implements",
       "import", "instanceof", "int", "interface", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short",
       "static", "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while" };
-  public static String returnName = "$";
+  public static String returnName =  notation.return$;
   public static ReturnNameSelect returnNameSelect = ReturnNameSelect.byConst;
   public static final BiFunction<Type, MethodDeclaration, String> methodReturnName = (x, y) -> {
     switch (returnNameSelect) {
@@ -35,7 +36,7 @@ public final class Names {
         final String $ = n.substring(0, 1).toLowerCase() + n.substring(1, n.length());
         return !Arrays.stream(reserved).anyMatch(λ -> λ.equals($)) && !$.equals(n) ? $ : null;
       default:
-        return "$";
+        return notation.return$;
     }
   };
   public static BiFunction<Type, MethodDeclaration, String> methodSingleParameterName = (x, y) -> "¢";

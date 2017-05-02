@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** A tipper to rename a method's return value to {@link notation#return¢}
+/** A tipper to rename a method's return value to {@link notation#return$}
  * @author Artium Nihamkin (original)
  * @author Boris van Sosin {@code <boris.van.sosin [at] gmail.com>} (v2)
  * @author Yossi Gil (v3)
