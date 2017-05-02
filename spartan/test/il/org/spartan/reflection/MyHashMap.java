@@ -121,8 +121,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     }
     $.table = new Entry[table.length];
     $.entrySet = null;
-    $.modCount = 0;
-    $.size = 0;
+    $.size = $.modCount = 0;
     $.putAllForCreate(this);
     return $;
   }

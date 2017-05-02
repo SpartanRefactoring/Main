@@ -22,8 +22,8 @@ import il.org.spartan.streotypes.*;
     }
   }
 
-  private File file;
-  private String header;
+  private @Nullable File file;
+  private @Nullable String header;
   /** The name of the file into which records are written. */
   @NotNull private final String fileName;
   @Nullable private final OutputStreamWriter inner;

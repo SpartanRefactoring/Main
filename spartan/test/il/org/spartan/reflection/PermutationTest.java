@@ -32,8 +32,7 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testIsPermutation1() {
-    final int a[] = Permutation.random(1);
-    assertEquals(0, a[0]);
+    assertEquals(0, Permutation.random(1)[0]);
   }
 
   @Test public void testIsPermutationLarge() {
@@ -53,18 +52,15 @@ import il.org.spartan.utils.*;
   }
 
   @Test public void testPermutation0() {
-    final int a[] = Permutation.random(0);
-    assertEquals(0, a.length);
+    assertEquals(0, Permutation.random(0).length);
   }
 
   @Test public void testPermutationLength1() {
-    final int a[] = Permutation.random(1);
-    assertEquals(1, a.length);
+    assertEquals(1, Permutation.random(1).length);
   }
 
   @Test public void testPermutationLength6() {
-    final int a[] = Permutation.random(6);
-    assertEquals(6, a.length);
+    assertEquals(6, Permutation.random(6).length);
   }
 
   @Test public void testrandom() {
