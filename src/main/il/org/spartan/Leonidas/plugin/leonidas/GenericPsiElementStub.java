@@ -6,15 +6,11 @@ import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.*;
 
 import java.util.Arrays;
 
 import static com.intellij.psi.JavaTokenType.FALSE_KEYWORD;
-import static com.intellij.psi.JavaTokenType.INTEGER_LITERAL;
 import static com.intellij.psi.JavaTokenType.TRUE_KEYWORD;
 
 /**
@@ -225,6 +221,9 @@ public class GenericPsiElementStub {
                     break;
                 case ANY_BLOCK:
                     x = new GenericPsiBlock(inner);
+                    break;
+                case BOOLEAN_LITERAL:
+                    x = new GenericBooleanLiteral(inner);
                     break;
                 default:
                     return null;
