@@ -4,7 +4,6 @@ import static java.util.logging.Level.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import java.io.*;
 import java.text.*;
 import java.util.*;
 import java.util.logging.*;
@@ -13,11 +12,11 @@ import java.util.logging.Formatter;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Yossi Gil
@@ -95,11 +94,7 @@ public class TraversalMonitor extends TraversalImplementation.__ implements Trav
   }
 
   private static CSVStatistics init() {
-    try {
-      return output = new CSVStatistics(outputDir, "Tips");
-    } catch (final IOException $) {
-      return note.io($);
-    }
+    return output = new CSVStatistics(outputDir, "Tips");
   }
 
   public static final Logger logger = anonymous.ly(() -> {

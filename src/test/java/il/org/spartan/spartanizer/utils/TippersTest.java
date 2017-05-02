@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.utils;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.ast.factory.misc.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
@@ -11,12 +11,12 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.jface.text.*;
 import org.junit.*;
-import il.org.spartan.*;
+
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
-import nano.ly.*;
 
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil

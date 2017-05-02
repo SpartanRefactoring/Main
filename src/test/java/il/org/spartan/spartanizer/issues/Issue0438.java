@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.issues;
 
 import org.junit.*;
+
 import il.org.spartan.spartanizer.utils.*;
 
 /** Failing (were ignored) tests of {@link TestOperandTest}

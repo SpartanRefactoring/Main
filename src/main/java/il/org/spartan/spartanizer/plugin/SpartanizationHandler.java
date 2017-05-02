@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.spartanizer.plugin.Eclipse.*;
-import static nano.ly.English.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -13,8 +12,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.ui.*;
 
+import fluent.ly.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Both {@link AbstractHandler} and {@link IMarkerResolution} implementations
  * that uses {@link NewGUIApplicator} as its applicator.
@@ -142,7 +141,7 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             });
         })).expand(EventMapper.inspectorOf(event.run_start).does(λ -> {
           if ($.selection().size() >= DIALOG_THRESHOLD)
-            if (!Dialogs.ok(Dialogs.message("Spartanizing " + unknownIfNull(λ.get(event.visit_root)))))
+            if (!Dialogs.ok(Dialogs.message("Spartanizing " + English.unknownIfNull(λ.get(event.visit_root)))))
               $.stop();
             else {
               runAsynchronouslyInUIThread(d::open);
@@ -153,9 +152,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             runAsynchronouslyInUIThread(d::close);
         }).does(¢ -> {
           if (openDialog.get())
-            Dialogs.message("Done spartanizing " + unknownIfNull(¢.get(event.visit_root)) + "\nSpartanized " + unknownIfNull(¢.get(event.visit_root))
-                + " with " + unknownIfNull((Collection<?>) ¢.get(event.visit_cu), λ -> Integer.valueOf(λ.size())) + " files in "
-                + plurales("pass", (Int) ¢.get(event.run_pass))).open();
+            Dialogs.message("Done spartanizing " + English.unknownIfNull(¢.get(event.visit_root)) + "\nSpartanized " + English.unknownIfNull(¢.get(event.visit_root))
+                + " with " + English.unknownIfNull((Collection<?>) ¢.get(event.visit_cu), λ -> Integer.valueOf(λ.size())) + " files in "
+                + English.plurales("pass", (Int) ¢.get(event.run_pass))).open();
         })));
     $.setContext(r -> {
       try {

@@ -1,7 +1,7 @@
 package il.org.spartan.spartanizer.issues;
 
+import static fluent.ly.azzert.*;
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
 import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
@@ -12,9 +12,12 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.junit.*;
+
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.count;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tippers.*;

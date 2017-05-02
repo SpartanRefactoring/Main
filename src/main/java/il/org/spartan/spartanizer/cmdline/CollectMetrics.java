@@ -6,15 +6,16 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.count;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Collect basic metrics of files (later on, maybe change to classes)
  * @author Yossi Gil
@@ -73,11 +74,7 @@ enum CollectMetrics {
   }
 
   private static CSVStatistics init(final String $, final String property) {
-    try {
-      return new CSVStatistics($, property);
-    } catch (final IOException ¢) {
-      throw new RuntimeException(OUTPUT, ¢);
-    }
+    return new CSVStatistics($, property);
   }
 
   /** fault, what happens if we have many classes in the same file? Also, we do

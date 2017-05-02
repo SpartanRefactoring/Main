@@ -8,6 +8,7 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
@@ -62,7 +63,7 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
   @Override @SuppressWarnings("unused") public boolean visit(final TypeDeclaration $) {
     // if (!excludeMethod($))
     try {
-      final Integer key = nano.ly.box.it(measure.commands($));
+      final Integer key = box.it(measure.commands($));
       //
       CUStatistics.putIfAbsent(key, an.empty.list());
       classStatistics.putIfAbsent(key, an.empty.list());

@@ -2,19 +2,18 @@ package il.org.spartan.spartanizer.cmdline.nanos;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
-import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** TODO orimarco {@code marcovitch.ori@gmail.com} please add a description
  * @author orimarco {@code marcovitch.ori@gmail.com}
@@ -61,11 +60,7 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
   }
 
   public static CSVStatistics openSummaryFile(final String $) {
-    try {
-      return new CSVStatistics($, "property");
-    } catch (final IOException ¢) {
-      return note.io(¢, "opening report file");
-    }
+    return new CSVStatistics($, "property");
   }
 
   public void summarizeNumbers() {

@@ -15,14 +15,15 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.ast.navigate.count;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.Utils;
 import il.org.spartan.spartanizer.cmdline.applicator.*;
 import il.org.spartan.spartanizer.engine.*;
-import nano.ly.*;
 
 /** Generator for reports
  * @author Matteo Orru'
@@ -175,11 +176,7 @@ public class ReportGenerator implements ConfigurableReport {
   }
 
   public static void initializeReport(final String reportFileName, final String id) {
-    try {
-      reports.put(id, new CSVStatistics(reportFileName, id));
-    } catch (final IOException ¢) {
-      note.io(¢, id);
-    }
+    reports.put(id, new CSVStatistics(reportFileName, id));
   }
 
   public static CSVStatistics report(final String key) {

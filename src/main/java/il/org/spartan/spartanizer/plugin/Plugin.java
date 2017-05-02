@@ -1,7 +1,9 @@
 package il.org.spartan.spartanizer.plugin;
 
+import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
+import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -9,11 +11,13 @@ import org.eclipse.core.runtime.jobs.*;
 import org.eclipse.ui.*;
 import org.eclipse.ui.plugin.*;
 import org.osgi.framework.*;
+import org.w3c.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
-import nano.ly.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 
 /** TODO Artium Nihamkin please add a description
  * @author Artium Nihamkin
@@ -125,8 +129,14 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     public String type;
   }
 
+  /** Load all the relevant prefrences from all resources (incliding the XML
+   * file) */
   private static void loadPreferences() {
     NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(store().getBoolean(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID));
     ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
+    final IProject[] projects = getAllSpartanizerProjects();
+    final Document doc = XMLSpartan.getXML(projects[0]);
+    doc.getDocumentElement().normalize();
+    notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
   }
 }

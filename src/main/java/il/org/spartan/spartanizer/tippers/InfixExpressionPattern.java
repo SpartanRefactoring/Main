@@ -26,6 +26,7 @@ public abstract class InfixExpressionPattern extends NodePattern<InfixExpression
     property("Operator", () -> operator = current.getOperator());
     property("Rest", () -> rest = step.extendedOperands(current));
     property("Operands", () -> operands = list.prepend(left).to().prepend(right).to(rest));
-    property("Arity", () -> arity = operands.size());
+    andAlso("Arity", () -> (arity = operands.size()) == 2);
   }
+
 }

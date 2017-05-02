@@ -7,7 +7,7 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tippers.Prefix;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @author Dor Ma'ayan
  * @since 2016-12-24 */
-public class PrefixToInfix extends PrefixExpressionPattern implements TipperCategory.Bloater {
+public class PrefixToInfix extends Prefix implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x5414F7B0C6AE739BL;
 
   public PrefixToInfix() {

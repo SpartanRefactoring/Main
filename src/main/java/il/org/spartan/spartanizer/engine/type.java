@@ -1,5 +1,5 @@
 package il.org.spartan.spartanizer.engine;
-
+import static java.util.stream.Collectors.*;
 import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -7,8 +7,6 @@ import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
-
-import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -18,12 +16,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
-import il.org.spartan.iterables.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
-import nano.ly.*;
 
 /** An interface for fluent api, used to determine the __ of an expression from
  * it's structure and context. Use __.get to find the __ of an expression.
@@ -643,7 +639,7 @@ public interface type {
       }
 
       @Override public Iterable<Certain> options() {
-        return iterables.singleton(this);
+        return a.singleton.list(this);
       }
     }
 

@@ -6,12 +6,13 @@ import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import nano.ly.*;
+
 import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
-import il.org.spartan.*;
+
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 

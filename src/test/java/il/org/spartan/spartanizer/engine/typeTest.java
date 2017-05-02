@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.engine.type.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
@@ -8,10 +8,12 @@ import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import il.org.spartan.*;
+
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import nano.ly.*;
+import il.org.spartan.spartanizer.engine.type.*;
+import il.org.spartan.spartanizer.traversal.Traversal.*;
 
 /** unit tests for {@link __} , as well as tests for the types of certain
  * expression using {@link Axiom} .

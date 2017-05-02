@@ -1,11 +1,8 @@
 package il.org.spartan.spartanizer.ast.factory;
-
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static java.util.stream.Collectors.*;
-
-import static il.org.spartan.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -15,6 +12,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
@@ -50,7 +48,7 @@ public enum minus {
   }
 
   public static int level(final InfixExpression ¢) {
-    return out(operator(¢), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
+    return is.out(operator(¢), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
 
   @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
@@ -70,7 +68,7 @@ public enum minus {
   }
 
   public static Expression peel(final InfixExpression ¢) {
-    return out(operator(¢), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(operator(¢));
+    return is.out(operator(¢), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(operator(¢));
   }
 
   private static List<Expression> peel(final Collection<Expression> ¢) {
@@ -82,6 +80,6 @@ public enum minus {
   }
 
   public static Expression peel(final PrefixExpression $) {
-    return out(operator($), op.MINUS1, op.PLUS1) ? $ : peel(operand($));
+    return is.out(operator($), op.MINUS1, op.PLUS1) ? $ : peel(operand($));
   }
 }

@@ -7,7 +7,8 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import il.org.spartan.*;
+
+import fluent.ly.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** Test of {@link AssignmentUpdateAndSameUpdate}
@@ -19,7 +20,7 @@ public class Issue1132 {
   public static void main(final String[] args) {
     ((Triples) (a, b, c) -> {
       if (b * c != 0)
-        azzert.that(String.format("%d %% %d %% %d", nano.ly.box.it(a), nano.ly.box.it(b), nano.ly.box.it(c)), a % b % c, azzert.is(a % (b * c)));
+        azzert.that(String.format("%d %% %d %% %d", box.it(a), box.it(b), box.it(c)), a % b % c, azzert.is(a % (b * c)));
     }).go();
   }
 

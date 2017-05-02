@@ -1,14 +1,12 @@
 package il.org.spartan.spartanizer.ast.safety;
 
-import nano.ly.*;
-
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
-import static nano.ly.box.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
+import static il.org.spartan.spartanizer.ast.navigate.step.nodeType;
 
 import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
@@ -18,6 +16,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -1345,7 +1344,7 @@ public interface iz {
     try {
       return iz.parseLong($) == l;
     } catch (final IllegalArgumentException ¢) {
-      note.bug(box(l), ¢);
+      note.bug(box.it(l), ¢);
       return false;
     }
   }

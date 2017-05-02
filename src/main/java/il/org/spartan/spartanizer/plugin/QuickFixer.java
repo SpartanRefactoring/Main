@@ -12,9 +12,9 @@ import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.ui.*;
 
+import fluent.ly.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.spartanizer.tipping.*;
-import nano.ly.*;
 
 /** A quickfix generator for spartanization refactoring. Revision: final marker
  * resolutions.

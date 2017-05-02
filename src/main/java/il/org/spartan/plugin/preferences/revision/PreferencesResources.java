@@ -4,11 +4,11 @@ import java.util.stream.*;
 
 import org.eclipse.jface.preference.*;
 
+import fluent.ly.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** TODO Daniel Mittelman please add a description
  * @author Daniel Mittelman
@@ -18,6 +18,7 @@ public enum PreferencesResources {
   /** Page description **/
   public static final String PAGE_DESCRIPTION = "Preferences for the Spartanizer plug-in";
   public static final String ZOOMER_PAGE_DESCRIPTION = "Preferences for the Zoomer tool";
+  public static final String WIDGET_PAGE_DESCRIPTION = "Preferences for the Athenizer Widget";
   /** General preferences **/
   public static final String PLUGIN_STARTUP_BEHAVIOR_ID = "pref_startup_behavior";
   public static final String PLUGIN_STARTUP_BEHAVIOR_TEXT = "Plugin startup behavior:";
@@ -30,10 +31,13 @@ public enum PreferencesResources {
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
   public static final String ZOOMER_REVERT_METHOD_ID = "ZOOMER_REVERT_METHOD";
   public static final String ZOOMER_REVERT_METHOD_TEXT = "Compund zoom text edits";
+  public static final String WIDGET_SHORTCUT_METHOD_ID = "WIDGET_SHORTCUT_METHOD";
+  public static final String WIDGET_SHORTCUT_METHOD_TEXT = "Enable widget shorcut - ctrl-w";
   // NOT SAFE
   public static final String TIPPER_CATEGORY_PREFIX = "il.org.spartan";
   public static final Bool NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE = new Bool(true);
   public static final Bool ZOOMER_REVERT_METHOD_VALUE = new Bool(false);
+  public static final Bool WIDGET_SHORTCUT_METHOD_VALUE = new Bool(true);
 
   public static String getLabel(final Class<? extends ExpanderCategory> $) {
     return English.name($);

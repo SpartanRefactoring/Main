@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.tippers;
 
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
-import static il.org.spartan.lisp.*;
+import static fluent.ly.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -12,13 +12,12 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
-import nano.ly.*;
 
 /** Replace {@code x = x # a } by {@code x #= a } where # can be any operator.
  * Tested in {@link Issue103}

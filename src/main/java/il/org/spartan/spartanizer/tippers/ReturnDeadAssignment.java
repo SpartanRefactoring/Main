@@ -19,7 +19,7 @@ import il.org.spartan.utils.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-22 */
-public final class ReturnDeadAssignment extends ReturnValuePattern implements TipperCategory.Deadcode {
+public final class ReturnDeadAssignment extends ReturnValue implements TipperCategory.Deadcode {
   private static final long serialVersionUID = 0x240D679126B42ECDL;
   private Assignment assignment;
   private SimpleName to;

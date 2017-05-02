@@ -23,11 +23,11 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.plugin.*;
-import nano.ly.*;
+import il.org.spartan.spartanizer.traversal.Traversal.*;
 
 /** Fluent API services for the plugin
  * @author Yossi Gil
@@ -229,5 +229,9 @@ public enum eclipse {
     } catch (final JavaModelException ¢) {
       return note.bug(this, ¢);
     }
+  }
+
+  public static IProject[] getAllSpartanizerProjects() {
+    return ResourcesPlugin.getWorkspace().getRoot().getProjects();
   }
 }

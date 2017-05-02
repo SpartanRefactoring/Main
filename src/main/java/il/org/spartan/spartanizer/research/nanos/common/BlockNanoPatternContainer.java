@@ -2,7 +2,7 @@ package il.org.spartan.spartanizer.research.nanos.common;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.research.*;
 
 /** List that can contain {@link NanoPatternTipper<Block>}

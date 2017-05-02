@@ -1,9 +1,10 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.junit.*;
-import il.org.spartan.*;
+
+import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.leonidas.*;
 

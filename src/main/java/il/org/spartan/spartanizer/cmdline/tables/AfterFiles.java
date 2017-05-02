@@ -10,6 +10,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -23,7 +24,6 @@ import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Generates files after nano spartanization+replacing
  * @author Ori Marcovitch
@@ -161,11 +161,7 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
   }
 
   private static CSVStatistics openSummaryFile(final String $) {
-    try {
-      return new CSVStatistics($, "property");
-    } catch (final IOException ¢) {
-      return note.io(¢, "opening report file");
-    }
+    return new CSVStatistics($, "property");
   }
 
   private final Map<String, NanoPatternRecord> npStatistics = new HashMap<>();

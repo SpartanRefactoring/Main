@@ -1,11 +1,12 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import il.org.spartan.*;
+
+import fluent.ly.*;
 import il.org.spartan.spartanizer.tippers.*;
 
 /** * Unit tests for the nesting class Unit test for the containing class. Note

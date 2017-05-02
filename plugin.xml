@@ -42,6 +42,16 @@ the program changes: https://goo.gl/sIqIBC
   </page>
 </extension>
 
+<!-- Widget preferences page -->
+<extension point="org.eclipse.ui.preferencePages">
+  <page
+    name="Widget"
+    class="il.org.spartan.plugin.preferences.revision.WidgetPreferencesPage"
+    id="il.org.spartan.plugin.WidgetPreferencesPage"
+    category="il.org.spartan.plugin.PluginPreferencesPage">
+  </page>
+</extension>
+
 <!-- Preferences-->
 <extension point="org.eclipse.core.runtime.preferences">
   <scope 
@@ -601,6 +611,10 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPullOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPushOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitCommitOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.SpartanizationOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.ZoomerOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CmdOperation" />
+	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CustomWidgetOperation" />
 </extension>
 
 </plugin>

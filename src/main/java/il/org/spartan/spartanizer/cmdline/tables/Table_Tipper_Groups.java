@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.cmdline.tables;
 import java.util.*;
 import java.util.stream.*;
 
+import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
@@ -37,8 +38,8 @@ public class Table_Tipper_Groups {
 
   private static void inc(final Map<TipperGroup, Integer> categories, final TipperCategory λ) {
     final TipperGroup key = λ.tipperGroup();
-    categories.putIfAbsent(key, nano.ly.box.it(0));
-    categories.put(key, nano.ly.box.it(categories.get(key).intValue() + 1));
+    categories.putIfAbsent(key, box.it(0));
+    categories.put(key, box.it(categories.get(key).intValue() + 1));
   }
 
   private static <T> Stream<T> flow(final Collection<T> ¢) {

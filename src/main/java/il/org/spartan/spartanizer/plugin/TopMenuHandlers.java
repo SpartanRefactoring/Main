@@ -5,8 +5,8 @@ import java.util.function.*;
 
 import org.eclipse.core.commands.*;
 
+import fluent.ly.*;
 import il.org.spartan.athenizer.*;
-import nano.ly.*;
 
 /** Some simple handlers to be used by the GUI.
  * @author Ori Roth

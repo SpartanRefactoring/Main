@@ -16,13 +16,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.w3c.dom.*;
 import org.xml.sax.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Support for plugin's XML configurations file for projects. Currently
  * describes what tippers are enabled for the project.
@@ -30,14 +29,14 @@ import nano.ly.*;
  * @since 2017-02-01 */
 public class XMLSpartan {
   public static final String FILE_NAME = "spartanizer.xml";
-  private static final String BASE = "spartan";
-  private static final String CURRENT_VERSION = "5.0";
-  private static final Examples EMPTY_PREVIEW = new Examples()//
+  public static final String BASE = "spartan";
+  public static final String CURRENT_VERSION = "5.0";
+  public static final Examples EMPTY_PREVIEW = new Examples()//
       .convert("[no available preview]")//
       .to("[no available preview]");
-  private static final String ENABLED = "enabled";
-  private static final String KIND = "kind";
-  private static final String VALUE = "value";
+  public static final String ENABLED = "enabled";
+  public static final String KIND = "kind";
+  public static final String VALUE = "value";
   private static final Collection<Class<? extends Tipper<? extends ASTNode>>> NON_CORE = //
       new HashSet<>(as.list(//
           CatchClauseRenameParameterToIt.class, //
@@ -56,10 +55,10 @@ public class XMLSpartan {
           ConstructorEmptyRemove.class, //
           ReturnDeadAssignment.class //
       ));
-  private static final String TIPPER = "tipper";
-  private static final String NOTATION = "notation";
-  private static final String TIPPER_ID = "id";
-  private static final String VERSION = "version";
+  public static final String TIPPER = "tipper";
+  public static final String NOTATION = "notation";
+  public static final String TIPPER_ID = "id";
+  public static final String VERSION = "version";
 
   /** Computes enabled tippers for project. If some error occur (such as a
    * corrupted XML file), full tippers collection is returned.
@@ -216,6 +215,10 @@ public class XMLSpartan {
     n.appendChild($);
   }
 
+  public static Document getXML(final IProject $) {
+    return getFile($);
+  }
+
   /** Return XML file for given project. Creates one if absent.
    * @param p JD
    * @return XML file for project */
@@ -271,7 +274,8 @@ public class XMLSpartan {
   }
 
   /** Initialize XML document. Enables all tippers, except declared non core
-   * tippers.
+   * tippers, also, add to the document the default values for naming\notations
+   * prefrences.
    * @param d JD
    * @return given document */
   private static Document initialize(final Document $) {

@@ -46,7 +46,7 @@ public final class LocalUninitializedAssignment extends LocalUninitialized //
         () -> compute//
             .usedIdentifiers(from)//
             .allMatch(usedName -> laterSiblings()//
-                .allMatch(sibling -> !usedName.equals(sibling.getName() + ""))));
+                .allMatch(λ -> !usedName.equals(λ.getName() + ""))));
   }
 
   @Override public String description() {

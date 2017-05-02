@@ -4,7 +4,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static java.util.stream.Collectors.*;
 
-import static il.org.spartan.lisp.*;
+import static fluent.ly.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
@@ -23,6 +23,7 @@ import org.eclipse.jdt.core.compiler.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -33,7 +34,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Collection of definitions and functions that capture some of the quirks of
  * the {@link ASTNode} hierarchy.

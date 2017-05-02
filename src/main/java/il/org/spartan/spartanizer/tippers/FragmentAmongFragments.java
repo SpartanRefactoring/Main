@@ -13,10 +13,10 @@ import il.org.spartan.spartanizer.engine.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-15 */
-public abstract class FragmentAmongFragmentsPattern extends FragmentPattern {
+public abstract class FragmentAmongFragments extends FragmentPattern {
   private static final long serialVersionUID = 1;
 
-  public FragmentAmongFragmentsPattern() {}
+  public FragmentAmongFragments() {}
 
   public boolean usedInLaterSiblings() {
     return laterSiblings().anyMatch(λ -> compute.usedIdentifiers(λ.getInitializer()).anyMatch(x -> x.equals(identifier)));

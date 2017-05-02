@@ -1,7 +1,9 @@
 package il.org.spartan.plugin.preferences.revision;
 
+import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
+import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -20,16 +22,17 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.*;
+import org.w3c.dom.*;
 
-import il.org.spartan.*;
-import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tippers.Names.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
 
 /** Revised global preferences page for the plugin.
  * @author Ori Roth {@code ori.rothh@gmail.com}
@@ -63,8 +66,10 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     final RadioGroupFieldEditor singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3,
         parameterRenameOptions, getFieldEditorParent());
     singleParameterRadio.setPropertyChangeListener((final PropertyChangeEvent __) -> {
-      // add here the XML Update...
-      // changes.update(p, able);
+      final IProject[] projects = getAllSpartanizerProjects();
+      final Document doc = XMLSpartan.getXML(projects[0]);
+      doc.getDocumentElement().normalize();
+      notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
     });
     addField(singleParameterRadio);
     setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());
@@ -134,6 +139,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     Button configureButton;
     Button ableButton;
 
+    
     ListSelectionEditor(final String name, final String labelText, final Composite parent, final List<Map.Entry<String, Object>> elements,
         final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
       super(name, labelText, parent);
@@ -218,6 +224,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       });
     }
 
+
+    
     @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
       super.doFillIntoGrid(parent, numColumns);
       getButtonBoxControl(parent).dispose();
@@ -358,7 +366,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {/**/}
     });
   }
-
+  
   private static void setRenamingButtons(final RadioGroupFieldEditor e, final Composite parent, final StringFieldEditor other) {
     final Control[] cc = e.getRadioBoxControl(parent).getChildren();
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {

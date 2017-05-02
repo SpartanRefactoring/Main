@@ -5,14 +5,15 @@
  * @since Nov 26, 2016 */
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import il.org.spartan.*;
+
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 
 @SuppressWarnings({ "javadoc", "static-method" })

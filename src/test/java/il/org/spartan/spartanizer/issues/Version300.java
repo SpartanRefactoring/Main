@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
-import static nano.ly.note.*;
 import static org.hamcrest.collection.IsEmptyCollection.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
@@ -12,7 +11,8 @@ import java.util.logging.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
-import il.org.spartan.*;
+
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -27,37 +27,37 @@ public class Version300 {
   @FunctionalInterface
   interface Find {
     default void andAlso(final Find ¢) {
-      bug(¢);
+      note.bug(¢);
     }
 
     default void andIs(final Runnable __1, final Runnable __2) {
-      bug(__1);
-      bug(__2);
+      note.bug(__1);
+      note.bug(__2);
     }
 
     //@formatter:on
     default boolean B(final int ¢) {
-      return fault.bool(bug(nano.ly.box.it(¢)));
+      return fault.bool(note.bug(box.it(¢)));
     }
 
     default boolean B(final Object... __) {
-      return fault.bool(bug(__));
+      return fault.bool(note.bug(__));
     }
 
     default void butNot(final Find ¢) {
-      bug(¢);
+      note.bug(¢);
     }
 
     void find();
 
     default void orElse(final Find ¢) {
-      bug(¢);
+      note.bug(¢);
     }
 
     //@formatter:off
     default Find prerequisite() { return null; }
-    default void S(final int ¢) { bug(nano.ly.box.it(¢)); }
-    default void S(final Object ... __) { bug(__); }
+    default void S(final int ¢) { note.bug(box.it(¢)); }
+    default void S(final Object ... __) { note.bug(__); }
   }
   interface Replace extends Find {
     void replace();

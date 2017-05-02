@@ -16,8 +16,8 @@ public class ZoomerPreferencesPage extends FieldEditorPreferencePage implements 
     setPreferenceStore(Plugin.plugin().getPreferenceStore());
     setDescription(ZOOMER_PAGE_DESCRIPTION);
     store().addPropertyChangeListener(λ -> {
-      if (λ != null && λ.getProperty() != null && λ.getProperty() == ZOOMER_REVERT_METHOD_ID && λ.getNewValue() instanceof Boolean)
-        ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
+      if (λ != null && λ.getProperty() != null && λ.getProperty() == WIDGET_SHORTCUT_METHOD_ID && λ.getNewValue() instanceof Boolean)
+        WIDGET_SHORTCUT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
 

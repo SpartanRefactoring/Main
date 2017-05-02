@@ -11,12 +11,12 @@ import org.junit.runner.*;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.*;
 
+import fluent.ly.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.utils.Example.*;
-import nano.ly.*;
 
 /** Examples tests for bloaters.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>

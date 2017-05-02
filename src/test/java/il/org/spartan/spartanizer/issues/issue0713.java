@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.issues;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -9,11 +9,10 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
-import nano.ly.*;
 
 /** see issue #713 for more details
  * @author Inbal Zukerman

@@ -11,6 +11,7 @@ import static il.org.spartan.spartanizer.ast.navigate.wizard.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 

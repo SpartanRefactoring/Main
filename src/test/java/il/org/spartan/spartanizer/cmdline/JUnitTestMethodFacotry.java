@@ -2,8 +2,7 @@ package il.org.spartan.spartanizer.cmdline;
 
 import static il.org.spartan.spartanizer.engine.nominal.Trivia.*;
 import static java.lang.String.*;
-import static nano.ly.English.*;
-import nano.ly.*;
+
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
@@ -15,6 +14,7 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -35,7 +35,7 @@ public enum JUnitTestMethodFacotry {
     String $ = code;
     for (final String keyword : wizard.keywords)
       $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
-    return lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
+    return English.lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
   }
 
   static String from(final String name, final String raw) {

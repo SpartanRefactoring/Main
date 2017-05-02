@@ -11,18 +11,17 @@ import org.eclipse.text.edits.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
-import nano.ly.*;
 
 /** TODO dormaayn: document class
  * @author dormaayn <tt>dor.d.ma@gmail.com</tt>
  * @since 2017-03-27 */
-public abstract class Local extends FragmentAmongFragmentsPattern {
+public abstract class Local extends FragmentAmongFragments {
   private static final long serialVersionUID = 0x54EEEFC48BF86611L;
   protected VariableDeclarationStatement declaration;
 
   public Local() {
-    andAlso("Must be local variable", //
-        () -> not.nil(declaration = az.variableDeclarationStatement(parent)));
+    needs("Variable declation", //
+        () -> declaration = az.variableDeclarationStatement(parent));
   }
 
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment

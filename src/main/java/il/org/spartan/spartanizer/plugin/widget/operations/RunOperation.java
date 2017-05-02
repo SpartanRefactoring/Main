@@ -5,8 +5,8 @@ import java.util.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.debug.core.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
-import nano.ly.*;
 
 /** Runs predefined run/debug configuration.
  * @author Ori Roth

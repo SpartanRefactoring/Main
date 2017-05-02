@@ -1,16 +1,15 @@
 package il.org.spartan.spartanizer.ast.engine;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.engine.*;
-import nano.ly.*;
 
 /** see Issue #831 for more details
  * @author Lidia Piatigorski

@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -13,7 +14,6 @@ import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.tipping.*;
-import nano.ly.*;
 
 /** Convert {@code void f(int a){}} to {@code void f(int ¢){}}
  * @author Yossi Gil
@@ -28,7 +28,7 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
 
   @Override public Tip tip(final MethodDeclaration d) {
     assert d != null;
-    if (d.isConstructor() || iz.abstract¢(d))
+    if (d.isConstructor() || iz.abstract¢(d) || d.parameters().isEmpty())
       return null;
     final SingleVariableDeclaration parameter = the.onlyOneOf(parameters(d));
     if (!JohnDoe.property(parameter))

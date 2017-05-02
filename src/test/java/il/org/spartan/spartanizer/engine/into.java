@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -9,7 +9,7 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.utils.*;

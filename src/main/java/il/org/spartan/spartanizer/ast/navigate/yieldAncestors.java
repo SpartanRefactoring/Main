@@ -1,12 +1,11 @@
 package il.org.spartan.spartanizer.ast.navigate;
-
-import static nano.ly.idiomatic.*;
+import static fluent.ly.idiomatic.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 
 /** A class to search in the ancestry line of a given node.
  * @author Yossi Gil

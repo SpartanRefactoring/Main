@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -33,7 +34,7 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
       // similar, what are u trying to find? --yg
       body(current).accept(new ASTVisitor(true) {
         @Override public boolean visit(final Block ¢) {
-          $.add(nano.ly.box.it(¢.hashCode() == ¢.hashCode()));
+          $.add(box.it(¢.hashCode() == ¢.hashCode()));
           return true;
         }
       });
