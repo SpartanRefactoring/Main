@@ -2,7 +2,7 @@
 package il.org.spartan.reap;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static java.lang.Math.max;
 import static nano.ly.idiomatic.*;
 

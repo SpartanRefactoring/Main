@@ -1,0 +1,4 @@
+include ':spartan'
+project(':spartan').projectDir = new File(settingsDir, '../spartan')
+include ':fluent.ly'
+project(':fluent.ly').projectDir = new File(settingsDir, '../fluent.ly')

@@ -1,6 +1,6 @@
 package il.org.spartan.java;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.java.Token.*;
 
 import java.io.*;

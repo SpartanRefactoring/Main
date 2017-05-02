@@ -1,0 +1,56 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+repositories {
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+dependencies {
+	compile project(':spartan')
+	compile project(':fluent.ly')
+	compile files('lib/cli-1.02.jar')
+	compile group: 'org.jetbrains', name: 'annotations', version: '13.0'
+	compile 'junit:junit:4.12'
+	compile 'org.hamcrest:hamcrest-junit:2.0.0.0'
+	compile "org.mockito:mockito-core:1.+"
+}
+
+eclipse {
+	classpath {
+		defaultOutputDir = file('target/classes')
+	}
+}
+eclipse.classpath.file {
+    whenMerged { classpath ->
+        classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.Container('org.eclipse.pde.core.requiredPlugins'))
+        classpath.entries.removeAll{entry -> entry.kind=='src' && entry.path=='src/main/resources'}
+    }
+}
+eclipse.project.file {
+	whenMerged { project ->
+		project.buildCommands += [
+			new org.gradle.plugins.ide.eclipse.model.BuildCommand('org.eclipse.jdt.core.javabuilder'),
+			new org.gradle.plugins.ide.eclipse.model.BuildCommand('org.eclipse.pde.ManifestBuilder'),
+			new org.gradle.plugins.ide.eclipse.model.BuildCommand('org.eclipse.pde.SchemaBuilder'),
+			new org.gradle.plugins.ide.eclipse.model.BuildCommand('org.eclipse.buildship.core.gradleprojectbuilder')
+		]
+		project.buildCommands.unique()
+		project.natures += [
+			'org.eclipse.buildship.core.gradleprojectnature',
+			'org.eclipse.pde.PluginNature',
+			'org.eclipse.jdt.core.javanature',
+			'org.eclipse.jdt.core.javanature',
+			'org.springframework.ide.eclipse.core.springnature'
+		]
+		project.natures.unique()
+	}
+}

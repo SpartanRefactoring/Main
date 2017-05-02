@@ -1,6 +1,6 @@
 package il.org.spartan.xy;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.misc.LinearAlgebra.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static java.lang.Math.log;

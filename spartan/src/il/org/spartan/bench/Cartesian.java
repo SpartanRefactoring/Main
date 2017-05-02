@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.utils.___.*;
 
 import org.jetbrains.annotations.*;

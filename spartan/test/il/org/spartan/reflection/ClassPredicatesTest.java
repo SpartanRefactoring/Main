@@ -1,6 +1,6 @@
 package il.org.spartan.reflection;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.reflection.ClassPredicates.*;
 
 import org.jetbrains.annotations.*;

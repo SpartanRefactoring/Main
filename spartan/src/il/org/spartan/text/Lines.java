@@ -2,7 +2,7 @@
 package il.org.spartan.text;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;

@@ -1,9 +1,9 @@
 package il.org.spartan.bench.operations;
 
+import fluent.ly.*;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.bench.*;
-import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 26/04/2011 */

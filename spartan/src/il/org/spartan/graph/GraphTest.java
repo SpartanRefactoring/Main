@@ -1,6 +1,6 @@
 package il.org.spartan.graph;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spartan.graph.GraphsSamplesGenerator.*;
 import static org.junit.Assert.assertEquals;
 
