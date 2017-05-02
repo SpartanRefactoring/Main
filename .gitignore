@@ -350,3 +350,4 @@ out/
 
 # User defined (add below this line) // vim: +,$!sort -u
 >>>>>>> bbb/master
+/.gradle/
