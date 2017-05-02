@@ -13,6 +13,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
+import let.*;
 
 /** Extends {@link org.junit.Assert} with more assertion for equality
  * comparisons. If the comparison yields a "not-equal" result, a JUnit assertion
@@ -775,5 +776,21 @@ public class azzert extends org.junit.Assert {
       azzert.that(reason, claim, is(false));
       return this;
     }
+  }
+
+  public interface Subject<T> {
+    default Subject<T> is(final T object) {
+      assert it().equals(object);
+      return this;
+    }
+
+    T it();
+  }
+  public static <T> Subject<T> that(T subject) {
+    return () -> subject;
+  }
+
+  public static <T> Subject<T> that(final it<T> subject) {
+    return () -> subject.it;
   }
 }

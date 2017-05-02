@@ -32,7 +32,7 @@ public enum as {
    *        type is isomorphic to array parameters in Java
    * @return an {@link Iterable} over the array, which can then be used to to
    *         iterate over the parameter(s) */
-  public static Iterable<Integer> asIterable(@NotNull final Integer... is) {
+  public static Iterable<Integer> asIterable( final Integer... is) {
     // Create an object of a new <em>anonymous</em> class that
     // <code><b>implements</b></code> {@link Iterable}
     return () -> new Iterator<Integer>() {
@@ -48,7 +48,7 @@ public enum as {
     };
   }
 
-  public static Iterable<Integer> asIterableLambda(@NotNull final Integer... is) {
+  public static Iterable<Integer> asIterableLambda( final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current;
 
@@ -83,8 +83,8 @@ public enum as {
    * @param is what to covert
    * @return parameter, converted to the {@link List} of non-
    *         <code><b>int</b></code> {@link Integer}s form. */
-  @NotNull public static List<Integer> ingeterList(@NotNull final int... is) {
-    @NotNull final List<Integer> $ = new ArrayList<>();
+   public static List<Integer> ingeterList( final int... is) {
+     final List<Integer> $ = new ArrayList<>();
     for (final int ¢ : is)
       $.add(fluent.ly.box.it(¢));
     return $;
@@ -103,8 +103,8 @@ public enum as {
    * @param is the list to be converted, none of the elements in it can be
    *        <code><b>null</b></code>
    * @return an array of <code><b>int</b></code>. representing the input. */
-  @NotNull public static int[] intArray(@NotNull final List<Integer> is) {
-    @NotNull final int[] $ = new int[is.size()];
+   public static int[] intArray( final List<Integer> is) {
+     final int  [] $ = new int  [is.size()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = is.get(¢).intValue();
     return $;
@@ -123,7 +123,7 @@ public enum as {
    * @param ¢ what to convert
    * @return a {@link List} of of all <code><b>int</b></code>s in the
    *         parameter */
-  public static List<Integer> list(@NotNull final int... ¢) {
+  public static List<Integer> list( final int... ¢) {
     return as.list(box.it(¢));
   }
 
@@ -132,7 +132,7 @@ public enum as {
    * @param <T> type of items to be converted
    * @param $ what to convert
    * @return parameter, converted to the {@link List} of the given type */
-  public static <T> List<T> list(@NotNull final Iterable<? extends T> $) {
+  public static <T> List<T> list( final Iterable<? extends T> $) {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
 
@@ -158,7 +158,7 @@ public enum as {
    * references to valid instances, into a {@link NotNull}
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
-  @NotNull public static String string(@Nullable final Object $) {
+   public static String string(@Nullable final Object $) {
     return $ == null ? "null" : as.string($ + "");
   }
 
@@ -166,7 +166,7 @@ public enum as {
    * or an actual String, into a {@link NotNull} String.
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
-  @NotNull public static String string(@Nullable final String $) {
+   public static String string(@Nullable final String $) {
     return $ != null ? $ : "null";
   }
 
@@ -174,15 +174,15 @@ public enum as {
    * @param os what to covert
    * @return an array of the parameter values, each converted to i
    *         {@link String} */
-  public static String[] strings(@NotNull final Iterable<?> os) {
-    @NotNull final List<String> $ = new ArrayList<>();
+  public static String[] strings( final Iterable<? extends  Object> os) {
+     final List< String> $ = new ArrayList<>();
     for (final @Nullable Object ¢ : os)
       if (¢ != null)
         $.add(¢ + "");
-    return Utils.cantBeNull($.toArray(new String[$.size()]));
+    return Utils.cantBeNull($.toArray(new String  [$.size()]));
   }
 
-  static Iterable<Integer> asIterableEssence(@NotNull final Integer... is) {
+  static Iterable<Integer> asIterableEssence( final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current;
 
@@ -214,13 +214,13 @@ public enum as {
     }
 
     @Test public void asIntArraySimple() {
-      final int[] is = as.intArray(100, 200, 200, 12, 13, 0);
+      final int  [] is = as.intArray(100, 200, 200, 12, 13, 0);
       assertArrayEquals(is, as.intArray(as.ingeterList(is)));
     }
 
     @Test public void asListSimple() {
       // direct call `as.list(12, 13, 14)` kills Travis --or
-      @NotNull final List<Integer> is = as.list(new int[] { 12, 13, 14 });
+       final List<Integer> is = as.list(new int[] { 12, 13, 14 });
       azzert.that(is.get(0), is(fluent.ly.box.it(12)));
       azzert.that(is.get(1), is(fluent.ly.box.it(13)));
       azzert.that(is.get(2), is(fluent.ly.box.it(14)));
