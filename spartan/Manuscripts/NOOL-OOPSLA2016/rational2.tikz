@@ -1,0 +1,70 @@
+\usegdlibrary{layered}
+
+\begin{tikzpicture}[
+thick,
+    shorten >=3pt,
+    -stealth,
+    p/.style = {% Property
+      label=above left:\cc{#1},
+      rounded corners,
+      font=\footnotesize,
+      rectangle split parts=2,
+	minimum height=0pt,
+	minimum width=0pt,
+    },
+    f/.style = {fill=olive!30,p=#1}, % cvalue
+    v/.style = {fill=Yellow,p=#1,circle,inner sep=2pt,}, % final 
+    r/.style = {fill=YellowGreen,
+      p=#1,
+minimum height=2em,
+      trapezium,
+      trapezium left angle=130, 
+      trapezium right angle=130,
+	inner sep=8pt,
+% inner sep=0pt,
+%  outer sep=0pt,
+    },   % recipe
+    l/.style = { % label
+      ellipse,
+      font=\scriptsize,
+      fill=ProcessBlue!90,
+inner sep=2pt,
+    },
+    valueIsSet/.style = {% Set 
+      draw,
+      very thick,
+    }, 
+    invalidated/.style = {% Set 
+fill=ProcessBlue!20
+    },
+]
+\def\cc#1{{\normalsize\texttt{\textbf{#1}}}}
+  \graph [ 
+     layered layout,
+edges=rounded corners,
+    level distance=12ex,
+    sibling distance=12ex
+    ] {% 
+    % vim: +,/^\s}$/-!column -t
+    d /{\cc{1}}[v=d,valueIsSet],
+    n /{$\bot$}[v=n,valueIsSet],
+    r /{\cc{n/d}}[r=r],
+    infinite /{\cc{d == 0}}[r=infinite],
+    abs /{\cc{r > 0 \relax? r : -r}  }[r=abs],
+    zero /{\cc{abs == 0}  }[r=zero],
+    positive /{\cc{n < 0 == d < 0}}[r=positive],
+    infinite <- d,
+    zero<-abs<-r,
+    r<-{n, d},
+    positive<-{n, d},
+    }; %
+    \node [l,at=(r.south)] {$\bot$};
+    \node [l,valueIsSet,at=(infinite.south)] {\scriptsize\texttt{True}};
+    \node [l,at=(abs.south),invalidated] {$\bot$};
+    \node [l,at=(zero.south),invalidated] {$\bot$};
+    \node [l,valueIsSet,at=(positive.south)] {\scriptsize\texttt{True}};
+    \path[fill=yellow!30,opacity=0.4,fill=white,] 
+    (current bounding box.south west) 
+    rectangle 
+    (current bounding box.north east); 
+\end{tikzpicture}
