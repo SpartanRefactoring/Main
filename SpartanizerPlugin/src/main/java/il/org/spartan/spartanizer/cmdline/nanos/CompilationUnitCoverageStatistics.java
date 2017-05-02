@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.research.nanos.*;
@@ -134,7 +134,7 @@ class CompilationUnitRecord {
     }
   }
 
-  final ElementCounter nodes = new ElementCounter(count::nodes, λ -> λ.nodes.np());
+  final ElementCounter nodes = new ElementCounter(countOf::nodes, λ -> λ.nodes.np());
   final ElementCounter commands = new ElementCounter(measure::commands, λ -> λ.commands.np());
   final ElementCounter expressions = new ElementCounter(measure::expressions, λ -> λ.expressions.np());
   public final Map<String, LightWeightMethodRecord> methods = new HashMap<>();
@@ -203,7 +203,7 @@ class LightWeightMethodRecord {
   private boolean fullyCovered;
 
   public LightWeightMethodRecord(final MethodDeclaration ¢) {
-    nodes = NanoPatternCounter.init(count.nodes(¢));
+    nodes = NanoPatternCounter.init(countOf.nodes(¢));
     commands = NanoPatternCounter.init(measure.commands(¢));
     expressions = NanoPatternCounter.init(measure.expressions(¢));
   }
@@ -232,7 +232,7 @@ class LightWeightMethodRecord {
   }
 
   private void mark(final ASTNode ¢) {
-    nodes.inc(count.nodes(¢));
+    nodes.inc(countOf.nodes(¢));
     commands.inc(measure.commands(¢));
     expressions.inc(measure.expressions(¢));
   }

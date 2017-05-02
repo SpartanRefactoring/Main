@@ -28,7 +28,7 @@ public interface lisp {
    * @return following item in the list, if such such an item exists, otherwise,
    *         the last node */
   @Nullable static <T> T next(final int i, @NotNull final List<T> ts) {
-    return inRange(i + 1, ts) ? ts.get(i + 1) : the.lastOf(ts);
+    return is.inRange(i + 1, ts) ? ts.get(i + 1) : the.lastOf(ts);
   }
 
   /** Retrieve previous item in a list
@@ -77,7 +77,7 @@ public interface lisp {
    * @param os A unknown number of assignments operators
    * @return whether all the operator are the same or false otherwise */
   static boolean areEqual(final Object o, final Object... os) {
-    return !hasNull(o, os) && Stream.of(os).allMatch(λ -> λ == o);
+    return !has.nil(o, os) && Stream.of(os).allMatch(λ -> λ == o);
   }
 
   static <T> List<T> chopLast(final List<T> ¢) {

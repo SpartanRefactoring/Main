@@ -68,11 +68,13 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
   }
 
   @SuppressWarnings("static-method") protected void done(final String path) {
-    ___.______unused(path);
+    Object[] ____ = { path };
+    forget.em(____);
   }
 
   @SuppressWarnings("static-method") protected void init(final String path) {
-    ___.______unused(path);
+    Object[] ____ = { path };
+    forget.em(____);
   }
 
   protected static String makeFile(final String fileName) {

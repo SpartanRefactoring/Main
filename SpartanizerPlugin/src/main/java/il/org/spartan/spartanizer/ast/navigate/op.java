@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
-import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -87,7 +86,7 @@ public enum op {
    *         {@link #InfixExpression.Operator.OR},
    *         {@link #InfixExpression.Operator.AND}, and false otherwise */
   public static boolean isBitwise(final InfixExpression.Operator ¢) {
-    return in(¢, XOR, OR, AND);
+    return is.in(¢, XOR, OR, AND);
   }
 
   /** Determine whether an InfixExpression.Operator is a shift operator or not
@@ -97,7 +96,7 @@ public enum op {
    *         {@link #InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED} and false
    *         otherwise */
   public static boolean isShift(final InfixExpression.Operator ¢) {
-    return in(¢, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
+    return is.in(¢, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
 
   /** @param o JD
@@ -134,7 +133,7 @@ public enum op {
    * @return whether all assignments has the same left hand side and operator as
    *         the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
-    return !hasNull(base, as) && Stream.of(as).noneMatch(λ -> op.incompatible(base, λ));
+    return !has.nil(base, as) && Stream.of(as).noneMatch(λ -> op.incompatible(base, λ));
   }
 
   static boolean compatible(final Assignment a1, final Assignment a2) {
@@ -195,7 +194,7 @@ public enum op {
   }
 
   static boolean incompatible(final Assignment a1, final Assignment a2) {
-    return hasNull(a1, a2) || !lisp.areEqual(a1.getOperator(), a2.getOperator()) || !wizard.eq(step.to(a1), step.to(a2));
+    return has.nil(a1, a2) || !lisp.areEqual(a1.getOperator(), a2.getOperator()) || !wizard.eq(step.to(a1), step.to(a2));
   }
 
   /** Determine whether an InfixExpression.Operator is a comparison operator or
@@ -211,7 +210,7 @@ public enum op {
    *         {@link #InfixExpression.Operator.CONDITIONAL_AND} and false
    *         otherwise */
   public static boolean isComparison(final InfixExpression.Operator ¢) {
-    return in(¢, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
+    return is.in(¢, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
         NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
 
@@ -220,7 +219,7 @@ public enum op {
   }
 
   static boolean notAssociative(final Operator ¢) {
-    return in(¢, MINUS2, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
+    return is.in(¢, MINUS2, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
 
   public static Assignment.Operator[] assignment = { ASSIGN, PLUS_ASSIGN, MINUS_ASSIGN, TIMES_ASSIGN, DIVIDE_ASSIGN, BIT_AND_ASSIGN, BIT_OR_ASSIGN,

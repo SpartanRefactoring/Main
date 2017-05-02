@@ -436,7 +436,7 @@ public interface iz {
   }
 
   static boolean deterministic(final MethodInvocation ¢) {
-    return Utils.in(guessName.of(¢.getName() + ""), guessName.GETTER_METHOD, guessName.IS_METHOD) && //
+    return is.in(guessName.of(¢.getName() + ""), guessName.GETTER_METHOD, guessName.IS_METHOD) && //
         iz.deterministic(arguments(¢));
   }
 

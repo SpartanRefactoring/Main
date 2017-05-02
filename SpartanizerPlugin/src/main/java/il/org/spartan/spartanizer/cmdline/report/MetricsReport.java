@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.Settings.*;
@@ -70,7 +70,7 @@ public class MetricsReport implements ConfigurableReport {
     return as.array(m("length" + id, λ -> (λ + "").length()), //
         m("essence" + id, λ -> Essence.of(λ + "").length()), //
         m("tokens" + id, λ -> metrics.tokens(λ + "")), //
-        m("nodes" + id, count::nodes), //
+        m("nodes" + id, countOf::nodes), //
         m("body" + id, metrics::bodySize), //
         m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()), //
         m("tide" + id, λ -> clean(λ + "").length())); //

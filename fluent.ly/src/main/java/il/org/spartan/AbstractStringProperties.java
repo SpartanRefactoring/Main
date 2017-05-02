@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.jetbrains.annotations.*;
 
-import fluent.ly.separate;
+import fluent.ly.*;
 
 /** @author Yossi Gil
  * @since Apr 8, 2012 */

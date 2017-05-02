@@ -8,7 +8,6 @@ import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
 import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
 
 /** Generate a CSV file including all preliminary information we have on
  * tippers, i.e., without applying these.

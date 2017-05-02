@@ -63,7 +63,7 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
   public abstract void Main(String... args);
 
   @Override public Object start(final IApplicationContext arg0) {
-    ___.unused(arg0);
+    forget.em(arg0);
     try {
       prepareTempIJavaProject();
     } catch (final CoreException ¢) {

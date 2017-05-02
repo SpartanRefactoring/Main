@@ -49,7 +49,7 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
   }
 
   @Override protected void done(final String __) {
-    ___.unused(__);
+    forget.em(__);
     dotter.line();
     summarizeNumbers();
     System.err.println("Your output is in: " + outputFolder);

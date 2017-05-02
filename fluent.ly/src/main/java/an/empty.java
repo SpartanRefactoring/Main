@@ -11,9 +11,10 @@ import fluent.ly.*;
  * @since 2017-04-01 */
 public enum empty {
   ;
-  public static void main(String[] args) {
-   azzert.that(the.first.of("Hello")).is("H");
+  public static void main(final String[] args) {
+    azzert.that(the.first.of("Hello")).is("H");
   }
+
   public static <T> List<T> list() {
     return new ArrayList<>();
   }

@@ -32,7 +32,7 @@ class Table_Effectiveness extends NanoTable {
         statistics.logCompilationUnit($);
         analyze.apply(spartanizer.fixedPoint($));
       } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
-        ___.unused(__);
+        forget.em(__);
       }
       return super.visit($);
     }

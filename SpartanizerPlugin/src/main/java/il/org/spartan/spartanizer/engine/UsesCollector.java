@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.engine;
 
-import static il.org.spartan.Utils.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
@@ -9,6 +7,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 
 abstract class HidingDepth extends ScopeManager {
@@ -463,7 +462,7 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   }
 
   @Override public boolean visit(final PostfixExpression it) {
-    return !in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+    return !is.in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
   }
 
   @Override public boolean visit(@SuppressWarnings("unused") final PrefixExpression __) {

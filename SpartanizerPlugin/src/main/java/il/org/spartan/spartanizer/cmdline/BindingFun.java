@@ -53,7 +53,7 @@ final class BindingFun implements IApplication {
   private IPackageFragment pack;
 
   @Override public Object start(final IApplicationContext arg0) {
-    ___.unused(arg0);
+    forget.em(arg0);
     try {
       prepareTempIJavaProject();
     } catch (final CoreException ¢) {
@@ -67,7 +67,8 @@ final class BindingFun implements IApplication {
         parser.setResolveBindings(true);
         parser.setSource(u);
         final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-        ___.______unused();
+        Object[] ____ = {};
+        forget.em(____);
         iterateMethodInvocations(cu);
       } catch (final IOException ¢) {
         note.io(¢, f + "");

@@ -1,6 +1,6 @@
 package il.org.spartan.spartanizer.java;
+import static fluent.ly.is.*;
 
-import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
 
@@ -15,6 +15,7 @@ import java.util.stream.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
@@ -108,7 +109,7 @@ public enum sideEffects {
   }
 
   public static boolean sink(final Expression x) {
-    return descendants.of(x).stream().mapToInt(λ -> λ.getNodeType()).noneMatch(λ -> intIsIn(λ, STRICT_SIDE_EFFECT));
+    return descendants.of(x).stream().mapToInt(λ -> λ.getNodeType()).noneMatch(λ -> Utils.intIsIn(λ, STRICT_SIDE_EFFECT));
   }
 
   static final int[] STRICT_SIDE_EFFECT = { METHOD_INVOCATION, SUPER_CONSTRUCTOR_INVOCATION, CONSTRUCTOR_INVOCATION, CLASS_INSTANCE_CREATION,

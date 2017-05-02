@@ -8,7 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.engine.*;
 
 /** TODO dormaayn: document class
@@ -30,7 +30,7 @@ public abstract class LocalInitializedStatement extends LocalInitialized {
   }
 
   protected int saving() {
-    return count.nodes(!singleFragment() ? current : declaration);
+    return countOf.nodes(!singleFragment() ? current : declaration);
   }
 
   private boolean singleFragment() {

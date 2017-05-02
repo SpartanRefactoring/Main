@@ -786,7 +786,8 @@ public class azzert extends org.junit.Assert {
 
     T it();
   }
-  public static <T> Subject<T> that(T subject) {
+
+  public static <T> Subject<T> that(final T subject) {
     return () -> subject;
   }
 

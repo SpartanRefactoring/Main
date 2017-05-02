@@ -10,17 +10,20 @@ import fluent.ly.*;
  * @since 19 November 2011 */
 public class SignatureAnalyzer {
   @NotNull public static SignatureAnalyzer ofFile(final String fileName) {
-    ___.______unused(fileName);
+    Object[] ____ = { fileName };
+    forget.em(____);
     return new SignatureAnalyzer();
   }
 
   @NotNull public static SignatureAnalyzer ofReader(final StringReader ¢) {
-    ___.______unused(¢);
+    Object[] ____ = { ¢ };
+    forget.em(____);
     return new SignatureAnalyzer();
   }
 
   @NotNull public static SignatureAnalyzer ofString(final String ¢) {
-    ___.______unused(¢);
+    Object[] ____ = { ¢ };
+    forget.em(____);
     return new SignatureAnalyzer();
   }
 }

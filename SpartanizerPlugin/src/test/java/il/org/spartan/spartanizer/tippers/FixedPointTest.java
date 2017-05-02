@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.tippers;
 
 import static fluent.ly.azzert.*;
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
 import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
@@ -70,17 +69,17 @@ public final class FixedPointTest {
   }
 
   @Test public void hasNullsTest() {
-    assert hasNull((Object) null);
-    assert !hasNull(new Object());
-    assert hasNull(new Object(), null);
-    assert !hasNull(new Object(), new Object());
-    assert !hasNull(new Object(), new Object());
-    assert !hasNull(new Object(), new Object(), new Object());
-    assert !hasNull(new Object(), new Object(), new Object(), new Object());
-    assert hasNull(null, new Object(), new Object(), new Object(), new Object());
-    assert hasNull(new Object(), new Object(), null, new Object(), new Object());
-    assert hasNull(new Object(), new Object(), new Object(), null, new Object());
-    assert hasNull(new Object(), new Object(), new Object(), new Object(), null);
+    assert has.nil((Object) null);
+    assert !has.nil(new Object());
+    assert has.nil(new Object(), null);
+    assert !has.nil(new Object(), new Object());
+    assert !has.nil(new Object(), new Object());
+    assert !has.nil(new Object(), new Object(), new Object());
+    assert !has.nil(new Object(), new Object(), new Object(), new Object());
+    assert has.nil(null, new Object(), new Object(), new Object(), new Object());
+    assert has.nil(new Object(), new Object(), null, new Object(), new Object());
+    assert has.nil(new Object(), new Object(), new Object(), null, new Object());
+    assert has.nil(new Object(), new Object(), new Object(), new Object(), null);
   }
 
   @Test(timeout = 4000) public void inlineInitializers() {

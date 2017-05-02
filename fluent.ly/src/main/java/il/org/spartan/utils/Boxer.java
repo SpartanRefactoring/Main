@@ -3,10 +3,10 @@ package il.org.spartan.utils;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-03-21 */
-public class Outer<Inner> {
+public class Boxer<Inner> {
   public Inner inner;
 
-  public Outer(final Inner inner) {
+  public Boxer(final Inner inner) {
     this.inner = inner;
     if (inner == null || inner == this)
       throw new IllegalArgumentException();
@@ -17,11 +17,11 @@ public class Outer<Inner> {
       return true;
     if (¢ == null || getClass() != ¢.getClass())
       return false;
-    @SuppressWarnings("unchecked") final Outer<Inner> $ = (Outer<Inner>) ¢;
+    @SuppressWarnings("unchecked") final Boxer<Inner> $ = (Boxer<Inner>) ¢;
     return equals($);
   }
 
-  protected boolean equals(final Outer<Inner> other) {
+  protected boolean equals(final Boxer<Inner> other) {
     if (inner == null) {
       if (other.inner != null)
         return false;

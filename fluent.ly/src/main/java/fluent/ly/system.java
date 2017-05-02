@@ -1,10 +1,8 @@
-package il.org.spartan.utils;
+package fluent.ly;
 
 import java.io.*;
 import java.text.*;
 import java.util.*;
-
-import fluent.ly.*;
 
 /** Not such a good name for a bunch of static functions
  * @author Yossi Gil

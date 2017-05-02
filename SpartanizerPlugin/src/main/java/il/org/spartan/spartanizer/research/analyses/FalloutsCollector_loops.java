@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.util.*;
-import il.org.spartan.utils.*;
 
 /** Find all loops not matched by a nano pattern
  * @author orimarco <marcovitch.ori@gmail.com>

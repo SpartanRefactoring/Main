@@ -1,13 +1,13 @@
 package il.org.spartan.spartanizer.engine;
 
-import static java.util.stream.Collectors.*;
-import static il.org.spartan.Utils.*;
 import static il.org.spartan.spartanizer.engine.type.Odd.Types.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Certain.*;
 import static il.org.spartan.spartanizer.engine.type.Primitive.Uncertain.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
+
+import static java.util.stream.Collectors.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -103,7 +103,7 @@ public interface type {
    *         safely assume that {@code +} is used for addition in this
    *         context */
   static boolean isNotString(final Expression ¢) {
-    return !in(of(¢), STRING, ALPHANUMERIC);
+    return !is.in(of(¢), STRING, ALPHANUMERIC);
   }
 
   static boolean isObject(final Type ¢) {
@@ -175,7 +175,7 @@ public interface type {
    *         {@link #INTEGRAL} or {@link #NUMERIC} , {@link #STRING} ,
    *         {@link #ALPHANUMERIC} or false otherwise */
   default boolean isAlphaNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
+    return is.in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
 
   /** @return whethereither a Primitive.Certain, Primitive.Odd.NULL or a
@@ -188,14 +188,14 @@ public interface type {
    *         {@link BYTE} , {@link SHORT} , {@link #INTEGRAL} or false
    *         otherwise */
   default boolean isIntegral() {
-    return in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
+    return is.in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
   }
 
   /** @return whether one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
    *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
    *         {@link #INTEGRAL} , {@link #NUMERIC} or false otherwise */
   default boolean isNumeric() {
-    return in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
+    return is.in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
 
   /** @return the formal name of this __, the key under which it is stored in
@@ -408,7 +408,7 @@ public interface type {
       }
 
       default implementation aboveBinaryOperator(final InfixExpression.Operator ¢) {
-        return in(¢, EQUALS, NOT_EQUALS) ? this
+        return is.in(¢, EQUALS, NOT_EQUALS) ? this
             : ¢ == op.PLUS2 ? asAlphaNumeric() : op.isBitwise(¢) ? asBooleanIntegral() : op.isShift(¢) ? asIntegral() : asNumeric();
       }
 
@@ -453,13 +453,13 @@ public interface type {
        * @return whether one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or
        *         false otherwise. */
       default boolean isIntUnderOperation() {
-        return in(this, CHAR, BYTE, SHORT);
+        return is.in(this, CHAR, BYTE, SHORT);
       }
 
       /** @return whether one of {@link #NOTHING}, {@link #NULL} or false
        *         otherwise */
       default boolean isNoInfo() {
-        return in(this, NOTHING, NULL);
+        return is.in(this, NOTHING, NULL);
       }
 
       default implementation join() {
@@ -476,7 +476,7 @@ public interface type {
       default implementation under(final PrefixExpression.Operator ¢) {
         assert ¢ != null;
         return ¢ == NOT ? BOOLEAN
-            : in(¢, DECREMENT, INCREMENT) ? asNumeric() : ¢ != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
+            : is.in(¢, DECREMENT, INCREMENT) ? asNumeric() : ¢ != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
       }
 
       /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
@@ -492,9 +492,9 @@ public interface type {
           return underBitwiseOperation(k);
         if (o == REMAINDER)
           return underIntegersOnlyOperator(k);
-        if (in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
+        if (is.in(o, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED))
           return asIntegralUnderOperation();
-        if (!in(o, TIMES, DIVIDE, op.MINUS2))
+        if (!is.in(o, TIMES, DIVIDE, op.MINUS2))
           throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
         return underNumericOnlyOperator(k);
       }
@@ -519,7 +519,7 @@ public interface type {
 
       default implementation underIntegersOnlyOperator(final implementation k) {
         final implementation $ = asIntegralUnderOperation(), ¢2 = k.asIntegralUnderOperation();
-        return in(LONG, $, ¢2) ? LONG : !in(INTEGRAL, $, ¢2) ? INT : INTEGRAL;
+        return is.in(LONG, $, ¢2) ? LONG : !is.in(INTEGRAL, $, ¢2) ? INT : INTEGRAL;
       }
 
       /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
@@ -534,11 +534,11 @@ public interface type {
         final implementation $ = k.asNumericUnderOperation();
         assert $ != null;
         assert $.isNumeric() : this + ": is for some reason not numeric ";
-        return in(DOUBLE, $, this) ? DOUBLE // Double contaminates Numeric
-            : in(NUMERIC, $, this) ? NUMERIC // Numeric contaminates Float
-                : in(FLOAT, $, this) ? FLOAT // FLOAT contaminates Integral
-                    : in(LONG, $, this) ? LONG : // LONG contaminates INTEGRAL
-                        !in(INTEGRAL, $, this) ? INT : INTEGRAL;// INTEGRAL
+        return is.in(DOUBLE, $, this) ? DOUBLE // Double contaminates Numeric
+            : is.in(NUMERIC, $, this) ? NUMERIC // Numeric contaminates Float
+                : is.in(FLOAT, $, this) ? FLOAT // FLOAT contaminates Integral
+                    : is.in(LONG, $, this) ? LONG : // LONG contaminates INTEGRAL
+                        !is.in(INTEGRAL, $, this) ? INT : INTEGRAL;// INTEGRAL
                                                                 // contaminates
                                                                 // INT
       }
@@ -549,7 +549,7 @@ public interface type {
       default implementation underPlus(final implementation k) {
         // addition with NULL or String must be a String
         // unless both operands are numeric, the result is alphanumeric
-        return in(STRING, this, k) || in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
+        return is.in(STRING, this, k) || is.in(NULL, this, k) ? STRING : !isNumeric() || !k.isNumeric() ? ALPHANUMERIC : underNumericOnlyOperator(k);
       }
     }
   }

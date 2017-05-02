@@ -79,7 +79,7 @@ public interface Proposition extends BooleanSupplier {
     return ¢.reduce(this);
   }
 
-  abstract class Aggregate<Inner> extends Outer<Inner> implements Proposition {
+  abstract class Aggregate<Inner> extends Boxer<Inner> implements Proposition {
     public Aggregate(final String toString, final Inner inner) {
       super(inner);
       this.toString = toString;

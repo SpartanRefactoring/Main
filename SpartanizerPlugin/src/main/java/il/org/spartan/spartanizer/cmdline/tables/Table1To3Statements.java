@@ -18,7 +18,6 @@ import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
 
 /** Table representing coverage for methods with 1 to 3 statements
  * @deprecated
@@ -58,7 +57,7 @@ public class Table1To3Statements extends DeprecatedFolderASTVisitor {
       findFirst.instanceOf(MethodDeclaration.class)
           .in(make.ast(WrapIntoComilationUnit.Method.off(nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))));
     } catch (final AssertionError __) {
-      ___.unused(__);
+      forget.em(__);
     }
     return true;
   }

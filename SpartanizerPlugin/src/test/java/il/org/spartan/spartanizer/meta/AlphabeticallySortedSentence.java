@@ -69,7 +69,7 @@ public class AlphabeticallySortedSentence extends MetaFixture {
   }
 
   private AlphabeticallySortedSentence(final Void __) {
-    ___.unused(__);
+    forget.em(__);
   }
 
   private void forbidden() {

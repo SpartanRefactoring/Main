@@ -2,9 +2,9 @@ package il.org.spartan.spartanizer.cmdline.tables;
 
 import java.lang.reflect.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
 
 /** TODO Matteo Orru': document class {@link }
  * @author Matteo Orru' {@code matteo.orru@cs.technion.ac.il}

@@ -64,7 +64,7 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
     final Expression expression = ¢.getExpression(), then = ¢.getThenExpression(), elze = ¢.getElseExpression(),
         $ = pushdownNot(pair(pair(expression, then).to(CONDITIONAL_AND), elze).to(CONDITIONAL_OR)),
         $2 = pair(notOf(then), notOf(elze)).toCondition(expression);
-    return count.nodes($) < count.nodes($2) ? $ : $2;
+    return countOf.nodes($) < countOf.nodes($2) ? $ : $2;
   }
 
   private static Expression comparison(final InfixExpression ¢) {

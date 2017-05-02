@@ -18,7 +18,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.Utils;
@@ -46,7 +46,7 @@ public class ReportGenerator implements ConfigurableReport {
     DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
-          m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, count::nodes), m("body" + id, metrics::bodySize),
+          m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, countOf::nodes), m("body" + id, metrics::bodySize),
           m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
           m("tide" + id, λ -> clean(λ + "").length()));//
     }
@@ -55,7 +55,7 @@ public class ReportGenerator implements ConfigurableReport {
       final HashMap<String, NamedFunction[]> $ = new HashMap<>();
       $.put("metrics", functions(""));
       $.put("methods",
-          as.array(m("N. of Nodes", count::nodes), //
+          as.array(m("N. of Nodes", countOf::nodes), //
               m("Average Depth", λ -> -1000), // (¢) -> Essence.of(¢ +
                                               // "").length()), //
               m("Average Uncle Depth", λ -> -1000), // (¢) -> Essence.of(¢ +

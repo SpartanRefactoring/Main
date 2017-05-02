@@ -119,7 +119,8 @@ public final class GroupFieldEditor extends FieldEditor {
   }
 
   @Override protected void doFillIntoGrid(final Composite __parent, final int __numColumns) {
-    ___.______unused(__parent, box.it(__numColumns));
+    Object[] ____ = { __parent, box.it(__numColumns) };
+    forget.em(____);
   }
 
   @Override protected void doLoad() {

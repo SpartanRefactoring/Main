@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.utils;
 import static fluent.ly.azzert.*;
 import static il.org.spartan.Utils.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -26,11 +27,13 @@ public final class UtilsTest {
   }
 
   @Test public void inTypicalFalse() {
-    assert !in("X", "A", "B", "C");
+    String @NonNull [] ts = { "A", "B", "C" };
+    assert !is.in("X",ts);
   }
 
   @Test public void inTypicalTrue() {
-    assert in("A", "A", "B", "C");
+    String @NonNull [] ts = { "A", "B", "C" };
+    assert is.in("A",ts);
   }
 
   @Test public void removePrefiEmpty() {

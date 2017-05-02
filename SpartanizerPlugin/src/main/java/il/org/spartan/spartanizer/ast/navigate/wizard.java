@@ -470,7 +470,7 @@ public interface wizard {
     final Statement then = then(s), elze = elze(s);
     if (elze == null)
       return true;
-    final int s1 = count.lines(then), s2 = count.lines(elze);
+    final int s1 = countOf.lines(then), s2 = countOf.lines(elze);
     if (s1 < s2)
       return true;
     if (s1 > s2)

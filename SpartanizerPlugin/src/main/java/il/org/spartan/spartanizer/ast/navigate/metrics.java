@@ -28,7 +28,7 @@ public interface metrics {
     n.accept(new ASTVisitor(true) {
       @Override public boolean visit(final MethodDeclaration ¢) {
         if (¢.getBody() != null)
-          $.inner += count.nodes(¢.getBody());
+          $.inner += countOf.nodes(¢.getBody());
         return false;
       }
     });
@@ -168,7 +168,7 @@ public interface metrics {
   }
 
   @SuppressWarnings("boxing") static int size(final ASTNode... ns) {
-    return Stream.of(ns).map(count::nodes).reduce((x, y) -> x + y).get();
+    return Stream.of(ns).map(countOf::nodes).reduce((x, y) -> x + y).get();
   }
 
   static int tokens(final String s) {

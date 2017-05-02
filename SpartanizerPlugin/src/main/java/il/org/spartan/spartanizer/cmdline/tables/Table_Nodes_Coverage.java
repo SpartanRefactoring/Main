@@ -43,7 +43,7 @@ public class Table_Nodes_Coverage {
           statistics.logAfterSpartanization(into.cu(spartanzied));
           analyze.apply(spartanzied);
         } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
-          ___.unused(__);
+          forget.em(__);
         }
         return true;
       }

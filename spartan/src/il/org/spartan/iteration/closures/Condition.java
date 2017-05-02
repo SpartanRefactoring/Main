@@ -4,6 +4,8 @@ import static fluent.ly.___.*;
 
 import org.jetbrains.annotations.*;
 
+import fluent.ly.*;
+
 /** An interface representing a boolean function taking single argument boolean.
  * @param <Argument> Type of argument
  * @author Yossi Gil
@@ -23,7 +25,7 @@ public interface Condition<Argument> {
      * @return the passed argument */
     public static <T> Condition<T> all() {
       return λ -> {
-        unused(λ);
+        forget.em(λ);
         return true;
       };
     }
@@ -48,7 +50,7 @@ public interface Condition<Argument> {
      * @return an empty iterable */
     public static <T> Condition<T> none() {
       return λ -> {
-        unused(λ);
+        forget.em(λ);
         return false;
       };
     }

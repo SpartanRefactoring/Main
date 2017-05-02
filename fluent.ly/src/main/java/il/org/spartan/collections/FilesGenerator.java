@@ -6,7 +6,7 @@ import java.util.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 
-import fluent.ly.as;
+import fluent.ly.*;
 
 /** Provides, employing fluent API, a {@link Iterable} interface for iteration
  * over files in the file system.
