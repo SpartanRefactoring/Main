@@ -1,6 +1,6 @@
 package il.org.spatan.iteration;
 
-import static il.org.spartan.utils.___.*;
+import static fluent.ly.___.*;
 
 /** @param <T> Type over which we shall iterate * @author Yossi Gil
  * @since 01/05/2011 */

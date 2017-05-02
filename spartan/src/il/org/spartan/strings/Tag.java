@@ -3,13 +3,14 @@ package il.org.spartan.strings;
 
 import static fluent.ly.azzert.*;
 import static il.org.spartan.strings.RE.*;
-import static il.org.spartan.utils.___.*;
+import static fluent.ly.___.*;
 
 import java.util.regex.*;
 
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;

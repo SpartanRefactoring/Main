@@ -3,7 +3,7 @@
  */
 package il.org.spartan.utils;
 
-import static nano.ly.box.*;
+import static fluent.ly.box.*;
 import static org.junit.Assert.*;
 
 import java.util.*;

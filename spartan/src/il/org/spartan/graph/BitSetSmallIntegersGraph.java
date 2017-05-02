@@ -8,7 +8,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 /** An immutable undirected graph whose nodes are short integers in the range
  * 0..N where N is small, with the compact representation of an array of size N

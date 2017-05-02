@@ -8,6 +8,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import fluent.ly.*;
+
 /** A class for lazy, memoizing evaluation of objects of arbitrary type. The
  * evaluation must never return <code><b>null</b></code>.
  * @param <T> some arbitrary type

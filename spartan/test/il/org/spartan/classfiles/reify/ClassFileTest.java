@@ -16,7 +16,7 @@ import il.org.spartan.files.visitors.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 @SuppressWarnings("static-method") public class ClassFileTest {
   private static final String GOOD_FILE_PATH = "bin/il/ac/technion/cs/ssdl/classfiles/reify/ClassFileTest.class";

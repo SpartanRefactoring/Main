@@ -1,7 +1,7 @@
 package il.org.spatan.iteration;
 
-import static nano.ly.box.*;
-import static nano.ly.unbox.*;
+import static fluent.ly.box.*;
+import static fluent.ly.unbox.*;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -11,7 +11,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.iteration.closures.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 public class Iterables {
   @NotNull public static <T, C extends Collection<T>> C addAll(@NotNull final C $, @NotNull final Iterable<? extends T> ts) {

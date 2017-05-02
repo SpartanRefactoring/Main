@@ -4,7 +4,7 @@ package il.org.spartan.utils;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.streotypes.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 /** A class to manage printing a {@link String} exactly once. In the first
  * invocation of {@link #toString()}, the initial value is returned. In all

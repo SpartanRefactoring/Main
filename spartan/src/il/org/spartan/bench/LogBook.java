@@ -4,8 +4,8 @@ import static fluent.ly.azzert.*;
 import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
 import static il.org.spartan.strings.StringUtils.*;
-import static il.org.spartan.utils.___.*;
-import static nano.ly.box.*;
+import static fluent.ly.___.*;
+import static fluent.ly.box.*;
 
 import java.io.*;
 import java.util.*;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Accumulator.Counter;

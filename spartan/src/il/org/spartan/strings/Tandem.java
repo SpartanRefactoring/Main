@@ -4,7 +4,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.Iterables.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 /** @author Yossi Gil
  * @since Apr 27, 2012 */

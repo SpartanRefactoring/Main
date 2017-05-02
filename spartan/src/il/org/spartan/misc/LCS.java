@@ -3,6 +3,7 @@ package il.org.spartan.misc;
 
 import static il.org.spartan.Utils.*;
 import static fluent.ly.azzert.*;
+import static java.lang.Math.max;
 
 import java.util.*;
 
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 import org.junit.runners.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.text.*;
 
@@ -108,7 +110,7 @@ public class LCS {
   }
 
   private int threeWayDynamicProgramingStep(final int i, final int j) {
-    return max(length(i - 1, j), length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j]));
+    return max(length(i - 1, j), max(length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j])));
   }
 
 

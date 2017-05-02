@@ -9,6 +9,7 @@ import org.junit.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
+import fluent.ly.*;
 
 /** @author Yossi Gil
  * @since 26 November 2011 */

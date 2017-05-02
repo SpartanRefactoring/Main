@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 
-// import static il.org.spartan.utils.___.*;
+// import static fluent.ly.___.*;
 import il.org.spartan.Aggregator.Aggregation.FormatSpecifier;
 import il.org.spartan.statistics.ImmutableStatistics;
 import il.org.spartan.statistics.RealStatistics;

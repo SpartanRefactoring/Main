@@ -2,7 +2,7 @@
 package il.org.spartan.reap;
 
 import static il.org.spartan.Utils.*;
-import static nano.ly.idiomatic.*;
+import static fluent.ly.idiomatic.*;
 
 import java.util.*;
 import java.util.function.*;

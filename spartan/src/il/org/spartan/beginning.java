@@ -8,7 +8,7 @@ import org.junit.*;
 import org.junit.runners.*;
 
 import il.org.spartan.iterables.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 public interface beginning {
   String COMMA = ",";

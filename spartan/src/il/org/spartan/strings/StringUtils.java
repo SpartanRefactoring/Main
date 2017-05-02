@@ -1,6 +1,6 @@
 package il.org.spartan.strings;
 
-import static il.org.spartan.utils.___.*;
+import static fluent.ly.___.*;
 
 import java.io.*;
 import java.util.*;

@@ -5,6 +5,8 @@ import static fluent.ly.azzert.*;
 
 import org.jetbrains.annotations.*;
 
+import fluent.ly.*;
+
 /** Fluent API
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-10-15 */

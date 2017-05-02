@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.*;
 import org.eclipse.jdt.annotation.*;
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.*;
-import il.org.spartan.utils.___.*;
+import fluent.ly.*;
+import fluent.ly.___.*;
 
 /** An unsorted set of integers supporting the basic set operations:
  * {@link #add} , {@link #contains} and {@link #remove}.
