@@ -7,6 +7,8 @@ import java.io.*;
 
 import org.jetbrains.annotations.*;
 
+import fluent.ly.*;
+
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public class TokenAsIs extends TokenProcessor {
@@ -29,7 +31,7 @@ public class TokenAsIs extends TokenProcessor {
   private final StringBuilder $ = new StringBuilder();
 
   @Override public void process(final Token t, final String text) {
-    unused(t);
+    forget.em(t);
     $.append(text);
   }
 

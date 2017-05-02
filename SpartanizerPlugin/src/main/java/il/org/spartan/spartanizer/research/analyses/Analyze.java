@@ -16,7 +16,7 @@ import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.java.*;
@@ -137,7 +137,7 @@ public enum Analyze {
         Logger.finishedType();
       });
     }
-    methods.sort((x, y) -> count.statements(x) < count.statements(y) ? -1 : as.bit(count.statements(x) > count.statements(y)));
+    methods.sort((x, y) -> countOf.statements(x) < countOf.statements(y) ? -1 : as.bit(countOf.statements(x) > countOf.statements(y)));
     writeFile(new File(outputDir() + "/after.java"), methods.stream().map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y));
     writeFile(new File(outputDir() + "/notTagged.java"),
         methods.stream().filter(λ -> !(javadoc(λ) + "").contains("[[")).map(λ -> format.code(λ + "")).reduce("", (x, y) -> x + y));
@@ -198,7 +198,7 @@ public enum Analyze {
                     analyses.values().forEach(λ -> λ.logMethod(¢, findFirst.instanceOf(MethodDeclaration.class)
                         .in(make.ast(WrapIntoComilationUnit.Method.off(spartanizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + "")))))));
                   } catch (final AssertionError __) {
-                    ___.unused(__);
+                    forget.em(__);
                     //
                   }
                 })));

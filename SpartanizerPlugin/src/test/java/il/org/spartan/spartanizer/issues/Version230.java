@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.issues;
 
+
 import static fluent.ly.azzert.*;
-import static il.org.spartan.Utils.*;
+import static fluent.ly.is.*;
 import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;
 import static il.org.spartan.spartanizer.engine.into.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsAll.*;
@@ -17,7 +18,6 @@ import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -1083,8 +1083,8 @@ public final class Version230 {
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
     final Expression e1 = left(e), e2 = right(e);
-    assert !hasNull(e1, e2);
-    assert count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD;
+    assert !has.nil(e1, e2);
+    assert countOf.nodes(e1) > countOf.nodes(e2) + NODES_THRESHOLD;
     assert moreArguments(e1, e2);
     assert longerFirst(e);
     assert s.check(e) : "e=" + e + " s=" + s;
@@ -1103,8 +1103,8 @@ public final class Version230 {
     azzert.that(s, instanceOf(InfixMultiplicationSort.class));
     assert s.check(e);
     final Expression e1 = left(e), e2 = right(e);
-    assert !hasNull(e1, e2);
-    assert count.nodes(e1) <= count.nodes(e2) + NODES_THRESHOLD;
+    assert !has.nil(e1, e2);
+    assert countOf.nodes(e1) <= countOf.nodes(e2) + NODES_THRESHOLD;
     assert moreArguments(e1, e2);
     assert longerFirst(e);
     assert s.check(e) : "e=" + e + " s=" + s;

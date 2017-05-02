@@ -13,7 +13,7 @@ import il.org.spartan.collections.*;
 import il.org.spartan.external.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.java.*;
@@ -104,7 +104,7 @@ public enum SpartanizationComparator {
         m("length - ", metrics::length), //
         m("essence - ", λ -> Essence.of(λ + "").length()), //
         m("tokens - ", λ -> metrics.tokens(λ + "")), //
-        m("nodes - ", count::nodes), //
+        m("nodes - ", countOf::nodes), //
         m("body - ", metrics::bodySize), //
         m("methodDeclaration - ", λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
         m("tide - ", λ -> clean(λ + "").length()));//

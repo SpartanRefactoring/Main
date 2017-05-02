@@ -64,7 +64,7 @@ public class Table_Summary_Unspartanized extends Table_Summary {
           logAfterSpartanization(¢);
           analyze.apply(¢ + "");
         } catch (final AssertionError | MalformedTreeException | IllegalArgumentException __) {
-          ___.unused(__);
+          forget.em(__);
         }
         return true;
       }

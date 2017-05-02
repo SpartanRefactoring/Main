@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.Utils.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;
 
@@ -79,7 +78,7 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
-    if (!in(x.getOperator(), PLUS, MINUS))
+    if (!is.in(x.getOperator(), PLUS, MINUS))
       $.add(x);
     else {
       gather(core(left(x)), $);

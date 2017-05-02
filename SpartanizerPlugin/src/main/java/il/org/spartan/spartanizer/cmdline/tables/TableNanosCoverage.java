@@ -16,7 +16,6 @@ import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.util.*;
 import il.org.spartan.spartanizer.utils.*;
 import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
 
 /** Table representing coverage for methods up to 30 statements
  * @author orimarco {@code marcovitch.ori@gmail.com}
@@ -52,7 +51,7 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       statementsCoverageStatistics.get(key).add(m);
       nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢ + ""));
     } catch (final AssertionError __) {
-      ___.unused(__);
+      forget.em(__);
     }
     return true;
   }

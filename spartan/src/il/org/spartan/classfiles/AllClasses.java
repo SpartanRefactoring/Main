@@ -6,6 +6,7 @@ import java.io.*;
 
 import org.jetbrains.annotations.*;
 
+import fluent.ly.*;
 import il.org.spartan.files.visitors.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 
@@ -18,7 +19,7 @@ public class AllClasses {
         }
 
         @Override public void visitZipEntry(@NotNull final String entryName, final InputStream __) {
-          unused(__);
+          forget.it(__);
           System.out.println(Filename.path2class(entryName, root));
         }
       }).go();

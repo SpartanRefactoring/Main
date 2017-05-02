@@ -1,5 +1,4 @@
 package fluent.ly;
-import static java.lang.Math.*;
 
 import java.util.function.*;
 

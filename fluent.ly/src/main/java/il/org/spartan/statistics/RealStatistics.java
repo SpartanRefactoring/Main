@@ -1,15 +1,15 @@
 package il.org.spartan.statistics;
 
-import fluent.ly.azzert;
-import static fluent.ly.azzert.*;
 import static org.junit.Assert.assertEquals;
+
+import static fluent.ly.azzert.*;
 
 import java.util.*;
 
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
-import fluent.ly.as;
+import fluent.ly.*;
 
 /** A class to compute statistics, e.g., the minimal and maximal value, the mean
  * and the standard deviation, of a sequence of real numbers.

@@ -4,13 +4,13 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.research.analyses.*;
 import il.org.spartan.spartanizer.research.nanos.common.*;
 import il.org.spartan.spartanizer.research.nanos.common.NanoPatternTipper.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.tables.*;
-import il.org.spartan.utils.*;
 
 /** A class which generates a table of all Nano Patterns gathered by categories.
  * @author orimarco {@code marcovitch.ori@gmail.com}

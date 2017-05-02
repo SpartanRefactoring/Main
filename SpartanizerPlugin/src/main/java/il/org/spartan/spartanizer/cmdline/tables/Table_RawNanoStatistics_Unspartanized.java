@@ -45,7 +45,7 @@ public class Table_RawNanoStatistics_Unspartanized extends Table_RawNanoStatisti
           $.accept(new AnnotationCleanerVisitor());
           nanonizer.fixedPoint($);
         } catch (final IllegalArgumentException | AssertionError __) {
-          ___.unused(__);
+          forget.em(__);
         }
         return super.visit($);
       }

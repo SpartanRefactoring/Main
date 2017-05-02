@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
-
-import static il.org.spartan.Utils.*;
+import static fluent.ly.is.*;
 
 import java.util.*;
 

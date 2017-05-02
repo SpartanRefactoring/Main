@@ -168,17 +168,28 @@ public interface the {
     return ¢.substring(1);
   }
 
-  static<T> T[] tailOf(T[] ts) {
-    return Arrays.copyOfRange(ts,1, ts.length);
+  static <T> T[] tailOf(final T[] ts) {
+    return Arrays.copyOfRange(ts, 1, ts.length);
+  }
+
+  /** @param <T> JD
+   * @param ¢ a list
+   * @return last item in a list or <code><b>null</b></code> if the parameter is
+   *         <code><b>null</b></code> or empty */
+  static <T> @Nullable T penultimate(final List<T> ¢) {
+    return eval(() -> ¢.get(¢.size() - 2)).unless(¢ == null || ¢.size() < 2);
   }
 
   interface first {
-    default it<String> of(String s) {
-      return new it<>(s.substring(0,1));
+    default it<String> of(final String s) {
+      return new it<>(s.substring(0, 1));
     }
-    default <T> it<T> of(T[] ts) {
+
+    default <T> it<T> of(final T[] ts) {
       return new it<>(ts[0]);
     }
   }
-  first first = new first() {};
+
+  first first = new first() {
+  };
 }

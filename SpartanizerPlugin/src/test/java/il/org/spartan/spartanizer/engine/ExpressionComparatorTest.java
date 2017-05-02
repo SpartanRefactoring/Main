@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 
 /** Test class for {@link ExpressionComparator}
  * @author Yossi Gil
@@ -97,7 +97,7 @@ public final class ExpressionComparatorTest {
   }
 
   private int cs(final String statement) {
-    return count.lines(s(statement));
+    return countOf.lines(s(statement));
   }
 
   @Test public void literalAndClassConstant() {

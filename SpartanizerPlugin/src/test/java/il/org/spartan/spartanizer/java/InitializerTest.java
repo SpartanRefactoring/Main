@@ -21,7 +21,8 @@ public final class InitializerTest {
   static int c;
 
   static void print(final Object ¢) {
-    ___.______unused(¢);
+    Object[] ____ = { ¢ };
+    forget.em(____);
   }
 
   final int e;

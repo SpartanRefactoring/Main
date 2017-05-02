@@ -12,7 +12,7 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -132,13 +132,13 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
   }
 
   boolean collect(final AbstractTypeDeclaration in) {
-    final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = count.nodes(in), body = metrics.bodySize(in),
+    final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = countOf.nodes(in), body = metrics.bodySize(in),
         tide = clean(in + "").length(), essence = Essence.of(in + "").length();
     final String out = interactiveSpartanizer.fixedPoint(in + "");
     final int length2 = out.length(), tokens2 = metrics.tokens(out), tide2 = clean(out + "").length(), essence2 = Essence.of(out + "").length(),
         wordCount = system.wc(Essence.of(out + ""));
     final ASTNode from = makeAST.COMPILATION_UNIT.from(out);
-    final int nodes2 = count.nodes(from), body2 = metrics.bodySize(from);
+    final int nodes2 = countOf.nodes(from), body2 = metrics.bodySize(from);
     System.err.println(++classesDone + " " + extract.category(in) + " " + extract.name(in));
     befores.print(in);
     afters.print(out);

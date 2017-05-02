@@ -78,7 +78,8 @@ public class SpartanizerTest {
   }
 
   static void print(final Object ¢) {
-    ___.______unused(¢);
+    Object[] ____ = { ¢ };
+    forget.em(____);
   }
 
   String method = "";

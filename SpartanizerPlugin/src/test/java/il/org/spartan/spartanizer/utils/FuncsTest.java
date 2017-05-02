@@ -12,7 +12,7 @@ import org.junit.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
@@ -69,7 +69,7 @@ public final class FuncsTest {
   }
 
   @Test public void countNonWhiteCharacters() {
-    azzert.that(count.nonWhiteCharacters(e("1 + 23     *456 + \n /* aa */ 7890")), is(13));
+    azzert.that(countOf.nonWhiteCharacters(e("1 + 23     *456 + \n /* aa */ 7890")), is(13));
   }
 
   @Test public void findFirstType() {

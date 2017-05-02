@@ -11,7 +11,7 @@ import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.traversal.*;
@@ -87,18 +87,18 @@ enum CollectMetrics {
     // TODO Matteo: make sure that the counting does not include comments.
     // Do this by adding stuff to the metrics suite.
     output.put(prefix + "Length", ¢.getLength());
-    output.put(prefix + "Count", count.nodes(¢));
-    output.put(prefix + "Non whites", count.nonWhiteCharacters(¢));
+    output.put(prefix + "Count", countOf.nodes(¢));
+    output.put(prefix + "Non whites", countOf.nonWhiteCharacters(¢));
     output.put(prefix + "Condensed size", metrics.condensedSize(¢));
-    output.put(prefix + "Lines", count.lines(¢));
+    output.put(prefix + "Lines", countOf.lines(¢));
     output.put(prefix + "Dexterity", metrics.dexterity(¢));
     output.put(prefix + "Leaves", metrics.leaves(¢));
     output.put(prefix + "Nodes", metrics.nodes(¢));
     output.put(prefix + "Internals", metrics.internals(¢));
     output.put(prefix + "Vocabulary", metrics.vocabulary(¢));
     output.put(prefix + "Literacy", metrics.literacy(¢));
-    output.put(prefix + "Imports", count.imports(¢));
-    output.put(prefix + "No Imports", count.noimports(¢));
+    output.put(prefix + "Imports", countOf.imports(¢));
+    output.put(prefix + "No Imports", countOf.noimports(¢));
   }
 
   private static void reportTips(final Iterable<Tip> ¢) {

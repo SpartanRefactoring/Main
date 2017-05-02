@@ -35,7 +35,7 @@ public class MethodRecord {
     numParameters = parameters(d).size();
     numStatements = measure.commands(d);
     numExpressions = measure.expressions(d);
-    numNodes = count.nodes(d);
+    numNodes = countOf.nodes(d);
   }
 
   void setAfter(final MethodDeclaration ¢) {
@@ -70,7 +70,7 @@ public class MethodRecord {
     }
     numNPStatements += measure.commands(n);
     numNPExpressions += measure.expressions(n);
-    numNPNodes += count.nodes(n);
+    numNPNodes += countOf.nodes(n);
     if (epxressionWholeStatement(n))
       ++numNPStatements;
     nps.add(np);

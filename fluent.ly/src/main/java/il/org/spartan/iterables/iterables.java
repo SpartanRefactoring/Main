@@ -1,16 +1,16 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import static il.org.spartan.Utils.contains;
+import static il.org.spartan.Utils.*;
 import static org.junit.Assert.*;
 
 import java.util.*;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import org.jetbrains.annotations.*;
+import org.junit.*;
 
-import an.iterable;
+import an.*;
 import fluent.ly.*;
 
 /** No values in an 'enum' used as name space for a collection of 'static'

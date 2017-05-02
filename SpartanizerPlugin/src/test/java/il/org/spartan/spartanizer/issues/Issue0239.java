@@ -12,7 +12,7 @@ import org.junit.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.*;
@@ -86,7 +86,7 @@ public class Issue0239 {
             "  f1(i1,i2);\n"//
     )); //
     assert block != null;
-    assert count.nodes(block) > 10;
+    assert countOf.nodes(block) > 10;
     final List<Statement> statements = statements(block);
     assert statements != null;
     assert statements.size() == 2;

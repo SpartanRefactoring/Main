@@ -17,7 +17,6 @@ import il.org.spartan.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.tipping.*;
-import il.org.spartan.utils.*;
 
 /** A logging dash-board with auto-expiration of {@link Tipper} operations.
  * @author Oran Gilboa

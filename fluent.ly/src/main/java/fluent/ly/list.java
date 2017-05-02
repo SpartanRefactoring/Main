@@ -12,7 +12,7 @@ public interface list {
   interface Operator<T> extends UnaryOperator<List<T>> {
     /**/}
 
-  class Operators<T> extends Outer<List<Operator<T>>> {
+  class Operators<T> extends Boxer<List<Operator<T>>> {
     public Operators() {
       super(an.empty.list());
     }

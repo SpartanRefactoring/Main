@@ -3,7 +3,7 @@ package il.org.spartan.tables;
 
 import java.util.*;
 
-import fluent.ly.as;
+import fluent.ly.*;
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
 

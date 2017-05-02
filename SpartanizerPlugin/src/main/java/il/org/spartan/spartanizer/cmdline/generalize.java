@@ -52,12 +52,12 @@ public enum generalize {
       }
 
       @Override public boolean visit(final ImportDeclaration ¢) {
-        ___.unused(¢);
+        forget.em(¢);
         return false;
       }
 
       @Override public boolean visit(final PackageDeclaration ¢) {
-        ___.unused(¢);
+        forget.em(¢);
         return false;
       }
 

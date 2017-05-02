@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
@@ -95,7 +96,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
    *         number of characters in the first argument is less than, equal to,
    *         or greater than the number of characters in the second argument. */
   static int characterCompare(final Expression e1, final Expression e2) {
-    return count.nonWhiteCharacters(e1) - count.nonWhiteCharacters(e2);
+    return countOf.nonWhiteCharacters(e1) - countOf.nonWhiteCharacters(e2);
   }
 
   static int literalCompare(final Expression e1, final Expression e2) {
@@ -103,7 +104,7 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   static int nodesCompare(final Expression e1, final Expression e2) {
-    return round(count.nodes(e1) - count.nodes(e2), NODES_THRESHOLD);
+    return round(countOf.nodes(e1) - countOf.nodes(e2), NODES_THRESHOLD);
   }
 
   static int round(final int $, final int threshold) {
@@ -111,9 +112,9 @@ public enum ExpressionComparator implements Comparator<Expression> {
   }
 
   private static boolean isLonger(final Expression e1, final Expression e2) {
-    return !hasNull(e1, e2) && (//
-    count.nodes(e1) > count.nodes(e2) + NODES_THRESHOLD || //
-        count.nodes(e1) >= count.nodes(e2) && moreArguments(e1, e2)//
+    return !has.nil(e1, e2) && (//
+    countOf.nodes(e1) > countOf.nodes(e2) + NODES_THRESHOLD || //
+        countOf.nodes(e1) >= countOf.nodes(e2) && moreArguments(e1, e2)//
     );
   }
 

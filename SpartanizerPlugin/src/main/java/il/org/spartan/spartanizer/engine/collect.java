@@ -217,7 +217,7 @@ public enum collect {
        * @param it JD
        * @return identifier of the operand. */
       @Override public boolean visit(final PrefixExpression it) {
-        return !in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
+        return !is.in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
 
       @Override public boolean visit(final TryStatement ¢) {

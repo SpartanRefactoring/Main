@@ -12,8 +12,6 @@ import java.util.stream.*;
 
 import org.eclipse.jdt.annotation.*;
 
-import il.org.spartan.utils.*;
-
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
  * @author Yossi Gil

@@ -9,6 +9,7 @@ import java.util.zip.*;
 
 import org.jetbrains.annotations.*;
 
+import fluent.ly.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.files.visitors.FindClassFile.*;
 import il.org.spartan.strings.*;
@@ -359,14 +360,14 @@ public class FileSystemVisitor {
      * @param __ ignored
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitDirectory(java.io.File) */
     @Override public void visitDirectory(final File __) {
-      unused(__);
+      forget.it(__);
     }
 
     /** A do-nothing function, ignoring its arguments
      * @param __ ignored
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitFile(java.io.File) */
     @Override public void visitFile(final File __) {
-      unused(__);
+      forget.it(__);
     }
 
     /** A do-nothing function, ignoring its arguments
@@ -374,7 +375,7 @@ public class FileSystemVisitor {
      * @throws StopTraversal
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitZip(java.io.File) */
     @Override public void visitZip(final File __) throws StopTraversal {
-      unused(__);
+      forget.it(__);
     }
 
     /** A do-nothing function, ignoring its arguments
@@ -384,7 +385,7 @@ public class FileSystemVisitor {
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitZipDirectory(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
     @Override public void visitZipDirectory(final String __, final String ____, final InputStream ______) {
-      unused(__, ____, ______);
+      forget.em(__, ____, ______);
     }
 
     /** A do-nothing function, ignoring its arguments
@@ -394,7 +395,7 @@ public class FileSystemVisitor {
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitZipEntry(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
     @Override public void visitZipEntry(final String __, final String ____, final InputStream ______) {
-      unused(__, ____, ______);
+      forget.em(__, ____, ______);
     }
   }
 
@@ -430,7 +431,7 @@ public class FileSystemVisitor {
      * @see il.org.spartan.files.visitors.FileSystemVisitor.EmptyAction#visitZipEntry(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
     @Override public void visitZipEntry(final String zipName, final String entryName, final InputStream s) {
-      unused(zipName);
+      forget.it(zipName);
       visitZipEntry(entryName, s);
     }
   }
@@ -461,8 +462,7 @@ public class FileSystemVisitor {
     @Override public abstract void visitFile(File f);
 
     @Override public final void visitZipEntry(final String entryName, final InputStream s) {
-      unused(entryName);
-      unused(s);
+      forget.em(entryName, s);
     }
   }
 
@@ -503,7 +503,7 @@ public class FileSystemVisitor {
      * @see il.org.spartan.files.visitors.FileSystemVisitor.EmptyAction#visitZipDirectory(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
     @Override public final void visitZipDirectory(final String zipName, final String entryName, final InputStream s) {
-      unused(zipName);
+      forget.em(zipName);
       visitZipDirectory(entryName, s);
     }
 

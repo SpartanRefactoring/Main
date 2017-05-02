@@ -1,6 +1,6 @@
 package il.org.spartan.athenizer.bloaters;
 
-import static il.org.spartan.Utils.*;
+import static fluent.ly.is.*;
 
 import java.util.*;
 import java.util.stream.*;
@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -40,14 +41,14 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
     if (s.getParent() == null)
       return null;
     final List<VariableDeclarationFragment> $ = step.fragments(s).stream()
-        .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(s, "result")) && !in(λ.getName().getIdentifier(), "result")
+        .filter(λ -> (!is.in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(s, "result")) && !in(λ.getName().getIdentifier(), "result")
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
     return $.isEmpty() ? null : new Tip("Verbosify parameter names", getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         for (final VariableDeclarationFragment ss : $)
           misc.rename(ss.getName(),
-              make.from(s).identifier(in(ss.getName().getIdentifier(), "$") ? "result" : scope.newName(s, step.type(s), prefix(step.type(s)))),
+              make.from(s).identifier(is.in(ss.getName().getIdentifier(), "$") ? "result" : scope.newName(s, step.type(s), prefix(step.type(s)))),
               s.getParent(), r, g);
       }
     }.spanning(s.getParent());

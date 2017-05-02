@@ -2,8 +2,6 @@ package let;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
-
 public class it<T> {
   private static Stack<Object> stack = new Stack<>();
   public T it;
@@ -18,7 +16,7 @@ public class it<T> {
     return $;
   }
 
-  public it<T> is(String string) {
+  public it<T> is(final String string) {
     return this;
   }
 }

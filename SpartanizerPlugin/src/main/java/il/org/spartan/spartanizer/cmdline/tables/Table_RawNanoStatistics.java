@@ -64,7 +64,7 @@ public class Table_RawNanoStatistics extends NanoTable {
           $.accept(new AnnotationCleanerVisitor());
           nanonizer.fixedPoint(spartanizer.fixedPoint($));
         } catch (final IllegalArgumentException | AssertionError __) {
-          ___.unused(__);
+          forget.em(__);
         }
         return super.visit($);
       }

@@ -102,13 +102,13 @@ public final class SingleFlater {
     });
     if (operations.isEmpty())
       return false;
-    final Outer<Range> touched = new Outer<>(new Range(-1, -1));
+    final Boxer<Range> touched = new Boxer<>(new Range(-1, -1));
     for (final Operation ¢ : operationsProvider.getFunction().apply(operations))
       perform(¢, g, touched);
     return true;
   }
 
-  @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final TextEditGroup g, final Outer<Range> touched) {
+  @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final TextEditGroup g, final Boxer<Range> touched) {
     robust.ly(() -> {
       setTipper(o.tipper);
       setNode(o.node);

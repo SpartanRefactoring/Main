@@ -20,7 +20,7 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -377,7 +377,7 @@ public enum make {
     final Statement then = then(s), elze = elze(s);
     if (elze == null)
       return true;
-    final int s1 = count.lines(then), s2 = count.lines(elze);
+    final int s1 = countOf.lines(then), s2 = countOf.lines(elze);
     if (s1 < s2)
       return true;
     if (s1 > s2)

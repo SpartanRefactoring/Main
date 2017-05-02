@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.count;
+import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
 
@@ -57,7 +57,7 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
         .put("method", guessName.of(¢.getName() + "") == guessName.METHOD_OR_VARIABLE) //
         .put("unknonwn", guessName.of(¢.getName() + "") == guessName.UNKNOWN) //
         .put("weirdo", guessName.of(¢.getName() + "") == guessName.WEIRDO) //
-        .put("Non whites", count.nonWhiteCharacters(¢)) //
+        .put("Non whites", countOf.nonWhiteCharacters(¢)) //
         .put("Condensed size", metrics.condensedSize(¢)) //
         .put("Dexterity", metrics.dexterity(¢)) //
         .put("Leaves", metrics.leaves(¢)) //
@@ -95,7 +95,7 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
         m("length", λ -> (λ + "").length()), //
         m("essence", λ -> Essence.of(λ + "").length()), //
         m("tokens", λ -> metrics.tokens(λ + "")), //
-        m("nodes", λ -> count.nodes((ASTNode) λ)), //
+        m("nodes", λ -> countOf.nodes((ASTNode) λ)), //
         m("body", λ -> metrics.bodySize((ASTNode) λ)),
         m("methodDeclaration",
             λ -> az.methodDeclaration((ASTNode) λ) == null ? -1 : extract.statements(az.methodDeclaration((ASTNode) λ).getBody()).size()),

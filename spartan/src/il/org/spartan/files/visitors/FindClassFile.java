@@ -78,12 +78,12 @@ import fluent.ly.*;
     }
 
     @Override public void visitZipDirectory(final String zipName, final String entryName, final InputStream s) {
-      ___.unused(s);
+      forget.it(s);
       report("Archive directory: " + entryName + " in zip " + zipName);
     }
 
     @Override public void visitZipEntry(final String zipName, @NotNull final String entryName, final InputStream s) throws StopTraversal {
-      ___.unused(s);
+      forget.it(s);
       ++entries;
       report("Archive entry: " + entryName);
       check(entryName, zipName);

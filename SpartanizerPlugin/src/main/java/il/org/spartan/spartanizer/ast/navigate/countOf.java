@@ -16,7 +16,7 @@ import il.org.spartan.utils.*;
  * prefix.
  * @author Yossi Gil
  * @since 2016 */
-public interface count {
+public interface countOf {
   static int imports(final CompilationUnit u) {
     final Int $ = new Int();
     u.accept(new ASTVisitor(true) {

@@ -1,7 +1,5 @@
 package il.org.spartan.athenizer.bloaters;
 
-import static il.org.spartan.Utils.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
@@ -11,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -43,15 +42,16 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
     if (d.isConstructor() || iz.abstract¢(d) || d.getBody() == null)
       return null;
     final List<SingleVariableDeclaration> $ = parameters(d).stream()
-        .filter(λ -> (!in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(body(d), "result")) && !in(λ.getName().getIdentifier(), "result")
+        .filter(λ -> (!is.in(λ.getName().getIdentifier(),"$") || !scope.hasInScope(body(d), "result")) && !is.in(λ.getName().getIdentifier(),"result" )
             && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
     return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final SingleVariableDeclaration ¢ : $)
+        for (final SingleVariableDeclaration ¢ : $) {
           misc.rename(¢.getName(),
-              make.from(d).identifier(in(¢.getName().getIdentifier(), "$") ? "result" : scope.newName(body(d), step.type(¢), prefix(step.type(¢)))),
+              make.from(d).identifier(is.in(¢.getName().getIdentifier(),"$") ? "result" : scope.newName(body(d), step.type(¢), prefix(step.type(¢)))),
               d, r, g);
+        }
       }
     }.spanning(d);
   }
