@@ -5,6 +5,7 @@ import static fluent.ly.azzert.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 
 /** @author Yossi Gil

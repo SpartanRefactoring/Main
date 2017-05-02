@@ -3,7 +3,7 @@ package il.org.spartan.lazy;
 
 import static fluent.ly.azzert.*;
 import static java.lang.Math.*;
-import static nano.ly.idiomatic.*;
+import static fluent.ly.idiomatic.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.*;
@@ -12,6 +12,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,

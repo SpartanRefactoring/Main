@@ -4,7 +4,7 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
 import il.org.spartan.utils.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 public class RunRecord extends AbstractRunRecord {
   public RunRecord(final int runs, @NotNull final Stopwatch grossTime, @NotNull final Stopwatch netTime) {

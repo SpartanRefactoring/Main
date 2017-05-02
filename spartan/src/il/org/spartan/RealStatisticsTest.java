@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.statistics.*;
 
 @SuppressWarnings("static-method") public class RealStatisticsTest {

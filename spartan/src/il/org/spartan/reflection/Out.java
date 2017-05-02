@@ -1,7 +1,7 @@
 package il.org.spartan.reflection;
 
-import static il.org.spartan.utils.___.*;
-import static nano.ly.box.*;
+import static fluent.ly.___.*;
+import static fluent.ly.box.*;
 
 import java.util.*;
 

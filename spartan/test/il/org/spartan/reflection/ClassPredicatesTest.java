@@ -7,7 +7,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 @SuppressWarnings("static-method") public class ClassPredicatesTest {
   @Test public void testBoxFields() {

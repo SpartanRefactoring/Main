@@ -4,6 +4,7 @@ import java.lang.reflect.*;
 
 import org.jetbrains.annotations.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 
 public class ClassPredicates {

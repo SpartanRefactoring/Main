@@ -20,7 +20,7 @@ import java.io.*;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.utils.*;
+import fluent.ly.*;
 
 /** A sane re-implementation of {@link ByteArrayInputStream}.
  * @author Yossi Gil */

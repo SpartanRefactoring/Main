@@ -3,7 +3,7 @@ package il.org.spartan;
 
 // TODO: I commented this import. Had it been renamed?
 
-// import static il.org.spartan.utils.___.*;
+// import static fluent.ly.___.*;
 import java.io.*;
 
 import org.jetbrains.annotations.*;

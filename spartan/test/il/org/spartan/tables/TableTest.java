@@ -5,7 +5,7 @@ import static fluent.ly.azzert.*;
 import org.junit.*;
 
 import il.org.spartan.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 /** Unit test for {@link Table#classToNormalizedFileName(String)}
  * @author Yossi Gil

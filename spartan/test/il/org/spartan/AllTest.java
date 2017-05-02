@@ -7,7 +7,7 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 @TestCase @SuppressWarnings("static-method") public class AllTest {
   @Test public void testNotNul_NotNulllNull() {

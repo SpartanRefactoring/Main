@@ -13,6 +13,7 @@ import org.junit.*;
 import il.org.spartan.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.utils.*;
+import fluent.ly.*;
 
 /** An interface for processing a sequence of X-Y points
  * @author Yossi Gil

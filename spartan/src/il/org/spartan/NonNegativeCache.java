@@ -42,7 +42,7 @@ public abstract class NonNegativeCache {
     }
 
     @Override protected int ____() {
-      return SOME_OFFSET + sqr(evaluations++);
+      return (int) (SOME_OFFSET + sqr(evaluations++));
     }
   }
 }

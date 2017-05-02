@@ -1,15 +1,15 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.utils.___.*;
+import static fluent.ly.___.*;
 
 import java.io.*;
 import java.util.*;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
+import fluent.ly.*;
 
 /** A general purpose implementation of the <b>Memento Design Pattern</b> using
  * object serialization

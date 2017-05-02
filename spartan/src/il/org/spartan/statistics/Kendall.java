@@ -11,7 +11,7 @@ import il.org.spartan.external.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 /** Provides services for computing the Kendall's tau metric for similarity
  * between rankings.

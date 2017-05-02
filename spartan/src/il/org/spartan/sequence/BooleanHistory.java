@@ -2,8 +2,7 @@ package il.org.spartan.sequence;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.*;
-import il.org.spartan.utils.*;
+import fluent.ly.*;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */

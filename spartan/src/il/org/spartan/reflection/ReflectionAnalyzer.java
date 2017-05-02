@@ -2,7 +2,7 @@ package il.org.spartan.reflection;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.*;
+import fluent.ly.*;
 
 public enum ReflectionAnalyzer {
   ;

@@ -1,7 +1,7 @@
 package il.org.spartan.bench;
 
 import static fluent.ly.azzert.*;
-import static nano.ly.box.*;
+import static fluent.ly.box.*;
 import static org.junit.Assert.assertEquals;
 
 import java.text.*;
@@ -9,6 +9,7 @@ import java.text.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>

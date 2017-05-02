@@ -1,6 +1,6 @@
 package il.org.spartan.iteration.closures;
 
-import static il.org.spartan.utils.___.*;
+import static fluent.ly.___.*;
 
 import org.jetbrains.annotations.*;
 

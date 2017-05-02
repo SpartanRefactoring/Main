@@ -3,7 +3,7 @@ package il.org.spartan.utils;
 import org.jetbrains.annotations.*;
 
 import il.org.spatan.iteration.*;
-import nano.ly.*;
+import fluent.ly.*;
 
 /** Computes the longest common prefix of the names of objects in a given set.
  * @author Yossi Gil
