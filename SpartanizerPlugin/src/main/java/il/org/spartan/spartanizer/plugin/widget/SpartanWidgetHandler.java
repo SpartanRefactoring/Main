@@ -12,15 +12,27 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.plugin.widget.operations.*;
 
 /** Spartanizer widget.
  * @author Ori Roth {@code ori.rothh@gmail.com}
+ * @author Niv Shalmon
  * @since 2017-03-21 */
 public class SpartanWidgetHandler extends AbstractHandler {
   private static final int R = 70;
+  private static final int r = 20;
   private static final int TRANSPERACY = 100;
   private static final Point MINIMAL_BUTTON_SIZE = new Point(9 * R / 10, R / 2 - R / 20);
   private static final String IMAGE_ID = "widget";
+  private static final Point[] circles = { //
+      new Point(2 * r, 2 * R )//
+      , new Point(r, R + r)//
+      , new Point(2*r, 2*r)//
+      , new Point(R + r, r)//
+      , new Point(2 * R , 2*r)//
+      , new Point(2 * R + r, R + r)//
+      , new Point(2 * R, 2 * R )//
+  };
   static final int OPERATION_HOLD_INTERVAL = 500;
   static final AtomicBoolean active = new AtomicBoolean(false);
 
@@ -46,7 +58,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
     closeButton.setText("close");
     expandControl(closeButton, MINIMAL_BUTTON_SIZE);
-    closeButton.setLocation(R / 2, 2 * R - closeButton.getSize().y / 2);
+    closeButton.setLocation(R / 2 + r, 2 * R - closeButton.getSize().y / 2 + r);
     closeButton.addListener(SWT.Selection, __ -> {
       shell.close();
       active.set(false);
@@ -67,11 +79,15 @@ public class SpartanWidgetHandler extends AbstractHandler {
     setControl(canvas, setSolid, setTransparent);
     setMovable(display, canvas, shell);
     final Region region = new Region();
-    region.add(circle(R));
+    region.add(circle(R, R + r, R + r));
     region.add(closeButton.getBounds());
     final Rectangle size = region.getBounds();
     shell.setSize(size.width, size.height);
     shell.setRegion(region);
+    for (Point center : circles) {
+      final Canvas button = createButton(shell, center, new GitPullOperation());
+      setControl(button, setSolid, setTransparent);
+    }
     shell.setLocation(startLocation.apply(Eclipse.mouseLocation()));
     shell.open();
     originalShell.forceFocus();
@@ -140,14 +156,14 @@ public class SpartanWidgetHandler extends AbstractHandler {
     source.addListener(SWT.MouseMove, l);
   }
 
-  static int[] circle(final int r) {
+  static int[] circle(@SuppressWarnings("hiding") final int r, int offsetX, int offsetY) {
     final int[] $ = new int[8 * r + 4];
     for (int i = 0; i <= 2 * r; ++i) {
       final int x = i - r, y = (int) Math.sqrt(r * r - x * x);
-      $[2 * i] = r + x;
-      $[2 * i + 1] = r + y;
-      $[8 * r - 2 * i - 2] = r + x;
-      $[8 * r - 2 * i - 1] = r - y;
+      $[2 * i] = offsetX + x;
+      $[2 * i + 1] = offsetY + y;
+      $[8 * r - 2 * i - 2] = offsetX + x;
+      $[8 * r - 2 * i - 1] = offsetY - y;
     }
     return $;
   }
@@ -167,8 +183,65 @@ public class SpartanWidgetHandler extends AbstractHandler {
       ¢.gc.drawImage(i, 0, 0);
       $.setSize(w, h);
     });
-    $.setLocation(R / 2 - fixX, R / 2);
+    $.setLocation(R / 2 - fixX + r, R / 2 + r);
     $.pack();
     return $;
+  }
+
+  /** creates a new {@link Canvas} which acts as a circular button in the
+   * widget. Adds the shape of the button to the region of s and sets up the
+   * listeners to {@link SWT} MouseUp, MouseDown, MouseDoubleClick.
+   * @param s The main shell of the widget. Must have a region set to it (rather
+   *        than use the default region)
+   * @param x The x coordinate of the center of the circle
+   * @param y The y coordinate of the center of the circle
+   * @param o The widget operation assigned to this button. Calling with null
+   *        creates an empty button that does nothing when pressed.
+   * @return the canvas created. */
+  private static Canvas createButton(final Shell s, final Point p, final WidgetOperation o) {
+    final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
+    final Image i = o == null ? null : o.image();
+    $.addPaintListener((final PaintEvent ¢) -> {
+      if (o != null)
+        ¢.gc.drawImage(i, r / 2, r / 2);
+      $.setSize(2 * r, 2 * r);
+    });
+    $.setLocation(p.x - r, p.y - r);
+    $.pack();
+    Region rg = s.getRegion();
+    rg.add(circle(r, p.x, p.y));
+    s.setRegion(rg);
+    if (o == null)
+      return $;
+    Listener l = new Listener() {
+      @Override public void handleEvent(Event e) {
+        WidgetContext c = createContext();
+        try {
+          switch (e.type) {
+            case SWT.MouseUp:
+              o.onMouseUp(c);
+              break;
+            case SWT.MouseDown:
+              o.onMouseDown(c);
+              break;
+            case SWT.MouseDoubleClick:
+              o.onDoubleClick(c);
+              break;
+            default:
+              break;
+          }
+        } catch (Throwable t) {
+          // TODO Niv Shalmon add error handling
+        }
+      }
+    };
+    $.addListener(SWT.MouseDown, l);
+    $.addListener(SWT.MouseUp, l);
+    $.addListener(SWT.MouseDoubleClick, l);
+    return $;
+  }
+
+  static WidgetContext createContext() {
+    return new WidgetContext();
   }
 }
