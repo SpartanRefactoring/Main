@@ -8,9 +8,6 @@ import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.*;
 import org.junit.*;
-import org.junit.runners.*;
-
-import il.org.spartan.*;
 import fluent.ly.*;
 
 /** A trivial utility module with functions to scatter a text into an array of
@@ -62,7 +59,6 @@ public enum Lines {
    * test methods begin with the name of the method they check.
    * @author Yossi Gil
    * @since 2014-05-31 */
-
   @SuppressWarnings("static-method") public static class TEST {
     @Test public void countEmpty() {
       azzert.that(count(""), is(0));

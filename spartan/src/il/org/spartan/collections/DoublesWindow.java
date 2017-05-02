@@ -9,7 +9,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 
 /** Manage a window of doubles of a certain size, supporting
  * {@link #add(double)} operations in such a fashion that the oldest value

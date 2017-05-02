@@ -40,21 +40,10 @@ public class SpartanMovie2 extends AbstractHandler {
       // mightNotBeSlick(page); // it stays here for now
       final IResource file = currentCompilationUnit.getResource();
       try {
-        IMarker[] markers = getMarkers(file);
-        if (markers.length > 0) {}
-        for (; markers.length > 0; markers = getMarkers(file)) {
+        for (IMarker[] markers = getMarkers(file); markers.length > 0; markers = getMarkers(file)) {
           final IMarker marker = getFirstMarker(markers);
           System.out.println("marker: " + marker);
           runUIJob(page, marker, file, traversal);
-          // marker.delete(); // TODO Ori Roth: does not seem to make a
-          // // difference
-          // // actually it removes the markers after the
-          // // traversal
-          // // and avoid the infinite loop (it descreases
-          // // markers.length at
-          // // each round -- mo
-          //// refresh(page);
-          // sleep(SLEEP_BETWEEN);
         }
       } catch (final CoreException ¢) {
         note.bug(¢);

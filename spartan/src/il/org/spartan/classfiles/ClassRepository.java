@@ -12,7 +12,6 @@ import org.junit.*;
 
 import il.org.sparan.classfiles.*;
 import il.org.sparan.classfiles.ClassRepositoryTest.*;
-import il.org.spartan.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
 import fluent.ly.*;

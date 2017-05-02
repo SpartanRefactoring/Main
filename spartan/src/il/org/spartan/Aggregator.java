@@ -8,7 +8,6 @@ import org.jetbrains.annotations.*;
 
 import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.statistics.*;
-import fluent.ly.*;
 
 /** @author Yossi Gil
  * @since Apr 8, 2012 */
@@ -57,7 +56,7 @@ public class Aggregator {
     record(key, value, toMap(ss));
   }
 
-  public void record(final String key, final double value, @NotNull final Map<Aggregation, String> m) {
+  @SuppressWarnings("null") public void record(final String key, final double value, @NotNull final Map<Aggregation, String> m) {
     ensure(realStatistics, key, new RealStatistics());
     force(columnSpecificAggregation, key, m);
     merge(m);
@@ -85,11 +84,11 @@ public class Aggregator {
     to.put(key, key.equals(markColumn) ? a + "" : missing(key, a) ? "" : get(key, a));
   }
 
-  private String get(final String key, @NotNull final Aggregation a) {
+  @SuppressWarnings("null") private String get(final String key, @NotNull final Aggregation a) {
     return a.retreive(realStatistics.get(key), columnSpecificAggregation.get(key).get(a));
   }
 
-  private boolean missing(final String key, final Aggregation a) {
+  @SuppressWarnings("null") private boolean missing(final String key, final Aggregation a) {
     return !columnSpecificAggregation.containsKey(key) || !columnSpecificAggregation.get(key).containsKey(a);
   }
 

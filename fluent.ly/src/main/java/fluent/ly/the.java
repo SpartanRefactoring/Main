@@ -166,7 +166,7 @@ public interface the {
     return ¢.substring(1);
   }
 
-  static<T> T[] tailOf(T[] ts) {
-    return Arrays.copyOfRange(ts,1, ts.length);
+  static <T> T[] tailOf(final T[] ts) {
+    return Arrays.copyOfRange(ts, 1, ts.length);
   }
 }

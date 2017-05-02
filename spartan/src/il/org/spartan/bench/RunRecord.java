@@ -3,7 +3,6 @@ package il.org.spartan.bench;
 import org.jetbrains.annotations.*;
 
 import il.org.spartan.*;
-import il.org.spartan.utils.*;
 import fluent.ly.*;
 
 public class RunRecord extends AbstractRunRecord {

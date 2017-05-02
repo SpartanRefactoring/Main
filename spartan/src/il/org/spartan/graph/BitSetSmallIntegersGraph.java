@@ -7,7 +7,6 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
-import il.org.spartan.*;
 import fluent.ly.*;
 
 /** An immutable undirected graph whose nodes are short integers in the range

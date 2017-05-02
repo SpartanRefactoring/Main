@@ -103,6 +103,6 @@ import il.org.spartan.streotypes.*;
   }
 
   @NotNull public static String tagContents(final String tag, @NotNull final String s) {
-    return new StringBuilder(first(s)).append(tag(tag, peel(s))).append(last(s)) + "";
+    return first(s) + "" + tag(tag, peel(s)) + last(s);
   }
 }

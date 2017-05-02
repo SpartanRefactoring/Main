@@ -12,7 +12,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 
 /** A kind of {@link Iterator} which does not support the rarely used
  * {@link #remove} operation and saves the user, i.e., who ever chooses to

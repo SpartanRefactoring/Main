@@ -7,8 +7,6 @@ import java.io.*;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.utils.*;
-
 public class Tokenizer {
   @NotNull public static Reader reader(@NotNull final File ¢) throws FileNotFoundException {
     return new FileReader(¢);

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.safety;
+
 import static fluent.ly.idiomatic.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;

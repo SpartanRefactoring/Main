@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.*;
 import org.jetbrains.annotations.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 import fluent.ly.___.*;
 
 /** An unsorted map of any entry to integers.

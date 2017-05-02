@@ -11,7 +11,6 @@ import org.junit.experimental.theories.*;
 import org.junit.runner.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 import il.org.spartan.files.visitors.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.utils.*;

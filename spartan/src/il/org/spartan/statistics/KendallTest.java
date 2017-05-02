@@ -8,7 +8,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class KendallTest {
   @Test public void test10() {

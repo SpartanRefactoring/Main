@@ -4,7 +4,6 @@ package il.org.spartan.tables;
 import java.util.*;
 
 import fluent.ly.as;
-import il.org.spartan.*;
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
 

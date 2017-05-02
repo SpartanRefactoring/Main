@@ -45,7 +45,7 @@ public class Misc {
     return i < as.length ? as : Arrays.copyOf(as, 1 + Math.max(i, as.length + (as.length >> 1)));
   }
 
-  @NotNull public static boolean[] toArray(@NotNull final List<Boolean> bs) {
+  @NotNull @SuppressWarnings("null") public static boolean[] toArray(@NotNull final List<Boolean> bs) {
     @NotNull final boolean[] $ = new boolean[bs.size()];
     for (int ¢ = 0; ¢ < bs.size(); ++¢)
       $[¢] = bs.get(¢).booleanValue();

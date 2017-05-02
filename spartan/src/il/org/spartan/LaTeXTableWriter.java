@@ -63,7 +63,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
     return in(innerTableName + "");
   }
 
-  public CSVLine in(final String innerTableName) {
+  @SuppressWarnings("null") public CSVLine in(final String innerTableName) {
     ensure(inner, innerTableName, new CSVLine.Ordered());
     return inner.get(innerTableName);
   }
@@ -103,7 +103,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
     $.add(String.format("\\multicolumn{%d}{c}{\\mbox{}}", box(column)));
     for (final String nestedTableName : inner.keySet()) {
       f.format("\\cmidrule(lr){%d-", box(column + 1));
-      final int size = inner.get(nestedTableName).size();
+      @SuppressWarnings("null") final int size = inner.get(nestedTableName).size();
       $.add(String.format("\\multicolumn{%d}{c}{%s}", box(size), nestedTableName));
       f.format("%d} ", box(column += size));
     }

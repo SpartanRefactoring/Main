@@ -55,7 +55,7 @@ import il.org.spartan.streotypes.*;
    * @return A non-<code><b>null</b></code> representing the set of images
    *         associated with <code>k</code> */
   @NotNull public Set<V> get(final K ¢) {
-    final Set<V> $ = implementation.get(¢);
+    @SuppressWarnings("null") final Set<V> $ = implementation.get(¢);
     return $ != null ? $ : clear(¢);
   }
 
