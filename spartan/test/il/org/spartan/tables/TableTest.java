@@ -1,6 +1,6 @@
 package il.org.spartan.tables;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import org.junit.*;
 

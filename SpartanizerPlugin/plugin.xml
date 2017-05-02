@@ -42,16 +42,6 @@ the program changes: https://goo.gl/sIqIBC
   </page>
 </extension>
 
-<!-- Widget preferences page -->
-<extension point="org.eclipse.ui.preferencePages">
-  <page
-    name="Widget"
-    class="il.org.spartan.plugin.preferences.revision.WidgetPreferencesPage"
-    id="il.org.spartan.plugin.WidgetPreferencesPage"
-    category="il.org.spartan.plugin.PluginPreferencesPage">
-  </page>
-</extension>
-
 <!-- Preferences-->
 <extension point="org.eclipse.core.runtime.preferences">
   <scope 
@@ -605,16 +595,12 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
  </key>
 </extension>
 
-<extension-point id="il.org.spartan.widgetoperation" name="Widget Operation" schema="plugin/schema/il.org.spartan.widgetoperation.exsd"/>
+<extension-point id="il.org.spartan.widgetoperation" name="Widget Operation" schema="schema/il.org.spartan.widgetoperation.exsd"/>
 <extension point="il.org.spartan.widgetoperation">
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.RunOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPullOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPushOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitCommitOperation" />
-	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.SpartanizationOperation" />
-	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.ZoomerOperation" />
-	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CmdOperation" />
-	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CustomWidgetOperation" />
 </extension>
 
 </plugin>

@@ -1,6 +1,6 @@
 package il.org.spartan.misc;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static il.org.spatan.iteration.Iterables.*;
 
 import java.util.*;

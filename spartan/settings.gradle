@@ -1,0 +1,2 @@
+include ':fluent.ly'
+project(':fluent.ly').projectDir = new File(settingsDir, '../fluent.ly')

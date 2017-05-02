@@ -14,7 +14,7 @@ public enum empty {
     return new ArrayList<>();
   }
 
-  public static <@Nullable T> Iterable<T> iterable() {
+  public static <T> Iterable<T> iterable() {
     return new Iterable<T>() {
       @Override public Iterator<T> iterator() {
         return new Iterator<T>() {

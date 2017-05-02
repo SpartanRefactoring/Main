@@ -1,7 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 import static java.lang.Math.*;
 import static nano.ly.idiomatic.*;
 import static org.hamcrest.Matchers.*;

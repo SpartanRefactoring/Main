@@ -1,6 +1,6 @@
 package il.org.sparan.classfiles;
 
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import java.io.*;
 import java.util.*;

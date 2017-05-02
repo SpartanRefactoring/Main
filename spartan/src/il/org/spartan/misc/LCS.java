@@ -2,7 +2,7 @@
 package il.org.spartan.misc;
 
 import static il.org.spartan.Utils.*;
-import static il.org.spartan.azzert.*;
+import static fluent.ly.azzert.*;
 
 import java.util.*;
 

@@ -104,7 +104,7 @@ public enum as {
    *        <code><b>null</b></code>
    * @return an array of <code><b>int</b></code>. representing the input. */
   @NotNull public static int[] intArray(@NotNull final List<Integer> is) {
-    @NotNull final int @NotNull [] $ = new int @NotNull [is.size()];
+    @NotNull final int [] $ = new int [is.size()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = is.get(¢).intValue();
     return $;
@@ -174,12 +174,12 @@ public enum as {
    * @param os what to covert
    * @return an array of the parameter values, each converted to i
    *         {@link String} */
-  public static String[] strings(@NotNull final Iterable<? extends @Nullable Object> os) {
-    @NotNull final List<@NotNull String> $ = new ArrayList<>();
+  public static String[] strings(@NotNull final Iterable<? extends Object> os) {
+    @NotNull final List<String> $ = new ArrayList<>();
     for (final @Nullable Object ¢ : os)
       if (¢ != null)
         $.add(¢ + "");
-    return Utils.cantBeNull($.toArray(new String @NotNull [$.size()]));
+    return Utils.cantBeNull($.toArray(new String [$.size()]));
   }
 
   static Iterable<Integer> asIterableEssence(@NotNull final Integer... is) {
@@ -214,7 +214,7 @@ public enum as {
     }
 
     @Test public void asIntArraySimple() {
-      final int @NotNull [] is = as.intArray(100, 200, 200, 12, 13, 0);
+      final int [] is = as.intArray(100, 200, 200, 12, 13, 0);
       assertArrayEquals(is, as.intArray(as.ingeterList(is)));
     }
 
