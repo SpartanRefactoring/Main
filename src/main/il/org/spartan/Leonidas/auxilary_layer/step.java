@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * TODO @orenafek comment this class
+ *
  * @author Oren Afek
  * @since 01-12-2016
  */
@@ -97,20 +98,20 @@ public enum step {
     public static PsiElement nextSibling(PsiElement e) {
         PsiElement b = e.getNextSibling();
         while (b != null && iz.whiteSpace(b))
-			b = b.getNextSibling();
+            b = b.getNextSibling();
         return b;
     }
 
     @NotNull
     public static String docCommentString(@NotNull PsiJavaDocumentedElement e) {
-		PsiDocComment doc = e.getDocComment();
-		return doc == null ? "" : doc.getText().substring(3, doc.getText().length() - 2);
-	}
+        PsiDocComment doc = e.getDocComment();
+        return doc == null ? "" : doc.getText().substring(3, doc.getText().length() - 2);
+    }
 
     public static PsiElement getHighestParent(PsiElement e) {
         PsiElement prev = e, next = e.getParent();
         for (; next != null && next.getText().startsWith(prev.getText()); next = next.getParent())
-			prev = next;
+            prev = next;
         return prev;
     }
 
@@ -119,10 +120,9 @@ public enum step {
      * for example, <code>NULL_KEYWORD</code>, <code>TRUE_KEYWORD</code>,
      * <code>INTEGER_LITERAL</code>, etc...
      *
-     * @see com.intellij.psi.JavaTokenType for a full list of possibly types
-     *
      * @param e literal expression
      * @return type of the literal expression
+     * @see com.intellij.psi.JavaTokenType for a full list of possibly types
      */
     public static IElementType literalType(PsiLiteralExpression e) {
         return e == null ? null : ((PsiJavaToken) e.getFirstChild()).getTokenType();

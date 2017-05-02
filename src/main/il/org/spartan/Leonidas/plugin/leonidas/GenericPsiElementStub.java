@@ -41,9 +41,13 @@ public class GenericPsiElementStub {
      *
      * @param id the serial no to distinct between several statements in the same tipper
      */
-    public static Object statement(int id) {return new Object();}
+    public static Object statement(int id) {
+        return new Object();
+    }
 
-    public static Object statement() {return new Object();}
+    public static Object statement() {
+        return new Object();
+    }
 
     /**
      * method stub representing an identifier for leonidas tippers
@@ -61,6 +65,7 @@ public class GenericPsiElementStub {
 
     /**
      * method stub representing any code block
+     *
      * @param id the serial no to distinct between several identifiers in the same tipper
      */
     public static void anyBlock(int id) {
@@ -115,7 +120,9 @@ public class GenericPsiElementStub {
 
         private String stubName;
 
-        StubName(String stubName) { this.stubName = stubName; }
+        StubName(String stubName) {
+            this.stubName = stubName;
+        }
 
         /**
          * @param x method call such as: booleanExpression(3), statement(2)...
@@ -207,7 +214,7 @@ public class GenericPsiElementStub {
 
         /**
          * @param inner the psi element that the generic type generalizes (usually a method call)
-         * @param id the ID inside the replaced element (if it isn't the direct method call, then we won't be able to retrieve it from "inner").
+         * @param id    the ID inside the replaced element (if it isn't the direct method call, then we won't be able to retrieve it from "inner").
          * @return
          */
         public GenericPsi getGenericPsiType(PsiElement inner, Integer id) {
@@ -233,7 +240,7 @@ public class GenericPsiElementStub {
         }
 
         /**
-         * @param prv the method call expression representing the generic element.
+         * @param prv  the method call expression representing the generic element.
          * @param next one step upwards in the psi tree of the code.
          * @return the true iff by the type of the generic element there is a need to go one step upwards.
          */
