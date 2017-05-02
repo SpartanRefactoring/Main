@@ -170,7 +170,7 @@ public class XMLSpartan {
    * @param p JD
    * @param d JD
    * @return true iff the operation has been completed successfully */
-  private static boolean commit(final IProject p, final Document d) {
+  static boolean commit(final IProject p, final Document d) {
     final IFile $ = p.getFile(FILE_NAME);
     return $ != null && $.exists() && commit($, d);
   }

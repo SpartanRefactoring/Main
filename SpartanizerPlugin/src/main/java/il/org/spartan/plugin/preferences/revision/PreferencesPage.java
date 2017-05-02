@@ -41,6 +41,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   private final Bool refreshNeeded = new Bool();
   private final SpartanPropertyListener listener = new SpartanPropertyListener(refreshNeeded);
   private Changes changes;
+  private RadioGroupFieldEditor singleParameterRadio;
 
   public PreferencesPage() {
     super(GRID);
@@ -48,6 +49,15 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   @Override public boolean performOk() {
     final boolean $ = super.performOk();
+    final IProject[] projects = getAllSpartanizerProjects();
+    for (IProject p : projects) {
+      final Document doc = XMLSpartan.getXML(p);
+      doc.getDocumentElement().normalize();
+      System.out.println(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue());
+      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue(singleParameterRadio.getPreferenceStore().getString("Cent"));
+      XMLSpartan.commit(p, doc);
+    }
+    notation.cent = singleParameterRadio.getPreferenceStore().getString("Cent");
     changes.commit();
     return $;
   }
@@ -63,14 +73,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.isEnabled((IProject) λ).booleanValue())) //
     ));
     final String[][] parameterRenameOptions = new String[][] { { "¢", "¢" }, { "it", "it" }, { "param", "param" } };
-    final RadioGroupFieldEditor singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3,
-        parameterRenameOptions, getFieldEditorParent());
-    singleParameterRadio.setPropertyChangeListener((final PropertyChangeEvent __) -> {
-      final IProject[] projects = getAllSpartanizerProjects();
-      final Document doc = XMLSpartan.getXML(projects[0]);
-      doc.getDocumentElement().normalize();
-      notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
-    });
+    singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3, parameterRenameOptions, getFieldEditorParent());
     addField(singleParameterRadio);
     setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());
     final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" }, { "typeCamelCase", "typeCamelCase" },
