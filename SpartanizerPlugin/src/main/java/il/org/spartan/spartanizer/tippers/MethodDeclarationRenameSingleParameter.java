@@ -22,8 +22,8 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
     implements TipperCategory.Centification {
   private static final long serialVersionUID = 0x5583F2C8E00B4000L;
 
-  @Override public String description(final MethodDeclaration ¢) {
-    return ¢.getName() + "";
+  @Override public String description(@SuppressWarnings("unused") final MethodDeclaration ¢) {
+    return notation.cent + "";
   }
 
   @Override public Tip tip(final MethodDeclaration d) {
@@ -41,7 +41,7 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
     if (b == null || haz.variableDefinition(b) || haz.cent(b) || collect.usesOf($).in(b).isEmpty())
       return null;
     final SimpleName ¢ = make.newCent(d);
-    return new Tip("Rename paraemter " + $ + " to ¢ ", getClass(), $) {
+    return new Tip("Rename Single paraemter " + $, getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.rename($, ¢, d, r, g);
         ParameterAbbreviate.fixJavadoc(d, $, ¢ + "", r, g);
