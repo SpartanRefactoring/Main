@@ -10,7 +10,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 
 /** @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2010 */

@@ -9,7 +9,6 @@ import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.strings.*;
-import il.org.spartan.utils.*;
 import fluent.ly.*;
 
 /** A program to search for a ".class" file in the file system.

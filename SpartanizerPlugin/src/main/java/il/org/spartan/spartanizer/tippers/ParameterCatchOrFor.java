@@ -14,10 +14,10 @@ public abstract class ParameterCatchOrFor extends NodePattern<SingleVariableDecl
   protected String identifier;
 
   ParameterCatchOrFor() {
-    property("Name", ()->name = current.getName());
-    property("Identifier", ()->identifier = name + "");
-    property("Type", ()->type = current.getType());
-    property("Initializer", ()->initializer = current.getInitializer());
+    property("Name", () -> name = current.getName());
+    property("Identifier", () -> identifier = name + "");
+    property("Type", () -> type = current.getType());
+    property("Initializer", () -> initializer = current.getInitializer());
   }
 
   protected Type type() {

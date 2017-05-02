@@ -191,7 +191,7 @@ public abstract class LogBook implements Serializable {
       }
 
       int compare(@Nullable final String s1, @NotNull final String s2) {
-        return s1 == null ? s2 == null ? 0 : 1 : compareNumeric(s1, s2);
+        return s1 != null ? compareNumeric(s1, s2) : s2 == null ? 0 : 1;
       }
 
       int compareNumeric(@NotNull final String s1, @NotNull final String s2) {

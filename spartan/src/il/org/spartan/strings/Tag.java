@@ -11,7 +11,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 
@@ -181,10 +180,8 @@ import il.org.spartan.utils.*;
     }
 
     @Test public void testDummyInContext() {
-      azzert.that(
-          ("\t /**\r\n" + "\t  * BEFORE\r\n" + "\t  * <dummy>\r\n" + "\t  * text\r\n" + "\t  * </dummy>\r\n" + "\t  * AFTER\r\n" + "\t  */")
-              .replaceFirst(tagRegularExpression, "Content"),
-          is("\t /**\r\n" + "\t  * BEFORE\r\n" + "\t  * Content\r\n" + "\t  * AFTER\r\n" + "\t  */"));
+      azzert.that("\t /**\r\n\t  * BEFORE\r\n\t  * <dummy>\r\n\t  * text\r\n\t  * </dummy>\r\n\t  * AFTER\r\n\t  */"
+          .replaceFirst(tagRegularExpression, "Content"), is("\t /**\r\n\t  * BEFORE\r\n\t  * Content\r\n\t  * AFTER\r\n\t  */"));
     }
 
     @Test public void testEmptyPre() {

@@ -11,9 +11,6 @@ import java.util.function.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
-import org.junit.runners.*;
-
-import il.org.spartan.*;
 import il.org.spartan.reap.Cookbook.Internal.*;
 import il.org.spartan.reap.Cookbook.Recipe.*;
 import fluent.ly.*;
@@ -156,7 +153,7 @@ public interface Cookbook {
    * sorters that cannot distinguish code from meta-code</i>
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-   enum ____META {
+  enum ____META {
     ;
     public static class A {
       final Cell<String> begin = value("<");
@@ -228,7 +225,7 @@ public interface Cookbook {
       }
     }
 
-     @SuppressWarnings({ "static-method", "null" }) public static class C {
+    @SuppressWarnings({ "static-method", "null" }) public static class C {
       @Test public void sessionA01() {
         azzert.that(compute((@org.jetbrains.annotations.NotNull final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(),
             is("(12)"));
@@ -360,7 +357,7 @@ public interface Cookbook {
 
       /** @author Yossi Gil <Yossi.Gil@GMail.COM>
        * @since 2016 */
-       @SuppressWarnings("null") public static class TEST extends Z {
+      @SuppressWarnings("null") public static class TEST extends Z {
         @Test public void sessionA01() {
           azzert.isNull(a());
         }

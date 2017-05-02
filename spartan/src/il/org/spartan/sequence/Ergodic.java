@@ -76,10 +76,10 @@ public class Ergodic {
         break;
       @Nullable final Double d = selectDouble($);
       if (d == null)
-        break;
+        return unbox.unbox($.toArray(new Double[$.size()]));
       $.add(d);
     }
-    return unbox.unbox($.toArray(new Double[$.size()]));
+    return null;
   }
 
   @NotNull private static int[] makeInt(final int n, @NotNull final List<Integer> $) {
@@ -88,10 +88,10 @@ public class Ergodic {
         break;
       @Nullable final Integer i = select($);
       if (i == null)
-        break;
+        return unbox.it($);
       $.add(i);
     }
-    return unbox.it($);
+    return null;
   }
 
   private static Integer mid(@NotNull final List<Integer> is, final int i) {

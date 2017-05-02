@@ -8,7 +8,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class StringLiteralsTest {
   @Nullable static Token toToken(@NotNull final String s) {

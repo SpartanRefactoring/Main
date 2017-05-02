@@ -5,8 +5,6 @@ import static fluent.ly.azzert.*;
 
 import org.jetbrains.annotations.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import il.org.spartan.iterables.*;
 import fluent.ly.*;
 
@@ -37,7 +35,7 @@ public interface beginning {
     return new with(¢);
   }
 
-   @SuppressWarnings("static-method") class TEST {
+  @SuppressWarnings("static-method") class TEST {
     @Test public void with() {
       azzert.that(beginning.with("a").separate("x", "y").by(",").endingWith("c") + "", is("ax,yc"));
     }

@@ -8,7 +8,6 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 import il.org.spartan.graph.Graph.*;
 
 public class GraphsSamplesGenerator {

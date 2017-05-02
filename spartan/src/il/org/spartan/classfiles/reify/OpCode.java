@@ -7,8 +7,6 @@ import java.io.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
-import il.org.spartan.*;
-import il.org.spartan.utils.*;
 import fluent.ly.*;
 
 /** @author Yossi Gil

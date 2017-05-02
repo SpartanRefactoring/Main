@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.engine;
+
 import static fluent.ly.idiomatic.*;
 
 import java.util.*;

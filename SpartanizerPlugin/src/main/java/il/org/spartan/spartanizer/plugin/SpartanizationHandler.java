@@ -152,8 +152,9 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             runAsynchronouslyInUIThread(d::close);
         }).does(¢ -> {
           if (openDialog.get())
-            Dialogs.message("Done spartanizing " + English.unknownIfNull(¢.get(event.visit_root)) + "\nSpartanized " + English.unknownIfNull(¢.get(event.visit_root))
-                + " with " + English.unknownIfNull((Collection<?>) ¢.get(event.visit_cu), λ -> Integer.valueOf(λ.size())) + " files in "
+            Dialogs.message("Done spartanizing " + English.unknownIfNull(¢.get(event.visit_root)) + "\nSpartanized "
+                + English.unknownIfNull(¢.get(event.visit_root)) + " with "
+                + English.unknownIfNull((Collection<?>) ¢.get(event.visit_cu), λ -> Integer.valueOf(λ.size())) + " files in "
                 + English.plurales("pass", (Int) ¢.get(event.run_pass))).open();
         })));
     $.setContext(r -> {

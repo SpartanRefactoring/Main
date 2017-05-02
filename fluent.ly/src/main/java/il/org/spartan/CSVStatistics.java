@@ -97,7 +97,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     return summarizer.fileName();
   }
 
-  RealStatistics getStatistics(final String key) {
+  @SuppressWarnings("null") RealStatistics getStatistics(final String key) {
     stats.putIfAbsent(key, new RealStatistics());
     return stats.get(key);
   }

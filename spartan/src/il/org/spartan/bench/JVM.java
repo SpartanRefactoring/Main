@@ -59,13 +59,7 @@ public final class JVM {
   }
 
   @NotNull public static String status() {
-    return new StringBuilder() //
-        .append(TotalMemory.format())//
-        .append("\n") //
-        .append(MemoryManagement.format())//
-        .append("\n") //
-        .append(GarbageCollectionSystem.format()) //
-        + "";
+    return TotalMemory.format() + "\n" + MemoryManagement.format() + "\n" + GarbageCollectionSystem.format();
   }
 
   /** Number of classes currently loaded in the JVM */
@@ -119,9 +113,8 @@ public final class JVM {
   }
 
   @Override @NotNull public String toString() {
-    return new StringBuilder().append("JIT𝝉=" + Unit.MILLISECONDS.format(compileTime))
-        .append(" #Classes=" + loadedClasses + "(current) " + removedClasses + "(removed) " + seenClasses + "(seen)")
-        .append(" HEAP=" + Unit.BYTES.format(heapSize)).append(" #GC=" + gcCycles).append(" GC𝝉=" + Unit.MILLISECONDS.format(gcTime)) + "";
+    return "JIT𝝉=" + Unit.MILLISECONDS.format(compileTime) + " #Classes=" + loadedClasses + "(current) " + removedClasses + "(removed) "
+        + seenClasses + "(seen) HEAP=" + Unit.BYTES.format(heapSize) + " #GC=" + gcCycles + " GC𝝉=" + Unit.MILLISECONDS.format(gcTime);
   }
 
   private boolean equals(@NotNull final JVM o) {
@@ -176,13 +169,8 @@ public final class JVM {
     }
 
     @NotNull static String format(@NotNull final GarbageCollectorMXBean ¢) {
-      return new StringBuffer().append(¢.getName()) //
-          .append((¢.isValid() ? "" : "/invalid") + " ") //
-          .append(¢.getCollectionCount()) //
-          .append("  ").append(Unit.MILLISECONDS.format(¢.getCollectionTime())) //
-          .append(" (").append(Separate.by(¢.getMemoryPoolNames(), ",")) //
-          .append(")") //
-          + "";
+      return ¢.getName() + (¢.isValid() ? "" : "/invalid") + " " + ¢.getCollectionCount() + "  " + Unit.MILLISECONDS.format(¢.getCollectionTime())
+          + " (" + Separate.by(¢.getMemoryPoolNames(), ",") + ")";
     }
   }
 
@@ -210,20 +198,13 @@ public final class JVM {
     }
 
     @NotNull public static String format(@NotNull final MemoryMXBean ¢) {
-      return new StringBuffer() //
-          .append("Zombies=").append(¢.getObjectPendingFinalizationCount()).append("\t") //
-          .append("Heap [").append(format(¢.getHeapMemoryUsage())).append("]\n")//
-          .append("\t\tNon Heap [").append(format(¢.getNonHeapMemoryUsage())).append("] ")//
-          + "";
+      return "Zombies=" + ¢.getObjectPendingFinalizationCount() + "\tHeap [" + format(¢.getHeapMemoryUsage()) + "]\n\t\tNon Heap ["
+          + format(¢.getNonHeapMemoryUsage()) + "] ";
     }
 
     @NotNull public static String format(@NotNull final MemoryUsage ¢) {
-      return new StringBuffer() //
-          .append("Init:").append(format(¢.getInit())).append(" ")//
-          .append("Max:").append(format(¢.getMax())).append(" ")//
-          .append("Committed:").append(format(¢.getCommitted())).append(" ")//
-          .append("Used:").append(format(¢.getUsed())).append(" ")//
-          + "";
+      return "Init:" + format(¢.getInit()) + " Max:" + format(¢.getMax()) + " Committed:" + format(¢.getCommitted()) + " Used:" + format(¢.getUsed())
+          + " ";
     }
 
     public static long heapSize() {

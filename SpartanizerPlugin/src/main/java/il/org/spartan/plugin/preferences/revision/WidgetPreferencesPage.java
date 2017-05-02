@@ -19,7 +19,7 @@ import il.org.spartan.plugin.preferences.revision.PreferencesPage.*;
  * @since 2017-04-30 */
 public class WidgetPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
   private Changes changes;
-  
+
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(Plugin.plugin().getPreferenceStore());
     setDescription(WIDGET_PAGE_DESCRIPTION);
@@ -32,7 +32,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   @Override protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
     addField(new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent()));
-    ListSelectionEditor lse = new ListSelectionEditor("X", "Configure tips for projects:", getFieldEditorParent(), getWidgetOperations(),
+    final ListSelectionEditor lse = new ListSelectionEditor("X", "Configure tips for projects:", getFieldEditorParent(), getWidgetOperations(),
         p -> ProjectPreferencesHandler.execute((IProject) p, changes.getPreference((IProject) p), (pp, es) -> changes.update(pp, es)), //
         λ -> changes.isEnabled((IProject) λ), //
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.isEnabled((IProject) λ).booleanValue())) //

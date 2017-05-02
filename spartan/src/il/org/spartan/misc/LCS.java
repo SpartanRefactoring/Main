@@ -1,7 +1,6 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.misc;
 
-import static il.org.spartan.Utils.*;
 import static fluent.ly.azzert.*;
 import static java.lang.Math.max;
 
@@ -10,10 +9,7 @@ import java.util.*;
 import org.eclipse.jdt.annotation.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
-import org.junit.runners.*;
-
 import fluent.ly.*;
-import il.org.spartan.*;
 import il.org.spartan.text.*;
 
 /** Utility functions for computing the "Longest Common Subsequence" for two
@@ -112,7 +108,6 @@ public class LCS {
   private int threeWayDynamicProgramingStep(final int i, final int j) {
     return max(length(i - 1, j), max(length(i, j - 1), length(i - 1, j - 1) + as.bit(A_s[i] == B_s[j])));
   }
-
 
   @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST {

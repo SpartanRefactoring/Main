@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.ast.factory;
+
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 

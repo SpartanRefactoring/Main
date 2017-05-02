@@ -9,7 +9,6 @@ import org.jetbrains.annotations.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 
 @SuppressWarnings("static-method")
 //
@@ -65,7 +64,7 @@ public class TokenizerTest {
   }
 
   @Test public void block_comment_keyword() throws IOException {
-    reset("/* a */ public\n" + "public");
+    reset("/* a */ public\npublic");
     azzert.that(t.next(), is(BLOCK_COMMENT));
     azzert.that(t.next(), is(SPACE));
     azzert.that(t.next(), is(__public));
@@ -110,8 +109,7 @@ public class TokenizerTest {
   }
 
   @Test public void doc_comment_keyword() throws IOException {
-    reset("/**\n" + "* A suite of metrics over Java code.\n" + "* \n" + "* @author Yossi Gil <yogi@cs.technion.ac.il> 21/04/2007\n" + "*/\n"
-        + "public");
+    reset("/**\n* A suite of metrics over Java code.\n* \n* @author Yossi Gil <yogi@cs.technion.ac.il> 21/04/2007\n*/\npublic");
     azzert.that(t.next(), is(PARTIAL_DOC_COMMENT));
     azzert.that(t.next(), is(NL_DOC_COMMENT));
     azzert.that(t.next(), is(PARTIAL_DOC_COMMENT));
@@ -269,7 +267,7 @@ public class TokenizerTest {
   }
 
   @Test public void short_doc_comment_keyword() throws IOException {
-    reset("/** a */ public\n" + "public");
+    reset("/** a */ public\npublic");
     azzert.that(t.next(), is(DOC_COMMENT));
     azzert.that(t.next(), is(SPACE));
     azzert.that(t.next(), is(__public));

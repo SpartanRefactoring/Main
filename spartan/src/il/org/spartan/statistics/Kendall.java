@@ -6,10 +6,8 @@ import java.util.*;
 
 import org.jetbrains.annotations.*;
 
-import il.org.spartan.*;
 import il.org.spartan.external.*;
 import il.org.spartan.streotypes.*;
-import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
 import fluent.ly.*;
 
@@ -36,7 +34,7 @@ import fluent.ly.*;
   /** [[SuppressWarningsSpartan]] */
   public static double tau(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
-    return computeS(xs, ys, xs.length) / (double) pairs(xs.length);
+    return pairs(xs.length) * computeS(xs, ys, xs.length) / 1.;
   }
 
   /** Compute Kendall's tau coefficient for a ranking of the integers 0,...,n
