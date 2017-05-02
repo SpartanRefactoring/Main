@@ -184,7 +184,7 @@ public class GenericPsiElementStub {
                     super.visitLiteralExpression(expression);
                     IElementType type = step.literalType(expression);
                     if (type != null && (type == TRUE_KEYWORD || type == FALSE_KEYWORD)) {
-                        name.set(ARRAY_IDENTIFIER);
+                        name.set(BOOLEAN_LITERAL);
                     }
                 }
             });
