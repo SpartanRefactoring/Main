@@ -19,7 +19,7 @@ public class GenericPsiExpression extends GenericPsi {
     private PsiType t;
 
     public GenericPsiExpression(PsiType t, PsiElement e) {
-        super(e, "GenericExpression");
+        super(e, "GenericEncapsulator");
         this.t = t;
     }
 

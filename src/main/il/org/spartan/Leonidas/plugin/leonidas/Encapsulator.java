@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin;
+package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
@@ -17,37 +17,37 @@ import java.util.stream.Collectors;
  * @author michalcohen
  * @since 22-02-2017
  */
-public class EncapsulatingNode implements Cloneable, VisitableNode, Iterable<EncapsulatingNode> {
+public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsulator> {
     private PsiElement inner;
-    private EncapsulatingNode parent;
-    private List<EncapsulatingNode> children = new LinkedList<>();
+    private Encapsulator parent;
+    private List<Encapsulator> children = new LinkedList<>();
 
-    public EncapsulatingNode(PsiElement e) {
+    public Encapsulator(PsiElement e) {
         inner = e;
-        Arrays.stream(e.getChildren()).forEach(child -> children.add(new EncapsulatingNode(child, this)));
+        Arrays.stream(e.getChildren()).forEach(child -> children.add(new Encapsulator(child, this)));
     }
 
-    private EncapsulatingNode(PsiElement e, EncapsulatingNode parent) {
+    private Encapsulator(PsiElement e, Encapsulator parent) {
         this(e);
         this.parent = parent;
     }
 
-    public EncapsulatingNode(EncapsulatingNode n) {
+    public Encapsulator(Encapsulator n) {
         this(n, null);
     }
 
-    private EncapsulatingNode(EncapsulatingNode n, EncapsulatingNode parent) {
+    private Encapsulator(Encapsulator n, Encapsulator parent) {
         this.parent = parent;
         inner = n.inner.copy();
-        children = n.getChildren().stream().map(c -> new EncapsulatingNode(c, this)).collect(Collectors.toList());
+        children = n.getChildren().stream().map(c -> new Encapsulator(c, this)).collect(Collectors.toList());
     }
 
     /**
      * @param e PsiElement
      * @return an encapsulating node that hides e.
      */
-    public static EncapsulatingNode buildTreeFromPsi(PsiElement e) {
-        return new EncapsulatingNode(e);
+    public static Encapsulator buildTreeFromPsi(PsiElement e) {
+        return new Encapsulator(e);
     }
 
     /**
@@ -55,7 +55,7 @@ public class EncapsulatingNode implements Cloneable, VisitableNode, Iterable<Enc
      * @param r       rewrite
      * @return this, for fluent API.
      */
-    public EncapsulatingNode replace(EncapsulatingNode newNode, PsiRewrite r) {
+    public Encapsulator replace(Encapsulator newNode, PsiRewrite r) {
         if (!iz.generic(inner))
             throw new IllegalArgumentException();
         if (parent == null) {
@@ -66,11 +66,11 @@ public class EncapsulatingNode implements Cloneable, VisitableNode, Iterable<Enc
         return this;
     }
 
-    public List<EncapsulatingNode> getChildren() {
+    public List<Encapsulator> getChildren() {
         return children;
     }
 
-    public EncapsulatingNode getParent() {
+    public Encapsulator getParent() {
         return parent;
     }
 
@@ -110,26 +110,26 @@ public class EncapsulatingNode implements Cloneable, VisitableNode, Iterable<Enc
         return inner.getText();
     }
 
-    public EncapsulatingNode clone() {
-        return new EncapsulatingNode(this);
+    public Encapsulator clone() {
+        return new Encapsulator(this);
     }
 
     @Override
-    public EncapsulatingNode.Iterator iterator() {
-        return new EncapsulatingNode.Iterator();
+    public Encapsulator.Iterator iterator() {
+        return new Encapsulator.Iterator();
     }
 
     @Override
-    public void forEach(Consumer<? super EncapsulatingNode> action) {
+    public void forEach(Consumer<? super Encapsulator> action) {
         children.stream().forEach(action);
     }
 
     /**
      * Iterator for iterating over the tree without considering white spaces.
      */
-    public class Iterator implements java.util.Iterator<EncapsulatingNode> {
+    public class Iterator implements java.util.Iterator<Encapsulator> {
         int location;
-        List<EncapsulatingNode> noSpaceChildren;
+        List<Encapsulator> noSpaceChildren;
 
         public Iterator() {
             noSpaceChildren = children.stream().filter(child -> !iz.whiteSpace(child.getInner())).collect(Collectors.toList());
@@ -141,13 +141,13 @@ public class EncapsulatingNode implements Cloneable, VisitableNode, Iterable<Enc
         }
 
         @Override
-        public EncapsulatingNode next() {
-            EncapsulatingNode e = noSpaceChildren.get(location);
+        public Encapsulator next() {
+            Encapsulator e = noSpaceChildren.get(location);
             ++location;
             return e;
         }
 
-        public EncapsulatingNode value() {
+        public Encapsulator value() {
             return noSpaceChildren.get(location);
         }
 

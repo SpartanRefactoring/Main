@@ -62,13 +62,13 @@ public class LeonidasTipperTest extends PsiTypeHelper {
 
     public void testCanTip() {
         $ = createTestObject();
-        Mockito.when(builderMock.getFromPsiTree()).thenReturn(EncapsulatingNode.buildTreeFromPsi(createTestStatementFromString(statement)));
+        Mockito.when(builderMock.getFromPsiTree()).thenReturn(Encapsulator.buildTreeFromPsi(createTestStatementFromString(statement)));
         assert $.canTip(createTestStatementFromString(statement));
     }
 
     public void testCanNotTip() {
         $ = createTestObject();
-        Mockito.when(builderMock.getFromPsiTree()).thenReturn(EncapsulatingNode.buildTreeFromPsi(createTestStatementFromString(statement)));
+        Mockito.when(builderMock.getFromPsiTree()).thenReturn(Encapsulator.buildTreeFromPsi(createTestStatementFromString(statement)));
         assert !$.canTip(createTestExpressionFromString(expression));
     }
 

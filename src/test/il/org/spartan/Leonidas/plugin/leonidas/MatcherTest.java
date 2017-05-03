@@ -8,7 +8,6 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
-import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,14 +24,14 @@ public class MatcherTest extends PsiTypeHelper {
     public void testMatch() throws Exception {
         Map<Integer, List<Matcher.Constraint>> constrains = new HashMap<>();
         PsiIfStatement ifs = createTestIfStatement("booleanExpression(0)", "statement(1);\n statement(2);");
-        EncapsulatingNode n = buildTemplate(ifs);
+        Encapsulator n = buildTemplate(ifs);
         constrains.putIfAbsent(1, new LinkedList<>());
         constrains.putIfAbsent(2, new LinkedList<>());
         constrains.putIfAbsent(3, new LinkedList<>());
-        EncapsulatingNode firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);"));
-        EncapsulatingNode secondConstraint = buildTemplate(createTestReturnStatement("null"));
-        EncapsulatingNode thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
-        EncapsulatingNode forthConstraint = buildTemplate(createTestReturnStatement("null"));
+        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);"));
+        Encapsulator secondConstraint = buildTemplate(createTestReturnStatement("null"));
+        Encapsulator thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
+        Encapsulator forthConstraint = buildTemplate(createTestReturnStatement("null"));
 
         constrains.get(1).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS_NOT, firstConstraint));
         constrains.get(2).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS, secondConstraint));
@@ -57,14 +56,14 @@ public class MatcherTest extends PsiTypeHelper {
     public void testExtractInfo() throws Exception {
         Map<Integer, List<Matcher.Constraint>> constrains = new HashMap<>();
         PsiIfStatement ifs = createTestIfStatement("booleanExpression(0)", "statement(1);\n statement(2);");
-        EncapsulatingNode n = buildTemplate(ifs);
+        Encapsulator n = buildTemplate(ifs);
         constrains.putIfAbsent(1, new LinkedList<>());
         constrains.putIfAbsent(2, new LinkedList<>());
         constrains.putIfAbsent(3, new LinkedList<>());
-        EncapsulatingNode firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);"));
-        EncapsulatingNode secondConstraint = buildTemplate(createTestReturnStatement("null"));
-        EncapsulatingNode thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
-        EncapsulatingNode forthConstraint = buildTemplate(createTestReturnStatement("null"));
+        Encapsulator firstConstraint = buildTemplate(createTestIfStatement("booleanExpression(3)", "statement(4);"));
+        Encapsulator secondConstraint = buildTemplate(createTestReturnStatement("null"));
+        Encapsulator thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
+        Encapsulator forthConstraint = buildTemplate(createTestReturnStatement("null"));
 
         constrains.get(1).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS_NOT, firstConstraint));
         constrains.get(2).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS, secondConstraint));
@@ -111,8 +110,8 @@ public class MatcherTest extends PsiTypeHelper {
         });
     }
 
-    private EncapsulatingNode buildTemplate(PsiElement e) {
+    private Encapsulator buildTemplate(PsiElement e) {
         giveIdToStubMethodCalls(e);
-        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(e));
+        return Pruning.prune(Encapsulator.buildTreeFromPsi(e));
     }
 }

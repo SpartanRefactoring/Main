@@ -5,7 +5,6 @@ import com.intellij.psi.tree.IElementType;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
-import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.*;
 
 import java.util.Arrays;
@@ -244,7 +243,7 @@ public class GenericPsiElementStub {
          * @param next one step upwards in the psi tree of the code.
          * @return the true iff by the type of the generic element there is a need to go one step upwards.
          */
-        public boolean goUpwards(EncapsulatingNode prv, EncapsulatingNode next) {
+        public boolean goUpwards(Encapsulator prv, Encapsulator next) {
             if (next == null)
                 return false;
             switch (this) {

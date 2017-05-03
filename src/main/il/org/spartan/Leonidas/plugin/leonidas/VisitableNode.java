@@ -1,4 +1,7 @@
-package il.org.spartan.Leonidas.plugin;
+package il.org.spartan.Leonidas.plugin.leonidas;
+
+import il.org.spartan.Leonidas.plugin.leonidas.EncapsulatingNodeValueVisitor;
+import il.org.spartan.Leonidas.plugin.leonidas.EncapsulatingNodeVisitor;
 
 import java.util.function.BinaryOperator;
 

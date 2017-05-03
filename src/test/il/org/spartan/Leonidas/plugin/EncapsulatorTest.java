@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.mockito.Mockito;
@@ -11,7 +12,7 @@ import org.mockito.Mockito;
  * @author melanyc, RoeiRaz
  * @since 29/4/17
  */
-public class EncapsulatingNodeTest extends PsiTypeHelper {
+public class EncapsulatorTest extends PsiTypeHelper {
     private final String ifStatement1 = "" +
             "if (expression) {" +
             "   statement();" +
@@ -19,7 +20,7 @@ public class EncapsulatingNodeTest extends PsiTypeHelper {
 
     private PsiRewrite mockPsiRewrite;
 
-    private boolean matchNodeTreeAndPsiTreeByReference(EncapsulatingNode node, PsiElement e) {
+    private boolean matchNodeTreeAndPsiTreeByReference(Encapsulator node, PsiElement e) {
         if (node == e && e == null)
             return true;
 
@@ -41,21 +42,21 @@ public class EncapsulatingNodeTest extends PsiTypeHelper {
     }
 
     public void testRootEncapsulatingNodeIsOrphan() throws Exception {
-        EncapsulatingNode node = EncapsulatingNode.buildTreeFromPsi(createTestStatementFromString(ifStatement1));
+        Encapsulator node = Encapsulator.buildTreeFromPsi(createTestStatementFromString(ifStatement1));
         Assert.assertNull(node.getParent());
     }
 
     public void testTreeBuiltFromPsiElementConformsToPsiElement() {
         PsiElement ifStatement1Psi = createTestStatementFromString(ifStatement1);
-        EncapsulatingNode node = EncapsulatingNode.buildTreeFromPsi(ifStatement1Psi);
+        Encapsulator node = Encapsulator.buildTreeFromPsi(ifStatement1Psi);
         Assert.assertTrue(matchNodeTreeAndPsiTreeByReference(node, ifStatement1Psi));
     }
 
     public void testFailWhenInvokingReplaceOnNonGenericNode() {
         // junit 3 doesn't have humane mechanisms for exceptions testing :( :(
         try {
-            EncapsulatingNode.buildTreeFromPsi(createTestStatementFromString(ifStatement1)).replace(
-                    EncapsulatingNode.buildTreeFromPsi(createTestStatementFromString(ifStatement1)),
+            Encapsulator.buildTreeFromPsi(createTestStatementFromString(ifStatement1)).replace(
+                    Encapsulator.buildTreeFromPsi(createTestStatementFromString(ifStatement1)),
                     mockPsiRewrite
             );
             Assert.fail();

@@ -8,11 +8,8 @@ import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
-import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
-import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
-import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
-import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
+import il.org.spartan.Leonidas.plugin.leonidas.*;
+import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
@@ -146,7 +143,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             // y - root, key ID
             map.putIfAbsent(key, new LinkedList<>());
             giveIdToStubMethodCalls(y);
-            map.get(key).add(new Matcher.Constraint(extractConstraintType(s), Pruning.prune(EncapsulatingNode.buildTreeFromPsi(y))));
+            map.get(key).add(new Matcher.Constraint(extractConstraintType(s), Pruning.prune(Encapsulator.buildTreeFromPsi(y))));
         });
         return map;
     }
@@ -237,10 +234,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @param r             - Rewrite object
      * @return the replaced element
      */
-    private EncapsulatingNode replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
+    private Encapsulator replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
         PsiElement n = getReplacingTree(m, r);
         r.replace(treeToReplace, n);
-        return EncapsulatingNode.buildTreeFromPsi(n);
+        return Encapsulator.buildTreeFromPsi(n);
     }
 
     /**
@@ -249,10 +246,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the template of the replacer with the concrete elements inside it.
      */
     private PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
-        EncapsulatingNode rootCopy = getReplacerRootTree();
+        Encapsulator rootCopy = getReplacerRootTree();
         m.keySet().forEach(d -> rootCopy.accept(e -> {
             if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && iz.generic(e.getInner()))
-                e.replace(new EncapsulatingNode(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
+                e.replace(new Encapsulator(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
         }));
         return rootCopy.getInner();
     }
@@ -321,21 +318,21 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     /**
      * @return the generic tree representing the "from" template
      */
-    private EncapsulatingNode getMatcherRootTree() {
+    private Encapsulator getMatcherRootTree() {
         PsiMethod method = getInterfaceMethod("matcher");
         giveIdToStubMethodCalls(method);
 
-        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(method,
+        return Pruning.prune(Encapsulator.buildTreeFromPsi(getTreeFromRoot(method,
                 getPsiElementTypeFromAnnotation(method))));
     }
 
     /**
      * @return the generic tree representing the "from" template
      */
-    private EncapsulatingNode getReplacerRootTree() {
+    private Encapsulator getReplacerRootTree() {
         PsiMethod replacer = (PsiMethod) getInterfaceMethod("replacer").copy();
         giveIdToStubMethodCalls(replacer);
-        return Pruning.prune(EncapsulatingNode.buildTreeFromPsi(getTreeFromRoot(replacer,
+        return Pruning.prune(Encapsulator.buildTreeFromPsi(getTreeFromRoot(replacer,
                 getPsiElementTypeFromAnnotation(replacer))));
     }
 

@@ -3,7 +3,6 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.EncapsulatingNode;
 
 import java.util.Map;
 
@@ -14,9 +13,9 @@ import java.util.Map;
 public class Replacer {
 
     private Matcher matcher;
-    private EncapsulatingNode root;
+    private Encapsulator root;
 
-    public Replacer(Matcher m, EncapsulatingNode r) {
+    public Replacer(Matcher m, Encapsulator r) {
         matcher = m;
         root = r;
     }
@@ -28,10 +27,10 @@ public class Replacer {
      * @param r             - Rewrite object
      * @return the replaced element
      */
-    public EncapsulatingNode replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
+    public Encapsulator replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
         PsiElement n = getReplacingTree(m, r);
         r.replace(treeToReplace, n);
-        return EncapsulatingNode.buildTreeFromPsi(n);
+        return Encapsulator.buildTreeFromPsi(n);
     }
 
     /**
@@ -40,10 +39,11 @@ public class Replacer {
      * @oaram m a mapping between the id of a generic element to its value in the code of the user.
      */
     public PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
-        EncapsulatingNode rootCopy = root.clone();
+        //TODO @orenafek : remove this :)
+        Encapsulator rootCopy = root.clone();
         m.keySet().forEach(d -> rootCopy.accept(e -> {
             if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && iz.generic(e.getInner()))
-                e.replace(new EncapsulatingNode(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
+                e.replace(new Encapsulator(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
         }));
         return rootCopy.getInner();
     }
