@@ -1,3 +1,4 @@
+// Buildscript ################################################################
 buildscript {
   repositories {
     maven {
@@ -9,46 +10,44 @@ buildscript {
   }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'com.diffplug.gradle.p2.asmaven'
-
-compileJava.options.encoding = 'UTF-8'
-
-compileJava.sourceCompatibility = JavaVersion.VERSION_1_8
-compileJava.targetCompatibility = JavaVersion.VERSION_1_8
-
+// Repositories definitions ###################################################
 repositories {
 	mavenCentral()
 	jcenter()
 }
-
 repositories {
 	flatDir {
 		dirs 'lib'
 	}
 }
 
+// Plugins ####################################################################
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'com.diffplug.gradle.p2.asmaven'
 
+// Imports ####################################################################
+apply from: 'eclipse-deps.gradle'
+
+
+// Java settings ##############################################################
+compileJava.options.encoding = 'UTF-8'
+compileJava.sourceCompatibility = JavaVersion.VERSION_1_8
+compileJava.targetCompatibility = JavaVersion.VERSION_1_8
+
+
+
+// P2AsMaven configuration ####################################################
+// Downloads required p2 packages, transforms them to maven packages, and
+// stores them in a local maven repository in build/p2asmaven/maven
+def eclipse_deps_group = 'eclipse-deps'
 p2AsMaven {
-	group 'eclipse-deps', {
+	group eclipse_deps_group, {
         // the repositories and artifacts to download
         repoEclipse '4.5.2'
-		iu         	'org.eclipse.debug.core'
-		iu         	'org.eclipse.jdt'
-		iu         	'org.eclipse.jdt.ui'
-        iu         	'org.eclipse.jdt.core'
-		iu         	'org.eclipse.ui'
-		iu         	'org.eclipse.ui.ide'
-		iu 			'org.eclipse.swt'
-		iu 			'org.eclipse.jface'
-		iu 			'org.eclipse.ltk.core.refactoring'
-		iu			'org.eclipse.jface.text'
-		iu			'org.eclipse.core.commands'
-		iu			'org.eclipse.core.runtime'
-		iu			'org.eclipse.ltk.ui.refactoring'
-		iu			'org.eclipse.ui.workbench.texteditor'
-		
+		for (dep in project.eclipse_deps) { 
+			iu dep
+		}		
     }
 	group 'eclipse-jgit-deps', {
 		repo 'http://download.eclipse.org/egit/updates/'
@@ -56,6 +55,7 @@ p2AsMaven {
 	}
 }
 
+// Dependencies ###############################################################
 dependencies {
 	compile project(':spartan')
 	compile project(':fluent.ly')
@@ -65,16 +65,14 @@ dependencies {
 	compile 'org.hamcrest:hamcrest-junit:2.0.0.0'
 	compile "org.mockito:mockito-core:1.+"
 	
-	// add all dependencies from eclipse-deps, including trasitive dependencies
-	def eclipse_deps_path = "build/p2asmaven/maven/eclipse-deps"
-	new File(eclipse_deps_path).eachDir() { dir ->
-		compile "eclipse-deps:" + dir.getName() + ":+"
+	// compile all eclipse p2 dependencies
+	for (dep in project.eclipse_deps) { 
+		compile eclipse_deps_group + ':' + dep + ':+'
 	}
-	
+
 	// Jgit??
 	compile "eclipse-jgit-deps:org.eclipse.jgit:+"
 	
 	// https://mvnrepository.com/artifact/org.osgi/org.osgi.framework
 	compile group: 'org.osgi', name: 'org.osgi.framework', version: '1.8.0'
-
 }

@@ -114,10 +114,7 @@ out
 release.properties
 .temp
 .dropbox
-<<<<<<< HEAD
-=======
 Testing
->>>>>>> bbb/master
 test-output
 tmp
 .version
@@ -128,10 +125,7 @@ Backup*/
 /backups/
 [Bb]in/
 /bin
-<<<<<<< HEAD
-=======
 /doc
->>>>>>> bbb/master
 bin/
 bld/
 /build
@@ -148,7 +142,6 @@ doc/tags
 out/
 target/
 
-<<<<<<< HEAD
 # User defined (add below this line) // vim: +,$!sort -u
 /types.CSV
 il.org.spartan.spartanizer
@@ -157,7 +150,6 @@ il.org.spartan.spartanizer
 .Rhistory
 /logs
 /scrapbook.jpage
-=======
 # User defined (add below this line) // vim: +,$!sort -u# Prefixes // vim: +,/^\s*$/-1!sort -u
 texput.*
 Untitled*
@@ -349,5 +341,5 @@ doc/tags
 out/
 
 # User defined (add below this line) // vim: +,$!sort -u
->>>>>>> bbb/master
 /.gradle/
+.gradle/
