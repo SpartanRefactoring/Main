@@ -287,7 +287,7 @@ public class Selection extends AbstractSelection<Selection> {
     }
 
     /** @return current Java project */
-    private static IJavaProject getJavaProject() {
+    public static IJavaProject getJavaProject() {
       final IProject $ = getProject();
       return $ == null ? null : JavaCore.create($);
     }

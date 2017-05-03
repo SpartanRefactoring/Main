@@ -215,7 +215,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
       return $;
     Listener l = new Listener() {
       @Override public void handleEvent(Event e) {
-        WidgetContext c = createContext();
+        WidgetContext c = WidgetContext.generateContext();
         try {
           switch (e.type) {
             case SWT.MouseUp:
@@ -241,7 +241,4 @@ public class SpartanWidgetHandler extends AbstractHandler {
     return $;
   }
 
-  static WidgetContext createContext() {
-    return new WidgetContext();
-  }
 }
