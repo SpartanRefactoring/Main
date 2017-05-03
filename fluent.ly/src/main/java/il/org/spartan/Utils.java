@@ -3,7 +3,6 @@ package il.org.spartan;
 import static org.junit.Assert.*;
 
 import static fluent.ly.azzert.*;
-import static fluent.ly.idiomatic.*;
 
 import java.io.*;
 import java.util.*;
