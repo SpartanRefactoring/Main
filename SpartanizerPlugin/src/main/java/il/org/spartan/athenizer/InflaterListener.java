@@ -1,7 +1,9 @@
 package il.org.spartan.athenizer;
 
 import java.util.*;
+import java.util.List;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.swt.*;
@@ -43,7 +45,17 @@ public class InflaterListener implements KeyListener, Listener {
   private final Color originalBackground;
   private final IDocumentUndoManager undoManager;
   private int editDirection;
-  private final boolean compoundEditing;
+  private final boolean compoundEditing; 
+  @SuppressWarnings("boxing")
+  private static final List<Integer> activating_keys = Arrays.asList(SWT.CTRL, SWT.ALT);
+  @SuppressWarnings("boxing")
+  private final List<Boolean> active_keys = activating_keys.stream().map(x -> false).collect(Collectors.toList());
+  private static final List<Predicate<Event>> zoomer_keys = Arrays.asList(e -> e.keyCode == SWT.KEYPAD_ADD,
+      e -> e.character == '=',
+      e -> e.type == SWT.MouseWheel && e.count > 0);
+  private static final List<Predicate<Event>> spartan_keys = Arrays.asList(e -> e.keyCode == SWT.KEYPAD_SUBTRACT,
+      e -> e.character == '-',
+      e -> e.type == SWT.MouseWheel && e.count < 0);
 
   public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
@@ -58,28 +70,17 @@ public class InflaterListener implements KeyListener, Listener {
   }
 
   @Override public void handleEvent(final Event ¢) {
-    if (¢.type != SWT.MouseWheel || !active || !text.getBounds().contains(text.toControl(Eclipse.mouseLocation())))
+    int t = checkEvent(¢);
+    if (t == 0 || !active || !text.getBounds().contains(text.toControl(Eclipse.mouseLocation())))
       return;
     ¢.doit = false;
     ¢.type = SWT.NONE;
-    final int c = ¢.count;
     ¢.count = 0;
     if (working.get())
       return;
     windowInformation = WindowInformation.of(text);
     working.set();
-    if (c > 0) {
-      if (compoundEditing && editDirection != ZOOMOUT_COMPUND_EDIT) {
-        if (editDirection != NO_COMPUND_EDIT)
-          undoManager.endCompoundChange();
-        undoManager.beginCompoundChange();
-      }
-      editDirection = ZOOMOUT_COMPUND_EDIT;
-      Eclipse.runAsynchronouslyInUIThread(() -> {
-        inflate();
-        working.clear();
-      });
-    } else if (c < 0) {
+    if (t <= 0) {
       if (compoundEditing && editDirection != ZOOMIN_COMPUND_EDIT) {
         if (editDirection != NO_COMPUND_EDIT)
           undoManager.endCompoundChange();
@@ -90,7 +91,25 @@ public class InflaterListener implements KeyListener, Listener {
         deflate();
         working.clear();
       });
+    } else {
+      if (compoundEditing && editDirection != ZOOMOUT_COMPUND_EDIT) {
+        if (editDirection != NO_COMPUND_EDIT)
+          undoManager.endCompoundChange();
+        undoManager.beginCompoundChange();
+      }
+      editDirection = ZOOMOUT_COMPUND_EDIT;
+      Eclipse.runAsynchronouslyInUIThread(() -> {
+        inflate();
+        working.clear();
+      });
     }
+  }
+  
+  /**
+   * Returns 1 if event corresponds to a bloater shortcut, -1 if even corresponds to spartanizer shortcut and 0 otherwise. 
+   */
+  private static int checkEvent(final Event e) {
+    return zoomer_keys.stream().anyMatch(x -> x.test(e)) ? 1 : spartan_keys.stream().anyMatch(x -> x.test(e)) ? -1 : 0;
   }
 
   private void inflate() {
@@ -107,13 +126,20 @@ public class InflaterListener implements KeyListener, Listener {
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
   }
 
-  @Override public void keyPressed(final KeyEvent ¢) {
-    if (¢.keyCode == SWT.CTRL && !active)
+  @Override @SuppressWarnings("boxing") public void keyPressed(final KeyEvent ¢) {
+    int index = activating_keys.indexOf(¢.keyCode);
+    if (index >= 0)
+      active_keys.set(index, true);
+    if (active_keys.stream().allMatch(x -> x) && !active)
       activate();
   }
 
-  @Override public void keyReleased(final KeyEvent ¢) {
-    if (¢.keyCode == SWT.CTRL && active)
+  @Override @SuppressWarnings("boxing") public void keyReleased(final KeyEvent ¢) {
+    int index = activating_keys.indexOf(¢.keyCode);
+    if (index < 0)
+      return;
+    active_keys.set(index, false);
+    if (active)
       deactivate();
   }
 
