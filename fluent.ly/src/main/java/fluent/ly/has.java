@@ -41,7 +41,7 @@ public enum has {
    * @param os an unknown number of objects
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
-  public static boolean nil(final @Nullable Object o, Object @Nullable ... os) {
+  public static <T> boolean nil(final @Nullable T o, T @Nullable ... os) {
     if (o == null || os == null)
       return true;
     for (final Object ¢ : os)
