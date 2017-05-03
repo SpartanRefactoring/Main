@@ -16,7 +16,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.I
  * @since 07-01-2017
  */
 public class Pruning {
-
     /**
      * Prunes all the stubs of the form "stub();" where "stub()"
      * is a method call for the method defined in GenericPsiElementStub.
@@ -25,6 +24,14 @@ public class Pruning {
      */
     public static Encapsulator prune(Encapsulator n) {
         assert (n != null);
+        if (iz.methodCallExpression(n.getInner())) {
+            PsiMethodCallExpression exp = az.methodCallExpression(n.getInner());
+            GenericPsiElementStub.StubName sn = GenericPsiElementStub.StubName.valueOfMethodCall(exp);
+            if (sn != null) {
+                Encapsulator prev = Pruning.getRealParent(n, sn);
+                return sn.getGenericElement(prev.getInner(), exp.getUserData(ID));
+            }
+        }
         n.accept(e1 -> {
             if (!iz.methodCallExpression(e1.getInner()))
 				return;
@@ -38,6 +45,7 @@ public class Pruning {
         });
         return n;
     }
+
 
     /**
      * @param n method call representing generic element.

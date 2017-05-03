@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
-import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 
 import java.util.Arrays;
@@ -119,9 +118,12 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
      * Replaces a concrete element with a generalized one.
      *
      * @param replacer the new Generalized element
-     * @return self
+     * @return the replacer
      */
     public Encapsulator generalize(Encapsulator replacer) {
+        if (parent == null) {
+
+        }
         parent.children.replaceAll(e -> e == Encapsulator.this ? replacer : e);
         replacer.parent = this.parent;
         return replacer;
