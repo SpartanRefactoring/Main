@@ -131,7 +131,7 @@ public class InflateHandler extends AbstractHandler {
     if (¢ instanceof ITextEditor)
       addListener((ITextEditor) ¢);
   }
-
+  
   private static void addListener(final ITextEditor ¢) {
     final StyledText text = getText(¢);
     if (text == null)
@@ -144,6 +144,7 @@ public class InflateHandler extends AbstractHandler {
       return;
     final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
     text.getDisplay().addFilter(SWT.MouseWheel, l);
+    text.getDisplay().addFilter(SWT.KeyDown, l);
     text.addKeyListener(l);
   }
 
@@ -155,6 +156,7 @@ public class InflateHandler extends AbstractHandler {
     ls.stream().filter(λ -> λ instanceof TypedListener && ((TypedListener) λ).getEventListener() instanceof InflaterListener).findFirst()
         .ifPresent(λ -> ((InflaterListener) ((TypedListener) λ).getEventListener()).finilize());
     ls.forEach(λ -> text.getDisplay().removeFilter(SWT.MouseWheel, (Listener) ((TypedListener) λ).getEventListener()));
+    ls.forEach(λ -> text.getDisplay().removeFilter(SWT.KeyDown, (Listener) ((TypedListener) λ).getEventListener()));
     ls.forEach(λ -> text.removeKeyListener((KeyListener) ((TypedListener) λ).getEventListener()));
   }
 }
