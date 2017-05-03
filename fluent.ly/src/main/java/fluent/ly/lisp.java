@@ -1,7 +1,5 @@
 package fluent.ly;
 
-import static il.org.spartan.Utils.*;
-
 import java.util.*;
 import java.util.stream.*;
 
