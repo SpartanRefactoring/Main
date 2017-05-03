@@ -80,18 +80,7 @@ public class InflaterListener implements KeyListener, Listener {
       return;
     windowInformation = WindowInformation.of(text);
     working.set();
-    if (t > 0) {
-      if (compoundEditing && editDirection != ZOOMOUT_COMPUND_EDIT) {
-        if (editDirection != NO_COMPUND_EDIT)
-          undoManager.endCompoundChange();
-        undoManager.beginCompoundChange();
-      }
-      editDirection = ZOOMOUT_COMPUND_EDIT;
-      Eclipse.runAsynchronouslyInUIThread(() -> {
-        inflate();
-        working.clear();
-      });
-    } else {
+    if (t <= 0) {
       if (compoundEditing && editDirection != ZOOMIN_COMPUND_EDIT) {
         if (editDirection != NO_COMPUND_EDIT)
           undoManager.endCompoundChange();
@@ -102,6 +91,17 @@ public class InflaterListener implements KeyListener, Listener {
         deflate();
         working.clear();
       });
+    } else {
+      if (compoundEditing && editDirection != ZOOMOUT_COMPUND_EDIT) {
+        if (editDirection != NO_COMPUND_EDIT)
+          undoManager.endCompoundChange();
+        undoManager.beginCompoundChange();
+      }
+      editDirection = ZOOMOUT_COMPUND_EDIT;
+      Eclipse.runAsynchronouslyInUIThread(() -> {
+        inflate();
+        working.clear();
+      });
     }
   }
   
@@ -109,11 +109,7 @@ public class InflaterListener implements KeyListener, Listener {
    * Returns 1 if event corresponds to a bloater shortcut, -1 if even corresponds to spartanizer shortcut and 0 otherwise. 
    */
   private static int checkEvent(final Event e) {
-    if(zoomer_keys.stream().anyMatch(x -> x.test(e)))
-      return 1;
-    if(spartan_keys.stream().anyMatch(x -> x.test(e)))
-      return -1;
-    return 0;
+    return zoomer_keys.stream().anyMatch(x -> x.test(e)) ? 1 : spartan_keys.stream().anyMatch(x -> x.test(e)) ? -1 : 0;
   }
 
   private void inflate() {
@@ -130,23 +126,21 @@ public class InflaterListener implements KeyListener, Listener {
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
   }
 
-  @SuppressWarnings("boxing")
-  @Override public void keyPressed(final KeyEvent ¢) {
+  @Override @SuppressWarnings("boxing") public void keyPressed(final KeyEvent ¢) {
     int index = activating_keys.indexOf(¢.keyCode);
-    if(index >= 0)
+    if (index >= 0)
       active_keys.set(index, true);
-    if(active_keys.stream().allMatch(x -> x) && !active)
+    if (active_keys.stream().allMatch(x -> x) && !active)
       activate();
   }
 
-  @SuppressWarnings("boxing")
-  @Override public void keyReleased(final KeyEvent ¢) {
+  @Override @SuppressWarnings("boxing") public void keyReleased(final KeyEvent ¢) {
     int index = activating_keys.indexOf(¢.keyCode);
-    if(index >= 0) {
-      active_keys.set(index, false);
-      if(active)
-        deactivate();
-    }
+    if (index < 0)
+      return;
+    active_keys.set(index, false);
+    if (active)
+      deactivate();
   }
 
   private void activate() {
