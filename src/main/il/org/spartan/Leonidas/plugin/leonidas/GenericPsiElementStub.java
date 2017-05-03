@@ -5,7 +5,7 @@ import com.intellij.psi.tree.IElementType;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.*;
+
 
 import java.util.Arrays;
 

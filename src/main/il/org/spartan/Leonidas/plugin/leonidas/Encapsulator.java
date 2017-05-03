@@ -36,7 +36,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         this(n, null);
     }
 
-    private Encapsulator(Encapsulator n, Encapsulator parent) {
+    public Encapsulator(Encapsulator n, Encapsulator parent) {
         this.parent = parent;
         inner = n.inner.copy();
         children = n.getChildren().stream().map(c -> new Encapsulator(c, this)).collect(Collectors.toList());
@@ -123,6 +123,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
      */
     public Encapsulator generalize(Encapsulator replacer) {
         parent.children.replaceAll(e -> e == Encapsulator.this ? replacer : e);
+        replacer.parent = this.parent;
         return replacer;
     }
 
