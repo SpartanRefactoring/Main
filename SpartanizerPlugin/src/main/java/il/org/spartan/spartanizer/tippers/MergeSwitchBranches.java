@@ -5,7 +5,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Removing redundant case branches in switch statement such as
