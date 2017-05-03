@@ -35,8 +35,8 @@ public class Matcher {
      * @return - true iff these two trees match by the Leonidas language.
      */
     private boolean treeMatch(Encapsulator treeTemplate, Encapsulator treeToMatch) {
-        if (!iz.conforms(treeToMatch.getInner(), treeTemplate.getInner())
-                || iz.block(treeToMatch.getInner()) && !iz.genericBlock(treeTemplate.getInner())
+        if (!iz.conforms(treeToMatch, treeTemplate)
+                || iz.block(treeToMatch.getInner()) && !iz.genericBlock(treeTemplate)
                 && treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS) != null
                 && treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS)
                 .notConforms(az.block(treeToMatch.getInner()).getStatements().length)
@@ -46,7 +46,7 @@ public class Matcher {
             return false;
         boolean res = true;
         if (treeTemplate.getAmountOfNoneWhiteSpaceChildren() < treeToMatch.getAmountOfNoneWhiteSpaceChildren()
-                && !iz.generic(treeTemplate.getInner()))
+                && !iz.generic(treeTemplate))
             return false;
         for (Encapsulator.Iterator treeTemplateChild = treeTemplate.iterator(), treeToMatchChild = treeToMatch
                 .iterator(); treeTemplateChild.hasNext()
@@ -138,7 +138,7 @@ public class Matcher {
     private Set<Integer> getGenericElements() {
         final Set<Integer> tmp = new HashSet<>();
         root.accept(e -> {
-            if (iz.generic(e.getInner())) {
+            if (iz.generic(e)) {
                 tmp.add(e.getInner().getUserData(KeyDescriptionParameters.ID));
             }
         });

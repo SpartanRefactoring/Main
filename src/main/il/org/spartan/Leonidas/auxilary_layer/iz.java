@@ -8,11 +8,8 @@ import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
+import il.org.spartan.Leonidas.plugin.leonidas.*;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.StubName;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
 
 import java.util.Arrays;
 
@@ -183,26 +180,27 @@ public enum iz {
 
 
     private static boolean literalConforms(PsiElement e1, PsiElement e2) {
-        return (iz.literal(e1) && iz.literal(e2) && !iz.generic(e2) && az.literal(e1).getText().equals(az.literal(e2).getText()));
+        return (iz.literal(e1) && iz.literal(e2) && az.literal(e1).getText().equals(az.literal(e2).getText()));
     }
 
     private static boolean tokenConforms(PsiElement e1, PsiElement e2) {
-        return (iz.javaToken(e1) && iz.javaToken(e2) && !iz.generic(e2) && az.javaToken(e1).getText().equals(az.javaToken(e2).getText()));
+        return (iz.javaToken(e1) && iz.javaToken(e2) && az.javaToken(e1).getText().equals(az.javaToken(e2).getText()));
     }
 
-    private static boolean genericConforms(PsiElement e1, PsiElement e2) {
+    private static boolean genericConforms(Encapsulator e1, Encapsulator e2) {
         return iz.generic(e2) && az.generic(e2).generalizes(e1);
     }
 
     private static boolean elseConforms(PsiElement e1, PsiElement e2) {
-        return !iz.generic(e2) && !iz.literal(e1) && !iz.literal(e2) && !iz.javaToken(e1) && !iz.javaToken(e2) && iz.theSameType(e1, e2);
+        return !iz.literal(e1) && !iz.literal(e2) && !iz.javaToken(e1) && !iz.javaToken(e2) && iz.theSameType(e1, e2);
     }
 
     /**
      * e2 is the generic tree
      */
-    public static boolean conforms(PsiElement e1, PsiElement e2) {
-        return literalConforms(e1, e2) || tokenConforms(e1, e2) || genericConforms(e1, e2) || elseConforms(e1, e2);
+    public static boolean conforms(Encapsulator e1, Encapsulator e2) {
+        return literalConforms(e1.getInner(), e2.getInner()) || tokenConforms(e1.getInner(), e2.getInner()) ||
+                genericConforms(e1, e2) || elseConforms(e1.getInner(), e2.getInner());
     }
 
     public static boolean whiteSpace(PsiElement e) {
@@ -229,21 +227,8 @@ public enum iz {
         return typeCheck(PsiDocComment.class, e);
     }
 
-    public static boolean generic(PsiElement e) {
-        //return iz.methodCallExpression(e) && Arrays.stream(StubName.values()).anyMatch(s ->  az.methodCallExpression(e).getMethodExpression().getText().endsWith(s.stubName()));
-        return typeCheck(GenericPsi.class, e);
-    }
-
-    public static boolean genericExpression(PsiElement e) {
-        return typeCheck(GenericPsiExpression.class, e);
-    }
-
-    public static boolean genericStatement(PsiElement e) {
-        return typeCheck(GenericPsiStatement.class, e);
-    }
-
-    public static boolean genericBlock(PsiElement e) {
-        return typeCheck(GenericPsiBlock.class, e);
+    public static boolean generic(Encapsulator e) {
+        return e instanceof GenericEncapsulator;
     }
 
     public static boolean whileStatement(PsiElement e) {
@@ -426,5 +411,21 @@ public enum iz {
 
     static boolean newExpression(PsiElement e) {
         return typeCheck(PsiNewExpression.class, e);
+    }
+
+    public static boolean genericBlock(Encapsulator treeTemplate) {
+        return treeTemplate instanceof GenericBlock;
+    }
+
+    public static boolean genericExpression(Encapsulator e) {
+        return e instanceof GenericExpression;
+    }
+
+    public static boolean genericStatement(Encapsulator e) {
+        return e instanceof GenericStatement;
+    }
+
+    public static boolean genericBooleanLiteral(Encapsulator e) {
+        return e instanceof GenericBooleanLiteral;
     }
 }

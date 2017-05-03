@@ -1,7 +1,11 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiType;
+import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+
+import java.util.Objects;
 
 /**
  * @author Oren Afek
@@ -9,8 +13,11 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
  */
 public class GenericExpression extends GenericEncapsulator {
 
-    public GenericExpression(PsiElement e) {
+    PsiType type;
+
+    public GenericExpression(PsiElement e, PsiType type) {
         super(e);
+        this.type = type;
     }
 
     public GenericExpression(Encapsulator n) {
@@ -20,5 +27,9 @@ public class GenericExpression extends GenericEncapsulator {
     @Override
     protected boolean generalizes(PsiElement e) {
         return iz.expression(e);
+    }
+
+    public PsiType evaluationType() {
+        return type;
     }
 }

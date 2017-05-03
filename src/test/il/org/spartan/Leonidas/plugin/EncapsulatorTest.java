@@ -52,20 +52,6 @@ public class EncapsulatorTest extends PsiTypeHelper {
         Assert.assertTrue(matchNodeTreeAndPsiTreeByReference(node, ifStatement1Psi));
     }
 
-    public void testFailWhenInvokingReplaceOnNonGenericNode() {
-        // junit 3 doesn't have humane mechanisms for exceptions testing :( :(
-        try {
-            Encapsulator.buildTreeFromPsi(createTestStatementFromString(ifStatement1)).replace(
-                    Encapsulator.buildTreeFromPsi(createTestStatementFromString(ifStatement1)),
-                    mockPsiRewrite
-            );
-            Assert.fail();
-        } catch (IllegalArgumentException ignored) {
-        } catch (Throwable t) {
-            Assert.fail();
-        }
-    }
-
     public void testReplace() throws Exception {
 
     }

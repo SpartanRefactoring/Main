@@ -216,17 +216,17 @@ public class GenericPsiElementStub {
          * @param id    the ID inside the replaced element (if it isn't the direct method call, then we won't be able to retrieve it from "inner").
          * @return
          */
-        public GenericPsi getGenericPsiType(PsiElement inner, Integer id) {
-            GenericPsi x;
+        public GenericEncapsulator getGenericElement(PsiElement inner, Integer id) {
+            GenericEncapsulator x;
             switch (this) {
                 case BOOLEAN_EXPRESSION:
-                    x = new GenericPsiExpression(PsiType.BOOLEAN, inner);
+                    x = new GenericExpression(inner, PsiType.BOOLEAN);
                     break;
                 case STATEMENT:
-                    x = new GenericPsiStatement(inner);
+                    x = new GenericStatement(inner);
                     break;
                 case ANY_BLOCK:
-                    x = new GenericPsiBlock(inner);
+                    x = new GenericBlock(inner);
                     break;
                 case BOOLEAN_LITERAL:
                     x = new GenericBooleanLiteral(inner);

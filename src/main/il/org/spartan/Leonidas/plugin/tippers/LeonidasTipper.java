@@ -248,8 +248,8 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
         Encapsulator rootCopy = getReplacerRootTree();
         m.keySet().forEach(d -> rootCopy.accept(e -> {
-            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && iz.generic(e.getInner()))
-                e.replace(new Encapsulator(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
+            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && iz.generic(e))
+                az.generic(e).replace(new Encapsulator(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
         }));
         return rootCopy.getInner();
     }

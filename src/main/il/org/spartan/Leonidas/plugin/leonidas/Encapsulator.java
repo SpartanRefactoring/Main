@@ -1,9 +1,9 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
+import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -18,9 +18,9 @@ import java.util.stream.Collectors;
  * @since 22-02-2017
  */
 public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsulator> {
-    private PsiElement inner;
-    private Encapsulator parent;
-    private List<Encapsulator> children = new LinkedList<>();
+    protected PsiElement inner;
+    protected Encapsulator parent;
+    protected List<Encapsulator> children = new LinkedList<>();
 
     public Encapsulator(PsiElement e) {
         inner = e;
@@ -50,21 +50,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         return new Encapsulator(e);
     }
 
-    /**
-     * @param newNode the concrete node that replaces the generic node.
-     * @param r       rewrite
-     * @return this, for fluent API.
-     */
-    public Encapsulator replace(Encapsulator newNode, PsiRewrite r) {
-        if (!iz.generic(inner))
-            throw new IllegalArgumentException();
-        if (parent == null) {
-            inner = newNode.inner;
-            return this;
-        }
-        inner = r.replace(((GenericPsi) inner).getInner(), newNode.inner);
-        return this;
-    }
+
 
     public List<Encapsulator> getChildren() {
         return children;
@@ -88,11 +74,6 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
 
     public PsiElement getInner() {
         return inner;
-    }
-
-    public void setInner(GenericPsi inner) {
-        this.inner = inner;
-        children = new LinkedList<>();
     }
 
     /**
@@ -122,6 +103,27 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     @Override
     public void forEach(Consumer<? super Encapsulator> action) {
         children.stream().forEach(action);
+    }
+
+
+    public <T> Encapsulator putUserData(Key<T> key, T id) {
+        this.inner.putUserData(key, id);
+        return this;
+    }
+
+    public <T> T getUserData(Key<T> id) {
+        return inner.getUserData(id);
+    }
+
+    /**
+     * Replaces a concrete element with a generalized one.
+     *
+     * @param replacer the new Generalized element
+     * @return self
+     */
+    public Encapsulator generalize(Encapsulator replacer) {
+        parent.children.replaceAll(e -> e == Encapsulator.this ? replacer : e);
+        return replacer;
     }
 
     /**

@@ -6,9 +6,10 @@ import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
+import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericBlock;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericExpression;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericStatement;
 
 /**
  * @author michal cohen, Amir Sagiv
@@ -72,7 +73,7 @@ public class izTest extends PsiTypeHelper {
         PsiJavaToken t3 = ((PsiBinaryExpression) createTestExpression("x >= y")).getOperationSign();
         assert !iz.equalsOperator(t3.getTokenType());
         assert !iz.equalsOperator(
-				((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType());
+                ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType());
     }
 
     public void testNotEqualsOperator() throws Exception {
@@ -83,7 +84,7 @@ public class izTest extends PsiTypeHelper {
         PsiJavaToken t3 = ((PsiBinaryExpression) createTestExpression("x >= y")).getOperationSign();
         assert !iz.notEqualsOperator(t3.getTokenType());
         assert !iz.notEqualsOperator(
-				((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType());
+                ((PsiBinaryExpression) createTestExpression("x + y")).getOperationSign().getTokenType());
     }
 
     public void testLiteral() throws Exception {
@@ -348,7 +349,7 @@ public class izTest extends PsiTypeHelper {
         PsiElement e1 = createTestExpression("x == y");
         assert iz.ofType(e1, PsiBinaryExpressionImpl.class);
         assert iz.ofType(createTestConditionalExpression("x == null", "x = true", "null"),
-				PsiConditionalExpressionImpl.class);
+                PsiConditionalExpressionImpl.class);
     }
 
     public void testDocumentedElement() throws Exception {
@@ -375,46 +376,46 @@ public class izTest extends PsiTypeHelper {
 
     public void testGeneric() {
         PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
-        GenericPsiBlock genericPsiBlock = new GenericPsiBlock(psiElement);
+        GenericBlock genericPsiBlock = new GenericBlock(psiElement);
         assert iz.generic(genericPsiBlock);
 
         psiElement = createTestStatementFromString("int x=0;");
-        GenericPsiStatement genericPsiStatement = new GenericPsiStatement(psiElement);
+        GenericStatement genericPsiStatement = new GenericStatement(psiElement);
         assert iz.generic(genericPsiStatement);
 
         psiElement = createTestExpressionFromString("x+y");
         PsiType psiType = createTestType("Integer");
-        GenericPsiExpression genericPsiExpression = new GenericPsiExpression(psiType, psiElement);
+        GenericExpression genericPsiExpression = new GenericExpression(psiElement, psiType);
         assert iz.generic(genericPsiExpression);
 
-        assert !iz.generic(psiElement);
+        assert !iz.generic(Encapsulator.buildTreeFromPsi(psiElement));
     }
 
     public void testGenericExpression() {
         PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
-        GenericPsiBlock genericPsiBlock = new GenericPsiBlock(psiElement);
+        GenericBlock genericPsiBlock = new GenericBlock(psiElement);
         assert !iz.genericExpression(genericPsiBlock);
 
         psiElement = createTestExpressionFromString("x+y");
-        assert iz.genericExpression(new GenericPsiExpression(createTestType("Integer"), psiElement));
+        assert iz.genericExpression(new GenericExpression(psiElement, createTestType("Integer")));
     }
 
     public void testGenericStatement() {
         PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
-        GenericPsiBlock genericPsiBlock = new GenericPsiBlock(psiElement);
+        GenericBlock genericPsiBlock = new GenericBlock(psiElement);
         assert !iz.genericStatement(genericPsiBlock);
 
         psiElement = createTestStatementFromString("int x=0;");
-        assert iz.genericStatement(new GenericPsiStatement(psiElement));
+        assert iz.genericStatement(new GenericStatement(psiElement));
     }
 
     public void testGenericBlock() {
         PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
-        GenericPsiBlock genericPsiBlock = new GenericPsiBlock(psiElement);
+        GenericBlock genericPsiBlock = new GenericBlock(psiElement);
         assert iz.genericBlock(genericPsiBlock);
 
         psiElement = createTestStatementFromString("int x=0;");
-        assert !iz.genericBlock(new GenericPsiStatement(psiElement));
+        assert !iz.genericBlock(new GenericStatement(psiElement));
     }
 
     public void testWhileStatement() throws Exception {
@@ -599,15 +600,15 @@ public class izTest extends PsiTypeHelper {
     }
 
     public void testConforms() throws Exception {
-        PsiElement e1 = createTestExpression("1+5"), e2 = createTestExpression("1 > 5");
+        PsiElement _e1 = createTestExpression("1+5"), _e2 = createTestExpression("1 > 5"),
+                _e3 = createTestStatementFromString("return x"), _e4 = createTestStatementFromString("return y");
+
+        Encapsulator e1 = Encapsulator.buildTreeFromPsi(_e1),
+                e2 = Encapsulator.buildTreeFromPsi(_e2),
+                e3 = Encapsulator.buildTreeFromPsi(_e3),
+                e4 = Encapsulator.buildTreeFromPsi(_e4);
+
         assert iz.conforms(e1, e2);
-        GenericPsiExpression ge = new GenericPsiExpression(PsiType.BOOLEAN, e2);
-        assert iz.conforms(e1, ge);
-        assert !iz.conforms(ge, e1);
-        PsiElement e3 = createTestStatementFromString("return x"), e4 = createTestStatementFromString("return y");
         assert iz.conforms(e3, e4);
-        GenericPsiStatement gs = new GenericPsiStatement(e4);
-        assert iz.conforms(e3, gs);
-        assert !iz.conforms(gs, e3);
     }
 }

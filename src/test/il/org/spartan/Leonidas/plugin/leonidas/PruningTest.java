@@ -15,16 +15,16 @@ public class PruningTest extends PsiTypeHelper {
         Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "booleanExpression(0);"));
         Encapsulator pruned = Pruning.prune(root);
         assertEquals(pruned.getChildren().size(), 7);
-        assertTrue(iz.generic(pruned.getChildren().get(6).getChildren().get(0).getChildren().get(1).getChildren().get(0).getInner()));
-        assertFalse(iz.generic(pruned.getChildren().get(3).getInner()));
+        assertTrue(iz.generic(pruned.getChildren().get(6).getChildren().get(0).getChildren().get(1).getChildren().get(0)));
+        assertFalse(iz.generic(pruned.getChildren().get(3)));
     }
 
     public void testPruneStatement() throws Exception {
         Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "statement(0);"));
         Encapsulator pruned = Pruning.prune(root);
         assertEquals(pruned.getChildren().size(), 7);
-        assertTrue(iz.generic(pruned.getChildren().get(6).getChildren().get(0).getChildren().get(1).getInner()));
-        assertFalse(iz.generic(pruned.getChildren().get(3).getInner()));
+        assertTrue(iz.generic(pruned.getChildren().get(6).getChildren().get(0).getChildren().get(1)));
+        assertFalse(iz.generic(pruned.getChildren().get(3)));
     }
 
     public void testGetRealParentExpression() throws Exception {

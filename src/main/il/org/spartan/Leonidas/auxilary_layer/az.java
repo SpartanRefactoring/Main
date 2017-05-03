@@ -1,7 +1,8 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.*;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
+import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericEncapsulator;
 
 /**
  * Utils class that helps converting Psi element to a specific Psi type
@@ -95,11 +96,15 @@ public enum az {
         return e == null || !iz.method(e) ? null : (PsiMethod) e;
     }
 
-    public static GenericPsi generic(PsiElement e) {
-        return e == null || !iz.generic(e) ? null : (GenericPsi) e;
+    public static GenericEncapsulator generic(Encapsulator e) {
+        return e != null ? (GenericEncapsulator) e : null;
     }
 
     public static PsiNewExpression newExpression(PsiElement e) {
         return e == null || !iz.newExpression(e) ? null : (PsiNewExpression) e;
+    }
+
+    public static PsiExpression expression(PsiElement e) {
+        return e == null || !iz.expression(e) ? null : (PsiExpression) e;
     }
 }

@@ -3,7 +3,6 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsi;
 
 import java.util.Optional;
 
@@ -33,9 +32,8 @@ public class Pruning {
 
             Optional.ofNullable(GenericPsiElementStub.StubName.valueOfMethodCall(exp)).ifPresent(y -> {
                 Encapsulator prev = Pruning.getRealParent(e1, y);
-                GenericPsi x = y.getGenericPsiType(prev.getInner(), exp.getUserData(ID));
-                if (x != null)
-                    prev.setInner(x);
+                GenericEncapsulator x = y.getGenericElement(prev.getInner(), exp.getUserData(ID));
+                prev.generalize(x);
             });
         });
         return n;

@@ -4,9 +4,7 @@ import com.intellij.psi.*;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.StubName;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiBlock;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes.GenericPsiStatement;
+
 
 import java.util.Optional;
 import java.util.function.BinaryOperator;
@@ -79,17 +77,17 @@ public class StubNameTest extends PsiTypeHelper {
         PsiMethodCallExpression m2 = createTestMethodCallExpression("booleanExpression", "5");
         PsiMethodCallExpression m3 = createTestMethodCallExpression("identifier", "0");
 
-        assertTrue(iz.generic(StubName.STATEMENT.getGenericPsiType(m1, 1)));
-        assertTrue(iz.generic(StubName.BOOLEAN_EXPRESSION.getGenericPsiType(m2, 5)));
-        assertTrue(iz.generic(StubName.ANY_BLOCK.getGenericPsiType(m3, 0)));
+        assertTrue(iz.generic(StubName.STATEMENT.getGenericElement(m1, 1)));
+        assertTrue(iz.generic(StubName.BOOLEAN_EXPRESSION.getGenericElement(m2, 5)));
+        assertTrue(iz.generic(StubName.ANY_BLOCK.getGenericElement(m3, 0)));
 
-        assertEquals(StubName.STATEMENT.getGenericPsiType(m1, 1).getClass(), GenericPsiStatement.class);
-        assertEquals(StubName.BOOLEAN_EXPRESSION.getGenericPsiType(m2, 5).getClass(), GenericPsiExpression.class);
-        assertEquals(StubName.ANY_BLOCK.getGenericPsiType(m3, 0).getClass(), GenericPsiBlock.class);
+        assertEquals(StubName.STATEMENT.getGenericElement(m1, 1).getClass(), GenericStatement.class);
+        assertEquals(StubName.BOOLEAN_EXPRESSION.getGenericElement(m2, 5).getClass(), GenericExpression.class);
+        assertEquals(StubName.ANY_BLOCK.getGenericElement(m3, 0).getClass(), GenericBlock.class);
 
-        assert (StubName.STATEMENT.getGenericPsiType(m1, 1).getUserData(KeyDescriptionParameters.ID) == 1);
-        assert (StubName.BOOLEAN_EXPRESSION.getGenericPsiType(m2, 5).getUserData(KeyDescriptionParameters.ID) == 5);
-        assert (StubName.ANY_BLOCK.getGenericPsiType(m3, 0).getUserData(KeyDescriptionParameters.ID) == 0);
+        assert (StubName.STATEMENT.getGenericElement(m1, 1).getUserData(KeyDescriptionParameters.ID) == 1);
+        assert (StubName.BOOLEAN_EXPRESSION.getGenericElement(m2, 5).getUserData(KeyDescriptionParameters.ID) == 5);
+        assert (StubName.ANY_BLOCK.getGenericElement(m3, 0).getUserData(KeyDescriptionParameters.ID) == 0);
     }
 
     public void testGoUpwards1() throws Exception {
