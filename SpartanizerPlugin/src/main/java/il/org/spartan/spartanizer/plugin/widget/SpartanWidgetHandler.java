@@ -230,7 +230,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
             default:
               break;
           }
-        } catch (Throwable t) {
+        } catch (@SuppressWarnings("unused") Throwable t) {
           // TODO Niv Shalmon add error handling
         }
       }
