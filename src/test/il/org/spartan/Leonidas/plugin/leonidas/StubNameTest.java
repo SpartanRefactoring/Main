@@ -3,8 +3,8 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 import com.intellij.psi.*;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.StubName;
-
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.StubName;
 
 import java.util.Optional;
 import java.util.function.BinaryOperator;
@@ -92,7 +92,7 @@ public class StubNameTest extends PsiTypeHelper {
 
     public void testGoUpwards1() throws Exception {
         Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "booleanExpression(0);"));
-        Encapsulator expression = root.accept(new EncapsulatingNodeValueVisitor<Optional<Encapsulator>>() {
+        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
             @Override
             public Optional<Encapsulator> visit(Encapsulator n) {
                 return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("booleanExpression(0)") ? n : null);
@@ -108,7 +108,7 @@ public class StubNameTest extends PsiTypeHelper {
 
     public void testGoUpwards2() throws Exception {
         Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "statement(0);"));
-        Encapsulator expression = root.accept(new EncapsulatingNodeValueVisitor<Optional<Encapsulator>>() {
+        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
             @Override
             public Optional<Encapsulator> visit(Encapsulator n) {
                 return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("statement(0)") ? n : null);
@@ -124,7 +124,7 @@ public class StubNameTest extends PsiTypeHelper {
 
     public void testGoUpwards3() throws Exception {
         Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "anyBlock(0);"));
-        Encapsulator expression = root.accept(new EncapsulatingNodeValueVisitor<Optional<Encapsulator>>() {
+        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
             @Override
             public Optional<Encapsulator> visit(Encapsulator n) {
                 return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("anyBlock(0)") ? n : null);

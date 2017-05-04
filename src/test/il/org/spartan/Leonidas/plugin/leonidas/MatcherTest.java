@@ -8,6 +8,7 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 
 import java.util.HashMap;
 import java.util.LinkedList;

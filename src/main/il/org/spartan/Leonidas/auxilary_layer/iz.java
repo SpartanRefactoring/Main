@@ -8,8 +8,8 @@ import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
-import il.org.spartan.Leonidas.plugin.leonidas.*;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.StubName;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.StubName;
 
 import java.util.Arrays;
 

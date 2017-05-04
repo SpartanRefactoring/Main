@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin.leonidas;
+package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.az;
@@ -17,6 +17,15 @@ public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {
 
     public GenericMethodCallBasedBlock(Encapsulator n, String template) {
         super(n, template);
+    }
+
+    /**
+     * For reflection use DO NOT REMOVE!
+     */
+    @SuppressWarnings("unused")
+    protected GenericMethodCallBasedBlock(String template) {
+        super();
+        this.template = template;
     }
 
     @Override

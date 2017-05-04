@@ -3,7 +3,7 @@ package il.org.spartan.Leonidas.plugin;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
-import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.mockito.Mockito;

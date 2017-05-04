@@ -1,7 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.booleanExpression;
-import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 
 /**
  * Replace if(b); else{s;} with if(!b){s;}

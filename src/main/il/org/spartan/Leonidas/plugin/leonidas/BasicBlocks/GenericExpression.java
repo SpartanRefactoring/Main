@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin.leonidas;
+package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
@@ -10,7 +10,8 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
  */
 public class GenericExpression extends GenericMethodCallBasedBlock {
 
-    private static final String TEMPLATE = "expression";
+    //FIXME @michalcohen @orenafek change to expression
+    private static final String TEMPLATE = "booleanExpression";
     PsiType type;
 
     public GenericExpression(PsiElement e, PsiType type) {
@@ -24,6 +25,14 @@ public class GenericExpression extends GenericMethodCallBasedBlock {
 
     public GenericExpression(Encapsulator n) {
         super(n, TEMPLATE);
+    }
+
+    /**
+     * For reflection use DO NOT REMOVE!
+     */
+    @SuppressWarnings("unused")
+    protected GenericExpression() {
+        super(TEMPLATE);
     }
 
     @Override

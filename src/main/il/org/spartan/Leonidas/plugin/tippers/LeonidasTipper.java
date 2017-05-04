@@ -8,8 +8,11 @@ import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
-import il.org.spartan.Leonidas.plugin.leonidas.*;
-import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
+import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 

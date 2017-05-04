@@ -1,6 +1,6 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.booleanExpression;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 
 /**
  * No two not operations are necessary.

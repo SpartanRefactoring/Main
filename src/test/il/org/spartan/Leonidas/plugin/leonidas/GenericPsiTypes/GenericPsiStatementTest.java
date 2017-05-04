@@ -2,8 +2,8 @@ package il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericStatement;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericStatement;
 
 
 /**

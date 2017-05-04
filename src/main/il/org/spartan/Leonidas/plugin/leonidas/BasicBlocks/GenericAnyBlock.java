@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin.leonidas;
+package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
@@ -17,6 +17,14 @@ public class GenericAnyBlock extends GenericMethodCallBasedBlock {
 
     public GenericAnyBlock(Encapsulator n) {
         super(n, TEMPLATE);
+    }
+
+    /**
+     * For reflection use DO NOT REMOVE!
+     */
+    @SuppressWarnings("unused")
+    protected GenericAnyBlock() {
+        super(TEMPLATE);
     }
 
     @Override

@@ -1,7 +1,8 @@
-package il.org.spartan.Leonidas.plugin.leonidas;
+package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 
 import java.util.Collections;
 
@@ -26,6 +27,12 @@ public abstract class GenericEncapsulator extends Encapsulator {
         this.template = template;
     }
 
+    /**
+     * For reflection use DO NOT REMOVE!
+     */
+    @SuppressWarnings("unused")
+    protected GenericEncapsulator() {
+    }
 
     /**
      * Can I generalize a PsiElement.
@@ -106,8 +113,8 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public Encapsulator getConcreteParent(Encapsulator n) {
         Encapsulator prev = n, next = n.getParent();
         while (goUpwards(prev, next)) {
-            next = next.getParent();
             prev = next;
+            next = next.getParent();
         }
         return prev;
     }

@@ -3,9 +3,8 @@ package il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericExpression;
 
 /**
  * @author Anna Belozovsky

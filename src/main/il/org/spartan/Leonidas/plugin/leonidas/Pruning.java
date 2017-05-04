@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.plugin.Toolbox;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 
 /**
  * This class helps generate generic trees representing code template written
@@ -22,7 +23,7 @@ public class Pruning {
         final Wrapper<Encapsulator> o = new Wrapper<>();
         n.accept(e1 -> {
             Toolbox.getInstance().getGenericsBasicBlocks().stream()
-                    .filter(ge -> ge.conforms(n.getInner()))
+                    .filter(ge -> ge.conforms(e1.getInner()))
                     .findFirst()
                     .ifPresent(g -> {
                         o.set(g.prune(e1));

@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin.leonidas;
+package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 /**
  * Implements the visitor design pattern on an Encapsulator element.
@@ -6,7 +6,7 @@ package il.org.spartan.Leonidas.plugin.leonidas;
  * @author michalcohen
  * @since 22-02-2017
  */
-public interface EncapsulatingNodeVisitor {
+public interface EncapsulatorVisitor {
 
     void visit(Encapsulator n);
 }

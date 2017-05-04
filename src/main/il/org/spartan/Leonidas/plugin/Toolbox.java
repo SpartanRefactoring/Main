@@ -8,8 +8,7 @@ import com.intellij.psi.PsiFile;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.type;
-import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericEncapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
@@ -18,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -84,16 +84,16 @@ public class Toolbox implements ApplicationComponent {
     private void initBasicBlocks() {
         Reflections r = new Reflections();
         blocks.addAll(r.getSubTypesOf(GenericEncapsulator.class).stream()
-                .filter(c -> isAbstract(c.getModifiers()))
+                .filter(c -> !isAbstract(c.getModifiers()))
                 .map(c -> {
                     try {
-                        return c.getConstructor(Encapsulator.class).newInstance((Object) null);
+                        Constructor<? extends GenericEncapsulator> cc = c.getDeclaredConstructor();
+                        cc.setAccessible(true);
+                        return cc.newInstance();
                     } catch (Exception ignored) { /**/ }
                     return null;
                 })
                 .collect(Collectors.toList()));
-
-
     }
 
     public void updateTipperList(List<String> list) {

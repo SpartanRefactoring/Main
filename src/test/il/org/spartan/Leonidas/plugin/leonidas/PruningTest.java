@@ -2,9 +2,7 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-
-import java.util.Optional;
-import java.util.function.BinaryOperator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 
 /**
  * @author michalcohen
@@ -29,7 +27,7 @@ public class PruningTest extends PsiTypeHelper {
 //TODO move to tests of GenericEncapsulators
 //    public void testGetRealParentExpression() throws Exception {
 //        Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "booleanExpression(0);"));
-//        Encapsulator expression = root.accept(new EncapsulatingNodeValueVisitor<Optional<Encapsulator>>() {
+//        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
 //            @Override
 //            public Optional<Encapsulator> visit(Encapsulator n) {
 //                return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("booleanExpression(0)") ? n : null);
@@ -45,7 +43,7 @@ public class PruningTest extends PsiTypeHelper {
 //
 //    public void testGetRealParentStatement() throws Exception {
 //        Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "statement(0);"));
-//        Encapsulator expression = root.accept(new EncapsulatingNodeValueVisitor<Optional<Encapsulator>>() {
+//        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
 //            @Override
 //            public Optional<Encapsulator> visit(Encapsulator n) {
 //                return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("statement(0)") ? n : null);
@@ -61,7 +59,7 @@ public class PruningTest extends PsiTypeHelper {
 //
 //    public void testGetRealParentAnyBlock() throws Exception {
 //        Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "anyBlock(0);"));
-//        Encapsulator expression = root.accept(new EncapsulatingNodeValueVisitor<Optional<Encapsulator>>() {
+//        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
 //            @Override
 //            public Optional<Encapsulator> visit(Encapsulator n) {
 //                return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("anyBlock(0)") ? n : null);
@@ -77,7 +75,7 @@ public class PruningTest extends PsiTypeHelper {
 //
 //    public void testGetRealParentIdentifier() throws Exception {
 //        Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "System.out.println(identifier(0));"));
-//        Encapsulator expression = root.accept(new EncapsulatingNodeValueVisitor<Optional<Encapsulator>>() {
+//        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
 //            @Override
 //            public Optional<Encapsulator> visit(Encapsulator n) {
 //                return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("identifier(0)") ? n : null);
@@ -93,7 +91,7 @@ public class PruningTest extends PsiTypeHelper {
 //
 //    public void testGetRealParentArrayIdentifier() throws Exception {
 //        Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "System.out.println(arrayIdentifier(0)[3]);"));
-//        Encapsulator expression = root.accept(new EncapsulatingNodeValueVisitor<Optional<Encapsulator>>() {
+//        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
 //            @Override
 //            public Optional<Encapsulator> visit(Encapsulator n) {
 //                return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("arrayIdentifier(0)") ? n : null);

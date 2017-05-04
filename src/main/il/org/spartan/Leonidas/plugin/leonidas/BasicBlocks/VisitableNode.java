@@ -1,7 +1,4 @@
-package il.org.spartan.Leonidas.plugin.leonidas;
-
-import il.org.spartan.Leonidas.plugin.leonidas.EncapsulatingNodeValueVisitor;
-import il.org.spartan.Leonidas.plugin.leonidas.EncapsulatingNodeVisitor;
+package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import java.util.function.BinaryOperator;
 
@@ -18,7 +15,7 @@ interface VisitableNode {
      *
      * @param v - Visitor.
      */
-    void accept(EncapsulatingNodeVisitor v);
+    void accept(EncapsulatorVisitor v);
 
     /**
      * @param v           visitor that returns vakue
@@ -26,5 +23,5 @@ interface VisitableNode {
      * @param <T>         - the result type
      * @return the result driven from applying v on every node.
      */
-    <T> T accept(EncapsulatingNodeValueVisitor<T> v, BinaryOperator<T> accumulator);
+    <T> T accept(EncapsulatorValueVisitor<T> v, BinaryOperator<T> accumulator);
 }

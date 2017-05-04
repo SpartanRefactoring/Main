@@ -6,10 +6,10 @@ import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericAnyBlock;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericStatement;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericAnyBlock;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericExpression;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericStatement;
 
 /**
  * @author michal cohen, Amir Sagiv

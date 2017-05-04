@@ -1,7 +1,7 @@
 package spartanizer.FutureLeonidasTippers;
 
 import com.intellij.psi.PsiArrayAccessExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub;
 import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 /**

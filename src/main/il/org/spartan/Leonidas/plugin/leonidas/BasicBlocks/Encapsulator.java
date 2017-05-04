@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin.leonidas;
+package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
@@ -20,6 +20,13 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     protected PsiElement inner;
     protected Encapsulator parent;
     protected List<Encapsulator> children = new LinkedList<>();
+
+    /**
+     * For reflection use DO NOT REMOVE!
+     */
+    @SuppressWarnings("unused")
+    protected Encapsulator() {
+    }
 
     public Encapsulator(PsiElement e) {
         inner = e;
@@ -60,13 +67,13 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     @Override
-    public void accept(EncapsulatingNodeVisitor v) {
+    public void accept(EncapsulatorVisitor v) {
         v.visit(this);
         children.forEach(child -> child.accept(v));
     }
 
     @Override
-    public <T> T accept(EncapsulatingNodeValueVisitor<T> v, BinaryOperator<T> accumulator) {
+    public <T> T accept(EncapsulatorValueVisitor<T> v, BinaryOperator<T> accumulator) {
         return accumulator.apply(v.visit(this), children.stream().filter(child -> child != null).map(child -> child.accept(v, accumulator))
                 .reduce(accumulator).orElse(null));
     }
@@ -123,7 +130,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     public Encapsulator generalize(Encapsulator replacer) {
         if (parent == null) {
 
-        }
+        }//TODO
         parent.children.replaceAll(e -> e == Encapsulator.this ? replacer : e);
         replacer.parent = this.parent;
         return replacer;
