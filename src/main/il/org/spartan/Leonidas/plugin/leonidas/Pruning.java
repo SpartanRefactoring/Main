@@ -1,12 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
-import com.intellij.psi.PsiMethodCallExpression;
-import il.org.spartan.Leonidas.auxilary_layer.az;
-import il.org.spartan.Leonidas.auxilary_layer.iz;
-
-import java.util.Optional;
-
-import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
+import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
+import il.org.spartan.Leonidas.plugin.Toolbox;
 
 /**
  * This class helps generate generic trees representing code template written
@@ -24,38 +19,21 @@ public class Pruning {
      */
     public static Encapsulator prune(Encapsulator n) {
         assert (n != null);
-        if (iz.methodCallExpression(n.getInner())) {
-            PsiMethodCallExpression exp = az.methodCallExpression(n.getInner());
-            GenericPsiElementStub.StubName sn = GenericPsiElementStub.StubName.valueOfMethodCall(exp);
-            if (sn != null) {
-                Encapsulator prev = Pruning.getRealParent(n, sn);
-                return sn.getGenericElement(prev.getInner(), exp.getUserData(ID));
-            }
-        }
+        final Wrapper<Encapsulator> o = new Wrapper<>();
         n.accept(e1 -> {
-            if (!iz.methodCallExpression(e1.getInner()))
-				return;
-            PsiMethodCallExpression exp = az.methodCallExpression(e1.getInner());
-
-            Optional.ofNullable(GenericPsiElementStub.StubName.valueOfMethodCall(exp)).ifPresent(y -> {
-                Encapsulator prev = Pruning.getRealParent(e1, y);
-                GenericEncapsulator x = y.getGenericElement(prev.getInner(), exp.getUserData(ID));
-                prev.generalize(x);
+            Toolbox.getInstance().getGenericsBasicBlocks().stream()
+                    .filter(ge -> ge.conforms(n.getInner()))
+                    .findFirst()
+                    .ifPresent(g -> {
+                        o.set(g.prune(e1));
             });
         });
+        if (Toolbox.getInstance().getGenericsBasicBlocks().stream()
+                .filter(ge -> ge.conforms(n.getInner()))
+                .findFirst()
+                .isPresent())
+            return o.get();
         return n;
-    }
 
-
-    /**
-     * @param n method call representing generic element.
-     * @param y the type of the generic method call.
-     * @return the highest generic parent.
-     */
-    public static Encapsulator getRealParent(Encapsulator n, GenericPsiElementStub.StubName y) {
-        Encapsulator prev = n, next = n.getParent();
-        for (; y.goUpwards(prev, next); next = next.getParent())
-			prev = next;
-        return prev;
     }
 }

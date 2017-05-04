@@ -53,6 +53,31 @@ public abstract class GenericEncapsulator extends Encapsulator {
      */
     public abstract int extractId(PsiElement e);
 
+    /**
+     * Prunes the irrelevant concrete PsiElements and replaces with a new Generic Encapsulator
+     *
+     * @param e the concrete PsiElement.
+     *          for example: the methodCallExpression: statement(0).
+     * @return The replacer of the syntactic generic element with the GenericEncapsulator
+     */
+    public Encapsulator prune(Encapsulator e) {
+        assert conforms(e.getInner());
+        int id = extractId(e.getInner());
+        Encapsulator elementParent = getConcreteParent(e);
+        GenericEncapsulator ge = create(elementParent.getInner());
+        ge.putUserData(KeyDescriptionParameters.ID, id);
+        return e.getParent() == null ? ge : elementParent.generalize(ge);
+    }
+
+    protected abstract boolean goUpwards(Encapsulator prev, Encapsulator next);
+
+    /**
+     * Creates another one like me, with concrete PsiElement within
+     *
+     * @param e element within.
+     * @return new <B>Specific</B> GenericEncapsulator
+     */
+    public abstract GenericEncapsulator create(PsiElement e);
 
     /**
      * Can I generalize a concrete element
@@ -72,6 +97,19 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public Encapsulator replace(Encapsulator newNode, PsiRewrite r) {
         inner = parent == null ? newNode.inner : r.replace(inner, newNode.inner);
         return this;
+    }
+
+    /**
+     * @param n method call representing generic element.
+     * @return the highest generic parent.
+     */
+    public Encapsulator getConcreteParent(Encapsulator n) {
+        Encapsulator prev = n, next = n.getParent();
+        while (goUpwards(prev, next)) {
+            next = next.getParent();
+            prev = next;
+        }
+        return prev;
     }
 
 

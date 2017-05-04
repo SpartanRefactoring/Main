@@ -1,9 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
-import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.auxilary_layer.step;
 
 /**
  * @author Oren Afek
@@ -24,6 +22,16 @@ public class GenericStatement extends GenericMethodCallBasedBlock {
     @Override
     protected boolean generalizes(PsiElement e) {
         return iz.statement(e) && !iz.blockStatement(e);
+    }
+
+    @Override
+    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
+        return prev.getText().equals(next.getText()) || next.getText().equals(prev.getText() + ";");
+    }
+
+    @Override
+    public GenericEncapsulator create(PsiElement e) {
+        return new GenericStatement(e);
     }
 
 

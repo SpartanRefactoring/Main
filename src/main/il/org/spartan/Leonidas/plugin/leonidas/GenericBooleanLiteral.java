@@ -24,5 +24,15 @@ public class GenericBooleanLiteral extends GenericMethodCallBasedBlock {
         return iz.booleanLiteral(e);
     }
 
+    @Override
+    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
+        return prev.getText().equals(next.getText());
+    }
+
+    @Override
+    public GenericEncapsulator create(PsiElement e) {
+        return new GenericBooleanLiteral(e);
+    }
+
 
 }

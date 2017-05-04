@@ -23,4 +23,14 @@ public class GenericAnyBlock extends GenericMethodCallBasedBlock {
     protected boolean generalizes(PsiElement e) {
         return iz.blockStatement(e) || iz.block(e) || iz.statement(e);
     }
+
+    @Override
+    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
+        return !iz.block(prev.getInner());
+    }
+
+    @Override
+    public GenericEncapsulator create(PsiElement e) {
+        return new GenericAnyBlock(e);
+    }
 }

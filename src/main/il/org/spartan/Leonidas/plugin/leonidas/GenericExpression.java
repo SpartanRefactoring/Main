@@ -31,8 +31,19 @@ public class GenericExpression extends GenericMethodCallBasedBlock {
         return iz.expression(e);
     }
 
+    @Override
+    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
+        return prev.getText().equals(next.getText());
+    }
+
+    @Override
+    public GenericEncapsulator create(PsiElement e) {
+        return new GenericExpression(e);
+    }
+
     public PsiType evaluationType() {
         return type;
     }
+
 
 }

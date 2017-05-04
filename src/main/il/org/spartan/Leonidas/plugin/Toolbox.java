@@ -8,6 +8,7 @@ import com.intellij.psi.PsiFile;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.type;
+import il.org.spartan.Leonidas.plugin.leonidas.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
@@ -76,16 +77,17 @@ public class Toolbox implements ApplicationComponent {
                 .add(new DefaultsTo())
                 .add(new MethodDeclarationRenameSingleParameterToCent())//
                 .add(new Delegator());
+        initBasicBlocks();
         createLeonidasTippers();
     }
 
-    private void $24K$() {
+    private void initBasicBlocks() {
         Reflections r = new Reflections();
         blocks.addAll(r.getSubTypesOf(GenericEncapsulator.class).stream()
                 .filter(c -> isAbstract(c.getModifiers()))
                 .map(c -> {
                     try {
-                        return c.getConstructor(PsiElement.class).newInstance((Object) null);
+                        return c.getConstructor(Encapsulator.class).newInstance((Object) null);
                     } catch (Exception ignored) { /**/ }
                     return null;
                 })
@@ -205,4 +207,7 @@ public class Toolbox implements ApplicationComponent {
         return auxGetComponentName();
     }
 
+    public List<GenericEncapsulator> getGenericsBasicBlocks() {
+        return this.blocks;
+    }
 }
