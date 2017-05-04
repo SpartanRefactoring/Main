@@ -1,5 +1,6 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
+import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
@@ -11,6 +12,7 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.plugin.widget.operations.*;
 
@@ -25,13 +27,13 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static final Point MINIMAL_BUTTON_SIZE = new Point(9 * R / 10, R / 2 - R / 20);
   private static final String IMAGE_ID = "widget";
   private static final Point[] circles = { //
-      new Point(2 * r, 2 * R )//
+      new Point(2 * r, 2 * R)//
       , new Point(r, R + r)//
-      , new Point(2*r, 2*r)//
+      , new Point(2 * r, 2 * r)//
       , new Point(R + r, r)//
-      , new Point(2 * R , 2*r)//
+      , new Point(2 * R, 2 * r)//
       , new Point(2 * R + r, R + r)//
-      , new Point(2 * R, 2 * R )//
+      , new Point(2 * R, 2 * R)//
   };
   static final int OPERATION_HOLD_INTERVAL = 500;
   static final AtomicBoolean active = new AtomicBoolean(false);
@@ -84,8 +86,13 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Rectangle size = region.getBounds();
     shell.setSize(size.width, size.height);
     shell.setRegion(region);
-    for (Point center : circles) {
-      final Canvas button = createButton(shell, center, new GitPullOperation());
+    /* TODO raviv - you need to supply me this array based on the user's
+     * configuration. The WigetOperations should already have registered their
+     * configurations when you send this to me, so they are ready to run. */
+    final WidgetOperation[] operations = { new GitPullOperation(), new GitPullOperation(), new GitPullOperation(), new GitPullOperation(),
+        new GitPullOperation(), new GitPullOperation(), new GitPullOperation() };
+    for (int i = 0; i < circles.length; ++i) {
+      final Canvas button = createButton(shell, circles[i], operations[i]);
       setControl(button, setSolid, setTransparent);
     }
     shell.setLocation(startLocation.apply(Eclipse.mouseLocation()));
@@ -202,7 +209,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
     final Image i = o == null ? null : o.image();
     $.addPaintListener((final PaintEvent ¢) -> {
-      if (o != null)
+      if (i != null)
         ¢.gc.drawImage(i, r / 2, r / 2);
       $.setSize(2 * r, 2 * r);
     });
@@ -214,15 +221,28 @@ public class SpartanWidgetHandler extends AbstractHandler {
     if (o == null)
       return $;
     Listener l = new Listener() {
+      Timer t = new Timer(true);
+
       @Override public void handleEvent(Event e) {
         WidgetContext c = WidgetContext.generateContext();
         try {
           switch (e.type) {
             case SWT.MouseUp:
+              t.cancel();
+              t.purge();
               o.onMouseUp(c);
               break;
             case SWT.MouseDown:
               o.onMouseDown(c);
+              t.schedule(new TimerTask() {
+                @Override public void run() {
+                  try {
+                    o.onMouseHold(c);
+                  } catch (@SuppressWarnings("hiding") Throwable t) {
+                    note.bug(t);
+                  }
+                }
+              }, OPERATION_HOLD_INTERVAL, OPERATION_HOLD_INTERVAL);
               break;
             case SWT.MouseDoubleClick:
               o.onDoubleClick(c);
@@ -230,8 +250,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
             default:
               break;
           }
-        } catch (@SuppressWarnings("unused") Throwable t) {
-          // TODO Niv Shalmon add error handling
+        } catch (@SuppressWarnings("hiding") Throwable t) {
+          note.bug(t);
         }
       }
     };
@@ -240,5 +260,4 @@ public class SpartanWidgetHandler extends AbstractHandler {
     $.addListener(SWT.MouseDoubleClick, l);
     return $;
   }
-
 }
