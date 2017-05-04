@@ -5,13 +5,10 @@ import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.type;
 import il.org.spartan.Leonidas.plugin.leonidas.GenericEncapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericStatement;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
@@ -23,6 +20,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
+
+import static java.lang.reflect.Modifier.isAbstract;
 
 /**
  * @author Oren Afek, michalcohen, Amir Sagiv
@@ -79,6 +79,20 @@ public class Toolbox implements ApplicationComponent {
         createLeonidasTippers();
     }
 
+    private void $24K$() {
+        Reflections r = new Reflections();
+        blocks.addAll(r.getSubTypesOf(GenericEncapsulator.class).stream()
+                .filter(c -> isAbstract(c.getModifiers()))
+                .map(c -> {
+                    try {
+                        return c.getConstructor(PsiElement.class).newInstance((Object) null);
+                    } catch (Exception ignored) { /**/ }
+                    return null;
+                })
+                .collect(Collectors.toList()));
+
+
+    }
 
     public void updateTipperList(List<String> list) {
         this.tipperMap.values().forEach(element -> element.forEach(tipper -> {

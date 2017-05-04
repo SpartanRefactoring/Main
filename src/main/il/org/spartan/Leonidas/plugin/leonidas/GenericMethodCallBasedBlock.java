@@ -6,7 +6,7 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
 
 /**
- * @author Oren Afek
+ * @author Oren Afek & Michal Cohen
  * @since 5/4/2017.
  */
 public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {

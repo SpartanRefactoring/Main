@@ -2,9 +2,6 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
-import il.org.spartan.Leonidas.auxilary_layer.az;
-import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.auxilary_layer.step;
 
 import java.util.Collections;
 

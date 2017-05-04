@@ -220,7 +220,7 @@ public class GenericPsiElementStub {
             GenericEncapsulator x;
             switch (this) {
                 case BOOLEAN_EXPRESSION:
-                    x = new GenericExpression(inner, PsiType.BOOLEAN);
+                    x = new GenericExpression(inner);
                     break;
                 case STATEMENT:
                     x = new GenericStatement(inner);

@@ -18,6 +18,10 @@ public class GenericExpression extends GenericMethodCallBasedBlock {
         this.type = type;
     }
 
+    public GenericExpression(PsiElement e) {
+        super(e, TEMPLATE);
+    }
+
     public GenericExpression(Encapsulator n) {
         super(n, TEMPLATE);
     }
@@ -27,8 +31,8 @@ public class GenericExpression extends GenericMethodCallBasedBlock {
         return iz.expression(e);
     }
 
-
     public PsiType evaluationType() {
         return type;
     }
+
 }
