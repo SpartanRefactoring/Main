@@ -83,7 +83,7 @@ public class StubNameTest extends PsiTypeHelper {
 
         assertEquals(StubName.STATEMENT.getGenericElement(m1, 1).getClass(), GenericStatement.class);
         assertEquals(StubName.BOOLEAN_EXPRESSION.getGenericElement(m2, 5).getClass(), GenericExpression.class);
-        assertEquals(StubName.ANY_BLOCK.getGenericElement(m3, 0).getClass(), GenericBlock.class);
+        assertEquals(StubName.ANY_BLOCK.getGenericElement(m3, 0).getClass(), GenericAnyBlock.class);
 
         assert (StubName.STATEMENT.getGenericElement(m1, 1).getUserData(KeyDescriptionParameters.ID) == 1);
         assert (StubName.BOOLEAN_EXPRESSION.getGenericElement(m2, 5).getUserData(KeyDescriptionParameters.ID) == 5);

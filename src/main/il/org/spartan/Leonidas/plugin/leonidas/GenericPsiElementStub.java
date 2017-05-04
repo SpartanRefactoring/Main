@@ -226,7 +226,7 @@ public class GenericPsiElementStub {
                     x = new GenericStatement(inner);
                     break;
                 case ANY_BLOCK:
-                    x = new GenericBlock(inner);
+                    x = new GenericAnyBlock(inner);
                     break;
                 case BOOLEAN_LITERAL:
                     x = new GenericBooleanLiteral(inner);

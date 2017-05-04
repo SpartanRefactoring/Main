@@ -414,7 +414,7 @@ public enum iz {
     }
 
     public static boolean genericBlock(Encapsulator treeTemplate) {
-        return treeTemplate instanceof GenericBlock;
+        return treeTemplate instanceof GenericAnyBlock;
     }
 
     public static boolean genericExpression(Encapsulator e) {

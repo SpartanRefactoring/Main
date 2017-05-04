@@ -127,4 +127,17 @@ public enum step {
     public static IElementType literalType(PsiLiteralExpression e) {
         return e == null ? null : ((PsiJavaToken) e.getFirstChild()).getTokenType();
     }
+
+    /**
+     * blame: Oren Afek
+     * Extracts the name of the method being called.
+     * for example:
+     * obj.foo(x,y,z) -> foo
+     *
+     * @param e method call expression
+     * @return method name
+     */
+    public static PsiReferenceExpression methodExpression(PsiMethodCallExpression e) {
+        return e == null ? null : e.getMethodExpression();
+    }
 }

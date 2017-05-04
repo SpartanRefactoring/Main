@@ -29,7 +29,7 @@ public class Wrapper<T> {
     /**
      * @param ¢ JD
      * @return <code><b>true</b></code>
-     * <i>iff</i> method <code>equals</code>
+     * <i>iff</i> method <code>conforms</code>
      * returns <code><b>true</b></code> for the wrapped objects.
      */
     private boolean equals(final Wrapper<?> ¢) {

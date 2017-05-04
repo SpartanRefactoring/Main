@@ -5,9 +5,13 @@ import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.type;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericEncapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericExpression;
+import il.org.spartan.Leonidas.plugin.leonidas.GenericStatement;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
@@ -26,12 +30,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class Toolbox implements ApplicationComponent {
 
+
     private static final Logger logger = new Logger(Toolbox.class);
     private final Map<Class<? extends PsiElement>, List<Tipper>> tipperMap = new ConcurrentHashMap<>();
     private final Set<VirtualFile> excludedFiles = new HashSet<>();
     private final Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
     public boolean playground = false;
     private Map<Class<? extends PsiElement>, List<Tipper>> allTipperMap = new ConcurrentHashMap<>();
+    private List<GenericEncapsulator> blocks = new ArrayList<>();
 
     public static Toolbox getInstance() {
         return (Toolbox) ApplicationManager.getApplication().getComponent(Toolbox.auxGetComponentName());
@@ -41,7 +47,7 @@ public class Toolbox implements ApplicationComponent {
         return Toolbox.class.getSimpleName();
     }
 
-    public List<Tipper> getAllTippers(){
+    public List<Tipper> getAllTippers() {
         List<Tipper> list = new ArrayList<>();
         this.allTipperMap.values().forEach(element -> {
             element.forEach(tipper -> {
@@ -50,6 +56,7 @@ public class Toolbox implements ApplicationComponent {
         });
         return list;
     }
+
     public List<Tipper> getCurrentTippers() {
         List<Tipper> list = new ArrayList<>();
         this.tipperMap.values().forEach(element -> {
@@ -72,18 +79,17 @@ public class Toolbox implements ApplicationComponent {
         createLeonidasTippers();
     }
 
-    public void updateTipperList(List<String> list){
-        this.tipperMap.values().forEach(element -> {
-            element.forEach(tipper -> {
-                if(!list.contains(tipper.name())){
-                    element.remove(tipper);
-                }
-            });
-        });
+
+    public void updateTipperList(List<String> list) {
+        this.tipperMap.values().forEach(element -> element.forEach(tipper -> {
+            if (!list.contains(tipper.name())) {
+                element.remove(tipper);
+            }
+        }));
 
         this.allTipperMap.values().forEach(element -> {
             element.forEach(tipper -> {
-                if(list.contains(tipper.name())){
+                if (list.contains(tipper.name())) {
                     tipperMap.putIfAbsent(tipper.getPsiClass(), new CopyOnWriteArrayList<>());
                     operableTypes.add(tipper.getPsiClass());
                     tipperMap.get(tipper.getPsiClass()).add(tipper);
@@ -184,4 +190,5 @@ public class Toolbox implements ApplicationComponent {
     public String getComponentName() {
         return auxGetComponentName();
     }
+
 }
