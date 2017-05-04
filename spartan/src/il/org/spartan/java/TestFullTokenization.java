@@ -47,7 +47,7 @@ public class TestFullTokenization {
 
   private final File fin = new File("test/data/UnicodeFile");
 
-  @Test public void brace_brace_newline() throws IOException {
+  @Test public void brace_brace_newline() {
     azzert.that(TokenAsIs.stringToString("{}\n"), is("{}\n"));
   }
 
@@ -55,7 +55,7 @@ public class TestFullTokenization {
     azzert.that(TokenAsIs.fileToString(¢), is(read(¢)));
   }
 
-  @Test public void some_method() throws IOException {
+  @Test public void some_method() {
     @NotNull final String s = Separate.nl(
         //
         "private static int circularSum(final int[] a, final int[] b, final int offset) {", //
@@ -70,7 +70,7 @@ public class TestFullTokenization {
     azzert.that(TokenAsIs.stringToString(s), is(s));
   }
 
-  @Test public void unicode() throws IOException {
+  @Test public void unicode() {
     azzert.that(TokenAsIs.stringToString("יוסי"), is("יוסי"));
   }
 

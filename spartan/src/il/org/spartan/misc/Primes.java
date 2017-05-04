@@ -24,7 +24,7 @@ public class Primes {
         || ¢ > 1 && isPrime¢(¢); // any integer>- 2
   }
 
-  public static void main(final String[] args) throws IOException {
+  public static void main(final String[] args) {
     @NotNull final CSVStatistics w = new CSVStatistics("primes.csv", "Property");
     @NotNull final Random r = new Random();
     for (@NotNull final Primes ¢ = new Primes(); ¢.current < 100; w.nl()) {

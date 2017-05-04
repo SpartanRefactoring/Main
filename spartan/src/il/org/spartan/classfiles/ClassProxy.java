@@ -274,7 +274,7 @@ public class ClassProxy<T> {
    * @return an array with names of all classes that this class uses
    * @throws IOException in case the constants' pool could not be read or found
    * @throws ClassNotFoundException */
-  @NotNull public String[] getReferencedClasses() throws IOException, ClassNotFoundException {
+  @NotNull public String[] getReferencedClasses() throws ClassNotFoundException {
     return classInfo().getReferencedClasses();
   }
 
@@ -283,7 +283,7 @@ public class ClassProxy<T> {
    * @return an array with <code><b>double</b></code>s that this class uses.
    * @throws IOException in case the constants' pool could not be read or found
    * @throws ClassNotFoundException */
-  @NotNull public double[] getReferencedDoubles() throws IOException, ClassNotFoundException {
+  @NotNull public double[] getReferencedDoubles() throws ClassNotFoundException {
     return classInfo().getReferencedDoubles();
   }
 
@@ -292,7 +292,7 @@ public class ClassProxy<T> {
    * @return an array with <code><b>float</b></code>s that this class uses.
    * @throws IOException in case the constants' pool could not be read or found
    * @throws ClassNotFoundException */
-  @NotNull public float[] getReferencedFloats() throws IOException, ClassNotFoundException {
+  @NotNull public float[] getReferencedFloats() throws ClassNotFoundException {
     return classInfo().getReferencedFloats();
   }
 
@@ -300,7 +300,7 @@ public class ClassProxy<T> {
    * @return an array with <code><b>int</b></code>s that this class uses.
    * @throws IOException in case the constants' pool could not be read or found
    * @throws ClassNotFoundException */
-  @NotNull public int[] getReferencedInts() throws IOException, ClassNotFoundException {
+  @NotNull public int[] getReferencedInts() throws ClassNotFoundException {
     return classInfo().getReferencedInts();
   }
 
@@ -308,7 +308,7 @@ public class ClassProxy<T> {
    * @return an array with <code><b>long</b></code>s that this class uses.
    * @throws IOException in case the constants' pool could not be read or found
    * @throws ClassNotFoundException */
-  @NotNull public long[] getReferencedLongs() throws IOException, ClassNotFoundException {
+  @NotNull public long[] getReferencedLongs() throws ClassNotFoundException {
     return classInfo().getReferencedLongs();
   }
 
@@ -316,7 +316,7 @@ public class ClassProxy<T> {
    * @return an array with all {@link String}s that this class uses
    * @throws IOException in case the constants' pool could not be read or found
    * @throws ClassNotFoundException */
-  @NotNull public String[] getReferencedStrings() throws IOException, ClassNotFoundException {
+  @NotNull public String[] getReferencedStrings() throws ClassNotFoundException {
     return classInfo().getReferencedStrings();
   }
 
@@ -417,7 +417,7 @@ public class ClassProxy<T> {
    * @throws IOException in case the constants' pool could not be read
    * @throws ClassNotFoundException in case the constants' pool could not be
    *         found */
-  @Nullable private ClassInfo classInfo() throws IOException, ClassNotFoundException {
+  @Nullable private ClassInfo classInfo() throws ClassNotFoundException {
     return inner != null ? inner : (inner = retrievePool());
   }
 
