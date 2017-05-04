@@ -1,0 +1,21 @@
+// Download from eclipse and put it into maven
+apply plugin: 'org.standardout.bnd-platform'
+platform {
+    determineImportVersions = true
+    importVersionStrategy = MAJOR
+    useBndHashQualifiers = false
+    fetchSources = false
+}
+// don't let stale bundles lay around
+bundles.dependsOn(clean)
+// bundles relies on the underlying jars being built
+configurations.collectMany { it.allDependencies }.findAll { it instanceof ProjectDependency }.each {
+    bundles.dependsOn(it.dependencyProject.path + ':jar')
+}
+
+dependencies {
+    // Gradle kicks out all but the newest, and we need both 18 and 17
+    platformaux 'com.google.guava:guava:17.0'
+    // RxJava wants sun.misc
+    platformaux 'com.diffplug.osgi:com.diffplug.osgi.extension.sun.misc:0.0.0'
+}
