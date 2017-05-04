@@ -47,7 +47,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * ConcurrentModificationException). */
   transient volatile int modCount;
   // Views
-  private transient Set<Map.Entry<K, V>> entrySet = null;
+  private transient Set<Map.Entry<K, V>> entrySet;
   transient volatile Set<K> keySet;
   transient volatile Collection<V> values;
 
@@ -433,7 +433,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     @SuppressWarnings("rawtypes") final Entry[] newTable = new Entry[newCapacity];
     transfer(newTable);
     table = newTable;
-    threshold = (int) (newCapacity * loadFactor);
+    threshold = (int) (loadFactor * newCapacity);
   }
 
   /** Transfers all entries from current table to newTable. */
