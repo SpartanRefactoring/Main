@@ -439,14 +439,13 @@ public final class MyHashMap<K, V> implements Map<K, V> {
   /** Transfers all entries from current table to newTable. */
   void transfer(@SuppressWarnings("rawtypes") final Entry[] newTable) {
     @SuppressWarnings("rawtypes") final Entry[] src = table;
-    final int newCapacity = newTable.length;
     for (int j = 0; j < src.length; ++j) {
       Entry<K, V> e = src[j];
       if (e != null) {
         src[j] = null;
         do {
           final Entry<K, V> next = e.next;
-          final int i = indexFor(e.hash, newCapacity);
+          final int i = indexFor(e.hash, newTable.length);
           e.next = newTable[i];
           newTable[i] = e;
           e = next;
