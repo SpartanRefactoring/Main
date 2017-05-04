@@ -1,0 +1,16 @@
+dependencies {
+    // eclipse/p2 dependencies
+    compile "eclipse-deps:org.eclipse.ui:+"
+    compile "eclipse-deps:org.eclipse.jdt.core:+"
+    compile "eclipse-deps:org.eclipse.jface.text:+"
+    compile "eclipse-deps:org.eclipse.jface:+"
+    compile "eclipse-deps:org.eclipse.core.runtime:+"
+    compile "eclipse-deps:org.eclipse.core.resources:+"
+
+
+    compile project(':spartan')
+    compile project(':fluent.ly')
+    // maven dependencies
+
+    testCompile "junit:junit:${VER_JUNIT}"
+}
