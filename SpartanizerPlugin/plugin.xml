@@ -389,7 +389,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.PreferencesChooser" name="Preferences..." />
      <command id="il.org.spartan.ItShortcut" name="'it' variable (¢)" />
      <command id="il.org.spartan.CentificationShortcut" name="Centification Shortcut" />
-     <command id="il.org.spartan.SpartanWidget" name="Spartan Widget" />
+     <command id="il.org.spartan.SpartanWidget" name="Launch spartan widget" />
      <command
            id="il.org.spartan.ZoomIn"
            name="Zoom In">
@@ -451,6 +451,12 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
          icon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/etool16/segment_edit.png" 
          id="il.org.spartan.plugin.toolbars.TextButton">
        </command>
+       <command
+       tooltip="Widget"
+         commandId="il.org.spartan.SpartanWidget" 
+         icon="platform:/plugin/org.eclipse.ui.intro.universal/icons/welcome16.gif" 
+         id="il.org.spartan.plugin.toolbars.TextButton">
+       </command>
     </toolbar>
   </menuContribution>
 
@@ -483,11 +489,14 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <command commandId="il.org.spartan.SpartanizeCurrent" style="push" mnemonic="C"/>       
       <command commandId="il.org.spartan.SpartanizeAll" style="push" mnemonic="A"/>
     </menu>
-  <menu label="Athenize..." mnemonic="A">
+    <menu label="Athenize..." mnemonic="A">
 	   <command commandId="il.org.spartan.AthensInflate" style="push" mnemonic="A"/>
       <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="S"/>
       <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
       <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
+    </menu>
+    <menu label="Widget" mnemonic="W">
+	  <command commandId="il.org.spartan.SpartanWidget" style="push" mnemonic="W"/>
     </menu>
     <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
     <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
