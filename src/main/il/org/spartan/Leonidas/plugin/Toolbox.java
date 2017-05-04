@@ -82,7 +82,7 @@ public class Toolbox implements ApplicationComponent {
     }
 
     private void initBasicBlocks() {
-        Reflections r = new Reflections();
+        Reflections r = new Reflections(GenericEncapsulator.class.getPackage().getName());
         blocks.addAll(r.getSubTypesOf(GenericEncapsulator.class).stream()
                 .filter(c -> !isAbstract(c.getModifiers()))
                 .map(c -> {
@@ -95,6 +95,10 @@ public class Toolbox implements ApplicationComponent {
                 })
                 .collect(Collectors.toList()));
     }
+
+//    private List<Class<? extends  GenericEncapsulator>> getGenericEncapsulators(Class<? extends GenericEncapsulator> c, List<Class<? extends GenericEncapsulator>> l){
+//        Reflections.
+//    }
 
     public void updateTipperList(List<String> list) {
         this.tipperMap.values().forEach(element -> element.forEach(tipper -> {

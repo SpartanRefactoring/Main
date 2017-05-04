@@ -128,9 +128,6 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
      * @return the replacer
      */
     public Encapsulator generalize(Encapsulator replacer) {
-        if (parent == null) {
-
-        }//TODO
         parent.children.replaceAll(e -> e == Encapsulator.this ? replacer : e);
         replacer.parent = this.parent;
         return replacer;
