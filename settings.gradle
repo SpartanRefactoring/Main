@@ -1,2 +1,7 @@
-include 'SpartanizerPlugin', 'fluent.ly', 'spartan'
+// We can have only 1 settings.gradle file.
 
+include ':SpartanizerPlugin', ':fluent.ly', ':spartan'
+
+include ':SpartanizerPlugin:target.p2'
+include ':SpartanizerPlugin:target.maven'
+include ':SpartanizerPlugin:il.org.spartan.spartanizer'
