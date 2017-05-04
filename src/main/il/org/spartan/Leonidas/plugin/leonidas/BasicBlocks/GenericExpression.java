@@ -42,7 +42,7 @@ public class GenericExpression extends GenericMethodCallBasedBlock {
 
     @Override
     protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
-        return prev.getText().equals(next.getText());
+        return next != null && prev.getText().equals(next.getText());
     }
 
     @Override
