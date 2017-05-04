@@ -5,7 +5,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import il.org.spartan.Leonidas.auxilary_layer.step;
-import il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.StubName;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.StubName;
 
 import javax.swing.*;
 import java.awt.*;
