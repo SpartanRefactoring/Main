@@ -62,8 +62,8 @@ public abstract class Applicator {
   /** Determines run misc for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
-    runAction = ¢;
+  public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> x) {
+    runAction = x;
     return this;
   }
 

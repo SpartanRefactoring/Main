@@ -53,6 +53,20 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     return $;
   }
 
+  public static void changeCentToIt() {
+    System.out.println("Strted Change");
+    for (IProject p : getAllSpartanizerProjects()) {
+      final Document doc = XMLSpartan.getXML(p);
+      doc.getDocumentElement().normalize();
+      System.out.println(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue());
+      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("it");
+      XMLSpartan.commit(p, doc);
+    }
+    notation.cent = "it";
+    System.out.println("Done Change");
+
+  }
+
   private void commitNotations() {
     final IProject[] projects = getAllSpartanizerProjects();
     for (IProject p : projects) {

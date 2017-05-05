@@ -109,7 +109,7 @@ public class InflaterListener implements KeyListener, Listener {
    * Returns 1 if event corresponds to a bloater shortcut, -1 if even corresponds to spartanizer shortcut and 0 otherwise. 
    */
   private static int checkEvent(final Event e) {
-    return zoomer_keys.stream().anyMatch(x -> x.test(e)) ? 1 : spartan_keys.stream().anyMatch(x -> x.test(e)) ? -1 : 0;
+    return zoomer_keys.stream().anyMatch(λ -> λ.test(e)) ? 1 : spartan_keys.stream().anyMatch(λ -> λ.test(e)) ? -1 : 0;
   }
 
   private void inflate() {
