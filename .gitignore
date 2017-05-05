@@ -144,7 +144,6 @@ target/
 
 # User defined (add below this line) // vim: +,$!sort -u
 /types.CSV
-il.org.spartan.spartanizer
 !spartanizer.xml
 .idea/
 .Rhistory

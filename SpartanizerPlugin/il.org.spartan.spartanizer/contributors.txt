@@ -1,0 +1,92 @@
+# This file holds the complete list of people who contributed to this
+# repository. Please keep this file maintained. New contributors should 
+# be added in an alphabetical order.
+#
+# Contributions can also be found in individual files by the @author 
+# annotation. 
+# 
+# CONTRIBUTORS: each and every class must have a Javadoc comment with 
+# one or more @author fields, and a single @since fields. If you rewrote 
+# a class, then add your name. The original author remains forever.
+
+# TROLLS: Since this repository hosts the YPP 234311 course of CS/Technion, some 
+# of the names in the list below might look funny. No worry, these are just 
+# the students training. 
+
+# Keep this list alphabetically sorted, on vim: +,$!sort -u
+Adi Omari <adiomari [at] gmail.com>
+Alexander Kaplan <alexkaplan.mail [at] gmail.com>
+Alexander Kopzon <alexkopzon [at] gmail.com>
+Alexander Vitho <alexvitho [at] gmail.com>
+Amir Sagiv <amirsagiv15 [at] gmail.com>
+Amit Ohayon <amitoha94 [at] gmail.com>
+Anna Belozovsky <anechka2005 [at] gmail.com>
+Ariel Kolikant <a.kolikant [at] gmail.com>
+Arthur Sapozhnikov <depaix3 [at] gmail.com>
+Artium Nihamkin <artium [at] nihamkin.com>
+Assaf Lustig  <assaf.ss3 [at] gmail.com>
+Aviad Cohen <aviadcohen7 [at] gmail.com>
+Boris van Sosin <boris.van.sosin [at] gmail.com>
+Dan Abramovich <dan.abramovich123 [at] gmail.com>
+Dan Greenstein <dngreenst [at] gmail.com>
+Daniel Mittelman <daniel [at] mittelman.co.il>
+Daniel Shames <dani.shames [at] gmail.com>
+David Cohen <dcohen484 [at] gmail.com>
+Dor Ma’ayan <dor.d.ma [at] gmail.com>
+Doron Meshulam  <doronmmm@gmail.com>
+Elia Traore <set [at] campus.technion.ac.il>
+Entony Lekhtman <tony.lek1995 [at] gmail.com>
+Idan Atias <idan2k3 [at] gmail.com>
+Inbal Matityahu <matityahuinbal [at] gmail.com>
+Inbal Zukerman <inbal.zukerman [at] gmail.com>
+Itai Dabran <idabran.cs.technion [at] gmail.com>
+Kfir Marx <kfir.marx [at] gmail.com>
+Kilroyss https://en.wikipedia.org/wiki/Kilroy_was_here
+Koby Ben Shimol <kobybs [at] gmail.com>
+Koral  Chapnik <chapnikkoral [at] gmail.com>
+Lidia Piatigorski <lidkin5 [at] gmail.com>
+Lior Ben Ami <benamilior89 [at] gmail.com>
+Matteo Orru' <matteo.orru [at] cs.technion.ac.il>
+Michal Cohen <cohenmelany1 [at] gmail.com>
+Moshe Eliasof   <moshikoalis [at] gmail.com>
+Netanel Felcher <netanel_felcher [at] hotmail.com>
+Nikita Dizhur <blenderon [at] gmail.com
+Nisan Arzoan <nisanarz [at] gmail.com>
+Niv Shalmon <shalmon.niv [at] gmail.com>
+Noam Yefet <noamyft [at] gmail.com>
+Ofir Elmakias <elmakias [at] outlook.com>
+Omri Ben Shmuel <omri.benshmuel [at] gmail.com>
+Or Troyaner <or.troyaner [at] gmail.com>
+Oren Afek <oren.afek [at] gmail.com>
+Ori Marcovitch <marcovitch.ori [at] gmail.com>
+Ori Roth <ori.rothh [at] gmail.com>
+Osher Hajaj <osherh [at] campus.technion.ac.il>
+Raviv Rachmiel <raviv.rachmiel [at] gmail.com>
+Roded Zats <rodedzats [at] gmail.com>
+Roei Rosenzweig <m.roei.raz [at] gmail.com>
+Roey Maor <maor.roey [at] gmail.com>
+Ron Gatenio <ron.gatenio [at] gmail.com>
+Roy Shchory <royshch1 [at] gmail.com>
+Sapir Bismot <sapirbismot@gmail.com>
+Sefi Albo <sefialbo [at] gmail.com>
+Shahar Yair <shya95 [at] gmail.com>
+Sharon Kuninin <sharonkl [at] campus.technion.ac.il>
+Shay Segal <siglons [at] gmail.com>
+Shimon Azulay <sazulay3 [at] gmail.com>
+Stav Namir <stav1472 [at] gmail.com>
+Tomer Dragucki <tomerd [at] campus.technion.ac.il>
+Tomer Zeltzer <tomerr90 [at] gmail.com>
+Vivian Shehadeh <vivian.sh185 [at] gmail.com>
+Ward Mattar <ward.mattar [at] gmail.com>
+Yael Amitay <syaelam [at] campus.technion.ac.il>
+Yaniv Levinsky <leyaniv [at] gmail.com>
+Yarden Lev <ylev [at] campus.technion.ac.il>
+Yevgenia Shandalov <genia.Shandalov [at] gmail.com>
+Yonatan Zarecki <szarecki [at] campus.technion.ac.il>
+Yosef Raisman <yosefraisman [at] gmail.com>
+Yossi Gil <yossi.gil [at] gmail.com>
+Yuval Simon <yuvaltechnion [at] gmail.com>
+Zahi Mizrahi <zahimizra [at] gmail.com>
+Ziv Izhar <szizhar [at] campus.techion.ac.il>
+Zvi Listopad <listopad [at] cs.technion.ac.il>
+
