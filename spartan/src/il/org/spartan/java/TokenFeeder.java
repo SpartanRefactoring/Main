@@ -4,7 +4,7 @@ import static il.org.spartan.java.Token.*;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** Forwards all tokens from a {@link RawTokenizer} to a {@link TokenProcessor}
  * @author Yossi Gil
@@ -13,7 +13,7 @@ public final class TokenFeeder {
   public final Tokenizer tokenizer;
   public final TokenProcessor processor;
 
-  public TokenFeeder(@NotNull final File f, final TokenProcessor processor) throws FileNotFoundException {
+  public TokenFeeder( final File f, final TokenProcessor processor) throws FileNotFoundException {
     this(new Tokenizer(f), processor);
   }
   public TokenFeeder(final Reader r, final TokenProcessor processor) {
@@ -23,9 +23,9 @@ public final class TokenFeeder {
     this.tokenizer = tokenizer;
     this.processor = processor;
   }
-  @NotNull public TokenFeeder go() {
+   public TokenFeeder go() {
     processor.before();
-    for (@Nullable Token ¢ = tokenizer.next(); ¢ != EOF; ¢ = tokenizer.next())
+    for ( Token ¢ = tokenizer.next(); ¢ != EOF; ¢ = tokenizer.next())
       processor.process(¢, tokenizer.text());
     processor.after();
     return this;

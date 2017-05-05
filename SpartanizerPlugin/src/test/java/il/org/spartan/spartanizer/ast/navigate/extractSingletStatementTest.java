@@ -48,10 +48,10 @@ public final class extractSingletStatementTest {
   @Test public void nullGivesNull() {
     azzert.isNull(extract.singleStatement(null));
   }
-  @Test public void oneInCurlyIsNotNull() {
+  @Test public void oneInCurlyIsNonNull() {
     assert extract.singleStatement(s("{a();}")) != null;
   }
-  @Test public void oneIsNotNull() {
+  @Test public void oneIsNonNull() {
     assert extract.singleStatement(s("{a();}")) != null;
   }
   @Test public void peelIf() {

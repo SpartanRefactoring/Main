@@ -5,7 +5,7 @@ import static il.org.spartan.java.Token.Kind.*;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.utils.*;
 
@@ -88,9 +88,9 @@ public enum Token {
   public static void main(final String argv[]) throws IOException {
     main(new RawTokenizer(System.in));
   }
-  private static void main(@NotNull final RawTokenizer tokenizer) throws IOException {
+  private static void main( final RawTokenizer tokenizer) throws IOException {
     for (;;) {
-      @Nullable final Token t = tokenizer.next();
+       final Token t = tokenizer.next();
       System.out.println(Separate.bySpaces(//
           "t=" + t, //
           "text=" + tokenizer.text(), //

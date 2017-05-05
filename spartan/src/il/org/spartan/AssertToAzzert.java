@@ -3,7 +3,7 @@ package il.org.spartan;
 
 import static fluent.ly.azzert.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 
@@ -15,11 +15,11 @@ public interface AssertToAzzert {
   static <T> void assertEquals(final String reason, final T t1, final T t2) {
     azzert.that(reason, t2, is(t1));
   }
-  // public static void assertEquals(final @Nullable Object exp, final @Nullable
+  // public static void assertEquals(final  Object exp, final 
   // Object val) {
   // azzert.that(val, is(exp));
   // }
-  // static <T> void assertEquals(final @Nullable T t1, final @Nullable T t2) {
+  // static <T> void assertEquals(final  T t1, final  T t2) {
   // azzert.that(t2, is(t1));
   // }
   static void assertFalse(final boolean ¢) {
@@ -31,10 +31,10 @@ public interface AssertToAzzert {
   static <T> void assertNotEquals(final T t1, final T t2) {
     azzert.that(t2, is(not(t1)));
   }
-  static <T> void assertNotNull(final Object reason, @NotNull final T t) {
+  static <T> void assertNonNull(final Object reason,  final T t) {
     assert t != null : reason;
   }
-  static <T> void assertNotNull(@NotNull final T ¢) {
+  static <T> void assertNonNull( final T ¢) {
     assert ¢ != null;
   }
   static <T> void assertNull(final T ¢) {

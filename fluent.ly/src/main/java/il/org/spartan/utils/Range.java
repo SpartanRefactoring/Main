@@ -2,7 +2,7 @@ package il.org.spartan.utils;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** An immutable integral range, representing all integers between
  * {@link #from}, up to, but not including, {@link #to}, i.e.,
@@ -28,7 +28,7 @@ public class Range {
   }
   /** Instantiates using values found in another intance
    * @param other other */
-  public Range(@NotNull final Range other) {
+  public Range( final Range other) {
     this(other.from, other.to);
   }
   @Override public boolean equals(final Object ¢) {
@@ -39,8 +39,8 @@ public class Range {
    * @return first {@link Range} object in the parameters that contains this
    *         instance, or <code><b>null</b></code> if not such value can be
    *         found. */
-  @Nullable public Range findIncludedIn(@NotNull final Iterable<? extends Range> ¢) {
-    for (@NotNull final Range $ : ¢)
+   public Range findIncludedIn( final Iterable<? extends Range> ¢) {
+    for ( final Range $ : ¢)
       if (includedIn($))
         return $;
     return null;
@@ -52,7 +52,7 @@ public class Range {
   /** @param ¢ arbitrary
    * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code> is
    *         included in the parameter. */
-  public boolean includedIn(@NotNull final Range ¢) {
+  public boolean includedIn( final Range ¢) {
     return from >= ¢.from && to <= ¢.to;
   }
   public boolean isEmpty() {
@@ -61,21 +61,21 @@ public class Range {
   /** Merge with another record
    * @param ¢ JD
    * @return A newly created range representing the merge. */
-  @NotNull public Range merge(@NotNull final Range ¢) {
+   public Range merge( final Range ¢) {
     return new Range(Math.min(from, ¢.from), Math.max(to, ¢.to));
   }
   /** Determine whether overlaps in any part another range
    * @param ¢ arbitrary
    * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code>
    *         overlaps the parameter. */
-  public boolean overlapping(@NotNull final Range ¢) {
+  public boolean overlapping( final Range ¢) {
     return from >= ¢.from || to <= ¢.to;
   }
   /** Prune all ranges in a given list that include this object.
    * @param rs JD */
-  public void pruneIncluders(@NotNull final List<? extends Range> rs) {
+  public void pruneIncluders( final List<? extends Range> rs) {
     for (;;) {
-      @Nullable final Range r = findIncludedIn(rs);
+       final Range r = findIncludedIn(rs);
       if (r == null)
         return;
       rs.remove(r);

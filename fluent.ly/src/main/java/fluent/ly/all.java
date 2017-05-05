@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package fluent.ly;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** A utility class to realize universally quantified checks of an entire
  * collection.
@@ -16,10 +16,10 @@ public enum all {
    * @return <code><b>true</b></code> <i>iff</i> <code>ts</code> is not
    *         <code><b>null</b></code> and all elements in it is not are not
    *         <code><b>null</b></code> */
-  public static <T> boolean notNull(@Nullable final Iterable<T> ts) {
+  public static <T> boolean NonNull( final Iterable<T> ts) {
     if (ts == null)
       return false;
-    for (@Nullable final T ¢ : ts)
+    for ( final T ¢ : ts)
       if (¢ == null)
         return false;
     return true;
@@ -30,10 +30,10 @@ public enum all {
    * @return <code><b>true</b></code> <i>iff</i> <code>ts</code> is not
    *         <code><b>null</b></code> and all elements in it are not
    *         <code><b>null</b></code>. */
-  public static <T> boolean notNull(@Nullable final T[] ts) {
+  public static <T> boolean NonNull( final T[] ts) {
     if (ts == null)
       return false;
-    for (@Nullable final T ¢ : ts)
+    for ( final T ¢ : ts)
       if (¢ == null)
         return false;
     return true;

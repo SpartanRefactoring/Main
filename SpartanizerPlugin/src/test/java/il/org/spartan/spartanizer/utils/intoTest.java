@@ -13,7 +13,7 @@ public final class intoTest {
   @Test public void dCorrect() {
     azzert.that(into.d("int f() { return a; }"), iz("int f() { return a; }"));
   }
-  @Test public void dNotNull() {
+  @Test public void dNonNull() {
     assert into.d("int f() { return a; }") != null;
   }
   @Test(expected = AssertionError.class) public void dOnNull() {

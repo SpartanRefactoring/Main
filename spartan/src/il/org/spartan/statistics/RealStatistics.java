@@ -6,7 +6,7 @@ import static fluent.ly.azzert.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -19,13 +19,13 @@ public class RealStatistics extends ImmutableStatistics {
    * use the values of <code>1L</code> to maintain upward compatibility. */
   private static final long serialVersionUID = 1;
 
-  public static double[] increase(@NotNull final double[] ¢) {
+  public static double[] increase( final double[] ¢) {
     return Arrays.copyOf(¢, 2 * ¢.length + 1);
   }
   /** Make a record of the sequence of elements.
    * @param vs values to be recorded
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  @NotNull public RealStatistics record(@NotNull final double... vs) {
+   public RealStatistics record( final double... vs) {
     for (final double v : vs)
       record(v);
     return this;
@@ -34,7 +34,7 @@ public class RealStatistics extends ImmutableStatistics {
    * are not recorded.
    * @param v the value to be recorded
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  @NotNull public RealStatistics record(final double v) {
+   public RealStatistics record(final double v) {
     return Double.isNaN(v) || Double.isInfinite(v) ? recordMissing() : recordValue(v);
   }
   /** Make a record of the next element in the sequence;
@@ -42,16 +42,16 @@ public class RealStatistics extends ImmutableStatistics {
    * recorded as ''missing'' values.
    * @param v the value to be recorded
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  @NotNull public Statistics record(@Nullable final Double v) {
+   public Statistics record( final Double v) {
     return v == null ? recordMissing() : record(v.doubleValue());
   }
   /** Add a ''missing'' value to the sequence.
    * @return the receiver, to be used, e.g., in chaining more such operations */
-  @NotNull public RealStatistics recordMissing() {
+   public RealStatistics recordMissing() {
     ++missing;
     return this;
   }
-  @NotNull protected RealStatistics recordValue(final double v) {
+   protected RealStatistics recordValue(final double v) {
     if (n() == 0) {
       min = max = v;
       flips = 2;
@@ -80,7 +80,7 @@ public class RealStatistics extends ImmutableStatistics {
     @Test public void all() {
       s11_20_5.median();
       s11_20_5.mad();
-      @NotNull final double[] vs = s11_20_5.all();
+       final double[] vs = s11_20_5.all();
       azzert.that(vs.length, is(3));
       assertEquals(11, vs[0], 1E-20);
       assertEquals(20, vs[1], 1E-20);
@@ -108,12 +108,12 @@ public class RealStatistics extends ImmutableStatistics {
       assertEquals(5 / 9.0, s_4x0_5x1.mean(), 1E-6);
     }
     @Test(expected = ArithmeticException.class) public void meanEmpty() {
-      @NotNull final RealStatistics x = new RealStatistics();
+       final RealStatistics x = new RealStatistics();
       assertEquals(0, x.mean(), 1E-20);
       x.relativeError();
     }
     @Test public void meanZero() {
-      @NotNull final RealStatistics x = new RealStatistics().record(1).record(-1);
+       final RealStatistics x = new RealStatistics().record(1).record(-1);
       assertEquals(0, x.mean(), 1E-20);
       x.relativeError();
     }

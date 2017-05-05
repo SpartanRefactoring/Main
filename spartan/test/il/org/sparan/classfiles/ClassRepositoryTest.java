@@ -3,7 +3,7 @@ package il.org.sparan.classfiles;
 import java.io.*;
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.classfiles.*;
@@ -22,10 +22,10 @@ public class ClassRepositoryTest {
   }
 
   @Test public void noDuplications() {
-    @NotNull final ClassRepository cr = new ClassRepository(ClassRepositoryTest.class);
-    @NotNull final Set<String> set = new HashSet<>();
-    for (@NotNull final File f : cr.getRoots()) {
-      @NotNull final String abs = f.getAbsolutePath();
+     final ClassRepository cr = new ClassRepository(ClassRepositoryTest.class);
+     final Set<String> set = new HashSet<>();
+    for ( final File f : cr.getRoots()) {
+       final String abs = f.getAbsolutePath();
       assert set.contains(abs) : abs;
       set.add(abs);
     }

@@ -66,7 +66,7 @@ public final class Issue0223 {
     a$040_init();
     assert tipper.check(focus);
   }
-  @Test public void b040tipNotNull() {
+  @Test public void b040tipNonNull() {
     a$040_init();
     assert tipper.tip(focus) != null;
   }
@@ -82,11 +82,11 @@ public final class Issue0223 {
     a$040_init();
     tipper.tip(focus);
   }
-  @Test public void b080descriptionNotNull() {
+  @Test public void b080descriptionNonNull() {
     a$040_init();
     assert tipper.tip(focus).description != null;
   }
-  @Test public void b090suggestNotNull() {
+  @Test public void b090suggestNonNull() {
     a$040_init();
     assert tipper.tip(focus) != null;
   }
@@ -114,7 +114,7 @@ public final class Issue0223 {
     a$040_init();
     assert Configurations.all().firstTipper(focus).check(focus);
   }
-  @Test public void b160findTipperReplacmenentNotNull() {
+  @Test public void b160findTipperReplacmenentNonNull() {
     a$040_init();
     assert ((ReplaceCurrentNode<ClassInstanceCreation>) Configurations.all().firstTipper(focus)).replacement(focus) != null;
   }

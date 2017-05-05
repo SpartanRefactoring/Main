@@ -4,23 +4,23 @@ import static il.org.spatan.iteration.Iterables.*;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public class TokenAsIs extends TokenProcessor {
-  @NotNull public static String fileToString(@NotNull final File ¢) throws IOException {
+   public static String fileToString( final File ¢) throws IOException {
     return new TokenFeeder(new Tokenizer(¢), new TokenAsIs()).go().processor + "";
   }
-  @NotNull public static String fileToString(final String fileName) throws IOException {
+   public static String fileToString(final String fileName) throws IOException {
     return new TokenFeeder(new Tokenizer(fileName), new TokenAsIs()).go().processor + "";
   }
-  public static void main(@NotNull final String argv[]) throws IOException {
+  public static void main( final String argv[]) throws IOException {
     System.out.println(fileToString(first(argv)));
   }
-  @NotNull public static String stringToString(@NotNull final String text) {
+   public static String stringToString( final String text) {
     return new TokenFeeder(new StringReader(text), new TokenAsIs()).go().processor + "";
   }
 
@@ -30,7 +30,7 @@ public class TokenAsIs extends TokenProcessor {
     forget.em(t);
     $.append(text);
   }
-  @Override @NotNull public String toString() {
+  @Override  public String toString() {
     return $ + "";
   }
 }

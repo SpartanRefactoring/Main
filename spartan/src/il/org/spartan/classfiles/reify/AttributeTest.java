@@ -2,7 +2,7 @@ package il.org.spartan.classfiles.reify;
 
 import static fluent.ly.azzert.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -15,7 +15,7 @@ public class AttributeTest {
     class __ {
       // empty
     }
-    for (@NotNull final Attribute.Content ¢ : Attribute.Extractor.attributes(new __()))
+    for ( final Attribute.Content ¢ : Attribute.Extractor.attributes(new __()))
       ¢.hashCode();
   }
   @Test public void manyAttributeNames() {
@@ -60,7 +60,7 @@ public class AttributeTest {
     }
     azzert.that(Attribute.Extractor.attributes(new __()).get(0).name, is("intAttribute"));
   }
-  @Test public void nonNull() {
+  @Test public void NonNull() {
     class __ {
       // empty
     }

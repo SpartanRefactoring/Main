@@ -18,7 +18,7 @@ Here `0012` is just a long name for "12". Higher values are worse
 
 A numerical metrics value of the project is written as `l1w35`, which means one spartanization tip, and thirty-five "ordinary" warnings.  The (partial, to be extended) legend is this:
   1. d (D) - number of (distinct) Javadoc warnings. 
-  2. n (N) - number of (distinct) `@Nullable` and `null` checking warnings. 
+  2. n (N) - number of (distinct) `` and `null` checking warnings. 
   3. statements (L) - number of (distinct) spartanization tips offered on the project.
   3. s (S) - number of (distinct) `@SuppressWarning` offered on the project. 
   4. t (T) - number of (distinct) tokens

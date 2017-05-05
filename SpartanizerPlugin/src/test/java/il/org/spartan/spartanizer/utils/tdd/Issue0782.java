@@ -73,7 +73,7 @@ public class Issue0782 {
         getAll.privateFields((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePublic{public int x;}"))))).size(),
         is(0));
   }
-  @Test @SuppressWarnings("static-method") public void returnsNotNull() {
+  @Test @SuppressWarnings("static-method") public void returnsNonNull() {
     assert getAll.privateFields(null) != null;
   }
 }

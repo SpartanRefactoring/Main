@@ -3,7 +3,7 @@ package il.org.spartan.classfiles;
 import java.io.*;
 import java.net.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
@@ -15,7 +15,7 @@ import il.org.spatan.iteration.*;
 @Utility
 public class CLASSPATH {
   /** A class loader, which represents a */
-  @Nullable private static ClassLoader classLoader;
+   private static ClassLoader classLoader;
   /** Which system property contains the class path? */
   private static final String JAVA_CLASS_PATH = "java.class.path";
   private static final String original = get();
@@ -32,15 +32,15 @@ public class CLASSPATH {
   }
   /** Retrieves the system's CLASSPATH in an {@link Iterable}
    * @return the content of the CLASSPATH, broken into array entries */
-  @NotNull public static Iterable<String> asIterable() {
+   public static Iterable<String> asIterable() {
     return Iterables.make(asArray());
   }
-  @Nullable public static ClassLoader classLoader() {
+   public static ClassLoader classLoader() {
     return classLoader != null ? classLoader : (classLoader = computeClassLoader());
   }
   /** Reset the class path and prepend multiple locations to the class path.
    * @param locations locations to prepend to the class path. */
-  public static void fix(@NotNull final String... locations) {
+  public static void fix( final String... locations) {
     reset();
     for (final String location : locations)
       prepend(location);
@@ -103,17 +103,17 @@ public class CLASSPATH {
   }
   /** Sets the system's CLASSPATH
    * @param path the new value of the CLASSPATH */
-  public static void set(@NotNull final String path) {
+  public static void set( final String path) {
     System.setProperty(JAVA_CLASS_PATH, path);
     classLoader = null;
   }
-  @NotNull private static ClassLoader computeClassLoader() {
-    @NotNull final String[] path = asArray();
-    @NotNull final URL[] $ = new URL[path.length];
+   private static ClassLoader computeClassLoader() {
+     final String[] path = asArray();
+     final URL[] $ = new URL[path.length];
     for (int i = 0; i < path.length; ++i)
       try {
         $[i] = new File(path[i]).toURI().toURL();
-      } catch (@NotNull final MalformedURLException __) {
+      } catch ( final MalformedURLException __) {
         // Ignore
       }
     return new URLClassLoader($);

@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 
@@ -12,8 +12,8 @@ import il.org.spartan.streotypes.*;
 @Utility
 public enum On {
   ;
-  public static void main(@NotNull final String[] args) {
-    for (@NotNull final String arg : args) {
+  public static void main( final String[] args) {
+    for ( final String arg : args) {
       System.out.print("Argument " + arg + " is ");
       On.sign(Integer.valueOf(arg), () -> System.out.println("negative!"), () -> System.out.println("zero!"), () -> System.out.println("positive!"));
     }
@@ -26,7 +26,7 @@ public enum On {
    * @param onNegative what to do in case <code>selector</code> is negative
    * @param onZero what to do in case <code>selector</code> is zero
    * @param onPositive what to do in case <code>selector</code> is positive */
-  public static void sign(final int selector, @NotNull final Action onNegative, @NotNull final Action onZero, @NotNull final Action onPositive) {
+  public static void sign(final int selector,  final Action onNegative,  final Action onZero,  final Action onPositive) {
     sign(selector, asFunction(onNegative), asFunction(onZero), asFunction(onPositive));
   }
   /** A lazy selection between three expressions depending on the sign of a
@@ -44,7 +44,7 @@ public enum On {
    * @return one of <code>onNegative.__()</code>, <code>onZero.__()</code> or
    *         <code>onPositive.__()</code>, depending on the sign of
    *         <code>selector</code> */
-  @NotNull public static <T> T sign(final int selector, final Function<T> onNegative, final Function<T> onZero, final Function<T> onPositive) {
+   public static <T> T sign(final int selector, final Function<T> onNegative, final Function<T> onZero, final Function<T> onPositive) {
     return (selector == 0 ? onZero : selector < 0 ? onNegative : onPositive).__();
   }
   /** A non-lazy selection between three values depending on the sign of a given
@@ -68,11 +68,11 @@ public enum On {
    * @param onNegative what to do in case <code>selector</code> is negative
    * @param onZero what to do in case <code>selector</code> is zero
    * @param onPositive what to do in case <code>selector</code> is positive */
-  public static void sign(@NotNull final Integer selector, @NotNull final Action onNegative, @NotNull final Action onZero,
-      @NotNull final Action onPositive) {
+  public static void sign( final Integer selector,  final Action onNegative,  final Action onZero,
+       final Action onPositive) {
     sign(selector.intValue(), asFunction(onNegative), asFunction(onZero), asFunction(onPositive));
   }
-  private static Function<Void> asFunction(@NotNull final Action ¢) {
+  private static Function<Void> asFunction( final Action ¢) {
     return () -> {
       ¢.__();
       return null;
@@ -84,6 +84,6 @@ public enum On {
   }
 
   public interface Function<T> {
-    @NotNull T __();
+     T __();
   }
 }

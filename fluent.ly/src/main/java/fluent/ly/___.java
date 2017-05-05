@@ -218,16 +218,16 @@ public abstract class ___ {
    * should never be <code><b>null</b></code>.
    * @param o if <code><b>null</b></code>, program will halt.
    * @throws NonNull in case <code>o</code> was <code><b>null</b></code> */
-  public static void nonnull(final Object ¢) throws NonNull {
-    nonnull(¢, "");
+  public static void notNull(final Object ¢) throws NonNull {
+    notNull(¢, "");
   }
   /** A possibly non-returning method to be used for checking objects that
    * should never be <code><b>null</b></code>.
    * @param o if <code><b>null</b></code>, program will halt.
    * @param message an error message to be associated with the failure
    * @throws NonNull in case <code>o</code> was <code><b>null</b></code> */
-  public static void nonnull(final Object o, final String message) throws NonNull {
-    nonnull(o, message, "");
+  public static void notNull(final Object o, final String message) throws NonNull {
+    nonNull(o, message, "");
   }
   /** A possibly non-returning method to be used for checking objects that
    * should never be <code><b>null</b></code>.
@@ -237,7 +237,7 @@ public abstract class ___ {
    * @param args <code>printf</code>-like arguments to be used with the format
    *        string.
    * @throws NonNull in case <code>o</code> was <code><b>null</b></code> */
-  public static void nonnull(final Object o, final String format, final Object... args) throws NonNull {
+  public static void nonNull(final Object o, final String format, final Object... args) throws NonNull {
     if (o == null)
       throw new NonNull(format, args);
   }
@@ -870,22 +870,22 @@ public abstract class ___ {
         assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
       }
     }
-    @Test public void nonnull() {
-      ___.nonnull(new Object());
+    @Test public void NonNull() {
+      ___.notNull(new Object());
       try {
-        ___.nonnull(null);
+        ___.notNull(null);
       } catch (final NonNull e) {
         assertEquals("", e.getMessage());
       }
       try {
-        ___.nonnull(null, "nonnull");
+        ___.notNull(null, "NonNull");
       } catch (final NonNull e) {
-        assertEquals("nonnull", e.getMessage());
+        assertEquals("NonNull", e.getMessage());
       }
       try {
-        ___.nonnull(null, "nonnull %s message %s", "this", "now");
+        ___.nonNull(null, "NonNull %s message %s", "this", "now");
       } catch (final NonNull e) {
-        assertEquals("nonnull this message now", e.getMessage());
+        assertEquals("NonNull this message now", e.getMessage());
       }
     }
     @Test public void nonpositive() {

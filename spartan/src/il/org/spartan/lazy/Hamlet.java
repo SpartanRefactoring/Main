@@ -12,13 +12,13 @@ import fluent.ly.*;
 @SuppressWarnings({ "boxing", "null" }) //
 public class Hamlet implements Environment {
   private final Property<Boolean> $ = function(init());
-  private final Function0<@Nullable Boolean> permanent = () -> !$.get();
+  private final Function0< Boolean> permanent = () -> !$.get();
 
   @Test public void seriesA01() {
-    @Nullable final Boolean first = $.¢();
+     final Boolean first = $.¢();
     assert first != null;
     assert $.cache != null;
-    @Nullable final Boolean second = $.get(), third = $.get(), fourth = $.get();
+     final Boolean second = $.get(), third = $.get(), fourth = $.get();
     azzert.that(first + "", is("false"));
     azzert.that(second + "", is("true"));
     azzert.that(third + "", is("false"));
@@ -28,13 +28,13 @@ public class Hamlet implements Environment {
     $.ϑ(permanent, $);
     return Boolean.FALSE;
   }
-  private Function0<@Nullable Boolean> init() {
+  private Function0< Boolean> init() {
     return () -> first();
   }
 
   public static class Hamlet2 {
-    @Nullable private final Function0<@Nullable Boolean> permanent1 = null;
+     private final Function0< Boolean> permanent1 = null;
     private final Property<Boolean> $ = value(false).push(permanent1);
-    @SuppressWarnings("unused") private final Function0<@Nullable Boolean> permanent = () -> !$.get();
+    @SuppressWarnings("unused") private final Function0< Boolean> permanent = () -> !$.get();
   }
 }

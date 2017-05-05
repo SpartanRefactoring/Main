@@ -5,7 +5,7 @@ import static fluent.ly.azzert.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -23,9 +23,9 @@ public class Primes {
         || ¢ > 1 && isPrime¢(¢); // any integer>- 2
   }
   public static void main(final String[] args) {
-    @NotNull final CSVStatistics w = new CSVStatistics("primes.csv", "Property");
-    @NotNull final Random r = new Random();
-    for (@NotNull final Primes ¢ = new Primes(); ¢.current < 100; w.nl()) {
+     final CSVStatistics w = new CSVStatistics("primes.csv", "Property");
+     final Random r = new Random();
+    for ( final Primes ¢ = new Primes(); ¢.current < 100; w.nl()) {
       w.put("Value", ¢.next());
       w.put("Bad Random", new Random().nextDouble());
       w.put("Good Random", r.nextDouble());
@@ -74,7 +74,7 @@ public class Primes {
       assert !isPrime(1);
     }
     @Test public void secondIsThree() {
-      @NotNull final Primes p = new Primes();
+       final Primes p = new Primes();
       p.next();
       azzert.that(p.next(), is(3));
     }
@@ -84,7 +84,7 @@ public class Primes {
           azzert.that(new Primes().next(), is(c));
     }
     @Test public void thirdIsFive() {
-      @NotNull final Primes p = new Primes();
+       final Primes p = new Primes();
       p.next();
       p.next();
       azzert.that(p.next(), is(5));

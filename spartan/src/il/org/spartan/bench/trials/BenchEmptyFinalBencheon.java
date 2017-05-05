@@ -1,6 +1,6 @@
 package il.org.spartan.bench.trials;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -12,8 +12,8 @@ public class BenchEmptyFinalBencheon {
   private static final int trials = 100;
 
   public static void main(final String args[]) throws Exception {
-    @NotNull final LogBook.Mutable l = new LogBook.Mutable(BenchEmptyFinalBencheon.class);
-    @NotNull final Bencheon b = new Bencheon("empty", 1) {
+     final LogBook.Mutable l = new LogBook.Mutable(BenchEmptyFinalBencheon.class);
+     final Bencheon b = new Bencheon("empty", 1) {
       @Override public void beforeAllRuns() {
         //
       }

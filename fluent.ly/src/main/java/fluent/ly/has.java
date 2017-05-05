@@ -4,7 +4,7 @@ package fluent.ly;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 /** A collection of <code><b>static</b></code> functions for converting from one
@@ -19,7 +19,7 @@ public enum has {
    * @param ts the indexed list
    * @return following item in the list, if such such an item exists, otherwise,
    *         the last node */
-  public static <@Nullable T> @Nullable T next(final int i, @NotNull final List<T> ts) {
+  public static < T>  T next(final int i,  final List<T> ts) {
     return !is.inRange(i + 1, ts) ? the.last(ts) : ts.get(i + 1);
   }
   /** Determine whether a <code><b>null</b></code> occurs in a sequence of
@@ -27,7 +27,7 @@ public enum has {
    * @param os JD
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
-  public static boolean nils(@NotNull final Iterable<@Nullable Object> os) {
+  public static boolean nils( final Iterable< Object> os) {
     for (final Object ¢ : os)
       if (¢ == null)
         return true;
@@ -38,7 +38,7 @@ public enum has {
    * @param os an unknown number of objects
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
-  public static <T> boolean nil(final @Nullable T o, final T @Nullable... os) {
+  public static <T> boolean nil(final  T o, final T ... os) {
     if (o == null || os == null)
       return true;
     for (final Object ¢ : os)
@@ -48,7 +48,7 @@ public enum has {
   }
 
   public static class TEST {
-    @Nullable private final String nul = null;
+     private final String nul = null;
 
     @Test public void seriesA01() {
       azzert.aye(has.nil(nul));

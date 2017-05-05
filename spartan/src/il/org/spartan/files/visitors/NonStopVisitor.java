@@ -5,7 +5,7 @@ import static fluent.ly.___.*;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 
@@ -20,7 +20,7 @@ public class NonStopVisitor extends FileSystemVisitor {
   public NonStopVisitor(final File[] from, final NonStopAction action, final String... extensions) {
     super(from, action, extensions);
   }
-  public NonStopVisitor(@NotNull final Iterable<String> from, final NonStopAction action, final String... extensions) {
+  public NonStopVisitor( final Iterable<String> from, final NonStopAction action, final String... extensions) {
     super(from, action, extensions);
   }
   public NonStopVisitor(final String from, final NonStopAction action, final String[] extensions) {
@@ -32,7 +32,7 @@ public class NonStopVisitor extends FileSystemVisitor {
   @Override public final void go() throws IOException {
     try {
       super.go();
-    } catch (@NotNull final StopTraversal e) {
+    } catch ( final StopTraversal e) {
       unreachable();
     }
   }

@@ -3,7 +3,7 @@ package il.org.spartan.collections;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 
@@ -28,7 +28,7 @@ public class ImmutableArray<T> implements Iterable<T> {
   public T get(final int ¢) {
     return implementation[¢];
   }
-  @Override @NotNull public Iterator<T> iterator() {
+  @Override  public Iterator<T> iterator() {
     return new Iterator<T>() {
       int i;
 

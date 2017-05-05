@@ -45,7 +45,7 @@ public class HasEnvironmentTest extends MetaFixture {
   public HasEnvironmentTest(final ASTNode name, @SuppressWarnings("unused") final String signature) {
     this.name = name;
   }
-  @Test public void notNullNode() {
+  @Test public void NonNullNode() {
     assert Environment.of(name) != null : //
     "\n name = " + name + //
         MetaFixture.ancestry(name) + //

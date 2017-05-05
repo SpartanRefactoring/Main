@@ -32,11 +32,11 @@ import il.org.spartan.classfiles.reify.ClassInfo.*;
     assert !new Builder(CLASSFILES.open(ClassFileTest.class)).hasErrors();
   }
 
-  @Test public void otherBuilderNotNull() {
+  @Test public void otherBuilderNonNull() {
     assert new Builder(CLASSFILES.open(ClassFileTest.class)).go() != null;
   }
 
-  @Test public void otherMakeNotNull() {
+  @Test public void otherMakeNonNull() {
     assert ClassInfo.make(ClassFileTest.class) != null;
   }
 
@@ -48,7 +48,7 @@ import il.org.spartan.classfiles.reify.ClassInfo.*;
     assert new ClassInfo.Builder(this.getClass()).go() != null;
   }
 
-  @Test public void selfMakeNotNull() {
+  @Test public void selfMakeNonNull() {
     assert ClassInfo.make(this.getClass()) != null;
   }
 }

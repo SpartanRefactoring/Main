@@ -56,7 +56,7 @@ public final class Issue0086 extends Issue____ {
     a04_init();
     assert tipper.check(focus);
   }
-  @Test public void b04tipNotNull() {
+  @Test public void b04tipNonNull() {
     a04_init();
     assert tipper.tip(focus) != null;
   }
@@ -72,11 +72,11 @@ public final class Issue0086 extends Issue____ {
     a04_init();
     tipper.tip(focus);
   }
-  @Test public void b09descriptionNotNull() {
+  @Test public void b09descriptionNonNull() {
     a04_init();
     assert tipper.tip(focus).description != null;
   }
-  @Test public void b0suggestNotNull() {
+  @Test public void b0suggestNonNull() {
     a04_init();
     assert tipper.tip(focus) != null;
   }

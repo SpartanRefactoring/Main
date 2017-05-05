@@ -1,7 +1,7 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 
@@ -22,43 +22,43 @@ import il.org.spartan.streotypes.*;
  * @since 12/02/2006) */
 @Instantiable
 public final class Separator {
-  public static <T> boolean isEmpty(@NotNull final Iterable<T> items) {
+  public static <T> boolean isEmpty( final Iterable<T> items) {
     return !items.iterator().hasNext();
   }
-  @NotNull public static String separateBy(@NotNull final int[] is, final String between) {
+   public static String separateBy( final int[] is, final String between) {
     if (is.length == 0)
       return "";
-    @NotNull String $ = "";
-    @NotNull final Separator s = new Separator(between);
+     String $ = "";
+     final Separator s = new Separator(between);
     for (final int ¢ : is)
       $ += s + "" + Integer.valueOf(¢);
     return $;
   }
-  @NotNull public static <T> String separateBy(final String between, @NotNull final T[] items) {
+   public static <T> String separateBy(final String between,  final T[] items) {
     return wrap("", "", items, between);
   }
-  @NotNull public static <T> String wrap(final String wrap, @NotNull final Iterable<T> items, final String between) {
+   public static <T> String wrap(final String wrap,  final Iterable<T> items, final String between) {
     return wrap(wrap, wrap, items, between);
   }
-  @NotNull public static <T> String wrap(final String begin, final String end, @NotNull final Iterable<T> items, final String between) {
+   public static <T> String wrap(final String begin, final String end,  final Iterable<T> items, final String between) {
     if (isEmpty(items))
       return "";
     String $ = begin;
-    @NotNull final Separator s = new Separator(between);
+     final Separator s = new Separator(between);
     for (final T ¢ : items)
       $ += s + "" + ¢;
     return $ + end;
   }
-  @NotNull public static <T> String wrap(final String begin, final String end, @NotNull final T[] items, final String between) {
+   public static <T> String wrap(final String begin, final String end,  final T[] items, final String between) {
     if (items.length == 0)
       return "";
     String $ = begin;
-    @NotNull final Separator s = new Separator(between);
+     final Separator s = new Separator(between);
     for (final T ¢ : items)
       $ += s + "" + ¢;
     return $ + end;
   }
-  static void main(@NotNull final String[] args) {
+  static void main( final String[] args) {
     for (final String a : args)
       System.out.print(new Separator(", ") + a);
   }

@@ -3,7 +3,7 @@ package il.org.spartan.files.visitors;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.files.visitors.FileSystemVisitor.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
@@ -19,7 +19,7 @@ public class FindClassFile {
   static boolean reportCounts;
   static boolean findFirstOnly;
 
-  public static void main(@NotNull final String[] args) {
+  public static void main( final String[] args) {
     if (args.length == 0) {
       System.err.printf("Usage: %s [ -n ] [ -f ] className [className ...]\n", name);
       System.exit(1);
@@ -29,9 +29,9 @@ public class FindClassFile {
         try {
           System.out.println("Searching for class: " + arg + " in " + Parenthesize.square(File.listRoots()));
           new FileSystemVisitor(File.listRoots(), new Searcher("." + arg + ".class"), ".class").go();
-        } catch (@NotNull final IOException ¢) {
+        } catch ( final IOException ¢) {
           System.err.println(¢.getMessage());
-        } catch (@NotNull final StopTraversal e) {
+        } catch ( final StopTraversal e) {
           //
         }
   }
@@ -60,16 +60,16 @@ public class FindClassFile {
     public Searcher(final String sought) {
       this.sought = sought;
     }
-    @Override public void visitDirectory(@NotNull final File ¢) {
+    @Override public void visitDirectory( final File ¢) {
       ++directories;
       report("Directory: " + ¢.getAbsolutePath());
     }
-    @Override public void visitFile(@NotNull final File ¢) throws StopTraversal {
+    @Override public void visitFile( final File ¢) throws StopTraversal {
       ++files;
       report("File: " + ¢.getAbsolutePath());
       check(¢.getName(), ¢.getAbsolutePath());
     }
-    @Override public void visitZip(@NotNull final File ¢) {
+    @Override public void visitZip( final File ¢) {
       ++zips;
       report("Archive: " + ¢.getAbsolutePath());
     }
@@ -77,13 +77,13 @@ public class FindClassFile {
       forget.it(s);
       report("Archive directory: " + entryName + " in zip " + zipName);
     }
-    @Override public void visitZipEntry(final String zipName, @NotNull final String entryName, final InputStream s) throws StopTraversal {
+    @Override public void visitZipEntry(final String zipName,  final String entryName, final InputStream s) throws StopTraversal {
       forget.it(s);
       ++entries;
       report("Archive entry: " + entryName);
       check(entryName, zipName);
     }
-    private void check(@NotNull final String file, final String directory) throws StopTraversal {
+    private void check( final String file, final String directory) throws StopTraversal {
       if (!file.endsWith(sought))
         return;
       System.out.printf("%s: %s\n", file, directory);

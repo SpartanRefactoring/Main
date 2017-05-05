@@ -4,7 +4,7 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 import fluent.ly.___.*;
@@ -58,7 +58,7 @@ public final class IntegersMap {
   }
   /** Remove all elements from this set, preserving capacity.
    * @return <code><b>this</b>/code> */
-  @NotNull public IntegersMap clear() {
+   public IntegersMap clear() {
     return reset(capacity());
   }
   /** Determine whether a given value is in this set.
@@ -72,7 +72,7 @@ public final class IntegersMap {
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, all elements in the array
    *         are contained in this set */
-  public boolean contains(@NotNull final int... is) {
+  public boolean contains( final int... is) {
     for (final int ¢ : is)
       if (!contains(¢))
         return false;
@@ -82,14 +82,14 @@ public final class IntegersMap {
    * @param is an array of of integers; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
    *         from the set of elements in the parameter */
-  public boolean disjoint(@NotNull final int... is) {
+  public boolean disjoint( final int... is) {
     for (final int ¢ : is)
       if (contains(¢))
         return false;
     return true;
   }
-  @NotNull public int[] get(@NotNull final int keys[]) {
-    @NotNull final int[] $ = new int[keys.length];
+   public int[] get( final int keys[]) {
+     final int[] $ = new int[keys.length];
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       $[¢] = get(keys[¢]);
     return $;
@@ -111,7 +111,7 @@ public final class IntegersMap {
   }
   /** @param key
    * @return <code>this</code> */
-  @NotNull public IntegersMap init(final int key) {
+   public IntegersMap init(final int key) {
     final int location = location(key);
     if (location >= 0)
       values[location] = 0;
@@ -127,8 +127,8 @@ public final class IntegersMap {
   }
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
-  @NotNull public int[] keys() {
-    @NotNull final int[] $ = new int[size];
+   public int[] keys() {
+     final int[] $ = new int[size];
     for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
       if (occupied[¢] && !placeholder[¢])
         $[j++] = data[¢];
@@ -136,7 +136,7 @@ public final class IntegersMap {
   }/* What are all values stored in this object?
     *
     * @return an array of all elements in this set. */
-  @NotNull public IntegersMap put(final int key, final int value) {
+   public IntegersMap put(final int key, final int value) {
     final int location = location(key);
     if (location >= 0)
       values[location] = value;
@@ -152,13 +152,13 @@ public final class IntegersMap {
   }
   /** Recreate the table, inserting all elements in it afresh.
    * @return <code><b>this</b>/code> */
-  @NotNull public IntegersMap rehash() {
+   public IntegersMap rehash() {
     return rehash(capacity());
   }
   /** Remove an array of integers to this set, if they are in it.
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
-  @NotNull public IntegersMap remove(@NotNull final int... is) {
+   public IntegersMap remove( final int... is) {
     for (final int ¢ : is)
       remove(¢);
     return this;
@@ -166,7 +166,7 @@ public final class IntegersMap {
   /** Remove an element from this set, it is in it
    * @param n some integer to be removed from the set
    * @return <code><b>this</b>/code> */
-  @NotNull public IntegersMap remove(final int n) {
+   public IntegersMap remove(final int n) {
     final int i = location(n);
     assert i >= -1 && i < capacity();
     if (i < 0)
@@ -181,8 +181,8 @@ public final class IntegersMap {
   public int size() {
     return size;
   }
-  @NotNull public int[] sortedKeys() {
-    @NotNull final int[] $ = keys();
+   public int[] sortedKeys() {
+     final int[] $ = keys();
     Arrays.sort($);
     return $;
   }
@@ -219,16 +219,16 @@ public final class IntegersMap {
    * of two.
    * @param newCapacity new initialCapacity for the internal array
    * @return <code><b>this</b>/code> */
-  @NotNull private IntegersMap rehash(final int newCapacity) {
+   private IntegersMap rehash(final int newCapacity) {
     assert (newCapacity & newCapacity - 1) == 0;
     assert newCapacity >= MIN_CAPACITY;
-    @NotNull final int[] keys = keys(), oldValues = get(keys);
+     final int[] keys = keys(), oldValues = get(keys);
     reset(newCapacity);
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       put(keys[¢], oldValues[¢]);
     return this;
   }
-  @NotNull private IntegersMap reset(final int capacity) {
+   private IntegersMap reset(final int capacity) {
     data = new int[capacity];
     occupied = new boolean[capacity];
     placeholder = new boolean[capacity];
@@ -254,7 +254,7 @@ public final class IntegersMap {
         if (placeholder[¢])
           assert occupied[¢];
     }
-    private int count(@NotNull final boolean bs[]) {
+    private int count( final boolean bs[]) {
       int $ = 0;
       for (final boolean ¢ : bs)
         $ += as.bit(¢);

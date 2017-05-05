@@ -6,7 +6,7 @@ import static fluent.ly.___.*;
 import java.math.*;
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 
@@ -20,9 +20,9 @@ public enum Permutation {
 
   /** @param i a non-negative integer
    * @return the decreasing permutation of length n, represented as an array. */
-  @NotNull public static int[] decreasing(final int i) {
+   public static int[] decreasing(final int i) {
     nonnegative(i);
-    @NotNull final int[] $ = new int[i];
+     final int[] $ = new int[i];
     for (int ¢ = 0; ¢ < i; ++¢)
       $[¢] = i - ¢ - 1;
     return $;
@@ -35,27 +35,27 @@ public enum Permutation {
   }
   /** @param i a non-negative integer
    * @return the increasing permutation of length n, represented as an array. */
-  @NotNull public static int[] identity(final int i) {
+   public static int[] identity(final int i) {
     nonnegative(i);
-    @NotNull final int[] $ = new int[i];
+     final int[] $ = new int[i];
     for (int ¢ = 0; ¢ < i; ++¢)
       $[¢] = ¢;
     return $;
   }
-  @NotNull public static int[] invert(@NotNull final int[] a) {
-    @NotNull final int[] $ = new int[a.length];
+   public static int[] invert( final int[] a) {
+     final int[] $ = new int[a.length];
     for (int ¢ = 0; ¢ < a.length; ++¢)
       $[a[¢]] = ¢;
     return $;
   }
   /** @param ¢ a non-negative integer
    * @return a random permutation of length n, represented as an array. */
-  @NotNull public static int[] random(final int ¢) {
+   public static int[] random(final int ¢) {
     nonnegative(¢);
     return shuffle(identity(¢));
   }
-  @NotNull public static int[] scramble(final int n) {
-    @NotNull final int[] $ = identity(n);
+   public static int[] scramble(final int n) {
+     final int[] $ = identity(n);
     for (int i = 0; i < n; ++i) {
       final double Gi = power(GOLD, i + 1, n);
       System.out.println("Gi=" + Gi);
@@ -63,19 +63,19 @@ public enum Permutation {
     }
     return $;
   }
-  @NotNull public static float[] shuffle(@NotNull final float[] $) {
-    @NotNull final Random r = new Random(System.nanoTime());
+   public static float[] shuffle( final float[] $) {
+     final Random r = new Random(System.nanoTime());
     for (int ¢ = 0; ¢ < $.length; ++¢)
       swap($, ¢, r.nextInt($.length));
     return $;
   }
-  @NotNull public static int[] shuffle(@NotNull final int[] $) {
-    @NotNull final Random r = new Random(System.nanoTime());
+   public static int[] shuffle( final int[] $) {
+     final Random r = new Random(System.nanoTime());
     for (int ¢ = 0; ¢ < $.length; ++¢)
       swap($, ¢, r.nextInt($.length));
     return $;
   }
-  public static <T> void shuffle(@NotNull final T[] ts) {
+  public static <T> void shuffle( final T[] ts) {
     for (int ¢ = 0; ¢ < ts.length; ++¢)
       swap(ts, ¢, new Random(System.nanoTime()).nextInt(ts.length));
   }
@@ -83,7 +83,7 @@ public enum Permutation {
    * @param fs the array with two cells to be swapped
    * @param i index of this first array cell
    * @param j index of the second array cell */
-  public static void swap(@NotNull final float[] fs, final int i, final int j) {
+  public static void swap( final float[] fs, final int i, final int j) {
     nonnegative(i);
     nonnegative(j);
     require(i <= fs.length);
@@ -100,7 +100,7 @@ public enum Permutation {
    * @param a the array with two cells to be swapped
    * @param i index of this first array cell
    * @param j index of the second array cell */
-  public static void swap(@NotNull final int[] a, final int i, final int j) {
+  public static void swap( final int[] a, final int i, final int j) {
     nonnegative(i);
     nonnegative(j);
     require(i <= a.length);
@@ -153,7 +153,7 @@ public enum Permutation {
     public double fraction() {
       return fraction;
     }
-    public void multiply(@NotNull final BigFloat other) {
+    public void multiply( final BigFloat other) {
       whole.multiply(other.whole);
       fraction *= other.fraction;
     }

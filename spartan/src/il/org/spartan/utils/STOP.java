@@ -3,7 +3,7 @@ package il.org.spartan.utils;
 
 import static fluent.ly.azzert.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 
@@ -14,7 +14,7 @@ import il.org.spartan.streotypes.*;
 public enum STOP {
   ;
   /** Handler for program exit requests. Default behavior: JUnit failure. */
-  @NotNull private static StopHandler stopHandler = stopFail();
+   private static StopHandler stopHandler = stopFail();
 
   /** Terminate the program with a specified exit code.
    * @param exitCode * the exit code associated with the termination */
@@ -29,14 +29,14 @@ public enum STOP {
   /** A never-returning method to be used for dealing with assertions that
    * should stop the program run.
    * @param ¢ the exception to be associated with this termination */
-  public static void stop(@NotNull final Throwable ¢) {
+  public static void stop( final Throwable ¢) {
     stop(¢, "Program must stop due to this error: ");
   }
   /** A never-returning method to be used for dealing with assertions that
    * should stop the program run.
    * @param t the exception to be associated with this termination
    * @param s a more detailed description of the error */
-  public static void stop(@NotNull final Throwable t, final String s) {
+  public static void stop( final Throwable t, final String s) {
     System.err.println(s);
     t.printStackTrace();
     stop(-1);
@@ -44,7 +44,7 @@ public enum STOP {
   /** Set the termination policy to program exit.
    * @return a {@link StopHandler} object specifying this policy. (It is safe to
    *         ignore this returned value) */
-  @NotNull public static StopHandler stopExit() {
+   public static StopHandler stopExit() {
     return stopHandler = new StopHandler() {
       @Override public void stop(final int exitCode) {
         throw new AssertionError("Stop " + exitCode);
@@ -58,7 +58,7 @@ public enum STOP {
   /** Set the termination policy to JUnit failure
    * @return a {@link StopHandler} object specifying this policy. (It is safe to
    *         ignore this returned value) */
-  @NotNull public static StopHandler stopFail() {
+   public static StopHandler stopFail() {
     return stopHandler = new StopHandler() {
       @Override public void stop(final int exitCode) {
         fail("Design by contract failue, code = " + exitCode);
@@ -71,7 +71,7 @@ public enum STOP {
   /** Set the termination policy to throwing of a {@link Runnable} failure
    * @return a {@link StopHandler} object specifying this policy. (It is safe to
    *         ignore this returned value) */
-  @NotNull public static StopHandler stopRuntimeException() {
+   public static StopHandler stopRuntimeException() {
     return stopHandler = new StopHandler() {
       @Override public void stop(final int exitCode) {
         throw new RuntimeException("Stop called, exit code=" + exitCode);

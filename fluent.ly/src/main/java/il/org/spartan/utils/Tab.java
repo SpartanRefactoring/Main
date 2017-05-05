@@ -4,7 +4,7 @@ package il.org.spartan.utils;
 import static fluent.ly.___.*;
 import static fluent.ly.azzert.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -83,8 +83,8 @@ public class Tab {
   }
   /** Send a formatted line, indented by this instance, to {@link System#out}.
    * @param os what to print */
-  public void println(@NotNull final Object... os) {
-    @NotNull final StringBuilder sb = new StringBuilder();
+  public void println( final Object... os) {
+     final StringBuilder sb = new StringBuilder();
     for (final Object ¢ : os)
       sb.append(¢);
     System.out.println(toString() + sb);
@@ -101,14 +101,14 @@ public class Tab {
    * @since 05/08/2008 */
   @SuppressWarnings("static-method")
   public static class TEST {
-    @NotNull private static String cat(final String s1, final String s2) {
+     private static String cat(final String s1, final String s2) {
       return "[[" + s1 + "]][[" + s2 + "]]";
     }
     @Test public void emptyContent() {
       azzert.that(new Tab("abc") + "", is(""));
     }
     @Test public void emptyFalse() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       assert !t.isEmpty();
     }
@@ -116,12 +116,12 @@ public class Tab {
       assert new Tab().isEmpty();
     }
     @Test public void testBeginAtLevelOne() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       azzert.that(cat(t.begin(), t + ""), is(cat("abc", "abcabc")));
     }
     @Test public void testBeginAtZero() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       azzert.that(cat(t.begin(), t + ""), is(cat("", "abc")));
     }
     @Test(expected = ___.Bug.Contract.Precondition.class) //
@@ -132,47 +132,47 @@ public class Tab {
       assert new Tab().isEmpty();
     }
     @Test public void testEndAtLevelOne() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       azzert.that(cat(t.end(), t + ""), is(cat("", "")));
     }
     @Test public void testEndAtLevelTwo() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       t.more();
       azzert.that(cat(t.end(), t + ""), is(cat("abc", "abc")));
     }
     @Test(expected = ___.Bug.Contract.Precondition.class) //
     public void testEndAtLevelZero() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       azzert.that(cat(t.end(), t + ""), is(cat("", "")));
     }
     @Test public void testOneMore() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       azzert.that(t + "", is("abc"));
     }
     @Test public void testOneMoreOneLess() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       t.less();
       azzert.that(t + "", is(""));
     }
     @Test public void testTwoMore() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       t.more();
       azzert.that(t + "", is("abcabc"));
     }
     @Test public void testTwoMoreOneLess() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       t.more();
       t.less();
       azzert.that(t + "", is("abc"));
     }
     @Test public void testTwoMoreTwoLessOneMore() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       t.more();
       t.less();
@@ -181,7 +181,7 @@ public class Tab {
       azzert.that(t + "", is("abc"));
     }
     @Test public void testTwoMoreTwoLessTwoMore() {
-      @NotNull final Tab t = new Tab("abc");
+       final Tab t = new Tab("abc");
       t.more();
       t.more();
       t.less();

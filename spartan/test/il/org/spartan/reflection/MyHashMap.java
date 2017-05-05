@@ -424,9 +424,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    *        greater than current capacity unless current capacity is
    *        MAXIMUM_CAPACITY (in which case value is irrelevant). */
   void resize(final int newCapacity) {
-    @SuppressWarnings("rawtypes") final Entry[] oldTable = table;
-    final int oldCapacity = oldTable.length;
-    if (oldCapacity == MAXIMUM_CAPACITY) {
+    if (table.length == MAXIMUM_CAPACITY) {
       threshold = Integer.MAX_VALUE;
       return;
     }

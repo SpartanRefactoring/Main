@@ -2,7 +2,7 @@ package il.org.spartan;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** Combines {@link CSVWriter} and {@link CSVLine}, to make it easy to write to
  * a CSV file.
@@ -33,7 +33,7 @@ public class CSVLineWriter extends CSVLine.Ordered {
     super(renderer);
     writer = new CSVWriter(fileName + extension());
   }
-  @Nullable public String absolutePath() {
+   public String absolutePath() {
     return writer.file() == null ? null : writer.file().getAbsolutePath();
   }
   public String close() {
@@ -46,14 +46,14 @@ public class CSVLineWriter extends CSVLine.Ordered {
   public File file() {
     return writer.file();
   }
-  @NotNull public String fileName() {
+   public String fileName() {
     return writer.fileName();
   }
   public void nl() {
     writer.writeFlush(this);
     ++count;
   }
-  @NotNull @SuppressWarnings("static-method") protected String extension() {
+   @SuppressWarnings("static-method") protected String extension() {
     return ".csv";
   }
 }

@@ -2,7 +2,7 @@ package il.org.spartan.java;
 
 import static fluent.ly.___.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spatan.iteration.*;
 
@@ -25,15 +25,15 @@ public abstract class TokenProcessor {
       this(Iterables.make(inners));
     }
     @Override protected void after() {
-      for (@NotNull final TokenProcessor inner : inners)
+      for ( final TokenProcessor inner : inners)
         inner.after();
     }
     @Override protected void before() {
-      for (@NotNull final TokenProcessor inner : inners)
+      for ( final TokenProcessor inner : inners)
         inner.before();
     }
     @Override protected void process(final Token t, final String text) {
-      for (@NotNull final TokenProcessor inner : inners)
+      for ( final TokenProcessor inner : inners)
         inner.process(t, text);
     }
   }

@@ -3,7 +3,6 @@ package il.org.spartan.spartanizer.utils;
 import static fluent.ly.azzert.*;
 import static il.org.spartan.Utils.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -23,10 +22,10 @@ public final class UtilsTest {
     azzert.that(compare(true, true), is(0));
   }
   @Test public void inTypicalFalse() {
-    assert !is.in("X", new String @NonNull [] { "A", "B", "C" });
+    assert !is.in("X", new String  [] { "A", "B", "C" });
   }
   @Test public void inTypicalTrue() {
-    assert is.in("A", new String @NonNull [] { "A", "B", "C" });
+    assert is.in("A", new String  [] { "A", "B", "C" });
   }
   @Test public void removePrefiEmpty() {
     azzert.that("BAAAAB", is(removePrefix("BAAAAB", "A")));

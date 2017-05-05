@@ -59,7 +59,7 @@ public interface Utils {
    * @param t an element
    * @return newly created array */
   static <T> T[] append(final T[] ts, final T t) {
-    @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, 1 + ts.length);
+    @SuppressWarnings("null") final T  [] $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
     return $;
   }
@@ -69,55 +69,55 @@ public interface Utils {
   static <F, T> Applicator<F, T> apply(final Function<F, T> ¢) {
     return new Applicator<>(¢);
   }
-  /** Removes the @Nullable annotation present on the type of a value. This
+  /** Removes the  annotation present on the type of a value. This
    * function is mainly used to make <code><b>null</b></code<]> checkers happy.
    * <p>
    * The parameter is an instance of an arbitrary type, T. The hidden assumption
-   * is that a @Nullable annotation is present on T. Thus, the parameter may be
+   * is that a  annotation is present on T. Thus, the parameter may be
    * either <code><b>null</b></code<]>, or an actual instance of T.
    * <p>
    * The function returns the same instance it received as a parameter, except
    * that this instance is returned as an instance of the type T <i>without</i>
-   * the @Nullable annotation. Execution is aborted with an
+   * the  annotation. Execution is aborted with an
    * {@link AssertionError} if the parameter is null.
    * <p>
    * as it turns out, this function is a (slow) logical no-op, but still
-   * applicable to arguments of type T, where T does not have the @Nullable
+   * applicable to arguments of type T, where T does not have the 
    * annotation present on it.
    * <p>
    * For reasons related to the way non-nullability is managed in Java, the
    * compiler will not warn you from doing applying this function to a
    * {@link NonNull} type. However, there is absolutely no point in removing
-   * a @Nullable annotation if the type that does not have it. Doing so a is
+   * a  annotation if the type that does not have it. Doing so a is
    * plain clutter. Since the compiler cannot assist you, you will have to be on
    * the guard.
    * @param $ result
    * @param <T> JD
    * @return parameter, but guaranteed to be {@link NonNull}
    * @see #mustBeNull(Object) */
-  @Nullable static <T> T canBeNull(final T $) {
+   static <T> T canBeNull(final T $) {
     return $;
   }
-  /** Removes the @Nullable annotation present on the type of a value. This
+  /** Removes the  annotation present on the type of a value. This
    * function is mainly used to make <code><b>null</b></code> checkers happy.
    * <p>
    * The parameter is an instance of an arbitrary type, T. The hidden assumption
-   * is that a @Nullable annotation is present on T. Thus, the parameter may be
+   * is that a  annotation is present on T. Thus, the parameter may be
    * either <code><b>null</b></code>, or an actual instance of T.
    * <p>
    * The function returns the same instance it received as a parameter, except
    * that this instance is returned as an instance of the type T <i>without</i>
-   * the @Nullable annotation. Execution is aborted with an
+   * the  annotation. Execution is aborted with an
    * {@link AssertionError} if the parameter is null.
    * <p>
    * As it turns out, this function is a (slow) logical no-op, but still
-   * applicable to arguments of type T, where T does not have the @Nullable
+   * applicable to arguments of type T, where T does not have the 
    * annotation present on it.
    * <p>
    * For reasons related to the way non-nullability is managed in Java, the
    * compiler will not warn you from doing applying this function to a
    * {@link NonNull} type. However, there is absolutely no point in removing
-   * a @Nullable annotation if the type that does not have it. Doing so a is
+   * a  annotation if the type that does not have it. Doing so a is
    * plain clutter. Since the compiler cannot assist you, you will have to be on
    * the guard.
    * @param <T> an arbitrary type
@@ -125,7 +125,7 @@ public interface Utils {
    * @return its parameter, after verifying that it is not
    *         <code><b>null</b></code>
    * @see #mustBeNull(Object) */
-  static <T> @NonNull T cantBeNull(final @Nullable T $) {
+  static <T>  T cantBeNull(final  T $) {
     assert $ != null;
     return $;
   }
@@ -146,7 +146,7 @@ public interface Utils {
    * @return parameter, with all redundant spaces removed from it */
   static String compressSpaces(final String javaCodeFragment) {
     String $ = javaCodeFragment.replaceAll("(?m)\\s+", " ").replaceAll("^\\s", "").replaceAll("\\s$", "");
-    for (final String operator : new String @NonNull [] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<",
+    for (final String operator : new String  [] { ":", "/", "%", ",", "\\{", "\\}", "=", ":", "\\?", ";", "\\+", ">", ">=", "!=", "==", "<",
         "<=", "-", "\\*", "\\|", "\\&", "%", "\\(", "\\)", "[\\^]" })
       $ = $.replaceAll(WHITES + operator, operator).replaceAll(operator + WHITES, operator);
     return cantBeNull($);
@@ -169,7 +169,7 @@ public interface Utils {
    * @param i position of element to be deleted
    * @return newly created array */
   static <T> T[] delete(final T[] ts, final int i) {
-    @SuppressWarnings("null") final T @NonNull [] $ = Arrays.copyOf(ts, ts.length - 1);
+    @SuppressWarnings("null") final T  [] $ = Arrays.copyOf(ts, ts.length - 1);
     System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
   }
@@ -207,7 +207,7 @@ public interface Utils {
    * @param $ an instance of the type parameter which is required to be
    *        <code><b>null</b></code>.
    * @return parameter */
-  static <@Nullable T> @Nullable Void mustBeNull(@Nullable final T $) {
+  static < T>  Void mustBeNull( final T $) {
     assert $ == null;
     return null;
   }
@@ -223,7 +223,7 @@ public interface Utils {
    * @param os JD
    * @return <code><b>true</b></code> <i>iff</i> the an {@link Object} parameter
    *         occurs as the penultimate element of the {@link List} parameter */
-  static <@Nullable T> boolean penultimateIn(final T o, final @Nullable List<T> os) {
+  static < T> boolean penultimateIn(final T o, final  List<T> os) {
     assert os != null;
     return the.penultimate(os) == o;
   }
@@ -246,7 +246,7 @@ public interface Utils {
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
-  static String quote(final @Nullable String $) {
+  static String quote(final  String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
   /** Remove any duplicates that may be present in a given {@link List}
@@ -368,7 +368,7 @@ public interface Utils {
      * @param s JD */
     public <FS extends Iterable<? extends F>> Iterable<T> to(final FS s) {
       final List<T> $ = new ArrayList<>();
-      for (final @Nullable F ¢ : s)
+      for (final  F ¢ : s)
         if (¢ != null)
           $.add(function.apply(¢));
       return $;
@@ -427,7 +427,7 @@ public interface Utils {
   @SuppressWarnings("static-method")
   class TEST {
     public static Integer[] intToIntegers(final int... is) {
-      final Integer @NonNull [] $ = new Integer @NonNull [is.length];
+      final Integer  [] $ = new Integer  [is.length];
       for (int ¢ = 0; ¢ < is.length; ++¢)
         $[¢] = fluent.ly.box.it(is[¢]);
       return $;
@@ -488,17 +488,17 @@ public interface Utils {
       azzert.that(idiomatic.quote("A"), is("'A'"));
     }
     @Test public void swapDegenerate() {
-      final String @NonNull [] ss = as.array("A", "B", "C", "D");
+      final String  [] ss = as.array("A", "B", "C", "D");
       swap(ss, 1, 1);
       assertArrayEquals(as.array("A", "B", "C", "D"), ss);
     }
     @Test public void swapTypical() {
-      final String @NonNull [] ss = as.array("A", "B", "C", "D");
+      final String  [] ss = as.array("A", "B", "C", "D");
       swap(ss, 1, 2);
       assertArrayEquals(as.array("A", "C", "B", "D"), ss);
     }
     @Test public void swapTypicalCase() {
-      final Integer @NonNull [] $ = intToIntegers(29, 1, 60);
+      final Integer  [] $ = intToIntegers(29, 1, 60);
       swap($, 0, 1);
       assertArrayEquals(intToIntegers(1, 29, 60), $);
     }

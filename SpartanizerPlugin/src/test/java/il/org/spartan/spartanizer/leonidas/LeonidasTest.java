@@ -173,7 +173,7 @@ public class LeonidasTest {
     leonidasSays.tipper("$X1 == $X2 && $X1 == $X3", "$X1.equals($X2, $X3)", "equalsToFew").tips("x1 == x2 && x1 == 789");
   }
   @Test public void testTips5() {
-    leonidasSays.tipper("if($X == null) return null;", "if($X == null) return nil;", "assertNotNull")
+    leonidasSays.tipper("if($X == null) return null;", "if($X == null) return nil;", "assertNonNull")
         .tips("if(g().f.b.c(1,g(), 7) == null) return null;");
   }
   @Test public void testTips6() {

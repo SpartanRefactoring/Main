@@ -2,7 +2,7 @@ package il.org.spatan.iteration;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.iteration.closures.*;
 import il.org.spatan.iteration.Iterables.*;
@@ -25,7 +25,7 @@ public abstract class FilteredIterable<T> implements Condition<T>, Iterable<T> {
    * @param t an element to be examined
    * @return true, if and only if, this element is to be passed through. */
   @Override public abstract boolean holds(T t);
-  @Override @NotNull public final Iterator<T> iterator() {
+  @Override  public final Iterator<T> iterator() {
     return new ReadonlyIterator<T>() {
       T pending;
       boolean hasNext = true;

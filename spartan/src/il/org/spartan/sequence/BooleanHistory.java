@@ -1,13 +1,13 @@
 package il.org.spartan.sequence;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 
 /** @author Yossi Gil
  * @since 8 באוק 2011 */
 public class BooleanHistory {
-  @NotNull private final boolean bs[];
+   private final boolean bs[];
   private int size;
   private int last;
 

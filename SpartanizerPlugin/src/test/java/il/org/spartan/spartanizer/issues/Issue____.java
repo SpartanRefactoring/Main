@@ -46,7 +46,7 @@ import fluent.ly.*;
  * <li>Instead, use class {@link azzert} for anything else:
  * <ul>
  * <li>to check whether something is {@code null, use
- * {@code azzer.notNull(something)} which prints the content of this something
+ * {@code azzer.NonNull(something)} which prints the content of this something
  * if it is not {@code null</b></code<li>Test methods do not usually contain
  * the word test in them. There is no point in repeating ourselves.
  * <li>Naming convention here is that test methods begin with a capital letter
