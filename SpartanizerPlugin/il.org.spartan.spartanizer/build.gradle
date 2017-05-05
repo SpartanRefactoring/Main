@@ -5,12 +5,49 @@ dependencies {
     compile "eclipse-deps:org.eclipse.jface.text:+"
     compile "eclipse-deps:org.eclipse.jface:+"
     compile "eclipse-deps:org.eclipse.core.runtime:+"
+    compile "eclipse-deps:org.eclipse.core.runtime.compatibility:+"
     compile "eclipse-deps:org.eclipse.core.resources:+"
 
+    compile "eclipse-deps:org.eclipse.ltk.core.refactoring:+"
+    compile "eclipse-deps:org.eclipse.ltk.ui.refactoring:+"
 
+    compile "eclipse-deps:org.eclipse.core.commands:+"
+
+    compile "eclipse-deps:org.eclipse.ui.editors:+"
+    compile "eclipse-deps:org.eclipse.ui.ide:+"
+    compile "eclipse-deps:org.eclipse.ui.monitoring:+"
+    compile "eclipse-deps:org.eclipse.ui.views:+"
+    compile "eclipse-deps:org.eclipse.ui.workbench:+"
+    compile "eclipse-deps:org.eclipse.ui.workbench.texteditor:+"
+
+    compile "eclipse-deps:org.eclipse.text:+"
+
+    compile "eclipse-deps:org.eclipse.core.jobs:+"
+
+    compile "eclipse-deps:org.eclipse.osgi:+"
+
+    compile "eclipse-deps:org.eclipse.equinox.app:+"
+
+    compile "eclipse-deps:org.eclipse.jdt.ui:+"
+
+    compile "eclipse-deps-jgit:org.eclipse.jgit:+"
+
+    compile "eclipse-deps:org.eclipse.equinox.preferences:+"
+    compile "eclipse-deps:org.eclipse.equinox.common:+"
+    compile "eclipse-deps:org.eclipse.equinox.util:+"
+    compile "eclipse-deps:org.eclipse.equinox.supplement:+"
+    compile "eclipse-deps:org.eclipse.equinox.security:+"
+    compile "eclipse-deps:org.eclipse.equinox.security.ui:+"
+    compile "eclipse-deps:org.eclipse.equinox.registry:+"
+
+    compile "eclipse-deps:org.eclipse.debug.core:+"
+    compile "eclipse-deps:org.eclipse.debug.ui:+"
+
+    // project dependencies
     compile project(':spartan')
     compile project(':fluent.ly')
-    // maven dependencies
 
+    // maven dependencies
     testCompile "junit:junit:${VER_JUNIT}"
+    compile "org.mockito:mockito-all:1.9.5"
 }

@@ -64,6 +64,14 @@ configure(subprojects.findAll(IS_PLUGIN)) {
 	// JAVA //
 	//////////
 	apply plugin: 'java'
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+                srcDir 'src/test/java'
+            }
+        }
+    }
 //	sourceSets {
 //		main { java {
 //			srcDir 'src'

@@ -7,8 +7,14 @@ p2AsMaven {
         repoEclipse '4.5.2'
         feature 'org.eclipse.equinox.executable'
         feature 'org.eclipse.rcp.configuration'
+        feature 'org.eclipse.jdt'
         feature 'org.eclipse.platform'
         feature 'org.eclipse.platform.source'
+        repo2runnable()
+    }
+    group 'eclipse-deps-jgit', {
+        repo 'http://download.eclipse.org/egit/updates'
+        feature 'org.eclipse.jgit'
         repo2runnable()
     }
 }
