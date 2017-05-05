@@ -36,40 +36,32 @@ public class CommandLine$Applicator extends GenericApplicator {
   public static long startingTime;
 
   public CommandLine$Applicator() {}
-
   public CommandLine$Applicator(final String... classes) {
     super(classes);
   }
-
   public CommandLine$Applicator(final String[] classes, final String... tipperGroups) {
     super(classes, tipperGroups);
   }
-
   public CommandLine$Applicator(final String[] classes, final String[] tipperGroups, final String... excludedTipperGroups) {
     super(classes, removeExcludedTippers(tipperGroups, excludedTipperGroups));
   }
-
   public CommandLine$Applicator(final String[] classes, final String[] tipperGroups, final String[] excludedTipperGroups,
       final String... excludedNanoPatterns) {
     // left intentionally empty
     super(classes, removeExcludedNanoPatternsAndTippers(tipperGroups, excludedTipperGroups, excludedNanoPatterns));
   }
-
   private static String[] removeExcludedNanoPatternsAndTippers(final String[] tipperGroups, final String[] excludedTipperGroups,
       final String... excludedNanoPatterns) {
     return removeExcludedNanoPatterns(removeExcludedTippers(tipperGroups, excludedTipperGroups), excludedNanoPatterns);
   }
-
   private static String[] removeExcludedNanoPatterns(final String[] tipperGroups, final String... excludedNanoPatterns) {
     return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[0]))
         .filter(λ -> !as.list(excludedNanoPatterns).contains(λ)).collect(toList()).toArray(new String[0]);
   }
-
   private static String[] removeExcludedTippers(final String[] tipperGroups, final String... excludedTipperGroups) {
     return Stream.of(tipperGroups != null ? tipperGroups : setAllTipperGroups().toArray(new String[0]))
         .filter(λ -> !as.list(excludedTipperGroups).contains(λ)).collect(toList()).toArray(new String[0]);
   }
-
   private void go(final CompilationUnit u) {
     // extract.type(u);
     // ReportGenerator.report("tips").put("FileName", presentFileName);
@@ -86,7 +78,6 @@ public class CommandLine$Applicator extends GenericApplicator {
       }
     });
   }
-
   boolean go(final ASTNode input) {
     tippersAppliedOnCurrentObject = 0;
     System.out.println(input.getClass());
@@ -114,7 +105,6 @@ public class CommandLine$Applicator extends GenericApplicator {
       computeMethodMetrics(input, outputASTNode);
     return false;
   }
-
   private void computeMethodMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     ReportGenerator.summaryFileName("methods");
@@ -122,7 +112,6 @@ public class CommandLine$Applicator extends GenericApplicator {
     ReportGenerator.writeMethodMetrics(input, output, "methods");
     ReportGenerator.nl("methods");
   }
-
   @SuppressWarnings("boxing") private void computeMetrics(final ASTNode input, final ASTNode output) {
     System.err.println(++done + " " + extract.category(input) + " " + extract.name(input));
     // ReportGenerator.report("tips").put("Name", extract.name(input));
@@ -136,11 +125,9 @@ public class CommandLine$Applicator extends GenericApplicator {
     // Reports.writeRatio(input, output, "", (n1,n2)->(n1/n2));
     ReportGenerator.nl("metrics");
   }
-
   private String fixedPoint(final ASTNode ¢) {
     return fixedPoint(¢ + "");
   }
-
   private String fixedPoint(final String from) {
     for (final IDocument $ = new Document(from);;) {
       final TextEdit e = createRewrite((CompilationUnit) makeAST.COMPILATION_UNIT.from($.get())).rewriteAST($, null);
@@ -154,7 +141,6 @@ public class CommandLine$Applicator extends GenericApplicator {
         return $.get();
     }
   }
-
   /** createRewrite on CompilationUnit
    * @param ¢
    * @return */
@@ -165,7 +151,6 @@ public class CommandLine$Applicator extends GenericApplicator {
     ReportGenerator.report("metrics").put("# Tippers", tippersAppliedOnCurrentObject);
     return $;
   }
-
   /** consolidate tips on CompilationUnit
    * @param r
    * @param u */
@@ -205,18 +190,15 @@ public class CommandLine$Applicator extends GenericApplicator {
         TraversalMonitor.rewrite(r, s);
         return true;
       }
-
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
-
   public boolean apply(final WrappedCompilationUnit u, @SuppressWarnings("unused") final AbstractSelection<?> __) {
     apply(u);
     return false;
   }
-
   /** Apply to single compilation unit
    * @param ¢
    * @return */
@@ -227,7 +209,6 @@ public class CommandLine$Applicator extends GenericApplicator {
     go(¢.compilationUnit);
     return false;
   }
-
   public boolean apply(final AbstractSelection<?> __) {
     for (final WrappedCompilationUnit w : ((CommandLineSelection) __).get()) {
       System.out.println("presentFileName: " + presentFileName);

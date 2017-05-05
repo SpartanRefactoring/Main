@@ -35,12 +35,10 @@ public class Issue0968 {
             + "c = 5;")
         .stays();
   }
-
   @Test public void b() {
     bloatingOf("int a = 3, b;")//
         .stays();
   }
-
   @Test public void c() {
     bloatingOf("int a, b, c;")//
         .stays();

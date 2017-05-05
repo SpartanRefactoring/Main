@@ -39,7 +39,6 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
   }
-
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
@@ -55,37 +54,30 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
     }
     return true;
   }
-
   @Override public void endVisit(final MethodDeclaration ¢) {
     if (!excludeMethod(¢))
       scope.pop();
   }
-
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
-
   @Override protected void done(final String path) {
     summarizeSortedMethodStatistics(path);
     statementsCoverageStatistics.clear();
     scope.clear();
     System.err.println("Output is in: " + system.tmp + path);
   }
-
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null || extract.annotations(¢).stream().anyMatch(λ -> "@Test".equals(λ + ""));
   }
-
   private static void logNanoContainingMethodInfo(final ASTNode n, final String np) {
     if (!containedInInstanceCreation(n))
       scope.peek().markNP(n, np);
   }
-
   private static void initializeWriter() {
     cWriter = new Table(TableNanosCoverage.class);
   }
-
   @SuppressWarnings("boxing") public static void summarizeSortedMethodStatistics(final String path) {
     if (cWriter == null)
       initializeWriter();
@@ -97,7 +89,6 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
     cWriter.put("total Statements coverage", format.decimal(100 * safe.div(totalStatementsCovered, totalStatements)));
     cWriter.nl();
   }
-
   @SuppressWarnings("boxing") private static void gatherGeneralStatistics() {
     totalStatementsCovered = totalMethods = totalStatements = 0;
     for (final Integer ¢ : statementsCoverageStatistics.keySet()) {
@@ -107,19 +98,15 @@ public class TableNanosCoverage extends DeprecatedFolderASTVisitor {
       totalStatementsCovered += totalStatementsCovered(rs);
     }
   }
-
   @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
-
   @SuppressWarnings("boxing") private static double totalStatementsCovered(final Collection<MethodRecord> rs) {
     return rs.stream().map(MethodRecord::numNPStatements).reduce((x, y) -> x + y).get();
   }
-
   private static double min(final double a, final double d) {
     return a < d ? a : d;
   }
-
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
     return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }

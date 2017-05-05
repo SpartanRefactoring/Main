@@ -39,7 +39,6 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
       }
     return null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }

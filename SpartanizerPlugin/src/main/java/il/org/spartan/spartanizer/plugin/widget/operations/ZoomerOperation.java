@@ -18,11 +18,9 @@ public class ZoomerOperation extends WidgetOperation {
         { TYPE, "List", "Current selection", "Current file", "Current project", "REQUIRED" } //
     };
   }
-
   @Override public boolean register(final Map<?, ?> configuration) {
     return (type = (String) configuration.get(TYPE)) != null;
   }
-
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext ¢) throws Throwable {
     switch (type) {
       case "Current file":
@@ -36,11 +34,9 @@ public class ZoomerOperation extends WidgetOperation {
         break;
     }
   }
-
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/obj16/menu.gif";
   }
-
   @Override public String description() {
     return "zoom in current selection";
   }

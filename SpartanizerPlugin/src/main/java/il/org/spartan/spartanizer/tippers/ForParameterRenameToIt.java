@@ -33,7 +33,6 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
   @Override public String description(final SingleVariableDeclaration ¢) {
     return ¢ + "";
   }
-
   @Override public Tip tip(final SingleVariableDeclaration d) {
     final EnhancedForStatement $ = az.enhancedFor(parent(d));
     if ($ == null)
@@ -64,7 +63,6 @@ public final class ForParameterRenameToIt extends EagerTipper<SingleVariableDecl
       }
     }.spanning(body);
   }
-
   private static boolean isNameDefined(final Statement s, final SimpleName n) {
     final Statement $ = az.statement(s.getParent());
     return Environment

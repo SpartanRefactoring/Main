@@ -37,11 +37,9 @@ public enum misc {
         copy.into(by2, to);
       }
   }
-
   public static void addImport(final CompilationUnit u, final ASTRewrite r, final ImportDeclaration d) {
     r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY).insertLast(d, null);
   }
-
   public static <N extends MethodDeclaration> void addJavaDoc(final N n, final ASTRewrite r, final TextEditGroup g, final String addedJavadoc) {
     final Javadoc j = n.getJavadoc();
     if (j == null)
@@ -55,7 +53,6 @@ public enum misc {
               ASTNode.JAVADOC),
           g);
   }
-
   /** Adds method m to the first __ in file.
    * @param fileName
    * @param m */
@@ -74,7 +71,6 @@ public enum misc {
       note.bug(¢);
     }
   }
-
   /** @param d JD
    * @param m JD
    * @param r rewriter
@@ -82,7 +78,6 @@ public enum misc {
   public static void addMethodToType(final AbstractTypeDeclaration d, final MethodDeclaration m, final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(d, d.getBodyDeclarationsProperty()).insertLast(copy.of(m), g);
   }
-
   /** @param d JD
    * @param s JD
    * @param r rewriter
@@ -90,7 +85,6 @@ public enum misc {
   public static void addStatement(final MethodDeclaration d, final ReturnStatement s, final ASTRewrite r, final TextEditGroup g) {
     r.getListRewrite(step.body(d), Block.STATEMENTS_PROPERTY).insertLast(s, g);
   }
-
   public static IfStatement blockIfNeeded(final IfStatement s, final ASTRewrite r, final TextEditGroup g) {
     if (!iz.blockRequired(s))
       return s;
@@ -98,24 +92,20 @@ public enum misc {
     r.replace(s, $, g);
     return (IfStatement) the.headOf(statements($));
   }
-
   public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
     for (int ¢ = what.size() - 1;; $.insertAfter(what.get(¢--), where, g))
       if (¢ < 0)
         return $;
   }
-
   public static ListRewrite insertBefore(final Statement where, final Iterable<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(parent(where), Block.STATEMENTS_PROPERTY);
     what.forEach(λ -> $.insertBefore(λ, where, g));
     return $;
   }
-
   public static IfStatement invert(final IfStatement ¢) {
     return subject.pair(elze(¢), then(¢)).toNot(¢.getExpression());
   }
-
   public static boolean leftSide(final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
     // noinspection SameReturnValue
@@ -129,7 +119,6 @@ public enum misc {
     });
     return $.inner;
   }
-
   public static IfStatement makeShorterIf(final IfStatement s) {
     final List<Statement> then = extract.statements(then(s)), elze = extract.statements(elze(s));
     final IfStatement $ = misc.invert(s);
@@ -141,7 +130,6 @@ public enum misc {
     final int rankThen = misc.sequencerRank(the.lastOf(then)), rankElse = misc.sequencerRank(the.lastOf(elze));
     return rankElse > rankThen || rankThen == rankElse && !misc.thenIsShorter(s) ? $ : main;
   }
-
   public static boolean mixedLiteralKind(final Collection<Expression> xs) {
     if (xs.size() <= 2)
       return false;
@@ -157,7 +145,6 @@ public enum misc {
       }
     return false;
   }
-
   /** Parenthesize an expression (if necessary).
    * @param x JD
    * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
@@ -165,12 +152,10 @@ public enum misc {
   public static Expression parenthesize(final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
-
   public static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = find.occurencesOf(s, id);
     return $.size() != 1 ? null : the.headOf($);
   }
-
   /** As {@link elze(ConditionalExpression)} but returns the last else statement
    * in "if - else if - ... - else" statement
    * @param ¢ JD
@@ -180,11 +165,9 @@ public enum misc {
       if (!($ instanceof IfStatement))
         return $;
   }
-
   public static void rename(final SimpleName oldName, final SimpleName newName, final ASTNode where, final ASTRewrite r, final TextEditGroup g) {
     new Inliner(oldName, r, g).byValue(newName).inlineInto(collect.usesOf(oldName).in(where).toArray(new SimpleName[0]));
   }
-
   public static ASTRewrite replaceTwoStatements(final ASTRewrite r, final Statement what, final Statement by, final TextEditGroup g) {
     final Block parent = az.block(what.getParent());
     final List<Statement> siblings = extract.statements(parent);
@@ -197,13 +180,11 @@ public enum misc {
     r.replace(parent, $, g);
     return r;
   }
-
   public static ListRewrite statementRewriter(final ASTRewrite r, final Statement s) {
     return parent(s) instanceof SwitchStatement ? r.getListRewrite(parent(s), SwitchStatement.STATEMENTS_PROPERTY)
         : parent(s) instanceof Block ? r.getListRewrite(parent(s), Block.STATEMENTS_PROPERTY) //
             : note.bug("Weird __ of %s under %s", s, parent(s));
   }
-
   static boolean thenIsShorter(final IfStatement s) {
     final Statement then = then(s), elze = elze(s);
     if (elze == null)
@@ -223,18 +204,15 @@ public enum misc {
     final IfStatement $ = misc.invert(s);
     return positivePrefixLength($) >= positivePrefixLength(misc.invert($));
   }
-
   static int positivePrefixLength(final IfStatement $) {
     return metrics.length($.getExpression(), then($));
   }
-
   static Expression pullInitializersFromExpression(final Expression from, final VariableDeclarationStatement s) {
     return iz.infix(from) ? wizard.goInfix(copy.of(az.infixExpression(from)), s)
         : iz.assignment(from) ? LocalInitializedStatementToForInitializers.handleAssignmentCondition(az.assignment(from), s)
             : iz.parenthesizedExpression(from)
                 ? LocalInitializedStatementToForInitializers.handleParenthesizedCondition(az.parenthesizedExpression(from), s) : from;
   }
-
   /** Make a duplicate, suitable for tree rewrite, of the parameter
    * @param ¢ JD
    * @param ¢ JD
@@ -244,7 +222,6 @@ public enum misc {
   @SuppressWarnings("unchecked") static <N extends ASTNode> N rebase(final N n, final AST t) {
     return (N) copySubtree(t, n);
   }
-
   private static int sequencerRank(final ASTNode ¢) {
     return the.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }

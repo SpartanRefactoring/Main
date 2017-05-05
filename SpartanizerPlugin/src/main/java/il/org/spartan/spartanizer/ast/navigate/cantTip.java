@@ -19,29 +19,23 @@ public enum cantTip {
     final VariableDeclarationFragment $ = hop.penultimateFragment(¢);
     return $ == null || new LocalInitializedStatementTerminatingScope().cantTip($);
   }
-
   public static boolean declarationInitializerStatementTerminatingScope(final WhileStatement ¢) {
     final VariableDeclarationFragment $ = hop.penultimate(¢);
     return $ == null || new LocalInitializedStatementTerminatingScope().cantTip($);
   }
-
   public static boolean declarationRedundantInitializer(final ForStatement s) {
     return extract.fragments(body(s)).stream().noneMatch(λ -> new FieldInitializedDefaultValue().check(λ));
   }
-
   public static boolean declarationRedundantInitializer(final WhileStatement s) {
     return extract.fragments(body(s)).stream().noneMatch(λ -> new FieldInitializedDefaultValue().check(λ));
   }
-
   public static boolean forRenameInitializerToIt(final ForStatement ¢) {
     final VariableDeclarationExpression $ = az.variableDeclarationExpression(¢);
     return $ == null || new ForRenameInitializerToIt().cantTip($);
   }
-
   public static boolean removeRedundantIf(final ForStatement s) {
     return extract.ifStatements(step.body(s)).stream().noneMatch(λ -> new IfDeadRemove().check(λ));
   }
-
   public static boolean remvoeRedundantIf(final WhileStatement s) {
     return extract.ifStatements(step.body(s)).stream().noneMatch(λ -> new IfDeadRemove().check(λ));
   }

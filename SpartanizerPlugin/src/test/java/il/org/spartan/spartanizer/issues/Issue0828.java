@@ -20,7 +20,6 @@ public class Issue0828 {
   String description() {
     return forTrueConditionRemove.description();
   }
-
   @Test public void descriptionTest() {
     assert description().equals(forTrueConditionRemove.description(simpleFor));
     assert description().equals(forTrueConditionRemove.description(trueFor));
@@ -30,7 +29,6 @@ public class Issue0828 {
     assert description().equals(forTrueConditionRemove.description(numEqualTrueStatement));
     assert description().equals(forTrueConditionRemove.description(strEqualTrueStatement));
   }
-
   @Before public void initialize() {
     simpleFor = (ForStatement) the.headOf(statements(((MethodDeclaration) make.ast("public void foo(int x){for(int i=0;i<5;i++){x=7;}}")).getBody()));
     trueFor = (ForStatement) the.headOf(statements(((MethodDeclaration) make.ast("public void foo(int x){for(int i=0;true;i++){x=7;}}")).getBody()));
@@ -46,7 +44,6 @@ public class Issue0828 {
         .get(1);
     forTrueConditionRemove = new ForTrueConditionRemove();
   }
-
   @Test public void prerequisiteTest() {
     assert !forTrueConditionRemove.prerequisite(simpleFor);
     assert forTrueConditionRemove.prerequisite(trueFor);
@@ -54,7 +51,6 @@ public class Issue0828 {
     assert !forTrueConditionRemove.prerequisite(obviouseTrueStatement);
     assert !forTrueConditionRemove.prerequisite(null);
   }
-
   @Test public void replacementTest() {
     assert forTrueConditionRemove.replacement(simpleFor) != null;
     assert forTrueConditionRemove.replacement(falseFor) != null;

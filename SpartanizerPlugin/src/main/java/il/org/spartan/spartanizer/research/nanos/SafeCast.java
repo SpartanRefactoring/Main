@@ -21,7 +21,6 @@ public class SafeCast extends NanoPatternTipper<CastExpression> {
   @Override public boolean canTip(final CastExpression ¢) {
     return (expression(yieldAncestors.untilClass(IfStatement.class).from(¢)) + "").contains(expression(¢) + " instanceof " + type(¢));
   }
-
   @Override public Tip pattern(final CastExpression ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

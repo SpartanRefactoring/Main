@@ -46,15 +46,12 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : the.headOf(ops2);
   }
-
   private static boolean containsZeroOperand(final InfixExpression ¢) {
     return allOperands(¢).stream().anyMatch(iz::literal0);
   }
-
   private static boolean containsPlusOperator(final InfixExpression x) {
     return allOperators(x).stream().anyMatch(λ -> λ == Operator.PLUS);
   }
-
   @SuppressWarnings("boxing") public static ASTNode replacement2(final InfixExpression x) {
     final List<Expression> ops = allOperands(x),
         ops2 = range.from(0).to(ops.size()).stream().filter(λ -> !iz.literal0(ops.get(λ))).map(ops::get).collect(toList());
@@ -63,18 +60,15 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
       $ = subject.pair($ != null ? $ : ops2.get(¢), ops2.get(¢ + 1)).to(Operator.PLUS);
     return ops2.size() != 1 ? $ : the.headOf(ops2);
   }
-
   @Override public boolean prerequisite(final InfixExpression $) {
     return $ != null && iz.infixPlus($) && containsZeroOperand($) && containsPlusOperator($);
   }
-
   private static List<Expression> gather(final Expression x, final List<Expression> $) {
     if (x instanceof InfixExpression)
       return gather(az.infixExpression(x), $);
     $.add(x);
     return $;
   }
-
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
@@ -88,16 +82,13 @@ public final class InfixAdditionZero2 extends ReplaceCurrentNode<InfixExpression
     }
     return $;
   }
-
   private static List<Expression> gather(final Iterable<Expression> xs, final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }
-
   @Override public String description() {
     return "Remove 0+ in expressions like ";
   }
-
   @Override public String description(final InfixExpression ¢) {
     return description() + ¢;
   }

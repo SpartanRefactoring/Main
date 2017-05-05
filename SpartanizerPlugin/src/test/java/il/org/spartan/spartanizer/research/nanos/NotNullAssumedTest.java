@@ -17,13 +17,11 @@ public class NotNullAssumedTest {
         .gives("statement();assert x!=null;use();use();") //
         .stays();
   }
-
   @Test public void sanity() {
     trimmingOf("statement(); azzert.notNull(x); use(); use();")//
         .using(new NotNullAssumed(), IfStatement.class)//
         .stays();
   }
-
   @Test public void a2() {
     trimmingOf("statement(); if(x == null || y == null) return; use(); use();")//
         .using(new NotNullAssumed(), IfStatement.class)//
@@ -31,7 +29,6 @@ public class NotNullAssumedTest {
         .gives("statement();assert y!=null:x;use();use();") //
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("statement(); if(x == null) return null; use(); use();")//
         .using(new NotNullAssumed(), IfStatement.class)//
@@ -39,7 +36,6 @@ public class NotNullAssumedTest {
         .gives("statement();assert x!=null;use();use();") //
         .stays();
   }
-
   @Test public void b2() {
     trimmingOf("statement(); if(x == null || y == null) return null; use(); use();")//
         .using(new NotNullAssumed(), IfStatement.class)//
@@ -47,19 +43,16 @@ public class NotNullAssumedTest {
         .gives("statement();assert y!=null:x;use();use();") //
         .stays();
   }
-
   @Test public void respect() {
     trimmingOf("void m(){if(x == null) return; use(); use();}")//
         .using(new NotNullAssumed(), IfStatement.class)//
         .stays();
   }
-
   @Test public void respect2() {
     trimmingOf("void m(){use(); if(x == null) return false; use(); use();}")//
         .using(new NotNullAssumed(), IfStatement.class)//
         .stays();
   }
-
   @Test public void respect3() {
     trimmingOf("void m(){use(); if(x == null) return; use(); use();}")//
         .using(new NotNullAssumed(), IfStatement.class)//
@@ -67,7 +60,6 @@ public class NotNullAssumedTest {
         .gives("void m(){use();assert x!=null;use();use();}") //
         .stays();
   }
-
   @Test public void respect4() {
     trimmingOf("statement(); if(x == null) return false; use(); use();")//
         .using(new NotNullAssumed(), IfStatement.class)//

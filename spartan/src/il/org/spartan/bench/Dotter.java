@@ -17,7 +17,6 @@ public class Dotter implements java.io.Serializable {
     initTime = System.nanoTime();
     clear();
   }
-
   public void clear() {
     if (cleared)
       return;
@@ -25,7 +24,6 @@ public class Dotter implements java.io.Serializable {
     n = line = 0;
     lineStart();
   }
-
   public void click() {
     cleared = false;
     System.err.print(++n % 10 == 0 ? '*' : '.');
@@ -34,24 +32,19 @@ public class Dotter implements java.io.Serializable {
     nl();
     lineStart();
   }
-
   public void end() {
     nl();
   }
-
   public int line() {
     return line;
   }
-
   public int n() {
     return n;
   }
-
   private void lineStart() {
     lineStartTime = System.nanoTime();
     System.err.printf("%3d", box(++line));
   }
-
   private void nl() {
     final long now = System.nanoTime();
     System.err.println(" " + Unit.formatNanoseconds(now - lineStartTime) + " Total: " + Unit.formatNanoseconds(now - initTime));

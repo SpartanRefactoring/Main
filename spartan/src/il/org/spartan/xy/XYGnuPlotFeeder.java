@@ -12,7 +12,6 @@ public class XYGnuPlotFeeder extends XYProcessor.Vacuous {
   public XYGnuPlotFeeder(final BufferedWriter inner) {
     this.inner = inner;
   }
-
   @Override public void done() {
     try {
       write("e\n");
@@ -21,15 +20,12 @@ public class XYGnuPlotFeeder extends XYProcessor.Vacuous {
       System.exit(1);
     }
   }
-
   @Override public void p(final double x, final double y) {
     write(x + " " + y + "\n");
   }
-
   @Override public void p(final double x, final double y, final double dy) {
     write(x + " " + y + " " + dy + "\n");
   }
-
   private void write(@NotNull final String s) {
     try {
       inner.write(s);

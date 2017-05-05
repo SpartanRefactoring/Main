@@ -33,17 +33,14 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
   public static Expression simplifyNot(final PrefixExpression ¢) {
     return pushdownNot(az.not(core(¢)));
   }
-
   static Expression notOfLiteral(final BooleanLiteral ¢) {
     final BooleanLiteral $ = copy.of(¢);
     $.setBooleanValue(!¢.booleanValue());
     return $;
   }
-
   static Expression perhapsNotOfLiteral(final Expression ¢) {
     return !iz.booleanLiteral(¢) ? null : notOfLiteral(az.booleanLiteral(¢));
   }
-
   static Expression pushdownNot(final Expression ¢) {
     Expression $;
     return ($ = perhapsNotOfLiteral(¢)) != null//
@@ -53,11 +50,9 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
         || ($ = perhapsTernary(¢)) != null //
             ? $ : null;
   }
-
   static Expression perhapsTernary(final Expression ¢) {
     return perhapsTernary(az.conditionalExpression(core(¢)));
   }
-
   static Expression perhapsTernary(final ConditionalExpression ¢) {
     if (¢ == null)
       return null;
@@ -66,61 +61,47 @@ public final class PrefixNotPushdown extends ReplaceCurrentNode<PrefixExpression
         $2 = pair(notOf(then), notOf(elze)).toCondition(expression);
     return countOf.nodes($) < countOf.nodes($2) ? $ : $2;
   }
-
   private static Expression comparison(final InfixExpression ¢) {
     return pair(left(¢), right(¢)).to(op.negate(¢.getOperator()));
   }
-
   private static boolean hasOpportunity(final Expression inner) {
     return iz.booleanLiteral(inner) || az.not(inner) != null || az.shortcircuit(inner) != null || az.comparison(inner) != null
         || az.conditionalExpression(inner) != null;
   }
-
   private static boolean hasOpportunity(final PrefixExpression ¢) {
     return ¢ != null && hasOpportunity(core(operand(¢)));
   }
-
   private static Expression perhapsComparison(final Expression inner) {
     return perhapsComparison(az.comparison(inner));
   }
-
   private static Expression perhapsComparison(final InfixExpression inner) {
     return inner == null ? null : comparison(inner);
   }
-
   private static Expression perhapsDeMorgan(final Expression ¢) {
     return perhapsDeMorgan(az.shortcircuit(¢));
   }
-
   private static Expression perhapsDeMorgan(final InfixExpression ¢) {
     return ¢ == null ? null : applyDeMorgan(¢);
   }
-
   private static Expression perhapsDoubleNegation(final Expression ¢) {
     return perhapsDoubleNegation(az.not(¢));
   }
-
   private static Expression perhapsDoubleNegation(final PrefixExpression ¢) {
     return ¢ == null ? null : tryToSimplify(operand(¢));
   }
-
   private static Expression pushdownNot(final PrefixExpression ¢) {
     return ¢ == null ? null : pushdownNot(operand(¢));
   }
-
   private static Expression tryToSimplify(final Expression ¢) {
     final Expression $ = pushdownNot(az.not(¢));
     return $ != null ? $ : ¢;
   }
-
   @Override public String description(@SuppressWarnings("unused") final PrefixExpression __) {
     return "Pushdown logical negation ('!')";
   }
-
   @Override public boolean prerequisite(final PrefixExpression ¢) {
     return ¢ != null && az.not(¢) != null && hasOpportunity(az.not(¢));
   }
-
   @Override public Expression replacement(final PrefixExpression ¢) {
     return simplifyNot(¢);
   }

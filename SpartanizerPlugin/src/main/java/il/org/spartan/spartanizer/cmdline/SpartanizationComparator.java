@@ -36,12 +36,10 @@ public enum SpartanizationComparator {
   static String makeFile(final String fileName) {
     return outputFolder + "/" + (system.isWindows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
-
   public static void main(final String[] where) {
     collect(where.length != 0 ? where : as.array("."));
     System.err.println("Look for your output here: " + writer.close());
   }
-
   private static void collect(final String[] where) {
     for (final File ¢ : new FilesGenerator(".java").from(where)) {
       System.out.println(¢.getName());
@@ -50,7 +48,6 @@ public enum SpartanizationComparator {
       collect(¢);
     }
   }
-
   private static void collect(final File f) {
     try {
       final String input = FileUtils.read(f);
@@ -60,11 +57,9 @@ public enum SpartanizationComparator {
       note.bug(¢);
     }
   }
-
   private static void collect(final String javaCode, final String id) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode), id);
   }
-
   private static void collect(final CompilationUnit u, final String id) {
     // dotter.click();
     // noinspection SameReturnValue
@@ -75,7 +70,6 @@ public enum SpartanizationComparator {
       }
     });
   }
-
   @SuppressWarnings({ "rawtypes", "unchecked" }) static void consider(final MethodDeclaration ¢, final String id) {
     ¢.getStartPosition();
     System.out.println(¢.getName());
@@ -98,7 +92,6 @@ public enum SpartanizationComparator {
       writer.put(f.name(), f.function().run(¢));
     writer.nl();
   }
-
   public static NamedFunction<?>[] functions() {
     return as.array(//
         m("length - ", metrics::length), //
@@ -109,7 +102,6 @@ public enum SpartanizationComparator {
         m("methodDeclaration - ", λ -> !iz.methodDeclaration(λ) ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
         m("tide - ", λ -> clean(λ + "").length()));//
   }
-
   static void consider(final MethodDeclaration ¢) {
     final Type type = ¢.getReturnType2();
     writer.put("File", presentFile) //
@@ -151,7 +143,6 @@ public enum SpartanizationComparator {
     ;
     writer.nl();
   }
-
   static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
     return new NamedFunction<>(name, f);
   }
@@ -169,11 +160,9 @@ public enum SpartanizationComparator {
       this.name = name;
       this.f = f;
     }
-
     public String name() {
       return name;
     }
-
     public ToInt<R> function() {
       return f;
     }

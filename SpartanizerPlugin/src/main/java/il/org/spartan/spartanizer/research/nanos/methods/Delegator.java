@@ -30,7 +30,6 @@ public class Delegator extends JavadocMarkerNanoPattern {
             && lastReturnsThis(¢)//
             && delegation(¢, firstStatement(¢));
   }
-
   private static boolean delegation(final MethodDeclaration d, final Statement ¢) {
     final Expression $ = expression(¢);
     return $ != null//
@@ -39,14 +38,12 @@ public class Delegator extends JavadocMarkerNanoPattern {
         && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
         && parametersNames(d).containsAll(analyze.dependencies(arguments(az.methodInvocation($))));
   }
-
   private static boolean arePseudoAtomic(final Collection<Expression> arguments, final Collection<String> parametersNames) {
     return arguments.stream()//
         .allMatch(//
             λ -> iz.name(λ) || iz.methodInvocation(λ) && safeContains(parametersNames, λ)//
     );
   }
-
   private static boolean safeContains(final Collection<String> parametersNames, final Expression ¢) {
     return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }

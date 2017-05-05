@@ -25,13 +25,11 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
       collect(¢);
     preVisit0(¢);
   }
-
   /** replaces {@link #preVisit(ASTNode)}
    * @param n JD */
   public void preVisit0(final ASTNode __) {
     // To be realized by user
   }
-
   /** collects all binding information, starting at the {@link ASTNode} of the
    * root of the parameter
    * @param ¢ a node on the tree, whose root is the strarting point of the
@@ -39,7 +37,6 @@ public abstract class VariableBindingVisitor extends ASTVisitor {
   void collect(final ASTNode ¢) {
     // TBD
   }
-
   boolean seen(final ASTNode ¢) {
     return environmentOf.containsKey(¢);
   }

@@ -16,11 +16,9 @@ public class ForDeadRemove extends ReplaceCurrentNode<ForStatement>//
   @Override public String description(final ForStatement ¢) {
     return "Remove dead loop" + ¢;
   }
-
   @Override protected boolean prerequisite(final ForStatement ¢) {
     return sideEffects.free(¢);
   }
-
   @Override public ASTNode replacement(final ForStatement ¢) {
     return ¢.getAST().newBlock();
   }

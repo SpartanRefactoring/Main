@@ -20,19 +20,15 @@ public class Issue0705 {
   @Test public void a() {
     auxList(getAll.instanceofs(null));
   }
-
   void auxList(@SuppressWarnings("unused") final List<InstanceofExpression> __) {
     assert true;
   }
-
   @Test public void b() {
     azzert.that(getAll.instanceofs((MethodDeclaration) make.ast("void func(){ return; }")).size(), is(0));
   }
-
   @Test public void c() {
     azzert.that(getAll.instanceofs((MethodDeclaration) make.ast("void a () {Integer obj = 5;if(obj instanceof Object){} }")).size(), is(1));
   }
-
   @Test public void d() {
     azzert.that(
         getAll.instanceofs(

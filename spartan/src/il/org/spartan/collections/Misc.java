@@ -23,35 +23,29 @@ public class Misc {
       }
     }
   }
-
   @NotNull public static boolean[] complement(@NotNull final boolean[] bs) {
     @NotNull final boolean[] $ = new boolean[bs.length];
     for (int ¢ = 0; ¢ < bs.length; ++¢)
       $[¢] = !bs[¢];
     return $;
   }
-
   @NotNull public static <T> T[] duplicate(@NotNull final T[] ¢) {
     @NotNull @SuppressWarnings("unchecked") final T[] $ = (T[]) java.lang.reflect.Array.newInstance(¢.getClass().getComponentType(), ¢.length);
     System.arraycopy(¢, 0, $, 0, ¢.length);
     return $;
   }
-
   @NotNull public static double[] ensureIndex(@NotNull final double[] as, final int i) {
     return i < as.length ? as : Arrays.copyOf(as, 1 + Math.max(i, as.length + (as.length >> 1)));
   }
-
   @NotNull public static int[] ensureIndex(@NotNull final int[] as, final int i) {
     return i < as.length ? as : Arrays.copyOf(as, 1 + Math.max(i, as.length + (as.length >> 1)));
   }
-
   @NotNull @SuppressWarnings("null") public static boolean[] toArray(@NotNull final List<Boolean> bs) {
     @NotNull final boolean[] $ = new boolean[bs.size()];
     for (int ¢ = 0; ¢ < bs.size(); ++¢)
       $[¢] = bs.get(¢).booleanValue();
     return $;
   }
-
   // public static<T> T[] toArray(T... ts) { return ts; }
   @NotNull public static <T> T[] toArray(@NotNull final T t, @NotNull final T... ts) {
     nonnull(t);

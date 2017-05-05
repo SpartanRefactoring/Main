@@ -27,7 +27,6 @@ public final class IntegersMap {
   static int hash(final int ¢) {
     return ¢ ^ ¢ >>> 12 ^ ¢ >>> 20 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 4 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 7;
   }
-
   private static int roundUp(final int ¢) {
     int $ = 1;
     while ($ < ¢)
@@ -46,26 +45,22 @@ public final class IntegersMap {
   public IntegersMap() {
     this(MIN_CAPACITY);
   }
-
   /** Instantiate this class, using a given size for the hash table.
    * @param initialCapacity suggests a hash table size, will be rounded up to
    *        the next power of two. */
   public IntegersMap(final int initialCapacity) {
     reset(Math.max(MIN_CAPACITY, roundUp(initialCapacity)));
   }
-
   /** What's the underlying table size?
    * @return the hash table size (always a power of two) */
   public int capacity() {
     return data.length;
   }
-
   /** Remove all elements from this set, preserving capacity.
    * @return <code><b>this</b>/code> */
   @NotNull public IntegersMap clear() {
     return reset(capacity());
   }
-
   /** Determine whether a given value is in this set.
    * @param ¢ an arbitrary integer
    * @return <code><b>true</b></code> if, and only if, the parameter is
@@ -73,7 +68,6 @@ public final class IntegersMap {
   public boolean contains(final int ¢) {
     return location(¢) >= 0;
   }
-
   /** Check whether an array of integers is contained in this set.
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, all elements in the array
@@ -84,7 +78,6 @@ public final class IntegersMap {
         return false;
     return true;
   }
-
   /** Check whether this object is disjoint from an array of integers
    * @param is an array of of integers; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
@@ -95,18 +88,15 @@ public final class IntegersMap {
         return false;
     return true;
   }
-
   @NotNull public int[] get(@NotNull final int keys[]) {
     @NotNull final int[] $ = new int[keys.length];
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       $[¢] = get(keys[¢]);
     return $;
   }
-
   public int get(final int key) {
     return values[location(key)];
   }
-
   public int increment(final int key) {
     final int $ = location(key);
     if ($ >= 0)
@@ -119,7 +109,6 @@ public final class IntegersMap {
       rehash(data.length << 1);
     return 1;
   }
-
   /** @param key
    * @return <code>this</code> */
   @NotNull public IntegersMap init(final int key) {
@@ -136,7 +125,6 @@ public final class IntegersMap {
       rehash(data.length << 1);
     return this;
   }
-
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
   @NotNull public int[] keys() {
@@ -148,7 +136,6 @@ public final class IntegersMap {
   }/* What are all values stored in this object?
     *
     * @return an array of all elements in this set. */
-
   @NotNull public IntegersMap put(final int key, final int value) {
     final int location = location(key);
     if (location >= 0)
@@ -163,13 +150,11 @@ public final class IntegersMap {
       rehash(data.length << 1);
     return this;
   }
-
   /** Recreate the table, inserting all elements in it afresh.
    * @return <code><b>this</b>/code> */
   @NotNull public IntegersMap rehash() {
     return rehash(capacity());
   }
-
   /** Remove an array of integers to this set, if they are in it.
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
@@ -178,7 +163,6 @@ public final class IntegersMap {
       remove(¢);
     return this;
   }
-
   /** Remove an element from this set, it is in it
    * @param n some integer to be removed from the set
    * @return <code><b>this</b>/code> */
@@ -192,19 +176,16 @@ public final class IntegersMap {
     return --size < MIN_LOAD * capacity() && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
         : ++removed > REMOVE_LOAD * capacity() ? rehash() : this;
   }
-
   /** How many elements are there in this set?
    * @return the number of values in the set. */
   public int size() {
     return size;
   }
-
   @NotNull public int[] sortedKeys() {
     @NotNull final int[] $ = keys();
     Arrays.sort($);
     return $;
   }
-
   /** Find the index in the hash table into which the parameter could be
    * inserted.
    * @param i some integer
@@ -221,7 +202,6 @@ public final class IntegersMap {
         return -1;
     }
   }
-
   /** Find the index in the hash table of the parameter
    * @param i some integer
    * @return index of the element if the parameter is in the table, otherwise,
@@ -235,7 +215,6 @@ public final class IntegersMap {
         return $;
     }
   }
-
   /** resize internal storage to the specified capacity, which must be a power
    * of two.
    * @param newCapacity new initialCapacity for the internal array
@@ -249,7 +228,6 @@ public final class IntegersMap {
       put(keys[¢], oldValues[¢]);
     return this;
   }
-
   @NotNull private IntegersMap reset(final int capacity) {
     data = new int[capacity];
     occupied = new boolean[capacity];
@@ -276,7 +254,6 @@ public final class IntegersMap {
         if (placeholder[¢])
           assert occupied[¢];
     }
-
     private int count(@NotNull final boolean bs[]) {
       int $ = 0;
       for (final boolean ¢ : bs)

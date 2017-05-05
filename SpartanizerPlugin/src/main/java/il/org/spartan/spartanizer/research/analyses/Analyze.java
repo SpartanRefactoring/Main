@@ -50,19 +50,15 @@ public enum Analyze {
   public static void summarize(final String outputDir) {
     summarizeMethodStatistics(outputDir);
   }
-
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
-
   public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
-
   public static CSVStatistics openSummaryFile(final String $) {
     return new CSVStatistics($, "property");
   }
-
   private static void summarizeMethodStatistics(final String outputDir) {
     final CSVStatistics report = openMethodSummaryFile(outputDir);
     if (report == null)
@@ -90,7 +86,6 @@ public enum Analyze {
     System.out.println("Average Expression ratio: " + safe.div(sumEratio, Logger.numMethods));
     report.close();
   }
-
   public static void main(final String[] args) {
     AnalyzerOptions.parseArguments(args);
     initializeSpartanizer();
@@ -115,7 +110,6 @@ public enum Analyze {
     }
     System.out.println("Took " + new DecimalFormat("#0.00").format((System.currentTimeMillis() - startTime) / 1000.0) + "s");
   }
-
   /** THE analysis */
   private static void spartanizeMethodsAndSort() {
     final List<MethodDeclaration> methods = an.empty.list();
@@ -145,20 +139,16 @@ public enum Analyze {
     // Logger.summarizeNPStatistics(outputDir());
     Count.print();
   }
-
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
-
   private static void initializeSpartanizer() {
     spartanizer = new Nanonizer();
   }
-
   /** run an interactive classifier to classify nanos! */
   private static void classify() {
     new Classifier().analyze(getCompilationUnit(inputFiles().stream().map(λ -> spartanize(compilationUnit(λ))).reduce((x, y) -> x + y).get()));
   }
-
   /** analyze nano patterns in code. */
   private static void analyze() {
     AnalyzerOptions.setVerbose();
@@ -181,11 +171,9 @@ public enum Analyze {
     }
     summarize(outputDir());
   }
-
   private static String spartanize(final ASTNode cu) {
     return spartanizer.fixedPoint(cu + "");
   }
-
   private static void methodsAnalyze() {
     inputFiles()//
         .forEach(f -> types(az.compilationUnit(compilationUnit(f))).stream()//

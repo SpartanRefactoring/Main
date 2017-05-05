@@ -21,7 +21,6 @@ public class Issue1099 {
         "    }"//
     ).stays();
   }
-
   @Test public void b() {
     trimmingOf("/**/" + //
         "  " + //
@@ -37,7 +36,6 @@ public class Issue1099 {
         )//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("/**/" + //
         "  " + //

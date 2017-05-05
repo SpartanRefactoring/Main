@@ -54,7 +54,6 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       }
     }
   }
-
   private static void spartanize() {
     final File input = new File(inputDir);
     if (input.isDirectory()) {
@@ -65,11 +64,9 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       spartanizeFile(input);
     }
   }
-
   private static void spartanizeFile(final File input) {
     new BatchSpartanizer(input.getAbsolutePath()).fire();
   }
-
   private static void spartanizeDir(final File input) {
     for (final File ¢ : input.listFiles())
       if (¢.getName().endsWith(".java") || containsJavaFileOrJavaFileItSelf(¢)) {
@@ -77,14 +74,12 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
         spartanizeFile(¢);
       }
   }
-
   public static ProcessBuilder runScript¢(final String pathname) {
     final ProcessBuilder $ = system.runScript();
     $.redirectErrorStream(true);
     $.command(script, pathname);
     return $;
   }
-
   private static void printHelpPrompt() {
     System.out.println("Batch" + system.myFullClassName());
     System.out.println("");
@@ -94,7 +89,6 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     System.out.println("  -i       input directory: place here the projects that you want to analyze.");
     System.out.println("");
   }
-
   private static void parseCommandLineArgs(final String... args) {
     for (int ¢ = 0; ¢ < args.length;)
       if ("-o".equals(args[¢])) {
@@ -116,11 +110,9 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
         ++¢;
       }
   }
-
   BatchSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
-
   BatchSpartanizer(final String presentSourcePath, final String name) {
     this.presentSourcePath = presentSourcePath;
     beforeFileName = outputDir + File.separator + name + ".before.java";
@@ -130,7 +122,6 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
-
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = countOf.nodes(in), body = metrics.bodySize(in),
         tide = clean(in + "").length(), essence = Essence.of(in + "").length();
@@ -186,23 +177,19 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     report.nl();
     return false;
   }
-
   @Override void collect(final CompilationUnit u) {
     u.accept(new ASTVisitor(true) {
       @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
         return collect(¢);
       }
-
       @Override public boolean visit(final EnumDeclaration ¢) {
         return collect(¢);
       }
-
       @Override public boolean visit(final TypeDeclaration ¢) {
         return collect(¢);
       }
     });
   }
-
   private void collect(final File f) {
     if (!Utils.isTestFile(f))
       try {
@@ -211,11 +198,9 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
         note.io(¢, "File = " + f);
       }
   }
-
   @Override void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
-
   void fire() {
     collect();
     runEssence();
@@ -225,12 +210,10 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
         box.it(il.org.spartan.spartanizer.traversal.Configurations.hooksCount())//
     );
   }
-
   private void runEssence() {
     system.shellEssenceMetrics(beforeFileName);
     system.shellEssenceMetrics(afterFileName);
   }
-
   private void applyEssenceCommandLine() {
     try {
       final int numWordEssentialBefore = BatchSpartanizer.runScript(beforeFileName).trim().length(),
@@ -242,7 +225,6 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
       note.bug(¢);
     }
   }
-
   private void collect() {
     System.err.printf(
         "Input path=%s\n" + //
@@ -266,20 +248,16 @@ final class BatchSpartanizer extends DeprecatedFolderASTVisitor {
     System.err.print("\n Done: " + classesDone + " files processed.");
     System.err.print("\n Summary: " + report.close());
   }
-
   private void runWordCount() {
     system.bash("wc " + separate.these(beforeFileName, afterFileName, system.essenced(beforeFileName), system.essenced(afterFileName)));
   }
-
   public static String runScript(final String pathname) throws IOException {
     return system.runScript(BatchSpartanizer.runScript¢(pathname).start());
   }
-
   private static boolean containsJavaFileOrJavaFileItSelf(final File f) {
     return f.getName().endsWith(".java") || f.isDirectory()
         && Stream.of(f.listFiles()).anyMatch(λ -> f.isDirectory() && containsJavaFileOrJavaFileItSelf(λ) || f.getName().endsWith(".java"));
   }
-
   /** This method is called from outside, like in the case of
    * {@link InteractiveSpartanizer}
    * @param fileNames */

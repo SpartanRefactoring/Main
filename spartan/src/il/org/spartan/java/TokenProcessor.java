@@ -10,11 +10,9 @@ public abstract class TokenProcessor {
   @SuppressWarnings("static-method") protected void after() {
     nothing();
   }
-
   @SuppressWarnings("static-method") protected void before() {
     nothing();
   }
-
   protected abstract void process(Token t, String text);
 
   public static class Multiplexor extends TokenProcessor {
@@ -23,21 +21,17 @@ public abstract class TokenProcessor {
     public Multiplexor(final Iterable<TokenProcessor> inners) {
       this.inners = inners;
     }
-
     public Multiplexor(final TokenProcessor... inners) {
       this(Iterables.make(inners));
     }
-
     @Override protected void after() {
       for (@NotNull final TokenProcessor inner : inners)
         inner.after();
     }
-
     @Override protected void before() {
       for (@NotNull final TokenProcessor inner : inners)
         inner.before();
     }
-
     @Override protected void process(final Token t, final String text) {
       for (@NotNull final TokenProcessor inner : inners)
         inner.process(t, text);

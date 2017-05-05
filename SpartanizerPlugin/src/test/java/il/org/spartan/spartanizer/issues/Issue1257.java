@@ -16,11 +16,9 @@ public class Issue1257 extends TipperTest<VariableDeclarationFragment> {
   @Override public Tipper<VariableDeclarationFragment> tipper() {
     return new LocalInitializedArithmeticsInline();
   }
-
   @Override public Class<VariableDeclarationFragment> tipsOn() {
     return VariableDeclarationFragment.class;
   }
-
   @Test public void j() {
     trimmingOf("int x = 0; x += ++b;")//
         .gives("int x = 0 + (++b);");

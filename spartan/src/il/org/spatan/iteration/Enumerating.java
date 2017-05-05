@@ -29,23 +29,18 @@ public class Enumerating<T> extends Codex.Anchored<T> {
     this.rankOf = rankOf;
     this.withRank = invert(rankOf);
   }
-
   @Override public boolean contains(final T ¢) {
     return codex.contains(¢);
   }
-
   @Override public T decode(final int ¢) {
     return codex.decode(withRank[¢]);
   }
-
   @Override public Iterable<? extends T> elements() {
     return codex.elements();
   }
-
   @Override public int encode(final T ¢) {
     return rankOf[codex.encode(¢)];
   }
-
   /** Determines whether there are any elements associated with a given level
    * @param order an arbitrary integer
    * @return <code><b>true<b></code> <em>if and only if</em> there are elements
@@ -53,7 +48,6 @@ public class Enumerating<T> extends Codex.Anchored<T> {
   public boolean hasOrder(final int order) {
     return order >= 0 && order < size();
   }
-
   /** Determines the level of a given object.
    * @param ¢ an arbitrary object, for which {@link #contains} returns true.
    * @return the level of this object, which is guaranteed to be an integer in
@@ -61,11 +55,9 @@ public class Enumerating<T> extends Codex.Anchored<T> {
   public int order(final T ¢) {
     return encode(¢);
   }
-
   @Override public int size() {
     return codex.size();
   }
-
   /** Which element or elements have a given level.
    * @param order an integer in the range <tt>0</tt> through
    *        <tt>{@link Iterables#count}(elements())</tt>, for which

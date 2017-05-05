@@ -20,19 +20,16 @@ public class WhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<WhileSta
     $.setBody($.getAST().newEmptyStatement());
     return $;
   }
-
   @Override protected boolean prerequisite(final WhileStatement ¢) {
     final Block $ = az.block(¢.getBody());
     return $ != null && iz.emptyBlock($);
   }
-
   @Override public Examples examples() {
     return //
     convert("while(x()){}").to("while(x());") //
         .ignores("while(x()){y();z();}")//
     ;
   }
-
   @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "Replace 'while(?){}' with 'while(?);'";
   }

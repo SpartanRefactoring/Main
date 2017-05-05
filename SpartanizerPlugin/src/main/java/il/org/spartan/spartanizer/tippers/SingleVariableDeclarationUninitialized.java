@@ -21,11 +21,9 @@ public abstract class SingleVariableDeclarationUninitialized extends NodePattern
       return true;
     });
   }
-
   protected Type type() {
     return type;
   }
-
   final SimpleName name() {
     return name;
   }

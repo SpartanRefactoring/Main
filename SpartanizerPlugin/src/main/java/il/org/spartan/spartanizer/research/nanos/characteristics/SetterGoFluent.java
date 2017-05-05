@@ -35,7 +35,6 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     final Assignment $ = az.assignment(e);
     return (iz.name(left($)) || tipper.check(left($))) && wizard.eq(right($), the.headOf(parameters(¢)).getName());
   }
-
   @Override public Tip pattern(final MethodDeclaration d) {
     return new Tip(description(d), getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -50,11 +49,9 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
       }
     };
   }
-
   protected static Type getType(final AbstractTypeDeclaration ¢) {
     return step.type(¢);
   }
-
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "Make setter fluent";
   }

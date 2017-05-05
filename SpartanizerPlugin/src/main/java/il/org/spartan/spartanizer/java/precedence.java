@@ -47,7 +47,6 @@ public enum precedence {
   public static boolean equal(final ASTNode host, final ASTNode e2) {
     return precedence.of(host) == precedence.of(e2);
   }
-
   /** Compare precedence of two expressions.
    * @param e1 JD
    * @param e2 JD
@@ -56,14 +55,12 @@ public enum precedence {
   public static boolean greater(final ASTNode e1, final ASTNode e2) {
     return !precedence.known(e1) || !precedence.known(e2) || precedence.of(e1) > precedence.of(e2);
   }
-
   /** determine whether an integer falls within the legal range of precedences.
    * @param precedence JD
    * @return whether the parameter is a legal precedence of Java. */
   public static boolean isLegal(final int of2) {
     return of2 >= 1 && of2 <= 15;
   }
-
   /** determine whether the precedence of a given {@link Expression} can be
    * determined.
    * @param n JD
@@ -71,14 +68,12 @@ public enum precedence {
   public static boolean known(final ASTNode ¢) {
     return precedence.isLegal(precedence.of(¢));
   }
-
   /** Determine the precedence of an arbitrary {@link ASTNode}
    * @param n JD
    * @return precedence of the parameter */
   public static int of(final ASTNode ¢) {
     return !iz.expression(¢) ? UNDEFINED : precedence.of(az.expression(¢));
   }
-
   /** Determine the precedence of the operator present on an {@link Expression}
    * @param x JD
    * @return precedence of the parameter */
@@ -94,14 +89,12 @@ public enum precedence {
         return of(¢.getClass().getSimpleName());
     }
   }
-
   /** Determine the precedence of an {@link InfixExpression.Operator}
    * @param o JD
    * @return precedence of the parameter */
   public static int of(final InfixExpression.Operator ¢) {
     return of(¢ + "");
   }
-
   /** Determine the precedence of two expressions is the same.
    * @param e1 JD
    * @param e2 JD
@@ -109,7 +102,6 @@ public enum precedence {
   public static boolean same(final Expression e1, final Expression e2) {
     return precedence.of(e1) == precedence.of(e2);
   }
-
   /** Determine whether an expression has the same precedence as that of a given
    * operator.
    * @param o JD
@@ -118,22 +110,18 @@ public enum precedence {
   public static boolean same(final InfixExpression.Operator o, final Expression x) {
     return precedence.of(o) == precedence.of(x);
   }
-
   private static int of(final Assignment ¢) {
     return of(¢.getOperator());
   }
-
   /** Determine the precedence of an {@link Assignment.Operator}
    * @param o JD
    * @return precedence of the parameter */
   private static int of(final Assignment.Operator ¢) {
     return of(¢ + "");
   }
-
   private static int of(final InfixExpression ¢) {
     return of(¢.getOperator());
   }
-
   private static int of(final String key) {
     return !of.containsKey(key) ? UNDEFINED : of.get(key);
   }

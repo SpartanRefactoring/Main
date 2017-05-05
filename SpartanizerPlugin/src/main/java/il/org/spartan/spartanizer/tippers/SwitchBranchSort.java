@@ -33,7 +33,6 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
       }
     return null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Sort switch branches";
   }

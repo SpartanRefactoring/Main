@@ -20,14 +20,12 @@ public final class SequencerNotLastInBlock<S extends Statement> extends GoToNext
   @Override public String description(final S ¢) {
     return "Remove dead statement after " + ¢;
   }
-
   @Override public Examples examples() {
     return //
     convert("{throw new Exception(); f();}") //
         .to("{throw new Exception();}") //
     ;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final S s, final Statement nextStatement, final TextEditGroup g) {
     final Block b = az.block(parent(s));
     if (b == null)

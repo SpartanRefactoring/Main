@@ -14,11 +14,9 @@ abstract class AbstractCommandLineProcessor {
   @SuppressWarnings("CanBeFinal") private String presentSourceName;
 
   public abstract void apply();
-
   protected String makeFile(final String fileName) {
     return outputFolder + File.separator + presentSourceName + "." + fileName;
   }
-
   public static void main(final String[] args) {
     if (args.length != 0)
       as.list(args).forEach(λ -> new BatchSpartanizer(λ).fire());

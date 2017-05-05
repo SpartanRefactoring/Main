@@ -23,11 +23,9 @@ public final class ThrowOnNull extends NanoPatternTipper<IfStatement> {
   @Override public boolean canTip(final IfStatement ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Throw if variable is null";
   }

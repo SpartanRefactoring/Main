@@ -28,7 +28,6 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
         notation.cent //
     );
   }
-
   // TODO: Dor Maayan, fix this example test -rr
   @Override public Examples examples() {
     return null;
@@ -39,7 +38,6 @@ public final class CatchClauseRenameParameterToIt extends EagerTipper<CatchClaus
     // .ignores("try {f();} catch (Exception e) {int ¢; e.f();}") //
     // ;
   }
-
   @Override public Tip tip(final CatchClause c) {
     final SingleVariableDeclaration d = c.getException();
     if (!JohnDoe.property(d))

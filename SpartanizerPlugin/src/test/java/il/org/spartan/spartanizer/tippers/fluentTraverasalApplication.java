@@ -57,7 +57,6 @@ public class fluentTraverasalApplication extends TraversalImplementation {
     }
     assert undoEdit != null;
   }
-
   String aboutTheSame(final String s1, final String s2) {
     assert s1 != null;
     assert s2 != null;
@@ -71,17 +70,14 @@ public class fluentTraverasalApplication extends TraversalImplementation {
     assert g2b != null;
     return tide.eq($, g2b) || tide.eq(s1, g2b) || tide.eq($, g2a) ? g2b : null;
   }
-
   String common(final String expected) {
     return aboutTheSame(expected, document.get());
   }
-
   /** creates an ASTRewrite which contains the changes
    * @return an ASTRewrite which contains the changes */
   public final ASTRewrite createRewrite() {
     return createRewrite(nullProgressMonitor);
   }
-
   /** creates an ASTRewrite which contains the changes
    * @param pm a progress monitor in which the progress of the refactoring is
    *        displayed
@@ -93,7 +89,6 @@ public class fluentTraverasalApplication extends TraversalImplementation {
     ¢.done();
     return $;
   }
-
   protected final void fillRewrite(final ASTRewrite r) {
     compilationUnit.accept(new DispatchingVisitor() {
       @Override protected <N extends ASTNode> boolean go(final N n) {
@@ -107,14 +102,12 @@ public class fluentTraverasalApplication extends TraversalImplementation {
       }
     });
   }
-
   <N extends ASTNode> N findNode(final Class<N> clazz) {
     assert GuessedContext.find(codeFragment) != null;
     final N $ = firstInstance(clazz);
     assert $ != null;
     return $;
   }
-
   <N extends ASTNode> N firstInstance(final Class<N> clazz) {
     final Wrapper<N> $ = new Wrapper<>();
     compilationUnit.accept(new ASTVisitor(true) {
@@ -137,7 +130,6 @@ public class fluentTraverasalApplication extends TraversalImplementation {
     });
     return $.get();
   }
-
   public fluentTraverasalApplication gives(final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {
       dump.go(this);
@@ -178,7 +170,6 @@ public class fluentTraverasalApplication extends TraversalImplementation {
       );
     return new fluentTraverasalApplication(document.get());
   }
-
   public void stays() {
     final String difference = common(codeFragment);
     if (difference != null)

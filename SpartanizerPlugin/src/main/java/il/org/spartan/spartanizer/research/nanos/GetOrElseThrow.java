@@ -30,11 +30,9 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
         && iz.returnStatement(next(¢))//
     ;
   }
-
   static Statement next(final IfStatement ¢) {
     return extract.nextStatement(¢);
   }
-
   @Override public Tip pattern(final IfStatement ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -44,23 +42,18 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
       }
     };
   }
-
   @Override public Category category() {
     return Category.Safety;
   }
-
   @Override public String description() {
     return description;
   }
-
   @Override public String technicalName() {
     return "IfXIsNullThrowElseReturnY";
   }
-
   @Override public String example() {
     return "if(X == null) throw new RuntimeException(); return Y;";
   }
-
   @Override public String symbolycReplacement() {
     return "notNull(X).get(Y);";
   }

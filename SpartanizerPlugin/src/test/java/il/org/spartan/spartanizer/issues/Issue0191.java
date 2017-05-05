@@ -14,7 +14,6 @@ public class Issue0191 {
         .gives("int f(){return ¢;}")//
         .stays();
   }
-
   @Test public void test1() {
     trimmingOf("int f(){  return ¢ ? Boolean.FALSE : Boolean.TRUE;}")//
         .gives("int f(){return !¢;}")//

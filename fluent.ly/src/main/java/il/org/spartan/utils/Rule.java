@@ -58,7 +58,6 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
   @Override default Rule<T, R> self() {
     return this;
   }
-
   /** Gives the ability to perform an action on object {@code T} t, only if
    * predicate(t) takes place.
    * @param <T> __ of elements for which the rule is applicable
@@ -73,7 +72,6 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
         c.accept(current());
         return null;
       }
-
       @Override public boolean ok(final T ¢) {
         return p.test(¢);
       }
@@ -92,14 +90,12 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
   @Check default Rule<T, R> afterCheck(final boolean b) {
     return afterCheck((final T t) -> b);
   }
-
   @Check default Rule<T, R> afterCheck(final Consumer<T> c) {
     return afterCheck((final T t) -> {
       c.accept(t);
       return true;
     });
   }
-
   @Check default Rule<T, R> afterCheck(final Predicate<T> p) {
     return new Interceptor<T, R>(this) {
       @Override public boolean check(final T ¢) {
@@ -107,17 +103,14 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
       }
     };
   }
-
   /** Should be overridden */
   default String[] akas() {
     return new String[] { technicalName() };
   }
-
   /** Apply this instance to a parameter
    * @param ¢ subject of this application
    * @return result of application of this instance on the given subject */
   @Override @Apply R apply(T ¢);
-
   /** {@code beforeCheck} functions supply a fluent API for: 1. performing an
    * action before {@link Rule.check}<br>
    * 2. add a prerequisite to check before {@link Rule.check}
@@ -126,14 +119,12 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
   default Rule<T, R> beforeCheck(final boolean b) {
     return beforeCheck((final T t) -> b);
   }
-
   default Rule<T, R> beforeCheck(final Consumer<T> c) {
     return beforeCheck((final T t) -> {
       c.accept(t);
       return true;
     });
   }
-
   default Rule<T, R> beforeCheck(final Predicate<T> p) {
     return new Interceptor<T, R>(this) {
       @Override public boolean check(final T ¢) {
@@ -141,14 +132,12 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
       }
     };
   }
-
   /** Determine whether the parameter is "eligible" for application of this
    * instance. Should be overridden
    * @param n JD
    * @return whether the argument is eligible for the simplification offered by
    *         this instance. */
   @Check boolean check(T n);
-
   default String description() {
     return format("%s/[%s]%s=", //
         English.name(Rule.class), //
@@ -157,38 +146,36 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
         technicalName(), //
         !ready() ? "not ready to " : "ready to " + verbObject());
   }
-
   /** Should be overridden */
   default Examples examples() {
     return new Examples();
   }
-
   T current();
-
   default boolean ready() {
     return current() != null;
   }
-
   /** Should not be overridden */
   default String technicalName() {
     return getClass().getSimpleName();
   }
-
   /** Should be overridden */
   default String verb() {
     return format("apply '%s' to '%%s'", technicalName());
   }
-
   default String verbObject() {
     return format(verb(), current());
   }
 
-  @Documented @Inherited @Target(ElementType.METHOD)
+  @Documented
+  @Inherited
+  @Target(ElementType.METHOD)
   @interface Apply {
     String value() default "A method for applying this instance";
   }
 
-  @Documented @Inherited @Target(ElementType.METHOD)
+  @Documented
+  @Inherited
+  @Target(ElementType.METHOD)
   @interface Check {
     String value() default "A boolean method for checking prior to application of this instance";
   }
@@ -202,7 +189,6 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
     public CountingDelegator(final Rule<T, R> inner) {
       super(inner);
     }
-
     @Override public Void before(final String key, final Object... arguments) {
       count.putIfAbsent(key, Integer.valueOf(0));
       count.put(key, box.it(count.get(key).intValue() + 1));
@@ -219,19 +205,15 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
     public Interceptor(final Rule<T, R> inner) {
       this.inner = inner;
     }
-
     @SuppressWarnings({ "static-method", "unused" }) public Void before(final String key, final Object... arguments) {
       return null;
     }
-
     @Override public boolean check(final T ¢) {
       return inner.check(¢);
     }
-
     @Override public T current() {
       return inner.current();
     }
-
     @Override public R apply(final T ¢) {
       return inner.apply(¢);
     }
@@ -241,29 +223,22 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
     default boolean afterCheck(final BooleanSupplier ¢) {
       return ¢.getAsBoolean();
     }
-
     @Override T get();
-
     default String[] listenAkas(final Supplier<String[]> $) {
       return $.get();
     }
-
     default String listenDescription(final Supplier<String> $) {
       return $.get();
     }
-
     default Examples listenExamples(final Supplier<Examples> $) {
       return $.get();
     }
-
     default String listenTechnicalName(final Supplier<String> $) {
       return $.get();
     }
-
     default R listenTip(final Function<T, R> f, final T t) {
       return f.apply(t);
     }
-
     default String listenVerb(final Supplier<String> $) {
       return $.get();
     }
@@ -293,7 +268,6 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
       current = null;
       return $;
     }
-
     private R badTypeState(final String reason, final Object... os) {
       return note.bug(this,
           new IllegalStateException(//
@@ -306,17 +280,13 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
           )//
       );
     }
-
     @Override public final boolean check(final T ¢) {
       return ok(current = ¢);
     }
-
     public abstract R fire();
-
     @Override public final T current() {
       return current;
     }
-
     public abstract boolean ok(T n);
   }
 }

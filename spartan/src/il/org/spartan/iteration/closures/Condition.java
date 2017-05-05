@@ -1,7 +1,5 @@
 package il.org.spartan.iteration.closures;
 
-import static fluent.ly.___.*;
-
 import org.jetbrains.annotations.*;
 
 import fluent.ly.*;
@@ -29,20 +27,16 @@ public interface Condition<Argument> {
         return true;
       };
     }
-
     public static <T> Condition<T> and(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2) {
       return λ -> c1.holds(λ) && c2.holds(λ);
     }
-
     public static <T> Condition<T> and(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2, @NotNull final Condition<T> c3) {
       return and(c1, and(c2, c3));
     }
-
     public static <T> Condition<T> and(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2, @NotNull final Condition<T> c3,
         @NotNull final Condition<T> c4) {
       return and(c1, and(c2, c3, c4));
     }
-
     /** A an implementation of a filter that rejects all objects.
      * @author Yossi Gil
      * @since November 26, 2009
@@ -54,7 +48,6 @@ public interface Condition<Argument> {
         return false;
       };
     }
-
     /** A an implementation of a filter that approves all non-null objects.
      * @author Yossi Gil
      * @since November 26, 2009
@@ -64,15 +57,12 @@ public interface Condition<Argument> {
     public static <T> Condition<T> nonnull() {
       return λ -> λ != null;
     }
-
     public static <T> Condition<T> not(@NotNull final Condition<T> c) {
       return λ -> !c.holds(λ);
     }
-
     public static <T> Condition<T> or(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2) {
       return λ -> c1.holds(λ) || c2.holds(λ);
     }
-
     public static <T> Condition<T> or(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2, @NotNull final Condition<T> c3) {
       return or(c1, or(c2, c3));
     }

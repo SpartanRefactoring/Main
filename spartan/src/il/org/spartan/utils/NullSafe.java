@@ -8,7 +8,6 @@ public class NullSafe {
   public static <T> boolean equals(@Nullable final T t1, final T t2) {
     return t1 == t2 || t1 != null && t1.equals(t2);
   }
-
   /** Return the hashCode of
    * @param <T> type of parameter to receive a default value
    * @param ¢ a possibly <code><b>null</b></code> value

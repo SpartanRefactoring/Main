@@ -43,7 +43,6 @@ public final class EnvironmentTests {
         for (int ¢ = 0; ¢ < 10; ++¢, x = ¢)
           ;
       }
-
       @NestedENV({ "EX10.forTest.x#int", "EX10.forTest.y#String" }) void g() {
         final List<String> tmp = an.empty.list();
         tmp.add("a");
@@ -59,7 +58,6 @@ public final class EnvironmentTests {
           throw new UnsupportedOperationException();
         return false;
       }
-
       void f() {
         String s;
         try {
@@ -67,7 +65,6 @@ public final class EnvironmentTests {
           dangerousFunc("yay".equals(s));
         } catch (final UnsupportedOperationException e) {}
       }
-
       void foo() {
         try {
           dangerousFunc("yay".equals("onoes"));
@@ -108,7 +105,6 @@ public final class EnvironmentTests {
         @End("x")
         class B {}
       }
-
       public static void change_y() {
         @Begin
         class A {}
@@ -215,7 +211,6 @@ public final class EnvironmentTests {
         @End("x")
         class QQ {}
       }
-
       @Override void set_x() {
         @Begin
         class Q {}
@@ -231,7 +226,6 @@ public final class EnvironmentTests {
       Child2() {
         x = 4;
       }
-
       @Override void set_x() {
         @Begin
         class Q {}
@@ -245,7 +239,6 @@ public final class EnvironmentTests {
       Parent() {
         x = 0;
       }
-
       void set_x() {
         @Begin
         class Q {}
@@ -418,7 +411,6 @@ public final class EnvironmentTests {
         class closing {
           /**/}
       }
-
       @Override public Iterator<Type> iterator() {
         return new Iterator<Type>() {
           @InOrderFlatENV({ "arrayList", "currentSize", "it" }) @OutOfOrderFlatENV({ "it", "currentSize", "arrayList" }) int currentIndex;
@@ -426,7 +418,6 @@ public final class EnvironmentTests {
           @Override public boolean hasNext() {
             return currentIndex < currentSize && arrayList[currentIndex] != null;
           }
-
           @Override public Type next() {
             return arrayList[currentIndex++];
           }
@@ -441,15 +432,12 @@ public final class EnvironmentTests {
       Oompa_Loompa Oompa_Loompa; /* A */
 
       <Oompa_Loompa> Oompa_Loompa() {}
-
       Oompa_Loompa(final Oompa_Loompa... Oompa_Loompa) {
         this(Oompa_Loompa, Oompa_Loompa);
       }
-
       Oompa_Loompa(final Oompa_Loompa[]... __) {
         this();
       }
-
       Oompa_Loompa Oompa_Loompa(final Oompa_Loompa l) {
         l: for (;;)
           for (;;)

@@ -36,13 +36,11 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
   @SuppressWarnings("resource") private static void initializeWriter(final int type) {
     writers.put(Integer.valueOf(type), new Table("distribution_" + ASTNode.nodeClassForType(type).getSimpleName()));
   }
-
   public static void main(final String[] args) throws InstantiationException, IllegalAccessException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
     writers.values().forEach(Table::close);
     System.err.println("Your output is in: " + system.tmp);
   }
-
   @Override public boolean visit(final MethodDeclaration $) {
     if (!excludeMethod($))
       try {
@@ -53,21 +51,17 @@ public class Table_NanosDistribution extends DeprecatedFolderASTVisitor {
       }
     return super.visit($);
   }
-
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(cleanerVisitor);
     return true;
   }
-
   @Override protected void done(final String path) {
     summarize(path);
     System.err.println("Your output is in: " + outputFolder);
   }
-
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
-
   public static void summarize(final String path) {
     for (final Integer boxedType : npStatistics.keySet()) {
       if (!writers.containsKey(boxedType))

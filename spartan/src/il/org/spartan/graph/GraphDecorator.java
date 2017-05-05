@@ -19,21 +19,18 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
   public GraphDecorator(final AbstractGraph<E> inner) {
     this.inner = inner;
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#contains(java.lang.Object) */
   @Override public boolean contains(final E ¢) {
     return inner.contains(¢);
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.iteration.NamedEntity#name() */
   @Override public String description() {
     return inner.description();
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#incoming(il.org.spartan
@@ -41,14 +38,12 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
   @Override public ImmutableArrayList<Vertex<E>> incoming(@NotNull final Vertex<E> ¢) {
     return inner.incoming(¢);
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.iteration.NamedEntity#name() */
   @Override public String name() {
     return inner.name();
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#outgoing(il.org.spartan
@@ -56,42 +51,36 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
   @Override public ImmutableArrayList<Vertex<E>> outgoing(@NotNull final Vertex<E> ¢) {
     return inner.outgoing(¢);
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#sinks() */
   @Override public ImmutableArrayList<Vertex<E>> sinks() {
     return inner.sinks();
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#sinksCount() */
   @Override public int sinksCount() {
     return inner.sinksCount();
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#sources() */
   @Override public ImmutableArrayList<Vertex<E>> sources() {
     return inner.sources();
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#sourcesCount() */
   @Override public int sourcesCount() {
     return inner.sourcesCount();
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#vertex(java.lang.Object) */
   @Override public Vertex<E> vertex(final E ¢) {
     return inner.vertex(¢);
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.AbstractGraph#vertices() */

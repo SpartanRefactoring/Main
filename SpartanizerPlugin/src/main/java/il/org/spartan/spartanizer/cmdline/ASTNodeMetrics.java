@@ -23,7 +23,6 @@ public class ASTNodeMetrics {
   public ASTNodeMetrics(final ASTNode n) {
     node = n;
   }
-
   public void computeMetrics() {
     length = node.getLength();
     tokens = metrics.tokens(node + "");
@@ -38,42 +37,34 @@ public class ASTNodeMetrics {
     tide = clean(node + "").length();
     essence = Essence.of(node + "").length();
   }
-
   /** @return the node */
   public ASTNode n() {
     return node;
   }
-
   /** @return the length */
   public int length() {
     return length;
   }
-
   /** @return the tokens */
   public int tokens() {
     return tokens;
   }
-
   /** @return the nodes */
   public int nodes() {
     return nodes;
   }
-
   /** @return the body */
   public int body() {
     return body;
   }
-
   /** @return the statements */
   public int statements() {
     return statements;
   }
-
   /** @return the tide */
   public int tide() {
     return tide;
   }
-
   /** @return the essence */
   public int essence() {
     return essence;

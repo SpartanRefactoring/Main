@@ -120,11 +120,9 @@ public interface wizard {
   static Expression addParenthesisIfNeeded(final Expression ¢) {
     return !isParethesisNeeded(¢) ? ¢ : make.parethesized(¢);
   }
-
   static Expression applyDeMorgan(final InfixExpression $) {
     return subject.operands(hop.operands(flatten.of($)).stream().map(make::notOf).collect(toList())).to(op.negate(operator($)));
   }
-
   /** Converts a string into an AST, depending on it's form, as determined
    * by @link{GuessedContext.find}.
    * @param javaSnippet string to convert
@@ -157,7 +155,6 @@ public interface wizard {
         return null;
     }
   }
-
   static ASTNode commonAncestor(final ASTNode n1, final ASTNode n2) {
     final List<ASTNode> ns1 = ancestors.path(n1), ns2 = ancestors.path(n2);
     for (int $ = 0; $ < Math.min(ns1.size(), ns2.size()); ++$)
@@ -165,15 +162,12 @@ public interface wizard {
         return ns1.get($);
     return null;
   }
-
   static CompilationUnit compilationUnitWithBinding(final File ¢) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
-
   static CompilationUnit compilationUnitWithBinding(final String ¢) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(¢).createAST(null);
   }
-
   static <T> String completionIndex(final List<T> ts, final T t) {
     final String $ = ts.size() + "";
     String i = ts.indexOf(t) + 1 + "";
@@ -181,7 +175,6 @@ public interface wizard {
       i = " " + i;
     return i + "/" + $;
   }
-
   /** @param ns unknown number of nodes to check
    * @return whether one of the nodes is an Expression Statement of __ Post or
    *         Pre Expression with ++ or -- operator. false if none of them are or
@@ -189,7 +182,6 @@ public interface wizard {
   static boolean containIncOrDecExp(final ASTNode... ns) {
     return ns != null && Stream.of(ns).anyMatch(λ -> λ != null && iz.updating(λ));
   }
-
   /** Determines if we can be certain that a {@link Statement} ends with a
    * sequencer ({@link ReturnStatement}, {@link ThrowStatement},
    * {@link BreakStatement}, {@link ContinueStatement}).
@@ -220,7 +212,6 @@ public interface wizard {
         return false;
     }
   }
-
   /** Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
    * <p>
@@ -232,7 +223,6 @@ public interface wizard {
   static boolean eq(final ASTNode n1, final ASTNode n2) {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType() && Trivia.cleanForm(n1).equals(Trivia.cleanForm(n2));
   }
-
   /** String wise comparison of all the given SimpleNames
    * @param ¢ string to compare all names to
    * @param xs SimplesNames to compare by their string value to cmpTo
@@ -240,7 +230,6 @@ public interface wizard {
   static boolean eq(final Expression x, final Expression... xs) {
     return Stream.of(xs).allMatch(λ -> eq(λ, x));
   }
-
   /** Determine whether two lists of nodes are the same, in the sense that their
    * textual representations is identical.
    * @param ns1 first list to compare
@@ -249,7 +238,6 @@ public interface wizard {
   @SuppressWarnings("boxing") static <N extends ASTNode> boolean eq(final List<N> ns1, final List<N> ns2) {
     return ns1 == ns2 || ns1.size() == ns2.size() && range.from(0).to(ns1.size()).stream().allMatch(λ -> eq(ns1.get(λ), ns2.get(λ)));
   }
-
   /** Works like same, but it applies {@ link tide.clean} to remove spaces
    * Determine whether two nodes are the same, in the sense that their textual
    * representations is identical.
@@ -265,7 +253,6 @@ public interface wizard {
     return n1 == n2 || n1 != null && n2 != null && n1.getNodeType() == n2.getNodeType()
         && tide.clean(Trivia.cleanForm(n1) + "").equals(tide.clean(Trivia.cleanForm(n2) + ""));
   }
-
   /** Find the first matching expression to the given boolean (b).
    * @param b JD,
    * @param xs JD
@@ -274,12 +261,10 @@ public interface wizard {
   static Expression find(final boolean b, final List<Expression> xs) {
     return xs.stream().filter(λ -> iz.booleanLiteral(λ) && b == az.booleanLiteral(λ).booleanValue()).findFirst().orElse(null);
   }
-
   static VariableDeclarationFragment findFragment(final FieldDeclaration ¢) {
     return fragments(¢).stream().filter(λ -> (λ.getName() + "").equals(FieldInitializedSerialVersionUIDToHexadecimal.SERIAL_VERSION_UID)).findFirst()
         .orElse(null);
   }
-
   /** Gets two lists of expressions and returns the idx of the only expression
    * which is different between them. If the lists differ with other then one
    * element, -1 is returned.
@@ -296,7 +281,6 @@ public interface wizard {
       }
     return $;
   }
-
   static boolean forbiddenOpOnPrimitive(final VariableDeclarationFragment f, final Statement nextStatement) {
     if (!iz.literal(f.getInitializer()) || !iz.expressionStatement(nextStatement))
       return false;
@@ -310,7 +294,6 @@ public interface wizard {
     final Expression e = core(((FieldAccess) x.getExpression()).getExpression());
     return iz.simpleName(e) && ((SimpleName) e).getIdentifier().equals(f.getName().getIdentifier());
   }
-
   @SuppressWarnings("unchecked") static List<MethodDeclaration> getMethodsSorted(final ASTNode n) {
     final Collection<MethodDeclaration> $ = an.empty.list();
     // noinspection SameReturnValue
@@ -323,11 +306,9 @@ public interface wizard {
     return (List<MethodDeclaration>) $.stream().sorted((x, y) -> metrics.countStatements(x) > metrics.countStatements(y)
         || metrics.countStatements(x) == metrics.countStatements(y) && x.parameters().size() > y.parameters().size() ? -1 : 1);
   }
-
   static Message[] getProblems(final ASTNode $) {
     return !($ instanceof CompilationUnit) ? null : ((CompilationUnit) $).getMessages();
   }
-
   static Expression goInfix(final InfixExpression from, final VariableDeclarationStatement s) {
     final List<Expression> $ = hop.operands(from);
     $.stream().filter(λ -> iz.parenthesizedExpression(λ) && iz.assignment(extract.core(λ))).forEachOrdered(x -> {
@@ -340,7 +321,6 @@ public interface wizard {
     });
     return subject.append(subject.pair(the.headOf($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
-
   static String intToClassName(final int $) {
     try {
       return ASTNode.nodeClassForType($).getSimpleName();
@@ -348,7 +328,6 @@ public interface wizard {
       return note.bug(¢);
     }
   }
-
   /** Checks if an expression need parenthesis in order to be interpreted
    * correctly @param x an Expression
    * @return whether or not this expression need parenthesis when put together
@@ -359,29 +338,23 @@ public interface wizard {
   static boolean isParethesisNeeded(final Expression x) {
     return Stream.of(np).anyMatch(λ -> λ.isInstance(x));
   }
-
   static List<Statement> listMe(final Expression ¢) {
     return a.singleton.list(¢.getAST().newExpressionStatement(copy.of(¢)));
   }
-
   static List<VariableDeclarationFragment> live(final VariableDeclarationFragment f, final Collection<VariableDeclarationFragment> fs) {
     final List<VariableDeclarationFragment> $ = an.empty.list();
     fs.stream().filter(λ -> λ != f && λ.getInitializer() != null).forEach(λ -> $.add(copy.of(λ)));
     return $;
   }
-
   static MethodDeclaration methodWithBinding(final String m) {
     return findFirst.instanceOf(MethodDeclaration.class).in(makeAST.CLASS_BODY_DECLARATIONS.makeParserWithBinding(m).createAST(null));
   }
-
   static String nodeName(final ASTNode ¢) {
     return ¢ == null ? "???" : nodeName(¢.getClass());
   }
-
   static String nodeName(final Class<? extends ASTNode> ¢) {
     return English.name(¢);
   }
-
   static <N extends ASTNode> int nodeType(final Class<N> ¢) {
     final Integer $ = il.org.spartan.spartanizer.ast.navigate.wizard.classToNodeType.get(¢);
     return $ != null ? $.intValue()
@@ -392,15 +365,12 @@ public interface wizard {
             "\n classForNodeType = " + il.org.spartan.spartanizer.ast.navigate.wizard.classToNodeType + //
             fault.done()));
   }
-
   static int nodeTypesCount() {
     return il.org.spartan.spartanizer.ast.navigate.wizard.classToNodeType.size() + 2;
   }
-
   static boolean notDefaultLiteral(final Expression ¢) {
     return !iz.nullLiteral(¢) && !iz.literal0(¢) && !literal.false¢(¢) && !iz.literal(¢, 0.0) && !iz.literal(¢, 0L);
   }
-
   /** Parenthesize an expression (if necessary).
    * @param x JD
    * @return a {@link copy#duplicate(Expression)} of the parameter wrapped in
@@ -408,7 +378,6 @@ public interface wizard {
   static Expression parenthesize(final Expression ¢) {
     return iz.noParenthesisRequired(¢) ? copy.of(¢) : make.parethesized(¢);
   }
-
   static ASTParser parser(final int kind) {
     final ASTParser $ = ASTParser.newParser(AST.JLS8);
     setBinding($);
@@ -418,15 +387,12 @@ public interface wizard {
     $.setCompilerOptions(options);
     return $;
   }
-
   static int positivePrefixLength(final IfStatement $) {
     return metrics.length($.getExpression(), then($));
   }
-
   static String problems(final ASTNode ¢) {
     return !(¢ instanceof CompilationUnit) ? "???" : problems((CompilationUnit) ¢);
   }
-
   static String problems(final CompilationUnit u) {
     final IProblem[] v = u.getProblems();
     if (v.length == 0)
@@ -434,38 +400,31 @@ public interface wizard {
     final Int $ = new Int();
     return Stream.of(v).map(λ -> "\n\t\t\t" + ++$.inner + ": " + λ.getMessage()).reduce((x, y) -> x + y).get();
   }
-
   /** replaces an ASTNode with another
    * @param n
    * @param with */
   static <N extends ASTNode> void replace(final N n, final N with, final ASTRewrite r) {
     r.replace(n, with, null);
   }
-
   static int sequencerRank(final ASTNode ¢) {
     return the.index(¢.getNodeType(), BREAK_STATEMENT, CONTINUE_STATEMENT, RETURN_STATEMENT, THROW_STATEMENT);
   }
-
   static void setBinding(final ASTParser $) {
     $.setResolveBindings(resolveBinding.inner);
     if (resolveBinding.inner)
       $.setEnvironment(null, null, null, true);
   }
-
   static void setParserResolveBindings() {
     resolveBinding.inner = true;
   }
-
   static boolean shoudlInvert(final IfStatement s) {
     final int $ = wizard.sequencerRank(hop.lastStatement(then(s))), rankElse = wizard.sequencerRank(hop.lastStatement(elze(s)));
     return rankElse > $ || $ == rankElse && !thenIsShorter(s);
   }
-
   static String signAdjust(final String token) {
     return token.startsWith("-") ? token.substring(1) //
         : "-" + token.substring(as.bit(token.startsWith("+")));
   }
-
   static boolean thenIsShorter(final IfStatement s) {
     final Statement then = then(s), elze = elze(s);
     if (elze == null)
@@ -485,12 +444,10 @@ public interface wizard {
     final IfStatement $ = make.invert(s);
     return wizard.positivePrefixLength($) >= wizard.positivePrefixLength(make.invert($));
   }
-
   static boolean valid(final ASTNode ¢) {
     final CompilationUnit $ = az.compilationUnit(¢.getRoot());
     return $ == null || $.getProblems().length == 0;
   }
-
   static boolean parenthesisRequiredIn(final Expression in, final ASTNode out) {
     return precedence.greater(out, in) || precedence.equal(out, in) && !op.nonAssociative(out);
   }

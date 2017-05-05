@@ -35,7 +35,6 @@ final class EnvironmentVisitor extends ASTVisitor {
   EnvironmentVisitor(final LinkedHashSet<Entry<String, Binding>> $) {
     this.$ = $;
   }
-
   /** As of JSL3, AnonymousClassDeclaration's parent can be either
    * ClassInstanceCreation or EnumConstantDeclaration */
   static String anonymousClassDeclarationParentName(final AnonymousClassDeclaration ¢) {
@@ -45,44 +44,36 @@ final class EnvironmentVisitor extends ASTVisitor {
     assert $ instanceof EnumConstantDeclaration;
     return az.enumConstantDeclaration($).getName() + "";
   }
-
   Entry<String, Binding> convertToEntry(final AnnotationTypeMemberDeclaration ¢) {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
-
   @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final FieldDeclaration d) {
     final Collection<Entry<String, Binding>> $ = an.empty.list();
     final type t = type.baptize(Trivia.condense(d.getType()));
     $.addAll(fragments(d).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
-
   Entry<String, Binding> convertToEntry(final SingleVariableDeclaration ¢) {
     return new MapEntry<>(fullName(¢.getName()), createInformation(¢));
   }
-
   @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationExpression x) {
     final Collection<Entry<String, Binding>> $ = an.empty.list();
     final type t = type.baptize(Trivia.condense(x.getType()));
     $.addAll(fragments(x).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
-
   @SuppressWarnings("hiding") Collection<Entry<String, Binding>> convertToEntry(final VariableDeclarationStatement s) {
     final Collection<Entry<String, Binding>> $ = an.empty.list();
     final type t = type.baptize(Trivia.condense(s.getType()));
     $.addAll(fragments(s).stream().map(λ -> new MapEntry<>(fullName(λ.getName()), createInformation(λ, t))).collect(toList()));
     return $;
   }
-
   Binding createInformation(final AnnotationTypeMemberDeclaration ¢) {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(Trivia.condense(¢.getType())));
   }
-
   Binding createInformation(final SingleVariableDeclaration ¢) {
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, type.baptize(Trivia.condense(¢.getType())));
   }
-
   Binding createInformation(final VariableDeclarationFragment ¢, final type t) {
     // VariableDeclarationFragment, that comes from either FieldDeclaration,
     // VariableDeclarationStatement or VariableDeclarationExpression,
@@ -90,78 +81,60 @@ final class EnvironmentVisitor extends ASTVisitor {
     // the convertToEntry calls.
     return new Binding(¢.getParent(), getHidden(fullName(¢.getName())), ¢, t);
   }
-
   // Everything besides the actual variable declaration was visited for
   // nameScope reasons. Once their visit is over, the nameScope needs to be
   // restored.
   @Override public void endVisit(final AnnotationTypeDeclaration __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final AnonymousClassDeclaration __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final Block __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final CatchClause __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final DoStatement __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final EnhancedForStatement __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final EnumConstantDeclaration __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final EnumDeclaration __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final ForStatement __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final IfStatement __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final MethodDeclaration __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final SwitchStatement __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final TryStatement __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final TypeDeclaration __) {
     restoreScopeName();
   }
-
   @Override public void endVisit(final WhileStatement __) {
     restoreScopeName();
   }
-
   @SuppressWarnings("hiding") String fullName(final SimpleName $) {
     return scopePath + "." + $;
   }
-
   static Binding get(final Collection<Entry<String, Binding>> ss, final String s) {
     return ss.stream().filter(λ -> s.equals(λ.getKey())).map(Entry::getValue).findFirst().orElse(null);
   }
-
   /** Returns the {@link Binding} of the declaration the current declaration is
    * hiding.
    * @param ¢ the fullName of the declaration.
@@ -188,7 +161,6 @@ final class EnvironmentVisitor extends ASTVisitor {
     }
     return null;
   }
-
   /** Similar to statementOrderAmongTypeInParent, {@link CatchClause}s only */
   static int orderOfCatchInTryParent(final CatchClause c) {
     assert c.getParent() instanceof TryStatement;
@@ -200,15 +172,12 @@ final class EnvironmentVisitor extends ASTVisitor {
     }
     return $;
   }
-
   static String parentNameScope(final String ¢) {
     return ¢ == null || ¢.isEmpty() ? "" : ¢.substring(0, ¢.lastIndexOf("."));
   }
-
   void restoreScopeName() {
     scopePath = parentNameScope(scopePath);
   }
-
   /** Order of the searched {@link Statement} in its parent {@link ASTNode},
    * among nodes of the same kind. zero based.
    * @param s
@@ -231,102 +200,82 @@ final class EnvironmentVisitor extends ASTVisitor {
     }
     return $;
   }
-
   @Override public boolean visit(final AnnotationTypeDeclaration ¢) {
     scopePath += "." + ¢.getName();
     return true;
   }
-
   @Override public boolean visit(final AnnotationTypeMemberDeclaration ¢) {
     $.add(convertToEntry(¢));
     return true;
   }
-
   @Override public boolean visit(final AnonymousClassDeclaration ¢) {
     scopePath += ".#anon_extends_" + anonymousClassDeclarationParentName(¢);
     return true;
   }
-
   @Override public boolean visit(final Block ¢) {
     scopePath += ".#block" + statementOrderAmongTypeInParent(¢);
     return true;
   }
-
   @Override public boolean visit(final CatchClause ¢) {
     scopePath += ".#catch" + orderOfCatchInTryParent(¢);
     return true;
   }
-
   @Override public boolean visit(final DoStatement ¢) {
     scopePath += ".#do" + statementOrderAmongTypeInParent(¢);
     return true;
   }
-
   @Override public boolean visit(final EnhancedForStatement ¢) {
     scopePath += ".#enhancedFor" + statementOrderAmongTypeInParent(¢);
     return true;
   }
-
   @Override public boolean visit(final EnumConstantDeclaration ¢) {
     scopePath += "." + ¢.getName();
     return true;
   }
-
   @Override public boolean visit(final EnumDeclaration ¢) {
     scopePath += "." + ¢.getName();
     return true;
   }
-
   @Override public boolean visit(final FieldDeclaration ¢) {
     $.addAll(convertToEntry(¢));
     return true;
   }
-
   @Override public boolean visit(final ForStatement ¢) {
     scopePath += ".#for" + statementOrderAmongTypeInParent(¢);
     return true;
   }
-
   @Override public boolean visit(final IfStatement ¢) {
     scopePath += ".#if" + statementOrderAmongTypeInParent(¢);
     return true;
   }
-
   @Override public boolean visit(final MethodDeclaration ¢) {
     scopePath += "." + ¢.getName();
     return true;
   }
-
   @Override public boolean visit(final SingleVariableDeclaration ¢) {
     $.add(convertToEntry(¢));
     return true;
   }
-
   @Override public boolean visit(final SwitchStatement ¢) {
     scopePath += ".#switch" + statementOrderAmongTypeInParent(¢);
     return true;
   }
-
   @Override public boolean visit(final TryStatement ¢) {
     scopePath += ".#try" + statementOrderAmongTypeInParent(¢);
     return true;
   }
-
   @Override public boolean visit(final TypeDeclaration ¢) {
     scopePath += "." + ¢.getName();
     return true;
   }
-
   @Override public boolean visit(final VariableDeclarationExpression ¢) {
     $.addAll(convertToEntry(¢));
     return true;
   }
-
   @Override public boolean visit(final VariableDeclarationStatement ¢) {
     $.addAll(convertToEntry(¢));
     return true;
   }
-
   @Override public boolean visit(final WhileStatement ¢) {
     scopePath += ".#while" + statementOrderAmongTypeInParent(¢);
     return true;

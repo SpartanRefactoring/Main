@@ -51,7 +51,6 @@ public final class Builder extends IncrementalProjectBuilder {
   public static void deleteMarkers(final IResource ¢) throws CoreException {
     ¢.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ONE);
   }
-
   private static void incrementalBuild(final IResourceDelta d) throws CoreException {
     d.accept(internalDelta -> {
       final int k = internalDelta.getKind();
@@ -62,12 +61,10 @@ public final class Builder extends IncrementalProjectBuilder {
       return true;
     });
   }
-
   static void addMarkers(final IResource ¢) throws CoreException {
     if (¢ instanceof IFile && ¢.getName().endsWith(".java"))
       addMarkers((IFile) ¢);
   }
-
   private static void addMarkers(final IFile ¢) throws CoreException {
     deleteMarkers(¢);
     try {
@@ -76,7 +73,6 @@ public final class Builder extends IncrementalProjectBuilder {
       note.bug(x);
     }
   }
-
   private static void addMarkers(final IResource f, final CompilationUnit u) throws CoreException {
     final Traversal s = new TraversalImplementation();
     s.useProjectPreferences();
@@ -84,15 +80,12 @@ public final class Builder extends IncrementalProjectBuilder {
       if (¢ != null)
         ¢.intoMarker(f.createMarker(groupName(Configurations.groupOf(¢))));
   }
-
   private static String groupName(final TipperGroup ¢) {
     return ¢ == null || ¢.id == null ? MARKER_TYPE : MARKER_TYPE + "." + ¢.name();
   }
-
   public static String prefix() {
     return SPARTANIZATION_SHORT_PREFIX;
   }
-
   @Override protected IProject[] build(final int kind, @SuppressWarnings({ "unused", "rawtypes" }) final Map __, final IProgressMonitor m)
       throws CoreException {
     if (m != null)
@@ -102,7 +95,6 @@ public final class Builder extends IncrementalProjectBuilder {
       m.done();
     return null;
   }
-
   private void fullBuild(final IProgressMonitor m) {
     try {
       getProject().accept(λ -> {
@@ -115,14 +107,12 @@ public final class Builder extends IncrementalProjectBuilder {
       note.bug(this, ¢);
     }
   }
-
   private void build(final IProgressMonitor ¢) throws CoreException {
     if (waitingForRefresh.remove(getProject()))
       fullBuild(¢);
     else
       incrementalBuild(getDelta(getProject()));
   }
-
   private void build(final int kind, final IProgressMonitor m) throws CoreException {
     if (kind != FULL_BUILD)
       build(m);

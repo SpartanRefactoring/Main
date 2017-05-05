@@ -13,7 +13,8 @@ import fluent.ly.*;
 
 /** A program to search for a ".class" file in the file system.
  * @author Yossi Gil Mar 29, 2007 */
-@Application public class FindClassFile {
+@Application
+public class FindClassFile {
   static final String name = "where";
   static boolean reportCounts;
   static boolean findFirstOnly;
@@ -34,7 +35,6 @@ import fluent.ly.*;
           //
         }
   }
-
   private static boolean processOption(final String option) {
     if ("-n".equals(option))
       reportCounts = true;
@@ -60,35 +60,29 @@ import fluent.ly.*;
     public Searcher(final String sought) {
       this.sought = sought;
     }
-
     @Override public void visitDirectory(@NotNull final File ¢) {
       ++directories;
       report("Directory: " + ¢.getAbsolutePath());
     }
-
     @Override public void visitFile(@NotNull final File ¢) throws StopTraversal {
       ++files;
       report("File: " + ¢.getAbsolutePath());
       check(¢.getName(), ¢.getAbsolutePath());
     }
-
     @Override public void visitZip(@NotNull final File ¢) {
       ++zips;
       report("Archive: " + ¢.getAbsolutePath());
     }
-
     @Override public void visitZipDirectory(final String zipName, final String entryName, final InputStream s) {
       forget.it(s);
       report("Archive directory: " + entryName + " in zip " + zipName);
     }
-
     @Override public void visitZipEntry(final String zipName, @NotNull final String entryName, final InputStream s) throws StopTraversal {
       forget.it(s);
       ++entries;
       report("Archive entry: " + entryName);
       check(entryName, zipName);
     }
-
     private void check(@NotNull final String file, final String directory) throws StopTraversal {
       if (!file.endsWith(sought))
         return;
@@ -96,7 +90,6 @@ import fluent.ly.*;
       if (FindClassFile.findFirstOnly)
         throw new StopTraversal();
     }
-
     private void report(final String ¢) {
       if (FindClassFile.reportCounts)
         System.out.println(¢ + ". " + directories + " directories, " + files + " class files, " + zips + " ZIP archives, " + entries + " entries.");

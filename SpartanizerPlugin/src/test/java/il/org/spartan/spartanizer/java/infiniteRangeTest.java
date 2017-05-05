@@ -18,7 +18,6 @@ public class infiniteRangeTest {
     }
     assert x == 200;
   }
-
   @Test public void test2() {
     int x = 12;
     for (final Integer ¢ : range.infinite().from(12)) {
@@ -29,7 +28,6 @@ public class infiniteRangeTest {
     }
     assert x == 200;
   }
-
   @Test public void test3() {
     int x = 12;
     for (final Integer ¢ : range.infinite().from(12).step(3)) {
@@ -40,7 +38,6 @@ public class infiniteRangeTest {
     }
     assert x == 201;
   }
-
   @Test public void test4() {
     int x = 12;
     for (final Integer ¢ : range.from(12).step(3).infinite()) {
@@ -51,7 +48,6 @@ public class infiniteRangeTest {
     }
     assert x == 201;
   }
-
   @Test public void test5() {
     int x = 12;
     for (final Integer ¢ : range.from(12).infinite()) {
@@ -62,7 +58,6 @@ public class infiniteRangeTest {
     }
     assert x == 201;
   }
-
   @Test public void test6() {
     int x = 12;
     for (final Integer ¢ : range.from(12).infinite().step(4)) {

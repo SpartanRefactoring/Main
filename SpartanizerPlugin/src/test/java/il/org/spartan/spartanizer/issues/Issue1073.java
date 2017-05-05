@@ -16,21 +16,17 @@ public class Issue1073 {
     trimmingOf("class X { {} }").gives("class X{}")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("class X { {} }").gives("class X{}")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("class X { static {} }").gives("class X{}")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("class X { /** JavaDOC */ {} }").stays();
   }
-
   @Test public void e() {
     trimmingOf("class X { /** JavaDOC */ static {} }").stays();
   }

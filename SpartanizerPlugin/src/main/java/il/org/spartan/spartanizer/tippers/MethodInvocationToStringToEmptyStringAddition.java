@@ -20,7 +20,6 @@ public final class MethodInvocationToStringToEmptyStringAddition extends Replace
     final Expression $ = receiver(¢);
     return "Prepend \"\" instead of calling toString(). Rewrite as \"\" +" + ($ != null ? $ : "x");
   }
-
   @Override public ASTNode replacement(final MethodInvocation i) {
     if (!"toString".equals(name(i).getIdentifier()) || !arguments(i).isEmpty() || iz.expressionStatement(parent(i)))
       return null;

@@ -34,7 +34,6 @@ public final class Recurser<T> {
     $.addAll(extendedOperands(¢));
     return $;
   }
-
   /** Operators cannot be retrieved because they are not nodes...
    * @param ¢
    * @return */
@@ -56,7 +55,6 @@ public final class Recurser<T> {
       $.addAll(fragments(az.variableDeclarationExpression(¢)));
     return $;
   }
-
   private static List<? extends ASTNode> march(final ASTNode $) {
     try {
       return marchingList($);
@@ -71,26 +69,21 @@ public final class Recurser<T> {
   public Recurser(final ASTNode root) {
     this(root, null);
   }
-
   public Recurser(final ASTNode root, final T current) {
     if ((this.root = root) == null)
       throw new NullPointerException();
     this.current = current;
   }
-
   public Recurser<T> from(final T value) {
     current = value;
     return this;
   }
-
   public T getCurrent() {
     return current;
   }
-
   public ASTNode getRoot() {
     return root;
   }
-
   public void postVisit(final Consumer<Recurser<T>> f) {
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty()) {
@@ -107,7 +100,6 @@ public final class Recurser<T> {
     current = index == 0 ? current : rs.get(index - 1).getCurrent();
     f.accept(this);
   }
-
   public T postVisit(final Function<Recurser<T>, T> $) {
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
@@ -122,7 +114,6 @@ public final class Recurser<T> {
     current = index == 0 ? current : rs.get(index - 1).getCurrent();
     return current = $.apply(this);
   }
-
   public void preVisit(final Consumer<Recurser<T>> f) {
     f.accept(this);
     final List<? extends ASTNode> children = children(root);
@@ -132,7 +123,6 @@ public final class Recurser<T> {
     children.forEach(λ -> rs.add(new Recurser<>(λ)));
     rs.forEach(λ -> λ.preVisit(f));
   }
-
   public T preVisit(final Function<Recurser<T>, T> f) {
     current = f.apply(this);
     final List<? extends ASTNode> children = children(root);

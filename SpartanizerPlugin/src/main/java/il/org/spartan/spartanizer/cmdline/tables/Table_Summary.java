@@ -35,7 +35,6 @@ public class Table_Summary extends NanoTable {
         System.err.println(" " + path + " Done"); // we need to know if the
                                                   // process is finished or hang
       }
-
       public void summarize(final String path) {
         initializeWriter();
         table//
@@ -52,7 +51,6 @@ public class Table_Summary extends NanoTable {
             // .col("total Methods", methods())//
             .nl();
       }
-
       void initializeWriter() {
         if (table == null)
           table = new Table(Table.classToNormalizedFileName(Table_Summary.class) + "-" + corpus, outputFolder);
@@ -70,7 +68,6 @@ public class Table_Summary extends NanoTable {
         }
         return true;
       }
-
       void logAfterSpartanization(final CompilationUnit ¢) {
         statistics.logAfterSpartanization(¢);
         npDistributionStatistics.logNode(¢);
@@ -78,43 +75,33 @@ public class Table_Summary extends NanoTable {
     });
     table.close();
   }
-
   static int commands() {
     return statistics.commands();
   }
-
   static int methods() {
     return statistics.methods();
   }
-
   static double methodsCovered() {
     return getNodeCoverage(ASTNode.METHOD_DECLARATION);
   }
-
   private static double getNodeCoverage(final int type) {
     return npDistributionStatistics.coverage(type);
   }
-
   static double iterativesCoverage() {
     return npDistributionStatistics.coverage(ASTNode.ENHANCED_FOR_STATEMENT, ASTNode.FOR_STATEMENT, ASTNode.WHILE_STATEMENT, ASTNode.DO_STATEMENT);
   }
-
   static double conditionalExpressionsCoverage() {
     return getNodeCoverage(ASTNode.CONDITIONAL_EXPRESSION);
   }
-
   static double conditionalStatementsCoverage() {
     return getNodeCoverage(ASTNode.IF_STATEMENT);
   }
-
   static double touched() {
     return statistics.touched();
   }
-
   static double statementsCoverage() {
     return statistics.commandsCoverage();
   }
-
   static double expressionsCoverage() {
     return statistics.expressionsCoverage();
   }

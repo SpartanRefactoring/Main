@@ -9,7 +9,6 @@ public class Issue1008 extends MetaFixture {
   AlphabeticallySortedSentence case1 = new AlphabeticallySortedSentence() {
     @Override @SuppressWarnings("All") protected void startingWith() {/***/
     }
-
     @Override @SuppressWarnings("All") protected void trimmingStopsAt() {/***/
     }
   };

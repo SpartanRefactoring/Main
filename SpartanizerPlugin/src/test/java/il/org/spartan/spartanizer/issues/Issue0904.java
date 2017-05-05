@@ -15,7 +15,6 @@ public class Issue0904 {
         .gives("")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("int i,j=1;j++;f(++j);")//
         .gives("int j=1;++j;f(++j);")//
@@ -23,14 +22,12 @@ public class Issue0904 {
         .gives("int j=2;f(++j);") //
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("int i; i = +0;")//
         .gives("int i =+0;")//
         .gives("")//
         .stays();
   }
-
   @Test public void t08() {
     trimmingOf("if(b){int i;int j;}else{g();int tipper;}")//
         .gives("if(b){}else{g();}") //
@@ -38,7 +35,6 @@ public class Issue0904 {
         .stays()//
     ;
   }
-
   @Test public void t09() {
     trimmingOf("if(b){int i;int j;g();}else{int q;int tipper;}")//
         .gives("if(!b){int q;int tipper;}else{int i;int j;g();}")//

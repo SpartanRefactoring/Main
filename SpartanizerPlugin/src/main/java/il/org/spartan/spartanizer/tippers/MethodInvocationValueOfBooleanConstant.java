@@ -20,19 +20,15 @@ public final class MethodInvocationValueOfBooleanConstant extends ReplaceCurrent
   private static String asString(final BooleanLiteral ¢) {
     return ¢.booleanValue() ? "TRUE" : "FALSE";
   }
-
   private static Expression replacement(final Expression x, final BooleanLiteral l) {
     return l == null ? null : subject.operand(x).toQualifier(asString(l));
   }
-
   private static Expression replacement(final Expression x, final Expression $) {
     return x == null || !"Boolean".equals(x + "") ? null : replacement(x, az.booleanLiteral($));
   }
-
   @Override public String description(final MethodInvocation ¢) {
     return "Replace valueOf (" + onlyArgument(¢) + ") with Boolean." + asString(az.booleanLiteral(onlyArgument(¢)));
   }
-
   @Override public Expression replacement(final MethodInvocation ¢) {
     return iz.statement(¢.getParent()) || !"valueOf".equals(step.name(¢).getIdentifier()) ? null : replacement(step.receiver(¢), onlyArgument(¢));
   }

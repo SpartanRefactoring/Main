@@ -10,31 +10,23 @@ public abstract class TypeInfo {
   @NotNull public static TypeInfo makeArrayOf(final TypeInfo ¢) {
     return new ArrayType(¢);
   }
-
   @NotNull public static TypeInfo makeConstructor(@NotNull final TypeInfo ¢) {
     return new ConstructorType(((MethodType) ¢).arguments);
   }
-
   @NotNull public static TypeInfo makeInitializer(@SuppressWarnings("unused") final TypeInfo __) {
     return new InitializerType();
   }
-
   @NotNull public static TypeInfo makeMethodType(final TypeInfo returnValue, final TypeInfo... arguments) {
     return new MethodType(returnValue, arguments);
   }
-
   @NotNull public static TypeInfo makePrimitiveType(final String name) {
     return new AtomicType(true, name);
   }
-
   @NotNull public static TypeInfo makeReferenceType(final String name) {
     return new AtomicType(false, name);
   }
-
   public abstract Collection<TypeInfo> components();
-
   public abstract boolean isPrimitive();
-
   @Override public abstract String toString();
 
   public static class ArrayType extends TypeInfo {
@@ -43,15 +35,12 @@ public abstract class TypeInfo {
     public ArrayType(final TypeInfo inner) {
       this.inner = inner;
     }
-
     @Override public Collection<TypeInfo> components() {
       return inner.components();
     }
-
     @Override public boolean isPrimitive() {
       return false;
     }
-
     @Override @NotNull public String toString() {
       return inner + "[]";
     }
@@ -65,21 +54,17 @@ public abstract class TypeInfo {
       this.name = name;
       this.isPrimitive = isPrimitive;
     }
-
     AtomicType(final String name) {
       this(true, name);
     }
-
     @Override @NotNull public Collection<TypeInfo> components() {
       @NotNull final ArrayList<TypeInfo> $ = new ArrayList<>(1);
       $.add(this);
       return $;
     }
-
     @Override public boolean isPrimitive() {
       return isPrimitive;
     }
-
     @Override public String toString() {
       return name;
     }
@@ -91,7 +76,6 @@ public abstract class TypeInfo {
     public ConstructorType(final TypeInfo[] arguments) {
       this.arguments = arguments;
     }
-
     @Override @NotNull public Collection<TypeInfo> components() {
       @NotNull final List<TypeInfo> $ = new ArrayList<>();
       for (@NotNull final TypeInfo a : arguments)
@@ -104,11 +88,9 @@ public abstract class TypeInfo {
     @Override @NotNull public Collection<TypeInfo> components() {
       return new ArrayList<>();
     }
-
     @Override public final boolean isPrimitive() {
       return false;
     }
-
     @Override @NotNull public String toString() {
       return "()";
     }
@@ -121,13 +103,11 @@ public abstract class TypeInfo {
       super(arguments);
       this.returnValue = returnValue;
     }
-
     @Override @NotNull public Collection<TypeInfo> components() {
       @NotNull final List<TypeInfo> $ = new ArrayList<>(returnValue.components());
       $.addAll(super.components());
       return $;
     }
-
     @Override @NotNull public String toString() {
       return returnValue + " (" + Separate.by(arguments, ", ") + ")";
     }

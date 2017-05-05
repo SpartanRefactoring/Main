@@ -18,7 +18,6 @@ public class Issue0180 {
     trimmingOf("/**\n * @param s\n */\nint length(String s) {\n  return s.length();\n}")
         .gives("/**\n * @param ¢\n */\nint length(String ¢) {\n  return ¢.length();\n}");
   }
-
   @Test public void renameToCentRealWorld() {
     trimmingOf("/** Retrieve all operands, including parenthesized ones, under an expression\n * @param x JD\n"
         + " * @return a {@link List} of all operands to the parameter */\n"

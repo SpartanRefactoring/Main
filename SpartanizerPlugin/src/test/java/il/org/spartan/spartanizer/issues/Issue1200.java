@@ -19,19 +19,15 @@ public class Issue1200 {
   @Test public void a() {
     azzert.that(OR(T, OR(T, F)).reduce(javaReducer), is("(T || T || F)"));
   }
-
   @Test public void b() {
     azzert.that(OR(T, Proposition.that("T || F", OR(T, F))).reduce(javaReducer), is("(T || (T || F))"));
   }
-
   @Test public void c() {
     azzert.that(F.or("X1", X).or(T).reduce(javaReducer), is("(F || X1 || T)"));
   }
-
   @Test public void d() {
     azzert.that(F.and("X1", X).and(T).reduce(javaReducer), is("(F && X1 && T)"));
   }
-
   @Test public void e() {
     azzert.that(Proposition.OR("T OR F OR X", T, F, X).and(Proposition.AND("T AND F AND X", T, F, X)).reduce(javaReducer),
         is("((T || F || X) && T && F && X)"));

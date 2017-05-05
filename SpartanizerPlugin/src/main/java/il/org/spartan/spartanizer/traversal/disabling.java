@@ -46,7 +46,6 @@ public interface disabling {
       }
     });
   }
-
   /** The recursive disabling process. Returns to {@link disabledScan} upon
    * reaching an enabler.
    * @param d disabled {@link BodyDeclaration} */
@@ -62,24 +61,19 @@ public interface disabling {
       }
     });
   }
-
   /** @return whether the node is spartanization disabled */
   static boolean on(final ASTNode ¢) {
     return property.has(¢, disabledPropertyId);
   }
-
   static boolean specificallyDisabled(final BodyDeclaration ¢) {
     return disabling.ByComment.specificallyDisabled(¢) || disabling.ByAnnotation.specificallyDisabled(¢);
   }
-
   static boolean specificallyEnabled(final BodyDeclaration ¢) {
     return !disabling.ByComment.specificallyDisabled(¢) && disabling.ByComment.specificallyEnabled(¢);
   }
-
   static boolean hasJavaDocIdentifier(final BodyDeclaration d, final String... ids) {
     return d != null && d.getJavadoc() != null && contains(d.getJavadoc() + "", ids);
   }
-
   @SuppressWarnings("unchecked") static boolean hasAnnotation(final BodyDeclaration d, final String... as) {
     return Optional.ofNullable(d).map(λ -> λ.modifiers()) //
         .map(ms -> Boolean.valueOf(ms.stream() //
@@ -87,7 +81,6 @@ public interface disabling {
             .count() > 0)) //
         .orElse(Boolean.FALSE).booleanValue();
   }
-
   static boolean contains(final String s, final String... ids) {
     return Stream.of(ids).anyMatch(s::contains);
   }
@@ -103,7 +96,6 @@ public interface disabling {
     static boolean specificallyDisabled(final BodyDeclaration ¢) {
       return disabling.hasJavaDocIdentifier(¢, disablers);
     }
-
     static boolean specificallyEnabled(final BodyDeclaration ¢) {
       return !disabling.hasJavaDocIdentifier(¢, disablers) && disabling.hasJavaDocIdentifier(¢, enablers);
     }
@@ -116,7 +108,6 @@ public interface disabling {
     static boolean specificallyDisabled(final BodyDeclaration ¢) {
       return disabling.hasAnnotation(¢, disablers);
     }
-
     static boolean specificallyEnabled(@SuppressWarnings("unused") final BodyDeclaration ¢) {
       return false;
     }

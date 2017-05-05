@@ -13,7 +13,6 @@ public class Empty extends JavadocMarkerNanoPattern {
   @Override protected boolean prerequisites(final MethodDeclaration ¢) {
     return empty(¢);
   }
-
   @Override public String tipperName() {
     return DefaultValue.class.getSimpleName();
   }

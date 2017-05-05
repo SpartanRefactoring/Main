@@ -16,7 +16,8 @@ import fluent.ly.*;
  * @author Yossi Gil, the Technion.
  * @since 24/07/2008
  * @param <T> type of object to be saved, must be {@link Serializable} */
-@Instantiable public class Memento<T> {
+@Instantiable
+public class Memento<T> {
   /** An object's snapshot as obtained by serialization */
   private final byte[] snapshot;
 
@@ -27,7 +28,6 @@ import fluent.ly.*;
   public Memento(final T t) {
     snapshot = object2bytes(t);
   }
-
   /** Restore the saved snapshot
    * @return a copy of the saved object */
   @NotNull public T restore() {
@@ -39,7 +39,6 @@ import fluent.ly.*;
       throw new RuntimeException(¢);
     }
   }
-
   /** Determine whether a given object is equal to the saved snapshot
    * @param ¢ an object to compare to the saved snapshot
    * @return <code><b>true</b></code>, <i>iff</i> the given object is deeply
@@ -48,14 +47,12 @@ import fluent.ly.*;
   public boolean same(final T ¢) {
     return Arrays.equals(snapshot, object2bytes(¢));
   }
-
   /** Determine the size in bytes of the recorded snapshot
    * @return a non-negative integer representing the size of the object in
    *         bytes */
   public int size() {
     return snapshot.length;
   }
-
   /** Convert an object to a byte array
    * @param t an object to convert
    * @return a byte array snapshot of the parameter as obtained by serializing

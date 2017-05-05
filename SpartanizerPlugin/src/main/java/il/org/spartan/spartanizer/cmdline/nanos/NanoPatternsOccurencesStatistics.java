@@ -27,7 +27,6 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
     putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
     ++typeHistogram(type).inner;
   }
-
   public void logNPInfo(final ASTNode n, final String np) {
     final Integer type = Integer.valueOf(nodeType(n));
     if (!iz.methodDeclaration(n))
@@ -36,7 +35,6 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
     ++nanoHistogram(type).get(np).inner;
     countSubtree(n, np);
   }
-
   private void countSubtree(final ASTNode n, final String np) {
     if (!excludeSubtree(np))
       n.accept(new ASTVisitor() {
@@ -50,37 +48,29 @@ public class NanoPatternsOccurencesStatistics extends HashMap<Integer, Pair<Int,
         }
       });
   }
-
   private static boolean excludeSubtree(@SuppressWarnings("unused") final String np) {
     return true;
     // return np.equals(FactoryMethod.class.getSimpleName());
   }
-
   Int typeHistogram(final Integer type) {
     return get(type) == null ? new Int() : get(type).first;
   }
-
   public HashMap<String, Int> nanoHistogram(final Integer type) {
     putIfAbsent(type, new Pair<>(new Int(), new HashMap<>()));
     return get(type).second;
   }
-
   public void logNode(final ASTNode ¢) {
     ¢.accept(typesDistributionCounter);
   }
-
   public int total(final int type) {
     return typeHistogram(box.it(type)).inner;
   }
-
   public int covered(final int type) {
     return nanoHistogram(box.it(type)).values().stream().mapToInt(λ -> λ.inner).sum();
   }
-
   public double coverage(final int type) {
     return format.perc(covered(type), total(type));
   }
-
   public double coverage(final int type0, final int type1, final int... types) {
     int $ = total(type0) + total(type1), covered = covered(type0) + covered(type1);
     for (final int ¢ : types) {

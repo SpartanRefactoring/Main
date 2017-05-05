@@ -31,7 +31,6 @@ public enum format {
   public static double decimal(final double ¢) {
     return Double.valueOf(numberFormatter.format(¢)).doubleValue();
   }
-
   public static double perc(final int a, final int b) {
     return decimal(100 * safe.div(a, b));
   }

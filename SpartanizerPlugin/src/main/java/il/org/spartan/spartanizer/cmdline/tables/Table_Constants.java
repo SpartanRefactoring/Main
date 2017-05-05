@@ -25,18 +25,15 @@ public class Table_Constants extends DeprecatedFolderASTVisitor {
   private static void initializeWriter() {
     writer = new Table(Table_Constants.class);
   }
-
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
     writer.close();
   }
-
   @Override protected void done(final String path) {
     summarizeNPStatistics(path);
     System.err.println(" " + path + " Done");
   }
-
   @Override public boolean visit(final FieldDeclaration ¢) {
     if (iz.constant(¢))//
       if (iz.intType(type(¢)))
@@ -47,7 +44,6 @@ public class Table_Constants extends DeprecatedFolderASTVisitor {
         ++longs;
     return super.visit(¢);
   }
-
   public static void summarizeNPStatistics(final String path) {
     if (writer == null)
       initializeWriter();

@@ -51,51 +51,41 @@ public interface type {
   static inner.implementation baptize(final String name) {
     return baptize(name, "anonymously born");
   }
-
   /** adds a new __ to the system, with fitting description */
   static inner.implementation baptize(final String name, final String description) {
     return have(name) ? bring(name) : new inner.implementation() {
       @Override public String description() {
         return description;
       }
-
       @Override public String key() {
         return name;
       }
-
       @Override public String toString() {
         return name + "";
       }
     }.join();
   }
-
   /** @return the __ object with a given name, or null if no such name exists in
    *         the system */
   static inner.implementation bring(final String name) {
     return inner.types.get(name);
   }
-
   /** @return whether a __ with a given name exists in the system */
   static boolean have(final String name) {
     return inner.types.containsKey(name);
   }
-
   static boolean isBoxedType(final String typeName) {
     return type.boxedTypes.contains(typeName);
   }
-
   static boolean isDouble(final Expression ¢) {
     return type.of(¢) == DOUBLE;
   }
-
   static boolean isInt(final Expression ¢) {
     return type.of(¢) == INT;
   }
-
   static boolean isLong(final Expression ¢) {
     return type.of(¢) == LONG;
   }
-
   /** @param x JD
    * @return {@code true} <i>if</i> the parameter is an expression whose __ is
    *         provably not of __ {@link String}, in the sense used in applying
@@ -105,7 +95,6 @@ public interface type {
   static boolean isNotString(final Expression ¢) {
     return !is.in(of(¢), STRING, ALPHANUMERIC);
   }
-
   static boolean isObject(final Type ¢) {
     if (¢ == null)
       return false;
@@ -117,11 +106,9 @@ public interface type {
         return false;
     }
   }
-
   static boolean isString(final Expression ¢) {
     return of(¢) == STRING;
   }
-
   static boolean isString(final String typeName) {
     if (typeName == null)
       return false;
@@ -133,43 +120,33 @@ public interface type {
         return false;
     }
   }
-
   static boolean isString(final Type ¢) {
     return isString(¢ + "");
   }
-
   static boolean isValueType(final String typeName) {
     return type.valueTypes.contains(typeName);
   }
-
   static boolean isValueType(final Type ¢) {
     return isValueType(!haz.binding(¢) ? ¢ + "" : ¢.resolveBinding().getBinaryName());
   }
-
   // TODO Matteo: Nano-pattern of values: not implemented
   /** @return the __ object of the expression */
   @SuppressWarnings("synthetic-access") static type of(final Expression ¢) {
     return inner.get(¢);
   }
-
   default Certain asPrimitiveCertain() {
     return null;
   }
-
   default Uncertain asPrimitiveUncertain() {
     return null;
   }
-
   default boolean canB(@SuppressWarnings("unused") final Certain __) {
     return false;
   }
-
   String description();
-
   default String fullName() {
     return this + "=" + key() + " (" + description() + ")";
   }
-
   /** @return whether one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
    *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
    *         {@link #INTEGRAL} or {@link #NUMERIC} , {@link #STRING} ,
@@ -177,27 +154,23 @@ public interface type {
   default boolean isAlphaNumeric() {
     return is.in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC, STRING, ALPHANUMERIC);
   }
-
   /** @return whethereither a Primitive.Certain, Primitive.Odd.NULL or a
    *         baptized __ */
   default boolean isCertain() {
     return this == NULL || have(key()) || asPrimitiveCertain() != null;
   }
-
   /** @return whether one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
    *         {@link BYTE} , {@link SHORT} , {@link #INTEGRAL} or false
    *         otherwise */
   default boolean isIntegral() {
     return is.in(this, LONG, INT, CHAR, BYTE, SHORT, INTEGRAL);
   }
-
   /** @return whether one of {@link #INT} , {@link #LONG} , {@link #CHAR} ,
    *         {@link BYTE} , {@link SHORT} , {@link FLOAT} , {@link #DOUBLE} ,
    *         {@link #INTEGRAL} , {@link #NUMERIC} or false otherwise */
   default boolean isNumeric() {
     return is.in(this, INT, LONG, CHAR, BYTE, SHORT, FLOAT, DOUBLE, INTEGRAL, NUMERIC);
   }
-
   /** @return the formal name of this __, the key under which it is stored in
    *         {@link #types}, e.g., "Object", "int", "String", etc. */
   String key();
@@ -212,39 +185,30 @@ public interface type {
     static Certain type(final boolean __) {
       return BOOLEAN;
     }
-
     static Certain type(final byte __) {
       return BYTE;
     }
-
     static Certain type(final char __) {
       return CHAR;
     }
-
     static Certain type(final double __) {
       return DOUBLE;
     }
-
     static Certain type(final float __) {
       return FLOAT;
     }
-
     static Certain type(final int __) {
       return INT;
     }
-
     static Certain type(final long __) {
       return LONG;
     }
-
     static type type(final Object __) {
       return NOTHING;
     }
-
     static Certain type(final short __) {
       return SHORT;
     }
-
     static Certain type(final String __) {
       return STRING;
     }
@@ -259,34 +223,28 @@ public interface type {
     private static implementation get(final Expression ¢) {
       return (implementation) (property.has(¢, propertyName) ? property.get(¢, propertyName) : property.set(¢, propertyName, lookUp(¢, lookDown(¢))));
     }
-
     private static boolean isCastedToShort(final implementation i1, final implementation i2, final Expression x) {
       if (i1 != SHORT || i2 != INT || !iz.numberLiteral(x))
         return false;
       final int $ = Integer.parseInt(token(az.numberLiteral(x)));
       return $ < Short.MAX_VALUE && $ > Short.MIN_VALUE;
     }
-
     private static implementation lookDown(final Assignment x) {
       final implementation $ = get(to(x));
       return !$.isNoInfo() ? $ : get(from(x)).isNumeric() ? NUMERIC : get(from(x));
     }
-
     private static implementation lookDown(final CastExpression ¢) {
       return get(expression(¢)) == NULL ? NULL : baptize(step.type(¢) + "");
     }
-
     private static implementation lookDown(final ClassInstanceCreation ¢) {
       return baptize(step.type(¢) + "");
     }
-
     private static implementation lookDown(final ConditionalExpression x) {
       final implementation $ = get(then(x)), ¢ = get(elze(x));
       return $ == ¢ ? $
           : isCastedToShort($, ¢, elze(x)) || isCastedToShort(¢, $, then(x)) ? SHORT
               : !$.isNumeric() || !¢.isNumeric() ? NOTHING : $.underNumericOnlyOperator(¢);
     }
-
     /** @param x JD
      * @return The most specific Type information that can be deduced about the
      *         expression from it's structure, or {@link #NOTHING} if it cannot
@@ -327,7 +285,6 @@ public interface type {
           return NOTHING;
       }
     }
-
     private static implementation lookDown(final InfixExpression x) {
       final InfixExpression.Operator o = operator(x);
       final List<Expression> es = hop.operands(x);
@@ -336,32 +293,25 @@ public interface type {
         $ = $.underBinaryOperator(o, get(¢));
       return $;
     }
-
     private static implementation lookDown(final MethodInvocation ¢) {
       return "toString".equals(step.name(¢) + "") && arguments(¢).isEmpty() ? STRING : NOTHING;
     }
-
     private static implementation lookDown(final NumberLiteral ¢) {
       return new NumericLiteralClassifier(token(¢)).type();
     }
-
     private static implementation lookDown(final ParenthesizedExpression ¢) {
       return get(core(¢));
     }
-
     private static implementation lookDown(final PostfixExpression ¢) {
       return get(operand(¢)).asNumeric(); // see
                                           // testInDecreamentSemantics
     }
-
     private static implementation lookDown(final PrefixExpression ¢) {
       return get(operand(¢)).under(operator(¢));
     }
-
     private static implementation lookDown(final VariableDeclarationExpression ¢) {
       return baptize(step.type(¢) + "");
     }
-
     /** @param x JD
      * @param i most specific __ information already known, usually from
      *        lookdown
@@ -406,33 +356,27 @@ public interface type {
       default implementation above(final PrefixExpression.Operator ¢) {
         return ¢ == NOT ? BOOLEAN : ¢ != COMPLEMENT ? asNumeric() : asIntegral();
       }
-
       default implementation aboveBinaryOperator(final InfixExpression.Operator ¢) {
         return is.in(¢, EQUALS, NOT_EQUALS) ? this
             : ¢ == op.PLUS2 ? asAlphaNumeric() : op.isBitwise(¢) ? asBooleanIntegral() : op.isShift(¢) ? asIntegral() : asNumeric();
       }
-
       default implementation asAlphaNumeric() {
         return isAlphaNumeric() ? this : ALPHANUMERIC;
       }
-
       default implementation asBooleanIntegral() {
         return isIntegral() || this == BOOLEAN ? this : BOOLEANINTEGRAL;
       }
-
       /** @return one of {@link #INT}, {@link #LONG}, {@link #CHAR},
        *         {@link BYTE}, {@link SHORT} or {@link #INTEGRAL}, in case it
        *         cannot decide */
       default implementation asIntegral() {
         return isIntegral() ? this : INTEGRAL;
       }
-
       /** @return one of {@link #INT}, {@link #LONG}, or {@link #INTEGRAL}, in
        *         case it cannot decide */
       default implementation asIntegralUnderOperation() {
         return isIntUnderOperation() ? INT : asIntegral();
       }
-
       /** @return one of {@link #INT}, {@link #LONG},, {@link #CHAR},
        *         {@link BYTE}, {@link SHORT}, {@link FLOAT}, {@link #DOUBLE},
        *         {@link #INTEGRAL} or {@link #NUMERIC}, in case no further
@@ -440,14 +384,12 @@ public interface type {
       default implementation asNumeric() {
         return isNumeric() ? this : NUMERIC;
       }
-
       /** @return one of {@link #INT}, {@link #LONG}, {@link #FLOAT},
        *         {@link #DOUBLE}, {@link #INTEGRAL} or {@link #NUMERIC}, in case
        *         no further information is available */
       default implementation asNumericUnderOperation() {
         return !isNumeric() ? NUMERIC : isIntUnderOperation() ? INT : this;
       }
-
       /** used to determine whether an integral __ behaves as itself under
        * operations or as an INT.
        * @return whether one of {@link #CHAR}, {@link BYTE}, {@link SHORT} or
@@ -455,19 +397,16 @@ public interface type {
       default boolean isIntUnderOperation() {
         return is.in(this, CHAR, BYTE, SHORT);
       }
-
       /** @return whether one of {@link #NOTHING}, {@link #NULL} or false
        *         otherwise */
       default boolean isNoInfo() {
         return is.in(this, NOTHING, NULL);
       }
-
       default implementation join() {
         assert !have(key()) : "fault: the dictionary should not have __ " + key() + "\n receiver is " + this + "\n This is all I know";
         inner.types.put(key(), this);
         return this;
       }
-
       /** To be used to determine the __ of the result of o being used on the
        * caller
        * @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
@@ -478,7 +417,6 @@ public interface type {
         return ¢ == NOT ? BOOLEAN
             : is.in(¢, DECREMENT, INCREMENT) ? asNumeric() : ¢ != COMPLEMENT ? asNumericUnderOperation() : asIntegralUnderOperation();
       }
-
       /** @return one of {@link #BOOLEAN} , {@link #INT} , {@link #LONG} ,
        *         {@link #DOUBLE} , {@link #STRING} , {@link #INTEGRAL} ,
        *         {@link BOOLEANINTEGRAL} {@link #NUMERIC} , or
@@ -498,7 +436,6 @@ public interface type {
           throw new IllegalArgumentException("o=" + o + " k=" + k.fullName() + "this=" + this);
         return underNumericOnlyOperator(k);
       }
-
       /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
        *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
        *         decide */
@@ -509,19 +446,16 @@ public interface type {
                     : k.isNoInfo() ? underBitwiseOperationNoInfo() //
                         : BOOLEANINTEGRAL;
       }
-
       /** @return one of {@link #BOOLEAN}, {@link #INT}, {@link #LONG},
        *         {@link #INTEGRAL} or {@link BOOLEANINTEGRAL}, in case it cannot
        *         decide */
       default implementation underBitwiseOperationNoInfo() {
         return this == BOOLEAN ? BOOLEAN : !isIntegral() ? BOOLEANINTEGRAL : this == LONG ? LONG : INTEGRAL;
       }
-
       default implementation underIntegersOnlyOperator(final implementation k) {
         final implementation $ = asIntegralUnderOperation(), ¢2 = k.asIntegralUnderOperation();
         return is.in(LONG, $, ¢2) ? LONG : !is.in(INTEGRAL, $, ¢2) ? INT : INTEGRAL;
       }
-
       /** @return one of {@link #INT}, {@link #LONG}, {@link #INTEGRAL},
        *         {@link #DOUBLE}, or {@link #NUMERIC}, in case it cannot
        *         decide */
@@ -543,7 +477,6 @@ public interface type {
         // contaminates
         // INT
       }
-
       /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},
        *         {@link #STRING}, {@link #INTEGRAL}, {@link #NUMERIC} or
        *         {@link #ALPHANUMERIC}, in case it cannot decide */
@@ -575,11 +508,9 @@ public interface type {
         this.description = description;
         this.key = key;
       }
-
       @Override public String description() {
         return description;
       }
-
       @Override public String key() {
         return key;
       }
@@ -619,27 +550,21 @@ public interface type {
         if (s != null)
           inner.types.put(s, this);
       }
-
       @Override public Certain asPrimitiveCertain() {
         return this;
       }
-
       @Override public Uncertain asPrimitiveUncertain() {
         return isIntegral() ? INTEGRAL : isNumeric() ? NUMERIC : isAlphaNumeric() ? ALPHANUMERIC : this != BOOLEAN ? null : BOOLEANINTEGRAL;
       }
-
       @Override public boolean canB(final Certain ¢) {
         return ¢ == this;
       }
-
       @Override public String description() {
         return description;
       }
-
       @Override public String key() {
         return key;
       }
-
       @Override public Iterable<Certain> options() {
         return a.singleton.list(this);
       }
@@ -664,19 +589,15 @@ public interface type {
         this.description = description;
         as.list(ps).forEach(p -> options.addAll(az.stream(p.options()).filter(λ -> !options.contains(λ)).collect(toList())));
       }
-
       @Override public boolean canB(final Certain ¢) {
         return options.contains(¢);
       }
-
       @Override public String description() {
         return description;
       }
-
       @Override public String key() {
         return separate.these(options).by('|');
       }
-
       @Override public Iterable<Certain> options() {
         return options;
       }

@@ -86,35 +86,30 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
       enableAutoBuild();
     listener().pop(message.run_finish.get(operationName(), selection().name, totalTipsInvoked.inner));
   }
-
   /** Default listener configuration of . Simple printing to console.
    * @return {@code this} applicator */
   @Override public NewGUIApplicator defaultListenerNoisy() {
     listener(λ -> as.list(λ).forEach(System.out::print));
     return this;
   }
-
   /** Default listener configuration of . Silent listener.
    * @return {@code this} applicator */
   public NewGUIApplicator defaultListenerSilent() {
     listener((final Object... __) -> {/**/});
     return this;
   }
-
   /** Default selection configuration of . Normal eclipse user selection.
    * @return {@code this} applicator */
   public NewGUIApplicator defaultSelection() {
     selection(Selection.Util.current());
     return this;
   }
-
   /** Default passes configuration of , with few passes.
    * @return {@code this} applicator */
   public NewGUIApplicator fewPasses() {
     setPasses(PASSES_FEW);
     return this;
   }
-
   /** Default passes configuration of , with many passes.
    * @return {@code this} applicator */
   public NewGUIApplicator manyPasses() {
@@ -134,7 +129,6 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     setRunAction(λ -> Integer.valueOf(λ == null ? 0 : inner.apply(λ, selection())));
     return this;
   }
-
   /** Default run misc configuration of . Spartanize the
    * {@link ICompilationUnit} using received {@link GUITraversal}.
    * @param t JD
@@ -148,18 +142,15 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     name(t.tipperName());
     return this;
   }
-
   public Applicator restrictTo(final Class<? extends Tipper<? extends ASTNode>> tipperClass) {
     return restrictTo(Tippers.cache.tipperClassToTipperInstance.get(tipperClass));
   }
-
   /** Default operation name.
    * @return {@code this} applicator */
   public NewGUIApplicator defaultOperationName() {
     operationName(English.Inflection.stem(DEFAULT_STEM));
     return this;
   }
-
   public static NewGUIApplicator plain() {
     return new NewGUIApplicator()//
         .defaultRunAction()//
@@ -168,7 +159,6 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
         // .defaultSelection()// We don't want this here --or
         .defaultOperationName();
   }
-
   /** Factory method.
    * @return default event applicator */
   public static NewGUIApplicator defaultApplicator() {
@@ -194,16 +184,13 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
       this.inputCount = inputCount;
       this.printing = printing;
     }
-
     public String get(final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);
     }
-
     private static String printableAt(final Object[] os, final int index) {
       return English.unknownIfNull(os, λ -> λ[index]);
     }
-
     private static String printableAt(final Object[] os, final int index, final Function<Object, String> operation) {
       return English.unknownIfNull(os, λ -> operation.apply(λ[index]));
     }
@@ -225,7 +212,6 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
     }
     return true;
   }
-
   private static void enableAutoBuild() {
     final IWorkspace w = ResourcesPlugin.getWorkspace();
     if (w == null)
@@ -240,7 +226,6 @@ public class NewGUIApplicator extends Applicator implements Selfie<NewGUIApplica
       note.bug(¢);
     }
   }
-
   @Override public NewGUIApplicator self() {
     return null;
   }

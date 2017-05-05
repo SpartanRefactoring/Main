@@ -49,7 +49,6 @@ public class MultiTypeCatchClause extends ReplaceCurrentNode<TryStatement>//
     }
     return $;
   }
-
   @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
     return null;
   }

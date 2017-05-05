@@ -26,19 +26,15 @@ public final class PutIfAbsent extends NanoPatternTipper<IfStatement> {
   @Override public boolean canTip(final IfStatement ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Put an element in a map if a key is absent";
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }

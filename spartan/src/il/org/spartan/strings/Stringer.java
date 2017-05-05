@@ -12,7 +12,8 @@ import il.org.spartan.utils.*;
  * of a list of items, optionally separated by a separator.
  * @author Yossi Gil (
  * @since 22/02/2006) */
-@Antiexample public class Stringer {
+@Antiexample
+public class Stringer {
   @Nullable public static String compaq(@Nullable final String s) {
     if (s == null)
       return null;
@@ -21,7 +22,6 @@ import il.org.spartan.utils.*;
       $ += Character.isSpaceChar(¢) ? "" : ¢ + "";
     return $;
   }
-
   /** Concatenate a prefix of a string with another string. The prefix is
    * determined by the value of <code>pos</code> parameter:
    * <ul>
@@ -37,7 +37,6 @@ import il.org.spartan.utils.*;
   @NotNull public static String concatAt(@NotNull final String lhs, final int pos, final String rhs) {
     return lhs.substring(0, pos >= 0 ? pos : lhs.length() + pos) + rhs;
   }
-
   /** Add leading zeros to a sequence of consecutive digits appearing at the
    * suffix of a String. This allows sorting to follow the natural order (i.e.:
    * abc2 should come before abc21).
@@ -58,7 +57,6 @@ import il.org.spartan.utils.*;
     @NotNull final String ZEROS = "0000000";
     return $ >= ZEROS.length() ? s : s.substring(0, firstDigitIndex) + ZEROS.substring(0, ZEROS.length() - $) + s.substring(firstDigitIndex);
   }
-
   /** Return the largest prefix of a String the does not contain a certain
    * character.
    * @param s String whose prefix is to be taken
@@ -69,7 +67,6 @@ import il.org.spartan.utils.*;
     final int $ = s.indexOf(c);
     return s.substring(0, $ >= 0 ? $ : s.length());
   }
-
   /** @param <T> type of items in the list
    * @param begin the string starting the string representation.
    * @param ts the actual items in the list, method <code>toString()</code> is
@@ -86,7 +83,6 @@ import il.org.spartan.utils.*;
     $.append(end);
     return $ + "";
   }
-
   /** @param <T> type of items in the list
    * @param begin the string starting the string representation.
    * @param ts the actual items in the list, method <code>toString()</code> is
@@ -103,7 +99,6 @@ import il.org.spartan.utils.*;
     $.append(end);
     return $ + "";
   }
-
   /** @author Oren Rubin
    * @param <T> type of items in the list
    * @param begin the string starting the string representation.
@@ -123,7 +118,6 @@ import il.org.spartan.utils.*;
     $.append(end);
     return $ + "";
   }
-
   /** Return the longest suffix of a String the starts with a certain character.
    * @param s String whose suffix is to be taken
    * @param c First character of the suffix.
@@ -133,7 +127,6 @@ import il.org.spartan.utils.*;
     final int $ = s.indexOf(c);
     return $ < 0 ? "" : s.substring($);
   }
-
   /** Generate a string specifying the values of all declared fields of the
    * given object.
    * @param o Object to inspect
@@ -162,7 +155,6 @@ import il.org.spartan.utils.*;
       b.append(s).append(¢);
     value = b + "";
   }
-
   public <T> Stringer(final String separator, final String nullStr, @NotNull final T... ts) {
     @NotNull final StringBuilder b = new StringBuilder();
     @NotNull final Separator s = new Separator(separator);
@@ -172,11 +164,9 @@ import il.org.spartan.utils.*;
     }
     value = b + "";
   }
-
   public <T> Stringer(final String between, final T... ts) {
     this(between, "null", ts);
   }
-
   @Override @NotNull public String toString() {
     return value;
   }

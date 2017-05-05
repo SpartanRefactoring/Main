@@ -28,7 +28,6 @@ public abstract class Switch extends NodePattern<SwitchStatement> {
       return true;
     }));
   }
-
   public List<SwitchCase> cases() {
     return statements.stream().filter(iz::switchCase).map(az::switchCase).collect(toList());
   }

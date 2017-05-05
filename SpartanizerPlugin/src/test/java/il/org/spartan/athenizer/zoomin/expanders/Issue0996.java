@@ -17,19 +17,16 @@ public class Issue0996 {
             + "a = 0;")
         .stays();
   }
-
   @Test public void b() {
     bloatingOf("int a = f();")//
         .gives("int a;" //
             + "a = f();")
         .stays();
   }
-
   @Test public void c() {
     bloatingOf("final String[] command = { \"/bin/bash\", \"-c\", shellCommand };")//
         .stays();
   }
-
   @Test public void d() {
     bloatingOf("@SuppressWarnings(\"unchecked\") int a = f();")//
         .stays();

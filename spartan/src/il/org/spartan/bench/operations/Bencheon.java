@@ -17,15 +17,12 @@ public abstract class Bencheon extends NamedOperation {
     super(name);
     this.size = size;
   }
-
   public void beforeAllRuns() {
     // Empty
   }
-
   public void beforeEachRun() {
     // Empty
   }
-
   public long netRunTime(final int runs) {
     final long $ = beforeEachMethodTime(runs), begin = System.nanoTime();
     for (int ¢ = 0; ¢ < runs; ++¢) {
@@ -34,7 +31,6 @@ public abstract class Bencheon extends NamedOperation {
     }
     return System.nanoTime() - $ - begin;
   }
-
   @Override @NotNull public final Stopwatch netTime(@NotNull final Stopwatch netTime) {
     beforeAllRuns();
     beforeEachRun();
@@ -43,7 +39,6 @@ public abstract class Bencheon extends NamedOperation {
     netTime.stop();
     return netTime;
   }
-
   @Override public final Stopwatch netTime(@NotNull final Stopwatch netTime, final int runs) {
     beforeAllRuns();
     long $;
@@ -52,14 +47,12 @@ public abstract class Bencheon extends NamedOperation {
     while ($ <= 0);
     return netTime.setTime($).setRuns(runs);
   }
-
   public final void run(final int runs) {
     for (int ¢ = 0; ¢ < runs; ++¢) {
       beforeEachRun();
       call();
     }
   }
-
   long beforeEachMethodTime(final int runs) {
     final long $ = System.nanoTime();
     for (int ¢ = 0; ¢ < runs; ++¢)
@@ -71,22 +64,18 @@ public abstract class Bencheon extends NamedOperation {
     public Core(final String name, final int size) {
       super(name, size);
     }
-
     @Override public final void beforeAllRuns() {
       //
     }
-
     @Override public final void beforeEachRun() {
       //
     }
-
     @Override public long netRunTime(final int runs) {
       final long $ = System.nanoTime();
       for (int ¢ = 0; ¢ < runs; ++¢)
         call();
       return System.nanoTime() - $;
     }
-
     @Override final long beforeEachMethodTime(final int runs) {
       return 0;
     }
@@ -97,7 +86,6 @@ public abstract class Bencheon extends NamedOperation {
     public Empty() {
       super("Empty", 1);
     }
-
     @Override @Nullable public Void call() {
       return null;
     }
@@ -127,15 +115,12 @@ public abstract class Bencheon extends NamedOperation {
       this.beforeEachRun = beforeEachRun;
       this.run = run;
     }
-
     @Override public void beforeAllRuns() {
       sleep(beforeAllRuns);
     }
-
     @Override public void beforeEachRun() {
       sleep(beforeEachRun);
     }
-
     @Override public Void call() {
       sleep(run);
       return null;
@@ -153,7 +138,6 @@ public abstract class Bencheon extends NamedOperation {
     public Hash() {
       super("Hash", 1);
     }
-
     @Override @Nullable public Void call() {
       a = hash(++a);
       return null;

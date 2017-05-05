@@ -37,16 +37,13 @@ public class InfixSimplifyComparisionOfAdditions extends ReplaceCurrentNode<Infi
     final InfixExpression res = subject.pair($, right).to(operator(x));
     return prerequisite(res) ? res : null;
   }
-
   private static boolean isLegalOperation(final InfixExpression ¢) {
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
-
   @Override public boolean prerequisite(final InfixExpression ¢) {
     return new specificity().compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "Simplify the comparison expression: " + ¢;
   }

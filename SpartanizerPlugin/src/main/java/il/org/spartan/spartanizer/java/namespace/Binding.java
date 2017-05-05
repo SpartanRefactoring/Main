@@ -14,7 +14,6 @@ public class Binding {
   private static boolean eq(final Object o1, final Object o2) {
     return o1 == o2 || o1 == null && o2 == null || o2.equals(o1);
   }
-
   /** For Information purposes, {@link __}s are equal if their key is equal. */
   private static boolean eq(final type t1, final type t2) {
     return t1 == null ? t2 == null : t2 != null && t1.key().equals(t2.key());
@@ -32,43 +31,35 @@ public class Binding {
     type = null;
     self = null;
   }
-
   @Override public String toString() {
     return type + "";
   }
-
   public Binding(@SuppressWarnings("unused") final ASTNode blockScope, final Binding hiding, final ASTNode self, final type type) {
     this.hiding = hiding;
     this.self = self;
     this.type = type;
   }
-
   public Binding(final type type) {
     this.type = type;
     self = null;
     hiding = null;
   }
-
   public Binding(@SuppressWarnings("unused") final String key, final type type) {
     this.type = type;
     hiding = null;
     self = null;
   }
-
   public Binding(@SuppressWarnings("unused") final String key, final ASTNode self) {
     this.self = self;
     hiding = null;
     type = null;
   }
-
   public boolean isNumeric() {
     return type.isNumeric();
   }
-
   private boolean equals(final Binding ¢) {
     return eq(hiding, ¢.hiding) && eq(type, ¢.type) && eq(self, ¢.self);
   }
-
   /** @param ¢
    * @return whether the ASTNode (self) and its parent (blockScope) are the same
    *         ones, the __'s key() is the same, and if the Information nodes
@@ -78,7 +69,6 @@ public class Binding {
   @Override public boolean equals(final Object ¢) {
     return ¢ == this || ¢ != null && getClass() == ¢.getClass() && equals((Binding) ¢);
   }
-
   // Required for MapEntry equality, which is, in turn, required for Set
   // containment check, which is required for testing.
   @Override public int hashCode() {

@@ -13,11 +13,9 @@ public enum TestsUtilsSpartanizer {
   public static int countOpportunities(final Traversal t, final CompilationUnit u) {
     return t.collectTips(u).size();
   }
-
   public static <N extends ASTNode> OperandToTipper<N> included(final String from, final Class<N> clazz) {
     return new OperandToTipper<>(from, clazz);
   }
-
   /** About four hundred tests depend on a particular trimming policy. We shall
    * call it {@link #trimmingOf(String)} */
   public static TestOperand trimmingOf(final String from) {
@@ -31,7 +29,6 @@ public enum TestsUtilsSpartanizer {
       super(from);
       this.clazz = clazz;
     }
-
     private N findNode(final Rule<N, Tip> t) {
       assert t != null;
       final WrapIntoComilationUnit wrapIntoComilationUnit = WrapIntoComilationUnit.find(get());
@@ -42,7 +39,6 @@ public enum TestsUtilsSpartanizer {
       assert $ != null;
       return $;
     }
-
     private N firstInstance(final CompilationUnit u) {
       final Wrapper<N> $ = new Wrapper<>();
       u.accept(new ASTVisitor(true) {
@@ -65,12 +61,10 @@ public enum TestsUtilsSpartanizer {
       });
       return $.get();
     }
-
     public OperandToTipper<N> in(final Rule<N, Tip> ¢) {
       assert ¢.check(findNode(¢));
       return this;
     }
-
     public OperandToTipper<N> notIn(final Rule<N, Tip> ¢) {
       assert !¢.check(findNode(¢));
       return this;

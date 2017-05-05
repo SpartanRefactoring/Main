@@ -30,12 +30,10 @@ public class RemoveRedundantSwitchCases extends CarefulTipper<SwitchCase>//
       }
     }.spanning($);
   }
-
   @Override protected boolean prerequisite(final SwitchCase n) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInBlock(n));
     return $ != null && ($.isDefault() || n.isDefault());
   }
-
   @Override public String description(final SwitchCase n) {
     return "Remove switch case " + Trivia.gist(n);
   }

@@ -27,7 +27,6 @@ public final class IfLastInMethodElseEndingWithEmptyReturn extends EagerTipper<I
   @Override @SuppressWarnings("unused") public String description(final IfStatement __) {
     return "Remove redundant return statement in 'else' branch of if statement that terminates this method";
   }
-
   @Override public Tip tip(final IfStatement s) {
     final Block b = az.block(s.getParent());
     if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))

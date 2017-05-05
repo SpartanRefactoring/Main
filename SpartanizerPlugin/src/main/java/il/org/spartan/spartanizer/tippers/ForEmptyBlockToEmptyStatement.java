@@ -20,12 +20,10 @@ public class ForEmptyBlockToEmptyStatement extends ReplaceCurrentNode<ForStateme
     $.setBody($.getAST().newEmptyStatement());
     return $;
   }
-
   @Override protected boolean prerequisite(final ForStatement ¢) {
     final Statement $ = ¢.getBody();
     return iz.block($) && iz.emptyBlock(az.block($));
   }
-
   @Override public Examples examples() {
     return convert("for(x();y();z()){}")//
         .to("for(x();y();z());") //
@@ -33,7 +31,6 @@ public class ForEmptyBlockToEmptyStatement extends ReplaceCurrentNode<ForStateme
         .ignores("for(x();y();z());")//
     ;
   }
-
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Replace 'for(?;?;?){}' with 'for(?;?;?);'";
   }

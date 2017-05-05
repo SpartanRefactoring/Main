@@ -45,7 +45,8 @@ import fluent.ly.*;
  * in {@link Stringify.Option} and modify the options object.
  * @author Yossi Gil, the Technion.
  * @since 28/08/2008 */
-@Utility public enum Stringify {
+@Utility
+public enum Stringify {
   ; // No values in this namespace.
   @NotNull public static <T> ArrayList<String> apply(@NotNull final F<T> f, @NotNull final Iterable<? extends T> ts) {
     @NotNull final ArrayList<String> $ = new ArrayList<>();
@@ -53,7 +54,6 @@ import fluent.ly.*;
       $.add(f.__(¢));
     return $;
   }
-
   /** Create an option object with default setting, except for a specified
    * beginning string.
    * @param begin a non-<code><b>null</b></code> specifying the text to place at
@@ -64,7 +64,6 @@ import fluent.ly.*;
     nonnull(begin);
     return new Option().begin(begin);
   }
-
   /** Create an option object with default setting, except for a specified
    * ending string.
    * @param end a non-<code><b>null</b></code> specifying the text to add at the
@@ -75,7 +74,6 @@ import fluent.ly.*;
     nonnull(end);
     return new Option().end(end);
   }
-
   /** Create an option object with default setting, except for a specified
    * string to replace <code><b>null</b></code> values.
    * @param filler string to replace <code><b>null</b></code> values found in
@@ -85,7 +83,6 @@ import fluent.ly.*;
   @NotNull public static Option filler(final String filler) {
     return new Option().filler(filler);
   }
-
   /** Create a textual representation of an {@link Iterable} collection of
    * objects using a supplied formatting style, after applying a user supplied
    * conversion to each object.
@@ -98,7 +95,6 @@ import fluent.ly.*;
   @NotNull public static <T> String it(@NotNull final Iterable<? extends T> ts, @NotNull final F<T> f, @NotNull final Option o) {
     return it(apply(f, ts), o);
   }
-
   /** Convert an {@link Iterable} collection of objects to a {@link String}
    * using the default formatting style.
    * @param <T> type of arguments to be converted.
@@ -109,7 +105,6 @@ import fluent.ly.*;
   @NotNull public static <T> String it(@NotNull final Iterable<T> ¢) {
     return it(¢, Option.defaultStyle);
   }
-
   /** Create a textual representation of an {@link Iterable} collection of
    * objects using a supplied formatting style.
    * @param <T> type of arguments to be converted.
@@ -120,7 +115,6 @@ import fluent.ly.*;
   @NotNull public static <T> String it(@NotNull final Iterable<T> ts, @NotNull final Option o) {
     return makeList(asStringArray(prune(ts, o), o.filler()), o);
   }
-
   /** Convert an array of objects to a {@link String} using the default
    * formatting style.
    * @param <T> type of arguments to be converted.
@@ -131,7 +125,6 @@ import fluent.ly.*;
   @NotNull public static <T> String it(@NotNull final T[] ¢) {
     return it(¢, Option.defaultStyle);
   }
-
   /** Convert an {@link Iterable} collection of objects to a {@link String}
    * using a supplied style.
    * @param <T> type of arguments to be converted.
@@ -142,7 +135,6 @@ import fluent.ly.*;
   @NotNull public static <T> String it(@NotNull final T[] ts, @NotNull final Option o) {
     return makeList(asStringArray(prune(ts, o), o.filler()), o);
   }
-
   /** Create an option object with default setting, except for the specification
    * <code><b>null</b></code> are to be omitted.
    * @return a newly created options object with the default settings, except
@@ -151,7 +143,6 @@ import fluent.ly.*;
   @NotNull public static Option omitNulls() {
     return new Option().omitNulls();
   }
-
   /** Create an option object with default setting, except for a specified
    * separator string.
    * @param separator a non-<code><b>null</b></code> specifying the text used to
@@ -162,11 +153,9 @@ import fluent.ly.*;
     nonnull(separator);
     return new Option().separator(separator);
   }
-
   private static <T> String[] asStringArray(@NotNull final Iterable<T> ts, final String nullFiller) {
     return asStringCollection(ts, nullFiller).toArray(new String[0]);
   }
-
   @NotNull private static <T> String[] asStringArray(@NotNull final T[] ts, final String nullFiller) {
     @NotNull final String[] $ = new String[ts.length];
     int i = 0;
@@ -174,7 +163,6 @@ import fluent.ly.*;
       $[i++] = ¢ != null ? ¢ + "" : nullFiller;
     return $;
   }
-
   @NotNull private static <T> Collection<String> asStringCollection(@NotNull final Iterable<T> ts, @Nullable final String nullFiller) {
     @NotNull final ArrayList<String> $ = new ArrayList<>();
     for (@Nullable final T ¢ : ts)
@@ -184,15 +172,12 @@ import fluent.ly.*;
         $.add(nullFiller);
     return $;
   }
-
   @NotNull private static String makeList(@NotNull final String[] ss, @NotNull final Option o) {
     return ss.length == 0 ? "" : o.begin() + Separate.by(ss, o.separator()) + o.end();
   }
-
   @NotNull private static <T> Iterable<T> prune(@NotNull final Iterable<T> ts, @NotNull final Option o) {
     return o.notOmittingNulls() ? ts : prune.nulls(ts);
   }
-
   @NotNull private static <T> T[] prune(@NotNull final T[] ts, @NotNull final Option o) {
     return o.notOmittingNulls() ? ts : prune.nulls(ts);
   }
@@ -216,160 +201,129 @@ import fluent.ly.*;
     public Option() {
       this(defaultStyle);
     }
-
     private Option(@NotNull final Option o) {
       __begin = o.__begin;
       __end = o.__end;
       __filler = o.__filler;
       __separator = o.__separator;
     }
-
     private Option(final String __begin, final String __end, final String __filler, final String __separator) {
       this.__begin = __begin;
       this.__end = __end;
       this.__filler = __filler;
       this.__separator = __separator;
     }
-
     public String begin() {
       return __begin;
     }
-
     @NotNull public Option begin(final String begin) {
       __begin = begin;
       return this;
     }
-
     public String end() {
       return __end;
     }
-
     @NotNull public Option end(final String end) {
       __end = end;
       return this;
     }
-
     @Nullable public String filler() {
       return __filler;
     }
-
     @NotNull public Option filler(final String filler) {
       __filler = filler;
       return this;
     }
-
     public boolean notOmittingNulls() {
       return __filler != null;
     }
-
     @NotNull public Option omitNulls() {
       __filler = null;
       return this;
     }
-
     public String separator() {
       return __separator;
     }
-
     @NotNull public Option separator(final String separator) {
       __separator = separator;
       return this;
     }
   }
 
-  @SuppressWarnings("static-method") public static class TEST {
+  @SuppressWarnings("static-method")
+  public static class TEST {
     private static String[] makeArray(final String... ¢) {
       return ¢;
     }
-
     @NotNull private static Collection<String> makeCollection(@NotNull final String... ss) {
       @NotNull final ArrayList<String> $ = new ArrayList<>();
       for (final String ¢ : ss)
         $.add(¢);
       return $;
     }
-
     @NotNull public Collection<String> makeCollectionABC() {
       return makeCollection("A", "B", "C");
     }
-
     @Test public void testArrayFillerSeparatorBeginEnd() {
       azzert.that(it(//
           makeArray(null, "A", null, "B", "C", null), //
           filler("__").begin("[[").end("]]").separator(":")//
       ), is("[[__:A:__:B:C:__]]"));
     }
-
     @Test public void testArrayNoBegin() {
       azzert.that(it(makeArray("A", "B", "C"), begin("")), is("A,B,C]"));
     }
-
     @Test public void testArrayNoEnd() {
       azzert.that(it(makeArray("A", "B", "C"), end("")), is("[A,B,C"));
     }
-
     @Test public void testDefaultsArray() {
       azzert.that(it(makeArray("A", "B", "C")), is("[A,B,C]"));
     }
-
     @Test public void testMakeBeginOption() {
       assert begin("(") != null;
     }
-
     @Test public void testMakeEndOption() {
       assert end(")") != null;
     }
-
     @Test public void testMakeFillerOption() {
       assert filler(")") != null;
     }
-
     @Test public void testMakeIgnoreNulls() {
       assert filler(")") != null;
     }
-
     @Test public void testMakeSeparatorOption() {
       assert separator(")") != null;
     }
-
     @Test public void testNulledList() {
       azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null)), is("[(null),A,(null),B,(null),C,(null)]"));
     }
-
     @Test public void testNulledListPruned() {
       azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null), filler(null)), is("[A,B,C]"));
     }
-
     @Test public void testNulledListPrunedWithOmitNulls() {
       azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null), omitNulls()), is("[A,B,C]"));
     }
-
     @Test public void testPrunedEmptyCollectionBeginEnd() {
       azzert.that(it(//
           makeCollection(), //
           omitNulls().separator(",").begin("(").end(")")), is(""));
     }
-
     @Test public void testPrunedEmptyCollectionOmittingNullsBeginEnd() {
       azzert.that(it(//
           makeCollection(null, null, null), //
           omitNulls().separator(",").begin("(").end(")")), is(""));
     }
-
     @Test public void testPrunedNulledListCommas() {
       azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null), omitNulls().separator(",")), is("[A,B,C]"));
     }
-
     @Test public void testPrunedNulledListCommasCallsBeginEnd() {
       azzert.that(it(//
           makeCollection(null, "A", null, "B", null, "C", null), //
           omitNulls().separator(",").begin("(").end(")")), is("(A,B,C)"));
     }
-
     @Test public void testPrunedNulledListSemiColons() {
       azzert.that(it(makeCollection(null, "A", null, "B", null, "C", null), omitNulls().separator(";")), is("[A;B;C]"));
     }
-
     @Test public void testSimpleList() {
       azzert.that(it(makeCollection("A", "B", "C")), is("[A,B,C]"));
     }

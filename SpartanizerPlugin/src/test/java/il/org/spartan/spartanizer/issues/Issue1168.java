@@ -15,7 +15,6 @@ public class Issue1168 {
         + "a += c;\n" //
         + "a = 1;").stays();
   }
-
   @Test public void b() {
     trimmingOf("/**/" //
         + "a = b;\n" //

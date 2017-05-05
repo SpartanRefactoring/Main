@@ -25,12 +25,10 @@ enum CollectClassMetrics {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
-
   static CompilationUnit spartanize(final CompilationUnit $) {
     new TextualTraversals().once($);
     return $;
   }
-
   private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
@@ -40,20 +38,16 @@ enum CollectClassMetrics {
       note.bug(¢);
     }
   }
-
   private static void go(final String javaCode) {
     output.put("Characters", javaCode.length());
     report("Before-", (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
-
   private static void go(final String... where) {
     new FilesGenerator(".java").from(where).forEach(CollectClassMetrics::go);
   }
-
   private static CSVStatistics init() {
     return new CSVStatistics(OUTPUT, "property");
   }
-
   /** fault, what happens if we have many classes in the same file? Also, we do
    * not want to count imports, and package instructions. Write a method that
    * finds all classes, which could be none, at the upper level, and collect on

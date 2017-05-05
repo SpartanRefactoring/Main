@@ -24,7 +24,6 @@ public abstract class NonNullCache<T> {
   @NotNull public T value() {
     return value != null ? value : (value = ____());
   }
-
   /** This function is to be implemented by clients, giving a method for
    * computing the cached value. This class protects this function, guaranteeing
    * that it would only be called once.
@@ -39,14 +38,12 @@ public abstract class NonNullCache<T> {
     @Test public void firstReturnsFirstOffset() {
       azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
-
     @Test public void restReturnsFirstOffset() {
       value();
       azzert.that(value(), is(SOME_OFFSET + "x0"));
       for (int ¢ = 0; ¢ < 10; ++¢)
         azzert.that(value(), is(SOME_OFFSET + "x0"));
     }
-
     @Override @NotNull protected String ____() {
       return SOME_OFFSET + "x" + sqr(evaluations++);
     }

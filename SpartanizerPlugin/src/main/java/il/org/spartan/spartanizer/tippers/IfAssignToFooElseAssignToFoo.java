@@ -26,7 +26,6 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
   @Override protected ASTNode highlight() {
     return to;
   }
-
   public IfAssignToFooElseAssignToFoo() {
     andAlso("Then part is an assignment", //
         () -> not.nil(thenAssignment = extract.assignment(then)));
@@ -37,11 +36,9 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
     andAlso("Assignment operators are compatible", //
         () -> lisp.areEqual(thenOperator = thenAssignment.getOperator(), elzeAssignment.getOperator()));
   }
-
   @Override public String description() {
     return "Consolidate assignments to " + to;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(current, //
         pair(to, //
@@ -49,7 +46,6 @@ public final class IfAssignToFooElseAssignToFoo extends IfAbstractPattern //
         ).toStatement(thenOperator), g);
     return r;
   }
-
   @Override public Examples examples() {
     return //
     convert("if(x) a += 3; else a += 9;")//

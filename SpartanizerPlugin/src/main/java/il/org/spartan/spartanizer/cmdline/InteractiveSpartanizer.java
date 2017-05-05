@@ -24,7 +24,6 @@ public class InteractiveSpartanizer {
           .fixedPoint(c.name().equals(GuessedContext.COMPILATION_UNIT_LOOK_ALIKE) ? input : c.intoCompilationUnit(input) + ""));
     }
   }
-
   static String read() {
     String $ = "";
     try (Scanner s = new Scanner(System.in)) {
@@ -34,23 +33,19 @@ public class InteractiveSpartanizer {
     }
     return $;
   }
-
   public InteractiveSpartanizer disable(final Class<? extends TipperCategory> ¢) {
     traversals.traversal.configuration.disable(¢);
     return this;
   }
-
   /** Apply trimming repeatedly, until no more changes
    * @param from what to process
    * @return trimmed text */
   public String fixedPoint(final String from) {
     return traversals.fixed(from + "");
   }
-
   public String fixedPoint(final ASTNode from) {
     return traversals.fixed(from + "");
   }
-
   public String once(final String from) {
     return traversals.once(from);
   }
@@ -61,7 +56,6 @@ public class InteractiveSpartanizer {
     traversals.traversal.configuration.add(c, ts);
     return this;
   }
-
   @SafeVarargs public final <N extends ASTNode> InteractiveSpartanizer remove(final Class<N> c, final Tipper<N>... ts) {
     traversals.traversal.configuration.remove(c, ts);
     return this;

@@ -30,7 +30,6 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
   @Override public String description(final MethodDeclaration ¢) {
     return "Split " + ¢.getName() + " into two logical parts";
   }
-
   @Override public List<ASTNode> go(final ASTRewrite r, final MethodDeclaration d, @SuppressWarnings("unused") final TextEditGroup __) {
     if (!isValid(d))
       return null;
@@ -42,11 +41,9 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     }
     return null;
   }
-
   private static boolean isValid(final MethodDeclaration ¢) {
     return !¢.isConstructor() && ¢.getBody() != null && statements(¢.getBody()).size() >= MINIMAL_STATEMENTS_COUNT;
   }
-
   /** @param d JD
    * @param ds variables list
    * @return whether the method and the list contains same variables, in
@@ -60,7 +57,6 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     // NANO: to rest of function
     return parameters(d).stream().allMatch(λ -> $.contains(λ.getType() + ""));
   }
-
   private static List<ASTNode> splitMethod(final ASTRewrite r, final MethodDeclaration d, final List<VariableDeclaration> ds,
       final Statement forkPoint, final boolean equalParams) {
     ds.sort(new NaturalVariablesOrder(d));
@@ -89,26 +85,21 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
     $.add(d2);
     return $;
   }
-
   private static void fixStatements(final MethodDeclaration d, final MethodDeclaration dx, final ASTRewrite r) {
     statements(body(dx)).clear();
     statements(body(d)).forEach(λ -> statements(dx).add(az.statement(r.createCopyTarget(λ))));
   }
-
   private static void fixName(final MethodDeclaration d2, final boolean equalParams) {
     if (equalParams)
       d2.setName(d2.getAST().newSimpleName(fixName(d2.getName() + "")));
   }
-
   private static void fixName(final MethodInvocation i, final boolean equalParams) {
     if (equalParams)
       i.setName(i.getAST().newSimpleName(fixName(i.getName() + "")));
   }
-
   private static String fixName(final String ¢) {
     return !Character.isDigit(¢.charAt(¢.length() - 1)) ? ¢ + "2" : ¢.replaceAll(".$", ¢.charAt(¢.length() - 1) - '0' + 1 + "");
   }
-
   private static void fixParameters(final MethodDeclaration d, final MethodDeclaration d2, final Iterable<VariableDeclaration> ds) {
     d2.parameters().clear();
     for (final VariableDeclaration v : ds)
@@ -123,7 +114,6 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
         parameters(d2).add(sv);
       }
   }
-
   private static void fixJavadoc(final MethodDeclaration d, final Collection<VariableDeclaration> ds) {
     final Javadoc j = d.getJavadoc();
     if (j == null)
@@ -153,7 +143,6 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       ts.add(tagPosition, e);
     }
   }
-
   @Override public ChildListPropertyDescriptor listDescriptor(@SuppressWarnings("unused") final MethodDeclaration __) {
     return TypeDeclaration.BODY_DECLARATIONS_PROPERTY;
   }
@@ -181,11 +170,9 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
           ++variablesTerminated;
       }
     }
-
     @Override public List<Statement> availableStatements() {
       return statements.subList(0, Math.min((int) (MAXIMAL_STATEMENTS_BEFORE_FORK_DIVIDER * statements.size()) + 1, statements.size() - 2));
     }
-
     @SuppressWarnings("unchecked") public void update() {
       final Iterable<VariableDeclaration> vs = as.list(uses.keySet());
       for (final VariableDeclaration ¢ : vs) {
@@ -209,19 +196,15 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
             inactive.add(¢);
         }
     }
-
     public boolean isOptionalForkPoint() {
       return variablesTerminated > 0;// && active.isEmpty();
     }
-
     public List<VariableDeclaration> usedVariables() {
       return new ArrayList<>(uses.keySet());
     }
-
     @SuppressWarnings("boxing") private void setUsesMapping(final VariableDeclaration d, final int starting) {
       range.from(starting).to(statements.size()).forEach(λ -> setUsesMapping(d, statements.get(λ)));
     }
-
     private void setUsesMapping(final VariableDeclaration d, final Statement s) {
       if (collect.usesOf(d.getName()).in(s).isEmpty())
         return;
@@ -239,7 +222,6 @@ public class ExtractMethodSuffix extends ListReplaceCurrentNode<MethodDeclaratio
       ps = parameters(method);
       ss = body(method) == null ? an.empty.list() : statements(method);
     }
-
     @Override public int compare(final VariableDeclaration d1, final VariableDeclaration d2) {
       return ps.contains(d1) ? !ps.contains(d2) ? 1 : ps.indexOf(d1) - ps.indexOf(d2)
           : ps.contains(d2) ? -1

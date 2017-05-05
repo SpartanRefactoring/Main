@@ -460,7 +460,6 @@ class ZZZ___Fixture_ModelClass {
               return sum(super.hashCode(), hashCode() * $.hashCode() + ¢);
             return sum(super.hashCode(), hashCode() * $.hashCode()) + something.hashCode();
           }
-
           @ScopeSize(4) @method int sum(@ScopeSize(1) @parameter final int a, @ScopeSize(1) @parameter final int b) {
             return z + a + b + fieldInAnonymousClass + anotherFieldInAnonymousClass;
           }

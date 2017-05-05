@@ -33,11 +33,9 @@ public final class AssignmentAndUpdateAssignmentToSame extends GoToNextStatement
   @Override public Examples examples() {
     return convert("a+=3;b=6;").to("a+=3+6");
   }
-
   @Override public String description(final Assignment ¢) {
     return "Consolidate assignment to " + to(¢) + " with subsequent update assignment";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;

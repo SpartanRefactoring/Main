@@ -71,7 +71,6 @@ public class issue0352 {
                 + "            return Maps.immutableEntry(nextRange.lowerBound, nextRange);        }      };")
             .stays();
   }
-
   @Test public void b() {
     trimmingOf("if (a())     return 0;   if (a())     return 1;   else {     int b = c(5) + 7;     return c(b+b+b);}")
         .gives("if (a())   return 0; if (a())   return 1;int b=c(5) + 7;return c(b + b + b);");

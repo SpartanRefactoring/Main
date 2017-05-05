@@ -28,7 +28,6 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
   @Override public String description(final EnhancedForStatement ¢) {
     return "Rename iterator '" + ¢.getParameter().getName() + "' to ¢ in " + Trivia.gist(¢);
   }
-
   @Override public Tip tip(final EnhancedForStatement s) {
     final MethodDeclaration p = yieldAncestors.untilClass(MethodDeclaration.class).from(s);
     if (p == null)
@@ -50,7 +49,6 @@ public final class EnhancedForParameterRenameToIt extends EagerTipper<EnhancedFo
       }
     }.spanning(s);
   }
-
   public static SimpleName newCurrent(final EnhancedForStatement ¢) {
     return ¢.getAST().newSimpleName(notation.cent);
   }

@@ -47,11 +47,9 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
         () -> invocations.stream().filter(λ -> "toString".equals(λ.getName().getIdentifier())).allMatch(λ -> λ.arguments().isEmpty()));
     andAlso("Can be simplified", () -> not.nil(simplification = simplification()));
   }
-
   @Override public String description() {
     return "Use \"+\" operator to concatenate strings";
   }
-
   @Override public Examples examples() {
     return convert("x.print(new StringBuilder(\"Description:\\t\").append(x+1).append(\"\\n\").toString())") //
         .to("x.print(\"Description:\\t\" + (x+1) + \"\\n\")") //
@@ -61,20 +59,16 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
         .ignores("new StringBuilder(\"Description:\\t\").append(x,y,z)") //
         .ignores("new StringBuilder(\"Description:\\t\").toString(x)");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(invocations.isEmpty() ? current : the.lastOf(invocations), simplification, g);
     return r;
   }
-
   @Override protected ASTNode[] span() {
     return new Expression[] { invocations.isEmpty() ? current : the.lastOf(invocations) };
   }
-
   @Override protected ASTNode highlight() {
     return invocations.isEmpty() ? current : the.lastOf(invocations);
   }
-
   private Expression simplification() {
     final List<Expression> $ = arguments(current.arguments());
     $.addAll(invocations.stream().reduce(an.empty.list(), (l, i) -> {
@@ -88,15 +82,12 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
       $.add(0, make.emptyString(current));
     return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(the.headOf($)) : subject.operands($).to(Operator.PLUS);
   }
-
   public static boolean needPreliminaryStringUnsafe(final List<Expression> ¢) {
     return ¢.isEmpty() || !iz.stringLiteral(the.headOf(¢)) && !iz.name(the.headOf(¢)) && !iz.methodInvocation(the.headOf(¢));
   }
-
   public static boolean needPreliminaryStringSafe(final List<Expression> ¢) {
     return ¢.isEmpty() || !iz.stringLiteral(the.headOf(¢));
   }
-
   private static List<Expression> arguments(final List<?> argumentz) {
     return argumentz.stream().filter(λ -> λ instanceof Expression).map(λ -> addParenthesisIfNeeded((Expression) λ)).collect(toList());
   }

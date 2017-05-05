@@ -17,7 +17,6 @@ public enum Statistic {
     @Override public String toString() {
       return "N/A";
     }
-
     @Override public double of(final RealStatistics ¢) {
       return ¢.missing();
     }
@@ -41,7 +40,6 @@ public enum Statistic {
     @Override public double of(final RealStatistics ¢) {
       return ¢.mad();
     }
-
     @Override public String toString() {
       return "M.A.D";
     }
@@ -77,7 +75,6 @@ public enum Statistic {
     }
   };
   public abstract double of(RealStatistics s);
-
   /** @param p percents of quartile (for q1 - 25, q3 - 75, median - 50) */
   static double quartile(final int p, final double[] ds) {
     Arrays.sort(ds);

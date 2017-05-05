@@ -22,14 +22,12 @@ public enum Count {
     statements.first.inner += enumerate.statements(¢);
     ternaries.first.inner += enumerate.ternaries(¢);
   }
-
   public static void after(final ASTNode ¢) {
     ifStatements.second.inner += enumerate.ifStatements(¢);
     loopsStatements.second.inner += enumerate.loops(¢);
     statements.second.inner += enumerate.statements(¢);
     ternaries.second.inner += enumerate.ternaries(¢);
   }
-
   public static void print() {
     System.out.println("statements: " + statements.first.inner + " ---> " + statements.second.inner//
         + " ratio: [" + safe.div(statements.second.inner, statements.first.inner) + "]");
@@ -40,7 +38,6 @@ public enum Count {
     System.out.println("ternaries: " + ternaries.first.inner + " ---> " + ternaries.second.inner//
         + " ratio: [" + safe.div(ternaries.second.inner, ternaries.first.inner) + "]");
   }
-
   private static Pair<Int, Int> newPair() {
     return new Pair<>(new Int(), new Int());
   }

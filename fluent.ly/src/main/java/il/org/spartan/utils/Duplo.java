@@ -11,16 +11,13 @@ public interface Duplo<T> {
   default NeighborsMerger<T> neighborsMerger() {
     return NeighborsMerger.empty();
   }
-
   /** return the element stored in this instance; */
   T self();
-
   /** do not override
    * @return a stream representation of the element stored in this instance */
   default Stream<T> selfStream() {
     return self() == null ? Stream.empty() : Stream.of(self());
   }
-
   /** return a stream of elements encapsulated by in this instance
    * @return a stream representation of the element stored in this instance */
   default Stream<T> neighborsStream() {
@@ -39,17 +36,16 @@ public interface Duplo<T> {
 
   interface Compound<T> extends Duplo<T> {
     Iterable<? extends Duplo<T>> neighbors();
-
     @Override default Stream<T> neighborsStream() {
       return neighborsMerger().append(self(), neighbors());
     }
   }
 
-  @FunctionalInterface interface NeighborsMerger<T> {
+  @FunctionalInterface
+  interface NeighborsMerger<T> {
     static <T> NeighborsMerger<T> empty() {
       return (self, others) -> Stream.empty();
     }
-
     Stream<T> append(T self, Iterable<? extends Duplo<T>> others);
   }
 }

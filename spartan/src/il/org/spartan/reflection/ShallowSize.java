@@ -56,83 +56,64 @@ public class ShallowSize {
   public static int arraySize(final int length) {
     return arraySize(length, referenceSize());
   }
-
   public static int of(@NotNull final boolean it[]) {
     return arraySize(it.length, 1);
   }
-
   public static int of(@NotNull final byte it[]) {
     return arraySize(it.length, 1);
   }
-
   public static int of(@NotNull final char it[]) {
     return arraySize(it.length, 2);
   }
-
   public static int of(@NotNull final Class<?> ¢) {
     final Class<?> $ = ¢.getSuperclass();
     return align(intrinsic(¢) + ($ != null ? of($) : headerSize()));
   }
-
   public static int of(@NotNull final double it[]) {
     return arraySize(it.length, 8);
   }
-
   public static int of(@NotNull final float it[]) {
     return arraySize(it.length, 4);
   }
-
   public static int of(@NotNull final int it[]) {
     return arraySize(it.length, 4);
   }
-
   public static int of(@NotNull final long it[]) {
     return arraySize(it.length, 8);
   }
-
   public static int of(@NotNull final Object it[]) {
     return arraySize(it.length);
   }
-
   public static int of(@Nullable final Object ¢) {
     return ¢ == null ? 0 : of(¢.getClass());
   }
-
   public static int of(@NotNull final short it[]) {
     return arraySize(it.length, 2);
   }
-
   public static int referenceSize() {
     return 4;
   }
-
   static int align(final int ¢) {
     return 8 * (¢ - 1) / 8 + 8;
   }
-
   static int arraySize(final int length, final int size) {
     return align(headerSize() + lengthSize() + size * length);
   }
-
   static int headerSize() {
     return 8;
   }
-
   static int intrinsic(@NotNull final Class<?> c) {
     int $ = 0;
     for (@NotNull final Field ¢ : c.getDeclaredFields())
       $ += size(¢);
     return $;
   }
-
   static int intrinsic(@NotNull final Object ¢) {
     return intrinsic(¢.getClass());
   }
-
   static int lengthSize() {
     return 4;
   }
-
   static int size(@NotNull final Field ¢) {
     if (Modifier.isStatic(¢.getModifiers()))
       return 0;

@@ -16,21 +16,18 @@ public class LastTest {
         .gives("last(li)")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("li.get(li.size()-1);")//
         .using(new Last(), MethodInvocation.class)//
         .gives("last(li);")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("omg(li.get(0), li.get(li.size()-1));")//
         .using(MethodInvocation.class, new First(), new Last())//
         .gives("omg(first(li),last(li));")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("li.m().get(li.m().size()-1);")//
         .using(new Last(), MethodInvocation.class)//

@@ -13,15 +13,12 @@ public interface JohnDoe {
   static boolean property(final SingleVariableDeclaration ¢) {
     return ¢ != null && property(type(¢), name(¢));
   }
-
   static boolean property(final String typeName, final String variableName) {
     return JavaTypeNameParser.make(typeName).isGenericVariation(variableName);
   }
-
   static boolean property(final Type t, final SimpleName n) {
     return n != null && property(t + "", identifier(n));
   }
-
   static boolean property(final String ¢) {
     return ¢.length() == 1 || is.in(¢, shortNames);
   }

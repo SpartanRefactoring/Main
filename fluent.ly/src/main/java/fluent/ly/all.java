@@ -24,7 +24,6 @@ public enum all {
         return false;
     return true;
   }
-
   /** Determine whether all elements in an array are not null.
    * @param <T> type of elements in the array
    * @param ts an array of elements to be tested

@@ -43,7 +43,6 @@ public class ClassProxy<T> {
   public static Class<?> findClass(final String className) throws ClassNotFoundException {
     return CLASSPATH.load(normalizeClassName(className));
   }
-
   /** Tries to determine which dot ('<tt>.</tt>') characters in a class name are
    * represents package name nesting and which are represent class nesting. This
    * is necessary since a dot representing class nesting is to be replaced by a
@@ -102,7 +101,6 @@ public class ClassProxy<T> {
     this.clazz = clazz;
     this.className = clazz.getName();
   }
-
   /** Instantiate with a given class name in the format returned by
    * {@link Class#getName()}
    * @param className a non-<code><b>null</b></code> representing the class
@@ -111,26 +109,21 @@ public class ClassProxy<T> {
     nonnull(className);
     this.className = normalizeClassName(className);
   }
-
   // ------------------------------------------------
   // Delegation to encapsulated {@link Class} object
   // ------------------------------------------------
   @NotNull public Class<?> asSubclass(@NotNull final Class<?> ¢) throws ClassNotFoundException {
     return clazz().asSubclass(¢);
   }
-
   public T cast(final Object ¢) throws ClassNotFoundException {
     return clazz().cast(¢);
   }
-
   public String className() {
     return className != null ? className : (className = retrieveClassName());
   }
-
   public boolean desiredAssertionStatus() throws ClassNotFoundException {
     return clazz().desiredAssertionStatus();
   }
-
   @Override public boolean equals(final Object $) {
     try {
       return clazz().equals($);
@@ -138,138 +131,105 @@ public class ClassProxy<T> {
       return false;
     }
   }
-
   public <A extends Annotation> A getAnnotation(@NotNull final Class<A> annotationClass) throws ClassNotFoundException {
     return clazz().getAnnotation(annotationClass);
   }
-
   public Annotation[] getAnnotations() throws ClassNotFoundException {
     return clazz().getAnnotations();
   }
-
   public String getCanonicalName() throws ClassNotFoundException {
     return clazz().getCanonicalName();
   }
-
   public Class<?>[] getClasses() throws ClassNotFoundException {
     return clazz().getClasses();
   }
-
   public ClassLoader getClassLoader() throws ClassNotFoundException {
     return clazz().getClassLoader();
   }
-
   public Class<?> getComponentType() throws ClassNotFoundException {
     return clazz().getComponentType();
   }
-
   public Constructor<?> getConstructor(final Class<?>... parameterTypes) throws NoSuchMethodException, SecurityException, ClassNotFoundException {
     return clazz().getConstructor(parameterTypes);
   }
-
   public Constructor<?>[] getConstructors() throws SecurityException, ClassNotFoundException {
     return clazz().getConstructors();
   }
-
   public Annotation[] getDeclaredAnnotations() throws ClassNotFoundException {
     return clazz().getDeclaredAnnotations();
   }
-
   public Class<?>[] getDeclaredClasses() throws SecurityException, ClassNotFoundException {
     return clazz().getDeclaredClasses();
   }
-
   public Constructor<?> getDeclaredConstructor(final Class<?>... parameterTypes)
       throws ClassNotFoundException, NoSuchMethodException, SecurityException {
     return clazz().getDeclaredConstructor(parameterTypes);
   }
-
   public Constructor<?>[] getDeclaredConstructors() throws SecurityException, ClassNotFoundException {
     return clazz().getDeclaredConstructors();
   }
-
   public Field getDeclaredField(@NotNull final String name) throws NoSuchFieldException, SecurityException, ClassNotFoundException {
     return clazz().getDeclaredField(name);
   }
-
   public Field[] getDeclaredFields() throws SecurityException, ClassNotFoundException {
     return clazz().getDeclaredFields();
   }
-
   public Method getDeclaredMethod(@NotNull final String name, final Class<?>... parameterTypes)
       throws NoSuchMethodException, SecurityException, ClassNotFoundException {
     return clazz().getDeclaredMethod(name, parameterTypes);
   }
-
   public Method[] getDeclaredMethods() throws SecurityException, ClassNotFoundException {
     return clazz().getDeclaredMethods();
   }
-
   public Class<?> getDeclaringClass() throws ClassNotFoundException {
     return clazz().getDeclaringClass();
   }
-
   public Class<?> getEnclosingClass() throws ClassNotFoundException {
     return clazz().getEnclosingClass();
   }
-
   public Constructor<?> getEnclosingConstructor() throws ClassNotFoundException {
     return clazz().getEnclosingConstructor();
   }
-
   public Method getEnclosingMethod() throws ClassNotFoundException {
     return clazz().getEnclosingMethod();
   }
-
   public T[] getEnumConstants() throws ClassNotFoundException {
     return clazz().getEnumConstants();
   }
-
   public Field getField(@NotNull final String name) throws NoSuchFieldException, SecurityException, ClassNotFoundException {
     return clazz().getField(name);
   }
-
   public Field[] getFields() throws SecurityException, ClassNotFoundException {
     return clazz().getFields();
   }
-
   public Type[] getGenericInterfaces() throws ClassNotFoundException {
     return clazz().getGenericInterfaces();
   }
-
   public Type getGenericSuperclass() throws ClassNotFoundException {
     return clazz().getGenericSuperclass();
   }
-
   public Class<?>[] getInterfaces() throws ClassNotFoundException {
     return clazz().getInterfaces();
   }
-
   public Method getMethod(@NotNull final String name, final Class<?>... parameterTypes)
       throws NoSuchMethodException, SecurityException, ClassNotFoundException {
     return clazz().getMethod(name, parameterTypes);
   }
-
   public Method[] getMethods() throws SecurityException, ClassNotFoundException {
     return clazz().getMethods();
   }
-
   public int getModifiers() throws ClassNotFoundException {
     return clazz().getModifiers();
   }
-
   public String getName() throws ClassNotFoundException {
     return clazz().getName();
   }
-
   public Package getPackage() throws ClassNotFoundException {
     return clazz().getPackage();
   }
-
   public ProtectionDomain getProtectionDomain() throws ClassNotFoundException {
     return clazz().getProtectionDomain();
   }
-
   /** Which other classes does this class refer to?
    * @return an array with names of all classes that this class uses
    * @throws IOException in case the constants' pool could not be read or found
@@ -277,7 +237,6 @@ public class ClassProxy<T> {
   @NotNull public String[] getReferencedClasses() throws ClassNotFoundException {
     return classInfo().getReferencedClasses();
   }
-
   /** Which <code><b>double</b></code>s are found in this class's constants'
    * pool?
    * @return an array with <code><b>double</b></code>s that this class uses.
@@ -286,7 +245,6 @@ public class ClassProxy<T> {
   @NotNull public double[] getReferencedDoubles() throws ClassNotFoundException {
     return classInfo().getReferencedDoubles();
   }
-
   /** Which <code><b>float</b></code>s are found in this class's constants'
    * pool?
    * @return an array with <code><b>float</b></code>s that this class uses.
@@ -295,7 +253,6 @@ public class ClassProxy<T> {
   @NotNull public float[] getReferencedFloats() throws ClassNotFoundException {
     return classInfo().getReferencedFloats();
   }
-
   /** Which <code><b>int</b></code>s are found in this class's constants' pool?
    * @return an array with <code><b>int</b></code>s that this class uses.
    * @throws IOException in case the constants' pool could not be read or found
@@ -303,7 +260,6 @@ public class ClassProxy<T> {
   @NotNull public int[] getReferencedInts() throws ClassNotFoundException {
     return classInfo().getReferencedInts();
   }
-
   /** Which <code><b>long</b></code>s are found in this class's constants' pool?
    * @return an array with <code><b>long</b></code>s that this class uses.
    * @throws IOException in case the constants' pool could not be read or found
@@ -311,7 +267,6 @@ public class ClassProxy<T> {
   @NotNull public long[] getReferencedLongs() throws ClassNotFoundException {
     return classInfo().getReferencedLongs();
   }
-
   /** Which {@link String}s does this class use?
    * @return an array with all {@link String}s that this class uses
    * @throws IOException in case the constants' pool could not be read or found
@@ -319,31 +274,24 @@ public class ClassProxy<T> {
   @NotNull public String[] getReferencedStrings() throws ClassNotFoundException {
     return classInfo().getReferencedStrings();
   }
-
   public URL getResource(final String name) throws ClassNotFoundException {
     return clazz().getResource(name);
   }
-
   public InputStream getResourceAsStream(final String name) throws ClassNotFoundException {
     return clazz().getResourceAsStream(name);
   }
-
   public Object[] getSigners() throws ClassNotFoundException {
     return clazz().getSigners();
   }
-
   @NotNull public String getSimpleName() throws ClassNotFoundException {
     return clazz().getSimpleName();
   }
-
   public Class<?> getSuperclass() throws ClassNotFoundException {
     return clazz().getSuperclass();
   }
-
   public TypeVariable<?>[] getTypeParameters() throws ClassNotFoundException {
     return clazz().getTypeParameters();
   }
-
   @Override public int hashCode() {
     try {
       return clazz().hashCode();
@@ -351,59 +299,45 @@ public class ClassProxy<T> {
       return 0;
     }
   }
-
   public boolean isAnnotation() throws ClassNotFoundException {
     return clazz().isAnnotation();
   }
-
   public boolean isAnnotationPresent(final Class<? extends Annotation> annotationClass) throws ClassNotFoundException {
     return clazz().isAnnotationPresent(annotationClass);
   }
-
   public boolean isAnonymousClass() throws ClassNotFoundException {
     return clazz().isAnonymousClass();
   }
-
   public boolean isArray() throws ClassNotFoundException {
     return clazz().isArray();
   }
-
   public boolean isAssignableFrom(@NotNull final Class<?> ¢) throws ClassNotFoundException {
     return clazz().isAssignableFrom(¢);
   }
-
   public boolean isEnum() throws ClassNotFoundException {
     return clazz().isEnum();
   }
-
   public boolean isInstance(final Object ¢) throws ClassNotFoundException {
     return clazz().isInstance(¢);
   }
-
   public boolean isInterface() throws ClassNotFoundException {
     return clazz().isInterface();
   }
-
   public boolean isLocalClass() throws ClassNotFoundException {
     return clazz().isLocalClass();
   }
-
   public boolean isMemberClass() throws ClassNotFoundException {
     return clazz().isMemberClass();
   }
-
   public boolean isPrimitive() throws ClassNotFoundException {
     return clazz().isPrimitive();
   }
-
   public boolean isSynthetic() throws ClassNotFoundException {
     return clazz().isSynthetic();
   }
-
   public T newInstance() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
     return clazz().newInstance();
   }
-
   @Override @Nullable public String toString() {
     try {
       return clazz() + "";
@@ -411,7 +345,6 @@ public class ClassProxy<T> {
       return null;
     }
   }
-
   /** Fill in constants' pool information, if it was not filled before.
    * @return the filled-in {@link #inner} data member
    * @throws IOException in case the constants' pool could not be read
@@ -420,18 +353,15 @@ public class ClassProxy<T> {
   @Nullable private ClassInfo classInfo() throws ClassNotFoundException {
     return inner != null ? inner : (inner = retrievePool());
   }
-
   @NotNull private Class<? extends T> clazz() throws ClassNotFoundException {
     return clazz != null ? clazz : (clazz = retrieveClazz());
   }
-
   @Nullable private InputStream open() throws ClassNotFoundException {
     @Nullable final InputStream $ = CLASSFILES.open(className());
     if ($ == null)
       throw new ClassNotFoundException();
     return $;
   }
-
   private String retrieveClassName() {
     nonnull(clazz);
     final String $ = clazz.getName();
@@ -448,13 +378,11 @@ public class ClassProxy<T> {
     }
     return $;
   }
-
   @NotNull private Class<? extends T> retrieveClazz() throws ClassNotFoundException {
     nonnull(className);
     @NotNull @SuppressWarnings("unchecked") final Class<T> $ = (Class<T>) findClass(className);
     return $;
   }
-
   @Nullable private ClassInfo retrievePool() throws ClassNotFoundException {
     return ClassInfo.make(open());
   }

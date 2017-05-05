@@ -23,15 +23,12 @@ public class ClassFilesVisitor extends FileSystemVisitor {
   public ClassFilesVisitor(final File[] from, final FileOnlyAction visitor) {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
-
   public ClassFilesVisitor(@NotNull final Iterable<String> from, final FileOnlyAction visitor) {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
-
   public ClassFilesVisitor(final String from, final FileOnlyAction visitor) {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }
-
   public ClassFilesVisitor(final String[] from, final FileOnlyAction visitor) {
     super(from, visitor, CLASS_FILE_EXTENSIONS);
   }

@@ -36,7 +36,6 @@ public class Issue0895 {
             "     }")//
         .stays();
   }
-
   /** Introduced by Yogi on Tue-Mar-28-03:29:43-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_publicFinalClassAPublicStaticVoidaFinalBbCcNewCDPublicVoiddTryeCatchEfFgbCatchGfFgb() {

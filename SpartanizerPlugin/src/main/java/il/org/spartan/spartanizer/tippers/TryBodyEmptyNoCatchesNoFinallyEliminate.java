@@ -19,7 +19,6 @@ public final class TryBodyEmptyNoCatchesNoFinallyEliminate extends RemovingTippe
     final Block $ = ¢.getFinally();
     return statements(body(¢)).isEmpty() && ¢.catchClauses().isEmpty() && ($ == null || statements($).isEmpty());
   }
-
   @Override public String description(final TryStatement ¢) {
     return "Eliminate this no-__ try block " + Trivia.gist(¢.getBody());
   }

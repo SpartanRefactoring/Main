@@ -24,15 +24,12 @@ public abstract class SingleVariableDeclarationInitialized extends NodePattern<S
       return true;
     });
   }
-
   protected Type type() {
     return type;
   }
-
   final SimpleName name() {
     return name;
   }
-
   protected Expression initializer() {
     return initializer;
   }

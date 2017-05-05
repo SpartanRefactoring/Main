@@ -15,29 +15,24 @@ public class Issue0974 {
     bloatingOf("i++;")//
         .stays();
   }
-
   @Test public void test1() {
     bloatingOf("i--;")//
         .stays();
   }
-
   @Test public void test2() {
     bloatingOf("++i;")//
         .gives("i+=1;")//
         .stays();
   }
-
   @Test public void test3() {
     bloatingOf("--i;")//
         .gives("i-=1;")//
         .stays();
   }
-
   @Test public void test4() {
     bloatingOf("x = f(i--);")//
         .stays();
   }
-
   @Test public void test5() {
     bloatingOf("x = f(i++);")//
         .stays();

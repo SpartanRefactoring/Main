@@ -52,7 +52,6 @@ public class SpartanMovie2 extends AbstractHandler {
     sleep(SLEEP_END);
     return null;
   }
-
   private void runUIJob(final IWorkbenchPage p, final IMarker m, final IResource file, final GUITraversal t) throws PartInitException {
     new UIJob(NAME) {
       @Override public IStatus runInUIThread(final IProgressMonitor monitor) {
@@ -71,7 +70,6 @@ public class SpartanMovie2 extends AbstractHandler {
         }
         return Status.OK_STATUS;
       }
-
       /** The current SpartanMovie is not releaseable. Some big changes should
        * be made.
        * @author Ori Roth
@@ -88,7 +86,6 @@ public class SpartanMovie2 extends AbstractHandler {
       }
     }.schedule();
   }
-
   /** Just in case, so that editors don't pile up. Not sure this is the right
    * behavior
    * <p>
@@ -100,7 +97,6 @@ public class SpartanMovie2 extends AbstractHandler {
   public static void mightNotBeSlick(final IWorkbenchPage ¢) {
     close(¢);
   }
-
   private static IMarker[] getMarkers(final IResource $) {
     try {
       return $.findMarkers(Builder.MARKER_TYPE, true, IResource.DEPTH_ONE);
@@ -109,7 +105,6 @@ public class SpartanMovie2 extends AbstractHandler {
       return new IMarker[0];
     }
   }
-
   private static List<ICompilationUnit> getCompilationUnits() {
     try {
       return eclipse.compilationUnits(eclipse.currentCompilationUnit(), nullProgressMonitor);
@@ -118,7 +113,6 @@ public class SpartanMovie2 extends AbstractHandler {
       return an.empty.list();
     }
   }
-
   static boolean focus(final IWorkbenchPage p, final IFile f) {
     try {
       IDE.openEditor(p, f, true);
@@ -128,11 +122,9 @@ public class SpartanMovie2 extends AbstractHandler {
     }
     return true;
   }
-
   static void close(final IWorkbenchPage ¢) {
     ¢.closeAllEditors(true);
   }
-
   /** The current SpartanMovie is not releaseable. Some big changes should be
    * made.
    * @author Ori Roth
@@ -147,18 +139,15 @@ public class SpartanMovie2 extends AbstractHandler {
       return false;
     }
   }
-
   static void refresh(final IWorkbenchPage ¢) {
     ¢.getWorkbenchWindow().getShell().update();
     ¢.getWorkbenchWindow().getShell().layout(true);
   }
-
   static void moveProgressDialog() {
     final Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell(), parentShell = shell == null ? null : shell.getParent().getShell();
     if (shell != null && parentShell != null)
       shell.setLocation(parentShell.getBounds().x + parentShell.getBounds().width - shell.getBounds().width, parentShell.getBounds().y);
   }
-
   /** Finds the first marker in array in terms of textual location. The
    * "CHAR_START" attribute is not something I have added, but an existing and
    * well maintained marker attribute.

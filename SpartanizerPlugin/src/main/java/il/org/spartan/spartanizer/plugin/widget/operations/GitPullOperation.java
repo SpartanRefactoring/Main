@@ -11,11 +11,9 @@ public class GitPullOperation extends GitOperation {
   @Override public String description() {
     return "Git pull";
   }
-
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.egit.ui/icons/obj16/pull.png";
   }
-
   @Override protected void gitOperation(final Git ¢) throws Throwable {
     ¢.pull().call();
   }

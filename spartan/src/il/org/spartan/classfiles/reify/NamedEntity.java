@@ -10,7 +10,6 @@ public class NamedEntity {
   public NamedEntity(final String name) {
     this.name = name;
   }
-
   public final String name() {
     return name;
   }
