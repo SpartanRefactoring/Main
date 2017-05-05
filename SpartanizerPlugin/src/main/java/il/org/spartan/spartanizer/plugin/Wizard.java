@@ -13,7 +13,6 @@ public final class Wizard extends RefactoringWizard {
   public Wizard(final Refactoring refactoring) {
     super(refactoring, PREVIEW_EXPAND_FIRST_NODE);
   }
-
   @Override protected void addUserInputPages() {
     forget.em(new Object[] { this });
   }

@@ -37,7 +37,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   public boolean apply(final ICompilationUnit ¢) {
     return run(¢, new TextSelection(0, 0)) > 0;
   }
-
   public int apply(final WrappedCompilationUnit u) {
     final TextFileChange textChange = init(u);
     final ASTRewrite r = go(u.build().compilationUnit);
@@ -63,7 +62,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     }
     return traversal.rewriteCount();
   }
-
   public int apply(final WrappedCompilationUnit $, final AbstractSelection<?> s) {
     if (s != null && s.textSelection != null)
       setSelection(s.textSelection);
@@ -71,7 +69,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       setSelection((TrackerSelection) s);
     return apply($);
   }
-
   @Override public RefactoringStatus checkFinalConditions(final IProgressMonitor pm) throws CoreException, OperationCanceledException {
     changes.clear();
     totalTips = 0;
@@ -84,18 +81,15 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     pm.done();
     return new RefactoringStatus();
   }
-
   @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor __) {
     final RefactoringStatus $ = new RefactoringStatus();
     if (iCompilationUnit == null && marker == null)
       $.merge(RefactoringStatus.createFatalErrorStatus("Nothing to do."));
     return $;
   }
-
   public Tips collectTips(final CompilationUnit ¢) {
     return traversal.collectTips(¢);
   }
-
   /** Count the number of tips offered by this instance.
    * <p>
    * This is a slow operation. Do not call light-headedly.
@@ -111,12 +105,10 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     }
     return totalTips;
   }
-
   @Override public Change createChange(final IProgressMonitor pm) throws OperationCanceledException {
     setProgressMonitor(pm);
     return new CompositeChange(getName(), changes.toArray(new Change[changes.size()]));
   }
-
   /** creates an ASTRewrite, under the context of a text marker, which contains
    * the changes
    * @param pm a progress monitor in which to display the progress of the
@@ -126,7 +118,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   public ASTRewrite createRewrite(final IMarker ¢) {
     return computeRewrite(compileCompilationUnit(¢));
   }
-
   /** a quickfix which automatically performs the tip
    * @author Boris van Sosin <code><boris.van.sosin [at] gmail.com></code>
    * @since 2013/07/01
@@ -136,7 +127,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       @Override public String getLabel() {
         return getName();
       }
-
       @Override public void run(final IMarker m) {
         try {
           runAsMarkerFix(m);
@@ -146,25 +136,20 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       }
     };
   }
-
   /** @return a quick fix with a preview for this instance. */
   public IMarkerResolution getFixWithPreview() {
     return getFixWithPreview(getName());
   }
-
   /** @return compilationUnit */
   public ICompilationUnit getiCompilationUnit() {
     return iCompilationUnit;
   }
-
   @Override public String getName() {
     return name;
   }
-
   public IProgressMonitor getProgressMonitor() {
     return progressMonitor;
   }
-
   public int go() {
     getProgressMonitor().beginTask("Creating change for " + compilationUnitName(), IProgressMonitor.UNKNOWN);
     final TextFileChange textChange = textFileChange();
@@ -186,18 +171,15 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     getProgressMonitor().done();
     return traversal.rewriteCount();
   }
-
   private IProgressMonitor newSubProgressMonitor() {
     return eclipse.newSubMonitor(getProgressMonitor());
   }
-
   /** @param iCompilationUnit the compilationUnit to set
    * @return */
   public GUITraversal iCompilationUnit(final ICompilationUnit ¢) {
     iCompilationUnit = ¢;
     return self();
   }
-
   public int run(final ICompilationUnit $, final ITextSelection s) {
     try {
       iCompilationUnit($);
@@ -221,7 +203,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     }
     return traversal.rewriteCount();
   }
-
   /** @param pm a progress monitor in which to display the progress of the
    *        refactoring
    * @param ¢ the marker for which the refactoring needs to system
@@ -230,60 +211,47 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
   public RefactoringStatus runAsMarkerFix(final IMarker ¢) throws CoreException {
     return innerRunAsMarkerFix(¢, false);
   }
-
   @Override public GUITraversal self() {
     return this;
   }
-
   public GUITraversal setMarker(final IMarker ¢) {
     traversal.setRange(Ranger.make(¢));
     return self(() -> marker = ¢);
   }
-
   public GUITraversal setName(final String ¢) {
     return self(() -> name = ¢);
   }
-
   public GUITraversal setProgressMonitor(final IProgressMonitor ¢) {
     return self(() -> progressMonitor = ¢);
   }
-
   public void setSelection(final AbstractSelection<?> ¢) {
     setSelection(¢ == null || ¢.textSelection == null ? null : ¢.textSelection);
   }
-
   public GUITraversal setSelection(final ITextSelection ¢) {
     return setSelection(Ranger.make(¢));
   }
-
   private GUITraversal setSelection(final Range ¢) {
     traversal.setRange(¢);
     return this;
   }
-
   public void setSelection(final TrackerSelection ¢) {
     setSelection(¢ == null || ¢.textSelection == null || ¢.textSelection.getLength() <= 0 || ¢.textSelection.isEmpty() ? null : ¢.textSelection);
   }
-
   @Override public String toString() {
     return getName();
   }
-
   private void collectAllTips() throws CoreException {
     getProgressMonitor().beginTask("Collecting tips...", IProgressMonitor.UNKNOWN);
     scanCompilationUnits(getUnits());
     getProgressMonitor().done();
   }
-
   private IFile compilationUnitIFile() {
     return (IFile) iCompilationUnit.getResource();
   }
-
   // TODO: Ori - can't we find Eclipse's version? --yg
   private CompilationUnit compileCompilationUnit(final IMarker ¢) {
     return az.compilationUnit(makeAST.COMPILATION_UNIT.from(¢, getProgressMonitor()));
   }
-
   private ASTRewrite computeRewrite(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
@@ -291,7 +259,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     getProgressMonitor().done();
     return $;
   }
-
   /** @param s Text for the preview dialog
    * @return a quickfix which opens a refactoring wizard with the tipper */
   private IMarkerResolution getFixWithPreview(final String s) {
@@ -302,7 +269,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       @Override public String getLabel() {
         return "Apply after preview";
       }
-
       @Override public void run(final IMarker m) {
         setMarker(m);
         try {
@@ -314,11 +280,9 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       }
     };
   }
-
   private Collection<ICompilationUnit> getUnits() throws JavaModelException {
     return compilationUnits(iCompilationUnit != null ? iCompilationUnit : currentCompilationUnit(), newSubMonitor(getProgressMonitor()));
   }
-
   private TextFileChange init(final WrappedCompilationUnit ¢) {
     iCompilationUnit(¢.descriptor);
     getProgressMonitor().beginTask("Creating change for compilation unit...", IProgressMonitor.UNKNOWN);
@@ -326,7 +290,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     $.setTextType("java");
     return $;
   }
-
   private RefactoringStatus innerRunAsMarkerFix(final IMarker m, final boolean preview) throws CoreException {
     marker = m;
     getProgressMonitor().beginTask("Running refactoring...", IProgressMonitor.UNKNOWN);
@@ -335,7 +298,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     getProgressMonitor().done();
     return new RefactoringStatus();
   }
-
   private ASTRewrite go(final CompilationUnit ¢) {
     note.logger.fine("Weaving maximal rewrite of " + ¢);
     getProgressMonitor().beginTask("Weaving maximal rewrite ...", IProgressMonitor.UNKNOWN);
@@ -343,7 +305,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     getProgressMonitor().done();
     return $;
   }
-
   /** @param u JD
    * @throws CoreException */
   private int scanCompilationUnit(final ICompilationUnit u, final IProgressMonitor m) throws CoreException {
@@ -358,7 +319,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
     m.done();
     return traversal.rewriteCount();
   }
-
   private void scanCompilationUnitForMarkerFix(final IMarker m, final boolean preview) throws CoreException {
     getProgressMonitor().beginTask("Parsing of " + m, IProgressMonitor.UNKNOWN);
     final ICompilationUnit u = makeAST.iCompilationUnit(m);
@@ -377,7 +337,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
         getProgressMonitor().done();
       }
   }
-
   /** Creates a change from each compilation unit and stores it in the changes
    * list
    * @throws IllegalArgumentException
@@ -388,13 +347,11 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
       scanCompilationUnit(¢, newSubProgressMonitor());
     getProgressMonitor().done();
   }
-
   private TextFileChange textFileChange() {
     final TextFileChange $ = new TextFileChange(compilationUnitName(), compilationUnitIFile());
     $.setTextType("java");
     return $;
   }
-
   protected String compilationUnitName() {
     return iCompilationUnit.getElementName();
   }
@@ -404,7 +361,6 @@ public final class GUITraversal extends Refactoring implements Selfie<GUITravers
         @Override public void begin() {
           TraversalTapper.super.begin();
         }
-
         @Override public void end() {
           TraversalTapper.super.end();
         }

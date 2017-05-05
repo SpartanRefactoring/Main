@@ -24,7 +24,6 @@ public final class IfPenultimateInMethodFollowedBySingleStatement extends GoToNe
   @Override public String description(final IfStatement ¢) {
     return "Convert return into else in  if(" + ¢.getExpression() + ")";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (elze(s) != null || !iz.lastInMethod(nextStatement))
       return null;

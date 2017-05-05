@@ -37,7 +37,6 @@ public enum TypeNamesCollector {
     }
     System.err.println("Look for your output here: " + w.close());
   }
-
   private static void collect(final CompilationUnit u) {
     // noinspection SameReturnValue
     u.accept(new ASTVisitor(true) {
@@ -45,7 +44,6 @@ public enum TypeNamesCollector {
         record(hop.simpleName(¢) + "");
         return true;
       }
-
       void record(final String longName) {
         longNames.putIfAbsent(longName, Integer.valueOf(0));
         longNames.put(longName, box.it(longNames.get(longName).intValue() + 1));
@@ -55,7 +53,6 @@ public enum TypeNamesCollector {
       }
     });
   }
-
   private static void collect(final File f) {
     try {
       collect(FileUtils.read(f));
@@ -63,11 +60,9 @@ public enum TypeNamesCollector {
       note.bug(¢);
     }
   }
-
   private static void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
-
   private static void collect(final String... where) {
     new FilesGenerator(".java").from(where).forEach(TypeNamesCollector::collect);
   }

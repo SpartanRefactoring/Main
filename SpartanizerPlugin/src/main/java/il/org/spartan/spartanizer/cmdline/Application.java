@@ -31,7 +31,6 @@ public final class Application implements IApplication {
       return $.getLineNumber();
     }
   }
-
   /** Count the number of lines in File named filename
    * @param fileName
    * @return
@@ -39,7 +38,6 @@ public final class Application implements IApplication {
   static int countLines(final String fileName) throws IOException {
     return countLines(new File(fileName));
   }
-
   static MethodInvocation getMethodInvocation(final CompilationUnit u, final int lineNumber, final MethodInvocation i) {
     final Wrapper<MethodInvocation> $ = new Wrapper<>();
     u.accept(new ASTVisitor(true) {
@@ -51,13 +49,11 @@ public final class Application implements IApplication {
     });
     return $.get() == null ? i : $.get();
   }
-
   private static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
   }
-
   private static void printHelpPrompt() {
     System.out.println("Spartan Refactoring plugin command line");
     System.out.println("Usage: eclipse -application il.org.spartan.spartanizer.application -nosplash [OPTIONS] PATH");
@@ -79,7 +75,6 @@ public final class Application implements IApplication {
     System.out.println("  -logPath Output dir for logs");
     System.out.println("");
   }
-
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
@@ -113,7 +108,6 @@ public final class Application implements IApplication {
     }
     return $;
   }
-
   @SuppressWarnings("OverlyComplexMethod") public Object startInner(final IApplicationContext arg0) {
     if (parseArguments(as.list((String[]) arg0.getArguments().get(IApplicationContext.APPLICATION_ARGS))))
       return IApplication.EXIT_OK;
@@ -151,7 +145,6 @@ public final class Application implements IApplication {
       printLineStatistics(fileStats);
     return IApplication.EXIT_OK;
   }
-
   private FileStats process(final File f, final ICompilationUnit u) throws IOException, JavaModelException {
     final FileStats $ = new FileStats(f);
     final GUITraversal t = new GUITraversal();
@@ -162,15 +155,12 @@ public final class Application implements IApplication {
     $.countLinesAfter();
     return $;
   }
-
   @Override public void stop() {
     ___.nothing();
   }
-
   String determineOutputFilename(final String path) {
     return optOverwrite ? path : path.substring(0, path.lastIndexOf('.')) + "__new.java";
   }
-
   /** Discard compilation unit u
    * @param u */
   private void discardCompilationUnit(final ICompilationUnit u) {
@@ -181,7 +171,6 @@ public final class Application implements IApplication {
       note.bug(this, ¢);
     }
   }
-
   void discardTempIProject() {
     try {
       javaProject.close();
@@ -190,13 +179,11 @@ public final class Application implements IApplication {
       note.bug(this, ¢);
     }
   }
-
   private ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
-
   private boolean parseArguments(final Collection<String> args) {
     if (args == null || args.isEmpty()) {
       printHelpPrompt();
@@ -224,7 +211,6 @@ public final class Application implements IApplication {
     }
     return optPath == null;
   }
-
   private void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
     if (p.exists())
@@ -244,7 +230,6 @@ public final class Application implements IApplication {
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }
-
   private void printLineStatistics(final Iterable<FileStats> ss) {
     System.out.println("\nLine differences:");
     if (optIndividualStatistics)
@@ -263,11 +248,9 @@ public final class Application implements IApplication {
       System.out.println("  Lines after: " + totalAfter);
     }
   }
-
   private void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
-
   @SuppressWarnings("boxing") private void printChangeStatistics(final Collection<FileStats> ss) {
     System.out.println("\nTotal changes made: ");
     if (!optIndividualStatistics)
@@ -292,23 +275,18 @@ public final class Application implements IApplication {
     FileStats(final File file) throws IOException {
       linesBefore = countLines(this.file = file);
     }
-
     public void countLinesAfter() throws IOException {
       linesAfter = countLines(determineOutputFilename(file.getAbsolutePath()));
     }
-
     public String fileName() {
       return file.getName();
     }
-
     public int getLinesAfter() {
       return linesAfter;
     }
-
     public int getLinesBefore() {
       return linesBefore;
     }
-
     public int getRoundStat(final int $) {
       try {
         return roundStats.get($).intValue();

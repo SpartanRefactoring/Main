@@ -20,18 +20,15 @@ public enum have {
   public static boolean booleanLiteral(final Expression... ¢) {
     return booleanLiteral(Stream.of(¢));
   }
-
   /** Determine whether a boolean literal is present
    * @param ¢ JD
    * @return whether one or more of the elements that is a boolean literal. */
   public static boolean booleanLiteral(final Iterable<Expression> ¢) {
     return booleanLiteral(az.stream(¢));
   }
-
   public static boolean booleanLiteral(final Stream<Expression> ¢) {
     return ¢.anyMatch(iz::booleanLiteral);
   }
-
   /** Determine whether the boolean literal {@code false} is present
    * @param ¢ JD
    * @return whether one or more of the elements is the boolean literal
@@ -39,35 +36,30 @@ public enum have {
   public static boolean falseLiteral(final Iterable<Expression> ¢) {
     return az.stream(¢).anyMatch(iz.literal::false¢);
   }
-
   /** Determine whether a literal is present
    * @param ¢ JD
    * @return whether one or more of the elements that is a literal. */
   public static boolean literal(final Expression... ¢) {
     return Stream.of(¢).anyMatch(iz::literal);
   }
-
   /** Determine whether a literal is present
    * @param ¢ JD
    * @return whether one or more of the elements that is a literal. */
   public static boolean literal(final Collection<Expression> ¢) {
     return ¢.stream().anyMatch(iz::literal);
   }
-
   /** Determine whether a numerical literal is present
    * @param ¢ JD
    * @return whether one or more of the elements that is a numeric literal. */
   public static boolean numericLiteral(final Expression... ¢) {
     return Stream.of(¢).anyMatch(iz::numericLiteral);
   }
-
   /** Determine whether a numerical literal is present
    * @param ¢ JD
    * @return whether one or more of the elements that is a numeric literal. */
   public static boolean numericLiteral(final Iterable<Expression> ¢) {
     return az.stream(¢).anyMatch(iz::numericLiteral);
   }
-
   /** Determine whether the boolean literal {@code true} is present
    * @param ¢ JD
    * @return whether one or more of the elements is the boolean literal

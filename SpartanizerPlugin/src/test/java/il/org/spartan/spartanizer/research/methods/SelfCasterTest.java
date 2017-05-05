@@ -12,15 +12,12 @@ public class SelfCasterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
     setNano(new SelfCaster());
   }
-
   @Test public void a() {
     assert not("@Override public boolean unfiltered(A a){}");
   }
-
   @Test public void b() {
     assert not("public static int hashCode(char value){return value;  }");
   }
-
   @Test public void c() {
     assert is("@SuppressWarnings(\"unchecked\") <T>Predicate<T> withNarrowedType(){  return (Predicate<T>)this;}");
   }

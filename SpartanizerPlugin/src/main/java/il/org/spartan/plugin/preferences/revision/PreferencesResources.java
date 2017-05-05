@@ -74,11 +74,9 @@ public enum PreferencesResources {
     public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());
     }
-
     public static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
-
     private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
       return Stream.of(TipperGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
@@ -92,7 +90,6 @@ public enum PreferencesResources {
       id = clazz.getCanonicalName();
       label = clazz.getSimpleName();
     }
-
     @SuppressWarnings("static-method") public boolean isEnabled() {
       // This preferences implementation is deprecated. Will be removed soon.
       // --or

@@ -29,15 +29,12 @@ public final class HoldsForAny extends NanoPatternTipper<EnhancedForStatement> {
     return tippers.canTip(az.block(parent(x)))//
         || tippers2.canTip(x);
   }
-
   @Override public Tip pattern(final EnhancedForStatement x) {
     return !tippers.canTip(az.block(parent(x))) ? tippers2.firstTip(x) : tippers.firstTip(az.block(parent(x)));
   }
-
   @Override public String description() {
     return "Return whether any elements in collection match predicate";
   }
-
   @Override public String tipperName() {
     return Aggregate.class.getSimpleName();
   }

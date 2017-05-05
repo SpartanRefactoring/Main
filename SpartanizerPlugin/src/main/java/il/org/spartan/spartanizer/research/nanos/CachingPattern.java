@@ -24,27 +24,21 @@ public final class CachingPattern extends NanoPatternTipper<IfStatement> {
   @Override public boolean canTip(final IfStatement x) {
     return tipper.check(az.block(parent(x)));
   }
-
   @Override public Tip pattern(final IfStatement $) {
     return tipper.tip(az.block(parent($)));
   }
-
   @Override public Category category() {
     return Category.Field;
   }
-
   @Override public String description() {
     return "A field which its value is defined by an expression which is evaluated only on the first access";
   }
-
   @Override public String technicalName() {
     return "IfX₁IsNullInitializeWithX₂ReturnX₁";
   }
-
   @Override public String example() {
     return tipper.pattern();
   }
-
   @Override public String symbolycReplacement() {
     return tipper.replacement();
   }

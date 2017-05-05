@@ -25,7 +25,6 @@ public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     $.setExpression(copy.of(¢));
     return $;
   }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Add parentheses to InfixExpression who's parent is also InfixExpression";
   }

@@ -10,17 +10,14 @@ public class CleanerVisitor extends ASTVisitor {
     ¢.delete();
     return true;
   }
-
   @Override public boolean visit(final LineComment ¢) {
     ¢.delete();
     return true;
   }
-
   @Override public boolean visit(final BlockComment ¢) {
     ¢.delete();
     return true;
   }
-
   @Override public boolean visit(final ImportDeclaration ¢) {
     ¢.delete();
     return true;

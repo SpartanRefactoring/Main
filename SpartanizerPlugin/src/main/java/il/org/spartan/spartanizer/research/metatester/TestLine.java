@@ -7,7 +7,6 @@ public class TestLine extends SourceLine {
     super(testClassName, content, lineNo);
     this.testName = testName.replace("@Test", "");
   }
-
   @SuppressWarnings("boxing") public String generateTestMethod() {
     return String.format("\tpublic @Test void %s_%d() {\n\t%s\n\t}", getTestName(), getLineNo(), getContent());
   }

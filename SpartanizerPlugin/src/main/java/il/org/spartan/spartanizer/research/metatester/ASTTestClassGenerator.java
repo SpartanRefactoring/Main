@@ -48,7 +48,6 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     packageName = packageName("\\.", testClass);
     sourceLines = new HashSet<>();
   }
-
   private void modifyClass() {
     root.accept(new ASTVisitor() {
       @Override public boolean visit(final TypeDeclaration node) {
@@ -63,17 +62,14 @@ public class ASTTestClassGenerator implements TestClassGenerator {
       }
     });
   }
-
   void addToMap(final Test t) {
     sourceLines.add(t);
   }
-
   private void removeOriginalTestsFromTree() {
     sourceLines.stream() //
         .map(x -> x.source) //
         .forEach(λ -> az.abstractTypeDeclaration(λ.getParent()).bodyDeclarations().remove(λ));
   }
-
   @Override public Class<?> generate(final String testClassName, final File originalSourceFile) {
     root = makeAST(originalSourceFile);
     modifyClass();
@@ -81,7 +77,6 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     final String $ = testClassSkelaton(allTestMethods().stream().map(λ -> tests(λ, prefixes(λ))).collect(Collectors.toList()));
     return loadClass(testClassName, format.code($), testClass, sourcePath);
   }
-
   private static List<String> prefixes(final Test t) {
     final List<String> $ = an.empty.list();
     final StringBuilder prefix = new StringBuilder();
@@ -91,7 +86,6 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     }).forEach($::add);
     return $;
   }
-
   private void removeUnnecessaryImports() {
     final List<Class<?>> importsToRemove = as.list(MetaTester.class);
     root.accept(new ASTVisitor() {
@@ -105,7 +99,6 @@ public class ASTTestClassGenerator implements TestClassGenerator {
       }
     });
   }
-
   private String testClassSkelaton(final List<List<String>> tests) {
     removeOriginalTestsFromTree();
     final StringBuilder $ = new StringBuilder();
@@ -116,19 +109,16 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     return $.toString().replaceFirst("@SuppressWarnings\\([\"a-zA-Z0-9-{}]*\\)[\n\t\r ]*public class", "public class").replace("public class",
         "@SuppressWarnings(\"all\") public class");
   }
-
   private static <T> String removeBraces(final List<T> l) {
     final StringBuilder $ = new StringBuilder();
     l.stream().forEach(e -> $.append(e + ", "));
     return $.substring(0, $.length() - 2);
   }
-
   @SuppressWarnings("boxing") private List<String> tests(final Test t, final List<String> prefixes) {
     final String annotaionString = "@Test" + (t.values != null ? "(" + removeBraces(t.values) + ")" : "");
     return prefixes.stream().map(λ -> String.format("%s public void test%d(){\n%s}", annotaionString, testNoGenerator.next(), λ))
         .collect(Collectors.toList());
   }
-
   private List<Test> allTestMethods() {
     final List<Test> $ = an.empty.list();
     root.accept(new ASTVisitor() {
@@ -145,11 +135,9 @@ public class ASTTestClassGenerator implements TestClassGenerator {
     });
     return $;
   }
-
   private static ASTNode makeAST(final File originalSourceFile) {
     return wizard.ast(readAll(originalSourceFile));
   }
-
   private static String readAll(final File f) {
     final StringBuilder $ = new StringBuilder();
     try (final BufferedReader linesStream = new BufferedReader(new FileReader(f))) {

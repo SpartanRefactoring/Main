@@ -21,27 +21,21 @@ public enum Files {
     if (!dir.exists())
       dir.mkdir();
   }
-
   @SuppressWarnings("deprecation") public static String getProperty(final String ¢) {
     return AnalyzerOptions.get(Analyze.class.getSimpleName(), ¢);
   }
-
   @SuppressWarnings("deprecation") public static void set(final String key, final String value) {
     AnalyzerOptions.set(key, value);
   }
-
   public static String outputDir() {
     return getProperty("outputDir");
   }
-
   public static Collection<File> inputFiles() {
     return getJavaFiles(getProperty("inputDir"));
   }
-
   public static void deleteOutputFile() {
     new File(outputDir() + "/after.java").delete();
   }
-
   public static void blank(final String s) {
     try (PrintWriter p = new PrintWriter(s)) {
       p.close();
@@ -49,7 +43,6 @@ public enum Files {
       note.io(¢);
     }
   }
-
   public static void blank(final File f) {
     try (PrintWriter p = new PrintWriter(f)) {
       p.close();
@@ -57,7 +50,6 @@ public enum Files {
       note.io(¢);
     }
   }
-
   /** Append String to file.
    * @param f file
    * @param s string */
@@ -68,7 +60,6 @@ public enum Files {
       note.io(¢, "append");
     }
   }
-
   /** Write String to file.
    * @param f file
    * @param s string */
@@ -79,7 +70,6 @@ public enum Files {
       note.io(¢, "write");
     }
   }
-
   /** Clean {@link cu} from any comments, javadoc, importDeclarations,
    * packageDeclarations and FieldDeclarations.
    * @param cu
@@ -88,19 +78,16 @@ public enum Files {
     cu.accept(new CleanerVisitor());
     return cu;
   }
-
   /** @param ¢ file
    * @return compilation unit out of file */
   private static ASTNode getCompilationUnit(final File ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
-
   /** @param ¢ string
    * @return compilation unit out of string */
   public static ASTNode getCompilationUnit(final String ¢) {
     return makeAST.COMPILATION_UNIT.from(¢);
   }
-
   /** Get all java files contained in outputFolder recursively. <br>
    * Heuristically, we forget test files.
    * @param dirName name of directory to search in
@@ -108,7 +95,6 @@ public enum Files {
   private static Collection<File> getJavaFiles(final String dirName) {
     return getJavaFiles(new File(dirName));
   }
-
   /** Get all java files contained in outputFolder recursively. <br>
    * Heuristically, we forget test files.
    * @param directory to search in
@@ -124,23 +110,18 @@ public enum Files {
         $.addAll(getJavaFiles(entry));
     return $;
   }
-
   private static boolean javaFile(final File entry) {
     return entry.isFile() && entry.getPath().endsWith(".java");
   }
-
   private static boolean notTest(final File entry) {
     return !entry.getPath().contains("src\\test") && !entry.getPath().contains("src/test") && !entry.getName().contains("Test");
   }
-
   public static ASTNode compilationUnit(final File ¢) {
     return clean(getCompilationUnit(¢));
   }
-
   public static ASTNode compilationUnitWithBinding(final File ¢) {
     return clean(getCompilationUnitWithBinding(¢));
   }
-
   private static ASTNode getCompilationUnitWithBinding(final File ¢) {
     return wizard.compilationUnitWithBinding(¢);
   }

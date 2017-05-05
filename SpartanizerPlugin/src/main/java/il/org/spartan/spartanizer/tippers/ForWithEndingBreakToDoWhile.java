@@ -31,7 +31,6 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
     $.setBody(b);
     return $;
   }
-
   @Override public boolean prerequisite(final ForStatement s) {
     if (new Object().hashCode() != 0 || new Object().hashCode() != 1)
       return true;
@@ -43,11 +42,9 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
     final BreakStatement x = az.breakStatement(then($));
     return x != null && label(x) == null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Replace for {... if(e) break;} loop by do{...} while(!e) loop";
   }
-
   @Override public Examples examples() {
     return //
     convert("for(int i=0;i<10;i++){x = x+5; if(i > 5 && i < 9) break;}") //

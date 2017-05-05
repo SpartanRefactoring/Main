@@ -21,27 +21,21 @@ public class Issue0249 {
   @Test public void a00() {
     azzert.that(metricUnderTest(null), is(0));
   }
-
   @Test public void a01() {
     azzert.that(metricUnderTest(""), is(0));
   }
-
   @Test public void a02() {
     azzert.that(metricUnderTest(";"), is(1));
   }
-
   @Test public void a03() {
     azzert.that(metricUnderTest("{}"), is(2));
   }
-
   @Test public void a04() {
     azzert.that(metricUnderTest("{;}"), is(4));
   }
-
   @Test public void a05() {
     azzert.that(metricUnderTest("{{}}"), is(4));
   }
-
   @Test public void a06() {
     final Statement s = into.s("{}");
     assert s != null;
@@ -51,19 +45,15 @@ public class Issue0249 {
     assert statements(b) != null;
     azzert.that(statements(b).size(), is(0));
   }
-
   @Test public void a07() {
     azzert.that(statements(az.block(into.s("{}"))).size(), is(0));
   }
-
   @Test public void a08() {
     azzert.that(statements(az.block(into.s("{}"))), iz("[]"));
   }
-
   @Test public void a09() {
     azzert.that(az.block(into.s("{}")), iz("{}"));
   }
-
   public int metricUnderTest(final String javaStatements) {
     return metrics.horizontalComplexity(javaStatements == null ? null : into.s(javaStatements));
   }

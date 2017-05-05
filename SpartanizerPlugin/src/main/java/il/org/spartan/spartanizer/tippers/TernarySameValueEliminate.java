@@ -18,7 +18,6 @@ public class TernarySameValueEliminate extends ReplaceCurrentNode<ConditionalExp
   @Override public ASTNode replacement(final ConditionalExpression ¢) {
     return copy.of(¢.getElseExpression());
   }
-
   @Override protected boolean prerequisite(final ConditionalExpression x) {
     final InfixExpression $ = az.infixExpression(x.getExpression());
     if (!iz.infixEquals($) || !sideEffects.free($))
@@ -29,7 +28,6 @@ public class TernarySameValueEliminate extends ReplaceCurrentNode<ConditionalExp
     final Expression elze = x.getElseExpression();
     return wizard.eq(elze, left) || wizard.eq(elze, right);
   }
-
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression ¢) {
     return "eliminate ternary expression that evaluates to the same value";
   }

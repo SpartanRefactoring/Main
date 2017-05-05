@@ -21,7 +21,6 @@ public class KnowsTest extends MetaFixture {
   @Parameters(name = "{index}. {0} knows {1} ({2})") public static Collection<Object[]> data() {
     return collect(KNOWN, fixtures);
   }
-
   public static Double g(final double y) {
     final DoubleFunction<Double> $ = ¢ -> Double.valueOf(Math.sin(¢ * new Object() {
       @Override @knows({ "$", "g/1", "f/1", "y" }) public int hashCode() {
@@ -30,13 +29,11 @@ public class KnowsTest extends MetaFixture {
     }.hashCode()));
     return $.apply(y);
   }
-
   public static int g(final int x, final int y) {
     @knows({ "x", "y", "$" }) final int $ = x * y;
     @knows({ "x", "y", "z", "$" }) final int z = $ * (x + y);
     return x * z + y + $;
   }
-
   public static int h(final int x, final int y) {
     @knows({ "x", "y", "$" }) final int $ = x * y;
     @knows({ "x", "y", "z", "$" }) final int z = $ * (x + y);
@@ -52,12 +49,10 @@ public class KnowsTest extends MetaFixture {
     this.shouldKnow = shouldKnow;
     this.repository = repository;
   }
-
   public int f(final int parameter) {
     @knows("parameter") final int $ = parameter * hashCode();
     return $ >>> $ * parameter;
   }
-
   @Test public void knows() {
     assert Environment.of(name).has(shouldKnow) : //
     "\n name = " + name + //

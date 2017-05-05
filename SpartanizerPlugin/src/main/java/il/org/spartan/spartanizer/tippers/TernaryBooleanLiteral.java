@@ -52,22 +52,18 @@ public final class TernaryBooleanLiteral extends ReplaceCurrentNode<ConditionalE
   private static Expression simplifyTernary(final ConditionalExpression ¢) {
     return simplifyTernary(¢.getThenExpression(), ¢.getElseExpression(), copy.of(¢.getExpression()));
   }
-
   private static Expression simplifyTernary(final Expression then, final Expression elze, final Expression main) {
     final boolean $ = !iz.booleanLiteral(then);
     final Expression other = $ ? then : elze;
     final boolean literal = az.booleanLiteral($ ? elze : then).booleanValue();
     return subject.pair(literal != $ ? main : make.notOf(main), other).to(literal ? CONDITIONAL_OR : CONDITIONAL_AND);
   }
-
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Convert ?: into Boolean expression";
   }
-
   @Override public boolean prerequisite(final ConditionalExpression ¢) {
     return have.booleanLiteral(¢.getThenExpression(), ¢.getElseExpression());
   }
-
   @Override public Expression replacement(final ConditionalExpression ¢) {
     return simplifyTernary(¢);
   }

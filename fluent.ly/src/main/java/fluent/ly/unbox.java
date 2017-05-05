@@ -30,27 +30,21 @@ public enum unbox {
   @NotNull public static double[] it(@NotNull final Double[] ¢) {
     return unbox(¢);
   }
-
   @NotNull public static float[] it(final Float[] fs) {
     return unbox(fs);
   }
-
   public static int it(@NotNull final Integer ¢) {
     return ¢.intValue();
   }
-
   @NotNull public static int[] it(@NotNull final Integer[] ¢) {
     return unbox(¢);
   }
-
   @NotNull public static int[] it(@NotNull final List<Integer> ¢) {
     return it(¢.toArray(new Integer[¢.size()]));
   }
-
   public static boolean unbox(@NotNull final Boolean ¢) {
     return ¢.booleanValue();
   }
-
   /** unbox an array of {@link Boolean}s into an array of
    * <code><b>boolean</b></code>s.
    * @param bs an array of {@link Boolean}s
@@ -61,11 +55,9 @@ public enum unbox {
       $[¢] = bs[¢].booleanValue();
     return $;
   }
-
   public static byte unbox(@NotNull final Byte ¢) {
     return ¢.byteValue();
   }
-
   /** unbox an array of {@link Byte}s into an array of <code><b>byte</b></code>
    * s.
    * @param bs an array of {@link Byte}s
@@ -76,11 +68,9 @@ public enum unbox {
       $[¢] = bs[¢].byteValue();
     return $;
   }
-
   public static char unbox(@NotNull final Character ¢) {
     return ¢.charValue();
   }
-
   /** unbox an array of {@link Character}s into an array of
    * <code><b>char</b></code>s.
    * @param cs an array of {@link Character}s
@@ -91,7 +81,6 @@ public enum unbox {
       $[¢] = cs[¢].charValue();
     return $;
   }
-
   /** unbox a {@link Collection} of {@link Short}s into an array of
    * <code><b>short</b></code>s.
    * @param ss a {@link Collection} of {@link Integer}s
@@ -103,11 +92,9 @@ public enum unbox {
       $[i++] = v.shortValue();
     return $;
   }
-
   public static double unbox(@NotNull final Double ¢) {
     return ¢.doubleValue();
   }
-
   /** unbox an array of {@link Double}s into an array of
    * <code><b>double</b></code>s.
    * @param ds an array of {@link Double}s
@@ -118,11 +105,9 @@ public enum unbox {
       $[¢] = ds[¢].floatValue();
     return $;
   }
-
   public static float unbox(@NotNull final Float ¢) {
     return ¢.floatValue();
   }
-
   /** unbox an array of {@link Float}s into an array of
    * <code><b>float</b></code> s.
    * @param fs an array of {@link Float}s
@@ -133,11 +118,9 @@ public enum unbox {
       $[¢] = fs[¢].floatValue();
     return $;
   }
-
   public static int unbox(@NotNull final Integer ¢) {
     return ¢.intValue();
   }
-
   /** unbox an array of {@link Integer}s into an array of
    * <code><b>int</b></code> s.
    * @param is an array of {@link Integer}s
@@ -148,11 +131,9 @@ public enum unbox {
       $[¢] = is[¢].intValue();
     return $;
   }
-
   public static long unbox(@NotNull final Long ¢) {
     return ¢.longValue();
   }
-
   /** unbox an array of {@link Long}s into an array of <code><b>long</b></code>
    * s.
    * @param ls an array of {@link Long}s
@@ -163,11 +144,9 @@ public enum unbox {
       $[¢] = ls[¢].longValue();
     return $;
   }
-
   public static short unbox(@NotNull final Short ¢) {
     return ¢.shortValue();
   }
-
   /** unbox an array of {@link Short}s into an array of
    * <code><b>short</b></code> s.
    * @param ss an array of {@link Integer}s

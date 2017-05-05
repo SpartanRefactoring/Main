@@ -39,24 +39,20 @@ public class NanoInstancesCollector extends DeprecatedFolderASTVisitor {
           }
         };
       }
-
       @Override public boolean canTip(final EnhancedForStatement ¢) {
         return nano.check(¢);
       }
-
       @Override public String description(final EnhancedForStatement ¢) {
         return nano.description(¢);
       }
     });
     DeprecatedFolderASTVisitor.main(args);
   }
-
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     nanonizer.fixedPoint(¢);
     return true;
   }
-
   @Override protected void visit(final String path) {
     Files.appendFile(out, "-------" + path + "-------\n");
     super.visit(path);

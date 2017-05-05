@@ -25,11 +25,9 @@ public class Issue0965 {
     public String check1() {
       return is + "";
     }
-
     public void check2() {
       //
     }
-
     public void check3() {
       //
     }

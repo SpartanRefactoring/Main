@@ -18,11 +18,9 @@ public class InvertedGraph<E> extends GraphDecorator<E> {
   @NotNull public static <E> InvertedGraph<E> make(final AbstractGraph<E> ¢) {
     return new InvertedGraph<>(¢);
   }
-
   private InvertedGraph(final AbstractGraph<E> g) {
     super(g);
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.GraphDecorator#incoming(il.ac.technion.cs.
@@ -30,12 +28,10 @@ public class InvertedGraph<E> extends GraphDecorator<E> {
   @Override public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> ¢) {
     return super.outgoing(¢);
   }
-
   @Override @NotNull public String name() {
     final String $ = inner.name();
     return $.length() == 0 ? $ : $ + "'";
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.graph.GraphDecorator#outgoing(il.ac.technion.cs.
@@ -43,11 +39,9 @@ public class InvertedGraph<E> extends GraphDecorator<E> {
   @Override public ImmutableArrayList<Vertex<E>> outgoing(final Vertex<E> ¢) {
     return super.incoming(¢);
   }
-
   @Override public ImmutableArrayList<Vertex<E>> sinks() {
     return super.sources();
   }
-
   @Override public ImmutableArrayList<Vertex<E>> sources() {
     return super.sinks();
   }

@@ -23,13 +23,11 @@ public final class LocalInitializedAssignment2 extends LocalInitializedStatement
   @Override public String description() {
     return "Consolidate declaration of " + name + " with its subsequent initialization";
   }
-
   @Override public Examples examples() {
     return //
     convert("int a; a = 3; fragment(b); fragment(a,b);a = fragment(a,b); b= fragment(a,b);}")//
         .to("int a = 3; fragment(b); fragment(a,b);a = fragment(a,b); b= fragment(a,b);");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Assignment a = extract.assignment(nextStatement);
     if (a == null || !wizard.eq(name, to(a)) || a.getOperator() != ASSIGN)

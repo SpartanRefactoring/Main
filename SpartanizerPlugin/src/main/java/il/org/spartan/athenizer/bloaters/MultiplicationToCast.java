@@ -57,7 +57,6 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     }
     return null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }

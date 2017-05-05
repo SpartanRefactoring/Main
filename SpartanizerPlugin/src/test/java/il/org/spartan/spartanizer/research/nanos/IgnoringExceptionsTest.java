@@ -25,7 +25,6 @@ public class IgnoringExceptionsTest {
         .stays()//
     ;
   }
-
   @Test public void b() {
     trimmingOf("try{ thing(); } catch(A a){}catch(B b){}")//
         .gives("try{thing();}catch(B|A a){}")//

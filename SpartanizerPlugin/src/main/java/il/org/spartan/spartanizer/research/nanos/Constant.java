@@ -23,7 +23,6 @@ public final class Constant extends NanoPatternTipper<FieldDeclaration> {
             || iz.boxedType(type(¢)))//
     ;
   }
-
   @Override public Tip pattern(final FieldDeclaration ¢) {
     return new Tip(description(), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -31,15 +30,12 @@ public final class Constant extends NanoPatternTipper<FieldDeclaration> {
       }
     };
   }
-
   @Override public String description() {
     return "Constant field declaration";
   }
-
   @Override public String technicalName() {
     return "constantC";
   }
-
   @Override public NanoPatternTipper.Category category() {
     return Category.Field;
   }

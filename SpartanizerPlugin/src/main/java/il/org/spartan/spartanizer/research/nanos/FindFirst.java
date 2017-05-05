@@ -46,15 +46,12 @@ public final class FindFirst extends NanoPatternTipper<EnhancedForStatement> {
         && nonTips(rivals, x)//
     ;
   }
-
   @Override public Tip pattern(final EnhancedForStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
-
   @Override public String description() {
     return "Iterate a collection for the first element matching some predicate";
   }
-
   @Override public String tipperName() {
     return "FirstSuchThat";
   }

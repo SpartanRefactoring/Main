@@ -28,7 +28,6 @@ public final class AssignmentAndAssignmentOfSameValue extends AssignmentPattern/
         .convert("a=c;b=c;").to("b=a=c;") //
     ;
   }
-
   public AssignmentAndAssignmentOfSameValue() {
     andAlso("Assignment is an expression statement", //
         () -> iz.expressionStatement(parent));
@@ -47,11 +46,9 @@ public final class AssignmentAndAssignmentOfSameValue extends AssignmentPattern/
     andAlso("Assigned value is deterministic", //
         () -> sideEffects.deterministic(origin));
   }
-
   @Override public String description() {
     return "Consolidate assignment to " + to + " with subsequent similar assignment";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     $.remove(parent, g);
     $.replace(nextOrigin, copy.of(current), g);

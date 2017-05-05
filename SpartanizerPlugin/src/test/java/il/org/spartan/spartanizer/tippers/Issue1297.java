@@ -16,7 +16,6 @@ public class Issue1297 {
     trimmingOf("int a=3;a=f()? 3 : 4;")//
         .gives("int a=f()? 3: 4;");
   }
-
   @Test public void t1() {
     trimmingOf("int a=2;a=3 * a * b;")//
         .gives("int a=3 * 2 * b;");
@@ -53,7 +52,6 @@ public class Issue1297 {
     trimmingOf("int a=2;return a;")//
         .gives("return 2;");
   }
-
   @Test public void t2() {
     trimmingOf("int a;if(x)a=3;else a++;")//
         .gives("int a;if(x)a=3;else++a;");
@@ -62,7 +60,6 @@ public class Issue1297 {
     trimmingOf("int b=5,a=2,c;return 3 * a * b * c;")//
         .gives("int a=2;return 3 * a * 5 * c;");
   }
-
   @Test public void t3() {
     trimmingOf("int a, b = 2; a = b;") //
         .gives("int a; a =2;") //
@@ -70,7 +67,6 @@ public class Issue1297 {
         .gives("") //
     ;
   }
-
   /** Introduced by Yossi on Thu-Apr-27-21:36:06-IDT-2017 (code generated
    * automatically by {@link JUnitTestMethodFacotry}) */
   @Test public void t4() {
@@ -82,22 +78,18 @@ public class Issue1297 {
         .gives("") //
     ;
   }
-
   @Test public void t5() {
     trimmingOf("String tipper=Z2;tipper=tipper.f(A).f(b)+ tipper.f(c);return(tipper + 3);")
         .gives("String tipper=Z2.f(A).f(b)+ Z2.f(c);return(tipper + 3);");
   }
-
   @Test public void t6() {
     trimmingOf("int[] a=new int[] {2,3};")//
         .gives("");
   }
-
   @Test public void t7() {
     trimmingOf("String u=m,foo=GY;print(x);if(u.equals(f())==true){foo=M;int k=2;k=8;S.h(foo);}f();")
         .gives("String u=m,foo=GY;print(x);if(u.equals(f())){foo=M;int k=8;S.h(foo);}f();");
   }
-
   @Test public void t8() {
     trimmingOf("int a;a=3;")//
         .gives("int a=3;");

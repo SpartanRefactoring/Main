@@ -34,7 +34,6 @@ public final class LocalInitializedIfAssignmentUpdating extends LocalInitialized
     return null;
     // return convert("int a = 2;if (b) a += 3;").to("int a = y ? 2 + 3 : 2");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     remove.statement(nextIf, $, g);
     $.replace(initializer,

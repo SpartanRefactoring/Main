@@ -32,7 +32,6 @@ public enum SentenceTestTemplate {
   static Iterable<List<MethodDeclaration>> allSentences() {
     return collectSentences(new Issue1008());
   }
-
   static Iterable<List<MethodDeclaration>> collectSentences(final MetaFixture... ¢) {
     return Stream.of(¢).flatMap(λ -> descendants.whoseClassIs(AnonymousClassDeclaration.class).from(λ.reflectedCompilationUnit()).stream())
         .map(AlphabeticallySortedSentence::reify).filter(Objects::nonNull).map(λ -> new ArrayList<>(λ.values())).collect(toList());
@@ -49,7 +48,6 @@ public enum SentenceTestTemplate {
       allSentences().forEach(λ -> $.addAll(λ.stream().filter(disabling::specificallyDisabled).map(Changes::____).collect(toList())));
       return $;
     }
-
     public static Object[] ____(final MethodDeclaration changes) {
       return new Object[] { changes.getName() + "", changes };
     }
@@ -81,7 +79,6 @@ public enum SentenceTestTemplate {
             $.add(____(sentence.get(¢), sentence.get(¢ + 1)));
       return $;
     }
-
     public static Object[] ____(final MethodDeclaration from, final MethodDeclaration to) {
       return new Object[] { from.getName() + " -> " + to.getName(), from, to, };
     }
@@ -96,19 +93,15 @@ public enum SentenceTestTemplate {
       if (!to.equals(peeled))
         azzert.that(Trivia.essence(peeled), is(Trivia.essence(to)));
     }
-
     String firstBody() {
       return (_1first + "").replace(disabling.ByComment.disabler, "");
     }
-
     CharSequence firstName() {
       return _1first.getName() + "";
     }
-
     String secondBody() {
       return (_2second + "").replace(secondName(), firstName()).replace(disabling.ByComment.disabler, "");
     }
-
     CharSequence secondName() {
       return _2second.getName() + "";
     }
@@ -126,7 +119,6 @@ public enum SentenceTestTemplate {
           .forEach(sentence -> $.addAll(sentence.stream().filter(λ -> !disabling.specificallyDisabled(λ)).map(Stays::____).collect(toList())));
       return $;
     }
-
     public static Object[] ____(final MethodDeclaration stays) {
       return new Object[] { stays.getName() + "", stays, };
     }

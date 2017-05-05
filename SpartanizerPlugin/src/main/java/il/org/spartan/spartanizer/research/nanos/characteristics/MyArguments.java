@@ -27,11 +27,9 @@ public class MyArguments extends JavadocMarkerNanoPattern {
             && λ.contains($))//
         && !invocations.isEmpty();
   }
-
   private static String stringify(final MethodDeclaration ¢) {
     return "," + separate.these(parametersNames(¢)).by(",") + ",";
   }
-
   private static String stringify(final MethodInvocation ¢) {
     return "," + separate.these(arguments(¢)).by(",") + ",";
   }

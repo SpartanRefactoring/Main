@@ -49,7 +49,6 @@ public enum leonidasSays {
         azzert.that(Essence.of(actual).replaceAll(" ", ""), is(Essence.of(s).replaceAll(" ", "")));
     }
   }
-
   static ASTNode extractASTNode(final String s, final CompilationUnit u) {
     switch (GuessedContext.find(s)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
@@ -65,12 +64,10 @@ public enum leonidasSays {
         return null;
     }
   }
-
   static ASTNode extractStatementIfOne(final ASTNode $) {
     final List<Statement> statements = statements(az.block($));
     return statements == null || statements.size() != 1 ? $ : the.headOf(statements);
   }
-
   static <N extends ASTNode> N findSecond(final Class<?> c, final ASTNode n) {
     if (n == null)
       return null;
@@ -95,23 +92,18 @@ public enum leonidasSays {
     @SuppressWarnings("unchecked") final N $$ = (N) $.get();
     return $$;
   }
-
   public static statementsTipper statementsTipper(final String p, final String s, final String d) {
     return new statementsTipper(TipperFactory.statementsPattern(p, s, d));
   }
-
   public static expression that(final String ¢) {
     return new expression(¢);
   }
-
   public static tipper tipper(final String p, final String s, final String d) {
     return new tipper(p, s, d);
   }
-
   public static tipper tipper(final UserDefinedTipper<ASTNode> ¢) {
     return new tipper(¢);
   }
-
   static String wrapCode(final String ¢) {
     switch (GuessedContext.find(¢)) {
       case COMPILATION_UNIT_LOOK_ALIKE:
@@ -138,7 +130,6 @@ public enum leonidasSays {
       this.tipper = tipper;
       string = _s;
     }
-
     public void into(final String rrr) {
       final IDocument document = new Document(wrapCode(string));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);
@@ -178,11 +169,9 @@ public enum leonidasSays {
     expression(final String s) {
       this.s = s;
     }
-
     public void matches(final String s2) {
       assert Matcher.patternMatcher(s, "").matches(ast(s2));
     }
-
     public void notmatches(final String s2) {
       assert !Matcher.patternMatcher(s, "").matches(ast(s2));
     }
@@ -194,23 +183,18 @@ public enum leonidasSays {
     public statementsTipper(final String pattern, final String replacement) {
       tipper = TipperFactory.patternTipper(pattern, replacement);
     }
-
     public statementsTipper(final String pattern, final String replacement, final String description) {
       tipper = TipperFactory.patternTipper(pattern, replacement, description);
     }
-
     public statementsTipper(final UserDefinedTipper<Block> tipper) {
       this.tipper = tipper;
     }
-
     public void nottips(final String ¢) {
       assert !tipper.check(az.block(make.ast(¢)));
     }
-
     public void tips(final String ¢) {
       assert tipper.check(az.block(make.ast(¢)));
     }
-
     public blockTurns turns(final String ¢) {
       return new blockTurns(tipper, ¢);
     }
@@ -222,23 +206,18 @@ public enum leonidasSays {
     public tipper(final String pattern, final String replacement) {
       tipper = TipperFactory.patternTipper(pattern, replacement);
     }
-
     public tipper(final String pattern, final String replacement, final String description) {
       tipper = TipperFactory.patternTipper(pattern, replacement, description);
     }
-
     public tipper(final UserDefinedTipper<ASTNode> tipper) {
       this.tipper = tipper;
     }
-
     public void nottips(final String ¢) {
       assert !tipper.check(make.ast(¢));
     }
-
     public void tips(final String ¢) {
       assert tipper.check(extractStatementIfOne(make.ast(¢)));
     }
-
     public turns turns(final String ¢) {
       return new turns(tipper, ¢);
     }
@@ -252,7 +231,6 @@ public enum leonidasSays {
       this.tipper = tipper;
       string = _s;
     }
-
     public void into(final String expected) {
       final IDocument document = new Document(wrapCode(string));
       final ASTParser parser = ASTParser.newParser(AST.JLS8);

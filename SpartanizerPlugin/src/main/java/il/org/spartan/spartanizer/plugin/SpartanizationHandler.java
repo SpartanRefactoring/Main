@@ -30,19 +30,15 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     a.go();
     return null;
   }
-
   @Override public String getLabel() {
     return "Apply";
   }
-
   @Override public void run(final IMarker ¢) {
     applicator().setPasses(1).selection(Selection.Util.by(¢)).go();
   }
-
   public static NewGUIApplicator applicator() {
     return applicator(OPERATION_ACTIVITY);
   }
-
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
   public static NewGUIApplicator applicator(final English.Inflection activityNamer) {
@@ -77,7 +73,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
         if (passes == 1)
           ++compilationUnitCount;
       }
-
       @Override public void push(final Object... ¢) {
         switch (++level) {
           case DIALOG_CREATION:
@@ -103,7 +98,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
             break;
         }
       }
-
       /** see issue #467 */
       @Override public void pop(final Object... ¢) {
         if (level-- == DIALOG_CREATION && dialogOpen)
@@ -115,7 +109,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
     $.operationName(OPERATION_ACTIVITY);
     return $;
   }
-
   /** Creates and configures an applicator, without configuring the selection.
    * @return applicator for this handler */
   @Deprecated @SuppressWarnings("deprecation") public static NewGUIApplicator applicatorMapper() {
@@ -183,7 +176,6 @@ public class SpartanizationHandler extends AbstractHandler implements IMarkerRes
       this.inputCount = inputCount;
       this.printing = printing;
     }
-
     public String get(final Object... ¢) {
       assert ¢.length == inputCount;
       return printing.apply(¢);

@@ -33,7 +33,6 @@ public class Issue1259 {
             "}" + //
             "}");
   }
-
   @Test(timeout = 3500) public void t1() {
     TraversalMonitor.logger.setLevel(Level.ALL);
     trimmingOf("class E extends B {" + //

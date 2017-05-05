@@ -16,59 +16,49 @@ public final class Issue0131 {
         .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int i=4; i<s.g() ; ++i){i+=9;break;}return x;");
   }
-
   @Test public void a02() {
     trimmingOf("while(i>9)if(i==5)return x;return x;")//
         .gives("while(i>9)if(i==5)break;return x;");
   }
-
   @Test public void a03() {
     trimmingOf("for(int ¢=4 ; ¢<s.g() ; ++¢)return x;return x;")//
         .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int ¢=4 ; ¢<s.g() ; ++¢)break;return x;")//
         .stays();
   }
-
   @Test public void a04() {
     trimmingOf("for(int ¢=4 ; ¢<s.g() ; ++¢)if(t=4)return x;return x;").using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int ¢=4 ; ¢<s.g() ; ++¢)if(t=4)break;return x;")//
     ;
   }
-
   @Test public void a05() {
     trimmingOf("while(i>5){i+=9;i++;return x;}return x;")//
         .gives("while(i>5){i+=9;i++;break;}return x;");
   }
-
   @Test public void a06() {
     trimmingOf("while(i>5){i+=9;return x;}return x;")//
         .gives("while(i>5){i+=9;break;}return x;")//
         .stays();
   }
-
   @Test public void a07() {
     trimmingOf("while(i>5)return x;return x;")//
         .gives("while(i>5)break;return x;")//
         .stays();
   }
-
   @Test public void a08() {
     trimmingOf("while(i>5)if(t=4)return x;return x;")//
         .gives("while(i>5)if(t=4)break;return x;");
   }
-
   @Test public void a09() {
     trimmingOf("for(int i=4 ; i<s.g() ; ++i)if(i==5)return x;return x;")//
         .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int i=4 ; i<s.g() ; ++i)if(i==5)break;return x;");
   }
-
   @Test public void a10() {
     trimmingOf("for(int i=4;i<s.g();++i){i+=9;i++;return x;}return x;")//
         .using(new ForFiniteConvertReturnToBreak(), ForStatement.class) //
         .gives("for(int i=4;i<s.g();++i){i+=9;i++;break;}return x;").gives("for(int ¢=4;¢<s.g();++¢){¢+=9;¢++;break;}return x;");
   }
-
   /** Introduced by Yogi on Tue-Apr-11-23:01:29-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void voidaIntb5Intc2ForIntd4defdIfcdb9Returngh15ReturngReturng() {
@@ -89,7 +79,6 @@ public final class Issue0131 {
             .stays() //
     ;
   }
-
   /** Introduced by Yogi on Tue-Apr-11-23:02:38-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void booleanaFalseForIntb4bcdbIfb5e9ReturnfElseReturngh15ReturnfReturnf() {
@@ -109,7 +98,6 @@ public final class Issue0131 {
         .stays() //
     ;
   }
-
   /** Introduced by Yogi on Tue-Apr-11-17:34:42-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void publicStaticVoidaWhileb7Ifb5c9ReturndElseReturnef15ReturndReturnd() {

@@ -28,7 +28,6 @@ public class CompilationUnitRecord {
   public void setPath(final String path) {
     this.path = path;
   }
-
   public CompilationUnitRecord(final CompilationUnit inner) {
     this.inner = inner;
     numStatements = measure.commands(inner);
@@ -41,11 +40,9 @@ public class CompilationUnitRecord {
     countTestAnnotation(inner);
     // testCount = Int.valueOf(countTestAnnotation(inner));
   }
-
   private static int countLines(final String ¢) {
     return ¢.split("\r\n|\r|\n").length;
   }
-
   public int testCount() {
     return testCount;
   }
@@ -62,7 +59,6 @@ public class CompilationUnitRecord {
       }
     });
   }
-
   /** Check if a file contains Test annotations
    * <p>
    * @param f
@@ -77,7 +73,6 @@ public class CompilationUnitRecord {
     }
     return hasTestAnnotation;
   }
-
   public static boolean containsTestAnnotation(final String javaCode) {
     final CompilationUnit cu = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
     // noinspection SameReturnValue
@@ -92,19 +87,15 @@ public class CompilationUnitRecord {
     });
     return hasTestAnnotation;
   }
-
   public String getPath() {
     return path;
   }
-
   public void setRelativePath(final String relativePath) {
     this.relativePath = relativePath;
   }
-
   public String getRelativePath() {
     return relativePath;
   }
-
   public boolean noTests() {
     return testCount == 0;
   }

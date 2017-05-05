@@ -14,7 +14,10 @@ import il.org.spartan.streotypes.*;
  * @see ImmutableEnumIntMap
  * @author Yossi Gil, the Technion.
  * @since 23/08/2008 */
-@Canopy @Classical @Instantiable public class MutableEnumIntMap<E extends Enum<E>> implements EnumIntMap<E> {
+@Canopy
+@Classical
+@Instantiable
+public class MutableEnumIntMap<E extends Enum<E>> implements EnumIntMap<E> {
   /** Suite metric values are stored internally here. */
   @NotNull private final int[] implementation;
 
@@ -34,7 +37,6 @@ import il.org.spartan.streotypes.*;
     nonnull(dummy);
     this.implementation = new int[dummy.getClass().getEnumConstants().length];
   }
-
   /** Add to the value associated with a specific <code><b>enum</b></code>
    * value.
    * @param e some non-<code><b>null</b></code> value of type <code>E</code>.
@@ -44,15 +46,12 @@ import il.org.spartan.streotypes.*;
     nonnull(e);
     implementation[e.ordinal()] += value;
   }
-
   @NotNull public ImmutableEnumIntMap<E> asImmutable() {
     return new ImmutableEnumIntMap<>(implementation);
   }
-
   @Override public int get(@NotNull final E ¢) {
     return implementation[¢.ordinal()];
   }
-
   /** Increment the value associated with a specific <code><b>enum</b></code>
    * value.
    * @param ¢ some non-<code><b>null</b></code> value of type <code>E</code>. */
@@ -60,7 +59,6 @@ import il.org.spartan.streotypes.*;
     nonnull(¢);
     ++implementation[¢.ordinal()];
   }
-
   /** Set the value associated with a specific <code><b>enum</b></code> value.
    * @param e some non-<code><b>null</b></code> value of type <code>E</code>.
    * @param value new value to be associated with <code>e</code>. */

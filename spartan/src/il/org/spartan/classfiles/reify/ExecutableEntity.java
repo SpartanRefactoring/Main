@@ -14,7 +14,6 @@ public class ExecutableEntity extends TypedEntity {
   @NotNull public static String signature(final String className, final String s, @NotNull final String d) {
     return className + "." + signature(s, d);
   }
-
   @Nullable private static String signature(final String s, @NotNull final String d) {
     return s + ":" + decode(d);
   }
@@ -30,31 +29,25 @@ public class ExecutableEntity extends TypedEntity {
     exceptions = readExceptions();
     code = readCodeAttribute();
   }
-
   public ExecutableEntity(final ConstantPool constantPool, final int flags, final String name, final TypeInfo t, final String descriptor,
       final AttributeInfo[] attributes) {
     super(constantPool, flags, name, t, descriptor, attributes);
     exceptions = readExceptions();
   }
-
   public ExecutableEntity(@NotNull final TypedEntity t) {
     super(t.constantPool, t.flags, t.name, t.descriptor, t.attributes);
     exceptions = readExceptions();
     code = readCodeAttribute();
   }
-
   public int codeSize() {
     return code == null ? 0 : code.codes.length;
   }
-
   public int cyclomaticComplexity() {
     return code == null ? 0 : code.cyclomaticComplexity();
   }
-
   @Nullable public CodeEntity getCode() {
     return code;
   }
-
   @NotNull public Set<String> getReferencedMethods() {
     @NotNull final Set<String> $ = new HashSet<>();
     if (code == null)
@@ -70,7 +63,6 @@ public class ExecutableEntity extends TypedEntity {
     }
     return $;
   }
-
   @NotNull public Set<String> instanceVariables() {
     @NotNull final Set<String> $ = new HashSet<>();
     if (code == null)
@@ -84,11 +76,9 @@ public class ExecutableEntity extends TypedEntity {
     }
     return $;
   }
-
   public int instructionCount() {
     return code == null ? 0 : code.instructionsCount();
   }
-
   public boolean isAccessed(@NotNull final TypedEntity e, @NotNull final String thisClassName) {
     if (code == null)
       return false;
@@ -99,31 +89,25 @@ public class ExecutableEntity extends TypedEntity {
     }
     return false;
   }
-
   @Attribute public int referencedFieldsCount() {
     return instanceVariables().size();
   }
-
   public Map<String, int[]> referencesToAllClasses() {
     if (class2refsByComponents == null)
       referencesToClasses();
     return class2refsByComponents;
   }
-
   public int[] referencesToClass(final String className) {
     if (class2refsByComponents == null)
       referencesToClasses();
     return class2refsByComponents.get(className);
   }
-
   @Nullable public String signature() {
     return signature(name, descriptor);
   }
-
   public int throwCount() {
     return code == null ? 0 : code.throwCount();
   }
-
   private int[] getClassRefsByComponents(final String className) {
     int[] $ = class2refsByComponents.get(className);
     if ($ != null)
@@ -132,28 +116,23 @@ public class ExecutableEntity extends TypedEntity {
     class2refsByComponents.put(className, $);
     return $;
   }
-
   private boolean isAccessed(@NotNull final TypedEntity e, @NotNull final String thisClassName, @NotNull final Instruction i) {
     @NotNull final MemberReference $ = constantPool.getMemberReference(i.args()[1] | i.args()[0] << 8);
     return $.getNameAndType().getName().equals(e.name) && $.getNameAndType().getDescriptor().equals(e.descriptor)
         && $.getClassConstant().getClassName().endsWith(thisClassName);
   }
-
   private CodeEntity readCodeAttribute() {
     @Nullable final AttributeInfo $ = findAttribute("Code");
     return $ == null ? null : readCodeAttribute($);
   }
-
   @NotNull private CodeEntity readCodeAttribute(@NotNull final AttributeInfo ¢) {
     @NotNull final ConstantPoolReader $ = ¢.reader(constantPool);
     return new CodeEntity($.readUnsignedShort(), $.readUnsignedShort(), $.readBytesArrray());
   }
-
   @NotNull private ClassConstant[] readExceptions() {
     @Nullable final AttributeInfo $ = findAttribute("Exceptions");
     return $ == null ? new ClassConstant[0] : $.reader(constantPool).readClasses();
   }
-
   private void referencesToClasses() {
     class2refsByComponents = new HashMap<>();
     for (final TypeInfo ¢ : type.components())

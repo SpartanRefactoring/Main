@@ -32,7 +32,6 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
     return null;
   }
-
   @Override public Tip tip(final ArrayAccess a) {
     final Expression $ = copy.of(a.getIndex());
     final Statement s = containing.statement(a);
@@ -52,7 +51,6 @@ public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
       }
     };
   }
-
   @Override protected boolean prerequisite(final ArrayAccess a) {
     final Expression e = a.getIndex();
     final Statement $ = containing.statement(a);

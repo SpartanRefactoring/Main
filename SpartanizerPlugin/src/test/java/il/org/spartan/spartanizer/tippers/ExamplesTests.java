@@ -36,7 +36,6 @@ public class ExamplesTests {
           .map(Converts.class::cast)//
           .forEachOrdered(this::converts);
   }
-
   /** Redirects examples to tests according to example type */
   @Test public void ignores() {
     if (tipper.examples() != null)
@@ -45,15 +44,12 @@ public class ExamplesTests {
           .map(Ignores.class::cast)//
           .forEachOrdered(this::ignores);
   }
-
   protected void ignores(final Ignores ¢) {
     wrap(() -> trimmingOf(¢.get()).using(tipper).stays());
   }
-
   protected void converts(final Converts ¢) {
     wrap(() -> trimmingOf(¢.from()).using(tipper).gives(¢.to()));
   }
-
   protected void wrap(final Runnable test) {
     try {
       test.run();
@@ -61,18 +57,15 @@ public class ExamplesTests {
       throw new AssertionError("Example failure at " + tipper.tipperName() + ":\n" + x.getMessage().trim(), x.getCause());
     }
   }
-
   public ExamplesTests(final Tipper<? extends ASTNode> tipper, @SuppressWarnings("unused") final String name) {
     this.tipper = tipper;
   }
-
   @Parameters(name = "{index}. {1}") //
   public static Collection<Object[]> data() {
     return allTippers().stream()//
         .map(λ -> new Object[] { λ, English.name(λ) })//
         .collect(toList());
   }
-
   /** Get all tippers from {@link Configuration}. Removes duplicate tippers
    * (same class, different templates).
    * @return

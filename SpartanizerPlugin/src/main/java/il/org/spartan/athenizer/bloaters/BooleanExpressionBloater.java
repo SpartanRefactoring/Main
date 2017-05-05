@@ -27,7 +27,6 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     return ¢.getOperator() == Operator.CONDITIONAL_AND || ¢.getOperator() == Operator.AND || ¢.getOperator() == Operator.OR
         || ¢.getOperator() == Operator.CONDITIONAL_OR;
   }
-
   @Override public Tip tip(final InfixExpression ¢) {
     subject.pair(getSeperate(¢.getLeftOperand()).getName(), getSeperate(¢.getRightOperand()).getName()).to(¢.getOperator());
     return new Tip(description(¢), getClass(), ¢) {
@@ -40,7 +39,6 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
       }
     };
   }
-
   private static SingleVariableDeclaration getSeperate(final Expression x) {
     final SingleVariableDeclaration $ = x.getAST().newSingleVariableDeclaration();
     $.setInitializer(copy.of(x));
@@ -49,7 +47,6 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     $.setName(make.from(x).identifier(scope.newName(x, t)));
     return $;
   }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }

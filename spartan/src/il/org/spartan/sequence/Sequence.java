@@ -15,19 +15,15 @@ public abstract class Sequence implements Cloneable {
   public Sequence() {
     this(MAX_VALUE);
   }
-
   public Sequence(final int threshold) {
     this.threshold = threshold;
   }
-
   @NotNull public abstract Sequence advance();
-
   @NotNull public final Sequence advanceTo(final int ¢) {
     while (current() < ¢ && more())
       advance();
     return this;
   }
-
   @Override @NotNull public final Sequence clone() {
     try {
       return (Sequence) super.clone();
@@ -35,33 +31,25 @@ public abstract class Sequence implements Cloneable {
       throw new RuntimeException(¢);
     }
   }
-
   public final int count() {
     return clone().__count();
   }
-
   public final int count(final int from) {
     return clone().startAt(from).__count();
   }
-
   public final int current() {
     return current;
   }
-
   public final boolean more() {
     return current() <= threshold;
   }
-
   @NotNull public abstract Sequence reset();
-
   @NotNull public Sequence startAt(final int ¢) {
     return reset().advanceTo(¢);
   }
-
   public final int[] toArray() {
     return clone().fill(new int[count()]);
   }
-
   private int __count() {
     for (int $ = 0;; ++$) {
       if (!more())
@@ -69,7 +57,6 @@ public abstract class Sequence implements Cloneable {
       advance();
     }
   }
-
   private int[] fill(final int[] $) {
     for (int ¢ = 0; more(); ++¢, advance())
       $[¢] = current();
@@ -81,12 +68,10 @@ public abstract class Sequence implements Cloneable {
       super(threshold);
       current = 1;
     }
-
     @Override @NotNull public Sequence advance() {
       current += current;
       return this;
     }
-
     @Override @NotNull public Sequence reset() {
       current = 1;
       return this;
@@ -102,7 +87,6 @@ public abstract class Sequence implements Cloneable {
       s2 = __s2;
       current = Math.min(s1.current(), s2.current());
     }
-
     @Override @NotNull public Sequence advance() {
       if (current < s1.current())
         s2.advance();
@@ -114,7 +98,6 @@ public abstract class Sequence implements Cloneable {
       current = Math.min(s1.current(), s2.current());
       return this;
     }
-
     @Override @NotNull public Sequence reset() {
       s1.reset();
       s2.reset();

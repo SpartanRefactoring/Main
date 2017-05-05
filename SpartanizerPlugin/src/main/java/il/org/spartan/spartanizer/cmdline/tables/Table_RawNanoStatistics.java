@@ -31,14 +31,12 @@ public class Table_RawNanoStatistics extends NanoTable {
     table.nl();
     reset();
   }
-
   static void fillAbsents() {
     nanonizer.allNanoPatterns().stream()//
         .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> table.col(λ, 0));
   }
-
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
       {

@@ -16,11 +16,9 @@ public class CFG {
         return $;
     return null;
   }
-
   private static long unsigned2signed(final long i) {
     return i & 0xffff;
   }
-
   private static long unsigned2signed_w(final long i) {
     return i & 0xfffffff;
   }
@@ -32,11 +30,9 @@ public class CFG {
     this.codes = codes;
     generateGraph();
   }
-
   public int cyclomaticComplexity() {
     return g.countEdges() - g.vertices().size() + 1;
   }
-
   public void generateGraph() {
     @NotNull final MultiMap<Long, Long> jumps2targets = new MultiMap<>();
     @NotNull final Map<Long, Set<Long>> subroutine2rets = new HashMap<>();
@@ -55,7 +51,6 @@ public class CFG {
         builder.newEdge(offset2block(basicBlocks, sub), offset2block(basicBlocks, ret));
     g = builder.build();
   }
-
   @Override @NotNull public String toString() {
     @NotNull String $ = "";
     for (@NotNull final Vertex<BasicBlock> ¢ : vertices())
@@ -65,11 +60,9 @@ public class CFG {
         $ += "edge: " + v.e().endOffset + ", " + v2.e().startOffset + "\n";
     return $;
   }
-
   @NotNull public ImmutableArrayList<Vertex<BasicBlock>> vertices() {
     return g.vertices();
   }
-
   @SuppressWarnings("boxing") private void findJumpsAndTargets(@NotNull final MultiMap<Long, Long> jumps2targets,
       @NotNull final Map<Long, Set<Long>> subroutine2rets) {
     long offset = 0;
@@ -144,7 +137,6 @@ public class CFG {
       offset = r.position();
     }
   }
-
   @NotNull @SuppressWarnings("boxing") private Set<BasicBlock> generateBasicBlocks(@NotNull final MultiMap<Long, Long> jumps2targets,
       @NotNull final Graph.Builder<BasicBlock> b) {
     @NotNull final Set<BasicBlock> $ = new HashSet<>();
@@ -190,11 +182,9 @@ public class CFG {
       return ¢ == this || ¢ != null && getClass() == ¢.getClass() && getOuterType().equals(((BasicBlock) ¢).getOuterType())
           && endOffset == ((BasicBlock) ¢).endOffset && startOffset == ((BasicBlock) ¢).startOffset;
     }
-
     @Override public int hashCode() {
       return (int) (31 * (endOffset + 31 * (getOuterType().hashCode() + 31)) + startOffset);
     }
-
     @NotNull private CFG getOuterType() {
       return CFG.this;
     }

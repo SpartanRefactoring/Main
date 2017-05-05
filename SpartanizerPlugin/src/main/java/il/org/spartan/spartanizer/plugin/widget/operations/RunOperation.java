@@ -22,28 +22,23 @@ public class RunOperation extends WidgetOperation {
   @Override public String description() {
     return "Activate run/debug configuration";
   }
-
   @Override public String[][] configurationComponents() {
     return new String[][] { //
         { NAME, "String", "Run configuration name", "REQUIRED" }, //
         { DEBUG, "Boolean", "Debug", "REQUIRED" }, //
     };
   }
-
   @Override public boolean register(@SuppressWarnings("hiding") final Map<?, ?> configuration) {
     return (configurationName = (String) configuration.get(NAME)) != null //
         && (debug = (Boolean) configuration.get(DEBUG)) != null //
         && load();
   }
-
   @Override public void onMouseUp(@SuppressWarnings("unused") final WidgetContext __) throws CoreException {
     configuration.launch(!debug.booleanValue() ? ILaunchManager.RUN_MODE : ILaunchManager.DEBUG_MODE, null);
   }
-
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.jdt.debug.ui/icons/full/etool16/run_exc.gif";
   }
-
   private boolean load() {
     final DebugPlugin plugin = DebugPlugin.getDefault();
     if (plugin == null)

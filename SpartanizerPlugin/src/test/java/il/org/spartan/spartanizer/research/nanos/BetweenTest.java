@@ -17,7 +17,6 @@ public class BetweenTest {
         .gives("if(is.value(c).between('a').and('z'))use();")//
         .stays();
   }
-
   // different operators
   @Test public void b() {
     trimmingOf("if('a' <= c && c < 'z') use();")//
@@ -25,7 +24,6 @@ public class BetweenTest {
         .gives("if(is.value(c).between('a').inclusive().and('z'))use();")//
         .stays();
   }
-
   // order
   @Test public void c() {
     trimmingOf("radix >= Character.MIN_RADIX && radix <= Character.MAX_RADIX")//

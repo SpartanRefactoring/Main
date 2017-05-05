@@ -16,7 +16,6 @@ public class ThrowOnNullTest {
         .gives("notNull(x).orThrow(()->new Watever());")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("if(x == null) throw new Watever(with(This, and, zis()));")//
         .using(new ThrowOnNull(), IfStatement.class)//

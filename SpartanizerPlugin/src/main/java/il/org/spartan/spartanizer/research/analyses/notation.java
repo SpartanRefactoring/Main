@@ -12,12 +12,11 @@ public class notation {
   public static String forbidden = "_"; //
   public static String lambda = "λ"; //
   public static String return$ = "$"; //
-  public static String[] specials = { forbidden, return$, anonymous, cent, lambda };
+  public static String[] specials = { forbidden, return$, anonymous, lambda };
 
   public static boolean isSpecial(final SimpleName $) {
     return isSpecial($.getIdentifier());
   }
-
   public static boolean isSpecial(final String $) {
     return in($, specials);
   }

@@ -16,15 +16,12 @@ public class CodeEntity {
     this.codes = codes;
     simplifiedCode = new SimplifiedCode(codes);
   }
-
   public int cyclomaticComplexity() {
     return simplifiedCode.cyclomaticComplexity();
   }
-
   public int instructionsCount() {
     return simplifiedCode.instructionsCount();
   }
-
   public int throwCount() {
     return simplifiedCode.throwCount();
   }

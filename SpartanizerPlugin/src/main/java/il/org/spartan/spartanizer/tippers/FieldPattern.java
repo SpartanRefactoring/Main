@@ -19,11 +19,9 @@ public abstract class FieldPattern extends FragmentAmongFragments {
   public FieldPattern() {
     andAlso("Must be field variable", () -> (declaration = az.fieldDeclaration(parent)) != null);
   }
-
   @Override protected final List<VariableDeclarationFragment> siblings() {
     return step.fragments(declaration);
   }
-
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
    * Still, if the containing node is left empty, it is removed as well.

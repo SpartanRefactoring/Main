@@ -29,12 +29,10 @@ public class SuperDelegator extends Delegator {
             && superDelegator(¢, firstStatement(¢))//
             && lastReturnsThis(¢);
   }
-
   private static boolean superDelegator(final MethodDeclaration ¢, final Statement s) {
     return anyTips(tippers, expression(s))//
         && parametersNames(¢).containsAll(analyze.dependencies(arguments(findFirst.instanceOf(SuperMethodInvocation.class).in(s))));
   }
-
   @Override public String tipperName() {
     return Delegator.class.getSimpleName();
   }

@@ -20,11 +20,9 @@ public final class TypeDeclarationClassExtendsObject extends ReplaceCurrentNode<
     $.setSuperclassType(null);
     return $;
   }
-
   @Override public String description(final TypeDeclaration ¢) {
     return "Trim implicit extends " + ¢.getSuperclassType();
   }
-
   @Override public String description() {
     return "Trim implicit extends Object";
   }

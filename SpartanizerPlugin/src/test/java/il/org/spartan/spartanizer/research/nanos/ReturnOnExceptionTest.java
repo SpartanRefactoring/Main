@@ -26,13 +26,11 @@ public class ReturnOnExceptionTest {
         .stays()//
     ;
   }
-
   @Test public void b() {
     trimmingOf("try{ thing(); } catch(A a){ return null;}catch(B b){return 3;}")//
         .using(new ReturnOnException(), CatchClause.class)//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf(//
         "try {" + //
@@ -49,7 +47,6 @@ public class ReturnOnExceptionTest {
         .stays()//
     ;
   }
-
   @Test public void d() {
     trimmingOf("try{ thing(); } catch(A a){ return;}catch(B b){return;}")//
         .gives("try{thing();}catch(B|A a){return;}")//
@@ -59,7 +56,6 @@ public class ReturnOnExceptionTest {
         .gives("If.throwz(()->thing()).returns();")//
         .stays();
   }
-
   @Test public void e() {
     trimmingOf(//
         "try {" + //

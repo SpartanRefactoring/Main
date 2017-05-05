@@ -19,7 +19,6 @@ public class DefaultValue extends JavadocMarkerNanoPattern {
     return empty(¢)//
         || returnDefault.canTip(onlyStatement(¢));
   }
-
   @Override public String tipperName() {
     return "DefaultValue";
   }

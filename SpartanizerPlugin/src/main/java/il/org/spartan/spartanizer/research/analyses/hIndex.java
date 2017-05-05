@@ -26,7 +26,6 @@ public interface hIndex {
     }
     return ¢.size();
   }
-
   static void analyze() {
     final Map<String, Pair<String, Int>> ranking = new HashMap<>();
     for (final File f : inputFiles()) {
@@ -44,7 +43,6 @@ public interface hIndex {
     System.out.println("min: " + the.lastOf(rs).first + " [" + the.lastOf(rs).second.inner + "]");
     System.out.println("h-index: " + hindex(rs));
   }
-
   static String declarationFile(final CompilationUnit u, final String methodName, final String fileName) {
     return !methodNames(u).contains(methodName) ? "" : fileName.replaceAll("\\.java", "") + ".";
   }

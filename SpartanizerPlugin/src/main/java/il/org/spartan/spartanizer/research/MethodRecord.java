@@ -37,31 +37,24 @@ public class MethodRecord {
     numExpressions = measure.expressions(d);
     numNodes = countOf.nodes(d);
   }
-
   void setAfter(final MethodDeclaration ¢) {
     after = ¢;
   }
-
   public boolean fullyMatched() {
     return fullyMatched;
   }
-
   public boolean touched() {
     return numNPStatements > 0 || numNPExpressions > 0;
   }
-
   public int numNPStatements() {
     return Math.min(numNPStatements, numStatements);
   }
-
   public int numNPExpressions() {
     return Math.min(numNPExpressions, numExpressions);
   }
-
   public int numNPNodes() {
     return Math.min(numNPNodes, numNodes);
   }
-
   public void markNP(final ASTNode n, final String np) {
     if (excluded(np)) {
       numNPExpressions += 1;
@@ -77,7 +70,6 @@ public class MethodRecord {
     if (iz.methodDeclaration(n))
       fullyMatched = true;
   }
-
   private static boolean epxressionWholeStatement(final ASTNode ¢) {
     return iz.expression(¢)//
         && iz.expressionStatement(parent(¢));
@@ -88,7 +80,6 @@ public class MethodRecord {
   public static boolean excluded(final String np) {
     return excluded.contains(np);
   }
-
   static String findTypeAncestor(final ASTNode ¢) {
     ASTNode n = ¢;
     String $ = "";

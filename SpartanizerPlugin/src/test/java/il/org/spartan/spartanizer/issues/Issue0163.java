@@ -14,19 +14,16 @@ public final class Issue0163 {
         .gives("return \"remove the block: \" + n;")//
         .stays();
   }
-
   @Test public void issue163_02() {
     trimmingOf("x + \"\" + f() + \"\" + g() + \"abc\"")//
         .gives("x + \"\" + f() + g() + \"abc\"")//
         .stays();
   }
-
   @Test public void issue163_03() {
     trimmingOf("x + \"\" + \"\"")//
         .gives("x+\"\"")//
         .stays();
   }
-
   @Test public void issue163_04() {
     trimmingOf("\"\"+\"\"+x +\"\"")//
         .gives("\"\"+\"\"+x")//

@@ -24,7 +24,8 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 12/07/2007
  * @see CLASSPATH */
-@Utility public enum JRE {
+@Utility
+public enum JRE {
   ;
   /** retrieve the system's CLASSPATH
    * @return the content of the classpath, broken into array entries */
@@ -40,7 +41,6 @@ import il.org.spartan.utils.*;
       return $;
     }
   }
-
   /** Obtain the CLASSPATH location used by the class loader of a given classes.
    * @param cs An array of classes
    * @return a list of files
@@ -61,7 +61,6 @@ import il.org.spartan.utils.*;
     }
     return $;
   }
-
   /** Exercise this class, by printing the result of its principal function.
    * @param __ unused */
   public static void main(final String[] __) {

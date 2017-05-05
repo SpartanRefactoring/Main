@@ -30,7 +30,6 @@ public enum enumerate {
     });
     return $.inner;
   }
-
   /** @author Aviad Cohen
    * @author Noam Yefet
    * @param ¢
@@ -47,7 +46,6 @@ public enum enumerate {
     });
     return $.inner;
   }
-
   /** @author Sharon Kuninin
    * @author Yarden Lev
    * @param ¢ the CompilationUnit its methods are counted
@@ -66,7 +64,6 @@ public enum enumerate {
     });
     return $.inner;
   }
-
   /** @author Ori Marcovitch
    * @param ¢
    * @return */
@@ -84,7 +81,6 @@ public enum enumerate {
     });
     return $.inner;
   }
-
   /** see issue #776 for more details
    * @author Yevgenia Shandalov
    * @author Osher Hajaj
@@ -127,7 +123,6 @@ public enum enumerate {
     return $;
   }
   // For you to implement! Let's TDD and get it on!
-
   public static int ifStatements(final ASTNode ¢) {
     if (¢ == null)
       return 0;
@@ -141,7 +136,6 @@ public enum enumerate {
     });
     return $.inner;
   }
-
   public static int loops(final ASTNode n) {
     if (n == null)
       return 0;
@@ -151,19 +145,15 @@ public enum enumerate {
       @Override public boolean visit(final WhileStatement ¢) {
         return push(¢);
       }
-
       @Override public boolean visit(final ForStatement ¢) {
         return push(¢);
       }
-
       @Override public boolean visit(final EnhancedForStatement ¢) {
         return push(¢);
       }
-
       @Override public boolean visit(final DoStatement ¢) {
         return push(¢);
       }
-
       boolean push(@SuppressWarnings("unused") final ASTNode __) {
         $.step();
         return true;
@@ -171,7 +161,6 @@ public enum enumerate {
     });
     return $.inner;
   }
-
   public static int ternaries(final ASTNode ¢) {
     if (¢ == null)
       return 0;

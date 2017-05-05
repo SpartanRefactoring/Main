@@ -17,18 +17,15 @@ public class Issue1071 {
         .gives("class X{}")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("class X extends java.lang.Object { }")//
         .gives("class X{}")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("public class X extends java.lang.object { }")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("public class X extends y { }")//
         .stays();

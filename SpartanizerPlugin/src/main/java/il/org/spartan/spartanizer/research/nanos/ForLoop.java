@@ -43,15 +43,12 @@ public final class ForLoop {
       return anyTips(tippers, az.block(parent(x)))//
       ;
     }
-
     @Override public Tip pattern(final ForStatement $) {
       return firstTip(tippers, az.block(parent($)));
     }
-
     @Override public String tipperName() {
       return "FirstSuchThat";
     }
-
     @Override public String description() {
       return "Iterate a collection for the first element matching some predicate";
     }

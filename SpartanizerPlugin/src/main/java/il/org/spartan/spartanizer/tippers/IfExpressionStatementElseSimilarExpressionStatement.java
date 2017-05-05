@@ -27,7 +27,6 @@ public final class IfExpressionStatementElseSimilarExpressionStatement extends R
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two branches of 'if' into a ternary exrpession";
   }
-
   @Override public Statement replacement(final IfStatement s) {
     final Expression then = expression(extract.expressionStatement(then(s)));
     if (then == null)

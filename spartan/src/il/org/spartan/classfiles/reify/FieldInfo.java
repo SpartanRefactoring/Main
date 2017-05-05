@@ -9,7 +9,6 @@ public final class FieldInfo extends TypedEntity {
       final AttributeInfo[] attributes) {
     super(constantPool, flags, name, descriptor, attributes);
   }
-
   public FieldInfo(@NotNull final TypedEntity t) {
     super(t.constantPool, t.flags, t.name, t.descriptor, t.attributes);
   }

@@ -23,15 +23,12 @@ public final class CastToDouble2Multiply1 extends ReplaceCurrentNode<CastExpress
     $.setToken("1.");
     return $;
   }
-
   private static InfixExpression replacement(final Expression $) {
     return subject.pair(literal($), $).to(TIMES);
   }
-
   @Override public String description(final CastExpression ¢) {
     return "Use 1.*" + expression(¢) + " instead of (double)" + expression(¢);
   }
-
   @Override public ASTNode replacement(final CastExpression ¢) {
     return eval(() -> replacement(expression(¢))).when(type(¢).isPrimitiveType() && "double".equals(type(¢) + ""));
   }

@@ -27,7 +27,6 @@ public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
     lastNode = node;
     return super.visit(node);
   }
-
   /** TODO Ori Roth: Please add here more boolean metrics such as
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
@@ -74,19 +73,16 @@ public final class MethodFeaturesCollector extends DeprecatedFolderASTVisitor {
     ;
     writer.nl();
   }
-
   @Override public void endVisit(final MethodDeclaration node) {
     --methodNesting;
     consider(node);
     super.endVisit(node);
   }
-
   @Override protected void done(final String path) {
     dotter.end();
     System.err.println("Done processing: " + path);
     System.err.println("Your output is in: " + writer.close());
   }
-
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);

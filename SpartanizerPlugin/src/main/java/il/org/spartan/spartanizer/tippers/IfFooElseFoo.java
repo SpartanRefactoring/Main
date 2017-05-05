@@ -18,18 +18,15 @@ public final class IfFooElseFoo extends IfAbstractPattern implements TipperCateg
     andAlso("Then and else are identical", //
         () -> wizard.eq(then, elze));
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     misc.insertBefore(current(), compute.decompose(current().getExpression()), r, g);
     misc.insertAfter(current(), as.list(then), r, g);
     remove.statement(current(), r, g);
     return r;
   }
-
   @Override public String description() {
     return "Eliminate 'if' with two identical branches";
   }
-
   @Override public Examples examples() {
     return //
     convert("if(f()==g())h();else h();")//

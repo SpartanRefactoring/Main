@@ -45,33 +45,37 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
   public PreferencesPage() {
     super(GRID);
   }
-
   @Override public boolean performOk() {
     final boolean $ = super.performOk();
     commitNotations();
     changes.commit();
     return $;
   }
-
-  public static void changeCentToIt() {
-    System.out.println("Strted Change");
+  /** Change all the centifications in the code to param */
+  public static void changeCentToParam() {
     for (final IProject p : getAllSpartanizerProjects()) {
       final Document doc = XMLSpartan.getXML(p);
       doc.getDocumentElement().normalize();
-      System.out.println(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue());
-      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("it");
+      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("param");
       XMLSpartan.commit(p, doc);
     }
-    notation.cent = "it";
-    System.out.println("Done Change");
+    notation.cent = "param";
   }
-
+  /** Change all the single parameters to cent */
+  public static void changeBackToCent() {
+    for (final IProject p : getAllSpartanizerProjects()) {
+      final Document doc = XMLSpartan.getXML(p);
+      doc.getDocumentElement().normalize();
+      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("¢");
+      XMLSpartan.commit(p, doc);
+    }
+    notation.cent = "¢";
+  }
   private void commitNotations() {
     final IProject[] projects = getAllSpartanizerProjects();
     for (final IProject p : projects) {
       final Document doc = XMLSpartan.getXML(p);
       doc.getDocumentElement().normalize();
-      System.out.println(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue());
       doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue(singleParameterRadio.getPreferenceStore().getString("Cent"));
       doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).setNodeValue(returnParameterRadio.getPreferenceStore().getString("Dollar"));
       XMLSpartan.commit(p, doc);
@@ -79,7 +83,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     notation.cent = singleParameterRadio.getPreferenceStore().getString("Cent");
     notation.return$ = returnParameterRadio.getPreferenceStore().getString("Dollar");
   }
-
   /** Build the preferences page by adding controls */
   @Override public void createFieldEditors() {
     final List<Entry<String, Object>> ps = getProjects();
@@ -112,7 +115,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     // setTextParams(other);
     // setRenamingButtons(r, getFieldEditorParent(), other);
   }
-
   /** @return open projects in workspace */
   private static List<Entry<String, Object>> getProjects() {
     final List<Entry<String, Object>> $ = an.empty.list();
@@ -126,7 +128,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       }
     return $;
   }
-
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(TipperGroup.store());
     setDescription(PAGE_DESCRIPTION);
@@ -141,7 +142,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     SpartanPropertyListener(final Bool refreshNeeded) {
       this.refreshNeeded = refreshNeeded;
     }
-
     /* (non-Javadoc)
      *
      * @see org.eclipse.jface.preference.PreferencePage#performApply() */
@@ -189,11 +189,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
-
         @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
-
         @SuppressWarnings("synthetic-access") void onSelection() {
           final int i = getList().getSelectionIndex();
           if (i < 0)
@@ -217,11 +215,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
-
         @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           onSelection();
         }
-
         @SuppressWarnings("synthetic-access") void onSelection() {
           final int i = getList().getSelectionIndex();
           if (i >= 0)
@@ -244,30 +240,24 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
               configureButton.setEnabled(false);
             }
         }
-
         @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           //
         }
       });
     }
-
     @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
       super.doFillIntoGrid(parent, numColumns);
       getButtonBoxControl(parent).dispose();
     }
-
     @Override protected String[] parseString(final String stringList) {
       return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : elements.stream().map(Entry::getKey).toArray(String[]::new);
     }
-
     @Override protected String getNewInputObject() {
       return null;
     }
-
     @Override protected String createList(final String[] items) {
       return separate.these(items).by(DELIMETER);
     }
-
     @Override protected void selectionChanged() {
       if (getList() != null && getList().getSelectionIndex() >= 0 && ableButton != null)
         ableButton.setEnabled(true);
@@ -288,7 +278,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       preferences2 = new HashMap<>();
       enabled = new HashMap<>();
     }
-
     public Changes(final Iterable<Object> projects) {
       preferences1 = new HashMap<>();
       preferences2 = new HashMap<>();
@@ -299,7 +288,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         enabled.put((IProject) p, null);
       }
     }
-
     @Override @SuppressWarnings("CloneDoesntDeclareCloneNotSupportedException") protected Changes clone() {
       final Changes $ = new Changes();
       $.preferences1.putAll(preferences1);
@@ -307,11 +295,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       $.enabled.putAll(enabled);
       return $;
     }
-
     public Map<SpartanCategory, SpartanTipper[]> getPreference(final IProject ¢) {
       return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getTippersByCategories(¢));
     }
-
     public Boolean isEnabled(final IProject p) {
       final Boolean $ = enabled.get(p);
       if ($ == null)
@@ -323,11 +309,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         }
       return $;
     }
-
     public void update(final IProject p, final Boolean able) {
       enabled.put(p, able);
     }
-
     public Void update(final IProject p, final Set<String> preference) {
       preferences2.put(p, preference);
       for (final SpartanTipper[] ts : preferences1.get(p).values())
@@ -335,7 +319,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
           ¢.enable(preference.contains(¢.name()));
       return null;
     }
-
     public synchronized void commit() {
       clone().commitSelf();
       for (final IProject ¢ : preferences1.keySet()) {
@@ -344,7 +327,6 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         enabled.put(¢, null);
       }
     }
-
     private void commitSelf() {
       new Job("Applying preferences changes") {
         @Override @SuppressWarnings("synthetic-access") protected IStatus run(final IProgressMonitor m) {
@@ -373,21 +355,18 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         Names.methodSingleParameterName = (x, y) -> "¢";
       }
-
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {/**/}
     });
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         Names.methodSingleParameterName = (x, y) -> "¢";
       }
-
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {/**/}
     });
     ((Button) cc[0]).addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         Names.methodSingleParameterName = (x, y) -> "¢";
       }
-
       @Override public void widgetDefaultSelected(@SuppressWarnings("unused") final SelectionEvent __) {/**/}
     });
   }

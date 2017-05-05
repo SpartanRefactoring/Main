@@ -15,18 +15,15 @@ public class Issue1023 {
     bloatingOf("for(Double i : lili) a=5; b=7;")//
         .gives("for(Double i : lili){a=5;}b=7;");
   }
-
   @Test public void notSimpleShouldntAddTest() {
     bloatingOf("for(Double i : lili){ a=5;b=3;}")//
         .stays();
   }
-
   @Test public void simpleBlockTest() {
     bloatingOf("for(int i : lili) a=5;")//
         .gives("for(int i : lili){a=5;}")//
         .stays();
   }
-
   @Test public void simpleShouldntAddTest() {
     bloatingOf("for(int i : lili){ a=5;}")//
         .stays();

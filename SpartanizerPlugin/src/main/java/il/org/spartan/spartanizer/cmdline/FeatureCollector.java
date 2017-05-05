@@ -12,9 +12,7 @@ public interface FeatureCollector<T> {
   default NamedFunction<ASTNode, Object> m(final String name, final Function<ASTNode, Object> r) {
     return new NamedFunction<>(name, r);
   }
-
   NamedFunction<ASTNode, T>[] functions();
-
   NamedFunction<ASTNode, T>[] functions(String id);
 
   @SuppressWarnings("hiding")
@@ -26,11 +24,9 @@ public interface FeatureCollector<T> {
       this.name = name;
       this.function = function;
     }
-
     public String name() {
       return name;
     }
-
     public Function<ASTNode, T> function() {
       return function;
     }

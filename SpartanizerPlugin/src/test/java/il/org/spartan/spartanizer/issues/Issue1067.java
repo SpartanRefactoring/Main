@@ -12,7 +12,6 @@ public class Issue1067 {
   @Test public void t1() {
     trimmingOf("int zero = 0, result = 8 / zero;f(++result);").stays();
   }
-
   @Test public void t2() {
     trimmingOf("int div = 2, result = 8/div;f(++result);")// //
         .stays();

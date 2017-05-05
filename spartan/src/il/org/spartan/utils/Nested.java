@@ -23,7 +23,6 @@ public interface Nested<T> extends Duplo<T> {
 
   interface Compound<T> extends Nested<T>, Duplo.Compound<T> {
     Nested<T> parent();
-
     @Override default Iterable<Duplo<T>> neighbors() {
       return a.singleton.list(parent());
     }

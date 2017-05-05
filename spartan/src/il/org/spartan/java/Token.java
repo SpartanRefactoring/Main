@@ -88,7 +88,6 @@ public enum Token {
   public static void main(final String argv[]) throws IOException {
     main(new RawTokenizer(System.in));
   }
-
   private static void main(@NotNull final RawTokenizer tokenizer) throws IOException {
     for (;;) {
       @Nullable final Token t = tokenizer.next();
@@ -110,20 +109,16 @@ public enum Token {
   Token() {
     this(KEYWORD);
   }
-
   Token(final Kind kind) {
     this(kind, false);
   }
-
   Token(final Kind kind, final boolean isError) {
     this.kind = kind;
     this.isError = isError;
   }
-
   public boolean isError() {
     return isError;
   }
-
   public boolean isNL() {
     return this == NL || this == NL_BLOCK_COMMENT || this == NL_DOC_COMMENT;
   }

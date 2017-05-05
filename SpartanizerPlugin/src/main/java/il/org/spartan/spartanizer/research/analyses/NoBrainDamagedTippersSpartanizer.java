@@ -12,7 +12,6 @@ public class NoBrainDamagedTippersSpartanizer extends InteractiveSpartanizer {
   public NoBrainDamagedTippersSpartanizer() {
     removeHeavy();
   }
-
   private NoBrainDamagedTippersSpartanizer removeHeavy() {
     remove(SwitchStatement.class, //
         new MergeSwitchBranches(), //

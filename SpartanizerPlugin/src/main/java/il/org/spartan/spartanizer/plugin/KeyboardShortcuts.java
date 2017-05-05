@@ -38,11 +38,9 @@ public class KeyboardShortcuts extends AbstractHandler {
     return !(is instanceof ITextSelection) || s == null || s.isEmpty() ? null
         : insertCharacter(shortcutsMap.get(getCharacter((Event) $)), s.setTextSelection((ITextSelection) is));
   }
-
   private static char getCharacter(final Event $) {
     return $.type != 13 ? $.character : key.apply('c'); // Hack, obviously
   }
-
   /** Insert a character at the given location. If the text selection contains a
    * range of characters, all of them would be replaced.
    * @param c the character to write in the file
@@ -64,7 +62,6 @@ public class KeyboardShortcuts extends AbstractHandler {
     }
     return clearSelection($.textSelection.getOffset() + 1);
   }
-
   /** Change text selection to empty text selection at the end of the original
    * selection.
    * @param i text selection required location

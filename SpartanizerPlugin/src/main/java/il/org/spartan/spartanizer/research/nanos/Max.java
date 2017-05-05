@@ -23,15 +23,12 @@ public final class Max extends NanoPatternTipper<ConditionalExpression> {
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public Category category() {
     return Category.Safety;
   }
-
   @Override public String description() {
     return "Max between two expressions";
   }

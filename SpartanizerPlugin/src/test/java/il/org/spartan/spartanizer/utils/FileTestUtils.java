@@ -35,7 +35,6 @@ public class FileTestUtils {
       return null;
     }
   }
-
   /** Creates a temporary file - including lazy deletion.
    * @param b
    * @param d
@@ -44,7 +43,6 @@ public class FileTestUtils {
   static File createTempFile(final StringBuilder b, final TestDirection d, final File f) {
     return createTemporaryRandomAccessFile(createTempFile(d, f), b + "");
   }
-
   private static File createTempFile(final TestDirection $, final File f) {
     try {
       return File.createTempFile(f.getName().replace(".", ""), "." + ($ == TestDirection.In ? "in" : "out"));
@@ -52,7 +50,6 @@ public class FileTestUtils {
       return null; // Failed to create temporary file
     }
   }
-
   private static File createTemporaryRandomAccessFile(final File $, final String s) {
     try (RandomAccessFile fh = new RandomAccessFile($, "rw")) {
       fh.writeBytes(s);
@@ -63,18 +60,15 @@ public class FileTestUtils {
     }
     return $;
   }
-
   private static StringBuilder deleteTestKeyword(final StringBuilder $) {
     if ($.indexOf(testKeyword) > 0)
       $.delete($.indexOf(testKeyword), $.length());
     return $;
   }
-
   private static GUITraversal error(final String message, final Class<?> c, final Throwable t) {
     System.err.println(message + " '" + c.getCanonicalName() + "' " + t.getMessage());
     return null;
   }
-
   /** Instantiates a {@link Class} object if possible, otherwise generate an
    * assertion fault
    * @param commandLineApplicator an arbitrary class object
@@ -93,16 +87,13 @@ public class FileTestUtils {
     }
     return null;
   }
-
   /** Makes an Input file out of a Test file */
   protected static File makeInFile(final File ¢) {
     return createTempFile(deleteTestKeyword(makeAST.COMPILATION_UNIT.builder(¢)), TestDirection.In, ¢);
   }
-
   static GUITraversal makeApplicator(final File ¢) {
     return makeApplicator(¢.getName());
   }
-
   static GUITraversal makeApplicator(final String folderForClass) {
     final Class<?> c = asClass(folderForClass);
     assert c != null;
@@ -110,7 +101,6 @@ public class FileTestUtils {
     assert $ != null;
     return (GUITraversal) $;
   }
-
   /** Makes an Output file out of a Test file */
   protected static File makeOutFile(final File ¢) {
     final StringBuilder $ = makeAST.COMPILATION_UNIT.builder(¢);
@@ -135,7 +125,6 @@ public class FileTestUtils {
       if (c != null)
         $.add(c);
     }
-
     abstract Object[] makeCase(File d);
   }
 
@@ -154,7 +143,6 @@ public class FileTestUtils {
             $.add(c);
         }
     }
-
     abstract Object[] makeCase(GUITraversal t, File d, File f, String name);
   }
 
@@ -181,7 +169,6 @@ public class FileTestUtils {
       }
       return $;
     }
-
     /** Collect test cases from each file in {@link #location}
      * @param $ where to save the collected test cases
      * @param f an entry in {@link #location} */

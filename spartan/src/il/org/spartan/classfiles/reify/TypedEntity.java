@@ -10,7 +10,6 @@ public class TypedEntity extends ConstantPoolEntity {
   @Nullable public static TypeInfo decode(@NotNull final String descriptor) {
     return decodeSingleType(Iterables.make(descriptor.toCharArray()).iterator());
   }
-
   static TypeInfo[] decodeArguments(@NotNull final CharIterator rest) {
     @NotNull final List<TypeInfo> $ = new ArrayList<>();
     for (char first;;) {
@@ -19,7 +18,6 @@ public class TypedEntity extends ConstantPoolEntity {
       $.add(decodeSingleType(first, rest));
     }
   }
-
   private static String decodeReferenceType(@NotNull final CharIterator i) {
     @NotNull final StringBuilder $ = new StringBuilder();
     for (char ¢; i.hasNext();)
@@ -35,7 +33,6 @@ public class TypedEntity extends ConstantPoolEntity {
       }
     return null;
   }
-
   private static TypeInfo decodeSingleType(final char first, @NotNull final CharIterator rest) {
     switch (first) {
       case 'B':
@@ -67,7 +64,6 @@ public class TypedEntity extends ConstantPoolEntity {
         return null;
     }
   }
-
   @Nullable private static TypeInfo decodeSingleType(@NotNull final CharIterator ¢) {
     return decodeSingleType(¢.next(), ¢);
   }
@@ -79,7 +75,6 @@ public class TypedEntity extends ConstantPoolEntity {
       final AttributeInfo[] attributes) {
     this(constantPool, flags, name, decode(descriptor), descriptor, attributes);
   }
-
   public TypedEntity(final ConstantPool constantPool, final int flags, final String name, final TypeInfo type, final String descriptor,
       final AttributeInfo[] attributes) {
     super(constantPool, flags, name, attributes);

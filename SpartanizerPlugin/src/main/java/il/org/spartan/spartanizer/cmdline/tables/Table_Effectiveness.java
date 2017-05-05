@@ -42,7 +42,6 @@ class Table_Effectiveness extends NanoTable {
     npStatistics.clear();
     RIndicesVisitor.clear();
   }
-
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
       {
@@ -58,7 +57,6 @@ class Table_Effectiveness extends NanoTable {
         summarize(path);
         clear();
       }
-
       void summarize(final String path) {
         final int rMethod = rMethod(), rInternal = rInternal(), rExternal = rExternal();
         table.put("Project", path);
@@ -69,7 +67,6 @@ class Table_Effectiveness extends NanoTable {
         fillAbsents();
         table.nl();
       }
-
       void initializeWriter() {
         if (table == null)
           table = new Table(Table.classToNormalizedFileName(Table_Effectiveness.class) + "-" + corpus, outputFolder);
@@ -77,7 +74,6 @@ class Table_Effectiveness extends NanoTable {
     }.visitAll(visitor);
     table.close();
   }
-
   static void fillAbsents() {
     nanonizer.allNanoPatterns().stream()//
         .map(Tipper::className)//

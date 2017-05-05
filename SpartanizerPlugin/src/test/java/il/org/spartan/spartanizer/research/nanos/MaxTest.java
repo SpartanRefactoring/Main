@@ -16,21 +16,18 @@ public class MaxTest {
         .gives("return max(x,y);")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("return x >= y ? x : y;")//
         .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("return y < x ? x : y;")//
         .using(new Max(), ConditionalExpression.class)//
         .gives("return max(x,y);")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("return y <= x ? x : y;")//
         .using(new Max(), ConditionalExpression.class)//

@@ -12,7 +12,6 @@ public class Maximizer<T> {
   public double max() {
     return max;
   }
-
   @NotNull public Maximizer<T> next(final T t, final double next) {
     if (!Double.isNaN(max) && next <= max)
       return this;
@@ -20,7 +19,6 @@ public class Maximizer<T> {
     value = t;
     return this;
   }
-
   public T value() {
     return value;
   }

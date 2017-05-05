@@ -41,7 +41,6 @@ public interface PureIterable<T> extends Iterable<T> {
     @Override @NotNull @NonNull public PureIterator<@NonNull T> iterator() {
       return null;
     }
-
     /** @return how many elements are there in this instance */
     public abstract int size();
   }

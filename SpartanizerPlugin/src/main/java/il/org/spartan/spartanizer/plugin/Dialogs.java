@@ -41,7 +41,6 @@ public enum Dialogs {
   public static Image image(final String $) {
     return image($, $, λ -> λ);
   }
-
   /** Lazy, dynamic loading of an image.
    * @return {@link SWT} image */
   public static Image image(final String url, final String $, final Function<ImageData, ImageData> scale) {
@@ -55,7 +54,6 @@ public enum Dialogs {
       }
     return images.get($);
   }
-
   /** Simple dialog, waits for user operation. Does not trim the received
    * message.
    * @param message to be displayed in the dialog
@@ -65,25 +63,21 @@ public enum Dialogs {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER | SWT.ON_TOP);
       }
-
       @Override protected void createButtonsForButtonBar(final Composite ¢) {
         createButton(¢, SWT.DEFAULT, "Cancel", false);
         super.createButtonsForButtonBar(¢);
       }
-
       @Override public Image getInfoImage() {
         return image(LOGO);
       }
     };
   }
-
   /** Simple dialog, waits for user operation.
    * @param message to be displayed in the dialog
    * @return simple, textual dialog with an OK button */
   public static MessageDialog message(final String message) {
     return messageUnsafe(English.trim(message));
   }
-
   /** Simple non-modal dialog. Does not wait for user operation (i.e., non
    * blocking).
    * @param message to be displayed in the dialog
@@ -93,7 +87,6 @@ public enum Dialogs {
     $.setBlockOnOpen(false);
     return $;
   }
-
   /** @param openOnRun whether this dialog should be open on run
    * @return dialog with progress bar, connected to a
    *         {@link IProgressMonitor} */
@@ -102,12 +95,10 @@ public enum Dialogs {
       @Override protected void setShellStyle(@SuppressWarnings("unused") final int __) {
         super.setShellStyle(SWT.CLOSE | SWT.TITLE | SWT.BORDER);
       }
-
       @Override protected void createButtonsForButtonBar(final Composite ¢) {
         createButton(¢, RIB_ID, "Run in Background", false);
         super.createButtonsForButtonBar(¢);
       }
-
       @Override protected void buttonPressed(final int ¢) {
         super.buttonPressed(¢);
         if (¢ != RIB_ID)
@@ -115,7 +106,6 @@ public enum Dialogs {
         decrementNestingDepth();
         close();
       }
-
       @Override public Image getInfoImage() {
         return image(LOGO);
       }
@@ -125,13 +115,11 @@ public enum Dialogs {
     $.setOpenOnRun(openOnRun);
     return $;
   }
-
   /** @param ¢ JD
    * @return whether the user pressed any button except close button. */
   public static boolean ok(final MessageDialog ¢) {
     return ¢.open() != SWT.DEFAULT;
   }
-
   /** @param ¢ JD
    * @param okIndex index of button to be pressed
    * @return whether the button selected has been pressed */

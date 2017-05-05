@@ -7,7 +7,6 @@ public class CountingReduce extends Reduce<Integer> {
   @Override @SuppressWarnings("boxing") public final Integer reduce(final Integer i1, final Integer i2) {
     return i1 + i2;
   }
-
   @Override @SuppressWarnings("boxing") public final Integer reduce() {
     return 0;
   }

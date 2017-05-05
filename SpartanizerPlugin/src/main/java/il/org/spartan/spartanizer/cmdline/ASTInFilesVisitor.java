@@ -49,7 +49,6 @@ public class ASTInFilesVisitor {
     });
     return $.get();
   }
-
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
       /* Override here which ever method you like */
@@ -57,7 +56,6 @@ public class ASTInFilesVisitor {
       /* OVerride here which ever method you like */
     });
   }
-
   /** Determines whether a file is production code, using the heuristic that
    * production code does not contain {@code @}{@link Test} annotations
    * <p>
@@ -70,7 +68,6 @@ public class ASTInFilesVisitor {
       return false;
     }
   }
-
   static boolean letItBeIn(final List<Statement> ¢) {
     return ¢.size() == 2 && the.headOf(¢) instanceof VariableDeclarationStatement;
   }
@@ -258,7 +255,6 @@ public class ASTInFilesVisitor {
 
   interface Tapper {
     void beginBatch();
-
     //@formatter:off
     void beginFile();
     void beginLocation();

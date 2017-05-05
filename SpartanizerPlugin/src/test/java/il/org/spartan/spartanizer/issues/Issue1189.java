@@ -29,29 +29,23 @@ public class Issue1189 {
           @Override protected String map(final BooleanSupplier ¢) {
             return ¢ + "";
           }
-
           @Override protected String ante(final Proposition.Some ¢) {
             return tab.begin() + ¢ + " " + (¢ instanceof And ? "AND" : ¢ instanceof Or ? "OR" : "UNKOWN") + NL;
           }
-
           @Override protected String ante(final Proposition.Singleton ¢) {
             return tab.begin();
           }
-
           @Override protected String post(final Proposition.Some ¢) {
             tab.less();
             return "";
           }
-
           @Override protected String post(final Proposition.Singleton ¢) {
             tab.less();
             return "";
           }
-
           @Override protected String inter(final Proposition.And ¢) {
             return NL;
           }
-
           @Override protected String inter(final Proposition.Or ¢) {
             return NL;
           }

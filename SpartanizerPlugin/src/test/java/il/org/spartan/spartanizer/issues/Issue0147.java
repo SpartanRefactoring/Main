@@ -26,33 +26,26 @@ public class Issue0147 {
     trimmingOf("for(int ¢=0; ¢<5;++¢){x.fuanc(); if(bool) continue;}")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("for (final Object o : os) {if (bool) return; continue;}")//
         .gives("for (final Object o : os) {if (bool) return; }");//
   }
-
   @Test public void b$() {
     trimmingOf("for(final Object o : os){x.fuanc(); if(bool) continue;}")//
         .stays();
   }
-
   @Test public void eligible() {
     assert TIPPER.check(FOR);
   }
-
   @Test public void extractFirstIf() {
     assert FOR != null;
   }
-
   @Test public void inputType() {
     azzert.that(FOR, instanceOf(ForStatement.class));
   }
-
   @Test public void notEligible() {
     assert !TIPPER.check(FOR1);
   }
-
   @Test public void a() {
     trimmingOf("for(int ¢=0; ¢<5;++¢){++¢; continue;}")//
         .gives("for(int ¢=0; ¢<5;++¢){++¢;}")//

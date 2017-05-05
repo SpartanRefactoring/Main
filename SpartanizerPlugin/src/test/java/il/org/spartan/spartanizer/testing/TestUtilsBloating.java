@@ -15,7 +15,6 @@ public enum TestUtilsBloating {
   public static OperandBloating bloatingOf(final String from) {
     return new OperandBloating(from);
   }
-
   public static OperandBloating bloatingOf(final MetaFixture ¢) {
     return new OperandBloating(¢.reflectedCompilationUnit(), ¢.reflectedCompilationUnitText());
   }

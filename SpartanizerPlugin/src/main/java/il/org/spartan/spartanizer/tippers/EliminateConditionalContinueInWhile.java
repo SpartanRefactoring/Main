@@ -17,7 +17,6 @@ public class EliminateConditionalContinueInWhile extends EagerTipper<WhileStatem
   @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "Eliminate conditional continue before last statement in the for loop";
   }
-
   @Override public Tip tip(final WhileStatement ¢) {
     return ContinueInConditionalEliminateAux.actualReplacement(az.block(¢.getBody()), ¢, myClass());
   }

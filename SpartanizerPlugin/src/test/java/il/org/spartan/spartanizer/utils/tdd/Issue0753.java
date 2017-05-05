@@ -22,28 +22,23 @@ public class Issue0753 {
   @Test public void a() {
     azzert.isNull(getAll.methods(null));
   }
-
   /** check that the function returns an empty list if given an empty
    * Compilation unit */
   @Test public void b() {
     assert getAll.methods(az.compilationUnit(make.ast("public class A {}"))).isEmpty();
   }
-
   @Test public void c() {
     azzert.that(1, is(getAll.methods(az.compilationUnit(make.ast("public class A {public void foo() {}}"))).size()));
   }
-
   /** checking that the function returns a list of length 2 upon receiving a
    * compilation unit that contains two methods */
   @Test public void d() {
     assert getAll.methods(az.compilationUnit(make.ast("class A{ int func(){ return 3; } int func2(){ return 4; } }"))).size() == 2;
   }
-
   @Test public void e() {
     azzert.that("foo",
         is(the.headOf(getAll.methods(az.compilationUnit(make.ast("class A{boolean foo(){return false;}}")))).getName().getIdentifier()));
   }
-
   @Test public void f() {
     final List<MethodDeclaration> res2 = getAll.methods(az.compilationUnit(
         make.ast("public class B { double elite(int arg1){ class InnerElite{ void innerfunc(){} } return 0.0; }  int anotherFunc(){} }")));

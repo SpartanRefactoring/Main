@@ -52,7 +52,6 @@ public class ClassRepository implements Iterable<String> {
     ___.sure(!$.isEmpty());
     return $;
   }
-
   /** Obtain a {@link ClassRepository} object that is initialized with the
    * location of the JRE on the local machine. Note that Java does not have an
    * API that provides this information so we have to make an intelligent guess
@@ -76,7 +75,6 @@ public class ClassRepository implements Iterable<String> {
       $.add(new File(¢.nextToken()));
     return filter($);
   }
-
   public static void main(final String[] args) {
     @NotNull final ClassRepository r = new ClassRepository.DEFAULT();
     System.out.println("Size is " + r.getClasses().size());
@@ -84,7 +82,6 @@ public class ClassRepository implements Iterable<String> {
     for (int ¢ = 0; ¢ < list.size(); ++¢)
       System.out.println(¢ + " " + list.get(¢));
   }
-
   /** Adding all classes residing in archive to cache
    * @param jarFile fill path to a jar file
    * @param result List where scanned files are stored */
@@ -102,11 +99,9 @@ public class ClassRepository implements Iterable<String> {
       throw new RuntimeException("Damaged zip file: " + jarFile, ¢);
     }
   }
-
   @NotNull private static String concat(@Nullable final String path, final String name) {
     return (path == null || path.length() == 0 ? "" : path + ".") + name;
   }
-
   @NotNull private static List<File> filter(@NotNull final Iterable<File> fs, final File... ignore) {
     @NotNull final List<File> $ = new ArrayList<>();
     for (File ¢ : fs) {
@@ -116,21 +111,18 @@ public class ClassRepository implements Iterable<String> {
     }
     return $;
   }
-
   private static boolean onDir(final File f, final File d) {
     for (File parent = f; parent != null; parent = parent.getParentFile())
       if (parent.equals(d))
         return true;
     return false;
   }
-
   private static boolean onDirs(final File f, @NotNull final File... dirs) {
     for (@NotNull final File d : dirs)
       if (onDir(f, d.getAbsoluteFile()))
         return true;
     return false;
   }
-
   @NotNull private static File[] toFile(@NotNull final String[] paths) {
     @NotNull final File[] $ = new File[paths.length];
     int i = 0;
@@ -146,13 +138,11 @@ public class ClassRepository implements Iterable<String> {
   public ClassRepository() {
     files = new File[0];
   }
-
   public ClassRepository(final Class<?> me) {
     this(fromClass(me));
     ___.sure(files.length > 0);
     ___.sure(size() > 0);
   }
-
   /** Initialize a new instance
    * @param fs Array of Files */
   public ClassRepository(@NotNull final File... fs) {
@@ -161,24 +151,20 @@ public class ClassRepository implements Iterable<String> {
     for (@NotNull final File ¢ : fs)
       files[i++] = ¢.getAbsoluteFile();
   }
-
   /** Initialize a new instance from an iterable collection.
    * @param fs an iterable collection of files. */
   public ClassRepository(@NotNull final Iterable<File> fs) {
     this(Iterables.toArray(fs, File.class));
   }
-
   /** Initialize a new instance
    * @param paths Array of strings. Each element is a path to a single file
    *        system location */
   public ClassRepository(@NotNull final String... paths) {
     this(toFile(paths));
   }
-
   public ClassRepository(@NotNull final URI uri) {
     this(new File(uri));
   }
-
   /** Find all classes on the CLASSPATH represented by the receiver
    * @return List of fully qualified names of all such classes */
   @NotNull public ArrayList<String> getClasses() {
@@ -187,13 +173,11 @@ public class ClassRepository implements Iterable<String> {
       addFromDirectory(0, ¢, ¢.getAbsolutePath(), $, "");
     return $;
   }
-
   /** Obtain all starting point of the underlying class path
    * @return Array of files */
   @NotNull public File[] getRoots() {
     return Arrays.copyOf(files, files.length);
   }
-
   /** Obtain an iterator over all class names found in the class path
    * @return a new iterator object */
   @Override @NotNull public Iterator<String> iterator() {
@@ -203,15 +187,12 @@ public class ClassRepository implements Iterable<String> {
       throw new RuntimeException(¢);
     }
   }
-
   public final int size() {
     return getClasses().size();
   }
-
   @Override @NotNull public String toString() {
     return Separate.by(files, File.pathSeparator);
   }
-
   /** Recursively adding all classes residing in specified directory into cache.
    * @param depth 0-based depth inside the directory tree
    * @param dirOrFile file or directory
@@ -252,11 +233,11 @@ public class ClassRepository implements Iterable<String> {
     }
   }
 
-  @SuppressWarnings("static-method") public static class TEST {
+  @SuppressWarnings("static-method")
+  public static class TEST {
     @Test public void empty() {
       azzert.that(new ClassRepository().getClasses().size(), is(0));
     }
-
     // TODO Yossi: using non existing classes
     @Test public void ensureDotSeparatedNames() {
       fail("See TODO at ClassRepository");
@@ -278,7 +259,6 @@ public class ClassRepository implements Iterable<String> {
       // fail(¢.getMessage());
       // }
     }
-
     @Test public void getClassesObject() {
       assert new ClassRepository.JRE().getClasses().contains("java.lang.Object");
     }
@@ -291,17 +271,14 @@ public class ClassRepository implements Iterable<String> {
     public NameDotSuffix(@NotNull final File f) {
       this(f.getName());
     }
-
     public NameDotSuffix(@NotNull final String s) {
       final int dot = s.lastIndexOf('.');
       name = dot < 0 ? s : s.substring(0, dot);
       suffix = dot < 0 ? "" : s.substring(dot);
     }
-
     public NameDotSuffix(@NotNull final ZipEntry ze) {
       this(ze.getName().replace('/', '.'));
     }
-
     public boolean suffixIs(final String ¢) {
       return suffix.equalsIgnoreCase(¢);
     }

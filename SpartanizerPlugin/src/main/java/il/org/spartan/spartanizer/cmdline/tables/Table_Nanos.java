@@ -21,7 +21,6 @@ public class Table_Nanos {
   public static void main(final String[] args) {
     new Table_Nanos().go();
   }
-
   public void go() {
     try (Table t = new Table(this)) {
       final List<Tipper<? extends ASTNode>>[] implementation = new Nanonizer().traversals.traversal.configuration.implementation;

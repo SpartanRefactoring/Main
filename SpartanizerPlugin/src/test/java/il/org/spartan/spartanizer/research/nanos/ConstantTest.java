@@ -16,14 +16,12 @@ public class ConstantTest {
         .gives("class C{}")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("class C{public static final Boolean a = 7;}")//
         .using(new Constant(), FieldDeclaration.class)//
         .gives("class C{}")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("class C{public static final Boolean a = true;"//
         + "public static final Integer b = 7;"//
@@ -34,7 +32,6 @@ public class ConstantTest {
             .gives("class C{}")//
             .stays();
   }
-
   @Test public void d() {
     trimmingOf("class C{public static final Boolean a = true;"//
         + "public static final Character b = 7;"//
