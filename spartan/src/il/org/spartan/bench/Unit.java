@@ -43,7 +43,10 @@ public enum Unit {
                   : m < Kb ? format(m, 1, "B")
                       : m < Mb ? format(m, Kb, "㎅")
                           : m < Gb ? format(m, Mb, "㎆")
-                              : m < Tb ? format(m, Gb, "㎇") : m < Pb ? format(m, Tb, "TB") : m < Eb ? format(m, Pb, "PB") : format(m, Eb, "EB");
+                              : m < Tb ? format(m, Gb, "㎇") //
+                                  : m < Pb ? format(m, Tb, "TB") //
+                                      : m < Eb ? format(m, Pb, "PB") //
+                                          : format(m, Eb, "EB");
     }
   },
   NANOSECONDS {
