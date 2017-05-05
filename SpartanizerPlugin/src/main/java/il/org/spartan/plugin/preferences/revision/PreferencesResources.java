@@ -48,7 +48,7 @@ public enum PreferencesResources {
 
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
-  @Deprecated public enum TipperGroup {
+  public enum TipperGroup {
     Abbreviation(TipperCategory.Abbreviation.class), //
     Arithmetic(TipperCategory.Arithmetics.class), //
     Anonymization(TipperCategory.Anonymization.class), //
