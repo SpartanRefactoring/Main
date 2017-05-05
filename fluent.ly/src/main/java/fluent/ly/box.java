@@ -23,7 +23,6 @@ public enum box {
   public static Boolean box(final boolean ¢) {
     return Boolean.valueOf(¢);
   }
-
   /** box an array of <code><b>boolean</b></code>s into an array of
    * {@link Boolean}s.
    * @param bs an array of <code><b>boolean</b></code>s
@@ -36,7 +35,6 @@ public enum box {
       $[¢] = box(bs[¢]);
     return $;
   }
-
   /** box a <code><b>byte</b></code> into a {@link Byte} object.
    * @param ¢ some <code><b>long</b></code> value
    * @return a non-<code><b>null</b></code> {@link Long} with the value of
@@ -44,7 +42,6 @@ public enum box {
   public static Byte box(final byte ¢) {
     return Byte.valueOf(¢);
   }
-
   /** box an array of <code><b>byte</b></code>s into an array of {@link Byte}s.
    * @param bs an array of <code><b>byte</b></code>s
    * @return an array of {@link Byte} of the same length as that of the
@@ -56,7 +53,6 @@ public enum box {
       $[¢] = box(bs[¢]);
     return $;
   }
-
   /** box a <code><b>char</b></code> into a {@link Character} object.
    * @param ¢ some <code><b>char</b></code> value
    * @return a non-<code><b>null</b></code> {@link Character} with the value of
@@ -64,7 +60,6 @@ public enum box {
   public static Character box(final char ¢) {
     return Character.valueOf(¢);
   }
-
   /** box an array of <code><b>byte</b></code>s into an array of
    * {@link Character}s.
    * @param cs an array of <code><b>long</b></code>s
@@ -77,7 +72,6 @@ public enum box {
       $[¢] = box(cs[¢]);
     return $;
   }
-
   /** box a <code><b>double</b></code> into a {@link Double} object.
    * @param ¢ some <code><b>double</b></code> value
    * @return a non-<code><b>null</b></code> {@link Double} with the value of
@@ -85,7 +79,6 @@ public enum box {
   public static Double box(final double ¢) {
     return Double.valueOf(¢);
   }
-
   /** box an array of <code><b>double</b></code>s into an array of
    * {@link Double} s.
    * @param ds an array of <code><b>double</b></code>s
@@ -98,7 +91,6 @@ public enum box {
       $[¢] = box(ds[¢]);
     return $;
   }
-
   /** box a <code><b>float</b></code> into a {@link Float} object.
    * @param ¢ some <code><b>float</b></code> value
    * @return a non-<code><b>null</b></code> {@link Float} with the value of
@@ -106,7 +98,6 @@ public enum box {
   public static Float box(final float ¢) {
     return Float.valueOf(¢);
   }
-
   /** box an array of <code><b>float</b></code>s into an array of {@link Float}
    * s.
    * @param fs an array of <code><b>float</b></code>s
@@ -119,7 +110,6 @@ public enum box {
       $[¢] = box(fs[¢]);
     return $;
   }
-
   /** box an <code><b>int</b></code> into an {@link Integer} object.
    * @param ¢ some <code><b>int</b></code> value
    * @return a non-<code><b>null</b></code> {@link Integer} with the value of
@@ -127,7 +117,6 @@ public enum box {
   public static Integer box(final int ¢) {
     return Integer.valueOf(¢);
   }
-
   /** box an array of <code><b>int</b></code>s into an array of {@link Integer}
    * s.
    * @param is an array of <code><b>int</b></code>s
@@ -140,7 +129,6 @@ public enum box {
       $[¢] = box(is[¢]);
     return $;
   }
-
   /** box a <code><b>long</b></code> into a {@link Long} object.
    * @param ¢ some <code><b>long</b></code> value
    * @return a non-<code><b>null</b></code> {@link Long} with the value of
@@ -148,7 +136,6 @@ public enum box {
   public static Long box(final long ¢) {
     return Long.valueOf(¢);
   }
-
   /** box an array of <code><b>long</b></code>s into an array of {@link Long}s.
    * @param ls an array of <code><b>long</b></code>s
    * @return an array of {@link Long} of the same length as that of the
@@ -160,7 +147,6 @@ public enum box {
       $[¢] = box(ls[¢]);
     return $;
   }
-
   /** box a <code><b>short</b></code> into a {@link Short} object.
    * @param ¢ some <code><b>short</b></code> value
    * @return a non-<code><b>null</b></code> {@link Short} with the value of
@@ -168,7 +154,6 @@ public enum box {
   public static Short box(final short ¢) {
     return Short.valueOf(¢);
   }
-
   /** box an array of <code><b>short</b></code>s into an array of {@link Short}
    * s.
    * @param ss an array of <code><b>short</b></code>s
@@ -181,7 +166,6 @@ public enum box {
       $[¢] = box(ss[¢]);
     return $;
   }
-
   /** box a <code><b>boolean</b></code> into a {@link Boolean} object.
    * @param ¢ some <code><b>boolean</b></code> value
    * @return a non-<code><b>null</b></code> {@link Boolean} with the value of
@@ -189,7 +173,6 @@ public enum box {
   public static Boolean it(final boolean ¢) {
     return cantBeNull(Boolean.valueOf(¢));
   }
-
   /** box an array of <code><b>boolean</b></code>s into an array of
    * {@link Boolean}s.
    * @param bs an array of <code><b>boolean</b></code>s
@@ -202,7 +185,6 @@ public enum box {
       $[¢] = it(bs[¢]);
     return $;
   }
-
   /** box a <code><b>byte</b></code> into a {@link Byte} object.
    * @param ¢ some <code><b>long</b></code> value
    * @return a non-<code><b>null</b></code> {@link Long} with the value of
@@ -210,7 +192,6 @@ public enum box {
   public static Byte it(final byte ¢) {
     return cantBeNull(Byte.valueOf(¢));
   }
-
   /** box an array of <code><b>byte</b></code>s into an array of {@link Byte}s.
    * @param bs an array of <code><b>byte</b></code>s
    * @return an array of {@link Byte} of the same length as that of the
@@ -222,7 +203,6 @@ public enum box {
       $[¢] = it(bs[¢]);
     return $;
   }
-
   /** box a <code><b>char</b></code> into a {@link Character} object.
    * @param ¢ some <code><b>char</b></code> value
    * @return a non-<code><b>null</b></code> {@link Character} with the value of
@@ -230,7 +210,6 @@ public enum box {
   public static Character it(final char ¢) {
     return cantBeNull(Character.valueOf(¢));
   }
-
   /** box an array of <code><b>byte</b></code>s into an array of
    * {@link Character}s.
    * @param cs an array of <code><b>long</b></code>s
@@ -243,7 +222,6 @@ public enum box {
       $[¢] = it(cs[¢]);
     return $;
   }
-
   /** box a <code><b>double</b></code> into a {@link Double} object.
    * @param ¢ some <code><b>double</b></code> value
    * @return a non-<code><b>null</b></code> {@link Double} with the value of
@@ -251,7 +229,6 @@ public enum box {
   public static Double it(final double ¢) {
     return cantBeNull(Double.valueOf(¢));
   }
-
   /** box an array of <code><b>double</b></code>s into an array of
    * {@link Double} s.
    * @param ds an array of <code><b>double</b></code>s
@@ -264,7 +241,6 @@ public enum box {
       $[¢] = it(ds[¢]);
     return $;
   }
-
   /** box a <code><b>float</b></code> into a {@link Float} object.
    * @param ¢ some <code><b>float</b></code> value
    * @return a non-<code><b>null</b></code> {@link Float} with the value of
@@ -272,7 +248,6 @@ public enum box {
   public static Float it(final float ¢) {
     return cantBeNull(Float.valueOf(¢));
   }
-
   /** box an array of <code><b>float</b></code>s into an array of {@link Float}
    * s.
    * @param fs an array of <code><b>float</b></code>s
@@ -285,7 +260,6 @@ public enum box {
       $[¢] = it(fs[¢]);
     return $;
   }
-
   /** box an <code><b>int</b></code> into an {@link Integer} object.
    * @param ¢ some <code><b>int</b></code> value
    * @return a non-<code><b>null</b></code> {@link Integer} with the value of
@@ -294,7 +268,6 @@ public enum box {
   public static Integer it(final int ¢) {
     return box(¢);
   }
-
   /** box an array of <code><b>int</b></code>s into an array of {@link Integer}
    * s.
    * @param ¢ an array of <code><b>int</b></code>s
@@ -304,7 +277,6 @@ public enum box {
   @NotNull public static Integer[] it(@NotNull final int ¢[]) {
     return box(¢);
   }
-
   /** box a <code><b>long</b></code> into a {@link Long} object.
    * @param ¢ some <code><b>long</b></code> value
    * @return a non-<code><b>null</b></code> {@link Long} with the value of
@@ -312,7 +284,6 @@ public enum box {
   public static Long it(final long ¢) {
     return cantBeNull(Long.valueOf(¢));
   }
-
   /** box an array of <code><b>long</b></code>s into an array of {@link Long}s.
    * @param ls an array of <code><b>long</b></code>s
    * @return an array of {@link Long} of the same length as that of the
@@ -324,7 +295,6 @@ public enum box {
       $[¢] = it(ls[¢]);
     return $;
   }
-
   /** box a <code><b>short</b></code> into a {@link Short} object.
    * @param ¢ some <code><b>short</b></code> value
    * @return a non-<code><b>null</b></code> {@link Short} with the value of
@@ -332,7 +302,6 @@ public enum box {
   public static Short it(final short ¢) {
     return cantBeNull(Short.valueOf(¢));
   }
-
   /** box an array of <code><b>short</b></code>s into an array of {@link Short}
    * s.
    * @param ss an array of <code><b>short</b></code>s

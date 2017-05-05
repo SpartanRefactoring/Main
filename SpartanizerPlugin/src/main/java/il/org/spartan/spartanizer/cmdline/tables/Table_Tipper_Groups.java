@@ -17,7 +17,6 @@ public class Table_Tipper_Groups {
   public static void main(final String[] args) {
     new Table_Tipper_Groups().go();
   }
-
   public void go() {
     final Map<TipperGroup, Integer> groups = new TreeMap<>();
     Stream.of(Configurations.all().implementation)//
@@ -34,13 +33,11 @@ public class Table_Tipper_Groups {
     }
     system.dumpOutput(system.bash("column -s \\& -t /tmp/groups.tex"));
   }
-
   private static void inc(final Map<TipperGroup, Integer> categories, final TipperCategory λ) {
     final TipperGroup key = λ.tipperGroup();
     categories.putIfAbsent(key, box.it(0));
     categories.put(key, box.it(categories.get(key).intValue() + 1));
   }
-
   private static <T> Stream<T> flow(final Collection<T> ¢) {
     return ¢.stream().filter(Objects::nonNull);
   }

@@ -19,7 +19,6 @@ public class Issue1157 extends TipperTest<SingleVariableDeclaration> {
         + "  return compute(key, (k, oldValue) -> (oldValue == null) ? null : function.apply(k, oldValue));" //
         + "}").stays();
   }
-
   /** [[SuppressWarningsSpartan]] - see #1245 */
   @Test public void t2() {
     trimmingOf("" //
@@ -47,11 +46,9 @@ public class Issue1157 extends TipperTest<SingleVariableDeclaration> {
         + "  });" //
         + "}").stays();
   }
-
   @Override public Tipper<SingleVariableDeclaration> tipper() {
     return new ParameterAbbreviate();
   }
-
   @Override public Class<SingleVariableDeclaration> tipsOn() {
     return SingleVariableDeclaration.class;
   }

@@ -82,7 +82,6 @@ public class XMLSpartan {
     $.removeIf(λ -> !ets.contains(λ.getSimpleName()));
     return $;
   }
-
   /** Computes enabled tippers by categories for the project. If some error
    * occur (such as a corrupted XML file), an empty map is returned.
    * @param p JD
@@ -120,7 +119,6 @@ public class XMLSpartan {
     tgs.forEach((key, value) -> $.put(tcs.get(key), value.toArray(new SpartanTipper[value.size()])));
     return $;
   }
-
   /** Updates the project's XML file to enable given tippers.
    * @param p JD
    * @param ss enabled tippers by name */
@@ -139,7 +137,6 @@ public class XMLSpartan {
     }
     commit(p, d);
   }
-
   /** Writes XML dom object to file.
    * @param f JD
    * @param d JD
@@ -165,7 +162,6 @@ public class XMLSpartan {
       return false;
     }
   }
-
   /** Writes XML dom object to project.
    * @param p JD
    * @param d JD
@@ -174,7 +170,6 @@ public class XMLSpartan {
     final IFile $ = p.getFile(FILE_NAME);
     return $ != null && $.exists() && commit($, d);
   }
-
   /** Adds a new tipper to the XML document.
    * @param d JD
    * @param p JD
@@ -195,7 +190,6 @@ public class XMLSpartan {
     seen.add(n);
     e.appendChild($);
   }
-
   /** Adds a new notation to the XML document.
    * @param d JD
    * @param kind JD
@@ -214,11 +208,9 @@ public class XMLSpartan {
     seen.add(kind);
     n.appendChild($);
   }
-
   public static Document getXML(final IProject $) {
     return getFile($);
   }
-
   /** Return XML file for given project. Creates one if absent.
    * @param p JD
    * @return XML file for project */
@@ -229,7 +221,6 @@ public class XMLSpartan {
       return note.bug(¢);
     }
   }
-
   /** Return XML file for given project. Creates one if absent.
    * @param p JD
    * @return XML file for project
@@ -272,7 +263,6 @@ public class XMLSpartan {
     commit(fl, $);
     return $;
   }
-
   /** Initialize XML document. Enables all tippers, except declared non core
    * tippers, also, add to the document the default values for naming\notations
    * prefrences.
@@ -296,11 +286,9 @@ public class XMLSpartan {
     $.setXmlStandalone(true); // TODO Roth: does not seem to work
     return $;
   }
-
   @SuppressWarnings("unchecked") private static Class<Tipper<?>> unchecked(@SuppressWarnings("rawtypes") final Class<? extends Tipper> λ) {
     return (Class<Tipper<?>>) λ;
   }
-
   /** Manipulates documents with different version / corrupted files.
    * @param $ plugin's XML document
    * @param version document's version
@@ -321,15 +309,12 @@ public class XMLSpartan {
       super(name, enabled);
       children = an.empty.list();
     }
-
     public void addChild(final SpartanTipper ¢) {
       children.add(¢);
     }
-
     @Override public SpartanElement[] getChildren() {
       return children.toArray(new SpartanElement[children.size()]);
     }
-
     @Override public boolean hasChildren() {
       return !children.isEmpty();
     }
@@ -347,23 +332,18 @@ public class XMLSpartan {
       this.name = name;
       this.enabled = enabled;
     }
-
     public void enable(final boolean enable) {
       enabled = enable;
     }
-
     public boolean enabled() {
       return enabled;
     }
-
     @SuppressWarnings("static-method") public SpartanElement[] getChildren() {
       return EMPTY;
     }
-
     @SuppressWarnings("static-method") public boolean hasChildren() {
       return false;
     }
-
     public String name() {
       return name;
     }

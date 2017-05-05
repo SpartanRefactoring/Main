@@ -14,7 +14,6 @@ public class Issue0378 {
         .gives("void func(int __) {return something_else;}")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("void func(int notJD) {return something_else;}")//
         .stays();

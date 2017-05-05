@@ -19,7 +19,6 @@ public class IntTest {
     $.inner += 3;
     assert $.inner() == Integer.valueOf(7);
   }
-
   @Test public void testValueOf() {
     azzert.that(0, is(Int.valueOf(0).inner));
   }

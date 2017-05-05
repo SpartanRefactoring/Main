@@ -10,7 +10,8 @@ import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil
  * @since 28 November 2011 */
-@Retention(RUNTIME) public @interface Attribute {
+@Retention(RUNTIME)
+public @interface Attribute {
   class Content {
     public final String name;
     public final String value;
@@ -32,11 +33,9 @@ import org.jetbrains.annotations.*;
           $.add(new Content(¢.getName(), value(target, ¢)));
       return $;
     }
-
     private static boolean isAttribute(@NotNull final Method ¢) {
       return ¢.getAnnotation(Attribute.class) != null;
     }
-
     @NotNull private static String value(final Object target, @NotNull final Method m) {
       try {
         return m.invoke(target) + "";

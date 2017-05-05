@@ -25,11 +25,9 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     $.setBody(minus.lastStatement(copy.of(body($))));
     return $;
   }
-
   @Override public String description() {
     return "Move last statement of a for(;;) loop into the list of updaters";
   }
-
   private static boolean fitting(final ForStatement ¢) {
     return ¢ != null//
         && !iz.containsContinueStatement(step.body(¢))//
@@ -39,7 +37,6 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
         && cantTip.declarationRedundantInitializer(¢)//
         && cantTip.removeRedundantIf(¢);
   }
-
   private static boolean hasFittingUpdater(final ForStatement ¢) {
     final Block bodyBlock = az.block(step.body(¢));
     if (!iz.updating(lastStatement(¢)) || bodyBlock == null || step.statements(bodyBlock).size() < 2 || bodyDeclaresElementsOf(lastStatement(¢)))
@@ -53,39 +50,31 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     return updaterDeclaredInFor(¢,
         $ != null ? az.simpleName(operand($)) : post != null ? az.simpleName(operand(post)) : a != null ? az.simpleName(left(a)) : null);
   }
-
   public static boolean bodyDeclaresElementsOf(final ASTNode n) {
     final Block $ = az.block(n.getParent());
     return $ != null && extract.fragments($).stream().anyMatch(λ -> !collect.usesOf(λ.getName()).in(n).isEmpty());
   }
-
   private static ASTNode lastStatement(final ForStatement ¢) {
     return hop.lastStatement(body(¢));
   }
-
   private static void setUpdaters(final ForStatement $) {
     final Collection<Expression> oldUpdaters = as.list(step.updaters($));
     updaters($).clear();
     updaters($).add(updaterFromBody($));
     updaters($).addAll(oldUpdaters);
   }
-
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
     return fragments(az.variableDeclarationExpression(the.headOf(initializers(s)))).stream().anyMatch(λ -> (name(λ) + "").equals(n + ""));
   }
-
   private static Expression updaterFromBody(final ForStatement ¢) {
     return copy.of(expression(az.expressionStatement(lastStatement(¢))));
   }
-
   @Override public String description(final ForStatement ¢) {
     return "Convert loop: 'for(?;" + expression(¢) + ";?)' to something else (buggy)";
   }
-
   @Override public boolean prerequisite(final ForStatement ¢) {
     return ¢ != null && fitting(¢);
   }
-
   @Override public ASTNode replacement(final ForStatement ¢) {
     return !fitting(¢) ? null : buildForWithoutLastStatement(copy.of(¢));
   }

@@ -38,11 +38,9 @@ public class OutlineTernaryMethodInvocation extends MethodInvocationPattern//
       return true;
     });
   }
-
   @Override public Examples examples() {
     return null;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     for (int i = 0; i < arguments.size(); ++i) {
       final ConditionalExpression $;

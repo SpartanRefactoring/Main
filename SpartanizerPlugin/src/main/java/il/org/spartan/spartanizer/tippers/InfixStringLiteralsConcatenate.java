@@ -40,7 +40,6 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     $.setLiteralValue(az.stringLiteral(the.headOf(es2)).getLiteralValue());
     return $;
   }
-
   @Override protected boolean prerequisite(final InfixExpression x) {
     if (operator(x) != op.PLUS2)
       return false;
@@ -56,7 +55,6 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     }
     return false;
   }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Replace concatenated string literals with one";
   }

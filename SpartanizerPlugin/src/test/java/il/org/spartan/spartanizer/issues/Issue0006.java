@@ -18,14 +18,12 @@ public class Issue0006 {
         .gives("-b*d*x/a/c/d")//
         .stays();
   }
-
   @Test public void issue06C2() {
     trimmingOf("-a * b/ c * d/d")//
         .gives("d*-a*b/c/d")//
         .gives("-d*a*b/c/d")//
         .stays();
   }
-
   @Test public void issue06C3() {
     trimmingOf("-a * b/ c * d") //
         .gives("d*-a*b/c") //

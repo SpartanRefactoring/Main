@@ -20,7 +20,6 @@ public class ExhaustTest {
         .gives("exhaust(()->keyReferenceQueue.poll()!=null);")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("while (keyReferenceQueue.poll() != null) {something(); andAnother();}")//
         .using(new Exhaust(), WhileStatement.class)//

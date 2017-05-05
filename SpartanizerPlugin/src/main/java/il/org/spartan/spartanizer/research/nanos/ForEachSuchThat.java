@@ -28,15 +28,12 @@ public class ForEachSuchThat extends ForEach {
     return anyTips(tippers, ¢)//
         && nonTips(rivals, ¢);
   }
-
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Iterate a collection and apply a statement for each element";
   }
-
   @Override public String tipperName() {
     return ForEach.class.getSimpleName();
   }

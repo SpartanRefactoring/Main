@@ -17,17 +17,14 @@ public class Issue1045 {
         .gives("if (((a > 1) || (b > 2)) || c + e > 3) { return 1; }").gives("if (((a > 1) || (b > 2)) || (c + e > 3)) { return 1; }")//
         .gives("if (((a > 1) || (b > 2)) || ((c + e) > 3)) { return 1; }");
   }
-
   @Test public void b() {
     bloatingOf("if (a + b + c > 3) { return 1; }")//
         .gives("if ((a + b + c) > 3) { return 1; }");
   }
-
   @Test public void c() {
     bloatingOf("while (a + b + c > 4) { }")//
         .gives("while ((a + b + c) > 4) { }");
   }
-
   @Test public void d() {
     bloatingOf("while (a > 1 && a < 2 || c > 3) { }")//
         .gives("while ((a > 1 && a < 2) || c > 3) { }")//

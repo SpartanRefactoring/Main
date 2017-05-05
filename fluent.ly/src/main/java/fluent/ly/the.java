@@ -20,44 +20,35 @@ public interface the {
         return $;
     return -1;
   }
-
   static <@Nullable T> T nil() {
     return null;
   }
-
   static String nth(final int i, final Collection<?> os) {
     return the.nth(i, os.size());
   }
-
   static String nth(final int i, final int n) {
     return nth(i + "", n + "");
   }
-
   static String nth(final String s, final String n) {
     return " #" + s + "/" + n;
   }
-
   static <@Nullable T> T penultimateOf(final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(¢.size() - 2);
   }
-
   static <@Nullable T> T previous(final T t, final List<T> ts) {
     if (ts == null)
       return null;
     final int $ = ts.indexOf(t);
     return $ < 1 ? null : ts.get($ - 1);
   }
-
   static <@Nullable T> List<T> tailOf(final List<T> ¢) {
     final List<T> $ = as.list(¢);
     $.remove(the.headOf($));
     return $;
   }
-
   static String tailOf(final String ¢) {
     return ¢.substring(1);
   }
-
   static <T> List<T> rest(final T t, final Iterable<T> ts) {
     boolean add = false;
     final List<T> $ = an.empty.list();
@@ -68,31 +59,24 @@ public interface the {
         add = x == t;
     return $;
   }
-
   @Contract("null -> null") @Nullable static <T> T headOf(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
   }
-
   static char characterOf(@NotNull final String ¢) {
     return the.beforeLastOf(¢, 0);
   }
-
   @Contract(pure = true) static char ith(@NotNull final String s, final int i) {
     return s.charAt(i);
   }
-
   @Contract("null -> null") @Nullable static <@Nullable T> T lastOf(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(¢.size() - 1);
   }
-
   static char lastOf(@NotNull final String ¢) {
     return beforeLastOf(¢, 0);
   }
-
   static char beforeLastOf(@NotNull final String s, final int i) {
     return s.charAt(s.length() - i - 1);
   }
-
   @NotNull static <T> Iterable<T> lastOf(@NotNull final Iterable<T> ¢) {
     return () -> new Iterator<T>() {
       final Iterator<T> $ = ¢.iterator();
@@ -103,21 +87,17 @@ public interface the {
       @Override public boolean hasNext() {
         return $.hasNext();
       }
-
       @Override public T next() {
         return $.next();
       }
     };
   }
-
   @Nullable static <T> T onlyOneOf(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.size() != 1 ? null : headOf(¢);
   }
-
   @Contract("null -> null") @Nullable static <T> T secondOf(@Nullable final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
-
   /** Computes the maximum of two or more integers.
    * @param a some integer
    * @param is additional integers
@@ -128,7 +108,6 @@ public interface the {
       $ = Math.max($, ¢);
     return $;
   }
-
   /** Computes the minimum of two or more integers
    * @param a some integer
    * @param is additional
@@ -139,11 +118,9 @@ public interface the {
       $ = Math.min($, ¢);
     return $;
   }
-
   static <T> T lastOf(final T[] ts) {
     return ts[ts.length - 1];
   }
-
   /** @param <T> JD
    * @param ¢ JD
    * @return last item in a list or <code><b>null</b></code> if the parameter is
@@ -151,14 +128,12 @@ public interface the {
   @SuppressWarnings("null") static <T> @Nullable T last(@NotNull final @Nullable List<T> ¢) {
     return eval(() -> ¢.get(¢.size() - 1)).unless(¢ == null || ¢.isEmpty());
   }
-
   /** Computes the square of a given integer
    * @param ¢ some integer
    * @return square of the parameter */
   static int sqr(final int ¢) {
     return ¢ * ¢;
   }
-
   /** Chop the first character of a string.
    * @param ¢ a non-<code><b>null</b></code> string of length at least one
    * @return <code>s</code> but without its first character. */
@@ -167,11 +142,9 @@ public interface the {
     positive(¢.length());
     return ¢.substring(1);
   }
-
   static <T> T[] tailOf(final T[] ts) {
     return Arrays.copyOfRange(ts, 1, ts.length);
   }
-
   /** @param <T> JD
    * @param ¢ a list
    * @return last item in a list or <code><b>null</b></code> if the parameter is
@@ -184,12 +157,10 @@ public interface the {
     default it<String> of(final String s) {
       return new it<>(s.substring(0, 1));
     }
-
     default <T> it<T> of(final T[] ts) {
       return new it<>(ts[0]);
     }
   }
 
-  first first = new first() {
-  };
+  first first = new first() {};
 }

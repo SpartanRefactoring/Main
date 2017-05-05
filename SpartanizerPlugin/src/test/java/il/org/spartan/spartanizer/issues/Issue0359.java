@@ -14,13 +14,11 @@ public class Issue0359 {
     trimmingOf("int i;++i;")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("int i=f();")//
         .gives("f();")//
         .stays();
   }
-
   @Test public void t20() {
     trimmingOf("for(;b==q++;){int i;}")//
         .gives("while(b==q++){int i;}")//

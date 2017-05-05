@@ -23,7 +23,6 @@ public class ClassInstanceIntoVariable extends CarefulTipper<ExpressionStatement
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
-
   @Override public Tip tip(final ExpressionStatement ¢) {
     return !iz.classInstanceCreation(expression(¢)) ? null : new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

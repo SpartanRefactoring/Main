@@ -17,55 +17,42 @@ public abstract class FlaggedEntity extends AttributedEntity {
     super(attributes, name);
     this.flags = flags | (hasNo("Synthetic") ? 0 : SYNTHETIC) | (hasNo("Deprecated") ? 0 : DEPRECATED);
   }
-
   public boolean isAbstract() {
     return Modifier.isAbstract(flags);
   }
-
   public boolean isDefault() {
     return !isPrivate() && !isPublic() && !isProtected();
   }
-
   public boolean isDeprecated() {
     return (flags & DEPRECATED) != 0;
   }
-
   public boolean isFinal() {
     return Modifier.isFinal(flags);
   }
-
   public boolean isNative() {
     return Modifier.isNative(flags);
   }
-
   public boolean isPrivate() {
     return Modifier.isPrivate(flags);
   }
-
   public boolean isProtected() {
     return Modifier.isProtected(flags);
   }
-
   public boolean isPublic() {
     return Modifier.isPublic(flags);
   }
-
   public boolean isStatic() {
     return Modifier.isStatic(flags);
   }
-
   public boolean isSynchronized() {
     return Modifier.isSynchronized(flags);
   }
-
   public boolean isSynthetic() {
     return (flags & SYNTHETIC) != 0;
   }
-
   public boolean isTransient() {
     return Modifier.isTransient(flags);
   }
-
   public boolean isVolatile() {
     return Modifier.isVolatile(flags);
   }

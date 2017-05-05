@@ -34,20 +34,16 @@ public final class WhileFiniteReturnToBreak extends NodePattern<WhileStatement>/
                 .orElse(null)//
         ));
   }
-
   @Override public String description() {
     return "Convert the return inside the loop to break";
   }
-
   @Override public Examples examples() {
     return null;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(convertToBreak, current.getAST().newBreakStatement(), g);
     return r;
   }
-
   @Override protected ASTNode highlight() {
     return convertToBreak;
   }

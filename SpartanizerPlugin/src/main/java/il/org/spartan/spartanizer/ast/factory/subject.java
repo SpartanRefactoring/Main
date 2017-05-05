@@ -25,20 +25,17 @@ public enum subject {
     extendedOperands($).add(make.plant(copy.of(add)).into($));
     return $;
   }
-
   public static InfixExpression append(final InfixExpression base, final Iterable<Expression> adds) {
     final Wrapper<InfixExpression> $ = new Wrapper<>(base);
     adds.forEach(λ -> $.set(append($.get(), λ)));
     return $.get();
   }
-
   /** Create a new Operand
    * @param inner the expression of the operand
    * @return the new operand */
   public static Operand operand(final Expression inner) {
     return new Operand(inner);
   }
-
   /** Create an instance of several operands together here we get the
    * expressions in separate and not as a list
    * @param xs JD
@@ -46,7 +43,6 @@ public enum subject {
   public static Several operands(final Expression... ¢) {
     return new Several(as.list(¢));
   }
-
   /** Create an instance of several operands together here we get the
    * expressions as a list
    * @param xs a list of expressions
@@ -54,7 +50,6 @@ public enum subject {
   public static Several operands(final List<Expression> ¢) {
     return new Several(¢);
   }
-
   /** Create an instance of 2 expressions together
    * @param left the left expression
    * @param right the right expression
@@ -62,7 +57,6 @@ public enum subject {
   public static Pair pair(final Expression left, final Expression right) {
     return new Pair(left, right);
   }
-
   /** Create an instance of 2 sideEffects together
    * @param s1 the first statement
    * @param s2 the second statement
@@ -70,7 +64,6 @@ public enum subject {
   public static StatementPair pair(final Statement s1, final Statement s2) {
     return new StatementPair(s1, s2);
   }
-
   /** Create an instance of several sideEffects together here we get the
    * sideEffects as a list
    * @param ss a list of sideEffects
@@ -78,7 +71,6 @@ public enum subject {
   public static SeveralStatements ss(final List<Statement> ¢) {
     return new SeveralStatements(¢);
   }
-
   /** Create an instance of several sideEffects together here we get only one
    * statement
    * @param context JD
@@ -86,7 +78,6 @@ public enum subject {
   public static SeveralStatements statement(final Statement ¢) {
     return statements(¢);
   }
-
   /** Create an instance of several sideEffects together here we get the
    * sideEffects in separate and not as a list
    * @param ss JD
@@ -103,7 +94,6 @@ public enum subject {
     public Claimer(final ASTNode n) {
       ast = n == null ? null : n.getAST();
     }
-
     /** Make a deep copy of expression and assign it to ast
      * @param x JD
      * @return a copy of the expression e
@@ -112,7 +102,6 @@ public enum subject {
     Expression claim(final Expression ¢) {
       return misc.rebase(copy.of(extract.core(¢)), ast);
     }
-
     /** A deep copy of statement and assign it to ast, if the statement exists
      * @param ¢ a Statement
      * @return a copy of the statement s if it is'nt null, else returns null
@@ -134,7 +123,6 @@ public enum subject {
       super(inner);
       this.inner = claim(inner);
     }
-
     // ** TODO Yossi Gil: integrate with fluent API
     /** Create a number literal node owned by ast
      * @param text the number of the literal node
@@ -144,7 +132,6 @@ public enum subject {
       $.setToken(text);
       return $;
     }
-
     /** Create a new parenthesis expression owned by ast and put the expression
      * inner (a field of Operand) between the parenthesis of the new expression
      * @return the expression inner between parenthesis */
@@ -153,7 +140,6 @@ public enum subject {
       $.setExpression(inner);
       return $;
     }
-
     /** Create a new expression with postfix operator owned by this ast, the
      * expression is a combination of the expression inner with a postfix
      * operator
@@ -165,7 +151,6 @@ public enum subject {
       $.setOperand(make.plant(inner).into($));
       return $;
     }
-
     /** Create a new expression with prefix operator owned by this ast, the
      * expression is a combination of the expression inner with a prefix
      * operator
@@ -177,7 +162,6 @@ public enum subject {
       $.setOperand(make.plant(inner).into($));
       return $;
     }
-
     /** Create a new expression of method invocation owned by this AST
      * @param methodName a string contains the method name
      * @return a method invocation expression of the method methodName with
@@ -189,14 +173,12 @@ public enum subject {
       $.setName(make.from(ast).identifier(methodName));
       return $;
     }
-
     /** Creates and returns a new qualified name node for inner.
      * @param name a string of the name to be qualified
      * @return a qualified name node with name */
     public Expression toQualifier(final String name) {
       return ast.newQualifiedName((Name) inner, ast.newSimpleName(name));
     }
-
     /** Create a new {@link ReturnStatement} which returns our operand
      * @return new return statement */
     public ReturnStatement toReturn() {
@@ -204,13 +186,11 @@ public enum subject {
       $.setExpression(inner);
       return $;
     }
-
     /** convert the expression inner into statement
      * @return an ExpressionStatement of inner */
     public ExpressionStatement toStatement() {
       return ast.newExpressionStatement(inner);
     }
-
     /** Create a new throw statement owned by this ast
      * @return a throw statement of the expression inner */
     public ThrowStatement toThrow() {
@@ -218,7 +198,6 @@ public enum subject {
       $.setExpression(inner);
       return $;
     }
-
     public AssertStatement toAssert() {
       final AssertStatement $ = ast.newAssertStatement();
       $.setExpression(inner);
@@ -240,7 +219,6 @@ public enum subject {
       this.left = claim(left);
       this.right = claim(right);
     }
-
     /** Create a new assignment expression owned by ast the left/right hand side
      * of the assignment expression is the field left/right respectively,
      * @param o an assignment operator
@@ -253,7 +231,6 @@ public enum subject {
       $.setRightHandSide(make.plant(right).into($));
       return $;
     }
-
     /** Create a new infix expression owned by ast the left/right hand side of
      * the assignment expression is the field left/right respectively, and the
      * operator is the given one
@@ -269,7 +246,6 @@ public enum subject {
               && !iz.simple(right) ? subject.operand(right).parenthesis() : right);
       return $;
     }
-
     /** Create a new conditional expression owned by ast the condition is given
      * as a parameter, the true path is the left field and the false is the
      * right field
@@ -284,7 +260,6 @@ public enum subject {
       $.setElseExpression(make.plant(right).into($));
       return $;
     }
-
     /** Convert the assignment operator into a statement
      * @param o JD
      * @return a statement of the operator */
@@ -305,7 +280,6 @@ public enum subject {
       this.operands = an.empty.list();
       this.operands.addAll(operands.stream().map(this::claim).collect(toList()));
     }
-
     /** Create an infix expression from the given operator and the operands
      * @param o JD
      * @return JD */
@@ -335,7 +309,6 @@ public enum subject {
       this.inner = an.empty.list();
       this.inner.addAll(inner.stream().map(this::claim).collect(toList()));
     }
-
     /** Transform the inner into a block
      * @return a Block statement */
     public Block toBlock() {
@@ -343,13 +316,11 @@ public enum subject {
       step.statements($).addAll(inner);
       return $;
     }
-
     /** Transform the inner into a block if it's possible
      * @return a Block statement {@code or} a {@code null} */
     public Statement toOneStatementOrNull() {
       return inner.isEmpty() ? null : toOptionalBlock();
     }
-
     /** use the inner list to make a block depending on it's size (only in case
      * there are more than 2 elements)
      * @return
@@ -369,7 +340,6 @@ public enum subject {
           return toBlock();
       }
     }
-
     /** Adds a statement to these statements.
      * @return these several statements */
     public SeveralStatements add(final Statement ¢) {
@@ -389,7 +359,6 @@ public enum subject {
     StatementPair(final Statement then) {
       this(then, null);
     }
-
     /** assign then and elze to the matching fields the then operand is the
      * owner
      * @param flat a list of sideEffects */
@@ -398,7 +367,6 @@ public enum subject {
       this.then = claim(then);
       this.elze = claim(elze);
     }
-
     /** Create a new if statement owned by ast the if statement contains a given
      * condition and uses the class parameters (then, elze)
      * @param condition the condition of the if statement
@@ -412,7 +380,6 @@ public enum subject {
         $.setElseStatement(elze);
       return $;
     }
-
     /** Create a new if statement owned by ast the if statement contains the
      * logical not of the given condition and uses the class parameters (then,
      * elze)

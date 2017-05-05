@@ -17,7 +17,6 @@ public class TextualTraversals {
         @Override public void begin() {
           TraversalTapper.super.begin();
         }
-
         @Override public void end() {
           TraversalTapper.super.end();
         }
@@ -31,11 +30,9 @@ public class TextualTraversals {
         return $.get();
     }
   }
-
   public String once(final ASTNode ¢) {
     return once(¢ + "");
   }
-
   /** Performs one spartanization iteration
    * @param d JD
    * @return
@@ -49,7 +46,6 @@ public class TextualTraversals {
       return note.bug(this, ¢);
     }
   }
-
   public String once(final String from) {
     return once(new Document(from)).get();
   }

@@ -45,7 +45,6 @@ public interface Recursive<T> extends Duplo<T> {
    * @since 2017-03-13 */
   interface Compound<T> extends Recursive<T>, Duplo.Compound<T> {
     Iterable<Recursive<T>> children();
-
     @Override default Iterable<? extends Duplo<T>> neighbors() {
       return children();
     }

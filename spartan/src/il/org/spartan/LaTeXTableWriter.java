@@ -24,20 +24,17 @@ public class LaTeXTableWriter extends CSVLineWriter {
   public LaTeXTableWriter() {
     super(Renderer.LaTeX);
   }
-
   /** Instantiate {@link LaTeXTableWriter}.
    * @param fileName */
   public LaTeXTableWriter(final String fileName) {
     super(fileName, Renderer.LaTeX);
   }
-
   @Override public boolean aggregating() {
     boolean $ = super.aggregating();
     for (@NotNull final CSVLine nested : inner.values())
       $ |= nested.aggregating();
     return $;
   }
-
   @Override @NotNull public final Iterable<Aggregation> aggregations() {
     @NotNull final Set<Aggregation> $ = new LinkedHashSet<>();
     Iterables.addAll($, super.aggregations());
@@ -45,7 +42,6 @@ public class LaTeXTableWriter extends CSVLineWriter {
       Iterables.addAll($, nested.aggregations());
     return $;
   }
-
   @Override public String close() {
     if (!aggregating())
       return super.close();
@@ -54,38 +50,31 @@ public class LaTeXTableWriter extends CSVLineWriter {
       writer.writeln(makeLine(collect(¢).values()));
     return super.close();
   }
-
   @Override @NotNull public String header() {
     return renderer.allTop() + wrappingHeader() + makeLine(keys()) + renderer.headerEnd();
   }
-
   public CSVLine in(final Object innerTableName) {
     return in(innerTableName + "");
   }
-
   @SuppressWarnings("null") public CSVLine in(final String innerTableName) {
     ensure(inner, innerTableName, new CSVLine.Ordered());
     return inner.get(innerTableName);
   }
-
   @Override @NotNull public Collection<String> keys() {
     @NotNull final List<String> $ = new ArrayList<>(super.keys());
     for (@NotNull final AbstractStringProperties nested : inner.values())
       Iterables.addAll($, nested.keys());
     return $;
   }
-
   @Override @NotNull public Collection<String> values() {
     @NotNull final List<String> $ = new ArrayList<>(super.values());
     for (@NotNull final AbstractStringProperties nested : inner.values())
       Iterables.addAll($, nested.values());
     return $;
   }
-
   @Override @NotNull protected String extension() {
     return ".tex";
   }
-
   @NotNull private AbstractStringProperties collect(@NotNull final Aggregation a) {
     @NotNull final AbstractStringProperties $ = new ListProperties();
     addAggregates($, a);
@@ -93,7 +82,6 @@ public class LaTeXTableWriter extends CSVLineWriter {
       nested.addAggregates($, a);
     return $;
   }
-
   @NotNull private String wrappingHeader() {
     if (inner.isEmpty())
       return "";

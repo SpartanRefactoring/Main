@@ -12,13 +12,13 @@ import fluent.ly.*;
  * @see Separator
  * @author Yossi Gil
  * @since 21/08/2007 */
-@Instantiable public class Once {
+@Instantiable
+public class Once {
   @Nullable private String value;
 
   public Once(final String value) {
     this.value = defaults.to(value, "");
   }
-
   @Override @Nullable public String toString() {
     @Nullable final String $ = value;
     value = null;

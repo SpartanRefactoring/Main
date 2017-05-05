@@ -98,20 +98,16 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @NotNull public static <E> ImmutableArrayList<E> make(@NotNull final Collection<? extends E> ¢) {
     return new ImmutableArrayList<>(¢);
   }
-
   @NotNull public static <E> ImmutableArrayList<E> make(final E[] ¢) {
     return new ImmutableArrayList<>(¢);
   }
-
   static boolean fail() {
     throw new UnsupportedOperationException();
   }
-
   @NotNull private static <E> E[] asArray(@NotNull final Collection<? extends E> ¢) {
     @NotNull @SuppressWarnings("unchecked") final E[] $ = (E[]) ¢.toArray();
     return $.getClass() == Object[].class ? $ : recopy($);
   }
-
   @NotNull private static <E> E[] recopy(@NotNull final E[] a) {
     @NotNull @SuppressWarnings("unchecked") final E[] $ = (E[]) Arrays.copyOf(a, a.length, Object[].class);
     return $;
@@ -128,20 +124,17 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   public ImmutableArrayList(@NotNull final Collection<? extends E> c) {
     data = asArray(c);
   }
-
   /** Instantiate this class from a given array
    * @param data an arbitrary array */
   public ImmutableArrayList(final E[] data) {
     this.data = data;
   }
-
   /** Appends the specified element to the end of this list.
    * @param __ to be appended to this list
    * @return never returns */
   @Override public boolean add(final E __) {
     return fail();
   }
-
   /** Inserts the specified element at the specified position in this list.
    * Shifts the element currently at that position (if any) and any subsequent
    * elements to the right (adds one to their indices).
@@ -151,7 +144,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public void add(final int index, final E element) {
     fail();
   }
-
   /** Appends all of the elements in the specified collection to the end of this
    * list, in the order that they are returned by the specified collection's
    * Iterator. The behavior of this operation is undefined if the specified
@@ -164,7 +156,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public boolean addAll(final @Nullable Collection<? extends E> __) {
     return fail();
   }
-
   /** Inserts all of the elements in the specified collection into this list,
    * starting at the specified position. Shifts the element currently at that
    * position (if any) and any subsequent elements to the right (increases their
@@ -179,20 +170,17 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public boolean addAll(final int index, final @Nullable Collection<? extends E> __) {
     return fail();
   }
-
   /** Removes all of the elements from this list. The list will be empty after
    * this call returns. */
   @Override public void clear() {
     fail();
   }
-
   /** Returns a shallow copy of this <tt>ArrayList</tt> instance. (The elements
    * themselves are not copied.)
    * @return a clone of this <tt>ArrayList</tt> instance */
   @Override @NotNull public ImmutableArrayList<E> clone() {
     return this;
   }
-
   /** Returns <tt>true</tt> if this list contains the specified element. More
    * formally, returns <tt>true</tt> if and only if this list contains at least
    * one element <tt>e</tt> such that
@@ -202,7 +190,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public boolean contains(final @Nullable Object ¢) {
     return indexOf(¢) >= 0;
   }
-
   /* (non-Javadoc)
    *
    * @see java.util.List#containsAll(java.util.Collection) */
@@ -212,7 +199,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
         return false;
     return true;
   }
-
   /** Increases the capacity of this <tt>ArrayList</tt> instance, if necessary,
    * to ensure that it can hold at least the number of elements specified by the
    * minimum capacity argument.
@@ -221,7 +207,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   public void ensureCapacity(final int minCapacity) {
     fail();
   }
-
   /** Returns the element at the specified position in this list.
    * @param index index of the element to return
    * @return the element at the specified position in this list
@@ -231,7 +216,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size());
     return elementData(index);
   }
-
   /** Returns the index of the first occurrence of the specified element in this
    * list, or -1 if this list does not contain the element. More formally,
    * returns the lowest index <tt>i</tt> such that
@@ -248,13 +232,11 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       }
     return -1;
   }
-
   /** Returns <tt>true</tt> if this list contains no elements.
    * @return <tt>true</tt> if this list contains no elements */
   @Override public boolean isEmpty() {
     return size() == 0;
   }
-
   /** Returns an iterator over the elements in this list in proper sequence.
    * <p>
    * The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
@@ -262,7 +244,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override @NotNull public Iterator<E> iterator() {
     return new InternalIterator();
   }
-
   /** Returns the index of the last occurrence of the specified element in this
    * list, or -1 if this list does not contain the element. More formally,
    * returns the highest index <tt>i</tt> such that
@@ -279,7 +260,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       }
     return -1;
   }
-
   /** Returns a list iterator over the elements in this list (in proper
    * sequence).
    * <p>
@@ -288,7 +268,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override @NotNull public ListIterator<E> listIterator() {
     return new InternalListIterator(0);
   }
-
   /** Returns a list iterator over the elements in this list (in proper
    * sequence), starting at the specified position in the list. The specified
    * index indicates the first element that would be returned by an initial call
@@ -303,7 +282,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       throw new IndexOutOfBoundsException("Index: " + index);
     return new InternalListIterator(index);
   }
-
   /** Removes the element at the specified position in this list. Shifts any
    * subsequent elements to the left (subtracts one from their indices).
    * @param index the index of the element to be removed
@@ -313,7 +291,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     fail();
     return null;
   }
-
   /** Removes the first occurrence of the specified element from this list, if
    * it is present. If the list does not contain the element, it is unchanged.
    * More formally, removes the element with the lowest index <tt>i</tt> such
@@ -327,7 +304,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public boolean remove(final @Nullable Object __) {
     return fail();
   }
-
   /** Removes from this list all of its elements that are contained in the
    * specified collection.
    * @param __ containing elements to be removed from this list
@@ -341,7 +317,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public boolean removeAll(final @Nullable Collection<?> __) {
     return fail();
   }
-
   /** Retains only the elements in this list that are contained in the specified
    * collection. In other words, removes from this list all of its elements that
    * are not contained in the specified collection.
@@ -356,7 +331,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public boolean retainAll(final @Nullable Collection<?> __) {
     return fail();
   }
-
   /** Replaces the element at the specified position in this list with the
    * specified element.
    * @param index index of the element to replace
@@ -367,18 +341,15 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     fail();
     return null;
   }
-
   /** Returns the number of elements in this list.
    * @return the number of elements in this list */
   @Override public int size() {
     return data.length;
   }
-
   @Override @NotNull public ImmutableArrayList<E> subList(final int fromIndex, final int toIndex) {
     fail();
     return null;
   }
-
   /** Returns an array containing all of the elements in this list in proper
    * sequence (from first to last element).
    * <p>
@@ -392,7 +363,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override @NotNull public E[] toArray() {
     return Arrays.copyOf(data, size());
   }
-
   /** Returns an array containing all of the elements in this list in proper
    * sequence (from first to last element); the runtime type of the returned
    * array is that of the specified array. If the list fits in the specified
@@ -417,7 +387,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     System.arraycopy(data, 0, a, 0, size());
     return a;
   }
-
   /** Trims the capacity of this <tt>ArrayList</tt> instance to be the list's
    * current size. An application can use this operation to minimize the storage
    * of an <tt>ArrayList</tt> instance. */
@@ -425,7 +394,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   public void trimToSize() {
     fail();
   }
-
   // Positional Access Operations
   E elementData(final int index) {
     return data[index];
@@ -437,7 +405,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     @Override public boolean hasNext() {
       return next != size();
     }
-
     @Override public E next() {
       final int $ = next;
       if ($ >= size())
@@ -445,7 +412,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       next = $ + 1;
       return elementData($);
     }
-
     @Override public void remove() {
       fail();
     }
@@ -456,19 +422,15 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
     InternalListIterator(final int index) {
       next = index;
     }
-
     @Override public void add(final E __) {
       fail();
     }
-
     @Override public boolean hasPrevious() {
       return next != 0;
     }
-
     @Override public int nextIndex() {
       return next;
     }
-
     @Override public E previous() {
       final int $ = next - 1;
       if ($ < 0 || $ >= size())
@@ -476,11 +438,9 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       next = $;
       return elementData($);
     }
-
     @Override public int previousIndex() {
       return next - 1;
     }
-
     @Override public void set(final E __) {
       fail();
     }

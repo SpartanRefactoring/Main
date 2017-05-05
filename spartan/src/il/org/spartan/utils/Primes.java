@@ -30,13 +30,11 @@ public class Primes {
     @Test public void firstIsTwo() {
       azzert.that(new Primes().next(), is(2));
     }
-
     @Test public void secondIsThree() {
       @NotNull final Primes p = new Primes();
       p.next();
       azzert.that(p.next(), is(3));
     }
-
     @Test public void thirdIsFive() {
       @NotNull final Primes p = new Primes();
       p.next();

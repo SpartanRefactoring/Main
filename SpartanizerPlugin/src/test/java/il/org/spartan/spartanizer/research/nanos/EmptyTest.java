@@ -16,21 +16,18 @@ public class EmptyTest {
         .gives("return empty(collection);")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("return 0 == collection.size();")//
         .using(new IsEmpty(), InfixExpression.class)//
         .gives("return empty(collection);")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("return 0 == collection.size() && first(collection).isPretty;")//
         .using(new IsEmpty(), InfixExpression.class)//
         .gives("return empty(collection) && first(collection).isPretty;")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("return 0 == (really.complicated ? exp : re).ssion.size() && first(collection).isPretty;")//
         .using(new IsEmpty(), InfixExpression.class)//

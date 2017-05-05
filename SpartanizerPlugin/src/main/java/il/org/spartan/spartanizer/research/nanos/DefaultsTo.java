@@ -22,11 +22,9 @@ public final class DefaultsTo extends NanoPatternTipper<ConditionalExpression> {
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return tippers.canTip(¢);
   }
-
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return tippers2.cantTip(containingBlock(¢)) ? tippers.firstTip(¢) : tippers2.firstTip(containingBlock(¢));
   }
-
   @Override public String description() {
     return "Evaluate expression, if null- replace with default value";
   }

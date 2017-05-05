@@ -58,7 +58,6 @@ public class Table_Nodes_Coverage {
   private static void initializeWriter() {
     writer = new Table(Table_Nodes_Coverage.class);
   }
-
   public static void summarizeStatistics(final String path) {
     if (writer == null)
       initializeWriter();
@@ -69,11 +68,9 @@ public class Table_Nodes_Coverage {
         .col("Units", statistics.size())//
         .nl();
   }
-
   private static double coverage() {
     return statistics.nodesCoverage();
   }
-
   private static int nodes() {
     return statistics.nodes();
   }

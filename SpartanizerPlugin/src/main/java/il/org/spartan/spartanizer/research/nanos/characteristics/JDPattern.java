@@ -38,40 +38,32 @@ public class JDPattern extends JavadocMarkerNanoPattern {
       @Override public boolean visit(final IfStatement ¢) {
         return checkContainsParameter(expression(¢));
       }
-
       @Override public boolean visit(final ForStatement ¢) {
         return checkContainsParameter(condition(¢)) || checkContainsParameter(initializers(¢)) || checkContainsParameter(updaters(¢));
       }
-
       @Override public boolean visit(final WhileStatement ¢) {
         return checkContainsParameter(expression(¢));
       }
-
       @Override public boolean visit(final AssertStatement ¢) {
         return checkContainsParameter(expression(¢));
       }
-
       @Override public boolean visit(final DoStatement ¢) {
         return checkContainsParameter(expression(¢));
       }
-
       @Override public boolean visit(final ConditionalExpression ¢) {
         return checkContainsParameter(expression(¢));
       }
-
       boolean checkContainsParameter(final ASTNode ¢) {
         if (containsParameter(¢, set))
           $.inner = false;
         return false;
       }
-
       boolean checkContainsParameter(final Iterable<Expression> ¢) {
         return Stream.of(¢).anyMatch(this::checkContainsParameter);
       }
     });
     return $.inner;
   }
-
   /** @param root node to search in
    * @param ss variable names which are influenced by parameters
    * @return */
@@ -87,7 +79,6 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     });
     return $.inner;
   }
-
   static Collection<String> getInfluenced(final MethodDeclaration root, final Collection<String> ps) {
     final Collection<String> $ = new HashSet<>(ps);
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
@@ -97,13 +88,11 @@ public class JDPattern extends JavadocMarkerNanoPattern {
           $.add(extractName(left(¢)));
         return true;
       }
-
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
         if (containsParameter(initializer(¢), $))
           $.add(extractName(name(¢)));
         return true;
       }
-
       @Override public boolean visit(final SingleVariableDeclaration ¢) {
         if (containsParameter(initializer(¢), $))
           $.add(extractName(initializer(¢)));
@@ -112,7 +101,6 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     });
     return $;
   }
-
   protected static String extractName(final Expression root) {
     final StringBuilder $ = new StringBuilder();
     // noinspection SameReturnValue
@@ -124,7 +112,6 @@ public class JDPattern extends JavadocMarkerNanoPattern {
     });
     return $ + "";
   }
-
   static boolean nullCheckExpression(final Expression ¢) {
     return anyTips(tippers, ¢);
   }

@@ -28,23 +28,18 @@ public final class IfEmptyThenEmptyElseTest {
   @Test public void eligible() {
     assert TIPPER.check(IF);
   }
-
   @Test public void emptyElse() {
     assert iz.vacuousElse(IF);
   }
-
   @Test public void emptyThen() {
     assert iz.vacuousThen(IF);
   }
-
   @Test public void extractFirstIf() {
     assert IF != null;
   }
-
   @Test public void inputType() {
     azzert.that(INPUT, instanceOf(Block.class));
   }
-
   @Test public void runGo() throws Exception {
     final String input = WrapIntoComilationUnit.Statement.on(INPUT + "");
     final IDocument d = new Document(input);
@@ -59,7 +54,6 @@ public final class IfEmptyThenEmptyElseTest {
     e.apply(d);
     azzert.isNull(findFirst.ifStatement(makeAST.COMPILATION_UNIT.from(d.get())));
   }
-
   @Test public void scopeIncludes() {
     assert TIPPER.check(IF);
   }

@@ -24,16 +24,13 @@ public class ForRedundantContinue extends NonEmptyForLoop//
   @Override public Examples examples() {
     return convert("for(int i=0;i<5;++i) continue;").to("for(int i=0;i<5;++i) ;");
   }
-
   public ForRedundantContinue() {
     andAlso("Applicable only on loops ending with continue", //
         () -> iz.continueStatement(lastStatement));
   }
-
   @Override public String description() {
     return "Prune redundant " + extract.lastStatement(current);
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Block b = az.block(body);
     if (b == null)

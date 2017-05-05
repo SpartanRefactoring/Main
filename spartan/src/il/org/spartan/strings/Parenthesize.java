@@ -15,38 +15,32 @@ import fluent.ly.*;
  * by a given {@link String} or <code><b>char</b></code>.
  * @author Yossi Gil, the Technion.
  * @since 07/08/2008 */
-@Utility public enum Parenthesize {
+@Utility
+public enum Parenthesize {
   ;
   private static final String COMMA = ",";
 
   @NotNull public static <T> String angular(@NotNull final Collection<T> ¢) {
     return make("<", prune(¢), ">");
   }
-
   @NotNull public static <T> String angular(@NotNull final T[] ¢) {
     return make("<", prune(¢), ">");
   }
-
   @NotNull public static <T> String circual(@NotNull final Collection<T> ¢) {
     return make("<", prune(¢), ">");
   }
-
   @NotNull public static <T> String circular(@NotNull final T[] ¢) {
     return make("<", prune(¢), ">");
   }
-
   @NotNull public static <T> String curly(@NotNull final Collection<T> ¢) {
     return make("{", prune(¢), "}");
   }
-
   @NotNull public static <T> String curly(@NotNull final T[] ¢) {
     return make("{", prune(¢), "}");
   }
-
   @NotNull public static <T> String make(final String begin, final Collection<T> ts, final String end) {
     return make(begin, ts, COMMA, end);
   }
-
   /** @param <T> type of items in the collection.
    * @param begin the opening parenthesis.
    * @param ts the actual items in the list, method <code>toString()</code> is
@@ -73,27 +67,21 @@ import fluent.ly.*;
   @NotNull public static <T> String make(final String begin, @Nullable final Collection<T> ts, final String between, final String end) {
     return ts == null || ts.isEmpty() ? "" : begin + Separate.by(ts, between) + end;
   }
-
   @NotNull public static <T> String make(final String begin, final T[] ts, final String end) {
     return make(begin, ts, COMMA, end);
   }
-
   @NotNull public static <T> String make(final String begin, @Nullable final T[] ts, final String between, final String end) {
     return ts == null || ts.length == 0 ? "" : begin + Separate.by(ts, between) + end;
   }
-
   @NotNull public static <T> String square(@NotNull final Collection<T> ¢) {
     return make("[", prune(¢), "]");
   }
-
   @NotNull public static <T> String square(@NotNull final T[] ¢) {
     return make("[", prune(¢), "]");
   }
-
   private static <T> Collection<T> prune(@NotNull final Collection<T> ¢) {
     return prune.nulls(¢);
   }
-
   private static <T> T[] prune(@NotNull final T[] ¢) {
     return prune.nulls(¢);
   }

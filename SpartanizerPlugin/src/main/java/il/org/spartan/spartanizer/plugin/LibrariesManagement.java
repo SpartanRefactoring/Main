@@ -37,15 +37,12 @@ public enum LibrariesManagement {
       @Override public IPath getPath() {
         return new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(LIBRARY_NAME);
       }
-
       @Override public int getKind() {
         return K_APPLICATION;
       }
-
       @Override public String getDescription() {
         return LIBRARY_NAME;
       }
-
       @Override public IClasspathEntry[] getClasspathEntries() {
         return new IClasspathEntry[] { JavaCore.newLibraryEntry(FEATURE_PATH, null, null) };
       }
@@ -57,7 +54,6 @@ public enum LibrariesManagement {
     @SuppressWarnings("restriction") final List<String> $ = as.list(new UserLibraryManager().getUserLibraryNames());
     return $.contains(LIBRARY_NAME);
   }
-
   /** @param p JD
    * @return true iff the project uses the spartan library. */
   public static boolean hasLibrary(final IJavaProject p) {
@@ -71,7 +67,6 @@ public enum LibrariesManagement {
     }
     return false;
   }
-
   /** Adding the spartan library to a project.
    * @param p JD
    * @return true upon success */
@@ -97,14 +92,12 @@ public enum LibrariesManagement {
     }
     return true;
   }
-
   /** If the project does not make use of the spartan library, we try to add it.
    * @param ¢ JD
    * @return true iff the project uses the spartan library */
   public static boolean checkLibrary(final IJavaProject ¢) {
     return ¢ != null && (hasLibrary(¢) || addLibrary(¢));
   }
-
   /** Add the spartan library to eclipse's user libraries.
    * @throws CoreException */
   public static void initializeUserLibraries() throws CoreException {

@@ -18,7 +18,6 @@ public final class NumericLiteralClassifier {
   public NumericLiteralClassifier(final String literal) {
     inner = literal;
   }
-
   /** @return the __ of this literal.
    * @see PrudentType */
   public Primitive.Certain type() {

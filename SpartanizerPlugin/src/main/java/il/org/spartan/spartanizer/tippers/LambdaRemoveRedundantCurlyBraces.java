@@ -29,7 +29,6 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
       }
     };
   }
-
   public static ASTNode replacement(final LambdaExpression x, final ASTRewrite r, final TextEditGroup g) {
     if (the.onlyOneOf(statements(body(x))) == null)
       return null;
@@ -41,11 +40,9 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
     $.setParentheses(x.hasParentheses());
     return $;
   }
-
   @Override public String description(final LambdaExpression ¢) {
     return "Remove curly braces from " + Trivia.gist(¢);
   }
-
   @Override protected boolean prerequisite(final LambdaExpression ¢) {
     return !iz.expression(body(¢))//
         && !iz.methodInvocation(body(¢))//

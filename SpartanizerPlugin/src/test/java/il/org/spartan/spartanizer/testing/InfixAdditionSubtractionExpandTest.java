@@ -21,39 +21,31 @@ public class InfixAdditionSubtractionExpandTest {
   @Test @SuppressWarnings("static-method") public void test01() {
     assert !new InfixAdditionSubtractionExpand().check(INPUT);
   }
-
   @Test @SuppressWarnings("static-method") public void test02() {
     assert new InfixAdditionSubtractionExpand().check(into.i(tide.clean(input2)));
   }
-
   @Test @SuppressWarnings("static-method") public void test03() {
     assert new InfixAdditionSubtractionExpand().check(into.i(input2));
   }
-
   @Test public void test04() {
     assert !new InfixAdditionSubtractionExpand().check(into.i(s));
   }
-
   @Test @SuppressWarnings("static-method") public void test05() {
     assert new InfixAdditionSubtractionExpand().check(into.i("a - (b+c)"));
   }
-
   @Test @SuppressWarnings("static-method") public void test06() {
     trimmingOf("a - (b+c)")//
         .gives("a - b -c").stays();
   }
-
   @Test @SuppressWarnings("static-method") public void test07() {
     trimmingOf("1 - (a+b)")//
         .gives("1 - a - b").stays();
   }
-
   // TODO Matteo (for himself) this is not working properly
   @Test @SuppressWarnings("static-method") public void test08() {
     trimmingOf("1 - (a+1)")//
         .gives("1 - a - 1").stays();
   }
-
   @Test @SuppressWarnings("static-method") public void test09() {
     trimmingOf("1 - (a+c)")//
         .gives("1 - a - c").stays();

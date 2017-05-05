@@ -18,7 +18,6 @@ public class NanoPatternRecord {
     this.name = name;
     className = cl.getSimpleName();
   }
-
   /** @param ¢ matched node */
   public void markNP(final ASTNode ¢) {
     ++occurences;

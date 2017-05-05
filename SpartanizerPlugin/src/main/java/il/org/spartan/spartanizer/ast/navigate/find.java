@@ -24,7 +24,6 @@ public enum find {
       }
     };
   }
-
   public static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }
@@ -45,7 +44,6 @@ public enum find {
         return null;
     return $;
   }
-
   private static Expression singleExpressionDifference(final ASTNode n1, final ASTNode n2) {
     if (n1 == null || n2 == null)
       return null;
@@ -67,20 +65,17 @@ public enum find {
     }
     return $;
   }
-
   public static <N extends ASTNode> List<String> singleAtomicDifferences(final List<N> ¢) {
     final List<String> $ = an.empty.list();
     ¢.forEach(λ -> $.add(λ != the.headOf(¢) ? singleAtomicDifference(λ, the.headOf(¢)) : singleAtomicDifference(the.headOf(¢), the.secondOf(¢))));
     return $;
   }
-
   public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(final List<N> ¢) {
     final List<Expression> $ = an.empty.list();
     ¢.forEach(
         λ -> $.add(λ != the.headOf(¢) ? singleExpressionDifference(λ, the.headOf(¢)) : singleExpressionDifference(the.headOf(¢), the.secondOf(¢))));
     return $;
   }
-
   /** Gets two nodes and returns the identifier of the only name i n1 which is
    * different from n2. If the nodes subtrees differ with other then one name or
    * any node, -1 is returned. */
@@ -106,11 +101,9 @@ public enum find {
     }
     return $;
   }
-
   static <N extends ASTNode> boolean areSelfDifferent(final N n1, final N n2) {
     return iz.infixExpression(n1) && (!iz.infixExpression(n2) || !operator(az.infixExpression(n1)).equals(operator(az.infixExpression(n2))));
   }
-
   /** like the other one but for a list
    * @param ns
    * @return */
@@ -128,14 +121,12 @@ public enum find {
     }
     return $;
   }
-
   public static <N extends ASTNode> boolean differsInSingleAtomic(final List<N> ¢) {
     if (¢ == null || ¢.isEmpty())
       return false;
     final String $ = singleAtomicDifference(¢);
     return $ != null && !$.isEmpty();
   }
-
   public static <N extends ASTNode> boolean differsInSingleExpression(final List<N> ¢) {
     return ¢ != null && !¢.isEmpty() && singleExpressionDifference(¢) != null;
   }

@@ -20,11 +20,9 @@ public class TrackerSelection extends Selection {
   public TrackerSelection(final WrappedCompilationUnit compilationUnit, final ITextSelection textSelection, final String name) {
     super(asList(compilationUnit), textSelection, name);
   }
-
   public static TrackerSelection empty() {
     return new TrackerSelection(null, null, null);
   }
-
   public TrackerSelection track(final ASTNode ¢) {
     assert ¢ != null;
     assert ¢ instanceof MethodDeclaration || ¢ instanceof AbstractTypeDeclaration;
@@ -32,7 +30,6 @@ public class TrackerSelection extends Selection {
     length = ¢.getLength();
     return this;
   }
-
   public void update() {
     the.headOf(inner).dispose();
     final ASTNode newTrack = fix(track.getNodeType(),
@@ -47,29 +44,24 @@ public class TrackerSelection extends Selection {
     length = track.getLength();
     textSelection = new TextSelection(track.getStartPosition(), length);
   }
-
   private static List<WrappedCompilationUnit> asList(final WrappedCompilationUnit ¢) {
     final List<WrappedCompilationUnit> $ = an.empty.list();
     if (¢ != null)
       $.add(¢);
     return $;
   }
-
   private static ASTNode fix(final int nodeType, final ASTNode coveredNode) {
     return yieldAncestors.untilNodeType(nodeType).from(coveredNode);
   }
-
   private static boolean match(final ASTNode track, final ASTNode newTrack) {
     return newTrack != null && (track.getClass().isInstance(newTrack) || newTrack.getClass().isInstance(track))
         && (track instanceof MethodDeclaration ? match((MethodDeclaration) track, (MethodDeclaration) newTrack)
             : track instanceof AbstractTypeDeclaration && match((AbstractTypeDeclaration) track, (AbstractTypeDeclaration) newTrack));
   }
-
   private static boolean match(final MethodDeclaration track, final MethodDeclaration newTrack) {
     return track.getName() == null || newTrack.getName() == null ? track.getName() == null && newTrack.getName() == null
         : track.getName().getIdentifier().equals(newTrack.getName().getIdentifier());
   }
-
   private static boolean match(final AbstractTypeDeclaration track, final AbstractTypeDeclaration newTrack) {
     return track.getName() == null || newTrack.getName() == null ? track.getName() == null && newTrack.getName() == null
         : track.getName().getIdentifier().equals(newTrack.getName().getIdentifier());

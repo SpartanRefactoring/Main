@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.plugin.*;
 @FunctionalInterface
 public interface ExpanderCategory {
   String description();
-
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
    * ExpanderGroup TODO Roth, add - {@link ExpanderGroup} when you make the
@@ -22,11 +21,9 @@ public interface ExpanderCategory {
   default ExpanderGroup tipperGroup() {
     return ExpanderGroup.find(this);
   }
-
   default ExpanderGroup ExpanderGroup() {
     return ExpanderGroup.find(this);
   }
-
   static String getLabel(final Class<? extends ExpanderCategory> ¢) {
     return English.name(¢);
   }
@@ -71,11 +68,9 @@ public interface ExpanderCategory {
     public static ExpanderGroup find(final ExpanderCategory ¢) {
       return find(¢.getClass());
     }
-
     static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
-
     private static ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
       return Stream.of(ExpanderGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
@@ -89,7 +84,6 @@ public interface ExpanderCategory {
       id = clazz.getCanonicalName();
       label = ExpanderCategory.getLabel(clazz);
     }
-
     public boolean isEnabled() {
       return Plugin.plugin() == null || store().getBoolean(id);
     }

@@ -9,7 +9,8 @@ import il.org.spartan.streotypes.*;
  * depending on the sign of a given integer
  * @author Yossi Gil, the Technion.
  * @since 24/07/2008 */
-@Utility public enum On {
+@Utility
+public enum On {
   ;
   public static void main(@NotNull final String[] args) {
     for (@NotNull final String arg : args) {
@@ -17,7 +18,6 @@ import il.org.spartan.streotypes.*;
       On.sign(Integer.valueOf(arg), () -> System.out.println("negative!"), () -> System.out.println("zero!"), () -> System.out.println("positive!"));
     }
   }
-
   /** Select between one of three actions to carry out, depending on the sign of
    * a given integer. Each action is given as an instance of a class
    * implementing the {@link Action}<code><T></code>
@@ -29,7 +29,6 @@ import il.org.spartan.streotypes.*;
   public static void sign(final int selector, @NotNull final Action onNegative, @NotNull final Action onZero, @NotNull final Action onPositive) {
     sign(selector, asFunction(onNegative), asFunction(onZero), asFunction(onPositive));
   }
-
   /** A lazy selection between three expressions depending on the sign of a
    * given integer. Each expression is given as an instance of a class
    * implementing the {@link Function}<code><T></code>
@@ -48,7 +47,6 @@ import il.org.spartan.streotypes.*;
   @NotNull public static <T> T sign(final int selector, final Function<T> onNegative, final Function<T> onZero, final Function<T> onPositive) {
     return (selector == 0 ? onZero : selector < 0 ? onNegative : onPositive).__();
   }
-
   /** A non-lazy selection between three values depending on the sign of a given
    * integer
    * @param <T> type of values from which to select a return value
@@ -62,7 +60,6 @@ import il.org.spartan.streotypes.*;
   public static <T> T sign(final int selector, final T onNegative, final T onZero, final T onPositive) {
     return selector == 0 ? onZero : selector < 0 ? onNegative : onPositive;
   }
-
   /** Select between one of three actions to carry out, depending on the sign of
    * a given integer. Each action is given as an instance of a class
    * implementing the {@link Action}<code><T></code>
@@ -75,7 +72,6 @@ import il.org.spartan.streotypes.*;
       @NotNull final Action onPositive) {
     sign(selector.intValue(), asFunction(onNegative), asFunction(onZero), asFunction(onPositive));
   }
-
   private static Function<Void> asFunction(@NotNull final Action ¢) {
     return () -> {
       ¢.__();

@@ -40,7 +40,6 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     final Javadoc j = $.getJavadoc();
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(step.type(¢) + "").contains(".");
   }
-
   @Override public Tip pattern(final CastExpression ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -50,7 +49,6 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
       }
     };
   }
-
   static void addAzMethod(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
     final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
     switch (s) {
@@ -70,49 +68,38 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
         break;
     }
   }
-
   private static String fileAzFilePath() {
     return getProperty(API_FILE);
   }
-
   private static File fileAzFile() {
     return new File(fileAzFilePath());
   }
-
   static boolean azMethodExist(final CastExpression ¢) {
     return step.methods(containingType(¢)).stream()
         .filter(λ -> azMethodName(¢).equals(λ.getName() + "") && typesEqual(step.returnType(λ), step.type(¢))).count() != 0;
   }
-
   private static boolean typesEqual(final Type returnType, final Type t) {
     return (returnType + "").equals(t + "");
   }
-
   private static void addAzMethodToType(final CastExpression ¢, final ASTRewrite r, final TextEditGroup g) {
     misc.addMethodToType(containingType(¢), az.methodDeclaration(copy.of(createAzMethod(¢))), r, g);
   }
-
   private static void addAzMethodToFile(final CastExpression ¢, final String path) {
     misc.addMethodToFile(path, az.methodDeclaration(createAzMethod(¢)));
   }
-
   private static MethodDeclaration createAzMethod(final CastExpression ¢) {
     return copy.of(az.methodDeclaration(make.ast(azMethodModifier() + step.type(¢) + " " + azMethodName(¢) + azMethodBody(¢))));
   }
-
   private static String azMethodModifier() {
     return "static ";
   }
-
   private static String azMethodBody(final CastExpression ¢) {
     return "(Object ¢){return (" + step.type(¢) + ")¢;}";
   }
-
   static String azMethodName(final CastExpression ¢) {
     return (getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : !API_LEVEL_TYPE.equals(getProperty(API_LEVEL)) ? "" : "az")
         + (step.type(¢) + "").replaceAll("//.", "•");
   }
-
   private static AbstractTypeDeclaration containingType(final CastExpression $) {
     final String s = getProperty(API_LEVEL) == null ? API_LEVEL_TYPE : getProperty(API_LEVEL);
     switch (s) {
@@ -127,32 +114,25 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
         return null;
     }
   }
-
   private static File packageAzFile(final CastExpression ¢) {
     return new File(packageAzFilePath(¢));
   }
-
   private static String packageAzFilePath(final CastExpression ¢) {
     return AnalyzerOptions.get(AnalyzerOptions.INPUT_DIR) + "/src/main/java/" + containing.package¢(¢).replaceAll("\\.", File.separator) + "/az.java";
   }
-
   private static AbstractTypeDeclaration getType(final File x) {
     return az.abstractTypeDeclaration(
         step.types(az.compilationUnit(makeAST.COMPILATION_UNIT.from(x))).stream().filter(λ -> "az".equals(λ.getName() + "")).findFirst().get());
   }
-
   private static String getProperty(final String property) {
     return AnalyzerOptions.get(Coercion.class.getSimpleName(), property);
   }
-
   private static File prepareFile(final File ¢) {
     return updatePackage(¢.exists() ? ¢ : createFileFromTemplate(¢));
   }
-
   private static File updatePackage(final File ¢) {
     return ¢;
   }
-
   private static File createFileFromTemplate(final File $) {
     try {
       Files.copy(new File(System.getProperty("user.dir") + "/src/main/java/il/org/spartan/spartanizer/research/templates/az.template").toPath(),
@@ -162,7 +142,6 @@ public class Coercion extends NanoPatternTipper<CastExpression> {
     }
     return $;
   }
-
   @Override public String description(@SuppressWarnings("unused") final CastExpression __) {
     return "replace coercion with az()";
   }

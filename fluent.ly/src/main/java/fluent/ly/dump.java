@@ -69,7 +69,6 @@ public class dump {
     out.out("declared annotations", ¢.getDeclaredAnnotations());
     out.out("---------------------------\n");
   }
-
   public static <T> void go(@NotNull final List<T> ts, @NotNull final String... ss) {
     out.out("Exploring list");
     for (final String ¢ : ss)
@@ -77,13 +76,11 @@ public class dump {
     for (final T ¢ : ts)
       dump.go(¢);
   }
-
   public static void go(final Object os[], @NotNull final String... ss) {
     for (final String ¢ : ss)
       out.out(¢);
     out.out("elements", os);
   }
-
   public static void go(final @Nullable Object o, @NotNull final String... ss) {
     for (final String ¢ : ss)
       out.out(¢);
@@ -128,7 +125,6 @@ public class dump {
     out.out("--END OBJECT--\n\n");
     System.out.flush();
   }
-
   public static void main(final String[] args) {
     // Explore.go(Package.class);
     final ClassLoadingMXBean a = ManagementFactory.getClassLoadingMXBean();

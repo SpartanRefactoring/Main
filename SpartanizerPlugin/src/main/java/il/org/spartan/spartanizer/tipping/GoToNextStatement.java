@@ -17,7 +17,6 @@ public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper
     final Statement $ = extract.nextStatement(¢);
     return $ != null && go(ASTRewrite.create(¢.getAST()), ¢, $, null) != null;
   }
-
   @Override public Tip tip(final N n) {
     final Statement $ = extract.nextStatement(n);
     return new Tip(description(n), myClass(), n) {
@@ -26,6 +25,5 @@ public abstract class GoToNextStatement<N extends ASTNode> extends CarefulTipper
       }
     }.spanning(n, $);
   }
-
   protected abstract ASTRewrite go(ASTRewrite r, N n, Statement nextStatement, TextEditGroup g);
 }

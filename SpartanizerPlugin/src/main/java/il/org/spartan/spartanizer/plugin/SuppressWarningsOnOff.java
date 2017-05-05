@@ -54,7 +54,6 @@ public enum SuppressWarningsOnOff {
   SuppressWarningsOnOff(final BiConsumer<ASTRewrite, BodyDeclaration> disable) {
     this.disable = disable;
   }
-
   /** Commit textual change of a certain {@link Type}: adding a disabler comment
    * to marked code with a progress monitor.
    * @param pm progress monitor for the operation
@@ -69,7 +68,6 @@ public enum SuppressWarningsOnOff {
     textChange.perform(pm);
     pm.done();
   }
-
   /** @param n an {@link ASTNode}
    * @return whether the node is disabled by an ancestor
    *         {@link BodyDeclaration}, containing a disabler in its JavaDoc. */
@@ -93,7 +91,6 @@ public enum SuppressWarningsOnOff {
       }
     return false;
   }
-
   /** @param j a {@link JavaDoc}
    * @return comment's text, without eneblers identifiers. */
   static String enablersRemoved(final Javadoc j) {
@@ -104,19 +101,15 @@ public enum SuppressWarningsOnOff {
     }
     return $;
   }
-
   static Collection<String> getDisablers(final String ¢) {
     return getKeywords(¢, disabling.ByComment.disablers);
   }
-
   static Iterable<String> getEnablers(final String ¢) {
     return getKeywords(¢, disabling.ByComment.enablers);
   }
-
   static Collection<String> getKeywords(final String c, final String[] kws) {
     return Stream.of(kws).filter(c::contains).collect(toSet());
   }
-
   static void recursiveUnEnable(final ASTRewrite $, final BodyDeclaration d) {
     d.accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
@@ -125,11 +118,9 @@ public enum SuppressWarningsOnOff {
       }
     });
   }
-
   static void unEnable(final ASTRewrite $, final BodyDeclaration d) {
     unEnable($, d.getJavadoc());
   }
-
   private ASTRewrite createRewrite(final IProgressMonitor pm, final CompilationUnit u, final IMarker m, final Type t) {
     assert pm != null : "Tell whoever calls me to use " + NullProgressMonitor.class.getCanonicalName() + " instead of " + null;
     pm.beginTask("Creating rewrite operation...", 1);
@@ -138,11 +129,9 @@ public enum SuppressWarningsOnOff {
     pm.done();
     return $;
   }
-
   private ASTRewrite createRewrite(final IProgressMonitor pm, final IMarker m, final Type t) {
     return createRewrite(pm, (CompilationUnit) makeAST.COMPILATION_UNIT.from(m, pm), m, t);
   }
-
   private void fillRewrite(final ASTRewrite $, final CompilationUnit u, final IMarker m, final Type t) {
     u.accept(new ASTVisitor(true) {
       boolean b;
@@ -173,7 +162,6 @@ public enum SuppressWarningsOnOff {
       }
     });
   }
-
   private static void unEnable(final ASTRewrite $, final Javadoc j) {
     if (j != null)
       $.replace(j, $.createStringPlaceholder(enablersRemoved(j), ASTNode.JAVADOC), null);

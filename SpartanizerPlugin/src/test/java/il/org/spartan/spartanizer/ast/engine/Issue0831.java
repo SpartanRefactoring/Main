@@ -27,7 +27,6 @@ public class Issue0831 {
       body += iter + "";
     azzert.that(body, is("int a;\nint b;\nint c;\nint d;\n"));
   }
-
   @Test public void givenNullinsteadMethodAssertionFailure() {
     try {
       new MethodScannerIExt(null).hashCode();
@@ -37,15 +36,12 @@ public class Issue0831 {
     }
     assert false;
   }
-
   @Test public void noStatementsInScannerWhenMethodHasEmptyBody() {
     assert new MethodScannerIExt((MethodDeclaration) make.ast("public int a(String a){}")).availableStatements().isEmpty();
   }
-
   @Test public void oneStatementInScanner() {
     assert "int a;\n".equals(the.headOf(new MethodScannerIExt(oneStatMethod).availableStatements()) + "");
   }
-
   @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {
     assert new MethodScannerIExt((MethodDeclaration) make.ast("public int a(String a);")).availableStatements() == null;
   }
@@ -54,7 +50,6 @@ public class Issue0831 {
     public MethodScannerIExt(final MethodDeclaration method) {
       super(method);
     }
-
     @Override protected List<Statement> availableStatements() {
       return statements;
     }

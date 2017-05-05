@@ -50,7 +50,6 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
     @Override protected Tip pattern(final EnhancedForStatement ¢) {
       return firstTip(tippers, ¢);
     }
-
     @Override public boolean canTip(final EnhancedForStatement ¢) {
       return anyTips(tippers, ¢);
     }
@@ -60,7 +59,6 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(blockTippers, az.block(parent(¢)))//
         || anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final EnhancedForStatement $) {
     try {
       return firstTip(blockTippers, az.block(parent($)));
@@ -68,11 +66,9 @@ public class Collect extends NanoPatternTipper<EnhancedForStatement> {
       return firstTip(tippers, $);
     }
   }
-
   @Override public Category category() {
     return Category.Iterative;
   }
-
   @Override public String tipperName() {
     return "SelectBy";
   }

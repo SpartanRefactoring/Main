@@ -6,14 +6,12 @@ public class Triple<First, Second, Third> extends Pair<First, Second> {
   @NotNull public static <First, Second, Third> Triple<First, Second, Third> make(final First f, final Second s, final Third t) {
     return new Triple<>(f, s, t);
   }
-
   @NotNull @SuppressWarnings("unchecked") //
   public static <First, Second, Third> //
       Triple<First, Second, Third>[] //
       makeTriples(final int ¢) {
     return new Triple[¢];
   }
-
   @NotNull public static <First, Second, Third> //
       Triple<First, Second, Third>[] //
       makeTriples(final int i, final int m, final int k) {

@@ -33,7 +33,6 @@ public final class WhileInfiniteBreakToReturn extends CarefulTipper<WhileStateme
     }
     return $;
   }
-
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     final IfStatement ifStatement = az.ifStatement(s);
     if (ifStatement == null)
@@ -59,19 +58,15 @@ public final class WhileInfiniteBreakToReturn extends CarefulTipper<WhileStateme
     final Statement $ = handleBlock((Block) elze, nextReturn);
     return $ != null ? $ : !iz.ifStatement(elze) ? null : handleIf(az.ifStatement(elze), nextReturn);
   }
-
   @Override public String description() {
     return "Convert the break inside 'while()' loop to 'return'";
   }
-
   @Override public String description(final WhileStatement ¢) {
     return "Convert the break inside 'while(" + ¢.getExpression() + ")' to return";
   }
-
   @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !iz.finiteLoop(¢);
   }
-
   @Override public Tip tip(final WhileStatement s) {
     final ReturnStatement nextReturn = extract.nextReturn(s);
     if (s == null || iz.finiteLoop(s) || nextReturn == null)

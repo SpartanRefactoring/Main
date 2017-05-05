@@ -26,7 +26,6 @@ public enum measure {
     });
     return $.inner;
   }
-
   public static int expressions(final ASTNode n) {
     if (iz.compilationUnit(n))
       return allExpressions(az.compilationUnit(n));
@@ -42,7 +41,6 @@ public enum measure {
     });
     return $.inner;
   }
-
   public static int allCommands(final CompilationUnit u) {
     final Int $ = new Int();
     if (u == null)
@@ -56,7 +54,6 @@ public enum measure {
     });
     return $.inner;
   }
-
   public static int commands(final ASTNode n) {
     if (iz.compilationUnit(n))
       return allCommands(az.compilationUnit(n));
@@ -72,7 +69,6 @@ public enum measure {
     });
     return $.inner;
   }
-
   static boolean excluded(final Statement ¢) {
     return as.list(//
         Block.class, //
@@ -88,7 +84,6 @@ public enum measure {
         || iz.variableDeclarationStatement(¢)//
             && initializer(the.onlyOneOf(fragments(az.variableDeclarationStatement(¢)))) == null;
   }
-
   static boolean excluded(final Expression ¢) {
     return as.list(//
         Annotation.class //

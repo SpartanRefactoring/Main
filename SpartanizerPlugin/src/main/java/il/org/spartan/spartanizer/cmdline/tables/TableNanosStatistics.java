@@ -36,14 +36,12 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
   private static void initializeWriter() {
     pWriter = new Table(TableNanosStatistics.class);
   }
-
   public static void main(final String[] args)
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
     pWriter.close();
     System.err.println("Your output is in: " + system.tmp + pWriter.name);
   }
-
   @Override public boolean visit(final MethodDeclaration $) {
     if (!excludeMethod($))
       try {
@@ -53,21 +51,17 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
       }
     return super.visit($);
   }
-
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
-
   @Override protected void done(final String path) {
     summarizeNPStatistics(path);
     System.err.println(" " + path + " Done");
   }
-
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null || anyTips(excluded, ¢);
   }
-
   public static void summarizeNPStatistics(final String path) {
     if (pWriter == null)
       initializeWriter();
@@ -80,14 +74,12 @@ public class TableNanosStatistics extends DeprecatedFolderASTVisitor {
     pWriter.nl();
     npStatistics.clear();
   }
-
   private static void fillAbsents() {
     nanonizer.allNanoPatterns().stream()//
         .map(Tipper::className)//
         .filter(λ -> !npStatistics.keySet().contains(λ))//
         .forEach(λ -> pWriter.col(λ, 0));
   }
-
   private static boolean anyTips(final Collection<JavadocMarkerNanoPattern> ps, final MethodDeclaration d) {
     return d != null && ps.stream().anyMatch(λ -> λ.check(d));
   }

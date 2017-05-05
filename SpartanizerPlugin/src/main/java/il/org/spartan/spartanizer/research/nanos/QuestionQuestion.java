@@ -22,11 +22,9 @@ public final class QuestionQuestion extends NanoPatternTipper<ConditionalExpress
     return tippers.canTip(¢)//
         && rival.cantTip(¢);
   }
-
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return tippers.firstTip(¢);
   }
-
   @Override public String description() {
     return "Evaluate expression, if null take some expression, otherwise take another";
   }

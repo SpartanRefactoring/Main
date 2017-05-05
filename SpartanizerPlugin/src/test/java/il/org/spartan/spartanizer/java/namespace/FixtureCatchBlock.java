@@ -56,15 +56,12 @@ public class FixtureCatchBlock extends MetaFixture {
     }
     return 3;
   }
-
   private int f(final int f) {
     return f(f);
   }
-
   int f(final Object f) {
     return f(f);
   }
-
   void simple() {
     try (FileReader r = new FileReader(toString())) {
       r.read();

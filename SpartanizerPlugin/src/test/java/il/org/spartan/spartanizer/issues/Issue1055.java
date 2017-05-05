@@ -14,7 +14,6 @@ public class Issue1055 {
         .gives("switch(x) { case 1: y = 2; }") //
     ;
   }
-
   @Test public void also() {
     trimmingOf("I x = new I(3),y=null;if(a)synchronized(x){{ y=2;}} return x*y;") //
         .gives("I x = new I(3),y=null;if(a)synchronized(x){y=2;} return x*y;") //

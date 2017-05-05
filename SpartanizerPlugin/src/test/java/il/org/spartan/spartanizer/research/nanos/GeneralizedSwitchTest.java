@@ -17,7 +17,6 @@ public class GeneralizedSwitchTest {
         .gives("holds(λ->x==λ).on(0,()->d1()).on(1,()->d2()).elze(()->d3());") //
         .stays();
   }
-
   @Test public void ternary() {
     trimmingOf("d = x == 0 ? d1() : x == 1 ? d2() : d3();")//
         .using(new WhenHoldsOn<>(), ConditionalExpression.class)//
@@ -25,7 +24,6 @@ public class GeneralizedSwitchTest {
         .gives("d=holds(λ->x==λ).on(0,()->d1()).on(1,()->d2()).elze(()->d3());") //
         .stays();
   }
-
   @Test public void ternary2() {
     trimmingOf("d = x(y+19) > a(b) ? d1() : z(w+17) > a(b) ? d2() : d3();")//
         .using(new WhenHoldsOn<>(), ConditionalExpression.class)//

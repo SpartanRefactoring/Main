@@ -16,13 +16,11 @@ public class LastIndexTest {
         .gives("lastIndex(li)")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("li.get(li.size()-1);")//
         .using(new LastIndex(), InfixExpression.class)//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("li.get(li.size()-1);")//
         .using(new LastIndex(), InfixExpression.class)//

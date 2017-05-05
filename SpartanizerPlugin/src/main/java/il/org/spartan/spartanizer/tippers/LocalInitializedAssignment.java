@@ -26,14 +26,12 @@ public final class LocalInitializedAssignment extends $FragmentAndStatement//
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + Trivia.gist(¢.getName()) + " with its subsequent initialization";
   }
-
   @Override public Examples examples() {
     return convert("int a = 2; a = b;")//
         .to("int a = b;")//
         .ignores("int a, b = 2; a = b;") //
     ;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null)

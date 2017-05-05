@@ -29,7 +29,6 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
     final Javadoc j = $.getJavadoc();
     return (j == null || !(j + "").contains(c.tag())) && c.cantTip($) && !(type(¢) + "").contains(".");
   }
-
   @Override public Tip pattern(final InstanceofExpression ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -39,34 +38,27 @@ class InstanceOf extends NanoPatternTipper<InstanceofExpression> {
       }
     };
   }
-
   static String izMethodName(final InstanceofExpression ¢) {
     return "iz" + type(¢);
   }
-
   static boolean izMethodExist(final InstanceofExpression ¢) {
     return step.methods(containingType(¢)).stream().filter(λ -> izMethodName(¢).equals(λ.getName() + "") && booleanType(step.returnType(λ)))
         .count() != 0;
   }
-
   private static boolean booleanType(final Type returnType) {
     return "boolean".equals(returnType + "");
   }
-
   static void addizMethod(final InstanceofExpression ¢, final ASTRewrite r, final TextEditGroup g) {
     misc.addMethodToType(containingType(¢), newIzMethod(¢), r, g);
   }
-
   private static MethodDeclaration newIzMethod(final InstanceofExpression ¢) {
     return az.methodDeclaration(make.ast("static boolean " + izMethodName(¢) + "(Object ¢){ return ¢ instanceof " + type(¢) + ";}"));
   }
-
   private static AbstractTypeDeclaration containingType(final InstanceofExpression ¢) {
     // smaybe in the future change to iz.java in package which will
     // be created automatically...
     return yieldAncestors.untilContainingType().from(¢);
   }
-
   @Override public String description(@SuppressWarnings("unused") final InstanceofExpression __) {
     return "replace instanceof with iz()";
   }

@@ -18,15 +18,12 @@ public final class ParameterRenameUnderscoreToDoubleUnderscore<N extends Variabl
   @Override public String description(final N ¢) {
     return "Use double underscore instead of " + Trivia.gist(¢);
   }
-
   @Override public String description() {
     return "Use \"__\" instead of \"_\"";
   }
-
   @Override protected boolean change(final N ¢) {
     return "_".equals(¢.getName() + "");
   }
-
   /** [[SuppressWarningsSpartan]] */
   @Override public Examples examples() {
     return convert("" //
@@ -45,7 +42,6 @@ public final class ParameterRenameUnderscoreToDoubleUnderscore<N extends Variabl
                 + "}") //
     ;
   }
-
   @Override protected SimpleName replacement(final N ¢) {
     return ¢.getAST().newSimpleName("__");
   }

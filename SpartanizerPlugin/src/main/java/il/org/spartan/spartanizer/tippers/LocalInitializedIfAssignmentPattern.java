@@ -34,7 +34,6 @@ public abstract class LocalInitializedIfAssignmentPattern extends LocalInitializ
     // andAlso("Not used in older siblings", () -> !usedInOlderSiblings());
     // andAlso("Not used in condition ", () -> !usedInOlderSiblings());
   }
-
   @Override public String description() {
     return "Consolidate initialization of " + name + " with the subsequent conditional assignment to it";
   }

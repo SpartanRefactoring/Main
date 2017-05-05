@@ -26,7 +26,6 @@ public enum BenchingPolicy {
     if (after != null)
       after.call();
   }
-
   /** Execute a given operation
    * @param o what to execute
    * @return the average time in nanoseconds for execution (always a positive
@@ -40,12 +39,10 @@ public enum BenchingPolicy {
         return 1. * netTime.time() / $;
     }
   }
-
   public static long gcCylces(@NotNull final LogBook.Mutable m, @NotNull final Bencheon b, final int runs) {
     m.set("operation", b.name).set("size", b.size);
     return gcCylces(m, (Operation) b, runs);
   }
-
   public static long gcCylces(@NotNull final LogBook.Mutable m, @NotNull final Operation o, final int runs) {
     @NotNull final JVM before = new JVM();
     for (int ¢ = 0; ¢ < runs; ++¢)
@@ -54,19 +51,15 @@ public enum BenchingPolicy {
     m.set("runs", runs).record($);
     return $;
   }
-
   public static long getBenchingTime() {
     return benchingTime;
   }
-
   public static void go(@NotNull final LogBook.Mutable m, @NotNull final Bencheon b) {
     go(m, b.size, b);
   }
-
   public static void go(@NotNull final LogBook.Mutable m, final long size, @NotNull final NamedOperation o) {
     go(m, o.name, size, o);
   }
-
   public static void go(@NotNull final LogBook.Mutable m, final String name, final long size, @NotNull final Operation o) {
     Log.beginStage("Benchmarking", name + ":" + size);
     m.set("operation", name).set("size", size);
@@ -78,42 +71,33 @@ public enum BenchingPolicy {
     measure(m, size, o, runs);
     Log.endStage();
   }
-
   public static void main(final String[] args) {
     new TEST().compareHash();
   }
-
   public static void measure(@NotNull final LogBook.Mutable m, @NotNull final Bencheon b, final int initialRuns) {
     m.set("operation", b.name).set("size", b.size);
     measure(m, b.size, b, initialRuns);
   }
-
   public static int runs(final double time) {
     ___.nonnegative(time);
     ___.positive(time);
     return (int) Math.round(benchingTime / time + 0.5);
   }
-
   public static int runs(@NotNull final Operation ¢) {
     return runs(approximateSteadyStateTime(¢));
   }
-
   public static void setBenchingTime(final double benchingTime) {
     setBenchingTime(1L * benchingTime);
   }
-
   public static void setBenchingTime(final long benchingTime) {
     BenchingPolicy.benchingTime = benchingTime;
   }
-
   public static void setMIN_WARMUP(final float minWarmup) {
     setMIN_WARMUP(1L * minWarmup);
   }
-
   public static void setMIN_WARMUP(final long minWarmup) {
     BenchingPolicy.minWarmup = minWarmup;
   }
-
   public static int warmup(@NotNull final TimingEstimator e, final int initialApproximation) {
     Log.ln("Time approximation at warmup begin:", Unit.formatNanoseconds(e.estimate()));
     Log.beginCompoundStage("Warmup", "[" + thousands(initialApproximation), "runs/iteration]");
@@ -137,7 +121,6 @@ public enum BenchingPolicy {
     Log.ln("Time approximation at warmup end:", Unit.formatNanoseconds(e.estimate()));
     return $;
   }
-
   static void measure(@NotNull final LogBook.Mutable m, final long size, @NotNull final Operation o, final int initialRuns) {
     for (int runs = initialRuns;;) {
       Log.print("Silence, measuring " + Unit.INTEGER.format(runs) + " runs ... ");
@@ -161,7 +144,6 @@ public enum BenchingPolicy {
       Log.ln("After JVM was: " + after);
     }
   }
-
   private static double approximateSteadyStateTime(@NotNull final TimingEstimator $) {
     for (@NotNull final Sequence s = new Multiplicative(0.3);; s.advance()) {
       @Nullable final RunRecord r = $.run(s.current(), 5);
@@ -169,13 +151,11 @@ public enum BenchingPolicy {
         return tuneupSteadyState($);
     }
   }
-
   private static void calibrate(@NotNull final TimingEstimator ¢) {
     Log.beginCompoundStage("Calibration");
     approximateSteadyStateTime(¢);
     Log.endCompoundStage();
   }
-
   private static double tuneupSteadyState(@NotNull final TimingEstimator $) {
     for (int estimatedRuns = runs($.estimate()); estimatedRuns > 1; estimatedRuns /= 2)
       if ($.run(estimatedRuns) != null)
@@ -190,7 +170,6 @@ public enum BenchingPolicy {
         go(l, new Bencheon.Exact(0, 0, 10));
       l.printBy(Consolidation.LIST);
     }
-
     @Test public void benchBencheon0_0__1000() {
       @NotNull final LogBook.Mutable l = new LogBook.Mutable(this);
       @NotNull final Bencheon b = new Bencheon.Exact(0, 0, 1000);
@@ -200,16 +179,13 @@ public enum BenchingPolicy {
         go(l, b);
       l.printBy(Consolidation.LIST);
     }
-
     @Test public void compareEmptyHeavyInit() {
       timeBencheon(new Bencheon.Exact(1000, 1000, 0));
     }
-
     @Test public void compareHash() {
       timeBencheon(new Bencheon.Hash());
       pure(new Bencheon.Hash());
     }
-
     @Test public void measureBencheon0_0__10() {
       @NotNull final LogBook.Mutable l = new LogBook.Mutable(this);
       @NotNull final Bencheon b = new Bencheon.Exact(0, 0, 10);
@@ -222,7 +198,6 @@ public enum BenchingPolicy {
       }
       l.printBy(Consolidation.LIST);
     }
-
     @Test public void measureEmpty() {
       @NotNull final LogBook.Mutable l = new LogBook.Mutable(this);
       for (int i = 0; i < 20; ++i) {
@@ -233,7 +208,6 @@ public enum BenchingPolicy {
       }
       l.printBy(Consolidation.LIST);
     }
-
     @Test public void measureNothingFunction() {
       @NotNull final LogBook.Mutable l = new LogBook.Mutable(this);
       for (int i = 0; i < 20; ++i) {
@@ -245,7 +219,6 @@ public enum BenchingPolicy {
       }
       l.printBy(Consolidation.LIST);
     }
-
     @Test public void timeExact() {
       @NotNull final LogBook.Mutable l = new LogBook.Mutable(this);
       l.set("Type", "Exponential Runs");
@@ -269,18 +242,15 @@ public enum BenchingPolicy {
       }
       l.printBy(Consolidation.LIST);
     }
-
     @Test public void timeHash() {
       timeBencheon(new Bencheon.Hash());
     }
-
     void pure(@NotNull final Bencheon b) {
       @NotNull final LogBook.Mutable l = new LogBook.Mutable(this);
       l.set("Type", "BENCH");
       go(l, b);
       l.printBy(Consolidation.LIST);
     }
-
     void timeBencheon(@NotNull final Bencheon b) {
       @NotNull final LogBook.Mutable l = new LogBook.Mutable(this);
       l.set("Type", "Exponential Runs");

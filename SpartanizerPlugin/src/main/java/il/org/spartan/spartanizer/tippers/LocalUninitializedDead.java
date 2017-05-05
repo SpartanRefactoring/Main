@@ -18,17 +18,14 @@ public final class LocalUninitializedDead extends LocalUninitialized implements 
     andAlso("Local variable is not used anywhere", //
         () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
   }
-
   @Override public String description() {
     return "Remove unused local variable " + name;
   }
-
   @Override public Examples examples() {
     return //
     convert("int c; int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);")//
         .to("int b; a = 3; f(b); f(a,b);a = f(a,b); b= f(a,b);");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     il.org.spartan.spartanizer.ast.factory.remove.deadFragment(current(), r, g);
     return r;

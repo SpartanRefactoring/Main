@@ -14,27 +14,22 @@ public class Examples implements Iterable<Example> {
     inner.add(¢);
     return this;
   }
-
   @Override public Iterator<Example> iterator() {
     return inner.iterator();
   }
-
   @Override public Spliterator<Example> spliterator() {
     return inner.spliterator();
   }
-
   public Converter convert(final String from) {
     return to -> add(new Example.Converts() {
       @Override public String from() {
         return from;
       }
-
       @Override public String to() {
         return to;
       }
     });
   }
-
   public Examples ignores(final String code) {
     return add((Ignores) () -> code);
   }

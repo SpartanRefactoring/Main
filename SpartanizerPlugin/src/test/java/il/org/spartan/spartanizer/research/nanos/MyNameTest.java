@@ -16,21 +16,18 @@ public class MyNameTest {
         .gives("void foo(){reduce¢(a);}")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("void foo(){ return foo(a) + foo(a,b);}")//
         .using(new MyName(), MethodInvocation.class)//
         .gives("void foo(){ return reduce¢(a) + reduce¢(a,b);}")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("void foo(){ return foo(a) + foo(a,b) == 7 ? foo() : bar();}")//
         .using(new MyName(), MethodInvocation.class)//
         .gives("void foo(){ return reduce¢(a) + reduce¢(a,b) == 7 ? foo() : bar();}")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("void foo(int a){ return foo(a) + foo(a,b) == 7 ? foo() : barar();}")//
         .using(new MyName(), MethodInvocation.class)//

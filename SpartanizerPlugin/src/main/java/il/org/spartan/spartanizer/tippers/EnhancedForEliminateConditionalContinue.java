@@ -17,7 +17,6 @@ public class EnhancedForEliminateConditionalContinue extends EagerTipper<Enhance
   @Override public String description(final EnhancedForStatement ¢) {
     return "Eliminate conditional continue before last statement in for about " + ¢.getExpression();
   }
-
   @Override public Tip tip(final EnhancedForStatement ¢) {
     return ContinueInConditionalEliminateAux.actualReplacement(az.block(¢.getBody()), ¢, myClass());
   }

@@ -52,15 +52,12 @@ public interface Tippers {
     @SuppressWarnings("unchecked") final Tipper<ASTNode> $ = (Tipper<ASTNode>) t;
     return $.tip(n);
   }
-
   static long find(final Tipper<? extends ASTNode> ¢) {
     return ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID();
   }
-
   @SafeVarargs static <N extends ASTNode> Tipper<N> findTipper(final N n, final Tipper<N>... ts) {
     return Stream.of(ts).filter(λ -> λ.check(n)).findFirst().orElse(null);
   }
-
   static <T extends Tipper<? extends ASTNode>> String name(final T ¢) {
     return ¢.getClass().getSimpleName();
   }

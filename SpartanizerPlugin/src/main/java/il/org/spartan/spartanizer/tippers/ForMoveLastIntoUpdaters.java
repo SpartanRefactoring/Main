@@ -17,16 +17,13 @@ public class ForMoveLastIntoUpdaters extends LoopReplacer<ForStatement> {
         && cantTip.declarationRedundantInitializer(¢)//
         && cantTip.removeRedundantIf(¢);
   }
-
   @Override public String description(final ForStatement ¢) {
     return "Move last statement into updaters of 'for(?;" + ¢.getExpression() + ";?)' ";
   }
-
   @Override public boolean prerequisite(final ForStatement ¢) {
     fillUp(¢.getBody());
     return validUpdater() && notClaimedByOthers(¢);
   }
-
   @Override public ForStatement replacement(final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
     step.updaters($).add(0, copy.of(updater));

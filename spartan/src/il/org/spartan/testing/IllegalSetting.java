@@ -11,11 +11,9 @@ public class IllegalSetting extends RuntimeException {
   public IllegalSetting() {
     // Empty
   }
-
   public IllegalSetting(final String message) {
     super(message);
   }
-
   public IllegalSetting(@NotNull final Throwable cause) {
     super(cause);
     setStackTrace(cause.getStackTrace());

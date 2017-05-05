@@ -17,7 +17,6 @@ public class CopyCollectionTest {
         .using(new CopyCollection(), ClassInstanceCreation.class)//
         .gives("StatsAccumulator $=Create.from(values);");
   }
-
   @Test public void b() {
     trimmingOf("StatsAccumulator<N> $=new StatsAccumulator<>();  $.addAll(values);")//
         .using(new CopyCollection(), ClassInstanceCreation.class)//

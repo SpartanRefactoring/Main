@@ -33,10 +33,8 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   public final T cache() {
     return cache;
   }
-
   /** see @see java.util.function.Supplier#get() (auto-generated) */
   @Override @Nullable public abstract T get();
-
   /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the current
    * value of this cell
    * @param ¢ JD
@@ -44,7 +42,6 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   @NotNull public final Cell<T> of(final T ¢) {
     return set(¢);
   }
-
   /** sets the current value of this cell
    * @param ¢ JD
    * @return <code><b>this</b></code> */
@@ -54,14 +51,12 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     version = oldestDependent() + 1; // Invalidate all dependents
     return this;
   }
-
   /** template function to be implemented by clients; normally an ingredient is
    * always updated and a dish is updated if all its ingredients are updated,
    * and the recipe was applied <i>after</i> all the ingredients where updated.
    * @return <code><b>true</b></code> <i>iff</i> the contents of the cache
    *         stored in this node is updated. */
   public abstract boolean updated();
-
   @Override @SuppressWarnings("unchecked") @Nullable protected Cell<T> clone() {
     try {
       return (Cell<T>) super.clone();
@@ -69,21 +64,17 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
       return null;
     }
   }
-
   protected long version() {
     return version;
   }
-
   void cache(@SuppressWarnings("hiding") final T cache) {
     this.cache = cache;
   }
-
   /** by overriding this function, inheriting classes can ask to be notified
    * when this cell was set. */
   void uponForcedSet() {
     // empty by default
   }
-
   private long oldestDependent() {
     long $ = 0;
     for (@NotNull final Cell<?> ¢ : dependents)
@@ -91,7 +82,8 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     return $;
   }
 
-  @FunctionalInterface interface Function2<T1, T2, R> {
+  @FunctionalInterface
+  interface Function2<T1, T2, R> {
     @NotNull R apply(T1 ¢1, T2 ¢2);
   }
 
@@ -128,7 +120,8 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
      * @param <R>
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
      * @since 2016 */
-    @FunctionalInterface interface Function3<T1, T2, T3, R> {
+    @FunctionalInterface
+    interface Function3<T1, T2, T3, R> {
       @NotNull R apply(T1 ¢1, T2 ¢2, T3 ¢3);
     }
   }

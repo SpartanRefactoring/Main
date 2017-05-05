@@ -24,7 +24,6 @@ public interface tide {
       ;
     return $;
   }
-
   static boolean eq(@Nullable final String s1, @Nullable final String s2) {
     return s1 == s2 || (s1 == null ? s2 == null : s1.equals(s2) || s2 != null && s2.equals(s1));
   }

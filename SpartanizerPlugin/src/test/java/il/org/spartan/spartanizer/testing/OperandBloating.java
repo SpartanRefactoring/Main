@@ -28,23 +28,19 @@ public class OperandBloating extends TestOperand {
   public OperandBloating(final String inner) {
     super(inner);
   }
-
   public OperandBloating(final ASTNode inner, final String classText) {
     super(classText);
     ast = inner;
   }
-
   public OperandBloating needRenaming(final boolean ¢) {
     needRenaming = ¢;
     return this;
   }
-
   @Override protected void copyPasteReformat(final String format, final Object... os) {
     rerun();
     System.err.printf(QUICK + format, os);
     System.err.println(NEW_UNIT_TEST + JUnitTestMethodFacotry.makeBloaterUnitTest(get()));
   }
-
   public static String bloat(final String source) {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(source);
     final String wrap = w.on(source);
@@ -59,7 +55,6 @@ public class OperandBloating extends TestOperand {
       return note.bug(¢);
     }
   }
-
   @Override public OperandBloating gives(final String $) {
     assert $ != null;
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
@@ -93,7 +88,6 @@ public class OperandBloating extends TestOperand {
     }
     return null;
   }
-
   public OperandBloating givesWithBinding(final String $) {
     assert $ != null;
     final CompilationUnit u = az.compilationUnit(ast);
@@ -116,7 +110,6 @@ public class OperandBloating extends TestOperand {
     }
     return null;
   }
-
   /** @param $ java code
    * @param f tested method name. expanders will be applied only for this method
    * @return */
@@ -145,7 +138,6 @@ public class OperandBloating extends TestOperand {
     }
     return null;
   }
-
   /** Rename all the SimpleNames in a compilation-unit to toList consistent
    * names : v1,v2,....
    * @author Dor Ma'ayan
@@ -167,20 +159,17 @@ public class OperandBloating extends TestOperand {
     });
     return $;
   }
-
   private static MethodDeclaration getMethod(final CompilationUnit u, final String f) {
     final List<MethodDeclaration> $ = descendants.whoseClassIs(MethodDeclaration.class).suchThat(λ -> λ.getName().getIdentifier().equals(f)).from(u);
     if ($.isEmpty())
       azzert.fail("No such method Exists");
     return the.headOf($);
   }
-
   private static CompilationUnit createCUWithBinding(final String text) {
     final ASTParser $ = make.COMPILATION_UNIT.parser(text);
     $.setResolveBindings(true);
     return az.compilationUnit($.createAST(null));
   }
-
   private void checkSame() {
     if (get().isEmpty())
       return;
@@ -203,7 +192,6 @@ public class OperandBloating extends TestOperand {
       note.bug(this, ¢);
     }
   }
-
   private void checkSameWithBinding() {
     final String wrap = get();
     final CompilationUnit u = az.compilationUnit(ast);
@@ -221,11 +209,9 @@ public class OperandBloating extends TestOperand {
       note.bug(this, ¢);
     }
   }
-
   @Override public void stays() {
     checkSame();
   }
-
   public void staysWithBinding() {
     checkSameWithBinding();
   }

@@ -35,53 +35,41 @@ public final class OccurrencesTest {
     azzert.that(s, iz("if (a + b) a=3;"));
     azzert.that(e, iz("a + b"));
   }
-
   @Test public void exploreLeftOfE() {
     azzert.that(left(e), iz("a"));
   }
-
   @Test public void lexicalUsesCollector() {
     final Collection<SimpleName> into = an.empty.list();
     a.accept(collect.lexicalUsesCollector(into, a));
     azzert.that(into.size(), is(1));
   }
-
   @Test public void occurencesAinAL() {
     azzert.that(collect.BOTH_SEMANTIC.of(a).in(a).size(), is(1));
   }
-
   @Test public void occurencesAinAsame() {
     assert wizard.eq(a, a);
   }
-
   @Test public void occurencesAinE() {
     azzert.that(collect.BOTH_SEMANTIC.of(a).in(e).size(), is(1));
   }
-
   @Test public void occurencesAinLeftOfE() {
     azzert.that(collect.BOTH_SEMANTIC.of(a).in(left(e)).size(), is(1));
   }
-
   @Test public void occurencesAinLeftOfEsame() {
     assert wizard.eq(left(e), a);
   }
-
   @Test public void occurencesAinRightOfE() {
     azzert.that(collect.BOTH_SEMANTIC.of(a).in(right(e)).size(), is(0));
   }
-
   @Test public void occurencesBinE() {
     azzert.that(collect.BOTH_SEMANTIC.of(b).in(e).size(), is(1));
   }
-
   @Test public void occurencesBinRightOfE() {
     azzert.that(collect.BOTH_SEMANTIC.of(b).in(right(e)).size(), is(1));
   }
-
   @Test public void sameAandLeftOfE() {
     assert wizard.eq(a, left(e));
   }
-
   @Test public void sameTypeAandLeftOfE() {
     azzert.that(a, instanceOf(left(e).getClass()));
   }

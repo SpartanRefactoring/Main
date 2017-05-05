@@ -16,16 +16,13 @@ public final class TokenFeeder {
   public TokenFeeder(@NotNull final File f, final TokenProcessor processor) throws FileNotFoundException {
     this(new Tokenizer(f), processor);
   }
-
   public TokenFeeder(final Reader r, final TokenProcessor processor) {
     this(new Tokenizer(r), processor);
   }
-
   public TokenFeeder(final Tokenizer tokenizer, final TokenProcessor processor) {
     this.tokenizer = tokenizer;
     this.processor = processor;
   }
-
   @NotNull public TokenFeeder go() {
     processor.before();
     for (@Nullable Token ¢ = tokenizer.next(); ¢ != EOF; ¢ = tokenizer.next())

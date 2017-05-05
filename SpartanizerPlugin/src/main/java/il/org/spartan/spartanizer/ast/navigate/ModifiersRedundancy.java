@@ -31,7 +31,6 @@ public enum ModifiersRedundancy {
         ¢.remove();
     return $;
   }
-
   public static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
@@ -89,15 +88,12 @@ public enum ModifiersRedundancy {
       $.remove(isFinal);
     return $;
   }
-
   public static Set<Modifier> redundants(final BodyDeclaration ¢) {
     return ModifierRedundant.matches(¢, redundancies(¢));
   }
-
   public static boolean test(final IExtendedModifier m, final Set<Predicate<Modifier>> ms) {
     return m instanceof Modifier && test((Modifier) m, ms);
   }
-
   public static boolean test(final Modifier m, final Set<Predicate<Modifier>> ms) {
     return ms.stream().anyMatch(λ -> λ.test(m));
   }

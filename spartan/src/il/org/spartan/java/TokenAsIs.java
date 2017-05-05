@@ -14,15 +14,12 @@ public class TokenAsIs extends TokenProcessor {
   @NotNull public static String fileToString(@NotNull final File ¢) throws IOException {
     return new TokenFeeder(new Tokenizer(¢), new TokenAsIs()).go().processor + "";
   }
-
   @NotNull public static String fileToString(final String fileName) throws IOException {
     return new TokenFeeder(new Tokenizer(fileName), new TokenAsIs()).go().processor + "";
   }
-
   public static void main(@NotNull final String argv[]) throws IOException {
     System.out.println(fileToString(first(argv)));
   }
-
   @NotNull public static String stringToString(@NotNull final String text) {
     return new TokenFeeder(new StringReader(text), new TokenAsIs()).go().processor + "";
   }
@@ -33,7 +30,6 @@ public class TokenAsIs extends TokenProcessor {
     forget.em(t);
     $.append(text);
   }
-
   @Override @NotNull public String toString() {
     return $ + "";
   }

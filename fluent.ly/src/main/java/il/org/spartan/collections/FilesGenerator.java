@@ -43,7 +43,6 @@ public class FilesGenerator {
     for (final File ¢ : new FilesGenerator(".java").from("."))
       System.out.println(¢);
   }
-
   /** @param directory should be a directory, but we still need to account for
    *        weird creatures such as "System Volume Information" */
   @Nullable static Iterator<File> directoryIterator(@Nullable final File directory) {
@@ -64,13 +63,11 @@ public class FilesGenerator {
           return true;
         }
       }
-
       @Override @Nullable public File next() {
         return next;
       }
     };
   }
-
   @NotNull private static Iterable<File> asFiles(@NotNull final Iterable<String> fileNames) {
     @NotNull final List<File> $ = new ArrayList<>();
     for (@NotNull final String fileName : fileNames)
@@ -94,7 +91,6 @@ public class FilesGenerator {
   public FilesGenerator(final String... extensions) {
     this.extensions = as.list(extensions);
   }
-
   /** @param from an array of names of directories from which the traversal
    *        should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
@@ -103,7 +99,6 @@ public class FilesGenerator {
   @NotNull public From from(@NotNull final Iterable<String> from) {
     return new From(asFiles(from));
   }
-
   /** @param from an array of names of directories from which the traversal
    *        should begin
    * @return an instance of an internal (yet <code><b>public</b></code>)
@@ -124,7 +119,6 @@ public class FilesGenerator {
     From(final Iterable<File> from) {
       this.from = from;
     }
-
     @Override @NotNull public Iterator<File> iterator() {
       return new FilesIterator(from.iterator());
     }
@@ -136,7 +130,6 @@ public class FilesGenerator {
       public FilesIterator(final Iterator<File> i) {
         stack.push(i);
       }
-
       @Override @SuppressWarnings("null") public boolean hasNext() {
         for (;;) {
           if (stack.isEmpty())
@@ -155,11 +148,9 @@ public class FilesGenerator {
             return true;
         }
       }
-
       @Override public File next() {
         return next;
       }
-
       private boolean ofInterest() {
         for (@NotNull final String extension : extensions)
           if (next.getName().endsWith(extension))

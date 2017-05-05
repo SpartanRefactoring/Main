@@ -24,18 +24,15 @@ public class Issue0236 {
         .gives("(b ? \"a\" : \"another\") + \" long string\"")//
         .stays();
   }
-
   @Test public void issue236_02() {
     trimmingOf("b? \"something\" : \"something\"+\" else\"")//
         .gives("\"something\" + (b? \"\" : \"\"+\" else\")").gives("\"something\" + (b? \"\" : \" else\")")//
         .stays();
   }
-
   @Test public void issue236_03() {
     trimmingOf("isIncrement(¢) ? \"++\" : \"--\"")//
         .stays();
   }
-
   @Test public void issue236_04() {
     trimmingOf("isIncrement(¢) ? \"++x\" : \"--x\"")//
         .gives("(isIncrement(¢) ? \"++\" : \"--\")+\"x\"")//

@@ -16,7 +16,6 @@ public class ForEachTest {
         .gives("(willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).forEach(¢->¢.onBroadcast(e));")//
     ;
   }
-
   @Test public void b() {
     trimmingOf("for (Class i : is) try { " //
         + " l.add((A)f.newClassInstance(H.class,i));} " //
@@ -28,21 +27,18 @@ public class ForEachTest {
             .gives("is.forEach(i->{try{l.add((A)f.newClassInstance(H.class,i));}catch(Throwable ¢){logger.warn(\"\",¢);}});")//
             .stays();
   }
-
   @Test public void c() {
     trimmingOf("for (Class<? extends BroadcastFilter> ¢ : bf) f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b));")//
         .using(new ForEach(), EnhancedForStatement.class)//
         .gives("bf.forEach(¢->f.broadcasterFilters(f.newClassInstance(BroadcastFilter.class,b)));")//
     ;
   }
-
   @Test public void d() {
     trimmingOf(" for (final Statement k : ss)    $.append(k);")//
         .using(new ForEach(), EnhancedForStatement.class)//
         .gives("ss.forEach(k -> $.append(k));")//
     ;
   }
-
   @Test public void e() {
     trimmingOf("for (final ICompilationUnit ¢ : us)    scanCompilationUnit(¢, eclipse.newSubMonitor(progressMonitor));")//
         .using(new ForEach(), EnhancedForStatement.class)//

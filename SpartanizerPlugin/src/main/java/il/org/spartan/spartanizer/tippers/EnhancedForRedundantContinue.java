@@ -20,11 +20,9 @@ public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForState
   @Override public String description(final EnhancedForStatement ¢) {
     return "Prune redundant " + extract.lastStatement(¢);
   }
-
   @Override public String description() {
     return "Prune redundant continue";
   }
-
   @Override public Tip tip(final EnhancedForStatement ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -32,7 +30,6 @@ public class EnhancedForRedundantContinue extends CarefulTipper<EnhancedForState
       }
     };
   }
-
   @Override public boolean prerequisite(final EnhancedForStatement ¢) {
     return iz.continueStatement(extract.lastStatement(¢));
   }

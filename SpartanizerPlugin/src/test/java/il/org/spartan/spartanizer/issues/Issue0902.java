@@ -16,19 +16,16 @@ public class Issue0902 {
         .gives("void f(){}")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("void f(){int x; return;}")//
         .gives("void f(){}")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("void f(){return;}")//
         .gives("void f(){}")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("void f(){int a;}")//
         .gives("void f(){}")//

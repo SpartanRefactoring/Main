@@ -22,21 +22,17 @@ public enum Truth {
       return Ħ;
     }
   }
-
   Truth not() {
     return this == T ? F : //
         this == F ? T : //
             this;
   }
-
   Truth or(final Truth other) {
     return this == T ? this : other;
   }
-
   Truth and(final Truth other) {
     return this == F ? this : other;
   }
-
   public static String letterOf(final BooleanSupplier ¢) {
     return truthOf(¢) + "";
   }
@@ -46,7 +42,6 @@ public enum Truth {
   Truth(final String description) {
     this.description = description;
   }
-
   @Override public String toString() {
     return description;
   }

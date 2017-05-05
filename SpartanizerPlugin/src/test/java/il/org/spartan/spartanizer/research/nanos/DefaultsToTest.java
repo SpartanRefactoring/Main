@@ -15,7 +15,6 @@ public class DefaultsToTest {
         .gives("return defaults(¢).to(\"\");")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("{B $ = t.tip(x); return $ != null ? $ : t2.tip(y);}")//
         .using(new DefaultsTo(), ConditionalExpression.class)//

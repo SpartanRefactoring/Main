@@ -20,12 +20,10 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
     $.setBody($.getAST().newEmptyStatement());
     return $;
   }
-
   @Override protected boolean prerequisite(final DoStatement ¢) {
     final Statement $ = ¢.getBody();
     return iz.block($) && iz.emptyBlock(az.block($));
   }
-
   @Override public Examples examples() {
     return convert("do{}while(x());y();z();")//
         .to("do;while(x());y();z();") //
@@ -33,7 +31,6 @@ public class DoWhileEmptyBlockToEmptyStatement extends ReplaceCurrentNode<DoStat
         .ignores("do;while(x());y();z();")//
     ;
   }
-
   @Override public String description(@SuppressWarnings("unused") final DoStatement __) {
     return "Replace 'do {} while(?)' with 'do ; while(?)'";
   }

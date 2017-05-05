@@ -20,7 +20,6 @@ public class Graph<E> extends AbstractGraph<E> {
         $.add(¢);
     return ImmutableArrayList.make($);
   }
-
   @NotNull private static <E> ImmutableArrayList<Vertex<E>> makeSources(@NotNull final ImmutableArrayList<Vertex<E>> v) {
     @NotNull final ArrayList<Vertex<E>> $ = new ArrayList<>();
     for (@NotNull final Vertex<E> ¢ : v)
@@ -39,7 +38,6 @@ public class Graph<E> extends AbstractGraph<E> {
   public Graph(@NotNull final Graph<E> other) {
     this(other.name(), other.description(), other.map);
   }
-
   /** This <code><b>private</b></code> constructor is used internally by the
    * factory class {@link Builder}, which provides the sole means for
    * Instantiating this class.
@@ -53,7 +51,6 @@ public class Graph<E> extends AbstractGraph<E> {
     sources = makeSources(vertices);
     sinks = makeSinks(vertices);
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.metrics.AbstractGraph#contains(il.ac.technion.cs
@@ -61,42 +58,33 @@ public class Graph<E> extends AbstractGraph<E> {
   @Override public boolean contains(final E ¢) {
     return map.containsKey(¢);
   }
-
   @Override public String description() {
     return description;
   }
-
   public boolean hasEdge(@NotNull final Vertex<E> from, final Vertex<E> to) {
     for (final Vertex<E> ¢ : from.outgoing())
       if (¢ == to)
         return true;
     return false;
   }
-
   @Override public String name() {
     return name;
   }
-
   @Override @NotNull public ImmutableArrayList<Vertex<E>> sinks() {
     return sinks;
   }
-
   @Override public int sinksCount() {
     return sinks.size();
   }
-
   @Override @NotNull public ImmutableArrayList<Vertex<E>> sources() {
     return sources;
   }
-
   @Override public int sourcesCount() {
     return sources.size();
   }
-
   @Override public Vertex<E> vertex(final E ¢) {
     return map.get(¢);
   }
-
   @Override @NotNull public ImmutableArrayList<Vertex<E>> vertices() {
     return vertices;
   }
@@ -108,13 +96,11 @@ public class Graph<E> extends AbstractGraph<E> {
     @NotNull private static <E> HashSet<E> emptySet() {
       return new HashSet<>();
     }
-
     private static <E> void fill(@NotNull final Map<E, Vertex<E>> m, final Vertex<E>[] vs, @NotNull final HashSet<E> es) {
       int i = 0;
       for (final E ¢ : es)
         vs[i++] = m.get(¢);
     }
-
     @NotNull @SuppressWarnings("unchecked") //
     private static <E> Vertex<E>[] newVertexArray(final int size) {
       return new Vertex[size];
@@ -130,21 +116,17 @@ public class Graph<E> extends AbstractGraph<E> {
     public Builder() {
       this("");
     }
-
     public Builder(@NotNull final Graph<E> g) {
       this(g.name(), g.description());
       addGraph(g);
     }
-
     public Builder(@NotNull final Graph<E> g, final String name, final String description) {
       this(name, description);
       addGraph(g);
     }
-
     public Builder(final String name) {
       this(name, "");
     }
-
     /** Instantiate this class, while supplying a name for the graph to be built
      * @param name the name of the graph to be built
      * @param description the description of the graph to be built */
@@ -152,7 +134,6 @@ public class Graph<E> extends AbstractGraph<E> {
       this.name = name;
       this.description = description;
     }
-
     /** Merges into the currently built graph all edges and vertices in the
      * supplied graph.
      * @param g an arbitrary graph
@@ -166,22 +147,18 @@ public class Graph<E> extends AbstractGraph<E> {
             newEdge(v.e(), u.e());
       return this;
     }
-
     /** The actual function to create the graph, defined by all associations
      * recorded so far.
      * @return the Graph object defined by the associations. */
     @NotNull @SuppressWarnings("synthetic-access") public Graph<E> build() {
       return new Graph<>(name, description, makeVerticesMap());
     }
-
     public int countEdges() {
       return edges.size();
     }
-
     public boolean hasEdge(final E from, final E to) {
       return edges.contains(new BuildingEdge<>(from, to));
     }
-
     /** Records multiple unidirectional associations between a set of a "from"
      * data elements, and a single, "to" data element. If any of the data
      * elements is not present in the graph, it is added as well.
@@ -193,7 +170,6 @@ public class Graph<E> extends AbstractGraph<E> {
         newEdge(from, to);
       return this;
     }
-
     /** Records a unidirectional association between two data elements- later to
      * be shown as an edge of the graph. This function also records the
      * existence of the these two data elements.
@@ -205,7 +181,6 @@ public class Graph<E> extends AbstractGraph<E> {
       edges.add(new BuildingEdge<>(from, to));
       return this;
     }
-
     /** Records the presence of multiple data elements. To be used mainly for
      * cases in which these data element may not participate in any association.
      * @param es arbitrary data elements
@@ -215,7 +190,6 @@ public class Graph<E> extends AbstractGraph<E> {
         newEdge(¢, ¢);
       return this;
     }
-
     /** Records the presence of a new data element, to be used for cases in
      * which the data element may not participate in any association.
      * @param ¢ a data element.
@@ -225,7 +199,6 @@ public class Graph<E> extends AbstractGraph<E> {
       incoming.put(¢, Builder.emptySet());
       return this;
     }
-
     /** Records the presence of multiple data elements. To be used mainly for
      * cases in which these data elements may not participate in any
      * association.
@@ -236,7 +209,6 @@ public class Graph<E> extends AbstractGraph<E> {
         newVertex(¢);
       return this;
     }
-
     /** Records multiple unidirectional associations between a "from" data
      * element, and a set of "to" data elements. If any of the data elements is
      * not present in the graph, it is added as well.
@@ -248,7 +220,6 @@ public class Graph<E> extends AbstractGraph<E> {
         newEdge(from, to);
       return this;
     }
-
     @NotNull private Map<E, Vertex<E>> makeVerticesMap() {
       // Phase I: Determine vertex set, and record mappings.
       for (@NotNull final BuildingEdge<E> ¢ : edges) {
@@ -272,7 +243,8 @@ public class Graph<E> extends AbstractGraph<E> {
       return $;
     }
 
-    @Immutable private static class BuildingEdge<E> {
+    @Immutable
+    private static class BuildingEdge<E> {
       public E from;
       public E to;
 
@@ -280,16 +252,13 @@ public class Graph<E> extends AbstractGraph<E> {
         this.from = from;
         this.to = to;
       }
-
       @Override public boolean equals(final Object ¢) {
         @NotNull @SuppressWarnings("unchecked") final BuildingEdge<E> $ = (BuildingEdge<E>) ¢;
         return from.equals($.from) && to.equals($.to);
       }
-
       @Override public int hashCode() {
         return to.hashCode() ^ from.hashCode() >>> 1;
       }
-
       @Override @NotNull public String toString() {
         return "<" + from + "," + to + ">";
       }

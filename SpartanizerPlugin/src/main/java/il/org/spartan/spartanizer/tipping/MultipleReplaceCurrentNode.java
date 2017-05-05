@@ -17,11 +17,9 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
   private static final long serialVersionUID = 0x1A7A32CF8CA4583FL;
 
   public abstract ASTRewrite go(ASTRewrite r, N n, TextEditGroup g, List<ASTNode> bss, List<ASTNode> crs);
-
   @Override public boolean prerequisite(final N ¢) {
     return go(ASTRewrite.create(¢.getAST()), ¢, null, an.empty.list(), an.empty.list()) != null;
   }
-
   @Override public final Tip tip(final N n) {
     return new Tip(description(n), myClass(), n) {
       @Override @SuppressWarnings("boxing") public void go(final ASTRewrite r, final TextEditGroup g) {

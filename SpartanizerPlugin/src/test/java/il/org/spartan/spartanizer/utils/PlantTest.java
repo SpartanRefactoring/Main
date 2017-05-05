@@ -17,7 +17,6 @@ public final class PlantTest {
   @Test public void plantIntoLess() {
     azzert.that(subject.pair(into.e("a + 2"), into.e("b")).to(LESS), iz("a+2<b"));
   }
-
   @Test public void plantIntoNull() {
     final String s = "a?b:c";
     final Expression e = e(s);
@@ -26,14 +25,12 @@ public final class PlantTest {
     assert e1 != null;
     azzert.that(e1, iz(s));
   }
-
   @Test public void plantIntoReturn() {
     final Expression e = into.e("2");
     final make.PlantingExpression plant = make.plant(e);
     plant.into(e.getAST().newReturnStatement());
     azzert.that(plant.into(e.getAST().newReturnStatement()), iz("2"));
   }
-
   @Test public void plus() {
     final Expression e = into.e("a + 2 <b"), plus = findFirst.infixPlus(e);
     azzert.that(plus + "", type.isNotString(plus), is(true));

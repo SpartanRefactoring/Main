@@ -35,21 +35,17 @@ public final class ForFiniteConvertReturnToBreak extends ForStatementPattern//
                 .orElse(null)//
         ));
   }
-
   @Override public String description() {
     return "Convert " + Trivia.gist(convertToBreak) + " to loop break";
   }
-
   @Override public Examples examples() {
     return convert("for (;x();) { if(x) return XX; } return XX;")//
         .to("for (;x();) { if(x) break; } return XX;");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(convertToBreak, current.getAST().newBreakStatement(), g);
     return r;
   }
-
   @Override protected ASTNode highlight() {
     return convertToBreak;
   }

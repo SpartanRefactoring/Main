@@ -17,11 +17,9 @@ public class BenchEmptyFinalBencheon {
       @Override public void beforeAllRuns() {
         //
       }
-
       @Override public void beforeEachRun() {
         //
       }
-
       @Override public Object call() {
         return null;
       }

@@ -27,7 +27,6 @@ public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
     blank(out);
     DeprecatedFolderASTVisitor.main(args);
   }
-
   @Override public boolean visit(final CompilationUnit u) {
     u.accept(new CleanerVisitor());
     try {
@@ -42,7 +41,6 @@ public class FalloutsCollector_loops extends DeprecatedFolderASTVisitor {
     }
     return true;
   }
-
   @Override protected void visit(final String path) {
     appendFile(out, "-------" + path + "-------\n");
     super.visit(path);

@@ -17,7 +17,6 @@ public enum Tandem {
       }
     }, ";");
   }
-
   @NotNull public static String arrays(@NotNull final double[] x, @NotNull final int[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
@@ -25,7 +24,6 @@ public enum Tandem {
       }
     }, ";");
   }
-
   @NotNull public static String arrays(@NotNull final int[] x, @NotNull final double[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
@@ -33,7 +31,6 @@ public enum Tandem {
       }
     }, ";");
   }
-
   @NotNull public static String arrays(@NotNull final int[] x, @NotNull final int[] y) {
     return Separate.by(() -> new RangeIterator<String>(worst(x, y)) {
       @Override public String value() {
@@ -41,27 +38,21 @@ public enum Tandem {
       }
     }, ";");
   }
-
   static int worst(@NotNull final double[] a1, @NotNull final double[] a2) {
     return Math.max(a1.length, a2.length);
   }
-
   static int worst(@NotNull final double[] a1, @NotNull final int[] a2) {
     return Math.max(a1.length, a2.length);
   }
-
   static int worst(@NotNull final int[] a1, @NotNull final double[] a2) {
     return Math.max(a1.length, a2.length);
   }
-
   static int worst(@NotNull final int[] a1, @NotNull final int[] a2) {
     return Math.max(a1.length, a2.length);
   }
-
   static int worst(@NotNull final int[] a1, @NotNull final Object[] a2) {
     return Math.max(a1.length, a2.length);
   }
-
   static int worst(@NotNull final Object[] a1, @NotNull final Object[] a2) {
     return Math.max(a1.length, a2.length);
   }

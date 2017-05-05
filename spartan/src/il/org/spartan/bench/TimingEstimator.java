@@ -36,7 +36,6 @@ public class TimingEstimator {
     final TimingEstimator $ = estimators.get(¢);
     return $ != null ? $ : makeEstimator(¢);
   }
-
   /** Execute a given operation a specified number of times, updating the time
    * estimate associated with it. Garbage collection cycles during the execution
    * are considered failure, in which case, the estimate is not updated.
@@ -47,7 +46,6 @@ public class TimingEstimator {
   public static void run(final Operation o, final int runs) {
     estimator(o).run(runs);
   }
-
   @NotNull private static TimingEstimator makeEstimator(final Operation ¢) {
     @NotNull final TimingEstimator $ = new TimingEstimator(¢);
     estimators.put(¢, $);
@@ -64,13 +62,11 @@ public class TimingEstimator {
   private TimingEstimator(final Operation o) {
     this.o = o;
   }
-
   /** @return current estimate, measured in nano-seconds, of the runtime of the
    *         underlying operation. */
   public double estimate() {
     return Double.isNaN(estimate) ? 1 : estimate;
   }
-
   /** Make a candid attempt to execute the underlying operation a specified
    * number of times, updating its current time estimate. Garbage collection
    * cycles during the execution are considered failure, but any JIT execution
@@ -116,7 +112,6 @@ public class TimingEstimator {
       return $;
     }
   }
-
   /** Make a candid attempt to execute the underlying operation a specified
    * number of times, updating its current time estimate, while trying to defeat
    * errors due to <i>both</i> garbage collection cycles and JIT meddling.
@@ -144,13 +139,11 @@ public class TimingEstimator {
     }
     return null;
   }
-
   /** @return <code><b>true</b></code> <i>iff</i> recent runs indicate that the
    *         current estimate is stable. */
   public boolean steady() {
     return consecutiveStable > MIN_CONSECUTIVE_STABLE;
   }
-
   @Override public String toString() {
     return String.format(//
         "Total:  %s\n" + //
@@ -165,7 +158,6 @@ public class TimingEstimator {
         Unit.NANOSECONDS.format(estimate) //
     );
   }
-
   private void updateEstimate(final double update) {
     ++n;
     if (Double.isNaN(estimate)) {

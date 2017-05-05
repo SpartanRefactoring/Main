@@ -14,7 +14,6 @@ public class HoldsForAllTest {
         .using(new HoldsForAll(), EnhancedForStatement.class)//
         .gives("return that.entrySet().stream().allMatch(λ -> !(m.count(λ.getElement()) != λ.getCount()));");
   }
-
   @Test public void b() {
     trimmingOf("for (  Entry<?> λ : that.entrySet())   if (λ != null)   return false;  return true;")//
         .using(IfStatement.class, new ExecuteUnless(), new NotNullAssumed())//
@@ -23,7 +22,6 @@ public class HoldsForAllTest {
         .gives("return that.entrySet().stream().allMatch(λ -> λ == null);")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("for (X x : Y) if (whatever) return false;")//
         .using(new HoldsForAll(), EnhancedForStatement.class)//
@@ -32,7 +30,6 @@ public class HoldsForAllTest {
         .gives("returnIf(Y.stream().allMatch(λ -> !whatever));")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("for (X x : Y) if (whatever) $ = false;")//
         .using(new HoldsForAll(), EnhancedForStatement.class)//
@@ -41,7 +38,6 @@ public class HoldsForAllTest {
         .gives("$ = Y.stream().allMatch(λ -> !whatever);")//
         .stays();
   }
-
   @Test public void e() {
     trimmingOf(" for (BroadcasterCacheInspector ¢ : inspectors) if (!¢.inspect(m)) return false;")//
         .using(new HoldsForAll(), EnhancedForStatement.class)//

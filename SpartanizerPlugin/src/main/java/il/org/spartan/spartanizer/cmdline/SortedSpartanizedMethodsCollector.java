@@ -41,7 +41,6 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     wizard.setParserResolveBindings();
     DeprecatedFolderASTVisitor.main(args);
   }
-
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
@@ -61,22 +60,18 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     }
     return true;
   }
-
   @Override public void endVisit(final MethodDeclaration ¢) {
     if (!excludeMethod(¢))
       scope.pop();
   }
-
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
-
   @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
     Logger.subscribe(this::logAll);
   }
-
   @Override protected void done(final String path) {
     dotter.line();
     System.err.println("Done processing: " + path);
@@ -91,22 +86,18 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     dotter.end();
     System.err.println("Your output is in: " + outputFolder);
   }
-
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
-
   private void logAll(final ASTNode n, final String np) {
     if (containedInInstanceCreation(n))
       return;
     logNanoContainingMethodInfo(n, np);
     logNPInfo(n, np);
   }
-
   private void logNanoContainingMethodInfo(final ASTNode n, final String np) {
     scope.peek().markNP(n, np);
   }
-
   @SuppressWarnings("boxing") public void summarizeSortedMethodStatistics() {
     final CSVStatistics report = openMethodSummaryFile(outputFolder);
     if (report == null)
@@ -136,31 +127,24 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     report.close();
     file.renameToCSV(outputFolder + "/methodStatistics");
   }
-
   private static double fractionOfMethodsTouched(final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().filter(λ -> λ.numNPStatements() > 0 || λ.numNPExpressions() > 0).count(), rs.size());
   }
-
   private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final Collection<MethodRecord> rs) {
     return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
   }
-
   private static double fractionOfMethods(final int methodsTotal, final Collection<MethodRecord> rs) {
     return safe.div(rs.size(), methodsTotal);
   }
-
   @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
-
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
-
   public static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
-
   public static CSVStatistics openSummaryFile(final String $) {
     return new CSVStatistics($, "property");
   }
@@ -172,7 +156,6 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
       npStatistics.put(np, new NanoPatternRecord(np, n.getClass()));
     npStatistics.get(np).markNP(n);
   }
-
   public void summarizeNPStatistics() {
     final CSVStatistics report = openNPSummaryFile(outputFolder);
     if (report == null)
@@ -194,11 +177,9 @@ public class SortedSpartanizedMethodsCollector extends DeprecatedFolderASTVisito
     report.close();
     file.renameToCSV(outputFolder + "/npStatistics");
   }
-
   private static double min(final double a, final double d) {
     return a < d ? a : d;
   }
-
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
     return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }

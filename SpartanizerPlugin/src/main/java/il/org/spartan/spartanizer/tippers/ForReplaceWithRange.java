@@ -50,7 +50,6 @@ public final class ForReplaceWithRange extends Tipper<ForStatement>//
     tippers.add(TipperFactory.patternTipper("for(int $N = $L1; $N >= $L2; --$N)$B",
         "for(Integer $N : range.from($L1).step(-1).to($L2).inclusive())$B", DESCRIPTION_NON_INCLUSIVE));
   }
-
   @Override public boolean canTip(final ForStatement s) {
     for (final UserDefinedTipper<ForStatement> ¢ : tippers)
       if (¢.check(s)) {
@@ -65,7 +64,6 @@ public final class ForReplaceWithRange extends Tipper<ForStatement>//
       }
     return false;
   }
-
   private static boolean ChangedInBlock(final String id, final Block b) {
     final Bool $ = new Bool();
     // noinspection SameReturnValue,SameReturnValue,SameReturnValue
@@ -75,13 +73,11 @@ public final class ForReplaceWithRange extends Tipper<ForStatement>//
           $.inner = true;
         return true;
       }
-
       @Override public boolean visit(final PrefixExpression ¢) {
         if (iz.updater(¢) && iz.simpleName(operand(¢)) && identifier(az.simpleName(operand(¢))).equals(id))
           $.inner = true;
         return true;
       }
-
       @Override public boolean visit(final PostfixExpression ¢) {
         if (("++".equals(operator(¢) + "") || "--".equals(operator(¢) + "")) && iz.simpleName(operand(¢))
             && identifier(az.simpleName(operand(¢))).equals(id))
@@ -91,11 +87,9 @@ public final class ForReplaceWithRange extends Tipper<ForStatement>//
     });
     return $.inner;
   }
-
   @Override public Tip tip(final ForStatement x) {
     return tippers.stream().filter(λ -> λ.check(x)).map(λ -> λ.tip(x)).findFirst().orElse(null);
   }
-
   @Override public String description(final ForStatement x) {
     return tippers.stream().filter(λ -> λ.check(x)).map(λ -> λ.description(x)).findFirst().orElse(null);
   }

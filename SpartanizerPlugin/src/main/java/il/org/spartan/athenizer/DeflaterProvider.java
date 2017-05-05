@@ -22,15 +22,12 @@ public class DeflaterProvider extends OperationsProvider {
     if (configuration == null)
       configuration = Configurations.allClone();
   }
-
   public DeflaterProvider(final Configuration tb) {
     configuration = tb;
   }
-
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return configuration.firstTipper(¢);
   }
-
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
     return λ -> Collections.singletonList(the.lastOf(λ));
   }

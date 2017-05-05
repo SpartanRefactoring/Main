@@ -33,42 +33,33 @@ public class issue0713 {
   @Test @SuppressWarnings("static-method") public void doesCompile() {
     assert true;
   }
-
   @Test public void listContainsRightNames() {
     final List<String> names = an.empty.list();
     names.add("x");
     names.add("y");
     azzert.that(getAll.publicFields(notCountingMethods), is(names));
   }
-
   @Test public void listOfPublicFields() {
     azzert.that(getAll.publicFields(listOfPublicFields).size(), is(4));
   }
-
   @Test public void notCountingMethods() {
     azzert.that(getAll.publicFields(notCountingMethods).size(), is(2));
   }
-
   @Test public void onePublicPass() {
     azzert.that(getAll.publicFields(onePublic).size(), is(1));
   }
-
   @Test public void onlyPrivates() {
     azzert.that(getAll.publicFields(onlyPrivates).size(), is(0));
   }
-
   @Test public void onlyPublicsDetected() {
     azzert.that(getAll.publicFields(notOnlyPublic).size(), is(2));
   }
-
   @Test @SuppressWarnings("static-method") public void returnsList() {
     getAll.publicFields(null);
   }
-
   @Test public void returnsNoPublic() {
     azzert.that(getAll.publicFields(noPublic).size(), is(0));
   }
-
   @Test public void rightNamesReturned() {
     final List<String> names = an.empty.list();
     names.add("x");

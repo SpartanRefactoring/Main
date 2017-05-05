@@ -13,17 +13,14 @@ public class Issue0234 {
     trimmingOf("try { f(); } catch(Exception e) { return -1; }")//
         .stays();
   }
-
   @Test public void b$02() {
     trimmingOf("try { } catch(Exception e) { return -1; } return true;")//
         .gives("return true;");
   }
-
   @Test public void b$03() {
     trimmingOf("int a; try { } catch(Exception e) { return -1; }")//
         .gives("");
   }
-
   @Test public void b$04() {
     trimmingOf("int a=5; try { } catch(Exception e) { return -1; } finally { ++a; }")//
         .gives("int a=5; {++a;}")//

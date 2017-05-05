@@ -56,29 +56,23 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       throw new RuntimeException();
     }
   }
-
   public static void main(final String[] args)
       throws SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     visit(args.length != 0 ? args : defaultArguments);
   }
-
   public static void visit(final String... arguments) throws InstantiationException, IllegalAccessException, InvocationTargetException {
     for (final String ¢ : External.Introspector.extract(arguments, clazz))
       declaredConstructor().newInstance().visit(¢);// NANO - can't, throws
   }
-
   @SuppressWarnings("static-method") protected void done(final String path) {
     forget.em(new Object[] { path });
   }
-
   @SuppressWarnings("static-method") protected void init(final String path) {
     forget.em(new Object[] { path });
   }
-
   protected static String makeFile(final String fileName) {
     return outputFolder + File.separator + (system.isWindows() || presentSourceName == null ? fileName : presentSourceName + "." + fileName);
   }
-
   protected void visit(final String path) {
     init(path);
     presentSourceName = system.folder2File(presentSourcePath = inputFolder + File.separator + path);
@@ -88,7 +82,6 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
     new FilesGenerator(".java").from(presentSourcePath).forEach(λ -> visit(presentFile = λ));
     done(path);
   }
-
   void collect(final CompilationUnit u) {
     try {
       u.accept(this);
@@ -96,11 +89,9 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       note.bug(this, ¢);
     }
   }
-
   void collect(final String javaCode) {
     collect((CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode));
   }
-
   void visit(final File f) {
     if (!silent)
       dotter.click();
@@ -122,7 +113,6 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       clazz = FieldsOnly.class;
       DeprecatedFolderASTVisitor.main(args);
     }
-
     @Override public boolean visit(final FieldDeclaration ¢) {
       System.out.println(¢);
       return true;
@@ -145,7 +135,6 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       }
       DeprecatedFolderASTVisitor.main(args);
     }
-
     @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration d) {
       ++total;
       if (!interesting(d))
@@ -160,23 +149,18 @@ public abstract class DeprecatedFolderASTVisitor extends ASTVisitor {
       }
       return true;
     }
-
     private static boolean interesting(final MethodDeclaration ¢) {
       return !¢.isConstructor() && interesting(statements(body(¢))) && leaking(descendants.streamOf(¢));
     }
-
     private static boolean leaking(final Stream<ASTNode> ¢) {
       return ¢.noneMatch(BucketMethods::leaking);
     }
-
     private static boolean interesting(final List<Statement> ¢) {
       return ¢ != null && ¢.size() >= 2 && !letItBeIn(¢);
     }
-
     static boolean letItBeIn(final List<Statement> ¢) {
       return ¢.size() == 2 && the.headOf(¢) instanceof VariableDeclarationStatement;
     }
-
     private static boolean leaking(final ASTNode ¢) {
       return iz.nodeTypeIn(¢, ARRAY_CREATION, METHOD_INVOCATION, CLASS_INSTANCE_CREATION, CONSTRUCTOR_INVOCATION, ANONYMOUS_CLASS_DECLARATION,
           SUPER_CONSTRUCTOR_INVOCATION, SUPER_METHOD_INVOCATION, LAMBDA_EXPRESSION);

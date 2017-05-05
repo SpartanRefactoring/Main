@@ -13,7 +13,6 @@ public interface iterable {
   @NotNull static <T> Iterable<T> singleton(final T ¢) {
     return iterable.over(¢);
   }
-
   /** Creates an iterable for an array of objects
    * @param < T > an arbitrary type
    * @param ts what to iterate on
@@ -27,7 +26,6 @@ public interface iterable {
           @Override public boolean hasNext() {
             return current < ts.length;
           }
-
           @Override public T next() {
             return ts[current++];
           }

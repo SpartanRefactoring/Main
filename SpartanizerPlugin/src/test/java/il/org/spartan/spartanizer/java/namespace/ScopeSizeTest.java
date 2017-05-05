@@ -49,7 +49,6 @@ public class ScopeSizeTest extends MetaFixture {
     scopeSize = ScopeSize;
     this.kind = kind;
   }
-
   @Test public void test() {
     azzert.that(
         "\n name = " + name + //

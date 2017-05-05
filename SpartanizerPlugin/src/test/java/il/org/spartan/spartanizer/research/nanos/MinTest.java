@@ -16,21 +16,18 @@ public class MinTest {
         .gives("return min(x,y);")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("return x >= y ? y : x;")//
         .using(new Min(), ConditionalExpression.class)//
         .gives("return min(x,y);")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("return y < x ? y : x;")//
         .using(new Min(), ConditionalExpression.class)//
         .gives("return min(x,y);")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("return y <= x ? y : x;")//
         .using(new Min(), ConditionalExpression.class)//

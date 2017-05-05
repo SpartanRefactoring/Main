@@ -14,7 +14,6 @@ public class AdvancedGivesTests {
         .givesEither("3", "")//
         .stays();
   }
-
   @Test public void test1() {
     trimmingOf("1+2+a")//
         .givesEither("a+3", "3+a");
