@@ -64,22 +64,15 @@ configure(subprojects.findAll(IS_PLUGIN)) {
 	// JAVA //
 	//////////
 	apply plugin: 'java'
-    sourceSets {
-        main {
-            java {
-                srcDir 'src/main/java'
-                srcDir 'src/test/java'
-            }
-        }
-    }
-//	sourceSets {
-//		main { java {
-//			srcDir 'src'
-//		} }
-//		test { java {
-//			srcDir 'test'
-//		} }
-//	}
+	sourceSets {
+		main { java {
+			srcDir 'src'
+			srcDir 'test'
+		} }
+		test { java {
+			srcDir 'test'
+		} }
+	}
 	sourceCompatibility = VER_JAVA
 	targetCompatibility = VER_JAVA
 
@@ -97,7 +90,7 @@ configure(subprojects.findAll(IS_PLUGIN)) {
 	osgiBndManifest {
 		copyTo 'META-INF/MANIFEST.MF'
 	}
-	// configure the OSGi bundle
+//	// configure the OSGi bundle
 	jar.manifest.attributes(
 			'-exportcontents': 'com.diffplug.*',
 			'-removeheaders': 'Bnd-LastModified,Bundle-Name,Created-By,Tool,Private-Package,Require-Capability',
@@ -108,10 +101,10 @@ configure(subprojects.findAll(IS_PLUGIN)) {
 			'Bundle-Vendor': 'DiffPlug',
 			'Bundle-License': "http://www.apache.org/licenses/LICENSE-2.0"
 	)
-
-	//////////////////////
-	// ECLIPSE PROJECTS //
-	//////////////////////
+//
+//	//////////////////////
+//	// ECLIPSE PROJECTS //
+//	//////////////////////
 	apply plugin: 'eclipse'
 	// remove the build folder
 	apply plugin: 'com.diffplug.gradle.eclipse.excludebuildfolder'
@@ -119,7 +112,7 @@ configure(subprojects.findAll(IS_PLUGIN)) {
 	apply plugin: 'com.diffplug.gradle.eclipse.projectdeps'
 	// handle build.properties correctly
 	apply plugin: 'com.diffplug.gradle.eclipse.buildproperties'
-
+//
 	eclipse {
 		project {
 			natures 'org.eclipse.pde.PluginNature'
@@ -168,5 +161,5 @@ project(':SpartanizerPlugin:target.maven') {
 /////////////////////////////////////////////////////////
 apply plugin: 'com.diffplug.gradle.eclipse.resourcefilters'
 eclipseResourceFilters {
-	exclude().folders().name('il.org.spartan.*')
+	exclude().folders().name('SpartanizerPlugin/il.org.spartan.*')
 }
