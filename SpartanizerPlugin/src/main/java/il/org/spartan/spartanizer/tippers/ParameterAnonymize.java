@@ -30,7 +30,6 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
   public static boolean isUsed(final MethodDeclaration d, final SimpleName n) {
     return !collect.usesOf(n).in(body(d)).isEmpty();
   }
-
   public static boolean suppressing(final SingleVariableDeclaration ¢) {
     for (final Annotation $ : annotations(¢)) {
       if (!"SuppressWarnings".equals($.getTypeName() + ""))
@@ -42,21 +41,17 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
     }
     return false;
   }
-
   @Override protected ASTNode[] span() {
     final List<SingleVariableDeclaration> $ = step.parameters(getMethod(current));
     return new ASTNode[] { the.headOf($), the.lastOf($) };
   }
-
   static MethodDeclaration getMethod(final SingleVariableDeclaration ¢) {
     final ASTNode $ = ¢.getParent();
     return !($ instanceof MethodDeclaration) ? null : (MethodDeclaration) $;
   }
-
   private static boolean isUnused(final Expression ¢) {
     return iz.literal("unused", ¢);
   }
-
   private static ASTNode replace(final SingleVariableDeclaration ¢) {
     final SingleVariableDeclaration $ = ¢.getAST().newSingleVariableDeclaration();
     $.setName(¢.getAST().newSimpleName(notation.anonymous));
@@ -67,27 +62,21 @@ public final class ParameterAnonymize extends ReplaceCurrentNodeSpanning<SingleV
     copy.modifiers(extendedModifiers(¢), extendedModifiers($));
     return $;
   }
-
   private static boolean suppressing(final ArrayInitializer ¢) {
     return expressions(¢).stream().anyMatch(ParameterAnonymize::isUnused);
   }
-
   private static boolean suppressing(final Expression ¢) {
     return iz.literal("unused", ¢) || iz.arrayInitializer(¢) && suppressing(az.arrayInitializer(¢));
   }
-
   private static boolean suppressing(final NormalAnnotation a) {
     return a != null && values(a).stream().anyMatch(λ -> iz.identifier("value", λ.getName()) && isUnused(λ.getValue()));
   }
-
   private static boolean suppresssing(final SingleMemberAnnotation ¢) {
     return suppressing(¢.getValue());
   }
-
   @Override public String description(final SingleVariableDeclaration ¢) {
     return "Anonymize parameter " + ¢.getName().getIdentifier();
   }
-
   @Override @SuppressWarnings("unused") public ASTNode replacement(final SingleVariableDeclaration $) {
     final MethodDeclaration method = getMethod($);
     if (method == null || body(method) == null)

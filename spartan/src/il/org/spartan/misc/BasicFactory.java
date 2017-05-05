@@ -18,10 +18,8 @@ public abstract class BasicFactory<V> implements FactoryConcept<V> {
     map.put(k, k);
     return k;
   }
-
   @Override public V fromString(final String ¢) {
     return from(stringToValue(¢));
   }
-
   @NotNull protected abstract V stringToValue(String s);
 }

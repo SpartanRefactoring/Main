@@ -40,7 +40,6 @@ public final class ReturnDeadAssignment extends ReturnValue implements TipperCat
         () -> operator = assignment.getOperator() //
     );
   }
-
   @Override public Examples examples() {
     return convert("int f() {int a = 2; return a = 3;}")//
         .to("int f() {int a = 2; return 3;}")//
@@ -51,7 +50,6 @@ public final class ReturnDeadAssignment extends ReturnValue implements TipperCat
         .convert("int f() {int a = 2; return a = 3;}")//
         .to("int f() {int a = 2; return 3;}");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(assignment, operator == ASSIGN ? copy.of(from) : subject.pair(to, from).to(op.assign2infix(operator)), g);
     return r;

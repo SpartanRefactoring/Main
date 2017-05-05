@@ -26,11 +26,9 @@ public final class JavaTypeNameParser {
   private JavaTypeNameParser(final SimpleName ¢) {
     this(¢.getIdentifier());
   }
-
   private JavaTypeNameParser(final SingleVariableDeclaration ¢) {
     this(¢.getName());
   }
-
   /** Instantiates this class
    * @param typeName the Java __ name to parse
    * @param isCollection denotes whether the __ is a collection or a variadic
@@ -38,7 +36,6 @@ public final class JavaTypeNameParser {
   private JavaTypeNameParser(final String typeName) {
     this.typeName = typeName;
   }
-
   /** @return an abbreviation of the __ name */
   public String abbreviate() {
     String $ = "";
@@ -46,11 +43,9 @@ public final class JavaTypeNameParser {
       if (!¢.find())
         return $.toLowerCase();
   }
-
   public boolean isGenericVariation(final SingleVariableDeclaration ¢) {
     return isGenericVariation(¢.getName());
   }
-
   /** Checks whether a variable name is a generic variation of its __ name. A
    * variable name is considered to be a generic variation of its __ name if the
    * variable name is equal to the __ name, either one of them is contained
@@ -63,24 +58,20 @@ public final class JavaTypeNameParser {
     return typeName.equalsIgnoreCase(variableName) || lowerCaseContains(typeName, variableName)
         || lowerCaseContains(typeName, toSingular(variableName)) || variableName.equals(abbreviate());
   }
-
   /** Shorthand for n.equals(this.shortName())
    * @param subject JD
    * @return whether the provided name equals the __'s short name */
   public boolean isShort(final String ¢) {
     return ¢.equals(shortName());
   }
-
   /** Returns the calculated short name for the __
    * @return __'s short name */
   public String shortName() {
     return "e".equals(lastNameCharIndex(0)) && "x".equals(lastNameCharIndex(1)) ? "x" : lastNameCharIndex(0);
   }
-
   CharSequence lastName() {
     return typeName.substring(lastNameIndex());
   }
-
   int lastNameIndex() {
     if (isUpper(typeName.length() - 1))
       return typeName.length() - 1;
@@ -92,27 +83,21 @@ public final class JavaTypeNameParser {
     }
     return 0;
   }
-
   private boolean isGenericVariation(final SimpleName ¢) {
     return isGenericVariation(¢.getIdentifier());
   }
-
   private boolean isLower(final int ¢) {
     return Character.isLowerCase(typeName.charAt(¢));
   }
-
   private boolean isUpper(final int ¢) {
     return Character.isUpperCase(typeName.charAt(¢));
   }
-
   private String lastNameCharIndex(final int ¢) {
     return lastName().length() <= ¢ ? "" : String.valueOf(Character.toLowerCase(lastName().charAt(¢)));
   }
-
   private boolean lowerCaseContains(final String s, final String substring) {
     return s.toLowerCase().contains(substring.toLowerCase());
   }
-
   private String toSingular(final String word) {
     return word.replaceAll("ies$", "y").replaceAll("es$", "").replaceAll("s$", "");
   }

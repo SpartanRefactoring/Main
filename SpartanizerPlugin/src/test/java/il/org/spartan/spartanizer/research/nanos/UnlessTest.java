@@ -16,7 +16,6 @@ public class UnlessTest {
         .gives("return unless(k==null).eval(() -> new SynchronizedEntry<K,V>(k,mutex)).defaultTo(null);")//
         .stays();
   }
-
   @Test public void basic2() {
     trimmingOf("return ($ == null) ? null : $.size();")//
         .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
@@ -24,7 +23,6 @@ public class UnlessTest {
         .gives("return unless($==null).eval(()->$.size()).defaultTo(null);")//
         .stays();
   }
-
   @Test public void respect() {
     trimmingOf("return ¢ != null ? ¢ : \"\";")//
         .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//
@@ -32,7 +30,6 @@ public class UnlessTest {
         .gives("return defaults(¢).to(\"\");")//
         .stays();
   }
-
   @Test public void respect2() {
     trimmingOf("return ¢ != null ? ¢ : \"\";")//
         .using(new EvaluateUnlessDefaultsTo(), ConditionalExpression.class)//

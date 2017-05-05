@@ -19,7 +19,6 @@ public enum Spearman {
       throw new IllegalArgumentException(x.length + ":" + y.length);
     return Pearson.rho(rank(x), rank(y));
   }
-
   @NotNull private static double[] rank(@NotNull final double[] x) {
     final double[] y = x.clone();
     Arrays.sort(y);

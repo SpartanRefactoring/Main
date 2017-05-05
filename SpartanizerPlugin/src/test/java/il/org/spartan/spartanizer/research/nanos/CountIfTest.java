@@ -17,14 +17,12 @@ public class CountIfTest {
         .gives("a += AA.stream().filter(λ->!λ.isCtr()).count();")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("for (M λ : AA.a() ? b : c) if (!λ.isCtr()) ++a;")//
         .using(EnhancedForStatement.class, new CountIf(), new ForEachSuchThat())//
         .gives("a += (AA.a() ? b : c).stream().filter(λ->!λ.isCtr()).count();")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("while (BlockFalling.canFall(w,i,j - 1,k) && j > 0) --j;")//
         .using(new While.CountIf(), WhileStatement.class)//

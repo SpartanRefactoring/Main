@@ -41,7 +41,6 @@ public class CSVStatistics extends CSVLine.Ordered {
     summarizer = new CSVWriter(removeExtension(baseName) + SUMMARY_EXTENSION);
     this.keysHeader = keysHeader;
   }
-
   @NotNull public String close() {
     inner.close();
     for (final String key : stats.keySet()) {
@@ -64,37 +63,30 @@ public class CSVStatistics extends CSVLine.Ordered {
     }
     return summarizer.close();
   }
-
   @NotNull public String mainFileName() {
     return inner.fileName();
   }
-
   public void nl() {
     inner.writeFlush(this);
   }
-
   @Override public CSVStatistics put(final String key, final double value, final FormatSpecifier... ss) {
     getStatistics(key).record(value);
     super.put(key, value, ss);
     return this;
   }
-
   @Override public CSVStatistics put(final String key, final int value) {
     getStatistics(key).record(value);
     super.put(key, value);
     return this;
   }
-
   @Override public CSVStatistics put(final String key, final long value) {
     getStatistics(key).record(value);
     super.put(key, value);
     return this;
   }
-
   @NotNull public String summaryFileName() {
     return summarizer.fileName();
   }
-
   @SuppressWarnings("null") RealStatistics getStatistics(final String key) {
     stats.putIfAbsent(key, new RealStatistics());
     return stats.get(key);
@@ -104,13 +96,11 @@ public class CSVStatistics extends CSVLine.Ordered {
     public void close() {
       inner.writeFlush(this);
     }
-
     @Override public CSVStatistics put(final String key, final double value, final FormatSpecifier... ss) {
       getStatistics(key).record(value);
       super.put(key, value, ss);
       return CSVStatistics.this;
     }
-
     @Override public CSVStatistics put(final String key, final long value) {
       getStatistics(key).record(value);
       super.put(key, value);

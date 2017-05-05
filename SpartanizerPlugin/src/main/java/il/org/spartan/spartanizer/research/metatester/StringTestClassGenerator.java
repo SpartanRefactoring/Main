@@ -26,7 +26,6 @@ public class StringTestClassGenerator implements TestClassGenerator {
     this.testName = testName;
     originalSourceFile = sourceFile;
   }
-
   @Override public Class<?> generate(final String testClassName) {
     final Collection<? extends SourceLine> $ = readAllLines();
     return loadClass(testClassName,
@@ -34,7 +33,6 @@ public class StringTestClassGenerator implements TestClassGenerator {
             $.stream().filter(λ -> λ instanceof ImportLine).map(λ -> (ImportLine) λ).collect(Collectors.toList()), testClassName),
         testClass, sourcePath);
   }
-
   @SuppressWarnings({ "unused", "resource" }) private List<SourceLine> readAllLines() {
     final List<SourceLine> $ = an.empty.list();
     try {
@@ -53,25 +51,20 @@ public class StringTestClassGenerator implements TestClassGenerator {
     } catch (final IOException ignore) {/**/}
     return an.empty.list();
   }
-
   private String getClassString(final Collection<TestLine> testsLines, final Collection<ImportLine> ls, final String className) {
     return packageHeaderString(packageName) + "\n" + importStatementString(ls) + "\n" + classHeaderString(className) + "\n" + testMethods(testsLines)
         + "\n}";
   }
-
   private String testMethods(final Collection<TestLine> testsLines) {
     return testsLines.stream().map(TestLine::generateTestMethod).reduce((acc, s1) -> acc + "\n\n" + s1).orElse("");
   }
-
   private String importStatementString(final Collection<ImportLine> ls) {
     return ls.stream().filter(λ -> !"import org.junit.runner.RunWith;".equals(λ.getContent().trim())).reduce("",
         (s, importLine) -> s + importLine.getContent() + "\n", (s, s2) -> s + s2);
   }
-
   private String classHeaderString(final String className) {
     return "@SuppressWarnings(\"static-method\")\npublic class " + className + " { \n";
   }
-
   private String packageHeaderString(final String packageNameString) {
     return "package " + packageNameString + ";";
   }

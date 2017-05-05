@@ -8,11 +8,9 @@ public class Counter {
   public int add() {
     return ++value;
   }
-
   public int increment() {
     return ++value;
   }
-
   public int value() {
     return value;
   }

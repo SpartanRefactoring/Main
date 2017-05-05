@@ -35,7 +35,6 @@ public final class IfFooSequencerIfFooSameSequencer extends GoToNextStatement<If
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate two 'if' statements with identical body";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;

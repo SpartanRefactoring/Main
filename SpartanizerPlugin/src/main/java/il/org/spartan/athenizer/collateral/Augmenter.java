@@ -49,7 +49,6 @@ public class Augmenter implements Application {
     }
     return Integer.valueOf(0);
   }
-
   /** @param u JD
    * @return selection as list of lists of statements */
   private static List<List<Statement>> getSelection(final CompilationUnit u, final ITextSelection s) {
@@ -72,7 +71,6 @@ public class Augmenter implements Application {
     });
     return $;
   }
-
   // TODO Ori Roth Ori Roth clear and complete
   /** Main function of the application.
    * @param r JD
@@ -86,7 +84,6 @@ public class Augmenter implements Application {
         the.headOf(the.headOf(sss)).getAST().newName("CollateralIsFun"), null);
     return true;
   }
-
   // TODO Ori Roth: complete
   /** Collateralize a list of statements, returning partition of the statements
    * as list of lists of statements.
@@ -95,7 +92,6 @@ public class Augmenter implements Application {
   public static List<List<Statement>> collateralizationOf(@SuppressWarnings("unused") final List<Statement> __) {
     return null;
   }
-
   /** Add an {@link ImportDeclaration} to a {@link CompilationUnit}.
    * @param r JD
    * @param u JD
@@ -112,7 +108,6 @@ public class Augmenter implements Application {
     d.setStatic(true);
     l.insertLast(d, g);
   }
-
   /** Checks whether the local eclipse machine acknowledge the Spartan Library.
    * TODO Ori Roth: check project is UTF-8 (or higher?)
    * @param forTrueConditionRemove JD
@@ -120,7 +115,6 @@ public class Augmenter implements Application {
   private static boolean checkServiceAvailableBeforeCalculation() {
     return LibrariesManagement.libraryExists();
   }
-
   /** Checks that the projects within the selection has this library. If a
    * project does not have the library, we try to import it. TODO Ori Roth:
    * allow several projects within selection (?)
@@ -129,7 +123,6 @@ public class Augmenter implements Application {
   private static boolean checkServiceAvailableAfterCalculation(final AbstractSelection<?> ¢) {
     return LibrariesManagement.checkLibrary(the.headOf(¢.inner).descriptor.getJavaProject());
   }
-
   // TODO Ori Roth improve
   /** @param u JD
    * @param s fully qualified name of an import declaration
@@ -138,7 +131,6 @@ public class Augmenter implements Application {
   private static boolean hasImportIncluded(final CompilationUnit u, final String s) {
     return imports(u).stream().anyMatch(λ -> identifier(name(λ)).equals(s));
   }
-
   /** Determines whether a block should not be collateralized, i.e. when it has
    * less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
    * @param ¢ JD
@@ -146,7 +138,6 @@ public class Augmenter implements Application {
   static boolean discardOptimization(final Block ¢) {
     return ¢ == null || statements(¢) == null || statements(¢).size() < MIN_STATEMENTS_COUNT;
   }
-
   /** Determines whether a list of statements should not be collateralized, i.e.
    * when it has less than {@link Augmenter#MIN_STATEMENTS_COUNT} statements.
    * @param ¢ JD
@@ -154,7 +145,6 @@ public class Augmenter implements Application {
   static boolean discardOptimization(final Collection<Statement> ¢) {
     return ¢ == null || ¢.size() < MIN_STATEMENTS_COUNT;
   }
-
   /** Fixes null text selection for full text selection.
    * @param u JD
    * @param s JD

@@ -36,7 +36,6 @@ public interface idiomatic {
   static <T> Holder<T> eval(@NotNull final Supplier<@Nullable T> $) {
     return () -> $.get();
   }
-
   /** @param <T> JD
    * @param t the main value
    * @condition the condition to use prior to taking this value;
@@ -45,7 +44,6 @@ public interface idiomatic {
   @Nullable static <T> T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
-
   /** A filter, which prints an appropriate log message and returns null in case
    * of {@link Exception} thrown by {@link Producer#λ()}
    * @param <T> JD
@@ -60,20 +58,17 @@ public interface idiomatic {
       return null;
     }
   }
-
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
   @NotNull static String quote(final @Nullable String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
-
   /** @param ¢ JD
    * @return an identical runnable which is also a {@link Runner} */
   @NotNull static Runner run(final Runnable ¢) {
     return new Runner(¢);
   }
-
   /** <code>yield</code>
    * @param <T> JD
    * @param ¢ JD
@@ -81,12 +76,10 @@ public interface idiomatic {
   @NotNull static <T> Storer<T> take(final T ¢) {
     return new Storer<>(¢);
   }
-
   /** @param condition JD */
   @Nullable static Trigger unless(final boolean condition) {
     return when(!condition);
   }
-
   /** @param <T> JD
    * @param condition when should the action take place
    * @param t JD
@@ -95,7 +88,6 @@ public interface idiomatic {
   @Nullable static <T> T unless(final boolean condition, final T t) {
     return incase(!condition, t);
   }
-
   /** @param condition JD */
   @Nullable static Trigger when(final boolean condition) {
     return condition ? eval : ignore;
@@ -113,7 +105,6 @@ public interface idiomatic {
     @Nullable default T unless(final boolean unless) {
       return when(!unless);
     }
-
     /** Return value when condition is <code><b>true</b></code>
      * @return {@link #get()} when the parameter is <code><b>true</b></code> ,
      *         otherwise code><b>null</b></code>.
@@ -129,7 +120,8 @@ public interface idiomatic {
    * @author Yossi Gil
    * @param <T> JD
    * @since 2016` */
-  @FunctionalInterface interface Producer<@Nullable T> {
+  @FunctionalInterface
+  interface Producer<@Nullable T> {
     /** @return next value provided by this instance
      * @throws Exception JD */
     @NotNull T λ() throws Exception;
@@ -147,17 +139,14 @@ public interface idiomatic {
     Runner(final Runnable run) {
       this.run = run;
     }
-
     @Override public void run() {
       run.run();
     }
-
     /** <code>unless</code>
      * @param unless condition n which execution occurs. */
     public void unless(final boolean unless) {
       when(!unless);
     }
-
     void when(final boolean when) {
       if (when)
         run();
@@ -176,60 +165,49 @@ public interface idiomatic {
     Storer(final T inner) {
       this.inner = inner;
     }
-
     /** see @see java.util.function.Supplier#get() (auto-generated) */
     @Override public T get() {
       return inner;
     }
   }
 
-  @SuppressWarnings("static-method") class TEST {
+  @SuppressWarnings("static-method")
+  class TEST {
     @Test public void use0() {
       assert new Storer<>(this) != null;
     }
-
     @Test public void use08() {
       azzert.isNull(unless(true).eval(() -> new Object()));
     }
-
     @Test public void use09() {
       assert unless(false).eval(() -> new Object()) != null;
     }
-
     @Test public void use1() {
       assert new Storer<>(this) != null;
       new Storer<>(this).when(true);
     }
-
     @Test public void use10() {
       assert when(true).eval(() -> new Object()) != null;
     }
-
     @Test public void use11() {
       azzert.isNull(when(false).eval(() -> new Object()));
     }
-
     @Test public void use2() {
       assert take(this) != null;
       azzert.isNull(take(this).when(false));
     }
-
     @Test public void use3() {
       azzert.that(take(this).when(true), is(this));
     }
-
     @Test public void use4() {
       azzert.isNull(take(this).when(false));
     }
-
     @Test public void use5() {
       azzert.that(take(this).unless(false), is(this));
     }
-
     @Test public void use6() {
       azzert.isNull(take(this).unless(true));
     }
-
     @Test public void use7() {
       azzert.isNull(take(this).unless(true));
       azzert.isNull(take(null).unless(true));
@@ -243,7 +221,6 @@ public interface idiomatic {
     /** @param <T> JD
      * @param t JD */
     @Nullable <@Nullable T> T eval(Supplier<T> t);
-
     /** @param <T> JD
      * @param $ JD */
     @Nullable default <@Nullable T> T eval(final T $) {

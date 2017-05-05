@@ -26,7 +26,6 @@ public enum Significance {
   @NotNull public static Significance signifcance(final double z) {
     return Math.abs(z) < 1.960 ? INSIGNIFICANT : Math.abs(z) < 2.575 ? FIVE_PERCENT : Math.abs(z) < 3.08 ? ONE_PERCENT : ONE_PERMILLE;
   }
-
   @NotNull public static Significance signifcance(@NotNull final Kendall.Charectristics c) {
     if (c.n > 10)
       return signifcance(c.z);

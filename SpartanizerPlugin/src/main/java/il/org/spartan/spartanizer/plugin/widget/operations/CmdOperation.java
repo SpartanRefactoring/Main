@@ -19,11 +19,9 @@ public class CmdOperation extends WidgetOperation {
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.wb.rcp/icons/info/Action/action.gif";
   }
-
   @Override public String description() {
     return "Execute a CMD command";
   }
-
   @Override public void onMouseUp(final WidgetContext xx) throws Throwable {
     createGui();
     super.onMouseUp(xx);
@@ -48,13 +46,11 @@ public class CmdOperation extends WidgetOperation {
         @Override public void mouseUp(@SuppressWarnings("unused") final MouseEvent arg0) {
           blnMouseDown = false;
         }
-
         @Override public void mouseDown(final MouseEvent ¢) {
           blnMouseDown = true;
           xPos = ¢.x;
           yPos = ¢.y;
         }
-
         @Override public void mouseDoubleClick(@SuppressWarnings("unused") final MouseEvent arg0) {/***/
         }
       });
@@ -67,7 +63,6 @@ public class CmdOperation extends WidgetOperation {
         if (!display.readAndDispatch())
           display.sleep();
     }
-
     protected void createContents() {
       shell.setSize(317, 42);
       shell.setText("SWT Application");
@@ -76,7 +71,6 @@ public class CmdOperation extends WidgetOperation {
       text.addKeyListener(new KeyListener() {
         @Override public void keyReleased(@SuppressWarnings("unused") final KeyEvent __) {/***/
         }
-
         @Override public void keyPressed(final KeyEvent ¢) {
           if (¢.character == SWT.CR /* || e.character == SWT.LF */)
             go(text.getText());
@@ -109,7 +103,6 @@ public class CmdOperation extends WidgetOperation {
       System.out.println(¢ + "");
     }
   }
-
   private void createGui() {
     try {
       new CmdWindow().open();

@@ -15,7 +15,8 @@ import il.org.spartan.utils.*;
  * {@link EXTENSIONPATH}, {@link ZipFile} and {@link File} providing a unified
  * repository of all locations where Java binaries may be found.
  * @author Yossi Gil */
-@Utility public enum CLASSFILES {
+@Utility
+public enum CLASSFILES {
   ;
   @NotNull static final Set<ZipFile> zipsInUse = new HashSet<>();
 
@@ -28,7 +29,6 @@ import il.org.spartan.utils.*;
     add($, EXTENSIONPATH.asArray(), CLASSPATH.asArray());
     return $;
   }
-
   /** Given the full name of a class, return a textual representation of the
    * location where the appropriate <tt>.class</tt> can be found.
    * @param className the full class name, where the inner- and anonymous- class
@@ -48,13 +48,11 @@ import il.org.spartan.utils.*;
     }
     return null;
   }
-
   /** Exercise this class by printing the result of its principal function.
    * @param __ unused */
   public static void main(final String[] __) {
     System.out.println(Separate.by(asFiles(), "\n"));
   }
-
   /** Given a {@link Class} object, return an open input stream to the
    * <tt>.class</tt> file where this class was implemented. (The input stream is
    * found by searching the class files repositories, and hence is not
@@ -70,7 +68,6 @@ import il.org.spartan.utils.*;
     nonnull(¢);
     return open(¢.getName());
   }
-
   /** Given the full name of a class, return an open input stream to the class
    * file where this class was implemented. (The input stream is found by
    * searching the class files repositories, and hence is not guaranteed to be
@@ -99,7 +96,6 @@ import il.org.spartan.utils.*;
     }
     return null;
   }
-
   public static void reset() {
     for (@NotNull final ZipFile z : zipsInUse)
       try {
@@ -110,34 +106,27 @@ import il.org.spartan.utils.*;
       }
     zipsInUse.clear();
   }
-
   private static void add(@NotNull final ArrayList<File> ds, @NotNull final String[]... directoryNamesArray) {
     for (@NotNull final String[] directories : directoryNamesArray)
       add(ds, directories);
   }
-
   private static void add(@NotNull final ArrayList<File> ds, @NotNull final String[] directoryNames) {
     for (@NotNull final String directory : directoryNames)
       ds.add(new File(directory));
   }
-
   @NotNull private static String canonicalFileName(@NotNull final String className) {
     return className.replace('.', File.separatorChar) + ".class";
   }
-
   @NotNull private static String class2ZipFileName(@NotNull final String className) {
     return className.replace('.', '/') + ".class";
   }
-
   private static String location(@NotNull final File where, @NotNull final String className) {
     return where.isDirectory() ? searchDirectory(where, className) == null ? null : where.getName()
         : searchZip(where, class2ZipFileName(className)) == null ? null : where.getName();
   }
-
   @Nullable private static InputStream open(@NotNull final File where, @NotNull final String className) {
     return where.isDirectory() ? searchDirectory(where, className) : searchZip(where, class2ZipFileName(className));
   }
-
   private static InputStream searchDirectory(final File where, @NotNull final String className) {
     @NotNull final File $ = new File(where, canonicalFileName(className));
     try {
@@ -146,7 +135,6 @@ import il.org.spartan.utils.*;
       return null;
     }
   }
-
   private static InputStream searchZip(@NotNull final File where, @NotNull final String fileName) {
     try {
       @NotNull final ZipFile $ = new ZipFile(where.getAbsoluteFile());

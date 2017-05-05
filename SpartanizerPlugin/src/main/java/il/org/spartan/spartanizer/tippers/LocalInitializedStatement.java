@@ -20,19 +20,15 @@ public abstract class LocalInitializedStatement extends LocalInitialized {
   @Override protected ASTNode[] span() {
     return as.array(current, nextStatement);
   }
-
   protected int waste() {
     return uses().size() * (metrics.size(Inliner.protect(initializer)) - 1);
   }
-
   private List<SimpleName> uses() {
     return collect.usesOf(name).in(nextStatement);
   }
-
   protected int saving() {
     return countOf.nodes(!singleFragment() ? current : declaration);
   }
-
   private boolean singleFragment() {
     return fragments(declaration).size() == 1;
   }

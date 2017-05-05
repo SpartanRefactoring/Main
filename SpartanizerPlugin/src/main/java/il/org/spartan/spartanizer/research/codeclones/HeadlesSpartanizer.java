@@ -20,27 +20,21 @@ public class HeadlesSpartanizer extends ASTInFilesVisitor {
   protected final File current() {
     return current;
   }
-
   protected void setUp() {
     /**/
   }
-
   protected void tearDown() {
     /**/
   }
-
   @SuppressWarnings("static-method") protected boolean spartanize(@SuppressWarnings("unused") final File __) {
     return true;
   }
-
   @SuppressWarnings("static-method") protected ASTVisitor astVisitor() {
     return new ASTVisitor() {/**/};
   }
-
   protected String perform(final String fileContent) {
     return fixedPoint(fileContent);
   }
-
   protected void analyze(@SuppressWarnings("unused") final String before, final String after) {
     try {
       FileUtils.writeToFile(current().getAbsolutePath(), after);
@@ -48,7 +42,6 @@ public class HeadlesSpartanizer extends ASTInFilesVisitor {
       note.io(¢);
     }
   }
-
   public final void go(final String dirPath) {
     setUp();
     new ASTInFilesVisitor(new String[] { dirPath }) {
@@ -67,7 +60,6 @@ public class HeadlesSpartanizer extends ASTInFilesVisitor {
     }.visitAll(astVisitor());
     tearDown();
   }
-
   public final String fixedPoint(final String from) {
     return traversals.fixed(from + "");
   }

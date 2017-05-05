@@ -28,7 +28,6 @@ public class ForInlineToInitalizers extends ForStatementPattern implements Tippe
         .flatMap(λ -> step.fragments(λ).stream()).map(step::name).collect(Collectors.toList()));
     andAlso("Exists updated variable not declared in for initalizers list", () -> !updatedNotDeclared.isEmpty());
   }
-
   private static List<SimpleName> updatedVars(final Expression u) {
     final List<SimpleName> $ = an.empty.list();
     final Expression e = extract.core(u);
@@ -38,16 +37,13 @@ public class ForInlineToInitalizers extends ForStatementPattern implements Tippe
       $.add(az.simpleName(d));
     return $;
   }
-
   @Override protected ASTRewrite go(@SuppressWarnings("unused") final ASTRewrite __, @SuppressWarnings("unused") final TextEditGroup g) {
     return null;
   }
-
   // TODO Yuval Simon: more meaningful description? which variable?
   @Override public String description() {
     return "Inline to for initalizers list";
   }
-
   @Override public Examples examples() {
     return convert("int i = 1; for(;i < 5; ++i) f(i);").to("for(int i = 1;i < 5; ++i) f(i);").ignores("int i = 1; for(;i < 5; ++i) f(i); g(i);");
   }

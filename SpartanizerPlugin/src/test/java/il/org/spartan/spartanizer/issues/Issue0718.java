@@ -30,47 +30,36 @@ public class Issue0718 {
   @Test public void checkIfBiMethodFailes() {
     assert !determineIf.loaded(biMethod);
   }
-
   @Test @SuppressWarnings("static-method") public void checkIfCompiles() {
     assert true;
   }
-
   @Test public void checkIfDeclInLambdaAlsoCountsPass() {
     assert determineIf.loaded(loadedMethodWithLambdaDeclaration);
   }
-
   @Test public void checkIfDoubledParamsAndQuintupledVarDefsFail() {
     assert !determineIf.loaded(TwoParamsFiveDefsMethod);
   }
-
   @Test public void checkIfLoadedMethodPasses() {
     assert determineIf.loaded(loaded);
   }
-
   @Test public void checkIfNotLoadedMethodFailes() {
     assert !determineIf.loaded(notLoaded);
   }
-
   @Test public void checkifOverLoadedMethodPass() {
     assert determineIf.loaded(overLoaded);
   }
-
   @Test @SuppressWarnings("static-method") public void checkIfReturnTypeIsBoolean() {
     determineIf.loaded(null);
   }
-
   @Test public void checkIfSeparatedVarDefAlsoCountsPass() {
     assert determineIf.loaded(separatedVarsDefinitionsLoadedMethod);
   }
-
   @Test public void checkIfThreeParamsPass() {
     assert determineIf.loaded(loaded);
   }
-
   @Test public void checkIfTripledParamsAndQuadrupleVarDefsFail() {
     assert !determineIf.loaded(notLoaded);
   }
-
   @Test public void checkIfTripledParamsAndQuintupledVarDefsPass() {
     assert determineIf.loaded(loaded);
   }

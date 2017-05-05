@@ -14,7 +14,9 @@ import il.org.spartan.streotypes.*;
  * @author Yossi Gil, the Technion.
  * @since 31/07/2008
  * @param <T> type of elements in the iterated collection */
-@Canopy @Instantiable public final class IterableAdapter<T> implements Iterable<T> {
+@Canopy
+@Instantiable
+public final class IterableAdapter<T> implements Iterable<T> {
   /** A factory method, generating an {@link Iterable} from a given
    * {@link Enumeration}
    * @param <T> type of elements in the iterated collection
@@ -32,17 +34,14 @@ import il.org.spartan.streotypes.*;
   public IterableAdapter(final Enumeration<T> implementation) {
     this.implementation = implementation;
   }
-
   @Override @NotNull public Iterator<T> iterator() {
     return new Iterator<T>() {
       @Override public boolean hasNext() {
         return implementation.hasMoreElements();
       }
-
       @Override public T next() {
         return implementation.nextElement();
       }
-
       @Override public void remove() {
         require(false, "cannot remove elements from an adapted enumeration");
       }

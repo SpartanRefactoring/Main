@@ -21,11 +21,9 @@ public final class LocalInitializedUnusedRemove extends LocalInitialized impleme
   public LocalInitializedUnusedRemove() {
     andAlso("Local is unused", () -> collect.usesOf(name).in(scope.of(name)).isEmpty());
   }
-
   @Override public String description() {
     return "Remove unused local " + name;
   }
-
   @Override public Examples examples() {
     return //
     convert("\f" //
@@ -44,7 +42,6 @@ public final class LocalInitializedUnusedRemove extends LocalInitialized impleme
                 + "}") //
     ;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final Block b = az.block(declaration.getParent());
     if (b == null)

@@ -36,7 +36,6 @@ public class TestOperandTest {
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
-
   @Test public void test03() {
     final TestOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
     final String wrap = WrapIntoComilationUnit.find(o.get()).on(o.get());
@@ -54,7 +53,6 @@ public class TestOperandTest {
     if (wrap.equals(d.get()))
       azzert.fail("Nothing done on " + o.get());
   }
-
   @Test public void test04() {
     final TestOperand o = trimmingOf("for(int i=0; i <100; i++){\n\tpr(i);\n}");
     final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find(o.get()).on(o.get()));

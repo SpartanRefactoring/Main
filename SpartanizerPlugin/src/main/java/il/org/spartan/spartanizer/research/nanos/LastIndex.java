@@ -25,23 +25,18 @@ public final class LastIndex extends NanoPatternTipper<InfixExpression> {
   @Override public boolean canTip(final InfixExpression ¢) {
     return anyTips(tippers, ¢) && rival.cantTip(az.methodInvocation(parent(¢)));
   }
-
   @Override public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public Category category() {
     return Category.Functional;
   }
-
   @Override public String description() {
     return "Index of last element in collection";
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }

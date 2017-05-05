@@ -15,11 +15,9 @@ public class FailingTipper<N extends ASTNode> extends Tipper<N> implements Tippe
   @Override public boolean canTip(final N __) {
     return true;
   }
-
   @Override public String description(final N __) {
     return "tipper that always apply and always fail, used for testing";
   }
-
   @Override public Tip tip(final N ¢) {
     throw new RuntimeException("thown on purpose, see FailingTipper");
   }

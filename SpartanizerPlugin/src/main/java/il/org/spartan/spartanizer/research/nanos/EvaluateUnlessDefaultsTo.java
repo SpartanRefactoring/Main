@@ -25,11 +25,9 @@ public final class EvaluateUnlessDefaultsTo extends NanoPatternTipper<Conditiona
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢) && nonTips(rivals, ¢);
   }
-
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Evaluate an expression unless some condition is satisfied";
   }

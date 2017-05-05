@@ -32,11 +32,9 @@ public final class LocalInitializedReturn extends $FragmentAndStatement//
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Eliminate temporary '" + ¢.getName() + "' by inlining it into the expression of the subsequent return statement";
   }
-
   @Override public Examples examples() {
     return convert("int a = 3; return a += 2;").to("return 3 + 2;");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer == null || haz.annotation(f))

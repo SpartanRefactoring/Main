@@ -23,15 +23,12 @@ public abstract class SingleParameterMethodDeclaration extends NonEmptyMethodDec
       return JohnDoe.property(parameter);
     });
   }
-
   protected final SimpleName parameterName() {
     return parameter.getName();
   }
-
   @Override protected ASTNode highlight() {
     return parameterName();
   }
-
   protected Type type() {
     return parameter.getType();
   }

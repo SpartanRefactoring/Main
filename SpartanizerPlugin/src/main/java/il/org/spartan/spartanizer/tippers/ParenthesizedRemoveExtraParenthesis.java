@@ -35,20 +35,16 @@ public class ParenthesizedRemoveExtraParenthesis extends NodePattern<Parenthesiz
         // expression(az.fieldAccess(parent)) == current), //
         that("Double parenthesis", () -> iz.parenthesizedExpression(parent)), F));
   }
-
   @Override protected ASTNode highlight() {
     return null;
   }
-
   @Override public ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(current, copy.of(inner), g);
     return r;
   }
-
   @Override public String description() {
     return "Remove redundant parenthesis around " + Trivia.gist(inner);
   }
-
   @Override public Examples examples() {
     return //
     convert("((x)).f();") //

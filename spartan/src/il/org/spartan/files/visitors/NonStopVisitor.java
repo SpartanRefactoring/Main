@@ -17,23 +17,18 @@ public class NonStopVisitor extends FileSystemVisitor {
   public NonStopVisitor(final File from, final NonStopAction action, final String... extensions) {
     super(from, action, extensions);
   }
-
   public NonStopVisitor(final File[] from, final NonStopAction action, final String... extensions) {
     super(from, action, extensions);
   }
-
   public NonStopVisitor(@NotNull final Iterable<String> from, final NonStopAction action, final String... extensions) {
     super(from, action, extensions);
   }
-
   public NonStopVisitor(final String from, final NonStopAction action, final String[] extensions) {
     super(from, action, extensions);
   }
-
   public NonStopVisitor(final String[] from, final NonStopAction action, final String... extensions) {
     super(from, action, extensions);
   }
-
   @Override public final void go() throws IOException {
     try {
       super.go();

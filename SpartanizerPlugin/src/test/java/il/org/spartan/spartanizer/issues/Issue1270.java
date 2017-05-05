@@ -14,15 +14,12 @@ public class Issue1270 extends TipperTest<SingleVariableDeclaration> {
   @Override public Tipper<SingleVariableDeclaration> tipper() {
     return new ParameterAbbreviate();
   }
-
   @Override public Class<SingleVariableDeclaration> tipsOn() {
     return SingleVariableDeclaration.class;
   }
-
   @Test public void a() {
     trimmingOf("IMoney addMoneyBag(MoneyBag s);").gives("IMoney addMoneyBag(MoneyBag b);");
   }
-
   @Test public void b() {
     trimmingOf("public abstract List<ReguessableValue> reguesses(AssumptionViolatedException a);") //
         .gives("public abstract List<ReguessableValue> reguesses(AssumptionViolatedException x);");

@@ -35,13 +35,11 @@ public final class ReflectionTraversal {
     this.clazz = clazz;
     this.visitor = visitor;
   }
-
   /** initiate the traversal
    * @return sum of all visit functions on all visited object */
   public int go() {
     return go(clazz);
   }
-
   private int go(@NotNull final Class<?> from) {
     nonnull(from);
     // Visit the class itself
@@ -63,11 +61,8 @@ public final class ReflectionTraversal {
 
   public interface Visitor {
     int visit(Class<?> c);
-
     int visit(Constructor<?> c);
-
     int visit(Field f);
-
     int visit(Method m);
   }
 }

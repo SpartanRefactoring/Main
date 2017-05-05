@@ -16,11 +16,9 @@ public class Out {
   public static void out(final String ¢) {
     System.out.print(¢);
   }
-
   public static void out(final String name, final boolean v) {
     System.out.printf("%s = %b\n", name, box(v));
   }
-
   public static void out(final String name, @Nullable final Collection<Object> a) {
     nonnull(name);
     if (a == null || a.isEmpty())
@@ -37,15 +35,12 @@ public class Out {
           System.out.printf("\t%2d) %s\n", box(n), ¢);
     }
   }
-
   public static void out(final String name, final int a) {
     System.out.printf("%s = %d\n", name, box(a));
   }
-
   public static void out(final String name, @Nullable final Object a) {
     System.out.printf((a == null ? "No" : "%s =") + " %s\n", name, a);
   }
-
   public static void out(final String name, @Nullable final Object[] os) {
     nonnull(name);
     if (os == null || os.length <= 0)

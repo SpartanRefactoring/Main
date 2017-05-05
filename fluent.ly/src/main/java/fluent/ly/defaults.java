@@ -27,7 +27,6 @@ public enum defaults {
   public static int to(@Nullable final Integer v, final int defaultValue) {
     return v != null ? v.intValue() : defaultValue;
   }
-
   /** Return a default value for an {@link Integer} type.
    * @param v a possibly <code><b>null</b></code> value
    * @param defaultValue a value to be used in case <code>v</code> is
@@ -37,7 +36,6 @@ public enum defaults {
   public static int to(@Nullable final Integer v, final Integer defaultValue) {
     return (v != null ? v : defaultValue).intValue();
   }
-
   /** Return a default value for an arbitrary type.
    * @param <T> type of parameter to receive a default value
    * @param v a possibly <code><b>null</b></code> value

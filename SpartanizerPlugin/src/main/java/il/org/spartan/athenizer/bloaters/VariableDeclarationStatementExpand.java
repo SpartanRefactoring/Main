@@ -35,7 +35,6 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
   @Override public String description(final VariableDeclarationStatement ¢) {
     return ¢ + "";
   }
-
   @Override public Tip tip(final VariableDeclarationStatement s) {
     assert s != null;
     if (s.getParent() == null)
@@ -53,12 +52,10 @@ public class VariableDeclarationStatementExpand extends EagerTipper<VariableDecl
       }
     }.spanning(s.getParent());
   }
-
   private static boolean nameMatch(final String s, final Type t) {
     final String $ = prefix(t);
     return s.length() >= $.length() && s.substring(0, $.length()).equals($) && s.substring($.length(), s.length()).matches("[0-9]*");
   }
-
   static String prefix(final Type ¢) {
     return abbreviate.it(¢);
   }

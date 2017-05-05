@@ -21,11 +21,9 @@ public interface TestClassGenerator {
   default Class<?> generate(final String testClassName) {
     return Object.class;
   }
-
   default Class<?> generate(final String testClassName, final File originalSourceFile) {
     return Object.class;
   }
-
   @SuppressWarnings("resource") default void compileSourceCode(final String className, final String sourceCode, final Class<?> testClass,
       final String sourcePath) {
     FileWriter writer = null;
@@ -46,7 +44,6 @@ public interface TestClassGenerator {
       fileManager.close();
     } catch (final IOException ignore) {/**/}
   }
-
   @SuppressWarnings("resource") default Class<?> loadClass(final String $, final String sourceCode, final Class<?> testClass,
       final String sourcePath) {
     compileSourceCode($, sourceCode, testClass, sourcePath);

@@ -45,7 +45,6 @@ public class SpartanWidgetHandler extends AbstractHandler {
     launchWidget(λ -> new Point(λ.x - R, λ.y - R));
     return null;
   }
-
   public static void launchWidget(final Function<Point, Point> startLocation) {
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
@@ -100,18 +99,15 @@ public class SpartanWidgetHandler extends AbstractHandler {
       @Override public void shellIconified(@SuppressWarnings("unused") final ShellEvent __) {
         //
       }
-
       @Override public void shellDeiconified(@SuppressWarnings("unused") final ShellEvent __) {
         //
       }
-
       @Override public void shellDeactivated(@SuppressWarnings("unused") final ShellEvent __) {
         if (shell.isDisposed() || widgetFocus.get())
           return;
         shell.setVisible(false);
         widgetFocus.set(false);
       }
-
       @Override public void shellClosed(@SuppressWarnings("unused") final ShellEvent __) {
         if (shell.isDisposed())
           return;
@@ -120,19 +116,16 @@ public class SpartanWidgetHandler extends AbstractHandler {
         active.set(false);
         shell.dispose();
       }
-
       @Override public void shellActivated(@SuppressWarnings("unused") final ShellEvent __) {
         if (!shell.isDisposed())
           shell.setVisible(true);
       }
     });
   }
-
   private static void setControl(final Control c, final Listener onEnter, final Listener onExit) {
     c.addListener(SWT.MouseEnter, onEnter);
     c.addListener(SWT.MouseExit, onExit);
   }
-
   static void setMovable(final Display d, final Control source, final Shell target) {
     final Listener l = new Listener() {
       Point origin;
@@ -160,7 +153,6 @@ public class SpartanWidgetHandler extends AbstractHandler {
     source.addListener(SWT.MouseUp, l);
     source.addListener(SWT.MouseMove, l);
   }
-
   static int[] circle(@SuppressWarnings("hiding") final int r, final int offsetX, final int offsetY) {
     final int[] $ = new int[8 * r + 4];
     for (int i = 0; i <= 2 * r; ++i) {
@@ -172,14 +164,12 @@ public class SpartanWidgetHandler extends AbstractHandler {
     }
     return $;
   }
-
   static void expandControl(final Control c, final Point minimalButtonSize) {
     if (c == null)
       return;
     final Point s = c.getSize();
     c.setSize(s == null ? minimalButtonSize : new Point(Math.max(s.x, minimalButtonSize.x), Math.max(s.y, minimalButtonSize.y)));
   }
-
   static Canvas createImage(final Shell s) {
     final int w = R, h = R, fixX = -10 * R / 100;
     final Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID, λ -> λ.scaledTo(-w, h));
@@ -192,7 +182,6 @@ public class SpartanWidgetHandler extends AbstractHandler {
     $.pack();
     return $;
   }
-
   /** creates a new {@link Canvas} which acts as a circular button in the
    * widget. Adds the shape of the button to the region of s and sets up the
    * listeners to {@link SWT} MouseUp, MouseDown, MouseDoubleClick.
@@ -235,7 +224,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
                 @Override public void run() {
                   try {
                     o.onMouseHold(c);
-                  } catch (@SuppressWarnings("hiding") final Throwable ¢) {
+                  } catch (final Throwable ¢) {
                     note.bug(¢);
                   }
                 }
@@ -248,7 +237,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
             default:
               break;
           }
-        } catch (@SuppressWarnings("hiding") final Throwable ¢) {
+        } catch (final Throwable ¢) {
           note.bug(¢);
         }
       }

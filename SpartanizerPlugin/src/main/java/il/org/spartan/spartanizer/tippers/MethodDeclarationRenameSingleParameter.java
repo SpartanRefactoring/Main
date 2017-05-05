@@ -25,7 +25,6 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration ¢) {
     return notation.cent + "";
   }
-
   @Override public Tip tip(final MethodDeclaration d) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d) || d.parameters().isEmpty())

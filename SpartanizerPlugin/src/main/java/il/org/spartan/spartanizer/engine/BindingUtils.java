@@ -21,13 +21,11 @@ public enum BindingUtils {
     final ASTNode $ = containing.typeDeclaration(¢);
     return eval(((AbstractTypeDeclaration) $)::resolveBinding).when($ instanceof TypeDeclaration);
   }
-
   /** @param compilationUnit current compilation unit
    * @return current package */
   private static IPackageBinding getPackage(final CompilationUnit ¢) {
     return ¢.getPackage().resolveBinding();
   }
-
   /** Finds visible method in hierarchy.
    * @param b base __
    * @param methodName method name
@@ -43,7 +41,6 @@ public enum BindingUtils {
     final IMethodBinding $ = Bindings.findMethodInHierarchy(b, methodName, bs);
     return take($).when(isVisible($, n, u));
   }
-
   /** Determines whether an invocation of a method is legal in a specific
    * context.
    * @param b a method

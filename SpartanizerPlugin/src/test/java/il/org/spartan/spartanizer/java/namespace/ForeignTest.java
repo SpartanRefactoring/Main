@@ -33,7 +33,6 @@ public class ForeignTest extends MetaFixture {
     this.foreign = foreign;
     this.repository = repository;
   }
-
   @Test public void foreign() {
     assert !Environment.of(name).has(foreign) : //
     "\n name = " + name + //

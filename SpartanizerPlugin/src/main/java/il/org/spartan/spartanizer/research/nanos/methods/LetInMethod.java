@@ -26,16 +26,13 @@ public class LetInMethod extends JavadocMarkerNanoPattern {
         && rival.cantTip(the.headOf(fragments(az.variableDeclarationStatement(firstStatement(¢))))) //
         && usesAssignment(¢);
   }
-
   private boolean usesAssignment(final MethodDeclaration ¢) {
     return !collect.usesOf(name(the.headOf(fragments(az.variableDeclarationStatement(firstStatement(¢)))))).in(secondStatement(¢)).isEmpty();
   }
-
   private static boolean preDelegation(final Statement secondStatement) {
     return iz.expressionStatement(secondStatement) //
         || iz.returnStatement(secondStatement);
   }
-
   @Override public String tipperName() {
     return "LetIn";
   }

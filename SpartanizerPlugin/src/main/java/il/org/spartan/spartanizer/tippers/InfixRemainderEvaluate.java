@@ -26,7 +26,6 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> ¢) throws IllegalArgumentException {
     throw new IllegalArgumentException("no remainder among doubles" + ¢);
   }
-
   @Override int evaluateInt(final List<Expression> xs) throws IllegalArgumentException {
     int $ = 0;
     try {
@@ -46,7 +45,6 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
     }
     return $;
   }
-
   @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
     for (final Expression ¢ : xs)
       if (type.of(¢) == Certain.DOUBLE)
@@ -65,11 +63,9 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
     }
     return $;
   }
-
   @Override String operation() {
     return "remainder";
   }
-
   @Override Operator operator() {
     return REMAINDER;
   }

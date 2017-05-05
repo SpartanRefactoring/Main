@@ -19,11 +19,9 @@ public class StringIntMap extends HashMap<String, Integer> {
   public boolean contains(final String key) {
     return super.containsKey(key);
   }
-
   @SuppressWarnings("null") public int get(final String key) {
     return super.get(key).intValue();
   }
-
   public void put(final String key, final int value) {
     super.put(key, Integer.valueOf(value));
   }

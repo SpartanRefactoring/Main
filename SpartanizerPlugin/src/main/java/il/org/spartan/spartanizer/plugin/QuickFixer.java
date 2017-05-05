@@ -47,12 +47,10 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
   @Override public IMarkerResolution[] getResolutions(final IMarker __) {
     return Arrays.copyOf(solutions, solutions.length);
   }
-
   private static NewGUIApplicator applicator(final IMarker λ) {
     return defaultApplicator()//
         .manyPasses();
   }
-
   /** Factory method for {@link IMarkerResolution}s.
    * @param name resolution's name
    * @param solution resolution's solution
@@ -62,13 +60,11 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
       @Override public void run(final IMarker ¢) {
         solution.accept(¢);
       }
-
       @Override public String getLabel() {
         return name;
       }
     };
   }
-
   static GUITraversal getSpartanizer(final IMarker $) {
     return new GUITraversal().setMarker($);
   }
@@ -83,7 +79,6 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         @Override public String getLabel() {
           return label;
         }
-
         @Override public void run(final IMarker m) {
           try {
             new SingleTipperApplicator().go(nullProgressMonitor, m, t);
@@ -93,41 +88,32 @@ public final class QuickFixer implements IMarkerResolutionGenerator {
         }
       };
     }
-
     static IMarkerResolution applyFile() {
       return apply(SingleTipperApplicator.Type.FILE, APPLY_TO_FILE);
     }
-
     static IMarkerResolution applyFunction() {
       return apply(SingleTipperApplicator.Type.DECLARATION, APPLY_TO_FUNCTION);
     }
-
     static IMarkerResolution applyProject() {
       return apply(SingleTipperApplicator.Type.PROJECT, APPLY_TO_PROJECT);
     }
-
     static IMarkerResolution disableClassFix() {
       return toggle(SuppressWarningsOnOff.ByComment, SuppressWarningsOnOff.Type.CLASS, "Suppress spartanization tips on class");
     }
-
     static IMarkerResolution disableFileFix() {
       return toggle(SuppressWarningsOnOff.ByComment, SuppressWarningsOnOff.Type.FILE, "Suppress spartanization tips on out most class");
     }
-
     static IMarkerResolution disableFunctionFix() {
       return toggle(SuppressWarningsOnOff.ByComment, SuppressWarningsOnOff.Type.FUNCTION, "Suppress spartanization tips on function");
     }
-
     static IMarkerResolution disableClassAnnotationFix() {
       return toggle(SuppressWarningsOnOff.ByAnnotation, SuppressWarningsOnOff.Type.CLASS, "Class under construction");
     }
-
     static IMarkerResolution toggle(final SuppressWarningsOnOff disabler, final SuppressWarningsOnOff.Type t, final String label) {
       return new IMarkerResolution() {
         @Override public String getLabel() {
           return label;
         }
-
         @Override public void run(final IMarker m) {
           try {
             disabler.deactivate(nullProgressMonitor, m, t);

@@ -24,20 +24,16 @@ public final class TernaryShortestFirst extends ReplaceCurrentNode<ConditionalEx
   private static double align(final Expression e1, final Expression e2) {
     return new LongestCommonSubsequence(e1 + "", e2 + "").similarity();
   }
-
   private static boolean compatible(final Expression e1, final Expression e2) {
     return e1.getNodeType() == e2.getNodeType()
         && (e1 instanceof InstanceofExpression || e1 instanceof InfixExpression || e1 instanceof MethodInvocation);
   }
-
   private static boolean compatibleCondition(final Expression e1, final Expression e2) {
     return compatible(e1, e2) || compatible(e1, make.notOf(e2));
   }
-
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Invert logical condition and exhange order of '?' and ':' operands to conditional expression";
   }
-
   @Override public ConditionalExpression replacement(final ConditionalExpression x) {
     final ConditionalExpression $ = subject.pair(elze(x), then(x)).toCondition(make.notOf(x.getExpression()));
     final Expression then = elze($), elze = then($);

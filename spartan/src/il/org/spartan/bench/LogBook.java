@@ -51,13 +51,11 @@ public abstract class LogBook implements Serializable {
     for (@NotNull final Entry ¢ : es)
       removeKeys(¢, exclude);
   }
-
   @NotNull public static Setting removeKeys(@NotNull final Setting s, @NotNull final Keys k) {
     @NotNull final Setting $ = new Setting();
     s.keySet().stream().filter(λ -> !k.contains(λ)).forEach(λ -> $.put(λ, s.get(λ)));
     return $;
   }
-
   @NotNull static Keys values(@NotNull final Iterable<Entry> es, final String key) {
     @NotNull final Keys $ = new Keys();
     for (@NotNull final Entry e : es) {
@@ -78,13 +76,11 @@ public abstract class LogBook implements Serializable {
       $.addAll(¢.keySet());
     return $;
   }
-
   /** @return the set of keys whose values are identical in all entries */
   @NotNull public final Keys commonKeys() {
     @NotNull final Keys $ = allKeys().stream().filter(this::hasCommonValue).collect(Collectors.toCollection(Keys::new));
     return $;
   }
-
   /** @return the {@link Setting} common to all entries */
   @NotNull public final Setting commonSettings() {
     @NotNull final Setting $ = new Setting();
@@ -92,7 +88,6 @@ public abstract class LogBook implements Serializable {
       $.put(key, commonValue(key));
     return $;
   }
-
   /** @param key an arbitrary key
    * @return if <em>all</em> entries associate the same value associated with
    *         the parameter, then this value, otherwise
@@ -105,24 +100,20 @@ public abstract class LogBook implements Serializable {
           return null;
     return $;
   }
-
   @NotNull public LogBook demote(final String key) {
     for (@NotNull final Entry ¢ : book)
       ¢.demote(key);
     return this;
   }
-
   @NotNull public final Setting distinctSettings(@NotNull final Setting ¢) {
     @NotNull final Setting $ = (Setting) ¢.clone();
     removeKeys($, commonKeys());
     return $;
   }
-
   /** @return an {@link Iterable} over entries */
   @NotNull public final Iterable<Entry> entries() {
     return book;
   }
-
   public final boolean hasCommonValue(final String key) {
     @Nullable final String $ = someValue(key);
     if ($ != null)
@@ -131,17 +122,14 @@ public abstract class LogBook implements Serializable {
           return false;
     return true;
   }
-
   public void merge(@NotNull final File f) throws IOException, ClassNotFoundException {
     @NotNull final ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
     merge((LogBook) in.readObject());
     in.close();
   }
-
   public void merge(@NotNull final LogBook other) {
     book.addAll(other.book);
   }
-
   @NotNull public LogBook printBy(final Consolidation m, @NotNull final String... keys) {
     close();
     sortBy(keys);
@@ -152,33 +140,27 @@ public abstract class LogBook implements Serializable {
     System.out.println(commonSettings());
     return new Consolidator(m, $, distinctKeys).go(book.clone());
   }
-
   @NotNull public LogBook remove(final String key) {
     for (@NotNull final Entry ¢ : book)
       ¢.remove(key);
     return this;
   }
-
   public final void removeCommon() {
     commonKeys().forEach(this::remove);
   }
-
   @NotNull public final LogBook setFormat(final String format) {
     this.format = format;
     return this;
   }
-
   /** @return the number of entries in this instance */
   public final int size() {
     return book.size();
   }
-
   public final String someValue(final String key) {
     for (@NotNull final Entry $ : book)
       return $.get(key);
     return null;
   }
-
   @NotNull public final LogBook sortBy(@NotNull final String... keys) {
     @NotNull final Entry[] es = Iterables.toArray(book, LogBook.Entry.class);
     Arrays.sort(es, new Comparator<Entry>() {
@@ -189,11 +171,9 @@ public abstract class LogBook implements Serializable {
             return $;
         return 0;
       }
-
       int compare(@Nullable final String s1, @NotNull final String s2) {
         return s1 != null ? compareNumeric(s1, s2) : s2 == null ? 0 : 1;
       }
-
       int compareNumeric(@NotNull final String s1, @NotNull final String s2) {
         return isInt(s1) && isInt(s2) ? atoi(s1) - atoi(s2)
             : isDouble(s1) && isDouble(s2) ? signum(atod(s1) - atod(s2))
@@ -204,18 +184,15 @@ public abstract class LogBook implements Serializable {
     Iterables.addAll(book, es);
     return this;
   }
-
   @NotNull public final Keys values(final String key) {
     return values(book, key);
   }
-
   /** @param ¢ a file to write to
    * @return <code><b>this</b></code>
    * @throws IOException in case of failure */
   @NotNull public LogBook writeTo(@NotNull final File ¢) throws IOException {
     return writeTo(new FileOutputStream(¢));
   }
-
   /** @param s a file to write to
    * @return <code><b>this</b></code>
    * @throws IOException in case of failure */
@@ -225,19 +202,16 @@ public abstract class LogBook implements Serializable {
     out.close();
     return this;
   }
-
   /** @param fileName name of file to write to
    * @return <code><b>this</b></code>
    * @throws IOException in case of failure */
   @NotNull public LogBook writeTo(@NotNull final String fileName) throws IOException {
     return writeTo(new File(fileName));
   }
-
   @NotNull protected LogBook clear() {
     book.clear();
     return this;
   }
-
   @NotNull abstract LogBook close();
 
   public enum Consolidation {
@@ -264,39 +238,30 @@ public abstract class LogBook implements Serializable {
     Entry(@NotNull final Setting s) {
       putAll(s);
     }
-
     public String format() {
       return format(format);
     }
-
     public String format(final String newFormat) {
       return records.format(unit, newFormat);
     }
-
     public double[] recorded() {
       return records.all();
     }
-
     public String settings() {
       return super.toString();
     }
-
     @Override public String toString() {
       return records.format(unit);
     }
-
     public Unit unit() {
       return unit;
     }
-
     void add(final double ¢) {
       records.record(box(¢));
     }
-
     void add(final long ¢) {
       add(1. * ¢);
     }
-
     @NotNull Entry setUnit(final Unit ¢) {
       require(unit == null || ¢ == unit);
       unit = ¢;
@@ -324,15 +289,12 @@ public abstract class LogBook implements Serializable {
       in.close();
       return $;
     }
-
     @NotNull public static Mutable readFrom(@NotNull final String fileName) throws IOException, ClassNotFoundException {
       return readFrom(new File(fileName));
     }
-
     private static double divide(final long d, final long l) {
       return 1. * d * l / 1.;
     }
-
     @NotNull private static Class<?> getClass(final Object ¢) {
       return ¢ instanceof Class ? (Class<?>) ¢ : ¢.getClass();
     }
@@ -347,27 +309,22 @@ public abstract class LogBook implements Serializable {
       if (initiator != null)
         set("Initiator", getClass(initiator).getSimpleName());
     }
-
     @Override @NotNull public final LogBook close() {
       if (dotter != null)
         dotter.end();
       return this;
     }
-
     @NotNull public Setting current() {
       return current;
     }
-
     public Entry currentEntry() {
       return find();
     }
-
     @Override @NotNull public LogBook demote(final String key) {
       super.demote(key);
       current.demote(key);
       return this;
     }
-
     public Entry find() {
       for (final Entry ¢ : entries())
         if (current.equals(¢))
@@ -376,88 +333,68 @@ public abstract class LogBook implements Serializable {
       book.add($);
       return $;
     }
-
     @NotNull public Mutable record(final double ¢) {
       return record(¢, DOUBLE);
     }
-
     @NotNull public Mutable record(final double d, final Unit u) {
       find().setUnit(u).add(d);
       if (dotter != null)
         dotter.click();
       return this;
     }
-
     public void record(final long v, final long l) {
       record(divide(v, l));
     }
-
     @NotNull public LogBook record(@NotNull final Stopwatch s, final long l) {
       return recordNanoseconds(s.time(), l);
     }
-
     @NotNull public LogBook recordBytes(final double bytes) {
       return record(bytes, BYTES);
     }
-
     @NotNull public LogBook recordBytes(final long bytes) {
       return recordBytes(1. * bytes);
     }
-
     @NotNull public LogBook recordMilliseconds(final double ¢) {
       return record(¢, MILLISECONDS);
     }
-
     @NotNull public LogBook recordMilliseconds(final long time, final long l) {
       return recordMilliseconds(divide(time, l));
     }
-
     @NotNull public LogBook recordNanoseconds(final double ¢) {
       return record(¢, NANOSECONDS);
     }
-
     @NotNull public LogBook recordNanoseconds(final long time, final long l) {
       return recordNanoseconds(divide(time, l));
     }
-
     @NotNull public LogBook recordRelative(final double ¢) {
       return record(¢, RELATIVE);
     }
-
     public void recordRelative(final long l1, final long l2) {
       recordRelative(1. * l1 / l2);
     }
-
     public void recordRelative(@NotNull final Stopwatch s1, @NotNull final Stopwatch s2) {
       recordRelative(s1.time(), s2.time());
     }
-
     @Override @NotNull public LogBook remove(final String key) {
       super.remove(key);
       current.remove(key);
       return this;
     }
-
     @NotNull public Mutable set(final String option, final boolean value) {
       return set(option, value + "");
     }
-
     @NotNull public Mutable set(final String option, final double value) {
       return set(option, value + "");
     }
-
     @NotNull public Mutable set(final String option, final float value) {
       return set(option, value + "");
     }
-
     @NotNull public Mutable set(final String option, final int value) {
       return set(option, value + "");
     }
-
     @NotNull public Mutable set(final String option, final long value) {
       return set(option, value + "");
     }
-
     @NotNull public Mutable set(final String option, final String value) {
       current.put(option, value);
       return this;
@@ -480,11 +417,9 @@ public abstract class LogBook implements Serializable {
         assert l.find().containsKey("C");
         assert l.find().containsKey("D");
       }
-
       @Test public void create() {
         assert new Mutable(this) != null;
       }
-
       @Test public void demoteCurrent() {
         @NotNull final Mutable l = new Mutable(this);
         l.set("A", "Tuesday");
@@ -495,7 +430,6 @@ public abstract class LogBook implements Serializable {
         azzert.that(l.current().keySet() + "", is("[A, B, D, C]"));
         azzert.that(l.size(), is(0));
       }
-
       @Test public void demoteEntry() {
         @NotNull final Mutable l = new Mutable(this);
         l.set("A", "Tuesday");
@@ -505,7 +439,6 @@ public abstract class LogBook implements Serializable {
         l.demote("C");
         azzert.that(l.find().keySet() + "", is("[A, B, D, C]"));
       }
-
       @Test public void demoteWithRecord() {
         @NotNull final Mutable l = new Mutable(this);
         l.set("A", "Tuesday");
@@ -522,24 +455,20 @@ public abstract class LogBook implements Serializable {
         azzert.that(l.size(), is(1));
         azzert.that(l.find().keySet() + "", is("[D, C, B, A]"));
       }
-
       @Test public void findEntry1() {
         @NotNull final Mutable l = new Mutable(this).set("day", "Tuesday").set("time", 12);
         l.record(1);
         azzert.that(l.find().records.n(), is(1));
       }
-
       @Test public void findEntry3() {
         @NotNull final Mutable l = new Mutable(this);
         l.set("day", "Tuesday").set("time", 12);
         l.record(1).record(2).record(3);
         azzert.that(l.find().records.n(), is(3));
       }
-
       @Test public void findNotNullEntry() {
         assert new Mutable(this).set("day", "Tuesday").set("time", 12).find().records != null;
       }
-
       @Test public void keyOrder() {
         @NotNull final Mutable l = new Mutable(this);
         l.set("A", "Tuesday");
@@ -548,7 +477,6 @@ public abstract class LogBook implements Serializable {
         l.set("D", c.value());
         azzert.that(l.find().keySet() + "", is("[A, B, C, D]"));
       }
-
       @Test public void keySet() {
         @NotNull final Mutable l = new Mutable(this);
         l.set("day", "Tuesday");
@@ -559,7 +487,6 @@ public abstract class LogBook implements Serializable {
         assert ss.contains("day");
         assert ss.contains("time");
       }
-
       @Test public void readWrite() throws Exception {
         @NotNull final File f = new File("/tmp/delme.lgb");
         try {
@@ -569,7 +496,6 @@ public abstract class LogBook implements Serializable {
         }
         myBook.writeTo(f);
       }
-
       @Test public void remove() {
         @NotNull final Mutable l = new Mutable(this);
         l.set("A", "Tuesday");
@@ -586,7 +512,6 @@ public abstract class LogBook implements Serializable {
         azzert.that(l.size(), is(1));
         azzert.that(l.find().keySet() + "", is("[D]"));
       }
-
       @Test public void repeatedSettingsCount() {
         int n = 0;
         @NotNull final Mutable l = new Mutable(this);
@@ -603,7 +528,6 @@ public abstract class LogBook implements Serializable {
         l.record(n++);
         azzert.that(l.find().records.n(), is(2));
       }
-
       @Test public void repeatedSettingsSize() {
         int n = 0;
         @NotNull final Mutable l = new Mutable(this);
@@ -623,11 +547,9 @@ public abstract class LogBook implements Serializable {
         l.record(n++);
         azzert.that(l.size(), is(4));
       }
-
       @Test public void sizeZero() {
         azzert.that(new Mutable(this).size(), is(0));
       }
-
       @Test public void value() {
         azzert.isNull(myBook.commonValue("B"));
         azzert.isNull(myBook.commonValue("C"));
@@ -651,7 +573,6 @@ public abstract class LogBook implements Serializable {
       remove(key);
       put(key, value);
     }
-
     @Override @NotNull public final Values values() {
       @NotNull final Values $ = new Values();
       $.addAll(super.values());
@@ -678,7 +599,6 @@ public abstract class LogBook implements Serializable {
       this.stagger = stagger;
       this.mode = mode;
     }
-
     @NotNull public final LogBook go(@NotNull final Collection<Entry> $) {
       if (!stagger.isEmpty())
         return go($, Iterables.first(stagger));
@@ -693,19 +613,15 @@ public abstract class LogBook implements Serializable {
       System.out.println(shortForm(min) + compare(min, max) + ratio(min, max) + shortForm(max));
       return LogBook.this;
     }
-
     @NotNull private String compare(@NotNull final Entry e1, @NotNull final Entry e2) {
       return compare(e1.records, e2.records);
     }
-
     @NotNull private String compare(final Statistics s1, final Statistics s2) {
       return new WelchT(s1, s2).p < 0.001 ? "==" : "~" + (new WelchT(s1, s2).p > 0.1 ? "" : RELATIVE.format(new WelchT(s1, s2).p) + "") + "~";
     }
-
     private boolean equals(@Nullable final String s1, @Nullable final String s2) {
       return s1 == null ? s2 == null : s1.equals(s2);
     }
-
     @NotNull private LogBook go(@NotNull final Collection<Entry> es, final String key) {
       exclude.add(key);
       stagger.remove(key);
@@ -719,7 +635,6 @@ public abstract class LogBook implements Serializable {
       stagger.add(key);
       return LogBook.this;
     }
-
     private Entry max(@NotNull final Collection<Entry> es) {
       Entry $ = Iterables.first(es);
       for (@NotNull final Entry ¢ : es)
@@ -727,7 +642,6 @@ public abstract class LogBook implements Serializable {
           $ = ¢;
       return $;
     }
-
     private Entry min(@NotNull final Collection<Entry> es) {
       Entry $ = Iterables.first(es);
       for (@NotNull final Entry ¢ : es)
@@ -735,15 +649,12 @@ public abstract class LogBook implements Serializable {
           $ = ¢;
       return $;
     }
-
     @NotNull private String prefix(@NotNull final Setting ¢) {
       return ¢.isEmpty() ? "" : ¢.values() + ": ";
     }
-
     @NotNull private String ratio(@NotNull final Entry e1, @NotNull final Entry e2) {
       return String.format("%.2f*", box(e1.records.median() / e2.records.median())) + "";
     }
-
     @NotNull private Collection<Entry> select(@NotNull final Iterable<Entry> es, final String key, final String value) {
       @NotNull final List<Entry> $ = new ArrayList<>();
       for (@NotNull final Entry ¢ : es)
@@ -751,11 +662,9 @@ public abstract class LogBook implements Serializable {
           $.add(¢);
       return $;
     }
-
     @NotNull private String shortForm(@NotNull final Entry ¢) {
       return removeKeys(¢, exclude).values() + ¢.format(" Jn");
     }
-
     @NotNull private LogBook summary(@NotNull final Entry[] es) {
       Arrays.sort(es, (e1, e2) -> signum(e1.records.median() - e2.records.median()));
       @NotNull final StringBuilder s = new StringBuilder();
@@ -777,7 +686,6 @@ public abstract class LogBook implements Serializable {
       println(s);
       return LogBook.this;
     }
-
     @NotNull private LogBook summary(@NotNull final Iterable<Entry> ¢) {
       return summary(Iterables.toArray(¢, Entry.class));
     }

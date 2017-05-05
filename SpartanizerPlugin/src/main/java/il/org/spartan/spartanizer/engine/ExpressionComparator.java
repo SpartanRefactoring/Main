@@ -60,7 +60,6 @@ public enum ExpressionComparator implements Comparator<Expression> {
   public static boolean longerFirst(final InfixExpression ¢) {
     return isLonger(left(¢), right(¢));
   }
-
   /** Compare method invocations by the number of arguments
    * @param e1 JD
    * @param e2 JD
@@ -69,7 +68,6 @@ public enum ExpressionComparator implements Comparator<Expression> {
   public static boolean moreArguments(final Expression e1, final Expression e2) {
     return argumentsCompare(e1, e2) > 0;
   }
-
   /** Lexicographical comparison expressions by their number of characters
    * @param e1 JD
    * @param e2 JD
@@ -80,15 +78,12 @@ public enum ExpressionComparator implements Comparator<Expression> {
   static int alphabeticalCompare(final Expression e1, final Expression e2) {
     return removeWhites(Trivia.cleanForm(e1)).compareTo(removeWhites(Trivia.cleanForm(e2)));
   }
-
   static int argumentsCompare(final Expression e1, final Expression e2) {
     return !iz.methodInvocation(e1) || !iz.methodInvocation(e2) ? 0 : argumentsCompare((MethodInvocation) e1, (MethodInvocation) e2);
   }
-
   static int argumentsCompare(final MethodInvocation i1, final MethodInvocation i2) {
     return arguments(i1).size() - arguments(i2).size();
   }
-
   /** Compare expressions by their number of characters
    * @param e1 JD
    * @param e2 JD
@@ -98,26 +93,21 @@ public enum ExpressionComparator implements Comparator<Expression> {
   static int characterCompare(final Expression e1, final Expression e2) {
     return countOf.nonWhiteCharacters(e1) - countOf.nonWhiteCharacters(e2);
   }
-
   static int literalCompare(final Expression e1, final Expression e2) {
     return -specificity.compare(e1, e2);
   }
-
   static int nodesCompare(final Expression e1, final Expression e2) {
     return round(countOf.nodes(e1) - countOf.nodes(e2), NODES_THRESHOLD);
   }
-
   static int round(final int $, final int threshold) {
     return Math.abs($) > threshold ? $ : 0;
   }
-
   private static boolean isLonger(final Expression e1, final Expression e2) {
     return !has.nil(e1, e2) && (//
     countOf.nodes(e1) > countOf.nodes(e2) + NODES_THRESHOLD || //
         countOf.nodes(e1) >= countOf.nodes(e2) && moreArguments(e1, e2)//
     );
   }
-
   /** Sorts the {@link Expression} list
    * @param xs an {@link Expression} list to sort
    * @return whether the list was modified */

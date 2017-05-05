@@ -12,19 +12,15 @@ public class FileUtils {
       $.append(dir).append(FS);
     return $.substring(0, $.length() - 1);
   }
-
   static String testSourcePath(final Class<?> current) {
     return makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\", current));
   }
-
   static String generatedSourcePath(final Class<?> current) {
     return makePath(System.getProperty("user.dir"), "src", "test", "java", packageName("\\\\", current));
   }
-
   static String generatedClassPath(final Class<?> current) {
     return makePath(System.getProperty("user.dir"), "target", "classes", packageName("\\\\", current));
   }
-
   static String packageName(final String seperator, final Class<?> current) {
     return current.getPackage().getName().replaceAll("\\.", seperator);
   }

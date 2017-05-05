@@ -29,16 +29,13 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
   public HeadlessSpartanizer() {
     this(".");
   }
-
   HeadlessSpartanizer(final String path) {
     this(path, system.folder2File(path));
   }
-
   HeadlessSpartanizer(final String presentSourcePath, final String name) {
     inputFolder = presentSourcePath;
     this.name = name;
   }
-
   @Override public void apply() {
     try {
       System.out.println(Arrays.toString(ReportGenerator.metricsMap().get("methods")));
@@ -74,7 +71,6 @@ public class HeadlessSpartanizer extends AbstractCommandLineProcessor {
       note.io(¢);
     }
   }
-
   public void name(final String ¢) {
     name = ¢;
   }

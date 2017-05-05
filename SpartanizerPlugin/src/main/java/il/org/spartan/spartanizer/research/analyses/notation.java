@@ -17,7 +17,6 @@ public class notation {
   public static boolean isSpecial(final SimpleName $) {
     return isSpecial($.getIdentifier());
   }
-
   public static boolean isSpecial(final String $) {
     return in($, specials);
   }

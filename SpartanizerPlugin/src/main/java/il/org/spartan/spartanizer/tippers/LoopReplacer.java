@@ -33,19 +33,15 @@ public abstract class LoopReplacer<S extends Statement> extends ReplaceCurrentNo
     updater = az.expressionStatement(lastStatement).getExpression();
     updates = compute.updateSpots(updater);
   }
-
   protected final boolean validUpdater() {
     return statements != null && statements.size() > 1 && validUpdates() && noContinue();
   }
-
   boolean noContinue() {
     return !haz.continueStatement(body);
   }
-
   boolean validUpdates() {
     return updates.stream().allMatch(SimpleName.class::isInstance);
   }
-
   public boolean bodyDeclaresElementsOf(final ASTNode n) {
     return extract.fragments(block).stream().noneMatch(λ -> collect.usesOf(λ.getName()).in(n).isEmpty());
   }

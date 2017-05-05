@@ -26,11 +26,9 @@ public final class IfThrowFooElseThrowBar extends ReplaceCurrentNode<IfStatement
   @Override public String description(final IfStatement ¢) {
     return "Consolidate 'if' " + Trivia.gist(¢.getExpression()) + " into a single 'throw' statement";
   }
-
   @Override public boolean prerequisite(final IfStatement ¢) {
     return extract.throwExpression(then(¢)) != null && extract.throwExpression(elze(¢)) != null;
   }
-
   @Override public Statement replacement(final IfStatement ¢) {
     return make.throwOf(subject.pair(extract.throwExpression(then(¢)), extract.throwExpression(elze(¢))).toCondition(¢.getExpression()));
   }

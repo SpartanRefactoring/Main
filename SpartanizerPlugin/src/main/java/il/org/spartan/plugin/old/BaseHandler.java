@@ -22,19 +22,15 @@ abstract class BaseHandler extends AbstractHandler {
       throw new ExecutionException(¢.getMessage());
     }
   }
-
   private String getDialogTitle() {
     return inner.getName();
   }
-
   private Void execute(final ISelection ¢) throws InterruptedException {
     return !(¢ instanceof ITextSelection) ? null : execute((ITextSelection) ¢);
   }
-
   private Void execute(final ITextSelection ¢) throws InterruptedException {
     return execute(new RefactoringWizardOpenOperation(new Wizard(inner.setSelection(¢).iCompilationUnit(eclipse.currentCompilationUnit()))));
   }
-
   private Void execute(final RefactoringWizardOpenOperation wop) throws InterruptedException {
     wop.run(eclipse.currentWorkbenchWindow().getShell(), getDialogTitle());
     return null;

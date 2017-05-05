@@ -126,7 +126,6 @@ public class RawTokenizer {
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
   }
-
   private static int zzUnpackAction(final String packed, final int offset, final int[] result) {
     int i = 0, j = offset;
     for (final int l = packed.length(); i < l;) {
@@ -138,14 +137,12 @@ public class RawTokenizer {
     }
     return j;
   }
-
   private static int[] zzUnpackAttribute() {
     final int[] result = new int[115];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
   }
-
   private static int zzUnpackAttribute(final String packed, final int offset, final int[] result) {
     int i = 0, j = offset;
     for (final int l = packed.length(); i < l;) {
@@ -157,7 +154,6 @@ public class RawTokenizer {
     }
     return j;
   }
-
   /** Unpacks the compressed character translation table.
    * @param packed the packed character translation table
    * @return the unpacked character translation table */
@@ -172,28 +168,24 @@ public class RawTokenizer {
     }
     return map;
   }
-
   private static int[] zzUnpackRowMap() {
     final int[] result = new int[115];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
   }
-
   private static int zzUnpackRowMap(final String packed, final int offset, final int[] result) {
     int i = 0, j = offset;
     for (final int l = packed.length(); i < l;)
       result[j++] = packed.charAt(i++) | packed.charAt(i++) << 16;
     return j;
   }
-
   private static int[] zzUnpackTrans() {
     final int[] result = new int[3162];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
   }
-
   private static int zzUnpackTrans(final String packed, final int offset, final int[] result) {
     int i = 0, j = offset;
     for (final int l = packed.length(); i < l;) {
@@ -241,7 +233,6 @@ public class RawTokenizer {
   public RawTokenizer(final java.io.InputStream in) {
     this(new java.io.InputStreamReader(in));
   }
-
   /** Creates a new scanner There is also a java.io.InputStream version of this
    * constructor.
    * @param in the java.io.Reader to read input from. */
@@ -249,28 +240,22 @@ public class RawTokenizer {
     reset();
     zzReader = in;
   }
-
   public int chars() {
     return yychar + 1;
   }
-
   public int column() {
     return yycolumn + 1;
   }
-
   public void error(final String ¢) {
     System.err.println(notify(¢));
     reset();
   }
-
   public int line() {
     return yyline + 1;
   }
-
   public String location() {
     return "[" + line() + "," + column() + "]: ";
   }
-
   /** Resumes scanning until the next regular expression is matched, the end of
    * input is encountered or an I/O-Error occurs.
    * @return the next token
@@ -755,31 +740,25 @@ public class RawTokenizer {
       }
     }
   }
-
   public String notify(final String ¢) {
     return location() + ¢ + " " + token();
   }
-
   public void reset() {
     truncate();
     yybegin(SCAN_CODE);
   }
-
   /* user code: */
   public String text() {
     return $.length() > 0 ? $ + "" : yytext();
   }
-
   public String token() {
     return "<" + text() + ">";
   }
-
   /** Enters a new lexical state
    * @param newState the new lexical state */
   public final void yybegin(final int newState) {
     zzLexicalState = newState;
   }
-
   /** Returns the character at position <tt>pos</tt> from the matched text. It
    * is equivalent to yytext().charAt(pos), but faster
    * @param pos the position of the character to fetch. A value from 0 to
@@ -788,7 +767,6 @@ public class RawTokenizer {
   public final char yycharat(final int pos) {
     return zzBuffer[pos + zzStartRead];
   }
-
   /** Closes the input stream. */
   public final void yyclose() throws java.io.IOException {
     zzAtEOF = true; /* indicate end of file */
@@ -796,12 +774,10 @@ public class RawTokenizer {
     if (zzReader != null)
       zzReader.close();
   }
-
   /** Returns the length of the matched text region. */
   public final int yylength() {
     return zzMarkedPos - zzStartRead;
   }
-
   /** Pushes the specified amount of characters back into the input stream. They
    * will be read again by then next call of the scanning method
    * @param number the number of characters to be read again. This number must
@@ -811,7 +787,6 @@ public class RawTokenizer {
       zzScanError(ZZ_PUSHBACK_2BIG);
     zzMarkedPos -= number;
   }
-
   /** Resets the scanner to read from a new input stream. Does not close the old
    * reader. All internal variables are reset, the old input stream
    * <b>cannot</b> be reused (internal buffer is discarded and lost). Lexical
@@ -823,58 +798,46 @@ public class RawTokenizer {
     yyline = yychar = yycolumn = zzCurrentPos = zzMarkedPos = 0;
     zzLexicalState = YYINITIAL;
   }
-
   /** Returns the current lexical state. */
   public final int yystate() {
     return zzLexicalState;
   }
-
   /** Returns the text matched by the current regular expression. */
   public final String yytext() {
     return new String(zzBuffer, zzStartRead, zzMarkedPos - zzStartRead);
   }
-
   private void begin(final int state) {
     truncate();
     extend();
     yybegin(state);
   }
-
   private void end() {
     goTo(RESET);
   }
-
   private void endExcluding() {
     regret();
     end();
   }
-
   private void endIncluding() {
     extend();
     end();
   }
-
   private void extend() {
     $.append(yytext());
   }
-
   private void goTo(final int state) {
     yybegin(state);
   }
-
   private void gotoExcluding(final int state) {
     regret();
     goTo(state);
   }
-
   private void regret() {
     yypushback(yylength());
   }
-
   private void truncate() {
     $.setLength(0);
   }
-
   /** Refills the input buffer.
    * @return <code>false</code>, iff there was new input.
    * @exception java.io.IOException if any I/O-Error occurs */
@@ -904,7 +867,6 @@ public class RawTokenizer {
     }
     return false;
   }
-
   /** Reports an error that occured while scanning. In a wellformed scanner (no
    * or only correct usage of yypushback(int) and a match-all fallback rule)
    * this method will only be called with things that "Can't Possibly Happen".

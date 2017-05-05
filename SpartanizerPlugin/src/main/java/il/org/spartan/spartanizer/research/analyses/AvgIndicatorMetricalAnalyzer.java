@@ -15,7 +15,6 @@ public class AvgIndicatorMetricalAnalyzer extends IndicatorMetricalAnalyzer {
   @Override protected int metric(final ASTNode ¢) {
     return metrics.subtreeUnderstandability2(¢);
   }
-
   @Override protected double enumElement(final List<Int> is) {
     return 1.0 * is.stream().reduce((x, y) -> Int.valueOf(x.inner + y.inner)).get().inner / is.size();
   }

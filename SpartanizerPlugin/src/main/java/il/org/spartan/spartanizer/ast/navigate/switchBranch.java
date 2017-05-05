@@ -59,39 +59,32 @@ public class switchBranch {
     this.statements = statements;
     hasDefault = numOfNodes = numOfStatements = depth = sequencerLevel = -1;
   }
-
   public List<SwitchCase> cases() {
     return cases;
   }
-
   @SuppressWarnings("boxing") public boolean hasDefault() {
     if (hasDefault == -1)
       hasDefault = cases.stream().filter(SwitchCase::isDefault).map(λ -> 1).findFirst().orElse(hasDefault);
     return hasDefault == 1;
   }
-
   public int depth() {
     if (depth < 0)
       depth = metrics.depth(statements);
     return depth;
   }
-
   public int statementsNum() {
     if (numOfStatements < 0)
       numOfStatements = metrics.countStatements(statements);
     return numOfStatements;
   }
-
   public int nodesNum() {
     if (numOfNodes < 0)
       numOfNodes = metrics.nodes(statements);
     return numOfNodes;
   }
-
   public int casesNum() {
     return cases.size();
   }
-
   public int sequencerLevel() {
     if (sequencerLevel >= 0)
       return sequencerLevel;
@@ -102,7 +95,6 @@ public class switchBranch {
     assert sum > 0;
     return sequencerLevel = sum > $ && sum > re && sum > br && sum > co ? 0 : $ > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
   }
-
   /** @param ¢
    * @return returns 1 if _this_ has better metrics than b (i.e should come
    *         before b in the switch), -1 otherwise */
@@ -114,28 +106,23 @@ public class switchBranch {
     }
     return false;
   }
-
   public boolean compareTo(final switchBranch ¢) {
     final boolean $ = compare(¢);
     return $ != ¢.compare(this) ? $ : (the.headOf(cases) + "").compareTo(the.headOf(¢.cases) + "") < 0;
   }
-
   private void addAll(final Collection<Statement> ¢) {
     ¢.addAll(cases.stream().map(copy::of).collect(toList()));
     ¢.addAll(statements.stream().map(copy::of).collect(toList()));
   }
-
   private static void addAll(final Collection<Statement> ss, final Iterable<switchBranch> bs) {
     bs.forEach(λ -> λ.addAll(ss));
   }
-
   public static SwitchStatement makeSwitchStatement(final Iterable<switchBranch> bs, final Expression x, final AST t) {
     final SwitchStatement $ = t.newSwitchStatement();
     $.setExpression(copy.of(x));
     addAll(step.statements($), bs);
     return $;
   }
-
   // TODO Yuval Simon: please simplify this code. It is, to be honest, crappy
   // --yg
   @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
@@ -176,22 +163,18 @@ public class switchBranch {
     }
     return $;
   }
-
   public boolean hasSameBody(final switchBranch ¢) {
     return wizard.eq(functionalCommands(), ¢.functionalCommands());
   }
-
   private List<Statement> functionalCommands() {
     final List<Statement> $ = IntStream.range(0, statements.size() - 1).mapToObj(statements::get).collect(toList());
     if (!iz.breakStatement(the.lastOf(statements)))
       $.add(the.lastOf(statements));
     return $;
   }
-
   public boolean hasFallThrough() {
     return statements.stream().anyMatch(iz::switchCase);
   }
-
   public boolean hasStatements() {
     return !statements.isEmpty() && !iz.breakStatement(the.headOf(statements));
   }

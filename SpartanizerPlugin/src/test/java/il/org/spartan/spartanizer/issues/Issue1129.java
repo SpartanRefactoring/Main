@@ -18,13 +18,11 @@ public class Issue1129 {
         .stays()//
     ;
   }
-
   @Test public void b() {
     trimmingOf("if(a) f(); else if (x()) g(); else f();")//
         .stays()//
     ;
   }
-
   @Test public void c() {
     trimmingOf("if (b1) if (b2) f1(); else if (b3) f2();" //
         + "else f1(); else g();")//
@@ -33,7 +31,6 @@ public class Issue1129 {
             .stays()//
     ;
   }
-
   @Test public void d() {
     trimmingOf("if (b1) if (b2) f1(); else if (b3) f2();" //
         + "else f1(); else if (a2) g1(); else if (a3) g2();" //

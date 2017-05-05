@@ -15,13 +15,11 @@ public class RunRecord extends AbstractRunRecord {
     ___.nonnegative(runs);
     ___.positive(runs);
   }
-
   public double estimate() {
     ___.positive(netTime);
     ___.positive(runs);
     return 1.0 * netTime / runs;
   }
-
   public boolean ok() {
     Log.f("Checking %s entry: runs=%d, netTime=%s (%s), grossTime=%s (%s)", getClass().getSimpleName(), box.it(runs), Unit.formatNanoseconds(netTime),
         Unit.formatRelative(netTime, BenchingPolicy.getBenchingTime()), Unit.formatNanoseconds(grossTime),

@@ -10,35 +10,27 @@ public class DeepSize {
   public static int of(@NotNull final boolean it[]) {
     return ShallowSize.of(it);
   }
-
   public static int of(@NotNull final byte it[]) {
     return ShallowSize.of(it);
   }
-
   public static int of(@NotNull final char it[]) {
     return ShallowSize.of(it);
   }
-
   public static int of(@NotNull final double it[]) {
     return ShallowSize.of(it);
   }
-
   public static int of(@NotNull final float it[]) {
     return ShallowSize.of(it);
   }
-
   public static int of(@NotNull final int it[]) {
     return ShallowSize.of(it);
   }
-
   public static int of(@NotNull final long it[]) {
     return ShallowSize.of(it);
   }
-
   public static int of(final Object ¢) {
     return new Visitor().size(¢);
   }
-
   public static int of(@NotNull final short it[]) {
     return ShallowSize.of(it);
   }
@@ -60,7 +52,6 @@ public class DeepSize {
           $.add(¢);
       return $;
     }
-
     private static Object get(@NotNull final Field $, final Object o) {
       $.setAccessible(true);
       try {
@@ -69,7 +60,6 @@ public class DeepSize {
         throw new RuntimeException(¢);
       }
     }
-
     private static boolean isReference(@NotNull final Field f) {
       final Class<?> c = f.getType();
       for (final Class<?> p : nonReference)
@@ -86,7 +76,6 @@ public class DeepSize {
       seen.add(¢);
       return ¢ == null ? 0 : size(¢, ¢.getClass());
     }
-
     int size(final Object o, @NotNull final Class<?> c) {
       if (c.isArray())
         return size(Object[].class.cast(o));
@@ -96,11 +85,9 @@ public class DeepSize {
       // System.out.println("$ is:" + $);
       return $;
     }
-
     private int size(final Object o, @NotNull final Field f) {
       return Modifier.isStatic(f.getModifiers()) || !isReference(f) ? 0 : size(get(f, o));
     }
-
     private int size(@NotNull final Object[] os) {
       int $ = ShallowSize.of(os);
       for (final Object ¢ : os)

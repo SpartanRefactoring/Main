@@ -23,15 +23,12 @@ public class Exhaust extends NanoPatternTipper<WhileStatement> {
   @Override public boolean canTip(final WhileStatement ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final WhileStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public Category category() {
     return Category.Iterative;
   }
-
   @Override public String description() {
     return "Move an Iterable to its end using getNext() != null";
   }

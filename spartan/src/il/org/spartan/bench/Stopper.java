@@ -17,19 +17,18 @@ import il.org.spartan.streotypes.*;
  * average time of each such occurrence.
  * @author Yossi Gil,
  * @since 18/06/2008 */
-@Instantiable public class Stopper {
+@Instantiable
+public class Stopper {
   private static boolean mute;
 
   /** Silence all stoppers from now on. */
   public static void mute() {
     mute = true;
   }
-
   /** Allow stoppers to print their output from now on. */
   public static void unmute() {
     mute = false;
   }
-
   private static void out(final String m) {
     if (!mute)
       System.err.println(m);
@@ -44,7 +43,6 @@ import il.org.spartan.streotypes.*;
   public Stopper() {
     this(null);
   }
-
   /** Create a new instance distinguishable by a descriptive string, and print a
    * log message.
    * @param what a textual description of this instance, used in printouts */
@@ -54,34 +52,28 @@ import il.org.spartan.streotypes.*;
       out("Started " + what);
     begin = System.nanoTime();
   }
-
   /** @return the time since creation, per cases. */
   @NotNull public String average() {
     return peep() / 1E9 / cases + " sec";
   }
-
   /** @return the number of cases recorded so far. */
   public int cases() {
     return cases;
   }
-
   /** Used for measuring multiple (similar) events with the same stopper, this
    * method records a new case. */
   public void nextCase() {
     ++cases;
   }
-
   /** @return the time elapsed since creation. */
   public long peep() {
     return System.nanoTime() - begin;
   }
-
   public void reset() {
     if (what != null)
       out("Restarted " + what);
     begin = System.nanoTime();
   }
-
   /** Stop the timer, and print a log message with the time elapsed since
    * creation.
    * @return <code><b>this</b></code> */
@@ -90,7 +82,6 @@ import il.org.spartan.streotypes.*;
     out("Finished " + what + ": " + time + "ns");
     return this;
   }
-
   /** Stop the stopper (if it was not stopped already), and return the time, i
    * milliseconds recorded on it.
    * @return the time recorded on the stopper when it was stopped. */
@@ -99,7 +90,6 @@ import il.org.spartan.streotypes.*;
       time = System.nanoTime() - begin;
     return time;
   }
-
   @Override @NotNull public String toString() {
     return peep() / 1E9 + " sec";
   }

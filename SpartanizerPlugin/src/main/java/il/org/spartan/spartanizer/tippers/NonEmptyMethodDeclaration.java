@@ -21,11 +21,9 @@ public abstract class NonEmptyMethodDeclaration extends NodePattern<MethodDeclar
       return true;
     });
   }
-
   protected Javadoc jdoc() {
     return jdoc;
   }
-
   protected SimpleName name() {
     return name;
   }

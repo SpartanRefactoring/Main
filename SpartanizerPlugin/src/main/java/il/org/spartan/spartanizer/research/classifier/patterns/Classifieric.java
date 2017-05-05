@@ -23,7 +23,6 @@ public class Classifieric {
     @Override public boolean canTip(final ForStatement ¢) {
       return anyTips(tippers, ¢);
     }
-
     @Override public Tip pattern(final ForStatement ¢) {
       return firstTip(tippers, ¢);
     }

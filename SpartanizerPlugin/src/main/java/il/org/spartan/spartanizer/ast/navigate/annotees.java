@@ -18,7 +18,6 @@ public interface annotees {
   static List<SimpleName> names(final List<VariableDeclarationFragment> ¢) {
     return ¢.stream().map(VariableDeclaration::getName).collect(toList());
   }
-
   @SuppressWarnings("OverlyComplexMethod") static List<SimpleName> of(final Annotation ¢) {
     final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
@@ -47,43 +46,33 @@ public interface annotees {
         return null;
     }
   }
-
   static List<SimpleName> of(final AnnotationTypeMemberDeclaration $) {
     return as.list($.getName());
   }
-
   static List<SimpleName> of(final AnnotationTypeDeclaration $) {
     return as.list($.getName());
   }
-
   static List<SimpleName> of(final EnumConstantDeclaration $) {
     return as.list($.getName());
   }
-
   static List<SimpleName> of(final EnumDeclaration $) {
     return as.list($.getName());
   }
-
   static List<SimpleName> of(final FieldDeclaration $) {
     return names(fragments($));
   }
-
   static List<SimpleName> of(final MethodDeclaration $) {
     return as.list($.getName());
   }
-
   static List<SimpleName> of(final SingleVariableDeclaration ¢) {
     return as.list(¢.getName());
   }
-
   static List<SimpleName> of(final TypeDeclaration $) {
     return as.list($.getName());
   }
-
   static List<SimpleName> of(final VariableDeclarationExpression ¢) {
     return names(fragments(¢));
   }
-
   static List<SimpleName> of(final VariableDeclarationStatement ¢) {
     return names(fragments(¢));
   }

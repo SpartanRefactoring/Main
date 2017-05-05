@@ -14,19 +14,15 @@ public class Issue1049 {
   @Test public void t1() {
     bloatingOf("d = a+(cond ? b : c);").gives("d = cond ? a+b : a+c;");
   }
-
   @Test public void t2() {
     bloatingOf("d = a()+(cond ? b() : c());").gives("d = cond ? a()+b() : a()+c();");
   }
-
   @Test public void t3() {
     bloatingOf("d = a+(cond() ? b : c);").stays();
   }
-
   @Test public void t4() {
     bloatingOf("d = (cond ? a : b)+(cond2 ? c : d);").gives("d = cond2 ? (cond ? a : b) + c : (cond ? a : b) + d;");
   }
-
   @Test public void t5() {
     bloatingOf("d = (cond ? b : c) + a;").gives("d = cond ? b+a : c+a;");
   }

@@ -21,15 +21,12 @@ public class InfixMultiplicationByZero extends ReplaceCurrentNode<InfixExpressio
   private static boolean containsZero(final InfixExpression x) {
     return extract.allOperands(x).stream().anyMatch(λ -> iz.numberLiteral(λ) && "0".equals(az.numberLiteral(λ).getToken()));
   }
-
   private static boolean isContainsSideEffect(final InfixExpression x) {
     return extract.allOperands(x).stream().anyMatch(λ -> !sideEffects.free(λ));
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "Convert" + ¢ + " to 0";
   }
-
   @Override public ASTNode replacement(final InfixExpression ¢) {
     if (¢.getOperator() != TIMES || !containsZero(¢) || isContainsSideEffect(¢))
       return null;

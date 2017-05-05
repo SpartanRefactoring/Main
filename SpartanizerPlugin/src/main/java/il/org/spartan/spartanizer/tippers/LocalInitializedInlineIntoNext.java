@@ -31,7 +31,6 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Inline variable " + name(¢) + " into next statement";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     if (containsClassInstanceCreation(nextStatement)//
         || wizard.forbiddenOpOnPrimitive(f, nextStatement))
@@ -89,21 +88,17 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
     $.replace(n, e, g);
     return $;
   }
-
   private static boolean containsLambda(final Statement nextStatement) {
     return !descendants.whoseClassIs(LambdaExpression.class).from(nextStatement).isEmpty();
   }
-
   private static boolean preOrPostfix(final SimpleName id) {
     final ASTNode $ = parent(id);
     return iz.prefixExpression($)//
         || iz.postfixExpression($);
   }
-
   private static boolean containsClassInstanceCreation(final Statement nextStatement) {
     return !descendants.whoseClassIs(ClassInstanceCreation.class).from(nextStatement).isEmpty();
   }
-
   private static boolean anyFurtherUsage(final Statement originalStatement, final Statement nextStatement, final String id) {
     final Bool $ = new Bool();
     final ASTNode parent = parent(nextStatement);
@@ -121,12 +116,10 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
     });
     return $.inner;
   }
-
   private static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = occurencesOf(s, id);
     return $.size() != 1 ? null : the.headOf($);
   }
-
   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);
   }

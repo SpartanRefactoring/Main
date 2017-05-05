@@ -26,7 +26,6 @@ public final class LocalInitializedStatementToForInitializers extends ReplaceToN
   private static boolean fitting(final VariableDeclarationStatement s, final ForStatement ¢) {
     return sameTypeAndModifiers(s, ¢) && fragmentsUseFitting(s, ¢) && cantTip.forRenameInitializerToIt(¢);
   }
-
   /** final modifier is the only legal modifier inside a for loop, thus we push
    * initializers only if both, initializer's and declaration's modifiers lists
    * are empty, or contain final modifier only.
@@ -37,25 +36,21 @@ public final class LocalInitializedStatementToForInitializers extends ReplaceToN
     final List<IExtendedModifier> $ = extendedModifiers(s), initializerModifiers = extendedModifiers(x);
     return $.isEmpty() && initializerModifiers.isEmpty() || haz.final¢($) && haz.final¢(initializerModifiers);
   }
-
   // TODO now fitting returns true iff all fragments fitting. We
   // may want to be able to treat each fragment separately.
   private static boolean fragmentsUseFitting(final VariableDeclarationStatement vds, final ForStatement s) {
     return fragments(vds).stream().allMatch(λ -> Inliner.variableUsedInFor(s, name(λ)) && Inliner.variableNotUsedAfterStatement(s, name(λ)));
   }
-
   public static Expression handleAssignmentCondition(final Assignment from, final VariableDeclarationStatement s) {
     fragments(s).stream().filter(λ -> identifier(λ).equals(az.simpleName(left(from)) + ""))
         .forEachOrdered(λ -> λ.setInitializer(copy.of(right(from))));
     return copy.of(left(from));
   }
-
   public static Expression handleParenthesizedCondition(final ParenthesizedExpression from, final VariableDeclarationStatement s) {
     final Assignment $ = az.assignment(from.getExpression());
     final InfixExpression e = az.infixExpression(extract.core(from));
     return $ != null ? handleAssignmentCondition($, s) : e != null ? wizard.goInfix(e, s) : from;
   }
-
   /** @param t JD
    * @param from JD (already duplicated)
    * @param to is the list that will contain the pulled out initializations from
@@ -65,7 +60,6 @@ public final class LocalInitializedStatementToForInitializers extends ReplaceToN
     return iz.infix(from) ? wizard.goInfix(az.infixExpression(from), s)
         : iz.assignment(from) ? handleAssignmentCondition(az.assignment(from), s) : from;
   }
-
   private static boolean sameTypeAndModifiers(final VariableDeclarationStatement s, final ForStatement ¢) {
     final List<Expression> initializers = initializers(¢);
     if (initializers.isEmpty())
@@ -76,18 +70,15 @@ public final class LocalInitializedStatementToForInitializers extends ReplaceToN
     assert $ != null : "FragmentToForInitializers -> for initializer is null and not empty?!?";
     return wizard.eq(s.getType(), $.getType()) && fittingModifiers(s, $);
   }
-
   public static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
     final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(the.headOf(initializers($)));
     initializers($).clear();
     initializers($).add(make.variableDeclarationExpression(s));
     fragments(az.variableDeclarationExpression(the.headOf(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
-
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
     if (f == null || $ == null || nextStatement == null)
       return null;
@@ -102,7 +93,6 @@ public final class LocalInitializedStatementToForInitializers extends ReplaceToN
     $.replace(forStatement, buildForStatement(declarationStatement, forStatement), g);
     return $;
   }
-
   static ForStatement buildForStatement(final VariableDeclarationStatement s, final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
     $.setExpression(removeInitializersFromExpression(copy.of(expression(¢)), s));

@@ -38,23 +38,19 @@ public final class LocaUninitializedAssignment extends LocalUninitialized implem
       return laterSiblings().noneMatch(λ -> usedNames.contains(λ.getName()));
     });
   }
-
   @Override public String description() {
     return "Consolidate declaration of " + name + " with its subsequent initialization";
   }
-
   @Override public Examples examples() {
     return convert("class A{{int a;a=b;}}")//
         .to("class A{{int a = b;}}")//
     ;
   }
-
   private VariableDeclarationFragment replacement() {
     final VariableDeclarationFragment $ = copy.of(current);
     $.setInitializer(copy.of(from));
     return $;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     $.replace(initializer, replacement(), g);
     remove.statement(nextStatement, $, g);

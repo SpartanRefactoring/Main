@@ -45,7 +45,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     return execute(Selection.Util.project());
   }
-
   /** Initiates configuration change for the project. This includes one dialog
    * opening.
    * @param p JD
@@ -58,7 +57,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
     return $ == null ? null : commit(p, $);
   }
-
   /** Initiates configuration change for the project. This includes one dialog
    * opening. This method does not open the XML file, but uses given enabled
    * tippers collection. It also uses given commit method. This execution method
@@ -74,7 +72,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
     return $ == null ? null : commit.apply(p, $);
   }
-
   /** Commits enabled tippers for the project, see
    * {@link XMLSpartan#updateEnabledTippers}.
    * @param p JD
@@ -91,7 +88,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     }
     return null;
   }
-
   /** @param ¢ dialog
    * @param initialPreferences preferences at the start of the process
    * @return dialog's result: either enabled tippers, or null if the operation
@@ -107,7 +103,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
             .collect(toSet());
     return $ == null || $.containsAll(initialPreferences) && initialPreferences.containsAll($) ? null : $;
   }
-
   /** @param m enabled tippers collection
    * @return preferences configuration dialog for project, using given enabled
    *         tippers */
@@ -119,23 +114,18 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       @Override public void removeListener(@SuppressWarnings("unused") final ILabelProviderListener __) {
         //
       }
-
       @Override @SuppressWarnings("unused") public boolean isLabelProperty(final Object __, final String property) {
         return false;
       }
-
       @Override public void dispose() {
         //
       }
-
       @Override public void addListener(@SuppressWarnings("unused") final ILabelProviderListener __) {
         //
       }
-
       @Override public String getText(final Object ¢) {
         return ¢ == null ? "" : !(¢ instanceof SpartanElement) ? ¢ + "" : ((SpartanElement) ¢).name();
       }
-
       @Override public Image getImage(final Object ¢) {
         return ¢ instanceof SpartanTipper ? Dialogs.image(Dialogs.ICON) : ¢ instanceof SpartanCategory ? Dialogs.image(Dialogs.CATEGORY) : null;
       }
@@ -143,15 +133,12 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       @Override public boolean hasChildren(final Object ¢) {
         return ¢ instanceof SpartanCategory && ((SpartanElement) ¢).hasChildren();
       }
-
       @Override public Object getParent(final Object ¢) {
         return !(¢ instanceof SpartanTipper) ? null : ((SpartanTipper) ¢).parent;
       }
-
       @Override public Object[] getElements(@SuppressWarnings("unused") final Object __) {
         return es;
       }
-
       @Override public Object[] getChildren(final Object parentElement) {
         return !(parentElement instanceof SpartanCategory) ? null : m.get(parentElement);
       }
@@ -185,7 +172,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     public SpartanPreferencesDialog(final Shell parent, final ILabelProvider labelProvider, final ITreeContentProvider contentProvider) {
       super(parent, labelProvider, contentProvider);
     }
-
     /* (non-Javadoc)
      *
      * @see
@@ -211,7 +197,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (o instanceof SpartanTipper)
             createTooltip((SpartanTipper) o, i.getBounds());
         }
-
         void createTooltip(final SpartanTipper t, final Rectangle r) {
           tooltips.values().forEach(λ -> λ.setVisible(false));
           if (!tooltips.containsKey(t)) {
@@ -256,18 +241,15 @@ public class ProjectPreferencesHandler extends AbstractHandler {
               @Override public String getName() {
                 return st.name();
               }
-
               @Override public Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm) throws OperationCanceledException {
                 @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
                 $.setEdit(new ReplaceEdit(0, before.length(), after));
                 return $;
               }
-
               @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
                   throws OperationCanceledException {
                 return new RefactoringStatus();
               }
-
               @Override public RefactoringStatus checkFinalConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
                   throws OperationCanceledException {
                 return new RefactoringStatus();
@@ -298,7 +280,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(¢)).append("\n\n");
     return ($ + "").trim();
   }
-
   static String prettify(final String code) {
     final TextEdit e = formatter.get().format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     if (e == null)
@@ -311,7 +292,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     }
     return $.get();
   }
-
   private static Set<String> toEnabledSet(final Map<SpartanCategory, SpartanTipper[]> m) {
     return m.values().stream().reduce(new HashSet<String>(), (s, a) -> {
       s.addAll(Arrays.stream(a).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toList()));

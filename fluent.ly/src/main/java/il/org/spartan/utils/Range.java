@@ -26,17 +26,14 @@ public class Range {
     this.from = from;
     this.to = to;
   }
-
   /** Instantiates using values found in another intance
    * @param other other */
   public Range(@NotNull final Range other) {
     this(other.from, other.to);
   }
-
   @Override public boolean equals(final Object ¢) {
     return ¢ instanceof Range && from == ((Range) ¢).from && to == ((Range) ¢).to;
   }
-
   /** Find an including range
    * @param ¢ some arbitrary {@link Range} objects
    * @return first {@link Range} object in the parameters that contains this
@@ -48,30 +45,25 @@ public class Range {
         return $;
     return null;
   }
-
   @Override public int hashCode() {
     // Cantor pairing function
     return (int) (from + 0.5 * (to + from) * (to + from + 1));
   }
-
   /** @param ¢ arbitrary
    * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code> is
    *         included in the parameter. */
   public boolean includedIn(@NotNull final Range ¢) {
     return from >= ¢.from && to <= ¢.to;
   }
-
   public boolean isEmpty() {
     return size() <= 0;
   }
-
   /** Merge with another record
    * @param ¢ JD
    * @return A newly created range representing the merge. */
   @NotNull public Range merge(@NotNull final Range ¢) {
     return new Range(Math.min(from, ¢.from), Math.max(to, ¢.to));
   }
-
   /** Determine whether overlaps in any part another range
    * @param ¢ arbitrary
    * @return <code><b>true</b></code> <i>iff</i> <code><b>this</b></code>
@@ -79,7 +71,6 @@ public class Range {
   public boolean overlapping(@NotNull final Range ¢) {
     return from >= ¢.from || to <= ¢.to;
   }
-
   /** Prune all ranges in a given list that include this object.
    * @param rs JD */
   public void pruneIncluders(@NotNull final List<? extends Range> rs) {
@@ -90,13 +81,11 @@ public class Range {
       rs.remove(r);
     }
   }
-
   /** The number of integers in the range
    * @return a non-negative integer, computed as {@link #to} -{@link #from} */
   public int size() {
     return to - from;
   }
-
   @Override public String toString() {
     return String.format("[%d, %d]", fluent.ly.box.it(from), fluent.ly.box.it(to));
   }

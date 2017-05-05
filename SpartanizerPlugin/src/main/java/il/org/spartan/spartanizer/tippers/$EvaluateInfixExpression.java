@@ -32,7 +32,6 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     }
     return 0;
   }
-
   private static int indexForRightEvaluation(final InfixExpression x) {
     final List<Expression> es = extract.allOperands(x);
     for (int $ = 0, ¢ = es.size() - 1; ¢ >= 0; --¢, ++$)
@@ -40,19 +39,15 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
         return $ > 1 ? $ : 0;
     return -1;
   }
-
   @Override public final String description() {
     return "Evaluate " + operation();
   }
-
   @Override public final String description(final InfixExpression ¢) {
     return description() + ":" + ¢;
   }
-
   @Override public final boolean prerequisite(final InfixExpression ¢) {
     return step.operator(¢) == operator();
   }
-
   @Override public final ASTNode replacement(final InfixExpression x) {
     try {
       if (iz.validForEvaluation(x)) {
@@ -93,21 +88,14 @@ abstract class $EvaluateInfixExpression extends ReplaceCurrentNode<InfixExpressi
     }
     return null;
   }
-
   @Override public final TipperGroup tipperGroup() {
     return super.tipperGroup();
   }
-
   abstract double evaluateDouble(List<Expression> xs) throws IllegalArgumentException;
-
   abstract int evaluateInt(List<Expression> xs) throws IllegalArgumentException;
-
   abstract long evaluateLong(List<Expression> xs) throws IllegalArgumentException;
-
   abstract String operation();
-
   abstract Operator operator();
-
   private String opportunisticReplacement(final InfixExpression ¢) throws IllegalArgumentException {
     return type.of(¢) == INT ? Integer.toString(evaluateInt(extract.allOperands(¢)))
         : type.of(¢) == DOUBLE ? Double.toString(evaluateDouble(extract.allOperands(¢)))

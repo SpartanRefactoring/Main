@@ -35,11 +35,9 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
   @Override public String description(final Modifier ¢) {
     return "Remove redundant [" + ¢ + "] modifier";
   }
-
   @Override public String description() {
     return "Remove redundant modifier";
   }
-
   @Override public Tip tip(final Modifier ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -47,15 +45,12 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
       }
     };
   }
-
   @Override public boolean prerequisite(final Modifier ¢) {
     return ModifiersRedundancy.test(¢, ModifiersRedundancy.redundancies(az.bodyDeclaration(parent(¢))));
   }
-
   public static Set<Modifier> redundants(final BodyDeclaration ¢) {
     return matches(¢, redundancies(¢));
   }
-
   public static Set<Predicate<Modifier>> redundancies(final BodyDeclaration ¢) {
     final Set<Predicate<Modifier>> $ = new LinkedHashSet<>();
     if (extendedModifiers(¢) == null || extendedModifiers(¢).isEmpty())
@@ -113,22 +108,18 @@ public final class ModifierRedundant extends CarefulTipper<Modifier>//
       $.remove(isFinal);
     return $;
   }
-
   public static BodyDeclaration prune(final BodyDeclaration $, final Set<Predicate<Modifier>> ms) {
     for (final Iterator<IExtendedModifier> ¢ = extendedModifiers($).iterator(); ¢.hasNext();)
       if (ModifiersRedundancy.test(¢.next(), ms))
         ¢.remove();
     return $;
   }
-
   public static Set<Modifier> matchess(final BodyDeclaration ¢, final Set<Predicate<Modifier>> ms) {
     return matches(extendedModifiers(¢), ms);
   }
-
   public static Set<Modifier> matches(final List<IExtendedModifier> ms, final Set<Predicate<Modifier>> ps) {
     return ms.stream().filter(λ -> ModifiersRedundancy.test(λ, ps)).map(Modifier.class::cast).collect(toSet());
   }
-
   public static Set<Modifier> matches(final BodyDeclaration d, final Set<Predicate<Modifier>> ms) {
     return extendedModifiers(d).stream().filter(λ -> ModifiersRedundancy.test(λ, ms)).map(Modifier.class::cast)
         .collect(toCollection(LinkedHashSet::new));

@@ -24,18 +24,15 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
                                 : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢) //
                                     : reduce();
   }
-
   protected R composite(final List<? extends ASTNode> ns) {
     R $ = reduce();
     for (final ASTNode ¢ : ns)
       $ = reduce($, map(¢));
     return $;
   }
-
   protected R compound(final Expression... ¢) {
     return foldl(as.list(¢));
   }
-
   protected final R foldl(final Iterable<? extends ASTNode> ns) {
     R $ = reduce();
     if (ns != null)
@@ -43,22 +40,18 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         $ = reduce($, map(¢));
     return $;
   }
-
   protected R foldListModifiers(final List<IExtendedModifier> ms) {
     R $ = reduce();
     for (final IExtendedModifier ¢ : ms)
       $ = reduce($, map(¢));
     return $;
   }
-
   @SuppressWarnings("static-method") protected int[] protect() {
     return new int[] {};
   }
-
   protected R map(final AbstractTypeDeclaration ¢) {
     return reduce(map(¢.getJavadoc()), foldListModifiers(step.extendedModifiers(¢)), map(¢.getName()), foldl(step.bodyDeclarations(¢)));
   }
-
   protected R map(final Annotation ¢) {
     return ¢ instanceof MarkerAnnotation ? map((MarkerAnnotation) ¢) //
         : ¢ instanceof NormalAnnotation ? map((NormalAnnotation) ¢) //
@@ -66,71 +59,54 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
                 : note.bug("Unrecognized Annotation; __=%s", English.name(¢.getClass())) //
     ;
   }
-
   protected R map(final AnonymousClassDeclaration ¢) {
     return bodyDeclarations(¢).stream().map(this::map).reduce(this::reduce).orElse(reduce());
   }
-
   protected R map(final ArrayAccess ¢) {
     return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
-
   protected R map(final ArrayCreation ¢) {
     return reduce(foldl(dimensions(¢)), map(¢.getInitializer()));
   }
-
   protected R map(final ArrayInitializer ¢) {
     return foldl(expressions(¢));
   }
-
   protected R map(final AssertStatement ¢) {
     return compound(¢.getExpression(), ¢.getMessage());
   }
-
   protected R map(final Assignment ¢) {
     return reduce(map(to(¢)), map(from(¢)));
   }
-
   protected R map(final Block ¢) {
     return foldl(statements(¢));
   }
-
   protected R map(final BreakStatement ¢) {
     return compound(¢.getLabel());
   }
-
   protected R map(final CastExpression ¢) {
     return map(¢.getExpression());
   }
-
   protected R map(final CatchClause ¢) {
     return reduce(map(¢.getException()), map(¢.getBody()));
   }
-
   protected R map(final ClassInstanceCreation ¢) {
     return reduce(map(¢.getExpression()), foldl(arguments(¢)));
   }
-
   protected R map(final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
-
   protected R map(final ConstructorInvocation ¢) {
     return foldl(arguments(¢));
   }
-
   protected R map(final ContinueStatement ¢) {
     return compound(¢.getLabel());
   }
-
   protected R map(final DoStatement ¢) {
     return map(¢.getBody());
   }
-
   protected R map(final EnhancedForStatement ¢) {
     return map(¢.getBody());
   }
-
   protected R map(final Expression ¢) {
     if (¢ == null)
       return reduce();
@@ -189,90 +165,69 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return note.bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
   }
-
   protected R map(final MethodRefParameter ¢) {
     return reduce(map(¢.getType()), map(¢.getName()));
   }
-
   protected R map(final MethodRef ¢) {
     return reduce(map(¢), map(¢));
   }
-
   protected R map(final ExpressionMethodReference ¢) {
     return reduce(map(¢.getExpression()), map(¢.getName()));
   }
-
   protected R map(final FieldAccess ¢) {
     return reduce(map(¢.getExpression()), map(¢.getName()));
   }
-
   protected R map(final ExpressionStatement ¢) {
     return compound(¢.getExpression());
   }
-
   protected R map(final ForStatement ¢) {
     return reduce(composite(initializers(¢)), map(¢.getExpression()), composite(updaters(¢)), map(¢.getBody()));
   }
-
   protected R map(final IExtendedModifier ¢) {
     return ¢.isAnnotation() ? map((Annotation) ¢) //
         : ¢.isModifier() ? map((Modifier) ¢) //
             : note.bug("Unrecognized IExtendedModifier; __=%s", English.name(¢.getClass()));
   }
-
   protected R map(final IfStatement ¢) {
     return reduce(map(expression(¢)), map(then(¢)), map(elze(¢)));
   }
-
   protected R map(final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
-
   protected R map(final Javadoc j) {
     return step.tags(j).stream().map(λ -> map(λ)).reduce(reduce(), (x1, x2) -> reduce(x1, x2));
   }
-
   protected R map(final LabeledStatement ¢) {
     return reduce(map(¢.getLabel()), map(¢.getBody()));
   }
-
   /** TODO: fix this! */
   protected R map(@SuppressWarnings("unused") final LambdaExpression fixMe) {
     return reduce();
   }
-
   protected R map(final MarkerAnnotation ¢) {
     return reduce(map(¢.getTypeName()));
   }
-
   protected R map(final MethodInvocation ¢) {
     return reduce(map(expression(¢)), foldl(arguments(¢)));
   }
-
   protected R map(final NormalAnnotation ¢) {
     return reduce(map(¢.getTypeName()), composite(values(¢)));
   }
-
   protected R map(final PostfixExpression ¢) {
     return map(expression(¢));
   }
-
   protected R map(final PrefixExpression ¢) {
     return map(expression(¢));
   }
-
   protected R map(final QualifiedName ¢) {
     return reduce(map(¢.getQualifier()), map(¢.getName()));
   }
-
   protected R map(final ReturnStatement ¢) {
     return compound(¢.getExpression());
   }
-
   protected R map(final SingleMemberAnnotation ¢) {
     return reduce(map(¢.getTypeName()), map(¢.getValue()));
   }
-
   protected R map(final Statement ¢) {
     if (¢ == null)
       return reduce();
@@ -322,27 +277,21 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return reduce();
     }
   }
-
   protected R map(final SuperConstructorInvocation ¢) {
     return reduce(map(expression(¢)), foldl(arguments(¢)));
   }
-
   protected R map(final SuperMethodInvocation ¢) {
     return reduce(map(expression(¢)), foldl(arguments(¢)));
   }
-
   protected R map(final SwitchStatement ¢) {
     return reduce(map(¢.getExpression()), composite(statements(¢)));
   }
-
   protected R map(final SynchronizedStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
   }
-
   protected R map(final ThisExpression ¢) {
     return map(¢.getQualifier());
   }
-
   protected R map(final TryStatement ¢) {
     return reduce(//
         reduceResources(¢), //
@@ -351,31 +300,24 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         map(¢.getFinally())//
     );
   }
-
   protected R map(final TypeDeclarationStatement ¢) {
     return map(¢.getDeclaration());
   }
-
   protected R map(final VariableDeclarationExpression ¢) {
     return reduce(fragments(¢));
   }
-
   protected R map(final VariableDeclarationStatement ¢) {
     return reduce(fragments(¢));
   }
-
   protected R map(final WhileStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
   }
-
   protected R reduce(final Collection<VariableDeclarationFragment> ¢) {
     return ¢.stream().map(VariableDeclarationFragment::getInitializer).map(this::map).reduce(this::reduce).orElse(reduce());
   }
-
   protected R reduceCatches(final TryStatement ¢) {
     return catchClauses(¢).stream().map(CatchClause::getBody).map(this::map).reduce(this::reduce).orElse(reduce());
   }
-
   protected R reduceResources(final TryStatement ¢) {
     return resources(¢).stream().map(this::map).reduce(this::reduce).orElse(reduce());
   }

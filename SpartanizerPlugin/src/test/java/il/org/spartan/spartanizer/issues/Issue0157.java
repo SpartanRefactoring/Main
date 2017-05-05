@@ -24,7 +24,6 @@ public final class Issue0157 {
                 + "return combine($);  \n" //
                 + "}");
   }
-
   @Test public void test02() {
     trimmingOf("public static String combine(final Uno<?>[] uno) {  \n" //
         + "final String[] $ = new String[uno.length];  \n" //
@@ -39,7 +38,6 @@ public final class Issue0157 {
                 + "return combine($);  \n" //
                 + "}");
   }
-
   @Test public void test03() {
     trimmingOf("public static String combine(final Many<?>[] manies) {  \n" //
         + "final String[] $ = new String[manies.length];  \n" //
@@ -54,7 +52,6 @@ public final class Issue0157 {
                 + "return combine($);  \n" //
                 + "}");
   }
-
   @Test public void test04() {
     trimmingOf("public static String combine(final Many<? extends Few>[] fews) {  \n" //
         + "final String[] $ = new String[fews.length];  \n" //
@@ -69,7 +66,6 @@ public final class Issue0157 {
                 + "return combine($);  \n" //
                 + "}");
   }
-
   // same test, with super instead of extends.
   @Test public void test05() {
     trimmingOf("public static String combine(final Many<? super Few>[] fews) {  \n" //
@@ -85,7 +81,6 @@ public final class Issue0157 {
                 + "return combine($);  \n" //
                 + "}");
   }
-
   // Parameterized that are not of some Collection __, don'tipper get an
   // 's' if
   // they're not an array.
@@ -103,7 +98,6 @@ public final class Issue0157 {
                 + "return combine($);  \n" //
                 + "}");
   }
-
   // Parameterized Collections do get an additional 's'.
   @Test public void test07() {
     trimmingOf("public static String combine(final List<Paranoid> paranoid) {  \n" //
@@ -119,7 +113,6 @@ public final class Issue0157 {
                 + "return combine($);  \n" //
                 + "}");
   }
-
   @Test public void test08() {
     trimmingOf("public static String combine(final Set<Paranoid> paranoid) {  \n" //
         + "final String[] $ = new String[paranoid.size()];  \n" //
@@ -134,7 +127,6 @@ public final class Issue0157 {
                 + "return combine($);  \n" //
                 + "}");
   }
-
   // Collections of collections of arrays of Collections behave as expected.
   @Test public void test09() {
     trimmingOf("public static String combine(final Set<List<HashSet<?>[]>> hash) {  \n" //

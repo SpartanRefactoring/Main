@@ -24,23 +24,18 @@ public final class ReturnIfException extends NanoPatternTipper<CatchClause> {
   @Override public boolean canTip(final CatchClause ¢) {
     return anyTips(tippers, parent(¢));
   }
-
   @Override public Tip pattern(final CatchClause ¢) {
     return firstTip(tippers, parent(¢));
   }
-
   @Override public Category category() {
     return Category.Exception;
   }
-
   private static TryStatement parent(final CatchClause ¢) {
     return az.tryStatement(parent(¢));
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }

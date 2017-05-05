@@ -29,7 +29,6 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
     wizard.setParserResolveBindings();
     DeprecatedFolderASTVisitor.main(args);
   }
-
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
@@ -38,31 +37,25 @@ public class MethodsCounter extends DeprecatedFolderASTVisitor {
     ++methods.get(key).inner;
     return true;
   }
-
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
-
   @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
   }
-
   @Override protected void done(final String __) {
     forget.em(__);
     dotter.line();
     summarizeNumbers();
     System.err.println("Your output is in: " + outputFolder);
   }
-
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
-
   public static CSVStatistics openSummaryFile(final String $) {
     return new CSVStatistics($, "property");
   }
-
   public void summarizeNumbers() {
     final CSVStatistics report = openSummaryFile(outputFolder + "/countStatistics.csv");
     if (report == null)

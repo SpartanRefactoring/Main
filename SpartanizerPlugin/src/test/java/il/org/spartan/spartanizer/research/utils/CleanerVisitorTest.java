@@ -18,15 +18,12 @@ public class CleanerVisitorTest {
   private static ASTNode createAST(final String ¢) {
     return make.ast(¢);
   }
-
   private static Predicate<ASTNode> createImportPredicate() {
     return ImportDeclaration.class::isInstance;
   }
-
   private static Predicate<ASTNode> createJavadocPredicate() {
     return Javadoc.class::isInstance;
   }
-
   @SuppressWarnings("static-method") private ASTNodeWrapper getChildren(final Predicate<ASTNode> p, final ASTNode n) {
     final ASTNodeWrapper $ = new ASTNodeWrapper();
     n.accept(new ASTVisitor(true) {
@@ -37,11 +34,9 @@ public class CleanerVisitorTest {
     });
     return $;
   }
-
   @Test public void test1() {
     new CleanerVisitor().visit((Javadoc) the.headOf(getChildren(createJavadocPredicate(), createAST("/**banana*/class f { }")).inner));
   }
-
   @Test public void test2() {
     new CleanerVisitor().visit((ImportDeclaration) the.headOf(getChildren(createImportPredicate(), createAST("import banana; class f { }")).inner));
   }

@@ -15,7 +15,6 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .gives("return tippers.stream().anyMatch(¢ -> ¢.canTip(s));");
   }
-
   @Test public void a() {
     trimmingOf("for (final Object ¢ : os) if (¢.equals(best)) return true; return false;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -23,7 +22,6 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("something1(); something2(); for (final Object ¢ : os) if (¢.equals(best)) return true; return false;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -31,7 +29,6 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("for (Object ¢ : os) if (best.equals(¢)) return true; return false;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -39,7 +36,6 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("for (Object ¢ : (B)bs) if (best.equals(¢)) return true; return false;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -47,7 +43,6 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void e() {
     trimmingOf("for (Object ¢ : col.le(c,(tio)n)) if (best.equals(¢)) return true; return false;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -55,7 +50,6 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void f() {
     trimmingOf("for (Object ¢ : omg ? yes : no) if (best.equals(¢)) return true; return false;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -63,7 +57,6 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void g() {
     trimmingOf("for (final Object ¢ : os) if (¢ == (best)) return true; return false;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -71,7 +64,6 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void h() {
     trimmingOf("for (final Object ¢ : os) if (¢ == a + b) return true; return false;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -79,7 +71,6 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void i() {
     trimmingOf("for (final Object ¢ : os) if (¢ == (omg ? yes : no)) return true; return false;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -87,14 +78,12 @@ public class HoldsForAnyTest {
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void j() {
     trimmingOf("for (final Object ¢ : f.modifiers()) if (((Modifier) ¢).isFinal()) $ = true;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
         .gives("$=f.modifiers().stream().anyMatch(¢->((Modifier)¢).isFinal());")//
     ;
   }
-
   @Test public void k() {
     trimmingOf("for (X x : Y) if (whatever) return true;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//
@@ -102,7 +91,6 @@ public class HoldsForAnyTest {
         .gives("returnIf(Y.stream().anyMatch(λ -> whatever));")//
         .stays();
   }
-
   @Test public void l() {
     trimmingOf("for (X x : Y) if (whatever) $ = true;")//
         .using(new HoldsForAny(), EnhancedForStatement.class)//

@@ -22,7 +22,6 @@ public class Issue1247 {
         .gives("\"\" + f() + (1+1) + \"\"") //
         .gives("\"\" + f() + (1+1)");
   }
-
   @Test public void stringFromBuilderGeneral() {
     trimmingOf("new StringBuilder(myName).append(\"\'s grade is\").append(100).toString()") //
         .using(new StringFromStringBuilder()) //
@@ -31,31 +30,26 @@ public class Issue1247 {
         .gives("myName + \"\'s grade is\" + 100") //
         .stays();
   }
-
   @Test public void stringFromBuilderNoStringComponents() {
     trimmingOf("new StringBuilder(0).append(1).toString()") //
         .using(new StringFromStringBuilder()) //
         .gives("\"\"+0+1");
   }
-
   @Test public void stringFromBuilderSimple() {
     trimmingOf("new StringBuilder(1).toString()") //
         .using(new StringFromStringBuilder()) //
         .gives("\"\"+1");
   }
-
   @Test public void stringFromBuilderSimple2() {
     trimmingOf("new StringBuilder(1) + \"\"") //
         .using(new StringFromStringBuilder()) //
         .gives("\"\" + 1 + \"\"");
   }
-
   @Test public void stringFromBuilderSimplest() {
     trimmingOf("new StringBuilder().toString()") //
         .using(new StringFromStringBuilder()) //
         .gives("\"\"");
   }
-
   @Test public void stringFromBuilderSimplest2() {
     trimmingOf("new StringBuilder() + \"\"") //
         .using(new StringFromStringBuilder()) //

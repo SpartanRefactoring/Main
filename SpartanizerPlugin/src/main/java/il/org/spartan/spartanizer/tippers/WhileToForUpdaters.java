@@ -23,20 +23,16 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
     $.setBody(minus.lastStatement(copy.of(body(¢))));
     return $;
   }
-
   private static boolean hasFittingUpdater(final WhileStatement ¢) {
     return az.block(body(¢)) != null && iz.updating(hop.lastStatement(body(¢))) && statements(az.block(body(¢))).size() >= 2
         && !ForToForUpdaters.bodyDeclaresElementsOf(hop.lastStatement(body(¢)));
   }
-
   @Override public String description() {
     return "Convert a while to a traditional for(;;)";
   }
-
   @Override public String description(final WhileStatement ¢) {
     return "Convert the while about '(" + ¢.getExpression() + ")' to a traditional for(;;)";
   }
-
   @Override public boolean prerequisite(final WhileStatement ¢) {
     return ¢ != null //
         && !iz.containsContinueStatement(body(¢)) //
@@ -45,7 +41,6 @@ public class WhileToForUpdaters extends ReplaceCurrentNode<WhileStatement>//
         && cantTip.declarationRedundantInitializer(¢) //
         && cantTip.remvoeRedundantIf(¢);
   }
-
   @Override public ASTNode replacement(final WhileStatement ¢) {
     return ¢ == null || iz.containsContinueStatement(body(¢)) || !hasFittingUpdater(¢) || !cantTip.declarationInitializerStatementTerminatingScope(¢)
         || !cantTip.declarationRedundantInitializer(¢) || !cantTip.remvoeRedundantIf(¢) ? null : buildForWithoutLastStatement(¢);

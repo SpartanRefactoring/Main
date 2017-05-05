@@ -23,7 +23,6 @@ public abstract class Local extends FragmentAmongFragments {
     needs("Variable declation", //
         () -> declaration = az.variableDeclarationStatement(parent));
   }
-
   /** Eliminates a {@link VariableDeclarationFragment}, with any other fragment
    * fragments which are not live in the containing
    * {@link VariabelDeclarationStatement}. If no fragments are left, then this
@@ -41,7 +40,6 @@ public abstract class Local extends FragmentAmongFragments {
     }
     return $;
   }
-
   protected int eliminationSaving() {
     final List<VariableDeclarationFragment> live = remainingSiblings();
     final int $ = metrics.size(declaration);
@@ -52,7 +50,6 @@ public abstract class Local extends FragmentAmongFragments {
     fragments(newParent).addAll(live);
     return $ - metrics.size(newParent);
   }
-
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
    * Still, if the containing node is left empty, it is removed as well.
@@ -61,7 +58,6 @@ public abstract class Local extends FragmentAmongFragments {
   void remove(final ASTRewrite r, final TextEditGroup g) {
     r.remove(declaration.fragments().size() > 1 ? current() : declaration, g);
   }
-
   @Override protected final List<VariableDeclarationFragment> siblings() {
     return step.fragments(declaration);
   }

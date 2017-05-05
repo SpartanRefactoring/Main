@@ -14,7 +14,10 @@ import il.org.spartan.streotypes.*;
  * @author Yossi Gil, the Technion.
  * @since 23/08/2008
  * @see MutableEnumIntMap */
-@Canopy @Classical @Immutable public class ImmutableEnumIntMap<E extends Enum<E>> extends ImmutableArray.Ints implements EnumIntMap<E> {
+@Canopy
+@Classical
+@Immutable
+public class ImmutableEnumIntMap<E extends Enum<E>> extends ImmutableArray.Ints implements EnumIntMap<E> {
   /** Initialize an instance with a given array of appropriate size.
    * @param is an array whose <i>i<sup>th</sup></i> entry is the value of the
    *        <i>i<sup>th</sup></i> enumerated value. The number of entries in
@@ -22,7 +25,6 @@ import il.org.spartan.streotypes.*;
   public ImmutableEnumIntMap(final int[] is) {
     super(is);
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.collections.EnumIntMap#get(E) */

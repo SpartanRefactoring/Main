@@ -16,14 +16,12 @@ public class LispFirstElementTest {
         .gives("first(li)")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("li.get(0);")//
         .using(new First(), MethodInvocation.class)//
         .gives("first(li);")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("omg(li.get(0),li.get(0));")//
         .using(new First(), MethodInvocation.class)//

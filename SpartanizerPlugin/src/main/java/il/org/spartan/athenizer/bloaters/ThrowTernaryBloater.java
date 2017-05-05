@@ -30,17 +30,14 @@ public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
     $.setElseStatement(copy.of(az.statement(elze)));
     return $;
   }
-
   private static ASTNode replaceReturn(final Statement ¢) {
     final ThrowStatement $ = az.throwStatement(¢);
     return $ == null || !(expression($) instanceof ConditionalExpression) && !(expression($) instanceof ParenthesizedExpression) ? null
         : innerThrowReplacement(expression($), ¢);
   }
-
   @Override public ASTNode replacement(final ThrowStatement ¢) {
     return replaceReturn(¢);
   }
-
   @Override public String description(@SuppressWarnings("unused") final ThrowStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }

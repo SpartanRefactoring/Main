@@ -22,7 +22,6 @@ public class InfixPlusToMinus extends ReplaceCurrentNode<InfixExpression>//
     return !iz.prefixMinus(¢.getRightOperand()) || !iz.infixPlus(¢) ? null
         : subject.pair(¢.getLeftOperand(), az.prefixExpression(¢.getRightOperand()).getOperand()).to(Operator.MINUS);
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "replace the plus in: " + ¢ + " to minus";
   }

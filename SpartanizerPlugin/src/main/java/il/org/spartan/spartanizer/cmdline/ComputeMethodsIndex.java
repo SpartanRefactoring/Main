@@ -23,7 +23,6 @@ public class ComputeMethodsIndex extends DeprecatedFolderASTVisitor {
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
   }
-
   @Override @SuppressWarnings("boxing") public boolean visit(final MethodDeclaration ¢) {
     if (statements(¢) == null || statements(¢).isEmpty())
       return false;
@@ -36,7 +35,6 @@ public class ComputeMethodsIndex extends DeprecatedFolderASTVisitor {
   @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
   }
-
   @Override protected void done(final String path) {
     dotter.end();
     System.err.println("Done processing: " + path);

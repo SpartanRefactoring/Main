@@ -29,18 +29,15 @@ public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
     andAlso("else if expression must have no side effects", () -> //
     sideEffects.free(elzeIfCondition));
   }
-
   @Override public String description() {
     return "Merges if and else blocks when they are the same and there is an else if clause.";
   }
-
   @Override public Examples examples() {
     return //
     convert("if(a) f(); else if(b) g(); else f();")//
         .to("if(a || !b) f(); else if(b) g();")//
         .ignores("if(a) f(); else if (x()) g(); else f();");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final IfStatement s2 = copy.of(az.ifStatement(elze)), $ = copy.of(current);
     $.setExpression(operands(condition, operand(elzeIfCondition).to(NOT))//

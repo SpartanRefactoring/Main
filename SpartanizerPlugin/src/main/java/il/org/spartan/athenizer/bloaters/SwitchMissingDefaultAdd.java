@@ -22,12 +22,10 @@ public class SwitchMissingDefaultAdd extends Switch implements TipperCategory.Bl
         ignores("switch(x) { case 1: y=2; break; default: }")//
     ;
   }
-
   public SwitchMissingDefaultAdd() {
     andAlso("Does not have default case", //
         () -> cases().stream().noneMatch(SwitchCase::isDefault));
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final ListRewrite l = $.getListRewrite(current, SwitchStatement.STATEMENTS_PROPERTY);
     final SwitchCase ss = current.getAST().newSwitchCase();
@@ -35,7 +33,6 @@ public class SwitchMissingDefaultAdd extends Switch implements TipperCategory.Bl
     l.insertLast(ss, g);
     return $;
   }
-
   @Override public String description() {
     return "Add default case to switch statement";
   }

@@ -19,12 +19,10 @@ public class Issue0808 {
     final Expression ex = az.numberLiteral(make.ast("5"));
     assertNotEquals(ex, new Term(true, copy.of(ex)).asExpression());
   }
-
   @Test @SuppressWarnings("static-method") public void test02() {
     final Expression ex = az.simpleName(make.ast("shahar"));
     azzert.that(new Term(false, ex).asExpression(), is(ex));
   }
-
   @Test @SuppressWarnings("static-method") public void test03() {
     final Expression ex1 = az.simpleName(make.ast("shahar")), ex2 = az.simpleName(make.ast("david")), ex3 = az.simpleName(make.ast("zahi"));
     azzert.that(new Term(false, ex1).asExpression(), is(ex1));

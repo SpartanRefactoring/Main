@@ -9,13 +9,11 @@ public class it<T> {
   public it(final T it) {
     this.it = it;
   }
-
   public static <T> it<T> be(final T it) {
     final let.it<T> $ = new it<>(it);
     stack.push($);
     return $;
   }
-
   public it<T> is(final String s) {
     return this;
   }

@@ -10,7 +10,8 @@ import java.lang.annotation.*;
  * @since 23/08/2008 */
 @Documented //
 @Retention(RetentionPolicy.SOURCE) //
-@Target(ElementType.TYPE) @Designator //
+@Target(ElementType.TYPE)
+@Designator //
 public @interface Module {
   // No members in a <b>Designator</b>.
 }

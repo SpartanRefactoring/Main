@@ -22,27 +22,21 @@ public final class Singleton extends NanoPatternTipper<InfixExpression> {
   @Override public boolean canTip(final InfixExpression ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final InfixExpression ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Boolean expression that checks whether a collection is of size 1";
   }
-
   @Override public String technicalName() {
     return "singleton(X)";
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }
-
   @Override public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }

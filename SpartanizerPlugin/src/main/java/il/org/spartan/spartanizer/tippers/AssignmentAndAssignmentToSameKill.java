@@ -24,11 +24,9 @@ public class AssignmentAndAssignmentToSameKill extends GoToNextStatement<Assignm
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return description();
   }
-
   @Override public String description() {
     return "eliminate redundant assignment";
   }
-
   @Override public Examples examples() {
     return //
     convert("x = 1; x = 2;") //
@@ -39,7 +37,6 @@ public class AssignmentAndAssignmentToSameKill extends GoToNextStatement<Assignm
         .ignores("x = 1; x += 2;") //
     ;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a, final Statement nextStatement, final TextEditGroup g) {
     final Assignment nextAssignment = Optional.of(nextStatement) //
         .map(az::expressionStatement) //

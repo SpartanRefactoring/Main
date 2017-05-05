@@ -21,6 +21,5 @@ public abstract class RemovingTipper<N extends ASTNode> extends CarefulTipper<N>
       }
     };
   }
-
   @Override protected abstract boolean prerequisite(N n);
 }

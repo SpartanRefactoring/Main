@@ -17,65 +17,51 @@ public abstract class StatementReduce<T> {
   protected T map(final ArrayAccess ¢) {
     return reduce(map(¢.getArray()), map(¢.getIndex()));
   }
-
   protected T map(final ArrayCreation ¢) {
     return reduce(reduce(dimensions(¢)), map(¢.getInitializer()));
   }
-
   private T reduce(final Iterable<Expression> xs) {
     T $ = neutralElement();
     for (final Expression ¢ : xs)
       $ = reduce($, map(¢));
     return $;
   }
-
   protected T map(final AssertStatement ¢) {
     return mapAtomic(¢);
   }
-
   protected T map(final Assignment ¢) {
     return reduce(map(to(¢)), map(from(¢)));
   }
-
   protected T map(final Block b) {
     T $ = neutralElement();
     for (final Statement ¢ : statements(b))
       $ = reduce($, map(¢));
     return $;
   }
-
   protected T map(final BreakStatement ¢) {
     return mapAtomic(¢);
   }
-
   protected T map(final ClassInstanceCreation ¢) {
     return reduce(map(¢.getExpression()), reduce(arguments(¢)));
   }
-
   protected T map(final ConditionalExpression ¢) {
     return reduce(map(¢.getExpression()), map(then(¢)), map(elze(¢)));
   }
-
   protected T map(final ConstructorInvocation ¢) {
     return mapAtomic(¢);
   }
-
   protected T map(final ContinueStatement ¢) {
     return mapAtomic(¢);
   }
-
   protected T map(final DoStatement ¢) {
     return map(¢.getBody());
   }
-
   protected T map(final EmptyStatement ¢) {
     return mapAtomic(¢);
   }
-
   protected T map(final EnhancedForStatement ¢) {
     return map(¢.getBody());
   }
-
   T map(final Expression ¢) {
     switch (¢.getNodeType()) {
       case PREFIX_EXPRESSION:
@@ -108,39 +94,30 @@ public abstract class StatementReduce<T> {
         return null;
     }
   }
-
   protected T map(final InstanceofExpression ¢) {
     return map(¢.getLeftOperand());
   }
-
   protected T map(final ExpressionStatement ¢) {
     return mapAtomic(¢);
   }
-
   protected T map(final IfStatement ¢) {
     return reduceIfStatement(expression(¢), then(¢), elze(¢));
   }
-
   protected T map(final LabeledStatement ¢) {
     return map(¢.getBody());
   }
-
   protected T map(final MethodInvocation ¢) {
     return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
-
   protected T map(final PostfixExpression ¢) {
     return map(expression(¢));
   }
-
   protected T map(final PrefixExpression ¢) {
     return map(expression(¢));
   }
-
   protected T map(final ReturnStatement ¢) {
     return mapAtomic(¢);
   }
-
   public final T map(final Statement ¢) {
     switch (¢.getNodeType()) {
       case ASSERT_STATEMENT:
@@ -174,34 +151,27 @@ public abstract class StatementReduce<T> {
         return null;
     }
   }
-
   protected T map(final SuperConstructorInvocation ¢) {
     return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
-
   protected T map(final SuperMethodInvocation ¢) {
     return reduce(map(expression(¢)), reduce(arguments(¢)));
   }
-
   protected T mapAtomic(final Statement i) {
     final Object[] ____ = { i };
     forget.em(____);
     return neutralElement();
   }
-
   protected T neutralElement() {
     return null;
   }
-
   protected abstract T reduce(T t1, T t2);
-
   @SafeVarargs protected final T reduce(final T t1, final T t2, final T... ts) {
     T $ = reduce(t1, t2);
     for (final T ¢ : ts)
       $ = reduce($, ¢);
     return $;
   }
-
   protected T reduceIfStatement(final Expression x, final Statement then, final Statement elze) {
     return reduce(map(x), reduce(map(then), map(elze)));
   }

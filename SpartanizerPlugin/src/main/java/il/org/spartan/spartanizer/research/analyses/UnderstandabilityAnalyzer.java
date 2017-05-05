@@ -16,7 +16,6 @@ public class UnderstandabilityAnalyzer extends IntegerMetricalAnalyzer {
   @Override protected int metric(final ASTNode ¢) {
     return metrics.subtreeUnderstandability(¢);
   }
-
   public static void main(final String[] args) {
     try (Scanner reader = new Scanner(System.in)) {
       final String s = system.read(reader);

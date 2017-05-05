@@ -22,7 +22,6 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     dotter.click();
     collect(¢);
   }
-
   void collect(final File f) {
     try {
       final ICompilationUnit u = openCompilationUnit(f);
@@ -36,14 +35,12 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
       note.io(¢, f + "");
     }
   }
-
   static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource($.createAST(null));
   }
-
   private static String getPackageNameFromSource(final ASTNode n) {
     final Wrapper<String> $ = new Wrapper<>("");
     // noinspection SameReturnValue
@@ -61,7 +58,6 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
   IPackageFragment pack;
 
   public abstract void Main(String... args);
-
   @Override public Object start(final IApplicationContext arg0) {
     forget.em(arg0);
     try {
@@ -71,11 +67,9 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     }
     return IApplication.EXIT_OK;
   }
-
   @Override public void stop() {
     discardTempIProject();
   }
-
   void discardTempIProject() {
     try {
       javaProject.close();
@@ -84,13 +78,11 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
       note.bug(this, ¢);
     }
   }
-
   ICompilationUnit openCompilationUnit(final File ¢) throws IOException, JavaModelException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
-
   void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("tempP");
     if (p.exists())
@@ -110,7 +102,6 @@ public abstract class FolderWithBindingASTVisitor extends DeprecatedFolderASTVis
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }
-
   void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }

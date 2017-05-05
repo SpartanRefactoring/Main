@@ -24,7 +24,6 @@ public final class Nature implements IProjectNature {
         return;
     set(d, cs);
   }
-
   @Override @SuppressWarnings("boxing") public void deconfigure() throws CoreException {
     final IProjectDescription description = getProject().getDescription();
     final ICommand[] cs = description.getBuildSpec();
@@ -35,15 +34,12 @@ public final class Nature implements IProjectNature {
         return;
       }
   }
-
   @Override public IProject getProject() {
     return project;
   }
-
   @Override public void setProject(final IProject ¢) {
     project = ¢;
   }
-
   private void set(final IProjectDescription d, final ICommand... cs) throws CoreException {
     final ICommand c = d.newCommand();
     c.setBuilderName(Builder.BUILDER_ID);

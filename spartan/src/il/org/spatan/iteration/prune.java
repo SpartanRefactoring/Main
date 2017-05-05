@@ -17,6 +17,7 @@ import il.org.spartan.streotypes.*;
  *
  * @author Yossi Gil, the Technion.
  * @since 27/08/2008 */
-@Utility public enum prune {
+@Utility
+public enum prune {
   //
 }

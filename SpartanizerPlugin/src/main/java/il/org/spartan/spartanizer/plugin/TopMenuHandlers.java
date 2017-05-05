@@ -53,7 +53,6 @@ public class TopMenuHandlers extends AbstractHandler {
       note.bug("Handler " + id + " is not registered in " + getClass().getName());
     return null;
   }
-
   protected static boolean showZoomToolMessage() {
     return Dialogs.ok(Dialogs.messageUnsafe(
         "You have just activate the Spartanizer's zooming tool!\nUsage instructions: click and hold CTRL, then use the mouse wheel to zoom in and out your code. Note that this service can be accessed using the menu button, or by the shourtcut CTRL+ALT+D. A second activition of this service would cancel it, until next activision."));

@@ -16,18 +16,15 @@ public abstract class FragmentPattern extends NodePattern<VariableDeclarationFra
   @Override protected ASTNode highlight() {
     return name;
   }
-
   protected FragmentPattern() {
     property("Name", () -> name = current().getName());
     property("Identifier", () -> identifier = name.getIdentifier());
     property("Initializer", () -> initializer = current().getInitializer());
     andAlso("Inapplicable on annotated fragments", () -> !haz.annotation(current()));
   }
-
   protected Expression initializer() {
     return initializer;
   }
-
   final SimpleName name() {
     return name;
   }

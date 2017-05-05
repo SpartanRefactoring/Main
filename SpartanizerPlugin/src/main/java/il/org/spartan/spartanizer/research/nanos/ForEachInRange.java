@@ -22,15 +22,12 @@ public class ForEachInRange extends NanoPatternTipper<ForStatement> {
   @Override public boolean canTip(final ForStatement ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Iterate through a range of indexes and apply a statement for each index";
   }
-
   @Override public String tipperName() {
     return "ForFromTo";
   }

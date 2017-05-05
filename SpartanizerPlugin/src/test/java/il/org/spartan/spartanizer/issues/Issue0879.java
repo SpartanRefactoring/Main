@@ -18,7 +18,6 @@ public class Issue0879 {
         .gives("void f(){}")//
         .stays();
   }
-
   /** Introduced by Yogi on Thu-Mar-30-16:21:39-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void daIntb4Ifb3b3b4Elseb5b55Return() {
@@ -37,7 +36,6 @@ public class Issue0879 {
         .stays() //
     ;
   }
-
   /** Introduced by Yogi on Thu-Mar-30-16:33:00-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Ignore @Test public void test_intaIntb9Intc7b4cbbReturnc() {
@@ -63,13 +61,11 @@ public class Issue0879 {
         .stays() //
     ;
   }
-
   @Test public void test0() {
     trimmingOf("void f(){return;}")//
         .gives("void f(){}")//
         .stays();
   }
-
   @Test public void test3() {
     trimmingOf("void f(){int x=9;int y=7; x+=4;y=x+x;return;}")//
         .gives("void f(){int x=9,y=7;x+=4;y=x+x;}") //

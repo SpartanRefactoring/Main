@@ -17,7 +17,6 @@ public class TableTippers {
   public static void main(final String[] args) {
     new TableTippers().go();
   }
-
   public void go() {
     try (Table t = new Table(this)) {
       final List<Tipper<? extends ASTNode>>[] implementation = Configurations.all().implementation;

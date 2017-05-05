@@ -30,11 +30,9 @@ public class FlatMap extends NanoPatternTipper<EnhancedForStatement> {
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Flatten a collection of collecions into one collection, optionally mapping";
   }

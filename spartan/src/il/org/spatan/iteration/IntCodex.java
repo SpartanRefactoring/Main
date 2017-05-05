@@ -31,11 +31,9 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
         int2objects.add(¢);
       }
   }
-
   @Override public boolean contains(final T ¢) {
     return objects2ints.containsKey(¢);
   }
-
   /** Returns the object represented by <code>i</code> as determined by this
    * translator.
    * @param ¢ the <code><b>int</b></code> whose translation shall be returned.
@@ -43,11 +41,9 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
   @Override public T decode(final int ¢) {
     return int2objects.get(¢);
   }
-
   @Override @NotNull public Iterable<T> elements() {
     return int2objects;
   }
-
   /** Returns the <code><b>int</b></code> value of <code>c</code> as determined
    * by this translator.
    * @param ¢ the value whose <code><b>int</b></code> translation shall be
@@ -57,7 +53,6 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
     require(objects2ints.containsKey(¢));
     return objects2ints.get(¢).intValue();
   }
-
   @Override public int size() {
     return objects2ints.size();
   }

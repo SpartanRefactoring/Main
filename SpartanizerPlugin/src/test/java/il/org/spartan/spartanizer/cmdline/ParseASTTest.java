@@ -25,7 +25,6 @@ public class ParseASTTest {
       boolean hasTestAnnotation(final MethodDeclaration d) {
         return extendedModifiers(d).stream().anyMatch(λ -> λ instanceof MarkerAnnotation && (λ + "").contains("@Test"));
       }
-
       /* (non-Javadoc)
        *
        * @see
@@ -35,7 +34,6 @@ public class ParseASTTest {
         print("node.getName().getIdentifier(): " + node.getName().getIdentifier());
         return true; // super.visit(node);
       }
-
       /* (non-Javadoc)
        *
        * @see
@@ -45,7 +43,6 @@ public class ParseASTTest {
         print("AnnotationTypeMemberDeclaration node.getName():" + node.getName());
         return super.visit(node);
       }
-
       /* (non-Javadoc)
        *
        * @see
@@ -55,7 +52,6 @@ public class ParseASTTest {
         print(node.getOperator());
         return super.visit(node);
       }
-
       /* (non-Javadoc)
        *
        * @see
@@ -65,7 +61,6 @@ public class ParseASTTest {
         print(node.getName());
         return super.visit(node);
       }
-
       /* (non-Javadoc)
        *
        * @see
@@ -76,7 +71,6 @@ public class ParseASTTest {
         print("parent: " + node.getParent().getNodeType());
         return super.visit(node);
       }
-
       /* (non-Javadoc)
        *
        * @see
@@ -86,7 +80,6 @@ public class ParseASTTest {
         print("MethodDeclaration node: getName(): " + node.getName());
         return !hasTestAnnotation(node);
       }
-
       /* (non-Javadoc)
        *
        * @see
@@ -96,7 +89,6 @@ public class ParseASTTest {
         print(node.getName());
         return super.visit(node);
       }
-
       /* (non-Javadoc)
        *
        * @see
@@ -106,7 +98,6 @@ public class ParseASTTest {
         print("NormalAnnotation: " + node.getTypeName());
         return super.visit(node);
       }
-
       /* (non-Javadoc)
        *
        * @see
@@ -118,11 +109,9 @@ public class ParseASTTest {
       }
     });
   }
-
   static void print(final Object ¢) {
     forget.em(new Object[] { ¢ });
   }
-
   @Test @SuppressWarnings("static-method") public void testStepMethod_01() {
     makeAST.COMPILATION_UNIT
         .from("package test;\nimport static il.org.spartan.plugin.demos.Inline.*;\nimport  static il.org.spartan.azzert.*; import org.junit.*;\n"

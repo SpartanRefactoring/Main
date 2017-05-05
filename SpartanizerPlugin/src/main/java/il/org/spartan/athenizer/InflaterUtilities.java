@@ -62,7 +62,6 @@ public enum InflaterUtilities {
     }
     return $;
   }
-
   /** @param u - the WrappedCompilationUnit which is bloated
    * @param ns - the list of statements which were selected and might be
    *        changed */
@@ -80,7 +79,6 @@ public enum InflaterUtilities {
       note.bug(¢);
     }
   }
-
   /** @param u - the WrappedCompilationUnit
    * @return - list of relevant statements for the expanders gets Statements
    *         (for now, maybe we should change the name to getASTNodes one day
@@ -96,18 +94,15 @@ public enum InflaterUtilities {
         $.add(node);
         return true;
       }
-
       @Override public boolean visit(final ExpressionStatement node) {
         if (az.assignment(node.getExpression()) != null)
           $.add(node);
         return true;
       }
-
       @Override public boolean visit(final VariableDeclarationStatement node) {
         $.add(node);
         return true;
       }
-
       @Override public boolean visit(final SwitchStatement node) {
         $.add(node);
         return true;
@@ -115,7 +110,6 @@ public enum InflaterUtilities {
     });
     return $;
   }
-
   /** @param startChar1 - starting char of first interval
    * @param lenth1 - length of first interval
    * @param startChar2 - starting char of second interval
@@ -125,14 +119,12 @@ public enum InflaterUtilities {
     return length1 != 0 && length2 != 0 && (startChar1 < startChar2 ? length1 + startChar1 > startChar2
         : startChar1 != startChar2 ? length2 + startChar2 > startChar1 : length1 > 0 && length2 > 0);
   }
-
   /** @param ns ASTNodes in compilation unit which might be relevant
    * @return list of selected ASTNodes */
   static List<ASTNode> selectedStatements(final Collection<ASTNode> ns) {
     return ns.stream().filter(λ -> intervalsIntersect(λ.getStartPosition(), λ.getLength(), Selection.Util.current().textSelection.getOffset(),
         Selection.Util.current().textSelection.getLength())).collect(toList());
   }
-
   public static void aux_go(final CompilationUnit u, final OperationsProvider p) {
     SingleFlater.in(u).from(p).go(ASTRewrite.create(u.getAST()), null);
   }

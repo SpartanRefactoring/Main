@@ -39,11 +39,9 @@ public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclaratio
     $.remove(nextStatement, g);
     return $;
   }
-
   @Override public String description(final VariableDeclarationStatement ¢) {
     return "Unify two variable declarations of type " + ¢.getType() + " into one";
   }
-
   @Override public Examples examples() {
     return //
     convert("int a; int b; int c; f(a, b, c);") //
@@ -55,7 +53,6 @@ public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclaratio
         .ignores("int a = 1; final int b = 2; f(a, b);") //
     ;
   }
-
   private static boolean canTip(final VariableDeclarationStatement $, final Statement nextStatement) {
     final Block parent = az.block(parent($));
     return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
@@ -63,7 +60,6 @@ public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclaratio
         && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
         && sameAnnotations(extract.annotations($), extract.annotations(az.variableDeclarationStatement(nextStatement)));
   }
-
   private static boolean sameAnnotations(final List<Annotation> l1, final List<Annotation> l2) {
     return l1.size() == l2.size() && l1.stream().allMatch(λ -> (λ + "").equals(l2.get(l1.indexOf(λ)) + ""));
   }

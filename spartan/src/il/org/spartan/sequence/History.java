@@ -15,7 +15,6 @@ public class History<T> {
     ___.positive(n);
     this.n = n;
   }
-
   void add(final T ¢) {
     inner.add(¢);
     while (inner.size() > n)

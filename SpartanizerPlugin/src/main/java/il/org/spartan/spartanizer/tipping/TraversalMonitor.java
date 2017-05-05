@@ -24,7 +24,6 @@ public class TraversalMonitor extends TraversalImplementation.__ implements Trav
   public static void off() {
     logger.setLevel(Level.OFF);
   }
-
   public static void rewrite(final ASTRewrite r, final Tip t) {
     if (--maxApplications <= 0) {
       if (maxApplications == 0)
@@ -36,27 +35,21 @@ public class TraversalMonitor extends TraversalImplementation.__ implements Trav
     t.go(r, null);
     System.out.println("       After: " + r);
   }
-
   public static void setFileName(final String $) {
     fileName = $;
   }
-
   public static void setMaxApplications(final int maxApplications) {
     TraversalMonitor.maxApplications = maxApplications;
   }
-
   public static void setMaxTips(final int maxTips) {
     TraversalMonitor.maxTips = maxTips;
   }
-
   public static void setMaxVisitations(final int maxVisitations) {
     TraversalMonitor.maxVisitations = maxVisitations;
   }
-
   public static void setOutputDir(final String $) {
     TraversalMonitor.outputDir = $;
   }
-
   public static <N extends ASTNode> void tip(final Tipper<N> w, final N n) {
     if (--maxTips <= 0) {
       if (maxTips == 0)
@@ -84,14 +77,12 @@ public class TraversalMonitor extends TraversalImplementation.__ implements Trav
     System.out.println("     Can tip: " + w.check(n));
     System.out.println("    Suggests: " + w.tip(n));
   }
-
   public static void visitation(final ASTNode ¢) {
     if (--maxVisitations > 0)
       System.out.println("VISIT: '" + tide.clean(¢ + "") + "' [" + ¢.getLength() + "] (" + English.name(¢) + ") parent = " + English.name(parent(¢)));
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");
   }
-
   private static CSVStatistics init() {
     return output = new CSVStatistics(outputDir, "Tips");
   }
@@ -135,35 +126,27 @@ public class TraversalMonitor extends TraversalImplementation.__ implements Trav
   public TraversalMonitor(final Traversal setup) {
     setup.super();
   }
-
   @Override public void noTipper() {
     logger.log(FINER, "No tippers for {0}", node());
   }
-
   @Override public void setNode() {
     logger.log(FINEST, "Visit {0}", node());
   }
-
   @Override public void tipperAccepts() {
     logger.log(FINE, "{0} accepts {1}", as.array(tipper(), node()));
   }
-
   @Override public void tipperRejects() {
     logger.log(FINER, "{0} rejects {1}", as.array(tipper(), node()));
   }
-
   @Override public void tipperTip() {
     logger.log(FINE, "{0} tips {1}", as.array(tipper(), tip(), node()));
   }
-
   @Override public void tipPrune() {
     logger.log(FINER, "Pruning:\n {0} \n in favor of:\n {1}", as.array(tip(), auxiliaryTip()));
   }
-
   @Override public void tipRewrite() {
     logger.log(FINE, "Rewrite {0}", rewrite());
   }
-
   private String tipper() {
     return English.name(self().tipper());
   }

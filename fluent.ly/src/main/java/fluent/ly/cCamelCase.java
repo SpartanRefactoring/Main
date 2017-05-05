@@ -9,15 +9,12 @@ public interface cCamelCase {
   static String[] components(final String javaName) {
     return javaName.split(JAVA_CAMEL_CASE_SEPARATOR);
   }
-
   static String lastComponent(final Class<?> ¢) {
     return lastComponent(¢.getCanonicalName());
   }
-
   static String lastComponent(final String fullClassName) {
     return fullClassName.replaceAll("[a-z0-9A-Z]*\\.", "");
   }
-
   static boolean usefulTypeName(final String typeName) {
     return typeName.length() > 1 || !Character.isUpperCase(the.characterOf(typeName));
   }
