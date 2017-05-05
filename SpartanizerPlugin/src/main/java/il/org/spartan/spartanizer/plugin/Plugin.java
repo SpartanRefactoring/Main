@@ -128,7 +128,10 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       final IProject[] projects = getAllSpartanizerProjects();
       final Document doc = XMLSpartan.getXML(projects[0]);
       doc.getDocumentElement().normalize();
-      notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
+      if (doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue().equals("cent"))
+        notation.cent = "¢";
+      else
+        notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
       notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
     } catch (final NullPointerException ¢) {
       // TODO Dor: should not happen!

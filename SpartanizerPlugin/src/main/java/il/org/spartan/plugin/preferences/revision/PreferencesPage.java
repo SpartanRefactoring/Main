@@ -65,7 +65,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     for (final IProject p : getAllSpartanizerProjects()) {
       final Document doc = XMLSpartan.getXML(p);
       doc.getDocumentElement().normalize();
-      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("¢");
+      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("cent");
       XMLSpartan.commit(p, doc);
     }
     notation.cent = "¢";
@@ -93,7 +93,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.isEnabled((IProject) λ).booleanValue())) //
     ));
     // GUI for renaming single parameter
-    final String[][] parameterRenameOptions = new String[][] { { "¢", "¢" }, { "it", "it" }, { "param", "param" } };
+    final String[][] parameterRenameOptions = new String[][] { { "cent", "cent" }, { "it", "it" }, { "param", "param" } };
     singleParameterRadio = new RadioGroupFieldEditor("Cent", "Method Single Variable rename to:", 3, parameterRenameOptions, getFieldEditorParent());
     addField(singleParameterRadio);
     setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());
