@@ -1,7 +1,6 @@
 package il.org.spartan.plugin.preferences.revision;
 
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 
 import java.util.*;
 import java.util.Map.*;
@@ -10,9 +9,9 @@ import org.eclipse.core.resources.*;
 import org.eclipse.jface.preference.*;
 import org.eclipse.ui.*;
 
+import il.org.spartan.plugin.preferences.revision.PreferencesPage.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
-import il.org.spartan.plugin.preferences.revision.PreferencesPage.*;
 
 /** The preferences page for the Athenizer Widget
  * @author Raviv Rachmiel

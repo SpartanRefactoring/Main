@@ -42,10 +42,13 @@ public enum PreferencesResources {
   public static String getLabel(final Class<? extends ExpanderCategory> $) {
     return English.name($);
   }
+  public static IPreferenceStore store() {
+    return Plugin.plugin().getPreferenceStore();
+  }
 
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */
-  public enum TipperGroup {
+  @Deprecated public enum TipperGroup {
     Abbreviation(TipperCategory.Abbreviation.class), //
     Arithmetic(TipperCategory.Arithmetics.class), //
     Anonymization(TipperCategory.Anonymization.class), //
@@ -73,9 +76,6 @@ public enum PreferencesResources {
     ;
     public static TipperGroup find(final TipperCategory ¢) {
       return find(¢.getClass());
-    }
-    public static IPreferenceStore store() {
-      return Plugin.plugin().getPreferenceStore();
     }
     private static TipperGroup find(final Class<? extends TipperCategory> ¢) {
       return Stream.of(TipperGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
