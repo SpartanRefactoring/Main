@@ -537,10 +537,11 @@ public interface type {
         return is.in(DOUBLE, $, this) ? DOUBLE // Double contaminates Numeric
             : is.in(NUMERIC, $, this) ? NUMERIC // Numeric contaminates Float
                 : is.in(FLOAT, $, this) ? FLOAT // FLOAT contaminates Integral
-                    : is.in(LONG, $, this) ? LONG : // LONG contaminates INTEGRAL
+                    : is.in(LONG, $, this) ? LONG : // LONG contaminates
+                                                    // INTEGRAL
                         !is.in(INTEGRAL, $, this) ? INT : INTEGRAL;// INTEGRAL
-                                                                // contaminates
-                                                                // INT
+        // contaminates
+        // INT
       }
 
       /** @return one of {@link #INT}, {@link #LONG}, {@link #DOUBLE},

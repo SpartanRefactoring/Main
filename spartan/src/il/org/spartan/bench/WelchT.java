@@ -8,11 +8,4 @@ import il.org.spartan.statistics.*;
  * @since 2016-09-10 */
 public class WelchT {
   public double p;
-
-  /** Empty for now */
-  /** Instantiates this class. @param s1 /** Instantiates this class. @param
-   * s2 */
-  @SuppressWarnings("unused") public WelchT(final Statistics s1, final Statistics s2) {
-    //
-  }
 }

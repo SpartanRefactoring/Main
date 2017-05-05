@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.java;
+
 import static fluent.ly.is.*;
 
 import static org.eclipse.jdt.core.dom.ASTNode.*;

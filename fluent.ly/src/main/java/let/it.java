@@ -16,7 +16,7 @@ public class it<T> {
     return $;
   }
 
-  public it<T> is(final String string) {
+  public it<T> is(final String s) {
     return this;
   }
 }

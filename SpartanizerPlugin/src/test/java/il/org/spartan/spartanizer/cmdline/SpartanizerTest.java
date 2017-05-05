@@ -78,8 +78,7 @@ public class SpartanizerTest {
   }
 
   static void print(final Object ¢) {
-    Object[] ____ = { ¢ };
-    forget.em(____);
+    forget.em(new Object[] { ¢ });
   }
 
   String method = "";

@@ -824,9 +824,6 @@ import fluent.ly.*;
   }
 
   public abstract static class MethodWithParametrs {
-    public MethodWithParametrs() {
-    }
-
     public final Integer method(final int a, final int b, final int c) {
       return Integer.valueOf(a + b + c + hashCode());
     }

@@ -45,17 +45,13 @@ public class InflaterListener implements KeyListener, Listener {
   private final Color originalBackground;
   private final IDocumentUndoManager undoManager;
   private int editDirection;
-  private final boolean compoundEditing; 
-  @SuppressWarnings("boxing")
-  private static final List<Integer> activating_keys = Arrays.asList(SWT.CTRL, SWT.ALT);
-  @SuppressWarnings("boxing")
-  private final List<Boolean> active_keys = activating_keys.stream().map(x -> false).collect(Collectors.toList());
-  private static final List<Predicate<Event>> zoomer_keys = Arrays.asList(e -> e.keyCode == SWT.KEYPAD_ADD,
-      e -> e.character == '=',
-      e -> e.type == SWT.MouseWheel && e.count > 0);
-  private static final List<Predicate<Event>> spartan_keys = Arrays.asList(e -> e.keyCode == SWT.KEYPAD_SUBTRACT,
-      e -> e.character == '-',
-      e -> e.type == SWT.MouseWheel && e.count < 0);
+  private final boolean compoundEditing;
+  @SuppressWarnings("boxing") private static final List<Integer> activating_keys = Arrays.asList(SWT.CTRL, SWT.ALT);
+  @SuppressWarnings("boxing") private final List<Boolean> active_keys = activating_keys.stream().map(λ -> false).collect(Collectors.toList());
+  private static final List<Predicate<Event>> zoomer_keys = Arrays.asList(λ -> λ.keyCode == SWT.KEYPAD_ADD, λ -> λ.character == '=',
+      λ -> λ.type == SWT.MouseWheel && λ.count > 0);
+  private static final List<Predicate<Event>> spartan_keys = Arrays.asList(λ -> λ.keyCode == SWT.KEYPAD_SUBTRACT, λ -> λ.character == '-',
+      λ -> λ.type == SWT.MouseWheel && λ.count < 0);
 
   public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
@@ -70,7 +66,7 @@ public class InflaterListener implements KeyListener, Listener {
   }
 
   @Override public void handleEvent(final Event ¢) {
-    int t = checkEvent(¢);
+    final int t = checkEvent(¢);
     if (t == 0 || !active || !text.getBounds().contains(text.toControl(Eclipse.mouseLocation())))
       return;
     ¢.doit = false;
@@ -104,10 +100,9 @@ public class InflaterListener implements KeyListener, Listener {
       });
     }
   }
-  
-  /**
-   * Returns 1 if event corresponds to a bloater shortcut, -1 if even corresponds to spartanizer shortcut and 0 otherwise. 
-   */
+
+  /** Returns 1 if event corresponds to a bloater shortcut, -1 if even
+   * corresponds to spartanizer shortcut and 0 otherwise. */
   private static int checkEvent(final Event e) {
     return zoomer_keys.stream().anyMatch(λ -> λ.test(e)) ? 1 : spartan_keys.stream().anyMatch(λ -> λ.test(e)) ? -1 : 0;
   }
@@ -127,15 +122,15 @@ public class InflaterListener implements KeyListener, Listener {
   }
 
   @Override @SuppressWarnings("boxing") public void keyPressed(final KeyEvent ¢) {
-    int index = activating_keys.indexOf(¢.keyCode);
+    final int index = activating_keys.indexOf(¢.keyCode);
     if (index >= 0)
       active_keys.set(index, true);
-    if (active_keys.stream().allMatch(x -> x) && !active)
+    if (active_keys.stream().allMatch(λ -> λ) && !active)
       activate();
   }
 
   @Override @SuppressWarnings("boxing") public void keyReleased(final KeyEvent ¢) {
-    int index = activating_keys.indexOf(¢.keyCode);
+    final int index = activating_keys.indexOf(¢.keyCode);
     if (index < 0)
       return;
     active_keys.set(index, false);

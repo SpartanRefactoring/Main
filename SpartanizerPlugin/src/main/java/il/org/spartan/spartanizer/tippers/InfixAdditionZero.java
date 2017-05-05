@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static fluent.ly.is.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.MINUS;
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.PLUS;

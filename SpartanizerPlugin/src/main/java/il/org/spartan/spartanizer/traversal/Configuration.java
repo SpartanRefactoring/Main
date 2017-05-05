@@ -19,8 +19,6 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 2015-08-22 */
 public class Configuration {
-  public Configuration() {}
-
   @Override public Configuration clone() {
     final Configuration $ = new Configuration();
     int i = 0;

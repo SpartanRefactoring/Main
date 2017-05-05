@@ -174,7 +174,7 @@ public enum as {
    * @param os what to covert
    * @return an array of the parameter values, each converted to i
    *         {@link String} */
-  public static String[] strings(final Iterable<? extends Object> os) {
+  public static String[] strings(final Iterable<?> os) {
     final List<String> $ = new ArrayList<>();
     for (final @Nullable Object ¢ : os)
       if (¢ != null)

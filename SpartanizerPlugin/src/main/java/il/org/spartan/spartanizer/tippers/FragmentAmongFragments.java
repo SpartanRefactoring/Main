@@ -16,8 +16,6 @@ import il.org.spartan.spartanizer.engine.*;
 public abstract class FragmentAmongFragments extends FragmentPattern {
   private static final long serialVersionUID = 1;
 
-  public FragmentAmongFragments() {}
-
   public boolean usedInLaterSiblings() {
     return laterSiblings().anyMatch(λ -> compute.usedIdentifiers(λ.getInitializer()).anyMatch(x -> x.equals(identifier)));
   }

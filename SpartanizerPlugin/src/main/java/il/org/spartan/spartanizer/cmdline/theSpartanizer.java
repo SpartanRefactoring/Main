@@ -32,7 +32,7 @@ public interface theSpartanizer {
           if (¢ == null)
             return true;
           $.set(¢);
-          return searching = false;
+          return false;
         }
 
         boolean searching = true;
@@ -60,7 +60,7 @@ public interface theSpartanizer {
           if ($ == null)
             return true;
           apply($, n);
-          return searching = false;
+          return false;
         }
 
         <N extends ASTNode> void apply(final Tip t, final N n) {

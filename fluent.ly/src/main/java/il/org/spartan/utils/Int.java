@@ -10,8 +10,7 @@ public final class Int {
   public int inner;
 
   public Int() {
-    Object[] ____ = {};
-    forget.em(____);
+    forget.em(new Object[] {});
   }
 
   public Int(final int inner) {
