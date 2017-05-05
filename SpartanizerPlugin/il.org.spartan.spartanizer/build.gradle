@@ -51,12 +51,3 @@ dependencies {
     testCompile "junit:junit:${VER_JUNIT}"
     compile "org.mockito:mockito-all:1.9.5"
 }
-
-task printSourceSets {
-    doLast {
-        println "sourceSets:"
-        println sourceSets.main.getAllSource().srcDirs
-    }
-}
-
-processResources.dependsOn printSourceSets

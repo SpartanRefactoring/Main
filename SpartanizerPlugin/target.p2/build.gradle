@@ -4,7 +4,7 @@ import com.diffplug.gradle.pde.EclipseRelease
 apply plugin: 'com.diffplug.gradle.p2.asmaven'
 p2AsMaven {
     group 'eclipse-deps', {
-        repoEclipse '4.5.2'
+        repoEclipse GOOMPH_PDE_VER
         feature 'org.eclipse.equinox.executable'
         feature 'org.eclipse.rcp.configuration'
         feature 'org.eclipse.jdt'

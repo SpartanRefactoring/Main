@@ -5,6 +5,28 @@ platform {
     importVersionStrategy = MAJOR
     useBndHashQualifiers = false
     fetchSources = false
+
+    // Fix
+    bundle file('../../spartan/lib/cli-1.01.jar'), {
+        bnd {
+            version = '1.0.1'
+            symbolicName = 'cli'
+        }
+    }
+
+    bundle file('../../fluent.ly/lib/cli-1.01.jar'), {
+        bnd {
+            version = '1.0.1'
+            symbolicName = 'cli'
+        }
+    }
+
+    bundle file('../../fluent.ly/lib/spartan-1.4.jar'), {
+        bnd {
+            version = '1.4.0'
+            symbolicName = 'spartan'
+        }
+    }
 }
 // don't let stale bundles lay around
 bundles.dependsOn(clean)

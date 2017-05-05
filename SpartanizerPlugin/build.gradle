@@ -92,13 +92,14 @@ configure(subprojects.findAll(IS_PLUGIN)) {
 	}
 //	// configure the OSGi bundle
 	jar.manifest.attributes(
-			'-exportcontents': 'com.diffplug.*',
+			'-exportcontents': 'il.org.spartan.*',
 			'-removeheaders': 'Bnd-LastModified,Bundle-Name,Created-By,Tool,Private-Package,Require-Capability',
 			'Import-Package': '!javax.annotation.*,*',
 			'Bundle-SymbolicName': project.name,
 			'Bundle-RequiredExecutionEnvironment': 'JavaSE-1.8',
 			'Require-Capability': 'osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"',
-			'Bundle-Vendor': 'DiffPlug',
+			'Bundle-Vendor': 'il.org.spartan',
+            'Bundle-Version': '1.0.0',
 			'Bundle-License': "http://www.apache.org/licenses/LICENSE-2.0"
 	)
 //
@@ -154,6 +155,7 @@ project(':SpartanizerPlugin:target.maven') {
 		it.evaluationDependsOn(pluginPath)
 		it.dependencies.add('platform', project(pluginPath))
 	}
+
 }
 
 /////////////////////////////////////////////////////////
