@@ -16,12 +16,11 @@ public class WidgetContext {
   public Selection currentSelecetion;
   public Selection currentCompilationUnit;
   public Selection allCompilationUnits;
-  
-  /**
-   * @return a WidgetContext representing the current context of the workspace
-   */
-  public static WidgetContext generateContext(){
-    WidgetContext $ = new WidgetContext();
+
+  /** @return a WidgetContext representing the current context of the
+   *         workspace */
+  public static WidgetContext generateContext() {
+    final WidgetContext $ = new WidgetContext();
     $.project = Selection.Util.project();
     $.javaProject = Selection.Util.getJavaProject();
     $.currentSelecetion = Selection.Util.current();
@@ -29,5 +28,4 @@ public class WidgetContext {
     $.allCompilationUnits = Selection.Util.getAllCompilationUnits();
     return $;
   }
-  
 }

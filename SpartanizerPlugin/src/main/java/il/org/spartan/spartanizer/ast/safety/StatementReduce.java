@@ -184,7 +184,7 @@ public abstract class StatementReduce<T> {
   }
 
   protected T mapAtomic(final Statement i) {
-    Object[] ____ = { i };
+    final Object[] ____ = { i };
     forget.em(____);
     return neutralElement();
   }

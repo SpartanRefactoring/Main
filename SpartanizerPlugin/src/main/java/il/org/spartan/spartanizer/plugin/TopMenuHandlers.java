@@ -19,7 +19,8 @@ public class TopMenuHandlers extends AbstractHandler {
         final Selection s = Selection.Util.current();
         SpartanizationHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
       });
-      put("il.org.spartan.CentToIt", λ -> SpartanizationHandler.applicator().restrictTo(new MethodDeclarationRenameSingleParameter()).manyPasses().selection(Selection.Util.getAllCompilationUnits()).go());
+      put("il.org.spartan.CentToIt", λ -> SpartanizationHandler.applicator().restrictTo(new MethodDeclarationRenameSingleParameter()).manyPasses()
+          .selection(Selection.Util.getAllCompilationUnits()).go());
       put("il.org.spartan.SpartanizeCurrent",
           λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getCurrentCompilationUnit()).go());
       put("il.org.spartan.SpartanizeAll",

@@ -28,7 +28,7 @@ public interface lazy<T> extends Supplier<T> {
        * always unique.
        * @Return value of the supplier */
       @Override public T get() {
-        return $ = $ == null ? ¢.get() : $;
+        return $ = $ != null ? $ : ¢.get();
       }
     };
   }

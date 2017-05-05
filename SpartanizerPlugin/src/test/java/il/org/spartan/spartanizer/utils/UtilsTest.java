@@ -27,13 +27,11 @@ public final class UtilsTest {
   }
 
   @Test public void inTypicalFalse() {
-    String @NonNull [] ts = { "A", "B", "C" };
-    assert !is.in("X",ts);
+    assert !is.in("X", new String @NonNull [] { "A", "B", "C" });
   }
 
   @Test public void inTypicalTrue() {
-    String @NonNull [] ts = { "A", "B", "C" };
-    assert is.in("A",ts);
+    assert is.in("A", new String @NonNull [] { "A", "B", "C" });
   }
 
   @Test public void removePrefiEmpty() {

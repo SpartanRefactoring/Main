@@ -58,6 +58,7 @@ public final class LocalInitializedNewAddAll extends LocalInitialized {
   @Override public Examples examples() {
     // TODO fix;
     return null;
-    // return convert("List<T> x = new ArrayList<>(); x.addAll(ys);").to("List<T> x = new ArrayList<>(ys);");
+    // return convert("List<T> x = new ArrayList<>();
+    // x.addAll(ys);").to("List<T> x = new ArrayList<>(ys);");
   }
 }

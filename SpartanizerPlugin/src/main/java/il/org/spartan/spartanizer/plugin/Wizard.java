@@ -15,7 +15,6 @@ public final class Wizard extends RefactoringWizard {
   }
 
   @Override protected void addUserInputPages() {
-    Object[] ____ = { this };
-    forget.em(____);
+    forget.em(new Object[] { this });
   }
 }

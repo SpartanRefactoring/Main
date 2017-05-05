@@ -434,11 +434,6 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   private class InternalIterator implements Iterator<E> {
     protected int next; // index of next element to return
 
-    /** Instantiate {@link InternalIterator}. */
-    InternalIterator() {
-      // Empty. Defined solely to make it publicly accessible
-    }
-
     @Override public boolean hasNext() {
       return next != size();
     }

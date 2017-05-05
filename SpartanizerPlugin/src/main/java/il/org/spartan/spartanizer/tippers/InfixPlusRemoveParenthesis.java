@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static fluent.ly.is.*;
 import static fluent.ly.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;

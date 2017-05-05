@@ -55,7 +55,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
 
   public static void changeCentToIt() {
     System.out.println("Strted Change");
-    for (IProject p : getAllSpartanizerProjects()) {
+    for (final IProject p : getAllSpartanizerProjects()) {
       final Document doc = XMLSpartan.getXML(p);
       doc.getDocumentElement().normalize();
       System.out.println(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue());
@@ -64,12 +64,11 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
     notation.cent = "it";
     System.out.println("Done Change");
-
   }
 
   private void commitNotations() {
     final IProject[] projects = getAllSpartanizerProjects();
-    for (IProject p : projects) {
+    for (final IProject p : projects) {
       final Document doc = XMLSpartan.getXML(p);
       doc.getDocumentElement().normalize();
       System.out.println(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue());

@@ -131,7 +131,7 @@ public class InflateHandler extends AbstractHandler {
     if (¢ instanceof ITextEditor)
       addListener((ITextEditor) ¢);
   }
-  
+
   private static void addListener(final ITextEditor ¢) {
     final StyledText text = getText(¢);
     if (text == null)

@@ -120,8 +120,7 @@ public class ParseASTTest {
   }
 
   static void print(final Object ¢) {
-    Object[] ____ = { ¢ };
-    forget.em(____);
+    forget.em(new Object[] { ¢ });
   }
 
   @Test @SuppressWarnings("static-method") public void testStepMethod_01() {

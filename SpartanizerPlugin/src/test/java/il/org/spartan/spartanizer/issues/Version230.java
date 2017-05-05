@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.issues;
 
-
 import static fluent.ly.azzert.*;
 import static fluent.ly.is.*;
 import static il.org.spartan.spartanizer.engine.ExpressionComparator.*;

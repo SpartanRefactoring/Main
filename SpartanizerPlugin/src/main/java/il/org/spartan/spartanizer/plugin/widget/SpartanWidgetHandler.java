@@ -91,10 +91,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
      * configurations when you send this to me, so they are ready to run. */
     final WidgetOperation[] operations = { new GitPullOperation(), new GitPullOperation(), new GitPullOperation(), new GitPullOperation(),
         new GitPullOperation(), new GitPullOperation(), new GitPullOperation() };
-    for (int i = 0; i < circles.length; ++i) {
-      final Canvas button = createButton(shell, circles[i], operations[i]);
-      setControl(button, setSolid, setTransparent);
-    }
+    for (int ¢ = 0; ¢ < circles.length; ++¢)
+      setControl(createButton(shell, circles[¢], operations[¢]), setSolid, setTransparent);
     shell.setLocation(startLocation.apply(Eclipse.mouseLocation()));
     shell.open();
     originalShell.forceFocus();
@@ -163,7 +161,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     source.addListener(SWT.MouseMove, l);
   }
 
-  static int[] circle(@SuppressWarnings("hiding") final int r, int offsetX, int offsetY) {
+  static int[] circle(@SuppressWarnings("hiding") final int r, final int offsetX, final int offsetY) {
     final int[] $ = new int[8 * r + 4];
     for (int i = 0; i <= 2 * r; ++i) {
       final int x = i - r, y = (int) Math.sqrt(r * r - x * x);
@@ -215,16 +213,16 @@ public class SpartanWidgetHandler extends AbstractHandler {
     });
     $.setLocation(p.x - r, p.y - r);
     $.pack();
-    Region rg = s.getRegion();
+    final Region rg = s.getRegion();
     rg.add(circle(r, p.x, p.y));
     s.setRegion(rg);
     if (o == null)
       return $;
-    Listener l = new Listener() {
+    final Listener l = new Listener() {
       Timer t = new Timer(true);
 
-      @Override public void handleEvent(Event e) {
-        WidgetContext c = WidgetContext.generateContext();
+      @Override public void handleEvent(final Event e) {
+        final WidgetContext c = WidgetContext.generateContext();
         try {
           switch (e.type) {
             case SWT.MouseUp:
@@ -237,8 +235,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
                 @Override public void run() {
                   try {
                     o.onMouseHold(c);
-                  } catch (@SuppressWarnings("hiding") Throwable t) {
-                    note.bug(t);
+                  } catch (@SuppressWarnings("hiding") final Throwable ¢) {
+                    note.bug(¢);
                   }
                 }
               }, OPERATION_HOLD_INTERVAL, OPERATION_HOLD_INTERVAL);
@@ -250,8 +248,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
             default:
               break;
           }
-        } catch (@SuppressWarnings("hiding") Throwable t) {
-          note.bug(t);
+        } catch (@SuppressWarnings("hiding") final Throwable ¢) {
+          note.bug(¢);
         }
       }
     };

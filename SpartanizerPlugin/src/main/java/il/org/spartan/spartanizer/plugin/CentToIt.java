@@ -9,9 +9,9 @@ import il.org.spartan.plugin.preferences.revision.*;
  * @author dormaayn
  * @since 2017-05-05 */
 public class CentToIt extends AbstractHandler {
-  @Override public Object execute(ExecutionEvent ¢) {
+  @Override public Object execute(final ExecutionEvent ¢) {
     System.out.println("Strted Press");
     PreferencesPage.changeCentToIt();
-    return (new TopMenuHandlers()).execute(¢);
+    return new TopMenuHandlers().execute(¢);
   }
 }

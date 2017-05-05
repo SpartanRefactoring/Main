@@ -140,9 +140,9 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       doc.getDocumentElement().normalize();
       notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
       notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
-    } catch (NullPointerException e) {
+    } catch (final NullPointerException ¢) {
       // TODO Dor: should not happen!
-      note.bug(e);
+      note.bug(¢);
     }
   }
 }

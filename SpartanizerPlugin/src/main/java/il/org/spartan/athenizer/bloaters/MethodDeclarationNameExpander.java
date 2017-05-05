@@ -42,16 +42,14 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
     if (d.isConstructor() || iz.abstract¢(d) || d.getBody() == null)
       return null;
     final List<SingleVariableDeclaration> $ = parameters(d).stream()
-        .filter(λ -> (!is.in(λ.getName().getIdentifier(),"$") || !scope.hasInScope(body(d), "result")) && !is.in(λ.getName().getIdentifier(),"result" )
-            && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
+        .filter(λ -> (!is.in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(body(d), "result"))
+            && !is.in(λ.getName().getIdentifier(), "result") && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
         .collect(Collectors.toList());
     return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final SingleVariableDeclaration ¢ : $) {
-          misc.rename(¢.getName(),
-              make.from(d).identifier(is.in(¢.getName().getIdentifier(),"$") ? "result" : scope.newName(body(d), step.type(¢), prefix(step.type(¢)))),
-              d, r, g);
-        }
+        for (final SingleVariableDeclaration ¢ : $)
+          misc.rename(¢.getName(), make.from(d)
+              .identifier(is.in(¢.getName().getIdentifier(), "$") ? "result" : scope.newName(body(d), step.type(¢), prefix(step.type(¢)))), d, r, g);
       }
     }.spanning(d);
   }

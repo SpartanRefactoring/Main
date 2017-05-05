@@ -258,8 +258,8 @@ public class RawTokenizer {
     return yycolumn + 1;
   }
 
-  public void error(final String s) {
-    System.err.println(notify(s));
+  public void error(final String ¢) {
+    System.err.println(notify(¢));
     reset();
   }
 
@@ -756,8 +756,8 @@ public class RawTokenizer {
     }
   }
 
-  public String notify(final String s) {
-    return location() + s + " " + token();
+  public String notify(final String ¢) {
+    return location() + ¢ + " " + token();
   }
 
   public void reset() {
@@ -767,7 +767,7 @@ public class RawTokenizer {
 
   /* user code: */
   public String text() {
-    return $.length() <= 0 ? yytext() : $.toString();
+    return $.length() > 0 ? $ + "" : yytext();
   }
 
   public String token() {
@@ -817,8 +817,8 @@ public class RawTokenizer {
    * <b>cannot</b> be reused (internal buffer is discarded and lost). Lexical
    * state is set to <tt>ZZ_INITIAL</tt>.
    * @param reader the new input stream */
-  public final void yyreset(final java.io.Reader r) {
-    zzReader = r;
+  public final void yyreset(final java.io.Reader ¢) {
+    zzReader = ¢;
     zzAtEOF = false;
     yyline = yychar = yycolumn = zzCurrentPos = zzMarkedPos = 0;
     zzLexicalState = YYINITIAL;

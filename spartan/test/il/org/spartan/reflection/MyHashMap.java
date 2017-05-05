@@ -504,11 +504,11 @@ public final class MyHashMap<K, V> implements Map<K, V> {
 
   /** Offloaded version of put for null keys */
   private V putForNullKey(final V value) {
-    for (Entry<K, V> e = table[0]; e != null; e = e.next)
-      if (e.key == null) {
-        final V $ = e.value;
-        e.value = value;
-        e.recordAccess(this);
+    for (Entry<K, V> ¢ = table[0]; ¢ != null; ¢ = ¢.next)
+      if (¢.key == null) {
+        final V $ = ¢.value;
+        ¢.value = value;
+        ¢.recordAccess(this);
         return $;
       }
     ++modCount;
