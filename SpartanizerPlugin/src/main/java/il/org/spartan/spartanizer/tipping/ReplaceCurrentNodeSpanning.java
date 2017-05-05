@@ -22,14 +22,11 @@ public abstract class ReplaceCurrentNodeSpanning<N extends ASTNode> extends Repl
       }
     }.spanning(span());
   }
-
   protected ASTNode[] span() {
     return new ASTNode[] { current };
   }
-
   @Override protected boolean prerequisite(@SuppressWarnings("unused") final N __) {
     return true;
   }
-
   @Override public abstract ASTNode replacement(N n);
 }

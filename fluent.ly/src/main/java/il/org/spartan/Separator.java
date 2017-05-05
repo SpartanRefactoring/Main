@@ -26,7 +26,6 @@ public final class Separator {
     for (final String a : args)
       System.out.print(new Separator(", ") + a);
   }
-
   /** <code>separateBy</code>
    * @param is JD
    * @param between what to put between the items
@@ -40,7 +39,6 @@ public final class Separator {
       $ += s + (Integer.valueOf(¢) + "");
     return $;
   }
-
   /** <code>separateBy</code> returning String
    * @param <T> JD
    * @param between what to put between the items
@@ -49,7 +47,6 @@ public final class Separator {
   @NotNull public static <T> String separateBy(final String between, @NotNull final T[] ts) {
     return wrap("", "", ts, between);
   }
-
   /** <code>wrap</code>
    * @param <T> JD
    * @param wrap what to wrap the characters with
@@ -59,7 +56,6 @@ public final class Separator {
   @NotNull public static <T> String wrap(@NotNull final String wrap, @NotNull final Iterable<T> ts, final String between) {
     return wrap(wrap, wrap, ts, between);
   }
-
   /** @param <T> JD
    * @param begin what to place before the items
    * @param end what to place after the items
@@ -75,7 +71,6 @@ public final class Separator {
       $.append(s).append(¢);
     return as.string($.append(end));
   }
-
   /** @param <T> JD
    * @param begin what to place before the items
    * @param end what to place after the items
@@ -99,13 +94,11 @@ public final class Separator {
   public Separator(final char c) {
     this(c + "");
   }
-
   /** Instantiates this class.
    * @param s JD */
   public Separator(final String s) {
     this.s = s;
   }
-
   @Override public String toString() {
     if (!first)
       return s;

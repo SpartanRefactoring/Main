@@ -17,32 +17,26 @@ public class Things {
     nPattern3();
     nPattern4();
   }
-
   private static void doSomethingWith(final Object... ¢) {
     nothing(¢);
   }
-
   private static void doSomethingWithPair(final Object o1, final Object o2) {
     nothing(o1, o2);
   }
-
   private static void nothing(@NotNull final Object... os) {
     if (os.length >= 2)
       for (final Object ¢ : os)
         nothing(¢);
   }
-
   private static void nPattern1() {
     for (final Thing ¢ : things)
       doSomethingWith(¢);
   }
-
   private static void nPattern2() {
     int i = 0;
     for (final Thing ¢ : things)
       doSomethingWithPair(Integer.valueOf(i++), ¢);
   }
-
   private static void nPattern3() {
     for (int i = 0; i < things.length - 1; ++i) {
       final Thing first = things[i];
@@ -52,7 +46,6 @@ public class Things {
       doSomethingWithPair(first, second);
     }
   }
-
   private static void nPattern4() {
     for (int i = 0; i <= things.length; ++i) {
       final int f = i - 1, t = i;

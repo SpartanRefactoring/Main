@@ -12,23 +12,18 @@ public class LetInMethodTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
     setNano(new LetInMethod());
   }
-
   @Test public void a() {
     assert not("boolean foo(){A x = 123; return bar(x,x);}");
   }
-
   @Test public void b() {
     assert not("boolean foo(){A x = 123; bar(x,x);}");
   }
-
   @Test public void c() {
     assert is("boolean foo(){A x = foo(); return bar(x,x);}");
   }
-
   @Test public void d() {
     assert is("boolean foo(){A x = foo(); bar(x,x);}");
   }
-
   @Test public void e() {
     assert is(//
         "private static SimpleName peelIdentifier(final Statement s, final String id) {"//
@@ -36,7 +31,6 @@ public class LetInMethodTest extends JavadocerTest {
             + "    return $.size() != 1 ? null : first($);"//
             + " }");
   }
-
   @Test public void f() {
     assert not("boolean foo(){A x = foo(); return bar(y,y);}");
   }

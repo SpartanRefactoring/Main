@@ -43,14 +43,12 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
             if (¢ instanceof ASTNode && wizard.eq((ASTNode) ¢, oldName))
               r.replace((ASTNode) ¢, make.from(d).identifier(newName), g);
   }
-
   private static String getExtraDimensions(final SingleVariableDeclaration d) {
     String $ = "";
     for (String ¢ = d + ""; ¢.endsWith("[]"); ¢ = ¢.substring(0, ¢.length() - 2))
       $ += "s";
     return $;
   }
-
   private static boolean isShort(final SingleVariableDeclaration ¢) {
     final String identifier = ¢.getName().getIdentifier();
     if (is.in(identifier, JohnDoe.shortNames))
@@ -58,7 +56,6 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
     final String $ = abbreviate.it(¢.getType());
     return $ != null && ($ + pluralVariadic(¢)).equals(identifier);
   }
-
   private static boolean legal(final SingleVariableDeclaration $, final MethodDeclaration d) {
     final List<SimpleName> localVariables = new MethodExplorer(d).localVariables();
     final String shortName = abbreviate.it($.getType());
@@ -66,19 +63,15 @@ public final class ParameterAbbreviate extends EagerTipper<SingleVariableDeclara
         && parameters(d).stream().noneMatch(λ -> λ.getName().getIdentifier().equals(shortName + pluralVariadic($)))
         && !d.getName().getIdentifier().equalsIgnoreCase(shortName + pluralVariadic($));
   }
-
   private static String pluralVariadic(final SingleVariableDeclaration ¢) {
     return ¢.isVarargs() ? "s" : getExtraDimensions(¢);
   }
-
   private static boolean suitable(final SingleVariableDeclaration ¢) {
     return JavaTypeNameParser.make(¢.getType() + "").isGenericVariation(¢.getName().getIdentifier()) && !isShort(¢);
   }
-
   @Override public String description(final SingleVariableDeclaration ¢) {
     return ¢.getName() + "";
   }
-
   @Override public Tip tip(final SingleVariableDeclaration d) {
     final MethodDeclaration $ = az.methodDeclaration(parent(d));
     if ($ == null || $.isConstructor() || !suitable(d) || isShort(d) || !legal(d, $))

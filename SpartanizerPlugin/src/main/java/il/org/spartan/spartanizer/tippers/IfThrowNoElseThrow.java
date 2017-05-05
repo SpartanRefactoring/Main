@@ -28,11 +28,9 @@ public final class IfThrowNoElseThrow extends GoToNextStatement<IfStatement>//
     final ThrowStatement $ = extract.throwStatement(¢);
     return $ == null ? null : extract.core($.getExpression());
   }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Consolidate into a single 'throw'";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final IfStatement s, final Statement nextStatement, final TextEditGroup g) {
     if (!iz.vacuousElse(s))
       return null;

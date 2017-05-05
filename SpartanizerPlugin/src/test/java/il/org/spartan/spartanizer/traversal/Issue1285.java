@@ -19,7 +19,6 @@ public class Issue1285 {
     for (final Tipper<? extends ASTNode> ¢ : Configurations.all().getAllTippers())
       Assert.assertNotEquals(1L, ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID());
   }
-
   @Test @SuppressWarnings("boxing") public void allSerialUIDsAreDifferent() {
     final HashSet<Long> serialUIDs = new HashSet<>();
     final Set<Class<?>> distinctTippersClasses = new HashSet<>();

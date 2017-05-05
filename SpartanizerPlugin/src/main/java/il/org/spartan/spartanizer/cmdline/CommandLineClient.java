@@ -12,7 +12,6 @@ final class CommandLineClient extends HeadlessSpartanizer {
   public static void main(final String[] args) {
     new CommandLineClient().go(args);
   }
-
   private void go(final String... args) {
     if (args.length == 0) {
       System.err.println(usage(this, args, this));
@@ -25,12 +24,10 @@ final class CommandLineClient extends HeadlessSpartanizer {
     ReportGenerator.setInputFolder(inputFolder);
     run();
   }
-
   private void run() {
     name(system.folder2File(inputFolder));
     apply();
   }
-
   static void printPrompt() {
     System.out.println(" to be completed ... ");
   }

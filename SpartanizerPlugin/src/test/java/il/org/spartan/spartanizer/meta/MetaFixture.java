@@ -49,7 +49,6 @@ public abstract class MetaFixture {
     return Stream.of(ancestors.of(n)).map(λ -> "\n\t + " + $.next() + ": " + Trivia.gist(λ) + "/" + λ.getClass().getSimpleName())
         .reduce((x, y) -> x + y).get();
   }
-
   /** Looks for all the annotees of annotationName in all the metafixtures in fs
    * and collects information in an array for each of them Each array is in the
    * next format: [<the name of the annotee>, <the annotation value>, < <name of
@@ -68,7 +67,6 @@ public abstract class MetaFixture {
                 $.add(as.array(¢, s, t.getClass().getSimpleName() + ":" + Environment.of(¢).fullName()));
     return $;
   }
-
   /** Returns the path of ¢'s src directory.
    * @param ¢ a File
    * @return the path of its source directory */
@@ -78,7 +76,6 @@ public abstract class MetaFixture {
       $ = $.removeLastSegments(1);
     return $;
   }
-
   /** Finds the wanted file in current directory and creates a cu out of its
    * content
    * @param fileName the name of the wanted file
@@ -94,7 +91,6 @@ public abstract class MetaFixture {
       }
     return null;
   }
-
   /** Finds the wanted file in current directory and creates a string that
    * contains its content
    * @param fileName the wanted file
@@ -105,7 +101,6 @@ public abstract class MetaFixture {
         return makeAST.string($);
     return null;
   }
-
   /** Gets the value of the parameter in the annotation ¢ as an integer
    * @param ¢ the single member annotation
    * @return the value in the parameter, if the value isn't an integer an
@@ -113,7 +108,6 @@ public abstract class MetaFixture {
   public static int value(final SingleMemberAnnotation ¢) {
     return az.throwing.int¢(az.numberLiteral(¢.getValue()).getToken());
   }
-
   /** Converts an array initializer to the strings corresponding to its
    * expressions
    * @param ¢ array initializer
@@ -121,7 +115,6 @@ public abstract class MetaFixture {
   private static String[] values(final ArrayInitializer ¢) {
     return values(step.expressions(¢));
   }
-
   /** Converts a collection of expressions to an array of the corresponding
    * strings
    * @param xs a collection of expressions
@@ -129,7 +122,6 @@ public abstract class MetaFixture {
   private static String[] values(final Collection<Expression> xs) {
     return xs.stream().map(λ -> az.stringLiteral(λ).getLiteralValue()).toArray(String[]::new);
   }
-
   /** Converts an expression to a string array containing the corresponding
    * string
    * @param $ an expression
@@ -139,7 +131,6 @@ public abstract class MetaFixture {
     return $ == null ? new String[0] : iz.stringLiteral($) ? values(az.stringLiteral($)) : //
         iz.arrayInitializer($) ? values(az.arrayInitializer($)) : new String[0];
   }
-
   /** Converts a single member annotation to a string array corresponding to its
    * value
    * @param ¢ a single member annotation
@@ -147,7 +138,6 @@ public abstract class MetaFixture {
   protected static String[] values(final SingleMemberAnnotation ¢) {
     return values(¢.getValue());
   }
-
   /** Converts a string literal to an array that contains the corresponding
    * string
    * @param ¢ a string literal
@@ -155,13 +145,11 @@ public abstract class MetaFixture {
   private static String[] values(final StringLiteral ¢) {
     return as.array(¢.getLiteralValue());
   }
-
   /** Gets all the annotations from current runtime class's cu
    * @return an iterable of these annotations */
   public Iterable<Annotation> annotations() {
     return descendants.whoseClassIs(Annotation.class).from(reflectedCompilationUnit());
   }
-
   /** Creates a vocabulary (map) that maps strings to method declarations. The
    * strings are the name of the method and the number of parameters it gets
    * @param cd anonymous class declaration
@@ -175,20 +163,17 @@ public abstract class MetaFixture {
     }
     return $;
   }
-
   /** Finds the first element of __ ¢ in current runtime class's cu
    * @param ¢ the wanted class
    * @return the first element of this __ */
   protected final <N extends ASTNode> N find(final Class<N> ¢) {
     return the.headOf(descendants.whoseClassIs(¢).from(reflectedCompilationUnit()));
   }
-
   /** Gets the name of the most outer class of the current one
    * @return returns this name */
   public String name() {
     return extract.name(types(reflectedCompilationUnit()).stream().filter(AbstractTypeDeclaration::isPackageMemberTypeDeclaration).findFirst().get());
   }
-
   /** If a mapping of this runtime class to a cu exists returns it, otherwise
    * adds a mapping to cu of this class or of its containing class if exists
    * @return the new cu or the existing mapping */
@@ -200,7 +185,6 @@ public abstract class MetaFixture {
     classToASTCompilationUnit.put(c, loadAST((c.getDeclaringClass() == null ? c : c.getDeclaringClass()).getSimpleName() + ".java"));
     return classToASTCompilationUnit.get(c);
   }
-
   /** If a mapping of this runtime class to a string exists returns it,
    * otherwise adds a mapping to a string of this class or of its containing
    * class if exists
@@ -213,7 +197,6 @@ public abstract class MetaFixture {
     classToText.put(c, loadText((c.getDeclaringClass() == null ? c : c.getDeclaringClass()).getSimpleName() + ".java"));
     return classToText.get(c);
   }
-
   /** Gets all the single member annotations from current runtime class's cu
    * @return an iterable of these annotations */
   public Iterable<SingleMemberAnnotation> singleMemberAnnotations() {

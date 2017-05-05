@@ -20,11 +20,11 @@ import il.org.spartan.streotypes.*;
  *
  * @author Yossi Gil (
  * @since 12/02/2006) */
-@Instantiable public final class Separator {
+@Instantiable
+public final class Separator {
   public static <T> boolean isEmpty(@NotNull final Iterable<T> items) {
     return !items.iterator().hasNext();
   }
-
   @NotNull public static String separateBy(@NotNull final int[] is, final String between) {
     if (is.length == 0)
       return "";
@@ -34,15 +34,12 @@ import il.org.spartan.streotypes.*;
       $ += s + "" + Integer.valueOf(¢);
     return $;
   }
-
   @NotNull public static <T> String separateBy(final String between, @NotNull final T[] items) {
     return wrap("", "", items, between);
   }
-
   @NotNull public static <T> String wrap(final String wrap, @NotNull final Iterable<T> items, final String between) {
     return wrap(wrap, wrap, items, between);
   }
-
   @NotNull public static <T> String wrap(final String begin, final String end, @NotNull final Iterable<T> items, final String between) {
     if (isEmpty(items))
       return "";
@@ -52,7 +49,6 @@ import il.org.spartan.streotypes.*;
       $ += s + "" + ¢;
     return $ + end;
   }
-
   @NotNull public static <T> String wrap(final String begin, final String end, @NotNull final T[] items, final String between) {
     if (items.length == 0)
       return "";
@@ -62,7 +58,6 @@ import il.org.spartan.streotypes.*;
       $ += s + "" + ¢;
     return $ + end;
   }
-
   static void main(@NotNull final String[] args) {
     for (final String a : args)
       System.out.print(new Separator(", ") + a);
@@ -74,11 +69,9 @@ import il.org.spartan.streotypes.*;
   public Separator(final char c) {
     s = c + "";
   }
-
   public Separator(final String s) {
     this.s = s;
   }
-
   @Override public String toString() {
     if (!first)
       return s;

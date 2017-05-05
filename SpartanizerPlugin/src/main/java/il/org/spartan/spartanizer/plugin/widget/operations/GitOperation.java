@@ -15,7 +15,6 @@ public abstract class GitOperation extends WidgetOperation {
   private static final long serialVersionUID = 0xB18576ECF23E9C3L;
 
   protected abstract void gitOperation(Git g) throws Throwable;
-
   @Override public void onMouseUp(final WidgetContext c) throws Throwable {
     if (c.project == null || !c.project.exists())
       return;

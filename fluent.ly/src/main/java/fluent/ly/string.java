@@ -18,23 +18,18 @@ public enum string {
   public static double atod(@NotNull final String ¢) {
     return Double.valueOf(¢).doubleValue();
   }
-
   public static float atof(@NotNull final String ¢) {
     return Float.valueOf(¢).floatValue();
   }
-
   public static int atoi(@NotNull final String ¢) {
     return Integer.valueOf(¢).intValue();
   }
-
   public static long atol(@NotNull final String ¢) {
     return Long.valueOf(¢).longValue();
   }
-
   @NotNull public static String capitalize(@NotNull final String ¢) {
     return ¢.length() == 0 ? ¢ : (first(¢) + "").toUpperCase() + the.rest(¢).toLowerCase();
   }
-
   /** Concatenate any number of strings.
    * @param ss a variable number of strings
    * @return the concatenation of the strings in <code>ss</code> */
@@ -44,26 +39,21 @@ public enum string {
       $.append(¢);
     return $ + "";
   }
-
   @NotNull public static String cat(@NotNull final String[]... sss) {
     @NotNull final StringBuilder $ = new StringBuilder("");
     for (final String[] ¢ : sss)
       $.append(cat(¢));
     return $ + "";
   }
-
   public static double delta(final double a, final double d) {
     return a == d ? 0 : signum(a) != signum(d) ? Double.NaN : 2 * Math.abs(a - d) / Math.abs(a + d);
   }
-
   @NotNull public static String dtoa(final double ¢) {
     return ¢ + "";
   }
-
   public static <T> boolean eq(@Nullable final T a, @Nullable final T b) {
     return a == null ? b == null : a.equals(b);
   }
-
   @NotNull public static String esc(final char ¢) {
     switch (¢) {
       case '\n':
@@ -82,7 +72,6 @@ public enum string {
         return ¢ + "";
     }
   }
-
   @NotNull public static String esc(@Nullable final String s) {
     if (s == null)
       return "(null)";
@@ -91,7 +80,6 @@ public enum string {
       $.append(esc(s.charAt(¢)));
     return $ + "";
   }
-
   public static String expandLeadingTabs(final String s) {
     nonnull(s);
     for (String $ = s;;) {
@@ -101,28 +89,23 @@ public enum string {
       $ = newValue;
     }
   }
-
   @NotNull public static String fill(final int i, final char c) {
     return fill(i, c + "");
   }
-
   @NotNull public static String fill(final int i, final String s) {
     @NotNull final StringBuilder $ = new StringBuilder();
     for (int ¢ = 0; ¢ < i; ++¢)
       $.append(s);
     return $ + "";
   }
-
   public static char first(@NotNull final String ¢) {
     nonnull(¢);
     positive(¢.length());
     return ¢.charAt(0);
   }
-
   @NotNull public static String ftoa(final float ¢) {
     return ¢ + "";
   }
-
   public static boolean isDouble(@NotNull final String s) {
     try {
       Double.valueOf(s);
@@ -131,7 +114,6 @@ public enum string {
       return false;
     }
   }
-
   public static boolean isFloat(@NotNull final String s) {
     try {
       Float.valueOf(s);
@@ -140,7 +122,6 @@ public enum string {
       return false;
     }
   }
-
   public static boolean isInt(@NotNull final String s) {
     try {
       Integer.valueOf(s);
@@ -149,7 +130,6 @@ public enum string {
       return false;
     }
   }
-
   public static boolean isLong(@NotNull final String s) {
     try {
       Long.valueOf(s);
@@ -158,21 +138,17 @@ public enum string {
       return false;
     }
   }
-
   @NotNull public static String itoa(final int ¢) {
     return ¢ + "";
   }
-
   @NotNull public static String javaCase(@NotNull final String ¢) {
     return ¢.length() == 0 ? ¢ : (first(¢) + "").toLowerCase() + the.rest(¢);
   }
-
   public static char last(@NotNull final String ¢) {
     nonnull(¢);
     positive(¢.length());
     return ¢.charAt(¢.length() - 1);
   }
-
   @NotNull public static String lowCounter(final int ¢) {
     switch (¢) {
       case -1:
@@ -183,11 +159,9 @@ public enum string {
         return tolow(¢);
     }
   }
-
   @NotNull public static String ltoa(final long ¢) {
     return ¢ + "";
   }
-
   /** Compute the string equivalent ordinal of a positive integer, e.g., for 1
    * return "1st", for 22, the "22nd", etc.
    * @param ¢ a non-negative integer to convert
@@ -203,18 +177,15 @@ public enum string {
         return ¢ + "th";
     }
   }
-
   /** Wrap an object in parenthesis
    * @param ¢ a non-<code><b>null</b></code> object for wrapping in parenthesis
    * @return the result of <code>o.toString()</code> wrapped parenthesis */
   @NotNull public static String paren(final Object ¢) {
     return "(" + ¢ + ")";
   }
-
   @NotNull public static String pluralize(final int i, final String singular) {
     return pluralize(i, singular, singular + "s");
   }
-
   @NotNull public static String pluralize(final int i, final String singular, final String plural) {
     switch (i) {
       case 0:
@@ -241,11 +212,9 @@ public enum string {
         return i + " " + plural;
     }
   }
-
   @NotNull public static String pretty(final String singular, final Collection<?> a) {
     return pretty(singular, singular + "s", a);
   }
-
   @NotNull public static String pretty(final String singular, final String plural, @Nullable final Collection<?> a) {
     if (a == null || a.isEmpty())
       return "";
@@ -260,7 +229,6 @@ public enum string {
     }
     return $;
   }
-
   /** Quote an object
    * @param ¢ a non-<code><b>null</b></code> object for quoting
    * @return the result of <code>o.toString()</code> wrapped with single
@@ -268,11 +236,9 @@ public enum string {
   @NotNull public static String quote(final Object ¢) {
     return wrap('\'', ¢ + "");
   }
-
   @NotNull public static String repeat(final int i, final char c) {
     return repeat(i, c + "");
   }
-
   /** Repeat a string a fixed number of times
    * @param i a non-negative integer
    * @param s a string to repeat
@@ -284,15 +250,12 @@ public enum string {
       $.append(s);
     return $ + "";
   }
-
   public static int signum(final double ¢) {
     return ¢ == 0 ? 0 : ¢ > 0 ? 1 : -1;
   }
-
   @NotNull public static String sprintf(@NotNull final String format, final Object... args) {
     return new Formatter().format(format, args) + "";
   }
-
   public static String sprintf(@NotNull final String[] args) {
     switch (args.length) {
       case 0:
@@ -306,7 +269,6 @@ public enum string {
         return new Formatter().format(args[0], $) + "";
     }
   }
-
   /** Strip the first and last character of a string.
    * @param ¢ a non-<code><b>null</b></code> string of length at least two to
    *        strip
@@ -316,7 +278,6 @@ public enum string {
     require(¢.length() >= 2);
     return ¢.substring(1, ¢.length() - 1);
   }
-
   @NotNull public static List<String> toLines(@NotNull final String s) throws IOException {
     @NotNull final List<String> $ = new ArrayList<>();
     for (@NotNull final BufferedReader br = new BufferedReader(new StringReader(s));;) {
@@ -326,7 +287,6 @@ public enum string {
       $.add(line);
     }
   }
-
   @NotNull public static String upCounter(final int ¢) {
     switch (¢) {
       case -1:
@@ -337,23 +297,18 @@ public enum string {
         return toup(¢);
     }
   }
-
   public static String visualize(final String ¢) {
     return esc(¢).replaceAll(" ", "\\s");
   }
-
   @NotNull public static String wrap(final char with, final String s) {
     return with + s + with;
   }
-
   @NotNull public static String wrap(final String with, final String s) {
     return with + s + with;
   }
-
   @NotNull private static String tolow(final int ¢) {
     return ¢ == 0 ? "" : tolow(¢ / 26) + (char) (¢ % 26 + 'a');
   }
-
   @NotNull private static String toup(final int ¢) {
     return ¢ == 0 ? "" : toup(¢ / 26) + (char) (¢ % 26 + 'A');
   }

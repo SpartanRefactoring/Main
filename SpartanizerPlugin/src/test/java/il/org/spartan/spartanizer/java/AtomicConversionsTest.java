@@ -37,7 +37,6 @@ public final class AtomicConversionsTest {
     assert atomic.isBoolean(b1 != b2);
     assert atomic.isBoolean(b1 || b2);
   }
-
   @Test public void booleansAsSemiIntegers() {
     assert atomic.isBoolean(b1 & b2);
     assert atomic.isBoolean(b1 | b2);
@@ -45,7 +44,6 @@ public final class AtomicConversionsTest {
     assert atomic.isBoolean(b1 | b2 & (b1 ^ b2));
     assert atomic.isBoolean(b1 ^ b2);
   }
-
   @Test public void charAndChar() {
     assert !atomic.isDouble(c);
     assert !atomic.isLong(c);
@@ -55,7 +53,6 @@ public final class AtomicConversionsTest {
     assert !atomic.isChar(c + 'b');
     assert !atomic.isFloat(c + "a");
   }
-
   @Test public void floatAndFloat() {
     assert !atomic.isDouble(1L);
     assert atomic.isLong(1L);
@@ -63,14 +60,12 @@ public final class AtomicConversionsTest {
     assert atomic.isFloat(2F + f);
     assert atomic.isFloat(1L + 2F);
   }
-
   @Test public void mod() {
     assert atomic.isLong(l / i);
     assert atomic.isLong(l + i);
     assert atomic.isLong(l % i);
     assert atomic.isLong(i % l);
   }
-
   @Test public void preIncrement() {
     azzert.that(type.Axiom.type(++d), is(type.Primitive.Certain.DOUBLE));
     azzert.that(type.Axiom.type(++f), is(type.Primitive.Certain.FLOAT));
@@ -79,7 +74,6 @@ public final class AtomicConversionsTest {
     azzert.that(type.Axiom.type(++s), is(type.Primitive.Certain.SHORT));
     azzert.that(type.Axiom.type(++i), is(type.Primitive.Certain.INT));
   }
-
   @Test public void shift2() {
     assert atomic.isByte(b);
     assert !atomic.isByte(b << l);
@@ -94,42 +88,36 @@ public final class AtomicConversionsTest {
     assert atomic.isInt(i << l);
     assert atomic.isLong(l << l);
   }
-
   @Test public void shiftByByte() {
     assert atomic.isInt(b << b);
     assert atomic.isInt(s << b);
     assert atomic.isInt(c << b);
     assert atomic.isInt(i << b);
   }
-
   @Test public void shiftByChar() {
     assert atomic.isInt(b << c);
     assert atomic.isInt(s << c);
     assert atomic.isInt(c << c);
     assert atomic.isInt(i << c);
   }
-
   @Test public void shiftByInt() {
     assert atomic.isInt(b << i);
     assert atomic.isInt(s << i);
     assert atomic.isInt(c << i);
     assert atomic.isInt(i << i);
   }
-
   @Test public void shiftByLong() {
     assert atomic.isInt(b << l);
     assert atomic.isInt(s << l);
     assert atomic.isInt(c << l);
     assert atomic.isInt(i << l);
   }
-
   @Test public void shiftByShort() {
     assert atomic.isInt(b << s);
     assert atomic.isInt(s << s);
     assert atomic.isInt(c << s);
     assert atomic.isInt(i << s);
   }
-
   @Test public void shiftOfLong() {
     assert atomic.isLong(l << b);
     assert atomic.isLong(l << c);
@@ -137,7 +125,6 @@ public final class AtomicConversionsTest {
     assert atomic.isLong(l << i);
     assert atomic.isLong(l << l);
   }
-
   @Test public void strings() {
     assert atomic.isString(d + "");
     assert atomic.isDouble(d + f);

@@ -31,50 +31,39 @@ public interface ConfigurableReport {
     public static void addInput(final ASTNode input) {
       getInputList().add(input);
     }
-
     public static void addOutput(final ASTNode output) {
       getOutputList().add(output);
     }
-
     @SuppressWarnings("rawtypes") public static NamedFunction[] functions(final String id) {
       return as.array(m("length" + id, λ -> (λ + "").length()), m("essence" + id, λ -> Essence.of(λ + "").length()),
           m("tokens" + id, λ -> metrics.tokens(λ + "")), m("nodes" + id, countOf::nodes), m("body" + id, metrics::bodySize),
           m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()),
           m("tide" + id, λ -> clean(λ + "").length()));//
     }
-
     public static String getFileName() {
       return reportFileName;
     }
-
     static String getHeader() {
       return header;
     }
-
     public static List<ASTNode> getInputList() {
       return inputList;
     }
-
     public static List<ASTNode> getOutputList() {
       return outputList;
     }
-
     static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
       return new NamedFunction<>(name, f);
     }
-
     public static void setFileName(final String ¢) {
       reportFileName = ¢;
     }
-
     public static void setHeader(final String ¢) {
       header = ¢;
     }
-
     public static void setInputList(final ArrayList<ASTNode> inputList) {
       Settings.inputList = inputList;
     }
-
     public static void setOutputList(final ArrayList<ASTNode> outputList) {
       Settings.outputList = outputList;
     }
@@ -89,51 +78,39 @@ public interface ConfigurableReport {
     public Action getAction() {
       return new Action();
     }
-
     public ASTNode getInput() {
       return input;
     }
-
     public String getInputFolder() {
       return inputFolder;
     }
-
     public ASTNode getOutput() {
       return output;
     }
-
     public String getOutputFolder() {
       return outputFolder;
     }
-
     public boolean isRobustMode() {
       return robustMode;
     }
-
     public CSVStatistics report() {
       return report;
     }
-
     public void setInput(final ASTNode ¢) {
       input = ¢;
     }
-
     public void setInputFolder(final String inputFolder) {
       this.inputFolder = inputFolder;
     }
-
     public void setOutput(final ASTNode ¢) {
       output = ¢;
     }
-
     public void setOutputFolder(final String outputFolder) {
       this.outputFolder = outputFolder;
     }
-
     public void setReport(final String reportFilename, final String header) {
       report = new CSVStatistics(reportFilename, header);
     }
-
     public void setRobustMode(final boolean robustMode) {
       this.robustMode = robustMode;
     }
@@ -150,11 +127,9 @@ public interface ConfigurableReport {
       public void close() {
         report().close();
       }
-
       private int defaultValue() {
         return hashCode();
       }
-
       @SuppressWarnings("boxing") int go() {
         // listeners().push("Initializing the " + getFileName() + " report.");
         if (Settings.this.isRobustMode()) {
@@ -187,20 +162,16 @@ public interface ConfigurableReport {
         // listeners().pop("exhausted");
         return defaultValue();
       }
-
       public void initialize() {
         report = new CSVStatistics(getFileName(), getHeader());
       }
-
       private void name(final ASTNode i) {
         report().put("name", extract.name(i));
         report().put("category", extract.category(i));
       }
-
       private void summaryFileName() {
         report().summaryFileName();
       }
-
       // running report
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void write(final ASTNode i, final ASTNode n) {
         for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {
@@ -208,7 +179,6 @@ public interface ConfigurableReport {
           report().put(¢.name() + "2", ¢.function().run(n));
         }
       }
-
       @SuppressWarnings({ "boxing", "unchecked" }) private void write(final ASTNode i, final ASTNode n, final String id,
           final BiFunction<Integer, Integer> bf) {
         if (bf == null && id == null) {
@@ -219,7 +189,6 @@ public interface ConfigurableReport {
         assert id != null;
         as.list(ReportGenerator.Util.functions("")).forEach(λ -> report().put(id + λ.name(), bf.apply(λ.function().run(i), λ.function().run(n))));
       }
-
       @SuppressWarnings({ "unchecked", "rawtypes" }) private void writePerc(final ASTNode n1, final ASTNode n2, final String id) {
         String a; // TODO Matteo: to be converted to double or float? -- Matteo
         for (final NamedFunction ¢ : ReportGenerator.Util.functions("")) {

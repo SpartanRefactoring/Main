@@ -36,7 +36,6 @@ public enum remove {
     fragments(newParent).addAll(live);
     r.replace(parent, newParent, g);
   }
-
   public static Expression literal(final InfixExpression x, final boolean b) {
     final List<Expression> $ = extract.allOperands(x);
     remove.removeAll(b, $);
@@ -49,7 +48,6 @@ public enum remove {
         return subject.operands($).to(x.getOperator());
     }
   }
-
   /** Removes a {@link VariableDeclarationFragment}, leaving intact any other
    * fragment fragments in the containing {@link VariabelDeclarationStatement} .
    * Still, if the containing node is left empty, it is removed as well.
@@ -60,11 +58,9 @@ public enum remove {
     final VariableDeclarationStatement parent = (VariableDeclarationStatement) f.getParent();
     r.remove(parent.fragments().size() > 1 ? f : parent, g);
   }
-
   public static void statement(final Statement s, final ASTRewrite r, final TextEditGroup g) {
     misc.statementRewriter(r, s).remove(s, g);
   }
-
   private static List<Statement> breakSequencer(final Iterable<Statement> ss) {
     final List<Statement> $ = an.empty.list();
     for (final Statement ¢ : ss) {
@@ -74,7 +70,6 @@ public enum remove {
     }
     return $;
   }
-
   private static Statement breakSequencer(final Statement s) {
     if (s == null)
       return null;
@@ -95,7 +90,6 @@ public enum remove {
     }
     return $;
   }
-
   /** Remove all occurrences of a boolean literal from a list of
    * {@link Expression}¢
    * <p>
@@ -110,7 +104,6 @@ public enum remove {
       xs.remove(x);
     }
   }
-
   private static List<Statement> removeBreakSequencer(final Iterable<Statement> ss) {
     final List<Statement> $ = an.empty.list();
     for (final Statement ¢ : ss) {
@@ -120,7 +113,6 @@ public enum remove {
     }
     return $;
   }
-
   private static Statement removeBreakSequencer(final Statement s) {
     if (s == null)
       return null;

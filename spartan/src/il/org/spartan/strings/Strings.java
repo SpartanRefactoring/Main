@@ -14,14 +14,12 @@ public class Strings extends ArrayList<String> {
   public Strings() {
     super(0);
   }
-
   /** Create a new list of strings from a single string.
    * @param s A string to initialize the list */
   public Strings(final String s) {
     super(1);
     add(s);
   }
-
   /** Create a new list of strings from a list of strings
    * @param s1 The first string to add to the list
    * @param s2 The second string to add to the list

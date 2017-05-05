@@ -47,7 +47,6 @@ public class NamespaceTest extends MetaFixture {
   @Test public void a01() {
     assert fixture != null;
   }
-
   @Test public void a02() {
     fixture.description().hashCode();
   }

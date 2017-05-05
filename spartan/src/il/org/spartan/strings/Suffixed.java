@@ -30,7 +30,8 @@ import il.org.spartan.streotypes.*;
  * return <code><b>false</b></code>.
  * @author Yossi Gil, the Technion.
  * @since 24/08/2008 */
-@Utility public enum Suffixed {
+@Utility
+public enum Suffixed {
   ;
   /** Determine whether a file name ends with any one of the supplied
    * extensions.
@@ -41,7 +42,6 @@ import il.org.spartan.streotypes.*;
   public static boolean by(@NotNull final File f, final String... suffixes) {
     return by(f.getName(), suffixes);
   }
-
   /** Determine whether a string ends with any one of the supplied suffixes.
    * @param s a string to examine
    * @param suffixes a list of potential suffixes

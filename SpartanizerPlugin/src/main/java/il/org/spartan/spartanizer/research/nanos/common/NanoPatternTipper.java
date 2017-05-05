@@ -23,35 +23,27 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
   protected static <N extends ASTNode> boolean anyTips(final Collection<UserDefinedTipper<N>> ts, final N n) {
     return n != null && ts.stream().anyMatch(λ -> λ.check(n));
   }
-
   protected static <N extends ASTNode> boolean nonTips(final Collection<NanoPatternTipper<N>> ts, final N n) {
     return n == null || ts.stream().allMatch(λ -> λ.cantTip(n));
   }
-
   protected static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final Collection<UserDefinedTipper<N>> ts, final N n) {
     return ts.stream().filter(λ -> λ.check(n)).findFirst().get();
   }
-
   public static <N extends ASTNode> Tip firstTip(final Collection<UserDefinedTipper<N>> ts, final N n) {
     return firstTipper(ts, n).tip(n);
   }
-
   public static <N extends ASTNode> String firstPattern(final List<UserDefinedTipper<N>> ¢) {
     return the.headOf(¢).pattern().replaceAll("\\$", "");
   }
-
   public static <N extends ASTNode> String firstReplacement(final List<UserDefinedTipper<N>> ¢) {
     return the.headOf(¢).replacement().replaceAll("\\$", "");
   }
-
   public static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final List<UserDefinedTipper<N>> ¢) {
     return the.headOf(¢);
   }
-
   protected static Block containingBlock(final ASTNode ¢) {
     return yieldAncestors.untilContainingBlock().from(¢);
   }
-
   @Override public final Tip tip(final N ¢) {
     final Tip $ = pattern(¢);
     return new Tip($.description, myClass(), ¢) {
@@ -61,29 +53,22 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
       }
     };
   }
-
   @Override public String description(@SuppressWarnings("unused") final N __) {
     return "";
   }
-
   @Override public String technicalName() {
     return tipperName();
   }
-
   @SuppressWarnings("static-method") public String example() {
     return null;
   }
-
   @SuppressWarnings("static-method") public String symbolycReplacement() {
     return "";
   }
-
   @Override public String[] akas() {
     return new String[] { tipperName() };
   }
-
   protected abstract Tip pattern(N ¢);
-
   @SuppressWarnings("static-method") public Category category() {
     return null;
   }

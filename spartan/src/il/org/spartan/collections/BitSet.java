@@ -55,14 +55,12 @@ public enum BitSet {
     require(¢ <= MAX);
     return (short) ($$[¢ + 1] - 1);
   }
-
   /** Return the number of elements in a set represented as a bit mask.
    * @param mask a bit mask to examine
    * @return the number of bits equal to 1 in the mask. */
   public static int cardinality(final int mask) {
     return mask == 0 ? 0 : (mask & 0x01) + cardinality(mask >>> 1);
   }
-
   /** Turn off a specific bit in a mask.
    * @param mask a bit mask representation of a set
    * @param i index of the bit to turn off
@@ -70,7 +68,6 @@ public enum BitSet {
   public static short clear(final short mask, final int i) {
     return (short) (mask & ~$$[i]);
   }
-
   /** Determine set membership
    * @param mask a bit mask representing a set
    * @param i an integer whose membership in the set is to be checked. Must be
@@ -80,7 +77,6 @@ public enum BitSet {
   public static boolean contains(final short mask, final int i) {
     return (mask & $$[i]) != 0;
   }
-
   /** Compute the intersection of two set sets of positions.
    * @param s1 a bit mask representation of a set of positions.
    * @param s2 another bit mask representation of a set of position.
@@ -88,7 +84,6 @@ public enum BitSet {
   public static short intersect(final short s1, final short s2) {
     return (short) (s1 & s2);
   }
-
   @SuppressWarnings("boxing") public static void main(final String argv[]) {
     for (int ¢ = 0; ¢ < MAX; ++¢)
       System.out.printf("exp[%d] = %d\n", ¢, $$[¢]);
@@ -102,7 +97,6 @@ public enum BitSet {
       System.out.print("] \n");
     }
   }
-
   /** Obtain a list of all integers in a given mask
    * @param mask a bit mask representing a set
    * @return an array containing all integers in the set represented by
@@ -111,7 +105,6 @@ public enum BitSet {
     require(mask < EXP_MAX);
     return positions[mask];
   }
-
   /** Turn on a specific bit in a mask.
    * @param mask A bit mask representation of a set
    * @param i index of the bit to turn on
@@ -119,7 +112,6 @@ public enum BitSet {
   public static short raise(final short mask, final int i) {
     return (short) (mask | $$[i]);
   }
-
   /** Convert an integer to a singleton set containing it.
    * @param ¢ an integer in the range <code>0...{@link BitSet#MAX}</code>
    * @return a bit mask representing the set whose sole member is
@@ -129,7 +121,6 @@ public enum BitSet {
     require(¢ < MAX);
     return $$[¢];
   }
-
   /** convert an array of <code><b>int</b></code>s into a bit mask
    * @param set the set of numbers to be converted; each member must be in the
    *        range <code>0...{@link #MAX}</code>
@@ -140,7 +131,6 @@ public enum BitSet {
       $ = raise($, position);
     return $;
   }
-
   /** convert a bunch of <code><b>{@link Integer}</b></code> into a bit mask
    * @param set the set of numbers to be converted; each member must non-
    *        <code><b>null</b></code> and in the range <code>0...
@@ -152,7 +142,6 @@ public enum BitSet {
       $ = raise($, position);
     return $;
   }
-
   /** convert an array of <code><b>short</b></code> integers into a bit mask
    * @param set the set of numbers to be converted; each member must be in the
    *        range <code>0...{@link #MAX}</code>
@@ -163,7 +152,6 @@ public enum BitSet {
       $ = raise($, position);
     return $;
   }
-
   /** Compute the union of two set sets of positions.
    * @param s1 a bit mask representation of a set of position.
    * @param s2 another bit mask representation of a set of position.

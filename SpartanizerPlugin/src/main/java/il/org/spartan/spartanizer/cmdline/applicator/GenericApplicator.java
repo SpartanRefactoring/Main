@@ -32,11 +32,9 @@ public class GenericApplicator {
     }
     return as.list($); // useless?
   }
-
   public GenericApplicator() {
     selectedNodeTypes = setAllNodeTypes();
   }
-
   public GenericApplicator(final String... classes) {
     System.out.println("classes:" + Arrays.toString(classes));
     if (classes == null) {
@@ -47,16 +45,13 @@ public class GenericApplicator {
       System.out.println("selected: " + selectedNodeTypes.size());
     }
   }
-
   public GenericApplicator(final String[] classes, final String... tipperGroups) {
     this(classes);
     selectedTipperGroups = tipperGroups == null ? setAllTipperGroups() : as.list(tipperGroups);
   }
-
   protected static List<String> setAllTipperGroups() {
     return Stream.of(TipperGroup.values()).map(Enum::name).collect(toList());
   }
-
   private static List<Class<? extends ASTNode>> setAllNodeTypes() {
     return as.list(MethodDeclaration.class, InfixExpression.class, //
         VariableDeclarationFragment.class, //
@@ -90,18 +85,15 @@ public class GenericApplicator {
         VariableDeclarationFragment.class //
     );
   }
-
   public static void main(final String[] args) {
     setSelectedNodeTypes("MethodDeclaration", "VariableDeclarationFragment").forEach(System.out::println);
     setSelectedTipperGroups("Abbreviation", "Centification").forEach(System.out::println);
   }
-
   private static Iterable<String> setSelectedTipperGroups(final String... ¢) {
     final Collection<String> $ = an.empty.list();
     Collections.addAll($, ¢);
     return $;
   }
-
   <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     final Tipper<N> $ = configuration.firstTipper(¢);
     final TipperGroup g = $.tipperGroup();

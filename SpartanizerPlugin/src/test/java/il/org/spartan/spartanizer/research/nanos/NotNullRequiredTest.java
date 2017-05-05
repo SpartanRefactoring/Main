@@ -17,7 +17,6 @@ public class NotNullRequiredTest {
         .gives("void m(){assert x!=null;use();use();}") //
         .stays();
   }
-
   @Test public void a2() {
     trimmingOf("void m(){if(x == null || y == null) return; use(); use();}")//
         .using(new NotNullRequired(), IfStatement.class)//
@@ -25,7 +24,6 @@ public class NotNullRequiredTest {
         .gives("void m(){assert y!=null:x;use();use();}") //
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("void m(){if(x == null) return null; use(); use();}")//
         .using(new NotNullRequired(), IfStatement.class)//
@@ -33,7 +31,6 @@ public class NotNullRequiredTest {
         .gives("void m(){assert x != null;use();use();}")//
         .stays();
   }
-
   @Test public void b2() {
     trimmingOf("void m(){if(x == null  || y == null) return null; use(); use();}")//
         .using(new NotNullRequired(), IfStatement.class)//
@@ -41,13 +38,11 @@ public class NotNullRequiredTest {
         .gives("void m(){assert y!=null:x;use();use();}") //
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("void m(){s(); if(x == null) return null; use(); use();}")//
         .using(new NotNullRequired(), IfStatement.class)//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("void m(){if(x == null || null == abc.b) return null; use(); use();}")//
         .gives("void m(){if(x==null||abc.b==null)return null;use();use();}")//

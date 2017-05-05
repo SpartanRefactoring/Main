@@ -20,7 +20,6 @@ public class HoldsOrReturnTest {
         .gives("holds(!(x.isCute())).orReturn();")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("if(x.isCute() || iWant()) return 0;")//
         .using(nano, IfStatement.class)//
@@ -28,7 +27,6 @@ public class HoldsOrReturnTest {
         .gives("holds(!x.isCute()&&!iWant()).orReturn(0);") //
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("if(iWant()) return null;")//
         .using(nano, IfStatement.class)//

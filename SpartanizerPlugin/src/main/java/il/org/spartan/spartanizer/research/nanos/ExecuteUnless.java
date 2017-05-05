@@ -32,12 +32,10 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
         && doesNotReferenceNonFinal(x)//
         && isNotContainedInSimpleLoop(x);
   }
-
   private static boolean isNotContainedInSimpleLoop(final IfStatement x) {
     return !iz.enhancedFor(parent(x)) //
         && !iz.simpleLoop(parent(parent(x)));
   }
-
   /** First order approximation - does statement reference non effective final
    * names? meanwhile we take care just assignments...
    * @param ¢ statement
@@ -45,7 +43,6 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
   private static boolean doesNotReferenceNonFinal(final IfStatement ¢) {
     return findFirst.assignment(¢) == null;
   }
-
   /** First order approximation - does statement throw?
    * @param ¢ statement
    * @return */
@@ -55,27 +52,21 @@ public final class ExecuteUnless extends NanoPatternTipper<IfStatement> {
     final MethodDeclaration $ = az.methodDeclaration(yieldAncestors.untilClass(MethodDeclaration.class).from(¢));
     return $ != null && !$.thrownExceptionTypes().isEmpty();
   }
-
   @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Execute a statement only if condition holds";
   }
-
   @Override public String technicalName() {
     return "IfXThenExecuteS";
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public NanoPatternTipper.Category category() {
     return Category.Conditional;
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }

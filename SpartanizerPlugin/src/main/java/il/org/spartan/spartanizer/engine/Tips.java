@@ -10,7 +10,6 @@ public class Tips extends ArrayList<Tip> {
 
   /** Suppresses default constructor, ensuring non-instantiability */
   private Tips() {/**/}
-
   public static Tips empty() {
     return new Tips();
   }

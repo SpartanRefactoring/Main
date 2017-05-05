@@ -1,7 +1,5 @@
 package il.org.spartan.classfiles;
 
-import static fluent.ly.___.*;
-
 import java.io.*;
 
 import org.jetbrains.annotations.*;
@@ -17,7 +15,6 @@ public class AllClasses {
         @Override public void visitFile(@NotNull final File ¢) {
           System.out.println(Filename.path2class(¢.getAbsolutePath(), root));
         }
-
         @Override public void visitZipEntry(@NotNull final String entryName, final InputStream __) {
           forget.it(__);
           System.out.println(Filename.path2class(entryName, root));

@@ -16,15 +16,12 @@ interface FactorsReorganizer {
   static Expression simplify(final InfixExpression ¢) {
     return build(new FactorsCollector(¢));
   }
-
   static Expression build(final FactorsCollector ¢) {
     return build(¢.multipliers(), ¢.dividers());
   }
-
   static Expression build(final List<Expression> multipliers, final List<Expression> dividers) {
     return buildDividers(buildMultipliers(multipliers), dividers);
   }
-
   static Expression buildDividers(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildDividers(rest);
@@ -33,7 +30,6 @@ interface FactorsReorganizer {
     rest.add(0, first);
     return subject.operands(rest).to(DIVIDE);
   }
-
   static Expression buildDividers(final List<Expression> ¢) {
     final Expression $ = subject.pair(the.headOf(¢).getAST().newNumberLiteral("1"), the.headOf(¢)).to(DIVIDE);
     if (¢.size() == 1)
@@ -42,7 +38,6 @@ interface FactorsReorganizer {
     ¢.add(0, $);
     return subject.operands(¢).to(DIVIDE);
   }
-
   static Expression buildMultipliers(final List<Expression> ¢) {
     switch (¢.size()) {
       case 0:

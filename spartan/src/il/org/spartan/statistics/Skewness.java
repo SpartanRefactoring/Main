@@ -11,29 +11,27 @@ import il.org.spartan.streotypes.*;
 
 /** @author Yossi Gil
  * @since 2011-08-1 */
-@Utility enum Skewness {
+@Utility
+enum Skewness {
   ;
   public static double skewenessCorrection(@NotNull final double... vs) {
     return skewenessCorrection(vs.length);
   }
-
   public static double skewenessCorrection(final int ¢) {
     return Math.sqrt(¢ * (¢ - 1)) / (¢ - 2);
   }
-
   public static double skewness(@NotNull final double... vs) {
     return skewnessNormalizedVector(normalize(vs.clone()));
   }
-
   public static double skewness(@NotNull final RealStatistics ¢) {
     return skewness(¢.all());
   }
-
   public static double skewnessNormalizedVector(final double... vs) {
     return moment(3, vs);
   }
 
-  @SuppressWarnings("static-method") public static class TEST {
+  @SuppressWarnings("static-method")
+  public static class TEST {
     @Test public void moment1() {
       @NotNull final double vs[] = { 1, 2, 3, 4, 5 };
       Assert.assertEquals(1, moment(0, vs), 1E-8);

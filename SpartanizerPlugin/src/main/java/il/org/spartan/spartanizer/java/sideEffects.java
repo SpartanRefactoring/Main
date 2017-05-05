@@ -75,19 +75,15 @@ public enum sideEffects {
     });
     return $.get();
   }
-
   public static boolean free(final IfStatement ¢) {
     return free(¢.getExpression()) && free(then(¢)) && free(elze(¢));
   }
-
   public static boolean free(final ExpressionStatement ¢) {
     return free(¢.getExpression());
   }
-
   private static boolean free(final ArrayCreation ¢) {
     return free(dimensions(¢)) && free(expressions(¢.getInitializer()));
   }
-
   public static boolean free(final ASTNode ¢) {
     return ¢ == null || (iz.expression(¢) ? free(az.expression(¢))
         : iz.expressionStatement(¢) ? free(az.expressionStatement(¢))
@@ -96,19 +92,15 @@ public enum sideEffects {
                     : iz.forStatement(¢) ? free(az.forStatement(¢))
                         : iz.isVariableDeclarationStatement(¢) ? free(az.variableDeclrationStatement(¢)) : iz.block(¢) && free(az.block(¢)));
   }
-
   public static boolean free(final ForStatement ¢) {
     return free(initializers(¢)) && free(¢.getExpression()) && free(updaters(¢)) && free(body(¢));
   }
-
   public static boolean free(final Block ¢) {
     return statements(¢).stream().allMatch(sideEffects::free);
   }
-
   private static boolean free(final ConditionalExpression ¢) {
     return free(expression(¢), then(¢), elze(¢));
   }
-
   public static boolean sink(final Expression x) {
     return descendants.of(x).stream().mapToInt(λ -> λ.getNodeType()).noneMatch(λ -> Utils.intIsIn(λ, STRICT_SIDE_EFFECT));
   }
@@ -147,31 +139,24 @@ public enum sideEffects {
         return false;
     }
   }
-
   private static boolean free(final Expression... ¢) {
     return Stream.of(¢).allMatch(sideEffects::free);
   }
-
   public static boolean free(final Iterable<? extends Expression> xs) {
     return xs == null || az.stream(xs).allMatch(λ -> sideEffects.free(az.expression(λ)));
   }
-
   public static boolean free(final MethodDeclaration ¢) {
     return sideEffects.free(¢.getBody());
   }
-
   private static boolean free(final PrefixExpression ¢) {
     return in(¢.getOperator(), PLUS, MINUS, COMPLEMENT, NOT) && sideEffects.free(operand(¢));
   }
-
   private static boolean free(final VariableDeclarationExpression x) {
     return fragments(x).stream().allMatch(λ -> sideEffects.free(initializer(λ)));
   }
-
   public static boolean free(final VariableDeclarationStatement s) {
     return fragments(s).stream().allMatch(λ -> sideEffects.free(initializer(λ)));
   }
-
   public static boolean free(final WhileStatement ¢) {
     return free(¢.getExpression()) && free(¢.getBody());
   }

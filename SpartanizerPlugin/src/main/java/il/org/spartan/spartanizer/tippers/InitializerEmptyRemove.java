@@ -19,15 +19,12 @@ public final class InitializerEmptyRemove extends RemovingTipper<Initializer>//
     final Block $ = ¢.getBody();
     return ¢.getJavadoc() == null && ($ == null || statements($).isEmpty());
   }
-
   @Override public String description() {
     return "Remove empty initializer";
   }
-
   @Override public String description(final Initializer ¢) {
     return "Remove empty " + (iz.static¢(¢) ? "" : "non-") + "static initializer";
   }
-
   @Override public Examples examples() {
     return //
     convert("class C {{}}") //

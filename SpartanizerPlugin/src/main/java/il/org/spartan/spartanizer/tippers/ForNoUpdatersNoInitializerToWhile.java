@@ -18,24 +18,20 @@ public class ForNoUpdatersNoInitializerToWhile extends ReplaceCurrentNode<ForSta
     final String $ = condition == null ? "C" : Trivia.gist(condition);
     return String.format("Convert 'for(;%s;)' to 'while(%s)'", $, $);
   }
-
   @Override public Examples examples() {
     return convert("for(;c;)f();").to("while(c)f();") //
         .ignores("for(g();c;)f();") //
         .ignores("for(;c;g())f();") //
     ;
   }
-
   @Override public String description(final ForStatement ¢) {
     condition = ¢.getExpression();
     return description();
   }
-
   @Override public boolean prerequisite(final ForStatement ¢) {
     condition = ¢.getExpression();
     return ¢.initializers().isEmpty() && ¢.updaters().isEmpty() && (condition = ¢.getExpression()) != null;
   }
-
   @Override public WhileStatement replacement(final ForStatement ¢) {
     final WhileStatement $ = ¢.getAST().newWhileStatement();
     $.setExpression(copy.of(¢.getExpression()));

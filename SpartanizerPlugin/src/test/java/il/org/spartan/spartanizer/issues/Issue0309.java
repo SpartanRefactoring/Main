@@ -18,7 +18,6 @@ public class Issue0309 {
                 + "for (final Matcher ¢ = Pattern.compile(\"[A-Z]\").matcher(typeName); ; $ += ¢.group()) if (!¢.find()) "
                 + "return $.toLowerCase(); }");
   }
-
   @Test @SuppressWarnings("static-method") public void b() {
     trimmingOf("int checkIfCentChangesToDollarWhenNeeded() { Integer ¢ = 2; for (int i = 1; i < 7; ++i) ¢ *= i; return ¢.intValue(); }")
         .gives("int checkIfCentChangesToDollarWhenNeeded() { Integer $ = 2; for (int i = 1; i < 7; ++i) $ *= i; return $.intValue(); }")

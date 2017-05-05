@@ -12,7 +12,8 @@ import il.org.spatan.iteration.*;
 /** A representation of the system global CLASSPATH.
  * @author Yossi Gil
  * @see JRE */
-@Utility public class CLASSPATH {
+@Utility
+public class CLASSPATH {
   /** A class loader, which represents a */
   @Nullable private static ClassLoader classLoader;
   /** Which system property contains the class path? */
@@ -24,23 +25,19 @@ import il.org.spatan.iteration.*;
   public static void append(final String location) {
     set(get() + File.pathSeparator + location);
   }
-
   /** Retrieves the system's CLASSPATH in an array
    * @return the content of the CLASSPATH, broken into array entries */
   public static String[] asArray() {
     return get().split(File.pathSeparator);
   }
-
   /** Retrieves the system's CLASSPATH in an {@link Iterable}
    * @return the content of the CLASSPATH, broken into array entries */
   @NotNull public static Iterable<String> asIterable() {
     return Iterables.make(asArray());
   }
-
   @Nullable public static ClassLoader classLoader() {
     return classLoader != null ? classLoader : (classLoader = computeClassLoader());
   }
-
   /** Reset the class path and prepend multiple locations to the class path.
    * @param locations locations to prepend to the class path. */
   public static void fix(@NotNull final String... locations) {
@@ -48,13 +45,11 @@ import il.org.spatan.iteration.*;
     for (final String location : locations)
       prepend(location);
   }
-
   /** Retrieves the system's CLASSPATH as a string
    * @return the current system CLASSPATH */
   public static String get() {
     return System.getProperty(JAVA_CLASS_PATH);
   }
-
   /** Mocks the system's {@link Class#forName} function, but using a
    * {@link ClassLoader} that makes it possible to load classes according to the
    * <em>current</em> class path. (The default {@link ClassLoader} fails to
@@ -73,7 +68,6 @@ import il.org.spatan.iteration.*;
   public static Class<?> initialize(final String className) throws ClassNotFoundException, NoClassDefFoundError {
     return Class.forName(className, true, classLoader());
   }
-
   /** Mocks {@link Class#forName(String, boolean, ClassLoader)}, where the
    * second parameter is <code><b>false</b></code>, and the third is our local
    * {@link ClassLoader} object. Thus, this function is similar to
@@ -93,31 +87,26 @@ import il.org.spatan.iteration.*;
   public static Class<?> load(final String className) throws ClassNotFoundException, NoClassDefFoundError {
     return Class.forName(className, false, classLoader());
   }
-
   /** Exercise this class by printing the result of its principal function.
    * @param __ unused */
   public static void main(final String[] __) {
     System.out.println(Separate.by(asArray(), "\n"));
   }
-
   /** Prepend a location to the class path.
    * @param location a location to prepend to the class path. */
   public static void prepend(final String location) {
     set(location + File.pathSeparator + get());
   }
-
   /** Sets the system's CLASSPATH to its original value */
   public static void reset() {
     set(original);
   }
-
   /** Sets the system's CLASSPATH
    * @param path the new value of the CLASSPATH */
   public static void set(@NotNull final String path) {
     System.setProperty(JAVA_CLASS_PATH, path);
     classLoader = null;
   }
-
   @NotNull private static ClassLoader computeClassLoader() {
     @NotNull final String[] path = asArray();
     @NotNull final URL[] $ = new URL[path.length];

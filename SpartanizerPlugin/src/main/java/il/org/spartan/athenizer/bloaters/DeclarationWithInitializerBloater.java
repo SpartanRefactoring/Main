@@ -31,12 +31,10 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
   @Override @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {
     return "Split declaration with initialization into two statemenets";
   }
-
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
     return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer() != null
         && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
   }
-
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢);
     ((VariableDeclaration) the.headOf(fragments($))).setInitializer(null);

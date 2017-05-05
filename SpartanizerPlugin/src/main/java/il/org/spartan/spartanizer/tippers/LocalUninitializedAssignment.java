@@ -48,17 +48,14 @@ public final class LocalUninitializedAssignment extends LocalUninitialized //
             .allMatch(usedName -> laterSiblings()//
                 .allMatch(λ -> !usedName.equals(λ.getName() + ""))));
   }
-
   @Override public String description() {
     return "Consolidate declaration of " + name + " with its subsequent initialization";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     $.replace(current, makeVariableDeclarationFragement(), g);
     $.remove(nextStatement, g);
     return $;
   }
-
   @Override public Examples examples() {
     return convert("int a; a = b;")//
         .to("int a = b;")//

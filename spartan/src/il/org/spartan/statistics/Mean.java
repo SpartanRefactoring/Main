@@ -10,20 +10,18 @@ import il.org.spartan.streotypes.*;
 
 /** @author Yossi Gil
  * @since 2011-08-1 */
-@Utility public enum Mean {
+@Utility
+public enum Mean {
   ;
   public static double destructiveMoment(final int i, @NotNull final double... ds) {
     return sum(i, shift(ds)) / ds.length;
   }
-
   public static double mean(@NotNull final double... ¢) {
     return sum(¢) / ¢.length;
   }
-
   public static double moment(final int i, @NotNull final double... ds) {
     return destructiveMoment(i, ds.clone());
   }
-
   @NotNull public static double[] shift(@NotNull final double... $) {
     final double mean = mean($);
     for (int ¢ = 0; ¢ < $.length; ++¢)
@@ -31,7 +29,8 @@ import il.org.spartan.streotypes.*;
     return $;
   }
 
-  @SuppressWarnings("static-method") public static class TEST {
+  @SuppressWarnings("static-method")
+  public static class TEST {
     @Test public void moment1() {
       @NotNull final double vs[] = { 1, 2, 3, 4, 5 };
       Assert.assertEquals(1, moment(0, vs), 1E-8);

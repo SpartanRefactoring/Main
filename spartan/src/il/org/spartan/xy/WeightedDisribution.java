@@ -13,19 +13,15 @@ public class WeightedDisribution {
   public void clear() {
     sum = sum2 = sumwlogw = 0;
   }
-
   public double entropy() {
     return sumw * Math.log(sumw) - sumwlogw;
   }
-
   public double mean() {
     return sum / sumw;
   }
-
   public double mean2() {
     return sum2 / sumw;
   }
-
   @NotNull public WeightedDisribution record(final double x, final double w) {
     sumw += w;
     sum += w * x;
@@ -33,7 +29,6 @@ public class WeightedDisribution {
     sumwlogw += w * Math.log(w);
     return this;
   }
-
   public double var() {
     return mean2() - mean() * mean();
   }

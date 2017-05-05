@@ -31,11 +31,9 @@ public enum guessName {
   public static boolean isClassName(final ASTNode ¢) {
     return ¢ != null && isClassName(hop.lastName(az.name(¢)) + "");
   }
-
   public static boolean isClassName(final String e) {
     return of(e) == CLASS_NAME;
   }
-
   public static guessName of(final String nameOfSomething) {
     if (nameOfSomething == null || nameOfSomething.isEmpty())
       return null;
@@ -67,7 +65,6 @@ public enum guessName {
         fault.done();
     return guessName.UNKNOWN;
   }
-
   @SuppressWarnings("static-method") boolean special(@SuppressWarnings("unused") final String nameOfSomething) {
     return false;
   }

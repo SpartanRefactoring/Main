@@ -31,7 +31,6 @@ enum CollectMetrics {
     go(where.length != 0 ? where : as.array("."));
     System.err.println("Your output should be here: " + output.close());
   }
-
   //
   public static Document rewrite(final Traversal t, final CompilationUnit u, final Document $) {
     try {
@@ -41,12 +40,10 @@ enum CollectMetrics {
       throw new AssertionError(¢);
     }
   }
-
   // TODO Yossi Gil: eliminate warning
   private static void collectTips(@SuppressWarnings("unused") final String __, final CompilationUnit before) {
     reportTips(new TraversalImplementation().collectTips(before));
   }
-
   private static void go(final File f) {
     try {
       // This line is going to give you trouble if you process class by class.
@@ -57,7 +54,6 @@ enum CollectMetrics {
       note.bug(¢);
     }
   }
-
   private static void go(final String javaCode) {
     output.put("Characters", javaCode.length());
     final CompilationUnit before = (CompilationUnit) makeAST.COMPILATION_UNIT.from(javaCode);
@@ -68,15 +64,12 @@ enum CollectMetrics {
     report("After-", after);
     output.nl();
   }
-
   private static void go(final String... where) {
     new FilesGenerator(".java").from(where).forEach(CollectMetrics::go);
   }
-
   private static CSVStatistics init(final String $, final String property) {
     return new CSVStatistics($, property);
   }
-
   /** fault, what happens if we have many classes in the same file? Also, we do
    * not want to count imports, and package instructions. Write a method that
    * finds all classes, which could be none, at the upper level, and collect on
@@ -100,7 +93,6 @@ enum CollectMetrics {
     output.put(prefix + "Imports", countOf.imports(¢));
     output.put(prefix + "No Imports", countOf.noimports(¢));
   }
-
   private static void reportTips(final Iterable<Tip> ¢) {
     for (final Tip $ : ¢) {
       Tips.put("description", $.description);
@@ -110,7 +102,6 @@ enum CollectMetrics {
       Tips.nl();
     }
   }
-
   private static CompilationUnit spartanize(final String javaCode) {
     final String $ = new TextualTraversals().fixed(javaCode);
     output.put("Characters", $.length());

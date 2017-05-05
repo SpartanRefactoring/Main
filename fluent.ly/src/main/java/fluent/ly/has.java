@@ -22,7 +22,6 @@ public enum has {
   public static <@Nullable T> @Nullable T next(final int i, @NotNull final List<T> ts) {
     return !is.inRange(i + 1, ts) ? the.last(ts) : ts.get(i + 1);
   }
-
   /** Determine whether a <code><b>null</b></code> occurs in a sequence of
    * objects
    * @param os JD
@@ -34,13 +33,12 @@ public enum has {
         return true;
     return false;
   }
-
   /** Determine whether a <code><b>null</b></code> occurs in a sequence of
    * objects
    * @param os an unknown number of objects
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
-  public static <T> boolean nil(final @Nullable T o, T @Nullable... os) {
+  public static <T> boolean nil(final @Nullable T o, final T @Nullable... os) {
     if (o == null || os == null)
       return true;
     for (final Object ¢ : os)
@@ -55,7 +53,6 @@ public enum has {
     @Test public void seriesA01() {
       azzert.aye(has.nil(nul));
     }
-
     @Test @SuppressWarnings("static-method") public void seriesA02() {
       azzert.nay(is.nil("A"));
     }

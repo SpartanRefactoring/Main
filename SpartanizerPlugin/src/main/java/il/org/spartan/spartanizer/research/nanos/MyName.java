@@ -24,13 +24,11 @@ public final class MyName extends NanoPatternTipper<MethodInvocation> {
     final MethodDeclaration $ = yieldAncestors.untilContainingMethod().from(¢);
     return $ != null && identifier($).equals(identifier(¢)) && sameSize(parameters($), arguments(¢));
   }
-
   private static boolean sameSize(final Collection<SingleVariableDeclaration> parameters, final Collection<Expression> arguments) {
     return arguments != null //
         && parameters != null //
         && arguments.size() != parameters.size();
   }
-
   @Override public Tip pattern(final MethodInvocation ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -40,7 +38,6 @@ public final class MyName extends NanoPatternTipper<MethodInvocation> {
       }
     };
   }
-
   @Override public String description() {
     return "Invocation for a method with same name of containing method but different number of parameters";
   }

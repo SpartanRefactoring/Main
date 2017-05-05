@@ -24,12 +24,10 @@ public class Hamlet implements Environment {
     azzert.that(third + "", is("false"));
     azzert.that(fourth + "", is("true"));
   }
-
   private Boolean first() {
     $.ϑ(permanent, $);
     return Boolean.FALSE;
   }
-
   private Function0<@Nullable Boolean> init() {
     return () -> first();
   }

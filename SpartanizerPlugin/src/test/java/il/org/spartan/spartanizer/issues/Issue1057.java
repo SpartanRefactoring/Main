@@ -22,7 +22,6 @@ public class Issue1057 {
         + "    break;" //
         + "}").stays();
   }
-
   @Test public void b() {
     trimmingOf("/**/" //
         + "private static int nsBranchBreakOrRetInd(final SwitchStatement s, int i) {\n" //

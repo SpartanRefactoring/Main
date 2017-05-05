@@ -19,7 +19,6 @@ public class Issue1089 {
         .gives("eG g=new eG();(new nA()).f().forEach(λ->new oB(λ).sEg(g));") //
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("Object o=new Object();l.forEach(c->a(o));")//
         .gives("Object o=new Object();l.forEach(λ->a(o));")//

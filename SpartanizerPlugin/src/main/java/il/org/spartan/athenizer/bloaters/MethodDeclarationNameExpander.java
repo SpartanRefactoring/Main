@@ -36,7 +36,6 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
   @Override public String description(final MethodDeclaration ¢) {
     return ¢.getName() + "";
   }
-
   @Override public Tip tip(final MethodDeclaration d) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d) || d.getBody() == null)
@@ -53,12 +52,10 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
       }
     }.spanning(d);
   }
-
   private static boolean nameMatch(final String s, final Type t) {
     final String $ = prefix(t);
     return s.length() >= $.length() && s.substring(0, $.length()).equals($) && s.substring($.length(), s.length()).matches("[0-9]*");
   }
-
   static String prefix(final Type ¢) {
     return abbreviate.it(¢);
   }

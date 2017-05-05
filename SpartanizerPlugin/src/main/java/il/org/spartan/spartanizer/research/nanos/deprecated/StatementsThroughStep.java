@@ -23,11 +23,9 @@ public final class StatementsThroughStep extends NanoPatternTipper<MethodInvocat
   @Override public String description(@SuppressWarnings("unused") final MethodInvocation __) {
     return "lisp: first";
   }
-
   @Override public boolean canTip(final MethodInvocation ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final MethodInvocation ¢) {
     return firstTip(tippers, ¢);
   }

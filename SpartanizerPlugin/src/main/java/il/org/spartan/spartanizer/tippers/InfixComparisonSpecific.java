@@ -27,12 +27,10 @@ public final class InfixComparisonSpecific extends ReplaceCurrentNode<InfixExpre
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Exchange left and right operands of comparison";
   }
-
   @Override public boolean prerequisite(final InfixExpression ¢) {
     return specifity.compare(left(¢), right(¢)) < 0 && !¢.hasExtendedOperands() && iz.comparison(¢)
         && (specificity.defined(left(¢)) || specificity.defined(right(¢)));
   }
-
   @Override public Expression replacement(final InfixExpression ¢) {
     return make.conjugate(¢);
   }

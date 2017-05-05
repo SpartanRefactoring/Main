@@ -35,17 +35,14 @@ public final class InfixConditionalCommon extends ReplaceCurrentNode<InfixExpres
     $.remove(0);
     return $.size() < 2 ? copy.of(the.headOf($)) : subject.operands($).to(¢.getOperator());
   }
-
   private static Operator conjugate(final Operator ¢) {
     return ¢ == CONDITIONAL_AND ? CONDITIONAL_OR //
         : ¢ == CONDITIONAL_OR ? CONDITIONAL_AND //
             : null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Factor out common logical component of ||";
   }
-
   @Override public Expression replacement(final InfixExpression x) {
     final Operator $ = x.getOperator();
     if (!in($, CONDITIONAL_AND, CONDITIONAL_OR))

@@ -28,7 +28,6 @@ public enum into {
   public static Assignment a(final String expression) {
     return (Assignment) e(expression);
   }
-
   /** Convert a given {@link String} into an {@link ConditionalExpression}, or
    * fail the current test, if such a conversion is not possible
    * @param conditionalExpression a {@link String} that represents a
@@ -41,21 +40,18 @@ public enum into {
     azzert.that(conditionalExpression, $, instanceOf(ConditionalExpression.class));
     return (ConditionalExpression) $;
   }
-
   /** @param p a {@link String} that represents a Java Compilation unit
    * @return {@link CompilationUnit} data structure representing the
    *         parameter. */
   public static CompilationUnit cu(final String cu) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from(cu);
   }
-
   /** @param p a {@link String} that represents a Java Compilation unit
    * @return {@link CompilationUnit} data structure representing the
    *         parameter. */
   public static CompilationUnit cuWithBinding(final String cu) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.makeParserWithBinding(cu).createAST(null);
   }
-
   /** Convert a given {@link String} into an {@link MethodDeclaration} by
    * appropriately wrapping it with text to make it a reasonably looking
    * {@link CompilationUnit}, parsing it, and then extracting the first method
@@ -68,7 +64,6 @@ public enum into {
     assert methodDelclaration != null;
     return findFirst.instanceOf(MethodDeclaration.class).in(WrapIntoComilationUnit.Method.intoCompilationUnit(methodDelclaration));
   }
-
   /** Convert a given {@link String} into an {@link Expression}, or fail the
    * current test, if such a conversion is not possible
    * @param expression a {@link String} that represents a Java expression
@@ -76,7 +71,6 @@ public enum into {
   public static Expression e(final String expression) {
     return (Expression) makeAST.EXPRESSION.from(expression);
   }
-
   /** Convert an array of {@link String} into a {@link List} of
    * {@link Expression}, or fail the current test, if such a conversion is not
    * possible
@@ -87,7 +81,6 @@ public enum into {
   public static Collection<Expression> es(final String... expressions) {
     return Stream.of(expressions).map(into::e).collect(toList());
   }
-
   /** Convert a given {@link String} into an {@link InfixExpression}, or fail
    * the current test, if such a conversion is not possible
    * @param expression a {@link String} that represents a Java expression
@@ -96,11 +89,9 @@ public enum into {
   public static InfixExpression i(final String expression) {
     return (InfixExpression) e(expression);
   }
-
   public static MethodDeclaration m(final String p) {
     return findFirst.instanceOf(MethodDeclaration.class).in(makeAST.CLASS_BODY_DECLARATIONS.from(p));
   }
-
   /** Convert a given {@link String} into an {@link PrefixExpression}, or fail
    * the current test, if such a conversion is not possible
    * @param expression a {@link String} that represents a Java expression
@@ -109,7 +100,6 @@ public enum into {
   public static PrefixExpression p(final String expression) {
     return (PrefixExpression) e(expression);
   }
-
   /** Convert a given {@link String} into an {@link Statement}, or fail the
    * current test, if such a conversion is not possible
    * @param statement a {@link String} that represents a Java statement
@@ -122,7 +112,6 @@ public enum into {
     azzert.that(statement, $, instanceOf(Statement.class));
     return (Statement) $;
   }
-
   public static Type t(final String codeFragment) {
     return findFirst.instanceOf(Type.class).in(s(codeFragment));
   }

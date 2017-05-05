@@ -39,7 +39,6 @@ public class SingleMarkerTest extends MetaFixture {
     this.name = name;
     this.kind = kind;
   }
-
   @Test public void test() {
     azzert.that(
         "\n name = " + name + //

@@ -43,7 +43,6 @@ public class Issue0239 {
                 "}")
             .stays();
   }
-
   @Test public void a$02() {
     trimmingOf(//
         "int f() {\n" + //
@@ -66,7 +65,6 @@ public class Issue0239 {
                 . //
                 stays();
   }
-
   @Test public void a$03() {
     trimmingOf(//
         "int f() {\n" + //
@@ -79,7 +77,6 @@ public class Issue0239 {
                 . //
                 stays();
   }
-
   @Test public void a$04() {
     final Block block = az.block(into.s( //
         "  final int i2 = Integer.valueOf(2);\n" + //

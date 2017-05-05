@@ -16,14 +16,12 @@ public class Issue0999 {
     bloatingOf("a = b = 3;")//
         .gives("b = 3; a = b;");
   }
-
   @Test public void b() {
     bloatingOf("a = b = c = 3;")//
         .gives("c = 3; a = b = c;")//
         .gives("c = 3; b = c; a = b;")//
         .stays();
   }
-
   @Test public void c() {
     bloatingOf("a += b += 3;")//
         .gives("b += 3; a += b;");

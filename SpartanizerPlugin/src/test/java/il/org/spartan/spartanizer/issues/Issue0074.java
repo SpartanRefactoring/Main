@@ -18,17 +18,14 @@ public class Issue0074 {
     trimmingOf("int[] a = new int[] {,}")//
         .gives("int[] a = new int[] {}");
   }
-
   @Test public void issue74b() {
     trimmingOf("int[] a = new int[] {2,3,}")//
         .gives("int[] a = new int[] {2,3}");
   }
-
   @Test public void issue74c() {
     trimmingOf("a = new int[]{2,3,}")//
         .gives("a = new int[] {2,3}");
   }
-
   @Test public void issue74d() {
     trimmingOf("int[] a = new int[] {2,3};")//
         .gives("");

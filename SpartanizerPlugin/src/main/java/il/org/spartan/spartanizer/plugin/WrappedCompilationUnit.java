@@ -27,7 +27,6 @@ public class WrappedCompilationUnit {
   public WrappedCompilationUnit(final ICompilationUnit compilationUnit) {
     descriptor = compilationUnit;
   }
-
   /** Instantiates this class with a Compilation Unit (useful for command line
    * applicator
    * @author Matteo Orru'
@@ -35,13 +34,11 @@ public class WrappedCompilationUnit {
   public WrappedCompilationUnit(final CompilationUnit cu) {
     compilationUnit = cu;
   }
-
   public WrappedCompilationUnit(final CompilationUnit cu, final String fileName, final String absolutePath) {
     this.fileName = fileName;
     filePath = absolutePath;
     compilationUnit = cu;
   }
-
   public WrappedCompilationUnit build() {
     if (compilationUnit == null)
       try {
@@ -52,29 +49,24 @@ public class WrappedCompilationUnit {
       }
     return this;
   }
-
   public WrappedCompilationUnit buildWithBinding() {
     if (compilationUnit == null)
       compilationUnit = (CompilationUnit) make.COMPILATION_UNIT.parserWithBinding(descriptor).createAST(nullProgressMonitor);
     return this;
   }
-
   public WrappedCompilationUnit dispose() {
     compilationUnit = null;
     return this;
   }
-
   public String name() {
     return descriptor == null ? null : descriptor.getElementName();
   }
-
   /** Factory method
    * @param ¢ JD
    * @return an instance created by the parameter */
   public static WrappedCompilationUnit of(final ICompilationUnit ¢) {
     return new WrappedCompilationUnit(¢);
   }
-
   /** Factory method that takes a list of CompilationUnit
    * @author matteo
    * @param ¢ JD
@@ -82,23 +74,18 @@ public class WrappedCompilationUnit {
   public static List<WrappedCompilationUnit> ov(final Collection<CompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(toList());
   }
-
   public static List<WrappedCompilationUnit> of(final Collection<ICompilationUnit> ¢) {
     return ¢.stream().map(WrappedCompilationUnit::new).collect(toList());
   }
-
   public static WrappedCompilationUnit of(final CompilationUnit from) {
     return new WrappedCompilationUnit(from);
   }
-
   public static WrappedCompilationUnit of(final CompilationUnit from, final String name, final String absolutePath) {
     return new WrappedCompilationUnit(from, name, absolutePath);
   }
-
   public String getFileName() {
     return fileName;
   }
-
   public String getFilePath() {
     return filePath;
   }

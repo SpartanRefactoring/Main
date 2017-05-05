@@ -32,11 +32,9 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
         .to("s=s.f().g();") //
     ;
   }
-
   @Override @NotNull public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into subsequent assignment";
   }
-
   @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
@@ -58,7 +56,6 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
         return null;
     }
   }
-
   @NotNull private static ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to,
       final Expression from1, final Expression from2) {
     new Inliner(to, $, g).byValue(from1).inlineInto(from2);

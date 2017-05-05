@@ -17,31 +17,24 @@ public final class Position implements Comparable<Position>, Serializable {
     this.line = line;
     this.column = column;
   }
-
   public boolean before(@NotNull final Position ¢) {
     return compareTo(¢) < 0;
   }
-
   @Override public int compareTo(final Position ¢) {
     return line != ¢.line ? line - ¢.line : column - ¢.column;
   }
-
   @Override public boolean equals(@Nullable final Object ¢) {
     return ¢ == this || ¢ != null && getClass() == ¢.getClass() && column == ((Position) ¢).column && line == ((Position) ¢).line;
   }
-
   @Override public int hashCode() {
     return line ^ column;
   }
-
   @NotNull public Position nextChar() {
     return new Position(line, column + 1);
   }
-
   @NotNull public Position nextLine() {
     return new Position(line + 1, 1);
   }
-
   @Override @NotNull public String toString() {
     return "(" + line + ":" + column + ")";
   }

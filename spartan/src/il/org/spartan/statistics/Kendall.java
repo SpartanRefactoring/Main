@@ -15,28 +15,25 @@ import fluent.ly.*;
  * between rankings.
  * @author Yossi Gil
  * @since Dec 6, 2009 */
-@Utility public enum Kendall {
+@Utility
+public enum Kendall {
   ;
   static final boolean FAST = true;
 
   @NotNull public static Charectristics makeCharectristics(@NotNull final double xs[]) {
     return makeCharectristics(xs, seq(xs.length));
   }
-
   @NotNull public static Charectristics makeCharectristics(@NotNull final double xs[], @NotNull final double ys[]) {
     return new Charectristics(xs, ys);
   }
-
   public static double tau(@NotNull final double ys[]) {
     return tau(seq(ys.length), ys);
   }
-
   /** [[SuppressWarningsSpartan]] */
   public static double tau(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
     return pairs(xs.length) * computeS(xs, ys, xs.length) / 1.;
   }
-
   /** Compute Kendall's tau coefficient for a ranking of the integers 0,...,n
    * @param xs arbitrary values of the first ranking
    * @param ys
@@ -44,11 +41,9 @@ import fluent.ly.*;
   public static double tau(@NotNull final Iterable<Double> xs, @NotNull final Iterable<Double> ys) {
     return tau(Iterables.toArray(xs), Iterables.toArray(ys));
   }
-
   public static double tauB(@NotNull final double ys[]) {
     return tauB(seq(ys.length), ys);
   }
-
   public static double tauB(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
     @NotNull final List<Double> $ = new ArrayList<>(), Ys = new ArrayList<>();
@@ -59,7 +54,6 @@ import fluent.ly.*;
       }
     return tauB_pruned(Iterables.toArray($), Iterables.toArray(Ys));
   }
-
   /** [[SuppressWarningsSpartan]] */
   static int compueS(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
@@ -73,7 +67,6 @@ import fluent.ly.*;
             --$;
     return $;
   }
-
   /** [[SuppressWarningsSpartan]] */
   static int compueS(@NotNull final int[] xs, @NotNull final int[] ys) {
     ___.require(xs.length == ys.length);
@@ -87,18 +80,15 @@ import fluent.ly.*;
             --$;
     return $;
   }
-
   static int pairs(final int ¢) {
     ___.nonnegative(¢);
     return ¢ * (¢ - 1) / 2;
   }
-
   static int sigma(@NotNull final double[] ¢) {
     final double[] $ = ¢.clone();
     Arrays.sort($);
     return sigmaSortedArray($);
   }
-
   static int sigmaSortedArray(@NotNull final double[] ds) {
     int $ = 0;
     for (int i = 0; i < ds.length;) {
@@ -114,7 +104,6 @@ import fluent.ly.*;
     }
     return $;
   }
-
   private static int computeS(final double[] xs, final double[] ys, final int n) {
     int $ = 0, nd = 0;
     for (int i = 0; i < n; ++i)
@@ -125,7 +114,6 @@ import fluent.ly.*;
           ++nd;
     return $ - nd;
   }
-
   private static double tauB_pruned(@NotNull final double[] xs, @NotNull final double[] ys) {
     ___.require(xs.length == ys.length);
     final int $ = xs.length, pairs = pairs($);
@@ -147,11 +135,9 @@ import fluent.ly.*;
     public Charectristics(@NotNull final double xs[], @NotNull final double ys[]) {
       this(valid(xs, ys), Kendall.tauB(xs, ys));
     }
-
     public Charectristics(@NotNull final double xs[], final double ys[], final double tau) {
       this(valid(xs, ys), tau);
     }
-
     public Charectristics(final int n, final double tau) {
       this.tau = tau;
       this.n = n;

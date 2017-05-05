@@ -18,7 +18,6 @@ public class SignatureFilter extends CodeOnlyFilter {
         return true;
     }
   }
-
   /** @param ¢ a token */
   private static boolean usefulPucntuation(@NotNull final Token ¢) {
     switch (¢) {
@@ -35,7 +34,6 @@ public class SignatureFilter extends CodeOnlyFilter {
         return true;
     }
   }
-
   @Override protected boolean ok(@NotNull final Token ¢) {
     switch (¢.kind) {
       case KEYWORD:

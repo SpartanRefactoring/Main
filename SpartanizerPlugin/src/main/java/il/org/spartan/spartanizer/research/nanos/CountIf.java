@@ -24,15 +24,12 @@ public class CountIf extends NanoPatternTipper<EnhancedForStatement> {
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Count elements in collection that satisfy some predicate";
   }
-
   @Override public String tipperName() {
     return Aggregate.class.getSimpleName();
   }

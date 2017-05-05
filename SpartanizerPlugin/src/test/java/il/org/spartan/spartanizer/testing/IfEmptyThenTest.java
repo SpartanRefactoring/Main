@@ -25,19 +25,15 @@ public final class IfEmptyThenTest {
   @Test public void eligible() {
     assert TIPPER.check(IF);
   }
-
   @Test public void emptyThen() {
     assert iz.vacuousThen(IF);
   }
-
   @Test public void extractFirstIf() {
     assert IF != null;
   }
-
   @Test public void inputType() {
     azzert.that(INPUT, instanceOf(Block.class));
   }
-
   @Test public void scopeIncludes() {
     assert TIPPER.check(IF);
   }

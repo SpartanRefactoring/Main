@@ -58,84 +58,67 @@ public class AlphabeticallySortedSentence extends MetaFixture {
     }
     return $;
   }
-
   public static Vocabulary reify(final ClassInstanceCreation ¢) {
     final AnonymousClassDeclaration $ = ¢.getAnonymousClassDeclaration();
     return $ == null || !(hop.name(¢.getType()) + "").equals(AlphabeticallySortedSentence.class.getSimpleName()) ? null : reify($);
   }
-
   public AlphabeticallySortedSentence() {
     forbidden();
   }
-
   private AlphabeticallySortedSentence(final Void __) {
     forget.em(__);
   }
-
   private void forbidden() {
     assert reflection != null : fault.specifically("Class " + getClass().getSimpleName() + " should not be instantiated by client");
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void startingWith() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto0() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto1() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto2() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto3() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto4() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto5() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto6() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto7() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto8() {
     forbidden();
   }
-
   /** [[SuppressWarningsSpartan]] */
   protected void trimmingInto9() {
     forbidden();
   }
-
   protected void trimmingStopsAt() {
     forbidden();
   }

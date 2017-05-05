@@ -19,7 +19,6 @@ public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
   @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "Remove redundant return statement";
   }
-
   @Override public boolean prerequisite(final ReturnStatement ¢) {
     if (¢.getExpression() != null)
       return false;

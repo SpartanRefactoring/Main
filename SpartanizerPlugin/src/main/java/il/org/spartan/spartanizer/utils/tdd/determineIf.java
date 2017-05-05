@@ -36,7 +36,6 @@ public enum determineIf {
     });
     return d.parameters().size() >= 3 && $.inner >= 5;
   }
-
   // For you to implement! Let's TDD and get it on!
   /** see issue #716 for more details
    * @author Ron Gatenio
@@ -57,7 +56,6 @@ public enum determineIf {
     });
     return $.inner >= 11;
   }
-
   /** see issue #714 for more details
    * @author Arthur Sapozhnikov
    * @author Assaf Lustig
@@ -68,7 +66,6 @@ public enum determineIf {
   public static boolean isImmutable(final TypeDeclaration m) {
     return m == null || Stream.of(fields(m)).allMatch(f -> modifiers(f).stream().anyMatch(λ -> ((Modifier) λ).isFinal()));
   }
-
   // For you to implement! Let's TDD and get it on!
   /** see issue #719 for more details
    * @author YaelAmitay
@@ -90,7 +87,6 @@ public enum determineIf {
     });
     return $.inner >= x;
   }
-
   // For you to implement! Let's TDD and get it on!
   /** see issue #717 for more details
    * @author Lidia Piatigorski
@@ -103,7 +99,6 @@ public enum determineIf {
   public static boolean hasBigBlock(final MethodDeclaration ¢) {
     return ¢ != null && ¢.getBody() != null && statements(body(¢)).size() >= 5;
   }
-
   /** see issue #710 for more details
    * @author David Cohen
    * @author Shahar Yair
@@ -121,15 +116,12 @@ public enum determineIf {
       @Override public boolean visit(@SuppressWarnings("unused") final LambdaExpression e1) {
         return false;
       }
-
       @Override public boolean visit(@SuppressWarnings("unused") final AnonymousClassDeclaration anonymClassDec) {
         return false;
       }
-
       @Override public boolean visit(@SuppressWarnings("unused") final TypeDeclaration __) {
         return false;
       }
-
       @Override public boolean visit(final ReturnStatement ¢) {
         $.add(¢);
         return true;
@@ -137,7 +129,6 @@ public enum determineIf {
     });
     return $.stream().anyMatch(λ -> λ.getClass().equals(ReturnStatement.class) && λ.getExpression().getClass().equals(NullLiteral.class));
   }
-
   /** see issue #774 for more details
    * @author Amit Ohayon
    * @author Yosef Raisman
@@ -155,13 +146,11 @@ public enum determineIf {
       void innerVisit(final Name node) {
         $.inner = node.getFullyQualifiedName().equals(name);
       }
-
       @Override public boolean visit(final QualifiedName node) {
         if (!$.inner)
           innerVisit(node);
         return !$.inner;
       }
-
       @Override public boolean visit(final SimpleName node) {
         if (!$.inner)
           innerVisit(node);

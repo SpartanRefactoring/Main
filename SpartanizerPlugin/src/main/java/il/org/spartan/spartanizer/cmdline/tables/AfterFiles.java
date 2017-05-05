@@ -43,7 +43,6 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     TraversalMonitor.off();
     DeprecatedFolderASTVisitor.main(args);
   }
-
   @Override public boolean visit(final MethodDeclaration ¢) {
     if (excludeMethod(¢))
       return false;
@@ -63,22 +62,18 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     }
     return true;
   }
-
   @Override public void endVisit(final MethodDeclaration ¢) {
     if (!excludeMethod(¢))
       scope.pop();
   }
-
   @Override public boolean visit(final CompilationUnit ¢) {
     ¢.accept(new CleanerVisitor());
     return true;
   }
-
   @Override protected void init(final String path) {
     System.err.println("Processing: " + path);
     Logger.subscribe(this::logAll);
   }
-
   @Override protected void done(final String path) {
     dotter.line();
     System.err.println("Done processing: " + path);
@@ -93,22 +88,18 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     dotter.end();
     System.err.println("Your output is in: " + outputFolder);
   }
-
   private static boolean excludeMethod(final MethodDeclaration ¢) {
     return iz.constructor(¢) || body(¢) == null;
   }
-
   private void logAll(final ASTNode n, final String np) {
     if (containedInInstanceCreation(n))
       return;
     logNanoContainingMethodInfo(n, np);
     logNPInfo(n, np);
   }
-
   private void logNanoContainingMethodInfo(final ASTNode n, final String np) {
     scope.peek().markNP(n, np);
   }
-
   @SuppressWarnings("boxing") private void summarizeSortedMethodStatistics(final String path) {
     try (Table report = new Table(path)) {
       int statementsTotal = 0, methodsTotal = 0;
@@ -135,31 +126,24 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
       }
     }
   }
-
   private static double fractionOfMethodsTouched(final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().filter(λ -> λ.numNPStatements() > 0 || λ.numNPExpressions() > 0).count(), rs.size());
   }
-
   private static double fractionOfStatements(final int statementsTotal, final Integer numStatements, final Collection<MethodRecord> rs) {
     return safe.div(rs.size() * numStatements.intValue(), statementsTotal);
   }
-
   private static double fractionOfMethods(final int methodsTotal, final Collection<MethodRecord> rs) {
     return safe.div(rs.size(), methodsTotal);
   }
-
   @SuppressWarnings("boxing") private static double avgCoverage(final Collection<MethodRecord> rs) {
     return safe.div(rs.stream().map(λ -> min(1, safe.div(λ.numNPStatements(), λ.numStatements))).reduce((x, y) -> x + y).get(), rs.size());
   }
-
   public static CSVStatistics openMethodSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/methodStatistics");
   }
-
   private static CSVStatistics openNPSummaryFile(final String outputDir) {
     return openSummaryFile(outputDir + "/npStatistics.csv");
   }
-
   private static CSVStatistics openSummaryFile(final String $) {
     return new CSVStatistics($, "property");
   }
@@ -171,7 +155,6 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
       npStatistics.put(np, new NanoPatternRecord(np, n.getClass()));
     npStatistics.get(np).markNP(n);
   }
-
   private void summarizeNPStatistics() {
     final CSVStatistics report = openNPSummaryFile(outputFolder);
     if (report == null)
@@ -193,11 +176,9 @@ public class AfterFiles extends DeprecatedFolderASTVisitor {
     report.close();
     file.renameToCSV(outputFolder + "/npStatistics");
   }
-
   private static double min(final double a, final double d) {
     return Math.min(a, d);
   }
-
   private static boolean containedInInstanceCreation(final ASTNode ¢) {
     return yieldAncestors.untilClass(ClassInstanceCreation.class).from(¢) != null;
   }

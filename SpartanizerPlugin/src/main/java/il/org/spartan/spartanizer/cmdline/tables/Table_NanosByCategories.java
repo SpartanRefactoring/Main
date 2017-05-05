@@ -19,7 +19,6 @@ public class Table_NanosByCategories {
   public static void main(final String[] args) {
     new Table_NanosByCategories().go();
   }
-
   public void go() {
     final List<Tipper<? extends ASTNode>>[] implementation = new Nanonizer().traversals.traversal.configuration.implementation;
     final Map<String, Set<String>> categories = new TreeMap<>();

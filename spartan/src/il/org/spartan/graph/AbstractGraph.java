@@ -16,18 +16,15 @@ import il.org.spatan.iteration.Iterables.*;
  * @since 2011-11-11 */
 public abstract class AbstractGraph<E> {
   public abstract boolean contains(E d);
-
   public int countEdges() {
     int $ = 0;
     for (@NotNull final Vertex<E> ¢ : vertices())
       $ += outDegree(¢);
     return $;
   }
-
   /** Which description is associated with this graph?
    * @return the description, if known, of this graph, or the empty string. */
   public abstract String description();
-
   /** Which edges are incident on this Vertex<E>?
    * @param ¢ some Vertex<E>
    * @return if v has no incoming edges then <code><b>null</b></code>,
@@ -35,11 +32,9 @@ public abstract class AbstractGraph<E> {
   public ImmutableArrayList<Vertex<E>> incoming(@NotNull final Vertex<E> ¢) {
     return ¢.incoming();
   }
-
   public int inDegree(@NotNull final Vertex<E> ¢) {
     return incoming(¢).size();
   }
-
   /** Generates the inverse graph, in which all the direction of all edges is
    * inverted.
    * @return the graph obtained by inverting the direction of all edges in this
@@ -47,7 +42,6 @@ public abstract class AbstractGraph<E> {
   @NotNull public AbstractGraph<E> invert() {
     return InvertedGraph.make(this);
   }
-
   /** Determine whether a given Vertex<E> is a source
    * @param ¢ some Vertex<E>
    * @return <code><b>true</b></code> if and only if this Vertex<E> is a
@@ -55,15 +49,12 @@ public abstract class AbstractGraph<E> {
   public final boolean isSource(@NotNull final Vertex<E> ¢) {
     return inDegree(¢) == 0;
   }
-
   /** What is this graph's name?
    * @return the name, if known, of this graph, or the empty string. */
   public abstract String name();
-
   public int outDegree(@NotNull final Vertex<E> ¢) {
     return ¢.outgoing().size();
   }
-
   /** Which edges emanate from a given Vertex<E>?
    * @param ¢ some Vertex<E>
    * @return if v has no outgoing edges then <code><b>null</b></code>,
@@ -72,7 +63,6 @@ public abstract class AbstractGraph<E> {
   public ImmutableArrayList<Vertex<E>> outgoing(@NotNull final Vertex<E> ¢) {
     return ¢.outgoing();
   }
-
   /** A DFS pre-order iteration over the graph.
    * @return the vertices of the graph, in a pre-order, dfs scan. */
   @Nullable public Iterable<Vertex<E>> preOrder() {
@@ -91,13 +81,11 @@ public abstract class AbstractGraph<E> {
       @Override public boolean hasNext() {
         return pending != null;
       }
-
       @Override @Nullable public Vertex<E> next() {
         @Nullable final Vertex<E> $ = pending;
         pending = findNext();
         return $;
       }
-
       Vertex<E> findNext() {
         while (!stack.empty() || !unvisited.isEmpty()) {
           if (stack.empty())
@@ -118,11 +106,9 @@ public abstract class AbstractGraph<E> {
         ensure(stack.empty());
         return null;
       }
-
       boolean fresh(final Vertex<E> ¢) {
         return !visited.contains(¢);
       }
-
       Vertex<E> visit(final Vertex<E> ¢) {
         visited.add(¢);
         unvisited.remove(¢);
@@ -130,7 +116,6 @@ public abstract class AbstractGraph<E> {
       }
     };
   }
-
   /** Provides means for iteration over those vertices which are sinks for the
    * graph.
    * <p>
@@ -141,17 +126,14 @@ public abstract class AbstractGraph<E> {
    *         with no emanating edges. The returned value is never
    *         <code><b>null</b></code>. */
   public abstract ImmutableArrayList<Vertex<E>> sinks();
-
   /** Provides means for counting the number of sinks in the graph.
    * @return a non-negative integer representing the number of sinks. */
   public abstract int sinksCount();
-
   /** @return a non-negative integer, representing the number of vertices in the
    *         graph */
   public final int size() {
     return vertices().size();
   }
-
   /** Return one of the sources of a given Vertex<E>. A Vertex<E> <em>r</em> is
    * a source of a Vertex<E> <i>v</i> if <i>v</i>can be reached from <i>r</i>,
    * and if there is another Vertex<E> <i>r'</i> from which <i>r</i> can be
@@ -179,7 +161,6 @@ public abstract class AbstractGraph<E> {
         return $;
     }
   }
-
   /** Provides means for iteration over those vertices which are sources for the
    * graph.
    * <p>
@@ -190,16 +171,12 @@ public abstract class AbstractGraph<E> {
    *         vertices with no incident edges. The returned value is never
    *         <code><b>null</b></code>. */
   public abstract ImmutableArrayList<Vertex<E>> sources();
-
   /** Provides means for counting the number of sinks in the graph.
    * @return a non-negative integer representing the number of sinks. */
   public abstract int sourcesCount();
-
   @Override @NotNull public String toString() {
     return name() + "<" + size() + ";" + countEdges() + "> ";
   }
-
   public abstract Vertex<E> vertex(E e);
-
   public abstract ImmutableArrayList<Vertex<E>> vertices();
 }

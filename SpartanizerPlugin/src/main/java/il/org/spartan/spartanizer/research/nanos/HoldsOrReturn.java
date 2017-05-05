@@ -25,7 +25,6 @@ public final class HoldsOrReturn extends NanoPatternTipper<IfStatement> {
   @Override public boolean canTip(final IfStatement ¢) {
     return anyTips(tippers, ¢) && rival.cantTip(¢);
   }
-
   @Override public Tip pattern(final IfStatement ¢) {
     return firstTip(tippers, ¢);
   }

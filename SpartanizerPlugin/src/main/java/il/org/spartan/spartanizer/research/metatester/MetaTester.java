@@ -26,11 +26,9 @@ public class MetaTester extends BlockJUnit4ClassRunner {
     testName = testClass.getSimpleName();
     sourceFile = openSourceFile(testName);
   }
-
   @Override public Description getDescription() {
     return Description.createTestDescription(testClass, "MetaTester");
   }
-
   @Override @SuppressWarnings("unused") protected void runChild(final FrameworkMethod __, final RunNotifier n) {
     if (hasRan)
       return;
@@ -48,7 +46,6 @@ public class MetaTester extends BlockJUnit4ClassRunner {
     /* super.runChild(method, notifier); */
     hasRan = true;
   }
-
   private File openSourceFile(final String className) {
     return new File(FileUtils.makePath(testSourcePath(testClass), className + ".java"));
   }

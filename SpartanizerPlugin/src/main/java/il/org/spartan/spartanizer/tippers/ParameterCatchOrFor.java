@@ -19,11 +19,9 @@ public abstract class ParameterCatchOrFor extends NodePattern<SingleVariableDecl
     property("Type", () -> type = current.getType());
     property("Initializer", () -> initializer = current.getInitializer());
   }
-
   protected Type type() {
     return type;
   }
-
   final SimpleName name() {
     return name;
   }

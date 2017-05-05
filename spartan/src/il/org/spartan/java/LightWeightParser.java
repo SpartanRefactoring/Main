@@ -17,39 +17,31 @@ public class LightWeightParser {
   public LightWeightParser(final Tokenizer tokenizer) {
     this.tokenizer = tokenizer;
   }
-
   public void clazz() {
     if (skipUntil(__class, __enum, __interface, AT_INTERFACE) == null)
       return;
     getIdentifier();
     skipUntil(LBRACE);
   }
-
   public void field() {
     //
   }
-
   public void file() {
     //
   }
-
   public void method() {
     //
   }
-
   public void statement() {
     //
   }
-
   public void variable() {
     //
   }
-
   @NotNull private String getIdentifier() {
     skipUntil(IDENTIFIER);
     return tokenizer.text();
   }
-
   private Token skipUntil(@NotNull final Token... ¢) {
     for (@Nullable Token $ = tokenizer.next(); $ != null; $ = tokenizer.next())
       if (in($, ¢))

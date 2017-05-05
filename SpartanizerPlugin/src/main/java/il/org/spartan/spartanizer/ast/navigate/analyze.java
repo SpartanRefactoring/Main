@@ -26,12 +26,10 @@ public enum analyze {
           $.add(identifier(node));
         return true;
       }
-
       boolean notMethodName(final Name ¢) {
         return (!iz.methodInvocation(parent(¢)) || !identifier(az.methodInvocation(parent(¢))).equals(¢ + ""))
             && (!iz.methodDeclaration(parent(¢)) || !identifier(az.methodDeclaration(parent(¢))).equals(¢ + ""));
       }
-
       @Override public boolean visit(final QualifiedName node) {
         if (notMethodName(node))
           $.add(identifier(node));
@@ -40,7 +38,6 @@ public enum analyze {
     });
     return $;
   }
-
   public static Collection<String> dependencies(final Iterable<Expression> arguments) {
     final Set<String> $ = new HashSet<>();
     for (final Expression ¢ : arguments) {
@@ -50,13 +47,11 @@ public enum analyze {
     }
     return $;
   }
-
   public static String type(final Name n) {
     final MethodDeclaration m = yieldAncestors.untilContainingMethod().from(n);
     final String $ = m == null ? null : findDeclarationInMethod(n, m);
     return $ != null ? $ : findDeclarationInType(n, yieldAncestors.untilContainingType().from(n));
   }
-
   private static String findDeclarationInType(final Name n, final AbstractTypeDeclaration d) {
     if (!iz.typeDeclaration(d)) // TODO Marco support all types of types
       return null;
@@ -66,7 +61,6 @@ public enum analyze {
           return step.type($) + "";
     return null;
   }
-
   private static String findDeclarationInMethod(final Name n, final MethodDeclaration d) {
     final Str $ = new Str();
     d.accept(new ASTVisitor(true) {
@@ -76,7 +70,6 @@ public enum analyze {
         $.set(step.type(¢));
         return false;
       }
-
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
         if ($.notEmpty() || !(step.name(¢) + "").equals(n + ""))
           return true;

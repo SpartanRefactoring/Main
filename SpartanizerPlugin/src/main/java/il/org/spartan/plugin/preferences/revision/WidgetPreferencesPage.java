@@ -28,7 +28,6 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
-
   @Override protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
     addField(new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent()));
@@ -41,7 +40,6 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     lse.configureButton.setText("configure operation");
     addField(lse);
   }
-
   /** @return all plugin widget operations */
   private static List<Entry<String, Object>> getWidgetOperations() {
     final List<Entry<String, Object>> $ = an.empty.list();

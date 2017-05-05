@@ -16,14 +16,12 @@ public class ExecuteUnlessTest {
         .gives("execute(() -> print(8)).when(x==8);")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("if(x == 8 && iz.Literal(lit) || bigDaddy(d)) a.b()._(f,g).f.x(8,g,h*p);")//
         .using(new ExecuteUnless(), IfStatement.class)//
         .gives("execute(()->a.b()._(f,g).f.x(8,g,h*p)).when(x==8&&iz.Literal(lit)||bigDaddy(d));")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("for (final E constant : cs) if(Y) $.add(constant);")//
         .using(new ExecuteUnless(), IfStatement.class)//

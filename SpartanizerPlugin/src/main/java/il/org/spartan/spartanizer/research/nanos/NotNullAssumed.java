@@ -29,7 +29,6 @@ public class NotNullAssumed extends NanoPatternTipper<IfStatement> {
         && rival.get().cantTip(¢)//
     ;
   }
-
   @Override public Tip pattern(final IfStatement ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -37,11 +36,9 @@ public class NotNullAssumed extends NanoPatternTipper<IfStatement> {
       }
     };
   }
-
   @Override public String description() {
     return description;
   }
-
   @Override public String tipperName() {
     return "NotNullAssumed";
   }

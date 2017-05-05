@@ -21,7 +21,6 @@ public class ConstructorEmptyRemove extends ConstructorPattern implements Tipper
   @Override public String description() {
     return "Remove empty constructor";
   }
-
   public ConstructorEmptyRemove() {
     andAlso("Constructor is empty", //
         () -> statements(body).isEmpty());
@@ -29,7 +28,6 @@ public class ConstructorEmptyRemove extends ConstructorPattern implements Tipper
     andAlso("Visibility is no lesser than of containing class", () -> visibility.of(current) >= visibility.of(typeDelcaration));
     andAlso("No other constructors defined", () -> step.methods(typeDelcaration).stream().filter(λ -> λ.isConstructor()).count() == 1);
   }
-
   @Override public Examples examples() {
     return convert("class A { A(){}}").to("class A{}") //
         .convert("class A { protected A(){}}").to("class A{}") //
@@ -40,7 +38,6 @@ public class ConstructorEmptyRemove extends ConstructorPattern implements Tipper
         .ignores("protected class A { private A(){}}") //
         .ignores("class A { A(){} A(int i) {}}");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.remove(current, g);
     return r;

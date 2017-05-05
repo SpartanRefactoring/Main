@@ -20,7 +20,6 @@ public class RecordWriter implements Closeable {
     writer = new FileWriter(file);
     write(renderer.beforeTable());
   }
-
   public void write(final String s) {
     try {
       writer.write(s);
@@ -48,14 +47,12 @@ public class RecordWriter implements Closeable {
       throw new RuntimeException(¢);
     }
   }
-
   public void write(final Map<String, Object> ¢) {
     if (shouldPrintHeader)
       writeHeader(¢);
     shouldPrintHeader = false;
     writeData(¢);
   }
-
   public void writeFooter(final Map<String, Object> ¢) {
     if (!footerPrinted) {
       write(renderer.beforeFooter());
@@ -63,18 +60,15 @@ public class RecordWriter implements Closeable {
     }
     write(renderer.footerBegin() + separate.these(¢.values()).by(renderer.footerSeparator()) + renderer.footerEnd());
   }
-
   private void writeData(final Map<String, Object> ¢) {
     write(renderer.renderRow(¢.values()));
   }
-
   private void writeHeader(final Map<String, Object> ¢) {
     renderer.setHeaderCount(¢.size());
     write(renderer.beforeHeader() + //
         renderer.headerLineBegin() + writeHeaderInner(¢) + renderer.headerLineEnd() + //
         renderer.afterHeader());
   }
-
   private String writeHeaderInner(final Map<String, Object> m) {
     final Separator s = new Separator(renderer.headerSeparator());
     final StringBuilder $ = new StringBuilder();

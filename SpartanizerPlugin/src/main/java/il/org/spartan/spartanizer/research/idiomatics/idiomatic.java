@@ -39,14 +39,12 @@ public interface idiomatic {
     d.setName(u.getAST().newName("il.org.spartan.spartanizer.research.idiomatic"));
     misc.addImport(u, r, d);
   }
-
   /** @param <T> JD
    * @param $ result
    * @return an identical supplier which is also a {@link Holder} */
   static <T> Holder<T> eval(final Supplier<T> $) {
     return $::get;
   }
-
   /* @param condition JD
    *
    * @return */
@@ -58,7 +56,6 @@ public interface idiomatic {
   static <T> T incase(final boolean condition, final T t) {
     return condition ? t : null;
   }
-
   /** A filter, which prints an appropriate log message and returns null in case
    * of {@link Exception} thrown by {@link Producer#λ()}
    * @param <T> JD
@@ -72,28 +69,23 @@ public interface idiomatic {
       return note.bug(¢);
     }
   }
-
   /** Quote a given {@link String}
    * @param $ some {@link String} to be quoted
    * @return parameter, quoted */
   static String quote(final String $) {
     return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
-
   /** @param ¢ JD
    * @return an identical runnable which is also a {@link Runner} */
   static Runner run(final Runnable ¢) {
     return new Runner(¢);
   }
-
   static <T> Storer<T> take(final T ¢) {
     return new Storer<>(¢);
   }
-
   static Trigger unless(final boolean condition) {
     return then(!condition);
   }
-
   /** @param <T> JD
    * @param condition when should the misc take place
    * @param t JD
@@ -109,7 +101,6 @@ public interface idiomatic {
     public ObjectHolder(final T t) {
       this.t = t;
     }
-
     public ConditionHolder nulls() {
       return new ConditionHolder(t == null);
     }
@@ -121,7 +112,6 @@ public interface idiomatic {
     public ConditionHolder(final boolean b) {
       this.b = b;
     }
-
     public <T> SupplierHolder<T> eval(final Supplier<T> ¢) {
       return new SupplierHolder<>(¢, b);
     }
@@ -135,7 +125,6 @@ public interface idiomatic {
       s = ¢;
       this.b = b;
     }
-
     public T elze(final Supplier<T> ¢) {
       return (b ? s : ¢).get();
     }
@@ -144,11 +133,9 @@ public interface idiomatic {
   static <T> ObjectHolder<T> when(final T ¢) {
     return new ObjectHolder<>(¢);
   }
-
   static ConditionHolder when(final boolean ¢) {
     return new ConditionHolder(¢);
   }
-
   /** @param condition JD
    * @return */
   static Trigger then(final boolean condition) {
@@ -172,7 +159,6 @@ public interface idiomatic {
       }
     };
   }
-
   static <T> Storer<T> default¢(final T ¢) {
     return new Storer<>(¢);
   }
@@ -190,7 +176,6 @@ public interface idiomatic {
     default T unless(final boolean unless) {
       return when(!unless);
     }
-
     /** Return value when condition is {@code true}
      * @return {@link #get()} when the parameter is {@code true} , otherwise
      *         {@code null.
@@ -198,7 +183,6 @@ public interface idiomatic {
     default T when(final boolean when) {
       return when ? get() : null;
     }
-
     default T to(final T ¢) {
       return get() == null ? ¢ : get();
     }
@@ -229,17 +213,14 @@ public interface idiomatic {
     Runner(final Runnable run) {
       this.run = run;
     }
-
     @Override public void run() {
       run.run();
     }
-
     /** {@code unless}
      * @param unless condition n which execution occurs. */
     public void unless(final boolean unless) {
       when(!unless);
     }
-
     void when(final boolean when) {
       if (when)
         run();
@@ -258,7 +239,6 @@ public interface idiomatic {
     Storer(final T inner) {
       this.inner = inner;
     }
-
     /** see @see java.util.function.Supplier#get() (auto-generated) */
     @Override public T get() {
       return inner;
@@ -272,7 +252,6 @@ public interface idiomatic {
      * @param t JD
      * @return */
     <T> T eval(Supplier<T> t);
-
     /** @param <T> JD
      * @param $ JD
      * @return */
@@ -298,27 +277,21 @@ public interface idiomatic {
     public CollectionHolder(final CT collection) {
       this.collection = collection;
     }
-
     public void apply(final Consumer<? super T> mapper) {
       collection.forEach(mapper);
     }
-
     @SuppressWarnings("unchecked") public <R, CR extends Collection<R>> CR map(final Function<? super T, ? extends R> mapper) {
       return (CR) collection.stream().map(mapper).collect(new GenericCollector<R>(collection.getClass()));
     }
-
     @SuppressWarnings("unchecked") public CT filter(final Predicate<? super T> mapper) {
       return (CT) collection.stream().filter(mapper).collect(new GenericCollector<>(collection.getClass()));
     }
-
     public T reduce(final BinaryOperator<T> reducer) {
       return collection.stream().reduce(reducer).get();
     }
-
     public T max(final Comparator<? super T> comperator) {
       return collection.stream().max(comperator).get();
     }
-
     public T min(final Comparator<? super T> comperator) {
       return collection.stream().min(comperator).get();
     }
@@ -337,7 +310,6 @@ public interface idiomatic {
     public MapperLambdaHolder(final Function<T, R> mapper) {
       this.mapper = mapper;
     }
-
     @SuppressWarnings("unchecked") public <CT extends Collection<T>, CR extends Collection<R>> CR to(final CT ¢) {
       return (CR) ¢.stream().map(mapper).collect(new GenericCollector<>(¢.getClass()));
     }
@@ -364,11 +336,9 @@ public interface idiomatic {
     public GenericCollector(final Class<? extends Collection> cls) {
       this.cls = cls;
     }
-
     @SuppressWarnings("unchecked") private <I> Function<I, Collection<R>> castingIdentity() {
       return λ -> (Collection<R>) λ;
     }
-
     @Override @SuppressWarnings("unchecked") public Supplier<Collection<R>> supplier() {
       return () -> {
         try {
@@ -378,22 +348,18 @@ public interface idiomatic {
         }
       };
     }
-
     @Override public BiConsumer<Collection<R>, R> accumulator() {
       return Collection::add;
     }
-
     @Override public BinaryOperator<Collection<R>> combiner() {
       return (left, right) -> {
         left.addAll(right);
         return left;
       };
     }
-
     @Override public Function<Collection<R>, Collection<R>> finisher() {
       return castingIdentity();
     }
-
     @Override public Set<Characteristics> characteristics() {
       return new HashSet<>();
     }

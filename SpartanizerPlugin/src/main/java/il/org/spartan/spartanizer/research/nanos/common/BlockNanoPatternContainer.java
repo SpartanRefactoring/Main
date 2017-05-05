@@ -14,7 +14,6 @@ public class BlockNanoPatternContainer extends NanoPatternContainer<Block> {
   @SafeVarargs public BlockNanoPatternContainer(final UserDefinedTipper<Block>... ts) {
     addAll(as.list(ts));
   }
-
   public BlockNanoPatternContainer statementsPattern(final String pattern, final String replacement, final String description) {
     add(TipperFactory.statementsPattern(pattern, replacement, description));
     return this;

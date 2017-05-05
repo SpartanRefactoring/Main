@@ -32,7 +32,6 @@ public enum CSV {
       $[¢] = cs[¢] == null ? null : cs[¢].getName();
     return combine($);
   }
-
   /** Combine the given array into a comma separated string. Each element is
    * escaped, so commas inside the elements cannot do not collide with the
    * separating commas.
@@ -48,7 +47,6 @@ public enum CSV {
       $.append(sep + escape(¢ == null ? null : ¢ + ""));
     return $ + "";
   }
-
   /** Combine the given array of enum values into a comma separated string. Each
    * array element is first converted into a string using its name() method and
    * then is escaped.
@@ -64,7 +62,6 @@ public enum CSV {
     }
     return combine($);
   }
-
   /** Escape the given input
    * @param s Input string
    * @return Escaped form of the input */
@@ -77,7 +74,6 @@ public enum CSV {
       $.append(¢ == '\\' ? "\\\\" : ¢ == '\n' ? "\\n" : ¢ == '\r' ? "\\r" : ¢ == '\t' ? "\\t" : ¢ == ',' ? "\\." : ¢);
     return $ + "";
   }
-
   /** Read a CSV file.
    * @param ¢ Input file
    * @return A two dimensional array of strings
@@ -85,7 +81,6 @@ public enum CSV {
   public static String[][] load(@NotNull final File ¢) throws IOException {
     return load(new FileReader(¢));
   }
-
   /** Read a CSV file from the given Reader object.
    * @param r input reader
    * @return a two dimensional array of strings */
@@ -95,13 +90,11 @@ public enum CSV {
       $.add(split(¢.nextLine()));
     return $.toArray(new String[$.size()][]);
   }
-
   public static void save(@NotNull final File f, @NotNull final String[][] data) throws IOException {
     @NotNull final PrintWriter pw = new PrintWriter(new FileWriter(f));
     pw.print(toCsv(data));
     pw.close();
   }
-
   /** Split a comma separated string into an array of enum values.
    * @param <T> Type of enum class
    * @param clazz Class object of T
@@ -114,7 +107,6 @@ public enum CSV {
       $[¢] = ss[¢] == null ? null : Enum.valueOf(clazz, ss[¢]);
     return $;
   }
-
   /** Split a comma separated string into its sub parts
    * @param s input string
    * @return Array of sub parts, in their original order */
@@ -132,7 +124,6 @@ public enum CSV {
       from = to + 1;
     }
   }
-
   /** Split a comma separated string into an array of classes.
    * @param s input string
    * @return Array of T */
@@ -149,7 +140,6 @@ public enum CSV {
       }
     return $;
   }
-
   @NotNull public static String toCsv(@NotNull final String[][] data) {
     @NotNull final StringWriter $ = new StringWriter();
     @NotNull final PrintWriter pw = new PrintWriter($);
@@ -162,7 +152,6 @@ public enum CSV {
     pw.flush();
     return $ + "";
   }
-
   /** Unescape the given input
    * @param s Input string
    * @return Unescaped string */

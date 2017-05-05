@@ -15,7 +15,6 @@ public class Version290 {
     trimmingOf("@SuppressWarnings()int $=(Class<T>)findClass(className); ")//
         .stays();
   }
-
   /** Introduced by Yogi on Wed-Apr-12-10:49:02-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void intab0Intc3Intdc2Intedc19be2dea() {
@@ -33,7 +32,6 @@ public class Version290 {
         .stays() //
     ;
   }
-
   /** Introduced by Yogi on Wed-Apr-12-10:51:24-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta5b3Intcb2Intdcb19aec() {
@@ -57,7 +55,6 @@ public class Version290 {
         .stays() //
     ;
   }
-
   /** Introduced by Yogi on Wed-Apr-12-10:53:05-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta5Intb3Intcb2Intdcb19ed2cda() {
@@ -75,7 +72,6 @@ public class Version290 {
         .stays() //
     ;
   }
-
   /** Introduced by Yogi on Wed-Apr-12-11:06:45-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void inta6FinalAbNewAaIntc2dccacca() {
@@ -87,13 +83,11 @@ public class Version290 {
         .stays() //
     ;
   }
-
   @Test public void renameVariableUnderscore2() {
     trimmingOf("class A{int __;int f(int _){return _;}}")//
         .gives("class A{int __;int f(int __){return __;}}") //
         .stays();
   }
-
   @Test public void replaceClassInstanceCreationWithFactoryClassInstanceCreation() {
     trimmingOf("Character x=new Character(new Character(f()));")//
         .gives("new Character(new Character(f()));")//

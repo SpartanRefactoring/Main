@@ -17,7 +17,6 @@ public class ForEachInRangeTest {
         .gives("range.from(0).to(4096).forEach(λ->whitespace.append(\" \"));")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("for (int ¢=0; ¢ < 2000; ++¢) whitespace.append(\" \");")//
         .using(new ForEachInRange(), ForStatement.class)//
@@ -25,7 +24,6 @@ public class ForEachInRangeTest {
         .gives("range.from(0).to(2000).forEach(λ->whitespace.append(\" \"));")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("for (int ¢=0; ¢ < ls.size(); ++¢) $[¢]=ls.elementAt(¢);")//
         .using(new ForEachInRange(), ForStatement.class)//
@@ -33,7 +31,6 @@ public class ForEachInRangeTest {
         .gives("range.from(0).to(ls.size()).forEach(λ->$[λ]=ls.elementAt(λ));")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("for (int ¢= thingy().f.g; ¢ < 7; ++¢) $[¢]=ls.elementAt(¢);")//
         .using(new ForEachInRange(), ForStatement.class)//

@@ -8,17 +8,16 @@ import il.org.spartan.*;
 /** TODO Yossi Gil Document Classn
  * @author Yossi Gil
  * @since 2016-12-25 */
-@FunctionalInterface public interface TableRenderer {
+@FunctionalInterface
+public interface TableRenderer {
   enum builtin implements TableRenderer {
     TXT, TEX {
       @Override public String afterHeader() {
         return "\\midrule" + NL;
       }
-
       @Override public String afterTable() {
         return "\\bottomrule" + NL;
       }
-
       // @formatter:off
       @Override
        public String arraySeparator() { return ", "; }
@@ -28,19 +27,15 @@ import il.org.spartan.*;
       @Override public String beforeTable() {
         return "\\toprule" + NL;
       }
-
       @Override public String nil() {
         return "$\\#$";
       }
-
       @Override public String recordEnd() {
         return " \\\\" + NL;
       }
-
       @Override public String recordSeparator() {
         return "\t&\t";
       }
-
       @Override public String render(final Statistic ¢) {
         switch (¢) {
           case Σ:
@@ -59,11 +54,9 @@ import il.org.spartan.*;
       @Override public String afterHeader() {
         return "\\hline" + NL;
       }
-
       @Override public String afterTable() {
         return "\\hline" + NL;
       }
-
     // @formatter:off
     @Override
      public String arraySeparator() { return ", "; }
@@ -73,11 +66,9 @@ import il.org.spartan.*;
       @Override public String beforeTable() {
         return "\\hline" + NL;
       }
-
       @Override public String footerEnd() {
         return "\\\\" + NL;
       }
-
       @Override public String recordSeparator() {
         return "\t&\t";
       }
@@ -96,11 +87,9 @@ import il.org.spartan.*;
           $ += "--- |";
         return $ + NL;
       }
-
       @Override public String afterTable() {
         return NL;
       }
-
       // @formatter:off
       @Override public String beforeTable() { return NL; }
       @Override
@@ -123,27 +112,21 @@ import il.org.spartan.*;
   default String cellReal(final Double ¢) {
     return ¢.longValue() != ¢.doubleValue() ? ¢ + "" : cellInt(Long.valueOf(¢.longValue()));
   }
-
   static String empty() {
     return "";
   }
-
   static String tab() {
     return "\t";
   }
-
   default String afterFooter() {
     return empty();
   }
-
   default String afterHeader() {
     return empty();
   }
-
   default String afterTable() {
     return empty();
   }
-
   // @formatter:off
 
   default String arraySeparator() { return "; "; }
@@ -177,19 +160,15 @@ import il.org.spartan.*;
   default String recordBegin() {
     return empty();
   }
-
   default String recordEnd() {
     return NL;
   }
-
   default String recordSeparator() {
     return tab();
   }
-
   default String render(final Statistic ¢) {
     return ¢ + "";
   }
-
   default String renderRow(final Collection<Object> values) {
     final StringBuilder $ = new StringBuilder(recordBegin());
     final Separator s = new Separator(recordSeparator());
@@ -199,9 +178,7 @@ import il.org.spartan.*;
                 : λ instanceof Double ? cellReal((Double) λ) : λ));
     return $ + recordEnd();
   }
-
   void setHeaderCount(int size);
-
   default String stringField(final String value) {
     return value;
   }

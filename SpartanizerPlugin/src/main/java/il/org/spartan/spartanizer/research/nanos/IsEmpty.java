@@ -16,27 +16,21 @@ public final class IsEmpty extends NanoPatternTipper<InfixExpression> {
   @Override public boolean canTip(final InfixExpression ¢) {
     return tippers.canTip(¢);
   }
-
   @Override public Tip pattern(final InfixExpression ¢) {
     return tippers.firstTip(¢);
   }
-
   @Override public String description() {
     return "Boolean expression that checks whether a collection is of size 0";
   }
-
   @Override public String technicalName() {
     return "empty(X)";
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }
-
   @Override public NanoPatternTipper.Category category() {
     return Category.Iterative;
   }

@@ -24,15 +24,12 @@ public abstract class ParameterCatchOrForInitialized extends NodePattern<SingleV
       return true;
     });
   }
-
   protected Type type() {
     return type;
   }
-
   final SimpleName name() {
     return name;
   }
-
   protected Expression initializer() {
     return initializer;
   }

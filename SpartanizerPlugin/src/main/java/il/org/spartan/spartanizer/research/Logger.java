@@ -27,7 +27,6 @@ public final class Logger {
 
   /** Suppresses default constructor, ensuring non-instantiability */
   private Logger() {}
-
   /** subscribe to logNP. Every time an NP will hit, the subscriber will be
    * invoked.
    * @param ¢ */
@@ -40,31 +39,25 @@ public final class Logger {
   private static void logMethodInfo(final MethodDeclaration ¢) {
     methodsStatistics.putIfAbsent(hashMethod(¢), new MethodRecord(¢));
   }
-
   public static void reset() {
     methodsStatistics.clear();
     numMethods = 0;
   }
-
   public static void logNP(final ASTNode n, final String np) {
     subscribers.forEach(λ -> λ.accept(n, np));
   }
-
   private static Integer hashMethod(final MethodDeclaration ¢) {
     return Integer.valueOf((currentFile + "." + getType() + name(¢) + parametersTypes(¢)).hashCode());
   }
-
   private static String getType() {
     return currentType == null || currentType.isEmpty() ? "" : currentType.peek() + "";
   }
-
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param ¢ compilation unit */
   public static void logCompilationUnit(final CompilationUnit ¢) {
     currentType = new Stack<>();
     descendants.whoseClassIs(AbstractTypeDeclaration.class).from(¢).stream().filter(haz::methods).forEach(Logger::logType);
   }
-
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param u compilation unit */
   public static void logType(final AbstractTypeDeclaration d) {
@@ -73,13 +66,11 @@ public final class Logger {
     ms.forEach(Logger::logMethodInfo);
     numMethods += ms.size();
   }
-
   /** Collect statistics of a compilation unit which will be analyzed.
    * @param ¢ compilation unit */
   public static void logFile(final String fileName) {
     currentFile = fileName;
   }
-
   public static void finishedType() {
     currentType.pop();
   }

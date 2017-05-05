@@ -25,7 +25,6 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
   @Override public String description(final CatchClause ¢) {
     return "Rename exception " + English.name(¢.getException()) + " caught in catch clause here to ¢";
   }
-
   @Override public Examples examples() {
     return //
     convert("try {f();} catch (Exception e) {e.f();}") //
@@ -34,7 +33,6 @@ public final class CatchClauseRenameParameterToCent extends EagerTipper<CatchCla
         .ignores("try {f();} catch (Exception e) {int ¢; e.f();}")//
     ;
   }
-
   @Override public Tip tip(final CatchClause c) {
     final SingleVariableDeclaration parameter = c.getException();
     if (!JohnDoe.property(parameter))

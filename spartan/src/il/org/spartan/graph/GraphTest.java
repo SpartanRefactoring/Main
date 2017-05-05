@@ -13,7 +13,8 @@ import fluent.ly.*;
 import il.org.spartan.collections.*;
 import il.org.spatan.iteration.*;
 
-@SuppressWarnings("static-method") public class GraphTest {
+@SuppressWarnings("static-method")
+public class GraphTest {
   static void verifyEdge(@NotNull final Graph<String> s, final int from, final int to) {
     assert s.vertices().get(from) != null;
     assert s.vertices().get(to) != null;
@@ -22,18 +23,15 @@ import il.org.spatan.iteration.*;
     verifyFound(s.vertices().get(from).outgoing(), s.vertices().get(to));
     verifyFound(s.vertices().get(to).incoming(), s.vertices().get(from));
   }
-
   static void verifyEdge(@NotNull final Graph<String> s, final String from, final String to) {
     verifyEdge(s, index(s, from), index(s, to));
   }
-
   static void verifyGraph(@NotNull final Graph<String> ¢) {
     verifyVertices(¢);
     verifySources(¢);
     verifySinks(¢);
     verifyPreorder(¢);
   }
-
   static void verifyGraphsEquivlanet(@NotNull final Graph<String> g1, @NotNull final Graph<String> g2) {
     assertEquals(g1.size(), g2.size());
     if (!g1.isEmpty())
@@ -48,75 +46,61 @@ import il.org.spatan.iteration.*;
           verifyEdge(g2, v.e(), outgoingIndex.e());
       }
   }
-
   static void verifyPreorder(@NotNull final Graph<String> s) {
     verifyCollection(s, s.preOrder(), s.vertices().size(), λ -> verifyVertex(s, λ.e()));
   }
-
   static void verifySink(@NotNull final Graph<String> s, final String sink) {
     verifySink(s, s.vertex(sink));
   }
-
   static void verifySink(@NotNull final Graph<String> s, @NotNull final Vertex<String> v) {
     assertEquals(0, s.outgoing(v).size());
   }
-
   static void verifySinks(@NotNull final Graph<String> s) {
     verifyCollection(s, s.sinks(), s.sinksCount(), λ -> verifySink(s, λ));
   }
-
   static void verifySource(@NotNull final Graph<String> s, final String source) {
     verifySource(s, s.vertex(source));
   }
-
   static void verifySource(@NotNull final Graph<String> s, @NotNull final Vertex<String> v) {
     assert s.isSource(v);
     assertEquals(0, v.incoming().size());
   }
-
   static void verifySources(@NotNull final Graph<String> s) {
     verifyCollection(s, s.sources(), s.sourcesCount(), λ -> verifySource(s, λ));
   }
-
   static void verifyVertex(@NotNull final Graph<String> s, @NotNull final String... vertices) {
     for (@NotNull final String vertex : vertices)
       assert vertex != null : s.vertex(vertex);
     for (final String vertex : vertices)
       verifyVertex(s, s.vertex(vertex));
   }
-
   static void verifyVertex(@NotNull final Graph<String> s, @NotNull final Vertex<String> v) {
     assert v != null;
     assert index(s, v) >= 0;
     assert index(s, v) < s.size();
     assertEquals(v, s.vertices().get(index(s, v)));
   }
-
   static void verifyVertices(@NotNull final Graph<String> s) {
     verifyCollection(s, s.vertices(), s.size(), λ -> verifyVertex(s, λ));
   }
-
   private static boolean among(@NotNull final String what, @NotNull final String... where) {
     for (final String ¢ : where)
       if (what.equals(¢))
         return true;
     return false;
   }
-
   private static int index(@NotNull final Graph<String> s, final String v) {
     for (int $ = 0; $ < s.vertices().size(); ++$)
       if (s.vertices().get($).e().equals(v))
         return $;
     return -1;
   }
-
   private static int index(@NotNull final Graph<String> s, final Vertex<String> v) {
     for (int $ = 0; $ < s.vertices().size(); ++$)
       if (s.vertices().get($) == v)
         return $;
     return -1;
   }
-
   private static void verifyCollection(@NotNull final Graph<String> s, @NotNull final ImmutableArrayList<Vertex<String>> vs, final int size,
       @NotNull final Query q) {
     assert vs != null;
@@ -129,7 +113,6 @@ import il.org.spatan.iteration.*;
       seen[index(s, ¢)] = true;
     }
   }
-
   private static void verifyCollection(@NotNull final Graph<String> s, @NotNull final Iterable<Vertex<String>> ss, final int length,
       @NotNull final Query q) {
     assert ss != null;
@@ -142,11 +125,9 @@ import il.org.spatan.iteration.*;
       seen[index(s, ¢)] = true;
     }
   }
-
   private static void verifyFound(final ImmutableArrayList<Vertex<String>> s, final Vertex<String> u) {
     azzert.that(s, hasItem(u));
   }
-
   @Test public void builderAddGraph() {
     @NotNull final Graph<String> src = new Graph.Builder<String>() //
         .newEdge("A", "C").newEdge("B", "C").newEdge("C", "D")//
@@ -162,7 +143,6 @@ import il.org.spatan.iteration.*;
     verifyGraphsEquivlanet(src, g);
     verifyGraph(g);
   }
-
   @Test public void emptyGraph() {
     final Graph<String> g = new Graph.Builder<String>().build();
     assertEquals(g.size(), 0);
@@ -171,15 +151,12 @@ import il.org.spatan.iteration.*;
     assertEquals(g.sinksCount(), 0);
     verifyGraph(g);
   }
-
   @Test public void emptyNamedGraph() {
     assertEquals("empty", new Graph.Builder<String>("empty").build().name());
   }
-
   @Test public void emptyNamedInvertedGraph() {
     assertEquals("empty" + NamedEntity.INVERTED, new Graph.Builder<String>("empty").build().invert().name());
   }
-
   @Test public void flowGraph() {
     @NotNull final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("START", "END", "a") //
@@ -203,7 +180,6 @@ import il.org.spatan.iteration.*;
     for (final Vertex<String> ¢ : g.vertices())
       assertEquals(g.vertex("START"), g.source(¢));
   }
-
   @Test public void invertedTree() {
     @NotNull final Graph<String> g = makeInvertedTree();
     assert among(g.source(g.vertex("A")).e(), "A");
@@ -214,7 +190,6 @@ import il.org.spatan.iteration.*;
     assert among(g.source(g.vertex("F")).e(), "C", "D");
     assert among(g.source(g.vertex("G")).e(), "A", "B", "C", "D");
   }
-
   @Test public void invertedTreeLoops() {
     @NotNull final Graph<String> g = makeInvertedTreeWithLoops();
     assert among(g.source(g.vertex("A")).e(), "A");
@@ -225,7 +200,6 @@ import il.org.spatan.iteration.*;
     assert among(g.source(g.vertex("F")).e(), "C", "D");
     assert among(g.source(g.vertex("G")).e(), "A", "B", "C", "D");
   }
-
   @Test public void namedTriagle() {
     @NotNull final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("root", "side", "tail") //
@@ -237,7 +211,6 @@ import il.org.spatan.iteration.*;
     for (final Vertex<String> ¢ : g.vertices())
       assertEquals(g.vertex("root"), g.source(¢));
   }
-
   @Test public void numbersTriagleExample() {
     @NotNull final Graph<String> g = makeOneTwoThreeTrianble();
     assertEquals(g.vertex("one"), g.source(g.vertex("one")));
@@ -246,7 +219,6 @@ import il.org.spatan.iteration.*;
     for (final Vertex<String> ¢ : g.vertices())
       assertEquals(g.vertex("one"), g.source(¢));
   }
-
   @Test public void singleEdgeGraph() {
     @NotNull final Graph<String> g = makeSingleEdge();
     assertEquals(2, g.size());
@@ -267,7 +239,6 @@ import il.org.spatan.iteration.*;
     assertEquals(1, index(g, "A") + index(g, "B"));
     verifyGraph(g);
   }
-
   @Test public void singleEdgeGraphPreOrder() {
     @NotNull final Graph<String> g = makeSingleEdge();
     @NotNull final Iterator<? extends Vertex<String>> i = g.preOrder().iterator();
@@ -278,7 +249,6 @@ import il.org.spatan.iteration.*;
     assert !i.hasNext();
     azzert.isNull(i.next());
   }
-
   @Test public void singleLoopGraph() {
     @NotNull final Graph<String> g = make2Clique();
     assertEquals(1, g.outDegree(g.vertex("A")));
@@ -291,7 +261,6 @@ import il.org.spatan.iteration.*;
     assertEquals(2, g.vertices().size());
     verifyGraph(g);
   }
-
   @Test public void singleLoopMultipleInsertionsGraph() {
     @NotNull final Graph.Builder<String> b = new Graph.Builder<>();
     b.newVertex("A");
@@ -313,7 +282,6 @@ import il.org.spatan.iteration.*;
     assertEquals(2, g.vertices().size());
     verifyGraph(g);
   }
-
   @Test public void singletonGraph() {
     @NotNull final Graph<String> g = make1Clique();
     assertEquals(1, g.size());
@@ -325,12 +293,10 @@ import il.org.spatan.iteration.*;
     assertEquals(0, g.vertices().get(0).outgoing().size());
     verifyGraph(g);
   }
-
   @Test public void testAll() {
     for (@NotNull final Graph<String> ¢ : makeAll())
       assertEquals(¢.size(), Iterables.count(¢.preOrder()));
   }
-
   @Test public void testCFGExample() {
     @NotNull final Graph<String> g = makeCFGExample();
     assertEquals(g.vertex("START"), g.source(g.vertex("START")));
@@ -345,7 +311,6 @@ import il.org.spatan.iteration.*;
     for (final Vertex<String> ¢ : g.vertices())
       assertEquals(g.vertex("START"), g.source(¢));
   }
-
   @Test public void testChain() {
     @NotNull final Graph<String> g = makeChainABCDEF();
     assertEquals(g.vertex("A"), g.source(g.vertex("A")));
@@ -355,7 +320,6 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("A"), g.source(g.vertex("E")));
     assertEquals(g.vertex("A"), g.source(g.vertex("F")));
   }
-
   @Test public void testDiamond() {
     @NotNull final Graph<String> g = makeDiamond();
     assertEquals(g.vertex("D"), g.source(g.vertex("V")));
@@ -363,7 +327,6 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("D"), g.source(g.vertex("B2")));
     assertEquals(g.vertex("D"), g.source(g.vertex("D")));
   }
-
   @Test public void testDiamondBasic() {
     @NotNull final Graph<String> g = makeDiamond();
     assertEquals(4, g.size());
@@ -383,7 +346,6 @@ import il.org.spatan.iteration.*;
     verifyEdge(g, "D", "B2");
     verifyGraph(g);
   }
-
   @Test public void testInvertedTree() {
     @NotNull final Graph<String> g = makeInvertedTree();
     assertEquals(7, Iterables.count(g.preOrder()));
@@ -395,7 +357,6 @@ import il.org.spatan.iteration.*;
     assert Iterables.contains(g.preOrder(), g.vertex("F"));
     assert Iterables.contains(g.preOrder(), g.vertex("G"));
   }
-
   @Test public void testInvertedTreeLoops() {
     @NotNull final Graph<String> g = makeInvertedTreeWithLoops();
     assert Iterables.contains(g.preOrder(), g.vertex("A"));
@@ -406,7 +367,6 @@ import il.org.spatan.iteration.*;
     assert Iterables.contains(g.preOrder(), g.vertex("F"));
     assert Iterables.contains(g.preOrder(), g.vertex("G"));
   }
-
   @Test public void testLowerCaseTriagleExample() {
     @NotNull final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("a", "b", "c") //
@@ -418,7 +378,6 @@ import il.org.spatan.iteration.*;
     for (final Vertex<String> ¢ : g.vertices())
       assertEquals(g.vertex("a"), g.source(¢));
   }
-
   @Test public void testPreOrderInnerCycle() {
     @NotNull final Graph<String> g = new Graph.Builder<String>() //
         .newEdge("A", "C").newEdge("B", "C").newEdge("C", "D")//
@@ -440,7 +399,6 @@ import il.org.spatan.iteration.*;
     assert Iterables.contains(g.preOrder(), g.vertex("H"));
     assertEquals(g.size(), Iterables.count(g.preOrder()));
   }
-
   @Test public void testPreOrderSmallIsolatedInnerCycle() {
     @NotNull final Graph<String> g = makeAloofNodeAndAloofCycle();
     assertEquals(3, g.vertices().size());
@@ -449,7 +407,6 @@ import il.org.spatan.iteration.*;
     assert Iterables.contains(g.preOrder(), g.vertex("C"));
     assertEquals(3, Iterables.count(g.preOrder()));
   }
-
   @Test public void testSimple() {
     @NotNull final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("A", "a") //
@@ -463,7 +420,6 @@ import il.org.spatan.iteration.*;
     for (final Vertex<String> ¢ : g.vertices())
       assertEquals(g.vertex("A"), g.source(¢));
   }
-
   @Test public void testSimpleTree() {
     @NotNull final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("A", "E", "B") //
@@ -478,24 +434,20 @@ import il.org.spatan.iteration.*;
     for (@NotNull final Vertex<String> ¢ : g.vertices())
       azzert.that("Node " + ¢.e(), g.source(¢), is(g.vertex("A")));
   }
-
   @Test public void testSingleEdgeSource() {
     @NotNull final Graph<String> g = makeSingleEdge();
     assertEquals(g.vertex("A"), g.source(g.vertex("A")));
     assertEquals(g.vertex("A"), g.source(g.vertex("B")));
   }
-
   @Test public void testSingleLoop() {
     @NotNull final Graph<String> g = make2Clique();
     assertEquals(g.vertex("B"), g.source(g.vertex("A")));
     assertEquals(g.vertex("A"), g.source(g.vertex("B")));
   }
-
   @Test public void testSingletonGraphSource() {
     @NotNull final Graph<String> g = make1Clique();
     assertEquals(g.vertex("A"), g.source(g.vertex("A")));
   }
-
   @Test public void testSingletonLoopGraph() {
     @NotNull final Graph<String> g = makeSingletonLoop();
     assertEquals(1, g.size());
@@ -507,7 +459,6 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertices().get(0), g.vertices().get(0).outgoing().get(0));
     verifyGraph(g);
   }
-
   @Test public void testThreeByThree() {
     @NotNull final Graph<String> g = make3By3();
     assertEquals(g.vertex("A1"), g.source(g.vertex("A1")));
@@ -517,7 +468,6 @@ import il.org.spatan.iteration.*;
     assert among(g.source(g.vertex("B2")).e(), "A1", "A2", "A3");
     assert among(g.source(g.vertex("B3")).e(), "A1", "A2", "A3");
   }
-
   @Test public void testThreeByThreeGraph() {
     @NotNull final Graph<String> g = make3By3();
     assertEquals(6, g.size());
@@ -553,7 +503,6 @@ import il.org.spatan.iteration.*;
     assertEquals(0, g.outDegree(g.vertex("B3")));
     verifyGraph(g);
   }
-
   @Test public void testTree() {
     @NotNull final Graph<String> g = makeTree();
     assertEquals(g.size(), Iterables.count(g.preOrder()));
@@ -571,7 +520,6 @@ import il.org.spatan.iteration.*;
     assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("C"));
     assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("D"));
   }
-
   @Test public void testTreeWithLoops() {
     @NotNull final Graph<String> g = makeTreeWithLoops();
     assertEquals(7, Iterables.count(g.preOrder()));
@@ -589,13 +537,11 @@ import il.org.spatan.iteration.*;
     assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("C"));
     assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("D"));
   }
-
   @Test public void testTwoAloofNodes() {
     @NotNull final Graph<String> g = makeTwoAloofNodes();
     assertEquals(g.vertex("A"), g.source(g.vertex("A")));
     assertEquals(g.vertex("B"), g.source(g.vertex("B")));
   }
-
   @Test public void testTwoAloofNodesGraph() {
     @NotNull final Graph<String> g = makeTwoAloofNodes();
     assertEquals(2, g.size());
@@ -604,7 +550,6 @@ import il.org.spatan.iteration.*;
     assertEquals(2, g.vertices().size());
     verifyGraph(g);
   }
-
   @Test public void testWikiPageRanksExample() {
     @NotNull final Graph<String> g = makeWikiExample();
     assertEquals(g.vertex("P1"), g.source(g.vertex("P1")));
@@ -619,7 +564,6 @@ import il.org.spatan.iteration.*;
     assert among(g.source(g.vertex("E")).e(), "P1", "P2", "P3", "P4", "P5");
     assert among(g.source(g.vertex("F")).e(), "P1", "P2", "P3", "P4", "P5");
   }
-
   @Test public void testWikiPageRanksExampleContains() {
     @NotNull final Graph<String> g = makeWikiExample();
     assert Iterables.contains(g.preOrder(), g.vertex("A"));
@@ -634,18 +578,15 @@ import il.org.spatan.iteration.*;
     assert Iterables.contains(g.preOrder(), g.vertex("P4"));
     assert Iterables.contains(g.preOrder(), g.vertex("P5"));
   }
-
   @Test public void testWikiPageRanksExampleCount() {
     @NotNull final Graph<String> g = makeWikiExample();
     assertEquals(g.size(), Iterables.count(g.preOrder()));
   }
-
   @Test public void toStringTest() {
     @NotNull final Graph<String> g = makeSingleEdge();
     assertEquals("A", g.vertex("A").e() + "");
     assertEquals("B", g.vertex("B").e() + "");
   }
-
   @Test public void tree() {
     @NotNull final Graph<String> g = makeTree();
     assertEquals(g.vertex("G"), g.source(g.vertex("G")));
@@ -656,7 +597,6 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("G"), g.source(g.vertex("C")));
     assertEquals(g.vertex("G"), g.source(g.vertex("D")));
   }
-
   @Test public void treeWithLoops() {
     @NotNull final Graph<String> g = makeTreeWithLoops();
     assertEquals(g.vertex("G"), g.source(g.vertex("G")));
@@ -667,7 +607,6 @@ import il.org.spatan.iteration.*;
     assertEquals(g.vertex("G"), g.source(g.vertex("C")));
     assertEquals(g.vertex("G"), g.source(g.vertex("D")));
   }
-
   @Test public void treeWithLoopsAndForwardEdges() {
     @NotNull final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("A", "B", "C") //
@@ -686,7 +625,6 @@ import il.org.spatan.iteration.*;
     for (final Vertex<String> ¢ : g.vertices())
       assertEquals(g.vertex("A"), g.source(¢));
   }
-
   @Test public void triangle() {
     @NotNull final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("A", "B", "C") //
@@ -698,7 +636,6 @@ import il.org.spatan.iteration.*;
     for (final Vertex<String> ¢ : g.vertices())
       assertEquals(g.vertex("A"), g.source(¢));
   }
-
   @Test public void twoConnectedPairs() {
     @NotNull final Graph<String> g = makeTwoConnectedPairs();
     assertEquals(4, g.vertices().size());
@@ -712,7 +649,6 @@ import il.org.spatan.iteration.*;
     assert Iterables.before(g.preOrder(), g.vertex("B"), g.vertex("C"));
     assert Iterables.before(g.preOrder(), g.vertex("B"), g.vertex("D"));
   }
-
   @Test public void wikiPageRanksExample() {
     @NotNull final Graph<String> g = makeWikiExample();
     assertEquals(11, g.size());

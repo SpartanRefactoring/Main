@@ -29,7 +29,6 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
         .to("if(a==0) temp = b; else temp = c;") //
     ;
   }
-
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
     final ConditionalExpression $ = az.conditionalExpression(core(x));
     return $ == null ? null
@@ -38,7 +37,6 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
             az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)))//
         ).toIf($.getExpression());
   }
-
   private static ASTNode replaceAssignment(final Statement ¢) {
     final ExpressionStatement expressionStatement = az.expressionStatement(¢);
     if (expressionStatement == null)
@@ -46,11 +44,9 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     final Assignment $ = az.assignment(expressionStatement.getExpression());
     return $ == null ? null : innerAssignReplacement(right($), left($), $.getOperator());
   }
-
   @Override public ASTNode replacement(final ExpressionStatement ¢) {
     return replaceAssignment(¢);
   }
-
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Expanding a ternary operator to a full if-else statement";
   }

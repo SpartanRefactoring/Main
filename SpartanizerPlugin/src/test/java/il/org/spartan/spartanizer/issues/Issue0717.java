@@ -26,15 +26,12 @@ public class Issue0717 {
   @Test public void bigBlockWithAnnotationReturnsTrue() {
     assert determineIf.hasBigBlock((MethodDeclaration) make.ast("@Override public int f(){;;;;;}"));
   }
-
   @Test public void fiveStatBlockReturnsTrue() {
     assert determineIf.hasBigBlock(fiveStatMethod);
   }
-
   @Test public void fourStatBlockReturnsFalse() {
     assert !determineIf.hasBigBlock(fourStatMethod);
   }
-
   private String generateRandomString() {
     final StringBuilder $ = new StringBuilder();
     final Random randomGenerator = new Random();
@@ -43,27 +40,21 @@ public class Issue0717 {
     range.from(1).to(len).forEach(λ -> $.append(CHAR_LIST.charAt(randomGenerator.nextInt(CHAR_LIST.length()))));
     return $ + "";
   }
-
   @Test public void isCompiled() {
     assert true;
   }
-
   @Test public void methodWithNoBodyReturnsFalse() {
     assert !determineIf.hasBigBlock((MethodDeclaration) make.ast("public int a(String a);"));
   }
-
   @Test public void methodWithNoStatementsReturnsFalse() {
     assert !determineIf.hasBigBlock((MethodDeclaration) make.ast("public int f(int x){}"));
   }
-
   @Test public void nullCheckReturnsFalse() {
     assert !determineIf.hasBigBlock(null);
   }
-
   @Test public void oneStatBlockReturnsFalse() {
     assert !determineIf.hasBigBlock(oneStatMethod);
   }
-
   @Test public void randomBigBlockReturnsTrue() {
     final String methodName = generateRandomString(), firstStat = "{int x; ++x;", nextStat = "x=4;";
     final Random random = new Random();
@@ -74,15 +65,12 @@ public class Issue0717 {
     randomBigBlock += "}";
     assert determineIf.hasBigBlock((MethodDeclaration) make.ast(randomBigBlock));
   }
-
   @Test public void smallBlockWithAnnotationReturnsFalse() {
     assert !determineIf.hasBigBlock((MethodDeclaration) make.ast("@Inherited private void g(){;;;;}"));
   }
-
   @Test public void smallBlockWithModifierReturnsFalse() {
     assert !determineIf.hasBigBlock((MethodDeclaration) make.ast("public static void g(){;;;;}"));
   }
-
   @Test public void smallBlockWithModifierReturnsTrue() {
     assert determineIf.hasBigBlock((MethodDeclaration) make.ast("private static void g(){;;;;;}"));
   }

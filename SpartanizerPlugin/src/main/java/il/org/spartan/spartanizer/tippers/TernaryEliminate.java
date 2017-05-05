@@ -26,11 +26,9 @@ public final class TernaryEliminate extends NodePattern<ConditionalExpression>//
         () -> sideEffects.free(condition = current().getExpression())//
     );
   }
-
   @Override public String description() {
     return "Eliminate conditional exprssion with identical branches";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(current(), make.plant(then).into(current().getParent()), g);
     return r;

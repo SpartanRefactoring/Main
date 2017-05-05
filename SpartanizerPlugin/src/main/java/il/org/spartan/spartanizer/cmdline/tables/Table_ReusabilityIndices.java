@@ -54,7 +54,6 @@ public class Table_ReusabilityIndices {
         }
         RIndicesVisitor.clear();
       }
-
       void initializeWriter() {
         if (writer == null)
           writer = new Table(Table.classToNormalizedFileName(Table_ReusabilityIndices.class) + "-" + corpus, outputFolder);
@@ -67,35 +66,27 @@ public class Table_ReusabilityIndices {
     public RIndicesVisitor() {
       super(true);
     }
-
     @Override public void preVisit(final ASTNode ¢) {
       increment("NODE-TYPE", Vocabulary.mangle(¢.getClass()));
     }
-
     @Override public boolean visit(final Assignment ¢) {
       return increment("ASSIGNMENT", Vocabulary.mangle(¢));
     }
-
     @Override public boolean visit(final InfixExpression ¢) {
       return increment("INFIX", key(¢));
     }
-
     @Override public boolean visit(final MethodDeclaration ¢) {
       return defined.add(Vocabulary.mangle(¢));
     }
-
     @Override public boolean visit(final MethodInvocation ¢) {
       return increment("METHOD", Vocabulary.mangle(¢));
     }
-
     @Override public boolean visit(final PostfixExpression ¢) {
       return increment("POSTFIX", Vocabulary.mangle(¢));
     }
-
     @Override public boolean visit(final PrefixExpression ¢) {
       return increment("PREFIX", Vocabulary.mangle(¢));
     }
-
     static void clear() {
       usage.clear();
       defined.clear();
@@ -106,14 +97,12 @@ public class Table_ReusabilityIndices {
     category.put(key, Integer.valueOf(category.get(key).intValue() + 1));
     return true;
   }
-
   static int[] ranks(final Map<?, Integer> m) {
     final Int n = new Int();
     final int[] $ = new int[m.size()];
     m.values().forEach(λ -> $[n.inner++] = λ.intValue());
     return $;
   }
-
   public static int rindex(final int... ranks) {
     Arrays.sort(ranks);
     int $ = 0;
@@ -121,7 +110,6 @@ public class Table_ReusabilityIndices {
       $ = Math.max($, Math.min(ranks[¢], ranks.length - ¢));
     return $;
   }
-
   public static Map<String, Integer> addIfNecessary(final String category, final String key) {
     usage.putIfAbsent(category, new LinkedHashMap<>());
     final Map<String, Integer> $ = usage.get(category);
@@ -129,7 +117,6 @@ public class Table_ReusabilityIndices {
     $.putIfAbsent(key, Integer.valueOf(0));
     return $;
   }
-
   static void addLineToGlobalStatistcs(final String path) {
     writer.col("Project", getProjectName(path));
     if (usage.get("METHOD") == null)
@@ -141,11 +128,9 @@ public class Table_ReusabilityIndices {
         .col("Internal-External", rIntrernal - rExternal)//
     ;
   }
-
   private static String getProjectName(final String ¢) {
     return ¢.substring(¢.lastIndexOf('-') + 1);
   }
-
   static void addMissingKeys() {
     wizard.classToNodeType.keySet().forEach(λ -> addIfNecessary("NODE-TYPE", Vocabulary.mangle(λ)));
     as.list(op.assignment).forEach(λ -> addIfNecessary("ASSIGNMENT", Vocabulary.mangle(λ)));
@@ -155,32 +140,26 @@ public class Table_ReusabilityIndices {
       for (int arity = 2; arity <= maxArity; ++arity)
         addIfNecessary("INFIX", Vocabulary.mangle(¢, arity));
   }
-
   static boolean increment(final String category, final String key) {
     return increment(addIfNecessary(category, key), key);
   }
-
   static String key(final InfixExpression ¢) {
     return key(¢, extract.arity(¢));
   }
-
   private static String key(final InfixExpression ¢, final int arity) {
     maxArity = Math.max(arity, maxArity);
     return Vocabulary.mangle(¢.getOperator(), arity);
   }
-
   protected static int rExternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
     defined.forEach($::remove);
     return rindex(ranks($));
   }
-
   protected static int rInternal() {
     final Map<String, Integer> $ = new LinkedHashMap<>(usage.get("METHOD"));
     $.keySet().stream().filter(λ -> !defined.contains(λ)).forEach($::remove);
     return rindex(ranks($));
   }
-
   protected static int rMethod() {
     return rindex(ranks(usage.get("METHOD")));
   }

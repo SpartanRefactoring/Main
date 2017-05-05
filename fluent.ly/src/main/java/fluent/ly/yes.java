@@ -12,19 +12,15 @@ public interface yes {
     ¢.run();
     return true;
   }
-
   @SuppressWarnings("unused") static boolean forgetting(final Object _1, final Object... _2) {
     return true;
   }
-
   @SuppressWarnings("unused") static boolean ignoring(final boolean __) {
     return true;
   }
-
   @SuppressWarnings("unused") static boolean ignoring(final double __) {
     return true;
   }
-
   @SuppressWarnings("unused") static boolean ignoring(final long __) {
     return true;
   }

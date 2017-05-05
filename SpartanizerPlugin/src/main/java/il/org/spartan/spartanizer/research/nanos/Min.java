@@ -23,11 +23,9 @@ public final class Min extends NanoPatternTipper<ConditionalExpression> {
   @Override public boolean canTip(final ConditionalExpression ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final ConditionalExpression ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Min between two expressions";
   }

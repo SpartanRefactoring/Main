@@ -34,11 +34,9 @@ public interface metrics {
     });
     return $.inner;
   }
-
   static int condensedSize(final ASTNode ¢) {
     return Trivia.condense(¢).length();
   }
-
   /** @param n JD
    * @return The total number of distinct kind of nodes in the AST */
   @SuppressWarnings("boxing") static int dexterity(final ASTNode n) {
@@ -53,7 +51,6 @@ public interface metrics {
       return λ.getCurrent() + 1;
     });
   }
-
   /** @param pattern JD
    * @return */
   static Set<String> dictionary(final ASTNode u) {
@@ -65,48 +62,39 @@ public interface metrics {
     });
     return $;
   }
-
   @SuppressWarnings("boxing") static int horizontalComplexity(final int base, final List<Statement> ss) {
     return ss == null ? 0 : ss.stream().map(λ -> base + horizontalComplexity(λ)).reduce((x, y) -> x + y).get();
   }
-
   static int horizontalComplexity(final int base, final Statement s) {
     return s == null ? 0 : iz.emptyStatement(s) ? 1 : !iz.block(s) ? 13443 : 2 + metrics.horizontalComplexity(base + 1, statements(az.block(s)));
   }
-
   static int horizontalComplexity(final Statement ¢) {
     return horizontalComplexity(0, ¢);
   }
-
   static int height(final ASTNode ¢) {
     return 1 + height(Recurser.allChildren(¢));
   }
-
   static int height(final List<ASTNode> ns) {
     final Int $ = new Int();
     ns.forEach(λ -> $.inner = Integer.max($.inner, height(λ)));
     return $.inner;
   }
-
   static int height(final List<Statement> ss, @SuppressWarnings("unused") final int x) {
     final Int $ = new Int();
     ss.forEach(λ -> $.inner = Integer.max($.inner, height(λ)));
     return $.inner;
   }
-
   static int depth(final List<Statement> ss) {
     final Int $ = new Int();
     ss.forEach(λ -> $.inner = Integer.max($.inner, depth(λ)));
     return $.inner;
   }
-
   @SuppressWarnings("boxing") static int depth(final ASTNode ¢) {
     ¢.accept(new ASTVisitor() {
       @Override public void preVisit(@SuppressWarnings("hiding") final ASTNode ¢) {
         if (¢ != null)
           ¢.setProperty("Depth", Integer.valueOf(1));
       }
-
       @Override public void postVisit(final ASTNode n) {
         if (n != null && n.getParent() != null && n != ¢)
           n.getParent().setProperty("Depth", Integer.max((Integer) n.getParent().getProperty("Depth"), (Integer) n.getProperty("Depth") + 1));
@@ -114,63 +102,51 @@ public interface metrics {
     });
     return (Integer) ¢.getProperty("Depth");
   }
-
   /** @param n JD
    * @return The total number of internal nodes in the AST */
   @SuppressWarnings("boxing") static int internals(final ASTNode n) {
     return n == null ? 0 : new Recurser<>(n, 0).preVisit(λ -> Recurser.children(λ.getRoot()).isEmpty() ? λ.getCurrent() : λ.getCurrent() + 1);
   }
-
   /** @param pattern JD
    * @return The total number of leaves in the AST */
   static int leaves(final ASTNode ¢) {
     return nodes(¢) - internals(¢);
   }
-
   static int length(final ASTNode... ns) {
     return Arrays.stream(ns).mapToInt(λ -> (λ + "").length()).reduce((x, y) -> x + y).orElse(0);
   }
-
   static int literacy(final ASTNode ¢) {
     return literals(¢).size();
   }
-
   static Set<String> literals(final ASTNode n) {
     final Set<String> $ = new LinkedHashSet<>();
     n.accept(new ASTVisitor(true) {
       @Override public void endVisit(final BooleanLiteral node) {
         $.add(node + "");
       }
-
       @Override public void endVisit(final NullLiteral node) {
         $.add(node + "");
       }
-
       @Override public void endVisit(final NumberLiteral node) {
         $.add(node.getToken());
       }
-
       @Override public void endVisit(final StringLiteral node) {
         $.add(node.getLiteralValue());
       }
     });
     return $;
   }
-
   /** @param n JD
    * @return The total number of nodes in the AST */
   @SuppressWarnings("boxing") static int nodes(final ASTNode n) {
     return n == null ? 0 : new Recurser<>(n, 0).preVisit(λ -> (1 + λ.getCurrent()));
   }
-
   @SuppressWarnings("boxing") static int nodes(final List<Statement> ss) {
     return ss.stream().map(metrics::nodes).reduce((x, y) -> x + y).get();
   }
-
   @SuppressWarnings("boxing") static int size(final ASTNode... ns) {
     return Stream.of(ns).map(countOf::nodes).reduce((x, y) -> x + y).get();
   }
-
   static int tokens(final String s) {
     int $ = 0;
     for (final Tokenizer tokenizer = new Tokenizer(new StringReader(s));;) {
@@ -181,11 +157,9 @@ public interface metrics {
         ++$;
     }
   }
-
   static int vocabulary(final ASTNode u) {
     return dictionary(u).size();
   }
-
   static int countStatements(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
@@ -196,11 +170,9 @@ public interface metrics {
     });
     return $.inner;
   }
-
   @SuppressWarnings("boxing") static int countStatements(final List<Statement> ss) {
     return ss.stream().map(metrics::countStatements).reduce((x, y) -> x + y).get();
   }
-
   static int countStatementsOfType(final Statement s, final int type) {
     final Int $ = new Int();
     s.accept(new ASTVisitor(true) {
@@ -211,11 +183,9 @@ public interface metrics {
     });
     return $.get();
   }
-
   @SuppressWarnings("boxing") static int countStatementsOfType(final List<Statement> ss, final int type) {
     return ss.stream().map(λ -> countStatementsOfType(λ, type)).reduce((x, y) -> x + y).get();
   }
-
   static int countExpressions(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
@@ -226,7 +196,6 @@ public interface metrics {
     });
     return $.inner;
   }
-
   static int countMethods(final ASTNode n) {
     final Int $ = new Int();
     // noinspection SameReturnValue
@@ -238,7 +207,6 @@ public interface metrics {
     });
     return $.inner;
   }
-
   /** measures metrics from root to node
    * @param n
    * @return */
@@ -257,7 +225,6 @@ public interface metrics {
         ++siblings.peek().inner;
         siblings.push(new Int());
       }
-
       @Override public void postVisit(@SuppressWarnings("unused") final ASTNode __) {
         if ($.inner != -1)
           return;
@@ -267,7 +234,6 @@ public interface metrics {
     });
     return $.inner;
   }
-
   /** measure the total U in the subtree
    * @param n
    * @return */
@@ -283,7 +249,6 @@ public interface metrics {
         ++siblings.peek().inner;
         siblings.push(new Int());
       }
-
       @Override public void postVisit(@SuppressWarnings("unused") final ASTNode __) {
         --depth.inner;
         siblings.pop();
@@ -291,7 +256,6 @@ public interface metrics {
     });
     return $.inner;
   }
-
   /** measure the total U in the subtree
    * @param n
    * @return */
@@ -307,41 +271,33 @@ public interface metrics {
         ifVariableCount(¢);
         ifNotVariableOpenScope(¢);
       }
-
       @Override public void postVisit(final ASTNode ¢) {
         unlessBlockDecreaseDepth(¢);
         ifNotVariableCloseScope(¢);
       }
-
       void ifNotVariableOpenScope(final ASTNode ¢) {
         if (!iz.isVariableDeclarationStatement(¢))
           variables.push(new Int());
       }
-
       void ifVariableCount(final ASTNode ¢) {
         if (iz.variableDeclarationFragment(¢) || iz.singleVariableDeclaration(¢))
           ++variables.peek().inner;
       }
-
       void unlessBlockIncreaseDepth(final ASTNode ¢) {
         if (!iz.block(¢))
           ++depth.inner;
       }
-
       void ifStatementIncreaseResult(final ASTNode ¢) {
         if (iz.statement(¢) && !iz.block(¢))
           increaseCostBy(depth.inner + variables.peek().inner);
       }
-
       void increaseCostBy(final int a) {
         $.inner += a;
       }
-
       void unlessBlockDecreaseDepth(final ASTNode ¢) {
         if (!iz.block(¢))
           --depth.inner; // depth
       }
-
       void ifNotVariableCloseScope(final ASTNode ¢) {
         if (!iz.isVariableDeclarationStatement(¢))
           variables.pop(); // variables
@@ -349,7 +305,6 @@ public interface metrics {
     });
     return $.inner;
   }
-
   static int length(final ASTNode ¢) {
     return (¢ + "").length();
   }

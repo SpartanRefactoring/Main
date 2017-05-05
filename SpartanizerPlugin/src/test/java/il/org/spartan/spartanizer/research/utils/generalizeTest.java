@@ -15,7 +15,6 @@ public class generalizeTest {
   @Test public void a() {
     azzert.that(generalize.code("x + y"), is("$N0 + $N1"));
   }
-
   @Test public void b() {
     azzert.that(generalize.code("x.y"), is("$N0.$N1"));
   }

@@ -17,23 +17,18 @@ public abstract class descendants<N extends ASTNode> {
   public static <N extends ASTNode> descendants<N> whoseClassIs(final Class<N> ¢) {
     return new whoseClassIs<>(¢);
   }
-
   /** @param n JD
    * @return descendants whose __ matches the given __. */
   public abstract List<N> from(ASTNode n);
-
   /** @param n JD
    * @return descendants whose __ matches the given __. */
   public abstract List<N> inclusiveFrom(ASTNode n);
-
   /** @param ¢ JD
    * @return add predicate to filter elements */
   public abstract descendants<N> suchThat(Predicate<N> ¢);
-
   public static boolean containsClassInstanceCreation(final Statement nextStatement) {
     return !descendants.whoseClassIs(ClassInstanceCreation.class).from(nextStatement).isEmpty();
   }
-
   public static boolean containsLambda(final Statement nextStatement) {
     return !descendants.whoseClassIs(LambdaExpression.class).from(nextStatement).isEmpty();
   }
@@ -45,12 +40,10 @@ public abstract class descendants<N extends ASTNode> {
     whoseClassIs(final Class<N> clazz) {
       this.clazz = clazz;
     }
-
     @Override public whoseClassIs<N> suchThat(final Predicate<N> ¢) {
       p = ¢;
       return this;
     }
-
     @Override public List<N> from(final ASTNode n) {
       final List<N> $ = an.empty.list();
       n.accept(new ASTVisitor(true) {
@@ -61,7 +54,6 @@ public abstract class descendants<N extends ASTNode> {
       });
       return $;
     }
-
     @Override public List<N> inclusiveFrom(final ASTNode n) {
       final List<N> $ = an.empty.list();
       if (n == null)
@@ -85,7 +77,6 @@ public abstract class descendants<N extends ASTNode> {
     });
     return $;
   }
-
   public static Stream<ASTNode> streamOf(final ASTNode ¢) {
     return descendants.of(¢).stream();
   }

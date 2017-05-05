@@ -40,7 +40,6 @@ class Table_Prevalence extends NanoTable {
     npStatistics.clear();
     RIndicesVisitor.clear();
   }
-
   public static void main(final String[] args) {
     new ASTInFilesVisitor(args) {
       {
@@ -62,7 +61,6 @@ class Table_Prevalence extends NanoTable {
               prevalence.get(λ.name).inner += λ.occurences > rMethod ? 6 : λ.occurences > rInternal ? 4 : λ.occurences > rExternal ? 3 : 0;
             });
       }
-
       void initializeWriter() {
         if (table == null)
           table = new Table(Table.classToNormalizedFileName(Table_Prevalence.class) + "-" + corpus, outputFolder);

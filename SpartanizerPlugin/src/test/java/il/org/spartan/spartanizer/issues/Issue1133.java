@@ -19,42 +19,36 @@ public class Issue1133 {
         .gives("a = 2 & 3;")//
     ;
   }
-
   @Test public void divides() {
     trimmingOf("a =2; a /= 3;")//
         .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 / 3;")//
     ;
   }
-
   @Test public void minus() {
     trimmingOf("a =2; a -= 3;")//
         .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 - 3;")//
     ;
   }
-
   @Test public void or() {
     trimmingOf("a =2; a |= 3;")//
         .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 | 3;")//
     ;
   }
-
   @Test public void function() {
     trimmingOf("a =b; a += f(c,d);")//
         .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = b + f(c,d);")//
     ;
   }
-
   @Test public void plus() {
     trimmingOf("a =2; a += 3;")//
         .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //
         .gives("a = 2 + 3;")//
     ;
   }
-
   @Test public void times() {
     trimmingOf("a =2; a *= 3;")//
         .using(new AssignmentAndUpdateAssignmentToSame(), Assignment.class) //

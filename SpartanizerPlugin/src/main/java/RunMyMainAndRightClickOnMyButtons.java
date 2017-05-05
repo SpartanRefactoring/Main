@@ -19,7 +19,6 @@ public class RunMyMainAndRightClickOnMyButtons {
       if (!display.readAndDispatch())
         display.sleep();
   }
-
   private static void applyOnce(final Shell s) {
     final Button bn = new Button(s, SWT.FLAT);
     bn.setText("&Apply (single scan)...");
@@ -35,7 +34,6 @@ public class RunMyMainAndRightClickOnMyButtons {
     addAction(i3, λ -> {/**/});
     bn.setMenu(popupMenu);
   }
-
   private static void fully(final Shell s) {
     final Button bn = new Button(s, SWT.FLAT);
     bn.setText("&Fully spartanize...");
@@ -51,7 +49,6 @@ public class RunMyMainAndRightClickOnMyButtons {
     addAction(i3, λ -> {/**/});
     bn.setMenu(popupMenu);
   }
-
   private static void applyRepeatedly(final Shell s) {
     final Button bn = new Button(s, SWT.FLAT);
     bn.setText("&Repeatedly apply ...");
@@ -67,7 +64,6 @@ public class RunMyMainAndRightClickOnMyButtons {
     addAction(i3, λ -> {/**/});
     bn.setMenu(popupMenu);
   }
-
   private static void suppress(final Shell s) {
     final Button bn = new Button(s, SWT.FLAT);
     bn.setText("&Silence...");
@@ -89,13 +85,11 @@ public class RunMyMainAndRightClickOnMyButtons {
     addAction(i4, λ -> {/**/});
     bn.setMenu(popupMenu);
   }
-
   private static void addAction(final MenuItem i, final Consumer<SelectionEvent> c) {
     i.addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(final SelectionEvent ¢) {
         c.accept(¢);
       }
-
       @Override public void widgetDefaultSelected(final SelectionEvent ¢) {
         widgetSelected(¢);
       }

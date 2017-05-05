@@ -23,18 +23,15 @@ public class Issue0450 {
     trimmingOf(SEPARATOR_CASE)//
         .stays();
   }
-
   @Test public void test0a() {
     trimmingOf(SEPARATOR_CASE)//
         .using(new LocalInitializedStatementTerminatingScope(), VariableDeclarationFragment.class)//
         .stays();
   }
-
   @Test public void test0b() {
     trimmingOf(SEPARATOR_CASE)//
         .using(new LocalInitializedInlineIntoNext(), VariableDeclarationFragment.class).stays();
   }
-
   @Test public void test1() {
     trimmingOf("int x = 7;" //
         + "for (final String a : args)" //
@@ -42,7 +39,6 @@ public class Issue0450 {
             .gives("for (final String a : args)" //
                 + "System.out.print(7+a.length());");
   }
-
   @Test public void test2() {
     trimmingOf("final Separator s = \"hello\";" //
         + "for (final String a : args)" //
