@@ -21,11 +21,11 @@ import il.org.spartan.spartanizer.meta.*;
 @SuppressWarnings("static-method")
 public class Issue1286 {
   @Test public void basic() {
-    bloatingOf(new Gives()).givesWithBinding("int f1() {" + "int t1 = x1(x);" + "y = x2(t1);" + "return y;" + "}", "f1");
+    bloatingOf(new Gives()).givesWithBinding("int f1() {int t1 = x1(x);y = x2(t1);return y;}", "f1");
   }
 
   @Test public void basic2() {
-    bloatingOf(new Gives()).givesWithBinding("void f2() {" + "Integer t1 = Integer.valueOf(1);" + "l.add(t1);" + "}", "f2");
+    bloatingOf(new Gives()).givesWithBinding("void f2() {Integer t1 = Integer.valueOf(1);l.add(t1);}", "f2");
   }
 
   // Issue #1155 and #1104
@@ -36,7 +36,7 @@ public class Issue1286 {
   // Issue #1104
   @Test public void bugAmbiguity() {
     bloatingOf(new Gives()).givesWithBinding(
-        "void f3() {" + "InfixExpression t1 = az.infixExpression(a);" + "b = copy.of(t1);" + "Assignment.Operator e;" + "e = c.getOperator();" + "}",
+        "void f3() {InfixExpression t1 = az.infixExpression(a);b = copy.of(t1);Assignment.Operator e;e = c.getOperator();}",
         "f3");
   }
 
