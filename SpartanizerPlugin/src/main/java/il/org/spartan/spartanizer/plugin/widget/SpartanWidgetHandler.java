@@ -235,7 +235,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
                 @Override public void run() {
                   try {
                     o.onMouseHold(c);
-                  } catch (@SuppressWarnings("hiding") final Throwable ¢) {
+                  } catch (final Throwable ¢) {
                     note.bug(¢);
                   }
                 }
@@ -248,7 +248,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
             default:
               break;
           }
-        } catch (@SuppressWarnings("hiding") final Throwable ¢) {
+        } catch (final Throwable ¢) {
           note.bug(¢);
         }
       }

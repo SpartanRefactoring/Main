@@ -3,12 +3,8 @@ package il.org.spartan.athenizer.zoomin.expanders;
 import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import java.util.*;
-import java.util.function.*;
-
 import org.junit.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.Assignment.*;
-
 import il.org.spartan.athenizer.bloaters.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -35,13 +31,12 @@ public class Issue1286 {
 
   // Issue #1104
   @Test public void bugAmbiguity() {
-    bloatingOf(new Gives()).givesWithBinding(
-        "void f3() {InfixExpression t1 = az.infixExpression(a);b = copy.of(t1);Assignment.Operator e;e = c.getOperator();}",
-        "f3");
+    bloatingOf(new Gives())
+        .givesWithBinding("void f3() {InfixExpression t1 = az.infixExpression(a);b = copy.of(t1);Assignment.Operator e;e = c.getOperator();}", "f3");
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @SuppressWarnings({ "unused", "boxing" })
+  @SuppressWarnings("boxing")
   public static class Gives extends MetaFixture {
     int x = 1;
     int y = 2;
@@ -74,7 +69,6 @@ public class Issue1286 {
   }
 
   /** [[SuppressWarningsSpartan]] */
-  @SuppressWarnings({ "unused", "boxing" })
   public static class Stays extends MetaFixture {
     List<Integer> l = new ArrayList<>();
 
@@ -85,6 +79,7 @@ public class Issue1286 {
 
     // #1104
     void f2() {
+      //
     }
   }
 }
