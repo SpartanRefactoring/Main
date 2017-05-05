@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
 import org.eclipse.core.resources.*;

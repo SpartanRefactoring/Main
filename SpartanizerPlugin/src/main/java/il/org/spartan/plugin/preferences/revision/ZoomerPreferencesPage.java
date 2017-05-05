@@ -1,7 +1,6 @@
 package il.org.spartan.plugin.preferences.revision;
 
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.ui.*;

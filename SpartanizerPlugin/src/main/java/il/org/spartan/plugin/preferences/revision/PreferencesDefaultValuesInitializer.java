@@ -1,7 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
-
 import org.eclipse.core.runtime.preferences.*;
 
 /** This class is called by Eclipse when the plugin is first loaded and has no
@@ -13,7 +11,7 @@ import org.eclipse.core.runtime.preferences.*;
  * @since 2016/03/28 */
 public final class PreferencesDefaultValuesInitializer extends AbstractPreferenceInitializer {
   @Override public void initializeDefaultPreferences() {
-    store().setDefault(PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
-    store().setDefault(PreferencesResources.ZOOMER_REVERT_METHOD_ID, false);
+    PreferencesResources.store().setDefault(PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
+    PreferencesResources.store().setDefault(PreferencesResources.ZOOMER_REVERT_METHOD_ID, false);
   }
 }

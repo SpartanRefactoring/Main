@@ -30,7 +30,10 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
     if (d.isConstructor() || iz.abstract¢(d) || d.parameters().isEmpty())
       return null;
     final SingleVariableDeclaration parameter = the.onlyOneOf(parameters(d));
-    if (!JohnDoe.property(parameter))
+    if (!JohnDoe.property(parameter)
+        && !parameter.getName().toString().equals("param")
+        && !parameter.getName().toString().equals("it")
+        && !parameter.getName().toString().equals("¢"))
       return null;
     final SimpleName $ = parameter.getName();
     assert $ != null;
