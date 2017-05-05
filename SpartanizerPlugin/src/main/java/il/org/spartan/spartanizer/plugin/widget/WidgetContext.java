@@ -1,5 +1,7 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
+import java.util.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.jdt.core.*;
 
@@ -13,6 +15,7 @@ import il.org.spartan.spartanizer.plugin.*;
 public class WidgetContext {
   public IProject project;
   public IJavaProject javaProject;
+  public List<IProject> allProjects;
   public Selection currentSelecetion;
   public Selection currentCompilationUnit;
   public Selection allCompilationUnits;
@@ -23,6 +26,8 @@ public class WidgetContext {
     final WidgetContext $ = new WidgetContext();
     $.project = Selection.Util.project();
     $.javaProject = Selection.Util.getJavaProject();
+    IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+    $.allProjects = Arrays.asList(workspaceRoot.getProjects());
     $.currentSelecetion = Selection.Util.current();
     $.currentCompilationUnit = Selection.Util.getCurrentCompilationUnit();
     $.allCompilationUnits = Selection.Util.getAllCompilationUnits();
