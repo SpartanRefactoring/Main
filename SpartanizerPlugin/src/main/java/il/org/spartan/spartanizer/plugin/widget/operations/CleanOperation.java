@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.plugin.widget.*;
  * @author Niv Shalmon
  * @since 2017-05-04 */
 public class CleanOperation extends WidgetOperation {
+  private static final long serialVersionUID = -5487701515113139827L;
   public static final String MODE = "mode";
   public static final String PROJECTS = "projects";
   public static final String current = "current project";
@@ -22,22 +23,18 @@ public class CleanOperation extends WidgetOperation {
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.mylyn.commons.ui/icons/elcl16/checkboxcleared.gif";
   }
-
   @Override public String description() {
     return "clean project";
   }
-
   @Override public String[][] configurationComponents() {
     return new String[][] { //
         { MODE, "List", current, all, /* selected, */ "Required" },//
         // {PROJECTS, ""},//
     };
   }
-
   @Override public boolean register(final Map<?, ?> configuration) {
     return is.in(mode = (String) configuration.get(MODE), current, all);
   }
-
   @Override public void onMouseUp(final WidgetContext c) throws Throwable {
     switch (mode) {
       case current:

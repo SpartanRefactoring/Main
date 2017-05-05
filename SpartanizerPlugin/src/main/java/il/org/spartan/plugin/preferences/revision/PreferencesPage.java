@@ -2,7 +2,6 @@ package il.org.spartan.plugin.preferences.revision;
 
 import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
 import static java.util.stream.Collectors.*;
@@ -129,7 +128,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     return $;
   }
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
-    setPreferenceStore(TipperGroup.store());
+    setPreferenceStore(PreferencesResources.store());
     setDescription(PAGE_DESCRIPTION);
     store().addPropertyChangeListener(listener);
   }
