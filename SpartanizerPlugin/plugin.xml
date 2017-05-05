@@ -403,6 +403,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <!-- Handlers of commands: which class to activate for each command id -->
 <extension point="org.eclipse.ui.handlers">
    <handler commandId="il.org.spartan.SpartanizeSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
+   <handler commandId="il.org.spartan.CentToIt" class="il.org.spartan.spartanizer.plugin.CentToIt"/>
    <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.ZoomSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
@@ -573,6 +574,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+S"
 		commandId="il.org.spartan.SpartanGlobal"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+	<key sequence="Ctrl+Alt+E"
+		commandId="il.org.spartan.CentToIt"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<!--<key sequence="Ctrl+Alt+A"
 		commandId="il.org.spartan.AthensCollateral"
