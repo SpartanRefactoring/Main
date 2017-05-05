@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.List;
 import java.util.Map.*;
 import java.util.function.*;
+import java.util.stream.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
@@ -268,7 +269,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
    * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-02-25 */
   static class Changes implements Cloneable {
-    private final Map<IProject, Map<SpartanCategory, SpartanTipper[]>> preferences1;
+    private final Map<IProject, Map<SpartanCategory, SpartanElement[]>> preferences1;
     private final Map<IProject, Set<String>> preferences2;
     private final Map<IProject, Boolean> enabled;
 
@@ -294,8 +295,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       $.enabled.putAll(enabled);
       return $;
     }
-    public Map<SpartanCategory, SpartanTipper[]> getPreference(final IProject ¢) {
-      return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getTippersByCategories(¢));
+    public Map<SpartanCategory, SpartanElement[]> getPreference(final IProject ¢) {
+      return preferences1.computeIfAbsent(¢, λ -> XMLSpartan.getElementsByCategories(¢));
     }
     public Boolean isEnabled(final IProject p) {
       final Boolean $ = enabled.get(p);
@@ -313,8 +314,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     }
     public Void update(final IProject p, final Set<String> preference) {
       preferences2.put(p, preference);
-      for (final SpartanTipper[] ts : preferences1.get(p).values())
-        for (final SpartanTipper ¢ : ts)
+      for (final SpartanElement[] ts : preferences1.get(p).values())
+        for (final SpartanTipper ¢ : Arrays.stream(ts).filter(SpartanTipper.class::isInstance).map(SpartanTipper.class::cast)
+            .collect(Collectors.toList()))
           ¢.enable(preference.contains(¢.name()));
       return null;
     }
