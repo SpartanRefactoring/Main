@@ -2,7 +2,6 @@ package il.org.spartan.plugin.preferences.revision;
 
 import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
 import static java.util.stream.Collectors.*;
@@ -51,24 +50,31 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     changes.commit();
     return $;
   }
-  public static void changeCentToIt() {
-    System.out.println("Strted Change");
+  /** Change all the centifications in the code to param */
+  public static void changeCentToParam() {
     for (final IProject p : getAllSpartanizerProjects()) {
       final Document doc = XMLSpartan.getXML(p);
       doc.getDocumentElement().normalize();
-      System.out.println(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue());
-      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("it");
+      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("param");
       XMLSpartan.commit(p, doc);
     }
-    notation.cent = "it";
-    System.out.println("Done Change");
+    notation.cent = "param";
+  }
+  /** Change all the single parameters to cent */
+  public static void changeBackToCent() {
+    for (final IProject p : getAllSpartanizerProjects()) {
+      final Document doc = XMLSpartan.getXML(p);
+      doc.getDocumentElement().normalize();
+      doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue("¢");
+      XMLSpartan.commit(p, doc);
+    }
+    notation.cent = "¢";
   }
   private void commitNotations() {
     final IProject[] projects = getAllSpartanizerProjects();
     for (final IProject p : projects) {
       final Document doc = XMLSpartan.getXML(p);
       doc.getDocumentElement().normalize();
-      System.out.println(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue());
       doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue(singleParameterRadio.getPreferenceStore().getString("Cent"));
       doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).setNodeValue(returnParameterRadio.getPreferenceStore().getString("Dollar"));
       XMLSpartan.commit(p, doc);
@@ -122,7 +128,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     return $;
   }
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
-    setPreferenceStore(TipperGroup.store());
+    setPreferenceStore(PreferencesResources.store());
     setDescription(PAGE_DESCRIPTION);
     store().addPropertyChangeListener(listener);
   }
