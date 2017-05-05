@@ -168,5 +168,5 @@ project(':SpartanizerPlugin:target.maven') {
 /////////////////////////////////////////////////////////
 apply plugin: 'com.diffplug.gradle.eclipse.resourcefilters'
 eclipseResourceFilters {
-	exclude().folders().name('com.diffplug.*')
+	exclude().folders().name('il.org.spartan.*')
 }

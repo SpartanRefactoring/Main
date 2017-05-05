@@ -104,18 +104,6 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
           mp.type = NEW_PROJECT;
           return true;
         });
-        // TODO Ori Roth: please clean this up
-        if (mp.p != null)
-          Job.createSystem(pm -> {
-            try {
-              if (mp.type.equals(NEW_PROJECT)) {
-                eclipse.addNature(mp.p);
-                mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
-              }
-            } catch (final Exception ¢) {
-              note.bug(¢);
-            }
-          }).schedule(SAFETY_DELAY);
       } catch (final CoreException ¢) {
         note.bug(¢);
       }

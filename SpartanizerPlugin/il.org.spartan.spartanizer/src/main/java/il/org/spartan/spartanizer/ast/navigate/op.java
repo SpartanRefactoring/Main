@@ -133,7 +133,7 @@ public enum op {
    * @return whether all assignments has the same left hand side and operator as
    *         the first one or false otherwise */
   static boolean compatible(final Assignment base, final Assignment... as) {
-    return !has.nil(base, as) && Stream.of(as).noneMatch(λ -> op.incompatible(base, λ));
+    return !has.nil(base, (Object[]) as) && Stream.of(as).noneMatch(λ -> op.incompatible(base, λ));
   }
 
   static boolean compatible(final Assignment a1, final Assignment a2) {

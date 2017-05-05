@@ -169,9 +169,9 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
 
     /** Counts calls of this event. Conducts casting. */
     @SuppressWarnings("unchecked") public EventMapperFunctor<E, Int, Int> counter() {
-      return ((EventMapperFunctor<E, Int, Int>) this) //
-          .startWith(new Int()) //
-          .does(λ -> λ.step());
+      return ((EventMapperFunctor<E, Int, Int>) this); //
+//          .startWith(new Int()) //
+//          .does(λ -> λ.step());
     }
 
     /** Setting biconsumer for this functor. May join with existing biconsumer.

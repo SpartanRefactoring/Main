@@ -155,6 +155,16 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       @Override public Object[] getChildren(final Object parentElement) {
         return !(parentElement instanceof SpartanCategory) ? null : m.get(parentElement);
       }
+
+      @Override
+      public void dispose() {
+
+      }
+
+      @Override
+      public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+
+      }
     });
     $.setTitle("Spartanization Preferences");
     $.setMessage("Choose the tippers you would like to use:\n(Tip: double click a tipper to see usage examples)");
@@ -174,7 +184,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     }
     $.setInitialSelections(et.toArray(new SpartanElement[et.size()]));
     $.setHelpAvailable(false);
-    $.setComparator(new ViewerComparator(String::compareToIgnoreCase));
+    //$.setComparator(new ViewerComparator(String::compareToIgnoreCase));
     return $;
   }
 
