@@ -62,7 +62,6 @@ public enum collect {
       }
     };
   }
-
   public static Collector definitionsOf(final SimpleName n) {
     return new Collector(n) {
       @Override public List<SimpleName> in(final ASTNode... ns) {
@@ -72,7 +71,6 @@ public enum collect {
       }
     };
   }
-
   /** Finds all the rest (not declarations or definitions) identifier (n) uses.
    * @param n same as "name"
    * @return {@link NewGUIApplicator} of all occurrences which are not
@@ -86,7 +84,6 @@ public enum collect {
       }
     };
   }
-
   /** finds all the occurrences of the given name (n) in which it is a
    * {@link ClassInstanceCreation}
    * @param n JD
@@ -100,7 +97,6 @@ public enum collect {
       }
     };
   }
-
   /** Creates a new instance which holds all the occurrences of the provided
    * name.
    * @param n JD
@@ -116,13 +112,11 @@ public enum collect {
       }
     };
   }
-
   public static Collector usesOf(final String s) {
     return new Collector(s) {
       @Override public List<SimpleName> in(@SuppressWarnings("unused") final ASTNode... __) {
         return null;
       }
-
       @Override public List<String> inside(final ASTNode... ns) {
         final List<String> $ = an.empty.list();
         Stream.of(ns).filter(Objects::nonNull).forEach(λ -> λ.accept(new StringCollector($, stringName)));
@@ -130,7 +124,6 @@ public enum collect {
       }
     };
   }
-
   /** Creates an ASTVisitor that adds to the provided SimpleName list all the
    * identifiers of variable declarations expressions, which are identical the
    * provided ASTNode's.
@@ -143,20 +136,16 @@ public enum collect {
       @Override public boolean visit(final ForStatement ¢) {
         return consider(initializers(¢));
       }
-
       @Override public boolean visit(final TryStatement ¢) {
         return consider(resources(¢));
       }
-
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
         return add(step.name(¢));
       }
-
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         addFragments(fragments(¢));
         return true;
       }
-
       /** Adds to the list provided by the closure (into) the name of the given
        * candidate.
        * @param candidate to be inserter to the list provided by the closure
@@ -168,14 +157,12 @@ public enum collect {
           into.add(¢);
         return true;
       }
-
       /** Tries to add to the list provided by the closure (into) the names of
        * the {@VariableDeclarationFragment}s given in the param (fs).
        * @param fs is a {@link List} of a {@link VariableDeclarationFragment} */
       void addFragments(final Iterable<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> add(step.name(λ)));
       }
-
       /** Tries to add to the list provided by the closure (into) the
        * identifiers from all the {@link VariableDeclarationExpression}s from
        * the given list (es).
@@ -190,7 +177,6 @@ public enum collect {
       }
     };
   }
-
   /** @see {@link declarationsCollector} specific comments are provided to
    *      methods which are not taking place in the
    *      {@link declarationsCollector}. */
@@ -200,18 +186,15 @@ public enum collect {
       @Override public boolean visit(final Assignment ¢) {
         return consider(to(¢));
       }
-
       @Override public boolean visit(final ForStatement ¢) {
         return consider(initializers(¢));
       }
-
       /** {@link PostfixExpression} can be only INCREMENT OR DECREMENT.
        * @param it JD
        * @return identifier of the operand. */
       @Override public boolean visit(final PostfixExpression it) {
         return consider(it.getOperand());
       }
-
       /** {@link PrefixExpression} can be more then only INCREMENT OR DECREMENT,
        * but only on that cases it is a definition.
        * @param it JD
@@ -219,30 +202,24 @@ public enum collect {
       @Override public boolean visit(final PrefixExpression it) {
         return !is.in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
       }
-
       @Override public boolean visit(final TryStatement ¢) {
         return consider(resources(¢));
       }
-
       @Override public boolean visit(final VariableDeclarationFragment ¢) {
         return add(step.name(¢));
       }
-
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         addFragments(fragments(¢));
         return true;
       }
-
       boolean add(final SimpleName candidate) {
         if (wizard.eq(candidate, n))
           into.add(candidate);
         return true;
       }
-
       void addFragments(final Iterable<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> add(step.name(λ)));
       }
-
       /** ThiWs function is needed cause a definition can be not in a
        * declaration form, and then #asVariableDeclarationExpression() will fail
        * @param x JD
@@ -251,14 +228,12 @@ public enum collect {
       boolean consider(final Expression ¢) {
         return add(az.simpleName(¢));
       }
-
       boolean consider(final Iterable<? extends Expression> initializers) {
         initializers.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
     };
   }
-
   // didn't find any use case in which it will be different of
   // usesCollector
   /** Creates an ASTVisitor that adds all explicit uses (by name) of a
@@ -270,7 +245,6 @@ public enum collect {
   static ASTVisitor lexicalUsesCollector(final Collection<SimpleName> into, final SimpleName what) {
     return usesCollector(what, into, true);
   }
-
   /** Creates an ASTVisitor that returns all the instances in which the provided
    * SimpleName was used. The instances will be inserted into the provided list.
    * @param what JD
@@ -287,103 +261,81 @@ public enum collect {
       @Override public void endVisit(@SuppressWarnings("unused") final DoStatement __) {
         --loopDepth;
       }
-
       @Override public void endVisit(@SuppressWarnings("unused") final EnhancedForStatement __) {
         --loopDepth;
       }
-
       @Override public void endVisit(@SuppressWarnings("unused") final ForStatement __) {
         --loopDepth;
       }
-
       @Override public void endVisit(@SuppressWarnings("unused") final WhileStatement __) {
         --loopDepth;
       }
-
       @Override public boolean visit(final AnonymousClassDeclaration d) {
         return getFieldsOfClass(d).stream().noneMatch(λ -> step.name(λ).subtreeMatch(matcher, what));
       }
-
       @Override public boolean visit(final Assignment ¢) {
         return collect(from(¢));
       }
-
       @Override public boolean visit(final CastExpression ¢) {
         return collect(expression(¢));
       }
-
       @Override public boolean visit(final ClassInstanceCreation ¢) {
         collect(expression(¢));
         return collect(arguments(¢));
       }
-
       @Override public boolean visit(final DoStatement ¢) {
         ++loopDepth;
         return collect(expression(¢));
       }
-
       @Override public boolean visit(@SuppressWarnings("unused") final EnhancedForStatement __) {
         ++loopDepth;
         return true;
       }
-
       @Override public boolean visit(final FieldAccess n) {
         collect(expression(n));
         return false;
       }
-
       @Override public boolean visit(@SuppressWarnings("unused") final ForStatement __) {
         ++loopDepth;
         return true;
       }
-
       @Override public boolean visit(final InstanceofExpression ¢) {
         return collect(left(¢));
       }
-
       @Override public boolean visit(final MethodDeclaration d) {
         return parameters(d).stream().noneMatch(λ -> step.name(λ).subtreeMatch(matcher, what));
       }
-
       @Override public boolean visit(final MethodInvocation ¢) {
         collect(receiver(¢));
         collect(arguments(¢));
         return false;
       }
-
       @Override public boolean visit(final QualifiedName ¢) {
         collectExpression(step.name(¢));
         return false;
       }
-
       @Override public boolean visit(final SimpleName ¢) {
         return collect(¢);
       }
-
       @Override public boolean visit(@SuppressWarnings("unused") final WhileStatement __) {
         ++loopDepth;
         return true;
       }
-
       boolean add(final Object ¢) {
         return collect((Expression) ¢);
       }
-
       boolean collect(final Expression ¢) {
         collectExpression(¢);
         return true;
       }
-
       boolean collect(final Iterable<?> os) {
         os.forEach(this::add);
         return true;
       }
-
       void collectExpression(final Expression ¢) {
         if (¢ instanceof SimpleName)
           collectExpression((SimpleName) ¢);
       }
-
       void collectExpression(final SimpleName ¢) {
         if (!wizard.eq(what, ¢))
           return;
@@ -391,7 +343,6 @@ public enum collect {
         if (repeated())
           into.add(¢);
       }
-
       Collection<VariableDeclarationFragment> getFieldsOfClass(final ASTNode classNode) {
         final Collection<VariableDeclarationFragment> $ = an.empty.list();
         // noinspection SameReturnValue
@@ -403,13 +354,11 @@ public enum collect {
         });
         return $;
       }
-
       boolean repeated() {
         return !lexicalOnly && loopDepth > 0;
       }
     };
   }
-
   /** Creates a function object for searching for a given value.
    * @param n what to search for
    * @return a function object to be used for searching for the parameter in a
@@ -421,7 +370,6 @@ public enum collect {
       }
     };
   }
-
   /** Creates a function object for searching for a given {@link SimpleName}, as
    * specified by the {@link VariableDeclarationFragment},
    * @param f JD
@@ -430,7 +378,6 @@ public enum collect {
   public Of of(final VariableDeclarationFragment ¢) {
     return of(step.name(¢));
   }
-
   /** Lists the required occurrences
    * @param what the expression to search for
    * @param ns the n in which to counted
@@ -442,9 +389,7 @@ public enum collect {
     $.sort(Comparator.comparingInt(ASTNode::getStartPosition));
     return $;
   }
-
   abstract ASTVisitor[] collectors(SimpleName n, List<SimpleName> into);
-
   /** Determines whether a specific SimpleName was used in a
    * {@link ForStatement}.
    * @param s JD
@@ -468,20 +413,16 @@ public enum collect {
       this.name = name;
       stringName = name + "";
     }
-
     @SuppressWarnings("static-method") public List<String> inside(@SuppressWarnings("unused") final ASTNode... __) {
       return an.empty.list();
     }
-
     public final Collection<SimpleName> in(final Collection<? extends ASTNode> ¢) {
       return in(¢.toArray(new ASTNode[¢.size()]));
     }
-
     Collector(final String name) {
       this.name = null;
       stringName = name;
     }
-
     public abstract List<SimpleName> in(ASTNode... ns);
   }
 
@@ -503,7 +444,6 @@ public enum collect {
     public boolean existIn(final ASTNode... ¢) {
       return !in(¢).isEmpty();
     }
-
     /** the method that will carry out the search
      * @param ns where to search
      * @return a list of occurrences of the captured value in the parameter. */

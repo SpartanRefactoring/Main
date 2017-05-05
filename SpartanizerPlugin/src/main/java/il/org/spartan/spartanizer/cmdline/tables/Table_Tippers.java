@@ -17,7 +17,6 @@ public class Table_Tippers {
   public static void main(final String[] args) {
     new Table_Tippers().go();
   }
-
   public void go() {
     try (Table t = new Table(this)) {
       final List<Tipper<? extends ASTNode>>[] implementation = Configurations.all().implementation;
@@ -36,7 +35,6 @@ public class Table_Tippers {
       System.err.println(t.description());
     }
   }
-
   public static String name(final Class<?> ¢) {
     return ¢ == null ? "???" : ¢.getSimpleName();
   }

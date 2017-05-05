@@ -19,7 +19,6 @@ public class ConstantReturner extends JavadocMarkerNanoPattern {
     return tippers.get().canTip(onlyStatement(¢))//
         && !rival.get().matches(¢);
   }
-
   @Override public String tipperName() {
     return "ConstantValue";
   }

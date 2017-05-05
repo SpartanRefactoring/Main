@@ -25,15 +25,12 @@ public class While {
     @Override public boolean canTip(final WhileStatement ¢) {
       return anyTips(tippers, ¢);
     }
-
     @Override public Tip pattern(final WhileStatement ¢) {
       return firstTip(tippers, ¢);
     }
-
     @Override public String description() {
       return "Count elements in collection that satisfy some predicate";
     }
-
     @Override public String tipperName() {
       return Aggregate.class.getSimpleName();
     }

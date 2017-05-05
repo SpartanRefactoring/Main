@@ -19,7 +19,6 @@ public class Issue0310 {
         .gives("void foo(){for(int ¢=0;¢<10;++¢)if(¢=5)return;}")//
         .stays();
   }
-
   @Test public void updaters_for_1() {
     trimmingOf("boolean k(final N n){N p=n;for(;p!=null;){if(Z.z(p))return true;p=p.f();}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;p=p.f();}return false;}")//
@@ -27,7 +26,6 @@ public class Issue0310 {
         .gives("boolean k(final N n){for(N p=n;p!=null;p=p.f())if(Z.z(p))return true;return false;}") //
         .stays();
   }
-
   /** Introduced by Yogi on Thu-Mar-30-16:38:46-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void xooleanaFinalAbForAcbcNullIfBdcReturnTruecceReturnFalse() {
@@ -39,7 +37,6 @@ public class Issue0310 {
         .stays() //
     ;
   }
-
   @Test public void updaters_for_2() {
     trimmingOf("boolean k(final N n){N p=n;for(;p!=null;){if(Z.z(p))return true;if(ens.z(p))return true;p=p.f();}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;if(ens.z(p))return true;p=p.f();}return false;}")
@@ -48,12 +45,10 @@ public class Issue0310 {
         .gives("boolean k(final N n){for(N p=n;p!=null;p=p.f())if(Z.z(p)||ens.z(p))return true;return false;}") //
         .stays();
   }
-
   @Test public void updaters_for_3a() {
     trimmingOf("for(int i=0;i<10;){int x=1;i+=x;x=5;}")//
         .stays();
   }
-
   @Test public void updaters_for_3b() {
     trimmingOf("for(int i=0;i<10;){int x=1;i+=x;}")//
         .gives("for(int i=0;i<10;){i+=1;}")//
@@ -63,12 +58,10 @@ public class Issue0310 {
         .gives("for(int ¢=0;¢<10;)++¢;")//
         .stays();
   }
-
   @Test public void updaters_for_4() {
     trimmingOf("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;++i;++j;}return false;}")//
         .stays();
   }
-
   @Test public void updaters_ordering_check_1_b() {
     trimmingOf("for(int i=0;;){arr[i]=0;++i;}")//
         .gives("for(int ¢=0;;){arr[¢]=0;++¢;}")//
@@ -76,7 +69,6 @@ public class Issue0310 {
         .gives("for(int ¢=0;;++¢)arr[¢]=0;")//
         .stays();
   }
-
   @Test public void updaters_ordering_check_2_right() {
     trimmingOf("List<M> ms=new U<>();M m=ms.gt(0);for(int i=0;;){m=ms.gt(i);++i;}")
         .gives("List<M> ms=new U<>();M m=ms.gt(0);for(int ¢=0;;){m=ms.gt(¢);++¢;}")
@@ -84,7 +76,6 @@ public class Issue0310 {
         .gives("List<M> ms=new U<>();M m=ms.gt(0);for(int ¢=0;;++¢) m=ms.gt(¢);")//
         .stays();
   }
-
   @Test public void test_booleanaFinalAbForAcbcNullIfBdcReturnTruecceReturnFalse() {
     trimmingOf("boolean a(final A b) { for (A c = b; c != null;) { if (B.d(c)) return true; c = c.e(); } return false; }") //
         .using(new ForToForUpdaters(), ForStatement.class) //
@@ -94,7 +85,6 @@ public class Issue0310 {
         .stays() //
     ;
   }
-
   /** Introduced by Yossi on Sat-Mar-25-05:13:22-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_booleanaFinalAbForAcbcNullIfBdcReturnTrueIfedcReturnTrueccfReturnFalse() {
@@ -108,13 +98,11 @@ public class Issue0310 {
         .stays() //
     ;
   }
-
   @Test public void updaters_while_3() {
     trimmingOf("boolean k(final N n){N p=n;while(p!=null){if(Z.z(p))return true;f();}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;f();}return false;}")//
         .stays();
   }
-
   @Test public void updaters_while_4() {
     trimmingOf("boolean k(final N n){N p=n;while(p!=null){if(Z.z(p))return true;++i;}return false;}")
         .gives("boolean k(final N n){for(N p=n;p!=null;){if(Z.z(p))return true;++i;}return false;}")//

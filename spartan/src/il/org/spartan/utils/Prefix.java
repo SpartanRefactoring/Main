@@ -14,11 +14,9 @@ public class Prefix<T> {
       if (s.startsWith($))
         return $;
   }
-
   private static String shorten(@NotNull final String ¢) {
     return ¢.substring(0, ¢.length() - 2);
   }
-
   @Nullable private static <T> String trim(@NotNull final Iterable<T> ts) {
     @Nullable String $ = null;
     for (final T ¢ : ts)
@@ -31,11 +29,9 @@ public class Prefix<T> {
   public Prefix(@NotNull final Iterable<T> ts) {
     this.prefix = trim(ts);
   }
-
   public Prefix(final T[] ts) {
     this(Iterables.make(ts));
   }
-
   @NotNull public String trim(final T ¢) {
     return (¢ + "").substring(prefix.length());
   }

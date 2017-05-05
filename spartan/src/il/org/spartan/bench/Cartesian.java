@@ -15,11 +15,9 @@ public class Cartesian {
   @NotNull public static <S> Pair<Integer, S>[] makeObliqueProduct(@NotNull final int[] is, @NotNull final S[] ss) {
     return makeObliqueProduct(box.it(is), ss);
   }
-
   @NotNull public static <S, T> Triple<Integer, S, T>[] makeObliqueProduct(@NotNull final int[] is, @NotNull final S[] ss, @NotNull final T[] ts) {
     return makeObliqueProduct(box.it(is), ss, ts);
   }
-
   @NotNull public static <R, S> Pair<R, S>[] makeObliqueProduct(@NotNull final R[] rs, @NotNull final S[] ss) {
     @NotNull final Pair<R, S>[] $ = Pair.makePairs(rs.length, ss.length);
     int n = 0;
@@ -41,7 +39,6 @@ public class Cartesian {
     ___.sure(n == $.length);
     return $;
   }
-
   @NotNull public static <R, S, T> Triple<R, S, T>[] makeObliqueProduct(@NotNull final R[] rs, @NotNull final S[] ss, @NotNull final T[] ts) {
     @NotNull final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
@@ -71,15 +68,12 @@ public class Cartesian {
     sure(n == $.length);
     return $;
   }
-
   @NotNull public static <S> Pair<Integer, S>[] makeProduct(@NotNull final int[] is, @NotNull final S[] ss) {
     return makeProduct(box.it(is), ss);
   }
-
   @NotNull public static <S, T> Triple<Integer, S, T>[] makeProduct(@NotNull final int[] is, @NotNull final S[] ss, @NotNull final T[] ts) {
     return makeProduct(box.it(is), ss, ts);
   }
-
   @NotNull public static <R, S> Pair<R, S>[] makeProduct(@NotNull final R[] rs, @NotNull final S[] ss) {
     @NotNull final Pair<R, S>[] $ = Pair.makePairs(rs.length * ss.length);
     int n = 0;
@@ -88,7 +82,6 @@ public class Cartesian {
         $[n++] = new Pair<>(r, ¢);
     return $;
   }
-
   @NotNull public static <R, S, T> Triple<R, S, T>[] makeProduct(@NotNull final R[] rs, @NotNull final S[] ss, @NotNull final T[] ts) {
     @NotNull final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
@@ -100,15 +93,14 @@ public class Cartesian {
     return $;
   }
 
-  @SuppressWarnings("static-method") public static class TEST {
+  @SuppressWarnings("static-method")
+  public static class TEST {
     @Test public void makeArray000() {
       azzert.that(makeObliqueProduct(new Object[0], new Object[0], new Object[0]).length, is(0));
     }
-
     @Test public void makeArray111() {
       azzert.that(makeObliqueProduct(new Object[1], new Object[1], new Object[1]).length, is(1));
     }
-
     @Test public void makeArray3_13_19() {
       azzert.that(makeObliqueProduct(new Object[3], new Object[13], new Object[19]).length, is(702));
     }

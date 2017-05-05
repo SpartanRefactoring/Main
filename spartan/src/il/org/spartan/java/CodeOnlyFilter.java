@@ -12,11 +12,9 @@ public class CodeOnlyFilter extends TokenFilter {
   @Override @NotNull public String toString() {
     return $ + "";
   }
-
   @Override protected void __process(final Token __, final String text) {
     $.append(text);
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.java.TokenFilter#ok(il.org.spartan.java. Token) */

@@ -14,11 +14,9 @@ public abstract class TipperTest<N extends ASTNode> {
   /** A method used to set the tipper to be tested.
    * @return a new instance of the tipper to be tested */
   public abstract Tipper<N> tipper();
-
   /** A method used to set the class the tipper works on.
    * @return the class object of the ASTNode the tipper tips on */
   public abstract Class<N> tipsOn();
-
   public TipperTrimmingOperand<N> trimmingOf(final String from) {
     return new TipperTrimmingOperand<>(from, tipper(), tipsOn());
   }
@@ -34,15 +32,12 @@ public abstract class TipperTest<N extends ASTNode> {
       this.tipsOn = tipsOn;
       using(tipper, tipsOn);
     }
-
     private TipperTrimmingOperand(final TestOperand o, final Tipper<M> tipper, final Class<M> tipsOn) {
       this(o.get(), tipper, tipsOn);
     }
-
     @Override public TipperTrimmingOperand<M> gives(final String $) {
       return new TipperTrimmingOperand<>(super.gives($), tipper, tipsOn);
     }
-
     @Override public TipperTrimmingOperand<M> givesEither(final String... options) {
       return new TipperTrimmingOperand<>(super.givesEither(options), tipper, tipsOn);
     }

@@ -43,18 +43,15 @@ public final class LocalInitializedReturnExpression extends LocalInitializedStat
     andAlso("Returned expression does not modify our local", //
         () -> compute.updateSpots(returnValue).stream().noneMatch(λ -> wizard.eq(λ, name)));
   }
-
   @Override public Examples examples() {
     return convert("int a = 3; return a;").to("return 3;"). //
         convert("int a = 3; return 2 * a;").to("return 2 * 3;") //
         .ignores("int a = 3; return a *=2;")//
         .ignores("int a = 3; return a =2;");//
   }
-
   @Override public String description() {
     return "Eliminate local " + name + " and inline its value into the expression of the subsequent return statement";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     new Inliner(name, $, g).byValue(Inliner.protect(initializer)).inlineInto(returnValue);
     remove.deadFragment(current, $, g);

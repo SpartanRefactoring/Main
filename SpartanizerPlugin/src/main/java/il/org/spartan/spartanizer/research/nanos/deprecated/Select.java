@@ -29,19 +29,15 @@ public class Select extends NanoPatternTipper<EnhancedForStatement> {
   @Override public boolean canTip(final EnhancedForStatement ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public Category category() {
     return Category.Iterative;
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }

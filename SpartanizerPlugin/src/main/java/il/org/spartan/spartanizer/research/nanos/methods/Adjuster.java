@@ -33,7 +33,6 @@ public class Adjuster extends JavadocMarkerNanoPattern {
     return hazOneStatement(¢)//
         && (adjuster(¢, onlyStatement(¢)) || adjuster(¢, onlySynchronizedStatementStatement(¢)));
   }
-
   private static boolean adjuster(final MethodDeclaration d, final Statement ¢) {
     final Expression $ = expression(¢);
     return $ != null//
@@ -42,7 +41,6 @@ public class Adjuster extends JavadocMarkerNanoPattern {
         && arePseudoAtomic(arguments(az.methodInvocation($)), parametersNames(d))//
     ;
   }
-
   private static boolean arePseudoAtomic(final Collection<Expression> arguments, final Collection<String> parametersNames) {
     return arguments.stream()
         .allMatch(λ -> iz.name(λ)//
@@ -51,17 +49,14 @@ public class Adjuster extends JavadocMarkerNanoPattern {
                     || parametersContainAllArguments(parametersNames, λ))//
     ) && arguments.stream().anyMatch(λ -> helps(parametersNames, λ));
   }
-
   private static boolean helps(final Collection<String> parametersNames, final Expression ¢) {
     return arguments(az.methodInvocation(¢)) != null//
         && !arguments(az.methodInvocation(¢)).isEmpty()//
         && parametersContainAllArguments(parametersNames, ¢);
   }
-
   private static boolean parametersContainAllArguments(final Collection<String> parametersNames, final Expression ¢) {
     return parametersNames.containsAll(arguments(az.methodInvocation(¢)).stream().map(ASTNode::toString).collect(toList()));
   }
-
   private static boolean safeContainsCallee(final Collection<String> parametersNames, final Expression ¢) {
     return parametersNames != null && parametersNames.contains(identifier(az.name(expression(¢))));
   }

@@ -29,7 +29,6 @@ public class SwitchSingleCaseToIf extends Switch//
   @Override public String description() {
     return "Convert switch statement to if-else statement";
   }
-
   public SwitchSingleCaseToIf() {
     andAlso(Proposition.that("Exactly two cases", () -> (cases.size() == 2)));
     andAlso(Proposition.that("Has default case", () -> (the.headOf(cases).isDefault() || the.lastOf(cases).isDefault())));
@@ -39,7 +38,6 @@ public class SwitchSingleCaseToIf extends Switch//
       return statements.subList(statements.indexOf(cases.get(0)), statements.indexOf(cases.get(1))).stream().anyMatch(iz::sequencerComplex);
     }));
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final boolean firstDefault = the.headOf(cases()).isDefault();
     final SwitchCase thenCase = firstDefault ? the.lastOf(cases()) : the.headOf(cases());
@@ -62,11 +60,9 @@ public class SwitchSingleCaseToIf extends Switch//
           g);
     return $;
   }
-
   private static List<Statement> removeBreaks(final List<Statement> src) {
     return src.stream().map(SwitchSingleCaseToIf::cleanBreaks).filter(λ -> !iz.emptyStatement(λ)).collect(Collectors.toList());
   }
-
   // TODO Yuval Simon: use map-reduce
   private static Statement cleanBreaks(final Statement ¢) {
     if (¢ == null)
@@ -85,7 +81,6 @@ public class SwitchSingleCaseToIf extends Switch//
         return copy.of(¢);
     }
   }
-
   @Override public Examples examples() {
     return convert("switch(x){case a:f(); g();break; default:g();h();}")//
         .to("if(x==a){f();g();}else{g();h();}");

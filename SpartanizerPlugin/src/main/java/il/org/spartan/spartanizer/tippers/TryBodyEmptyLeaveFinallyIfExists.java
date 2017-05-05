@@ -21,7 +21,6 @@ public final class TryBodyEmptyLeaveFinallyIfExists extends CarefulTipper<TrySta
     final Block $ = ¢.getBody();
     return $ != null && statements($).isEmpty();
   }
-
   @Override public Tip tip(final TryStatement s) {
     return new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -33,7 +32,6 @@ public final class TryBodyEmptyLeaveFinallyIfExists extends CarefulTipper<TrySta
       }
     };
   }
-
   @Override public String description(@SuppressWarnings("unused") final TryStatement __) {
     return "Prune empty try block";
   }

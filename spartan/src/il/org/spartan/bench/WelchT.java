@@ -10,11 +10,6 @@ import il.org.spartan.statistics.*;
 // broke the build
 public class WelchT {
   public double p = 0;
-  private final Statistics s1;
-  private final Statistics s2;
-
-  public WelchT(Statistics s1, Statistics s2) {
-    this.s1 = s1;
-    this.s2 = s2;
+  public WelchT(final Statistics s1, final Statistics s2) {
   }
 }

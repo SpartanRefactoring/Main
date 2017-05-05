@@ -31,7 +31,6 @@ public class MergeSwitchBranches extends ReplaceCurrentNode<SwitchStatement>//
         }
     return null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Merge branches with same code";
   }

@@ -30,11 +30,9 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
         && (parametersAdder(¢, onlyStatement(¢))//
             || parametersAdder(¢, onlySynchronizedStatementStatement(¢)));
   }
-
   private static boolean parametersAdder(final MethodDeclaration d, final Statement s) {
     return parametersAdder(d, expression(s));
   }
-
   private static boolean parametersAdder(final MethodDeclaration d, final Expression $) {
     return anyTips(tippers, $)//
         && iz.methodInvocation($)//
@@ -43,12 +41,10 @@ public class DefaultParametersAdder extends JavadocMarkerNanoPattern {
         && identifier(name(az.methodInvocation($))).equals(identifier(name(d)))//
     ;
   }
-
   private static boolean containsParameters(final MethodDeclaration ¢, final Expression x) {
     return arguments(az.methodInvocation(x)).stream().filter(iz::name).map(λ -> identifier(az.name(λ))).collect(toList())
         .containsAll(parametersNames(¢));
   }
-
   @Override public String tipperName() {
     return "DefaultArguments";
   }

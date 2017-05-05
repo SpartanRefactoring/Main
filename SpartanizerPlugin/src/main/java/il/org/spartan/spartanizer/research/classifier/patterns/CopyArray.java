@@ -22,11 +22,9 @@ public class CopyArray extends NanoPatternTipper<ForStatement> {
   @Override public boolean canTip(final ForStatement ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Init array: conevrt to fluent API";
   }
-
   @Override public Tip pattern(final ForStatement ¢) {
     return firstTip(tippers, ¢);
   }

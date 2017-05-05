@@ -37,7 +37,6 @@ public abstract class Traversal implements Selfie<Traversal> {
         @Override public void begin() {
           rewriteCount.clear();
         }
-
         @Override public void tipRewrite() {
           rewriteCount.step();
         }
@@ -76,68 +75,52 @@ public abstract class Traversal implements Selfie<Traversal> {
     ¢.accept(tipsCollector());
     return tips;
   }
-
   public abstract ASTRewrite go(CompilationUnit u);
-
   public TraversalTappers pop() {
     return notify.pop();
   }
-
   public Traversal push(final TraversalTapper ¢) {
     notify.push(¢);
     return this;
   }
-
   @Override public Traversal self() {
     return this;
   }
-
   public Traversal setRange(final Range ¢) {
     return self(() -> range = ¢);
   }
-
   public Tipper<? extends ASTNode> tipper() {
     return tipper;
   }
-
   protected abstract ASTVisitor tipsCollector();
-
   public Traversal useProjectPreferences() {
     useProjectPreferences = true;
     configurations.clear();
     return this;
   }
-
   public Traversal notUseProjectPreferences() {
     useProjectPreferences = false;
     configurations.clear();
     return this;
   }
-
   @SuppressWarnings("static-method") protected <N extends ASTNode> boolean check(@SuppressWarnings("unused") final N __) {
     return true;
   }
-
   protected void clearTipper() {
     tipper = null;
   }
-
   protected CompilationUnit compilationUnit() {
     return compilationUnit;
   }
-
   protected Tip getAuxiliaryTip() {
     return otherTip;
   }
-
   protected TextEditGroup getCurrentEditGroup() {
     return editGroup;
   }
-
   public ASTNode getNode() {
     return node;
   }
-
   /** @param u JD
    * @return {@link Configuration} by project's preferences */
   protected Configuration getPreferredConfiguration(final CompilationUnit u) {
@@ -162,38 +145,30 @@ public abstract class Traversal implements Selfie<Traversal> {
     configurations.put(p, $);
     return $;
   }
-
   protected Range getRange() {
     return range;
   }
-
   protected ASTRewrite getRewrite() {
     return rewrite;
   }
-
   protected Tip getTip() {
     return tip;
   }
-
   protected Tip setAuxiliaryTip(final Tip auxiliaryTip) {
     return otherTip = auxiliaryTip;
   }
-
   protected void setCompilationUnit(final CompilationUnit ¢) {
     compilationUnit = ¢;
     fileName = English.unknownIfNull(¢.getJavaElement(), IJavaElement::getElementName);
     notify.begin();
   }
-
   protected void setNode(final ASTNode currentNode) {
     node = currentNode;
     notify.setNode();
   }
-
   protected void setRewrite(final ASTRewrite currentRewrite) {
     rewrite = currentRewrite;
   }
-
   protected void setTipper(final Tipper<?> currentTipper) {
     tipper = currentTipper;
     if (tipper() == null)
@@ -209,7 +184,6 @@ public abstract class Traversal implements Selfie<Traversal> {
     protected Traversal self() { return Traversal.this.self(); }
     protected Tip tip() { return getTip(); }
     // @formatter:on
-
     protected String node() {
       final ASTNode $ = self().getNode();
       return String.format("%s(%s)", English.name($), Trivia.gist($));

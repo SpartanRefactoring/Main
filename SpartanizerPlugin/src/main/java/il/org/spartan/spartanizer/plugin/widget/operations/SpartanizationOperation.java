@@ -16,17 +16,14 @@ public class SpartanizationOperation extends WidgetOperation {
   @Override public String description() {
     return "Spartanize code";
   }
-
   @Override public String[][] configurationComponents() {
     return new String[][] { //
         { TYPE, "List", "Current selection", "Current file", "Current project", "REQUIRED" } //
     };
   }
-
   @Override public boolean register(final Map<?, ?> configuration) {
     return (type = (String) configuration.get(TYPE)) != null;
   }
-
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext ¢) throws Throwable {
     switch (type) {
       case "Current file":
@@ -41,7 +38,6 @@ public class SpartanizationOperation extends WidgetOperation {
         break;
     }
   }
-
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/obj16/changelog_obj.gif";
   }

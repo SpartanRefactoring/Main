@@ -21,7 +21,6 @@ public interface note {
     static String trace(final Throwable ¢) {
       return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
     }
-
     static String trace() {
       return trace(new Throwable());
     }

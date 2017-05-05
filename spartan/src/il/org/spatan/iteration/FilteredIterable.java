@@ -20,13 +20,11 @@ public abstract class FilteredIterable<T> implements Condition<T>, Iterable<T> {
   public FilteredIterable(final Iterable<? extends T> iterable) {
     this.iterable = iterable;
   }
-
   /** Filters the objects in the stream. Must be implemented by the client,
    * which should extend this class.
    * @param t an element to be examined
    * @return true, if and only if, this element is to be passed through. */
   @Override public abstract boolean holds(T t);
-
   @Override @NotNull public final Iterator<T> iterator() {
     return new ReadonlyIterator<T>() {
       T pending;
@@ -39,13 +37,11 @@ public abstract class FilteredIterable<T> implements Condition<T>, Iterable<T> {
       @Override public boolean hasNext() {
         return hasNext;
       }
-
       @Override public T next() {
         final T $ = pending;
         advance();
         return $;
       }
-
       void advance() {
         while (iterator.hasNext())
           if (holds(pending = iterator.next()))

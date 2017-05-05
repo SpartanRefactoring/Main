@@ -50,7 +50,6 @@ public class TraversalImplementation extends Traversal {
           tips.add(getTip());
         return true;
       }
-
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
@@ -62,32 +61,26 @@ public class TraversalImplementation extends Traversal {
     }
     return getRewrite();
   }
-
   private void applyTip() {
     getTip().go(getRewrite(), getCurrentEditGroup());
     notify.tipRewrite();
   }
-
   @Override public ASTRewrite go(final CompilationUnit ¢) {
     tips.clear();
     setCompilationUnit(¢);
     topDown(¢);
     return getRewrite();
   }
-
   @SafeVarargs public final <N extends ASTNode> Traversal restrictTo(final Tipper<N>... ¢) {
     configuration.restrictTo(¢);
     return this;
   }
-
   public final <N extends ASTNode> Traversal fixBloater(final Tipper<N> ¢) {
     return restrictTo(¢);
   }
-
   @SafeVarargs public final <N extends ASTNode> Traversal fixTipper(final Tipper<N>... ¢) {
     return restrictTo(¢);
   }
-
   private void topDown(final CompilationUnit u) {
     setRewrite(ASTRewrite.create(u.getAST()));
     final Range range = getRange();
@@ -111,13 +104,11 @@ public class TraversalImplementation extends Traversal {
         notify.tipRewrite();
         return false;
       }
-
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     });
   }
-
   protected <N extends ASTNode> Tipper<N> findTipper(final N ¢) {
     return robust.lyNull(() -> {
       final Tipper<N> $ = configuration.firstTipper(¢);
@@ -125,7 +116,6 @@ public class TraversalImplementation extends Traversal {
       return $;
     }, (Consumer<Exception>) note::bug);
   }
-
   @Override protected ASTVisitor tipsCollector() {
     fileName = English.unknownIfNull(compilationUnit(), λ -> English.unknownIfNull(λ.getJavaElement(), IJavaElement::getElementName));
     return new DispatchingVisitor() {
@@ -142,13 +132,11 @@ public class TraversalImplementation extends Traversal {
           tips.add(getTip());
         }, note::bug);
       }
-
       @Override protected void initialization(final ASTNode ¢) {
         disabling.scan(¢);
       }
     };
   }
-
   <N extends ASTNode> void findTip(final N ¢) {
     robust.ly(() -> {
       setTip(null);
@@ -158,7 +146,6 @@ public class TraversalImplementation extends Traversal {
       setTip($.tip(¢));
     }, (Consumer<Exception>) note::bug);
   }
-
   void setTip(final Tip ¢) {
     tip = ¢;
     if (¢ != null)

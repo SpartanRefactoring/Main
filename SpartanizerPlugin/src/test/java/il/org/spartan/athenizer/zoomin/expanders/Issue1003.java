@@ -15,7 +15,6 @@ public class Issue1003 {
     bloatingOf("s = \"Happy \" + (holiday ? \"Hanukkah\" : \"birthday\");")//
         .gives("s = holiday ? \"Happy Hanukkah\" : \"Happy birthday\";");
   }
-
   @Test public void t2() {
     bloatingOf("s = (cond ? \"aa\" : \"bb\") + \"cc\";")//
         .gives("s = cond ? \"aacc\" : \"bbcc\";");

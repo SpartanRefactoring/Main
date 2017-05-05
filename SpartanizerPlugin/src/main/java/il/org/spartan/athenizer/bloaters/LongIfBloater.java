@@ -30,11 +30,9 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     newThen.setElseStatement(copy.of(oldElse));
     return subject.pair(newThen, copy.of(oldElse)).toIf($.getLeftOperand());
   }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Replace an if statement that contains && with two ifs";
   }
-
   private static Expression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
     final InfixExpression $ = subject.pair(¢.getRightOperand(), the.headOf(extendedOperands(¢))).to(¢.getOperator());
     subject.append($, step.extendedOperands(¢));
@@ -42,11 +40,9 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
       $.extendedOperands().remove(0);
     return $;
   }
-
   private static boolean shouldTip(final IfStatement ¢) {
     return iz.infixExpression(¢.getExpression()) && iz.conditionalAnd(az.infixExpression(¢.getExpression())) && !tooComplicated(¢);
   }
-
   private static boolean tooComplicated(final IfStatement ¢) {
     return step.elze(¢) != null && step.extendedOperands(az.infixExpression(¢.getExpression())) != null
         && !step.extendedOperands(az.infixExpression(¢.getExpression())).isEmpty();

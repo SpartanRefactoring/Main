@@ -19,7 +19,6 @@ public class Issue1249 {
   @Test(expected = Exception.class) public void a() {
     trimmingOf("f();").using(fail, ExpressionStatement.class).doesNotCrash();
   }
-
   @Test(expected = Exception.class) public void b() {
     bloatingOf("f();").using(fail, ExpressionStatement.class).doesNotCrash();
   }

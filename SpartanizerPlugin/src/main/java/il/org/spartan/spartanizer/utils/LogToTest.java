@@ -70,7 +70,6 @@ public enum LogToTest {
     }
     System.out.println("Done! Written " + ts.size() + " tests to " + fileName + ".java");
   }
-
   private static void analyze(final Collection<String> xs, final Collection<String> ts, final Map<String, Integer> nu, final List<String> ss) {
     final String errorLocationUnparsed = ss.get(1).trim().split("\n")[1],
         errorLocationFile = errorLocationUnparsed.replaceFirst(".*at ", "").replaceFirst("\\(.*", "");
@@ -88,20 +87,17 @@ public enum LogToTest {
     buildTest(ts, errorLocationFileClean, errorLocationUnparsed.replaceFirst(".*:", "").replaceFirst("\\)", ""), the.headOf(ss),
         ss.get(2).trim().equals(English.UNKNOWN) ? "some test file" : ss.get(2).trim(), ss.get(3), ss.get(4), errorLocationFile);
   }
-
   private static void buildTest(final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,
       final String errorName, final String fileName, final String errorCode, final String rawCode, final String errorLocationFileUnclean) {
     ss.add(wrap(errorLocationFileClean, errorLocationLine, errorName, fileName, errorCode, JUnitTestMethodFacotry.unWrapedTestCase(rawCode),
         errorLocationFileUnclean));
   }
-
   private static String wrap(final String errorLocationFileClean, final String errorLocationLine, final String errorName, final String fileName,
       @SuppressWarnings("unused") final String errorCode, final String code, final String errorLocationFileUnclean) {
     return "/** Test created automatically due to " + errorName + " thrown while testing " + fileName + ".\nOriginated at " + errorLocationFileUnclean
         + "\n at line #" + errorLocationLine + ".\n\n*/\n@Test public void " + errorLocationFileClean + "Test() {\ntrimmingOf(" + code
         + ").doesNotCrash();\n}";
   }
-
   private static String wrap(final Iterable<String> ss, final String fileName) {
     final StringBuilder $ = new StringBuilder(
         "package il.org.spartan.automatic;\n\nimport static il.org.spartan.spartanizer.tippers.TrimmerTestsUtils.*;\n\n"

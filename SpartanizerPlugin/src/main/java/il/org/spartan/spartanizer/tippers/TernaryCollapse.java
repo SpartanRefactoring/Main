@@ -24,7 +24,6 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
     Expression $;
     return ($ = collapseOnElse(¢)) != null || ($ = collaspeOnThen(¢)) != null ? $ : null;
   }
-
   private static Expression collapseOnElse(final ConditionalExpression x) {
     final ConditionalExpression $ = az.conditionalExpression(core(x.getElseExpression()));
     if ($ == null)
@@ -36,7 +35,6 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
             : subject.pair(elseElse, then)
                 .toCondition(subject.pair(make.notOf(x.getExpression()), make.notOf($.getExpression())).to(CONDITIONAL_AND));
   }
-
   private static Expression collaspeOnThen(final ConditionalExpression x) {
     final ConditionalExpression $ = az.conditionalExpression(core(x.getThenExpression()));
     if ($ == null)
@@ -47,11 +45,9 @@ public final class TernaryCollapse extends ReplaceCurrentNode<ConditionalExpress
         : wizard.eq(thenThen, elze)
             ? subject.pair(thenElse, elze).toCondition(subject.pair(x.getExpression(), make.notOf($.getExpression())).to(CONDITIONAL_AND)) : null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final ConditionalExpression __) {
     return "Eliminate nested conditional expression";
   }
-
   @Override public Expression replacement(final ConditionalExpression ¢) {
     return collapse(¢);
   }

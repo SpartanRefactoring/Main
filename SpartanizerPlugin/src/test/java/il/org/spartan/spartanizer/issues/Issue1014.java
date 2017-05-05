@@ -17,13 +17,11 @@ public class Issue1014 {
                 + "if (definition.Kind.has(key))for (final SimpleName ¢ : annotees.of(a))$.add(as.array(definition.Kind.valueOf(key), ¢));}")
             .stays();
   }
-
   @Test public void test1() {
     trimmingOf("for (int i=0 ;i<length;++i){int a;if(a==b)continue; c= a+3;}") //
         .gives("for (int i=0 ;i<length;++i){int a;if(a!=b)c=a+3;}")//
         .stays();
   }
-
   @Test public void test2() {
     trimmingOf("while (q){int a;if(a==b)continue; c= a+3;}") //
         .gives("while (q){int a;if(a!=b)c=a+3;}")//

@@ -14,7 +14,6 @@ public enum Coupling {
   @SuppressWarnings("unused") public static Inner of(final ASTNode next) {
     return λ -> null;
   }
-
   public static boolean unknownNumberOfEvaluations(final ASTNode n, final Statement s) {
     ASTNode child = n;
     for (final ASTNode ancestor : hop.ancestors(n)) {

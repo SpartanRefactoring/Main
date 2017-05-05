@@ -23,7 +23,6 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Split assignment statement";
   }
-
   @Override public Tip tip(final ExpressionStatement ¢) {
     final Assignment $ = az.assignment(expression(¢));
     return $ == null || !iz.assignment(right($)) ? null : new Tip(description(¢), getClass(), ¢) {
@@ -38,7 +37,6 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
         l.insertAfter(head, ¢, g);
         l.remove(¢, g);
       }
-
       public Assignment rightMost(final Assignment newTail) {
         for (@SuppressWarnings("hiding") Assignment $ = newTail;; $ = az.assignment(right($)))
           if (!iz.assignment(right(az.assignment(right($)))))
@@ -46,7 +44,6 @@ public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStat
       }
     };
   }
-
   @Override public Examples examples() {
     return //
     convert("a=b=5;")//

@@ -21,7 +21,6 @@ public class ExtractExpressionFromReturn extends CarefulTipper<ReturnStatement>/
   @Override public String description(final ReturnStatement ¢) {
     return "Extract expression from " + ¢ + " statement";
   }
-
   @Override public Tip tip(final ReturnStatement s) {
     return expression(s) == null || !iz.assignment(expression(s)) || !iz.block(s.getParent()) ? null : new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {

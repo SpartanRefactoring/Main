@@ -24,11 +24,9 @@ public class Vertex<E> {
     this.incoming = ImmutableArrayList.make(incoming);
     this.outgoing = ImmutableArrayList.make(outgoing);
   }
-
   public E e() {
     return e;
   }
-
   @Override public boolean equals(@Nullable final Object o) {
     if (o == this)
       return true;
@@ -42,11 +40,9 @@ public class Vertex<E> {
       return false;
     return true;
   }
-
   @Override public int hashCode() {
     return e.hashCode();
   }
-
   /** Which vertices lie on the other end of outgoing edges? Package visibility
    * is deliberate; access to to neighbors must be through the enclosing graph,
    * so as to make it possible to invert edge directionality
@@ -54,7 +50,6 @@ public class Vertex<E> {
   @NotNull public ImmutableArrayList<Vertex<E>> outgoing() {
     return outgoing;
   }
-
   /** Which vertices lie on the other end of incoming edges? Package visibility
    * is deliberate; access to to neighbors must be through the enclosing graph,
    * so as to make it possible to invert edge directionality

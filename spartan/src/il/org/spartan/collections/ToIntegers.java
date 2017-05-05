@@ -28,12 +28,10 @@ public final class ToIntegers<E> {
     $ ^= $ >>> 12 ^ $ >>> 20;
     return $ ^ $ >>> 4 ^ $ >>> 7;
   }
-
   @NotNull private static <E> E[] allocate(final int ¢) {
     @NotNull @SuppressWarnings("unchecked") final E[] $ = (E[]) new Object[¢];
     return $;
   }
-
   private static int roundUp(final int ¢) {
     int $ = 1;
     while ($ < ¢)
@@ -52,26 +50,22 @@ public final class ToIntegers<E> {
   public ToIntegers() {
     this(MIN_CAPACITY);
   }
-
   /** Instantiate this class, using a given size for the hash table.
    * @param initialCapacity suggests a hash table size, will be rounded up to
    *        the next power of two. */
   public ToIntegers(final int initialCapacity) {
     reset(Math.max(MIN_CAPACITY, roundUp(initialCapacity)));
   }
-
   /** What's the underlying table size?
    * @return the hash table size (always a power of two) */
   public int capacity() {
     return data.length;
   }
-
   /** Remove all elements from this set, preserving capacity.
    * @return <code><b>this</b>/code> */
   @NotNull public ToIntegers<E> clear() {
     return reset(capacity());
   }
-
   /** Determine whether a given key is in this set.
    * @param key an arbitrary key
    * @return <code><b>true</b></code> if, and only if, the parameter is
@@ -79,7 +73,6 @@ public final class ToIntegers<E> {
   public boolean contains(@NotNull final E key) {
     return location(key) >= 0;
   }
-
   /** Check whether an array of integers is contained in this set.
    * @param ns an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, all elements in the array
@@ -90,7 +83,6 @@ public final class ToIntegers<E> {
         return false;
     return true;
   }
-
   /** Check whether this object is disjoint from an array of integers
    * @param ns an array of of integers; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
@@ -101,18 +93,15 @@ public final class ToIntegers<E> {
         return false;
     return true;
   }
-
   @NotNull public int[] get(@NotNull final E keys[]) {
     @NotNull final int[] $ = new int[keys.length];
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       $[¢] = get(keys[¢]);
     return $;
   }
-
   public int get(@NotNull final E key) {
     return values[location(key)];
   }
-
   public int increment(@NotNull final E key) {
     final int $ = location(key);
     if ($ >= 0)
@@ -125,7 +114,6 @@ public final class ToIntegers<E> {
       rehash(data.length << 1);
     return 1;
   }
-
   /** @param key
    * @return <code>this</code> */
   @NotNull public ToIntegers<E> init(@NotNull final E key) {
@@ -142,7 +130,6 @@ public final class ToIntegers<E> {
       rehash(data.length << 1);
     return this;
   }
-
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
   @NotNull public E[] keys() {
@@ -152,7 +139,6 @@ public final class ToIntegers<E> {
         $[j++] = data[¢];
     return $;
   }
-
   @NotNull public ToIntegers<E> put(@NotNull final E key, final int value) {
     final int location = location(key);
     if (location >= 0)
@@ -167,13 +153,11 @@ public final class ToIntegers<E> {
       rehash(data.length << 1);
     return this;
   }
-
   /** Recreate the table, inserting all elements in it afresh.
    * @return <code><b>this</b>/code> */
   @NotNull public ToIntegers<E> rehash() {
     return rehash(capacity());
   }
-
   /** Remove an element from this set, it is in it
    * @param e some integer to be removed from the set
    * @return <code><b>this</b>/code> */
@@ -187,7 +171,6 @@ public final class ToIntegers<E> {
     return --size < MIN_LOAD * capacity() && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
         : ++removed > REMOVE_LOAD * capacity() ? rehash() : this;
   }
-
   /** Remove an array of integers to this set, if they are in it.
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
@@ -196,13 +179,11 @@ public final class ToIntegers<E> {
       remove(¢);
     return this;
   }
-
   /** How many elements are there in this set?
    * @return the number of values in the set. */
   public int size() {
     return size;
   }
-
   /** Find the index in the hash table into which the parameter could be
    * inserted.
    * @param e some value
@@ -219,7 +200,6 @@ public final class ToIntegers<E> {
         return -1;
     }
   }
-
   /** Find the index in the hash table of the parameter
    * @param e some integer
    * @return index of the element if the parameter is in the table, otherwise,
@@ -233,7 +213,6 @@ public final class ToIntegers<E> {
         return $;
     }
   }
-
   /** resize internal storage to the specified capacity, which must be a power
    * of two.
    * @param newCapacity new initialCapacity for the internal array
@@ -248,7 +227,6 @@ public final class ToIntegers<E> {
       put(keys[¢], oldValues[¢]);
     return this;
   }
-
   @NotNull private ToIntegers<E> reset(final int capacity) {
     data = allocate(capacity);
     occupied = new boolean[capacity];
@@ -275,7 +253,6 @@ public final class ToIntegers<E> {
         if (placeholder[¢])
           assert occupied[¢];
     }
-
     private int count(@NotNull final boolean bs[]) {
       int $ = 0;
       for (final boolean ¢ : bs)

@@ -39,7 +39,6 @@ public final class LetInNext extends NanoPatternTipper<VariableDeclarationFragme
       return preDelegation(f, nextStatement) && $ != null && fragments($).size() == 1 && noFurtherUsage(name(f), nextStatement)
           && initializer(f) != null;
     }
-
     @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final Statement nextStatement, final TextEditGroup g) {
       final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(f));
       final Expression initializer = initializer(f);
@@ -52,23 +51,19 @@ public final class LetInNext extends NanoPatternTipper<VariableDeclarationFragme
           + expression(nextStatement) + ");"), g);
       return $;
     }
-
     private static boolean noFurtherUsage(final SimpleName n, final Statement nextStatement) {
       final List<SimpleName> $ = collect.forAllOccurencesExcludingDefinitions(n).in(parent(nextStatement));
       $.remove(n);
       $.removeAll(collect.forAllOccurencesExcludingDefinitions(n).in(nextStatement));
       return $.isEmpty();
     }
-
     private static boolean preDelegation(final VariableDeclarationFragment f, final Statement nextStatement) {
       return (iz.expressionStatement(nextStatement)//
           || iz.returnStatement(nextStatement)) && usesAssignment(f, nextStatement);
     }
-
     private static boolean usesAssignment(final VariableDeclarationFragment f, final Statement nextStatement) {
       return !collect.usesOf(name(f)).in(nextStatement).isEmpty();
     }
-
     @Override public String description(@SuppressWarnings("unused") final VariableDeclarationFragment __) {
       return "inline me!";
     }
@@ -77,7 +72,6 @@ public final class LetInNext extends NanoPatternTipper<VariableDeclarationFragme
   @Override protected Tip pattern(final VariableDeclarationFragment ¢) {
     return letInliner.tip(¢);
   }
-
   @Override public String tipperName() {
     return "LetInNext";
   }

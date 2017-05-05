@@ -269,22 +269,18 @@ public interface Configurations {
   static Configuration all() {
     return all.get();
   }
-
   static Stream<Tipper<? extends ASTNode>> allTippers() {
     return Stream.of(all().implementation)//
         .filter(λ -> λ != null && !λ.isEmpty())//
         .flatMap(Collection::stream) //
     ;
   }
-
   static Configuration empty() {
     return new Configuration();
   }
-
   static Configuration allClone() {
     return all().clone();
   }
-
   static List<String> get(final TipperGroup ¢) {
     final List<String> $ = an.empty.list();
     if (¢ == null)
@@ -295,20 +291,16 @@ public interface Configurations {
         .forEach(element -> $.addAll(element.stream().filter(λ -> ¢.equals(λ.tipperGroup())).map(Tipper::technicalName).collect(toList())));
     return $;
   }
-
   static TipperGroup groupOf(@SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {
     return categoryMap == null || !categoryMap.containsKey(tipperClass) ? null : categoryMap.get(tipperClass);
   }
-
   static long hooksCount() {
     return allTippers().count();
   }
-
   static void main(final String[] args) {
     final Configuration t = all();
     System.out.printf("Currently, there are a total of %d tippers offered on %d classes", box.it(t.tippersCount()), box.it(t.nodesTypeCount()));
   }
-
   /** Make a for a specific kind of tippers
    * @param clazz JD
    * @param w JS
@@ -317,7 +309,6 @@ public interface Configurations {
   @SafeVarargs static <N extends ASTNode> Configuration make(final Class<N> clazz, final Tipper<N>... ts) {
     return empty().add(clazz, ts);
   }
-
   static String name(final Class<? extends Tipper<?>> ¢) {
     return ¢.getSimpleName();
   }

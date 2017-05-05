@@ -19,16 +19,13 @@ public enum AnalyzerOptions {
   public static String get(final String cls, final String property) {
     return options.get(cls) == null ? null : options.get(cls).get(property);
   }
-
   static void set(final String cls, final String property, final String value) {
     options.computeIfAbsent(cls, λ -> new HashMap<>());
     options.get(cls).put(property, value);
   }
-
   public static String get(final String property) {
     return get(Analyze.class.getSimpleName(), property);
   }
-
   public static void set(final String property, final String value) {
     set(Analyze.class.getSimpleName(), property, value);
   }
@@ -46,18 +43,15 @@ public enum AnalyzerOptions {
     }
     System.out.print(".");
   }
-
   static void setVerbose() {
     verbose.inner = true;
   }
-
   public static void parseArguments(final String... args) {
     if (args.length < 2)
       assert false : "You need to specify at least inputDir and outputDir!\nUsage: Analyzer -option=<value> -pattern.option2=<value> ...\n";
     as.list(args).forEach(AnalyzerOptions::parseArgument);
     System.out.println(AnalyzerOptions.options);
   }
-
   private static void parseArgument(final String s) {
     assert s.charAt(0) == '-' : "property should start with '-'";
     final String[] li = bisect(s.substring(1), "=");
@@ -67,7 +61,6 @@ public enum AnalyzerOptions {
     else
       setOuterProperty(li[0], li[1]);
   }
-
   private static String[] bisect(final String s, final String by) {
     final String[] $ = new String[2];
     final int i = s.indexOf(by);
@@ -75,21 +68,18 @@ public enum AnalyzerOptions {
     $[1] = s.substring(i + 1);
     return $;
   }
-
   /** Sets property of the form x=y.
    * @param key
    * @param value */
   private static void setOuterProperty(final String key, final String value) {
     set(key, value);
   }
-
   /** Sets property of the form x.z=y.
    * @param left
    * @param right */
   private static void setInnerProperty(final String left, final String right) {
     setExternalProperty(left.split("\\.")[0], left.split("\\.")[1], right);
   }
-
   private static void setExternalProperty(final String cls, final String property, final String value) {
     set(cls, property, value);
   }

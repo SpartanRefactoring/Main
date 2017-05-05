@@ -42,12 +42,10 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
     DeprecatedFolderASTVisitor.main(args);
     closeWriters();
   }
-
   private static void closeWriters() {
     rawWriter.close();
     summaryWriter.close();
   }
-
   public static void logNPInfo(final ASTNode n, final String np) {
     if (!iz.loop(n))
       return;
@@ -57,7 +55,6 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
     if (iz.definiteLoop(n))
       definites.logNPInfo(n, np);
   }
-
   @Override public boolean visit(final MethodDeclaration d) {
     if (!excludeMethod(d))
       try {
@@ -67,7 +64,6 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
       }
     return false;
   }
-
   private static void log(final String spartanized) {
     into.cu(spartanized).accept(new ASTVisitor(true) {
       @Override public void preVisit(final ASTNode ¢) {
@@ -81,30 +77,25 @@ public class Table_Iteratives extends DeprecatedFolderASTVisitor {
       }
     });
   }
-
   private static String spartanalyze(final String ¢) {
     return nanonizer.fixedPoint(WrapIntoComilationUnit.Method.on(¢));
   }
-
   @Override protected void done(final String path) {
     summarize(path);
     clearAll();
     System.err.println("Finished " + path);
   }
-
   private static void clearAll() {
     all.clear();
     simple.clear();
     definites.clear();
   }
-
   private static void initializeWritersIfNeeded() {
     if (rawWriter != null)
       return;
     rawWriter = new Table("Table_Loops_Raw");
     summaryWriter = new Table("Table_Loops_Summary");
   }
-
   public static void summarize(final String path) {
     initializeWritersIfNeeded();
     rawWriter//

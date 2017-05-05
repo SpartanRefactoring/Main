@@ -35,57 +35,47 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
   public static boolean isHandler() {
     return false;
   }
-
   /** @return whether the refactorer is a marker resolution */
   public boolean isMarkerResolution() {
     return false;
   }
-
   /** @param e JD
    * @return the applicator used by this refactorer */
   public GUITraversal getApplicator(@SuppressWarnings("unused") final ExecutionEvent __) {
     return null;
   }
-
   /** @param m JD
    * @return the applicator used by this refactorer */
   public GUITraversal getApplicator(@SuppressWarnings("unused") final IMarker __) {
     return null;
   }
-
   /** @return the compilation units designated for refactorer */
   public Selection getSelection() {
     return null;
   }
-
   /** @return the compilation units designated for refactorer */
   public Selection getSelection(@SuppressWarnings("unused") final IMarker __) {
     return null;
   }
-
   /** Return null for canceled message.
    * @return opening message for given attributes */
   public String getOpeningMessage(@SuppressWarnings("unused") final Map<attribute, Object> __) {
     return null;
   }
-
   /** Return null for canceled message.
    * @return ending message for given attributes */
   public String getEndingMessage(@SuppressWarnings("unused") final Map<attribute, Object> __) {
     return null;
   }
-
   /** @return how many pass the refactorer should conduct */
   public int passesCount() {
     return 1;
   }
-
   /** @param us JD
    * @return message to be displayed by a {@link IProgressMonitor} */
   @SuppressWarnings("unused") public String getProgressMonitorMessage(final List<ICompilationUnit> __, final int pass) {
     return getLabel();
   }
-
   /** @param inner
    * @param currentCompilationUnit
    * @return sub message to be displayed by a {@link IProgressMonitor} */
@@ -93,18 +83,15 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       final ICompilationUnit currentCompilationUnit) {
     return null;
   }
-
   /** @param us JD
    * @return work to be done by a {@link IProgressMonitor} */
   public int getProgressMonitorWork(@SuppressWarnings("unused") final List<ICompilationUnit> __) {
     return IProgressMonitor.UNKNOWN;
   }
-
   /** @return whether the refactorer shows a display while working */
   public boolean hasDisplay() {
     return false;
   }
-
   /** @param m JD
    * @param targetCompilationUnits JD
    * @param helloString JD
@@ -113,7 +100,6 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       final Map<attribute, Object> m) {
     return null;
   }
-
   /** @param m JD
    * @param targetCompilationUnits JD
    * @param helloString JD
@@ -122,16 +108,13 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       final Map<attribute, Object> m) {
     return null;
   }
-
   @Override public Void execute(final ExecutionEvent ¢) {
     return !isHandler() ? null : go(¢, null);
   }
-
   @Override public void run(final IMarker ¢) {
     if (isMarkerResolution())
       go(null, ¢);
   }
-
   private Void go(final ExecutionEvent e, final IMarker m) {
     final Selection selection = either(getSelection(), getSelection(m));
     final GUITraversal applicator = either(getApplicator(e), getApplicator(m));
@@ -158,13 +141,11 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     show(getEndingMessage(attributes));
     return null;
   }
-
   private Map<attribute, Object> unknowns() {
     final Map<attribute, Object> $ = new HashMap<>();
     Stream.of(attribute.values()).forEach(λ -> $.put(λ, unknown));
     return $;
   }
-
   private boolean doWork(final IRunnableWithProgress p, final IRunnableContext d) {
     if (p != null)
       try {
@@ -177,7 +158,6 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       }
     return false;
   }
-
   private IRunnableWithProgress runnable(final Selection s, final GUITraversal t, final Map<attribute, Object> m) {
     return pm -> {
       final int $ = passesCount();
@@ -206,16 +186,13 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
       put(m, attribute.TOTAL_TIPS, Integer.valueOf(totalTips));
     };
   }
-
   private static <T> T either(final T t1, final T t2) {
     return t1 != null ? t1 : t2;
   }
-
   private static void put(final Map<attribute, Object> m, final attribute a, final Object o) {
     if (o != null)
       m.put(a, o);
   }
-
   private static MessageDialog show(final String ¢) {
     if (¢ == null)
       return null;
@@ -223,28 +200,23 @@ public abstract class Refactorer extends AbstractHandler implements IMarkerResol
     $.open();
     return $;
   }
-
   private void closeDialog(final MessageDialog initialDialog) {
     if (initialDialog != null)
       initialDialog.close();
   }
-
   private static boolean finish(final IProgressMonitor pm) {
     final boolean $ = pm.isCanceled();
     pm.done();
     return $;
   }
-
   private static List<ICompilationUnit> currentCompilationUnits(final Collection<ICompilationUnit> us, final Collection<ICompilationUnit> ds) {
     final List<ICompilationUnit> $ = as.list(us);
     $.removeAll(ds);
     return $;
   }
-
   private static boolean valid(final Object... ¢) {
     return Stream.of(¢).allMatch(Objects::nonNull);
   }
-
   private static void initializeProgressDialog(final ProgressMonitorDialog d) {
     d.open();
     final Shell s = d.getShell();

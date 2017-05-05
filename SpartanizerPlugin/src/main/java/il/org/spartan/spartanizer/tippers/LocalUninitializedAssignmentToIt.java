@@ -22,19 +22,15 @@ public final class LocalUninitializedAssignmentToIt extends $FragmentAndStatemen
     $.setInitializer(copy.of(x));
     return $;
   }
-
   @Override public Examples examples() {
     return convert("int a;a=3;").to("int a=3;");
   }
-
   @Override public String description() {
     return "Consolidate uninitialized declaration with subsequent initialization";
   }
-
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Consolidate declaration of " + ¢.getName() + " with its subsequent initialization";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final VariableDeclarationFragment f, final SimpleName n, final Expression initializer,
       final Statement nextStatement, final TextEditGroup g) {
     if (initializer != null)

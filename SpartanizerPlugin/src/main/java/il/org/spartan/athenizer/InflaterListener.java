@@ -64,7 +64,6 @@ public class InflaterListener implements KeyListener, Listener {
     undoManager = DocumentUndoManagerRegistry.getDocumentUndoManager(Eclipse.document(editor));
     compoundEditing = PreferencesResources.ZOOMER_REVERT_METHOD_VALUE.get();
   }
-
   @Override public void handleEvent(final Event ¢) {
     final int t = checkEvent(¢);
     if (t == 0 || !active || !text.getBounds().contains(text.toControl(Eclipse.mouseLocation())))
@@ -100,27 +99,23 @@ public class InflaterListener implements KeyListener, Listener {
       });
     }
   }
-
   /** Returns 1 if event corresponds to a bloater shortcut, -1 if even
    * corresponds to spartanizer shortcut and 0 otherwise. */
   private static int checkEvent(final Event e) {
     return zoomer_keys.stream().anyMatch(λ -> λ.test(e)) ? 1 : spartan_keys.stream().anyMatch(λ -> λ.test(e)) ? -1 : 0;
   }
-
   private void inflate() {
     text.setSelectionBackground(INFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = the.headOf(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
   }
-
   private void deflate() {
     text.setSelectionBackground(DEFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = the.headOf(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
   }
-
   @Override @SuppressWarnings("boxing") public void keyPressed(final KeyEvent ¢) {
     final int index = activating_keys.indexOf(¢.keyCode);
     if (index >= 0)
@@ -128,7 +123,6 @@ public class InflaterListener implements KeyListener, Listener {
     if (active_keys.stream().allMatch(λ -> λ) && !active)
       activate();
   }
-
   @Override @SuppressWarnings("boxing") public void keyReleased(final KeyEvent ¢) {
     final int index = activating_keys.indexOf(¢.keyCode);
     if (index < 0)
@@ -137,7 +131,6 @@ public class InflaterListener implements KeyListener, Listener {
     if (active)
       deactivate();
   }
-
   private void activate() {
     active = true;
     editDirection = NO_COMPUND_EDIT;
@@ -146,7 +139,6 @@ public class InflaterListener implements KeyListener, Listener {
     text.setCursor(activeCursor);
     Optional.ofNullable(text.getVerticalBar()).ifPresent(λ -> λ.setEnabled(false));
   }
-
   private void deactivate() {
     text.setSelectionBackground(originalBackground);
     active = false;
@@ -158,12 +150,10 @@ public class InflaterListener implements KeyListener, Listener {
     text.setCursor(inactiveCursor);
     Optional.ofNullable(text.getVerticalBar()).ifPresent(λ -> λ.setEnabled(true));
   }
-
   public void finilize() {
     if (active)
       deactivate();
   }
-
   public Listener find(final Iterable<Listener> ls) {
     TypedListener $ = null;
     for (final Listener ¢ : ls)

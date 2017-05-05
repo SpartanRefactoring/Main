@@ -27,11 +27,9 @@ public class PossiblyMultipleExecution {
   private PossiblyMultipleExecution(final ASTNode what) {
     this.what = what;
   }
-
   public boolean inContext(final ASTNode ¢) {
     return inContext(as.list(¢));
   }
-
   public boolean inContext(final Collection<? extends ASTNode> where) {
     for (ASTNode $ = what.getParent(); $ != null; $ = $.getParent()) {
       if (where.contains($))
@@ -59,15 +57,12 @@ public class PossiblyMultipleExecution {
     assert fault.unreachable() : fault.specifically("Context does not contain current node", what, where);
     return false;
   }
-
   private boolean multiple(final EnhancedForStatement $) {
     return touched(body($));
   }
-
   private boolean multiple(final ForStatement $) {
     return touched(expression($)) || updaters($).stream().anyMatch(λ -> touched(λ));
   }
-
   private boolean touched(final ASTNode n) {
     return descendants.streamOf(n).anyMatch(λ -> λ == what);
   }

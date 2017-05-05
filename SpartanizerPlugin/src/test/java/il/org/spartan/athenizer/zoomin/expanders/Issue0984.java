@@ -18,7 +18,6 @@ public class Issue0984 {
             + "else " //
             + "  o.f(b);");
   }
-
   @Test public void b() {
     bloatingOf("o.f(p, x ? a : b);")//
         .gives("if (x)" //
@@ -26,7 +25,6 @@ public class Issue0984 {
             + "else" //
             + "  o.f(p, b);");
   }
-
   @Test public void c() {
     bloatingOf("o.f(y ? a1 : b1, x ? a2 : b2);")
         .gives("if (y)" //
@@ -37,7 +35,6 @@ public class Issue0984 {
         .gives("if(y){if(x)o.f(a1,a2);else o.f(a1,b2);}else{o.f(b1,x?a2:b2);}")//
         .gives("if(y){if(x){o.f(a1,a2);}else{o.f(a1,b2);}}else{o.f(b1,x?a2:b2);}").stays();
   }
-
   @Test public void d() {
     bloatingOf("o.f(y ? a1 : b1, pp, x ? a2 : b2);")
         .gives("if (y)" //

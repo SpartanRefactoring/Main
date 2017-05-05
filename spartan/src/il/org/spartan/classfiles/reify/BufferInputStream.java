@@ -34,39 +34,30 @@ public class BufferInputStream extends InputStream {
     this.bytes = bytes;
     length = bytes.length;
   }
-
   @Override public synchronized int available() {
     return length - position;
   }
-
   @Override public void close() {
     ___.nothing();
   }
-
   public boolean done() {
     return position >= length;
   }
-
   public boolean eof() {
     return done();
   }
-
   @Override public synchronized void mark(final int limit) {
     mark = position;
   }
-
   @Override public boolean markSupported() {
     return true;
   }
-
   public final int position() {
     return position;
   }
-
   @Override public synchronized int read() {
     return done() ? -1 : bytes[position++] & 0xff;
   }
-
   @Override public synchronized int read(final byte bs[], final int offset, final int len) {
     if (bs == null)
       throw new NullPointerException();
@@ -81,11 +72,9 @@ public class BufferInputStream extends InputStream {
     position += $;
     return $;
   }
-
   @Override public synchronized void reset() {
     position = mark;
   }
-
   @Override public synchronized long skip(long ¢) {
     if (¢ + position > length)
       ¢ = length - position;

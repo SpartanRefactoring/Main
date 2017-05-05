@@ -26,31 +26,24 @@ public class Issue0818 {
   @Test @SuppressWarnings("static-method") public void a() {
     azzert.that("ab", is(az.stringLiteral(tipper.replacement(ie01)).getLiteralValue()));
   }
-
   @Test @SuppressWarnings("static-method") public void b() {
     azzert.isNull(az.stringLiteral(tipper.replacement(ie02)));
   }
-
   @Test @SuppressWarnings("static-method") public void c() {
     azzert.isNull(az.stringLiteral(tipper.replacement(ie03)));
   }
-
   @Test @SuppressWarnings("static-method") public void d() {
     assert tipper.description() != null;
   }
-
   @Test @SuppressWarnings("static-method") public void e() {
     assert tipper.description(null) != null;
   }
-
   @Test @SuppressWarnings("static-method") public void f() {
     azzert.isNull(az.stringLiteral(tipper.replacement(ie04)));
   }
-
   @Test @SuppressWarnings("static-method") public void g() {
     azzert.isNull(az.stringLiteral(tipper.replacement(ie05)));
   }
-
   @Test @SuppressWarnings("static-method") public void h() {
     assert tipper.replacement(ie06) != null;
   }

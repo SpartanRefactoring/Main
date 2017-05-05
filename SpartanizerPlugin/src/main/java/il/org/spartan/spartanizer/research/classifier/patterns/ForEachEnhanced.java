@@ -18,11 +18,9 @@ public class ForEachEnhanced extends NanoPatternTipper<ForStatement> {
   @Override public boolean canTip(final ForStatement ¢) {
     return anyTips(tippers, ¢);
   }
-
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "ForEach: conevrt to fluent API";
   }
-
   @Override public Tip pattern(final ForStatement ¢) {
     return firstTipper(tippers, ¢).tip(¢);
   }

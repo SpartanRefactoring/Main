@@ -24,11 +24,9 @@ public final class MethodDeclarationOverrideDegenerateRemove extends RemovingTip
         return false;
     return (i.getName() + "").equals($.getName() + "") && arguments(i).size() == parameters($).size();
   }
-
   @Override public String description(final MethodDeclaration ¢) {
     return "Remove vacous '" + ¢.getName() + "' overriding method";
   }
-
   @Override protected boolean prerequisite(final MethodDeclaration ¢) {
     final ExpressionStatement $ = extract.expressionStatement(¢);
     return $ != null && $.getExpression() instanceof SuperMethodInvocation && shouldRemove(¢, (SuperMethodInvocation) $.getExpression());

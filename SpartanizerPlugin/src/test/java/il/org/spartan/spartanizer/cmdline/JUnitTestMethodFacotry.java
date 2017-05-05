@@ -36,19 +36,15 @@ public enum JUnitTestMethodFacotry {
       $ = $.replaceAll("\\b" + keyword + "\\b", English.upperFirstLetter(keyword));
     return English.lowerFirstLetter($.replaceAll("\\p{Punct}", "").replaceAll("\\s", ""));
   }
-
   static String from(final String name, final String raw) {
     return wrapTest(name, linify(escapeQuotes(format.code(shortenIdentifiers(raw)))));
   }
-
   public static String unWrapedTestCase(final String raw) {
     return linify(escapeQuotes(format.code(shortenIdentifiers(raw))));
   }
-
   public static String code(final String raw) {
     return format.code(shortenIdentifiers(raw));
   }
-
   private static String wrapTest(final String name, final String code) {
     return String.format("  @Test public void %s() {\n" //
         + "    trimmingOf(\n \"%s\" \n)\n" //
@@ -56,7 +52,6 @@ public enum JUnitTestMethodFacotry {
         + "    // Edit this to reflect your expectation\n" //
         + "     \"%s\"\n//\n)//\n.stays()\n;\n}", name, code, code);
   }
-
   /** Renders the Strings a,b,c, ..., z, x1, x2, ... for lower case identifiers
    * and A, B, C, ..., Z, X1, X2, ... for upper case identifiers */
   static String renderIdentifier(final String old) {
@@ -73,7 +68,6 @@ public enum JUnitTestMethodFacotry {
         return old.length() == 1 ? String.valueOf((char) (old.charAt(0) + 1)) : String.valueOf(old.charAt(0)) + (old.charAt(1) + 1);
     }
   }
-
   /** Separate the string to lines
    * @param ¢ string to linify
    * @return */
@@ -85,7 +79,6 @@ public enum JUnitTestMethodFacotry {
     }
     return $;
   }
-
   public static String shortenIdentifiers(final String javaFragment) {
     final Wrapper<String> id = new Wrapper<>("start"), Id = new Wrapper<>("START");
     final IDocument $ = new Document(ASTutils.wrapCode(javaFragment));
@@ -117,7 +110,6 @@ public enum JUnitTestMethodFacotry {
     applyChanges($, r);
     return ASTutils.extractCode(javaFragment, $);
   }
-
   private static void applyChanges(final IDocument d, final ASTRewrite r) {
     try {
       r.rewriteAST(d, null).apply(d);
@@ -125,7 +117,6 @@ public enum JUnitTestMethodFacotry {
       note.bug(¢);
     }
   }
-
   public static void main(final String[] args) {
     System.err.println("");
     final Display display = new Display();
@@ -200,17 +191,14 @@ public enum JUnitTestMethodFacotry {
         display.sleep();
     display.dispose();
   }
-
   public static String makeTipperUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("  @Test public void %s() {\n %s\n}\n", signature($), tipperBody($));
   }
-
   public static String makeBloaterUnitTest(final String codeFragment) {
     final String $ = squeeze(removeComments(code(essence(codeFragment))));
     return comment() + format("@Test public void %s() {\n %s\n}\n", signature($), bloaterBody($));
   }
-
   static String comment() {
     return format(
         "/** Introduced by %s on %s \n" + //
@@ -219,7 +207,6 @@ public enum JUnitTestMethodFacotry {
         system.now(), //
         system.myShortClassName());
   }
-
   static String tipperBody(final String input) {
     for (String $ = format("    trimmingOf(\"%s\") //\n", input), from = input;;) {
       final String to = theSpartanizer.once(from);
@@ -241,7 +228,6 @@ public enum JUnitTestMethodFacotry {
       from = to;
     }
   }
-
   static String bloaterBody(final String input) {
     for (String $ = format("  bloatingOf(\"%s\") //\n", input), from = input;;) {
       final String to = OperandBloating.bloat(from);
@@ -251,11 +237,9 @@ public enum JUnitTestMethodFacotry {
       from = to;
     }
   }
-
   private static String operandClass(final Tipper<?> ¢) {
     return English.name(¢.current());
   }
-
   private static String tipperClass(final Tipper<?> ¢) {
     return ¢.tipperName() + format(¢.getClass().getTypeParameters().length <= 0 ? "" : "<%s>", operandClass(¢));
   }

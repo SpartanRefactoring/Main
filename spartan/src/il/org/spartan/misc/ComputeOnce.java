@@ -8,6 +8,5 @@ public abstract class ComputeOnce {
   public final double value() {
     return !Double.isNaN(value) ? value : (value = compute());
   }
-
   protected abstract double compute();
 }

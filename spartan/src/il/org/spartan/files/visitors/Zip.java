@@ -12,7 +12,8 @@ import il.org.spartan.strings.*;
  * is a ZIP or other archive file.
  * @author Yossi Gil, the Technion.
  * @since 24/08/2008 */
-@Utility public enum Zip {
+@Utility
+public enum Zip {
   ;
   /** A list of all recognized extensions of archive file names. */
   private static final String[] ZIP_FILE_EXTENSIONS = { ".ZIP", ".jar", ".war", ".ear" };

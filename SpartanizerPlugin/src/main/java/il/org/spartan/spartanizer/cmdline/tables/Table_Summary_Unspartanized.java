@@ -36,7 +36,6 @@ public class Table_Summary_Unspartanized extends Table_Summary {
         System.err.println(" " + path + " Done"); // we need to know if the
                                                   // process is finished or hang
       }
-
       public void summarize(final String path) {
         initializeWriter();
         table//
@@ -51,7 +50,6 @@ public class Table_Summary_Unspartanized extends Table_Summary {
             .col("ConditionalCommands", conditionalStatementsCoverage())//
             .nl();
       }
-
       void initializeWriter() {
         if (table == null)
           table = new Table(Table.classToNormalizedFileName(Table_Summary_Unspartanized.class) + "-" + corpus, outputFolder);
@@ -68,7 +66,6 @@ public class Table_Summary_Unspartanized extends Table_Summary {
         }
         return true;
       }
-
       void logAfterSpartanization(final CompilationUnit ¢) {
         statistics.logAfterSpartanization(¢);
         npDistributionStatistics.logNode(¢);

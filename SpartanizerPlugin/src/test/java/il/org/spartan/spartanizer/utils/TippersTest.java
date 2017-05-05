@@ -35,7 +35,6 @@ public final class TippersTest {
     azzert.that(a, iz("a"));
     azzert.that(collect.usesOf(a).in(m).size(), is(2));
   }
-
   @Test public void inlineExpressionWithSideEffect() {
     assert !sideEffects.free(e("f()"));
     final VariableDeclarationFragment f = findFirst
@@ -61,23 +60,18 @@ public final class TippersTest {
     azzert.that(collect.usesOf(n).in(alternateInitializer).size(), is(2));
     assert !new Inliner(n).byValue(initializer).canInlineinto(alternateInitializer);
   }
-
   @Test public void mixedLiteralKindEmptyList() {
     assert !mixedLiteralKind(es());
   }
-
   @Test public void mixedLiteralKindnPairList() {
     assert !mixedLiteralKind(es("1", "1.0"));
   }
-
   @Test public void mixedLiteralKindnTripleList() {
     assert mixedLiteralKind(es("1", "1.0", "a"));
   }
-
   @Test public void mixedLiteralKindSingletonList() {
     assert !mixedLiteralKind(es("1"));
   }
-
   @Test public void renameInEnhancedFor() throws Exception {
     final String input = "int f() { for (int a: as) return a; }";
     final Document d = WrapIntoComilationUnit.Method.intoDocument(input);
@@ -94,7 +88,6 @@ public final class TippersTest {
     assert output != null;
     azzert.that(output, iz(" int f() {for(int $:as)return $;}"));
   }
-
   @Test public void renameintoDoWhile() throws Exception {
     final String input = "void f() { int b = 3; do ; while(b != 0); }";
     final Document d = WrapIntoComilationUnit.Method.intoDocument(input);

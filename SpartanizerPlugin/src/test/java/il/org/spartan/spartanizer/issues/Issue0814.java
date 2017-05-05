@@ -20,7 +20,6 @@ public class Issue0814 {
     a.getParent().delete();
     assert new AssignmentAndReturn().go(null, a, s, null) == null;
   }
-
   @Test @SuppressWarnings("static-method") public void simpleTest() {
     final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
     final ReturnStatement s = the.headOf(new MethodExplorer(m).returnStatements());

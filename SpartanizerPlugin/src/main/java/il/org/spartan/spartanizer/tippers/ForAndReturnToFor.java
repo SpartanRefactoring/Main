@@ -38,7 +38,6 @@ public class ForAndReturnToFor extends GoToNextStatement<ForStatement>//
     $.remove(nextStatement, g);
     return $;
   }
-
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "combine the for and return statements to a single statement";
   }

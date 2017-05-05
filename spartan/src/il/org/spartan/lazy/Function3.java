@@ -10,7 +10,8 @@ import org.jetbrains.annotations.*;
  * @param <A3> type of the 3rd argument
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
-@FunctionalInterface public interface Function3<T, A1, A2, A3> {
+@FunctionalInterface
+public interface Function3<T, A1, A2, A3> {
   /** Encapsulated function
    * @param ¢1 1st argument
    * @param ¢2 2nd argument

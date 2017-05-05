@@ -15,15 +15,12 @@ public enum TermsReorganizer {
   public static Expression simplify(final InfixExpression ¢) {
     return build(new TermsCollector(¢));
   }
-
   private static Expression build(final List<Expression> plus, final List<Expression> minus) {
     return buildMinus(buildPlus(plus), minus);
   }
-
   private static Expression build(final TermsCollector ¢) {
     return build(¢.plus(), ¢.minus());
   }
-
   private static Expression buildMinus(final Expression first, final List<Expression> rest) {
     if (first == null)
       return buildMinus(rest);
@@ -32,7 +29,6 @@ public enum TermsReorganizer {
     rest.add(0, first);
     return subject.operands(rest).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
-
   private static Expression buildMinus(final List<Expression> ¢) {
     final Expression $ = subject.operand(the.headOf(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
     if (¢.size() == 1)
@@ -41,7 +37,6 @@ public enum TermsReorganizer {
     ¢.add(0, $);
     return subject.operands(¢).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
-
   private static Expression buildPlus(final List<Expression> ¢) {
     switch (¢.size()) {
       case 0:

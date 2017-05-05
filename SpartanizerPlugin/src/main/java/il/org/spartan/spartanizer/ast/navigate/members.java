@@ -18,22 +18,18 @@ public interface members {
     $.addAll(step.bodyDeclarations(¢));
     return $;
   }
-
   static List<? extends BodyDeclaration> of(final TypeDeclaration ¢) {
     return step.bodyDeclarations(¢);
   }
-
   static List<? extends BodyDeclaration> of(final AnnotationTypeDeclaration ¢) {
     return step.bodyDeclarations(¢);
   }
-
   static List<? extends BodyDeclaration> of(final AnonymousClassDeclaration ¢) {
     assert ¢ != null;
     final List<BodyDeclaration> $ = step.bodyDeclarations(¢);
     assert $ != null;
     return $;
   }
-
   static List<? extends BodyDeclaration> of(final ASTNode ¢) {
     return iz.anonymousClassDeclaration(¢) ? of(az.anonymousClassDeclaration(¢))
         : iz.enumDeclaration(¢) ? of(az.enumDeclaration(¢)) //

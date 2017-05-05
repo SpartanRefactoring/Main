@@ -24,7 +24,6 @@ public class IdentifierLetters {
         w.nl();
       }
   }
-
   @NonNull static String hex(final int ¢) {
     return String.format("U+%0" + (¢ > 255 ? "4" : "2") + "X", Integer.valueOf(¢));
   }

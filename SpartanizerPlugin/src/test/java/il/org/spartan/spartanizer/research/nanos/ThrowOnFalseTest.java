@@ -16,7 +16,6 @@ public class ThrowOnFalseTest {
         .gives("holds(!(x.isCute())).orThrow(()->new Watever());")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("if(x.isCute() || iWant()) throw new Watever(with(This, and, zis()));")//
         .using(new ThrowOnFalse(), IfStatement.class)//

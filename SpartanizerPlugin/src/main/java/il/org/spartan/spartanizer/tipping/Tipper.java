@@ -35,9 +35,7 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   @Override public String[] akas() {
     return new String[] { tipperName() };
   }
-
   public abstract boolean canTip(N n);
-
   /** Determines whether this instance can make a {@link Tip} for the parameter
    * instance.
    * @param e JD
@@ -47,60 +45,46 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
   public final boolean cantTip(final N ¢) {
     return !check(¢);
   }
-
   public final String className() {
     return English.name(this);
   }
-
   @Override public String description() {
     return separate.these(cCamelCase.components(tipperName())).bySpaces();
   }
-
   public abstract String description(N n);
-
   @Override public boolean equals(final Object ¢) {
     return getClass().equals(¢.getClass());
   }
-
   @Override public final Tip fire() {
     return tip(current());
   }
-
   /** Heuristics to find the class of operands on which this class works.
    * @return a guess for the __ of the node. */
   public final Class<N> getAbstractOperandClass() {
     return myOperandsClass != null ? myOperandsClass : (myOperandsClass = initializeMyOperandsClass());
   }
-
   public Class<N> myActualOperandsClass() {
     final Class<N> $ = getAbstractOperandClass();
     return !isAbstract($.getModifiers()) ? $ : null;
   }
-
   @SuppressWarnings("unchecked") public final Class<Tipper<N>> myClass() {
     return (Class<Tipper<N>>) getClass();
   }
-
   @Override public final boolean ok(final N ¢) {
     return canTip(¢);
   }
-
   public abstract Tip tip(N ¢);
-
   /** @return a string that represents why the tipper failed to tip on the given
    *         node. */
   @SuppressWarnings("unused") public String explain(final N ¢) {
     return null;
   }
-
   public String tipperName() {
     return English.name(myClass());
   }
-
   @SuppressWarnings("unchecked") private Class<N> castClass(final Class<?> c2) {
     return (Class<N>) c2;
   }
-
   private Class<N> initializeMyOperandsClass() {
     Class<N> $ = null;
     for (final Method ¢ : getClass().getMethods())
@@ -108,15 +92,12 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
         $ = lowest($, ¢.getParameterTypes()[0]);
     return $ != null ? $ : castClass(ASTNode.class);
   }
-
   private boolean isDefinedHere(final Method ¢) {
     return ¢.getDeclaringClass() == getClass();
   }
-
   private Class<N> lowest(final Class<N> c1, final Class<?> c2) {
     return c2 == null || !ASTNode.class.isAssignableFrom(c2) || c1 != null && !c1.isAssignableFrom(c2) ? c1 : castClass(c2);
   }
-
   public static <N extends ASTNode> Tipper<N> materialize(final IMarker $) {
     if ($.getResource() == null)
       return null;
@@ -128,7 +109,6 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
     @SuppressWarnings("unchecked") final Class<? extends Tipper<N>> tipperClass = (Class<? extends Tipper<N>>) (Class<?>) o;
     return Tipper.instantiate(tipperClass);
   }
-
   private static Object getKey(final IMarker $) {
     try {
       return $.getAttribute(Builder.SPARTANIZATION_TIPPER_KEY);
@@ -136,7 +116,6 @@ public abstract class Tipper<N extends ASTNode> extends Rule.Stateful<N, Tip> //
       return note.bug(¢);
     }
   }
-
   public static <X extends ASTNode, T extends Tipper<X>> Tipper<X> instantiate(final Class<T> $) {
     try {
       return $.newInstance();

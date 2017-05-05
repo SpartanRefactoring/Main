@@ -17,7 +17,6 @@ public class Issue0499 {
         .gives("public S d(final G a) {assert a != null;r(λ -> Integer.valueOf(a.apply(λ, selection())));return this;}")//
         .stays();
   }
-
   /** Introduced by Yossi on Thu-Mar-23-00:43:14-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void test_publicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
@@ -29,13 +28,11 @@ public class Issue0499 {
         .stays() //
     ;
   }
-
   @Test public void test1() {
     trimmingOf("public S d(final G a) {assert a != null;r(x -> Integer.valueOf(a.apply(x, selection())));return this;}")//
         .gives("public S d(final G a){assert a!=null;r(λ->Integer.valueOf(a.apply(λ,selection())));return this;}") //
         .stays();
   }
-
   /** Introduced by Yossi on Thu-Mar-23-00:44:12-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void publicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
@@ -47,7 +44,6 @@ public class Issue0499 {
         .stays() //
     ;
   }
-
   /** Introduced by Yossi on Thu-Mar-23-00:44:54-IST-2017 (code automatically
    * generated in 'il.org.spartan.spartanizer.cmdline.anonymize.java') */
   @Test public void ublicAaFinalBbAssertaNullrxIntegervalueOfaapplyxselectionReturnThis() {
@@ -59,7 +55,6 @@ public class Issue0499 {
         .stays() //
     ;
   }
-
   @Test public void test2() {
     trimmingOf("public S d(final G a) {assert a != null;r(x -> Integer.valueOf(a.apply(x, selection())));return this;}")
         .gives("public S d(final G a) {assert a != null;r(λ -> Integer.valueOf(a.apply(λ, selection())));return this;}")//

@@ -17,19 +17,15 @@ public abstract class JavadocerTest {
   protected static boolean is(final String ¢) {
     return javadoced("public class A{" + ¢ + "}");
   }
-
   private static boolean javadoced(final String ¢) {
     return spartanized(¢).contains("[[" + JAVADOCER.getClass().getSimpleName() + "]]");
   }
-
   protected static boolean not(final String ¢) {
     return !is(¢);
   }
-
   protected static void setNano(final JavadocMarkerNanoPattern ¢) {
     spartanizer.add(MethodDeclaration.class, JAVADOCER = ¢);
   }
-
   protected static String spartanized(final String ¢) {
     return spartanizer.fixedPoint(makeAST.COMPILATION_UNIT.from(¢) + "");
   }

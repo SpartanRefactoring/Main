@@ -14,11 +14,9 @@ public class ClassPredicates {
     final Class<?> $ = c.getSuperclass();
     return $ != null && hasMutableFields($);
   }
-
   public static boolean isImmutable(@NotNull final Class<?> ¢) {
     return !¢.isEnum() && nFields(¢) > 0 && !hasMutableFields(¢);
   }
-
   public static int nFields(@NotNull final Class<?> c) {
     int $ = 0;
     for (@NotNull final Field ¢ : c.getDeclaredFields())

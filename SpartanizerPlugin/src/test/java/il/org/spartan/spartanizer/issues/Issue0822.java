@@ -25,7 +25,6 @@ public class Issue0822 {
     if (makeAST.string(f) != null)
       azzert.that(makeAST.string(f), equalTo(""));
   }
-
   @Test public void testBuilderException() {
     StringBuilder sb = null;
     try {
@@ -36,13 +35,11 @@ public class Issue0822 {
     assert sb != null;
     azzert.that(sb + "", is(""));
   }
-
   @Test public void testBuilderFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Collections.singletonList("a = a + b;"));
     azzert.that(makeAST.STATEMENTS.builder(p.toFile()) + "", is("a = a + b;"));
   }
-
   @Test public void testExpressionFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Collections.singletonList("a + b"));
@@ -50,11 +47,9 @@ public class Issue0822 {
     azzert.that(ast + "", is(make.ast("a+b") + ""));
     azzert.that(ast, instanceOf(Expression.class));
   }
-
   @Test public void testStatementsFromDocument() {
     azzert.that(make.ast("a = b + c + d;") + "", is(makeAST.STATEMENTS.from(new Document("a = b + c + d;")) + ""));
   }
-
   @Test public void testStatementsFromFile() throws IOException {
     final Path p = Files.createTempFile("test_file", ".tmp");
     Files.write(p, Collections.singletonList("a = a + b;"));

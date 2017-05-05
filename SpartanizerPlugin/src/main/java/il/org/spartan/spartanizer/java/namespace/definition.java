@@ -148,11 +148,9 @@ public interface definition {
           fault.done();
       return $;
     }
-
     @SuppressWarnings("static-method") List<? extends ASTNode> specificScope(final SimpleName ¢) {
       return members.of(parent(parent(¢)));
     }
-
     public static boolean has(final String name) {
       return name != null && Stream.of(values()).anyMatch(λ -> name.equals(λ + ""));
     }
@@ -182,7 +180,6 @@ public interface definition {
         return null;
     }
   }
-
   static Kind kind(final VariableDeclarationFragment ¢) {
     final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
@@ -197,7 +194,6 @@ public interface definition {
         return null;
     }
   }
-
   static Kind kind(final SingleVariableDeclaration ¢) {
     final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
@@ -218,7 +214,6 @@ public interface definition {
         return null;
     }
   }
-
   static Kind kind(final VariableDeclarationExpression ¢) {
     final ASTNode $ = parent(¢);
     switch ($.getNodeType()) {
@@ -231,11 +226,9 @@ public interface definition {
         return null;
     }
   }
-
   static List<? extends ASTNode> scope(final SimpleName ¢) {
     return kind(¢).scope(¢);
   }
-
   static Kind kind(final TypeDeclaration x) {
     return !x.isInterface() ? Kind.class¢ : Kind.interface¢;
   }

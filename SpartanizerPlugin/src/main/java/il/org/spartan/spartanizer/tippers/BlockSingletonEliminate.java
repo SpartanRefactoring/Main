@@ -39,16 +39,13 @@ public final class BlockSingletonEliminate extends NodePattern<Block> implements
   @Override protected ASTNode highlight() {
     return null;
   }
-
   @Override public String description() {
     return "Remove redundant curly braces";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(current, copy.of(onlyStatement), g);
     return r;
   }
-
   @Override public Examples examples() {
     return convert("if (a){g();}").to("if(a)g();");
   }

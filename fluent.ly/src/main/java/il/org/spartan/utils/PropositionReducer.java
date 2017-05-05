@@ -13,11 +13,9 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     this.inner = inner;
     assert inner != this;
   }
-
   @Override public R reduce() {
     return inner.reduce();
   }
-
   public final R reduce(final BooleanSupplier ¢) {
     return //
     ¢ instanceof Not ? reduce((Not) ¢) //
@@ -26,11 +24,9 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
                 : ¢ instanceof Or ? reduce((Or) ¢) //
                     : map(¢);
   }
-
   @Override public R reduce(final R r1, final R r2) {
     return inner.reduce(r1, r2);
   }
-
   private R reduce(final And a) {
     R $ = ante(a);
     for (int size = a.inner.size(), ¢ = 0; ¢ < size; ++¢) {
@@ -40,15 +36,12 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     }
     return reduce($, post(a));
   }
-
   private R reduce(final Not ¢) {
     return reduce(ante(¢), reduce(¢.inner), post(¢));
   }
-
   private R reduce(final Singleton ¢) {
     return reduce(ante(¢), map(¢), post(¢));
   }
-
   private R reduce(final Or o) {
     R $ = ante(o);
     for (int size = o.inner.size(), ¢ = 0; ¢ < size; ++¢) {
@@ -58,37 +51,28 @@ public abstract class PropositionReducer<R> extends Reduce<R> {
     }
     return reduce($, post(o));
   }
-
   protected R ante(@SuppressWarnings("unused") final Proposition.Not __) {
     return reduce();
   }
-
   protected R ante(@SuppressWarnings("unused") final Proposition.Singleton __) {
     return reduce();
   }
-
   protected R ante(@SuppressWarnings("unused") final Some __) {
     return reduce();
   }
-
   protected R inter(@SuppressWarnings("unused") final And __) {
     return reduce();
   }
-
   protected R inter(@SuppressWarnings("unused") final Or __) {
     return reduce();
   }
-
   protected abstract R map(BooleanSupplier ¢);
-
   protected R post(@SuppressWarnings("unused") final Proposition.Not __) {
     return reduce();
   }
-
   protected R post(@SuppressWarnings("unused") final Proposition.Singleton __) {
     return reduce();
   }
-
   protected R post(@SuppressWarnings("unused") final Some __) {
     return reduce();
   }

@@ -33,7 +33,6 @@ public class MetricsReport implements ConfigurableReport {
     Settings.setFileName("/tmp/NEWmetrics.CSV");
     settings.getAction().initialize();
   }
-
   public static Settings getSettings() {
     return settings;
   }
@@ -56,11 +55,9 @@ public class MetricsReport implements ConfigurableReport {
       this.name = name;
       this.f = f;
     }
-
     public String name() {
       return name;
     }
-
     public ToInt<R> function() {
       return f;
     }
@@ -75,17 +72,14 @@ public class MetricsReport implements ConfigurableReport {
         m("methodDeclaration" + id, λ -> az.methodDeclaration(λ) == null ? -1 : extract.statements(az.methodDeclaration(λ).getBody()).size()), //
         m("tide" + id, λ -> clean(λ + "").length())); //
   }
-
   static NamedFunction<ASTNode> m(final String name, final ToInt<ASTNode> f) {
     return new NamedFunction<>(name, f);
   }
-
   public static void write() {
     final Action wr = settings.getAction();
     wr.initialize();
     wr.go();
   }
-
   public static void generate() {
     write();
   }

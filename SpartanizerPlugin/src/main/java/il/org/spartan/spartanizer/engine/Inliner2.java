@@ -41,7 +41,6 @@ public final class Inliner2 {
   public static Of of(final SimpleName of) {
     return by -> location -> new Inliner2(of, by, location);
   }
-
   public boolean ok() {
     if (spots.stream().anyMatch(Inliner2::isLeftValue))
       return false;
@@ -54,23 +53,19 @@ public final class Inliner2 {
         return multipleInlineOK();
     }
   }
-
   private static boolean isLeftValue(final SimpleName ¢) {
     final ASTNode $ = parent(¢);
     return iz.prefixExpression($) || iz.postfixExpression($) || ¢ == to(az.assignment(¢.getParent()));
   }
-
   public ASTRewrite fire(final ASTRewrite $, final TextEditGroup g) {
     for (final SimpleName ¢ : spots)
       $.replace(¢, copy.of(replacement), g);
     return $;
   }
-
   private Inliner2(final SimpleName what, final Expression replacement, final List<? extends ASTNode> where) {
     this.replacement = protect(replacement);
     spots = collect.usesOf(this.what = what).in(this.where = where);
   }
-
   /** Computes the number of AST nodes added as a result of the replacement
    * operation.
    * @param es JD
@@ -79,7 +74,6 @@ public final class Inliner2 {
   public int addedSize() {
     return spots.size() * (metrics.size(replacement) - metrics.size(what));
   }
-
   /** [[SuppressWarningsSpartan]] */
   private boolean multipleInlineOK() {
     if (iz.deterministic(replacement))
@@ -88,15 +82,12 @@ public final class Inliner2 {
       return false;
     return true;
   }
-
   private boolean singletonInlineOK() {
     return sideEffects.free(replacement);
   }
-
   private boolean nullaryInlineOK() {
     return sideEffects.sink(replacement);
   }
-
   public static Expression protect(final Expression initializer, final VariableDeclarationStatement currentStatement) {
     if (!iz.arrayInitializer(initializer))
       return initializer;
@@ -106,7 +97,6 @@ public final class Inliner2 {
     $.setInitializer(copy.of(az.arrayInitializer(initializer)));
     return $;
   }
-
   public static Expression protect(final Expression ¢) {
     switch (¢.getNodeType()) {
       case ARRAY_CREATION:
@@ -140,19 +130,15 @@ public final class Inliner2 {
     static ASTRewrite go(final TextEditGroup g, final ASTRewrite r) {
       return new Inner().go(g, r);
     }
-
     static Inner in(final ASTNode... ¢) {
       return new Inner().in(¢);
     }
-
     static Inner of(final SimpleName ¢) {
       return new Inner().of(¢);
     }
-
     static Inner with(final Expression ¢) {
       return new Inner().with(¢);
     }
-
     static Wrapper<ASTNode>[] wrap(final ASTNode[] ns) {
       @SuppressWarnings("unchecked") final Wrapper<ASTNode>[] $ = new Wrapper[ns.length];
       final Int i = new Int();
@@ -170,7 +156,6 @@ public final class Inliner2 {
         occurrences.forEach(λ -> $.replace(λ, !iz.expression(λ) ? copy.of(with) : make.plant(with).into(λ.getParent()), g));
         return $;
       }
-
       /** Computes the number of AST nodes added as a result of the replacement
        * operation.
        * @param es JD
@@ -180,7 +165,6 @@ public final class Inliner2 {
       public int addedSize() {
         return occurrences.size() * (metrics.size(with) - 1);
       }
-
       public boolean canGo() {
         if (with == null || occurrences.isEmpty())
           return false;
@@ -211,22 +195,18 @@ public final class Inliner2 {
             return true;
         }
       }
-
       boolean noHiding() {
         noHiding();
         return collect.definitionsOf(name).in().isEmpty();
       }
-
       public Inner in(final ASTNode[] ¢) {
         occurrences = collect.usesOf(name).in(range = ¢);
         return null;
       }
-
       public Inner of(final SimpleName ¢) {
         occurrences = collect.usesOf(name = ¢).in(range);
         return null;
       }
-
       /** Computes the total number of AST nodes in the replaced parameters
        * @return A non-negative integer, computed from original size of the
        *         parameters, the number of occurrences of {@link #name} in the
@@ -234,7 +214,6 @@ public final class Inliner2 {
       public int replacedSize() {
         return metrics.size(range) + occurrences.size() * (metrics.size(get()) - 1);
       }
-
       public Inner with(final Expression ¢) {
         with = ¢;
         return this;

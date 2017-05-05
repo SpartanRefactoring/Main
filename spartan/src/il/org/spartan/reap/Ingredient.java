@@ -14,19 +14,16 @@ public class Ingredient<T> extends Cell<T> {
   public Ingredient() {
     // Make sure we have a public constructor
   }
-
   /** instantiates this class
    * @param value JD */
   public Ingredient(final T value) {
     cache(value);
   }
-
   /** see @see il.org.spartan.reap.Cookbook.Cell#get() (auto-generated) */
   @Override public T get() {
     idiomatic.run(() -> trace.add(this)).unless(trace == null);
     return cache();
   }
-
   @Override public final boolean updated() {
     return true;
   }
@@ -41,7 +38,6 @@ public class Ingredient<T> extends Cell<T> {
     public NotNull(final T value) {
       super(value);
     }
-
     @Override void cache(@Nullable @SuppressWarnings("hiding") final T cache) {
       super.cache(cache);
       if (cache == null)

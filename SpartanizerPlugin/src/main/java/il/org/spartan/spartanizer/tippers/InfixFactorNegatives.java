@@ -32,11 +32,9 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     $.add(x);
     return $;
   }
-
   private static List<Expression> gather(final InfixExpression ¢) {
     return gather(¢, an.empty.list());
   }
-
   private static List<Expression> gather(final InfixExpression x, final List<Expression> $) {
     if (x == null)
       return $;
@@ -50,16 +48,13 @@ public final class InfixFactorNegatives extends CarefulTipper<InfixExpression>//
     }
     return $;
   }
-
   private static List<Expression> gather(final Iterable<Expression> xs, final List<Expression> $) {
     xs.forEach(λ -> gather(λ, $));
     return $;
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "Use at most one arithmetical negation, for first factor of " + ¢.getOperator();
   }
-
   @Override public Tip tip(final InfixExpression x) {
     final List<Expression> $ = gather(x);
     if ($.size() < 2)

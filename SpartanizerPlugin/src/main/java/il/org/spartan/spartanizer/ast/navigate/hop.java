@@ -33,7 +33,6 @@ public interface hop {
       @Override public boolean hasNext() {
         return current != null;
       }
-
       @Override public ASTNode next() {
         final ASTNode $ = current;
         current = current.getParent();
@@ -41,15 +40,12 @@ public interface hop {
       }
     };
   }
-
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(final List<VariableDeclarationFragment> fs, final SimpleName ¢) {
     return fs.stream().filter(λ -> wizard.eq(¢, λ.getName())).findFirst().orElse(null);
   }
-
   static VariableDeclarationFragment correspondingVariableDeclarationFragment(final VariableDeclarationStatement s, final SimpleName n) {
     return hop.correspondingVariableDeclarationFragment(step.fragments(s), n);
   }
-
   /** @param root the node whose children we return
    * @return A list containing all the nodes in the given root'¢ sub tree */
   static List<ASTNode> descendants(final ASTNode root) {
@@ -64,16 +60,13 @@ public interface hop {
     $.remove(0);
     return $;
   }
-
   static String getEnclosingMethodName(final BodyDeclaration ¢) {
     final MethodDeclaration $ = yieldAncestors.untilClass(MethodDeclaration.class).from(¢);
     return $ == null ? null : $.getName() + "";
   }
-
   static SimpleName lastName(final Name ¢) {
     return ¢ == null ? null : ¢.isSimpleName() ? (SimpleName) ¢ : ¢.isQualifiedName() ? ((QualifiedName) ¢).getName() : null;
   }
-
   /** Find the last statement residing under a given {@link Statement}
    * @param ¢ JD
    * @return last statement residing under a given {@link Statement}, or
@@ -81,12 +74,10 @@ public interface hop {
   static Statement lastStatement(final Statement ¢) {
     return last(extract.statements(¢));
   }
-
   static Name name(final Type ¢) {
     return ¢.isSimpleType() ? ((SimpleType) ¢).getName()
         : ¢.isNameQualifiedType() ? ((NameQualifiedType) ¢).getName() : ¢.isQualifiedType() ? ((QualifiedType) ¢).getName() : null;
   }
-
   /** Makes a list of all operands of an expression, comprising the left
    * operand, the right operand, followed by extra operands when they exist.
    * @param x JD
@@ -99,7 +90,6 @@ public interface hop {
       $.addAll(extendedOperands(¢));
     return $;
   }
-
   static Expression origin(final Assignment a) {
     Assignment ¢ = a;
     for (Expression $ = ¢;; $ = from(¢)) {
@@ -108,36 +98,30 @@ public interface hop {
         return $;
     }
   }
-
   /** [[SuppressWarningsSpartan]] - see #1246 */
   static VariableDeclarationFragment penultimate(final Statement body) {
     final ASTNode n = hop.lastStatement(copy.of(body));
     final Statement $ = !(n instanceof Statement) ? null : (Statement) n;
     return n == null || $ == null ? null : previous($);
   }
-
   /** @param ¢ JD
    * @return conversion of {@link Statement}, which is previous to the
    *         LastStatement in the loop body. */
   static VariableDeclarationFragment penultimate(final WhileStatement $) {
     return penultimate(body($));
   }
-
   /** @param ¢ JD
    * @return conversion of {@link Statement} , which is previous to the
    *         firstLastStatement in the loop body. */
   static VariableDeclarationFragment penultimateFragment(final ForStatement ¢) {
     return penultimate(body(¢));
   }
-
   static VariableDeclarationFragment previous(final Statement ¢) {
     return the.headOf(fragments(az.variableDeclrationStatement(previousStatementInBody(¢))));
   }
-
   static SimpleName simpleName(final Type ¢) {
     return lastName(hop.name(¢));
   }
-
   static List<Statement> subsequentStatements(final Statement ¢) {
     return parent(¢) instanceof SwitchStatement ? the.rest(¢, step.statements((SwitchStatement) parent(¢)))
         : parent(¢) instanceof Block ? the.rest(¢, step.statements((Block) parent(¢))) //

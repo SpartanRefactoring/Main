@@ -26,7 +26,6 @@ public abstract class ___ {
   public static void check(final ___.Invariantable ¢) {
     ¢.check();
   }
-
   /** A possibly non-returning method to be used for checking postconditions.
    * @param condition if <code><b>false</b></code>, program will halt.
    * @throws Postcondition A {@link RuntimeException} to be thrown in the case
@@ -34,7 +33,6 @@ public abstract class ___ {
   public static void ensure(final boolean condition) throws Postcondition {
     ensure(condition, "");
   }
-
   /** A possibly non-returning method to be used for checking postconditions. If
    * the postcondition fails, then a user supplied message is associated with
    * the thrown exception.
@@ -46,7 +44,6 @@ public abstract class ___ {
   public static void ensure(final boolean condition, final String message) throws Postcondition {
     ensure(condition, message, "");
   }
-
   /** A possibly non-returning method to be used for checking postconditions. If
    * the postcondition fails, then a user supplied formatted message (generated
    * from <code>printf</code> like arguments) is associated with the thrown
@@ -62,7 +59,6 @@ public abstract class ___ {
     if (!condition)
       throw new Postcondition(nprintf(format, args));
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be negative.
    * @param¢ a value which must be negative
@@ -70,7 +66,6 @@ public abstract class ___ {
   public static void negative(final double ¢) throws Negative {
     negative(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be negative.
    * @param d a value which must be negative
@@ -80,7 +75,6 @@ public abstract class ___ {
   public static void negative(final double d, final String message) throws Negative {
     negative(d, message, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be negative.
    * @param d a value which must be negative
@@ -93,7 +87,6 @@ public abstract class ___ {
     if (d >= 0)
       throw new Negative(d, format, args);
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be negative.
    * @param n a value which must be negative
@@ -101,7 +94,6 @@ public abstract class ___ {
   public static void negative(final int ¢) throws Negative {
     negative(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be negative.
    * @param i a value which must be negative
@@ -111,7 +103,6 @@ public abstract class ___ {
   public static void negative(final int i, final String message) throws Negative {
     negative(i, message, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be negative.
    * @param i a value which must be negative
@@ -124,7 +115,6 @@ public abstract class ___ {
     if (i >= 0)
       throw new Negative(i, format, args);
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be non-NaN.
    * @param d a value which must be not be NaN
@@ -132,7 +122,6 @@ public abstract class ___ {
   public static void nonNaN(final double ¢) throws NonNan {
     nonNaN(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be non-NaN.
    * @param d a value which must be nonnegative
@@ -142,7 +131,6 @@ public abstract class ___ {
   public static void nonNaN(final double d, final String message) throws NonNan {
     nonNaN(d, message, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be non-NaN.
    * @param d a value which must be nonnegative
@@ -155,7 +143,6 @@ public abstract class ___ {
     if (Double.isNaN(d))
       throw new NonNan(d, format, args);
   }
-
   /** A possibly non-returning method to be used for checking doubles which must
    * be non-NaN.
    * @param ds a array which must not be NaN
@@ -164,7 +151,6 @@ public abstract class ___ {
     for (final double ¢ : ds)
       nonNaN(¢);
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
    * @param ¢ a value which must be nonnegative
@@ -172,7 +158,6 @@ public abstract class ___ {
   public static void nonnegativ(final int ¢) throws NonNegative {
     nonnegative(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
    * @param d a value which must be nonnegative
@@ -180,7 +165,6 @@ public abstract class ___ {
   public static void nonnegative(final double ¢) throws NonNegative {
     nonnegative(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
    * @param d a value which must be nonnegative
@@ -190,7 +174,6 @@ public abstract class ___ {
   public static void nonnegative(final double d, final String message) throws NonNegative {
     nonnegative(d, message, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
    * @param d a value which must be nonnegative
@@ -203,7 +186,6 @@ public abstract class ___ {
     if (d < 0)
       throw new NonNegative(d, format, args);
   }
-
   /** A possibly non-returning method to be used for checking doubles which must
    * be nonnegative.
    * @param ds a array which must be nonnegative
@@ -212,7 +194,6 @@ public abstract class ___ {
     for (final double ¢ : ds)
       nonnegative(¢);
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
    * @param i a value which must be nonnegative
@@ -225,7 +206,6 @@ public abstract class ___ {
     if (i < 0)
       throw new NonNegative(i, format, args);
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonnegative.
    * @param is a array which must be nonnegative
@@ -234,7 +214,6 @@ public abstract class ___ {
     for (final int ¢ : is)
       nonnegative(¢);
   }
-
   /** A possibly non-returning method to be used for checking objects that
    * should never be <code><b>null</b></code>.
    * @param o if <code><b>null</b></code>, program will halt.
@@ -242,7 +221,6 @@ public abstract class ___ {
   public static void nonnull(final Object ¢) throws NonNull {
     nonnull(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking objects that
    * should never be <code><b>null</b></code>.
    * @param o if <code><b>null</b></code>, program will halt.
@@ -251,7 +229,6 @@ public abstract class ___ {
   public static void nonnull(final Object o, final String message) throws NonNull {
     nonnull(o, message, "");
   }
-
   /** A possibly non-returning method to be used for checking objects that
    * should never be <code><b>null</b></code>.
    * @param o if <code><b>null</b></code>, program will halt.
@@ -264,7 +241,6 @@ public abstract class ___ {
     if (o == null)
       throw new NonNull(format, args);
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonpositive.
    * @param d a value which must be nonpositive
@@ -272,7 +248,6 @@ public abstract class ___ {
   public static void nonpositive(final double ¢) throws NonPositive {
     nonpositive(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonpositive.
    * @param d a value which must be nonpositive
@@ -282,7 +257,6 @@ public abstract class ___ {
   public static void nonpositive(final double d, final String message) throws NonPositive {
     nonpositive(d, message, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonpositive.
    * @param d a value which must be nonpositive
@@ -295,7 +269,6 @@ public abstract class ___ {
     if (d > 0)
       throw new NonPositive(d, format, args);
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonpositive.
    * @param n a value which must be positive
@@ -303,7 +276,6 @@ public abstract class ___ {
   public static void nonpositive(final int ¢) throws NonPositive {
     nonpositive(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonpositive.
    * @param i a value which must be nonpositive
@@ -313,7 +285,6 @@ public abstract class ___ {
   public static void nonpositive(final int i, final String message) throws NonPositive {
     nonpositive(i, message, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be nonpositive.
    * @param i a value which must be nonpositive
@@ -326,29 +297,23 @@ public abstract class ___ {
     if (i > 0)
       throw new NonPositive(i, format, args);
   }
-
   /** A do nothing method to document the fact that nothing is done, to be used
    * typically for C style (Yuck) loops. */
   public static void nothing() {
     // empty
   }
-
   public static String nprintf(final String format, final double d, final Object o) {
     return sprintf(format, box(d), o);
   }
-
   public static String nprintf(final String format, final int n1, final int n2) {
     return sprintf(format, box(n1), box(n2));
   }
-
   public static String nprintf(final String format, final int i, final Object o) {
     return sprintf(format, box(i), o);
   }
-
   public static String nprintf(final String format, final Object... args) {
     return format == null ? "" : args == null ? format : sprintf(format, args);
   }
-
   /** A possibly non-returning method to be used for checking floating point
    * numbers which must be positive.
    * @param d a value which must be positive
@@ -356,7 +321,6 @@ public abstract class ___ {
   public static void positive(final double ¢) throws Positive {
     positive(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be positive.
    * @param d a value which must be positive
@@ -366,7 +330,6 @@ public abstract class ___ {
   public static void positive(final double d, final String message) throws Positive {
     positive(d, message, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be positive.
    * @param d a value which must be positive
@@ -379,7 +342,6 @@ public abstract class ___ {
     if (d <= 0)
       throw new Positive(d, format, args);
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be positive.
    * @param n a value which must be positive
@@ -387,7 +349,6 @@ public abstract class ___ {
   public static void positive(final int ¢) throws Positive {
     positive(¢, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be positive.
    * @param i if negative program will halt.
@@ -397,7 +358,6 @@ public abstract class ___ {
   public static void positive(final int i, final String message) throws Positive {
     positive(i, message, "");
   }
-
   /** A possibly non-returning method to be used for checking integers which
    * must be positive.
    * @param i a value which must be positive
@@ -410,7 +370,6 @@ public abstract class ___ {
     if (i <= 0)
       throw new Positive(i, format, args);
   }
-
   /** A possibly non-returning method to be used for checking preconditions.
    * @param condition if <code><b>false</b></code>, program will halt.
    * @throws Precondition A {@link RuntimeException} to be thrown in the case
@@ -418,7 +377,6 @@ public abstract class ___ {
   public static void require(final boolean condition) throws Precondition {
     require(condition, "");
   }
-
   /** A possibly non-returning method to be used for checking preconditions. If
    * the precondition fails, then a user supplied message is associated with the
    * thrown exception.
@@ -430,7 +388,6 @@ public abstract class ___ {
   public static void require(final boolean condition, final String message) throws Precondition {
     ___.require(condition, message, "");
   }
-
   /** A possibly non-returning method to be used for checking preconditions. If
    * the precondition fails, then a user supplied formatted message (generated
    * from <code>printf</code> like arguments) is associated with the thrown
@@ -446,7 +403,6 @@ public abstract class ___ {
     if (!condition)
       throw new Precondition(nprintf(format, args));
   }
-
   /** A possibly non-returning method to be used for checking assertions.
    * @param condition if <code><b>false</b></code>, program will halt.
    * @throws Invariant A {@link RuntimeException} to be thrown in the case
@@ -454,7 +410,6 @@ public abstract class ___ {
   public static void sure(final boolean condition) throws Invariant {
     sure(condition, "");
   }
-
   /** A possibly non-returning method to be used for checking assertions. If the
    * postcondition fails, then a user supplied message is associated with the
    * thrown exception.
@@ -466,7 +421,6 @@ public abstract class ___ {
   public static void sure(final boolean condition, final String message) throws Invariant {
     sure(condition, message, "");
   }
-
   /** A possibly non-returning method to be used for checking assertions. If the
    * postcondition fails, then a user supplied formatted message (generated from
    * <code>printf</code> like arguments) is associated with the thrown
@@ -482,21 +436,18 @@ public abstract class ___ {
     if (!condition)
       throw new Invariant(nprintf(format, args));
   }
-
   /** A never-returning method indicating code sites with missing functionality
    * @param args a list of strings in a <code>printf</code> like format
    *        describing the task to be done. */
   public static void todo(final String... args) {
     note.bug("Feature unsupported. ", args);
   }
-
   /** A never-returning method to be used in points of code which should never
    * be reached.
    * @throws Reachability will always be thrown */
   public static void unreachable() throws Reachability {
     unreachable("");
   }
-
   /** A never-returning method to be used in points of code which should never
    * be reached.
    * @param message a string describing the violation
@@ -504,7 +455,6 @@ public abstract class ___ {
   public static void unreachable(final String message) throws Reachability {
     unreachable(message, "");
   }
-
   public static void unreachable(final String format, final Object... args) throws Reachability {
     throw new Reachability(nprintf(format, args));
   }
@@ -525,7 +475,6 @@ public abstract class ___ {
     public Bug(final Exception e) {
       super(e);
     }
-
     /** instantiate this class with a given textual description
      * @param message a description of the exceptional situation */
     public Bug(final String message) {
@@ -582,13 +531,11 @@ public abstract class ___ {
         public Value() {
           super("");
         }
-
         /** instantiate this class with a given textual description
          * @param message a description of the exceptional situation */
         public Value(final String message) {
           super(message);
         }
-
         public Value(final String format, final Object... args) {
           super(nprintf(format, args));
         }
@@ -601,15 +548,12 @@ public abstract class ___ {
           private static final long serialVersionUID = -0x5D86AA1C39A3BBD1L;
 
           /** instantiate this class with no textual description */
-          public NonNull() {
-          }
-
+          public NonNull() {}
           /** instantiate this class with a given textual description
            * @param message a description of the exceptional situation */
           public NonNull(final String message) {
             super(message);
           }
-
           public NonNull(final String format, final Object... args) {
             super(format, args);
           }
@@ -625,7 +569,6 @@ public abstract class ___ {
           public Numerical(final String expected, final double d, final String message) {
             super(nprintf("Found %g while expecting a %s number.", d, expected) + message);
           }
-
           Numerical(final String expected, final int n, final String message) {
             super(nprintf("Found %d while expecting a %s integer.", n, expected) + message);
           }
@@ -640,23 +583,18 @@ public abstract class ___ {
             public Negative(final double d) {
               this(d, "");
             }
-
             public Negative(final double d, final String message) {
               super(expected, d, message);
             }
-
             public Negative(final double d, final String format, final Object... args) {
               this(d, nprintf(format, args));
             }
-
             public Negative(final int n) {
               this(n, "");
             }
-
             public Negative(final int n, final String message) {
               super(expected, n, message);
             }
-
             public Negative(final int n, final String format, final Object... args) {
               this(n, nprintf(format, args));
             }
@@ -673,23 +611,18 @@ public abstract class ___ {
             public NonNan(final double d) {
               this(d, "");
             }
-
             public NonNan(final double d, final String message) {
               super(expected, d, message);
             }
-
             public NonNan(final double d, final String format, final Object... args) {
               this(d, nprintf(format, args));
             }
-
             public NonNan(final int n) {
               this(n, "");
             }
-
             public NonNan(final int n, final String message) {
               super(expected, n, message);
             }
-
             public NonNan(final int n, final String format, final Object... args) {
               this(n, nprintf(format, args));
             }
@@ -705,23 +638,18 @@ public abstract class ___ {
             public NonNegative(final double d) {
               this(d, "");
             }
-
             public NonNegative(final double d, final String message) {
               super("expected", d, message);
             }
-
             public NonNegative(final double d, final String format, final Object... args) {
               this(d, nprintf(format, args));
             }
-
             public NonNegative(final int n) {
               this(n, "");
             }
-
             public NonNegative(final int n, final String message) {
               super("expected", n, message);
             }
-
             public NonNegative(final int n, final String format, final Object... args) {
               this(n, nprintf(format, args));
             }
@@ -736,23 +664,18 @@ public abstract class ___ {
             public NonPositive(final double d) {
               this(d, "");
             }
-
             public NonPositive(final double d, final String message) {
               super("nonpositive", d, message);
             }
-
             public NonPositive(final double d, final String format, final Object... args) {
               this(d, nprintf(format, args));
             }
-
             public NonPositive(final int n) {
               this(n, "");
             }
-
             public NonPositive(final int n, final String message) {
               super("nonpositive", n, message);
             }
-
             public NonPositive(final int n, final String format, final Object... args) {
               this(n, nprintf(format, args));
             }
@@ -768,23 +691,18 @@ public abstract class ___ {
             public Positive(final double d) {
               this(d, "");
             }
-
             public Positive(final double d, final String message) {
               super(expected, d, message);
             }
-
             public Positive(final double d, final String format, final Object... args) {
               this(d, nprintf(format, args));
             }
-
             public Positive(final int n) {
               this(n, "");
             }
-
             public Positive(final int n, final String message) {
               super(expected, n, message);
             }
-
             public Positive(final int n, final String format, final Object... args) {
               this(n, nprintf(format, args));
             }
@@ -890,7 +808,8 @@ public abstract class ___ {
     void check();
   }
 
-  @SuppressWarnings("static-method") public static class TEST {
+  @SuppressWarnings("static-method")
+  public static class TEST {
     @Test public void ensure() {
       ___.ensure(true);
       try {
@@ -909,7 +828,6 @@ public abstract class ___ {
         assertEquals("ensure this message now", e.getMessage());
       }
     }
-
     @Test public void negative() {
       ___.negative(-1);
       ___.negative(-2);
@@ -935,7 +853,6 @@ public abstract class ___ {
         assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
       }
     }
-
     @Test public void nonnegative() {
       ___.nonnegative(1);
       ___.nonnegative(2);
@@ -953,7 +870,6 @@ public abstract class ___ {
         assertEquals("Found -1.00000 while expecting a negative number.", ¢.getMessage());
       }
     }
-
     @Test public void nonnull() {
       ___.nonnull(new Object());
       try {
@@ -972,7 +888,6 @@ public abstract class ___ {
         assertEquals("nonnull this message now", e.getMessage());
       }
     }
-
     @Test public void nonpositive() {
       ___.nonpositive(-1);
       ___.nonpositive(-2);
@@ -990,7 +905,6 @@ public abstract class ___ {
         assertEquals("Found -1.00000 while expecting a nonpositive number.", ¢.getMessage());
       }
     }
-
     @Test public void positive() {
       ___.positive(1);
       ___.positive(2);
@@ -1016,7 +930,6 @@ public abstract class ___ {
         assertEquals("Found -1.00000 while expecting a positive number.", ¢.getMessage());
       }
     }
-
     @Test public void require() {
       ___.require(true);
       try {
@@ -1035,15 +948,12 @@ public abstract class ___ {
         assertEquals("require this message now", ¢.getMessage());
       }
     }
-
     @Test(expected = ___.Bug.class) public void requireBug() {
       ___.require(false);
     }
-
     @Test(expected = Precondition.class) public void requirePrecondition() {
       ___.require(false);
     }
-
     @Test public void sure() {
       ___.sure(true);
       try {
@@ -1062,7 +972,6 @@ public abstract class ___ {
         assertEquals("sure this message now", e.getMessage());
       }
     }
-
     @Test public void unreachable() {
       try {
         ___.unreachable();
@@ -1080,7 +989,6 @@ public abstract class ___ {
         assertEquals("unreachable this message now", ¢.getMessage());
       }
     }
-
     @Test public void variant() {
       {
         final Variant v = new Variant(10);
@@ -1132,7 +1040,6 @@ public abstract class ___ {
         throw new Assertion.Variant.Initial(value);
       this.value = value;
     }
-
     /** reset the variant value to a new, smaller value value; abort if the new
      * value is negative or no lesser than the previous value.
      * @param newValue the next value of this variant.
@@ -1145,7 +1052,6 @@ public abstract class ___ {
         throw new Underflow(newValue);
       value = newValue;
     }
-
     /** inspect the variant's value.
      * @return a non-negative integer which is the current value of this
      *         object */

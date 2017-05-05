@@ -17,21 +17,18 @@ public class AsBitTest {
         .gives("as.bit(k == 0)") //
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("k == 0 ? 1 : 0")//
         .using(new AsBit(), ConditionalExpression.class)//
         .gives("as.bit(k == 0)")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("k? 1 : 0")//
         .using(new AsBit(), ConditionalExpression.class)//
         .gives("as.bit(k)")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("(0 == x(f,g,h.h(a,b,moo))) ? 1 : 0")//
         .using(new AsBit(), ConditionalExpression.class)//
@@ -40,7 +37,6 @@ public class AsBitTest {
         .gives("as.bit(x(f,g,h.h(a,b,moo)) == 0)")//
         .stays();
   }
-
   @Test public void e() {
     trimmingOf("k == 0 ? 0 : 1")//
         .using(new AsBit(), ConditionalExpression.class)//

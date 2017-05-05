@@ -21,11 +21,9 @@ public final class InfixConditionalAndTrue extends ReplaceCurrentNode<InfixExpre
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Remove 'true' argument to '&&'";
   }
-
   @Override public boolean prerequisite(final InfixExpression ¢) {
     return iz.conditionalAnd(¢) && have.trueLiteral(extract.allOperands(¢));
   }
-
   @Override public Expression replacement(final InfixExpression ¢) {
     return remove.literal(¢, true);
   }

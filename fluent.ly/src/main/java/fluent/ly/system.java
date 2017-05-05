@@ -20,7 +20,6 @@ public interface system {
     }
     return null;
   }
-
   static BufferedWriter callingClassUniqueWriter() {
     try {
       return new BufferedWriter(new FileWriter(ephemeral(myFullClassName()).dot("txt")));
@@ -29,7 +28,6 @@ public interface system {
     }
     return null;
   }
-
   static Process dumpOutput(final Process $) {
     if (isWindows())
       return $;
@@ -41,11 +39,9 @@ public interface system {
     }
     return $;
   }
-
   static Extension ephemeral(final String stem) {
     return λ -> new File(system.tmp + stem + new SimpleDateFormat("-yyyy-MM-dd-HH-mm-ss").format(new Date()) + "." + λ);
   }
-
   /** @author Yossi Gil
    * @author Yarden Lev
    * @author Sharon Kuninin
@@ -65,11 +61,9 @@ public interface system {
         .replaceAll("([^a-zA-Z¢$_]) ([a-zA-Z¢$_])", "$1$2")//
         .replaceAll("([a-zA-Z¢$_]) ([^a-zA-Z¢$_])", "$1$2");
   }
-
   static String essenced(final String fileName) {
     return fileName + ".essence";
   }
-
   static String folder2File(final String path) {
     return path//
         .replaceAll("^[.]$", "CWD")//
@@ -80,7 +74,6 @@ public interface system {
         .replaceAll("-$", "")//
     ;
   }
-
   @SuppressWarnings("boxing") static boolean isBalanced(final String s) {
     final Stack<Character> $ = new Stack<>();
     for (final char ¢ : s.toCharArray())
@@ -105,7 +98,6 @@ public interface system {
       }
     return $.isEmpty();
   }
-
   /** @return if called from a (potentially static) method m in class A, gives
    *         the full name of the class B != A, such that a method in B, made a
    *         sequence of calls through methods in A, which ended in the call to
@@ -121,7 +113,6 @@ public interface system {
         return trace[$].getClassName();
     return new Object().getClass().getEnclosingClass().getCanonicalName();
   }
-
   /** @return the name of the class from which this method was called. */
   static String myFullClassName() {
     final StackTraceElement[] $ = new Throwable().getStackTrace();
@@ -130,32 +121,26 @@ public interface system {
         return $[¢].getClassName();
     return new Object().getClass().getEnclosingClass().getCanonicalName();
   }
-
   static String myShortClassName() {
     return cCamelCase.lastComponent(myFullClassName());
   }
-
   static String now() {
     return (new Date() + "").replaceAll(" ", "-");
   }
-
   static String read() {
     try (Scanner $ = new Scanner(System.in)) {
       return read($);
     }
   }
-
   static String read(final Scanner ¢) {
     String $ = "";
     while (¢.hasNext()) // Can be Nano?
       $ += "\n" + ¢.nextLine();
     return $;
   }
-
   static ProcessBuilder runScript() {
     return new ProcessBuilder("/bin/bash");
   }
-
   static String runScript(final Process p) throws IOException {
     try (InputStream s = p.getInputStream(); BufferedReader r = new BufferedReader(new InputStreamReader(s))) {
       String ¢;
@@ -164,15 +149,12 @@ public interface system {
           return $ + "";
     }
   }
-
   static Process shellEssenceMetrics(final String fileName) {
     return bash("./essence <" + fileName + ">" + essenced(fileName));
   }
-
   static String userName() {
     return English.upperFirstLetter(System.getProperty("user.name", "User"));
   }
-
   /** This function counts the number of words the given string contains. Words
    * are separated by at least one whitespace.
    * @param $ the string its words are being counted
@@ -180,7 +162,6 @@ public interface system {
   static int wc(final String $) {
     return $ == null || $.trim().isEmpty() ? 0 : $.trim().split("\\s+").length;
   }
-
   static boolean isWindows() {
     return System.getProperty("os.name").contains("indows");
   }

@@ -20,7 +20,6 @@ public class SuperConstructor extends JavadocMarkerNanoPattern {
         && iz.superConstructorInvocation(onlyStatement(¢)) //
         && delegating(¢);
   }
-
   private boolean delegating(final MethodDeclaration ¢) {
     final List<String> ps = parametersNames(¢);
     final Iterable<Expression> as = arguments(az.superConstructorInvocation(onlyStatement(¢)));
@@ -29,7 +28,6 @@ public class SuperConstructor extends JavadocMarkerNanoPattern {
         return false;
     return true;
   }
-
   @Override public String tipperName() {
     return "Super";
   }

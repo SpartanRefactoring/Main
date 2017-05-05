@@ -56,25 +56,20 @@ public interface Environment {
   @NotNull static <@Nullable T, @Nullable A> Binder1<T, A> bind(@NotNull final Function1<T, A> ¢) {
     return new Property<T>().bind(¢);
   }
-
   @NotNull static <@Nullable T, @Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(
       @NotNull final Function2<T, A1, A2> ¢) {
     return new Property<T>().bind(¢);
   }
-
   @NotNull static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(@NotNull final Function3<T, A1, A2, A3> ¢) {
     return new Property<T>().bind(¢);
   }
-
   @NotNull static <@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> Binder4<T, A1, A2, A3, A4> bind(
       @NotNull final Function4<T, A1, A2, A3, A4> ¢) {
     return new Property<T>().bind(¢);
   }
-
   @NotNull static <@Nullable T> Property<T> function(final Function0<T> ¢) {
     return new Property<T>().ϑ(¢);
   }
-
   /** A factory method of class {@link Property} returning an undefined value
    * for a cell
    * @param <T> JD
@@ -83,7 +78,6 @@ public interface Environment {
   @NotNull static <@Nullable T> Property<T> undefined() {
     return new Property<>();
   }
-
   /** A factory method of class {@link Property} of an {@link Integer} as in
    *
    * <pre>
@@ -95,7 +89,6 @@ public interface Environment {
   @NotNull static Property<@Nullable Boolean> value(final boolean ¢) {
     return new Property<>(Boolean.valueOf(¢));
   }
-
   /** A factory method of class {@link Property} of an {@link Integer} as in
    *
    * <pre>
@@ -107,7 +100,6 @@ public interface Environment {
   @NotNull static Property<@Nullable Integer> value(final int ¢) {
     return new Property<>(Integer.valueOf(¢));
   }
-
   /** A factory method for class {@link Ingredient} as in
    *
    * <pre>
@@ -121,7 +113,8 @@ public interface Environment {
     return new Property<>(¢);
   }
 
-  @SuppressWarnings({ "static-method", "null" }) interface ____META {
+  @SuppressWarnings({ "static-method", "null" })
+  interface ____META {
     class TEST {
       private static final String EMPTY = "";
       private static final int FIRST_MAGIC_NUMBER = 1729;
@@ -152,7 +145,6 @@ public interface Environment {
         helloWorld = bind((@NotNull final String ¢1, @NotNull final String ¢2, @NotNull final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator,
             world);
       }
-
       @Test public void seriesA0() {
         azzert.that(hello.¢(), iz(HELLO));
         azzert.isNull(nullProperty);
@@ -160,20 +152,17 @@ public interface Environment {
         azzert.isNull(undefinedProperty.¢());
         azzert.that(emptyString.¢(), iz(EMPTY));
       }
-
       @Test public void seriesA1() {
         azzert.that(hello.¢(), iz(HELLO));
         hello.undefine();
         azzert.isNull(hello.ϑ);
         azzert.isNull(hello.¢());
       }
-
       @Test public void seriesA2() {
         azzert.that(hello.¢(), iz(HELLO));
         hello.set(WORLD);
         azzert.that(hello.¢(), iz(WORLD));
       }
-
       @Test public void seriesA3() {
         azzert.that(helloWorld.¢(), iz(HELLO + SEPARATOR + WORLD));
         helloWorld
@@ -181,7 +170,6 @@ public interface Environment {
             .to(hello, world, hello, world);
         azzert.that(helloWorld.¢(), iz(HELLO + WORLD + HELLO + WORLD));
       }
-
       @Test public void seriesA4() {
         azzert.that(supplierCalls, is(0));
         azzert.that(integer.version(), is(0L));
@@ -207,14 +195,12 @@ public interface Environment {
         azzert.that(integer.get(), is(SECOND_MAGIC_NUMBER));
         azzert.that(supplierCalls, is(1));
       }
-
       @Test public void seriesA5() {
         azzert.that(helloWorld.prerequisites.size(), is(3));
         azzert.that(helloWorld.dependents, empty());
         azzert.that(helloWorld.version, is(0L));
         azzert.nay(helloWorld.updated());
       }
-
       @Test public void seriesA6() {
         final Property<String> $ = bind((@NotNull final String ¢1, @NotNull final String ¢2, @NotNull final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello,
             separator, world);
@@ -247,15 +233,12 @@ public interface Environment {
         azzert.aye($.updated());
         azzert.that(helloWorld.get(), iz(WORLD + SEPARATOR + WORLD));
       }
-
       @Test public void seriesA7() {
         //
       }
-
       @Test public void seriesA8() {
         //
       }
-
       @Test public void seriesA9() {
         final Property<String> a = value(EMPTY);
         azzert.aye(a.dependents.isEmpty()).andAye(a.prerequisites.isEmpty());
@@ -277,19 +260,23 @@ public interface Environment {
     }
   }
 
-  @FunctionalInterface interface Binder1<@Nullable T, @Nullable A> {
+  @FunctionalInterface
+  interface Binder1<@Nullable T, @Nullable A> {
     @NotNull Property<T> to(Property<A> ¢);
   }
 
-  @FunctionalInterface interface Binder2<@Nullable T, @Nullable A1, @Nullable A2> {
+  @FunctionalInterface
+  interface Binder2<@Nullable T, @Nullable A1, @Nullable A2> {
     @NotNull Property<T> to(Property<A1> ¢1, Property<A2> ¢2);
   }
 
-  @FunctionalInterface interface Binder3<@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> {
+  @FunctionalInterface
+  interface Binder3<@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3> {
     @NotNull Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3);
   }
 
-  @FunctionalInterface interface Binder4<@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> {
+  @FunctionalInterface
+  interface Binder4<@Nullable T, @Nullable A1, @Nullable A2, @Nullable A3, @Nullable A4> {
     @NotNull Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3, Property<A4> ¢4);
   }
 
@@ -323,28 +310,23 @@ public interface Environment {
     private boolean frozen;
 
     /** Instantiates this class. */
-    public Property() {
-    }
-
+    public Property() {}
     /** Instantiates this class.
      * @param λ JD */
     public Property(final Function0<? extends T> ϑ) {
       this.ϑ = ϑ;
     }
-
     /** Instantiates this class.
      * @param t initial cached value */
     public Property(final T t) {
       cache(t);
     }
-
     /** @return current value stored in this instance, recomputed if
      *         necessary */
     @Override public T ¢() {
       update();
       return cache();
     }
-
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
      * @param <A> argument's type
@@ -360,7 +342,6 @@ public interface Environment {
     @NotNull public Property<@Nullable T> bind(@NotNull final Function0<T> ¢) {
       return ϑ(() -> ¢.¢());
     }
-
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
      * @param <A> argument's type
@@ -376,7 +357,6 @@ public interface Environment {
     @NotNull public <@Nullable A> Binder1<T, A> bind(@NotNull final Function1<T, A> f) {
       return ¢ -> ϑ(() -> f.ϑ(¢.¢()), ¢);
     }
-
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking two arguments
      * @param <A1> 1st argument's type
@@ -389,7 +369,6 @@ public interface Environment {
     @NotNull public <@Nullable A1, @Nullable A2> Binder2<@Nullable T, @Nullable A1, @Nullable A2> bind(@NotNull final Function2<T, A1, A2> a) {
       return (¢1, ¢2) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢()), ¢1, ¢2);
     }
-
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking four arguments
      * @param <A1> 1st argument's type
@@ -403,7 +382,6 @@ public interface Environment {
     @NotNull public <@Nullable A1, @Nullable A2, @Nullable A3> Binder3<T, A1, A2, A3> bind(@NotNull final Function3<T, A1, A2, A3> a) {
       return (¢1, ¢2, ¢3) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢()), ¢1, ¢2, ¢3);
     }
-
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking four arguments
      * @param <A1> 1st argument's type
@@ -419,7 +397,6 @@ public interface Environment {
         @NotNull final Function4<T, A1, A2, A3, A4> a) {
       return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
     }
-
     /** Used for fluent API; sets the current value of this instance to a be a
      * function taking one argument
      * @param <A> argument's type
@@ -438,12 +415,10 @@ public interface Environment {
       ingredients(this);
       return this;
     }
-
     /** @return last value computed or set for this instance. */
     public final T cache() {
       return cache;
     }
-
     @Override @NotNull @SuppressWarnings("unchecked") public Property<T> clone() {
       try {
         return (Property<T>) super.clone();
@@ -451,24 +426,20 @@ public interface Environment {
         throw new RuntimeException(¢);
       }
     }
-
     public void freeze() {
       frozen = true;
     }
-
     public T freezeGet() {
       freeze();
       final T $ = get();
       melt();
       return $;
     }
-
     /** @return current value stored in this instance, recomputed if
      *         necessary */
     public T get() {
       return ¢();
     }
-
     /** Add another property on which this instance depends
      * @param ¢ JD
      * @return <code><b>this</b></code> */
@@ -477,7 +448,6 @@ public interface Environment {
       run(() -> prerequisites.add(¢)).unless(prerequisites.contains(this));
       return this;
     }
-
     /** Add another property on which this instance depends
      * @param ps JD
      * @return <code><b>this</b></code> */
@@ -486,18 +456,15 @@ public interface Environment {
         ingredient(¢);
       return this;
     }
-
     public void melt() {
       frozen = false;
     }
-
     /** Used for fluent API; sets the current value of this instance
      * @param ¢ a no-arguments function that returns a value for this instance
      * @return <code><b>this</b></code> */
     @NotNull public Property<T> of(final Function0<T> ¢) {
       return ϑ(¢);
     }
-
     /** Used for fluent API; sets the current value of this instance
      * @param ¢ JD
      * @return <code><b>this</b></code>* */
@@ -508,15 +475,12 @@ public interface Environment {
       prerequisites.clear();
       return this;
     }
-
     @NotNull public Property<T> push(@SuppressWarnings("unused") final Function0<T> __) {
       return this;
     }
-
     @NotNull public Property<T> push(@SuppressWarnings("unused") final T __) {
       return this;
     }
-
     /** forcibly set the value stored in this instance, ignoring the function
      * used for computing it, and marks this instance as updated with respect to
      * all prerequisites.
@@ -526,14 +490,12 @@ public interface Environment {
       version = latestPrequisiteVersion() + 1;
       return cache(¢);
     }
-
     /** puts this instance in an undefined state
      * @return <code><b>this</b></code> */
     @NotNull public Property<@Nullable T> undefine() {
       cache(null);
       return this;
     }
-
     public void update() {
       if (frozen || updated())
         return;
@@ -550,7 +512,6 @@ public interface Environment {
       }
       frozen = false;
     }
-
     /** @return <code><b>true</b></code> <em>iff</em> the value in this cell is
      *         updated with respect to all its prerequisites */
     public boolean updated() {
@@ -563,24 +524,19 @@ public interface Environment {
           return false;
       return true;
     }
-
     /** @return version of this instance */
     public long version() {
       return version;
     }
-
     @Nullable T cache(@SuppressWarnings("hiding") final T cache) {
       return this.cache = cache;
     }
-
     final long latestDependentVersion() {
       return maxVersion(dependents);
     }
-
     long latestPrequisiteVersion() {
       return maxVersion(prerequisites);
     }
-
     /** @param ϑ a no-arguments function that returns a value for this instance
      * @param cs instances on which the cell depends
      * @return <code><b>this</b></code> */

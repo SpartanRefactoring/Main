@@ -18,21 +18,16 @@ public interface English {
         @Override public String get() {
           return base;
         }
-
         @Override public String getEd() {
           return base + "ed";
         }
-
         @Override public String getIng() {
           return base + "ing";
         }
       };
     }
-
     String get();
-
     String getEd();
-
     String getIng();
   }
 
@@ -46,18 +41,15 @@ public interface English {
   static String indefinite(final Object ¢) {
     return indefinite(English.name(¢));
   }
-
   static String indefinite(final String className) {
     final String $ = cCamelCase.components(className)[0];
     final char openingLetter = the.characterOf($);
     return isAcronym($) ? indefinite(pronounce(openingLetter)) : //
         (Utils.intIsIn(openingLetter, 'i', 'e', 'o', 'u', 'y') ? "an" : "a") + " " + className;
   }
-
   static boolean isAcronym(final String $) {
     return $.toUpperCase().equals($);
   }
-
   /** Constructs linguistic list of items: [i1, i2, i3] --> "i1, i2 and i3"
    * @param ¢ list of items
    * @return a linguistic list of the items */
@@ -65,19 +57,15 @@ public interface English {
     return ¢ == null || ¢.isEmpty() ? "nothing"
         : ¢.size() == 1 ? the.headOf(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + the.lastOf(¢);
   }
-
   static String lowerFirstLetter(final String input) {
     return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toLowerCase() + input.substring(1);
   }
-
   static String name(final Class<?> ¢) {
     return ¢.getEnclosingClass() == null ? English.selfName(¢) : English.selfName(¢) + "." + name(¢.getEnclosingClass());
   }
-
   static String name(final Object ¢) {
     return English.name(¢.getClass());
   }
-
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
    * @param s string to be pluralize
    * @param i count
@@ -85,7 +73,6 @@ public interface English {
   static String plurales(final String s, final int i) {
     return i == 1 ? "one " + s : i + " " + s + "es";
   }
-
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
    * @param s string to be pluralize
    * @param i count
@@ -93,7 +80,6 @@ public interface English {
   static String plurales(final String s, final Int i) {
     return i == null ? UNKNOWN + " " + s + "es" : i.get() != 1 ? i + " " + s + "es" : "one " + s;
   }
-
   /** Get the plural form of the word if needed, by adding an 'es' to its end.
    * @param s string to be pluralize
    * @param i count
@@ -101,7 +87,6 @@ public interface English {
   static String plurales(final String s, final Integer i) {
     return i == null ? UNKNOWN + " " + s + "es" : i.intValue() != 1 ? i + " " + s + "es" : "one " + s;
   }
-
   /** Get the plural form of the word if needed, by adding an 's' to its end.
    * @param s string to be pluralize
    * @param i count
@@ -109,7 +94,6 @@ public interface English {
   static String plurals(final String s, final int i) {
     return i == 1 ? "one " + s : i + " " + s + "s";
   }
-
   /** Get the plural form of the word if needed, by adding an 's' to its end.
    * @param s string to be pluralize
    * @param i count
@@ -117,7 +101,6 @@ public interface English {
   static String plurals(final String s, final Int i) {
     return i == null ? UNKNOWN + " " + s + "s" : i.get() != 1 ? i + " " + s + "s" : "one " + s;
   }
-
   /** Get the plural form of the word if needed, by adding an 's' to its end.
    * @param s string to be pluralize
    * @param i count
@@ -125,7 +108,6 @@ public interface English {
   static String plurals(final String s, final Integer i) {
     return i == null ? UNKNOWN + " " + s + "s" : i.intValue() != 1 ? i + " " + s + "s" : "one " + s;
   }
-
   static String pronounce(final char ¢) {
     if (Character.isUpperCase(¢))
       return pronounce(Character.toLowerCase(¢));
@@ -184,20 +166,16 @@ public interface English {
         return "some character";
     }
   }
-
   static String repeat(final int i, final char c) {
     return String.valueOf(new char[i]).replace('\0', c);
   }
-
   static String selfName(final Class<?> ¢) {
     return ¢.isAnonymousClass() ? "{}"
         : ¢.isAnnotation() ? "@" + ¢.getSimpleName() : !¢.getSimpleName().isEmpty() ? ¢.getSimpleName() : ¢.getCanonicalName();
   }
-
   static String time(final long $) {
     return new DecimalFormat(DOUBLE_FORMAT).format($ / 1000000000.0);
   }
-
   /** Cut string's suffix to maximal length for every row.
    * @param s JD
    * @return cut string */
@@ -208,7 +186,6 @@ public interface English {
     IntStream.range(0, $.length).forEach(λ -> $[λ] = trimAbsolute($[λ], TRIM_THRESHOLD, TRIM_SUFFIX));
     return String.join("\n", $);
   }
-
   /** Cut string's suffix to maximal length.
    * @param s JD
    * @param l JD
@@ -218,20 +195,17 @@ public interface English {
     assert l - x.length() >= 0;
     return s == null || s.length() <= l ? s : s.substring(0, l - x.length()) + x;
   }
-
   /** @param ¢ something
    * @return printable {@link String} for it */
   static <X> String unknownIfNull(final X ¢) {
     return ¢ != null ? ¢ + "" : UNKNOWN;
   }
-
   /** @param x something
    * @param f function to be conducted on x in case it is not null
    * @return printable {@link String} for f(x) */
   static <X> String unknownIfNull(final X x, final Function<X, ?> f) {
     return x == null ? UNKNOWN : f.apply(x) + "";
   }
-
   static String upperFirstLetter(final String input) {
     return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toUpperCase() + input.substring(1);
   }

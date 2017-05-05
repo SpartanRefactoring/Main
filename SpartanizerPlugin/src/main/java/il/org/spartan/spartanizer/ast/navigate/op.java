@@ -73,14 +73,12 @@ public enum op {
   public static InfixExpression.Operator assign2infix(final Assignment.Operator ¢) {
     return assign2infix.get(¢);
   }
-
   public static Assignment.Operator infix2assign(final InfixExpression.Operator ¢) {
     assert ¢ != null;
     final Assignment.Operator $ = infix2assign.get(¢);
     assert $ != null : "No assignment equivalent to " + ¢;
     return $;
   }
-
   /** @param o JD
    * @return whether one of {@link #InfixExpression.Operator.XOR},
    *         {@link #InfixExpression.Operator.OR},
@@ -88,7 +86,6 @@ public enum op {
   public static boolean isBitwise(final InfixExpression.Operator ¢) {
     return is.in(¢, XOR, OR, AND);
   }
-
   /** Determine whether an InfixExpression.Operator is a shift operator or not
    * @param o JD
    * @return whether one of {@link #InfixExpression.Operator.LEFT_SHIFT},
@@ -98,7 +95,6 @@ public enum op {
   public static boolean isShift(final InfixExpression.Operator ¢) {
     return is.in(¢, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }
-
   /** @param o JD
    * @return operator that produces the logical negation of the parameter */
   public static InfixExpression.Operator negate(final InfixExpression.Operator ¢) {
@@ -112,7 +108,6 @@ public enum op {
                                 : ¢.equals(LESS) ? GREATER_EQUALS //
                                     : null;
   }
-
   /** Determine whether a node is an infix expression whose operator is
    * non-associative.
    * @param pattern JD
@@ -121,11 +116,9 @@ public enum op {
   public static boolean nonAssociative(final ASTNode ¢) {
     return nonAssociative(az.infixExpression(¢));
   }
-
   static InfixExpression.Operator assign2infix(final Assignment ¢) {
     return assign2infix.get(¢.getOperator());
   }
-
   /** the function checks if all the given assignments have the same left hand
    * side(variable) and operator
    * @param base The assignment to compare all others to
@@ -135,15 +128,12 @@ public enum op {
   static boolean compatible(final Assignment base, final Assignment... as) {
     return !has.nil(base, as) && Stream.of(as).noneMatch(λ -> op.incompatible(base, λ));
   }
-
   static boolean compatible(final Assignment a1, final Assignment a2) {
     return !op.incompatible(a1, a2);
   }
-
   static boolean compatible(final Assignment.Operator o1, final InfixExpression.Operator o2) {
     return infix2assign.get(o2) == o1;
   }
-
   /** Makes an opposite operator from a given one, which keeps its logical
    * operation after the node swapping. ¢.¢. "&" is commutative, therefore no
    * change needed. "<" isn't commutative, but it has its opposite: ">=".
@@ -153,7 +143,6 @@ public enum op {
   public static InfixExpression.Operator conjugate(final InfixExpression.Operator ¢) {
     return conjugate.getOrDefault(¢, ¢);
   }
-
   static InfixExpression.Operator convertToInfix(final Assignment.Operator ¢) {
     return ¢ == Assignment.Operator.BIT_AND_ASSIGN ? InfixExpression.Operator.AND
         : ¢ == Assignment.Operator.BIT_OR_ASSIGN ? InfixExpression.Operator.OR
@@ -166,7 +155,6 @@ public enum op {
                                     : ¢ == Assignment.Operator.RIGHT_SHIFT_SIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_SIGNED
                                         : ¢ == Assignment.Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN ? InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED : null;
   }
-
   /** Compute the "de Morgan" conjugate of the operator present on an
    * {@link InfixExpression}.
    * @param x an expression whose operator is either
@@ -179,7 +167,6 @@ public enum op {
   static InfixExpression.Operator deMorgan(final InfixExpression ¢) {
     return deMorgan(¢.getOperator());
   }
-
   /** Compute the "de Morgan" conjugate of an operator.
    * @param o must be either {@link Operator#CONDITIONAL_AND} or
    *        {@link Operator#CONDITIONAL_OR}
@@ -192,11 +179,9 @@ public enum op {
     assert iz.deMorgan(¢);
     return ¢.equals(CONDITIONAL_AND) ? CONDITIONAL_OR : CONDITIONAL_AND;
   }
-
   static boolean incompatible(final Assignment a1, final Assignment a2) {
     return has.nil(a1, a2) || !lisp.areEqual(a1.getOperator(), a2.getOperator()) || !wizard.eq(step.to(a1), step.to(a2));
   }
-
   /** Determine whether an InfixExpression.Operator is a comparison operator or
    * not
    * @param o JD
@@ -213,11 +198,9 @@ public enum op {
     return is.in(¢, LESS, GREATER, LESS_EQUALS, GREATER_EQUALS, EQUALS, //
         NOT_EQUALS, CONDITIONAL_OR, CONDITIONAL_AND);
   }
-
   static boolean nonAssociative(final InfixExpression ¢) {
     return ¢ != null && (notAssociative(¢.getOperator()) || iz.infixPlus(¢) && !type.isNotString(¢));
   }
-
   static boolean notAssociative(final Operator ¢) {
     return is.in(¢, MINUS2, DIVIDE, REMAINDER, LEFT_SHIFT, RIGHT_SHIFT_SIGNED, RIGHT_SHIFT_UNSIGNED);
   }

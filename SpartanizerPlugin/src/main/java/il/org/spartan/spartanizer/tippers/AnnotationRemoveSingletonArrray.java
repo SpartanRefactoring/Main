@@ -20,7 +20,6 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
   @Override public String description(final SingleMemberAnnotation ¢) {
     return "Remove the curly brackets in the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
-
   @Override public Examples examples() {
     return convert("@SuppressWarnings({\"unchecked\"}) void f() {}") //
         .to("@SuppressWarnings(\"unchecked\") void f() {}") //
@@ -29,7 +28,6 @@ public final class AnnotationRemoveSingletonArrray extends ReplaceCurrentNode<Si
         .ignores("@SuppressWarnings void f() {}")//
     ;
   }
-
   @Override public ASTNode replacement(final SingleMemberAnnotation a) {
     final Expression x = the.onlyOneOf(expressions(az.arrayInitializer(a.getValue())));
     if (x == null)

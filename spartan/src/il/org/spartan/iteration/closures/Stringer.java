@@ -33,15 +33,12 @@ public interface Stringer<T> extends Converter<T, String> {
     public Quoter(final char quote) {
       this(quote + "");
     }
-
     public Quoter(final String quote) {
       this.quote = quote;
     }
-
     @Override @NotNull public final String __(@Nullable final T ¢) {
       return quote(¢ == null ? "" : super.__(¢));
     }
-
     @NotNull public final String quote(@NotNull final String ¢) {
       nonnull(¢);
       return wrap(quote, ¢.replaceAll(quote, quote + quote));

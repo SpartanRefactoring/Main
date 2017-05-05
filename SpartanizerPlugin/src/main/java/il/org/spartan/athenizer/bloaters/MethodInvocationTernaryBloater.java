@@ -33,7 +33,6 @@ public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<Expressio
     arguments(mElse).set(ci, copy.of(elze($)));
     return subject.pair(subject.operand(mThen).toStatement(), subject.operand(mElse).toStatement()).toIf(copy.of($.getExpression()));
   }
-
   @Override @SuppressWarnings("unused") public String description(final ExpressionStatement __) {
     return "replace ternary with if in method invocation parameters";
   }

@@ -12,24 +12,19 @@ public class B {
   @Override public int hashCode() {
     return 31 * ((left == null ? 3 : left.hashCode()) + 31) + (right == null ? 13 : right.hashCode());
   }
-
   public boolean eq(final B b1, final B b2) {
     return b1 == null && b2 == null || b1 != null && b2 != null && eq(b1.left, b2.left) && eq(b1.right, b2.right);
   }
-
   @Override public boolean equals(final Object ¢) {
     return ¢ == this || getClass() == ¢.getClass() && eq(this, (B) ¢);
   }
-
   public B(final B left, final B right) {
     this.left = left;
     this.right = right;
   }
-
   @Override public String toString() {
     return String.format("(%s,%s)", s(left), s(right));
   }
-
   private static String s(final B ¢) {
     return ¢ == null ? "." : ¢ + "";
   }
@@ -46,7 +41,6 @@ public class B {
           $.addAll(enumerate(n - i - 1).stream().map(λ -> new B(left, λ)).collect(Collectors.toList()));
     return $;
   }
-
   public static void main(final String[] args) {
     System.out.println(enumerate(0).size());
     System.out.println(enumerate(1).size());

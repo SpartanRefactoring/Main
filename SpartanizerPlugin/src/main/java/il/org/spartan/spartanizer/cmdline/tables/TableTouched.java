@@ -22,16 +22,13 @@ public class TableTouched extends TableNanosCoverage {
     clazz = TableTouched.class;
     DeprecatedFolderASTVisitor.main(args);
   }
-
   @Override protected void done(final String path) {
     summarize(path);
     super.done(path);
   }
-
   private static void initializeWriter() {
     touchedWriter = new Table(TableTouched.class);
   }
-
   @SuppressWarnings({ "boxing", "hiding" }) public static void summarize(final String path) {
     if (touchedWriter == null)
       initializeWriter();
@@ -49,11 +46,9 @@ public class TableTouched extends TableNanosCoverage {
     touchedWriter.put("% of methods touched", format.decimal(100 * safe.div(totalMethodsTouched, totalMethods)));
     touchedWriter.nl();
   }
-
   private static double fractionOfMethodsTouched(final Collection<MethodRecord> ¢) {
     return safe.div(totalMethodsTouched(¢), ¢.size());
   }
-
   private static double totalMethodsTouched(final Collection<MethodRecord> ¢) {
     return ¢.stream().filter(MethodRecord::touched).count();
   }

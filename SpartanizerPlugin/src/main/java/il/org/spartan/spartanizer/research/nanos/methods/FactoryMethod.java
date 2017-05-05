@@ -23,7 +23,6 @@ public class FactoryMethod extends JavadocMarkerNanoPattern {
     return hazOneStatement(¢)//
         && anyTips(tippers.get(), onlyStatement(¢));
   }
-
   @Override public String tipperName() {
     return "Factory";
   }

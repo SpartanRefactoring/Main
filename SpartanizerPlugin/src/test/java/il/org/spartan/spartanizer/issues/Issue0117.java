@@ -17,7 +17,6 @@ public class Issue0117 {
         .gives("for (int a  = f(), ¢ = 0; a <100;  ++¢) b[¢] *= 3 << a;")//
         .stays();
   }
-
   @Test public void issue54ForPlainUseInInitializer() {
     trimmingOf("int a  = f(); for (int ¢ = a; ¢ <100; ++¢) b[¢] = 3;")//
         .gives("for (int ¢ = f(); ¢ <100; ++¢) b[¢] = 3;");

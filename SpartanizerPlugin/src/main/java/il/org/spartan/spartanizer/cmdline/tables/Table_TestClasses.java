@@ -21,7 +21,6 @@ public class Table_TestClasses extends Table_SummaryForPaper {
     testClassesWriter.close();
     System.err.println("Your output is in: " + system.tmp);
   }
-
   private void writeTestClasses(final String path) {
     compilationUnitRecords.stream().filter(λ -> λ.testCount() > 0)
         .forEachOrdered(λ -> testClassesWriter//
@@ -31,14 +30,12 @@ public class Table_TestClasses extends Table_SummaryForPaper {
             .col("#TestMethods", λ.testCount())//
             .nl());
   }
-
   @Override protected void done(final String path) {
     if (testClassesWriter == null)
       initializeWriter();
     writeTestClasses(path);
     System.err.println("Your output is in: " + outputFolder);
   }
-
   private static void initializeWriter() {
     testClassesWriter = new Table(clazz);
   }

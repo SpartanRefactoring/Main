@@ -35,7 +35,6 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
   @Override public String description(final Assignment ¢) {
     return "Consolidate update assignment to " + to(¢) + " with subsequent similar assignment";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (is.in(a1.getOperator(), ASSIGN, REMAINDER_ASSIGN, LEFT_SHIFT_ASSIGN, RIGHT_SHIFT_SIGNED_ASSIGN, RIGHT_SHIFT_UNSIGNED_ASSIGN))
       return null;
@@ -52,7 +51,6 @@ public final class AssignmentUpdateAndSameUpdate extends GoToNextStatement<Assig
     $.replace(from(a2), subject.operands(from(a1), from(a2)).to(unifying(a1)), g);
     return $;
   }
-
   private static Operator unifying(final Assignment ¢) {
     final Operator $ = op.assign2infix(¢.getOperator());
     return $ == op.MINUS2 ? op.PLUS2 : $ == DIVIDE ? TIMES : $;

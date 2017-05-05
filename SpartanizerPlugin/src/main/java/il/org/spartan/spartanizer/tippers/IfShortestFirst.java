@@ -20,7 +20,6 @@ public final class IfShortestFirst extends ReplaceCurrentNode<IfStatement>//
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Invert logical conditiona and swap branches of 'if' to make the shortest branch first";
   }
-
   @Override public Statement replacement(final IfStatement ¢) {
     return wizard.thenIsShorter(¢) ? null : make.invert(¢);
   }

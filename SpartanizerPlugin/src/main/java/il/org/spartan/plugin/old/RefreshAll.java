@@ -18,7 +18,6 @@ public final class RefreshAll extends BaseHandler {
   public static void go() {
     as.list(ResourcesPlugin.getWorkspace().getRoot().getProjects()).forEach(λ -> go(λ));
   }
-
   public static void go(final IProject p) {
     final IProgressMonitor npm = new NullProgressMonitor();
     new Thread(() -> {
@@ -34,7 +33,6 @@ public final class RefreshAll extends BaseHandler {
       }
     }).run();
   }
-
   @Override public Void execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     go();
     return null;

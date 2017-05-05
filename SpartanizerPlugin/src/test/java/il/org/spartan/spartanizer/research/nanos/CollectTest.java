@@ -16,7 +16,6 @@ public class CollectTest {
         .gives("L<SimpleName>$=(fs).stream().map(λ->λ.getName()).collect(toList());")//
     ;
   }
-
   @Test public void b() {
     trimmingOf("L<SimpleName> $ = new A<>();  for (VariableDeclarationFragment λ : fs) if(iLikeTo(a))  $.add(λ.getName());")//
         .using(EnhancedForStatement.class, new ForEachSuchThat(), new ForEach(), new Collect())//
@@ -25,7 +24,6 @@ public class CollectTest {
         .gives("fs.stream().filter(λ->iLikeTo(a)).map(λ->λ.getName()).collect(toList());")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("L<SimpleName> $ = new A<>();  for (VariableDeclarationFragment λ : fs) if(iLikeTo(a))  $.add(λ);")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
@@ -34,7 +32,6 @@ public class CollectTest {
         .gives("fs.stream().filter(λ->iLikeTo(a)).collect(toList());")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("L<SimpleName> $ = new A<>();  for (VariableDeclarationFragment λ : fs) $.add(λ);")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
@@ -43,7 +40,6 @@ public class CollectTest {
         .gives("fs.stream().collect(toList());")//
         .stays();
   }
-
   @Test public void e() {
     trimmingOf("for (L<M> st : aS()) for (M λ : st)  if (d.sD(λ))   $.add(x(λ));")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
@@ -51,14 +47,12 @@ public class CollectTest {
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
     ;
   }
-
   @Test public void e0() {
     trimmingOf("for (S s : as()) for (M λ : s) if (a.b(λ)) $.add(x(λ));")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
         .gives("for(S s:as())$.addAll((s).stream().filter(λ->a.b(λ)).map(λ->x(λ)).collect(toList()));")//
     ;
   }
-
   @Test public void f() {
     trimmingOf("Set<Modifier> $ = new H<>(); for (IExtendedModifier λ : ms)  if (test(λ, ps))   $.add((Modifier) λ);")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//
@@ -67,7 +61,6 @@ public class CollectTest {
         .gives("ms.stream().filter(λ->test(λ,ps)).map(λ->(Modifier)λ).collect(toList());")//
         .stays();
   }
-
   @Test public void g() {
     trimmingOf("L<S> $ = new A<>(); for (E e : J.parse(d.gH()).select(\"dS\").first().children())  $.add(e.gN()); return $;")//
         .using(EnhancedForStatement.class, new ForEach(), new ForEachSuchThat(), new Collect())//

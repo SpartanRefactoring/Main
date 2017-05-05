@@ -34,7 +34,6 @@ public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//
     $.setName(¢.getAST().newSimpleName("toString"));
     return $;
   }
-
   @Override @SuppressWarnings("unused") public String description(final InfixExpression __) {
     return null;
   }

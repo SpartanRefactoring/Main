@@ -26,7 +26,6 @@ public class Configuration {
       $.implementation[i++] = ¢ == null ? null : new ArrayList<>(¢);
     return $;
   }
-
   /** Generate an {@link ASTRewrite} that contains the changes proposed by the
    * first tipper that applies to a node in the usual scan.
    * @param root JD
@@ -51,11 +50,9 @@ public class Configuration {
     });
     return $;
   }
-
   private static void disable(final Class<? extends TipperCategory> c, final List<Tipper<? extends ASTNode>> ts) {
     ts.removeIf(λ -> c.isAssignableFrom(λ.getClass()));
   }
-
   @SuppressWarnings("unchecked") private static <N extends ASTNode> Tipper<N> firstTipper(final N n, final List<Tipper<?>> ts) {
     return ts.stream()//
         .map(λ -> (Tipper<N>) λ)//
@@ -76,7 +73,6 @@ public class Configuration {
   @SafeVarargs public final <N extends ASTNode> Configuration add(final Class<N> c, final Tipper<N>... ts) {
     return add(wizard.nodeType(c), ts);
   }
-
   @SafeVarargs public final <N extends ASTNode> Configuration add(final int nodeType, final Tipper<N>... ts) {
     for (final Tipper<N> ¢ : ts) {
       if (¢ == null)
@@ -92,25 +88,21 @@ public class Configuration {
     }
     return this;
   }
-
   @SafeVarargs public final <N extends ASTNode> Configuration remove(final Class<N> c, final Tipper<N>... ts) {
     final int nodeType = wizard.nodeType(c);
     for (final Tipper<N> ¢ : ts)
       get(nodeType).remove(¢);
     return this;
   }
-
   public Collection<Tipper<? extends ASTNode>> getAllTippers() {
     final Collection<Tipper<? extends ASTNode>> $ = an.empty.list();
     for (int ¢ = 0; ¢ < implementation.length; ++¢)
       $.addAll(get(¢));
     return $;
   }
-
   public void disable(final Class<? extends TipperCategory> c) {
     Stream.of(implementation).filter(Objects::nonNull).forEach(λ -> disable(c, λ));
   }
-
   /** Find the first {@link Tipper} appropriate for an {@link ASTNode}
    * @param pattern JD
    * @return first {@link Tipper} for which the parameter is within scope, or
@@ -118,33 +110,26 @@ public class Configuration {
   public <N extends ASTNode> Tipper<N> firstTipper(final N ¢) {
     return firstTipper(¢, get(¢));
   }
-
   public List<Tipper<? extends ASTNode>> get(final int ¢) {
     return implementation[¢] = implementation[¢] == null ? an.empty.list() : implementation[¢];
   }
-
   public int tippersCount() {
     return Stream.of(implementation).filter(Objects::nonNull).mapToInt(List::size).sum();
   }
-
   public long nodesTypeCount() {
     return Stream.of(implementation).filter(Objects::nonNull).count();
   }
-
   List<Tipper<? extends ASTNode>> get(final ASTNode ¢) {
     return get(¢.getNodeType());
   }
-
   @SafeVarargs public final Configuration restrictTo(final Tipper<?>... ts) {
     Stream.of(implementation).filter(Objects::nonNull).forEach(x -> x.removeIf(λ -> !is.in(λ, ts)));
     return this;
   }
-
   @SafeVarargs public final <N extends ASTNode> Configuration setTo(final Class<N> c, final Tipper<N>... ts) {
     clear().get(wizard.nodeType(c)).addAll(as.list(ts));
     return this;
   }
-
   public Configuration clear() {
     Stream.of(implementation).filter(Objects::nonNull).forEach(List::clear);
     return this;

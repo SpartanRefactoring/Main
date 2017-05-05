@@ -26,19 +26,15 @@ public class Issue1044 extends MetaFixture {
   @Test public void test1a() {
     azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new Integer(5)"))))), is("i4"));
   }
-
   @Test public void test1b() {
     azzert.that(firstBlock.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new B();"))))), is("b1"));
   }
-
   @Test public void test2a() {
     azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new Integer(5);"))))), is("i1"));
   }
-
   @Test public void test2b() {
     azzert.that(functionF.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new A();"))))), is("a2"));
   }
-
   @Test public void test3a() {
     azzert.that(clazz.generateName(type(az.classInstanceCreation(findFirst.expression(make.ast("new X();"))))), is("x3"));
   }

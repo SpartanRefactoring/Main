@@ -33,20 +33,16 @@ public class InfixSimplifyComparisionOfSubtractions extends ReplaceCurrentNode<I
             : subject.pair(subject.pair($, rr).to(Operator.PLUS), subject.pair(rl, lr).to(Operator.PLUS)).to(x.getOperator());
     return prerequisite(res) ? res : null;
   }
-
   private static boolean isLiegal(final InfixExpression ¢) {
     return isLegalOperation(¢) && iz.infixMinus(¢.getLeftOperand()) && iz.infixMinus(¢.getRightOperand());
   }
-
   private static boolean isLegalOperation(final InfixExpression ¢) {
     return iz.infixEquals(¢) || iz.infixLess(¢) || iz.infixGreater(¢) || iz.infixGreaterEquals(¢) || iz.infixLessEquals(¢);
   }
-
   @Override public boolean prerequisite(final InfixExpression ¢) {
     return new specificity().compare(left(¢), right(¢)) >= 0 || ¢.hasExtendedOperands() || !iz.comparison(¢)
         || !specificity.defined(left(¢)) && !specificity.defined(right(¢));
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "Simplify the comparison expression: " + ¢;
   }

@@ -18,15 +18,12 @@ public class ForTrueConditionRemove extends ReplaceCurrentNode<ForStatement>//
   @Override public String description() {
     return DESCRIPTION;
   }
-
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return DESCRIPTION;
   }
-
   @Override public boolean prerequisite(final ForStatement ¢) {
     return iz.literal.true¢(step.expression(¢));
   }
-
   @Override public ASTNode replacement(final ForStatement ¢) {
     final ForStatement $ = copy.of(¢);
     $.setExpression(null);

@@ -16,24 +16,20 @@ public class GitCommitOperation extends GitOperation {
   @Override public String description() {
     return "Git commit";
   }
-
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.egit.ui/icons/obj16/commit.png";
   }
-
   @Override public String[][] configurationComponents() {
     return new String[][] { //
         { MESSAGE, "String", "Commit message" }, //
     };
   }
-
   @Override public boolean register(final Map<?, ?> configuration) {
     message = (String) configuration.get(MESSAGE);
     if (message == null)
       message = DEFAULT_MESSAGE;
     return true;
   }
-
   @Override protected void gitOperation(final Git ¢) throws Throwable {
     ¢.commit().setMessage(message).setAll(true).call();
   }
