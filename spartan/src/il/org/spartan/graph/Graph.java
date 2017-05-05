@@ -2,7 +2,7 @@ package il.org.spartan.graph;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.collections.*;
 import il.org.spartan.streotypes.*;
@@ -13,29 +13,29 @@ import il.org.spartan.streotypes.*;
  * @author Yossi Gil
  * @since 2011-11-11 */
 public class Graph<E> extends AbstractGraph<E> {
-  private static <E> ImmutableArrayList<Vertex<E>> makeSinks(@NotNull final ImmutableArrayList<Vertex<E>> v) {
-    @NotNull final ArrayList<Vertex<E>> $ = new ArrayList<>();
-    for (@NotNull final Vertex<E> ¢ : v)
+  private static <E> ImmutableArrayList<Vertex<E>> makeSinks( final ImmutableArrayList<Vertex<E>> v) {
+     final ArrayList<Vertex<E>> $ = new ArrayList<>();
+    for ( final Vertex<E> ¢ : v)
       if (¢.outgoing().isEmpty())
         $.add(¢);
     return ImmutableArrayList.make($);
   }
-  @NotNull private static <E> ImmutableArrayList<Vertex<E>> makeSources(@NotNull final ImmutableArrayList<Vertex<E>> v) {
-    @NotNull final ArrayList<Vertex<E>> $ = new ArrayList<>();
-    for (@NotNull final Vertex<E> ¢ : v)
+   private static <E> ImmutableArrayList<Vertex<E>> makeSources( final ImmutableArrayList<Vertex<E>> v) {
+     final ArrayList<Vertex<E>> $ = new ArrayList<>();
+    for ( final Vertex<E> ¢ : v)
       if (¢.incoming().isEmpty())
         $.add(¢);
     return new ImmutableArrayList<>($);
   }
 
-  @NotNull private final ImmutableArrayList<Vertex<E>> vertices;
-  @NotNull private final ImmutableArrayList<Vertex<E>> sources;
-  @NotNull private final ImmutableArrayList<Vertex<E>> sinks;
-  @NotNull private final Map<E, Vertex<E>> map;
+   private final ImmutableArrayList<Vertex<E>> vertices;
+   private final ImmutableArrayList<Vertex<E>> sources;
+   private final ImmutableArrayList<Vertex<E>> sinks;
+   private final Map<E, Vertex<E>> map;
   private final String description;
   private final String name;
 
-  public Graph(@NotNull final Graph<E> other) {
+  public Graph( final Graph<E> other) {
     this(other.name(), other.description(), other.map);
   }
   /** This <code><b>private</b></code> constructor is used internally by the
@@ -43,7 +43,7 @@ public class Graph<E> extends AbstractGraph<E> {
    * Instantiating this class.
    * @param name
    * @param map An array of vertices */
-  private Graph(final String name, final String description, @NotNull final Map<E, Vertex<E>> map) {
+  private Graph(final String name, final String description,  final Map<E, Vertex<E>> map) {
     this.name = name;
     this.description = description;
     this.map = map;
@@ -61,7 +61,7 @@ public class Graph<E> extends AbstractGraph<E> {
   @Override public String description() {
     return description;
   }
-  public boolean hasEdge(@NotNull final Vertex<E> from, final Vertex<E> to) {
+  public boolean hasEdge( final Vertex<E> from, final Vertex<E> to) {
     for (final Vertex<E> ¢ : from.outgoing())
       if (¢ == to)
         return true;
@@ -70,13 +70,13 @@ public class Graph<E> extends AbstractGraph<E> {
   @Override public String name() {
     return name;
   }
-  @Override @NotNull public ImmutableArrayList<Vertex<E>> sinks() {
+  @Override  public ImmutableArrayList<Vertex<E>> sinks() {
     return sinks;
   }
   @Override public int sinksCount() {
     return sinks.size();
   }
-  @Override @NotNull public ImmutableArrayList<Vertex<E>> sources() {
+  @Override  public ImmutableArrayList<Vertex<E>> sources() {
     return sources;
   }
   @Override public int sourcesCount() {
@@ -85,7 +85,7 @@ public class Graph<E> extends AbstractGraph<E> {
   @Override public Vertex<E> vertex(final E ¢) {
     return map.get(¢);
   }
-  @Override @NotNull public ImmutableArrayList<Vertex<E>> vertices() {
+  @Override  public ImmutableArrayList<Vertex<E>> vertices() {
     return vertices;
   }
 
@@ -93,15 +93,15 @@ public class Graph<E> extends AbstractGraph<E> {
    * @since Dec 7, 2011
    * @param <E> type of elements stored in this graph */
   public static class Builder<E> {
-    @NotNull private static <E> HashSet<E> emptySet() {
+     private static <E> HashSet<E> emptySet() {
       return new HashSet<>();
     }
-    private static <E> void fill(@NotNull final Map<E, Vertex<E>> m, final Vertex<E>[] vs, @NotNull final HashSet<E> es) {
+    private static <E> void fill( final Map<E, Vertex<E>> m, final Vertex<E>[] vs,  final HashSet<E> es) {
       int i = 0;
       for (final E ¢ : es)
         vs[i++] = m.get(¢);
     }
-    @NotNull @SuppressWarnings("unchecked") //
+     @SuppressWarnings("unchecked") //
     private static <E> Vertex<E>[] newVertexArray(final int size) {
       return new Vertex[size];
     }
@@ -116,11 +116,11 @@ public class Graph<E> extends AbstractGraph<E> {
     public Builder() {
       this("");
     }
-    public Builder(@NotNull final Graph<E> g) {
+    public Builder( final Graph<E> g) {
       this(g.name(), g.description());
       addGraph(g);
     }
-    public Builder(@NotNull final Graph<E> g, final String name, final String description) {
+    public Builder( final Graph<E> g, final String name, final String description) {
       this(name, description);
       addGraph(g);
     }
@@ -138,19 +138,19 @@ public class Graph<E> extends AbstractGraph<E> {
      * supplied graph.
      * @param g an arbitrary graph
      * @return <code><b>this</b></code> */
-    @NotNull public Builder<E> addGraph(@NotNull final Graph<E> g) {
-      for (@NotNull final Vertex<E> v : g.vertices())
+     public Builder<E> addGraph( final Graph<E> g) {
+      for ( final Vertex<E> v : g.vertices())
         if (g.outDegree(v) == 0)
           newVertex(v.e());
         else
-          for (@NotNull final Vertex<E> u : g.outgoing(v))
+          for ( final Vertex<E> u : g.outgoing(v))
             newEdge(v.e(), u.e());
       return this;
     }
     /** The actual function to create the graph, defined by all associations
      * recorded so far.
      * @return the Graph object defined by the associations. */
-    @NotNull @SuppressWarnings("synthetic-access") public Graph<E> build() {
+     @SuppressWarnings("synthetic-access") public Graph<E> build() {
       return new Graph<>(name, description, makeVerticesMap());
     }
     public int countEdges() {
@@ -165,7 +165,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * @param to the target of the associations.
      * @param froms the sources of the associations
      * @return <code><b>this</b></code> */
-    @NotNull public Builder<E> incoming(final E to, @NotNull final E... froms) {
+     public Builder<E> incoming(final E to,  final E... froms) {
       for (final E from : froms)
         newEdge(from, to);
       return this;
@@ -176,7 +176,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * @param from association starts here
      * @param to association ends here
      * @return <code><b>this</b></code> */
-    @NotNull public Builder<E> newEdge(final E from, final E to) {
+     public Builder<E> newEdge(final E from, final E to) {
       newVertex(from).newVertex(to);
       edges.add(new BuildingEdge<>(from, to));
       return this;
@@ -185,7 +185,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * cases in which these data element may not participate in any association.
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
-    @NotNull public Builder<E> newSelfLoops(@NotNull final E... es) {
+     public Builder<E> newSelfLoops( final E... es) {
       for (final E ¢ : es)
         newEdge(¢, ¢);
       return this;
@@ -194,7 +194,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * which the data element may not participate in any association.
      * @param ¢ a data element.
      * @return <code><b>this</b></code> */
-    @NotNull public Builder<E> newVertex(final E ¢) {
+     public Builder<E> newVertex(final E ¢) {
       outgoing.put(¢, Builder.emptySet());
       incoming.put(¢, Builder.emptySet());
       return this;
@@ -204,7 +204,7 @@ public class Graph<E> extends AbstractGraph<E> {
      * association.
      * @param es arbitrary data elements
      * @return <code><b>this</b></code> */
-    @NotNull public Builder<E> newVertices(@NotNull final E... es) {
+     public Builder<E> newVertices( final E... es) {
       for (final E ¢ : es)
         newVertex(¢);
       return this;
@@ -215,25 +215,25 @@ public class Graph<E> extends AbstractGraph<E> {
      * @param from the source of the associations
      * @param tos the targets of the associations.
      * @return <code><b>this</b></code> */
-    @NotNull public Builder<E> outgoing(final E from, @NotNull final E... tos) {
+     public Builder<E> outgoing(final E from,  final E... tos) {
       for (final E to : tos)
         newEdge(from, to);
       return this;
     }
-    @NotNull private Map<E, Vertex<E>> makeVerticesMap() {
+     private Map<E, Vertex<E>> makeVerticesMap() {
       // Phase I: Determine vertex set, and record mappings.
-      for (@NotNull final BuildingEdge<E> ¢ : edges) {
+      for ( final BuildingEdge<E> ¢ : edges) {
         outgoing.get(¢.from).add(¢.to);
         incoming.get(¢.to).add(¢.from);
       }
-      @NotNull final Map<E, Vertex<E>[]> incomingArrays = new HashMap<>(), outgoingArrays = new HashMap<>();
+       final Map<E, Vertex<E>[]> incomingArrays = new HashMap<>(), outgoingArrays = new HashMap<>();
       for (final E e : outgoing.keySet()) {
-        @NotNull final Vertex<E>[] out = newVertexArray(outgoing.get(e).size()), in = newVertexArray(incoming.get(e).size());
+         final Vertex<E>[] out = newVertexArray(outgoing.get(e).size()), in = newVertexArray(incoming.get(e).size());
         outgoingArrays.put(e, out);
         incomingArrays.put(e, in);
       }
       // Phase III: create the vertices map.
-      @NotNull final Map<E, Vertex<E>> $ = new HashMap<>();
+       final Map<E, Vertex<E>> $ = new HashMap<>();
       for (final E ¢ : outgoing.keySet())
         $.put(¢, new Vertex<>(¢, outgoingArrays.get(¢), incomingArrays.get(¢)));
       for (final E v : $.keySet()) {
@@ -253,13 +253,13 @@ public class Graph<E> extends AbstractGraph<E> {
         this.to = to;
       }
       @Override public boolean equals(final Object ¢) {
-        @NotNull @SuppressWarnings("unchecked") final BuildingEdge<E> $ = (BuildingEdge<E>) ¢;
+         @SuppressWarnings("unchecked") final BuildingEdge<E> $ = (BuildingEdge<E>) ¢;
         return from.equals($.from) && to.equals($.to);
       }
       @Override public int hashCode() {
         return to.hashCode() ^ from.hashCode() >>> 1;
       }
-      @Override @NotNull public String toString() {
+      @Override  public String toString() {
         return "<" + from + "," + to + ">";
       }
     }

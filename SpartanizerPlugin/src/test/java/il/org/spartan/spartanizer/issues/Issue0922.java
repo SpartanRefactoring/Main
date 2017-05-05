@@ -67,12 +67,12 @@ public class Issue0922 {
         .stays();
   }
   @Test public void a$12() {
-    trimmingOf("Assert.assertNotNull(T);")//
+    trimmingOf("Assert.assertNonNull(T);")//
         .gives("assert T != null;")//
         .stays();
   }
   @Test public void a$13() {
-    trimmingOf("Assert.assertNotNull(message, T);")//
+    trimmingOf("Assert.assertNonNull(message, T);")//
         .gives("assert T != null: message;")//
         .stays();
   }
@@ -85,7 +85,7 @@ public class Issue0922 {
         .stays();
   }
   @Test public void b() {
-    trimmingOf("azzert.notNull(message, T);")//
+    trimmingOf("azzert.NonNull(message, T);")//
         .gives("assert T != null: message;")//
         .stays();
   }

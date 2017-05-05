@@ -49,7 +49,7 @@ public final class Issue0214 {
   @Test public void a05_simplifyBlockReturnBlock() {
     assert blockSimplify.myActualOperandsClass() != null;
   }
-  @Test public void a06_TipperAbstractNotNull() {
+  @Test public void a06_TipperAbstractNonNull() {
     assert new BlockSimplify().getAbstractOperandClass() != null;
   }
   @Test public void a07_BlockSimplifyReturnsSomeClass() {

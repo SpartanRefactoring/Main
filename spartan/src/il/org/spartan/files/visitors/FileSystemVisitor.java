@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
@@ -28,13 +28,13 @@ import il.org.spatan.iteration.*;
  *      il.org.spartan.files.visitors.FileSystemVisitor.Action, String[])
  * @see Action */
 public class FileSystemVisitor {
-  @NotNull private static Iterable<File> asFiles(@NotNull final Iterable<String> fileNames) {
-    @NotNull final List<File> $ = new ArrayList<>();
-    for (@NotNull final String fileName : fileNames)
+   private static Iterable<File> asFiles( final Iterable<String> fileNames) {
+     final List<File> $ = new ArrayList<>();
+    for ( final String fileName : fileNames)
       $.add(new File(fileName));
     return $;
   }
-  @NotNull private static Iterable<File> asFiles(final String... fileNames) {
+   private static Iterable<File> asFiles(final String... fileNames) {
     return asFiles(Iterables.toList(fileNames));
   }
 
@@ -98,7 +98,7 @@ public class FileSystemVisitor {
    * @see #go
    * @see #FileSystemVisitor(Collection,
    *      il.org.spartan.files.visitors.FileSystemVisitor.Action, String[]) */
-  public FileSystemVisitor(@NotNull final Iterable<String> from, final Action visitor, final String... extensions) {
+  public FileSystemVisitor( final Iterable<String> from, final Action visitor, final String... extensions) {
     this(visitor, asFiles(from), extensions);
   }
   /** Create a new visitor object to scan a single directory.
@@ -197,7 +197,7 @@ public class FileSystemVisitor {
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */
   public void go() throws IOException, StopTraversal {
-    for (@NotNull final File ¢ : from)
+    for ( final File ¢ : from)
       recurse(¢);
   }
   /** Conduct recursive traversal starting at a given file
@@ -206,7 +206,7 @@ public class FileSystemVisitor {
    * @throws IOException if the file system could not traversed for some reason
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */
-  private void recurse(@NotNull final File ¢) throws IOException, StopTraversal {
+  private void recurse( final File ¢) throws IOException, StopTraversal {
     if (¢.isDirectory())
       recurseDirectory(¢);
     else if (Zip.isZipFile(¢))
@@ -218,16 +218,16 @@ public class FileSystemVisitor {
    * @param d a directory
    * @throws IOException if the file system could not be traversed for some
    *         reason */
-  private void recurseDirectory(@NotNull final File d) throws IOException {
+  private void recurseDirectory( final File d) throws IOException {
     try {
       visitor.visitDirectory(d);
       if (d.list() == null) // Weird directories such as
         // "System Volume Information"
         return;
-      for (@Nullable final String name : d.list())
+      for ( final String name : d.list())
         if (name != null)
           recurse(new File(d, name));
-    } catch (@NotNull final Action.StopTraversal __) {
+    } catch ( final Action.StopTraversal __) {
       // do not visit children of this directory
     }
   }
@@ -238,14 +238,14 @@ public class FileSystemVisitor {
    *         visitation of the ZIP file itself, the scanning of this ZIP file
    *         will stop, but the no exception is thrown, and the entire traversal
    *         continue. */
-  private void scanZip(@NotNull final File f) throws StopTraversal {
+  private void scanZip( final File f) throws StopTraversal {
     try {
       visitor.visitZip(f);
-    } catch (@NotNull final Action.StopTraversal e) {
+    } catch ( final Action.StopTraversal e) {
       return; // do not visit any elements of this ZIP file, but continue
       // traversal.
     }
-    try (@NotNull ZipFile Z = new ZipFile(f.getAbsoluteFile())) {
+    try ( ZipFile Z = new ZipFile(f.getAbsoluteFile())) {
       for (final Enumeration<? extends ZipEntry> es = Z.entries(); es.hasMoreElements();) {
         final ZipEntry e = es.nextElement();
         try {
@@ -257,14 +257,14 @@ public class FileSystemVisitor {
           if (Suffixed.by(e.getName(), extensions))
             visitor.visitZipEntry(Z.getName(), e.getName(), is);
           is.close();
-        } catch (@NotNull final StopTraversal x) {
+        } catch ( final StopTraversal x) {
           System.out.println("Found at ZIP!!!");
           throw x;
-        } catch (@NotNull final IOException ¢) {
+        } catch ( final IOException ¢) {
           System.err.println("Error reading " + Z + ": " + ¢.getMessage());
         }
       }
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       System.err.println(f.getAbsolutePath() + ": " + ¢.getMessage());
     }
   }

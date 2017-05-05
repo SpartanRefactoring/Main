@@ -8,7 +8,7 @@ import java.util.function.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** A cell stores a value of some type (which is passed by parameter). A cell
  * may be either {@link Ingredient} or {@link Recipe}. A computed cell typically
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.*;
 public abstract class Cell<T> implements Supplier<T>, Cloneable {
   public static Set<Cell<?>> trace;
   /** The last value computed for this cell */
-  @Nullable T cache;
+   T cache;
   /** other cells that depend on this cell */
   final List<Cell<?>> dependents = new ArrayList<>();
   long version;
@@ -34,18 +34,18 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
     return cache;
   }
   /** see @see java.util.function.Supplier#get() (auto-generated) */
-  @Override @Nullable public abstract T get();
+  @Override  public abstract T get();
   /** Used for fluent API, synonym of {@link Cell#set(Object)}. sets the current
    * value of this cell
    * @param ¢ JD
    * @return <code><b>this</b></code>* */
-  @NotNull public final Cell<T> of(final T ¢) {
+   public final Cell<T> of(final T ¢) {
     return set(¢);
   }
   /** sets the current value of this cell
    * @param ¢ JD
    * @return <code><b>this</b></code> */
-  @NotNull public final Cell<T> set(final T ¢) {
+   public final Cell<T> set(final T ¢) {
     cache(¢);
     uponForcedSet();
     version = oldestDependent() + 1; // Invalidate all dependents
@@ -57,10 +57,10 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
    * @return <code><b>true</b></code> <i>iff</i> the contents of the cache
    *         stored in this node is updated. */
   public abstract boolean updated();
-  @Override @SuppressWarnings("unchecked") @Nullable protected Cell<T> clone() {
+  @Override @SuppressWarnings("unchecked")  protected Cell<T> clone() {
     try {
       return (Cell<T>) super.clone();
-    } catch (@NotNull final CloneNotSupportedException e) {
+    } catch ( final CloneNotSupportedException e) {
       return null;
     }
   }
@@ -77,14 +77,14 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   }
   private long oldestDependent() {
     long $ = 0;
-    for (@NotNull final Cell<?> ¢ : dependents)
+    for ( final Cell<?> ¢ : dependents)
       $ = max($, ¢.version);
     return $;
   }
 
   @FunctionalInterface
   interface Function2<T1, T2, R> {
-    @NotNull R apply(T1 ¢1, T2 ¢2);
+     R apply(T1 ¢1, T2 ¢2);
   }
 
   /** @author Yossi Gil <Yossi.Gil@GMail.COM>
@@ -92,25 +92,25 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
   interface Internal {
     /** @return never! The <code><b>none</b></code> type. There is no legal
      *         value that this function can return, since the type
-     *         <code>@NonNull</code> {@link Void} is empty. (
+     *         <code></code> {@link Void} is empty. (
      *         <code><b>null</b></code> is the single vale of {@link Void} , but
-     *         it does not obey the {@link @NonNull} annotation. */
-    @NotNull @NonNull static Void shouldNeverBeCalled() {
+     *         it does not obey the {@link } annotation. */
+     static Void shouldNeverBeCalled() {
       assert false;
       throw new RuntimeException();
     }
 
     interface $$Function<T, R> {
-      @NotNull Cell<R> from(Cell<T> ¢);
+       Cell<R> from(Cell<T> ¢);
     }
 
     interface $$Function2<T1, T2, R> {
-      @NotNull Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
+       Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
     }
 
     /** Fluent API */
     interface $$RecipeMaker {
-      @NotNull <X> Cell<@Nullable X> make(Supplier<X> x);
+       <X> Cell< X> make(Supplier<X> x);
     }
 
     /** <code>Cookbook</code>
@@ -122,7 +122,7 @@ public abstract class Cell<T> implements Supplier<T>, Cloneable {
      * @since 2016 */
     @FunctionalInterface
     interface Function3<T1, T2, T3, R> {
-      @NotNull R apply(T1 ¢1, T2 ¢2, T3 ¢3);
+       R apply(T1 ¢1, T2 ¢2, T3 ¢3);
     }
   }
 }

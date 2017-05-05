@@ -2,24 +2,24 @@ package il.org.spartan.classfiles.reify;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spatan.iteration.*;
 
 public class TypedEntity extends ConstantPoolEntity {
-  @Nullable public static TypeInfo decode(@NotNull final String descriptor) {
+   public static TypeInfo decode( final String descriptor) {
     return decodeSingleType(Iterables.make(descriptor.toCharArray()).iterator());
   }
-  static TypeInfo[] decodeArguments(@NotNull final CharIterator rest) {
-    @NotNull final List<TypeInfo> $ = new ArrayList<>();
+  static TypeInfo[] decodeArguments( final CharIterator rest) {
+     final List<TypeInfo> $ = new ArrayList<>();
     for (char first;;) {
       if ((first = rest.next()) == ')')
         return $.toArray(new TypeInfo[$.size()]);
       $.add(decodeSingleType(first, rest));
     }
   }
-  private static String decodeReferenceType(@NotNull final CharIterator i) {
-    @NotNull final StringBuilder $ = new StringBuilder();
+  private static String decodeReferenceType( final CharIterator i) {
+     final StringBuilder $ = new StringBuilder();
     for (char ¢; i.hasNext();)
       switch (¢ = i.next()) {
         case ';':
@@ -33,7 +33,7 @@ public class TypedEntity extends ConstantPoolEntity {
       }
     return null;
   }
-  private static TypeInfo decodeSingleType(final char first, @NotNull final CharIterator rest) {
+  private static TypeInfo decodeSingleType(final char first,  final CharIterator rest) {
     switch (first) {
       case 'B':
         return TypeInfo.makePrimitiveType("byte");
@@ -54,7 +54,7 @@ public class TypedEntity extends ConstantPoolEntity {
       case 'Z':
         return TypeInfo.makePrimitiveType("boolean");
       case '(':
-        @NotNull final TypeInfo[] $ = decodeArguments(rest);
+         final TypeInfo[] $ = decodeArguments(rest);
         return TypeInfo.makeMethodType(decodeSingleType(rest), $);
       case 'L':
         return TypeInfo.makeReferenceType(decodeReferenceType(rest));
@@ -64,14 +64,14 @@ public class TypedEntity extends ConstantPoolEntity {
         return null;
     }
   }
-  @Nullable private static TypeInfo decodeSingleType(@NotNull final CharIterator ¢) {
+   private static TypeInfo decodeSingleType( final CharIterator ¢) {
     return decodeSingleType(¢.next(), ¢);
   }
 
   public final TypeInfo type;
   public final String descriptor;
 
-  public TypedEntity(final ConstantPool constantPool, final int flags, final String name, @NotNull final String descriptor,
+  public TypedEntity(final ConstantPool constantPool, final int flags, final String name,  final String descriptor,
       final AttributeInfo[] attributes) {
     this(constantPool, flags, name, decode(descriptor), descriptor, attributes);
   }

@@ -2,16 +2,16 @@ package il.org.spatan.iteration;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 public class ArrayIterator<T> implements Iterator<T> {
-  @NotNull public static <E> Iterator<E> make(@NotNull final E[] ¢) {
+   public static <E> Iterator<E> make( final E[] ¢) {
     return make(¢, 0);
   }
-  @NotNull public static <E> Iterator<E> make(@NotNull final E[] es, final int begin) {
+   public static <E> Iterator<E> make( final E[] es, final int begin) {
     return make(es, begin, es.length);
   }
-  @NotNull public static <E> Iterator<E> make(final E[] es, final int begin, final int end) {
+   public static <E> Iterator<E> make(final E[] es, final int begin, final int end) {
     return new ArrayIterator<>(es, begin, end);
   }
 
@@ -19,10 +19,10 @@ public class ArrayIterator<T> implements Iterator<T> {
   private int index;
   private int end;
 
-  public ArrayIterator(@NotNull final T[] ts) {
+  public ArrayIterator( final T[] ts) {
     this(ts, 0);
   }
-  public ArrayIterator(@NotNull final T[] ts, final int begin) {
+  public ArrayIterator( final T[] ts, final int begin) {
     this(ts, begin, ts.length);
   }
   public ArrayIterator(final T[] ts, final int begin, final int end) {

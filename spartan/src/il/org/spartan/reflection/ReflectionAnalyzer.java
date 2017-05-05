@@ -1,6 +1,6 @@
 package il.org.spartan.reflection;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 
@@ -27,8 +27,8 @@ public enum ReflectionAnalyzer {
       }
     }.getClass());
   }
-  @NotNull public static String toBinary(final int value) {
-    @NotNull String $ = "";
+   public static String toBinary(final int value) {
+     String $ = "";
     for (int mask = 1; mask != 0; mask <<= 1)
       $ += (mask & value) == 0 ? "" : "+" + mask;
     return $;
@@ -45,7 +45,7 @@ public enum ReflectionAnalyzer {
 
 class A {
   class B {
-    @NotNull A f() {
+     A f() {
       return A.this;
     }
   }

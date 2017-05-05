@@ -4,7 +4,7 @@ import static fluent.ly.azzert.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -74,7 +74,7 @@ import il.org.spartan.*;
   }
 
   @Test public void of_HashMap() {
-    @NotNull final HashMap<Object, Object> m = new HashMap<>();
+     final HashMap<Object, Object> m = new HashMap<>();
     azzert.that(ShallowSize.of(m), is(40));
     m.put(new Object(), new Object());
     azzert.that(ShallowSize.of(m), is(40));
@@ -161,7 +161,7 @@ import il.org.spartan.*;
   }
 
   static class ObjectObject {
-    @NotNull Object self = this;
+     Object self = this;
   }
 
   static class ObjectStaticChar {

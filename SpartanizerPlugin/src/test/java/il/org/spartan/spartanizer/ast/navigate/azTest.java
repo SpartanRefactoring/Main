@@ -40,7 +40,7 @@ public final class azTest {
     doReturn(GREATER).when(i).getOperator();
     azzert.that(az.comparison(i), is(i));
   }
-  @Test public void asComparisonTypicalInfixIsNotNull() {
+  @Test public void asComparisonTypicalInfixIsNonNull() {
     final InfixExpression e = mock(InfixExpression.class);
     doReturn(GREATER).when(e).getOperator();
     assert az.comparison(e) != null;

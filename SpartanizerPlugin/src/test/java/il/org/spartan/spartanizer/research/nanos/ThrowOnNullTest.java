@@ -13,13 +13,13 @@ public class ThrowOnNullTest {
   @Test public void a() {
     trimmingOf("if(x == null) throw new Watever();")//
         .using(new ThrowOnNull(), IfStatement.class)//
-        .gives("notNull(x).orThrow(()->new Watever());")//
+        .gives("NonNull(x).orThrow(()->new Watever());")//
         .stays();
   }
   @Test public void b() {
     trimmingOf("if(x == null) throw new Watever(with(This, and, zis()));")//
         .using(new ThrowOnNull(), IfStatement.class)//
-        .gives("notNull(x).orThrow(()->new Watever(with(This,and,zis())));")//
+        .gives("NonNull(x).orThrow(()->new Watever(with(This,and,zis())));")//
         .stays();
   }
 }

@@ -38,10 +38,10 @@ public final class ExtractStatementTest {
   @Test public void isEmptyOfNull() {
     azzert.that(extract.statements(null), empty());
   }
-  @Test public void isNotNullOfNull() {
+  @Test public void isNonNullOfNull() {
     assert extract.statements(null) != null;
   }
-  @Test public void isNotNullOfValidStatement() {
+  @Test public void isNonNullOfValidStatement() {
     assert extract.statements(s("{}")) != null;
   }
   @Test public void manyEmptyStatementInBlockIsEmpty() {

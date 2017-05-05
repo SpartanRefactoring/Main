@@ -1,6 +1,6 @@
 package il.org.spartan.bench.operations;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.bench.*;
 
@@ -12,16 +12,16 @@ public abstract class TimedOperation extends NamedOperation {
   public TimedOperation(final String name) {
     super(name);
   }
-  @Override @NotNull public final Stopwatch call() {
+  @Override  public final Stopwatch call() {
     return run(makeStopWatch());
   }
-  @Override @NotNull public Stopwatch netTime(final Stopwatch netTime) {
+  @Override  public Stopwatch netTime(final Stopwatch netTime) {
     return run(netTime);
   }
-  @Override @NotNull public Stopwatch netTime(final Stopwatch $, final int runs) {
+  @Override  public Stopwatch netTime(final Stopwatch $, final int runs) {
     for (int ¢ = 0; ¢ < runs; ++¢)
       run($);
     return $;
   }
-  @NotNull public abstract Stopwatch run(Stopwatch s);
+   public abstract Stopwatch run(Stopwatch s);
 }

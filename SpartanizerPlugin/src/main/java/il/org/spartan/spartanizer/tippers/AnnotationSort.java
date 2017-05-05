@@ -84,8 +84,8 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     return "Sort annotations of declaration";
   }
   @Override public Examples examples() {
-    return convert("@NonNull @SuppressWarnings public @Override final void f() {}") //
-        .to("@Override @SuppressWarnings @NonNull public final void f() {}") //
+    return convert(" @SuppressWarnings public @Override final void f() {}") //
+        .to("@Override @SuppressWarnings  public final void f() {}") //
         .convert("@C @B @A class A {}") //
         .to("@A @B @C class A {}") //
     ;

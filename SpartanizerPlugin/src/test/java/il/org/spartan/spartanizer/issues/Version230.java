@@ -521,7 +521,7 @@ public final class Version230 {
         .stays();
   }
   @Test public void doNotInlineWithDeclaration() {
-    trimmingOf("private Class<? extends T> retrieveClazz()throws ClassNotFoundException { nonnull(className); "
+    trimmingOf("private Class<? extends T> retrieveClazz()throws ClassNotFoundException { NonNull(className); "
         + " @SuppressWarnings(\"unchecked\")final Class<T> $=(Class<T>)findClass(className);return $;}")//
             .stays();
   }

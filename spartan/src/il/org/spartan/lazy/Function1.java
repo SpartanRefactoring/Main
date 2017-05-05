@@ -1,7 +1,7 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** A {@link FunctionalInterface} encapsulating a function with one argument
  * @param <A> type of the argument
@@ -14,5 +14,5 @@ public interface Function1<T, A> {
    * @param ¢ JD
    * @throws Exception in case the function failed
    * @return result of applying the function to the argument */
-  @NotNull T ϑ(A ¢) throws Exception;
+   T ϑ(A ¢) throws Exception;
 }

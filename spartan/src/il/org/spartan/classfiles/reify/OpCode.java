@@ -4,7 +4,7 @@ import static fluent.ly.azzert.*;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -183,32 +183,32 @@ public enum OpCode {
   JSR(2), // 168 (0xA8)
   RET(1), // 169 (0xA9)
   TABLESWITCH { // 170 (0xAA)
-    @Override @NotNull Instruction readContent(@NotNull final BufferDataInputStream s) {
+    @Override  Instruction readContent( final BufferDataInputStream s) {
       s.align4();
       try {
         final int $ = s.readInt(), low = s.readInt(), high = s.readInt();
         ___.sure(low <= high);
-        @NotNull final int offsets[] = new int[high - low + 1];
+         final int offsets[] = new int[high - low + 1];
         for (int k = 0; k <= high - low; ++k)
           offsets[k] = s.readInt();
         return new Instruction(this, $, offsets);
-      } catch (@NotNull final IOException e) {
+      } catch ( final IOException e) {
         throw new RuntimeException();
       }
     }
   },
   LOOKUPSWITCH { // 171 (0xAB)
-    @Override @NotNull Instruction readContent(@NotNull final BufferDataInputStream s) {
+    @Override  Instruction readContent( final BufferDataInputStream s) {
       s.align4();
       try {
         final int $ = s.readInt(), nPairs = s.readInt();
-        @NotNull final int offsets[] = new int[nPairs];
+         final int offsets[] = new int[nPairs];
         for (int k = 0; k < nPairs; ++k) {
           s.skip(4);
           offsets[k] = s.readInt();
         }
         return new Instruction(this, $, offsets);
-      } catch (@NotNull final IOException e) {
+      } catch ( final IOException e) {
         throw new RuntimeException();
       }
     }
@@ -238,7 +238,7 @@ public enum OpCode {
   MONITORENTER, // 194 (0xC2)
   MONITOREXIT, // 195 (0xC3)
   WIDE { // 196 (0xC4)
-    @Override @Nullable Instruction readContent(@NotNull final BufferDataInputStream $) {
+    @Override  Instruction readContent( final BufferDataInputStream $) {
       if (OpCode.values()[$.read()] != IINC)
         return readContent($);
       $.skip(4);
@@ -247,7 +247,7 @@ public enum OpCode {
   },
   MULTIANEWARRAY(3), // 197 (0xC5)
   IFNULL(2), // 198 (0xC6)
-  IFNONNULL(2), // 199 (0xC7)
+  IFNonNull(2), // 199 (0xC7)
   GOTO_W(4), // 200 (0xC8)
   JSR_W(4), // 201 (0xC9)
   BREAKPOINT, // 202 (0xCA)
@@ -305,14 +305,14 @@ public enum OpCode {
   IMPDEP1(-1), // 254 (0xFE)
   IMPDEP2(-1), // 255 (0xFF)
   ;
-  public static Instruction read(@NotNull final BufferDataInputStream $) {
+  public static Instruction read( final BufferDataInputStream $) {
     if ($.eof())
       return null;
     try {
       return OpCode.values()[$.readUnsignedByte()].readContent($);
-    } catch (@NotNull final EOFException e) {
+    } catch ( final EOFException e) {
       return null;
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       throw new CorruptClassFile(¢);
     }
   }
@@ -328,8 +328,8 @@ public enum OpCode {
   public boolean invalid() {
     return size < 0;
   }
-  @Nullable Instruction readContent(@NotNull final BufferDataInputStream s) throws IOException {
-    @NotNull final short[] $ = new short[size];
+   Instruction readContent( final BufferDataInputStream s) throws IOException {
+     final short[] $ = new short[size];
     for (int ¢ = 0; ¢ < size; ++¢)
       $[¢] = (short) (s.readByte() & 0x000000FF);
     return new Instruction(this, $);
@@ -337,10 +337,10 @@ public enum OpCode {
 
   public class Instruction {
     public final OpCode opCode;
-    @Nullable final short[] args;
+    final short[] args;
     // for tableswhitch and lookupswitch
     final int defaultOffset;
-    @Nullable final int[] offsets;
+    final int[] offsets;
 
     public Instruction(final OpCode opCode, final int defaultOffset, final int[] offsets) {
       this.opCode = opCode;
@@ -354,7 +354,7 @@ public enum OpCode {
       defaultOffset = 0;
       offsets = null;
     }
-    @Nullable public short[] args() {
+     public short[] args() {
       return args;
     }
     public boolean invalid() {

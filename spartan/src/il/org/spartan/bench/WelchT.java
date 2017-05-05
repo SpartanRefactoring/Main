@@ -9,7 +9,7 @@ import il.org.spartan.statistics.*;
 // TODO: Yossi, this is an older version, you removed the constructor and that's
 // broke the build
 public class WelchT {
-  public double p = 0;
+  public double p;
   public WelchT(final Statistics s1, final Statistics s2) {
   }
 }

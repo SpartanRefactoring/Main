@@ -22,11 +22,11 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-29 */
 public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 0x20E2A72F139D8B00L;
-  private static final String description = "replace with azzert.notNull(X)";
-  private static final ThrowOnNull assertNotNull = new ThrowOnNull();
+  private static final String description = "replace with azzert.NonNull(X)";
+  private static final ThrowOnNull assertNonNull = new ThrowOnNull();
 
   @Override public boolean canTip(final IfStatement ¢) {
-    return assertNotNull.check(¢)//
+    return assertNonNull.check(¢)//
         && iz.returnStatement(next(¢))//
     ;
   }
@@ -38,7 +38,7 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final Statement next = next(¢);
         r.remove(next, g);
-        r.replace(¢, extract.singleStatement(make.ast("notNull(" + separate.these(nullCheckees(¢)).by(",") + ").get(" + returnee(next) + ");")), g);
+        r.replace(¢, extract.singleStatement(make.ast("NonNull(" + separate.these(nullCheckees(¢)).by(",") + ").get(" + returnee(next) + ");")), g);
       }
     };
   }
@@ -55,6 +55,6 @@ public class GetOrElseThrow extends NanoPatternTipper<IfStatement> {
     return "if(X == null) throw new RuntimeException(); return Y;";
   }
   @Override public String symbolycReplacement() {
-    return "notNull(X).get(Y);";
+    return "NonNull(X).get(Y);";
   }
 }

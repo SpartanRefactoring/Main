@@ -45,8 +45,8 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
         return setAssert($, make.notOf(condition));
       case "assertTrue":
         return setAssert($, copy.of(condition));
-      case "assertNotNull":
-      case "notNull":
+      case "assertNonNull":
+      case "NonNull":
         return setAssert($, subject.operands(condition, make.nullLiteral(i)).to(NOT_EQUALS));
       default:
         return null;

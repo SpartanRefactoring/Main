@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** An interface for a metric returning a <code><b>double</b></code> value.
  * @author Yossi Gil
@@ -17,7 +17,7 @@ public class Metric {
   public String name() {
     return name;
   }
-  @NotNull public Metric name(final String __name) {
+   public Metric name(final String __name) {
     name = __name;
     return this;
   }
@@ -46,7 +46,7 @@ public class Metric {
       super(name);
     }
     public abstract long __();
-    @Override @NotNull public Long name(final String name) {
+    @Override  public Long name(final String name) {
       super.name(name);
       return this;
     }

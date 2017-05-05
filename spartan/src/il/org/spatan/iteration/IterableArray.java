@@ -1,7 +1,7 @@
 /** Copyright */
 package il.org.spatan.iteration;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spatan.iteration.Iterables.*;
 
@@ -21,7 +21,7 @@ public class IterableArray<T> implements Iterable<T> {
   public int count() {
     return ts.length;
   }
-  @Override @NotNull public ArrayIterator<T> iterator() {
+  @Override  public ArrayIterator<T> iterator() {
     return new ArrayIterator<>(ts);
   }
 

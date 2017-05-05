@@ -3,7 +3,7 @@ package il.org.spartan.collections;
 
 import static fluent.ly.___.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 
@@ -28,7 +28,7 @@ public class ImmutableEnumIntMap<E extends Enum<E>> extends ImmutableArray.Ints 
   /* (non-Javadoc)
    *
    * @see il.org.spartan.collections.EnumIntMap#get(E) */
-  @Override public int get(@NotNull final E ¢) {
+  @Override public int get( final E ¢) {
     sure(length() == ¢.getClass().getEnumConstants().length);
     return get(¢.ordinal());
   }

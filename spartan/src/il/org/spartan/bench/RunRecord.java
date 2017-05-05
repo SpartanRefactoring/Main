@@ -1,12 +1,12 @@
 package il.org.spartan.bench;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.*;
 import fluent.ly.*;
 
 public class RunRecord extends AbstractRunRecord {
-  public RunRecord(final int runs, @NotNull final Stopwatch grossTime, @NotNull final Stopwatch netTime) {
+  public RunRecord(final int runs,  final Stopwatch grossTime,  final Stopwatch netTime) {
     this.runs = runs;
     this.grossTime = grossTime.time();
     this.netTime = netTime.time();

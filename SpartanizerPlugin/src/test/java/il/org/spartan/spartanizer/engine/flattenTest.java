@@ -26,7 +26,7 @@ public final class flattenTest {
     final InfixExpression e = i("1+2");
     azzert.that(flatten.of(e), is(not(e)));
   }
-  @Test public void flattenIsNotNull() {
+  @Test public void flattenIsNonNull() {
     azzert.that(flatten.of(i("1+2")), is(not(nullValue())));
   }
   @Test public void flattenIsSame() {
@@ -69,10 +69,10 @@ public final class flattenTest {
   @Test public void leftOperandIsOne() {
     azzert.that(left(i("1+2")) + "", is("1"));
   }
-  @Test public void leftOperandNotNull() {
+  @Test public void leftOperandNonNull() {
     assert left(i("1+2")) != null;
   }
-  @Test public void rightOperandNotNull() {
+  @Test public void rightOperandNonNull() {
     assert right(i("1+2")) != null;
   }
 }

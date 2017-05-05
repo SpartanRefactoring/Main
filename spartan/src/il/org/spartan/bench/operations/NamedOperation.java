@@ -1,6 +1,6 @@
 package il.org.spartan.bench.operations;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.bench.*;
 
@@ -14,7 +14,7 @@ public abstract class NamedOperation extends Operation {
   public NamedOperation(final String name) {
     this.name = name;
   }
-  @Override @NotNull public final Stopwatch makeStopWatch() {
+  @Override  public final Stopwatch makeStopWatch() {
     return new Stopwatch(name);
   }
 }

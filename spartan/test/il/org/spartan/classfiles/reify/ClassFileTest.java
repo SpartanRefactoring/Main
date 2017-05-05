@@ -674,7 +674,7 @@ import fluent.ly.*;
     assertEquals(ClassInfo.Builder.MAGIC, new RobustReader(GOOD_FILE_PATH).readInt());
   }
 
-  @Test public void selfMakeNotNull() {
+  @Test public void selfMakeNonNull() {
     assert ClassInfo.make(this.getClass()) != null;
   }
 

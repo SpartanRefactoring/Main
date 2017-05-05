@@ -4,6 +4,7 @@ package fluent.ly;
 import java.util.*;
 import java.util.stream.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.jetbrains.annotations.*;
 
 /** @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
@@ -42,7 +43,7 @@ public interface is {
    * @param candidate what to search for
    * @param is where to search
    * @return true if the the item is found in the list */
-  @SafeVarargs @Contract(pure = true) static boolean intIsIn(final int candidate, @NotNull final int... is) {
+  @SafeVarargs @Contract(pure = true) static boolean intIsIn(final int candidate,  final int... is) {
     for (final int ¢ : is)
       if (¢ == candidate)
         return true;

@@ -6,7 +6,7 @@ import static fluent.ly.___.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 import il.org.spartan.*;
@@ -32,7 +32,7 @@ public class TimingEstimator {
    * previously done.
    * @param ¢ arbitrary operation
    * @return the {@link TimingEstimator} associated with the parameter */
-  @NotNull public static TimingEstimator estimator(final Operation ¢) {
+   public static TimingEstimator estimator(final Operation ¢) {
     final TimingEstimator $ = estimators.get(¢);
     return $ != null ? $ : makeEstimator(¢);
   }
@@ -46,8 +46,8 @@ public class TimingEstimator {
   public static void run(final Operation o, final int runs) {
     estimator(o).run(runs);
   }
-  @NotNull private static TimingEstimator makeEstimator(final Operation ¢) {
-    @NotNull final TimingEstimator $ = new TimingEstimator(¢);
+   private static TimingEstimator makeEstimator(final Operation ¢) {
+     final TimingEstimator $ = new TimingEstimator(¢);
     estimators.put(¢, $);
     return $;
   }
@@ -76,15 +76,15 @@ public class TimingEstimator {
    * @return <code><b>null</b></code> if the execution failed, i.e., there was a
    *         garbage collection cycle within this execution. Otherwise, a
    *         {@linkplain RunRecord} object. */
-  @Nullable public RunRecord run(final int runs) {
+   public RunRecord run(final int runs) {
     for (;;) {
       Log.print("Running " + thousands(runs) + " times...");
-      @NotNull final JVM before = new JVM();
-      @NotNull final Stopwatch grossTime = new Stopwatch().start(), netTime = o.netTime(runs);
+       final JVM before = new JVM();
+       final Stopwatch grossTime = new Stopwatch().start(), netTime = o.netTime(runs);
       grossTime.stop();
-      @NotNull final JVM after = new JVM();
+       final JVM after = new JVM();
       nonnegative(netTime.time());
-      @NotNull final RunRecord $ = new RunRecord(runs, grossTime, netTime);
+       final RunRecord $ = new RunRecord(runs, grossTime, netTime);
       totalRuns.add($);
       if (!after.equals(before)) {
         Log.print("oops, JVM state changed... " + netTime);
@@ -130,9 +130,9 @@ public class TimingEstimator {
    * @return <code><b>null</b></code> if the execution failed, i.e., there was a
    *         garbage collection cycle within this execution. Otherwise, a
    *         {@linkplain RunRecord} object. */
-  @Nullable public RunRecord run(final int runs, final int trials) {
+   public RunRecord run(final int runs, final int trials) {
     for (int ¢ = 0; ¢ < trials; ++¢) {
-      @Nullable final RunRecord $ = run(runs);
+       final RunRecord $ = run(runs);
       if ($ != null)
         return $;
       System.gc();

@@ -1,6 +1,6 @@
 package il.org.spartan.bench.trials;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.*;
 import il.org.spartan.bench.*;
@@ -13,8 +13,8 @@ public class BenchHashFunction {
   public static int size = 9;
 
   public static void main(final String args[]) throws Exception {
-    @NotNull final LogBook.Mutable l = new LogBook.Mutable(BenchHashFunction.class);
-    @NotNull final Hash h = new Hash();
+     final LogBook.Mutable l = new LogBook.Mutable(BenchHashFunction.class);
+     final Hash h = new Hash();
     Log.deactivate();
     for (int ¢ = 0; ¢ < trials; ++¢)
       BenchingPolicy.go(l, "hash", 1, h);
@@ -28,7 +28,7 @@ public class BenchHashFunction {
 
     int a;
 
-    @Override @Nullable public Void call() {
+    @Override  public Void call() {
       a = hash(++a);
       return null;
     }

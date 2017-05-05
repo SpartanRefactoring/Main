@@ -3,7 +3,7 @@ package il.org.spartan.statistics;
 import static il.org.spartan.statistics.Mean.*;
 import static il.org.spartan.statistics.StandardDeviation.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 
@@ -12,7 +12,7 @@ import il.org.spartan.streotypes.*;
 @Utility
 public enum Kurtosis {
   ;
-  public static double kurotsis(@NotNull final double... ¢) {
+  public static double kurotsis( final double... ¢) {
     return kurtosisNormalizedVector(normalize(¢.clone()));
   }
   public static double kurtosisNormalizedVector(final double... ¢) {

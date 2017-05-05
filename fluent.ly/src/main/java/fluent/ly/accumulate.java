@@ -4,7 +4,7 @@ package fluent.ly;
 import java.util.*;
 
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @param <T> JD
@@ -16,52 +16,52 @@ public interface accumulate<T, C extends Collection<T>> {
    * @param c JD */
   static <T, C extends Collection<T>> accumulate<T, C> to(final C c) {
     return new accumulate<T, C>() {
-      @Override @NotNull public accumulate<T, C> add(final @Nullable T ¢) {
+      @Override  public accumulate<T, C> add(final  T ¢) {
         if (¢ == null)
           return this;
         c.add(¢);
         return this;
       }
-      @Override @NotNull public C elements() {
+      @Override  public C elements() {
         return c;
       }
     };
   }
   /** @param ts JD
    * @return <code><b>this</b></code> */
-  @NotNull default accumulate<T, C> add(@NotNull final Iterable<? extends @Nullable T> ts) {
-    for (@Nullable final T ¢ : ts)
+   default accumulate<T, C> add( final Iterable<? extends  T> ts) {
+    for ( final T ¢ : ts)
       if (¢ != null)
         add(¢);
     return this;
   }
   /** @param t JD
    * @return <code><b>this</b></code> */
-  @NotNull accumulate<T, C> add(@Nullable T t);
+   accumulate<T, C> add( T t);
   /** @param ts JD
    * @return <code><b>this</b></code> */
-  @NotNull default accumulate<T, C> add(@SuppressWarnings("unchecked") final @Nullable T @Nullable... ts) {
+   default accumulate<T, C> add(@SuppressWarnings("unchecked") final  T ... ts) {
     if (ts != null)
-      for (@Nullable final T ¢ : ts)
+      for ( final T ¢ : ts)
         if (¢ != null)
           add(¢);
     return this;
   }
   /** @param ts JD
    * @return <code><b>this</b></code> */
-  @NotNull default accumulate<T, C> addAll(final @Nullable Iterable<? extends T> ts) {
+   default accumulate<T, C> addAll(final  Iterable<? extends T> ts) {
     if (ts != null)
-      for (@Nullable final T ¢ : ts)
+      for ( final T ¢ : ts)
         if (¢ != null)
           add(¢);
     return this;
   }
   /** @param tss JD
    * @return <code><b>this</b></code> */
-  @NotNull default accumulate<T, C> addAll(@NotNull final Iterable<? extends T>... tss) {
+   default accumulate<T, C> addAll( final Iterable<? extends T>... tss) {
     for (final Iterable<? extends T> ¢ : tss)
       addAll(¢);
     return this;
   }
-  @NotNull C elements();
+   C elements();
 }

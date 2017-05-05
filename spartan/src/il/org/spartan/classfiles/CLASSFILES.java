@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
@@ -18,13 +18,13 @@ import il.org.spartan.utils.*;
 @Utility
 public enum CLASSFILES {
   ;
-  @NotNull static final Set<ZipFile> zipsInUse = new HashSet<>();
+   static final Set<ZipFile> zipsInUse = new HashSet<>();
 
   /** Where are all Java class files found
    * @return the list of directories and ZIP archives in the current search
    *         path. */
-  @NotNull public static Iterable<File> asFiles() {
-    @NotNull final ArrayList<File> $ = new ArrayList<>();
+   public static Iterable<File> asFiles() {
+     final ArrayList<File> $ = new ArrayList<>();
     $.addAll(JRE.asList());
     add($, EXTENSIONPATH.asArray(), CLASSPATH.asArray());
     return $;
@@ -39,10 +39,10 @@ public enum CLASSFILES {
    *         class has no corresponding <tt>.class</tt> file (e.g., in the case
    *         it is a primitive or an array type), or in the case that the
    *         corresponding <tt>.class</tt> file could not be found. */
-  public static String location(@NotNull final String className) {
-    nonnull(className);
-    for (@NotNull final File where : asFiles()) {
-      @Nullable final String $ = location(where, className);
+  public static String location( final String className) {
+    notNull(className);
+    for ( final File where : asFiles()) {
+       final String $ = location(where, className);
       if ($ != null)
         return $;
     }
@@ -64,8 +64,8 @@ public enum CLASSFILES {
    *         <tt>.class</tt> file (e.g., in the case it is a primitive or an
    *         array type), or in the case that the corresponding <tt>.class</tt>
    *         file could not be found. */
-  @Nullable public static InputStream open(@NotNull final Class<?> ¢) {
-    nonnull(¢);
+   public static InputStream open( final Class<?> ¢) {
+    notNull(¢);
     return open(¢.getName());
   }
   /** Given the full name of a class, return an open input stream to the class
@@ -81,14 +81,14 @@ public enum CLASSFILES {
    *         <tt>.class</tt> file (e.g., in the case it is a primitive or an
    *         array type), or in the case that the corresponding <tt>.class</tt>
    *         file could not be found. */
-  public static InputStream open(@NotNull final String fullClassName) {
-    nonnull(fullClassName);
-    for (@NotNull final File f : asFiles()) {
-      @Nullable final InputStream $ = open(f, fullClassName);
+  public static InputStream open( final String fullClassName) {
+    notNull(fullClassName);
+    for ( final File f : asFiles()) {
+       final InputStream $ = open(f, fullClassName);
       if ($ != null)
         try {
           $.available();
-        } catch (@NotNull final IOException ¢) {
+        } catch ( final IOException ¢) {
           ¢.printStackTrace();
         }
       if ($ != null)
@@ -97,47 +97,47 @@ public enum CLASSFILES {
     return null;
   }
   public static void reset() {
-    for (@NotNull final ZipFile z : zipsInUse)
+    for ( final ZipFile z : zipsInUse)
       try {
         z.close();
-      } catch (@NotNull final IOException __) {
+      } catch ( final IOException __) {
         // Absorb (we do not care about errors)
         __.printStackTrace();
       }
     zipsInUse.clear();
   }
-  private static void add(@NotNull final ArrayList<File> ds, @NotNull final String[]... directoryNamesArray) {
-    for (@NotNull final String[] directories : directoryNamesArray)
+  private static void add( final ArrayList<File> ds,  final String[]... directoryNamesArray) {
+    for ( final String[] directories : directoryNamesArray)
       add(ds, directories);
   }
-  private static void add(@NotNull final ArrayList<File> ds, @NotNull final String[] directoryNames) {
-    for (@NotNull final String directory : directoryNames)
+  private static void add( final ArrayList<File> ds,  final String[] directoryNames) {
+    for ( final String directory : directoryNames)
       ds.add(new File(directory));
   }
-  @NotNull private static String canonicalFileName(@NotNull final String className) {
+   private static String canonicalFileName( final String className) {
     return className.replace('.', File.separatorChar) + ".class";
   }
-  @NotNull private static String class2ZipFileName(@NotNull final String className) {
+   private static String class2ZipFileName( final String className) {
     return className.replace('.', '/') + ".class";
   }
-  private static String location(@NotNull final File where, @NotNull final String className) {
+  private static String location( final File where,  final String className) {
     return where.isDirectory() ? searchDirectory(where, className) == null ? null : where.getName()
         : searchZip(where, class2ZipFileName(className)) == null ? null : where.getName();
   }
-  @Nullable private static InputStream open(@NotNull final File where, @NotNull final String className) {
+   private static InputStream open( final File where,  final String className) {
     return where.isDirectory() ? searchDirectory(where, className) : searchZip(where, class2ZipFileName(className));
   }
-  private static InputStream searchDirectory(final File where, @NotNull final String className) {
-    @NotNull final File $ = new File(where, canonicalFileName(className));
+  private static InputStream searchDirectory(final File where,  final String className) {
+     final File $ = new File(where, canonicalFileName(className));
     try {
       return !$.exists() ? null : new FileInputStream($);
-    } catch (@NotNull final FileNotFoundException __) {
+    } catch ( final FileNotFoundException __) {
       return null;
     }
   }
-  private static InputStream searchZip(@NotNull final File where, @NotNull final String fileName) {
+  private static InputStream searchZip( final File where,  final String fileName) {
     try {
-      @NotNull final ZipFile $ = new ZipFile(where.getAbsoluteFile());
+       final ZipFile $ = new ZipFile(where.getAbsoluteFile());
       final ZipEntry e = $.getEntry(fileName);
       if (e == null) {
         $.close();
@@ -148,7 +148,7 @@ public enum CLASSFILES {
       /* for (final ZipEntry e : IterableAdapter.make(z.entries())) if
        * (e.getName().equals(fileName)) { zipsInUse.add(z); return
        * z.getInputStream(e); } z.close(); */
-    } catch (@NotNull final IOException __) {
+    } catch ( final IOException __) {
       // Absorb (we do not care about errors)
     }
     return null;

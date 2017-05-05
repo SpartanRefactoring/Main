@@ -131,7 +131,7 @@ public final class SubjectTest {
   @Test public void subjectOperandsIsCorrect() {
     azzert.that(subject.operands(hop.operands(copy.of(i("a*b*c")))).to(i("1+2+3").getOperator()) + "", is("a + b + c"));
   }
-  @Test public void subjectOperandsNotNull() {
+  @Test public void subjectOperandsNonNull() {
     assert subject.operands(hop.operands(copy.of(i("a+b+c")))).to(i("1+2+3").getOperator()) != null;
   }
   @Test public void subjectOperandsWithParenthesis() {

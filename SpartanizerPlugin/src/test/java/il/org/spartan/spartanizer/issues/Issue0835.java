@@ -22,7 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public class Issue0835 {
   final Tipper<VariableDeclarationFragment> tipper = new LocalUninitializedDead();
 
-  @Test public void descriptionNotNull() {
+  @Test public void descriptionNonNull() {
     assert tipper.description() != null;
   }
   @Test public void emptyBlock1() {
@@ -34,7 +34,7 @@ public class Issue0835 {
   @Test public void emptyBlock3() {
     azzert.that(1, is(statements(az.block(make.ast("\n{int a;}\n"))).size()));
   }
-  @Test public void returnNotNullNonEmptyBlock() {
+  @Test public void returnNonNullNonEmptyBlock() {
     trimmingOf("{int x;}")//
         .gives("int x;")//
         .gives("")//

@@ -58,7 +58,7 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
                 new NotNullAssumed(), //
                 new ExecuteUnless(), //
                 new WhenHoldsOn<>(), //
-                new NotNullRequired(), //
+                new NonNullRequired(), //
                 new ThrowOnFalse(), //
                 null) //
             .add(InfixExpression.class, //

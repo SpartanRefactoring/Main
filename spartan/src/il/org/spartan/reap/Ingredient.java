@@ -32,13 +32,13 @@ public class Ingredient<T> extends Cell<T> {
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  public static class NotNull<T> extends Ingredient<T> {
+  public static class NonNull<T> extends Ingredient<T> {
     /** instantiates this class
      * @param value JD */
-    public NotNull(final T value) {
+    public NonNull(final T value) {
       super(value);
     }
-    @Override void cache(@Nullable @SuppressWarnings("hiding") final T cache) {
+    @Override void cache( @SuppressWarnings("hiding") final T cache) {
       super.cache(cache);
       if (cache == null)
         throw new NullPointerException();

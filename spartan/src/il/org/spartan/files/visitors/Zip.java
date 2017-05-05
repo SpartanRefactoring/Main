@@ -3,7 +3,7 @@ package il.org.spartan.files.visitors;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 import il.org.spartan.strings.*;
@@ -21,7 +21,7 @@ public enum Zip {
   /** @param ¢ a file to examine
    * @return <code><b>true</b></code> <em>iff</em>the file is appears to be a
    *         ZIP file. */
-  public static boolean isZipFile(@NotNull final File ¢) {
+  public static boolean isZipFile( final File ¢) {
     return Suffixed.by(¢, ZIP_FILE_EXTENSIONS);
   }
 }

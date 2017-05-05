@@ -54,7 +54,7 @@ import fluent.ly.*;
  * @param <R> __ of result of applying this rule
  * @author Yossi Gil
  * @since 2017-03-10 */
-public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursive<Rule<T, R>> {
+public interface Rule< T,  R> extends Function<T, R>, Recursive<Rule<T, R>> {
   @Override default Rule<T, R> self() {
     return this;
   }
@@ -66,7 +66,7 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
    * @return a lambda of type {@link OnApplicator}
    * @author Yossi Gil
    * @since 2017-03-10 */
-  static <@Nullable T, @Nullable R> OnApplicator<T, R> on(final Predicate<T> p) {
+  static < T,  R> OnApplicator<T, R> on(final Predicate<T> p) {
     return c -> new Rule.Stateful<T, R>() {
       @Override public R fire() {
         c.accept(current());
@@ -78,7 +78,7 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
     };
   }
 
-  interface OnApplicator<@Nullable T, @Nullable R> {
+  interface OnApplicator< T,  R> {
     Rule<T, R> go(Consumer<T> c);
   }
 
@@ -183,7 +183,7 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
   /** For counting Strings
    * @author oran1248
    * @since 2017-04-21 */
-  abstract class CountingDelegator<@Nullable T, @Nullable R> extends Interceptor<T, R> {
+  abstract class CountingDelegator< T,  R> extends Interceptor<T, R> {
     final Map<String, Integer> count = new LinkedHashMap<>();
 
     public CountingDelegator(final Rule<T, R> inner) {
@@ -199,7 +199,7 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
   /** Wrapper for Rule
    * @author oran1248
    * @since 2017-04-21 */
-  class Interceptor<@Nullable T, @Nullable R> implements Rule<T, R> {
+  class Interceptor< T,  R> implements Rule<T, R> {
     public final Rule<T, R> inner;
 
     public Interceptor(final Rule<T, R> inner) {
@@ -249,7 +249,7 @@ public interface Rule<@Nullable T, @Nullable R> extends Function<T, R>, Recursiv
    * @param <R> {@see Rule}
    * @author Yossi Gil
    * @since 2017-03-13 */
-  abstract class Stateful<@Nullable T, @Nullable R> implements Rule<T, R> {
+  abstract class Stateful< T,  R> implements Rule<T, R> {
     public T current;
 
     @Override public final R apply(final T ¢) {

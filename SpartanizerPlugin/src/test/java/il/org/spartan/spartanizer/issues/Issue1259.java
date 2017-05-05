@@ -20,7 +20,7 @@ public class Issue1259 {
         "private final AccessibleObject accessibleObject;" + //
         "private final Member member;" + //
         "<M extends AccessibleObject & Member> Element(M accessibleObject) {" + //
-        "checkNotNull(accessibleObject);" + //
+        "checkNonNull(accessibleObject);" + //
         "this.accessibleObject = accessibleObject;" + //
         "this.member = accessibleObject;" + //
         "}" + //
@@ -28,7 +28,7 @@ public class Issue1259 {
             "private final AccessibleObject accessibleObject;" + //
             "private final Member member;" + //
             "<M extends AccessibleObject & Member> Element(M member) {" + //
-            "checkNotNull(member);" + //
+            "checkNonNull(member);" + //
             "this.accessibleObject = this.member = accessibleObject;" + //
             "}" + //
             "}");
@@ -39,7 +39,7 @@ public class Issue1259 {
         "A a;" + //
         "M m;" + //
         "E(M m) {" + //
-        "checkNotNull(m);" + //
+        "checkNonNull(m);" + //
         "this.a = m;" + //
         "this.m = m;" + //
         "}" + //
@@ -49,7 +49,7 @@ public class Issue1259 {
                 "A a;" + //
                 "M m;" + //
                 "E(M m) {" + //
-                "checkNotNull(m);" + //
+                "checkNonNull(m);" + //
                 "this.a = a; this.m = m;" + //
                 "}" + //
                 "}");

@@ -1,6 +1,6 @@
 package il.org.spartan.iteration.closures;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 
@@ -27,14 +27,14 @@ public interface Condition<Argument> {
         return true;
       };
     }
-    public static <T> Condition<T> and(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2) {
+    public static <T> Condition<T> and( final Condition<T> c1,  final Condition<T> c2) {
       return λ -> c1.holds(λ) && c2.holds(λ);
     }
-    public static <T> Condition<T> and(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2, @NotNull final Condition<T> c3) {
+    public static <T> Condition<T> and( final Condition<T> c1,  final Condition<T> c2,  final Condition<T> c3) {
       return and(c1, and(c2, c3));
     }
-    public static <T> Condition<T> and(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2, @NotNull final Condition<T> c3,
-        @NotNull final Condition<T> c4) {
+    public static <T> Condition<T> and( final Condition<T> c1,  final Condition<T> c2,  final Condition<T> c3,
+         final Condition<T> c4) {
       return and(c1, and(c2, c3, c4));
     }
     /** A an implementation of a filter that rejects all objects.
@@ -54,16 +54,16 @@ public interface Condition<Argument> {
      * @param <T> type of elements in the iterable
      * @return an iterable which is identical to the arugment, except that all
      *         null elements are removed. */
-    public static <T> Condition<T> nonnull() {
+    public static <T> Condition<T> NonNull() {
       return λ -> λ != null;
     }
-    public static <T> Condition<T> not(@NotNull final Condition<T> c) {
+    public static <T> Condition<T> not( final Condition<T> c) {
       return λ -> !c.holds(λ);
     }
-    public static <T> Condition<T> or(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2) {
+    public static <T> Condition<T> or( final Condition<T> c1,  final Condition<T> c2) {
       return λ -> c1.holds(λ) || c2.holds(λ);
     }
-    public static <T> Condition<T> or(@NotNull final Condition<T> c1, @NotNull final Condition<T> c2, @NotNull final Condition<T> c3) {
+    public static <T> Condition<T> or( final Condition<T> c1,  final Condition<T> c2,  final Condition<T> c3) {
       return or(c1, or(c2, c3));
     }
   }

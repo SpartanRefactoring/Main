@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** @author Yossi Gil
  * @since 28 November 2011 */
@@ -26,24 +26,24 @@ public @interface Attribute {
   }
 
   class Extractor {
-    @NotNull public static List<Content> attributes(@NotNull final Object target) {
-      @NotNull final List<Content> $ = new ArrayList<>();
-      for (@NotNull final Method ¢ : target.getClass().getMethods())
+     public static List<Content> attributes( final Object target) {
+       final List<Content> $ = new ArrayList<>();
+      for ( final Method ¢ : target.getClass().getMethods())
         if (isAttribute(¢))
           $.add(new Content(¢.getName(), value(target, ¢)));
       return $;
     }
-    private static boolean isAttribute(@NotNull final Method ¢) {
+    private static boolean isAttribute( final Method ¢) {
       return ¢.getAnnotation(Attribute.class) != null;
     }
-    @NotNull private static String value(final Object target, @NotNull final Method m) {
+     private static String value(final Object target,  final Method m) {
       try {
         return m.invoke(target) + "";
-      } catch (@NotNull final IllegalArgumentException $) {
+      } catch ( final IllegalArgumentException $) {
         return "IllegalArgument: " + $.getMessage();
-      } catch (@NotNull final IllegalAccessException $) {
+      } catch ( final IllegalAccessException $) {
         return "IllegalAccess: " + $.getMessage();
-      } catch (@NotNull final InvocationTargetException $) {
+      } catch ( final InvocationTargetException $) {
         return "Exception in call: " + $.getMessage();
       }
     }

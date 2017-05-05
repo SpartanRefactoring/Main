@@ -4,7 +4,7 @@ import static il.org.spartan.statistics.MomentUtils.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static java.lang.Double.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.utils.*;
@@ -39,8 +39,8 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
   public double eval(final double x) {
     return beta() + x * alpha();
   }
-  @NotNull public double[] eval(@NotNull final double[] x) {
-    @NotNull final double[] $ = new double[x.length];
+   public double[] eval( final double[] x) {
+     final double[] $ = new double[x.length];
     for (int ¢ = 0; ¢ < x.length; ++¢)
       $[¢] = eval(x[¢]);
     return $;
@@ -65,7 +65,7 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
   public double r2() {
     return sqr(r());
   }
-  @Override @NotNull public String toString() {
+  @Override  public String toString() {
     return Separate.byNewLines("𝑛=" + n(), "𝛼=" + alpha(), "𝛽=" + beta(), "𝑟²=" + r2(), "𝑟=" + r(), "H=" + xs.entropy());
   }
 

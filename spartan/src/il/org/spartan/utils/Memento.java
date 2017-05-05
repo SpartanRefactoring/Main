@@ -6,7 +6,7 @@ import static fluent.ly.___.*;
 import java.io.*;
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 import fluent.ly.*;
@@ -30,11 +30,11 @@ public class Memento<T> {
   }
   /** Restore the saved snapshot
    * @return a copy of the saved object */
-  @NotNull public T restore() {
+   public T restore() {
     try {
-      @NotNull @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
+       @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
       return $;
-    } catch (@NotNull final ClassNotFoundException | IOException ¢) {
+    } catch ( final ClassNotFoundException | IOException ¢) {
       unreachable(¢.getMessage());
       throw new RuntimeException(¢);
     }
@@ -60,13 +60,13 @@ public class Memento<T> {
    * @throws Bug.Contract.Precondition in case object could not be serialized */
   private byte[] object2bytes(final T t) {
     try {
-      @NotNull final ByteArrayOutputStream $ = new ByteArrayOutputStream();
+       final ByteArrayOutputStream $ = new ByteArrayOutputStream();
       new ObjectOutputStream($).writeObject(t);
       return $.toByteArray();
-    } catch (@NotNull final NotSerializableException ¢) {
+    } catch ( final NotSerializableException ¢) {
       dump.go(¢);
       throw new Bug.Contract.Precondition("Cannot serialize object of class " + ¢.getMessage());
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       unreachable(¢.getMessage());
       throw new RuntimeException(¢);
     }

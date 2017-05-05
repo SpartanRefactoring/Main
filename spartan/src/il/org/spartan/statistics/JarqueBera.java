@@ -4,7 +4,7 @@ import static il.org.spartan.statistics.Kurtosis.*;
 import static il.org.spartan.statistics.MomentUtils.*;
 import static il.org.spartan.statistics.Skewness.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 
@@ -13,10 +13,10 @@ import il.org.spartan.streotypes.*;
 @Utility
 public enum JarqueBera {
   ;
-  public static double jarqueBera(@NotNull final double... vs) {
+  public static double jarqueBera( final double... vs) {
     return jarqueBeraNormalizedVector(normalize(vs.clone()));
   }
-  public static double jarqueBeraNormalizedVector(@NotNull final double... ¢) {
+  public static double jarqueBeraNormalizedVector( final double... ¢) {
     return ¢.length * (sqr(skewnessNormalizedVector(¢)) + sqr(kurtosisNormalizedVector(¢) / 2)) / 6;
   }
 }

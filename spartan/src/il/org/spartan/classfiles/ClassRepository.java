@@ -7,7 +7,7 @@ import java.net.*;
 import java.util.*;
 import java.util.zip.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.utils.*;
@@ -34,17 +34,17 @@ public class ClassRepository implements Iterable<String> {
    * @return a list of files
    * @throws IllegalArgumentException If the class loader of the arguments is
    *         not a URLClassLoader */
-  @NotNull public static List<File> fromClass(@NotNull final Class<?>... cs) throws IllegalArgumentException {
-    @NotNull final List<File> $ = new ArrayList<>();
-    for (@NotNull final Class<?> c : cs) {
+   public static List<File> fromClass( final Class<?>... cs) throws IllegalArgumentException {
+     final List<File> $ = new ArrayList<>();
+    for ( final Class<?> c : cs) {
       final ClassLoader cl = c.getClassLoader();
       if (!(cl instanceof URLClassLoader))
         throw new IllegalArgumentException("Class loader is not a URLClassLoader. class=" + c.getName());
       ___.sure(((URLClassLoader) cl).getURLs().length > 0);
-      for (@NotNull final URL url : ((URLClassLoader) cl).getURLs())
+      for ( final URL url : ((URLClassLoader) cl).getURLs())
         try {
           $.add(new File(url.toURI()));
-        } catch (@NotNull final URISyntaxException e) {
+        } catch ( final URISyntaxException e) {
           $.add(new File(url.getFile().substring(1)));
           // continue;
         }
@@ -63,47 +63,47 @@ public class ClassRepository implements Iterable<String> {
    * location, but only in JVMs by Sun.
    * </ul>
    * @return A new ClassPathInfo object */
-  @NotNull public static List<File> fromJre() {
+   public static List<File> fromJre() {
     try {
       return fromClass(Object.class);
-    } catch (@NotNull final Throwable t) {
+    } catch ( final Throwable t) {
       // Abosrb, let's try the other option...
     }
-    @NotNull final List<File> $ = new ArrayList<>();
+     final List<File> $ = new ArrayList<>();
     final String cp = System.getProperty("sun.boot.class.path");
-    for (@NotNull final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
+    for ( final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
       $.add(new File(¢.nextToken()));
     return filter($);
   }
   public static void main(final String[] args) {
-    @NotNull final ClassRepository r = new ClassRepository.DEFAULT();
+     final ClassRepository r = new ClassRepository.DEFAULT();
     System.out.println("Size is " + r.getClasses().size());
-    @NotNull final List<String> list = r.getClasses();
+     final List<String> list = r.getClasses();
     for (int ¢ = 0; ¢ < list.size(); ++¢)
       System.out.println(¢ + " " + list.get(¢));
   }
   /** Adding all classes residing in archive to cache
    * @param jarFile fill path to a jar file
    * @param result List where scanned files are stored */
-  private static void addFromArchive(@NotNull final String jarFile, @NotNull final ArrayList<String> result) {
+  private static void addFromArchive( final String jarFile,  final ArrayList<String> result) {
     try {
       if (!new File(jarFile).exists())
         return;
       for (final Enumeration<? extends ZipEntry> entries = new ZipFile(jarFile).entries(); entries.hasMoreElements();) {
         final ZipEntry ze = entries.nextElement();
-        @NotNull final NameDotSuffix nds = new NameDotSuffix(ze);
+         final NameDotSuffix nds = new NameDotSuffix(ze);
         if (nds.suffixIs(DOT_CLASS))
           result.add(nds.name);
       }
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       throw new RuntimeException("Damaged zip file: " + jarFile, ¢);
     }
   }
-  @NotNull private static String concat(@Nullable final String path, final String name) {
+   private static String concat( final String path, final String name) {
     return (path == null || path.length() == 0 ? "" : path + ".") + name;
   }
-  @NotNull private static List<File> filter(@NotNull final Iterable<File> fs, final File... ignore) {
-    @NotNull final List<File> $ = new ArrayList<>();
+   private static List<File> filter( final Iterable<File> fs, final File... ignore) {
+     final List<File> $ = new ArrayList<>();
     for (File ¢ : fs) {
       ¢ = ¢.getAbsoluteFile();
       if (¢.exists() && !onDirs(¢, ignore))
@@ -117,22 +117,22 @@ public class ClassRepository implements Iterable<String> {
         return true;
     return false;
   }
-  private static boolean onDirs(final File f, @NotNull final File... dirs) {
-    for (@NotNull final File d : dirs)
+  private static boolean onDirs(final File f,  final File... dirs) {
+    for ( final File d : dirs)
       if (onDir(f, d.getAbsoluteFile()))
         return true;
     return false;
   }
-  @NotNull private static File[] toFile(@NotNull final String[] paths) {
-    @NotNull final File[] $ = new File[paths.length];
+   private static File[] toFile( final String[] paths) {
+     final File[] $ = new File[paths.length];
     int i = 0;
-    for (@NotNull final String path : paths)
+    for ( final String path : paths)
       $[i++] = new File(path).getAbsoluteFile();
     return $;
   }
 
   /** This is where the collection of elements of the class path are stored. */
-  @NotNull private final File[] files;
+   private final File[] files;
 
   /** Initialize a new empty instance */
   public ClassRepository() {
@@ -145,52 +145,52 @@ public class ClassRepository implements Iterable<String> {
   }
   /** Initialize a new instance
    * @param fs Array of Files */
-  public ClassRepository(@NotNull final File... fs) {
+  public ClassRepository( final File... fs) {
     files = new File[fs.length];
     int i = 0;
-    for (@NotNull final File ¢ : fs)
+    for ( final File ¢ : fs)
       files[i++] = ¢.getAbsoluteFile();
   }
   /** Initialize a new instance from an iterable collection.
    * @param fs an iterable collection of files. */
-  public ClassRepository(@NotNull final Iterable<File> fs) {
+  public ClassRepository( final Iterable<File> fs) {
     this(Iterables.toArray(fs, File.class));
   }
   /** Initialize a new instance
    * @param paths Array of strings. Each element is a path to a single file
    *        system location */
-  public ClassRepository(@NotNull final String... paths) {
+  public ClassRepository( final String... paths) {
     this(toFile(paths));
   }
-  public ClassRepository(@NotNull final URI uri) {
+  public ClassRepository( final URI uri) {
     this(new File(uri));
   }
   /** Find all classes on the CLASSPATH represented by the receiver
    * @return List of fully qualified names of all such classes */
-  @NotNull public ArrayList<String> getClasses() {
-    @NotNull final ArrayList<String> $ = new ArrayList<>();
-    for (@NotNull final File ¢ : files)
+   public ArrayList<String> getClasses() {
+     final ArrayList<String> $ = new ArrayList<>();
+    for ( final File ¢ : files)
       addFromDirectory(0, ¢, ¢.getAbsolutePath(), $, "");
     return $;
   }
   /** Obtain all starting point of the underlying class path
    * @return Array of files */
-  @NotNull public File[] getRoots() {
+   public File[] getRoots() {
     return Arrays.copyOf(files, files.length);
   }
   /** Obtain an iterator over all class names found in the class path
    * @return a new iterator object */
-  @Override @NotNull public Iterator<String> iterator() {
+  @Override  public Iterator<String> iterator() {
     try {
       return getClasses().iterator();
-    } catch (@NotNull final Exception ¢) {
+    } catch ( final Exception ¢) {
       throw new RuntimeException(¢);
     }
   }
   public final int size() {
     return getClasses().size();
   }
-  @Override @NotNull public String toString() {
+  @Override  public String toString() {
     return Separate.by(files, File.pathSeparator);
   }
   /** Recursively adding all classes residing in specified directory into cache.
@@ -199,15 +199,15 @@ public class ClassRepository implements Iterable<String> {
    * @param root the root directory
    * @param result List where results are stored
    * @param path Relative path (dot-separated) from the starting point */
-  private void addFromDirectory(final int depth, @NotNull final File dirOrFile, final String root, @NotNull final ArrayList<String> result,
+  private void addFromDirectory(final int depth,  final File dirOrFile, final String root,  final ArrayList<String> result,
       final String path) {
     if (dirOrFile.isDirectory()) {
-      @Nullable final String[] children = dirOrFile.list();
-      for (@NotNull final String ¢ : children)
+       final String[] children = dirOrFile.list();
+      for ( final String ¢ : children)
         addFromDirectory(depth + 1, new File(dirOrFile, ¢), root, result, depth == 0 ? "" : concat(path, dirOrFile.getName()));
       return;
     }
-    @NotNull final NameDotSuffix nds = new NameDotSuffix(dirOrFile);
+     final NameDotSuffix nds = new NameDotSuffix(dirOrFile);
     if (nds.suffixIs(DOT_JAR) || nds.suffixIs(DOT_ZIP))
       addFromArchive(dirOrFile.getPath(), result);
     else if (nds.suffixIs(DOT_CLASS))
@@ -242,10 +242,10 @@ public class ClassRepository implements Iterable<String> {
     @Test public void ensureDotSeparatedNames() {
       fail("See TODO at ClassRepository");
       // try {
-      // @NotNull final List<File> fs = il.org.spartan.classfiles.JRE.asList();
+      //  final List<File> fs = il.org.spartan.classfiles.JRE.asList();
       // fs.addAll(ClassRepository.fromClass(ClassRepositoryTest.class));
-      // @NotNull final ClassRepository cpi = new ClassRepository(fs);
-      // @NotNull final Set<String> classes = new HashSet<>();
+      //  final ClassRepository cpi = new ClassRepository(fs);
+      //  final Set<String> classes = new HashSet<>();
       // classes.addAll(cpi.getClasses());
       // azzert.assertContains(classes, Object.class.getName());
       // azzert.assertContains(classes, String.class.getName());
@@ -254,7 +254,7 @@ public class ClassRepository implements Iterable<String> {
       // azzert.assertContains(classes, Assert.class.getName());
       // azzert.assertContains(classes, Test.class.getName());
       // azzert.assertContains(classes, MyClass.class.getName());
-      // } catch (@NotNull final Throwable ¢) {
+      // } catch ( final Throwable ¢) {
       // ¢.printStackTrace();
       // fail(¢.getMessage());
       // }
@@ -265,18 +265,18 @@ public class ClassRepository implements Iterable<String> {
   }
 
   private static class NameDotSuffix {
-    @NotNull public final String name;
-    @NotNull public final String suffix;
+     public final String name;
+     public final String suffix;
 
-    public NameDotSuffix(@NotNull final File f) {
+    public NameDotSuffix( final File f) {
       this(f.getName());
     }
-    public NameDotSuffix(@NotNull final String s) {
+    public NameDotSuffix( final String s) {
       final int dot = s.lastIndexOf('.');
       name = dot < 0 ? s : s.substring(0, dot);
       suffix = dot < 0 ? "" : s.substring(dot);
     }
-    public NameDotSuffix(@NotNull final ZipEntry ze) {
+    public NameDotSuffix( final ZipEntry ze) {
       this(ze.getName().replace('/', '.'));
     }
     public boolean suffixIs(final String ¢) {
