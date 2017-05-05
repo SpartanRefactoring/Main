@@ -1,5 +1,7 @@
 package il.org.spartan.plugin.preferences.revision;
 
+import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
+
 import static java.util.stream.Collectors.*;
 
 import java.io.*;
@@ -294,8 +296,9 @@ public class XMLSpartan {
    * @param version document's version
    * @return true iff the document is valid, and does not require
    *         initialization */
-  private static boolean validate(@SuppressWarnings("unused") final Document $, final String version) {
-    return version != null && Double.parseDouble(version) >= 3.0;
+  private static boolean validate(final Document $, final String version) {
+    return version != null && Double.parseDouble(version) >= 3.0 && $.getElementsByTagName(NOTATION).item(0) != null
+        && $.getElementsByTagName(NOTATION).item(1) != null;
   }
 
   /** Describes an XML category element for plugin's XML file. The category has
