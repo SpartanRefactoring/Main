@@ -10,8 +10,6 @@ import java.util.zip.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 
-import il.org.sparan.classfiles.*;
-import il.org.sparan.classfiles.ClassRepositoryTest.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
 import fluent.ly.*;
@@ -259,24 +257,26 @@ public class ClassRepository implements Iterable<String> {
       azzert.that(new ClassRepository().getClasses().size(), is(0));
     }
 
+    // TODO Yossi: using non existing classes
     @Test public void ensureDotSeparatedNames() {
-      try {
-        @NotNull final List<File> fs = il.org.spartan.classfiles.JRE.asList();
-        fs.addAll(ClassRepository.fromClass(ClassRepositoryTest.class));
-        @NotNull final ClassRepository cpi = new ClassRepository(fs);
-        @NotNull final Set<String> classes = new HashSet<>();
-        classes.addAll(cpi.getClasses());
-        azzert.assertContains(classes, Object.class.getName());
-        azzert.assertContains(classes, String.class.getName());
-        azzert.assertContains(classes, Class.class.getName());
-        azzert.assertContains(classes, ClassRepositoryTest.class.getName());
-        azzert.assertContains(classes, Assert.class.getName());
-        azzert.assertContains(classes, Test.class.getName());
-        azzert.assertContains(classes, MyClass.class.getName());
-      } catch (@NotNull final Throwable ¢) {
-        ¢.printStackTrace();
-        fail(¢.getMessage());
-      }
+      fail("See TODO at ClassRepository");
+      // try {
+      // @NotNull final List<File> fs = il.org.spartan.classfiles.JRE.asList();
+      // fs.addAll(ClassRepository.fromClass(ClassRepositoryTest.class));
+      // @NotNull final ClassRepository cpi = new ClassRepository(fs);
+      // @NotNull final Set<String> classes = new HashSet<>();
+      // classes.addAll(cpi.getClasses());
+      // azzert.assertContains(classes, Object.class.getName());
+      // azzert.assertContains(classes, String.class.getName());
+      // azzert.assertContains(classes, Class.class.getName());
+      // azzert.assertContains(classes, ClassRepositoryTest.class.getName());
+      // azzert.assertContains(classes, Assert.class.getName());
+      // azzert.assertContains(classes, Test.class.getName());
+      // azzert.assertContains(classes, MyClass.class.getName());
+      // } catch (@NotNull final Throwable ¢) {
+      // ¢.printStackTrace();
+      // fail(¢.getMessage());
+      // }
     }
 
     @Test public void getClassesObject() {
