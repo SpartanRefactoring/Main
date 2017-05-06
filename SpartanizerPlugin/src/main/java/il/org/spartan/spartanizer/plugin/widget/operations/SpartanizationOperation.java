@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.plugin.widget.*;
 public class SpartanizationOperation extends WidgetOperation {
   private static final long serialVersionUID = -0x409F3F461222BD5BL;
   public static final String TYPE = "type";
-  private String type;
+  private String type = "Current file";
 
   @Override public String description() {
     return "Spartanize code";
