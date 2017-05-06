@@ -17,6 +17,8 @@ import il.org.spartan.spartanizer.ast.safety.*;
  * @author Or Troyaner
  * @author Tom Nof
  * @since 16-11-04 */
+// TODO: Yossi Gil (?)
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public final class metricsTest {
   private final String helloWorldQuoted = "\"Hello, World!\\n\"";

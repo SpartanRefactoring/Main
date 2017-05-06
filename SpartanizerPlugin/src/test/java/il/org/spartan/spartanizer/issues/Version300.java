@@ -22,6 +22,8 @@ import il.org.spartan.utils.*;
 /** Misc unit tests with no better other place for version 3.00
  * @author Yossi Gil
  * @since 2017-03-09 */
+// TODO: Yossi Gil
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Version300 {
   @FunctionalInterface
