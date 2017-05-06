@@ -13,6 +13,19 @@ repositories {
 	}
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+    }
+}
+
 dependencies {
 	compile files('lib/cli-1.01.jar')
 	compile project(':fluent.ly')

@@ -50,8 +50,6 @@ subprojects {
 /////////////
 // tasks to clean and jar all of the plugins
 Closure IS_PLUGIN = { it.name.equals("il.org.spartan.spartanizer") }
-println subprojects
-println rootProject
 configure(subprojects.findAll(IS_PLUGIN)) {
 	// we need the maven repo from p2
 	evaluationDependsOn(':SpartanizerPlugin:target.p2')
@@ -64,6 +62,8 @@ configure(subprojects.findAll(IS_PLUGIN)) {
 	// JAVA //
 	//////////
 	apply plugin: 'java'
+        compileJava.options.encoding = 'UTF-8'
+
 	sourceSets {
 		main { java {
 			srcDir 'src'
