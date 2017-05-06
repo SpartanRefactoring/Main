@@ -5,7 +5,7 @@ import static fluent.ly.unbox.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.classfiles.*;
 import il.org.spartan.collections.*;
@@ -13,145 +13,128 @@ import il.org.spartan.collections.*;
 /** A representation of an entry in the constant pool array.
  * @author Yossi Gil */
 public final class ConstantPool {
-  @NotNull private static UTF8 asUTF8(@NotNull final Constant $) {
+   private static UTF8 asUTF8( final Constant $) {
     try {
       return (UTF8) $;
-    } catch (@NotNull final ClassCastException ¢) {
+    } catch ( final ClassCastException ¢) {
       throw new CorruptClassFile(¢);
     }
   }
 
-  @NotNull private final Constant[] pool;
+   private final Constant[] pool;
 
-  public ConstantPool(@NotNull final RobustReader reader) {
+  public ConstantPool( final RobustReader reader) {
     pool = new Constant[reader.readUnsignedShort()];
     for (int ¢ = 1; ¢ < pool.length; ++¢)
       if ((pool[¢] = readConstant(reader)).isDoubleLength())
         pool[++¢] = Empty.$$;
   }
-
   /** @param classIndex
    * @return name of class stored in this location */
-  @Nullable public String getClassName(final int classIndex) {
+   public String getClassName(final int classIndex) {
     return ((ClassConstant) pool[classIndex]).getClassName();
   }
-
-  @NotNull public FieldReference getFieldReference(final int classIndex) {
+   public FieldReference getFieldReference(final int classIndex) {
     return (FieldReference) pool[classIndex];
   }
-
-  @NotNull public MemberReference getMemberReference(final int classIndex) {
+   public MemberReference getMemberReference(final int classIndex) {
     return (MemberReference) pool[classIndex];
   }
-
-  @Nullable public String getPackage(final int classIndex) {
+   public String getPackage(final int classIndex) {
     return ((ClassConstant) pool[classIndex]).getPackage();
   }
-
   /** Which other classes does this class refer to?
    * @return an array with names of all classes that this class uses */
   public String[] getReferencedClasses() {
-    @NotNull final ArrayList<String> $ = new ArrayList<>();
+     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof ClassConstant && ¢ + "" != null)
         $.add(¢ + "");
     return $.toArray(new String[$.size()]);
   }
-
   public int[] getReferencedClassesIndices() {
-    @NotNull final IntsArray $ = new IntsArray();
+     final IntsArray $ = new IntsArray();
     for (int ¢ = 0; ¢ < pool.length; ++¢)
       if (pool[¢] instanceof ClassConstant && pool[¢] + "" != null)
         $.push(¢);
     return $.toArray();
   }
-
   /** Which <code><b>double</b></code>s are found in this class's constants'
    * pool?
    * @return an array with <code><b>double</b></code>s that this class uses. */
-  @NotNull public double[] getReferencedDoubles() {
-    @NotNull final ArrayList<Double> $ = new ArrayList<>();
+   public double[] getReferencedDoubles() {
+     final ArrayList<Double> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof DoubleLiteral)
         $.add(box(((DoubleLiteral) ¢).value));
     return unbox($.toArray(new Double[$.size()]));
   }
-
   /** Which <code><b>float</b></code>s are found in this class's constants'
    * pool?
    * @return an array with <code><b>float</b></code>s that this class uses. */
-  @NotNull public float[] getReferencedFloats() {
-    @NotNull final ArrayList<Float> $ = new ArrayList<>();
+   public float[] getReferencedFloats() {
+     final ArrayList<Float> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof FloatLiteral)
         $.add(box(((FloatLiteral) ¢).value));
     return unbox($.toArray(new Float[$.size()]));
   }
-
   /** Which <code><b>int</b></code>s are found in this class's constants' pool?
    * @return an array with <code><b>int</b></code>s that this class uses. */
-  @NotNull public int[] getReferencedInts() {
-    @NotNull final ArrayList<Integer> $ = new ArrayList<>();
+   public int[] getReferencedInts() {
+     final ArrayList<Integer> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof IntLiteral)
         $.add(box(((IntLiteral) ¢).value));
     return unbox($.toArray(new Integer[$.size()]));
   }
-
   /** Which <code><b>long</b></code>s are found in this class's constants' pool?
    * @return an array with <code><b>long</b></code>s that this class uses. */
-  @NotNull public long[] getReferencedLongs() {
-    @NotNull final ArrayList<Long> $ = new ArrayList<>();
+   public long[] getReferencedLongs() {
+     final ArrayList<Long> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof LongLiteral)
         $.add(box(((LongLiteral) ¢).value));
     return unbox($.toArray(new Long[$.size()]));
   }
-
   public String[] getReferencedMethods() {
-    @NotNull final ArrayList<String> $ = new ArrayList<>();
+     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof MethodReference && !"<init>".equals(((MethodReference) ¢).getNameAndType().getName()) && ¢ + "" != null)
         $.add(((MethodReference) ¢).getClassConstant().getClassName() + ":" + ((MethodReference) ¢).getNameAndType().getName());
     return $.toArray(new String[$.size()]);
   }
-
   /** Which {@link String}s does this class refer to?
    * @return an array with all {@link String}s that this class uses */
   public String[] getReferencedStrings() {
-    @NotNull final ArrayList<String> $ = new ArrayList<>();
+     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof StringConstant)
         $.add(¢ + "");
     return $.toArray(new String[$.size()]);
   }
-
   /** Which <code><b>UTF8</b></code>s are found in this class's constants' pool?
    * @return an array with <code><b>UTF8</b></code>s that this class uses. */
   public String[] getReferencedUTF8() {
-    @NotNull final ArrayList<String> $ = new ArrayList<>();
+     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
       if (¢ instanceof UTF8)
         $.add(((UTF8) ¢).value);
     return $.toArray(new String[$.size()]);
   }
-
-  @Nullable public String getShortClassName(final int classIndex) {
+   public String getShortClassName(final int classIndex) {
     return ((ClassConstant) pool[classIndex]).getShortClassName();
   }
-
   public String getUTF8(final int a) {
     return asUTF8(pool[a]).value;
   }
-
-  @NotNull ClassConstant getClassConstant(final int classIndex) {
+   ClassConstant getClassConstant(final int classIndex) {
     return (ClassConstant) pool[classIndex];
   }
-
   /** Read the next constant pool entry from a given stream
    * @param r
    * @return the next constant pool entry found in the given stream */
-  private Constant readConstant(@NotNull final RobustReader $) {
+  private Constant readConstant( final RobustReader $) {
     final int//
     CONSTANT_UTF8 = 1, //
         CONSTANT_INTEGER = 3, //
@@ -202,20 +185,18 @@ public final class ConstantPool {
     public ClassConstant(final int nameIndex) {
       super(nameIndex);
     }
-
     /** What is the fully-qualified class name. In the case of an object array
      * only the class name of the object is returned.
      * @return fully-qualified class name in standard notation with '.'. */
-    @Nullable public String getClassName() {
-      @Nullable String $ = getUTF8(contentIndex);
+     public String getClassName() {
+       String $ = getUTF8(contentIndex);
       if ($ == null)
         return null;
       $ = $.replaceFirst("^[\\[]+L", "").replaceAll(";$", "");
       return $.startsWith("[") ? null : $.replace('/', '.').replace('$', '.');
     }
-
-    @Nullable public String getPackage() {
-      @Nullable String $ = getUTF8(contentIndex);
+     public String getPackage() {
+       String $ = getUTF8(contentIndex);
       if ($ == null)
         return null;
       $ = $.replaceFirst("^[\\[]+L", "").replaceAll(";$", "");
@@ -224,20 +205,17 @@ public final class ConstantPool {
       final int i = $.lastIndexOf('/');
       return i == -1 ? "" : $.substring(0, i).replace('/', '.');
     }
-
-    @Nullable public String getShortClassName() {
-      @Nullable String $ = getUTF8(contentIndex);
+     public String getShortClassName() {
+       String $ = getUTF8(contentIndex);
       if ($ == null)
         return null;
       $ = $.replaceFirst("^[\\[]+L", "").replaceAll(";$", "");
       return $.startsWith("[") ? null : $.substring($.lastIndexOf('/') + 1).replace('$', '.');
     }
-
-    @Override @Nullable public String toString() {
+    @Override  public String toString() {
       return getClassName();
     }
-
-    @Override @NotNull public String typeName() {
+    @Override  public String typeName() {
       return "CLASS";
     }
   }
@@ -249,10 +227,9 @@ public final class ConstantPool {
     @SuppressWarnings("static-method") public boolean isDoubleLength() {
       return false;
     }
-
     /** What is the type of this constant?
      * @return a textual representation of the type of this instance */
-    @NotNull public abstract String typeName();
+     public abstract String typeName();
   }
 
   /** A representation of a <code><b>long</b></code> literal in the constants'
@@ -267,15 +244,12 @@ public final class ConstantPool {
     public DoubleLiteral(final double value) {
       this.value = value;
     }
-
     @Override public boolean isDoubleLength() {
       return true;
     }
-
-    @Override @NotNull public String toString() {
+    @Override  public String toString() {
       return value + "";
     }
-
     @Override public String typeName() {
       return "DOUBLE";
     }
@@ -299,7 +273,6 @@ public final class ConstantPool {
     private Empty() {
       // Forbid instantiation by clients
     }
-
     @Override public String typeName() {
       return "EMPTY";
     }
@@ -314,7 +287,6 @@ public final class ConstantPool {
     public FieldReference(final int classIndex, final int nameAndTypeIndex) {
       super(classIndex, nameAndTypeIndex);
     }
-
     @Override public String typeName() {
       return "FIELD";
     }
@@ -332,11 +304,9 @@ public final class ConstantPool {
     public FloatLiteral(final float value) {
       this.value = value;
     }
-
-    @Override @NotNull public String toString() {
+    @Override  public String toString() {
       return "CONSTANT_Float: " + value;
     }
-
     @Override public String typeName() {
       return "DOUBLE";
     }
@@ -353,7 +323,6 @@ public final class ConstantPool {
     public InterfaceMethodReference(final int classIndex, final int nameAndTypeIndex) {
       super(classIndex, nameAndTypeIndex);
     }
-
     @Override public String typeName() {
       return "INTERFACE METHOD";
     }
@@ -371,11 +340,9 @@ public final class ConstantPool {
     public IntLiteral(final int value) {
       this.value = value;
     }
-
-    @Override @NotNull public String toString() {
+    @Override  public String toString() {
       return value + "";
     }
-
     @Override public String typeName() {
       return "INTEGER";
     }
@@ -399,15 +366,12 @@ public final class ConstantPool {
     public LongLiteral(final long value) {
       this.value = value;
     }
-
     @Override public boolean isDoubleLength() {
       return true;
     }
-
-    @Override @NotNull public String toString() {
+    @Override  public String toString() {
       return value + "";
     }
-
     @Override public String typeName() {
       return "DOUBLE";
     }
@@ -429,20 +393,17 @@ public final class ConstantPool {
       this.classIndex = classIndex;
       this.nameAndTypeIndex = nameAndTypeIndex;
     }
-
     /** @return the class constant. */
-    @NotNull @SuppressWarnings("synthetic-access") //
+     @SuppressWarnings("synthetic-access") //
     public ClassConstant getClassConstant() {
       return (ClassConstant) pool[classIndex];
     }
-
     /** @return the name-and-type constant. */
-    @NotNull @SuppressWarnings("synthetic-access") //
+     @SuppressWarnings("synthetic-access") //
     public NameAndTypeConstant getNameAndType() {
       return (NameAndTypeConstant) pool[nameAndTypeIndex];
     }
-
-    @Override @NotNull public final String toString() {
+    @Override  public final String toString() {
       return "Class = " + getClassConstant().getClassName() + ", Name = " + getNameAndType().getName() + ", Descriptor = "
           + getNameAndType().getDescriptor();
     }
@@ -457,7 +418,6 @@ public final class ConstantPool {
     public MethodReference(final int classIndex, final int nameAndTypeIndex) {
       super(classIndex, nameAndTypeIndex);
     }
-
     @Override public String typeName() {
       return "METHOD";
     }
@@ -478,22 +438,18 @@ public final class ConstantPool {
       super(nameIndex);
       this.descriptorIndex = descriptorIndex;
     }
-
     /** @return the type or method descriptor. */
-    @Nullable public String getDescriptor() {
+     public String getDescriptor() {
       return getUTF8(descriptorIndex);
     }
-
     /** @return the name. */
-    @Nullable public String getName() {
+     public String getName() {
       return getUTF8(contentIndex);
     }
-
-    @Override @Nullable public String toString() {
+    @Override  public String toString() {
       return getName() + ", " + getDescriptor();
     }
-
-    @Override @NotNull public String typeName() {
+    @Override  public String typeName() {
       return "NAME&TYPE";
     }
   }
@@ -511,11 +467,9 @@ public final class ConstantPool {
     public Reference(final int contentIndex) {
       this.contentIndex = contentIndex;
     }
-
-    @Override @Nullable public String toString() {
+    @Override  public String toString() {
       return getUTF8(contentIndex);
     }
-
     /** Return a UTF8 representation of a specific entry in the constants' pool
      * @param ¢ where to look for this entry?
      * @return a UTF8 representation of the content of this entry */
@@ -535,8 +489,7 @@ public final class ConstantPool {
     public StringConstant(final int stringIndex) {
       super(stringIndex);
     }
-
-    @Override @NotNull public String typeName() {
+    @Override  public String typeName() {
       return "STRING";
     }
   }
@@ -552,12 +505,10 @@ public final class ConstantPool {
     public UTF8(final String string) {
       value = string;
     }
-
     @Override public String toString() {
       return value;
     }
-
-    @Override @NotNull public String typeName() {
+    @Override  public String typeName() {
       return "UTF8";
     }
   }

@@ -1,9 +1,9 @@
 package il.org.spatan.iteration;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** @author Yossi Gil
  * @since 21 November 2011 */
 public interface CharIterable {
-  @NotNull CharIterator iterator();
+   CharIterator iterator();
 }

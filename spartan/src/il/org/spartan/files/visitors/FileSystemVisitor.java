@@ -1,13 +1,11 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.files.visitors;
 
-import static fluent.ly.___.*;
-
 import java.io.*;
 import java.util.*;
 import java.util.zip.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
@@ -30,14 +28,13 @@ import il.org.spatan.iteration.*;
  *      il.org.spartan.files.visitors.FileSystemVisitor.Action, String[])
  * @see Action */
 public class FileSystemVisitor {
-  @NotNull private static Iterable<File> asFiles(@NotNull final Iterable<String> fileNames) {
-    @NotNull final List<File> $ = new ArrayList<>();
-    for (@NotNull final String fileName : fileNames)
+   private static Iterable<File> asFiles( final Iterable<String> fileNames) {
+     final List<File> $ = new ArrayList<>();
+    for ( final String fileName : fileNames)
       $.add(new File(fileName));
     return $;
   }
-
-  @NotNull private static Iterable<File> asFiles(final String... fileNames) {
+   private static Iterable<File> asFiles(final String... fileNames) {
     return asFiles(Iterables.toList(fileNames));
   }
 
@@ -66,7 +63,6 @@ public class FileSystemVisitor {
   public FileSystemVisitor(final File from, final Action visitor, final String... extensions) {
     this(visitor, Iterables.toList(from), extensions);
   }
-
   /** Create a new visitor object to scan an array of {@link File}s naming the
    * search locations.
    * @param from a non-<code><b>null</b></code> specifying the directories or
@@ -85,7 +81,6 @@ public class FileSystemVisitor {
   public FileSystemVisitor(final File[] from, final Action visitor, final String... extensions) {
     this(visitor, Iterables.toList(from), extensions);
   }
-
   /** Create a new visitor object to scan an array of {@link String}s naming the
    * search locations.
    * @param from a non-<code><b>null</b></code> specifying where the traversal
@@ -103,10 +98,9 @@ public class FileSystemVisitor {
    * @see #go
    * @see #FileSystemVisitor(Collection,
    *      il.org.spartan.files.visitors.FileSystemVisitor.Action, String[]) */
-  public FileSystemVisitor(@NotNull final Iterable<String> from, final Action visitor, final String... extensions) {
+  public FileSystemVisitor( final Iterable<String> from, final Action visitor, final String... extensions) {
     this(visitor, asFiles(from), extensions);
   }
-
   /** Create a new visitor object to scan a single directory.
    * @param from a non-<code><b>null</b></code> specifying where the traversal
    *        should begin.
@@ -124,7 +118,6 @@ public class FileSystemVisitor {
   public FileSystemVisitor(final String from, final Action visitor, final String[] extensions) {
     this(new String[] { from }, visitor, extensions);
   }
-
   /** Create a new visitor object to scan a {@link String} naming the search
    * location.
    * @param from a non-<code><b>null</b></code> specifying where the traversal
@@ -143,7 +136,6 @@ public class FileSystemVisitor {
   public FileSystemVisitor(final String from, final Searcher visitor, final String... extensions) {
     this(visitor, asFiles(from), extensions);
   }
-
   /** Create a new visitor object to scan an array of {@link String}s naming the
    * search locations.
    * @param from a non-<code><b>null</b></code> specifying where the traversal
@@ -164,7 +156,6 @@ public class FileSystemVisitor {
   public FileSystemVisitor(final String[] from, final Action visitor, final String... extensions) {
     this(visitor, asFiles(from), extensions);
   }
-
   /** Create a new visitor object to scan an array of {@link File}s naming the
    * search locations.
    * @param from a non-<code><b>null</b></code> specifying the names of the
@@ -188,7 +179,6 @@ public class FileSystemVisitor {
     this.visitor = visitor;
     this.extensions = extensions;
   }
-
   /** Conduct the traversal. For each file encountered during the traversal, the
    * {@link FileSystemVisitor} invokes one of
    * <ol>
@@ -207,17 +197,16 @@ public class FileSystemVisitor {
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */
   public void go() throws IOException, StopTraversal {
-    for (@NotNull final File ¢ : from)
+    for ( final File ¢ : from)
       recurse(¢);
   }
-
   /** Conduct recursive traversal starting at a given file
    * @param ¢ a file, which may be a directory, a ZIP, or a plain file, at which
    *        the traversal begins
    * @throws IOException if the file system could not traversed for some reason
    * @throws StopTraversal if the visitor object requested to stop the
    *         visitation. */
-  private void recurse(@NotNull final File ¢) throws IOException, StopTraversal {
+  private void recurse( final File ¢) throws IOException, StopTraversal {
     if (¢.isDirectory())
       recurseDirectory(¢);
     else if (Zip.isZipFile(¢))
@@ -225,25 +214,23 @@ public class FileSystemVisitor {
     else if (Suffixed.by(¢, extensions))
       visitor.visitFile(¢);
   }
-
   /** conduct recursive traversal of a directory
    * @param d a directory
    * @throws IOException if the file system could not be traversed for some
    *         reason */
-  private void recurseDirectory(@NotNull final File d) throws IOException {
+  private void recurseDirectory( final File d) throws IOException {
     try {
       visitor.visitDirectory(d);
       if (d.list() == null) // Weird directories such as
         // "System Volume Information"
         return;
-      for (@Nullable final String name : d.list())
+      for ( final String name : d.list())
         if (name != null)
           recurse(new File(d, name));
-    } catch (@NotNull final Action.StopTraversal __) {
+    } catch ( final Action.StopTraversal __) {
       // do not visit children of this directory
     }
   }
-
   /** Scan entries of a ZIP file.
    * @param f a ZIP or other archive file
    * @throws StopTraversal if the visitor object requested to stop the
@@ -251,14 +238,14 @@ public class FileSystemVisitor {
    *         visitation of the ZIP file itself, the scanning of this ZIP file
    *         will stop, but the no exception is thrown, and the entire traversal
    *         continue. */
-  private void scanZip(@NotNull final File f) throws StopTraversal {
+  private void scanZip( final File f) throws StopTraversal {
     try {
       visitor.visitZip(f);
-    } catch (@NotNull final Action.StopTraversal e) {
+    } catch ( final Action.StopTraversal e) {
       return; // do not visit any elements of this ZIP file, but continue
       // traversal.
     }
-    try (@NotNull ZipFile Z = new ZipFile(f.getAbsoluteFile())) {
+    try ( ZipFile Z = new ZipFile(f.getAbsoluteFile())) {
       for (final Enumeration<? extends ZipEntry> es = Z.entries(); es.hasMoreElements();) {
         final ZipEntry e = es.nextElement();
         try {
@@ -270,14 +257,14 @@ public class FileSystemVisitor {
           if (Suffixed.by(e.getName(), extensions))
             visitor.visitZipEntry(Z.getName(), e.getName(), is);
           is.close();
-        } catch (@NotNull final StopTraversal x) {
+        } catch ( final StopTraversal x) {
           System.out.println("Found at ZIP!!!");
           throw x;
-        } catch (@NotNull final IOException ¢) {
+        } catch ( final IOException ¢) {
           System.err.println("Error reading " + Z + ": " + ¢.getMessage());
         }
       }
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       System.err.println(f.getAbsolutePath() + ": " + ¢.getMessage());
     }
   }
@@ -293,7 +280,6 @@ public class FileSystemVisitor {
      * @see #visitZip(File)
      * @see #visitZipEntry(String,String,InputStream) */
     void visitDirectory(File f) throws StopTraversal;
-
     /** action to conduct for each ordinary, i.e., non-ZIP and non-directory,
      * file.
      * @param f the file to visit
@@ -302,7 +288,6 @@ public class FileSystemVisitor {
      * @see #visitDirectory(File)
      * @see #visitZip(File) */
     void visitFile(File f) throws StopTraversal;
-
     /** action to conduct for each ZIP and other archive files encountered
      * throughout the traversal.
      * @param f the archive file object
@@ -311,7 +296,6 @@ public class FileSystemVisitor {
      * @see #visitFile(File)
      * @see #visitDirectory(File) */
     void visitZip(File f) throws StopTraversal;
-
     /** action to conduct for each directory encountered in an archival file
      * scanned through the traversal.
      * @param zipName the name of the ZIP file from which this entry was taken
@@ -322,7 +306,6 @@ public class FileSystemVisitor {
      * @see #visitFile(File)
      * @see #visitDirectory(File) */
     void visitZipDirectory(String zipName, String entryName, InputStream s) throws StopTraversal;
-
     /** action to conduct for each entry found in a ZIP file, encountered
      * throughout the traversal
      * @param zipName the name of the ZIP file from which this entry was taken
@@ -338,9 +321,7 @@ public class FileSystemVisitor {
       private static final long serialVersionUID = -0x40A795EBEA740DB0L;
 
       /** Create a new {@link StopTraversal} object */
-      public StopTraversal() {
-      }
-
+      public StopTraversal() {}
       /** Create a new {@link StopTraversal} object with a specific message
        * @param message a message to record
        * @see Exception */
@@ -362,14 +343,12 @@ public class FileSystemVisitor {
     @Override public void visitDirectory(final File __) {
       forget.it(__);
     }
-
     /** A do-nothing function, ignoring its arguments
      * @param __ ignored
      * @see il.org.spartan.files.visitors.FileSystemVisitor.Action#visitFile(java.io.File) */
     @Override public void visitFile(final File __) {
       forget.it(__);
     }
-
     /** A do-nothing function, ignoring its arguments
      * @param __ ignored
      * @throws StopTraversal
@@ -377,7 +356,6 @@ public class FileSystemVisitor {
     @Override public void visitZip(final File __) throws StopTraversal {
       forget.it(__);
     }
-
     /** A do-nothing function, ignoring its arguments
      * @param __ ignored
      * @param ____ ignored
@@ -387,7 +365,6 @@ public class FileSystemVisitor {
     @Override public void visitZipDirectory(final String __, final String ____, final InputStream ______) {
       forget.em(__, ____, ______);
     }
-
     /** A do-nothing function, ignoring its arguments
      * @param __ ignored
      * @param ____ ignored
@@ -424,9 +401,7 @@ public class FileSystemVisitor {
    * @since 18/06/2007 */
   public abstract static class FileOnlyAction extends EmptyAction {
     @Override public abstract void visitFile(File f);
-
     public abstract void visitZipEntry(String entryName, InputStream s);
-
     /** Not to be used by clients.
      * @see il.org.spartan.files.visitors.FileSystemVisitor.EmptyAction#visitZipEntry(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
@@ -460,7 +435,6 @@ public class FileSystemVisitor {
    * @since 16/05/2011 */
   public abstract static class PlainFileOnlyAction extends FileOnlyAction {
     @Override public abstract void visitFile(File f);
-
     @Override public final void visitZipEntry(final String entryName, final InputStream s) {
       forget.em(entryName, s);
     }
@@ -498,7 +472,6 @@ public class FileSystemVisitor {
      * @param d the directory currently being visited.
      * @see il.org.spartan.files.visitors.FileSystemVisitor.EmptyAction#visitDirectory(java.io.File) */
     @Override public abstract void visitDirectory(File d);
-
     /** Not to be called by clients
      * @see il.org.spartan.files.visitors.FileSystemVisitor.EmptyAction#visitZipDirectory(java.lang.String,
      *      java.lang.String, java.io.InputStream) */
@@ -506,7 +479,6 @@ public class FileSystemVisitor {
       forget.em(zipName);
       visitZipDirectory(entryName, s);
     }
-
     /** Visit a directory entry contained in an archive.
      * @param entryName the name of the discovered directory
      * @param s to be used for opening it if necessary */
@@ -515,13 +487,9 @@ public class FileSystemVisitor {
 
   interface NonStopAction extends Action {
     @Override void visitDirectory(File f);
-
     @Override void visitFile(File f);
-
     @Override void visitZip(File f) throws StopTraversal;
-
     @Override void visitZipDirectory(String zipName, String entryName, InputStream s);
-
     @Override void visitZipEntry(String zipName, String entryName, InputStream s);
   }
 }

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -16,7 +16,7 @@ import fluent.ly.*;
  * @author Yossi Gil
  * @since Apr 27, 2012 */
 public class DoublesWindow {
-  @NotNull private final double[] window;
+   private final double[] window;
   private int newest;
   private int size;
 
@@ -28,26 +28,22 @@ public class DoublesWindow {
       throw new IllegalArgumentException(capacity + "");
     window = new double[capacity];
   }
-
   /** add a value into the window, removing the oldest one if necessary
    * @param ¢ an arbitrary value
    * @return <code><strong>this</strong></code> */
-  @NotNull public DoublesWindow add(final double ¢) {
+   public DoublesWindow add(final double ¢) {
     if (size < window.length)
       ++size;
     window[newest = (newest + 1) % window.length] = ¢;
     return this;
   }
-
   /** @return the capacity of queue, */
   public int capacity() {
     return window.length;
   }
-
   public boolean full() {
     return size() == capacity();
   }
-
   /** Retrieve the newest value stored in this instance
    * @return the last value added into this instance
    * @throws EmptyStackException in case no values were previously added */
@@ -56,7 +52,6 @@ public class DoublesWindow {
       throw new EmptyStackException();
     return window[newest];
   }
-
   /** Retrieve the oldest value stored in this instance
    * @return the oldest value in this instance
    * @throws EmptyStackException in case no values were previously added */
@@ -65,7 +60,6 @@ public class DoublesWindow {
       throw new EmptyStackException();
     return window[(newest + window.length - size + 1) % window.length];
   }
-
   /** Determines many values are stored in this instance.
    * @return a non-negative integer, which is the count of values stored in this
    *         instance */
@@ -78,81 +72,62 @@ public class DoublesWindow {
     @Test public void addCapacityDoesNotAbort() {
       new DoublesWindow(3).add(13.2).add(14.2).add(-1).add(-4);
     }
-
     @Test public void correctCapacity() {
       azzert.that(new DoublesWindow(10).capacity(), is(10));
     }
-
     @Test public void correctSizeAfterOverflow() {
       azzert.that(new DoublesWindow(3).add(1).add(3).add(4).add(5).size(), is(3));
     }
-
     @Test public void correctSizeBeforeOverflow() {
       azzert.that(new DoublesWindow(3).add(1).add(3).add(4).size(), is(3));
     }
-
     @Test public void correctSizeOfEmpty() {
       azzert.that(new DoublesWindow(10).size(), is(0));
     }
-
     @Test public void correctSizeOfOne() {
       azzert.that(new DoublesWindow(10).add(1).size(), is(1));
     }
-
     @Test public void correctSizeOfTwo() {
       azzert.that(new DoublesWindow(10).add(1).add(3).size(), is(2));
     }
-
     @Test public void create() {
       assert new DoublesWindow(10) != null;
     }
-
     @Test(expected = IllegalArgumentException.class) public void createMinusOneSize() {
       assert new DoublesWindow(-1) != null;
     }
-
     @Test(expected = IllegalArgumentException.class) public void createNegativeSize() {
       assert new DoublesWindow(-10) != null;
     }
-
     @Test(expected = IllegalArgumentException.class) public void createZeroSize() {
       assert new DoublesWindow(0) != null;
     }
-
     @Test public void hasAdd() {
       new DoublesWindow(10).add(13.2);
     }
-
     @Test public void hasNewest() {
       assertEquals(13.2, new DoublesWindow(10).add(13.2).newest(), 1E-5);
     }
-
     @Test(expected = EmptyStackException.class) public void newestOfEmpty() {
       assertEquals(13.2, new DoublesWindow(10).newest(), 1E-5);
     }
-
     @Test public void newestOfSequence() {
       assertEquals(14.2, new DoublesWindow(10).add(0).add(1).add(14.2).newest(), 1E-5);
     }
-
     @Test(expected = EmptyStackException.class) public void oldestOfEmpty() {
       assertEquals(13.2, new DoublesWindow(10).oldest(), 1E-5);
     }
-
     @Test public void oldestOfOverflowingSequence() {
       assertEquals(12.7, new DoublesWindow(2).add(-3.0).add(12.7).add(14.2).oldest(), 1E-5);
     }
-
     @Test public void oldestOfSequence() {
       assertEquals(-3.0, new DoublesWindow(10).add(-3.0).add(1).add(14.2).oldest(), 1E-5);
     }
-
     @Test public void simpleOldest() {
       assertEquals(13.2, new DoublesWindow(10).add(13.2).oldest(), 1E-5);
     }
-
     @Test public void veryLongWindow() {
-      @NotNull final DoublesWindow w = new DoublesWindow(5);
+       final DoublesWindow w = new DoublesWindow(5);
       for (int ¢ = 0; ¢ < 5; ++¢) {
         azzert.that(w.capacity(), is(5));
         azzert.that(w.size(), is(¢));

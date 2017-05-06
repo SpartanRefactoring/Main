@@ -47,7 +47,7 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    * ConcurrentModificationException). */
   transient volatile int modCount;
   // Views
-  private transient Set<Map.Entry<K, V>> entrySet = null;
+  private transient Set<Map.Entry<K, V>> entrySet;
   transient volatile Set<K> keySet;
   transient volatile Collection<V> values;
 
@@ -424,29 +424,26 @@ public final class MyHashMap<K, V> implements Map<K, V> {
    *        greater than current capacity unless current capacity is
    *        MAXIMUM_CAPACITY (in which case value is irrelevant). */
   void resize(final int newCapacity) {
-    @SuppressWarnings("rawtypes") final Entry[] oldTable = table;
-    final int oldCapacity = oldTable.length;
-    if (oldCapacity == MAXIMUM_CAPACITY) {
+    if (table.length == MAXIMUM_CAPACITY) {
       threshold = Integer.MAX_VALUE;
       return;
     }
     @SuppressWarnings("rawtypes") final Entry[] newTable = new Entry[newCapacity];
     transfer(newTable);
     table = newTable;
-    threshold = (int) (newCapacity * loadFactor);
+    threshold = (int) (loadFactor * newCapacity);
   }
 
   /** Transfers all entries from current table to newTable. */
   void transfer(@SuppressWarnings("rawtypes") final Entry[] newTable) {
     @SuppressWarnings("rawtypes") final Entry[] src = table;
-    final int newCapacity = newTable.length;
     for (int j = 0; j < src.length; ++j) {
       Entry<K, V> e = src[j];
       if (e != null) {
         src[j] = null;
         do {
           final Entry<K, V> next = e.next;
-          final int i = indexFor(e.hash, newCapacity);
+          final int i = indexFor(e.hash, newTable.length);
           e.next = newTable[i];
           newTable[i] = e;
           e = next;
@@ -505,11 +502,11 @@ public final class MyHashMap<K, V> implements Map<K, V> {
 
   /** Offloaded version of put for null keys */
   private V putForNullKey(final V value) {
-    for (Entry<K, V> e = table[0]; e != null; e = e.next)
-      if (e.key == null) {
-        final V $ = e.value;
-        e.value = value;
-        e.recordAccess(this);
+    for (Entry<K, V> ¢ = table[0]; ¢ != null; ¢ = ¢.next)
+      if (¢.key == null) {
+        final V $ = ¢.value;
+        ¢.value = value;
+        ¢.recordAccess(this);
         return $;
       }
     ++modCount;

@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** @author Yossi Gil
  * @since Mar 6, 2012
@@ -12,15 +12,13 @@ public class Maximizer<T> {
   public double max() {
     return max;
   }
-
-  @NotNull public Maximizer<T> next(final T t, final double next) {
+   public Maximizer<T> next(final T t, final double next) {
     if (!Double.isNaN(max) && next <= max)
       return this;
     max = next;
     value = t;
     return this;
   }
-
   public T value() {
     return value;
   }

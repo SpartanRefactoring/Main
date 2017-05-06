@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.bench.operations.*;
 
@@ -11,29 +11,24 @@ public class Bencher extends LogBook.Mutable {
   public Bencher(final Object initiator) {
     super(initiator);
   }
-
   public void afterEachGo(final Operation ¢) {
     after = ¢;
   }
-
-  @Override @NotNull public LogBook clear() {
+  @Override  public LogBook clear() {
     super.clear();
     current.clear();
     dotter.clear();
     return this;
   }
-
-  public void go(@NotNull final Bencheon ¢) {
+  public void go( final Bencheon ¢) {
     BenchingPolicy.go(this, ¢);
     BenchingPolicy.after(after);
   }
-
-  public void go(final long size, @NotNull final NamedOperation o) {
+  public void go(final long size,  final NamedOperation o) {
     BenchingPolicy.go(this, size, o);
     BenchingPolicy.after(after);
   }
-
-  public void go(final String name, final long l, @NotNull final Operation o) {
+  public void go(final String name, final long l,  final Operation o) {
     BenchingPolicy.go(this, name, l, o);
     BenchingPolicy.after(after);
   }

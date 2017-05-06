@@ -6,7 +6,7 @@ import static fluent.ly.___.*;
 import java.io.*;
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 import fluent.ly.*;
@@ -16,7 +16,8 @@ import fluent.ly.*;
  * @author Yossi Gil, the Technion.
  * @since 24/07/2008
  * @param <T> type of object to be saved, must be {@link Serializable} */
-@Instantiable public class Memento<T> {
+@Instantiable
+public class Memento<T> {
   /** An object's snapshot as obtained by serialization */
   private final byte[] snapshot;
 
@@ -27,19 +28,17 @@ import fluent.ly.*;
   public Memento(final T t) {
     snapshot = object2bytes(t);
   }
-
   /** Restore the saved snapshot
    * @return a copy of the saved object */
-  @NotNull public T restore() {
+   public T restore() {
     try {
-      @NotNull @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
+       @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
       return $;
-    } catch (@NotNull final ClassNotFoundException | IOException ¢) {
+    } catch ( final ClassNotFoundException | IOException ¢) {
       unreachable(¢.getMessage());
       throw new RuntimeException(¢);
     }
   }
-
   /** Determine whether a given object is equal to the saved snapshot
    * @param ¢ an object to compare to the saved snapshot
    * @return <code><b>true</b></code>, <i>iff</i> the given object is deeply
@@ -48,14 +47,12 @@ import fluent.ly.*;
   public boolean same(final T ¢) {
     return Arrays.equals(snapshot, object2bytes(¢));
   }
-
   /** Determine the size in bytes of the recorded snapshot
    * @return a non-negative integer representing the size of the object in
    *         bytes */
   public int size() {
     return snapshot.length;
   }
-
   /** Convert an object to a byte array
    * @param t an object to convert
    * @return a byte array snapshot of the parameter as obtained by serializing
@@ -63,13 +60,13 @@ import fluent.ly.*;
    * @throws Bug.Contract.Precondition in case object could not be serialized */
   private byte[] object2bytes(final T t) {
     try {
-      @NotNull final ByteArrayOutputStream $ = new ByteArrayOutputStream();
+       final ByteArrayOutputStream $ = new ByteArrayOutputStream();
       new ObjectOutputStream($).writeObject(t);
       return $.toByteArray();
-    } catch (@NotNull final NotSerializableException ¢) {
+    } catch ( final NotSerializableException ¢) {
       dump.go(¢);
       throw new Bug.Contract.Precondition("Cannot serialize object of class " + ¢.getMessage());
-    } catch (@NotNull final IOException ¢) {
+    } catch ( final IOException ¢) {
       unreachable(¢.getMessage());
       throw new RuntimeException(¢);
     }

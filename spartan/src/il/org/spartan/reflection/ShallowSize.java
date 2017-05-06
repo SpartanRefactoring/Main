@@ -2,7 +2,7 @@ package il.org.spartan.reflection;
 
 import java.lang.reflect.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** This class realizes a memory model for Java objects, as per the following
  * rules.
@@ -56,84 +56,65 @@ public class ShallowSize {
   public static int arraySize(final int length) {
     return arraySize(length, referenceSize());
   }
-
-  public static int of(@NotNull final boolean it[]) {
+  public static int of( final boolean it[]) {
     return arraySize(it.length, 1);
   }
-
-  public static int of(@NotNull final byte it[]) {
+  public static int of( final byte it[]) {
     return arraySize(it.length, 1);
   }
-
-  public static int of(@NotNull final char it[]) {
+  public static int of( final char it[]) {
     return arraySize(it.length, 2);
   }
-
-  public static int of(@NotNull final Class<?> ¢) {
+  public static int of( final Class<?> ¢) {
     final Class<?> $ = ¢.getSuperclass();
     return align(intrinsic(¢) + ($ != null ? of($) : headerSize()));
   }
-
-  public static int of(@NotNull final double it[]) {
+  public static int of( final double it[]) {
     return arraySize(it.length, 8);
   }
-
-  public static int of(@NotNull final float it[]) {
+  public static int of( final float it[]) {
     return arraySize(it.length, 4);
   }
-
-  public static int of(@NotNull final int it[]) {
+  public static int of( final int it[]) {
     return arraySize(it.length, 4);
   }
-
-  public static int of(@NotNull final long it[]) {
+  public static int of( final long it[]) {
     return arraySize(it.length, 8);
   }
-
-  public static int of(@NotNull final Object it[]) {
+  public static int of( final Object it[]) {
     return arraySize(it.length);
   }
-
-  public static int of(@Nullable final Object ¢) {
+  public static int of( final Object ¢) {
     return ¢ == null ? 0 : of(¢.getClass());
   }
-
-  public static int of(@NotNull final short it[]) {
+  public static int of( final short it[]) {
     return arraySize(it.length, 2);
   }
-
   public static int referenceSize() {
     return 4;
   }
-
   static int align(final int ¢) {
     return 8 * (¢ - 1) / 8 + 8;
   }
-
   static int arraySize(final int length, final int size) {
     return align(headerSize() + lengthSize() + size * length);
   }
-
   static int headerSize() {
     return 8;
   }
-
-  static int intrinsic(@NotNull final Class<?> c) {
+  static int intrinsic( final Class<?> c) {
     int $ = 0;
-    for (@NotNull final Field ¢ : c.getDeclaredFields())
+    for ( final Field ¢ : c.getDeclaredFields())
       $ += size(¢);
     return $;
   }
-
-  static int intrinsic(@NotNull final Object ¢) {
+  static int intrinsic( final Object ¢) {
     return intrinsic(¢.getClass());
   }
-
   static int lengthSize() {
     return 4;
   }
-
-  static int size(@NotNull final Field ¢) {
+  static int size( final Field ¢) {
     if (Modifier.isStatic(¢.getModifiers()))
       return 0;
     final Class<?> $ = ¢.getType();

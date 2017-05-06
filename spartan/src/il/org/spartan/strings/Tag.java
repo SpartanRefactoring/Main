@@ -7,7 +7,7 @@ import static fluent.ly.___.*;
 
 import java.util.regex.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -17,7 +17,9 @@ import il.org.spartan.utils.*;
 /** A representation of an HTML tag, capable of wrapping a given {@link String}.
  * @author Yossi Gil, the Technion.
  * @since 11/07/2008 */
-@Immutable @Instantiable public class Tag {
+@Immutable
+@Instantiable
+public class Tag {
   /** A pre-made instance, representing the HTML &lt;strong&gt; tag. */
   public static final Tag strong = new Tag("strong");
   /** A pre-made instance, representing the HTML &lt;em&gt; tag. */
@@ -48,67 +50,61 @@ import il.org.spartan.utils.*;
   /** Make a {@link String} of an HTML opening tag with a given name.
    * @param name the name of the given tag.
    * @return the name enclosed in angular brackets. */
-  @NotNull public static String beginTag(final String name) {
+   public static String beginTag(final String name) {
     return "<" + name + ">";
   }
-
   /** Make a {@link String} of an HTML closing tag with a given name.
    * @param name the name of the given tag.
    * @return the name enclosed in angular brackets. */
-  @NotNull public static String endTag(final String name) {
+   public static String endTag(final String name) {
     return beginTag("/" + name);
   }
-
-  public static String remove(@NotNull final String text, final String tag) {
+  public static String remove( final String text, final String tag) {
     return text//
         .replaceAll(ignoreCase() + beginTag(tag), "") //
         .replaceAll(ignoreCase() + endTag(tag), "") //
         .replaceAll(ignoreCase() + selfClosing(tag), "") //
     ;
   }
-
-  public static String replace(@NotNull final String text, final String from, final String to) {
+  public static String replace( final String text, final String from, final String to) {
     return text//
         .replaceAll(ignoreCase() + beginTag(from), beginTag(to)) //
         .replaceAll(ignoreCase() + endTag(from), endTag(to));
   }
-
   /** Make a self closing {@link String} of an HTML tag with a given name.
    * @param name the name of the given tag.
    * @return the name parameter, followed by slash (/) and enclosed in angular
    *         brackets. */
-  @NotNull public static String selfClosing(final String name) {
+   public static String selfClosing(final String name) {
     return beginTag(name + " /");
   }
 
   /** The opening {@link String} of this tag. */
-  @NotNull public final String begin;
+   public final String begin;
   /** The closing {@link String} of this tag. */
-  @NotNull public final String end;
+   public final String end;
 
   /** Instantiate a plain tag, i.e., a tag without any inner tags,
    * @param name the tag name, e.g., "font"
    * @param flags any number of HTML flags */
-  public Tag(final String name, @NotNull final String... flags) {
-    nonnull(name);
-    nonnull(flags);
+  public Tag(final String name,  final String... flags) {
+    assert name != null;
+    assert flags != null;
     begin = beginTag(name + (flags.length == 0 ? "" : " " + Separate.by(flags, " ")));
     end = beginTag("/" + name);
   }
-
   /** Instantiate a tag containing another tag
    * @param inner the inner tag; all instances of the newly created tag will be
    *        around this inner tag
    * @param name the tag name, e.g., "font"
    * @param flags any number of HTML flags */
-  public Tag(@NotNull final Tag inner, final String name, final String... flags) {
-    nonnull(name);
-    nonnull(flags);
-    @NotNull final Tag unnested = new Tag(name, flags);
+  public Tag( final Tag inner, final String name, final String... flags) {
+    notNull(name);
+    notNull(flags);
+     final Tag unnested = new Tag(name, flags);
     begin = unnested.begin + inner.begin;
     end = inner.end + unnested.end;
   }
-
   /** A factory function, creating a new tag, containing this one. Typical use
    * demonstrates tag containment. The expression
    *
@@ -122,88 +118,77 @@ import il.org.spartan.utils.*;
    * @param flags any number of HTML flags to be used with the newly created tag
    * @return A newly created tag with the specified name and flags, containing
    *         this tag */
-  @NotNull public Tag inside(final String name, final String... flags) {
+   public Tag inside(final String name, final String... flags) {
     return new Tag(this, name, flags);
   }
-
   /** Make a {@link Matcher} of a given text, to capture the opening and closing
    * tag together with the enclosed content in this text.
    * @param ¢ where to look for this text?
    * @return {@link Matcher} of the parameter to capture the tag and its
    *         content. The content is in group number 1. */
-  @NotNull public Matcher makeMatcher(@NotNull final String ¢) {
+   public Matcher makeMatcher( final String ¢) {
     return makePattern().matcher(¢);
   }
-
   /** Make a {@link Pattern} to capture the opening and closing tag together
    * with the enclosed content.
    * @return a regular expression to capture the tag and its content. The
    *         content is in group number 1. */
-  @NotNull public Pattern makePattern() {
+   public Pattern makePattern() {
     return Pattern.compile(makeRegularExpression());
   }
-
   /** Make a regular expression to capture the opening and closing tag together
    * with the enclosed content.
    * @return a regular expression to capture the tag and its content. The
    *         content is in group number 1. */
-  @NotNull public String makeRegularExpression() {
+   public String makeRegularExpression() {
     return ignoreCase() + begin + group(anyNumberOfReluctant(".|[\r\n]")) + end;
   }
-
   /** Wrap a given string within this tag.
    * @param ¢ a non-<code><b>null</b></code> representing the string to wrap
    * @return the string <code>s</code> wrapped with the tag, e.g., if
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then <code>"<b>Hello"</b>"</code> is returned. */
-  @NotNull public String wrap(@NotNull final String ¢) {
-    nonnull(¢);
+   public String wrap( final String ¢) {
+    notNull(¢);
     return ¢.length() == 0 ? ¢ : begin + ¢ + end;
   }
-
   /** Wrap a given string within newline characters and then within this tag.
    * @param ¢ a non-<code><b>null</b></code> representing the string to wrap
    * @return the string <code>s</code> wrapped with the tag, e.g., if
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then the string <code>"<b>\nHello\n</b>"</code> is
    *         returned. */
-  @NotNull public String wrapNL(final String ¢) {
-    nonnull(¢);
+   public String wrapNL(final String ¢) {
+    notNull(¢);
     return wrap("\n" + ¢ + "\n");
   }
 
-  @SuppressWarnings("static-method") public static class TEST {
+  @SuppressWarnings("static-method")
+  public static class TEST {
     private static final String tagRegularExpression = new Tag("dummy").makeRegularExpression();
 
     @Test public void testCRLFinPre() {
       azzert.that("A<dummy>\r\n</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
-
     @Test public void testDummyInContext() {
       azzert.that("\t /**\r\n\t  * BEFORE\r\n\t  * <dummy>\r\n\t  * text\r\n\t  * </dummy>\r\n\t  * AFTER\r\n\t  */"
           .replaceFirst(tagRegularExpression, "Content"), is("\t /**\r\n\t  * BEFORE\r\n\t  * Content\r\n\t  * AFTER\r\n\t  */"));
     }
-
     @Test public void testEmptyPre() {
       azzert.that("A<dummy></dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
-
     @Test public void testLFinPre() {
       azzert.that("A<dummy>\n</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
-
     @Test public void testMiXeDCaSeTag() {
       azzert.that("A<DuMmY>a\nb\r\nABCDE</dUmMy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
-
     @Test public void testSeveralLinesInPre() {
       azzert.that("A<dummy>a\nb\r\nABCDE</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
-
     @Test public void testSimplePre() {
       azzert.that("A<dummy>X</dummy>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }
-
     @Test public void testUpperCaseTag() {
       azzert.that("A<DUMMY>a\nb\r\nABCDE</DUMMY>C".replaceFirst(tagRegularExpression, "B"), is("ABC"));
     }

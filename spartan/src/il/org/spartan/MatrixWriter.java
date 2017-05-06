@@ -1,13 +1,12 @@
 package il.org.spartan;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 public class MatrixWriter extends CSVLineWriter {
   public MatrixWriter(final String fileName) {
     super(fileName, Renderer.MATRIX);
   }
-
-  @Override @NotNull public String header() {
+  @Override  public String header() {
     return "";
   }
 }

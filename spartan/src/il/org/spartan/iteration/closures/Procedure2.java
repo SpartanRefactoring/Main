@@ -1,6 +1,6 @@
 package il.org.spartan.iteration.closures;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** An interface representing a procedure which takes two arguments
  * @param <A1> type of first argument
@@ -10,5 +10,5 @@ public interface Procedure2<A1, A2> {
    * @param a first argument
    * @param a2 second argument
    * @return nothing */
-  @NotNull Void eval(A1 a, A2 a2);
+   Void eval(A1 a, A2 a2);
 }

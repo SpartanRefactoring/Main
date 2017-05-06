@@ -6,13 +6,10 @@ import il.org.spartan.statistics.*;
 /** Ad hoc implementation before we use Apache common
  * @author Yossi Gil <tt>yossi.gil@gmail.com</tt>
  * @since 2016-09-10 */
+// TODO: Yossi, this is an older version, you removed the constructor and that's
+// broke the build
 public class WelchT {
   public double p;
-
-  /** Empty for now */
-  /** Instantiates this class. @param s1 /** Instantiates this class. @param
-   * s2 */
-  @SuppressWarnings("unused") public WelchT(final Statistics s1, final Statistics s2) {
-    //
+  public WelchT(final Statistics s1, final Statistics s2) {
   }
 }

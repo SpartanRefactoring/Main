@@ -3,7 +3,7 @@ package il.org.spartan.reflection;
 import static fluent.ly.azzert.*;
 import static il.org.spartan.reflection.ClassPredicates.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -50,7 +50,7 @@ import fluent.ly.*;
   @Test public void testIsImmutableFalse() {
     class A {
       int a = 3;
-      @Nullable final Object o = null;
+       final Object o = null;
 
       int b() {
         a *= 2;
@@ -64,7 +64,7 @@ import fluent.ly.*;
   @Test public void testIsImmutableInheritingTrue() {
     class A {
       final int a = 3;
-      @Nullable final Object o = null;
+       final Object o = null;
 
       int b() {
         return a + (o == null ? 1 : 2);
@@ -81,7 +81,7 @@ import fluent.ly.*;
   @Test public void testIsImmutableTrue() {
     class A {
       final int a = 3;
-      @Nullable final Object o = null;
+       final Object o = null;
 
       int b() {
         return a + (o == null ? 1 : 2);
@@ -113,12 +113,12 @@ import fluent.ly.*;
 
   public static class ImmmutableInhertingFromMmutable extends MutableStatic {
     final int b = 3;
-    @Nullable final Object object = null;
+     final Object object = null;
   }
 
   public static class ImmutableStatic {
     final int a = 3;
-    @Nullable final Object o = null;
+     final Object o = null;
   }
 
   public static class MutableInhertingFromImmutable extends ImmutableStatic {

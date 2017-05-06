@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
@@ -24,44 +24,43 @@ import il.org.spartan.utils.*;
  * @author Yossi Gil
  * @since 12/07/2007
  * @see CLASSPATH */
-@Utility public enum JRE {
+@Utility
+public enum JRE {
   ;
   /** retrieve the system's CLASSPATH
    * @return the content of the classpath, broken into array entries */
-  @NotNull public static List<File> asList() {
+   public static List<File> asList() {
     try {
       return fromClass(Object.class);
-    } catch (@NotNull final Throwable __) {
+    } catch ( final Throwable __) {
       // Absorb this exception, let's try the other option...
-      @NotNull final List<File> $ = new ArrayList<>();
+       final List<File> $ = new ArrayList<>();
       final String cp = System.getProperty("sun.boot.class.path");
-      for (@NotNull final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
+      for ( final StringTokenizer ¢ = new StringTokenizer(cp, File.pathSeparator); ¢.hasMoreTokens();)
         $.add(new File(¢.nextToken()));
       return $;
     }
   }
-
   /** Obtain the CLASSPATH location used by the class loader of a given classes.
    * @param cs An array of classes
    * @return a list of files
    * @throws IllegalArgumentException If the class loader of <code>c</code> is
    *         not a URLClassLoader */
-  @NotNull public static List<File> fromClass(@NotNull final Class<?>... cs) throws IllegalArgumentException {
-    @NotNull final List<File> $ = new ArrayList<>();
-    for (@NotNull final Class<?> c : cs) {
+   public static List<File> fromClass( final Class<?>... cs) throws IllegalArgumentException {
+     final List<File> $ = new ArrayList<>();
+    for ( final Class<?> c : cs) {
       final ClassLoader cl = c.getClassLoader();
       if (!(cl instanceof URLClassLoader))
         throw new IllegalArgumentException("Class loader is not a URLClassLoader. class=" + c.getName());
-      for (@NotNull final URL url : ((URLClassLoader) cl).getURLs())
+      for ( final URL url : ((URLClassLoader) cl).getURLs())
         try {
           $.add(new File(url.toURI()));
-        } catch (@NotNull final URISyntaxException e) {
+        } catch ( final URISyntaxException e) {
           throw new IllegalArgumentException("I cannot obtain a file from url " + url);
         }
     }
     return $;
   }
-
   /** Exercise this class, by printing the result of its principal function.
    * @param __ unused */
   public static void main(final String[] __) {

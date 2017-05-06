@@ -4,7 +4,6 @@ package il.org.spartan.java;
  * @since 2011-11-19 */
 public abstract class TokenFilter extends TokenProcessor {
   protected abstract void __process(Token t, String text);
-
   /** Determine whether token should be processed. Subclasses wishing to
    * restrict processing to certain tokens only should override this method.
    * @param __ a {@link Token} to inspect
@@ -13,7 +12,6 @@ public abstract class TokenFilter extends TokenProcessor {
   @SuppressWarnings("static-method") protected boolean ok(@SuppressWarnings("unused") final Token __) {
     return true;
   }
-
   /* (non-Javadoc)
    *
    * @see il.org.spartan.java.TokenProcessor#process(il.org.spartan

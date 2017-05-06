@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>spartan</name>
-	<comment></comment>
-	<projects/>
-	<natures>
-		<nature>org.eclipse.jdt.core.javanature</nature>
-	</natures>
+	<comment>Project spartan created by Buildship.</comment>
+	<projects>
+	</projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments/>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
+			<arguments>
+			</arguments>
 		</buildCommand>
 	</buildSpec>
-	<linkedResources/>
-	<filteredResources/>
+	<natures>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>bin-spartan</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/SpartanizerPlugin/lib/spartan.jar</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -8,7 +8,7 @@ import java.util.*;
 
 import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -38,19 +38,17 @@ public abstract class PureIterator<T> implements Iterator<T> {
   public abstract static class Staged<T> extends PureIterator<T> {
     /** Stores the next value that this iterator returns. It has non-null
      * content only after {@link #hasNext} returned true. */
-    @Nullable private T next;
+     private T next;
 
-    @Override @NotNull public final T next() {
-      @NotNull final @NonNull T $ = cantBeNull(next);
+    @Override  public final T next() {
+       final  T $ = cantBeNull(next);
       clearNext();
       return $;
     }
-
     protected final void clearNext() {
       cantBeNull(next);
       next = null;
     }
-
     protected final boolean setNext(final T next) {
       mustBeNull(this.next);
       this.next = next;
@@ -62,27 +60,21 @@ public abstract class PureIterator<T> implements Iterator<T> {
     public static <T> void assertEquals(final String reason, final T t1, final T t2) {
       azzert.that(reason, t2, is(t1));
     }
-
     public static <T> void assertEquals(final T t1, final T t2) {
       azzert.that(t2, is(t1));
     }
-
     public static <T> void assertNotEquals(final String reason, final T t1, final T t2) {
       azzert.that(reason, t2, is(t1));
     }
-
     public static <T> void assertNotEquals(final T t1, final T t2) {
       azzert.that(t2, is(t1));
     }
-
     @Override public boolean hasNext() {
       return false;
     }
-
     @Test public void isEmpty() {
       azzert.nay(hasNext());
     }
-
     @Test(expected = IllegalArgumentException.class) public void tryToRemove() {
       remove();
     }

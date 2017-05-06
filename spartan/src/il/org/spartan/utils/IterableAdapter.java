@@ -5,7 +5,7 @@ import static fluent.ly.___.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 
@@ -14,13 +14,15 @@ import il.org.spartan.streotypes.*;
  * @author Yossi Gil, the Technion.
  * @since 31/07/2008
  * @param <T> type of elements in the iterated collection */
-@Canopy @Instantiable public final class IterableAdapter<T> implements Iterable<T> {
+@Canopy
+@Instantiable
+public final class IterableAdapter<T> implements Iterable<T> {
   /** A factory method, generating an {@link Iterable} from a given
    * {@link Enumeration}
    * @param <T> type of elements in the iterated collection
    * @param ¢ an enumeration to convert into an {@link Iterable}
    * @return a new {@link Iterable} created from the parameter */
-  @NotNull public static <T> Iterable<T> make(final Enumeration<T> ¢) {
+   public static <T> Iterable<T> make(final Enumeration<T> ¢) {
     return new IterableAdapter<>(¢);
   }
 
@@ -32,17 +34,14 @@ import il.org.spartan.streotypes.*;
   public IterableAdapter(final Enumeration<T> implementation) {
     this.implementation = implementation;
   }
-
-  @Override @NotNull public Iterator<T> iterator() {
+  @Override  public Iterator<T> iterator() {
     return new Iterator<T>() {
       @Override public boolean hasNext() {
         return implementation.hasMoreElements();
       }
-
       @Override public T next() {
         return implementation.nextElement();
       }
-
       @Override public void remove() {
         require(false, "cannot remove elements from an adapted enumeration");
       }

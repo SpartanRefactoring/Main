@@ -674,7 +674,7 @@ import fluent.ly.*;
     assertEquals(ClassInfo.Builder.MAGIC, new RobustReader(GOOD_FILE_PATH).readInt());
   }
 
-  @Test public void selfMakeNotNull() {
+  @Test public void selfMakeNonNull() {
     assert ClassInfo.make(this.getClass()) != null;
   }
 
@@ -824,9 +824,6 @@ import fluent.ly.*;
   }
 
   public abstract static class MethodWithParametrs {
-    public MethodWithParametrs() {
-    }
-
     public final Integer method(final int a, final int b, final int c) {
       return Integer.valueOf(a + b + c + hashCode());
     }
@@ -861,7 +858,8 @@ import fluent.ly.*;
 
     @Override public String toString() {
       return String.format(
-          "Processed %s files, consisting of %s methods with %s code blocks\n" + "comprising a total of %s bytecode instructions in %s.",
+          "Processed %s files, consisting of %s methods with %s code blocks\n" + //
+              "comprising a total of %s bytecode instructions in %s.",
           Unit.INTEGER.format(nFiles), Unit.INTEGER.format(nMethods), Unit.INTEGER.format(nCodes), Unit.INTEGER.format(nInstructions),
           Unit.NANOSECONDS.format(s.time())) + "";
     }
@@ -885,7 +883,7 @@ import fluent.ly.*;
             try {
               parse(ClassInfo.make(f));
             } catch (final RuntimeException ¢) {
-              System.out.println("\n** " + "" + f + ": " + ¢);
+              System.out.println("\n** " + f + ": " + ¢);
             }
           }
 
@@ -901,9 +899,7 @@ import fluent.ly.*;
             }
           }
         }).go();
-      } catch (final IOException ¢) {
-        ¢.printStackTrace();
-      } catch (final StopTraversal ¢) {
+      } catch (final StopTraversal | IOException ¢) {
         ¢.printStackTrace();
       }
     }

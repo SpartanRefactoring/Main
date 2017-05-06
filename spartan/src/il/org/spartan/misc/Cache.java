@@ -5,7 +5,7 @@ import static fluent.ly.___.*;
 import java.util.*;
 import java.util.Map.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** A generic class realizing a cached buffer of elements of an arbitrary kind,
  * but indexed by {@link String}s. If a fetched element is not in the cache,
@@ -35,21 +35,19 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
   public Cache(final Factory<T> factory) {
     this.factory = factory;
   }
-
-  @NotNull public Collection<T> all() {
+   public Collection<T> all() {
     if (!exhaustive)
       map.putAll(factory.all());
     exhaustive = true;
     return map.values();
   }
-
   /** fetch an element from the cache, but if it is not there, try to create it,
    * and insert it into the cache.
    * @param key the key identifying the element to be fetched, empty string is
    *        fine.
    * @return the element identified by this key. */
   public T get(final String key) {
-    nonnull(key);
+    notNull(key);
     T $ = map.get(key);
     if ($ != null || exhaustive)
       return $;
@@ -57,13 +55,11 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
     map.put(key, $);
     return $;
   }
-
   /** Obtain an iterator over the cached object
    * @return Iterator of Entry<String,T> */
-  @Override @NotNull public Iterator<Entry<String, T>> iterator() {
+  @Override  public Iterator<Entry<String, T>> iterator() {
     return map.entrySet().iterator();
   }
-
   /** Store the given value in the cache, and associate it with the given key.
    * @param key key with which the specified value is to be associated.
    * @param t value to be stored in the cache.
@@ -71,7 +67,6 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
   public T put(final String key, final T t) {
     return map.put(key, t);
   }
-
   /** Size of cache
    * @return Number of elements currently stored in the cache */
   public int size() {
@@ -89,14 +84,13 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
      * @return the base implementation returns the empty set, but it is meant to
      *         be overridden by concrete classes inheriting from
      *         {@link Cache.Factory} */
-    @NotNull public Map<String, T> all() {
+     public Map<String, T> all() {
       return new HashMap<>();
     }
-
     /** create a new object from its {@link String} name
      * @param key the identifier for the newly created object.
      * @return the newly created object, or <code><b>null</b></code> if no such
      *         object can be created. */
-    @NotNull public abstract T make(String key);
+     public abstract T make(String key);
   }
 }

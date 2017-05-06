@@ -4,7 +4,7 @@ import static fluent.ly.___.*;
 
 import java.lang.reflect.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** A class realizing a recursive traversal of a reflection {@link Class}
  * object, applying the appropriate function supplied by a {@link Visitor} to
@@ -30,20 +30,18 @@ public final class ReflectionTraversal {
    * @param visitor what should be done at each node, must not be
    *        <code><b>null</b></code>. */
   public ReflectionTraversal(final Class<?> clazz, final Visitor visitor) {
-    nonnull(clazz);
-    nonnull(visitor);
+    notNull(clazz);
+    notNull(visitor);
     this.clazz = clazz;
     this.visitor = visitor;
   }
-
   /** initiate the traversal
    * @return sum of all visit functions on all visited object */
   public int go() {
     return go(clazz);
   }
-
-  private int go(@NotNull final Class<?> from) {
-    nonnull(from);
+  private int go( final Class<?> from) {
+    notNull(from);
     // Visit the class itself
     int $ = visitor.visit(from);
     // Visit all sorts of members
@@ -56,18 +54,15 @@ public final class ReflectionTraversal {
     for (final Class<?> ¢ : from.getDeclaredClasses())
       $ += visitor.visit(¢);
     // Recurse into inner, local and anonymous classes
-    for (@NotNull final Class<?> ¢ : from.getDeclaredClasses())
+    for ( final Class<?> ¢ : from.getDeclaredClasses())
       $ += go(¢);
     return $;
   }
 
   public interface Visitor {
     int visit(Class<?> c);
-
     int visit(Constructor<?> c);
-
     int visit(Field f);
-
     int visit(Method m);
   }
 }

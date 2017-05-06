@@ -3,7 +3,7 @@ package il.org.spartan.bench;
 import static fluent.ly.azzert.*;
 import static fluent.ly.___.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.utils.*;
@@ -12,16 +12,14 @@ import fluent.ly.*;
 /** @author Yossi Gil
  * @since 29/05/2011 */
 public class Cartesian {
-  @NotNull public static <S> Pair<Integer, S>[] makeObliqueProduct(@NotNull final int[] is, @NotNull final S[] ss) {
+   public static <S> Pair<Integer, S>[] makeObliqueProduct( final int[] is,  final S[] ss) {
     return makeObliqueProduct(box.it(is), ss);
   }
-
-  @NotNull public static <S, T> Triple<Integer, S, T>[] makeObliqueProduct(@NotNull final int[] is, @NotNull final S[] ss, @NotNull final T[] ts) {
+   public static <S, T> Triple<Integer, S, T>[] makeObliqueProduct( final int[] is,  final S[] ss,  final T[] ts) {
     return makeObliqueProduct(box.it(is), ss, ts);
   }
-
-  @NotNull public static <R, S> Pair<R, S>[] makeObliqueProduct(@NotNull final R[] rs, @NotNull final S[] ss) {
-    @NotNull final Pair<R, S>[] $ = Pair.makePairs(rs.length, ss.length);
+   public static <R, S> Pair<R, S>[] makeObliqueProduct( final R[] rs,  final S[] ss) {
+     final Pair<R, S>[] $ = Pair.makePairs(rs.length, ss.length);
     int n = 0;
     for (int sum = 2; sum < rs.length + ss.length; ++sum)
       for (int i = 1; i <= Math.min(sum, rs.length); ++i) {
@@ -41,9 +39,8 @@ public class Cartesian {
     ___.sure(n == $.length);
     return $;
   }
-
-  @NotNull public static <R, S, T> Triple<R, S, T>[] makeObliqueProduct(@NotNull final R[] rs, @NotNull final S[] ss, @NotNull final T[] ts) {
-    @NotNull final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
+   public static <R, S, T> Triple<R, S, T>[] makeObliqueProduct( final R[] rs,  final S[] ss,  final T[] ts) {
+     final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
     for (int sum = 3; sum <= rs.length + ss.length + ts.length; ++sum)
       for (int i = 1; i <= Math.min(sum, rs.length); ++i)
@@ -71,26 +68,22 @@ public class Cartesian {
     sure(n == $.length);
     return $;
   }
-
-  @NotNull public static <S> Pair<Integer, S>[] makeProduct(@NotNull final int[] is, @NotNull final S[] ss) {
+   public static <S> Pair<Integer, S>[] makeProduct( final int[] is,  final S[] ss) {
     return makeProduct(box.it(is), ss);
   }
-
-  @NotNull public static <S, T> Triple<Integer, S, T>[] makeProduct(@NotNull final int[] is, @NotNull final S[] ss, @NotNull final T[] ts) {
+   public static <S, T> Triple<Integer, S, T>[] makeProduct( final int[] is,  final S[] ss,  final T[] ts) {
     return makeProduct(box.it(is), ss, ts);
   }
-
-  @NotNull public static <R, S> Pair<R, S>[] makeProduct(@NotNull final R[] rs, @NotNull final S[] ss) {
-    @NotNull final Pair<R, S>[] $ = Pair.makePairs(rs.length * ss.length);
+   public static <R, S> Pair<R, S>[] makeProduct( final R[] rs,  final S[] ss) {
+     final Pair<R, S>[] $ = Pair.makePairs(rs.length * ss.length);
     int n = 0;
     for (final R r : rs)
       for (final S ¢ : ss)
         $[n++] = new Pair<>(r, ¢);
     return $;
   }
-
-  @NotNull public static <R, S, T> Triple<R, S, T>[] makeProduct(@NotNull final R[] rs, @NotNull final S[] ss, @NotNull final T[] ts) {
-    @NotNull final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
+   public static <R, S, T> Triple<R, S, T>[] makeProduct( final R[] rs,  final S[] ss,  final T[] ts) {
+     final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
     for (final R r : rs)
       for (final S s : ss)
@@ -100,15 +93,14 @@ public class Cartesian {
     return $;
   }
 
-  @SuppressWarnings("static-method") public static class TEST {
+  @SuppressWarnings("static-method")
+  public static class TEST {
     @Test public void makeArray000() {
       azzert.that(makeObliqueProduct(new Object[0], new Object[0], new Object[0]).length, is(0));
     }
-
     @Test public void makeArray111() {
       azzert.that(makeObliqueProduct(new Object[1], new Object[1], new Object[1]).length, is(1));
     }
-
     @Test public void makeArray3_13_19() {
       azzert.that(makeObliqueProduct(new Object[3], new Object[13], new Object[19]).length, is(702));
     }

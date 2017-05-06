@@ -1,6 +1,6 @@
 package il.org.spartan.bench;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 
@@ -16,62 +16,52 @@ public final class Stopwatch {
   public Stopwatch() {
     this(null);
   }
-
   /** Instantiate {@link Stopwatch}.
    * @param name */
   public Stopwatch(final String name) {
     this.name = name;
   }
-
   public String name() {
     return name;
   }
-
   /** @return <code><b>this</b></code> */
-  @NotNull public Stopwatch reset() {
+   public Stopwatch reset() {
     time = runs = 0;
     return this;
   }
-
   public int runs() {
     return runs;
   }
-
   /** @param runs
    * @return <code><b>this</b></code> */
-  @NotNull public Stopwatch setRuns(final int runs) {
+   public Stopwatch setRuns(final int runs) {
     this.runs = runs;
     return this;
   }
-
   /** @param time
    * @return <code><b>this</b></code> */
-  @NotNull public Stopwatch setTime(final long time) {
+   public Stopwatch setTime(final long time) {
     this.time = time;
     return this;
   }
-
   /** @return <code><b>this</b></code> */
-  @NotNull public Stopwatch start() {
+   public Stopwatch start() {
     ___.require(!started);
     begin = System.nanoTime();
     started = true;
     return this;
   }
-
   /** @return <code><b>this</b></code> */
-  @NotNull public Stopwatch stop() {
+   public Stopwatch stop() {
     ___.require(started);
     time += System.nanoTime() - begin;
     ++runs;
     started = false;
     return this;
   }
-
   public long time() {
     return time;
   }
-
   @Override public String toString() {
     return Unit.format(this);
   }

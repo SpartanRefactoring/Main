@@ -6,7 +6,7 @@ import static fluent.ly.box.*;
 import java.io.*;
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** Provides an encoding of an object (drawn from a given, predetermined, set of
  * objects) as an <code><b>int</b></code> value, and a representation of a set
@@ -15,13 +15,13 @@ import org.jetbrains.annotations.*;
  * @param <T> type of encoded elements */
 public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
   private static final long serialVersionUID = -0x54137EB6CCF2FDE7L;
-  @NotNull private final Vector<T> int2objects;
-  @NotNull private final Map<T, Integer> objects2ints;
+   private final Vector<T> int2objects;
+   private final Map<T, Integer> objects2ints;
 
   /** Constructs a translator for the specified set.
    * @param ts the set of objects/attributes that shall be translated. */
-  public IntCodex(@NotNull final Iterable<T> ts) {
-    nonnull(ts);
+  public IntCodex( final Iterable<T> ts) {
+    notNull(ts);
     int2objects = new Vector<>();
     objects2ints = new HashMap<>();
     int position = 0;
@@ -31,11 +31,9 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
         int2objects.add(¢);
       }
   }
-
   @Override public boolean contains(final T ¢) {
     return objects2ints.containsKey(¢);
   }
-
   /** Returns the object represented by <code>i</code> as determined by this
    * translator.
    * @param ¢ the <code><b>int</b></code> whose translation shall be returned.
@@ -43,11 +41,9 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
   @Override public T decode(final int ¢) {
     return int2objects.get(¢);
   }
-
-  @Override @NotNull public Iterable<T> elements() {
+  @Override  public Iterable<T> elements() {
     return int2objects;
   }
-
   /** Returns the <code><b>int</b></code> value of <code>c</code> as determined
    * by this translator.
    * @param ¢ the value whose <code><b>int</b></code> translation shall be
@@ -57,7 +53,6 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
     require(objects2ints.containsKey(¢));
     return objects2ints.get(¢).intValue();
   }
-
   @Override public int size() {
     return objects2ints.size();
   }

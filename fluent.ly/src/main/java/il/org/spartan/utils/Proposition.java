@@ -17,27 +17,21 @@ public interface Proposition extends BooleanSupplier {
   static Proposition AND(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return AND(null, s1, s2, ss);
   }
-
   static Proposition AND(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new And(toString, s1, s2, ss);
   }
-
   static Proposition not(final BooleanSupplier ¢) {
     return new Not(¢);
   }
-
   static Proposition that(final BooleanSupplier ¢) {
     return new Singleton(¢);
   }
-
   static Proposition that(final String toString, final BooleanSupplier s) {
     return new Singleton(toString, s);
   }
-
   static Proposition OR(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Or(s1, s2, ss);
   }
-
   static Proposition OR(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... ss) {
     return new Or(toString, s1, s2, ss);
   }
@@ -60,21 +54,16 @@ public interface Proposition extends BooleanSupplier {
   /** Name must be distinct from but similar to
    * {@link #AND(BooleanSupplier, BooleanSupplier, BooleanSupplier...)} */
   Proposition and(BooleanSupplier s, BooleanSupplier... ss);
-
   default Proposition and(final String toString, final BooleanSupplier s) {
     return and(Proposition.that(toString, s));
   }
-
   default boolean eval() {
     return getAsBoolean();
   }
-
   Proposition or(BooleanSupplier s, BooleanSupplier... ss);
-
   default Proposition or(final String toString, final BooleanSupplier s) {
     return or(Proposition.that(toString, s));
   }
-
   default <R> R reduce(final PropositionReducer<R> ¢) {
     return ¢.reduce(this);
   }
@@ -84,7 +73,6 @@ public interface Proposition extends BooleanSupplier {
       super(inner);
       this.toString = toString;
     }
-
     @Override public final String toString() {
       return toString != null ? toString : inner instanceof Aggregate ? inner + "" : super.toString();
     }
@@ -101,25 +89,20 @@ public interface Proposition extends BooleanSupplier {
       super(null);
       add(s1, s2, ss);
     }
-
     And(final BooleanSupplier s, final BooleanSupplier[] ss) {
       super(null);
       add(s, ss);
     }
-
     And(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier[] ss) {
       super(toString);
       add(s1, s2, ss);
     }
-
     @Override public Proposition and(final BooleanSupplier s, final BooleanSupplier... ss) {
       return new And(this, s, ss);
     }
-
     @Override public boolean getAsBoolean() {
       return stream().allMatch(BooleanSupplier::getAsBoolean);
     }
-
     @Override public Proposition or(final BooleanSupplier s, final BooleanSupplier... ss) {
       return new Or(this, s, ss);
     }
@@ -129,7 +112,6 @@ public interface Proposition extends BooleanSupplier {
     public Not(final BooleanSupplier s) {
       super(s);
     }
-
     @Override public boolean getAsBoolean() {
       return !inner.getAsBoolean();
     }
@@ -140,25 +122,20 @@ public interface Proposition extends BooleanSupplier {
       super(null);
       add(s, cs);
     }
-
     public Or(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier[] ss) {
       super(null);
       add(s1, s2, ss);
     }
-
     public Or(final String toString, final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier[] ss) {
       super(toString);
       add(s1, s2, ss);
     }
-
     @Override public Proposition and(final BooleanSupplier s, final BooleanSupplier... cs) {
       return new And(this, s, cs);
     }
-
     @Override public boolean getAsBoolean() {
       return stream().anyMatch(BooleanSupplier::getAsBoolean);
     }
-
     @Override public Proposition or(final BooleanSupplier s, final BooleanSupplier... cs) {
       return new Or(this, s, cs);
     }
@@ -171,23 +148,18 @@ public interface Proposition extends BooleanSupplier {
     public Singleton(final BooleanSupplier inner) {
       this(null, inner);
     }
-
     public Singleton(final String toString, final BooleanSupplier inner) {
       super(toString, inner);
     }
-
     @Override public final Proposition and(final BooleanSupplier s, final BooleanSupplier... cs) {
       return new And(this, s, cs);
     }
-
     @Override public boolean getAsBoolean() {
       return inner.getAsBoolean();
     }
-
     @Override public Proposition or(final BooleanSupplier s, final BooleanSupplier... cs) {
       return new Or(this, s, cs);
     }
-
     @Override public Proposition self() {
       return null;
     }
@@ -200,11 +172,9 @@ public interface Proposition extends BooleanSupplier {
     public Some(final String toString) {
       super(toString, an.empty.list());
     }
-
     protected Stream<BooleanSupplier> stream() {
       return inner.stream();
     }
-
     protected void simplify() {
       final List<BooleanSupplier> newInner = stream().map(λ -> {
         if (!getClass().isInstance(λ))
@@ -216,18 +186,15 @@ public interface Proposition extends BooleanSupplier {
       inner.clear();
       inner.addAll(newInner);
     }
-
     final Proposition add(final BooleanSupplier... ¢) {
       inner.addAll(as.list(¢));
       simplify();
       return this;
     }
-
     final Proposition add(final BooleanSupplier s, final BooleanSupplier... cs) {
       inner.add(s);
       return add(cs);
     }
-
     final Proposition add(final BooleanSupplier s1, final BooleanSupplier s2, final BooleanSupplier... cs) {
       inner.add(s1);
       return add(s2, cs);

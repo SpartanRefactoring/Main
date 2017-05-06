@@ -21,7 +21,6 @@ public interface note {
     static String trace(final Throwable ¢) {
       return separate.these(Stream.of(¢.getStackTrace()).map(StackTraceElement::toString).collect(toList())).by(";\n");
     }
-
     static String trace() {
       return trace(new Throwable());
     }
@@ -40,18 +39,18 @@ public interface note {
     return $;
   });
 
-  static <T> T bug() {
+  static < T> T bug() {
     return bug("");
   }
 
-  static <T> T bug(final Object instance) {
+  static < T> T bug(final Object instance) {
     return bug(//
         "Instance involved is %s\n" + //
             "toString() = \n",
         English.indefinite(instance), instance);
   }
 
-  static <T> T bug(final Object o, final Throwable t) {
+  static < T> T bug(final Object o, final Throwable t) {
     return nulling.ly(() -> logger.info(format(//
         "An instance of %s was hit by %s exception.\n" + //
             "This is an indication of a bug.\n", //
@@ -63,7 +62,7 @@ public interface note {
     ));
   }
 
-  static <T> T bug(final String format, final Object... os) {
+  static < T> T bug(final String format, final Object... os) {
     return nulling.ly(() -> logger.info(format(//
         "A bug was detected in the vicinty of %s; trace =%s\n",
         __.trace(),//
@@ -71,7 +70,7 @@ public interface note {
         format(format, os)));
   }
 
-  static <T> T bug(final Throwable ¢) {
+  static < T> T bug(final Throwable ¢) {
     return nulling.ly(() -> logger.info(//
         "A static method was hit by " + indefinite(¢) + " exception.\n" + //
             "This is an indication of a bug.\n" + //
@@ -82,7 +81,7 @@ public interface note {
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param ¢ JD */
-  static <T> T cancel(final Exception ¢) {
+  static < T> T cancel(final Exception ¢) {
     return nulling.ly(() -> logger.info(//
         " " + English.name(¢) + //
             " (probably cancellation) exception." + //
@@ -93,7 +92,7 @@ public interface note {
   /** To be invoked whenever you do not know what to do with an exception
    * @param o JD
    * @param x JD */
-  static <T> T cancel(final Object o, final Exception x) {
+  static < T> T cancel(final Object o, final Exception x) {
     return nulling.ly(() -> logger.info(//
         "An instance of " + English.name(o) + //
             "\n was hit by " + indefinite(x) + //
@@ -102,7 +101,7 @@ public interface note {
             "\n o = " + o + "'"));
   }
 
-  static <T> T ignore(final Class<?> o, final Throwable t) {
+  static < T> T ignore(final Class<?> o, final Throwable t) {
     return info(//
         "A static method of " + English.name(o) + //
             "was hit by " + indefinite(t) + "\n" + //
@@ -111,7 +110,7 @@ public interface note {
             "o = " + o + "'");
   }
 
-  static <T> T ignore(final Object o, final Throwable t) {
+  static < T> T ignore(final Object o, final Throwable t) {
     return info(//
         "An instance of " + English.name(o) + //
             "\n was hit by " + indefinite(t) + //
@@ -120,11 +119,11 @@ public interface note {
             "\n o = " + o + "'");
   }
 
-  static <T> T info(final String message) {
+  static < T> T info(final String message) {
     return nulling.ly(() -> logger.info(message));
   }
 
-  static <T> T io(final Exception ¢) {
+  static < T> T io(final Exception ¢) {
     return nulling.ly(() -> logger.config(//
         "   Got an exception of __ : " + English.name(¢) + //
             "\n      (probably I/O exception)" //
@@ -132,7 +131,7 @@ public interface note {
     ));
   }
 
-  static <T> T io(final Exception x, final String message) {
+  static < T> T io(final Exception x, final String message) {
     return nulling.ly(() -> logger.info(//
         "   Got an exception of __ : " + English.name(x) + //
             "\n      (probably I/O exception)" + //
@@ -142,16 +141,16 @@ public interface note {
     ));
   }
 
-  static <T> T io(final IOException ¢) {
+  static < T> T io(final IOException ¢) {
     return nulling.ly(() -> logger.info(//
-        "   Got an exception of __ : " + English.name(¢) + //
+        "   Got an exception of type : " + English.name(¢) + //
             "\n      (probably I/O exception)\n   The exception says: '" + ¢ + "'" //
     ));
   }
 
   /** logs an error in the plugin into an external file
    * @param tipper an error */
-  static <@Nullable T> T logToFile(final Throwable t, final Object... os) {
+  static < T> T logToFile(final Throwable t, final Object... os) {
     final StringWriter w = new StringWriter();
     t.printStackTrace(new PrintWriter(w));
     final Object[] nos = new Object[os.length + 2];

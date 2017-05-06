@@ -2,7 +2,7 @@
 package il.org.spartan.lazy;
 
 import org.eclipse.jdt.annotation.*;
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.*;
 
@@ -12,7 +12,7 @@ import il.org.spartan.*;
  * @since 2016-09-11 */
 public class IdentifierLetters {
   public static void main(final String[] args) {
-    @NotNull final CSVLineWriter w = new CSVLineWriter();
+     final CSVLineWriter w = new CSVLineWriter();
     for (int ¢ = Character.MIN_CODE_POINT; ¢ <= Character.MAX_CODE_POINT; ++¢)
       if (Character.isJavaIdentifierStart(¢) && !Character.isAlphabetic(¢)) {
         w.put("Character", "'" + (char) ¢ + "'").put("Unicode", hex(¢)).put("Decimal", ¢);
@@ -24,8 +24,7 @@ public class IdentifierLetters {
         w.nl();
       }
   }
-
-  @NonNull static String hex(final int ¢) {
+   static String hex(final int ¢) {
     return String.format("U+%0" + (¢ > 255 ? "4" : "2") + "X", Integer.valueOf(¢));
   }
 }

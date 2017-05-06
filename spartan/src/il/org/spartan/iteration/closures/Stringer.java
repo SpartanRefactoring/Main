@@ -3,7 +3,7 @@ package il.org.spartan.iteration.closures;
 import static il.org.spartan.strings.StringUtils.*;
 import static fluent.ly.___.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** An interface supplying a function object pointer, where the function return
  * value is {@link String}. To create such a pointer, create a subclass that
@@ -13,10 +13,10 @@ import org.jetbrains.annotations.*;
  * @author Yossi Gil.
  * @param <T> type of values that the function takes */
 public interface Stringer<T> extends Converter<T, String> {
-  @Override @NotNull String __(T t);
+  @Override  String __(T t);
 
   class Default<T> implements Stringer<T> {
-    @Override @NotNull public String __(final T ¢) {
+    @Override  public String __(final T ¢) {
       return ¢ + "";
     }
   }
@@ -33,17 +33,14 @@ public interface Stringer<T> extends Converter<T, String> {
     public Quoter(final char quote) {
       this(quote + "");
     }
-
     public Quoter(final String quote) {
       this.quote = quote;
     }
-
-    @Override @NotNull public final String __(@Nullable final T ¢) {
+    @Override  public final String __( final T ¢) {
       return quote(¢ == null ? "" : super.__(¢));
     }
-
-    @NotNull public final String quote(@NotNull final String ¢) {
-      nonnull(¢);
+     public final String quote( final String ¢) {
+      notNull(¢);
       return wrap(quote, ¢.replaceAll(quote, quote + quote));
     }
   }

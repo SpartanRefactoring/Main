@@ -1,6 +1,6 @@
 package il.org.spartan.classfiles.reify;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** @author Yossi Gil
  * @since 25 November 2011 */
@@ -11,15 +11,13 @@ public class AttributedEntity extends NamedEntity {
     super(name);
     this.attributes = attributes;
   }
-
-  public final AttributeInfo findAttribute(@NotNull final String attributeName) {
-    for (@NotNull final AttributeInfo $ : attributes)
+  public final AttributeInfo findAttribute( final String attributeName) {
+    for ( final AttributeInfo $ : attributes)
       if (attributeName.equals($.name))
         return $;
     return null;
   }
-
-  public final boolean hasNo(@NotNull final String attributeName) {
+  public final boolean hasNo( final String attributeName) {
     return findAttribute(attributeName) == null;
   }
 }

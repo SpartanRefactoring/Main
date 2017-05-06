@@ -2,7 +2,7 @@ package il.org.spartan.utils;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 /** Represents a position in a file, including a column and line number.
  * @author Yossi Gil <yogi@cs.technion.ac.il> 13/06/2007 */
@@ -17,32 +17,25 @@ public final class Position implements Comparable<Position>, Serializable {
     this.line = line;
     this.column = column;
   }
-
-  public boolean before(@NotNull final Position ¢) {
+  public boolean before( final Position ¢) {
     return compareTo(¢) < 0;
   }
-
   @Override public int compareTo(final Position ¢) {
     return line != ¢.line ? line - ¢.line : column - ¢.column;
   }
-
-  @Override public boolean equals(@Nullable final Object ¢) {
+  @Override public boolean equals( final Object ¢) {
     return ¢ == this || ¢ != null && getClass() == ¢.getClass() && column == ((Position) ¢).column && line == ((Position) ¢).line;
   }
-
   @Override public int hashCode() {
     return line ^ column;
   }
-
-  @NotNull public Position nextChar() {
+   public Position nextChar() {
     return new Position(line, column + 1);
   }
-
-  @NotNull public Position nextLine() {
+   public Position nextLine() {
     return new Position(line + 1, 1);
   }
-
-  @Override @NotNull public String toString() {
+  @Override  public String toString() {
     return "(" + line + ":" + column + ")";
   }
 }

@@ -6,7 +6,7 @@ import static fluent.ly.___.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 import il.org.spartan.*;
@@ -32,11 +32,10 @@ public class TimingEstimator {
    * previously done.
    * @param ¢ arbitrary operation
    * @return the {@link TimingEstimator} associated with the parameter */
-  @NotNull public static TimingEstimator estimator(final Operation ¢) {
+   public static TimingEstimator estimator(final Operation ¢) {
     final TimingEstimator $ = estimators.get(¢);
     return $ != null ? $ : makeEstimator(¢);
   }
-
   /** Execute a given operation a specified number of times, updating the time
    * estimate associated with it. Garbage collection cycles during the execution
    * are considered failure, in which case, the estimate is not updated.
@@ -47,9 +46,8 @@ public class TimingEstimator {
   public static void run(final Operation o, final int runs) {
     estimator(o).run(runs);
   }
-
-  @NotNull private static TimingEstimator makeEstimator(final Operation ¢) {
-    @NotNull final TimingEstimator $ = new TimingEstimator(¢);
+   private static TimingEstimator makeEstimator(final Operation ¢) {
+     final TimingEstimator $ = new TimingEstimator(¢);
     estimators.put(¢, $);
     return $;
   }
@@ -64,13 +62,11 @@ public class TimingEstimator {
   private TimingEstimator(final Operation o) {
     this.o = o;
   }
-
   /** @return current estimate, measured in nano-seconds, of the runtime of the
    *         underlying operation. */
   public double estimate() {
     return Double.isNaN(estimate) ? 1 : estimate;
   }
-
   /** Make a candid attempt to execute the underlying operation a specified
    * number of times, updating its current time estimate. Garbage collection
    * cycles during the execution are considered failure, but any JIT execution
@@ -80,15 +76,15 @@ public class TimingEstimator {
    * @return <code><b>null</b></code> if the execution failed, i.e., there was a
    *         garbage collection cycle within this execution. Otherwise, a
    *         {@linkplain RunRecord} object. */
-  @Nullable public RunRecord run(final int runs) {
+   public RunRecord run(final int runs) {
     for (;;) {
       Log.print("Running " + thousands(runs) + " times...");
-      @NotNull final JVM before = new JVM();
-      @NotNull final Stopwatch grossTime = new Stopwatch().start(), netTime = o.netTime(runs);
+       final JVM before = new JVM();
+       final Stopwatch grossTime = new Stopwatch().start(), netTime = o.netTime(runs);
       grossTime.stop();
-      @NotNull final JVM after = new JVM();
+       final JVM after = new JVM();
       nonnegative(netTime.time());
-      @NotNull final RunRecord $ = new RunRecord(runs, grossTime, netTime);
+       final RunRecord $ = new RunRecord(runs, grossTime, netTime);
       totalRuns.add($);
       if (!after.equals(before)) {
         Log.print("oops, JVM state changed... " + netTime);
@@ -116,7 +112,6 @@ public class TimingEstimator {
       return $;
     }
   }
-
   /** Make a candid attempt to execute the underlying operation a specified
    * number of times, updating its current time estimate, while trying to defeat
    * errors due to <i>both</i> garbage collection cycles and JIT meddling.
@@ -135,22 +130,20 @@ public class TimingEstimator {
    * @return <code><b>null</b></code> if the execution failed, i.e., there was a
    *         garbage collection cycle within this execution. Otherwise, a
    *         {@linkplain RunRecord} object. */
-  @Nullable public RunRecord run(final int runs, final int trials) {
+   public RunRecord run(final int runs, final int trials) {
     for (int ¢ = 0; ¢ < trials; ++¢) {
-      @Nullable final RunRecord $ = run(runs);
+       final RunRecord $ = run(runs);
       if ($ != null)
         return $;
       System.gc();
     }
     return null;
   }
-
   /** @return <code><b>true</b></code> <i>iff</i> recent runs indicate that the
    *         current estimate is stable. */
   public boolean steady() {
     return consecutiveStable > MIN_CONSECUTIVE_STABLE;
   }
-
   @Override public String toString() {
     return String.format(//
         "Total:  %s\n" + //
@@ -165,7 +158,6 @@ public class TimingEstimator {
         Unit.NANOSECONDS.format(estimate) //
     );
   }
-
   private void updateEstimate(final double update) {
     ++n;
     if (Double.isNaN(estimate)) {

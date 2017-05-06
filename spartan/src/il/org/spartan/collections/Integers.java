@@ -4,7 +4,7 @@ package il.org.spartan.collections;
 import static org.hamcrest.Matchers.*;
 
 import org.eclipse.jdt.annotation.*;
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 import fluent.ly.___.*;
@@ -29,7 +29,6 @@ public class Integers {
   static int hash(final int ¢) {
     return ¢ ^ ¢ >>> 12 ^ ¢ >>> 20 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 4 ^ (¢ ^ ¢ >>> 12 ^ ¢ >>> 20) >>> 7;
   }
-
   private static int roundUp(final int ¢) {
     int $ = 1;
     while ($ < ¢)
@@ -47,19 +46,17 @@ public class Integers {
   public Integers() {
     this(MIN_CAPACITY);
   }
-
   /** Instantiate this class, using a given size for the hash table.
    * @param initialCapacity suggests a hash table size, will be rounded up to
    *        the next power of two. */
   public Integers(final int initialCapacity) {
     final int capacity = Math.max(MIN_CAPACITY, roundUp(initialCapacity));
-    data = new int @NonNull [capacity];
-    occupied = new boolean @NonNull [capacity];
-    placeholder = new boolean @NonNull [capacity];
+    data = new int  [capacity];
+    occupied = new boolean  [capacity];
+    placeholder = new boolean  [capacity];
     size = removed = 0;
     subclassReset(capacity);
   }
-
   /** Add an integer to the set, if it is not already there.
    * @param n an arbitrary integer
    * @return <code><b>this</b></code> */
@@ -74,7 +71,6 @@ public class Integers {
       rehash(data.length << 1);
     return this;
   }
-
   /** Add an array of integers to this set, if they are not already in it.
    * @param is an arbitrary array of integers; ; must not be
    *        <code><b>null</b></code>.
@@ -84,19 +80,16 @@ public class Integers {
       add(¢);
     return this;
   }
-
   /** What's the underlying table size?
    * @return hash table size (always a power of two) */
   public int capacity() {
     return data.length;
   }
-
   /** Remove all elements from this set, preserving capacity.
    * @return <code><b>this</b></code> */
   public Integers clear() {
     return reset(capacity());
   }
-
   /** Determine whether a given value is in this set.
    * @param ¢ an arbitrary integer
    * @return <code><b>true</b></code> if, and only if, the parameter is
@@ -104,7 +97,6 @@ public class Integers {
   public boolean contains(final int ¢) {
     return location(¢) >= 0;
   }
-
   /** Check whether an array of integers is contained in this set.
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, all elements in the array
@@ -115,7 +107,6 @@ public class Integers {
         return false;
     return true;
   }
-
   /** Check whether this object is disjoint from an array of integers
    * @param is an array of of integers; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
@@ -126,23 +117,20 @@ public class Integers {
         return false;
     return true;
   }
-
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
   public int[] entries() {
-    final int @NonNull [] $ = new int @NonNull [size];
+    final int  [] $ = new int  [size];
     for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
       if (occupied[¢] && !placeholder[¢])
         $[j++] = data[¢];
     return $;
   }
-
   /** Recreate the table, inserting all elements in it afresh.
    * @return <code><b>this</b></code> */
   public Integers rehash() {
     return rehash(capacity());
   }
-
   /** Remove an element from this set, it is in it
    * @param n some integer to be removed from the set
    * @return <code><b>this</b></code> */
@@ -156,7 +144,6 @@ public class Integers {
     return --size < MIN_LOAD * capacity() && capacity() > MIN_CAPACITY ? rehash(data.length >> 1)
         : ++removed > REMOVE_LOAD * capacity() ? rehash() : this;
   }
-
   /** Remove an array of integers to this set, if they are in it.
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b></code> */
@@ -165,13 +152,11 @@ public class Integers {
       remove(¢);
     return this;
   }
-
   /** How many elements are there in this set?
    * @return number of values in the set. */
   public int size() {
     return size;
   }
-
   /** Find the index in the hash table into which the parameter could be
    * inserted.
    * @param n some integer
@@ -188,7 +173,6 @@ public class Integers {
         return -1;
     }
   }
-
   /** resize internal storage to the specified capacity, which must be a power
    * of two.
    * @param newCapacity new initialCapacity for the internal array
@@ -198,16 +182,14 @@ public class Integers {
     assert newCapacity >= MIN_CAPACITY;
     return reset(newCapacity).add(entries());
   }
-
   protected final Integers reset(final int capacity) {
-    data = new int @NonNull [capacity];
-    occupied = new boolean @NonNull [capacity];
-    placeholder = new boolean @NonNull [capacity];
+    data = new int  [capacity];
+    occupied = new boolean  [capacity];
+    placeholder = new boolean  [capacity];
     size = removed = 0;
     subclassReset(capacity);
     return this;
   }
-
   /** @param capacity new hash table size */
   @SuppressWarnings("unused") protected void subclassReset(final int capacity) {
     //
@@ -230,8 +212,7 @@ public class Integers {
         if (placeholder[¢])
           assert occupied[¢];
     }
-
-    private int count(@NotNull final boolean bs[]) {
+    private int count( final boolean bs[]) {
       int $ = 0;
       for (final boolean ¢ : bs)
         $ += as.bit(¢);

@@ -18,55 +18,46 @@ package il.org.spartan.classfiles.reify;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import fluent.ly.*;
 
 /** A sane re-implementation of {@link ByteArrayInputStream}.
  * @author Yossi Gil */
 public class BufferInputStream extends InputStream {
-  @NotNull protected final byte[] bytes;
+   protected final byte[] bytes;
   protected int position;
   protected int mark;
   protected final int length;
 
-  public BufferInputStream(@NotNull final byte bytes[]) {
+  public BufferInputStream( final byte bytes[]) {
     this.bytes = bytes;
     length = bytes.length;
   }
-
   @Override public synchronized int available() {
     return length - position;
   }
-
   @Override public void close() {
     ___.nothing();
   }
-
   public boolean done() {
     return position >= length;
   }
-
   public boolean eof() {
     return done();
   }
-
   @Override public synchronized void mark(final int limit) {
     mark = position;
   }
-
   @Override public boolean markSupported() {
     return true;
   }
-
   public final int position() {
     return position;
   }
-
   @Override public synchronized int read() {
     return done() ? -1 : bytes[position++] & 0xff;
   }
-
   @Override public synchronized int read(final byte bs[], final int offset, final int len) {
     if (bs == null)
       throw new NullPointerException();
@@ -81,11 +72,9 @@ public class BufferInputStream extends InputStream {
     position += $;
     return $;
   }
-
   @Override public synchronized void reset() {
     position = mark;
   }
-
   @Override public synchronized long skip(long ¢) {
     if (¢ + position > length)
       ¢ = length - position;

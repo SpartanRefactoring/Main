@@ -2,7 +2,7 @@ package il.org.spartan.classfiles.reify;
 
 import java.io.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.classfiles.*;
 import il.org.spartan.classfiles.reify.ConstantPool.*;
@@ -16,57 +16,46 @@ public class ConstantPoolReader extends RobustReader {
     super(inner);
     this.constantPool = constantPool;
   }
-
-  @Nullable public String classPackage(final int classIndex) {
+   public String classPackage(final int classIndex) {
     return classIndex == 0 ? null : constantPool.getPackage(classIndex);
   }
-
-  @Nullable public String classShortName(final int classIndex) {
+   public String classShortName(final int classIndex) {
     return classIndex == 0 ? null : constantPool.getShortClassName(classIndex);
   }
-
-  @NotNull public AttributeInfo[] readAttributes() {
-    @NotNull final AttributeInfo[] $ = new AttributeInfo[readUnsignedShort()];
+   public AttributeInfo[] readAttributes() {
+     final AttributeInfo[] $ = new AttributeInfo[readUnsignedShort()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = readAttribute();
     return $;
   }
-
-  @NotNull public byte[] readBytesArrray() {
+   public byte[] readBytesArrray() {
     return readBytes(new byte[readInt()]);
   }
-
-  @NotNull public ClassConstant readClassConstant() {
+   public ClassConstant readClassConstant() {
     return constantPool.getClassConstant(readUnsignedShort());
   }
-
-  @NotNull public ClassConstant[] readClasses() {
-    @NotNull final ClassConstant[] $ = new ClassConstant[readUnsignedShort()];
+   public ClassConstant[] readClasses() {
+     final ClassConstant[] $ = new ClassConstant[readUnsignedShort()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = readClassConstant();
     return $;
   }
-
-  @Nullable public String readClassName() {
+   public String readClassName() {
     return readClassName(readUnsignedShort());
   }
-
-  @Nullable public String readClassName(final int classIndex) {
+   public String readClassName(final int classIndex) {
     return classIndex == 0 ? null : constantPool.getClassName(classIndex);
   }
-
-  @NotNull public TypedEntity[] readMembers() {
-    @NotNull final TypedEntity[] $ = new TypedEntity[readUnsignedShort()];
+   public TypedEntity[] readMembers() {
+     final TypedEntity[] $ = new TypedEntity[readUnsignedShort()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = new TypedEntity(constantPool, readUnsignedShort(), readStringConstant(), readStringConstant(), readAttributes());
     return $;
   }
-
   public String readStringConstant() {
     return constantPool.getUTF8(readUnsignedShort());
   }
-
-  @NotNull private AttributeInfo readAttribute() {
+   private AttributeInfo readAttribute() {
     return new AttributeInfo(readStringConstant(), readBytesArrray());
   }
 }

@@ -1,7 +1,7 @@
 /** Copyright */
 package il.org.spatan.iteration;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spatan.iteration.Iterables.*;
 
@@ -18,12 +18,10 @@ public class IterableArray<T> implements Iterable<T> {
   public IterableArray(final T[] ts) {
     this.ts = ts;
   }
-
   public int count() {
     return ts.length;
   }
-
-  @Override @NotNull public ArrayIterator<T> iterator() {
+  @Override  public ArrayIterator<T> iterator() {
     return new ArrayIterator<>(ts);
   }
 
@@ -34,11 +32,9 @@ public class IterableArray<T> implements Iterable<T> {
     public ArrayIterator(final T[] ts) {
       this.ts = ts;
     }
-
     @Override public boolean hasNext() {
       return current < ts.length;
     }
-
     @Override public T next() {
       return ts[current++];
     }

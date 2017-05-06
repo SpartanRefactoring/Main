@@ -4,7 +4,7 @@ import static fluent.ly.azzert.*;
 
 import java.util.*;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -91,7 +91,7 @@ public final class IntegersTest extends Integers {
     for (int i = 0; i < M; ++i) {
       invariant.check();
       azzert.that(N, is(size()));
-      @NotNull final int[] v = entries();
+       final int[] v = entries();
       azzert.that(v.length, is(N));
       Permutation.shuffle(v);
       assert contains(v);
@@ -191,7 +191,7 @@ public final class IntegersTest extends Integers {
 
   @Test public void valuesRange() {
     add(1, 2, 3);
-    @NotNull final int[] values = entries();
+     final int[] values = entries();
     Arrays.sort(values);
     azzert.that(Arrays.binarySearch(values, 1), is(0));
     azzert.that(Arrays.binarySearch(values, 2), is(1));

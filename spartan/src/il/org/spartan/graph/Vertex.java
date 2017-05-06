@@ -1,6 +1,6 @@
 package il.org.spartan.graph;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.collections.*;
 
@@ -10,8 +10,8 @@ import il.org.spartan.collections.*;
  * @param <E> type of elements stored in each vertex */
 public class Vertex<E> {
   private final E e;
-  @NotNull private final ImmutableArrayList<Vertex<E>> incoming;
-  @NotNull private final ImmutableArrayList<Vertex<E>> outgoing;
+   private final ImmutableArrayList<Vertex<E>> incoming;
+   private final ImmutableArrayList<Vertex<E>> outgoing;
 
   /** Instantiate {@link Vertex}. Package visibility is to prevent clients from
    * instantiating vertices rather than obtaining these from the containing
@@ -24,17 +24,15 @@ public class Vertex<E> {
     this.incoming = ImmutableArrayList.make(incoming);
     this.outgoing = ImmutableArrayList.make(outgoing);
   }
-
   public E e() {
     return e;
   }
-
-  @Override public boolean equals(@Nullable final Object o) {
+  @Override public boolean equals( final Object o) {
     if (o == this)
       return true;
     if (o == null || getClass() != o.getClass())
       return false;
-    @Nullable @SuppressWarnings("unchecked") final Vertex<E> other = (Vertex<E>) o;
+     @SuppressWarnings("unchecked") final Vertex<E> other = (Vertex<E>) o;
     if (e == null) {
       if (other.e != null)
         return false;
@@ -42,24 +40,21 @@ public class Vertex<E> {
       return false;
     return true;
   }
-
   @Override public int hashCode() {
     return e.hashCode();
   }
-
   /** Which vertices lie on the other end of outgoing edges? Package visibility
    * is deliberate; access to to neighbors must be through the enclosing graph,
    * so as to make it possible to invert edge directionality
    * @return vertices that lie on the other end of outgoing edges */
-  @NotNull public ImmutableArrayList<Vertex<E>> outgoing() {
+   public ImmutableArrayList<Vertex<E>> outgoing() {
     return outgoing;
   }
-
   /** Which vertices lie on the other end of incoming edges? Package visibility
    * is deliberate; access to to neighbors must be through the enclosing graph,
    * so as to make it possible to invert edge directionality
    * @return vertices that lie on the other end of incoming edges */
-  @NotNull ImmutableArrayList<Vertex<E>> incoming() {
+   ImmutableArrayList<Vertex<E>> incoming() {
     return incoming;
   }
 }

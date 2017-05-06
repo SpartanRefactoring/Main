@@ -3,7 +3,7 @@ package il.org.spartan.utils;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.strings.*;
 
@@ -31,31 +31,28 @@ public enum SystemProperty {
   USER_TIMEZONE, //
   ;
   public static void main(final String[] args) throws RuntimeException {
-    for (@NotNull final SystemProperty ¢ : values()) {
+    for ( final SystemProperty ¢ : values()) {
       if (¢.value() == null)
         throw new RuntimeException("property " + ¢ + " is probably misspelled");
       System.out.println(¢.key + "='" + ¢.value() + "'");
     }
-    for (@NotNull final String ¢ : objectsToStrings(System.getProperties().keySet()))
+    for ( final String ¢ : objectsToStrings(System.getProperties().keySet()))
       System.out.println(¢ + " = '" + StringUtils.visualize((String) System.getProperties().get(¢)) + "'");
   }
-
-  @NotNull private static TreeSet<String> objectsToStrings(@NotNull final Set<Object> ¢) {
-    @NotNull final TreeSet<String> $ = ¢.stream().map(λ -> (String) λ).collect(Collectors.toCollection(TreeSet::new));
+   private static TreeSet<String> objectsToStrings( final Set<Object> ¢) {
+     final TreeSet<String> $ = ¢.stream().map(λ -> (String) λ).collect(Collectors.toCollection(TreeSet::new));
     return $;
   }
 
-  @NotNull public final String key;
+   public final String key;
 
   SystemProperty() {
     key = name().toLowerCase().replace('_', '.');
   }
-
   public String value() {
     return StringUtils.visualize(value(System.getProperties()));
   }
-
-  public String value(@NotNull final Properties ¢) {
+  public String value( final Properties ¢) {
     return ¢.getProperty(key);
   }
 }

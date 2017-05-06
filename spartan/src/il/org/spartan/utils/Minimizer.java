@@ -1,6 +1,6 @@
 package il.org.spartan.utils;
 
-import org.jetbrains.annotations.*;
+import org.eclipse.jdt.annotation.*;
 import fluent.ly.*;
 
 /** @author Yossi Gil
@@ -15,13 +15,11 @@ public class Minimizer<T> {
   public int index() {
     return maxIndex;
   }
-
   public double min() {
     return min;
   }
-
-  @NotNull public Minimizer<T> next(final T t, final double next) {
-    ___.nonnull(t);
+   public Minimizer<T> next(final T t, final double next) {
+    assert t != null;
     if (Double.isNaN(min) || next < min) {
       min = next;
       value = t;
@@ -30,9 +28,8 @@ public class Minimizer<T> {
     ++index;
     return this;
   }
-
   public T value() {
-    ___.nonnull(value);
+    assert value != null;
     return value;
   }
 }

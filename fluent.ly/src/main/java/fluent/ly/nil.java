@@ -12,23 +12,19 @@ public interface nil {
     R on(T t);
   }
 
-  @SuppressWarnings("unused") static <@Nullable T> T forgetting(final Object _1, final Object... _2) {
+  @SuppressWarnings("unused") static < T> T forgetting(final Object _1, final Object... _2) {
     return null;
   }
-
   static <T, R> On<T, R> guardingly(final Function<T, R> f) {
     return λ -> λ == null ? null : f.apply(λ);
   }
-
-  @SuppressWarnings("unused") static <@Nullable T> T ignoring(final boolean __) {
+  @SuppressWarnings("unused") static < T> T ignoring(final boolean __) {
     return null;
   }
-
-  @SuppressWarnings("unused") static <@Nullable T> T ignoring(final double __) {
+  @SuppressWarnings("unused") static < T> T ignoring(final double __) {
     return null;
   }
-
-  @SuppressWarnings("unused") static <@Nullable T> T ignoring(final long __) {
+  @SuppressWarnings("unused") static < T> T ignoring(final long __) {
     return null;
   }
 }
