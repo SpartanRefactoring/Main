@@ -34,7 +34,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
             : iz.infixExpression(then) && iz.stringLiteral(elze)
                 ? simplify(subject.operand(condition).to(PrefixExpression.Operator.NOT), az.stringLiteral(elze), az.infixExpression(then))
                 : iz.infixExpression(then) && iz.infixExpression(elze) ? simplify(condition, az.infixExpression(then), az.infixExpression(elze))
-                    : null; //
+                    : null;
   }
   static String longer(final String s1, final String s2) {
     // noinspection StringEquality
