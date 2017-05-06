@@ -17,7 +17,7 @@ public class CleanOperation extends WidgetOperation {
   public static final String PROJECTS = "projects";
   public static final String current = "current project";
   public static final String all = "all projects";
-  private String mode;
+  private String mode = current;
 
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.mylyn.commons.ui/icons/elcl16/checkboxcleared.gif";
