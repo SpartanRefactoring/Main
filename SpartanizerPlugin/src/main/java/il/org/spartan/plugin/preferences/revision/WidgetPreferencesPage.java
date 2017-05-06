@@ -30,13 +30,14 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   @Override protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
     addField(new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent()));
-    final ListSelectionEditor lse = new ListSelectionEditor("X", "Configure tips for projects:", getFieldEditorParent(), getWidgetOperations(),
+    final ListSelectionEditor lse = new ListSelectionEditor("X", "Configure operations for widget:", getFieldEditorParent(), getWidgetOperations(),
         p -> ProjectPreferencesHandler.execute((IProject) p, changes.getPreference((IProject) p), (pp, es) -> changes.update(pp, es)), //
         λ -> changes.isEnabled((IProject) λ), //
         λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.isEnabled((IProject) λ).booleanValue())) //
     );
     lse.ableButton.setText("enable/disable operation");
     lse.configureButton.setText("configure operation");
+
     addField(lse);
   }
   /** @return all plugin widget operations */
