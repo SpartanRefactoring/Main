@@ -8,7 +8,7 @@ import org.eclipse.core.runtime.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 
-/** TODO Niv Shalmon: document class
+/** A widget operation that cleans projects
  * @author Niv Shalmon
  * @since 2017-05-04 */
 public class CleanOperation extends WidgetOperation {
@@ -17,7 +17,6 @@ public class CleanOperation extends WidgetOperation {
   public static final String PROJECTS = "projects";
   public static final String current = "current project";
   public static final String all = "all projects";
-  // public static final String selected = "selected projects";
   private String mode;
 
   @Override public String imageURL() {
@@ -28,8 +27,7 @@ public class CleanOperation extends WidgetOperation {
   }
   @Override public String[][] configurationComponents() {
     return new String[][] { //
-        { MODE, "List", current, all, /* selected, */ "Required" },//
-        // {PROJECTS, ""},//
+        { MODE, "List", current, all, "Required" },//
     };
   }
   @Override public boolean register(final Map<?, ?> configuration) {
