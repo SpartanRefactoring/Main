@@ -106,7 +106,7 @@ public class MatcherTest extends PsiTypeHelper {
                 if (!iz.stubMethodCall(expression)) {
                     return;
                 }
-                expression.putUserData(ID, az.integer(step.firstParamterExpression(expression)));
+                expression.putUserData(ID, az.integer(step.firstParameterExpression(expression)));
             }
         });
     }

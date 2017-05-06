@@ -43,6 +43,6 @@ public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {
     @Override
     public int extractId(PsiElement e) {
         assert (conforms(e));
-        return az.integer(step.firstParamterExpression(az.methodCallExpression(e)));
+        return az.integer(step.firstParameterExpression(az.methodCallExpression(e)));
     }
 }

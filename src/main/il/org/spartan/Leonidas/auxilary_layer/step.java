@@ -34,7 +34,7 @@ public enum step {
         return m == null ? null : firstParameter(m.getParameterList());
     }
 
-    public static PsiExpression firstParamterExpression(PsiMethodCallExpression x) {
+    public static PsiExpression firstParameterExpression(PsiMethodCallExpression x) {
         return x == null || x.getArgumentList().getExpressions().length < 1 ? null : x.getArgumentList().getExpressions()[0];
     }
 
