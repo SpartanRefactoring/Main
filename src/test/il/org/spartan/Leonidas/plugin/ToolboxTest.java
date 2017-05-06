@@ -2,6 +2,10 @@ package il.org.spartan.Leonidas.plugin;
 
 import com.intellij.psi.PsiFile;
 import il.org.spartan.Leonidas.PsiTypeHelper;
+import il.org.spartan.Leonidas.plugin.tipping.Tipper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Amir Sagiv
@@ -11,7 +15,7 @@ public class ToolboxTest extends PsiTypeHelper {
 
     private Toolbox tb = new Toolbox();
 
-    /*
+
         public void testGetAllTippers() throws Exception {
             tb.initComponent();
             List<Tipper> list = tb.getAllTippers();
@@ -125,7 +129,7 @@ public class ToolboxTest extends PsiTypeHelper {
 
             tb.disposeComponent();
         }
-    */
+
     public void testCheckExcluded() throws Exception {
         tb.initComponent();
         PsiFile f = createTestFileFromString("class A{}");
