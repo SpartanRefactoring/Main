@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.plugin.widget.*;
 public class ZoomerOperation extends WidgetOperation {
   private static final long serialVersionUID = -0x543A88984C660B4CL;
   public static final String TYPE = "type";
-  private String type;
+  private String type = "Current file";
 
   @Override public String[][] configurationComponents() {
     return new String[][] { //

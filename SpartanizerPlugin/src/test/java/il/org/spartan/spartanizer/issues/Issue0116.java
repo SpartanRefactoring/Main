@@ -44,15 +44,10 @@ public final class Issue0116 extends TipperTest<InfixExpression> {
         .gives("0 + \"\" + (x - 7)")//
         .stays();
   }
-  // TODO: Niv Shalmon, fix this please
-  @Ignore @Test public void issue116_08() {
-    trimmingOf("return x == null ? \"Use isEmpty()\" : \"Use \" + x + \".isEmpty()\";")
-        .gives("return \"Use \" + (x == null ? \"isEmpty()\" : \"\" + x + \".isEmpty()\");")
-        .gives("return \"Use \" + ((x == null ? \"\" : \"\" + x + \".\")+\"isEmpty()\");")
-        .gives("return \"Use \" + (x == null ? \"\" : \"\" + x  + \".\")+\"isEmpty()\";")
+  @Test public void issue116_08() {
+    trimmingOf("return \"Use \" + (x == null ? \"\" : \"\" + x  + \".\")+\"isEmpty()\";")
         .gives("return \"Use \" + (x == null ? \"\" : x +\"\" + \".\")+\"isEmpty()\";")
-        .gives("return \"Use \" + (x == null ? \"\" : x + \".\")+\"isEmpty()\";")//
-        .stays();
+        ;
   }
   @Test public void issue1245() {
     trimmingOf("\"\"+\"abc\"").stays();
