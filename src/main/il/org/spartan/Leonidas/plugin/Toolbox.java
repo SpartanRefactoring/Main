@@ -84,12 +84,10 @@ public class Toolbox implements ApplicationComponent {
                     } catch (Exception ignored) { /**/ }
                     return null;
                 })
+                .filter(i -> i != null)
+                .map(i -> (GenericEncapsulator) i)
                 .collect(Collectors.toList()));
     }
-
-//    private List<Class<? extends  GenericEncapsulator>> getGenericEncapsulators(Class<? extends GenericEncapsulator> c, List<Class<? extends GenericEncapsulator>> l){
-//        Reflections.
-//    }
 
     @SuppressWarnings("unchecked")
     public void updateTipperList(List<String> list) {
