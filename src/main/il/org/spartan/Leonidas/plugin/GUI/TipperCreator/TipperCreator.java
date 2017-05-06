@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin.GUI.TipperCreatorOld;
+package il.org.spartan.Leonidas.plugin.GUI.TipperCreator;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.uiDesigner.core.GridConstraints;

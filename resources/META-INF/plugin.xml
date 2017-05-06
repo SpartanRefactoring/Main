@@ -49,7 +49,7 @@
                 text="Spartanize">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
-        <action class="il.org.spartan.Leonidas.plugin.GUI.TipperCreatorOld.TipperCreatorAction" id="myPlugin4"
+        <action class="il.org.spartan.Leonidas.plugin.GUI.TipperCreator.TipperCreatorAction" id="myPlugin4"
                 text="Create new tipper">
             <keyboard-shortcut first-keystroke="ctrl m" keymap="$default"/>
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
@@ -59,7 +59,7 @@
                 text="Playground">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
-        <action class="il.org.spartan.Leonidas.plugin.GUI.ToolBoxControllerSwing.ToolBoxControllerAction"
+        <action class="il.org.spartan.Leonidas.plugin.GUI.ToolBoxController.ToolBoxControllerAction"
                 id="myPlugin6"
                 text="ToolBox Controller">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>

@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin.GUI.ToolBoxControllerSwing;
+package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
 
 import javax.swing.*;
@@ -13,20 +13,16 @@ import java.awt.event.MouseEvent;
  * @since 24/04/2017
  */
 @SuppressWarnings("unchecked")
-class CheckBoxList extends JList
-{
+class CheckBoxList extends JList {
     protected static Border noFocusBorder =
             new EmptyBorder(1, 1, 1, 1);
     private int numOfElements;
 
-    public CheckBoxList()
-    {
+    public CheckBoxList() {
         numOfElements = 0;
         setCellRenderer(new CellRenderer());
-        addMouseListener(new MouseAdapter()
-                         {
-                             public void mousePressed(MouseEvent e)
-                             {
+        addMouseListener(new MouseAdapter() {
+                             public void mousePressed(MouseEvent e) {
                                  int index = locationToIndex(e.getPoint());
 
                                  if (index != -1) {
@@ -39,7 +35,6 @@ class CheckBoxList extends JList
                              }
                          }
         );
-
 
 
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -70,12 +65,10 @@ class CheckBoxList extends JList
         setListData(newList);
     }
 
-    protected class CellRenderer implements ListCellRenderer
-    {
+    protected class CellRenderer implements ListCellRenderer {
         public Component getListCellRendererComponent(
                 JList list, Object value, int index,
-                boolean isSelected, boolean cellHasFocus)
-        {
+                boolean isSelected, boolean cellHasFocus) {
             JCheckBox checkbox = (JCheckBox) value;
             checkbox.setBackground(isSelected ?
                     getSelectionBackground() : getBackground());

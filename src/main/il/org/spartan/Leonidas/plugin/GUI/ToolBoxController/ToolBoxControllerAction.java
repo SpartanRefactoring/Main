@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin.GUI.ToolBoxControllerSwing;
+package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
