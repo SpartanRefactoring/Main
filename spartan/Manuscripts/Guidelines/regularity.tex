@@ -1,0 +1,13 @@
+\label{regularity}
+Sometimes, it is not enough to simply judge the complexity of code by a monotonous function.
+Just because a piece of code is long, does not mean that it is unreasonably complicated.
+The long code might have a well-structured design, or a particular pattern to it that helps readers understand it better.
+
+The idea of measuring for \emph{regularity} in the code was first suggested by Feitelson \& Jbara \cite{Jbara:Feitelson:13}.
+In their research, they studied how developers react to regularity.
+We wish to expand on this idea by measuring the correlation of regular code to bugs and other metrics.
+Using their definition, we will work on the assumption that the more regulated the code is, the more \textit{compressible} it is.
+\begin{define}
+Let $A$ be a compression algorithm and $c$ a piece of code, then $$\mathrm{regularity}_A(c)\triangleq\frac{\abs{c}}{\abs{A(c)}}.$$
+\end{define}
+Meaning, the regularity of the code is its compression ratio.

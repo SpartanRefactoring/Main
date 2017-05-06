@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+formatter_profile=_Spartan
+formatter_settings_version=12
+org.eclipse.jdt.ui.ignorelowercasenames=false
+org.eclipse.jdt.ui.importorder=\#fluent.ly;java;javax;org;com;
+org.eclipse.jdt.ui.ondemandthreshold=0
+org.eclipse.jdt.ui.staticondemandthreshold=0

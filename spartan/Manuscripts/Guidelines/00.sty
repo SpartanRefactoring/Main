@@ -1,0 +1,44 @@
+\def\passOptions#1#2{\PassOptionsToPackage{#2}{#1}}
+
+\passOptions{algorithm}{plain}
+\passOptions{amsmath}{fleqn} 
+\passOptions{cleveref}{nameinlink}
+\passOptions{geometry} {margin=0.75in}
+\passOptions{hyperref}{colorlinks=true,final,allcolors=blue,breaklinks,draft=false} 
+\passOptions{lmodern}{lighttt}
+\passOptions{xcolor} {usenames, dvipsnames, table} 
+
+\usepackage{adjustbox}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb} 
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{cleveref}
+\usepackage{code}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{nth}
+\usepackage{syntax}
+
+\usepackage{yogi-lang}
+
+\adjustboxset{max width=\columnwidth}
+\adjustboxset{max height=0.8\textheight}
+\adjustboxset{center}
+\newadjustboxkey*{W}[1]{\setkeys{adjbox}{max width=#1\columnwidth}}
+\newadjustboxkey*{H}[1]{\setkeys{adjbox}{max height=#1\textheight}}
+
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Definition}{Definition}
+\numberwithin{equation}{section}
+
+\newcommand \urlref [1] {\footnote{\url{#1}}}
+
+\crefname{section}{Sect.}{Sects.}
+\Crefname{section}{Sect.}{Sects.}
+\crefname{figure}{Fig.}{Figs.}
+\Crefname{figure}{Fig.}{Figs.}
