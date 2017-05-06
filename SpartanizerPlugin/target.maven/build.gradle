@@ -27,6 +27,13 @@ platform {
             symbolicName = 'spartan'
         }
     }
+
+    bundle file('../../spartan/lib/fluent.ly-0.0.1.jar'), {
+        bnd {
+            version = '0.0.1'
+            symbolicName = 'fluent.ly'
+        }
+    }
 }
 // don't let stale bundles lay around
 bundles.dependsOn(clean)

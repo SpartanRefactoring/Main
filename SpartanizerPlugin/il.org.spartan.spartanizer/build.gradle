@@ -5,7 +5,7 @@ dependencies {
     compile "eclipse-deps:org.eclipse.jface.text:+"
     compile "eclipse-deps:org.eclipse.jface:+"
     compile "eclipse-deps:org.eclipse.core.runtime:+"
-    compile "eclipse-deps:org.eclipse.core.runtime.compatibility:+"
+    //compile "eclipse-deps:org.eclipse.core.runtime.compatibility:+"
     compile "eclipse-deps:org.eclipse.core.resources:+"
 
     compile "eclipse-deps:org.eclipse.ltk.core.refactoring:+"
@@ -45,7 +45,7 @@ dependencies {
 
     // project dependencies
     compile project(':spartan')
-    compile project(':fluent.ly')
+    //compile project(':fluent.ly')
 
     // maven dependencies
     testCompile "junit:junit:${VER_JUNIT}"

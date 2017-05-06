@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>SpartanizerPlugin</name>
+	<comment>Gradle and Eclipse RCP</comment>
+	<projects/>
+	<natures/>
+	<buildSpec/>
+	<linkedResources/>
+	<filteredResources>
+		<filter>
+			<id>923922756</id>
+			<name></name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-SpartanizerPlugin/il.org.spartan.*</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
+</projectDescription>

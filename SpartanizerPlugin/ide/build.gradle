@@ -9,6 +9,7 @@ oomphIde {
         targetplatform {
             it.installation '../target.maven/build'
             it.installation '../target.p2/build/p2asmaven/p2runnable/eclipse-deps'
+            it.installation '../target.p2/build/p2asmaven/p2runnable/eclipse-deps-jgit'
         }
     }
     style {
