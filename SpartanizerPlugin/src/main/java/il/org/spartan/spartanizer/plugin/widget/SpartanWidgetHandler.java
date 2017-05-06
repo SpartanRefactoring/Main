@@ -35,6 +35,14 @@ public class SpartanWidgetHandler extends AbstractHandler {
       , new Point(2 * R + r, R + r)//
       , new Point(2 * R, 2 * R)//
   };
+  private static WidgetOperation[] operations = { new GitPullOperation()//
+      , new GitPullOperation()//
+      , new GitPushOperation()//
+      , new GitCommitOperation()//
+      , new CleanOperation()//
+      , null//
+      , new GitPullOperation()//
+  };
   static final int OPERATION_HOLD_INTERVAL = 500;
   static final AtomicBoolean active = new AtomicBoolean(false);
 
@@ -85,11 +93,6 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Rectangle size = region.getBounds();
     shell.setSize(size.width, size.height);
     shell.setRegion(region);
-    /* TODO raviv - you need to supply me this array based on the user's
-     * configuration. The WigetOperations should already have registered their
-     * configurations when you send this to me, so they are ready to run. */
-    final WidgetOperation[] operations = { new GitPullOperation(), new GitPullOperation(), new GitPullOperation(), new GitPullOperation(),
-        new GitPullOperation(), new GitPullOperation(), new GitPullOperation() };
     for (int ¢ = 0; ¢ < circles.length; ++¢)
       setControl(createButton(shell, circles[¢], operations[¢]), setSolid, setTransparent);
     shell.setLocation(startLocation.apply(Eclipse.mouseLocation()));
