@@ -29,13 +29,12 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   private static final long serialVersionUID = 0x3CB7B1F8BB26D539L;
 
   public static Expression replacement(final Expression condition, final Expression then, final Expression elze) {
-    Expression $ = iz.stringLiteral(then) && iz.stringLiteral(elze) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
+    return iz.stringLiteral(then) && iz.stringLiteral(elze) ? simplify(condition, az.stringLiteral(then), az.stringLiteral(elze))
         : iz.stringLiteral(then) && iz.infixExpression(elze) ? simplify(condition, az.stringLiteral(then), az.infixExpression(elze))
             : iz.infixExpression(then) && iz.stringLiteral(elze)
                 ? simplify(subject.operand(condition).to(PrefixExpression.Operator.NOT), az.stringLiteral(elze), az.infixExpression(then))
                 : iz.infixExpression(then) && iz.infixExpression(elze) ? simplify(condition, az.infixExpression(then), az.infixExpression(elze))
-                    : null; //
-    return $;
+                    : null;
   }
   static String longer(final String s1, final String s2) {
     // noinspection StringEquality
