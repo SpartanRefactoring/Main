@@ -38,10 +38,10 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static WidgetOperation[] operations = { new GitPullOperation()//
       , new GitPullOperation()//
       , new GitPushOperation()//
+      , new SpartanizationOperation()//
+      , new ZoomerOperation()//
       , new GitCommitOperation()//
       , new CleanOperation()//
-      , null//
-      , new GitPullOperation()//
   };
   static final int OPERATION_HOLD_INTERVAL = 500;
   static final AtomicBoolean active = new AtomicBoolean(false);
@@ -94,7 +94,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
     shell.setSize(size.width, size.height);
     shell.setRegion(region);
     for (int ¢ = 0; ¢ < circles.length; ++¢)
-      setControl(createButton(shell, circles[¢], operations[¢]), setSolid, setTransparent);
+      if (operations[¢] != null)
+        setControl(createButton(shell, circles[¢], operations[¢]), setSolid, setTransparent);
     shell.setLocation(startLocation.apply(Eclipse.mouseLocation()));
     shell.open();
     originalShell.forceFocus();
