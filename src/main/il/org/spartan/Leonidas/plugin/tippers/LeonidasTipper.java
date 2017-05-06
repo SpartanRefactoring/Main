@@ -16,7 +16,6 @@ import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
-import java.io.IOException;
 import java.util.*;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
@@ -27,6 +26,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.I
  * @author Amir Sagiv, Sharon Kuninin, michalcohen
  * @since 26-03-2017.
  */
+@SuppressWarnings("ConstantConditions")
 public class LeonidasTipper implements Tipper<PsiElement> {
 
     private static final String LEONIDAS_ANNOTATION_NAME = Leonidas.class.getTypeName();
@@ -38,19 +38,21 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     private Matcher matcher;
     private Class<? extends PsiElement> rootType;
     private PsiJavaFile file;
-    private Map<Integer, List<Matcher.Constraint>> map;
 
-    public LeonidasTipper(String tipperName, String fileContent) throws IOException {
+    @SuppressWarnings("ConstantConditions")
+    public LeonidasTipper(String tipperName, String fileContent) {
         file = getPsiTreeFromString("Tipper" + tipperName, fileContent);
+        assert file != null;
         description = file.getClasses()[0].getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
         name = file.getClasses()[0].getDocComment().getText()
                 .split("\\n")[2].trim()
                 .split("\\*")[1].trim();
-        map = getConstraints();
+        Map<Integer, List<Matcher.Constraint>> map = getConstraints();
         matcher = new Matcher(getMatcherRootTree(), map);
         Class<? extends PsiElement> t = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));
+        //noinspection unchecked
         rootType = t != null ? t : (Class<? extends PsiElement>) matcher.getRoot().getInner().getClass().getInterfaces()[0];
     }
 
@@ -235,12 +237,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      *
      * @param treeToReplace - the given tree that matched the "from" tree.
      * @param r             - Rewrite object
-     * @return the replaced element
      */
-    private Encapsulator replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
+    private void replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
         PsiElement n = getReplacingTree(m, r);
         r.replace(treeToReplace, n);
-        return Encapsulator.buildTreeFromPsi(n);
     }
 
     /**
@@ -313,7 +313,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 if (!iz.stubMethodCall(expression)) {
                     return;
                 }
-                expression.putUserData(ID, az.integer(step.firstParamterExpression(expression)));
+                expression.putUserData(ID, az.integer(step.firstParameterExpression(expression)));
             }
         });
     }

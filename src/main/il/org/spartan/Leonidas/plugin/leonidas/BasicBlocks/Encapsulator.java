@@ -3,10 +3,12 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -74,7 +76,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
 
     @Override
     public <T> T accept(EncapsulatorValueVisitor<T> v, BinaryOperator<T> accumulator) {
-        return accumulator.apply(v.visit(this), children.stream().filter(child -> child != null).map(child -> child.accept(v, accumulator))
+        return accumulator.apply(v.visit(this), children.stream().filter(Objects::nonNull).map(child -> child.accept(v, accumulator))
                 .reduce(accumulator).orElse(null));
     }
 
@@ -93,10 +95,13 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         return inner.toString();
     }
 
+    @NotNull
     public String getText() {
-        return inner.getText();
+        return inner.getText() != null ? inner.getText() : "";
     }
 
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
     public Encapsulator clone() {
         return new Encapsulator(this);
     }
@@ -108,13 +113,12 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
 
     @Override
     public void forEach(Consumer<? super Encapsulator> action) {
-        children.stream().forEach(action);
+        children.forEach(action);
     }
 
 
-    public <T> Encapsulator putUserData(Key<T> key, T id) {
+    public <T> void putUserData(Key<T> key, T id) {
         this.inner.putUserData(key, id);
-        return this;
     }
 
     public <T> T getUserData(Key<T> id) {

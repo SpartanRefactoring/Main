@@ -18,7 +18,7 @@ public interface LeonidasTipperDefinition {
     void replacer();
 
     /**
-     * Defiines additional constraints that need to apply on the code of the user so it will be matched.
+     * Defines additional constraints that need to apply on the code of the user so it will be matched.
      */
     default void constraints() {
     }

@@ -18,8 +18,6 @@ public class EncapsulatorTest extends PsiTypeHelper {
             "   statement();" +
             "}";
 
-    private PsiRewrite mockPsiRewrite;
-
     private boolean matchNodeTreeAndPsiTreeByReference(Encapsulator node, PsiElement e) {
         if (node == e && e == null)
             return true;
@@ -38,7 +36,7 @@ public class EncapsulatorTest extends PsiTypeHelper {
 
     @Before
     public void setup() {
-        mockPsiRewrite = Mockito.mock(PsiRewrite.class);
+        PsiRewrite mockPsiRewrite = Mockito.mock(PsiRewrite.class);
     }
 
     public void testRootEncapsulatingNodeIsOrphan() throws Exception {

@@ -45,12 +45,13 @@ class LogFileUtils {
      * Creates the log file and all the containing directories
      * if they are not already exist.
      */
-    private static void ensureLogExistance() {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private static void ensureLogExistence() {
         File f = new File(getPath());
         if (!f.exists())
 			try {
-				f.getParentFile().mkdirs();
-				f.createNewFile();
+                f.getParentFile().mkdirs();
+                f.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -62,8 +63,8 @@ class LogFileUtils {
 	 */
 	static synchronized void appendToLogFile(String s) {
 		try {
-			ensureLogExistance();
-			new FileWriter(getPath(), true).append(s).flush();
+            ensureLogExistence();
+            new FileWriter(getPath(), true).append(s).flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -364,7 +364,7 @@ public class izTest extends PsiTypeHelper {
         assert !iz.documentedElement(createTestMethodCallExpression("foo", "a"));
     }
 
-    public void testjavaDoc() throws Exception {
+    public void testJavaDoc() throws Exception {
         PsiElement e = createTestDocCommentFromString("/**\n" +
                 " * This is a main class JavaDoc\n" +
                 " */\n");

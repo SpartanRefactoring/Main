@@ -25,7 +25,7 @@ public class OptimisticTest extends PsiTypeHelper {
         assert !haz.syntaxErrors(createTestExpressionFromString("5 == 5"));
         assert !haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return false;}"));
         assert !haz.syntaxErrors(createTestMethodFromString("boolean dummy(){return (5==5);}"));
-        assert !haz.compilationErrors(createTestFileFromString("package test; public class Test { public Test() { final int x=3; System.out.println(\"lalala\"); } }"));
+        assert !haz.compilationErrors(createTestFileFromString("package test; public class Test { public Test() { final int x=3; System.out.println(\"banana\"); } }"));
 
     }
 

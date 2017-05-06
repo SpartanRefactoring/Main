@@ -9,6 +9,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author melanyc
  * @since 30-04-2017
  */
+@SuppressWarnings("DoubleNegation")
 public class IfDoubleNot implements LeonidasTipperDefinition {
 
     /**

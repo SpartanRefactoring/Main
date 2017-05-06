@@ -54,7 +54,7 @@ public class DefaultToTest extends PsiTypeHelper {
         assert !new DefaultsTo().canTip(createTestExpressionFromString("x != y ? x : y"));
     }
 
-    public void testCannotTipCondVarsAndThenElseVarsDontMatch() {
+    public void testCannotTipCondVarsAndThenElseVarsDoNotMatch() {
         assert !new DefaultsTo().canTip(createTestExpressionFromString("x != null ? y : z"));
     }
 

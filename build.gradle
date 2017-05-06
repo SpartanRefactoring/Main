@@ -35,7 +35,7 @@ sourceSets {
  * task broken. Intellij probably can't auto refactor the paths here, so be aware.
  * See issue #149.
  */
-// TODO @RoeiRaz its not a good solution, only a temporary patch. Make the team meembers aware of the dangers.
+// TODO @RoeiRaz its not a good solution, only a temporary patch. Make the team members aware of the dangers.
 task copyTippers(type: Copy) {
     // Assumes we use the last added source directory for the tippers.
     // The first source directory seems to be src.main.java by default.

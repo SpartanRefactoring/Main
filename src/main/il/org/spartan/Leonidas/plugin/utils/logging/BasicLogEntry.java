@@ -48,11 +48,11 @@ class BasicLogEntry {
         return logLevel;
     }
 
-    private String getFormatedDate() {
+    private String getFormattedDate() {
         return new SimpleDateFormat(DATE_FORMAT).format(this.date);
     }
 
-    private String getFormatedMsg() {
+    private String getFormattedMsg() {
         return LOG_MSG_LEADER
                 + this.msg.replace("\r\n", "\r\n" + LOG_MSG_LEADER)
                 .replace("\n", "\n" + LOG_MSG_LEADER);
@@ -60,7 +60,7 @@ class BasicLogEntry {
 
     @Override
     public String toString() {
-        return getFormatedDate() + SPACE + logLevel + SPACE + clazz.getName() + SPACE + ":\n" + getFormatedMsg()
-				+ LOG_ENTRY_TRAILER;
+        return getFormattedDate() + SPACE + logLevel + SPACE + clazz.getName() + SPACE + ":\n" + getFormattedMsg()
+                + LOG_ENTRY_TRAILER;
     }
 }
