@@ -17,19 +17,23 @@ public enum Spartanizer {
 
     static void spartanizeElement(PsiElement e) {
         if (!"SpartanizerUtils.java".equals(e.getContainingFile().getName()))
-			Toolbox.getInstance().executeAllTippers(e);
+            Toolbox.getInstance().executeAllTippers(e);
     }
 
     public static void spartanizeFileOnePass(PsiFile f) {
         if ("SpartanizerUtils.java".equals(f.getName()))
-			return;
+            return;
         Toolbox toolbox = Toolbox.getInstance();
-        f.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitElement(PsiElement e) {
-                super.visitElement(e);
-                toolbox.executeAllTippers(e);
-            }
-        });
+        toolbox.replaced = true;
+        while (toolbox.replaced) {
+            toolbox.replaced = false;
+            f.accept(new JavaRecursiveElementVisitor() {
+                @Override
+                public void visitElement(PsiElement e) {
+                    super.visitElement(e);
+                    toolbox.executeAllTippers(e);
+                }
+            });
+        }
     }
 }

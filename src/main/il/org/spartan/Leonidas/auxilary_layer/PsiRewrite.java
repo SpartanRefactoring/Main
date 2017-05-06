@@ -5,10 +5,12 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
+import il.org.spartan.Leonidas.plugin.Toolbox;
 
 /**
  * This class helps performing replacement actions on Psi elements without having to create
- *  each time WriteCommandAction.
+ * each time WriteCommandAction.
+ *
  * @author Roey Maor
  * @since 03-12-2016
  */
@@ -38,6 +40,7 @@ public class PsiRewrite {
      * @return the new tree that was inserted to the path of the tree that was replaced.
      */
     public PsiElement replace(PsiElement element1, PsiElement element2) {
+        Toolbox.getInstance().replaced = true;
         Wrapper<PsiElement> newElement = new Wrapper<>(null);
         new WriteCommandAction.Simple(project, psiFile) {
             @Override
