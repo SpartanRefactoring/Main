@@ -53,8 +53,9 @@ public abstract class WidgetOperation implements Serializable {
   /** @return scaled SWT image of this operation.
    * @see #scale() */
   public Image image() {
-    final String $ = imageURL();
-    return Dialogs.image($, $, scale());
+    final String s = imageURL();
+    final Image $ = Dialogs.image(s, s, scale());
+    return $ != null ? $ : Dialogs.image("platform:/plugin/org.eclipse.ui.intro.universal/icons/welcome16.gif", "defualt widget", λ -> λ);
   }
   /** Scaling the image of the operation, does nothing by default.
    * @return scaler for SWT image of this operation. */
