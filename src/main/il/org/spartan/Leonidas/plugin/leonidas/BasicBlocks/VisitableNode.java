@@ -18,7 +18,7 @@ interface VisitableNode {
     void accept(EncapsulatorVisitor v);
 
     /**
-     * @param v           visitor that returns vakue
+     * @param v           visitor that returns value
      * @param accumulator the way two results are propagated, must be associative and commutative.
      * @param <T>         - the result type
      * @return the result driven from applying v on every node.

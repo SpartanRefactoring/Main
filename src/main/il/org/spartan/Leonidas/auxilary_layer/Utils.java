@@ -106,9 +106,8 @@ public enum Utils {
     /**
      * @param c the wanted tipper class
      * @return the content of the file of the tipper.
-     * @throws IOException
      */
-    public static String getSourceCode(Class<?> c) throws IOException {
+    public static String getSourceCode(Class<?> c) {
         try {
             InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
             return is != null ? IOUtils.toString(new BufferedReader(new InputStreamReader(is))) : "";
@@ -130,7 +129,7 @@ public enum Utils {
         try {
             return URLDecoder.decode(path, "UTF-8");
         } catch (UnsupportedEncodingException ignore) {
-            return null;
+            return "";
         }
     }
 
@@ -139,6 +138,7 @@ public enum Utils {
      * @return the first element inside the block that isn't white space or the
      * enclosing brackets.
      */
+    @SuppressWarnings("StatementWithEmptyBody")
     public static PsiElement getFirstElementInsideBody(PsiCodeBlock cb) {
         PsiElement c;
         for (c = cb.getFirstBodyElement(); c != null && iz.whiteSpace(c); c = c.getNextSibling()) ;

@@ -7,7 +7,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
  * @author Anna Belozovsky
  * @since 22/04/2017
  */
-public class PlaygroungControllerAction extends AnAction {
+public class PlaygroundControllerAction extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
         new Playground();

@@ -6,9 +6,10 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 /**
  * Remove redundant curly braces
  * RemoveCurlyBraces
- * author Oren Afek, Shron Kuninin, michalcohen
+ * author Oren Afek, Sharon Kuninin, michalcohen
  * since 06/01/17
  */
+@SuppressWarnings("ConstantConditions")
 public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinition {
     @Override
     public void constraints() {

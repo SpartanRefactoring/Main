@@ -56,8 +56,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
 				Stream<PsiIdentifier> fields = references.stream()
 						.filter(q -> iz.javaToken(q.getPrevSibling().getPrevSibling()));
 				references.removeAll(fields.collect(Collectors.toList()));
-				references.stream().forEach(s -> r.replace(s, cent));
-			}
+                references.forEach(s -> r.replace(s, cent));
+            }
         };
     }
 

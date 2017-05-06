@@ -16,7 +16,6 @@ import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -50,21 +49,13 @@ public class Toolbox implements ApplicationComponent {
 
     public List<Tipper> getAllTippers() {
         List<Tipper> list = new ArrayList<>();
-        this.allTipperMap.values().forEach(element -> {
-            element.forEach(tipper -> {
-                list.add(tipper);
-            });
-        });
+        this.allTipperMap.values().forEach(element -> element.forEach(list::add));
         return list;
     }
 
     public List<Tipper> getCurrentTippers() {
         List<Tipper> list = new ArrayList<>();
-        this.tipperMap.values().forEach(element -> {
-            element.forEach(tipper -> {
-                list.add(tipper);
-            });
-        });
+        this.tipperMap.values().forEach(element -> element.forEach(list::add));
         return list;
     }
 
@@ -100,6 +91,7 @@ public class Toolbox implements ApplicationComponent {
 //        Reflections.
 //    }
 
+    @SuppressWarnings("unchecked")
     public void updateTipperList(List<String> list) {
         this.tipperMap.values().forEach(element -> element.forEach(tipper -> {
             if (!list.contains(tipper.name())) {
@@ -107,28 +99,22 @@ public class Toolbox implements ApplicationComponent {
             }
         }));
 
-        this.allTipperMap.values().forEach(element -> {
-            element.forEach(tipper -> {
-                if (list.contains(tipper.name())) {
-                    tipperMap.putIfAbsent(tipper.getPsiClass(), new CopyOnWriteArrayList<>());
-                    operableTypes.add(tipper.getPsiClass());
-                    tipperMap.get(tipper.getPsiClass()).add(tipper);
-                }
-            });
-        });
+        this.allTipperMap.values().forEach(element -> element.forEach(tipper -> {
+            if (list.contains(tipper.name())) {
+                tipperMap.putIfAbsent(tipper.getPsiClass(), new CopyOnWriteArrayList<>());
+                operableTypes.add(tipper.getPsiClass());
+                tipperMap.get(tipper.getPsiClass()).add(tipper);
+            }
+        }));
 
     }
 
     private void createLeonidasTippers() {
-        (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class).stream()
+        (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class)
                 .forEach(c -> {
-                    try {
-                        String source = Utils.getSourceCode(c);
-                        if (!source.equals(""))
-                            add(new LeonidasTipper(c.getSimpleName(), source));
-                    } catch (IOException e) {
-                        logger.info("Failed to read file: " + c.getName() + "\n" + Arrays.stream(e.getStackTrace()).map(x -> x.toString()).reduce((e1, e2) -> e1 + "\n" + e2));
-                    }
+                    String source = Utils.getSourceCode(c);
+                    if (!source.equals(""))
+                        add(new LeonidasTipper(c.getSimpleName(), source));
                 });
     }
 
@@ -146,12 +132,11 @@ public class Toolbox implements ApplicationComponent {
     }
 
     @SuppressWarnings("unchecked")
-    public Toolbox executeAllTippers(PsiElement e) {
+    public void executeAllTippers(PsiElement e) {
         if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
-            return this;
+            return;
         tipperMap.get(type.of(e)).stream().filter(tipper -> tipper.canTip(e)).findFirst()
                 .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
-        return this;
     }
 
     /**

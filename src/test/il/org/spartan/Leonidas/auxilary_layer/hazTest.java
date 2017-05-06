@@ -24,13 +24,13 @@ public class hazTest extends PsiTypeHelper {
 
     public void testHazFunctionNamed() throws Exception{
         PsiElement e1 = createTestMethodFromString("public int getX(){return 1;}");
-        assert haz.functionNamed(e1, "getX");
+        assertTrue(haz.functionNamed(e1, "getX"));
         PsiElement e2 = createTestClassFromString("","A","pubic A(){} private static int getX(){return 1;}","public");
-        assert haz.functionNamed(e2, "getX");
+        assertTrue(haz.functionNamed(e2, "getX"));
         PsiElement e3 = createTestClassFromString("","A","pubic A(){} private static int getY(){return 1;}","public");
-        assert !haz.functionNamed(e3, "getX");
-        assert haz.functionNamed(createTestInterfaceFromString("", "A", "private static int getX();", "public"),
-				"getX");
+        assertFalse(haz.functionNamed(e3, "getX"));
+        assertTrue(haz.functionNamed(createTestInterfaceFromString("", "A", "private static int getX();", "public"),
+                "getX"));
 
     }
 

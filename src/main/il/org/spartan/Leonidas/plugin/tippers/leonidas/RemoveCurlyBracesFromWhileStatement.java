@@ -10,6 +10,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  * @author michalcohen
  * @since 30-04-2017
  */
+@SuppressWarnings("ConstantConditions")
 public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefinition {
 
     /**

@@ -3,17 +3,20 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 import com.intellij.psi.*;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericAnyBlock;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericExpression;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.StubName;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericStatement;
 
 import java.util.Optional;
-import java.util.function.BinaryOperator;
 
 
 /**
  * @author Oren Afek, michalcohen
  * @since 17-01-2017
  */
+@SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "ConstantConditions"})
 public class StubNameTest extends PsiTypeHelper {
     public void testValueOfMethodCall() throws Exception {
         PsiMethodCallExpression m1 = createTestMethodCallExpression("statement", "1");
@@ -46,7 +49,7 @@ public class StubNameTest extends PsiTypeHelper {
         PsiExpression e = createTestExpression("x--");
         PsiCodeBlock cb = createTestCodeBlockFromString("{\n\tx++;\n\tx--;\n}");
         PsiIdentifier id = createTestIdentifierFromString("y");
-        PsiArrayAccessExpression aa = createTestArrayaAccess("a", "x++");
+        PsiArrayAccessExpression aa = createTestArrayAccess("a", "x++");
 
         assertEquals(StubName.getGeneralType(s), StubName.STATEMENT);
         assertEquals(StubName.getGeneralType(e), StubName.BOOLEAN_EXPRESSION);
@@ -92,49 +95,19 @@ public class StubNameTest extends PsiTypeHelper {
 
     public void testGoUpwards1() throws Exception {
         Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "booleanExpression(0);"));
-        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
-            @Override
-            public Optional<Encapsulator> visit(Encapsulator n) {
-                return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("booleanExpression(0)") ? n : null);
-            }
-        }, new BinaryOperator<Optional<Encapsulator>>() {
-            @Override
-            public Optional<Encapsulator> apply(Optional<Encapsulator> t, Optional<Encapsulator> t2) {
-                return t == null || !t.isPresent() ? (t2 == null ? Optional.empty() : t2) : t;
-            }
-        }).orElse(null);
+        Encapsulator expression = root.accept(n -> Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("booleanExpression(0)") ? n : null), (t, t2) -> t == null || !t.isPresent() ? (t2 == null ? Optional.empty() : t2) : t).orElse(null);
         assertFalse(StubName.BOOLEAN_EXPRESSION.goUpwards(expression, expression.getParent()));
     }
 
     public void testGoUpwards2() throws Exception {
         Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "statement(0);"));
-        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
-            @Override
-            public Optional<Encapsulator> visit(Encapsulator n) {
-                return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("statement(0)") ? n : null);
-            }
-        }, new BinaryOperator<Optional<Encapsulator>>() {
-            @Override
-            public Optional<Encapsulator> apply(Optional<Encapsulator> t, Optional<Encapsulator> t2) {
-                return t == null || !t.isPresent() ? (t2 == null ? Optional.empty() : t2) : t;
-            }
-        }).orElse(null);
+        Encapsulator expression = root.accept(n -> Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("statement(0)") ? n : null), (t, t2) -> t == null || !t.isPresent() ? (t2 == null ? Optional.empty() : t2) : t).orElse(null);
         assertTrue(StubName.STATEMENT.goUpwards(expression, expression.getParent()));
     }
 
     public void testGoUpwards3() throws Exception {
         Encapsulator root = Encapsulator.buildTreeFromPsi(createTestIfStatement("x > 2", "anyBlock(0);"));
-        Encapsulator expression = root.accept(new EncapsulatorValueVisitor<Optional<Encapsulator>>() {
-            @Override
-            public Optional<Encapsulator> visit(Encapsulator n) {
-                return Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("anyBlock(0)") ? n : null);
-            }
-        }, new BinaryOperator<Optional<Encapsulator>>() {
-            @Override
-            public Optional<Encapsulator> apply(Optional<Encapsulator> t, Optional<Encapsulator> t2) {
-                return t == null || !t.isPresent() ? (t2 == null ? Optional.empty() : t2) : t;
-            }
-        }).orElse(null);
+        Encapsulator expression = root.accept(n -> Optional.ofNullable(iz.expression(n.getInner()) && n.getInner().getText().equals("anyBlock(0)") ? n : null), (t, t2) -> t == null || !t.isPresent() ? (t2 == null ? Optional.empty() : t2) : t).orElse(null);
         assertTrue(StubName.ANY_BLOCK.goUpwards(expression, expression.getParent()));
     }
 }

@@ -19,6 +19,7 @@ import static com.intellij.psi.JavaTokenType.TRUE_KEYWORD;
  * @author Oren Afek
  * @since 06-01-2017
  */
+@SuppressWarnings({"SameReturnValue", "UnusedReturnValue"})
 public class GenericPsiElementStub {
 
     /**
@@ -214,7 +215,7 @@ public class GenericPsiElementStub {
         /**
          * @param inner the psi element that the generic type generalizes (usually a method call)
          * @param id    the ID inside the replaced element (if it isn't the direct method call, then we won't be able to retrieve it from "inner").
-         * @return
+         * @return the generic element
          */
         public GenericEncapsulator getGenericElement(PsiElement inner, Integer id) {
             GenericEncapsulator x;

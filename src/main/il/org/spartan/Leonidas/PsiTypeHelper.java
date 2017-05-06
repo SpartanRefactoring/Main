@@ -269,17 +269,17 @@ public class PsiTypeHelper extends PsiTestCase {
         return (PsiLambdaExpression) getTestFactory().createExpressionFromText(s, getTestFile());
     }
 
-    protected PsiNewExpression createTestNewExpression(String typeName, String... parametes) {
+    protected PsiNewExpression createTestNewExpression(String typeName, String... parameters) {
         StringBuilder sb = new StringBuilder();
         sb.append("new ")
                 .append(typeName)
                 .append("(");
-        Arrays.stream(parametes).forEach(sb::append);
+        Arrays.stream(parameters).forEach(sb::append);
         sb.append(")");
         return (PsiNewExpression) getTestFactory().createExpressionFromText(sb.toString(), getTestFile());
     }
 
-    protected PsiMethodReferenceExpression createTestMethodReferenceEpression(String typeName, String methodName) {
+    protected PsiMethodReferenceExpression createTestMethodReferenceExpression(String typeName, String methodName) {
         return (PsiMethodReferenceExpression) getTestFactory().createExpressionFromText(typeName + "::" + methodName,
 				getTestFile());
     }
@@ -292,7 +292,7 @@ public class PsiTypeHelper extends PsiTestCase {
         return (PsiReturnStatement) getTestFactory().createStatementFromText("return " + expression + ";", getTestFile());
     }
 
-    protected PsiArrayAccessExpression createTestArrayaAccess(String arrayName, String accessContent) {
+    protected PsiArrayAccessExpression createTestArrayAccess(String arrayName, String accessContent) {
         return (PsiArrayAccessExpression) getTestFactory().createExpressionFromText(arrayName + "[" + accessContent + "]", getTestFile());
     }
 }

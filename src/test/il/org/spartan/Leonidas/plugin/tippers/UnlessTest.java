@@ -15,14 +15,14 @@ public class UnlessTest extends PsiTypeHelper {
         super.setUp();
     }
 
-    public void testcanTipThen() throws Exception {
+    public void testCanTipThen() throws Exception {
         PsiConditionalExpression k = createTestConditionalExpression("x > 0", "null", "x");
         assert (iz.nullExpression(k.getThenExpression()));
         assert ((new Unless()).canTip(k));
 
     }
 
-    public void testcantTip() throws Exception {
+    public void testCanNotTip() throws Exception {
         PsiConditionalExpression k = createTestConditionalExpression("x > 0", "_null", "x");
         assert (!iz.nullExpression(k.getThenExpression()));
         assert (!(new Unless()).canTip(k));

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 public class Logger {
 
     private static final LEVEL defaultLogLevel = LEVEL.INFO;
-    private Class<?> clz;
+    private final Class<?> clz;
     private LEVEL logLevel;
 
     /**

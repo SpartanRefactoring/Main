@@ -101,6 +101,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @param r       rewrite
      * @return this, for fluent API.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public Encapsulator replace(Encapsulator newNode, PsiRewrite r) {
         inner = parent == null ? newNode.inner : r.replace(inner, newNode.inner);
         return this;

@@ -13,7 +13,7 @@ public class typeTest extends PsiTypeHelper {
     }
 
     public void testMethodReferenceExpression() {
-        assertEquals(type.of(createTestMethodReferenceEpression("Object", "toString")),
+        assertEquals(type.of(createTestMethodReferenceExpression("Object", "toString")),
                 PsiMethodReferenceExpression.class);
     }
 

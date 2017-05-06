@@ -63,7 +63,7 @@ public interface TipperCategory {
      * A specialized {@link Collapse} carried out, by factoring out some common
      * element
      */
-    interface CommnoFactoring extends Collapse { // S2
+    interface CommonFactoring extends Collapse { // S2
         String label = "Distributive refactoring";
 
         @Override

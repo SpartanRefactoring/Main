@@ -37,7 +37,7 @@ public class PreferencesResources {
         Abbreviation(TipperCategory.Abbreviation.class), //
         Annonimaization(TipperCategory.Annonimization.class), //
         Canonicalization(TipperCategory.Collapse.class), //
-        CommonFactoring(TipperCategory.CommnoFactoring.class), //
+        CommonFactoring(TipperCategory.CommonFactoring.class), //
         Centification(TipperCategory.Centification.class), //
         Dollarization(TipperCategory.Dollarization.class), //
         EarlyReturn(TipperCategory.EarlyReturn.class), //

@@ -3,7 +3,8 @@ package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 
 /**
- * Created by  on 4/29/2017.
+ * @author @roey maor
+ * @since 29-04-2017.
  */
 public class RemoveCurlyBracesFromIfStatementTest extends PsiTypeHelper {
 

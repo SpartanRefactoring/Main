@@ -77,7 +77,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
      */
     public abstract PsiElement createReplacement(N e);
 
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
+    @SuppressWarnings({"OptionalGetWithoutIsPresent", "ResultOfMethodCallIgnored"})
     private PsiFile createUtilsFile(PsiElement e, PsiDirectory d) throws IOException {
         URL is = getClass().getResource("/spartanizer/SpartanizerUtils.java");
         File file = new File(is.getPath());
@@ -124,7 +124,7 @@ public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<
     private void insertImportStatement(PsiElement e, PsiFile f) {
         PsiImportStaticStatement piss = JavaPsiFacade.getElementFactory(e.getProject()).createImportStaticStatement(PsiTreeUtil.getChildOfType(f, PsiClass.class), "*");
         PsiImportList pil = ((PsiJavaFile) e.getContainingFile()).getImportList();
-        if (!Arrays.stream(pil.getImportStaticStatements()).anyMatch(x -> x.getText().contains("spartanizer")))
+        if (Arrays.stream(pil.getImportStaticStatements()).noneMatch(x -> x.getText().contains("spartanizer")))
             pil.add(piss);
 
     }

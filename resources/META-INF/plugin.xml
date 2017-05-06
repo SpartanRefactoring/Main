@@ -21,7 +21,7 @@
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
-    <!-- uncomment to enail.org.spartan.Leonidas.plugin in all products
+    <!-- uncomment to email.org.spartan.Leonidas.plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
 
@@ -54,7 +54,7 @@
             <keyboard-shortcut first-keystroke="ctrl m" keymap="$default"/>
             <add-to-group group-id="LeonidasGroup" anchor="last"/>
         </action>
-        <action class="il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.PlaygroungControllerAction"
+        <action class="il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.PlaygroundControllerAction"
                 id="myPlugin5"
                 text="Playground">
             <add-to-group group-id="LeonidasGroup" anchor="last"/>

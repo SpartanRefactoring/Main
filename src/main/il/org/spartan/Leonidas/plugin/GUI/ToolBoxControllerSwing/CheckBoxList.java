@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
  * @author Amir Sagiv
  * @since 24/04/2017
  */
+@SuppressWarnings("unchecked")
 class CheckBoxList extends JList
 {
     protected static Border noFocusBorder =

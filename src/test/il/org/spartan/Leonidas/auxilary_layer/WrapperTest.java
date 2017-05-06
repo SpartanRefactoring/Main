@@ -12,7 +12,7 @@ public class WrapperTest extends PsiTypeHelper {
         assertEquals(x, wrapper.get());
     }
 
-    public void testCtorWithInit() {
+    public void testCreatorWithInit() {
         Integer x = 2, y = 5;
         Wrapper<Integer> wrapper = new Wrapper<>(x);
         assertEquals(x, wrapper.get());

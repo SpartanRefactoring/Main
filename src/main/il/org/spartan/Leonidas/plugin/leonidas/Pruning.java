@@ -21,18 +21,12 @@ public class Pruning {
     public static Encapsulator prune(Encapsulator n) {
         assert (n != null);
         final Wrapper<Encapsulator> o = new Wrapper<>();
-        n.accept(e1 -> {
-            Toolbox.getInstance().getGenericsBasicBlocks().stream()
-                    .filter(ge -> ge.conforms(e1.getInner()))
-                    .findFirst()
-                    .ifPresent(g -> {
-                        o.set(g.prune(e1));
-            });
-        });
-        if (Toolbox.getInstance().getGenericsBasicBlocks().stream()
-                .filter(ge -> ge.conforms(n.getInner()))
+        n.accept(e1 -> Toolbox.getInstance().getGenericsBasicBlocks().stream()
+                .filter(ge -> ge.conforms(e1.getInner()))
                 .findFirst()
-                .isPresent())
+                .ifPresent(g -> o.set(g.prune(e1))));
+        if (Toolbox.getInstance().getGenericsBasicBlocks().stream()
+                .anyMatch(ge -> ge.conforms(n.getInner())))
             return o.get();
         return n;
 

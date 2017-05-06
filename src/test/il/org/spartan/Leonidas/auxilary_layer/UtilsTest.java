@@ -20,7 +20,7 @@ public class UtilsTest extends PsiTypeHelper {
         assertFalse(in(2, 3, 4, 5, 6));
         assertTrue(in("banana", "apple", "pear", "avocado", "banana"));
         assertFalse(in(3));
-        assertFalse(in(new Object(), null));
+        assertFalse(in(new Object()));
         assertFalse(in(null));
     }
 

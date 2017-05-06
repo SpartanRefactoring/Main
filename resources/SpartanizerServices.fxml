@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane maxHeight="700.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="il.org.spartan.Leonidas.plugin.GUI.SpartanizerToolBoxController.SpartanizerServicesController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="700.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0"
+            prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="il.org.spartan.Leonidas.plugin.GUI.SpartanizerToolBoxController.SpartanizerServicesController">
    <children>
       <TabPane layoutX="193.0" layoutY="31.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
