@@ -6,7 +6,6 @@ import il.org.spartan.spartanizer.research.nanos.methods.*;
 
 /** Tests {@link Setter}
  * @author Ori Marcovitch */
-// TODO: Ori Marcovitch
 @SuppressWarnings("static-method")
 public class SetterTest extends JavadocerTest {
   @BeforeClass public static void setUp() {

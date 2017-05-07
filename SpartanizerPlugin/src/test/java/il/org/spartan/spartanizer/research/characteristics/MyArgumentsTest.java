@@ -8,8 +8,6 @@ import il.org.spartan.spartanizer.research.nanos.characteristics.*;
 /** Tests {@link MyArguments}
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-01-01 */
-// TODO: Ori Marcovitch
-@Ignore
 @SuppressWarnings("static-method")
 public class MyArgumentsTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
