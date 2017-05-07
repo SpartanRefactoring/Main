@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -60,8 +61,10 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ir.setUseContextToFilterImplicitImports(true);
     ir.setFilterImplicitImports(true);
     final Type t = ir.addImport(binding, s.getAST());
+    final Wrapper<IType[]> types = new Wrapper<>();
     try {
       ir.rewriteImports(new NullProgressMonitor());
+      types.set(ir.getCompilationUnit().getAllTypes());
     } catch (CoreException e) {
       note.bug(e);
       return null;
@@ -70,7 +73,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     // fixWildCardType(t), added it since when it returns null we get exception
     return t == null || fixWildCardType(t) == null || $ instanceof Assignment ? null : new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        fixAddedImports(s, ir, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
+        fixAddedImports(s, ir, types, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
         final Type tt = fixWildCardType(t);
         final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
         final String nn = scope.newName(s, tt);
@@ -152,16 +155,18 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   /** Manual addition of imports recorded in the {@link ImportRewrite} object.
    * @param s
    * @param r
-   * @param u
+   * @param types
    * @param g
    * @param ilr */
-  static void fixAddedImports(final Statement s, final ImportRewrite r, final TextEditGroup g, final ListRewrite ilr) {
+  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> types, final TextEditGroup g, final ListRewrite ilr) {
     final Collection<String> idns = an.empty.list();
     if (r.getCreatedImports() != null)
       idns.addAll(as.list(r.getCreatedImports()));
     if (r.getCreatedStaticImports() != null)
       idns.addAll(as.list(r.getCreatedStaticImports()));
     for (final String idn : idns) {
+      if (Arrays.stream(types.get()).anyMatch(λ -> idn.equals(λ.getFullyQualifiedName('.'))))
+        continue;
       final ImportDeclaration id = s.getAST().newImportDeclaration();
       id.setName(s.getAST().newName(idn));
       ilr.insertLast(id, g);
