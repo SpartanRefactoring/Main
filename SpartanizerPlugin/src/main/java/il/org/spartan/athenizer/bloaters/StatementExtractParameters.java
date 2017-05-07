@@ -7,8 +7,10 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 import java.util.function.*;
 
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
@@ -58,11 +60,17 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ir.setUseContextToFilterImplicitImports(true);
     ir.setFilterImplicitImports(true);
     final Type t = ir.addImport(binding, s.getAST());
+    try {
+      ir.rewriteImports(new NullProgressMonitor());
+    } catch (CoreException e) {
+      note.bug(e);
+      return null;
+    }
     // TODO Ori Roth: enable assignments extraction + check the
     // fixWildCardType(t), added it since when it returns null we get exception
     return t == null || fixWildCardType(t) == null || $ instanceof Assignment ? null : new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
+        fixAddedImports(s, ir, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
         final Type tt = fixWildCardType(t);
         final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
         final String nn = scope.newName(s, tt);
@@ -147,15 +155,13 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param u
    * @param g
    * @param ilr */
-  static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
+  static void fixAddedImports(final Statement s, final ImportRewrite r, final TextEditGroup g, final ListRewrite ilr) {
     final Collection<String> idns = an.empty.list();
-    if (r.getAddedImports() != null)
-      idns.addAll(as.list(r.getAddedImports()));
-    if (r.getAddedStaticImports() != null)
-      idns.addAll(as.list(r.getAddedStaticImports()));
+    if (r.getCreatedImports() != null)
+      idns.addAll(as.list(r.getCreatedImports()));
+    if (r.getCreatedStaticImports() != null)
+      idns.addAll(as.list(r.getCreatedStaticImports()));
     for (final String idn : idns) {
-      if (imports(u).stream().anyMatch(λ -> idn.equals(λ.getName().getFullyQualifiedName())))
-        continue;
       final ImportDeclaration id = s.getAST().newImportDeclaration();
       id.setName(s.getAST().newName(idn));
       ilr.insertLast(id, g);
