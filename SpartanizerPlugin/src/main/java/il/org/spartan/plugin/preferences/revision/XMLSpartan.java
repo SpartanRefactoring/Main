@@ -1,7 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
-
 import static java.util.stream.Collectors.*;
 
 import java.io.*;
@@ -18,6 +16,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.w3c.dom.*;
+import org.w3c.dom.Node;
 import org.xml.sax.*;
 
 import fluent.ly.*;
