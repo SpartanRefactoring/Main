@@ -878,6 +878,10 @@ public interface iz {
       case IF_STATEMENT:
         final IfStatement $ = (IfStatement) ¢;
         return sequencerComplex($.getThenStatement()) && sequencerComplex($.getElseStatement());
+      case TRY_STATEMENT:
+        return sequencerComplex(az.tryStatement(¢).getFinally()) || (sequencerComplex(az.tryStatement(¢).getBody()) && step.catchClauses(az.tryStatement(¢)).stream().allMatch(iz::sequencerComplex));
+      case CATCH_CLAUSE:
+        return sequencerComplex(az.catchClause(¢).getBody());
       default:
         return sequencer(¢);
     }
