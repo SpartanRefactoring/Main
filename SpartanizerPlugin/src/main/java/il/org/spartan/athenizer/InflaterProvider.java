@@ -27,9 +27,7 @@ public class InflaterProvider extends OperationsProvider {
     return new Configuration()//
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander(), //
-            // TODO Yuval: check if it can be removed, copy of {@link
-            // StatementExtractParameters} --or
-            // new ExtractExpressionFromReturn(), //
+            new ExtractExpressionFromReturn(), //
             new StatementExtractParameters<>(), //
             null) //
         .add(ExpressionStatement.class, //
