@@ -73,7 +73,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     // fixWildCardType(t), added it since when it returns null we get exception
     return t == null || fixWildCardType(t) == null || $ instanceof Assignment ? null : new Tip(description(s), myClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        fixAddedImports(s, ir, types, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
+        fixAddedImports(s, ir, types, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY), binding.isTopLevel());
         final Type tt = fixWildCardType(t);
         final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
         final String nn = scope.newName(s, tt);
@@ -157,15 +157,17 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param r
    * @param types
    * @param g
-   * @param ilr */
-  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> types, final TextEditGroup g, final ListRewrite ilr) {
+   * @param ilr
+   * @param isTpLevel */
+  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> types, final TextEditGroup g, final ListRewrite ilr,
+      boolean isTopLevel) {
     final Collection<String> idns = an.empty.list();
     if (r.getCreatedImports() != null)
       idns.addAll(as.list(r.getCreatedImports()));
     if (r.getCreatedStaticImports() != null)
       idns.addAll(as.list(r.getCreatedStaticImports()));
     for (final String idn : idns) {
-      if (Arrays.stream(types.get()).anyMatch(λ -> idn.equals(λ.getFullyQualifiedName('.'))))
+      if (isTopLevel && Arrays.stream(types.get()).anyMatch(λ -> idn.equals(λ.getFullyQualifiedName('.'))))
         continue;
       final ImportDeclaration id = s.getAST().newImportDeclaration();
       id.setName(s.getAST().newName(idn));
