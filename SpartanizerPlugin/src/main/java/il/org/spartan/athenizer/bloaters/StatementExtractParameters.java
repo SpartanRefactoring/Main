@@ -6,6 +6,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.regex.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
@@ -50,7 +51,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if ($ == null)
       return null;
     final ITypeBinding binding = $.resolveTypeBinding();
-    if (binding == null)
+    if (binding == null || captureRisk(binding))
       return null;
     final CompilationUnit u = az.compilationUnit(root);
     if (u == null)
@@ -235,7 +236,24 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return iz.nodeTypeIn(¢, CLASS_INSTANCE_CREATION, METHOD_INVOCATION, INFIX_EXPRESSION, ASSIGNMENT, CONDITIONAL_EXPRESSION, LAMBDA_EXPRESSION);
   }
   private static Expression choose(final List<Expression> ¢) {
-    return the.onlyOneOf(¢);
+    return the.headOf(¢);
+  }
+  private static boolean captureRisk(ITypeBinding binding) {
+    if (binding == null)
+      return true;
+    Set<String> seenCaptures = new HashSet<>();
+    for (ITypeBinding b : binding.getTypeArguments()) {
+      Pattern pattern = Pattern.compile("capture#(.*?)-of");
+      Matcher matcher = pattern.matcher(b.toString());
+      if (matcher.find())
+        for (int i = 1; i <= matcher.groupCount(); ++i) {
+          String capture = matcher.group(i);
+          if (seenCaptures.contains(capture))
+            return true;
+          seenCaptures.add(capture);
+        }
+    }
+    return false;
   }
 
   // TODO Ori Roth: move class to utility file
