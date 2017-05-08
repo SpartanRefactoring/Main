@@ -225,17 +225,26 @@ public final class SingleFlater {
       startLine = v.getTopIndex();
       endLine = v.getBottomIndex();
     }
-    public WindowInformation(final StyledText ¢) {
+    @Deprecated public WindowInformation(final StyledText ¢) {
       startLine = ¢.getTopIndex();
       endLine = JFaceTextUtil.getBottomIndex(¢);
       startChar = ¢.getOffsetAtLine(startLine);
       endChar = ¢.getOffsetAtLine(endLine);
     }
-    @Deprecated public static WindowInformation of(final ITextEditor ¢) {
-      return new WindowInformation(¢);
+    public WindowInformation(ISourceViewer ¢) {
+      startLine = ¢.getTopIndex();
+      endLine = ¢.getBottomIndex();
+      startChar = ¢.getTopIndexStartOffset();
+      endChar = ¢.getBottomIndexEndOffset();
     }
-    public static WindowInformation of(final StyledText ¢) {
-      return new WindowInformation(¢);
+    @Deprecated public static WindowInformation of(final ITextEditor ¢) {
+      return ¢ == null ? null : new WindowInformation(¢);
+    }
+    @Deprecated public static WindowInformation of(final StyledText ¢) {
+      return ¢ == null ? null : new WindowInformation(¢);
+    }
+    public static WindowInformation of(final ISourceViewer ¢) {
+      return ¢ == null ? null : new WindowInformation(¢);
     }
     public boolean invalid() {
       return startChar == INVALID;

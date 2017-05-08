@@ -6,6 +6,8 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.jdt.internal.ui.javaeditor.*;
+import org.eclipse.jface.text.source.*;
 import org.eclipse.swt.*;
 import org.eclipse.swt.custom.*;
 import org.eclipse.swt.events.*;
@@ -46,6 +48,7 @@ public class InflaterListener implements KeyListener, Listener {
   private final IDocumentUndoManager undoManager;
   private int editDirection;
   private final boolean compoundEditing;
+  private ISourceViewer viewer;
   @SuppressWarnings("boxing") private static final List<Integer> activating_keys = Arrays.asList(SWT.CTRL, SWT.ALT);
   @SuppressWarnings("boxing") private final List<Boolean> active_keys = activating_keys.stream().map(λ -> false).collect(Collectors.toList());
   private static final List<Predicate<Event>> zoomer_keys = Arrays.asList(λ -> λ.keyCode == SWT.KEYPAD_ADD, λ -> λ.character == '=',
@@ -53,7 +56,7 @@ public class InflaterListener implements KeyListener, Listener {
   private static final List<Predicate<Event>> spartan_keys = Arrays.asList(λ -> λ.keyCode == SWT.KEYPAD_SUBTRACT, λ -> λ.character == '-',
       λ -> λ.type == SWT.MouseWheel && λ.count < 0);
 
-  public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
+  @SuppressWarnings("restriction") public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;
     this.editor = editor;
     this.selection = selection;
@@ -63,6 +66,8 @@ public class InflaterListener implements KeyListener, Listener {
     originalBackground = text.getSelectionBackground();
     undoManager = DocumentUndoManagerRegistry.getDocumentUndoManager(Eclipse.document(editor));
     compoundEditing = PreferencesResources.ZOOMER_REVERT_METHOD_VALUE.get();
+    if (editor instanceof CompilationUnitEditor)
+      viewer = ((CompilationUnitEditor) editor).getViewer();
   }
   @Override public void handleEvent(final Event ¢) {
     final int t = checkEvent(¢);
@@ -73,7 +78,7 @@ public class InflaterListener implements KeyListener, Listener {
     ¢.count = 0;
     if (working.get())
       return;
-    windowInformation = WindowInformation.of(text);
+    windowInformation = WindowInformation.of(viewer);
     working.set();
     if (t <= 0) {
       if (compoundEditing && editDirection != ZOOMIN_COMPUND_EDIT) {
