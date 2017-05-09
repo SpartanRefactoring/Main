@@ -113,13 +113,13 @@ public class InflaterListener implements KeyListener, Listener {
     text.setSelectionBackground(INFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = the.headOf(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(windowInformation),
-        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
+        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, viewer, editor, windowInformation, compoundEditing);
   }
   private void deflate() {
     text.setSelectionBackground(DEFLATE_COLOR.apply(Display.getCurrent()));
     final WrappedCompilationUnit wcu = the.headOf(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).limit(windowInformation),
-        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, text, editor, windowInformation, compoundEditing);
+        ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, viewer, editor, windowInformation, compoundEditing);
   }
   @Override @SuppressWarnings("boxing") public void keyPressed(final KeyEvent ¢) {
     final int index = activating_keys.indexOf(¢.keyCode);
