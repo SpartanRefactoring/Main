@@ -41,6 +41,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   public static Boolean isEnabled(WidgetOperation o) {
     return store().getBoolean("IS_ENABLED_"+ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID());
     
+    
   }
 
   
