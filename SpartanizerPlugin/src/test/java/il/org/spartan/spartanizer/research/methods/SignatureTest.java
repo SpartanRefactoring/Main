@@ -7,8 +7,6 @@ import il.org.spartan.spartanizer.research.nanos.methods.*;
 /** Tests {@link Empty}
  * @author orimarco {@code marcovitch.ori@gmail.com}
  * @since 2017-02-13 */
-// TODO: Ori Marcovitch
-@Ignore
 @SuppressWarnings("static-method")
 public class SignatureTest extends JavadocerTest {
   @BeforeClass public static void setUp() {

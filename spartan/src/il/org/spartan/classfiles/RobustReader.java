@@ -3,20 +3,18 @@ package il.org.spartan.classfiles;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** @author Yossi Gil
  * @since 11 November 2011 */
 public class RobustReader {
-   protected static DataInputStream asDataInputStream( final InputStream ¢) {
+  protected static DataInputStream asDataInputStream(final InputStream ¢) {
     return ¢ == null ? null : new DataInputStream(¢);
   }
-   protected static FileInputStream asFileInputStream( final File $) {
+  protected static FileInputStream asFileInputStream(final File $) {
     if ($ == null)
       return null;
     try {
       return new FileInputStream($);
-    } catch ( final FileNotFoundException e) {
+    } catch (final FileNotFoundException e) {
       return null;
     }
   }
@@ -40,14 +38,14 @@ public class RobustReader {
   }
   /** Instantiate {@link RobustReader}.
    * @param fileName an arbitrary file name */
-  public RobustReader( final String fileName) {
+  public RobustReader(final String fileName) {
     this(new File(fileName));
   }
   public final void close() {
     if (inner != null)
       try {
         inner.close();
-      } catch ( final IOException ¢) {
+      } catch (final IOException ¢) {
         recordError(¢);
       }
   }
@@ -59,7 +57,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readDouble();
-    } catch ( final IOException $) {
+    } catch (final IOException $) {
       return recordError($);
     }
   }
@@ -68,7 +66,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readFloat();
-    } catch ( final IOException $) {
+    } catch (final IOException $) {
       return recordError($);
     }
   }
@@ -77,7 +75,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readInt();
-    } catch ( final IOException $) {
+    } catch (final IOException $) {
       return recordError($);
     }
   }
@@ -86,7 +84,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readLong();
-    } catch ( final IOException $) {
+    } catch (final IOException $) {
       return recordError($);
     }
   }
@@ -95,7 +93,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readUnsignedByte();
-    } catch ( final IOException $) {
+    } catch (final IOException $) {
       return recordError($);
     }
   }
@@ -104,7 +102,7 @@ public class RobustReader {
       return 0;
     try {
       return inner.readUnsignedShort();
-    } catch ( final IOException $) {
+    } catch (final IOException $) {
       return recordError($);
     }
   }
@@ -113,7 +111,7 @@ public class RobustReader {
       return "";
     try {
       return inner.readUTF();
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       recordError(¢);
       return null;
     }
@@ -122,7 +120,7 @@ public class RobustReader {
     for (int ¢ = 0; ¢ < i; ++¢)
       readUnsignedByte();
   }
-   protected final byte[] readBytes( final byte[] $) {
+  protected final byte[] readBytes(final byte[] $) {
     if (inner == null)
       return new byte[0];
     for (int left = $.length; left > 0;)
@@ -133,10 +131,10 @@ public class RobustReader {
     errors.add(¢);
     return 0;
   }
-  int readBytes( final byte[] $, final int offset, final int howMany) {
+  int readBytes(final byte[] $, final int offset, final int howMany) {
     try {
       return inner.read($, offset, howMany);
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       recordError(¢);
       return howMany;
     }

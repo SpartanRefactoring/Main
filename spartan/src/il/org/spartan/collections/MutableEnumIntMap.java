@@ -1,10 +1,6 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.collections;
 
-import static fluent.ly.___.*;
-
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.streotypes.*;
 
 /** A mutable map, associating an <code><b>int</b></code> value with each value
@@ -19,7 +15,7 @@ import il.org.spartan.streotypes.*;
 @Instantiable
 public class MutableEnumIntMap<E extends Enum<E>> implements EnumIntMap<E> {
   /** Suite metric values are stored internally here. */
-   private final int[] implementation;
+  private final int[] implementation;
 
   /** Initialize this class, with a map associating a zero with each of the
    * enumerated type values.
@@ -33,8 +29,8 @@ public class MutableEnumIntMap<E extends Enum<E>> implements EnumIntMap<E> {
    *        MutableIntMap&lt;E&gt; mutableMap = new MutableIntMap&lt;E&gt;(E.values()[0]);
    *        </pre>
   */
-  public MutableEnumIntMap( final E dummy) {
-    notNull(dummy);
+  public MutableEnumIntMap(final E dummy) {
+    assert dummy != null;
     this.implementation = new int[dummy.getClass().getEnumConstants().length];
   }
   /** Add to the value associated with a specific <code><b>enum</b></code>
@@ -42,28 +38,28 @@ public class MutableEnumIntMap<E extends Enum<E>> implements EnumIntMap<E> {
    * @param e some non-<code><b>null</b></code> value of type <code>E</code>.
    * @param value what to add to the value associated with this enumerated type
    *        value. */
-  public void add( final E e, final int value) {
-    notNull(e);
+  public void add(final E e, final int value) {
+    assert e != null;
     implementation[e.ordinal()] += value;
   }
-   public ImmutableEnumIntMap<E> asImmutable() {
+  public ImmutableEnumIntMap<E> asImmutable() {
     return new ImmutableEnumIntMap<>(implementation);
   }
-  @Override public int get( final E ¢) {
+  @Override public int get(final E ¢) {
     return implementation[¢.ordinal()];
   }
   /** Increment the value associated with a specific <code><b>enum</b></code>
    * value.
    * @param ¢ some non-<code><b>null</b></code> value of type <code>E</code>. */
-  public void increment( final E ¢) {
-    notNull(¢);
+  public void increment(final E ¢) {
+    assert ¢ != null;
     ++implementation[¢.ordinal()];
   }
   /** Set the value associated with a specific <code><b>enum</b></code> value.
    * @param e some non-<code><b>null</b></code> value of type <code>E</code>.
    * @param value new value to be associated with <code>e</code>. */
-  public void set( final E e, final int value) {
-    notNull(e);
+  public void set(final E e, final int value) {
+    assert e != null;
     implementation[e.ordinal()] = value;
   }
 }

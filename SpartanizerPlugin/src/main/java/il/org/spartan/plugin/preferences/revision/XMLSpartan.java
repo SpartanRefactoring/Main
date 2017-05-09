@@ -1,7 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
-
 import static java.util.stream.Collectors.*;
 
 import java.io.*;
@@ -18,6 +16,7 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.w3c.dom.*;
+import org.w3c.dom.Node;
 import org.xml.sax.*;
 
 import fluent.ly.*;
@@ -126,12 +125,12 @@ public class XMLSpartan {
   public static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject p) {
     final Map<SpartanCategory, SpartanElement[]> $ = getTippersByCategories(p);
     final Map<String, SpartanCategory> existingCategories = anonymous.ly(() -> {
-      Map<String, SpartanCategory> m = new HashMap<>();
-      for (SpartanCategory c : $.keySet())
-        m.put(c.name(), c);
+      final Map<String, SpartanCategory> m = new HashMap<>();
+      for (final SpartanCategory ¢ : $.keySet())
+        m.put(¢.name(), ¢);
       return m;
     });
-    for (Entry<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> e : TipperCategory.hierarchy.entrySet()) {
+    for (final Entry<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> e : TipperCategory.hierarchy.entrySet()) {
       SpartanCategory parent;
       if (existingCategories.containsKey(e.getKey().getSimpleName()))
         parent = existingCategories.get(e.getKey().getSimpleName());
@@ -139,14 +138,14 @@ public class XMLSpartan {
         parent = new SpartanCategory(e.getKey());
         existingCategories.put(parent.name(), parent);
       }
-      List<SpartanCategory> children = e.getValue().stream().map(cc -> {
+      final List<SpartanCategory> children = e.getValue().stream().map(cc -> {
         if (existingCategories.containsKey(cc.getSimpleName()))
           return existingCategories.get(cc.getSimpleName());
-        SpartanCategory c = new SpartanCategory(cc);
+        final SpartanCategory c = new SpartanCategory(cc);
         existingCategories.put(c.name(), c);
         return c;
       }).collect(Collectors.toList());
-      children.forEach(c -> parent.addChild(c));
+      children.forEach(λ -> parent.addChild(λ));
       $.put(parent, children.toArray(new SpartanElement[children.size()]));
     }
     return trimEmptyCategories($);
@@ -168,6 +167,29 @@ public class XMLSpartan {
         e.setAttribute(ENABLED, ss.contains(nameByID) ? "true" : "false");
     }
     commit(p, d);
+  }
+  /** Updates the project's XML file to enable given tippers.
+   * @param p JD
+   * @param ss enabled tippers by name */
+  public static void updateEnabledTippers(final Document d, final Collection<String> ss) {
+    if (d == null)
+      return;
+    final NodeList ns = d.getElementsByTagName(TIPPER);
+    if (ns != null)
+      for (int i = 0; i < ns.getLength(); ++i) {
+        final Element e = (Element) ns.item(i);
+        final String id = e.getAttribute(TIPPER_ID);
+        if (id != null)
+          e.setAttribute(ENABLED, ss.contains(id) ? "true" : "false");
+      }
+  }
+  public static Collection<String> createEnabledList(Document d) {
+    List<String> $ = new ArrayList<>();
+    final NodeList ns = d.getElementsByTagName(TIPPER);
+    for (int ¢ = 0; ¢ < ns.getLength(); ++¢)
+      if ("true".equals(((Element) ns.item(¢)).getAttribute(ENABLED)))
+        $.add(((Element) ns.item(¢)).getAttribute(TIPPER_ID));
+    return $;
   }
   /** Writes XML dom object to file.
    * @param f JD
@@ -291,9 +313,12 @@ public class XMLSpartan {
     final NodeList ns = $.getElementsByTagName(BASE);
     if (ns != null && ns.getLength() == 1 && validate($, ((Element) ns.item(0)).getAttribute(VERSION)))
       return $;
-    $ = initialize(b.newDocument());
-    commit(fl, $);
-    return $;
+    Collection<String> ls = createEnabledList($);
+    Document ret = b.newDocument();
+    ret = initialize(ret);
+    updateEnabledTippers(ret, ls);
+    commit(fl, ret);
+    return ret;
   }
   /** Initialize XML document. Enables all tippers, except declared non core
    * tippers, also, add to the document the default values for naming\notations
@@ -414,21 +439,21 @@ public class XMLSpartan {
     }
   }
 
-  private static Map<SpartanCategory, SpartanElement[]> trimEmptyCategories(Map<SpartanCategory, SpartanElement[]> m) {
-    Set<SpartanCategory> emptys = new HashSet<>();
-    for (SpartanCategory c : m.keySet())
-      if (empty(c))
-        emptys.add(c);
-    for (SpartanCategory c : emptys)
-      m.remove(c);
-    return m;
+  private static Map<SpartanCategory, SpartanElement[]> trimEmptyCategories(final Map<SpartanCategory, SpartanElement[]> $) {
+    final Set<SpartanCategory> emptys = new HashSet<>();
+    for (final SpartanCategory ¢ : $.keySet())
+      if (empty(¢))
+        emptys.add(¢);
+    for (final SpartanCategory ¢ : emptys)
+      $.remove(¢);
+    return $;
   }
-  private static boolean empty(SpartanElement c) {
+  private static boolean empty(final SpartanElement c) {
     if (c instanceof SpartanTipper)
       return false;
     boolean nonEmptyChild = false;
-    for (SpartanElement e : c.getChildren())
-      if (!empty(e))
+    for (final SpartanElement ¢ : c.getChildren())
+      if (!empty(¢))
         nonEmptyChild = true;
     if (nonEmptyChild)
       return false;

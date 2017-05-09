@@ -9,9 +9,7 @@ import static fluent.ly.idiomatic.*;
 import java.util.*;
 import java.util.function.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import il.org.spartan.reap.Cookbook.Internal.*;
 import il.org.spartan.reap.Cookbook.Recipe.*;
@@ -66,7 +64,7 @@ public interface Cookbook {
    * @param <R> result type
    * @param λ function from the first type argument to the second type argument
    * @return $$Function */
-  static < T,  R> $$Function<T, R> compute( final Function<T, R> λ) {
+  static <T, R> $$Function<T, R> compute(final Function<T, R> λ) {
     return ¢ -> new Recipe<>(() -> λ.apply(¢.get())).ingredient(¢);
   }
   /** <code>compute</code>
@@ -75,16 +73,16 @@ public interface Cookbook {
    * @param <R> result type
    * @param λ function from the first type argument to the second type argument
    * @return $$Function */
-  static < T1,  T2,  R> $$Function2<T1, T2, R> compute( final Function2<T1, T2, R> λ) {
+  static <T1, T2, R> $$Function2<T1, T2, R> compute(final Function2<T1, T2, R> λ) {
     return (¢1, ¢2) -> new Recipe<>(() -> λ.apply(¢1.get(), ¢2.get())).ingredients(¢1, ¢2);
   }
   /** @param <T> JD
    * @param $ JD
    * @return a newly created {@link Cell} */
-   static < T> Cell<T> cook( final Supplier<T> $) {
+  static <T> Cell<T> cook(final Supplier<T> $) {
     Cell.trace = new HashSet<>();
     $.get();
-     final Cell<?>[] trace = asArray(Cell.trace);
+    final Cell<?>[] trace = asArray(Cell.trace);
     Cell.trace = null;
     return new Recipe<>($).ingredients(trace);
   }
@@ -97,9 +95,9 @@ public interface Cookbook {
    * @param ingredients list of ingredients
    * @return a {@link $$RecipeMaker} which can be used to continue the fluent
    *         API chain. */
-   static $$RecipeMaker from(final Cell<?>... ingredients) {
+  static $$RecipeMaker from(final Cell<?>... ingredients) {
     return new $$RecipeMaker() {
-      @Override  public <T> Cell< T> make(final Supplier<T> ¢) {
+      @Override public <T> Cell<T> make(final Supplier<T> ¢) {
         return new Recipe<>(¢).ingredients(ingredients);
       }
     };
@@ -107,14 +105,14 @@ public interface Cookbook {
   /** creates a new ingredient with a specific type
    * @param <T> JD
    * @return newly created instance */
-   static <T> Cell<T> input() {
+  static <T> Cell<T> input() {
     return new Ingredient<>();
   }
   /** Fluent API factory method that returns a recipe
    * @param <T> JD
    * @param ¢ JD
    * @return newly created {@link Recipe} object */
-   static <T> Recipe< T> recipe(final Supplier<T> ¢) {
+  static <T> Recipe<T> recipe(final Supplier<T> ¢) {
     return new Recipe<>(¢);
   }
   /** A factory method for class {@link Ingredient} of an {@link Integer} as in
@@ -125,7 +123,7 @@ public interface Cookbook {
    *
    * @param ¢ JD
    * @return newly created instance of {@link Ingredient} */
-   static Cell<Integer> value(final int ¢) {
+  static Cell<Integer> value(final int ¢) {
     return new Ingredient<>(Integer.valueOf(¢));
   }
   /** A factory method for class {@link Ingredient} as in
@@ -137,7 +135,7 @@ public interface Cookbook {
    * @param <T> JD
    * @param ¢ JD
    * @return newly created instance of {@link Ingredient} */
-   static < T> Cell< T> value(final T ¢) {
+  static <T> Cell<T> value(final T ¢) {
     return new Ingredient<>(¢);
   }
 
@@ -155,18 +153,18 @@ public interface Cookbook {
       final Cell<String> text = value("p");
       final Cell<String> wrap = from(begin, end, text).make(() -> begin() + text() + end());
       final Cell<String> xBoxed = from(wrap).make(() -> "[[" + wrap() + "]]");
-      final Cell<String> zzz = new Ingredient< String>().of("zzz");
+      final Cell<String> zzz = new Ingredient<String>().of("zzz");
 
-       String begin() {
+      String begin() {
         return begin.get();
       }
-       String end() {
+      String end() {
         return end.get();
       }
-       String text() {
+      String text() {
         return text.get();
       }
-       String wrap() {
+      String wrap() {
         return wrap.get();
       }
 
@@ -183,7 +181,7 @@ public interface Cookbook {
         }
         @Test public void sessionA02() {
           azzert.that(wrap, instanceOf(Recipe.class));
-           final Recipe<?> r = (Recipe<?>) wrap;
+          final Recipe<?> r = (Recipe<?>) wrap;
           azzert.that(r.dependents.size(), is(1));
           azzert.that(r.prerequisites.size(), is(3));
           azzert.that(begin(), is("<"));
@@ -199,14 +197,12 @@ public interface Cookbook {
         /** Local ingredients and recipes */
         @Test public void sessionA04() {
           azzert.that(zzz.get(), is("zzz"));
-          final Cell<String> foo = value("foo"), ba = value("ba");
-           final Cell<String> bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
+          final Cell<String> foo = value("foo"), ba = value("ba"), bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
           azzert.that(from(foo, bazzz).make(() -> foo.get() + bazzz.get()).get(), is("foobazzz"));
         }
         /** Cloning */
         @Test public void sessionA05() {
-          final Cell<String> foo = value("foo"), ba = value("ba");
-           final Cell<String> bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
+          final Cell<String> foo = value("foo"), ba = value("ba"), bazzz = from(ba, zzz).make(() -> ba.get() + zzz.get());
           azzert.that(from(foo, bazzz).make(() -> foo.get() + bazzz.get()).clone().get(), is("foobazzz"));
         }
       }
@@ -215,27 +211,23 @@ public interface Cookbook {
     @SuppressWarnings({ "static-method", "null" })
     public static class C {
       @Test public void sessionA01() {
-        azzert.that(compute(( final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(),
-            is("(12)"));
+        azzert.that(compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
       }
       @Test public void sessionA02() {
-        azzert.that(compute(( final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(),
-            is("(12)"));
+        azzert.that(compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
       }
       @Test public void sessionA03() {
-        azzert.that(compute(( final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(),
-            is("(12)"));
+        azzert.that(compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
       }
       @Test public void sessionA04() {
         azzert.that(
-            compute(( final Integer i,  final Character c) -> c + "(" + i + ")")
-                .from(value(Integer.valueOf(13)), value(Character.valueOf('f'))).get(),
+            compute((final Integer i, final Character c) -> c + "(" + i + ")").from(value(Integer.valueOf(13)), value(Character.valueOf('f'))).get(),
             is("f(13)"));
       }
       @Test @SuppressWarnings("synthetic-access") public void sessionA05() {
         final Cell<Integer> x = value(Integer.valueOf(13));
         final Cell<Character> f = value(Character.valueOf('f'));
-         final Cell<String> fx = cook(() -> f.get() + "(" + x.get() + ")");
+        final Cell<String> fx = cook(() -> f.get() + "(" + x.get() + ")");
         azzert.that(fx.dependents.size(), is(0));
         azzert.that(f.dependents.size(), is(1));
         azzert.that(((Recipe<String>) fx).prerequisites.size(), is(2));
@@ -277,59 +269,59 @@ public interface Cookbook {
       /** Must not be private; used for testing of proper lazy evaluation */
       int __aPower03Calls;
       /** Can, and often should be made private; package is OK */
-      final Cell< Integer> a = new Cookbook.Ingredient<>();
+      final Cell<Integer> a = new Cookbook.Ingredient<>();
       /** Can, and often should be made private; package is OK */
-      @SuppressWarnings("null") final Cell< Integer> aPower02 = new Recipe<>(() -> {
+      @SuppressWarnings("null") final Cell<Integer> aPower02 = new Recipe<>(() -> {
         ++__aPower02Calls;
         return a() * a();
       }).ingredients(a);
       /** Can, and often should be made private; package is OK */
-      @SuppressWarnings("null") final Cell< Integer> aPower03 = new Recipe<>(() -> {
+      @SuppressWarnings("null") final Cell<Integer> aPower03 = new Recipe<>(() -> {
         ++__aPower03Calls;
         return a() * aPower02();
       }).ingredients(aPower02, a);
       /** the actual cell behind {@link #aPower05()} */
-      @SuppressWarnings("null") final Cell< Integer> aPower05 = new Recipe<>(() -> aPower02() * aPower03()).ingredients(aPower02, aPower03);
+      @SuppressWarnings("null") final Cell<Integer> aPower05 = new Recipe<>(() -> aPower02() * aPower03()).ingredients(aPower02, aPower03);
       /** the actual cell behind {@link #b()} */
-      @SuppressWarnings("null") final Cell< Integer> aPower17NullSafe = new Recipe.NullRobust<>(
+      @SuppressWarnings("null") final Cell<Integer> aPower17NullSafe = new Recipe.NullRobust<>(
           () -> a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()).ingredients(a, aPower02, aPower03);
       /** the actual cell behind {@link #b()} */
-      final Cell< Integer> b = new Cookbook.Ingredient<>(3);
+      final Cell<Integer> b = new Cookbook.Ingredient<>(3);
       /** the actual cell behind {@link #c()} */
-      final Cell< Integer> c = new Cookbook.Ingredient<>(5);
+      final Cell<Integer> c = new Cookbook.Ingredient<>(5);
       /** the actual cell behind {@link #d()} */
-      @SuppressWarnings("null") final Cell< Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
+      @SuppressWarnings("null") final Cell<Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
 
       /** @return contents of cell a */
-       public final Integer a() {
+      public final Integer a() {
         return a.get();
       }
       /** @return contents of cell a^2 := (a)^2 */
-       public final Integer aPower02() {
+      public final Integer aPower02() {
         return aPower02.get();
       }
       /** @return contents of cell a^3 := a^2 * a */
-       public final Integer aPower03() {
+      public final Integer aPower03() {
         return aPower03.get();
       }
       /** @return contents of cell a^5 := a^2 * a^3 */
-       public final Integer aPower05() {
+      public final Integer aPower05() {
         return aPower05.get();
       }
       /** @return contents of cell a^17 := (a)^4 * (a^2)^4 * (a^3)^3 */
-       public final Integer aPower17NullSafe() {
+      public final Integer aPower17NullSafe() {
         return aPower17NullSafe.get();
       }
       /** @return contents of valued cell <code>b</code> */
-       public final Integer b() {
+      public final Integer b() {
         return b.get();
       }
       /** @return contents of valued cell <code>c</code> */
-       public final Integer c() {
+      public final Integer c() {
         return c.get();
       }
       /** @return contents of cell d := a + b + c */
-       public final Integer d() {
+      public final Integer d() {
         return d.get();
       }
 
@@ -794,9 +786,9 @@ public interface Cookbook {
    * @see Recipe */
   @SuppressWarnings("null")
   abstract class Cell<T> implements Supplier<T>, Cloneable {
-     public static Set<Cell<?>> trace;
+    public static Set<Cell<?>> trace;
     /** The last value computed for this cell */
-     T cache;
+    T cache;
     /** other cells that depend on this cell */
     final List<Cell<?>> dependents = new ArrayList<>();
     long version;
@@ -806,18 +798,18 @@ public interface Cookbook {
       return cache;
     }
     /** see @see java.util.function.Supplier#get() (auto-generated) */
-    @Override  public abstract T get();
+    @Override public abstract T get();
     /** Used for fluent API, synonym of {@link Cell#set(Object)} . sets the
      * current value of this cell
      * @param ¢ JD
      * @return <code><b>this</b></code>* */
-     public final Cell<T> of(final T ¢) {
+    public final Cell<T> of(final T ¢) {
       return set(¢);
     }
     /** sets the current value of this cell
      * @param ¢ JD
      * @return <code><b>this</b></code> */
-     public final Cell<T> set(final T ¢) {
+    public final Cell<T> set(final T ¢) {
       cache(¢);
       uponForcedSet();
       version = oldestDependent() + 1;
@@ -830,10 +822,10 @@ public interface Cookbook {
      * @return <code><b>true</b></code> <i>iff</i> the contents of the cache
      *         stored in this node is updated. */
     public abstract boolean updated();
-    @Override @SuppressWarnings("unchecked")  protected Cell<T> clone() {
+    @Override @SuppressWarnings("unchecked") protected Cell<T> clone() {
       try {
         return (Cell<T>) super.clone();
-      } catch ( final CloneNotSupportedException e) {
+      } catch (final CloneNotSupportedException e) {
         return null;
       }
     }
@@ -850,7 +842,7 @@ public interface Cookbook {
     }
     private long oldestDependent() {
       long $ = 0;
-      for ( final Cell<?> ¢ : dependents)
+      for (final Cell<?> ¢ : dependents)
         $ = max($, ¢.version);
       return $;
     }
@@ -887,7 +879,7 @@ public interface Cookbook {
       public NonNull(final T value) {
         super(value);
       }
-      @Override void cache( @SuppressWarnings("hiding") final T cache) {
+      @Override void cache(@SuppressWarnings("hiding") final T cache) {
         super.cache(cache);
         if (cache == null)
           throw new NullPointerException();
@@ -900,31 +892,31 @@ public interface Cookbook {
    * @since 2016 */
   interface Internal {
     /** @return never! The <code><b>none</b></code> type. There is no legal
-     *         value that this function can return, since the type
-     *         <code></code> {@link Void} is empty. (
-     *         <code><b>null</b></code> is the single vale of {@link Void} , but
-     *         it does not obey the {@link } annotation. */
-      static Void shouldNeverBeCalled() {
+     *         value that this function can return, since the type <code></code>
+     *         {@link Void} is empty. ( <code><b>null</b></code> is the single
+     *         vale of {@link Void} , but it does not obey the {@link }
+     *         annotation. */
+    static Void shouldNeverBeCalled() {
       assert false;
       throw new RuntimeException();
     }
 
     interface $$Function<T, R> {
-       Cell<R> from(Cell<T> ¢);
+      Cell<R> from(Cell<T> ¢);
     }
 
     interface $$Function2<T1, T2, R> {
-       Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
+      Cell<R> from(Cell<T1> ¢1, Cell<T2> ¢2);
     }
 
     /** Fluent API */
     interface $$RecipeMaker {
-       <X> Cell< X> make(Supplier<X> x);
+      <X> Cell<X> make(Supplier<X> x);
     }
 
     @FunctionalInterface
     interface Function2<T1, T2, R> {
-       R apply(T1 ¢1, T2 ¢2);
+      R apply(T1 ¢1, T2 ¢2);
     }
 
     /** TODO(2016) Javadoc: automatically generated for type
@@ -937,7 +929,7 @@ public interface Cookbook {
      * @since 2016 */
     @FunctionalInterface
     interface Function3<T1, T2, T3, R> {
-       R apply(T1 ¢1, T2 ¢2, T3 ¢3);
+      R apply(T1 ¢1, T2 ¢2, T3 ¢3);
     }
   }
 
@@ -945,23 +937,23 @@ public interface Cookbook {
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  class Recipe< T> extends Cell<T> {
+  class Recipe<T> extends Cell<T> {
     private final List<Cell<?>> prerequisites = new ArrayList<>();
-     private Supplier<? extends  T> supplier;
+    private Supplier<? extends T> supplier;
 
     /** Instantiates this class.
      * @param supplier JD */
     public Recipe(final Supplier<? extends T> supplier) {
       this.supplier = supplier;
     }
-    @Override  public Cell<T> clone() {
+    @Override public Cell<T> clone() {
       return super.clone();
     }
-    @Override  public T get() {
+    @Override public T get() {
       if (updated())
         return cache();
       assert supplier != null;
-      for ( final Cell<?> ¢ : prerequisites)
+      for (final Cell<?> ¢ : prerequisites)
         ¢.get();
       assert supplier != null;
       cache(filter(eval()));
@@ -971,7 +963,7 @@ public interface Cookbook {
     /** Add another cell on which this instance depends
      * @param ¢ JD
      * @return <code><b>this</b></code> */
-     public Recipe<T> ingredient( final Cell<?> ¢) {
+    public Recipe<T> ingredient(final Cell<?> ¢) {
       run(() -> ¢.dependents.add(this)).unless(¢.dependents.contains(this));
       run(() -> prerequisites.add(¢)).unless(prerequisites.contains(this));
       return this;
@@ -979,8 +971,8 @@ public interface Cookbook {
     /** Add another cell on which this instance depends
      * @param cs JD
      * @return <code><b>this</b></code> */
-     public Recipe<T> ingredients( final Cell<?>... cs) {
-      for ( final Cell<?> ¢ : cs)
+    public Recipe<T> ingredients(final Cell<?>... cs) {
+      for (final Cell<?> ¢ : cs)
         ingredient(¢);
       return this;
     }
@@ -989,12 +981,12 @@ public interface Cookbook {
         return true;
       if (version() <= latestPrequisiteVersion())
         return false;
-      for ( final Cell<?> ¢ : prerequisites)
+      for (final Cell<?> ¢ : prerequisites)
         if (!¢.updated())
           return false;
       return true;
     }
-     T eval() {
+    T eval() {
       assert supplier != null;
       return supplier.get();
     }
@@ -1006,7 +998,7 @@ public interface Cookbook {
     }
     final long latestPrequisiteVersion() {
       long $ = 0;
-      for ( final Cell<?> ¢ : prerequisites)
+      for (final Cell<?> ¢ : prerequisites)
         if ($ < ¢.version())
           $ = ¢.version();
       return $;
@@ -1022,27 +1014,27 @@ public interface Cookbook {
     @SuppressWarnings("null")
     public static class NonNull<T> extends Cookbook.Recipe<T> {
       private final List<Cookbook.Cell<?>> prerequisites = new ArrayList<>();
-       private Supplier<? extends  T> supplier;
+      private Supplier<? extends T> supplier;
 
       /** Instantiates this class.
        * @param supplier JD */
-      public NonNull( final Supplier<? extends  T> supplier) {
+      public NonNull(final Supplier<? extends T> supplier) {
         super(cantBeNull(supplier));
         cache(cantBeNull(supplier).get());
       }
-      @Override @SuppressWarnings({})  public NonNull<T> clone() {
+      @Override @SuppressWarnings({}) public NonNull<T> clone() {
         return (NonNull<T>) super.clone();
       }
       /** Add another cell on which this instance depends
        * @param ¢ JD
        * @return <code><b>this</b></code> */
-      @Override  public NonNull<T> ingredients(final Cookbook.Cell<?>... ¢) {
+      @Override public NonNull<T> ingredients(final Cookbook.Cell<?>... ¢) {
         return (NonNull<T>) super.ingredients(¢);
       }
       @Override public final boolean updated() {
         if (supplier == null)
           return true;
-        for ( final Cookbook.Cell<?> ¢ : prerequisites)
+        for (final Cookbook.Cell<?> ¢ : prerequisites)
           if (!¢.updated() || version() < ¢.version())
             return false;
         return true;
@@ -1051,7 +1043,7 @@ public interface Cookbook {
         assert supplier != null;
         return supplier.get();
       }
-      @Override final <N> N filter( final N $) {
+      @Override final <N> N filter(final N $) {
         return cantBeNull($);
       }
     }
@@ -1060,41 +1052,41 @@ public interface Cookbook {
      * @param <T> JD
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
      * @since 2016 */
-    public static class NullRobust< T> extends Cookbook.Recipe<T> {
+    public static class NullRobust<T> extends Cookbook.Recipe<T> {
       /** Instantiates this class.
        * @param supplier JD */
-      public NullRobust( final Supplier<? extends T> supplier) {
+      public NullRobust(final Supplier<? extends T> supplier) {
         super(supplier);
         assert supplier != null;
       }
       @Override @SuppressWarnings({}) public Cookbook.Cell<T> clone() {
         return super.clone();
       }
-      @Override  public T get() {
+      @Override public T get() {
         try {
           return super.get();
-        } catch ( final NullPointerException x) {
+        } catch (final NullPointerException x) {
           return null;
         }
       }
       /** Add another cell on which this instance depends
        * @param ¢ JD
        * @return <code><b>this</b></code> */
-      @Override  public NullRobust<T> ingredients(final Cookbook.Cell<?>... ¢) {
+      @Override public NullRobust<T> ingredients(final Cookbook.Cell<?>... ¢) {
         super.ingredients(¢);
         return this;
       }
-      @Override void cache(@SuppressWarnings("hiding")  final T cache) {
+      @Override void cache(@SuppressWarnings("hiding") final T cache) {
         try {
           super.cache(cache);
-        } catch ( final NullPointerException ¢) {
+        } catch (final NullPointerException ¢) {
           ¢.printStackTrace();
         }
       }
-      @Override  T eval() {
+      @Override T eval() {
         try {
           return super.eval();
-        } catch ( final NullPointerException x) {
+        } catch (final NullPointerException x) {
           return null;
         }
       }

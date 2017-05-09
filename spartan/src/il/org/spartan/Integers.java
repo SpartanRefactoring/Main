@@ -1,8 +1,6 @@
 /** Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import org.eclipse.jdt.annotation.*;
-
 /** An unsorted set of integers supporting the basic set operations:
  * {@link #add} , {@link #contains} and {@link #remove}.
  * <p>
@@ -45,9 +43,9 @@ public class Integers {
    *        the next power of two. */
   public Integers(final int initialCapacity) {
     final int capacity = Math.max(MIN_CAPACITY, roundUp(initialCapacity));
-    data = new int  [capacity];
-    occupied = new boolean  [capacity];
-    placeholder = new boolean  [capacity];
+    data = new int[capacity];
+    occupied = new boolean[capacity];
+    placeholder = new boolean[capacity];
     size = removed = 0;
     subclassReset(capacity);
   }
@@ -114,7 +112,7 @@ public class Integers {
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
   public int[] entries() {
-    final int  [] $ = new int  [size];
+    final int[] $ = new int[size];
     for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
       if (occupied[¢] && !placeholder[¢])
         $[j++] = data[¢];
@@ -177,9 +175,9 @@ public class Integers {
     return reset(newCapacity).add(entries());
   }
   protected final Integers reset(final int capacity) {
-    data = new int  [capacity];
-    occupied = new boolean  [capacity];
-    placeholder = new boolean  [capacity];
+    data = new int[capacity];
+    occupied = new boolean[capacity];
+    placeholder = new boolean[capacity];
     size = removed = 0;
     subclassReset(capacity);
     return this;

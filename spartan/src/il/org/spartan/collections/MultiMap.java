@@ -3,8 +3,6 @@ package il.org.spartan.collections;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.streotypes.*;
 
 /** import static il.org.spartan.utils.Box.*; import java.util.*; import
@@ -21,7 +19,7 @@ import il.org.spartan.streotypes.*;
 @Canopy
 public final class MultiMap<K, V> implements Iterable<K> {
   /** Actual implementation */
-   private final HashMap<K, Set<V>> implementation;
+  private final HashMap<K, Set<V>> implementation;
 
   /** Create a new empty {@link MultiMap} */
   public MultiMap() {
@@ -41,8 +39,8 @@ public final class MultiMap<K, V> implements Iterable<K> {
   /** Clear the set of all images of the given source value
    * @param ¢ Source value
    * @return the newly created set object */
-   public Set<V> clear(final K ¢) {
-     final Set<V> $ = new HashSet<>();
+  public Set<V> clear(final K ¢) {
+    final Set<V> $ = new HashSet<>();
     implementation.put(¢, $);
     return $;
   }
@@ -51,7 +49,7 @@ public final class MultiMap<K, V> implements Iterable<K> {
    * @param ¢ key value
    * @return A non-<code><b>null</b></code> representing the set of images
    *         associated with <code>k</code> */
-   public Set<V> get(final K ¢) {
+  public Set<V> get(final K ¢) {
     @SuppressWarnings("null") final Set<V> $ = implementation.get(¢);
     return $ != null ? $ : clear(¢);
   }
@@ -74,16 +72,16 @@ public final class MultiMap<K, V> implements Iterable<K> {
   public int size() {
     return implementation.size();
   }
-  @Override  public String toString() {
-     final StringBuilder $ = new StringBuilder();
+  @Override public String toString() {
+    final StringBuilder $ = new StringBuilder();
     for (final K ¢ : this)
       $.append(¢ + "=>" + get(¢) + '\n');
     return $ + "";
   }
   /** Obtain all images
    * @return Set of V objects */
-   public Set<V> values() {
-     final Set<V> $ = new HashSet<>();
+  public Set<V> values() {
+    final Set<V> $ = new HashSet<>();
     implementation.values().forEach($::addAll);
     return $;
   }

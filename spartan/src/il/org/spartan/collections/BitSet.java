@@ -2,8 +2,6 @@ package il.org.spartan.collections;
 
 import static fluent.ly.___.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** A collection of functions and data structures pertaining to the
  * representation of a set of small non-negative integers as a bit mask. Each
  * such set is represented as a <code><b>short</b></code> integer.
@@ -24,7 +22,7 @@ public enum BitSet {
    * <p>
    * Viewed differently, <code>{@link #$$}[p]</code> is the bit mask whose
    * <i>p</i><sup>th</sup> bit is set. */
-   public static final short $$[];
+  public static final short $$[];
   static {
     $$ = new short[MAX + 1];
     for (int ¢ = 0; ¢ <= MAX; ++¢)
@@ -125,7 +123,7 @@ public enum BitSet {
    * @param set the set of numbers to be converted; each member must be in the
    *        range <code>0...{@link #MAX}</code>
    * @return the bit mask representation of <code>set</code> */
-  public static short toMask( final int[] set) {
+  public static short toMask(final int[] set) {
     short $ = 0;
     for (final int position : set)
       $ = raise($, position);
@@ -136,7 +134,7 @@ public enum BitSet {
    *        <code><b>null</b></code> and in the range <code>0...
    *            {@link #MAX}</code>
    * @return the bit mask representation of <code>set</code> */
-  public static short toMask( final Iterable<Integer> set) {
+  public static short toMask(final Iterable<Integer> set) {
     short $ = 0;
     for (final int position : set)
       $ = raise($, position);
@@ -146,7 +144,7 @@ public enum BitSet {
    * @param set the set of numbers to be converted; each member must be in the
    *        range <code>0...{@link #MAX}</code>
    * @return the bit mask representation of <code>set</code> */
-  public static short toMask( final short[] set) {
+  public static short toMask(final short[] set) {
     short $ = 0;
     for (final short position : set)
       $ = raise($, position);

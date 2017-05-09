@@ -2,8 +2,6 @@ package il.org.spartan.collections;
 
 import static org.hamcrest.Matchers.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 import fluent.ly.___.*;
 
@@ -23,13 +21,13 @@ public final class ToIntegers<E> {
   public static final float REMOVE_LOAD = 0.20f;
   public static final int MIN_CAPACITY = 4;
 
-  static <E> int hash( final E ¢) {
+  static <E> int hash(final E ¢) {
     int $ = ¢.hashCode();
     $ ^= $ >>> 12 ^ $ >>> 20;
     return $ ^ $ >>> 4 ^ $ >>> 7;
   }
-   private static <E> E[] allocate(final int ¢) {
-     @SuppressWarnings("unchecked") final E[] $ = (E[]) new Object[¢];
+  private static <E> E[] allocate(final int ¢) {
+    @SuppressWarnings("unchecked") final E[] $ = (E[]) new Object[¢];
     return $;
   }
   private static int roundUp(final int ¢) {
@@ -63,22 +61,22 @@ public final class ToIntegers<E> {
   }
   /** Remove all elements from this set, preserving capacity.
    * @return <code><b>this</b>/code> */
-   public ToIntegers<E> clear() {
+  public ToIntegers<E> clear() {
     return reset(capacity());
   }
   /** Determine whether a given key is in this set.
    * @param key an arbitrary key
    * @return <code><b>true</b></code> if, and only if, the parameter is
    *         contained in this set. */
-  public boolean contains( final E key) {
+  public boolean contains(final E key) {
     return location(key) >= 0;
   }
   /** Check whether an array of integers is contained in this set.
    * @param ns an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, all elements in the array
    *         are contained in this set */
-  public boolean contains( final E... ns) {
-    for ( final E n : ns)
+  public boolean contains(final E... ns) {
+    for (final E n : ns)
       if (!contains(n))
         return false;
     return true;
@@ -87,22 +85,22 @@ public final class ToIntegers<E> {
    * @param ns an array of of integers; must not be <code><b>null</b></code>.
    * @return <code><b>true</b></code> if, and only if, this object is disjoint
    *         from the set of elements in the parameter */
-  public boolean disjoint( final E... ns) {
-    for ( final E n : ns)
+  public boolean disjoint(final E... ns) {
+    for (final E n : ns)
       if (contains(n))
         return false;
     return true;
   }
-   public int[] get( final E keys[]) {
-     final int[] $ = new int[keys.length];
+  public int[] get(final E keys[]) {
+    final int[] $ = new int[keys.length];
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       $[¢] = get(keys[¢]);
     return $;
   }
-  public int get( final E key) {
+  public int get(final E key) {
     return values[location(key)];
   }
-  public int increment( final E key) {
+  public int increment(final E key) {
     final int $ = location(key);
     if ($ >= 0)
       return ++values[$];
@@ -116,7 +114,7 @@ public final class ToIntegers<E> {
   }
   /** @param key
    * @return <code>this</code> */
-   public ToIntegers<E> init( final E key) {
+  public ToIntegers<E> init(final E key) {
     final int location = location(key);
     if (location >= 0)
       values[location] = 0;
@@ -132,14 +130,14 @@ public final class ToIntegers<E> {
   }
   /** What are all values stored in this object?
    * @return an array of all elements in this set. */
-   public E[] keys() {
-     final E[] $ = allocate(size);
+  public E[] keys() {
+    final E[] $ = allocate(size);
     for (int ¢ = 0, j = 0; ¢ < capacity(); ++¢)
       if (occupied[¢] && !placeholder[¢])
         $[j++] = data[¢];
     return $;
   }
-   public ToIntegers<E> put( final E key, final int value) {
+  public ToIntegers<E> put(final E key, final int value) {
     final int location = location(key);
     if (location >= 0)
       values[location] = value;
@@ -155,13 +153,13 @@ public final class ToIntegers<E> {
   }
   /** Recreate the table, inserting all elements in it afresh.
    * @return <code><b>this</b>/code> */
-   public ToIntegers<E> rehash() {
+  public ToIntegers<E> rehash() {
     return rehash(capacity());
   }
   /** Remove an element from this set, it is in it
    * @param e some integer to be removed from the set
    * @return <code><b>this</b>/code> */
-   public ToIntegers<E> remove( final E e) {
+  public ToIntegers<E> remove(final E e) {
     final int i = location(e);
     assert i >= -1 && i < capacity();
     if (i < 0)
@@ -174,7 +172,7 @@ public final class ToIntegers<E> {
   /** Remove an array of integers to this set, if they are in it.
    * @param is an array of integers; ; must not be <code><b>null</b></code>.
    * @return <code><b>this</b>/code> */
-   public ToIntegers<E> remove( final int... is) {
+  public ToIntegers<E> remove(final int... is) {
     for (final int ¢ : is)
       remove(¢);
     return this;
@@ -189,7 +187,7 @@ public final class ToIntegers<E> {
    * @param e some value
    * @return -1 if the parameter is in the table already, otherwise, the index
    *         at which it could be safely inserted. */
-  int find( final E e) {
+  int find(final E e) {
     for (int $ = -1, ¢ = hash(e), t = 0;; ¢ += ++t) {
       ¢ &= data.length - 1;
       if (placeholder[¢] || !occupied[¢])
@@ -204,7 +202,7 @@ public final class ToIntegers<E> {
    * @param e some integer
    * @return index of the element if the parameter is in the table, otherwise,
    *         -1; */
-  int location( final E e) {
+  int location(final E e) {
     for (int $ = hash(e), ¢ = 0;; $ += ++¢) {
       $ &= data.length - 1;
       if (!occupied[$])
@@ -217,17 +215,17 @@ public final class ToIntegers<E> {
    * of two.
    * @param newCapacity new initialCapacity for the internal array
    * @return <code><b>this</b>/code> */
-   private ToIntegers<E> rehash(final int newCapacity) {
+  private ToIntegers<E> rehash(final int newCapacity) {
     assert (newCapacity & newCapacity - 1) == 0;
     assert newCapacity >= MIN_CAPACITY;
-     final E[] keys = keys();
-     final int[] oldValues = get(keys);
+    final E[] keys = keys();
+    final int[] oldValues = get(keys);
     reset(newCapacity);
     for (int ¢ = 0; ¢ < keys.length; ++¢)
       put(keys[¢], oldValues[¢]);
     return this;
   }
-   private ToIntegers<E> reset(final int capacity) {
+  private ToIntegers<E> reset(final int capacity) {
     data = allocate(capacity);
     occupied = new boolean[capacity];
     placeholder = new boolean[capacity];
@@ -253,7 +251,7 @@ public final class ToIntegers<E> {
         if (placeholder[¢])
           assert occupied[¢];
     }
-    private int count( final boolean bs[]) {
+    private int count(final boolean bs[]) {
       int $ = 0;
       for (final boolean ¢ : bs)
         $ += as.bit(¢);

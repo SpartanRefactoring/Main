@@ -1,10 +1,6 @@
 package il.org.spartan.reflection;
 
-import static fluent.ly.___.*;
-
 import java.lang.reflect.*;
-
-import org.eclipse.jdt.annotation.*;
 
 /** A class realizing a recursive traversal of a reflection {@link Class}
  * object, applying the appropriate function supplied by a {@link Visitor} to
@@ -30,8 +26,8 @@ public final class ReflectionTraversal {
    * @param visitor what should be done at each node, must not be
    *        <code><b>null</b></code>. */
   public ReflectionTraversal(final Class<?> clazz, final Visitor visitor) {
-    notNull(clazz);
-    notNull(visitor);
+    assert clazz != null;
+    assert visitor != null;
     this.clazz = clazz;
     this.visitor = visitor;
   }
@@ -40,8 +36,8 @@ public final class ReflectionTraversal {
   public int go() {
     return go(clazz);
   }
-  private int go( final Class<?> from) {
-    notNull(from);
+  private int go(final Class<?> from) {
+    assert from != null;
     // Visit the class itself
     int $ = visitor.visit(from);
     // Visit all sorts of members
@@ -54,7 +50,7 @@ public final class ReflectionTraversal {
     for (final Class<?> ¢ : from.getDeclaredClasses())
       $ += visitor.visit(¢);
     // Recurse into inner, local and anonymous classes
-    for ( final Class<?> ¢ : from.getDeclaredClasses())
+    for (final Class<?> ¢ : from.getDeclaredClasses())
       $ += go(¢);
     return $;
   }

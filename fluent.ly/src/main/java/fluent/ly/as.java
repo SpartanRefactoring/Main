@@ -7,7 +7,6 @@ import static fluent.ly.azzert.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.*;
@@ -69,7 +68,7 @@ public enum as {
    * @return <code>0</code> if the parameter is <code><b>null</b></code>.
    *         <code>1</code> otherwise.
    * @see as#bit(Object) */
-  public static int bit(final  Object ¢) {
+  public static int bit(final Object ¢) {
     return ¢ == null ? 0 : 1;
   }
   /** Converts a sequence of <code><b>int</b></code> values into a {@link List}
@@ -129,7 +128,7 @@ public enum as {
    * @param <T> type of objects to be converted
    * @param $ what to covert
    * @return result parameter, converted into a {@link List} */
-  @SafeVarargs public static <T> List<T> list(final  T... $) {
+  @SafeVarargs public static <T> List<T> list(final T... $) {
     return accumulate.to(new ArrayList<T>()).add($).elements();
   }
   /** Converts a sequence of objects of a given type into a {@link Set} of
@@ -137,21 +136,21 @@ public enum as {
    * @param <T> type of objects to be converted
    * @param ¢ what to covert
    * @return parameter, converted into a {@link Set} */
-  @SafeVarargs public static <T> Set<? extends T> set(final  T... ¢) {
+  @SafeVarargs public static <T> Set<? extends T> set(final T... ¢) {
     return accumulate.to(new HashSet<T>()).add(¢).elements();
   }
   /** Converts a value, which can be either a <code><b>null</b></code> or
    * references to valid instances, into a {@link NonNull}
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
-  public static String string( final Object $) {
+  public static String string(final Object $) {
     return $ == null ? "null" : as.string($ + "");
   }
   /** Converts a {@link String}, which can be either a <code><b>null</b></code>
    * or an actual String, into a {@link NonNull} String.
    * @param $ some value
    * @return parameter, after bing to a non-null string. */
-  public static String string( final String $) {
+  public static String string(final String $) {
     return $ != null ? $ : "null";
   }
   /** Converts an {@link Iterable} into an array of {@link String}.
@@ -160,7 +159,7 @@ public enum as {
    *         {@link String} */
   public static String[] strings(final Iterable<?> os) {
     final List<String> $ = new ArrayList<>();
-    for (final  Object ¢ : os)
+    for (final Object ¢ : os)
       if (¢ != null)
         $.add(¢ + "");
     return Utils.cantBeNull($.toArray(new String[$.size()]));
@@ -211,7 +210,7 @@ public enum as {
     }
     @Test public void stringWhenToStringReturnsNull() {
       azzert.that(as.string(new Object() {
-        @Override  public String toString() {
+        @Override public String toString() {
           return null;
         }
       }), is("null"));

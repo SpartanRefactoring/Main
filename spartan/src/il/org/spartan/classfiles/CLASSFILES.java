@@ -1,12 +1,8 @@
 package il.org.spartan.classfiles;
 
-import static fluent.ly.___.*;
-
 import java.io.*;
 import java.util.*;
 import java.util.zip.*;
-
-import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
@@ -18,13 +14,13 @@ import il.org.spartan.utils.*;
 @Utility
 public enum CLASSFILES {
   ;
-   static final Set<ZipFile> zipsInUse = new HashSet<>();
+  static final Set<ZipFile> zipsInUse = new HashSet<>();
 
   /** Where are all Java class files found
    * @return the list of directories and ZIP archives in the current search
    *         path. */
-   public static Iterable<File> asFiles() {
-     final ArrayList<File> $ = new ArrayList<>();
+  public static Iterable<File> asFiles() {
+    final ArrayList<File> $ = new ArrayList<>();
     $.addAll(JRE.asList());
     add($, EXTENSIONPATH.asArray(), CLASSPATH.asArray());
     return $;
@@ -39,10 +35,10 @@ public enum CLASSFILES {
    *         class has no corresponding <tt>.class</tt> file (e.g., in the case
    *         it is a primitive or an array type), or in the case that the
    *         corresponding <tt>.class</tt> file could not be found. */
-  public static String location( final String className) {
-    notNull(className);
-    for ( final File where : asFiles()) {
-       final String $ = location(where, className);
+  public static String location(final String className) {
+    assert className != null;
+    for (final File where : asFiles()) {
+      final String $ = location(where, className);
       if ($ != null)
         return $;
     }
@@ -64,8 +60,8 @@ public enum CLASSFILES {
    *         <tt>.class</tt> file (e.g., in the case it is a primitive or an
    *         array type), or in the case that the corresponding <tt>.class</tt>
    *         file could not be found. */
-   public static InputStream open( final Class<?> ¢) {
-    notNull(¢);
+  public static InputStream open(final Class<?> ¢) {
+    assert ¢ != null;
     return open(¢.getName());
   }
   /** Given the full name of a class, return an open input stream to the class
@@ -81,14 +77,14 @@ public enum CLASSFILES {
    *         <tt>.class</tt> file (e.g., in the case it is a primitive or an
    *         array type), or in the case that the corresponding <tt>.class</tt>
    *         file could not be found. */
-  public static InputStream open( final String fullClassName) {
-    notNull(fullClassName);
-    for ( final File f : asFiles()) {
-       final InputStream $ = open(f, fullClassName);
+  public static InputStream open(final String fullClassName) {
+    assert fullClassName != null;
+    for (final File f : asFiles()) {
+      final InputStream $ = open(f, fullClassName);
       if ($ != null)
         try {
           $.available();
-        } catch ( final IOException ¢) {
+        } catch (final IOException ¢) {
           ¢.printStackTrace();
         }
       if ($ != null)
@@ -97,47 +93,47 @@ public enum CLASSFILES {
     return null;
   }
   public static void reset() {
-    for ( final ZipFile z : zipsInUse)
+    for (final ZipFile z : zipsInUse)
       try {
         z.close();
-      } catch ( final IOException __) {
+      } catch (final IOException __) {
         // Absorb (we do not care about errors)
         __.printStackTrace();
       }
     zipsInUse.clear();
   }
-  private static void add( final ArrayList<File> ds,  final String[]... directoryNamesArray) {
-    for ( final String[] directories : directoryNamesArray)
+  private static void add(final ArrayList<File> ds, final String[]... directoryNamesArray) {
+    for (final String[] directories : directoryNamesArray)
       add(ds, directories);
   }
-  private static void add( final ArrayList<File> ds,  final String[] directoryNames) {
-    for ( final String directory : directoryNames)
+  private static void add(final ArrayList<File> ds, final String[] directoryNames) {
+    for (final String directory : directoryNames)
       ds.add(new File(directory));
   }
-   private static String canonicalFileName( final String className) {
+  private static String canonicalFileName(final String className) {
     return className.replace('.', File.separatorChar) + ".class";
   }
-   private static String class2ZipFileName( final String className) {
+  private static String class2ZipFileName(final String className) {
     return className.replace('.', '/') + ".class";
   }
-  private static String location( final File where,  final String className) {
+  private static String location(final File where, final String className) {
     return where.isDirectory() ? searchDirectory(where, className) == null ? null : where.getName()
         : searchZip(where, class2ZipFileName(className)) == null ? null : where.getName();
   }
-   private static InputStream open( final File where,  final String className) {
+  private static InputStream open(final File where, final String className) {
     return where.isDirectory() ? searchDirectory(where, className) : searchZip(where, class2ZipFileName(className));
   }
-  private static InputStream searchDirectory(final File where,  final String className) {
-     final File $ = new File(where, canonicalFileName(className));
+  private static InputStream searchDirectory(final File where, final String className) {
+    final File $ = new File(where, canonicalFileName(className));
     try {
       return !$.exists() ? null : new FileInputStream($);
-    } catch ( final FileNotFoundException __) {
+    } catch (final FileNotFoundException __) {
       return null;
     }
   }
-  private static InputStream searchZip( final File where,  final String fileName) {
+  private static InputStream searchZip(final File where, final String fileName) {
     try {
-       final ZipFile $ = new ZipFile(where.getAbsoluteFile());
+      final ZipFile $ = new ZipFile(where.getAbsoluteFile());
       final ZipEntry e = $.getEntry(fileName);
       if (e == null) {
         $.close();
@@ -148,7 +144,7 @@ public enum CLASSFILES {
       /* for (final ZipEntry e : IterableAdapter.make(z.entries())) if
        * (e.getName().equals(fileName)) { zipsInUse.add(z); return
        * z.getInputStream(e); } z.close(); */
-    } catch ( final IOException __) {
+    } catch (final IOException __) {
       // Absorb (we do not care about errors)
     }
     return null;

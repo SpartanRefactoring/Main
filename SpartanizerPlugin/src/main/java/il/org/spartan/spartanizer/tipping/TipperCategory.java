@@ -22,13 +22,13 @@ public interface TipperCategory {
   }
   default Class<? extends TipperCategory> lowestCategory() {
     Class<? extends TipperCategory> $ = TipperCategory.class;
-    for (Class<? extends TipperCategory> c : hierarchy.keySet())
-      if (c.isInstance(this) && $.isAssignableFrom(c))
-        $ = c;
+    for (final Class<? extends TipperCategory> ¢ : hierarchy.keySet())
+      if (¢.isInstance(this) && $.isAssignableFrom(¢))
+        $ = ¢;
     return $;
   }
 
-  public static Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> hierarchy = anonymous.ly(() -> {
+  Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> hierarchy = anonymous.ly(() -> {
     final Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> $ = new HashMap<>();
     $.put(Nominal.class, Arrays.asList(Abbreviation.class, Anonymization.class, Dollarization.class));
     $.put(Structural.class, Arrays.asList(Collapse.class, Loops.class, Deadcode.class, EarlyReturn.class, NOP.class, ScopeReduction.class,
@@ -60,22 +60,22 @@ public interface TipperCategory {
     $.put(Collapse.class, Arrays.asList(CommnonFactoring.class));
     return $;
   });
-  public static Map<Class<? extends TipperCategory>, Class<? extends TipperCategory>> reversedHierarchy = anonymous.ly(() -> {
+  Map<Class<? extends TipperCategory>, Class<? extends TipperCategory>> reversedHierarchy = anonymous.ly(() -> {
     final Map<Class<? extends TipperCategory>, Class<? extends TipperCategory>> $ = new HashMap<>();
-    for (Entry<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> e : hierarchy.entrySet())
-      for (Class<? extends TipperCategory> c : e.getValue())
-        $.put(c, e.getKey());
+    for (final Entry<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> e : hierarchy.entrySet())
+      for (final Class<? extends TipperCategory> ¢ : e.getValue())
+        $.put(¢, e.getKey());
     return $;
   });
-  public static Map<Class<? extends TipperCategory>, String> descriptions = anonymous.ly(() -> {
+  Map<Class<? extends TipperCategory>, String> descriptions = anonymous.ly(() -> {
     final Map<Class<? extends TipperCategory>, String> $ = new HashMap<>();
-    for (Class<? extends TipperCategory> c : hierarchy.keySet())
+    for (final Class<? extends TipperCategory> c : hierarchy.keySet())
       try {
-        for (Field f : c.getDeclaredFields())
-          if ("toString".equals(f.getName()))
-            $.put(c, (String) f.get(null));
-      } catch (IllegalAccessException | IllegalArgumentException | SecurityException x) {
-        note.bug(x);
+        for (final Field ¢ : c.getDeclaredFields())
+          if ("toString".equals(¢.getName()))
+            $.put(c, (String) ¢.get(null));
+      } catch (IllegalAccessException | IllegalArgumentException | SecurityException ¢) {
+        note.bug(¢);
       }
     return $;
   });

@@ -4,7 +4,6 @@ import static il.org.spartan.statistics.Mean.mean;
 import static il.org.spartan.statistics.MomentUtils.*;
 import static il.org.spatan.iteration.Iterables.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
@@ -14,7 +13,7 @@ import il.org.spartan.streotypes.*;
 @Utility
 public enum Sum {
   ;
-  public static double sum( final double... ds) {
+  public static double sum(final double... ds) {
     double $ = 0;
     for (final double ¢ : ds)
       $ += ¢;
@@ -26,13 +25,13 @@ public enum Sum {
       $ += t[j];
     return $;
   }
-  public static double sum(final int i,  final double... ds) {
+  public static double sum(final int i, final double... ds) {
     double $ = 0;
     for (final double ¢ : ds)
       $ += pow(¢, i);
     return $;
   }
-  public static double sum2( final double... ds) {
+  public static double sum2(final double... ds) {
     double $ = 0;
     for (final double ¢ : ds)
       $ += sqr(¢);
@@ -48,13 +47,13 @@ public enum Sum {
       Assert.assertEquals(9.0, sum(doubles(0, 1, 2, 3, 4, 5, 6), 2, 3), 1E-5);
     }
     @Test public void sum1() {
-       final double vs[] = { 5, 20, 40, 80, 100 };
+      final double vs[] = { 5, 20, 40, 80, 100 };
       Assert.assertEquals(5, sum(0, vs), 1E-8);
       Assert.assertEquals(245, sum(1, vs), 1E-8);
       Assert.assertEquals(49, mean(vs), 1E-8);
     }
     @Test public void sumN() {
-       final double vs[] = { 1, 2, 3, 4, 5 };
+      final double vs[] = { 1, 2, 3, 4, 5 };
       Assert.assertEquals(5, sum(0, vs), 1E-8);
       Assert.assertEquals(15, sum(1, vs), 1E-8);
       Assert.assertEquals(55, sum(2, vs), 1E-8);

@@ -1,7 +1,5 @@
 package il.org.spartan.graph;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.collections.*;
 
 /** Provides an inverse perspective on a graph, i.e., inverts the direction of
@@ -15,7 +13,7 @@ public class InvertedGraph<E> extends GraphDecorator<E> {
    * @param <E> type of elements stored in this graph
    * @return the graph representing the parameter where all the direction of all
    *         edges was inverted. */
-   public static <E> InvertedGraph<E> make(final AbstractGraph<E> ¢) {
+  public static <E> InvertedGraph<E> make(final AbstractGraph<E> ¢) {
     return new InvertedGraph<>(¢);
   }
   private InvertedGraph(final AbstractGraph<E> g) {
@@ -28,7 +26,7 @@ public class InvertedGraph<E> extends GraphDecorator<E> {
   @Override public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> ¢) {
     return super.outgoing(¢);
   }
-  @Override  public String name() {
+  @Override public String name() {
     final String $ = inner.name();
     return $.length() == 0 ? $ : $ + "'";
   }

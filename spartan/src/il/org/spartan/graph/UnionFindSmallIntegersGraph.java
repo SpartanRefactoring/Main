@@ -4,19 +4,17 @@ import static java.util.Arrays.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** @author Yossi Gil
  * @since Apr 19, 2012 */
 public class UnionFindSmallIntegersGraph extends AbstractSmallIntegersGraph {
   private final BitSet nodes = new BitSet();
-   private short component[] = new short[0];
+  private short component[] = new short[0];
 
   @Override public final short component(final int ¢) {
     return !has(¢) ? -1 : component((short) ¢);
   }
   @Override public final short components() {
-     final BitSet $ = new BitSet();
+    final BitSet $ = new BitSet();
     for (int ¢ = nodes.nextSetBit(0); ¢ >= 0; ¢ = nodes.nextSetBit(¢ + 1))
       $.set(¢);
     return (short) $.cardinality();

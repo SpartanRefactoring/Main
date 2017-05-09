@@ -6,8 +6,6 @@ import static fluent.ly.box.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spatan.iteration.*;
 
 /** @author Yossi Gil
@@ -16,27 +14,26 @@ public abstract class Statistics {
   protected static final int MOMENTS = 4;
   protected static final String EMPTY_SEQUENCE = "No elements yet in sequene.";
 
-  public static double mad( final double[] ds) {
+  public static double mad(final double[] ds) {
     final int n = ds.length;
-    final double median = median(ds);
-     final double $[] = new double[n];
+    final double median = median(ds), $[] = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
       $[¢] = Math.abs(ds[¢] - median);
     return median($);
   }
-  public static double median( final double[] ¢) {
+  public static double median(final double[] ¢) {
     Arrays.sort(¢);
     return (¢[¢.length / 2] + ¢[(¢.length - 1) / 2]) / 2;
   }
-   public static double[] prune( final double[] ds) {
-     final List<Double> $ = new ArrayList<>();
+  public static double[] prune(final double[] ds) {
+    final List<Double> $ = new ArrayList<>();
     final double median = median(ds), mad = mad(ds);
     for (final double ¢ : ds)
       if (median - 2 * mad <= ¢ && ¢ <= median + 2 * mad)
         $.add(box(¢));
     return Iterables.toArray($);
   }
-  public static double sampleMean( final double[] ds) {
+  public static double sampleMean(final double[] ds) {
     double $ = 0;
     for (final double ¢ : ds)
       $ += ¢;
@@ -47,7 +44,7 @@ public abstract class Statistics {
    * >sample variance</a>
    * @param ds the sample
    * @return the sample variance of the parameter */
-  public static double sampleVariance( final double[] ds) {
+  public static double sampleVariance(final double[] ds) {
     double $ = 0, sum2 = 0;
     for (final double ¢ : ds) {
       $ += ¢;

@@ -1,7 +1,5 @@
 package il.org.spartan.testing;
 
-import org.eclipse.jdt.annotation.*;
-
 /** An unchecked exception that indicates an incorrect setup of the testing
  * system
  * @author Itay Maman <imaman@cs> Jul 5, 2007 */
@@ -14,7 +12,7 @@ public class IllegalSetting extends RuntimeException {
   public IllegalSetting(final String message) {
     super(message);
   }
-  public IllegalSetting( final Throwable cause) {
+  public IllegalSetting(final Throwable cause) {
     super(cause);
     setStackTrace(cause.getStackTrace());
   }

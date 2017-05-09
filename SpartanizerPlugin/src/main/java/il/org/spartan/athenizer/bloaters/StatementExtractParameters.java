@@ -6,13 +6,17 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.regex.*;
 
+import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.QualifiedName;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -47,7 +51,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     if ($ == null)
       return null;
     final ITypeBinding binding = $.resolveTypeBinding();
-    if (binding == null)
+    if (binding == null || captureRisk(binding))
       return null;
     final CompilationUnit u = az.compilationUnit(root);
     if (u == null)
@@ -58,40 +62,52 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ir.setUseContextToFilterImplicitImports(true);
     ir.setFilterImplicitImports(true);
     final Type t = ir.addImport(binding, s.getAST());
+    final Wrapper<IType[]> types = new Wrapper<>();
+    try {
+      ir.rewriteImports(new NullProgressMonitor());
+      types.set(ir.getCompilationUnit().getAllTypes());
+    } catch (final CoreException ¢) {
+      note.bug(¢);
+      return null;
+    }
     // TODO Ori Roth: enable assignments extraction + check the
     // fixWildCardType(t), added it since when it returns null we get exception
-    return t == null || fixWildCardType(t) == null || $ instanceof Assignment ? null : new Tip(description(s), myClass(), s) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        fixAddedImports(s, ir, u, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
-        final Type tt = fixWildCardType(t);
-        final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
-        final String nn = scope.newName(s, tt);
-        f.setName(make.from(s).identifier(nn));
-        f.setInitializer(copy.of($));
-        final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
-        v.setType(tt);
-        final Statement ns = copy.of(s);
-        s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
-        if (!(s.getParent() instanceof Block))
-          goNonBlockParent(s.getParent(), v, ns, r, g);
-        else
-          goBlockParent((Block) s.getParent(), v, ns, r, g);
-      }
-      void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement x,
-          final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, final ASTRewrite r, final TextEditGroup g) {
-        final Block b = p.getAST().newBlock();
-        statements(b).add(x);
-        statements(b).add(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug);
-        r.replace(s, b, g);
-      }
-      void goBlockParent(final Block b, final VariableDeclarationStatement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug,
-          final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
-        lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, s, g);
-        lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, s, g);
-        lr.remove(s, g);
-      }
-    };
+    return t == null || //
+        nonPublicImport(types.get(), !binding.isArray() ? binding : binding.getElementType()) || //
+        fixWildCardType(t) == null || //
+        $ instanceof Assignment ? null : //
+            new Tip(description(s), myClass(), s) {
+              @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+                fixAddedImports(s, ir, types, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY), binding.isTopLevel());
+                final Type tt = fixWildCardType(t);
+                final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
+                final String nn = scope.newName(s, tt);
+                f.setName(make.from(s).identifier(nn));
+                f.setInitializer(copy.of($));
+                final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
+                v.setType(tt);
+                final Statement ns = copy.of(s);
+                s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
+                if (!(s.getParent() instanceof Block))
+                  goNonBlockParent(s.getParent(), v, ns, r, g);
+                else
+                  goBlockParent((Block) s.getParent(), v, ns, r, g);
+              }
+              void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement x,
+                  final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, final ASTRewrite r, final TextEditGroup g) {
+                final Block b = p.getAST().newBlock();
+                statements(b).add(x);
+                statements(b).add(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug);
+                r.replace(s, b, g);
+              }
+              void goBlockParent(final Block b, final VariableDeclarationStatement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug,
+                  final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, final ASTRewrite r, final TextEditGroup g) {
+                final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+                lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, s, g);
+                lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, s, g);
+                lr.remove(s, g);
+              }
+            };
   }
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
@@ -144,17 +160,19 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   /** Manual addition of imports recorded in the {@link ImportRewrite} object.
    * @param s
    * @param r
-   * @param u
+   * @param ts
    * @param g
-   * @param ilr */
-  static void fixAddedImports(final Statement s, final ImportRewrite r, final CompilationUnit u, final TextEditGroup g, final ListRewrite ilr) {
+   * @param ilr
+   * @param isTpLevel */
+  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> ts, final TextEditGroup g, final ListRewrite ilr,
+      final boolean isTopLevel) {
     final Collection<String> idns = an.empty.list();
-    if (r.getAddedImports() != null)
-      idns.addAll(as.list(r.getAddedImports()));
-    if (r.getAddedStaticImports() != null)
-      idns.addAll(as.list(r.getAddedStaticImports()));
+    if (r.getCreatedImports() != null)
+      idns.addAll(as.list(r.getCreatedImports()));
+    if (r.getCreatedStaticImports() != null)
+      idns.addAll(as.list(r.getCreatedStaticImports()));
     for (final String idn : idns) {
-      if (imports(u).stream().anyMatch(λ -> idn.equals(λ.getName().getFullyQualifiedName())))
+      if (isTopLevel && Arrays.stream(ts.get()).anyMatch(λ -> idn.equals(λ.getFullyQualifiedName('.'))))
         continue;
       final ImportDeclaration id = s.getAST().newImportDeclaration();
       id.setName(s.getAST().newName(idn));
@@ -222,7 +240,32 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return iz.nodeTypeIn(¢, CLASS_INSTANCE_CREATION, METHOD_INVOCATION, INFIX_EXPRESSION, ASSIGNMENT, CONDITIONAL_EXPRESSION, LAMBDA_EXPRESSION);
   }
   private static Expression choose(final List<Expression> ¢) {
-    return the.onlyOneOf(¢);
+    return the.headOf(¢);
+  }
+  private static boolean captureRisk(final ITypeBinding binding) {
+    if (binding == null)
+      return true;
+    final Set<String> seenCaptures = new HashSet<>();
+    for (final ITypeBinding b : binding.getTypeArguments()) {
+      final Pattern pattern = Pattern.compile("capture#(.*?)-of");
+      final Matcher matcher = pattern.matcher(b + "");
+      if (matcher.find())
+        for (int i = 1; i <= matcher.groupCount(); ++i) {
+          final String capture = matcher.group(i);
+          if (seenCaptures.contains(capture))
+            return true;
+          seenCaptures.add(capture);
+        }
+    }
+    return false;
+  }
+  private static boolean nonPublicImport(IType[] innerTypes, ITypeBinding outerType) {
+    return !Modifier.isPublic(outerType.getModifiers()) && (innerTypes.length == 0 || //
+        Optional.ofNullable(innerTypes[0]) //
+            .map(x -> x.getPackageFragment()) //
+            .map(x -> x.getElementName()) //
+            .map(x -> box.it(!x.equals(Optional.ofNullable(outerType.getPackage()).map(y -> y.getName()).orElse("~")))) //
+            .orElse(Boolean.TRUE).booleanValue());
   }
 
   // TODO Ori Roth: move class to utility file

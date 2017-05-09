@@ -3,8 +3,6 @@ package il.org.spartan.collections;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;
 
@@ -16,13 +14,13 @@ import il.org.spatan.iteration.*;
 public class Sequence<E> implements Iterable<E>, Serializable {
   private static final long serialVersionUID = 0x729F6AEADAC5332BL;
 
-   public static <T> Sequence<T> make( final Sequence<T> s, final int begin) {
+  public static <T> Sequence<T> make(final Sequence<T> s, final int begin) {
     return make(s.es, begin, s.end);
   }
-   public static <T> Sequence<T> make(final T[] ts, final int begin, final int end) {
+  public static <T> Sequence<T> make(final T[] ts, final int begin, final int end) {
     return new Sequence<>(ts, begin, end);
   }
-   public static <T> Sequence<T> upcast(@SuppressWarnings("unused") final Class<T> __,  final Sequence<? extends T> src) {
+  public static <T> Sequence<T> upcast(@SuppressWarnings("unused") final Class<T> __, final Sequence<? extends T> src) {
     return make(src.es, src.begin, src.end);
   }
 
@@ -33,7 +31,7 @@ public class Sequence<E> implements Iterable<E>, Serializable {
   public Sequence() {
     this(null, 0, 0);
   }
-  public Sequence( final E... es) {
+  public Sequence(final E... es) {
     this(es, 0, es.length);
   }
   protected Sequence(final E[] es, final int begin, final int end) {
@@ -53,13 +51,13 @@ public class Sequence<E> implements Iterable<E>, Serializable {
         return $ - begin;
     return -1;
   }
-  @Override  public Iterator<E> iterator() {
+  @Override public Iterator<E> iterator() {
     return ArrayIterator.make(es, begin, end);
   }
   public int size() {
     return end - begin;
   }
-  @Override  public String toString() {
+  @Override public String toString() {
     return Stringify.it(this);
   }
 }

@@ -2,7 +2,6 @@ package il.org.spartan.classfiles.reify;
 
 import static fluent.ly.azzert.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -15,7 +14,7 @@ public class AttributeTest {
     class __ {
       // empty
     }
-    for ( final Attribute.Content ¢ : Attribute.Extractor.attributes(new __()))
+    for (final Attribute.Content ¢ : Attribute.Extractor.attributes(new __()))
       ¢.hashCode();
   }
   @Test public void manyAttributeNames() {

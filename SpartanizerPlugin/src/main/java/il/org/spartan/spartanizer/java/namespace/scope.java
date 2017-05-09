@@ -1,30 +1,15 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
-import static il.org.spartan.spartanizer.ast.navigate.step.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil please add a description
  * @author Yossi Gil
  * @since 2016-12 */
 public interface scope {
-  static ASTNode delimiter(final ASTNode ¢) {
-    if (iz.nodeTypeIn(¢, BLOCK, SWITCH_STATEMENT))
-      return ¢;
-    for (final ASTNode $ : ancestors.of(¢))
-      if (iz.nodeTypeIn($, BLOCK, SWITCH_STATEMENT))
-        return $;
-    return null;
-  }
   static List<ASTNode> of(final SingleVariableDeclaration x) {
     final List<ASTNode> $ = an.empty.list();
     $.add(x);
@@ -41,21 +26,20 @@ public interface scope {
         fault.done();
     return $;
   }
-  static Block getBlock(final ASTNode ¢) {
-    return az.block(delimiter(¢));
-  }
-  static Namespace getScopeNamespace(final ASTNode ¢) {
-    final ASTNode delimiter = delimiter(¢);
-    if (delimiter == null)
-      return null;
-    if (delimiter.getProperty("Namespace") != null)
-      return (Namespace) delimiter.getProperty("Namespace");
-    final List<Statement> statements = statements(delimiter);
-    final Statement last = the.lastOf(statements);
-    Namespace $ = Environment.of(last);
+  static void initializeNamespaces(final ASTNode ¢) {
+    final ASTNode root = ¢.getRoot();
+    if (root.getProperty("Namespace") != null)
+      return;
+    Namespace $ = Environment.of(root);
     if ($ == null)
       $ = new Namespace($);
-    delimiter.setProperty("Namespace", $);
+  }
+  static Namespace getScopeNamespace(final ASTNode ¢) {
+    Namespace $ = Environment.of(¢);
+    if ($ != null || ($ = (Namespace) ¢.getRoot().getProperty("Namspace")) != null)
+      return $;
+    $ = new Namespace(null);
+    ¢.getRoot().setProperty("Namspace", $);
     return $;
   }
   static String newName(final ASTNode ¢, final Type t) {

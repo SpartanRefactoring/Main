@@ -1,7 +1,5 @@
 package il.org.spartan.bench;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.bench.operations.*;
 
 public class Bencher extends LogBook.Mutable {
@@ -14,21 +12,21 @@ public class Bencher extends LogBook.Mutable {
   public void afterEachGo(final Operation ¢) {
     after = ¢;
   }
-  @Override  public LogBook clear() {
+  @Override public LogBook clear() {
     super.clear();
     current.clear();
     dotter.clear();
     return this;
   }
-  public void go( final Bencheon ¢) {
+  public void go(final Bencheon ¢) {
     BenchingPolicy.go(this, ¢);
     BenchingPolicy.after(after);
   }
-  public void go(final long size,  final NamedOperation o) {
+  public void go(final long size, final NamedOperation o) {
     BenchingPolicy.go(this, size, o);
     BenchingPolicy.after(after);
   }
-  public void go(final String name, final long l,  final Operation o) {
+  public void go(final String name, final long l, final Operation o) {
     BenchingPolicy.go(this, name, l, o);
     BenchingPolicy.after(after);
   }

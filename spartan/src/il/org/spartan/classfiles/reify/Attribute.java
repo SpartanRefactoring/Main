@@ -6,8 +6,6 @@ import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** @author Yossi Gil
  * @since 28 November 2011 */
 @Retention(RUNTIME)
@@ -26,24 +24,24 @@ public @interface Attribute {
   }
 
   class Extractor {
-     public static List<Content> attributes( final Object target) {
-       final List<Content> $ = new ArrayList<>();
-      for ( final Method ¢ : target.getClass().getMethods())
+    public static List<Content> attributes(final Object target) {
+      final List<Content> $ = new ArrayList<>();
+      for (final Method ¢ : target.getClass().getMethods())
         if (isAttribute(¢))
           $.add(new Content(¢.getName(), value(target, ¢)));
       return $;
     }
-    private static boolean isAttribute( final Method ¢) {
+    private static boolean isAttribute(final Method ¢) {
       return ¢.getAnnotation(Attribute.class) != null;
     }
-     private static String value(final Object target,  final Method m) {
+    private static String value(final Object target, final Method m) {
       try {
         return m.invoke(target) + "";
-      } catch ( final IllegalArgumentException $) {
+      } catch (final IllegalArgumentException $) {
         return "IllegalArgument: " + $.getMessage();
-      } catch ( final IllegalAccessException $) {
+      } catch (final IllegalAccessException $) {
         return "IllegalAccess: " + $.getMessage();
-      } catch ( final InvocationTargetException $) {
+      } catch (final InvocationTargetException $) {
         return "Exception in call: " + $.getMessage();
       }
     }

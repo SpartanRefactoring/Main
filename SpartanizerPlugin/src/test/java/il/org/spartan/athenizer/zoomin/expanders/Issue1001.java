@@ -18,9 +18,9 @@ public class Issue1001 {
         + "  int a;\n" //
         + "  a = 0;\n" //
         + "  a = a + 1;\n" //
+        + "  x(a);" //
         + "}", "f1");
   }
-
   @Test public void inclusion() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f2() {\n" //
@@ -31,7 +31,6 @@ public class Issue1001 {
         + "  x(a = a + (b += 1));\n" //
         + "}", "f2");
   }
-
   @Test public void inclusion2() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f22() {\n" //
@@ -42,7 +41,6 @@ public class Issue1001 {
         + "  x(a = a + (b = b + 1));\n" //
         + "}", "f22");
   }
-
   @Test public void inclusion3() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f3() {\n" //
@@ -51,13 +49,12 @@ public class Issue1001 {
         + "  a = 0;\n" //
         + "  b = 0;\n" //
         + "  x(a = a + (b = 1));\n" //
+        + "  x(b);" //
         + "}", "f3");
   }
-
   @Test public void nonMatchingPrimitives() {
     bloatingOf(Issue1001Aux.instance()).staysWithBinding();
   }
-
   @Test public void operators() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f4() {\n" //
@@ -68,7 +65,6 @@ public class Issue1001 {
         + "  x(a = a % (b |= 1));\n" //
         + "}", "f4");
   }
-  
   @Test public void operators2() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f44() {\n" //
@@ -79,20 +75,19 @@ public class Issue1001 {
         + "  x(a = a % (b = b | 1));\n" //
         + "}", "f44");
   }
-  
+
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings({ "unused", "TooBroadScope" })
   public static class Issue1001Aux extends MetaFixture {
     public static Issue1001Aux instance() {
       return new Issue1001Aux();
     }
-
     void f1() {
       int a;
       a = 0;
       a += 1;
+      x(a);
     }
-
     void f2() {
       int a;
       int b;
@@ -100,7 +95,6 @@ public class Issue1001 {
       b = 0;
       x(a += b += 1);
     }
-
     void f22() {
       int a;
       int b;
@@ -108,15 +102,14 @@ public class Issue1001 {
       b = 0;
       x(a = a + (b += 1));
     }
-
     void f3() {
       int a;
       int b;
       a = 0;
       b = 0;
-      x(a += (b = 1));
+      x(a += b = 1);
+      x(b);
     }
-
     void f4() {
       int a;
       int b;
@@ -124,7 +117,6 @@ public class Issue1001 {
       b = 0;
       x(a %= b |= 1);
     }
-
     void f44() {
       int a;
       int b;
@@ -132,7 +124,6 @@ public class Issue1001 {
       b = 0;
       x(a = a % (b |= 1));
     }
-
     void x(final int y) {
       //
     }

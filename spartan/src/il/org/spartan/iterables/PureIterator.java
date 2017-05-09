@@ -6,9 +6,6 @@ import static fluent.ly.azzert.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -38,10 +35,10 @@ public abstract class PureIterator<T> implements Iterator<T> {
   public abstract static class Staged<T> extends PureIterator<T> {
     /** Stores the next value that this iterator returns. It has non-null
      * content only after {@link #hasNext} returned true. */
-     private T next;
+    private T next;
 
-    @Override  public final T next() {
-       final  T $ = cantBeNull(next);
+    @Override public final T next() {
+      final T $ = cantBeNull(next);
       clearNext();
       return $;
     }

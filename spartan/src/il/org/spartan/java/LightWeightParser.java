@@ -2,10 +2,8 @@ package il.org.spartan.java;
 
 import static il.org.spartan.java.Token.*;
 
-import org.eclipse.jdt.annotation.*;
-
 public class LightWeightParser {
-  private static boolean in(final Token t,  final Token[] ts) {
+  private static boolean in(final Token t, final Token[] ts) {
     for (final Token tʹ : ts)
       if (t == tʹ)
         return true;
@@ -38,12 +36,12 @@ public class LightWeightParser {
   public void variable() {
     //
   }
-   private String getIdentifier() {
+  private String getIdentifier() {
     skipUntil(IDENTIFIER);
     return tokenizer.text();
   }
-  private Token skipUntil( final Token... ¢) {
-    for ( Token $ = tokenizer.next(); $ != null; $ = tokenizer.next())
+  private Token skipUntil(final Token... ¢) {
+    for (Token $ = tokenizer.next(); $ != null; $ = tokenizer.next())
       if (in($, ¢))
         return $;
     return null;

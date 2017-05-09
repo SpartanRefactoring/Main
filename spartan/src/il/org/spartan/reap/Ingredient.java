@@ -1,8 +1,6 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.reap;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 
 /** cell which does not depend on others
@@ -38,7 +36,7 @@ public class Ingredient<T> extends Cell<T> {
     public NonNull(final T value) {
       super(value);
     }
-    @Override void cache( @SuppressWarnings("hiding") final T cache) {
+    @Override void cache(@SuppressWarnings("hiding") final T cache) {
       super.cache(cache);
       if (cache == null)
         throw new NullPointerException();

@@ -1,7 +1,5 @@
 package il.org.spartan.java;
 
-import org.eclipse.jdt.annotation.*;
-
 public class RichToken {
   private final Token token;
   private final RawTokenizer tokenizer;
@@ -25,7 +23,7 @@ public class RichToken {
   public int line() {
     return tokenizer.line();
   }
-   public String location() {
+  public String location() {
     return tokenizer.location();
   }
   public final String name() {
@@ -34,13 +32,13 @@ public class RichToken {
   public final int ordinal() {
     return token.ordinal();
   }
-   public String text() {
+  public String text() {
     return tokenizer.text();
   }
-   public String token() {
+  public String token() {
     return tokenizer.token();
   }
-  @Override  public String toString() {
+  @Override public String toString() {
     return token + "";
   }
 
@@ -50,7 +48,7 @@ public class RichToken {
     public Factory(final RawTokenizer tokenizer) {
       this.tokenizer = tokenizer;
     }
-     @SuppressWarnings("synthetic-access") public RichToken make(final Token ¢) {
+    @SuppressWarnings("synthetic-access") public RichToken make(final Token ¢) {
       return new RichToken(tokenizer, ¢);
     }
   }
