@@ -48,6 +48,11 @@ public class FAPI {
     }
     return this;
   }
+  public FAPI fixPath() {
+    names.add(0, ast.newSimpleName("fluent"));
+    names.add(1, ast.newSimpleName("ly"));
+    return this;
+  }
   @Override public String toString() {
     final StringBuilder b = new StringBuilder("/* Fluent API information: */\n");
     if (!names.isEmpty())
