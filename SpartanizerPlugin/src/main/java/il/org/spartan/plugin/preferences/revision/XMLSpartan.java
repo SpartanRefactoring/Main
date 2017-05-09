@@ -168,6 +168,31 @@ public class XMLSpartan {
     }
     commit(p, d);
   }
+  /** Updates the project's XML file to enable given tippers.
+   * @param p JD
+   * @param ss enabled tippers by name */
+  public static void updateEnabledTippers(final Document d, final Collection<String> ss) {
+    if (d == null)
+      return;
+    final NodeList ns = d.getElementsByTagName(TIPPER);
+    if (ns == null)
+      return;
+    else
+      for (int i = 0; i < ns.getLength(); ++i) {
+        final Element e = (Element) ns.item(i);
+        final String id = e.getAttribute(TIPPER_ID);
+        if (id != null)
+          e.setAttribute(ENABLED, ss.contains(id) ? "true" : "false");
+      }
+  }
+  public static Collection<String> createEnabledList(Document d) {
+    List<String> $ = new ArrayList<>();
+    final NodeList ns = d.getElementsByTagName(TIPPER);
+    for (int ¢ = 0; ¢ < ns.getLength(); ++¢)
+      if ("true".equals(((Element) ns.item(¢)).getAttribute(ENABLED)))
+        $.add(((Element) ns.item(¢)).getAttribute(TIPPER_ID));
+    return $;
+  }
   /** Writes XML dom object to file.
    * @param f JD
    * @param d JD
@@ -290,9 +315,12 @@ public class XMLSpartan {
     final NodeList ns = $.getElementsByTagName(BASE);
     if (ns != null && ns.getLength() == 1 && validate($, ((Element) ns.item(0)).getAttribute(VERSION)))
       return $;
-    $ = initialize(b.newDocument());
-    commit(fl, $);
-    return $;
+    Collection<String> ls = createEnabledList($);
+    Document ret = b.newDocument();
+    ret = initialize(ret);
+    updateEnabledTippers(ret, ls);
+    commit(fl, ret);
+    return ret;
   }
   /** Initialize XML document. Enables all tippers, except declared non core
    * tippers, also, add to the document the default values for naming\notations
