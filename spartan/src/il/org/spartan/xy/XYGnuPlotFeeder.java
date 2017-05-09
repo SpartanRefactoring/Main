@@ -2,8 +2,6 @@ package il.org.spartan.xy;
 
 import java.io.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** @author Yossi Gil
  * @since Mar 1, 2012 */
 public class XYGnuPlotFeeder extends XYProcessor.Vacuous {
@@ -15,7 +13,7 @@ public class XYGnuPlotFeeder extends XYProcessor.Vacuous {
   @Override public void done() {
     try {
       write("e\n");
-    } catch ( final Exception ¢) {
+    } catch (final Exception ¢) {
       ¢.printStackTrace();
       System.exit(1);
     }
@@ -26,11 +24,11 @@ public class XYGnuPlotFeeder extends XYProcessor.Vacuous {
   @Override public void p(final double x, final double y, final double dy) {
     write(x + " " + y + " " + dy + "\n");
   }
-  private void write( final String s) {
+  private void write(final String s) {
     try {
       inner.write(s);
       inner.flush();
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       ¢.printStackTrace();
       System.exit(1);
     }

@@ -10,8 +10,6 @@ import java.util.*;
 import java.util.logging.*;
 import java.util.stream.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** Our way of dealing with logs, exceptions, NPE, Eclipse bugs, and other
  * unusual situations.
  * @author Yossi Gil

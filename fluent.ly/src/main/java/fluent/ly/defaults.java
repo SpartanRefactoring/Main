@@ -1,7 +1,5 @@
 package fluent.ly;
 
-import org.eclipse.jdt.annotation.*;
-
 /** A bunch of <code><b>static</b></code> functions to manage the frequent
  * conditional of replacing a <code><b>null</b></code> value with some default.
  * Writing
@@ -24,7 +22,7 @@ public enum defaults {
    *        <code><b>null</b></code>
    * @return <code>v</code> if it is not <code><b>null</b></code>, otherwise
    *         <code>defaultValue</code> */
-  public static int to( final Integer v, final int defaultValue) {
+  public static int to(final Integer v, final int defaultValue) {
     return v != null ? v.intValue() : defaultValue;
   }
   /** Return a default value for an {@link Integer} type.
@@ -33,7 +31,7 @@ public enum defaults {
    *        <code><b>null</b></code>
    * @return <code>v</code> if it is not <code><b>null</b></code>, otherwise
    *         <code>defaultValue</code> */
-  public static int to( final Integer v, final Integer defaultValue) {
+  public static int to(final Integer v, final Integer defaultValue) {
     return (v != null ? v : defaultValue).intValue();
   }
   /** Return a default value for an arbitrary type.
@@ -43,7 +41,7 @@ public enum defaults {
    *        <code><b>null</b></code>
    * @return <code>v</code> if it is not <code><b>null</b></code>, otherwise
    *         <code>defaultValue</code> */
-   public static <T> T to( final T v, final T defaultValue) {
+  public static <T> T to(final T v, final T defaultValue) {
     return v != null ? v : defaultValue;
   }
 }

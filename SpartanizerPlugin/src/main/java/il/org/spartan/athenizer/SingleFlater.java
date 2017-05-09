@@ -231,7 +231,7 @@ public final class SingleFlater {
       startChar = ¢.getOffsetAtLine(startLine);
       endChar = ¢.getOffsetAtLine(endLine);
     }
-    public WindowInformation(ISourceViewer ¢) {
+    public WindowInformation(final ISourceViewer ¢) {
       startLine = ¢.getTopIndex();
       endLine = ¢.getBottomIndex();
       startChar = ¢.getTopIndexStartOffset();

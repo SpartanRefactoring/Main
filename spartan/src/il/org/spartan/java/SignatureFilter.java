@@ -1,11 +1,9 @@
 package il.org.spartan.java;
 
-import org.eclipse.jdt.annotation.*;
-
 /** @author Yossi Gil
  * @since 2011-11-19 */
 public class SignatureFilter extends CodeOnlyFilter {
-  private static boolean usefulKeyword( final Token ¢) {
+  private static boolean usefulKeyword(final Token ¢) {
     switch (¢) {
       default:
         return false;
@@ -19,7 +17,7 @@ public class SignatureFilter extends CodeOnlyFilter {
     }
   }
   /** @param ¢ a token */
-  private static boolean usefulPucntuation( final Token ¢) {
+  private static boolean usefulPucntuation(final Token ¢) {
     switch (¢) {
       default:
         return false;
@@ -34,7 +32,7 @@ public class SignatureFilter extends CodeOnlyFilter {
         return true;
     }
   }
-  @Override protected boolean ok( final Token ¢) {
+  @Override protected boolean ok(final Token ¢) {
     switch (¢.kind) {
       case KEYWORD:
         return usefulKeyword(¢);

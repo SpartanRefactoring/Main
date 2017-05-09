@@ -1,7 +1,5 @@
 package il.org.spartan.reflection;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 
 public enum ReflectionAnalyzer {
@@ -27,8 +25,8 @@ public enum ReflectionAnalyzer {
       }
     }.getClass());
   }
-   public static String toBinary(final int value) {
-     String $ = "";
+  public static String toBinary(final int value) {
+    String $ = "";
     for (int mask = 1; mask != 0; mask <<= 1)
       $ += (mask & value) == 0 ? "" : "+" + mask;
     return $;
@@ -45,7 +43,7 @@ public enum ReflectionAnalyzer {
 
 class A {
   class B {
-     A f() {
+    A f() {
       return A.this;
     }
   }

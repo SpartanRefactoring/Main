@@ -2,8 +2,6 @@ package il.org.spartan.xy;
 
 import java.io.*;
 
-import org.eclipse.jdt.annotation.*;
-
 class OutputStreamRedirector extends Thread {
   private final InputStream from;
   private final PrintStream to;
@@ -17,7 +15,7 @@ class OutputStreamRedirector extends Thread {
     try {
       for (final int nextChar = from.read(); nextChar != -1;)
         to.append((char) nextChar);
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       ¢.printStackTrace();
     }
   }

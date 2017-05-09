@@ -4,7 +4,6 @@ import static fluent.ly.azzert.*;
 import static il.org.spatan.iteration.Iterables.*;
 import static org.junit.Assert.assertEquals;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -18,7 +17,7 @@ public class KendallTest {
     assertEquals(0.6, Kendall.tauB(doubles(15, 20, 100, 70, 98)), 1E-6);
   }
   @Test public void testMinorityVsChi2() {
-     final double[]//
+    final double[]//
     x = { 1, 1, 1, 2, 1, 2, 2, 1, 2, 2, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3, 1, 3, 3, 1, 3, 1, 3, 3, 0, 2, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 2,
         1, 2, 1, 2, 2, 2, 2, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 3, 4, 3, 0, 1, 1, 1, 1, 1 },
         y = { 1, 5, 1, 0, 3, 0, 0, 2, 5, 4, 3, 3, 0, 0, 1, 5, 3, 0, 1, 2, 4, 3, 3, 4, 1, 8, 0, 2, 6, 2, 3, 2, 11, 8, 10, 3, 8, 7, 1, 1, 2, 4, 1, 3, 3,
@@ -28,8 +27,8 @@ public class KendallTest {
     assertEquals(3.7983, new Kendall.Charectristics(y.length, tau).z, 0.001);
   }
   @Test public void testMinorityVsTypesChange() {
-     final double[] x = { 1, 1, 1, 2, 1, 2, 2, 1, 2, 2, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3, 1, 3, 3, 1, 3, 1, 3, 3, 0, 2, 1, 0, 0, 1, 0,
-        0, 1, 0, 0, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 3, 4, 3, 0, 1, 1, 1, 1, 1 },
+    final double[] x = { 1, 1, 1, 2, 1, 2, 2, 1, 2, 2, 1, 2, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1, 3, 1, 3, 3, 1, 3, 1, 3, 3, 0, 2, 1, 0, 0, 1, 0, 0, 1, 0,
+        0, 1, 1, 1, 2, 1, 2, 1, 2, 2, 2, 2, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 3, 4, 3, 0, 1, 1, 1, 1, 1 },
         y = { 1.696078431, 1.080924855, 1.417112299, 1, 1.513207547, 1.012468828, 1.002463054, 1.285012285, 1.057361377, 1.04159132, 1.305555556,
             1.022606383, 1.019607843, 1.096153846, 1.087719298, 3.112903226, 1.088082902, 1, 1.033333333, 1.032258065, 1.02346707, 1.068047337,
             1.132271468, 1.053275109, 1.272802653, 1.321172638, 1.018244576, 1.104116223, 1.071052632, 1.305896806, 1.007212292, 1.025840598,
@@ -105,14 +104,14 @@ public class KendallTest {
         new double[] { 0, 80, 80, 80, 10, 33, 60, 0, 67, 27, 25, 80, 80, 80, 80, 80, 80, 0, 10, 45 }), 0.0001);
   }
   @Test public void testTauBIdentical() {
-     final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
+    final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
     assertEquals(1, Kendall.tauB(x, x), 0.0001);
   }
   @Test public void testTauBNegated() {
     assertEquals(-1, Kendall.tauB(new double[] { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 }, new double[] { -4, -10, -3, -1, -9, -2, -6, -7, -8, -5 }), 0.0001);
   }
   @Test public void testTauIdentical() {
-     final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
+    final double[] x = { 4, 10, 3, 1, 9, 2, 6, 7, 8, 5 };
     assertEquals(1, Kendall.tau(x, x), 0.0001);
   }
   @Test public void testTauNegated() {

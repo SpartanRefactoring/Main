@@ -1,9 +1,6 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.iterables;
 
-import org.eclipse.jdt.annotation.*;
-import org.eclipse.jdt.annotation.*;
-
 /** A kind of {@link Iterable} which does not permit the rarely used
  * {@link Iterator#remove} operation and saves the user, i.e., whoever chooses
  * to <code><b>implements</b></code> this class, the trouble of providing a
@@ -13,7 +10,7 @@ import org.eclipse.jdt.annotation.*;
  * @since 2014-06-03
  * @param <T> some arbitrary type */
 public interface PureIterable<T> extends Iterable<T> {
-  @Override  PureIterator< T> iterator();
+  @Override PureIterator<T> iterator();
 
   /** A kind of {@link PureIterable} which provides an additional
    * {@link #size()} service.
@@ -38,7 +35,7 @@ public interface PureIterable<T> extends Iterable<T> {
   abstract class Sized<T> implements PureIterable<T> {
     /** see @see il.org.spartan.iterables.PureIterable#iterator()
      * (auto-generated) */
-    @Override  public PureIterator< T> iterator() {
+    @Override public PureIterator<T> iterator() {
       return null;
     }
     /** @return how many elements are there in this instance */

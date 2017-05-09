@@ -11,7 +11,7 @@ import il.org.spartan.spartanizer.research.analyses.*;
  * @since 2017-05-05 */
 public class CentToParam extends AbstractHandler {
   @Override public Object execute(final ExecutionEvent ¢) {
-    if (!notation.cent.equals("¢"))
+    if (!"¢".equals(notation.cent))
       PreferencesPage.changeBackToCent();
     else
       PreferencesPage.changeCentToParam();

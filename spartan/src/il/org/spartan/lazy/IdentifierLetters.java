@@ -1,9 +1,6 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.lazy;
 
-import org.eclipse.jdt.annotation.*;
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.*;
 
 /** Print out all Unicode characters that are pseudo-letters, and demonstrate
@@ -12,7 +9,7 @@ import il.org.spartan.*;
  * @since 2016-09-11 */
 public class IdentifierLetters {
   public static void main(final String[] args) {
-     final CSVLineWriter w = new CSVLineWriter();
+    final CSVLineWriter w = new CSVLineWriter();
     for (int ¢ = Character.MIN_CODE_POINT; ¢ <= Character.MAX_CODE_POINT; ++¢)
       if (Character.isJavaIdentifierStart(¢) && !Character.isAlphabetic(¢)) {
         w.put("Character", "'" + (char) ¢ + "'").put("Unicode", hex(¢)).put("Decimal", ¢);
@@ -24,7 +21,7 @@ public class IdentifierLetters {
         w.nl();
       }
   }
-   static String hex(final int ¢) {
+  static String hex(final int ¢) {
     return String.format("U+%0" + (¢ > 255 ? "4" : "2") + "X", Integer.valueOf(¢));
   }
 }

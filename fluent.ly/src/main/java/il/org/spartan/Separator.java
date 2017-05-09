@@ -1,8 +1,6 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 
 /** A class representing a separator string, which can be used for separating
@@ -22,7 +20,7 @@ import fluent.ly.*;
  * @since 12/02/2006) */
 public final class Separator {
   /** @param args JD */
-  public static void main( final String[] args) {
+  public static void main(final String[] args) {
     for (final String a : args)
       System.out.print(new Separator(", ") + a);
   }
@@ -30,11 +28,11 @@ public final class Separator {
    * @param is JD
    * @param between what to put between the items
    * @return String value of method <code>separateBy</code> */
-   public static String separateBy( final int[] is, final String between) {
+  public static String separateBy(final int[] is, final String between) {
     if (is.length == 0)
       return "";
-     String $ = "";
-     final Separator s = new Separator(between);
+    String $ = "";
+    final Separator s = new Separator(between);
     for (final int ¢ : is)
       $ += s + (Integer.valueOf(¢) + "");
     return $;
@@ -44,7 +42,7 @@ public final class Separator {
    * @param between what to put between the items
    * @param ts JD
    * @return the parameters separated */
-   public static <T> String separateBy(final String between,  final T[] ts) {
+  public static <T> String separateBy(final String between, final T[] ts) {
     return wrap("", "", ts, between);
   }
   /** <code>wrap</code>
@@ -53,7 +51,7 @@ public final class Separator {
    * @param ts JD
    * @param between what to put between the items
    * @return String value of method <code>wrap</code> */
-   public static <T> String wrap( final String wrap,  final Iterable<T> ts, final String between) {
+  public static <T> String wrap(final String wrap, final Iterable<T> ts, final String between) {
     return wrap(wrap, wrap, ts, between);
   }
   /** @param <T> JD
@@ -62,11 +60,11 @@ public final class Separator {
    * @param ts JD
    * @param between what to put between the items
    * @return String <code>wrap</code> */
-   public static <T> String wrap( final String begin, final String end,  final Iterable<T> ts, final String between) {
+  public static <T> String wrap(final String begin, final String end, final Iterable<T> ts, final String between) {
     if (is.empty(ts))
       return "";
-     final StringBuilder $ = new StringBuilder(begin);
-     final Separator s = new Separator(between);
+    final StringBuilder $ = new StringBuilder(begin);
+    final Separator s = new Separator(between);
     for (final T ¢ : ts)
       $.append(s).append(¢);
     return as.string($.append(end));
@@ -76,11 +74,11 @@ public final class Separator {
    * @param end what to place after the items
    * @param ts JD
    * @param between what to put between the items */
-   public static <T> String wrap( final String begin, final String end,  final T[] ts, final String between) {
+  public static <T> String wrap(final String begin, final String end, final T[] ts, final String between) {
     if (ts.length == 0)
       return "";
-     final StringBuilder $ = new StringBuilder(begin);
-     final Separator s = new Separator(between);
+    final StringBuilder $ = new StringBuilder(begin);
+    final Separator s = new Separator(between);
     for (final T ¢ : ts)
       $.append(s).append(¢);
     return as.string($.append(end));

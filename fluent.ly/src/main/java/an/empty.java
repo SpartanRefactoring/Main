@@ -2,8 +2,6 @@ package an;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 
 /** TODO Yossi Gil: document class
@@ -17,7 +15,7 @@ public enum empty {
   public static <T> List<T> list() {
     return new ArrayList<>();
   }
-  public static < T> Iterable<T> iterable() {
+  public static <T> Iterable<T> iterable() {
     return () -> new Iterator<T>() {
       @Override public boolean hasNext() {
         return false;

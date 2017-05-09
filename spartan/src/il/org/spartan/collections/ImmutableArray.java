@@ -3,8 +3,6 @@ package il.org.spartan.collections;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.streotypes.*;
 
 /** An immutable array of any reference type.
@@ -28,7 +26,7 @@ public class ImmutableArray<T> implements Iterable<T> {
   public T get(final int ¢) {
     return implementation[¢];
   }
-  @Override  public Iterator<T> iterator() {
+  @Override public Iterator<T> iterator() {
     return new Iterator<T>() {
       int i;
 

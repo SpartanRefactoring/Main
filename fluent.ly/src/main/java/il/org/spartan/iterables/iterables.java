@@ -6,8 +6,6 @@ import static org.junit.Assert.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import an.*;
@@ -22,21 +20,21 @@ public enum iterables {
    * @param <T> some arbitrary type
    * @param ts some iterable over items whose type is the type parameter
    * @return number of items the given iterable yields. */
-  public static <T> int count(final  Iterable<T> ts) {
+  public static <T> int count(final Iterable<T> ts) {
     int $ = 0;
     if (ts != null)
-      for (final  T ¢ : ts)
+      for (final T ¢ : ts)
         $ += as.bit(¢ != null);
     return $;
   }
   /** @param <T> JD
    * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
-   public static <T> Iterable<T> empty() {
+  public static <T> Iterable<T> empty() {
     return iterable.over();
   }
   /** @param os JD */
-  public static boolean isEmpty( final Iterable<?> os) {
-    for ( final Object name2 : os)
+  public static boolean isEmpty(final Iterable<?> os) {
+    for (final Object name2 : os)
       if (name2 != null)
         return false;
     return true;

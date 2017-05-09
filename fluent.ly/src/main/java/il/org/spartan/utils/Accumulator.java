@@ -2,7 +2,6 @@ package il.org.spartan.utils;
 
 import static fluent.ly.azzert.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -57,7 +56,7 @@ public abstract class Accumulator {
       add();
       return value();
     }
-    @Override  public String toString() {
+    @Override public String toString() {
       return value + "";
     }
     @Override protected int transform(final int v) {
@@ -67,7 +66,7 @@ public abstract class Accumulator {
     @SuppressWarnings("static-method")
     public static class TEST {
       @Test public void booleanAdds() {
-         final Counter c = new Counter();
+        final Counter c = new Counter();
         azzert.that(c.value(), is(0));
         c.add(true);
         azzert.that(c.value(), is(1));
@@ -81,7 +80,7 @@ public abstract class Accumulator {
         azzert.that(c.value(), is(3));
       }
       @Test public void emptyAdds() {
-         final Counter c = new Counter();
+        final Counter c = new Counter();
         for (int ¢ = 0; ¢ < 19; ++¢)
           c.add();
         azzert.that(c.value(), is(19));
@@ -107,7 +106,7 @@ public abstract class Accumulator {
     @SuppressWarnings("static-method")
     public static class TEST {
       @Test public void booleanAdds() {
-         final Last c = new Last();
+        final Last c = new Last();
         azzert.that(as.bit(false), is(0));
         azzert.that(c.value(), is(0));
         c.add(true);
@@ -123,7 +122,7 @@ public abstract class Accumulator {
         azzert.that(c.value(), is(1));
       }
       @Test public void emptyAdds() {
-         final Last c = new Last();
+        final Last c = new Last();
         for (int ¢ = 0; ¢ < 19; ++¢)
           c.add(¢);
         c.add(11);

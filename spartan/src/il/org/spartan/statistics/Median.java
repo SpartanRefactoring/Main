@@ -4,8 +4,6 @@ import static fluent.ly.box.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.streotypes.*;
 import il.org.spatan.iteration.*;
 
@@ -14,26 +12,25 @@ import il.org.spatan.iteration.*;
 @Utility
 public enum Median {
   ;
-  public static double destructiveMad( final double... ds) {
+  public static double destructiveMad(final double... ds) {
     final int n = ds.length;
-    final double median = destructiveMedian(ds);
-     final double $[] = new double[n];
+    final double median = destructiveMedian(ds), $[] = new double[n];
     for (int ¢ = 0; ¢ < n; ++¢)
       $[¢] = Math.abs(ds[¢] - median);
     return destructiveMedian($);
   }
-  public static double destructiveMedian( final double... ¢) {
+  public static double destructiveMedian(final double... ¢) {
     Arrays.sort(¢);
     return (¢[¢.length / 2] + ¢[(¢.length - 1) / 2]) / 2;
   }
-  public static double mad( final double... ¢) {
+  public static double mad(final double... ¢) {
     return destructiveMad(¢.clone());
   }
-  public static double median( final double... ¢) {
+  public static double median(final double... ¢) {
     return destructiveMedian(¢.clone());
   }
-   public static double[] prune( final double... ds) {
-     final List<Double> $ = new ArrayList<>();
+  public static double[] prune(final double... ds) {
+    final List<Double> $ = new ArrayList<>();
     final double median = destructiveMedian(ds), mad = mad(ds);
     for (final double ¢ : ds)
       if (median - 2 * mad <= ¢ && ¢ <= median + 2 * mad)

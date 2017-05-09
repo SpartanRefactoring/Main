@@ -24,7 +24,7 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
     final DoStatement $ = create.newDoStatement();
     $.setExpression(copy.of(make.notOf(step.expression(az.ifStatement(extract.lastStatement(s))))));
     final Block b = create.newBlock();
-     final List<Statement> ss = extract.statements(copy.of(step.body(s)));
+    final List<Statement> ss = extract.statements(copy.of(step.body(s)));
     for (final Statement x : ss.subList(0, ss.size() - 1))
       step.statements(b).add(copy.of(x));
     $.setBody(b);

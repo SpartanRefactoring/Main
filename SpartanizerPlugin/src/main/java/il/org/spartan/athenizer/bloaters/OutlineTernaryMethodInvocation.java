@@ -26,9 +26,8 @@ import il.org.spartan.utils.*;
 public class OutlineTernaryMethodInvocation extends MethodInvocationPattern//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x54464757E1B1C1A1L;
-  
   ConditionalExpression $;
-  
+
   public OutlineTernaryMethodInvocation() {
     andAlso("Parent is not a lambda lxpression", () -> !iz.lambdaExpression(current.getParent()));
     andAlso("There is at least one argument", () -> !arguments.isEmpty());
@@ -45,7 +44,7 @@ public class OutlineTernaryMethodInvocation extends MethodInvocationPattern//
   }
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final MethodInvocation whenTrue = copy.of(current), whenFalse = copy.of(current);
-    int i = arguments.indexOf($);
+    final int i = arguments.indexOf($);
     arguments(whenTrue).remove(i);
     arguments(whenTrue).add(i, copy.of(then($)));
     arguments(whenFalse).remove(i);

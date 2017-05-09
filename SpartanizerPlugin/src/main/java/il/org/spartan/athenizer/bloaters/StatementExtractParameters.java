@@ -66,8 +66,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     try {
       ir.rewriteImports(new NullProgressMonitor());
       types.set(ir.getCompilationUnit().getAllTypes());
-    } catch (CoreException e) {
-      note.bug(e);
+    } catch (final CoreException ¢) {
+      note.bug(¢);
       return null;
     }
     // TODO Ori Roth: enable assignments extraction + check the
@@ -156,19 +156,19 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   /** Manual addition of imports recorded in the {@link ImportRewrite} object.
    * @param s
    * @param r
-   * @param types
+   * @param ts
    * @param g
    * @param ilr
    * @param isTpLevel */
-  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> types, final TextEditGroup g, final ListRewrite ilr,
-      boolean isTopLevel) {
+  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> ts, final TextEditGroup g, final ListRewrite ilr,
+      final boolean isTopLevel) {
     final Collection<String> idns = an.empty.list();
     if (r.getCreatedImports() != null)
       idns.addAll(as.list(r.getCreatedImports()));
     if (r.getCreatedStaticImports() != null)
       idns.addAll(as.list(r.getCreatedStaticImports()));
     for (final String idn : idns) {
-      if (isTopLevel && Arrays.stream(types.get()).anyMatch(λ -> idn.equals(λ.getFullyQualifiedName('.'))))
+      if (isTopLevel && Arrays.stream(ts.get()).anyMatch(λ -> idn.equals(λ.getFullyQualifiedName('.'))))
         continue;
       final ImportDeclaration id = s.getAST().newImportDeclaration();
       id.setName(s.getAST().newName(idn));
@@ -238,16 +238,16 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   private static Expression choose(final List<Expression> ¢) {
     return the.headOf(¢);
   }
-  private static boolean captureRisk(ITypeBinding binding) {
+  private static boolean captureRisk(final ITypeBinding binding) {
     if (binding == null)
       return true;
-    Set<String> seenCaptures = new HashSet<>();
-    for (ITypeBinding b : binding.getTypeArguments()) {
-      Pattern pattern = Pattern.compile("capture#(.*?)-of");
-      Matcher matcher = pattern.matcher(b.toString());
+    final Set<String> seenCaptures = new HashSet<>();
+    for (final ITypeBinding b : binding.getTypeArguments()) {
+      final Pattern pattern = Pattern.compile("capture#(.*?)-of");
+      final Matcher matcher = pattern.matcher(b + "");
       if (matcher.find())
         for (int i = 1; i <= matcher.groupCount(); ++i) {
-          String capture = matcher.group(i);
+          final String capture = matcher.group(i);
           if (seenCaptures.contains(capture))
             return true;
           seenCaptures.add(capture);

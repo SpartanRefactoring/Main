@@ -1,7 +1,5 @@
 package il.org.spartan.xy;
 
-import org.eclipse.jdt.annotation.*;
-
 /** @author Yossi Gil
  * @since February 22, 2012 */
 public class WeightedDisribution {
@@ -22,7 +20,7 @@ public class WeightedDisribution {
   public double mean2() {
     return sum2 / sumw;
   }
-   public WeightedDisribution record(final double x, final double w) {
+  public WeightedDisribution record(final double x, final double w) {
     sumw += w;
     sum += w * x;
     sum2 += w * x * x;

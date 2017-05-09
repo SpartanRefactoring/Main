@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -16,7 +15,7 @@ import fluent.ly.*;
  * @author Yossi Gil
  * @since Apr 27, 2012 */
 public class DoublesWindow {
-   private final double[] window;
+  private final double[] window;
   private int newest;
   private int size;
 
@@ -31,7 +30,7 @@ public class DoublesWindow {
   /** add a value into the window, removing the oldest one if necessary
    * @param ¢ an arbitrary value
    * @return <code><strong>this</strong></code> */
-   public DoublesWindow add(final double ¢) {
+  public DoublesWindow add(final double ¢) {
     if (size < window.length)
       ++size;
     window[newest = (newest + 1) % window.length] = ¢;
@@ -127,7 +126,7 @@ public class DoublesWindow {
       assertEquals(13.2, new DoublesWindow(10).add(13.2).oldest(), 1E-5);
     }
     @Test public void veryLongWindow() {
-       final DoublesWindow w = new DoublesWindow(5);
+      final DoublesWindow w = new DoublesWindow(5);
       for (int ¢ = 0; ¢ < 5; ++¢) {
         azzert.that(w.capacity(), is(5));
         azzert.that(w.size(), is(¢));

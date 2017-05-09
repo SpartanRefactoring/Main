@@ -1,8 +1,6 @@
 /** Copyright */
 package il.org.spatan.iteration;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spatan.iteration.Iterables.*;
 
 /** An array {@linkplain "http://en.wikipedia.org/wiki/Adapter_pattern Adapter"}
@@ -21,7 +19,7 @@ public class IterableArray<T> implements Iterable<T> {
   public int count() {
     return ts.length;
   }
-  @Override  public ArrayIterator<T> iterator() {
+  @Override public ArrayIterator<T> iterator() {
     return new ArrayIterator<>(ts);
   }
 

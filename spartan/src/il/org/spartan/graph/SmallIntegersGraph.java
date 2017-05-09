@@ -1,7 +1,5 @@
 package il.org.spartan.graph;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.collections.*;
 
 /** @author Yossi Gil
@@ -20,7 +18,7 @@ public abstract class SmallIntegersGraph {
     return !has(¢) ? -1 : component((short) ¢);
   }
   public final short components() {
-     final Integers $ = new Integers();
+    final Integers $ = new Integers();
     for (final short n : nodes)
       $.add(component(n));
     return (short) $.size();
