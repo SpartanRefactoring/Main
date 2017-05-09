@@ -100,9 +100,9 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     setSingleParameterRenaming(singleParameterRadio, getFieldEditorParent());
     // GUI for renaming return statement variable radio + textbox for others
     final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" } };
-    /* TODO: Add more advanced options for naming { "typeCamelCase",
+    /* TODO: Dor Maayan, Add more advanced options for naming { "typeCamelCase",
      * "typeCamelCase" }, { "Function name", "Function's name" }, { "Other",
-     * "Other" } }; */
+     * "Other" } };  -rr */
     returnParameterRadio = new RadioGroupFieldEditor("Dollar", "Method return variable rename to:", 3, labelAndValues, getFieldEditorParent());
     addField(returnParameterRadio);
     // TODO: Add more advanced options for naming final StringFieldEditor other
