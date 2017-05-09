@@ -528,9 +528,9 @@ public enum extract {
     final List<SimpleName> $ = new LinkedList<>();
     for (Name q = n; q != null; q = !iz.qualifiedName(q) ? null : az.qualifiedName(q).getQualifier())
       if (iz.qualifiedName(q))
-        $.add(az.qualifiedName(q).getName());
+        $.add(0, az.qualifiedName(q).getName());
       else
-        $.add(az.simpleName(q));
+        $.add(0, az.simpleName(q));
     return $;
   }
 }
