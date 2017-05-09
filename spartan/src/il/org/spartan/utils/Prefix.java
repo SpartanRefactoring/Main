@@ -1,7 +1,5 @@
 package il.org.spartan.utils;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spatan.iteration.*;
 import fluent.ly.*;
 
@@ -9,30 +7,30 @@ import fluent.ly.*;
  * @author Yossi Gil
  * @param <T> type of objects in the set */
 public class Prefix<T> {
-   public static String trim(final String prefix,  final String s) {
-    for ( String $ = defaults.to(prefix, s);; $ = shorten($))
+  public static String trim(final String prefix, final String s) {
+    for (String $ = defaults.to(prefix, s);; $ = shorten($))
       if (s.startsWith($))
         return $;
   }
-  private static String shorten( final String ¢) {
+  private static String shorten(final String ¢) {
     return ¢.substring(0, ¢.length() - 2);
   }
-   private static <T> String trim( final Iterable<T> ts) {
-     String $ = null;
+  private static <T> String trim(final Iterable<T> ts) {
+    String $ = null;
     for (final T ¢ : ts)
       $ = trim($, ¢ + "");
     return $;
   }
 
-   private final String prefix;
+  private final String prefix;
 
-  public Prefix( final Iterable<T> ts) {
+  public Prefix(final Iterable<T> ts) {
     this.prefix = trim(ts);
   }
   public Prefix(final T[] ts) {
     this(Iterables.make(ts));
   }
-   public String trim(final T ¢) {
+  public String trim(final T ¢) {
     return (¢ + "").substring(prefix.length());
   }
 }

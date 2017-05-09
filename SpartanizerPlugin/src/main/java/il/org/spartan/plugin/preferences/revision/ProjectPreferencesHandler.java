@@ -111,7 +111,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   private static SpartanPreferencesDialog getDialog(final Map<SpartanCategory, SpartanElement[]> m) {
     if (Display.getCurrent().getActiveShell() == null || m == null)
       return null;
-    final List<SpartanElement> _es = m.keySet().stream().filter(c -> !TipperCategory.reversedHierarchy.containsKey(c.categoryClass()))
+    final List<SpartanElement> _es = m.keySet().stream().filter(λ -> !TipperCategory.reversedHierarchy.containsKey(λ.categoryClass()))
         .collect(Collectors.toList());
     final SpartanElement[] es = _es.toArray(new SpartanElement[_es.size()]);
     final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
@@ -153,8 +153,8 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     $.setContainerMode(true);
     $.setInput(new Object()); // vio: very important object
     final Collection<SpartanElement> et = an.empty.list();
-    for (final SpartanCategory c : m.keySet())
-      collectEnabledTippersInto(c, et);
+    for (final SpartanCategory ¢ : m.keySet())
+      collectEnabledTippersInto(¢, et);
     $.setInitialSelections(et.toArray(new SpartanElement[et.size()]));
     $.setHelpAvailable(false);
     $.setComparator(new ViewerComparator(String::compareToIgnoreCase));
@@ -193,18 +193,18 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (o instanceof SpartanElement)
             createTooltip((SpartanElement) o, i.getBounds());
         }
-        void createTooltip(final SpartanElement t, final Rectangle r) {
+        void createTooltip(final SpartanElement e, final Rectangle r) {
           tooltips.values().forEach(λ -> λ.setVisible(false));
-          if (!tooltips.containsKey(t)) {
+          if (!tooltips.containsKey(e)) {
             final ToolTip tt = new ToolTip(getShell(), SWT.ICON_INFORMATION);
-            tt.setMessage(t.description());
+            tt.setMessage(e.description());
             tt.setAutoHide(true);
-            tooltips.put(t, tt);
+            tooltips.put(e, tt);
           }
           final Rectangle tp = $.getTree().getBounds();
           final Point tl = Display.getCurrent().getActiveShell().toDisplay(tp.x + r.x, tp.y + r.y);
           final Rectangle tr = new Rectangle(tl.x, tl.y, r.width, r.height);
-          final ToolTip tt = tooltips.get(t);
+          final ToolTip tt = tooltips.get(e);
           bounds.put(tt, tr);
           tt.setLocation(tr.x + tr.width, tr.y);
           tt.setVisible(true);
@@ -297,10 +297,10 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       return s1;
     });
   }
-  private static void collectEnabledTippersInto(SpartanElement c, Collection<SpartanElement> et) {
+  private static void collectEnabledTippersInto(final SpartanElement c, final Collection<SpartanElement> et) {
     if (c instanceof SpartanTipper && c.enabled())
       et.add(c);
     else
-      Arrays.stream(c.getChildren()).forEach(e -> collectEnabledTippersInto(e, et));
+      Arrays.stream(c.getChildren()).forEach(λ -> collectEnabledTippersInto(λ, et));
   }
 }

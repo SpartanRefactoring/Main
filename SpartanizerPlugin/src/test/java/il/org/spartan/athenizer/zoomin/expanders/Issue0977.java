@@ -48,9 +48,8 @@ public class Issue0977 {
     bloatingOf("switch (x) { case 1: case 2: int y = f(); return y + 1; }").needRenaming(false)
         .gives("switch (x) { case 1: int y1 = f(); return y1 + 1; case 2: int y = f(); return y + 1; }");
   }
-  
   @Test public void testBreakBug() {
-    bloatingOf("switch (x) { case 1: int y = f(); case 3: try {return; } catch(Exception e) { return;} }").needRenaming(false)
-        .gives("switch (x) { case 1: int y = f(); try {return; } catch(Exception e) { return;} case 3: try {return; } catch(Exception e) { return;} }");
+    bloatingOf("switch (x) { case 1: int y = f(); case 3: try {return; } catch(Exception e) { return;} }").needRenaming(false).gives(
+        "switch (x) { case 1: int y = f(); try {return; } catch(Exception e) { return;} case 3: try {return; } catch(Exception e) { return;} }");
   }
 }

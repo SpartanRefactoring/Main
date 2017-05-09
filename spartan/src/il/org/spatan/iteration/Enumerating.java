@@ -1,30 +1,28 @@
 package il.org.spatan.iteration;
 
-import org.eclipse.jdt.annotation.*;
-
 /** A codex recording a given <i>enumeration</i>, i;.e., fixed mapping of a set
  * of n elements of a specified type into the integers 0,..., n-1.
  * @author Yossi Gil
  * @since Dec 3, 2009
  * @param <T> Type of encoded elements. */
 public class Enumerating<T> extends Codex.Anchored<T> {
-   private static int[] invert( final int[] is) {
-     final int[] $ = new int[is.length];
+  private static int[] invert(final int[] is) {
+    final int[] $ = new int[is.length];
     for (int ¢ = 0; ¢ < is.length; ++¢)
       $[is[¢]] = ¢;
     return $;
   }
 
   private final Codex.Anchored<T> codex;
-   private final int[] rankOf;
-   private final int[] withRank;
+  private final int[] rankOf;
+  private final int[] withRank;
 
   /** Instantiate this class with a given codex and ranking vector.
    * @param codex an arbitrary object encoding of some set
    * @param rankOf a vector defining ranks of the objects in this set. All ranks
    *        (i.e., elements of this array) must be in the range 0,..., n-1 and
    *        no two positions in this array should have the same value. */
-  public Enumerating(final Codex.Anchored<T> codex,  final int[] rankOf) {
+  public Enumerating(final Codex.Anchored<T> codex, final int[] rankOf) {
     this.codex = codex;
     this.rankOf = rankOf;
     this.withRank = invert(rankOf);

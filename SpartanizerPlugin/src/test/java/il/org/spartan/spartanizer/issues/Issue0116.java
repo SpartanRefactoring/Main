@@ -46,8 +46,7 @@ public final class Issue0116 extends TipperTest<InfixExpression> {
   }
   @Test public void issue116_08() {
     trimmingOf("return \"Use \" + (x == null ? \"\" : \"\" + x  + \".\")+\"isEmpty()\";")
-        .gives("return \"Use \" + (x == null ? \"\" : x +\"\" + \".\")+\"isEmpty()\";")
-        ;
+        .gives("return \"Use \" + (x == null ? \"\" : x +\"\" + \".\")+\"isEmpty()\";");
   }
   @Test public void issue1245() {
     trimmingOf("\"\"+\"abc\"").stays();

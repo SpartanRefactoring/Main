@@ -3,8 +3,6 @@ package il.org.spartan.strings;
 
 import java.io.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.streotypes.*;
 
 /** A <b>utility</b> class, providing services of determining whether a
@@ -39,7 +37,7 @@ public enum Suffixed {
    * @param suffixes a list of potential extensions.
    * @return <code><b>true</b></code> <em>iff</em>the file name ends with any
    *         one of the supplied extensions. */
-  public static boolean by( final File f, final String... suffixes) {
+  public static boolean by(final File f, final String... suffixes) {
     return by(f.getName(), suffixes);
   }
   /** Determine whether a string ends with any one of the supplied suffixes.
@@ -47,8 +45,8 @@ public enum Suffixed {
    * @param suffixes a list of potential suffixes
    * @return <code><b>true</b></code> <em>iff</em> <code>s</code> ends with any
    *         one of the supplied suffixes. */
-  public static boolean by( final String s,  final String... suffixes) {
-    for ( final String end : suffixes)
+  public static boolean by(final String s, final String... suffixes) {
+    for (final String end : suffixes)
       if (s.endsWith(end))
         return true;
     return false;

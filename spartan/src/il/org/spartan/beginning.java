@@ -3,7 +3,6 @@ package il.org.spartan;
 
 import static fluent.ly.azzert.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import il.org.spartan.iterables.*;
 import fluent.ly.*;
@@ -26,10 +25,10 @@ public interface beginning {
                 .endingWith(")").ifEmpty("[]") //
     );
   }
-   static with with(final char ¢) {
+  static with with(final char ¢) {
     return with(¢ + "");
   }
-   static with with(final String ¢) {
+  static with with(final String ¢) {
     return new with(¢);
   }
 
@@ -39,7 +38,7 @@ public interface beginning {
       azzert.that(beginning.with("a").separate("x", "y").by(",").endingWith("c") + "", is("ax,yc"));
     }
     @Test public void withType() {
-       final Object endingWith = beginning.with("a").separate("x", "y").by(",").endingWith("c");
+      final Object endingWith = beginning.with("a").separate("x", "y").by(",").endingWith("c");
       assert endingWith != null;
       azzert.that(endingWith + "", is("ax,yc"));
     }
@@ -56,10 +55,10 @@ public interface beginning {
     public String beginWith() {
       return beginWith;
     }
-     public C separate(final Iterable<?> os) {
+    public C separate(final Iterable<?> os) {
       return new C(os);
     }
-     public C separate(final String... ¢) {
+    public C separate(final String... ¢) {
       return new C(as.list(¢));
     }
 
@@ -69,16 +68,16 @@ public interface beginning {
       C(final Iterable<?> os) {
         this.os = os;
       }
-       public D by(final String between) {
+      public D by(final String between) {
         return new D(between);
       }
-       public D byCommas() {
+      public D byCommas() {
         return by(COMMA);
       }
-       public D bySpaces() {
+      public D bySpaces() {
         return by(SPACE);
       }
-       public C pruned() {
+      public C pruned() {
         return new with(beginWith()).new C(as.list(prune.whites(as.strings(os))));
       }
       boolean nothing() {
@@ -96,13 +95,13 @@ public interface beginning {
         public D(final String separator) {
           this.separator = separator;
         }
-         public E endingWith(final String ¢) {
+        public E endingWith(final String ¢) {
           return new E(¢);
         }
         public String separator() {
           return separator;
         }
-        @Override  public String toString() {
+        @Override public String toString() {
           return nothing() ? ifEmpty : beginWith() + separate.these(these()).by(separator()) + endWith;
         }
 
@@ -110,10 +109,10 @@ public interface beginning {
           public E(final String endWith) {
             D.this.endWith = endWith;
           }
-           public I ifEmpty(final String ¢) {
+          public I ifEmpty(final String ¢) {
             return new I(¢);
           }
-          @Override  public String toString() {
+          @Override public String toString() {
             return D.this + "";
           }
 
@@ -121,7 +120,7 @@ public interface beginning {
             public I(final String ifEmpty) {
               D.this.ifEmpty = ifEmpty;
             }
-            @Override  public String toString() {
+            @Override public String toString() {
               return E.this + "";
             }
           }

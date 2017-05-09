@@ -6,7 +6,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -15,7 +14,7 @@ import il.org.spatan.iteration.*;
 
 @SuppressWarnings("static-method")
 public class GraphTest {
-  static void verifyEdge( final Graph<String> s, final int from, final int to) {
+  static void verifyEdge(final Graph<String> s, final int from, final int to) {
     assert s.vertices().get(from) != null;
     assert s.vertices().get(to) != null;
     assert s.vertices().get(from).outgoing() != null;
@@ -23,103 +22,101 @@ public class GraphTest {
     verifyFound(s.vertices().get(from).outgoing(), s.vertices().get(to));
     verifyFound(s.vertices().get(to).incoming(), s.vertices().get(from));
   }
-  static void verifyEdge( final Graph<String> s, final String from, final String to) {
+  static void verifyEdge(final Graph<String> s, final String from, final String to) {
     verifyEdge(s, index(s, from), index(s, to));
   }
-  static void verifyGraph( final Graph<String> ¢) {
+  static void verifyGraph(final Graph<String> ¢) {
     verifyVertices(¢);
     verifySources(¢);
     verifySinks(¢);
     verifyPreorder(¢);
   }
-  static void verifyGraphsEquivlanet( final Graph<String> g1,  final Graph<String> g2) {
+  static void verifyGraphsEquivlanet(final Graph<String> g1, final Graph<String> g2) {
     assertEquals(g1.size(), g2.size());
     if (!g1.isEmpty())
-      for ( final Vertex<String> sv : g1.vertices()) {
+      for (final Vertex<String> sv : g1.vertices()) {
         final Vertex<String> v = g2.vertex(sv.e());
         assertEquals(sv.e(), v.e());
         assertEquals(sv.incoming().size(), v.incoming().size());
-        for ( final Vertex<String> incomingIndex : sv.incoming())
+        for (final Vertex<String> incomingIndex : sv.incoming())
           verifyEdge(g2, incomingIndex.e(), sv.e());
         assertEquals(sv.outgoing().size(), v.outgoing().size());
-        for ( final Vertex<String> outgoingIndex : sv.outgoing())
+        for (final Vertex<String> outgoingIndex : sv.outgoing())
           verifyEdge(g2, v.e(), outgoingIndex.e());
       }
   }
-  static void verifyPreorder( final Graph<String> s) {
+  static void verifyPreorder(final Graph<String> s) {
     verifyCollection(s, s.preOrder(), s.vertices().size(), λ -> verifyVertex(s, λ.e()));
   }
-  static void verifySink( final Graph<String> s, final String sink) {
+  static void verifySink(final Graph<String> s, final String sink) {
     verifySink(s, s.vertex(sink));
   }
-  static void verifySink( final Graph<String> s,  final Vertex<String> v) {
+  static void verifySink(final Graph<String> s, final Vertex<String> v) {
     assertEquals(0, s.outgoing(v).size());
   }
-  static void verifySinks( final Graph<String> s) {
+  static void verifySinks(final Graph<String> s) {
     verifyCollection(s, s.sinks(), s.sinksCount(), λ -> verifySink(s, λ));
   }
-  static void verifySource( final Graph<String> s, final String source) {
+  static void verifySource(final Graph<String> s, final String source) {
     verifySource(s, s.vertex(source));
   }
-  static void verifySource( final Graph<String> s,  final Vertex<String> v) {
+  static void verifySource(final Graph<String> s, final Vertex<String> v) {
     assert s.isSource(v);
     assertEquals(0, v.incoming().size());
   }
-  static void verifySources( final Graph<String> s) {
+  static void verifySources(final Graph<String> s) {
     verifyCollection(s, s.sources(), s.sourcesCount(), λ -> verifySource(s, λ));
   }
-  static void verifyVertex( final Graph<String> s,  final String... vertices) {
-    for ( final String vertex : vertices)
+  static void verifyVertex(final Graph<String> s, final String... vertices) {
+    for (final String vertex : vertices)
       assert vertex != null : s.vertex(vertex);
     for (final String vertex : vertices)
       verifyVertex(s, s.vertex(vertex));
   }
-  static void verifyVertex( final Graph<String> s,  final Vertex<String> v) {
+  static void verifyVertex(final Graph<String> s, final Vertex<String> v) {
     assert v != null;
     assert index(s, v) >= 0;
     assert index(s, v) < s.size();
     assertEquals(v, s.vertices().get(index(s, v)));
   }
-  static void verifyVertices( final Graph<String> s) {
+  static void verifyVertices(final Graph<String> s) {
     verifyCollection(s, s.vertices(), s.size(), λ -> verifyVertex(s, λ));
   }
-  private static boolean among( final String what,  final String... where) {
+  private static boolean among(final String what, final String... where) {
     for (final String ¢ : where)
       if (what.equals(¢))
         return true;
     return false;
   }
-  private static int index( final Graph<String> s, final String v) {
+  private static int index(final Graph<String> s, final String v) {
     for (int $ = 0; $ < s.vertices().size(); ++$)
       if (s.vertices().get($).e().equals(v))
         return $;
     return -1;
   }
-  private static int index( final Graph<String> s, final Vertex<String> v) {
+  private static int index(final Graph<String> s, final Vertex<String> v) {
     for (int $ = 0; $ < s.vertices().size(); ++$)
       if (s.vertices().get($) == v)
         return $;
     return -1;
   }
-  private static void verifyCollection( final Graph<String> s,  final ImmutableArrayList<Vertex<String>> vs, final int size,
-       final Query q) {
+  private static void verifyCollection(final Graph<String> s, final ImmutableArrayList<Vertex<String>> vs, final int size, final Query q) {
     assert vs != null;
     for (final Vertex<String> ¢ : vs)
       q.test(¢);
     assertEquals(size, vs.size());
-     final boolean[] seen = new boolean[s.size()];
+    final boolean[] seen = new boolean[s.size()];
     for (final Vertex<String> ¢ : vs) {
       assert !seen[index(s, ¢)];
       seen[index(s, ¢)] = true;
     }
   }
-  private static void verifyCollection( final Graph<String> s,  final Iterable<Vertex<String>> ss, final int length,
-       final Query q) {
+  private static void verifyCollection(final Graph<String> s, final Iterable<Vertex<String>> ss, final int length, final Query q) {
     assert ss != null;
     for (final Vertex<String> ¢ : ss)
       q.test(¢);
     assertEquals(length, Iterables.count(ss));
-     final boolean[] seen = new boolean[s.size()];
+    final boolean[] seen = new boolean[s.size()];
     for (final Vertex<String> ¢ : ss) {
       assert !seen[index(s, ¢)];
       seen[index(s, ¢)] = true;
@@ -129,7 +126,7 @@ public class GraphTest {
     azzert.that(s, hasItem(u));
   }
   @Test public void builderAddGraph() {
-     final Graph<String> src = new Graph.Builder<String>() //
+    final Graph<String> src = new Graph.Builder<String>() //
         .newEdge("A", "C").newEdge("B", "C").newEdge("C", "D")//
         .newEdge("C", "E").newEdge("F", "G").newEdge("H", "I")//
         .newEdge("I", "H").newVertex("J")//
@@ -137,7 +134,7 @@ public class GraphTest {
     verifyGraph(src);
     verifyVertex(src, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
     assertEquals(10, src.size());
-     final Graph<String> g = new Graph.Builder<String>().addGraph(src).build();
+    final Graph<String> g = new Graph.Builder<String>().addGraph(src).build();
     verifyVertex(g, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J");
     assertEquals(10, g.size());
     verifyGraphsEquivlanet(src, g);
@@ -158,7 +155,7 @@ public class GraphTest {
     assertEquals("empty" + NamedEntity.INVERTED, new Graph.Builder<String>("empty").build().invert().name());
   }
   @Test public void flowGraph() {
-     final Graph<String> g = new Graph.Builder<String>()//
+    final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("START", "END", "a") //
         .outgoing("a", "b", "c") //
         .outgoing("b", "c")//
@@ -181,7 +178,7 @@ public class GraphTest {
       assertEquals(g.vertex("START"), g.source(¢));
   }
   @Test public void invertedTree() {
-     final Graph<String> g = makeInvertedTree();
+    final Graph<String> g = makeInvertedTree();
     assert among(g.source(g.vertex("A")).e(), "A");
     assert among(g.source(g.vertex("B")).e(), "B");
     assert among(g.source(g.vertex("C")).e(), "C");
@@ -191,7 +188,7 @@ public class GraphTest {
     assert among(g.source(g.vertex("G")).e(), "A", "B", "C", "D");
   }
   @Test public void invertedTreeLoops() {
-     final Graph<String> g = makeInvertedTreeWithLoops();
+    final Graph<String> g = makeInvertedTreeWithLoops();
     assert among(g.source(g.vertex("A")).e(), "A");
     assert among(g.source(g.vertex("B")).e(), "B");
     assert among(g.source(g.vertex("C")).e(), "C");
@@ -201,7 +198,7 @@ public class GraphTest {
     assert among(g.source(g.vertex("G")).e(), "A", "B", "C", "D");
   }
   @Test public void namedTriagle() {
-     final Graph<String> g = new Graph.Builder<String>()//
+    final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("root", "side", "tail") //
         .outgoing("side", "tail") //
         .build();
@@ -212,7 +209,7 @@ public class GraphTest {
       assertEquals(g.vertex("root"), g.source(¢));
   }
   @Test public void numbersTriagleExample() {
-     final Graph<String> g = makeOneTwoThreeTrianble();
+    final Graph<String> g = makeOneTwoThreeTrianble();
     assertEquals(g.vertex("one"), g.source(g.vertex("one")));
     assertEquals(g.vertex("one"), g.source(g.vertex("two")));
     assertEquals(g.vertex("one"), g.source(g.vertex("three")));
@@ -220,7 +217,7 @@ public class GraphTest {
       assertEquals(g.vertex("one"), g.source(¢));
   }
   @Test public void singleEdgeGraph() {
-     final Graph<String> g = makeSingleEdge();
+    final Graph<String> g = makeSingleEdge();
     assertEquals(2, g.size());
     assertEquals(1, g.sourcesCount());
     assertEquals(1, g.sinksCount());
@@ -240,8 +237,8 @@ public class GraphTest {
     verifyGraph(g);
   }
   @Test public void singleEdgeGraphPreOrder() {
-     final Graph<String> g = makeSingleEdge();
-     final Iterator<? extends Vertex<String>> i = g.preOrder().iterator();
+    final Graph<String> g = makeSingleEdge();
+    final Iterator<? extends Vertex<String>> i = g.preOrder().iterator();
     assert i.hasNext();
     assertEquals(i.next(), g.vertex("A"));
     assert i.hasNext();
@@ -250,7 +247,7 @@ public class GraphTest {
     azzert.isNull(i.next());
   }
   @Test public void singleLoopGraph() {
-     final Graph<String> g = make2Clique();
+    final Graph<String> g = make2Clique();
     assertEquals(1, g.outDegree(g.vertex("A")));
     assertEquals(1, g.inDegree(g.vertex("A")));
     assertEquals(1, g.outDegree(g.vertex("A")));
@@ -262,7 +259,7 @@ public class GraphTest {
     verifyGraph(g);
   }
   @Test public void singleLoopMultipleInsertionsGraph() {
-     final Graph.Builder<String> b = new Graph.Builder<>();
+    final Graph.Builder<String> b = new Graph.Builder<>();
     b.newVertex("A");
     b.newVertex("B");
     b.newEdge("A", "B");
@@ -275,7 +272,7 @@ public class GraphTest {
     b.newVertex("B");
     b.newEdge("A", "B");
     b.newEdge("B", "A");
-     final Graph<String> g = b.build();
+    final Graph<String> g = b.build();
     assertEquals(2, g.size());
     assertEquals(0, g.sourcesCount());
     assertEquals(0, g.sinksCount());
@@ -283,7 +280,7 @@ public class GraphTest {
     verifyGraph(g);
   }
   @Test public void singletonGraph() {
-     final Graph<String> g = make1Clique();
+    final Graph<String> g = make1Clique();
     assertEquals(1, g.size());
     assertEquals(1, g.vertices().size());
     assertEquals(1, g.sourcesCount());
@@ -294,11 +291,11 @@ public class GraphTest {
     verifyGraph(g);
   }
   @Test public void testAll() {
-    for ( final Graph<String> ¢ : makeAll())
+    for (final Graph<String> ¢ : makeAll())
       assertEquals(¢.size(), Iterables.count(¢.preOrder()));
   }
   @Test public void testCFGExample() {
-     final Graph<String> g = makeCFGExample();
+    final Graph<String> g = makeCFGExample();
     assertEquals(g.vertex("START"), g.source(g.vertex("START")));
     assertEquals(g.vertex("START"), g.source(g.vertex("a")));
     assertEquals(g.vertex("START"), g.source(g.vertex("b")));
@@ -312,7 +309,7 @@ public class GraphTest {
       assertEquals(g.vertex("START"), g.source(¢));
   }
   @Test public void testChain() {
-     final Graph<String> g = makeChainABCDEF();
+    final Graph<String> g = makeChainABCDEF();
     assertEquals(g.vertex("A"), g.source(g.vertex("A")));
     assertEquals(g.vertex("A"), g.source(g.vertex("B")));
     assertEquals(g.vertex("A"), g.source(g.vertex("C")));
@@ -321,14 +318,14 @@ public class GraphTest {
     assertEquals(g.vertex("A"), g.source(g.vertex("F")));
   }
   @Test public void testDiamond() {
-     final Graph<String> g = makeDiamond();
+    final Graph<String> g = makeDiamond();
     assertEquals(g.vertex("D"), g.source(g.vertex("V")));
     assertEquals(g.vertex("D"), g.source(g.vertex("B1")));
     assertEquals(g.vertex("D"), g.source(g.vertex("B2")));
     assertEquals(g.vertex("D"), g.source(g.vertex("D")));
   }
   @Test public void testDiamondBasic() {
-     final Graph<String> g = makeDiamond();
+    final Graph<String> g = makeDiamond();
     assertEquals(4, g.size());
     assertEquals(4, g.vertices().size());
     assertEquals(1, g.sourcesCount());
@@ -347,7 +344,7 @@ public class GraphTest {
     verifyGraph(g);
   }
   @Test public void testInvertedTree() {
-     final Graph<String> g = makeInvertedTree();
+    final Graph<String> g = makeInvertedTree();
     assertEquals(7, Iterables.count(g.preOrder()));
     assert Iterables.contains(g.preOrder(), g.vertex("A"));
     assert Iterables.contains(g.preOrder(), g.vertex("B"));
@@ -358,7 +355,7 @@ public class GraphTest {
     assert Iterables.contains(g.preOrder(), g.vertex("G"));
   }
   @Test public void testInvertedTreeLoops() {
-     final Graph<String> g = makeInvertedTreeWithLoops();
+    final Graph<String> g = makeInvertedTreeWithLoops();
     assert Iterables.contains(g.preOrder(), g.vertex("A"));
     assert Iterables.contains(g.preOrder(), g.vertex("B"));
     assert Iterables.contains(g.preOrder(), g.vertex("C"));
@@ -368,7 +365,7 @@ public class GraphTest {
     assert Iterables.contains(g.preOrder(), g.vertex("G"));
   }
   @Test public void testLowerCaseTriagleExample() {
-     final Graph<String> g = new Graph.Builder<String>()//
+    final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("a", "b", "c") //
         .outgoing("b", "c") //
         .build();
@@ -379,7 +376,7 @@ public class GraphTest {
       assertEquals(g.vertex("a"), g.source(¢));
   }
   @Test public void testPreOrderInnerCycle() {
-     final Graph<String> g = new Graph.Builder<String>() //
+    final Graph<String> g = new Graph.Builder<String>() //
         .newEdge("A", "C").newEdge("B", "C").newEdge("C", "D")//
         .newEdge("C", "E").newEdge("F", "G")//
         .newEdge("H", "I").newEdge("I", "H")//
@@ -400,7 +397,7 @@ public class GraphTest {
     assertEquals(g.size(), Iterables.count(g.preOrder()));
   }
   @Test public void testPreOrderSmallIsolatedInnerCycle() {
-     final Graph<String> g = makeAloofNodeAndAloofCycle();
+    final Graph<String> g = makeAloofNodeAndAloofCycle();
     assertEquals(3, g.vertices().size());
     assert Iterables.contains(g.preOrder(), g.vertex("A"));
     assert Iterables.contains(g.preOrder(), g.vertex("B"));
@@ -408,7 +405,7 @@ public class GraphTest {
     assertEquals(3, Iterables.count(g.preOrder()));
   }
   @Test public void testSimple() {
-     final Graph<String> g = new Graph.Builder<String>()//
+    final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("A", "a") //
         .outgoing("a", "C", "D") //
         .outgoing("C", "D")//
@@ -421,7 +418,7 @@ public class GraphTest {
       assertEquals(g.vertex("A"), g.source(¢));
   }
   @Test public void testSimpleTree() {
-     final Graph<String> g = new Graph.Builder<String>()//
+    final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("A", "E", "B") //
         .outgoing("B", "C", "D") //
         .outgoing("C", "D")//
@@ -431,25 +428,25 @@ public class GraphTest {
     assertEquals(g.vertex("A"), g.source(g.vertex("C")));
     assertEquals(g.vertex("A"), g.source(g.vertex("D")));
     assertEquals(g.vertex("A"), g.source(g.vertex("E")));
-    for ( final Vertex<String> ¢ : g.vertices())
+    for (final Vertex<String> ¢ : g.vertices())
       azzert.that("Node " + ¢.e(), g.source(¢), is(g.vertex("A")));
   }
   @Test public void testSingleEdgeSource() {
-     final Graph<String> g = makeSingleEdge();
+    final Graph<String> g = makeSingleEdge();
     assertEquals(g.vertex("A"), g.source(g.vertex("A")));
     assertEquals(g.vertex("A"), g.source(g.vertex("B")));
   }
   @Test public void testSingleLoop() {
-     final Graph<String> g = make2Clique();
+    final Graph<String> g = make2Clique();
     assertEquals(g.vertex("B"), g.source(g.vertex("A")));
     assertEquals(g.vertex("A"), g.source(g.vertex("B")));
   }
   @Test public void testSingletonGraphSource() {
-     final Graph<String> g = make1Clique();
+    final Graph<String> g = make1Clique();
     assertEquals(g.vertex("A"), g.source(g.vertex("A")));
   }
   @Test public void testSingletonLoopGraph() {
-     final Graph<String> g = makeSingletonLoop();
+    final Graph<String> g = makeSingletonLoop();
     assertEquals(1, g.size());
     assertEquals(1, g.vertices().size());
     assertEquals(0, g.sourcesCount());
@@ -460,7 +457,7 @@ public class GraphTest {
     verifyGraph(g);
   }
   @Test public void testThreeByThree() {
-     final Graph<String> g = make3By3();
+    final Graph<String> g = make3By3();
     assertEquals(g.vertex("A1"), g.source(g.vertex("A1")));
     assertEquals(g.vertex("A2"), g.source(g.vertex("A2")));
     assertEquals(g.vertex("A3"), g.source(g.vertex("A3")));
@@ -469,7 +466,7 @@ public class GraphTest {
     assert among(g.source(g.vertex("B3")).e(), "A1", "A2", "A3");
   }
   @Test public void testThreeByThreeGraph() {
-     final Graph<String> g = make3By3();
+    final Graph<String> g = make3By3();
     assertEquals(6, g.size());
     assertEquals(6, g.vertices().size());
     assertEquals(3, g.sourcesCount());
@@ -504,7 +501,7 @@ public class GraphTest {
     verifyGraph(g);
   }
   @Test public void testTree() {
-     final Graph<String> g = makeTree();
+    final Graph<String> g = makeTree();
     assertEquals(g.size(), Iterables.count(g.preOrder()));
     assert Iterables.contains(g.preOrder(), g.vertex("A"));
     assert Iterables.contains(g.preOrder(), g.vertex("B"));
@@ -521,7 +518,7 @@ public class GraphTest {
     assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("D"));
   }
   @Test public void testTreeWithLoops() {
-     final Graph<String> g = makeTreeWithLoops();
+    final Graph<String> g = makeTreeWithLoops();
     assertEquals(7, Iterables.count(g.preOrder()));
     assert Iterables.contains(g.preOrder(), g.vertex("A"));
     assert Iterables.contains(g.preOrder(), g.vertex("B"));
@@ -538,12 +535,12 @@ public class GraphTest {
     assert Iterables.before(g.preOrder(), g.vertex("F"), g.vertex("D"));
   }
   @Test public void testTwoAloofNodes() {
-     final Graph<String> g = makeTwoAloofNodes();
+    final Graph<String> g = makeTwoAloofNodes();
     assertEquals(g.vertex("A"), g.source(g.vertex("A")));
     assertEquals(g.vertex("B"), g.source(g.vertex("B")));
   }
   @Test public void testTwoAloofNodesGraph() {
-     final Graph<String> g = makeTwoAloofNodes();
+    final Graph<String> g = makeTwoAloofNodes();
     assertEquals(2, g.size());
     assertEquals(2, g.sourcesCount());
     assertEquals(2, g.sinksCount());
@@ -551,7 +548,7 @@ public class GraphTest {
     verifyGraph(g);
   }
   @Test public void testWikiPageRanksExample() {
-     final Graph<String> g = makeWikiExample();
+    final Graph<String> g = makeWikiExample();
     assertEquals(g.vertex("P1"), g.source(g.vertex("P1")));
     assertEquals(g.vertex("P2"), g.source(g.vertex("P2")));
     assertEquals(g.vertex("P3"), g.source(g.vertex("P3")));
@@ -565,7 +562,7 @@ public class GraphTest {
     assert among(g.source(g.vertex("F")).e(), "P1", "P2", "P3", "P4", "P5");
   }
   @Test public void testWikiPageRanksExampleContains() {
-     final Graph<String> g = makeWikiExample();
+    final Graph<String> g = makeWikiExample();
     assert Iterables.contains(g.preOrder(), g.vertex("A"));
     assert Iterables.contains(g.preOrder(), g.vertex("B"));
     assert Iterables.contains(g.preOrder(), g.vertex("C"));
@@ -579,16 +576,16 @@ public class GraphTest {
     assert Iterables.contains(g.preOrder(), g.vertex("P5"));
   }
   @Test public void testWikiPageRanksExampleCount() {
-     final Graph<String> g = makeWikiExample();
+    final Graph<String> g = makeWikiExample();
     assertEquals(g.size(), Iterables.count(g.preOrder()));
   }
   @Test public void toStringTest() {
-     final Graph<String> g = makeSingleEdge();
+    final Graph<String> g = makeSingleEdge();
     assertEquals("A", g.vertex("A").e() + "");
     assertEquals("B", g.vertex("B").e() + "");
   }
   @Test public void tree() {
-     final Graph<String> g = makeTree();
+    final Graph<String> g = makeTree();
     assertEquals(g.vertex("G"), g.source(g.vertex("G")));
     assertEquals(g.vertex("G"), g.source(g.vertex("F")));
     assertEquals(g.vertex("G"), g.source(g.vertex("E")));
@@ -598,7 +595,7 @@ public class GraphTest {
     assertEquals(g.vertex("G"), g.source(g.vertex("D")));
   }
   @Test public void treeWithLoops() {
-     final Graph<String> g = makeTreeWithLoops();
+    final Graph<String> g = makeTreeWithLoops();
     assertEquals(g.vertex("G"), g.source(g.vertex("G")));
     assertEquals(g.vertex("G"), g.source(g.vertex("F")));
     assertEquals(g.vertex("G"), g.source(g.vertex("E")));
@@ -608,7 +605,7 @@ public class GraphTest {
     assertEquals(g.vertex("G"), g.source(g.vertex("D")));
   }
   @Test public void treeWithLoopsAndForwardEdges() {
-     final Graph<String> g = new Graph.Builder<String>()//
+    final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("A", "B", "C") //
         .outgoing("B", "D", "E") //
         .outgoing("C", "F", "G") //
@@ -626,7 +623,7 @@ public class GraphTest {
       assertEquals(g.vertex("A"), g.source(¢));
   }
   @Test public void triangle() {
-     final Graph<String> g = new Graph.Builder<String>()//
+    final Graph<String> g = new Graph.Builder<String>()//
         .outgoing("A", "B", "C") //
         .outgoing("B", "C") //
         .build();
@@ -637,7 +634,7 @@ public class GraphTest {
       assertEquals(g.vertex("A"), g.source(¢));
   }
   @Test public void twoConnectedPairs() {
-     final Graph<String> g = makeTwoConnectedPairs();
+    final Graph<String> g = makeTwoConnectedPairs();
     assertEquals(4, g.vertices().size());
     assert Iterables.contains(g.preOrder(), g.vertex("A"));
     assert Iterables.contains(g.preOrder(), g.vertex("B"));
@@ -650,7 +647,7 @@ public class GraphTest {
     assert Iterables.before(g.preOrder(), g.vertex("B"), g.vertex("D"));
   }
   @Test public void wikiPageRanksExample() {
-     final Graph<String> g = makeWikiExample();
+    final Graph<String> g = makeWikiExample();
     assertEquals(11, g.size());
     assertEquals(5, g.sourcesCount());
     assertEquals(1, g.sinksCount());

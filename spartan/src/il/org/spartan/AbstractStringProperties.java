@@ -2,8 +2,6 @@ package il.org.spartan;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 
 /** @author Yossi Gil
@@ -17,30 +15,30 @@ public abstract class AbstractStringProperties {
   public AbstractStringProperties(final Renderer renderer) {
     this.renderer = renderer;
   }
-  @Override  public AbstractStringProperties clone() {
+  @Override public AbstractStringProperties clone() {
     try {
       return (AbstractStringProperties) super.clone();
-    } catch ( final CloneNotSupportedException ¢) {
+    } catch (final CloneNotSupportedException ¢) {
       ¢.printStackTrace();
       return null;
     }
   }
-   public abstract String get(String key);
+  public abstract String get(String key);
   /** A total inspector
    * @return the header of the CSV line */
-   public String header() {
+  public String header() {
     return renderer.allTop() + makeLine(keys()) + renderer.headerEnd();
   }
-   public abstract Iterable<String> keys();
+  public abstract Iterable<String> keys();
   /** A total inspector
    * @return the content of the CSV line as per all recorded values. */
-   public final String line() {
+  public final String line() {
     return makeLine(values());
   }
-   public abstract AbstractStringProperties put(String key, String value);
+  public abstract AbstractStringProperties put(String key, String value);
   public abstract int size();
-   public abstract Iterable<String> values();
-   protected String makeLine(final Iterable<String> ¢) {
+  public abstract Iterable<String> values();
+  protected String makeLine(final Iterable<String> ¢) {
     return renderer.makeLine(¢);
   }
 
@@ -48,14 +46,14 @@ public abstract class AbstractStringProperties {
     private final List<String> keys = new ArrayList<>();
     private final List<String> values = new ArrayList<>();
 
-    @Override @SuppressWarnings("null")  public String get(final String key) {
+    @Override @SuppressWarnings("null") public String get(final String key) {
       final int $ = keys.lastIndexOf(key);
       return $ < 0 ? null : values.get($);
     }
-    @Override  public Iterable<String> keys() {
+    @Override public Iterable<String> keys() {
       return keys;
     }
-    @Override  public ListProperties put(final String key, final String value) {
+    @Override public ListProperties put(final String key, final String value) {
       keys.add(key);
       values.add(value);
       return this;
@@ -66,7 +64,7 @@ public abstract class AbstractStringProperties {
     @Override public int size() {
       return keys.size();
     }
-    @Override  public Iterable<String> values() {
+    @Override public Iterable<String> values() {
       return values;
     }
   }
@@ -78,25 +76,25 @@ public abstract class AbstractStringProperties {
       static final String QUOTE = '"' + "";
       static final String DELIMETER = ",";
 
-      @Override  public String headerEnd() {
+      @Override public String headerEnd() {
         return "";
       }
-      @Override  public String makeField( final String ¢) {
+      @Override public String makeField(final String ¢) {
         return ¢ == null ? "" : !¢.contains(QUOTE) && !¢.contains(delimiter()) ? ¢ : QUOTE + ¢.replaceAll(QUOTE, QUOTE + QUOTE) + QUOTE;
       }
-      @Override  String allBottom() {
+      @Override String allBottom() {
         return "";
       }
-      @Override  String allTop() {
+      @Override String allTop() {
         return "";
       }
-      @Override  String delimiter() {
+      @Override String delimiter() {
         return DELIMETER;
       }
-      @Override  String lineBegin() {
+      @Override String lineBegin() {
         return "";
       }
-      @Override  String lineEnd() {
+      @Override String lineEnd() {
         return "";
       }
     },
@@ -104,22 +102,22 @@ public abstract class AbstractStringProperties {
       static final String DELIMETER = " ";
       static final int WIDTH = 3;
 
-      @Override  String allBottom() {
+      @Override String allBottom() {
         return "";
       }
-      @Override  String allTop() {
+      @Override String allTop() {
         return "";
       }
-      @Override  String delimiter() {
+      @Override String delimiter() {
         return DELIMETER;
       }
-      @Override  String headerEnd() {
+      @Override String headerEnd() {
         return "";
       }
-      @Override  String lineBegin() {
+      @Override String lineBegin() {
         return "";
       }
-      @Override  String lineEnd() {
+      @Override String lineEnd() {
         return "";
       }
       @Override String makeField(final String ¢) {
@@ -127,40 +125,40 @@ public abstract class AbstractStringProperties {
       }
     },
     LaTeX() {
-      @Override  String allBottom() {
+      @Override String allBottom() {
         return "\\bottomrule\n";
       }
-      @Override  String allTop() {
+      @Override String allTop() {
         return "\\toprule\n";
       }
       @Override String delimiter() {
         return " &\t\t";
       }
-      @Override  String headerEnd() {
+      @Override String headerEnd() {
         return "\n\\midrule";
       }
-      @Override  String lineBegin() {
+      @Override String lineBegin() {
         return "";
       }
-      @Override  String lineEnd() {
+      @Override String lineEnd() {
         return "\\\\";
       }
-      @Override  String makeField( final String ¢) {
+      @Override String makeField(final String ¢) {
         return ¢ == null ? "" : !¢.contains(delimiter()) ? ¢ : ¢.replaceAll(delimiter(), "\\" + delimiter());
       }
     };
-     public String makeLine(final Iterable<String> ¢) {
+    public String makeLine(final Iterable<String> ¢) {
       return lineBegin() + separate(¢) + lineEnd();
     }
-     public String separate(final Iterable<String> ¢) {
+    public String separate(final Iterable<String> ¢) {
       return separate.these(¢).by(delimiter());
     }
-     abstract String allBottom();
-     abstract String allTop();
-     abstract String delimiter();
-     abstract String headerEnd();
-     abstract String lineBegin();
-     abstract String lineEnd();
+    abstract String allBottom();
+    abstract String allTop();
+    abstract String delimiter();
+    abstract String headerEnd();
+    abstract String lineBegin();
+    abstract String lineEnd();
     abstract String makeField(String s);
   }
 }

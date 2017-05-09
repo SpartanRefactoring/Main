@@ -4,8 +4,6 @@ import static il.org.spatan.iteration.Iterables.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.external.*;
 import il.org.spartan.streotypes.*;
 import il.org.spatan.iteration.*;
@@ -20,17 +18,17 @@ public enum Kendall {
   ;
   static final boolean FAST = true;
 
-   public static Charectristics makeCharectristics( final double xs[]) {
+  public static Charectristics makeCharectristics(final double xs[]) {
     return makeCharectristics(xs, seq(xs.length));
   }
-   public static Charectristics makeCharectristics( final double xs[],  final double ys[]) {
+  public static Charectristics makeCharectristics(final double xs[], final double ys[]) {
     return new Charectristics(xs, ys);
   }
-  public static double tau( final double ys[]) {
+  public static double tau(final double ys[]) {
     return tau(seq(ys.length), ys);
   }
   /** [[SuppressWarningsSpartan]] */
-  public static double tau( final double[] xs,  final double[] ys) {
+  public static double tau(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
     return pairs(xs.length) * computeS(xs, ys, xs.length) / 1.;
   }
@@ -38,15 +36,15 @@ public enum Kendall {
    * @param xs arbitrary values of the first ranking
    * @param ys
    * @return the Kendall tau coefficient of these two rankings. */
-  public static double tau( final Iterable<Double> xs,  final Iterable<Double> ys) {
+  public static double tau(final Iterable<Double> xs, final Iterable<Double> ys) {
     return tau(Iterables.toArray(xs), Iterables.toArray(ys));
   }
-  public static double tauB( final double ys[]) {
+  public static double tauB(final double ys[]) {
     return tauB(seq(ys.length), ys);
   }
-  public static double tauB( final double[] xs,  final double[] ys) {
+  public static double tauB(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
-     final List<Double> $ = new ArrayList<>(), Ys = new ArrayList<>();
+    final List<Double> $ = new ArrayList<>(), Ys = new ArrayList<>();
     for (int ¢ = 0; ¢ < xs.length; ++¢)
       if (!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢])) {
         $.add(box.it(xs[¢]));
@@ -55,7 +53,7 @@ public enum Kendall {
     return tauB_pruned(Iterables.toArray($), Iterables.toArray(Ys));
   }
   /** [[SuppressWarningsSpartan]] */
-  static int compueS( final double[] xs,  final double[] ys) {
+  static int compueS(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; ++i)
@@ -68,7 +66,7 @@ public enum Kendall {
     return $;
   }
   /** [[SuppressWarningsSpartan]] */
-  static int compueS( final int[] xs,  final int[] ys) {
+  static int compueS(final int[] xs, final int[] ys) {
     ___.require(xs.length == ys.length);
     int $ = 0;
     for (int i = 0; i < xs.length; ++i)
@@ -84,12 +82,12 @@ public enum Kendall {
     ___.nonnegative(¢);
     return ¢ * (¢ - 1) / 2;
   }
-  static int sigma( final double[] ¢) {
+  static int sigma(final double[] ¢) {
     final double[] $ = ¢.clone();
     Arrays.sort($);
     return sigmaSortedArray($);
   }
-  static int sigmaSortedArray( final double[] ds) {
+  static int sigmaSortedArray(final double[] ds) {
     int $ = 0;
     for (int i = 0; i < ds.length;) {
       if (Double.isNaN(ds[i])) {
@@ -114,14 +112,14 @@ public enum Kendall {
           ++nd;
     return $ - nd;
   }
-  private static double tauB_pruned( final double[] xs,  final double[] ys) {
+  private static double tauB_pruned(final double[] xs, final double[] ys) {
     ___.require(xs.length == ys.length);
     final int $ = xs.length, pairs = pairs($);
     return computeS(xs, ys, $) / Math.sqrt(1. * (pairs - sigma(xs)) * (pairs - sigma(ys)));
   }
 
   public static class Charectristics {
-    private static int valid( final double[] xs, final double[] ys) {
+    private static int valid(final double[] xs, final double[] ys) {
       int $ = 0;
       for (int ¢ = 0; ¢ < xs.length; ++¢)
         $ += as.bit(!Double.isNaN(xs[¢]) && !Double.isNaN(ys[¢]));
@@ -132,10 +130,10 @@ public enum Kendall {
     @External public final int n;
     @External public final double z;
 
-    public Charectristics( final double xs[],  final double ys[]) {
+    public Charectristics(final double xs[], final double ys[]) {
       this(valid(xs, ys), Kendall.tauB(xs, ys));
     }
-    public Charectristics( final double xs[], final double ys[], final double tau) {
+    public Charectristics(final double xs[], final double ys[], final double tau) {
       this(valid(xs, ys), tau);
     }
     public Charectristics(final int n, final double tau) {

@@ -8,8 +8,6 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -53,21 +51,19 @@ import fluent.ly.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @since 2016 */
 public interface Environment {
-   static < T,  A> Binder1<T, A> bind( final Function1<T, A> ¢) {
+  static <T, A> Binder1<T, A> bind(final Function1<T, A> ¢) {
     return new Property<T>().bind(¢);
   }
-   static < T,  A1,  A2> Binder2< T,  A1,  A2> bind(
-       final Function2<T, A1, A2> ¢) {
+  static <T, A1, A2> Binder2<T, A1, A2> bind(final Function2<T, A1, A2> ¢) {
     return new Property<T>().bind(¢);
   }
-   static < T,  A1,  A2,  A3> Binder3<T, A1, A2, A3> bind( final Function3<T, A1, A2, A3> ¢) {
+  static <T, A1, A2, A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> ¢) {
     return new Property<T>().bind(¢);
   }
-   static < T,  A1,  A2,  A3,  A4> Binder4<T, A1, A2, A3, A4> bind(
-       final Function4<T, A1, A2, A3, A4> ¢) {
+  static <T, A1, A2, A3, A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> ¢) {
     return new Property<T>().bind(¢);
   }
-   static < T> Property<T> function(final Function0<T> ¢) {
+  static <T> Property<T> function(final Function0<T> ¢) {
     return new Property<T>().ϑ(¢);
   }
   /** A factory method of class {@link Property} returning an undefined value
@@ -75,7 +71,7 @@ public interface Environment {
    * @param <T> JD
    * @return newly created instance of {@link Property} containing null value of
    *         the type parameter */
-   static < T> Property<T> undefined() {
+  static <T> Property<T> undefined() {
     return new Property<>();
   }
   /** A factory method of class {@link Property} of an {@link Integer} as in
@@ -86,7 +82,7 @@ public interface Environment {
    *
    * @param ¢ JD
    * @return newly created instance of {@link Ingredient} */
-   static Property< Boolean> value(final boolean ¢) {
+  static Property<Boolean> value(final boolean ¢) {
     return new Property<>(Boolean.valueOf(¢));
   }
   /** A factory method of class {@link Property} of an {@link Integer} as in
@@ -97,7 +93,7 @@ public interface Environment {
    *
    * @param ¢ JD
    * @return newly created instance of {@link Ingredient} */
-   static Property< Integer> value(final int ¢) {
+  static Property<Integer> value(final int ¢) {
     return new Property<>(Integer.valueOf(¢));
   }
   /** A factory method for class {@link Ingredient} as in
@@ -109,7 +105,7 @@ public interface Environment {
    * @param <T> JD
    * @param ¢ JD
    * @return newly created instance of {@link Property} */
-   static < T> Property< T> value(final T ¢) {
+  static <T> Property<T> value(final T ¢) {
     return new Property<>(¢);
   }
 
@@ -125,12 +121,12 @@ public interface Environment {
       private Property<String> emptyString;
       private Property<String> hello;
       private Property<String> helloWorld;
-       private Property<String> nullProperty;
+      private Property<String> nullProperty;
       private Property<String> separator;
       private int supplierCalls;
-       private Property<String> undefinedProperty = undefined();
+      private Property<String> undefinedProperty = undefined();
       private Property<String> world;
-       Property<Integer> integer = function(() -> {
+      Property<Integer> integer = function(() -> {
         ++supplierCalls;
         return Integer.valueOf(FIRST_MAGIC_NUMBER);
       });
@@ -142,8 +138,7 @@ public interface Environment {
         world = value(WORLD);
         separator = value(SEPARATOR);
         emptyString = value(EMPTY);
-        helloWorld = bind(( final String ¢1,  final String ¢2,  final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator,
-            world);
+        helloWorld = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
       }
       @Test public void seriesA0() {
         azzert.that(hello.¢(), iz(HELLO));
@@ -165,9 +160,7 @@ public interface Environment {
       }
       @Test public void seriesA3() {
         azzert.that(helloWorld.¢(), iz(HELLO + SEPARATOR + WORLD));
-        helloWorld
-            .bind(( final String ¢1,  final String ¢2,  final String ¢3,  final String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4))
-            .to(hello, world, hello, world);
+        helloWorld.bind((final String ¢1, final String ¢2, final String ¢3, final String ¢4) -> (¢1 + ¢2 + ¢3 + ¢4)).to(hello, world, hello, world);
         azzert.that(helloWorld.¢(), iz(HELLO + WORLD + HELLO + WORLD));
       }
       @Test public void seriesA4() {
@@ -202,8 +195,7 @@ public interface Environment {
         azzert.nay(helloWorld.updated());
       }
       @Test public void seriesA6() {
-        final Property<String> $ = bind(( final String ¢1,  final String ¢2,  final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello,
-            separator, world);
+        final Property<String> $ = bind((final String ¢1, final String ¢2, final String ¢3) -> (¢1 + ¢2 + ¢3)).to(hello, separator, world);
         azzert.that($.prerequisites.size(), is(3));
         azzert.that($.dependents, empty());
         azzert.that($.version, is(0L));
@@ -247,37 +239,37 @@ public interface Environment {
         azzert.aye(a.dependents.isEmpty()).andAye(a.prerequisites.isEmpty());
         azzert.that(a.¢(), iz(WORLD));
         azzert.that(a.version, is(1L));
-         final Property<String> b = new Property<>();
+        final Property<String> b = new Property<>();
         azzert.aye(b.dependents.isEmpty()).andAye(b.prerequisites.isEmpty());
         azzert.zero(b.version);
-        b.bind(( final String ¢) -> "Hello, " + ¢).to(a);
+        b.bind((final String ¢) -> "Hello, " + ¢).to(a);
         azzert.that(b.dependents, empty());
         azzert.nay(b.prerequisites.isEmpty());
         azzert.that(b.prerequisites, contains(azzert.is(a)));
-        b.bind(( final String ¢) -> "Hello, " + a.¢()).to(a);
-        b.bind(( final String ¢) -> "Hello, " + a.¢()).to(a);
+        b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
+        b.bind((final String ¢) -> "Hello, " + a.¢()).to(a);
       }
     }
   }
 
   @FunctionalInterface
-  interface Binder1< T,  A> {
-     Property<T> to(Property<A> ¢);
+  interface Binder1<T, A> {
+    Property<T> to(Property<A> ¢);
   }
 
   @FunctionalInterface
-  interface Binder2< T,  A1,  A2> {
-     Property<T> to(Property<A1> ¢1, Property<A2> ¢2);
+  interface Binder2<T, A1, A2> {
+    Property<T> to(Property<A1> ¢1, Property<A2> ¢2);
   }
 
   @FunctionalInterface
-  interface Binder3< T,  A1,  A2,  A3> {
-     Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3);
+  interface Binder3<T, A1, A2, A3> {
+    Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3);
   }
 
   @FunctionalInterface
-  interface Binder4< T,  A1,  A2,  A3,  A4> {
-     Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3, Property<A4> ¢4);
+  interface Binder4<T, A1, A2, A3, A4> {
+    Property<T> to(Property<A1> ¢1, Property<A2> ¢2, Property<A3> ¢3, Property<A4> ¢4);
   }
 
   /** A property stores a value of some type (which is passed by parameter). A
@@ -289,16 +281,16 @@ public interface Environment {
    * @param <T> type of value of this property
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  class Property< T> implements Function0<T>, Cloneable {
-    private static long maxVersion( final Iterable<Property<?>> ps) {
+  class Property<T> implements Function0<T>, Cloneable {
+    private static long maxVersion(final Iterable<Property<?>> ps) {
       long $ = 0;
-      for ( final Property<?> c : ps)
+      for (final Property<?> c : ps)
         $ = max($, c.version());
       return $;
     }
 
     /** The last value computed for this instance */
-     T cache;
+    T cache;
     /** other properties that depend on this instance */
     final List<Property<?>> dependents = new ArrayList<>();
     /** other properties on which this instance depends */
@@ -306,7 +298,7 @@ public interface Environment {
     /** version of this instance */
     long version;
     /** returns the instance updated value when invoked */
-     Function0<? extends  T> ϑ;
+    Function0<? extends T> ϑ;
     private boolean frozen;
 
     /** Instantiates this class. */
@@ -339,7 +331,7 @@ public interface Environment {
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-     public Property< T> bind( final Function0<T> ¢) {
+    public Property<T> bind(final Function0<T> ¢) {
       return ϑ(() -> ¢.¢());
     }
     /** Used for fluent API; sets the current value of this instance to a be a
@@ -354,7 +346,7 @@ public interface Environment {
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-     public < A> Binder1<T, A> bind( final Function1<T, A> f) {
+    public <A> Binder1<T, A> bind(final Function1<T, A> f) {
       return ¢ -> ϑ(() -> f.ϑ(¢.¢()), ¢);
     }
     /** Used for fluent API; sets the current value of this instance to a be a
@@ -366,7 +358,7 @@ public interface Environment {
      * @return a function with two arguments named {@link Binder2#to} which when
      *         applied changes the current instance returning
      *         <code><b>this</b></code> */
-     public < A1,  A2> Binder2< T,  A1,  A2> bind( final Function2<T, A1, A2> a) {
+    public <A1, A2> Binder2<T, A1, A2> bind(final Function2<T, A1, A2> a) {
       return (¢1, ¢2) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢()), ¢1, ¢2);
     }
     /** Used for fluent API; sets the current value of this instance to a be a
@@ -379,7 +371,7 @@ public interface Environment {
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
-     public < A1,  A2,  A3> Binder3<T, A1, A2, A3> bind( final Function3<T, A1, A2, A3> a) {
+    public <A1, A2, A3> Binder3<T, A1, A2, A3> bind(final Function3<T, A1, A2, A3> a) {
       return (¢1, ¢2, ¢3) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢()), ¢1, ¢2, ¢3);
     }
     /** Used for fluent API; sets the current value of this instance to a be a
@@ -393,8 +385,7 @@ public interface Environment {
      * @return a function with four arguments named {@link #toString()} which
      *         when applied changes the current instance and returning
      *         <code><b>this</b></code> */
-     public < A1,  A2,  A3,  A4> Binder4<T, A1, A2, A3, A4> bind(
-         final Function4<T, A1, A2, A3, A4> a) {
+    public <A1, A2, A3, A4> Binder4<T, A1, A2, A3, A4> bind(final Function4<T, A1, A2, A3, A4> a) {
       return (¢1, ¢2, ¢3, ¢4) -> ϑ(() -> a.ϑ(¢1.¢(), ¢2.¢(), ¢3.¢(), ¢4.¢()), ¢1, ¢2, ¢3, ¢4);
     }
     /** Used for fluent API; sets the current value of this instance to a be a
@@ -409,8 +400,8 @@ public interface Environment {
      *         <li>returns <code><b>this</b></code>
      *         </ol>
     */
-     public Property< T> bind2( final Function0<T> ¢) {
-      this.ϑ = (Function0< T>) () -> ¢.¢();
+    public Property<T> bind2(final Function0<T> ¢) {
+      this.ϑ = (Function0<T>) () -> ¢.¢();
       prerequisites.clear();
       ingredients(this);
       return this;
@@ -419,10 +410,10 @@ public interface Environment {
     public final T cache() {
       return cache;
     }
-    @Override  @SuppressWarnings("unchecked") public Property<T> clone() {
+    @Override @SuppressWarnings("unchecked") public Property<T> clone() {
       try {
         return (Property<T>) super.clone();
-      } catch ( final CloneNotSupportedException ¢) {
+      } catch (final CloneNotSupportedException ¢) {
         throw new RuntimeException(¢);
       }
     }
@@ -443,7 +434,7 @@ public interface Environment {
     /** Add another property on which this instance depends
      * @param ¢ JD
      * @return <code><b>this</b></code> */
-     public Property<T> ingredient( final Property<?> ¢) {
+    public Property<T> ingredient(final Property<?> ¢) {
       run(() -> ¢.dependents.add(Property.this)).unless(¢.dependents.contains(this));
       run(() -> prerequisites.add(¢)).unless(prerequisites.contains(this));
       return this;
@@ -451,8 +442,8 @@ public interface Environment {
     /** Add another property on which this instance depends
      * @param ps JD
      * @return <code><b>this</b></code> */
-     public Property<T> ingredients( final Property<?>... ps) {
-      for ( final Property<?> ¢ : ps)
+    public Property<T> ingredients(final Property<?>... ps) {
+      for (final Property<?> ¢ : ps)
         ingredient(¢);
       return this;
     }
@@ -462,23 +453,23 @@ public interface Environment {
     /** Used for fluent API; sets the current value of this instance
      * @param ¢ a no-arguments function that returns a value for this instance
      * @return <code><b>this</b></code> */
-     public Property<T> of(final Function0<T> ¢) {
+    public Property<T> of(final Function0<T> ¢) {
       return ϑ(¢);
     }
     /** Used for fluent API; sets the current value of this instance
      * @param ¢ JD
      * @return <code><b>this</b></code>* */
-     public Property<T> of(final T ¢) {
+    public Property<T> of(final T ¢) {
       cache(¢);
       ϑ = null;
       version = latestDependentVersion() + 1;
       prerequisites.clear();
       return this;
     }
-     public Property<T> push(@SuppressWarnings("unused") final Function0<T> __) {
+    public Property<T> push(@SuppressWarnings("unused") final Function0<T> __) {
       return this;
     }
-     public Property<T> push(@SuppressWarnings("unused") final T __) {
+    public Property<T> push(@SuppressWarnings("unused") final T __) {
       return this;
     }
     /** forcibly set the value stored in this instance, ignoring the function
@@ -486,13 +477,13 @@ public interface Environment {
      * all prerequisites.
      * @param ¢ JD
      * @return <code><b>this</b></code> */
-     public T set(final T ¢) {
+    public T set(final T ¢) {
       version = latestPrequisiteVersion() + 1;
       return cache(¢);
     }
     /** puts this instance in an undefined state
      * @return <code><b>this</b></code> */
-     public Property< T> undefine() {
+    public Property<T> undefine() {
       cache(null);
       return this;
     }
@@ -500,13 +491,13 @@ public interface Environment {
       if (frozen || updated())
         return;
       frozen = true;
-      for ( final Property<?> ¢ : prerequisites)
+      for (final Property<?> ¢ : prerequisites)
         ¢.update();
       version = latestPrequisiteVersion() + 1;
       assert ϑ != null;
       try {
         assert set(ϑ.¢()) != null;
-      } catch ( final Exception ¢) {
+      } catch (final Exception ¢) {
         ¢.printStackTrace();
         undefine();
       }
@@ -519,7 +510,7 @@ public interface Environment {
         return true;
       if (cache() == null)
         return false;
-      for ( final Property<?> ¢ : prerequisites)
+      for (final Property<?> ¢ : prerequisites)
         if (version() <= ¢.version() || !¢.updated())
           return false;
       return true;
@@ -528,7 +519,7 @@ public interface Environment {
     public long version() {
       return version;
     }
-     T cache(@SuppressWarnings("hiding") final T cache) {
+    T cache(@SuppressWarnings("hiding") final T cache) {
       return this.cache = cache;
     }
     final long latestDependentVersion() {
@@ -540,7 +531,7 @@ public interface Environment {
     /** @param ϑ a no-arguments function that returns a value for this instance
      * @param cs instances on which the cell depends
      * @return <code><b>this</b></code> */
-     Property<T> ϑ(@SuppressWarnings("hiding") final Function0<T> ϑ, final Property<?>... cs) {
+    Property<T> ϑ(@SuppressWarnings("hiding") final Function0<T> ϑ, final Property<?>... cs) {
       this.ϑ = ϑ;
       prerequisites.clear();
       ingredients(cs);

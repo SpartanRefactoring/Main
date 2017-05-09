@@ -37,7 +37,6 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     );
     lse.ableButton.setText("enable/disable operation");
     lse.configureButton.setText("configure operation");
-
     addField(lse);
   }
   /** @return all plugin widget operations */

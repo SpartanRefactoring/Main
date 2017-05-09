@@ -4,20 +4,19 @@ import static fluent.ly.azzert.*;
 
 import java.io.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
 
 @SuppressWarnings("static-method")
 public class StringLiteralsTest {
-   static Token toToken( final String s) {
+  static Token toToken(final String s) {
     try {
-       final RawTokenizer J = new RawTokenizer(new StringReader(s));
-       final Token $ = J.next();
+      final RawTokenizer J = new RawTokenizer(new StringReader(s));
+      final Token $ = J.next();
       azzert.that(J.next(), is(Token.EOF));
       return $;
-    } catch ( final IOException E) {
+    } catch (final IOException E) {
       return Token.EOF;
     }
   }

@@ -2,16 +2,14 @@ package il.org.spartan.classfiles.reify;
 
 import java.io.*;
 
-import org.eclipse.jdt.annotation.*;
-
 public final class BufferDataInputStream extends DataInputStream {
-   private final BufferInputStream inner;
+  private final BufferInputStream inner;
 
-  public BufferDataInputStream( final BufferInputStream inner) {
+  public BufferDataInputStream(final BufferInputStream inner) {
     super(inner);
     this.inner = inner;
   }
-  public BufferDataInputStream( final byte[] bytes) {
+  public BufferDataInputStream(final byte[] bytes) {
     this(new BufferInputStream(bytes));
   }
   public void align4() {

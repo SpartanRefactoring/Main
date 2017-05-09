@@ -1,8 +1,6 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.bench;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.streotypes.*;
 
 /** A class serving as stopwatch for measuring runtime of programs. To start a
@@ -37,7 +35,7 @@ public class Stopper {
   private long begin;
   private int cases = 1;
   private long time;
-   private final String what;
+  private final String what;
 
   /** Create a new instance */
   public Stopper() {
@@ -46,14 +44,14 @@ public class Stopper {
   /** Create a new instance distinguishable by a descriptive string, and print a
    * log message.
    * @param what a textual description of this instance, used in printouts */
-  public Stopper( final String what) {
+  public Stopper(final String what) {
     this.what = what;
     if (what != null)
       out("Started " + what);
     begin = System.nanoTime();
   }
   /** @return the time since creation, per cases. */
-   public String average() {
+  public String average() {
     return peep() / 1E9 / cases + " sec";
   }
   /** @return the number of cases recorded so far. */
@@ -77,7 +75,7 @@ public class Stopper {
   /** Stop the timer, and print a log message with the time elapsed since
    * creation.
    * @return <code><b>this</b></code> */
-   public Stopper stop() {
+  public Stopper stop() {
     time = System.nanoTime() - begin;
     out("Finished " + what + ": " + time + "ns");
     return this;
@@ -90,7 +88,7 @@ public class Stopper {
       time = System.nanoTime() - begin;
     return time;
   }
-  @Override  public String toString() {
+  @Override public String toString() {
     return peep() / 1E9 + " sec";
   }
 }

@@ -3,7 +3,6 @@ package il.org.spartan.bench;
 import static fluent.ly.azzert.*;
 import static fluent.ly.___.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.utils.*;
@@ -12,14 +11,14 @@ import fluent.ly.*;
 /** @author Yossi Gil
  * @since 29/05/2011 */
 public class Cartesian {
-   public static <S> Pair<Integer, S>[] makeObliqueProduct( final int[] is,  final S[] ss) {
+  public static <S> Pair<Integer, S>[] makeObliqueProduct(final int[] is, final S[] ss) {
     return makeObliqueProduct(box.it(is), ss);
   }
-   public static <S, T> Triple<Integer, S, T>[] makeObliqueProduct( final int[] is,  final S[] ss,  final T[] ts) {
+  public static <S, T> Triple<Integer, S, T>[] makeObliqueProduct(final int[] is, final S[] ss, final T[] ts) {
     return makeObliqueProduct(box.it(is), ss, ts);
   }
-   public static <R, S> Pair<R, S>[] makeObliqueProduct( final R[] rs,  final S[] ss) {
-     final Pair<R, S>[] $ = Pair.makePairs(rs.length, ss.length);
+  public static <R, S> Pair<R, S>[] makeObliqueProduct(final R[] rs, final S[] ss) {
+    final Pair<R, S>[] $ = Pair.makePairs(rs.length, ss.length);
     int n = 0;
     for (int sum = 2; sum < rs.length + ss.length; ++sum)
       for (int i = 1; i <= Math.min(sum, rs.length); ++i) {
@@ -39,8 +38,8 @@ public class Cartesian {
     ___.sure(n == $.length);
     return $;
   }
-   public static <R, S, T> Triple<R, S, T>[] makeObliqueProduct( final R[] rs,  final S[] ss,  final T[] ts) {
-     final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
+  public static <R, S, T> Triple<R, S, T>[] makeObliqueProduct(final R[] rs, final S[] ss, final T[] ts) {
+    final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
     for (int sum = 3; sum <= rs.length + ss.length + ts.length; ++sum)
       for (int i = 1; i <= Math.min(sum, rs.length); ++i)
@@ -68,22 +67,22 @@ public class Cartesian {
     sure(n == $.length);
     return $;
   }
-   public static <S> Pair<Integer, S>[] makeProduct( final int[] is,  final S[] ss) {
+  public static <S> Pair<Integer, S>[] makeProduct(final int[] is, final S[] ss) {
     return makeProduct(box.it(is), ss);
   }
-   public static <S, T> Triple<Integer, S, T>[] makeProduct( final int[] is,  final S[] ss,  final T[] ts) {
+  public static <S, T> Triple<Integer, S, T>[] makeProduct(final int[] is, final S[] ss, final T[] ts) {
     return makeProduct(box.it(is), ss, ts);
   }
-   public static <R, S> Pair<R, S>[] makeProduct( final R[] rs,  final S[] ss) {
-     final Pair<R, S>[] $ = Pair.makePairs(rs.length * ss.length);
+  public static <R, S> Pair<R, S>[] makeProduct(final R[] rs, final S[] ss) {
+    final Pair<R, S>[] $ = Pair.makePairs(rs.length * ss.length);
     int n = 0;
     for (final R r : rs)
       for (final S ¢ : ss)
         $[n++] = new Pair<>(r, ¢);
     return $;
   }
-   public static <R, S, T> Triple<R, S, T>[] makeProduct( final R[] rs,  final S[] ss,  final T[] ts) {
-     final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
+  public static <R, S, T> Triple<R, S, T>[] makeProduct(final R[] rs, final S[] ss, final T[] ts) {
+    final Triple<R, S, T>[] $ = Triple.makeTriples(rs.length, ss.length, ts.length);
     int n = 0;
     for (final R r : rs)
       for (final S s : ss)

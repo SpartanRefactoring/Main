@@ -4,7 +4,6 @@ import static il.org.spartan.statistics.Mean.*;
 import static il.org.spartan.statistics.StandardDeviation.*;
 import static il.org.spartan.statistics.Sum.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
@@ -14,16 +13,16 @@ import il.org.spartan.streotypes.*;
 @Utility
 enum Skewness {
   ;
-  public static double skewenessCorrection( final double... vs) {
+  public static double skewenessCorrection(final double... vs) {
     return skewenessCorrection(vs.length);
   }
   public static double skewenessCorrection(final int ¢) {
     return Math.sqrt(¢ * (¢ - 1)) / (¢ - 2);
   }
-  public static double skewness( final double... vs) {
+  public static double skewness(final double... vs) {
     return skewnessNormalizedVector(normalize(vs.clone()));
   }
-  public static double skewness( final RealStatistics ¢) {
+  public static double skewness(final RealStatistics ¢) {
     return skewness(¢.all());
   }
   public static double skewnessNormalizedVector(final double... vs) {
@@ -33,7 +32,7 @@ enum Skewness {
   @SuppressWarnings("static-method")
   public static class TEST {
     @Test public void moment1() {
-       final double vs[] = { 1, 2, 3, 4, 5 };
+      final double vs[] = { 1, 2, 3, 4, 5 };
       Assert.assertEquals(1, moment(0, vs), 1E-8);
       Assert.assertEquals(15, sum(1, vs), 1E-8);
       Mean.shift(vs);

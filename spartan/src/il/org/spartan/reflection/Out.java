@@ -1,11 +1,8 @@
 package il.org.spartan.reflection;
 
-import static fluent.ly.___.*;
 import static fluent.ly.box.*;
 
 import java.util.*;
-
-import org.eclipse.jdt.annotation.*;
 
 import il.org.spartan.utils.*;
 
@@ -19,8 +16,8 @@ public class Out {
   public static void out(final String name, final boolean v) {
     System.out.printf("%s = %b\n", name, box(v));
   }
-  public static void out(final String name,  final Collection<Object> a) {
-    notNull(name);
+  public static void out(final String name, final Collection<Object> a) {
+    assert name != null;
     if (a == null || a.isEmpty())
       System.out.printf("No %s\n", name);
     else if (a.size() == 1)
@@ -38,11 +35,11 @@ public class Out {
   public static void out(final String name, final int a) {
     System.out.printf("%s = %d\n", name, box(a));
   }
-  public static void out(final String name,  final Object a) {
+  public static void out(final String name, final Object a) {
     System.out.printf((a == null ? "No" : "%s =") + " %s\n", name, a);
   }
-  public static void out(final String name,  final Object[] os) {
-    notNull(name);
+  public static void out(final String name, final Object[] os) {
+    assert name != null;
     if (os == null || os.length <= 0)
       System.out.printf("No %s\n", name);
     else if (os.length == 1)

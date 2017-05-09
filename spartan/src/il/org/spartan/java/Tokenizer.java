@@ -4,26 +4,24 @@ import static il.org.spartan.strings.StringUtils.*;
 
 import java.io.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 
 public class Tokenizer {
-   public static Reader reader( final File ¢) throws FileNotFoundException {
+  public static Reader reader(final File ¢) throws FileNotFoundException {
     return new FileReader(¢);
   }
-   public static Reader reader( final String fileName) throws FileNotFoundException {
+  public static Reader reader(final String fileName) throws FileNotFoundException {
     return fileName != null ? reader(new File(fileName)) : new InputStreamReader(System.in);
   }
 
-   private final RawTokenizer inner;
+  private final RawTokenizer inner;
   private final String streamName;
   private final Reader reader;
 
   /** Instantiate {@link Tokenizer}.
    * @param f read input from this file
    * @throws FileNotFoundException */
-  public Tokenizer( final File f) throws FileNotFoundException {
+  public Tokenizer(final File f) throws FileNotFoundException {
     this(f.getPath(), reader(f));
   }
   public Tokenizer(final Reader in) {
@@ -42,26 +40,26 @@ public class Tokenizer {
   public void closeReader() {
     try {
       reader.close();
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       ¢.printStackTrace();
     }
   }
   public int column() {
     return inner.column();
   }
-   public String description( final Token ¢) {
+  public String description(final Token ¢) {
     return location() + ¢ + " / " + ¢.kind + "<" + esc(text()) + "> S=" + state();
   }
   public int line() {
     return inner.line();
   }
-   public String location() {
+  public String location() {
     return inner.location();
   }
-   public Token next() {
+  public Token next() {
     try {
       return inner.next();
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       ¢.printStackTrace();
       ___.unreachable();
       return null;
@@ -70,10 +68,10 @@ public class Tokenizer {
   public String streamName() {
     return streamName;
   }
-   public String text() {
+  public String text() {
     return inner.text();
   }
-   protected String state() {
+  protected String state() {
     return inner.yystate() + "";
   }
 }

@@ -1,8 +1,5 @@
 package il.org.spartan.utils;
 
-import org.eclipse.jdt.annotation.*;
-import fluent.ly.*;
-
 /** @author Yossi Gil
  * @since Mar 6, 2012
  * @param <T> an arbitrary type */
@@ -18,7 +15,7 @@ public class Minimizer<T> {
   public double min() {
     return min;
   }
-   public Minimizer<T> next(final T t, final double next) {
+  public Minimizer<T> next(final T t, final double next) {
     assert t != null;
     if (Double.isNaN(min) || next < min) {
       min = next;

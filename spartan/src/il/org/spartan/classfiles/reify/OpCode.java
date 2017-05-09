@@ -4,7 +4,6 @@ import static fluent.ly.azzert.*;
 
 import java.io.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -183,32 +182,31 @@ public enum OpCode {
   JSR(2), // 168 (0xA8)
   RET(1), // 169 (0xA9)
   TABLESWITCH { // 170 (0xAA)
-    @Override  Instruction readContent( final BufferDataInputStream s) {
+    @Override Instruction readContent(final BufferDataInputStream s) {
       s.align4();
       try {
         final int $ = s.readInt(), low = s.readInt(), high = s.readInt();
         ___.sure(low <= high);
-         final int offsets[] = new int[high - low + 1];
+        final int offsets[] = new int[high - low + 1];
         for (int k = 0; k <= high - low; ++k)
           offsets[k] = s.readInt();
         return new Instruction(this, $, offsets);
-      } catch ( final IOException e) {
+      } catch (final IOException e) {
         throw new RuntimeException();
       }
     }
   },
   LOOKUPSWITCH { // 171 (0xAB)
-    @Override  Instruction readContent( final BufferDataInputStream s) {
+    @Override Instruction readContent(final BufferDataInputStream s) {
       s.align4();
       try {
-        final int $ = s.readInt(), nPairs = s.readInt();
-         final int offsets[] = new int[nPairs];
+        final int $ = s.readInt(), nPairs = s.readInt(), offsets[] = new int[nPairs];
         for (int k = 0; k < nPairs; ++k) {
           s.skip(4);
           offsets[k] = s.readInt();
         }
         return new Instruction(this, $, offsets);
-      } catch ( final IOException e) {
+      } catch (final IOException e) {
         throw new RuntimeException();
       }
     }
@@ -238,7 +236,7 @@ public enum OpCode {
   MONITORENTER, // 194 (0xC2)
   MONITOREXIT, // 195 (0xC3)
   WIDE { // 196 (0xC4)
-    @Override  Instruction readContent( final BufferDataInputStream $) {
+    @Override Instruction readContent(final BufferDataInputStream $) {
       if (OpCode.values()[$.read()] != IINC)
         return readContent($);
       $.skip(4);
@@ -305,14 +303,14 @@ public enum OpCode {
   IMPDEP1(-1), // 254 (0xFE)
   IMPDEP2(-1), // 255 (0xFF)
   ;
-  public static Instruction read( final BufferDataInputStream $) {
+  public static Instruction read(final BufferDataInputStream $) {
     if ($.eof())
       return null;
     try {
       return OpCode.values()[$.readUnsignedByte()].readContent($);
-    } catch ( final EOFException e) {
+    } catch (final EOFException e) {
       return null;
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       throw new CorruptClassFile(¢);
     }
   }
@@ -328,8 +326,8 @@ public enum OpCode {
   public boolean invalid() {
     return size < 0;
   }
-   Instruction readContent( final BufferDataInputStream s) throws IOException {
-     final short[] $ = new short[size];
+  Instruction readContent(final BufferDataInputStream s) throws IOException {
+    final short[] $ = new short[size];
     for (int ¢ = 0; ¢ < size; ++¢)
       $[¢] = (short) (s.readByte() & 0x000000FF);
     return new Instruction(this, $);
@@ -354,7 +352,7 @@ public enum OpCode {
       defaultOffset = 0;
       offsets = null;
     }
-     public short[] args() {
+    public short[] args() {
       return args;
     }
     public boolean invalid() {

@@ -2,8 +2,6 @@ package il.org.spartan.utils;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 import il.org.spartan.*;
 
@@ -12,11 +10,11 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 2015-09-23 */
 public class LongestCommonSubsequence {
-   private final char[] as;
-   private final char[] bs;
-   private final int[][] length;
+  private final char[] as;
+  private final char[] bs;
+  private final int[][] length;
 
-  public LongestCommonSubsequence( final String a,  final String b) {
+  public LongestCommonSubsequence(final String a, final String b) {
     as = tide.clean(a).toCharArray();
     bs = tide.clean(b).toCharArray();
     length = new int[as.length][];

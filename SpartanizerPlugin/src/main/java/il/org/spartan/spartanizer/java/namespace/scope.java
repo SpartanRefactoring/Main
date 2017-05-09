@@ -1,13 +1,9 @@
 package il.org.spartan.spartanizer.java.namespace;
 
-import static org.eclipse.jdt.core.dom.ASTNode.*;
-
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.utils.*;
 
 /** TODO Yossi Gil please add a description
@@ -19,11 +15,9 @@ public interface scope {
     $.add(x);
     return $;
   }
-
   static List<? extends ASTNode> of(final VariableDeclarationFragment ¢) {
     return scope.of(¢.getName());
   }
-
   static List<? extends ASTNode> of(final SimpleName ¢) {
     final List<? extends ASTNode> $ = definition.scope(¢);
     assert $ != null : fault.dump() + //
@@ -32,16 +26,14 @@ public interface scope {
         fault.done();
     return $;
   }
-  
-  static void initializeNamespaces(ASTNode ¢) {
-    ASTNode root = ¢.getRoot();
+  static void initializeNamespaces(final ASTNode ¢) {
+    final ASTNode root = ¢.getRoot();
     if (root.getProperty("Namespace") != null)
       return;
     Namespace $ = Environment.of(root);
-    if($ == null)
+    if ($ == null)
       $ = new Namespace($);
   }
-
   static Namespace getScopeNamespace(final ASTNode ¢) {
     Namespace $ = Environment.of(¢);
     if ($ != null || ($ = (Namespace) ¢.getRoot().getProperty("Namspace")) != null)
@@ -50,27 +42,23 @@ public interface scope {
     ¢.getRoot().setProperty("Namspace", $);
     return $;
   }
-
   static String newName(final ASTNode ¢, final Type t) {
     final Namespace n = getScopeNamespace(¢);
     final String $ = n.generateName(t);
     n.addNewName($, t);
     return $;
   }
-
   static String newName(final ASTNode ¢, final Type t, final String s) {
     final Namespace n = getScopeNamespace(¢);
     final String $ = n.generateName(s);
     n.addNewName($, t);
     return $;
   }
-
   /** returns whether identifier exists in the environment (does not include
    * nested scopes) */
   static boolean hasInScope(final ASTNode ¢, final String identifier) {
     return getScopeNamespace(¢) != null && getScopeNamespace(¢).has(identifier);
   }
-
   /** returns whether identifier exists in the environment (includes nested
    * scopes) */
   static boolean hasInScopeComplex(final ASTNode ¢, final String identifier) {

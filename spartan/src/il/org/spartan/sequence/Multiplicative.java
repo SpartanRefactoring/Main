@@ -1,12 +1,10 @@
 package il.org.spartan.sequence;
 
-import org.eclipse.jdt.annotation.*;
-
 public class Multiplicative extends Sequence {
   private static final double DEFAULT_STEP = 0.1;
 
   public static void main(final String[] args) {
-    for ( final Sequence ¢ = new Multiplicative(0.16); ¢.current < 150; ¢.advance())
+    for (final Sequence ¢ = new Multiplicative(0.16); ¢.current < 150; ¢.advance())
       System.out.print(¢.current() + " ");
     System.out.println();
   }
@@ -24,14 +22,14 @@ public class Multiplicative extends Sequence {
     reset();
     this.step = Math.pow(2, step);
   }
-  @Override  public Multiplicative advance() {
+  @Override public Multiplicative advance() {
     final int prev = current;
     current *= step;
     if (current == prev)
       ++current;
     return this;
   }
-  @Override  public Multiplicative reset() {
+  @Override public Multiplicative reset() {
     current = 1;
     return this;
   }

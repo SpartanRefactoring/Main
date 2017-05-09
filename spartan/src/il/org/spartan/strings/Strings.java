@@ -2,8 +2,6 @@ package il.org.spartan.strings;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** Typedef for a list of strings.
  * @author Yossi Gil
  * @since 01/05/2007 */
@@ -24,7 +22,7 @@ public class Strings extends ArrayList<String> {
    * @param s1 The first string to add to the list
    * @param s2 The second string to add to the list
    * @param ss The remaining strings to add to the list */
-  public Strings(final String s1, final String s2,  final String... ss) {
+  public Strings(final String s1, final String s2, final String... ss) {
     super(2 + ss.length);
     add(s1);
     add(s2);
