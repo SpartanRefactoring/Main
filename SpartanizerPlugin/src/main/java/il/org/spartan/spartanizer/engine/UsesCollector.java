@@ -121,6 +121,10 @@ class UsesCollector extends HidingDepth {
   @Override public boolean visit(final MethodDeclaration ¢) {
     return !declaredIn(¢) && recurse(¢.getBody());
   }
+  @Override public boolean visit(final ExpressionMethodReference r) {
+    ingore(r.getName());
+    return false;
+  }
   @Override public boolean visit(final MethodInvocation ¢) {
     ingore(name(¢));
     recurse(receiver(¢));
