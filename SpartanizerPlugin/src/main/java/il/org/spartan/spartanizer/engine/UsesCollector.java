@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.java.namespace.*;
 
 abstract class HidingDepth extends ScopeManager {
   private int depth;
@@ -149,10 +150,7 @@ class UsesCollector extends HidingDepth {
     return new UsesCollector(result, focus);
   }
   void consider(final SimpleName candidate) {
-    IBinding b = candidate.resolveBinding();
-    if(b != null && b.getKind() != IBinding.VARIABLE)
-      ingore(candidate);
-    else if (hit(candidate))
+    if (hit(candidate))
       result.add(candidate);
   }
   boolean declaredIn(final FieldDeclaration ¢) {
