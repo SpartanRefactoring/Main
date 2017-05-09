@@ -2,23 +2,24 @@ package il.org.spartan.plugin.preferences.revision;
 
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
+import java.io.*;
 import java.util.*;
+import java.util.List;
 import java.util.Map.*;
 
-import org.eclipse.core.resources.*;
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.preference.*;
+
 import org.eclipse.ui.*;
 
-import il.org.spartan.plugin.preferences.revision.PreferencesPage.*;
-import il.org.spartan.spartanizer.plugin.*;
+
+import il.org.spartan.spartanizer.plugin.Plugin;
 import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** The preferences page for the Athenizer Widget
  * @author Raviv Rachmiel
  * @since 2017-04-30 */
 public class WidgetPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-  private Changes changes;
-
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(Plugin.plugin().getPreferenceStore());
     setDescription(WIDGET_PAGE_DESCRIPTION);
@@ -27,25 +28,31 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
-
-  public static void onAble(@SuppressWarnings("unused") IProject p) {
-    String prefOpsIDs = store().getString("prefOpsIDs"), prefOpsMapConfs = store().getString("prefOpsMapConfs");
-    if (prefOpsIDs == null)
-      store().putValue(prefOpsIDs, "stub");
-    if (prefOpsMapConfs == null) 
-      store().putValue(prefOpsMapConfs, "stub");
+  public static void onAble(WidgetOperation o,boolean valueNow) {
+    store().setValue("IS_ENABLED_"+ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID(),!valueNow);
+    // String prefOpsIDs = store().getString("prefOpsIDs"), prefOpsMapConfs =
+    // store().getString("prefOpsMapConfs");
+    // if (prefOpsIDs == null)
+    // store().putValue(prefOpsIDs, "stub");
+    // if (prefOpsMapConfs == null)
+    // store().putValue(prefOpsMapConfs, "stub");
   }
-  @Override protected void createFieldEditors() {
+  @SuppressWarnings("boxing")
+  public static Boolean isEnabled(WidgetOperation o) {
+    return store().getBoolean("IS_ENABLED_"+ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID());
+    
+  }
+
+  
+  public static void onConfigure(@SuppressWarnings("unused") WidgetOperation __) {
+    (new InputDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "STUB FOR CONFIG DIALOG", "STUB FOR CONFIG DIALOG", "", null)).open();  
+  }
+  @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
     addField(new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent()));
-    final ListSelectionEditor lse = new ListSelectionEditor("X", "Configure operations for widget:", getFieldEditorParent(), getWidgetOperations(),
-        p -> ProjectPreferencesHandler.execute((IProject) p, changes.getPreference((IProject) p), (pp, es) -> changes.update(pp, es)), //
-        λ -> changes.isEnabled((IProject) λ), //
-        λ -> changes.update((IProject) λ, Boolean.valueOf(!changes.isEnabled((IProject) λ).booleanValue())) //
-    );
-    lse.ableButton.setText("enable/disable operation");
-    lse.configureButton.setText("configure operation");
-    addField(lse);
+    addField(new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent(), getWidgetOperations(),
+        λ -> onConfigure((WidgetOperation) λ), λ -> isEnabled((WidgetOperation) λ),
+        λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ))));
   }
   /** @return all plugin widget operations */
   private static List<Entry<String, Object>> getWidgetOperations() {
