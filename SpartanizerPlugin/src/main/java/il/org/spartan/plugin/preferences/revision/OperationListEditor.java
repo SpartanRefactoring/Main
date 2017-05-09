@@ -25,14 +25,14 @@ import fluent.ly.*;
 */
 public class OperationListEditor extends ListEditor {
   static final String DELIMETER = ",";
-  final List<Map.Entry<String, Object>> elements;
+  final List<Map.Entry<String, Object>> elements_list;
   Button configureButton;
   Button ableButton;
 
   OperationListEditor(final String name, final String labelText, final Composite parent, final List<Map.Entry<String, Object>> elements,
       final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
     super(name, labelText, parent);
-    this.elements = as.list(elements);
+    this.elements_list = as.list(elements);
     final Composite buttonBox = new Composite(parent, SWT.NULL);
     final GridLayout layout = new GridLayout();
     layout.marginWidth = 0;
@@ -58,13 +58,13 @@ public class OperationListEditor extends ListEditor {
         final int i = getList().getSelectionIndex();
         if (i < 0)
           return;
-        onAble.accept(elements.get(i).getValue());
-        if ("Disable operation".equals(ableButton.getText())) {
-          ableButton.setText("Enable operation");
-          configureButton.setEnabled(false);
-        } else if ("Enable operation".equals(ableButton.getText())) {
+        onAble.accept(elements_list.get(i).getValue());
+        if (isAble.apply(elements_list.get(i).getValue()).booleanValue()) {
           ableButton.setText("Disable operation");
           configureButton.setEnabled(true);
+        } else {
+          ableButton.setText("Enable operation");
+          configureButton.setEnabled(false);
         }
       }
     });
@@ -83,7 +83,7 @@ public class OperationListEditor extends ListEditor {
       @SuppressWarnings("synthetic-access") void onSelection() {
         final int i = getList().getSelectionIndex();
         if (i >= 0)
-          onConfigure.accept(elements.get(i).getValue()); //perform the on configure on widget op
+          onConfigure.accept(elements_list.get(i).getValue()); //perform the on configure on widget op
       }
     });
     parent.addDisposeListener(λ -> {
@@ -94,7 +94,7 @@ public class OperationListEditor extends ListEditor {
       @Override @SuppressWarnings("synthetic-access") public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         final int i = getList().getSelectionIndex();
         if (i >= 0)
-          if (isAble.apply(elements.get(i).getValue()).booleanValue()) {
+          if (isAble.apply(elements_list.get(i).getValue()).booleanValue()) {
             ableButton.setText("Disable operations");
             configureButton.setEnabled(true);
           } else {
@@ -112,7 +112,7 @@ public class OperationListEditor extends ListEditor {
     getButtonBoxControl(parent).dispose();
   }
   @Override protected String[] parseString(final String stringList) {
-    return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : elements.stream().map(Entry::getKey).toArray(String[]::new);
+    return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : elements_list.stream().map(Entry::getKey).toArray(String[]::new);
   }
   @Override protected String getNewInputObject() {
     return null;

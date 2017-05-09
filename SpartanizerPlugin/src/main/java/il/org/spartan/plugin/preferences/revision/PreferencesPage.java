@@ -209,7 +209,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       configureButton = new Button(buttonBox, SWT.PUSH);
       configureButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
       configureButton.setText("Configure tips");
-      configureButton.setEnabled(true);
+      configureButton.setEnabled(false);
       configureButton.setVisible(true);
       configureButton.addSelectionListener(new SelectionListener() {
         @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
