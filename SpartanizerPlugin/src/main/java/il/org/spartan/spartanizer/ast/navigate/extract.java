@@ -520,4 +520,17 @@ public enum extract {
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
   }
+  public static List<SimpleName> names(Name n) {
+    if (n == null)
+      return an.empty.list();
+    if (iz.simpleName(n))
+      return as.list(az.simpleName(n));
+    final List<SimpleName> $ = new LinkedList<>();
+    for (Name q = n; q != null; q = !iz.qualifiedName(q) ? null : az.qualifiedName(q).getQualifier())
+      if (iz.qualifiedName(q))
+        $.add(az.qualifiedName(q).getName());
+      else
+        $.add(az.simpleName(q));
+    return $;
+  }
 }

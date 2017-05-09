@@ -409,6 +409,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
            id="il.org.spartan.ZoomOut"
            name="Zoom Out">
      </command>
+     <command id="il.org.spartan.Linguistic" name="Linguistic it" />
 </extension>
 
 <!-- Handlers of commands: which class to activate for each command id -->
@@ -437,6 +438,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
          class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"
          commandId="il.org.spartan.ZoomOut">
    </handler>
+   <handler commandId="il.org.spartan.Linguistic" class="il.org.spartan.spartanizer.research.linguistic.LinguisticHandler" />
 </extension>
 
 <!-- Menus -->
@@ -617,6 +619,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
        sequence="Ctrl+]">
  </key>
+	<key sequence="Ctrl+Alt+L"
+		commandId="il.org.spartan.Linguistic"
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
 
 <extension-point id="il.org.spartan.widgetoperation" name="Widget Operation" schema="plugin/schema/il.org.spartan.widgetoperation.exsd"/>
