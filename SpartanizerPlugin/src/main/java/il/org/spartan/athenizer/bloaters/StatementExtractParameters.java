@@ -71,6 +71,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       return null;
     }
     final boolean samePackage = samePackage(types.get(), !binding.isArray() ? binding : binding.getElementType());
+    final boolean isTopLevel = binding.isTopLevel();
     // TODO Ori Roth: enable assignments extraction + check the
     // fixWildCardType(t), added it since when it returns null we get exception
     return t == null || //
@@ -79,7 +80,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         $ instanceof Assignment ? null : //
             new Tip(description(s), myClass(), s) {
               @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-                fixAddedImports(s, ir, types, samePackage, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY), binding.isTopLevel());
+                fixAddedImports(s, ir, types, samePackage, isTopLevel, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
                 final Type tt = fixWildCardType(t);
                 final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
                 final String nn = scope.newName(s, tt);
@@ -166,9 +167,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param g
    * @param ilr
    * @param isTpLevel */
-  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> ts, final boolean samePackage, final TextEditGroup g,
-      final ListRewrite ilr, final boolean isTopLevel) {
-    if (samePackage)
+  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> ts, final boolean samePackage, final boolean isTopLevel,
+      final TextEditGroup g, final ListRewrite ilr) {
+    if (samePackage && isTopLevel)
       return;
     final Collection<String> idns = an.empty.list();
     if (r.getCreatedImports() != null)
