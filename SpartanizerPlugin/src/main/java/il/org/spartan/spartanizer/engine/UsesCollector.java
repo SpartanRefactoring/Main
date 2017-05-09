@@ -123,6 +123,7 @@ class UsesCollector extends HidingDepth {
   }
   @Override public boolean visit(final ExpressionMethodReference r) {
     ingore(r.getName());
+    recurse(r.getExpression());
     return false;
   }
   @Override public boolean visit(final MethodInvocation ¢) {
@@ -148,6 +149,9 @@ class UsesCollector extends HidingDepth {
     return new UsesCollector(result, focus);
   }
   void consider(final SimpleName candidate) {
+    IBinding b = candidate.resolveBinding();
+    if(b != null && b.getKind() != IBinding.VARIABLE)
+      ingore(candidate);
     if (hit(candidate))
       result.add(candidate);
   }

@@ -27,15 +27,14 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
-  
-  public static void onAble(@SuppressWarnings("unused") IProject __) {
+
+  public static void onAble(@SuppressWarnings("unused") IProject p) {
     String prefOpsIDs = store().getString("prefOpsIDs"), prefOpsMapConfs = store().getString("prefOpsMapConfs");
-    if(prefOpsIDs ==null)
+    if (prefOpsIDs == null)
       store().putValue(prefOpsIDs, "stub");
-    if(prefOpsMapConfs == null)
+    if (prefOpsMapConfs == null) 
       store().putValue(prefOpsMapConfs, "stub");
   }
-  
   @Override protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
     addField(new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent()));
