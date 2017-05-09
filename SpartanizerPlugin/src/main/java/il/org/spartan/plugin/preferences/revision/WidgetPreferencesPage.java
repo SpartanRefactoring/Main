@@ -4,7 +4,6 @@ import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
 import java.util.*;
 import java.util.Map.*;
-import java.util.function.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jface.preference.*;
@@ -24,20 +23,17 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     setPreferenceStore(Plugin.plugin().getPreferenceStore());
     setDescription(WIDGET_PAGE_DESCRIPTION);
     store().addPropertyChangeListener(λ -> {
-      if (λ != null && λ.getProperty() != null && λ.getProperty() == WIDGET_SHORTCUT_METHOD_ID && λ.getNewValue() instanceof Boolean)
+      if ((λ != null && λ.getProperty() != null && λ.getProperty() == WIDGET_SHORTCUT_METHOD_ID) && λ.getNewValue() instanceof Boolean)
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
   
-  public void onAble(IProject p) {
-    String prefOpsIDs = store().getString("prefOpsIDs");
-    String prefOpsMapConfs =store().getString("prefOpsMapConfs");
-    if(prefOpsIDs ==null) {
+  public static void onAble(@SuppressWarnings("unused") IProject __) {
+    String prefOpsIDs = store().getString("prefOpsIDs"), prefOpsMapConfs = store().getString("prefOpsMapConfs");
+    if(prefOpsIDs ==null)
       store().putValue(prefOpsIDs, "stub");
-    }
-    if(prefOpsMapConfs == null) {
+    if(prefOpsMapConfs == null)
       store().putValue(prefOpsMapConfs, "stub");
-    }
   }
   
   @Override protected void createFieldEditors() {
