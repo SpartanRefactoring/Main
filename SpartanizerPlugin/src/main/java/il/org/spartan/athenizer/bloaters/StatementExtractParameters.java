@@ -70,17 +70,20 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       note.bug(¢);
       return null;
     }
-    final boolean samePackage = samePackage(types.get(), !binding.isArray() ? binding : binding.getElementType());
+    final ITypeBinding realType = !binding.isArray() ? binding : binding.getElementType();
+    final boolean samePackage = samePackage(types.get(), realType);
     final boolean isTopLevel = binding.isTopLevel();
+    final boolean sameFile = sameFile(types.get(), realType);
     // TODO Ori Roth: enable assignments extraction + check the
     // fixWildCardType(t), added it since when it returns null we get exception
     return t == null || //
-        !samePackage && nonPublicImport(!binding.isArray() ? binding : binding.getElementType()) || //
+        samePackage && privateImport(realType) || //
+        !samePackage && nonPublicImport(realType) || //
         fixWildCardType(t) == null || //
         $ instanceof Assignment ? null : //
             new Tip(description(s), myClass(), s) {
               @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-                fixAddedImports(s, ir, types, samePackage, isTopLevel, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
+                fixAddedImports(s, ir, types, samePackage, isTopLevel, sameFile, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
                 final Type tt = fixWildCardType(t);
                 final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
                 final String nn = scope.newName(s, tt);
@@ -164,12 +167,13 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param r
    * @param ts
    * @param samePackage
+   * @param sameFile
    * @param g
    * @param ilr
    * @param isTpLevel */
-  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> ts, final boolean samePackage, final boolean isTopLevel,
-      final TextEditGroup g, final ListRewrite ilr) {
-    if (samePackage && isTopLevel)
+  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> ts, final boolean samePackage,
+      final boolean isTopLevel, boolean sameFile, final TextEditGroup g, final ListRewrite ilr) {
+    if (sameFile || samePackage && isTopLevel)
       return;
     final Collection<String> idns = an.empty.list();
     if (r.getCreatedImports() != null)
@@ -266,6 +270,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   private static boolean nonPublicImport(ITypeBinding outerType) {
     return !Modifier.isPublic(outerType.getModifiers());
   }
+  private static boolean privateImport(ITypeBinding outerType) {
+    return Modifier.isPrivate(outerType.getModifiers());
+  }
   private static boolean samePackage(IType[] innerTypes, ITypeBinding outerType) {
     return (innerTypes.length != 0 && //
         Optional.ofNullable(innerTypes[0]) //
@@ -273,6 +280,13 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
             .map(x -> x.getElementName()) //
             .map(x -> box.it(x.equals(Optional.ofNullable(outerType.getPackage()).map(y -> y.getName()).orElse("~")))) //
             .orElse(Boolean.FALSE).booleanValue());
+  }
+  private static boolean sameFile(IType[] ts, ITypeBinding realType) {
+    ITypeBinding topBinding = realType;
+    for (; topBinding != null && !topBinding.isTopLevel(); topBinding = topBinding.getDeclaringClass())
+      ;
+    String tn = topBinding == null ? null : topBinding.getName();
+    return tn != null && Arrays.stream(ts).map(x -> x.getElementName()).anyMatch(n -> tn.equals(n));
   }
 
   // TODO Ori Roth: move class to utility file
