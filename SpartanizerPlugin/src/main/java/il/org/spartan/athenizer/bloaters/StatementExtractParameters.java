@@ -72,38 +72,42 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     }
     // TODO Ori Roth: enable assignments extraction + check the
     // fixWildCardType(t), added it since when it returns null we get exception
-    return t == null || fixWildCardType(t) == null || $ instanceof Assignment ? null : new Tip(description(s), myClass(), s) {
-      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        fixAddedImports(s, ir, types, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY), binding.isTopLevel());
-        final Type tt = fixWildCardType(t);
-        final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
-        final String nn = scope.newName(s, tt);
-        f.setName(make.from(s).identifier(nn));
-        f.setInitializer(copy.of($));
-        final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
-        v.setType(tt);
-        final Statement ns = copy.of(s);
-        s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
-        if (!(s.getParent() instanceof Block))
-          goNonBlockParent(s.getParent(), v, ns, r, g);
-        else
-          goBlockParent((Block) s.getParent(), v, ns, r, g);
-      }
-      void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement x,
-          final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, final ASTRewrite r, final TextEditGroup g) {
-        final Block b = p.getAST().newBlock();
-        statements(b).add(x);
-        statements(b).add(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug);
-        r.replace(s, b, g);
-      }
-      void goBlockParent(final Block b, final VariableDeclarationStatement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug,
-          final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, final ASTRewrite r, final TextEditGroup g) {
-        final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
-        lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, s, g);
-        lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, s, g);
-        lr.remove(s, g);
-      }
-    };
+    return t == null || //
+        nonPublicImport(types.get(), !binding.isArray() ? binding : binding.getElementType()) || //
+        fixWildCardType(t) == null || //
+        $ instanceof Assignment ? null : //
+            new Tip(description(s), myClass(), s) {
+              @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+                fixAddedImports(s, ir, types, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY), binding.isTopLevel());
+                final Type tt = fixWildCardType(t);
+                final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
+                final String nn = scope.newName(s, tt);
+                f.setName(make.from(s).identifier(nn));
+                f.setInitializer(copy.of($));
+                final VariableDeclarationStatement v = s.getAST().newVariableDeclarationStatement(f);
+                v.setType(tt);
+                final Statement ns = copy.of(s);
+                s.subtreeMatch(new ASTMatcherSpecific($, λ -> r.replace(λ, make.from(s).identifier(nn), g)), ns);
+                if (!(s.getParent() instanceof Block))
+                  goNonBlockParent(s.getParent(), v, ns, r, g);
+                else
+                  goBlockParent((Block) s.getParent(), v, ns, r, g);
+              }
+              void goNonBlockParent(final ASTNode p, final VariableDeclarationStatement x,
+                  final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, final ASTRewrite r, final TextEditGroup g) {
+                final Block b = p.getAST().newBlock();
+                statements(b).add(x);
+                statements(b).add(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug);
+                r.replace(s, b, g);
+              }
+              void goBlockParent(final Block b, final VariableDeclarationStatement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug,
+                  final Statement pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, final ASTRewrite r, final TextEditGroup g) {
+                final ListRewrite lr = r.getListRewrite(b, Block.STATEMENTS_PROPERTY);
+                lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug, s, g);
+                lr.insertBefore(pleaseDoNotChangeThisVariableNameToSItCausesAHidingBug2, s, g);
+                lr.remove(s, g);
+              }
+            };
   }
   // TODO Ori Roth: extend (?)
   @SuppressWarnings("hiding") private static List<Expression> candidates(final Statement s) {
@@ -254,6 +258,14 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         }
     }
     return false;
+  }
+  private static boolean nonPublicImport(IType[] innerTypes, ITypeBinding outerType) {
+    return !Modifier.isPublic(outerType.getModifiers()) && (innerTypes.length == 0 || //
+        Optional.ofNullable(innerTypes[0]) //
+            .map(x -> x.getPackageFragment()) //
+            .map(x -> x.getElementName()) //
+            .map(x -> box.it(!x.equals(Optional.ofNullable(outerType.getPackage()).map(y -> y.getName()).orElse("~")))) //
+            .orElse(Boolean.TRUE).booleanValue());
   }
 
   // TODO Ori Roth: move class to utility file

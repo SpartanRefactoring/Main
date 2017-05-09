@@ -175,9 +175,7 @@ public class XMLSpartan {
     if (d == null)
       return;
     final NodeList ns = d.getElementsByTagName(TIPPER);
-    if (ns == null)
-      return;
-    else
+    if (ns != null)
       for (int i = 0; i < ns.getLength(); ++i) {
         final Element e = (Element) ns.item(i);
         final String id = e.getAttribute(TIPPER_ID);
