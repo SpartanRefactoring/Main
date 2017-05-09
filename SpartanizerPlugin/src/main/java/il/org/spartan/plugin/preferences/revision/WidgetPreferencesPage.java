@@ -4,7 +4,6 @@ import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
 import java.util.*;
 import java.util.Map.*;
-import java.util.function.*;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.jface.preference.*;
@@ -28,18 +27,16 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
-  
-  public void onAble(IProject p) {
+  public static void onAble(@SuppressWarnings("unused") IProject p) {
     String prefOpsIDs = store().getString("prefOpsIDs");
-    String prefOpsMapConfs =store().getString("prefOpsMapConfs");
-    if(prefOpsIDs ==null) {
+    String prefOpsMapConfs = store().getString("prefOpsMapConfs");
+    if (prefOpsIDs == null) {
       store().putValue(prefOpsIDs, "stub");
     }
-    if(prefOpsMapConfs == null) {
+    if (prefOpsMapConfs == null) {
       store().putValue(prefOpsMapConfs, "stub");
     }
   }
-  
   @Override protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
     addField(new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent()));
