@@ -55,6 +55,6 @@ public class LinguisticHandler extends AbstractHandler {
       if (iz.methodInvocation(x) && (name = az.name(az.methodInvocation(x).getExpression())) != null)
         break;
     }
-    return new FAPI(s.getAST(), name, invocations).solveBinding();
+    return new FAPI(s.getAST(), name, invocations).solveBinding().fixPath();
   }
 }
