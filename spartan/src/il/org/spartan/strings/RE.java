@@ -2,19 +2,18 @@ package il.org.spartan.strings;
 
 import java.util.regex.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.utils.*;
 
 public class RE {
-   public static String all(final String ¢) {
+  public static String all(final String ¢) {
     return beginLine() + ¢ + endLine();
   }
-   public static String anyNumberOf(final String regularExpression) {
+  public static String anyNumberOf(final String regularExpression) {
     return parenthesis(regularExpression) + "*";
   }
-   public static String anyNumberOfReluctant(final String regularExpression) {
+  public static String anyNumberOfReluctant(final String regularExpression) {
     return parenthesis(regularExpression) + "*?";
   }
   public static String beginLine() {
@@ -23,17 +22,17 @@ public class RE {
   public static String endLine() {
     return "$";
   }
-  public static String find( final String regularExpression,  final String text) {
-     final Matcher $ = Pattern.compile(regularExpression).matcher(text);
+  public static String find(final String regularExpression, final String text) {
+    final Matcher $ = Pattern.compile(regularExpression).matcher(text);
     return !$.find() ? null : $.group();
   }
-  public static boolean found( final String regularExpression,  final String text) {
+  public static boolean found(final String regularExpression, final String text) {
     return !text.equals(text.replaceAll(regularExpression, ""));
   }
-   public static String fulllyQualifiedIdentifier() {
+  public static String fulllyQualifiedIdentifier() {
     return identifier() + anyNumberOf(whites() + "[.]" + whites() + identifier());
   }
-   public static String group(final String regularExpression) {
+  public static String group(final String regularExpression) {
     return "(" + regularExpression + ")";
   }
   public static String identifier() {
@@ -45,19 +44,19 @@ public class RE {
   public static String lineMode() {
     return "(?m)";
   }
-   public static String newLine() {
+  public static String newLine() {
     return or("\r\n", "\n");
   }
-   public static String optional(final String regularExpression) {
+  public static String optional(final String regularExpression) {
     return parenthesis(regularExpression) + "?";
   }
-   public static String or( final String... alternatives) {
+  public static String or(final String... alternatives) {
     return parenthesis(Separate.by(λ -> parenthesis(λ), alternatives, "|"));
   }
-   public static String padded(final String regularExpression) {
+  public static String padded(final String regularExpression) {
     return whites() + regularExpression + whites();
   }
-   public static String parenthesis(final String regularExpression) {
+  public static String parenthesis(final String regularExpression) {
     return "(?:" + regularExpression + ")";
   }
   public static String spaces() {

@@ -1,11 +1,7 @@
 package il.org.spartan.misc;
 
-import static fluent.ly.___.*;
-
 import java.util.*;
 import java.util.Map.*;
-
-import org.eclipse.jdt.annotation.*;
 
 /** A generic class realizing a cached buffer of elements of an arbitrary kind,
  * but indexed by {@link String}s. If a fetched element is not in the cache,
@@ -35,7 +31,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
   public Cache(final Factory<T> factory) {
     this.factory = factory;
   }
-   public Collection<T> all() {
+  public Collection<T> all() {
     if (!exhaustive)
       map.putAll(factory.all());
     exhaustive = true;
@@ -47,7 +43,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
    *        fine.
    * @return the element identified by this key. */
   public T get(final String key) {
-    notNull(key);
+    assert key != null;
     T $ = map.get(key);
     if ($ != null || exhaustive)
       return $;
@@ -57,7 +53,7 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
   }
   /** Obtain an iterator over the cached object
    * @return Iterator of Entry<String,T> */
-  @Override  public Iterator<Entry<String, T>> iterator() {
+  @Override public Iterator<Entry<String, T>> iterator() {
     return map.entrySet().iterator();
   }
   /** Store the given value in the cache, and associate it with the given key.
@@ -84,13 +80,13 @@ public class Cache<T> implements Iterable<Map.Entry<String, T>> {
      * @return the base implementation returns the empty set, but it is meant to
      *         be overridden by concrete classes inheriting from
      *         {@link Cache.Factory} */
-     public Map<String, T> all() {
+    public Map<String, T> all() {
       return new HashMap<>();
     }
     /** create a new object from its {@link String} name
      * @param key the identifier for the newly created object.
      * @return the newly created object, or <code><b>null</b></code> if no such
      *         object can be created. */
-     public abstract T make(String key);
+    public abstract T make(String key);
   }
 }

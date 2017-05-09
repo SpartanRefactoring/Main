@@ -3,8 +3,6 @@ package il.org.spartan;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 // import static fluent.ly.___.*;
 import il.org.spartan.Aggregator.Aggregation.*;
 import il.org.spartan.statistics.*;
@@ -18,14 +16,14 @@ import il.org.spartan.statistics.*;
 public class CSVStatistics extends CSVLine.Ordered {
   private static final String SUMMARY_EXTENSION = ".summary";
 
-  @SuppressWarnings("null") private static String removeExtension( final String baseName) {
+  @SuppressWarnings("null") private static String removeExtension(final String baseName) {
     return baseName.replaceFirst("\\.csv$", "");
   }
 
-   private final String keysHeader;
+  private final String keysHeader;
   final Map<String, RealStatistics> stats = new LinkedHashMap<>();
-   final CSVWriter inner;
-   final CSVWriter summarizer;
+  final CSVWriter inner;
+  final CSVWriter summarizer;
 
   /** Instantiate this class, setting the names of the main and secondary CSV
    * files.
@@ -34,17 +32,17 @@ public class CSVStatistics extends CSVLine.Ordered {
    * @param keysHeader the name of the column in which the names of the
    *        numerical columns in the principal file
    * @throws IOException */
-  public CSVStatistics( final String baseName,  final String keysHeader) {
+  public CSVStatistics(final String baseName, final String keysHeader) {
     assert baseName != null;
     assert keysHeader != null;
     inner = new CSVWriter(removeExtension(baseName));
     summarizer = new CSVWriter(removeExtension(baseName) + SUMMARY_EXTENSION);
     this.keysHeader = keysHeader;
   }
-   public String close() {
+  public String close() {
     inner.close();
     for (final String key : stats.keySet()) {
-       final CSVLine l = new CSVLine.Ordered.Separated("%");
+      final CSVLine l = new CSVLine.Ordered.Separated("%");
       l.put(keysHeader, key);
       @SuppressWarnings("null") final ImmutableStatistics s = stats.get(key);
       l//
@@ -63,7 +61,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     }
     return summarizer.close();
   }
-   public String mainFileName() {
+  public String mainFileName() {
     return inner.fileName();
   }
   public void nl() {
@@ -84,7 +82,7 @@ public class CSVStatistics extends CSVLine.Ordered {
     super.put(key, value);
     return this;
   }
-   public String summaryFileName() {
+  public String summaryFileName() {
     return summarizer.fileName();
   }
   @SuppressWarnings("null") RealStatistics getStatistics(final String key) {

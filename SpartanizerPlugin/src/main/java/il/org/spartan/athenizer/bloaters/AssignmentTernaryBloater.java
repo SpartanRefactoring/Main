@@ -10,6 +10,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 
 import il.org.spartan.athenizer.zoomin.expanders.*;
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
@@ -31,11 +33,15 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
   }
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
     final ConditionalExpression $ = az.conditionalExpression(core(x));
-    return $ == null ? null
-        : pair(//
-            az.expressionStatement($.getAST().newExpressionStatement(pair(left, then($)).to(o))),
-            az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)))//
-        ).toIf($.getExpression());
+    if($ == null)
+      return null;
+    ExpressionStatement e1 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, then($)).to(o))),
+        e2 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)));
+    if(wizard.eq(left, then($)))
+      return pair(e2,null).toIf(make.notOf($.getExpression()));
+    if(wizard.eq(left, elze($)))
+      e2 = null;
+    return pair(e1,e2).toIf($.getExpression());
   }
   private static ASTNode replaceAssignment(final Statement ¢) {
     final ExpressionStatement expressionStatement = az.expressionStatement(¢);

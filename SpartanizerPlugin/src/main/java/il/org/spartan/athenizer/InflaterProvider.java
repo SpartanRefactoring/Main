@@ -28,6 +28,7 @@ public class InflaterProvider extends OperationsProvider {
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander(), //
             new ExtractExpressionFromReturn(), //
+            new StatementExtractParameters<>(), //
             null) //
         .add(ExpressionStatement.class, //
             new AssignmentAndAssignmentBloater(), //

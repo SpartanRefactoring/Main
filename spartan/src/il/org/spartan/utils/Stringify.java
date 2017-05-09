@@ -2,11 +2,8 @@
 package il.org.spartan.utils;
 
 import static fluent.ly.azzert.*;
-import static fluent.ly.___.*;
-
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.streotypes.*;
@@ -48,8 +45,8 @@ import fluent.ly.*;
 @Utility
 public enum Stringify {
   ; // No values in this namespace.
-   public static <T> ArrayList<String> apply( final F<T> f,  final Iterable<? extends T> ts) {
-     final ArrayList<String> $ = new ArrayList<>();
+  public static <T> ArrayList<String> apply(final F<T> f, final Iterable<? extends T> ts) {
+    final ArrayList<String> $ = new ArrayList<>();
     for (final T ¢ : ts)
       $.add(f.__(¢));
     return $;
@@ -60,8 +57,8 @@ public enum Stringify {
    *        the beginning of a non-empty list.
    * @return a newly created options object with the default settings, except
    *         for the specified beginning string. */
-   public static Option begin(final String begin) {
-    notNull(begin);
+  public static Option begin(final String begin) {
+    assert begin != null;
     return new Option().begin(begin);
   }
   /** Create an option object with default setting, except for a specified
@@ -70,8 +67,8 @@ public enum Stringify {
    *        end of a non-empty list.
    * @return a newly created options object with the default settings, except
    *         for the specified ending string. */
-   public static Option end(final String end) {
-    notNull(end);
+  public static Option end(final String end) {
+    assert end != null;
     return new Option().end(end);
   }
   /** Create an option object with default setting, except for a specified
@@ -80,7 +77,7 @@ public enum Stringify {
    *        the list. If <code><b>null</b></code>, then empty elements are not .
    * @return a newly created options object with the default settings, except
    *         for the specified filler string. */
-   public static Option filler(final String filler) {
+  public static Option filler(final String filler) {
     return new Option().filler(filler);
   }
   /** Create a textual representation of an {@link Iterable} collection of
@@ -92,7 +89,7 @@ public enum Stringify {
    * @param <T> type of arguments to be converted.
    * @return a {@link String} representation of the parameter, prepared with the
    *         supplied formatting style. */
-   public static <T> String it( final Iterable<? extends T> ts,  final F<T> f,  final Option o) {
+  public static <T> String it(final Iterable<? extends T> ts, final F<T> f, final Option o) {
     return it(apply(f, ts), o);
   }
   /** Convert an {@link Iterable} collection of objects to a {@link String}
@@ -102,7 +99,7 @@ public enum Stringify {
    * @return a {@link String} representation of the parameter, prepared with the
    *         default list formatting style as represented by
    *         {@link Option#defaultStyle}. */
-   public static <T> String it( final Iterable<T> ¢) {
+  public static <T> String it(final Iterable<T> ¢) {
     return it(¢, Option.defaultStyle);
   }
   /** Create a textual representation of an {@link Iterable} collection of
@@ -112,7 +109,7 @@ public enum Stringify {
    * @param o formatting style for this list.
    * @return a {@link String} representation of the parameter, prepared with the
    *         supplied formatting style. */
-   public static <T> String it( final Iterable<T> ts,  final Option o) {
+  public static <T> String it(final Iterable<T> ts, final Option o) {
     return makeList(asStringArray(prune(ts, o), o.filler()), o);
   }
   /** Convert an array of objects to a {@link String} using the default
@@ -122,7 +119,7 @@ public enum Stringify {
    * @return a {@link String} representation of the parameter, prepared with the
    *         default list formatting style as represented by
    *         {@link Option#defaultStyle}. */
-   public static <T> String it( final T[] ¢) {
+  public static <T> String it(final T[] ¢) {
     return it(¢, Option.defaultStyle);
   }
   /** Convert an {@link Iterable} collection of objects to a {@link String}
@@ -132,7 +129,7 @@ public enum Stringify {
    * @param o formatting style for this list.
    * @return a {@link String} representation of the parameter, prepared with the
    *         supplied formatting style. */
-   public static <T> String it( final T[] ts,  final Option o) {
+  public static <T> String it(final T[] ts, final Option o) {
     return makeList(asStringArray(prune(ts, o), o.filler()), o);
   }
   /** Create an option object with default setting, except for the specification
@@ -140,7 +137,7 @@ public enum Stringify {
    * @return a newly created options object with the default settings, except
    *         for except for the specification <code><b>null</b></code> are to be
    *         omitted. */
-   public static Option omitNulls() {
+  public static Option omitNulls() {
     return new Option().omitNulls();
   }
   /** Create an option object with default setting, except for a specified
@@ -149,36 +146,36 @@ public enum Stringify {
    *        separate the list items.
    * @return a newly created options object with the default settings, except
    *         for the specified filler string. */
-   public static Option separator(final String separator) {
-    notNull(separator);
+  public static Option separator(final String separator) {
+    assert separator != null;
     return new Option().separator(separator);
   }
-  private static <T> String[] asStringArray( final Iterable<T> ts, final String nullFiller) {
+  private static <T> String[] asStringArray(final Iterable<T> ts, final String nullFiller) {
     return asStringCollection(ts, nullFiller).toArray(new String[0]);
   }
-   private static <T> String[] asStringArray( final T[] ts, final String nullFiller) {
-     final String[] $ = new String[ts.length];
+  private static <T> String[] asStringArray(final T[] ts, final String nullFiller) {
+    final String[] $ = new String[ts.length];
     int i = 0;
-    for ( final T ¢ : ts)
+    for (final T ¢ : ts)
       $[i++] = ¢ != null ? ¢ + "" : nullFiller;
     return $;
   }
-   private static <T> Collection<String> asStringCollection( final Iterable<T> ts,  final String nullFiller) {
-     final ArrayList<String> $ = new ArrayList<>();
-    for ( final T ¢ : ts)
+  private static <T> Collection<String> asStringCollection(final Iterable<T> ts, final String nullFiller) {
+    final ArrayList<String> $ = new ArrayList<>();
+    for (final T ¢ : ts)
       if (¢ != null)
         $.add(¢ + "");
       else if (nullFiller != null)
         $.add(nullFiller);
     return $;
   }
-   private static String makeList( final String[] ss,  final Option o) {
+  private static String makeList(final String[] ss, final Option o) {
     return ss.length == 0 ? "" : o.begin() + Separate.by(ss, o.separator()) + o.end();
   }
-   private static <T> Iterable<T> prune( final Iterable<T> ts,  final Option o) {
+  private static <T> Iterable<T> prune(final Iterable<T> ts, final Option o) {
     return o.notOmittingNulls() ? ts : prune.nulls(ts);
   }
-   private static <T> T[] prune( final T[] ts,  final Option o) {
+  private static <T> T[] prune(final T[] ts, final Option o) {
     return o.notOmittingNulls() ? ts : prune.nulls(ts);
   }
 
@@ -194,14 +191,14 @@ public enum Stringify {
     public static final Option defaultStyle = new Option("[", "]", NULL_TEXT, ",");
     private String __begin;
     private String __end;
-     private String __filler;
+    private String __filler;
     private String __separator;
 
     /** Create a new instance, initialized with the default formatting style. */
     public Option() {
       this(defaultStyle);
     }
-    private Option( final Option o) {
+    private Option(final Option o) {
       __begin = o.__begin;
       __end = o.__end;
       __filler = o.__filler;
@@ -216,35 +213,35 @@ public enum Stringify {
     public String begin() {
       return __begin;
     }
-     public Option begin(final String begin) {
+    public Option begin(final String begin) {
       __begin = begin;
       return this;
     }
     public String end() {
       return __end;
     }
-     public Option end(final String end) {
+    public Option end(final String end) {
       __end = end;
       return this;
     }
-     public String filler() {
+    public String filler() {
       return __filler;
     }
-     public Option filler(final String filler) {
+    public Option filler(final String filler) {
       __filler = filler;
       return this;
     }
     public boolean notOmittingNulls() {
       return __filler != null;
     }
-     public Option omitNulls() {
+    public Option omitNulls() {
       __filler = null;
       return this;
     }
     public String separator() {
       return __separator;
     }
-     public Option separator(final String separator) {
+    public Option separator(final String separator) {
       __separator = separator;
       return this;
     }
@@ -255,13 +252,13 @@ public enum Stringify {
     private static String[] makeArray(final String... ¢) {
       return ¢;
     }
-     private static Collection<String> makeCollection( final String... ss) {
-       final ArrayList<String> $ = new ArrayList<>();
+    private static Collection<String> makeCollection(final String... ss) {
+      final ArrayList<String> $ = new ArrayList<>();
       for (final String ¢ : ss)
         $.add(¢);
       return $;
     }
-     public Collection<String> makeCollectionABC() {
+    public Collection<String> makeCollectionABC() {
       return makeCollection("A", "B", "C");
     }
     @Test public void testArrayFillerSeparatorBeginEnd() {

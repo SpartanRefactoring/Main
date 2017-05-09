@@ -1,7 +1,5 @@
 package il.org.spartan.graph;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.collections.*;
 
 /** A basic graph decorator, which does nothing except for delegating all its
@@ -35,7 +33,7 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
    *
    * @see il.org.spartan.graph.AbstractGraph#incoming(il.org.spartan
    * .graph.Vertex) */
-  @Override public ImmutableArrayList<Vertex<E>> incoming( final Vertex<E> ¢) {
+  @Override public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> ¢) {
     return inner.incoming(¢);
   }
   /* (non-Javadoc)
@@ -48,7 +46,7 @@ public class GraphDecorator<E> extends AbstractGraph<E> {
    *
    * @see il.org.spartan.graph.AbstractGraph#outgoing(il.org.spartan
    * .graph.Vertex) */
-  @Override public ImmutableArrayList<Vertex<E>> outgoing( final Vertex<E> ¢) {
+  @Override public ImmutableArrayList<Vertex<E>> outgoing(final Vertex<E> ¢) {
     return inner.outgoing(¢);
   }
   /* (non-Javadoc)

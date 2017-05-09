@@ -1,18 +1,16 @@
 package il.org.spartan.utils;
 
-import org.eclipse.jdt.annotation.*;
-
 public class Triple<First, Second, Third> extends Pair<First, Second> {
-   public static <First, Second, Third> Triple<First, Second, Third> make(final First f, final Second s, final Third t) {
+  public static <First, Second, Third> Triple<First, Second, Third> make(final First f, final Second s, final Third t) {
     return new Triple<>(f, s, t);
   }
-   @SuppressWarnings("unchecked") //
+  @SuppressWarnings("unchecked") //
   public static <First, Second, Third> //
       Triple<First, Second, Third>[] //
       makeTriples(final int ¢) {
     return new Triple[¢];
   }
-   public static <First, Second, Third> //
+  public static <First, Second, Third> //
       Triple<First, Second, Third>[] //
       makeTriples(final int i, final int m, final int k) {
     return Triple.makeTriples(i * k * m);

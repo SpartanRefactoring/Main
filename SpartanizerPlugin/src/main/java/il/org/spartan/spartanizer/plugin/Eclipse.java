@@ -13,6 +13,7 @@ import java.util.stream.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.swt.events.*;
@@ -128,5 +129,11 @@ public class Eclipse {
    * @param ¢ JD */
   public static void runAsynchronouslyInUIThread(final Runnable ¢) {
     Display.getDefault().asyncExec(¢);
+  }
+  public static ASTNode coveredNodeByRange(final CompilationUnit u, final ITextSelection s) {
+    return new NodeFinder(u, s.getOffset(), Math.max(1, s.getLength())).getCoveredNode();
+  }
+  public static ASTNode coveringNodeByRange(final CompilationUnit u, final ITextSelection s) {
+    return new NodeFinder(u, s.getOffset(), Math.max(1, s.getLength())).getCoveringNode();
   }
 }

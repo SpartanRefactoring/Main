@@ -7,7 +7,6 @@ import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import il.org.spartan.collections.*;
@@ -131,7 +130,7 @@ public interface XYProcessor {
     @SuppressWarnings("static-method")
     public static class TEST {
       @Test public void feed() {
-         final RealsOnly p = new RealsOnly();
+        final RealsOnly p = new RealsOnly();
         p.feed(doubles(Double.NaN, 1, 4, 3), doubles(0, Double.NEGATIVE_INFINITY, 5, 3), doubles(0, 1, 6, Double.NEGATIVE_INFINITY));
         azzert.that(p.xs().length, is(1));
         azzert.that(p.ys().length, is(1));
@@ -173,7 +172,7 @@ public interface XYProcessor {
     @Override public void done() {
       ___.nothing();
     }
-     public Vacuous feed( final double xs[],  final double ys[]) {
+    public Vacuous feed(final double xs[], final double ys[]) {
       assert xs.length == ys.length;
       final int n = Math.max(xs.length, ys.length);
       for (int ¢ = 0; ¢ < n; ++¢)
@@ -181,7 +180,7 @@ public interface XYProcessor {
       done();
       return this;
     }
-     public Vacuous feed( final double xs[],  final double ys[],  final double dys[]) {
+    public Vacuous feed(final double xs[], final double ys[], final double dys[]) {
       assert xs.length == ys.length;
       assert ys.length == dys.length;
       final int n = Math.max(xs.length, ys.length);
@@ -190,27 +189,27 @@ public interface XYProcessor {
       done();
       return this;
     }
-     public Vacuous feed( final XYSeries s) {
+    public Vacuous feed(final XYSeries s) {
       for (int ¢ = 0; ¢ < s.n(); ++¢)
         p(s.x[¢], s.y[¢], s.dy[¢]);
       done();
       return this;
     }
-     public Vacuous feedHistogram( final double ds[]) {
+    public Vacuous feedHistogram(final double ds[]) {
       for (int ¢ = 0; ¢ < ds.length; ++¢)
         if (ds[¢] != 0)
           p(¢, ds[¢]);
       done();
       return this;
     }
-     public Vacuous feedHistogram( final double ys[], final double dys[]) {
+    public Vacuous feedHistogram(final double ys[], final double dys[]) {
       for (int ¢ = 0; ¢ < ys.length; ++¢)
         if (ys[¢] != 0)
           p(¢, ys[¢], dys[¢]);
       done();
       return this;
     }
-     public Vacuous feedHistogram( final int as[]) {
+    public Vacuous feedHistogram(final int as[]) {
       for (int ¢ = 0; ¢ < as.length; ++¢)
         if (as[¢] != 0)
           p(¢, as[¢]);

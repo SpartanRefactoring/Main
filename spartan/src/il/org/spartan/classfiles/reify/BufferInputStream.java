@@ -18,19 +18,17 @@ package il.org.spartan.classfiles.reify;
 
 import java.io.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 
 /** A sane re-implementation of {@link ByteArrayInputStream}.
  * @author Yossi Gil */
 public class BufferInputStream extends InputStream {
-   protected final byte[] bytes;
+  protected final byte[] bytes;
   protected int position;
   protected int mark;
   protected final int length;
 
-  public BufferInputStream( final byte bytes[]) {
+  public BufferInputStream(final byte bytes[]) {
     this.bytes = bytes;
     length = bytes.length;
   }

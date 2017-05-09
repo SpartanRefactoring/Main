@@ -1,7 +1,5 @@
 package il.org.spartan.bench;
 
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 
 /** @author Yossi Gil
@@ -25,7 +23,7 @@ public final class Stopwatch {
     return name;
   }
   /** @return <code><b>this</b></code> */
-   public Stopwatch reset() {
+  public Stopwatch reset() {
     time = runs = 0;
     return this;
   }
@@ -34,25 +32,25 @@ public final class Stopwatch {
   }
   /** @param runs
    * @return <code><b>this</b></code> */
-   public Stopwatch setRuns(final int runs) {
+  public Stopwatch setRuns(final int runs) {
     this.runs = runs;
     return this;
   }
   /** @param time
    * @return <code><b>this</b></code> */
-   public Stopwatch setTime(final long time) {
+  public Stopwatch setTime(final long time) {
     this.time = time;
     return this;
   }
   /** @return <code><b>this</b></code> */
-   public Stopwatch start() {
+  public Stopwatch start() {
     ___.require(!started);
     begin = System.nanoTime();
     started = true;
     return this;
   }
   /** @return <code><b>this</b></code> */
-   public Stopwatch stop() {
+  public Stopwatch stop() {
     ___.require(started);
     time += System.nanoTime() - begin;
     ++runs;

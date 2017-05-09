@@ -4,8 +4,6 @@ package il.org.spartan.files.visitors;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** A class realizing a traversal of the file system, where the traversal is
  * restricted to <code>.java</code> files only
  * <p>
@@ -20,7 +18,7 @@ import org.eclipse.jdt.annotation.*;
 public class JavaFilesVisitor extends NonStopVisitor {
   private static final String[] JAVA_FILES_EXTENSION = new String[] { ".java" };
 
-  public JavaFilesVisitor( final Collection<String> from, final FileOnlyAction action) {
+  public JavaFilesVisitor(final Collection<String> from, final FileOnlyAction action) {
     super(from, action, JAVA_FILES_EXTENSION);
   }
   public JavaFilesVisitor(final File from, final FileOnlyAction action) {

@@ -2,8 +2,6 @@ package il.org.spartan.misc;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** This cache class allows a value to be retrieved by either by a String key or
  * by another value. If the key object was used in the past, the returned value
  * is the previously created object.
@@ -21,5 +19,5 @@ public abstract class BasicFactory<V> implements FactoryConcept<V> {
   @Override public V fromString(final String ¢) {
     return from(stringToValue(¢));
   }
-   protected abstract V stringToValue(String s);
+  protected abstract V stringToValue(String s);
 }

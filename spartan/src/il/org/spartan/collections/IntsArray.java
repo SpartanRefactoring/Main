@@ -2,21 +2,19 @@ package il.org.spartan.collections;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** A <href a=http://en.wikipedia.org/wiki/Dynamic_array>growable array</a> of
  * <code><b>int</b></code>s.
  * @author Yossi Gil
  * @since February 20, 2012 */
 public class IntsArray {
   private int length;
-   private int[] inner = new int[0];
+  private int[] inner = new int[0];
 
   /** Makes sure the specified array index exists, extending {@link #length()}
    * if necessary
    * @param i a non-negative array index
    * @return <code><b>this</b></code> */
-   public IntsArray access(final int i) {
+  public IntsArray access(final int i) {
     if (i < length)
       return this;
     final int n = inner.length;
@@ -72,7 +70,7 @@ public class IntsArray {
   }
   /** A representation as a Java array.
    * @return the underlying array; likely to be invalid if the array grows */
-   public int[] toArray() {
+  public int[] toArray() {
     return Arrays.copyOf(inner, length);
   }
 }

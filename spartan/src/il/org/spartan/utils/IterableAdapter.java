@@ -5,8 +5,6 @@ import static fluent.ly.___.*;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.streotypes.*;
 
 /** An {@link Iterable} interface to an {@link Enumeration} using the
@@ -22,7 +20,7 @@ public final class IterableAdapter<T> implements Iterable<T> {
    * @param <T> type of elements in the iterated collection
    * @param ¢ an enumeration to convert into an {@link Iterable}
    * @return a new {@link Iterable} created from the parameter */
-   public static <T> Iterable<T> make(final Enumeration<T> ¢) {
+  public static <T> Iterable<T> make(final Enumeration<T> ¢) {
     return new IterableAdapter<>(¢);
   }
 
@@ -34,7 +32,7 @@ public final class IterableAdapter<T> implements Iterable<T> {
   public IterableAdapter(final Enumeration<T> implementation) {
     this.implementation = implementation;
   }
-  @Override  public Iterator<T> iterator() {
+  @Override public Iterator<T> iterator() {
     return new Iterator<T>() {
       @Override public boolean hasNext() {
         return implementation.hasMoreElements();

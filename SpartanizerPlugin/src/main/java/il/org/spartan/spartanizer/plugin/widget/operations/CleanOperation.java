@@ -12,7 +12,7 @@ import il.org.spartan.spartanizer.plugin.widget.*;
  * @author Niv Shalmon
  * @since 2017-05-04 */
 public class CleanOperation extends WidgetOperation {
-  private static final long serialVersionUID = -5487701515113139827L;
+  private static final long serialVersionUID = -0x4C283B73F1B10E73L;
   public static final String MODE = "mode";
   public static final String PROJECTS = "projects";
   public static final String current = "current project";
@@ -42,8 +42,8 @@ public class CleanOperation extends WidgetOperation {
         c.allProjects.forEach(p -> {
           try {
             p.build(IncrementalProjectBuilder.CLEAN_BUILD, new NullProgressMonitor());
-          } catch (final CoreException x) {
-            note.bug(x);
+          } catch (final CoreException ¢) {
+            note.bug(¢);
           }
         });
     }

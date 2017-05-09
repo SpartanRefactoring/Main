@@ -2,16 +2,14 @@ package il.org.spartan.classfiles.reify;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.classfiles.reify.OpCode.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.graph.*;
 import il.org.spartan.graph.Graph.*;
 
 public class CFG {
-  @SuppressWarnings("boxing") private static BasicBlock offset2block( final Set<BasicBlock> bs, final Long offset) {
-    for ( final BasicBlock $ : bs)
+  @SuppressWarnings("boxing") private static BasicBlock offset2block(final Set<BasicBlock> bs, final Long offset) {
+    for (final BasicBlock $ : bs)
       if ($.startOffset <= offset && $.endOffset >= offset)
         return $;
     return null;
@@ -34,14 +32,14 @@ public class CFG {
     return g.countEdges() - g.vertices().size() + 1;
   }
   public void generateGraph() {
-     final MultiMap<Long, Long> jumps2targets = new MultiMap<>();
-     final Map<Long, Set<Long>> subroutine2rets = new HashMap<>();
+    final MultiMap<Long, Long> jumps2targets = new MultiMap<>();
+    final Map<Long, Set<Long>> subroutine2rets = new HashMap<>();
     // first stage - mark jump instructions, target instructions and end
     // instructions
     findJumpsAndTargets(jumps2targets, subroutine2rets);
     // second phase - create control flow graph - nodes only
-     final Graph.Builder<BasicBlock> builder = new Builder<>();
-     final Set<BasicBlock> basicBlocks = generateBasicBlocks(jumps2targets, builder);
+    final Graph.Builder<BasicBlock> builder = new Builder<>();
+    final Set<BasicBlock> basicBlocks = generateBasicBlocks(jumps2targets, builder);
     // third phase - add edges to the graph
     for (final Long jump : jumps2targets.keySet())
       for (final Long target : jumps2targets.get(jump))
@@ -51,23 +49,22 @@ public class CFG {
         builder.newEdge(offset2block(basicBlocks, sub), offset2block(basicBlocks, ret));
     g = builder.build();
   }
-  @Override  public String toString() {
-     String $ = "";
-    for ( final Vertex<BasicBlock> ¢ : vertices())
+  @Override public String toString() {
+    String $ = "";
+    for (final Vertex<BasicBlock> ¢ : vertices())
       $ += "basic block: " + ¢.e().startOffset + ", " + ¢.e().endOffset + "\n";
-    for ( final Vertex<BasicBlock> v : vertices())
-      for ( final Vertex<BasicBlock> v2 : v.outgoing())
+    for (final Vertex<BasicBlock> v : vertices())
+      for (final Vertex<BasicBlock> v2 : v.outgoing())
         $ += "edge: " + v.e().endOffset + ", " + v2.e().startOffset + "\n";
     return $;
   }
-   public ImmutableArrayList<Vertex<BasicBlock>> vertices() {
+  public ImmutableArrayList<Vertex<BasicBlock>> vertices() {
     return g.vertices();
   }
-  @SuppressWarnings("boxing") private void findJumpsAndTargets( final MultiMap<Long, Long> jumps2targets,
-       final Map<Long, Set<Long>> subroutine2rets) {
+  @SuppressWarnings("boxing") private void findJumpsAndTargets(final MultiMap<Long, Long> jumps2targets, final Map<Long, Set<Long>> subroutine2rets) {
     long offset = 0;
-    for ( final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
-       final Instruction i = OpCode.read(r);
+    for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
+      final Instruction i = OpCode.read(r);
       if (i == null)
         break;
       if (i.invalid())
@@ -137,13 +134,13 @@ public class CFG {
       offset = r.position();
     }
   }
-   @SuppressWarnings("boxing") private Set<BasicBlock> generateBasicBlocks( final MultiMap<Long, Long> jumps2targets,
-       final Graph.Builder<BasicBlock> b) {
-     final Set<BasicBlock> $ = new HashSet<>();
+  @SuppressWarnings("boxing") private Set<BasicBlock> generateBasicBlocks(final MultiMap<Long, Long> jumps2targets,
+      final Graph.Builder<BasicBlock> b) {
+    final Set<BasicBlock> $ = new HashSet<>();
     long offset = 0;
-     BasicBlock currBlock = null;
-    for ( final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
-       final Instruction i = OpCode.read(r);
+    BasicBlock currBlock = null;
+    for (final BufferDataInputStream r = new BufferDataInputStream(codes);;) {
+      final Instruction i = OpCode.read(r);
       if (i == null)
         break;
       if (i.invalid())
@@ -178,14 +175,14 @@ public class CFG {
     long startOffset;
     long endOffset;
 
-    @Override public boolean equals( final Object ¢) {
+    @Override public boolean equals(final Object ¢) {
       return ¢ == this || ¢ != null && getClass() == ¢.getClass() && getOuterType().equals(((BasicBlock) ¢).getOuterType())
           && endOffset == ((BasicBlock) ¢).endOffset && startOffset == ((BasicBlock) ¢).startOffset;
     }
     @Override public int hashCode() {
       return (int) (31 * (endOffset + 31 * (getOuterType().hashCode() + 31)) + startOffset);
     }
-     private CFG getOuterType() {
+    private CFG getOuterType() {
       return CFG.this;
     }
   }

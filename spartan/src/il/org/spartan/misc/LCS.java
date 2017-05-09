@@ -6,8 +6,6 @@ import static java.lang.Math.max;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 import fluent.ly.*;
 import il.org.spartan.text.*;
@@ -23,7 +21,7 @@ import il.org.spartan.text.*;
 public class LCS {
   /** @param ia JD
    * @param is2 JD */
-  public static int length( final int[] ia,  final int[] is2) {
+  public static int length(final int[] ia, final int[] is2) {
     return new LCS(ia, is2).length();
   }
   /** @param a JD
@@ -33,33 +31,33 @@ public class LCS {
   }
   /** @param ssa JD
    * @param ssb JD */
-  public static int length( final String[] ssa,  final String[] ssb) {
+  public static int length(final String[] ssa, final String[] ssb) {
     return new LCS(ssa, ssb).length();
   }
-  static double distance( final String s1,  final String s2) {
+  static double distance(final String s1, final String s2) {
     return 2. * LCS.length(s1, s2) / (s1.length() + s2.length());
   }
-  private static int hash( final String ¢) {
+  private static int hash(final String ¢) {
     return ¢.replaceAll("\\s+", "").toLowerCase().hashCode();
   }
-   private static int[] hash( final String[] ss) {
-     final int  [] $ = new int  [ss.length];
+  private static int[] hash(final String[] ss) {
+    final int[] $ = new int[ss.length];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = hash(ss[¢]);
     return $;
   }
 
-   private final int[] A_s;
-   private final int[] B_s;
-   private final int[][] length;
+  private final int[] A_s;
+  private final int[] B_s;
+  private final int[][] length;
 
   /** Instantiates this class.
    * @param as JD
    * @param bs JD */
-  public LCS( final int[] as,  final int[] bs) {
+  public LCS(final int[] as, final int[] bs) {
     A_s = as;
     B_s = bs;
-    length = new int  [as.length][];
+    length = new int[as.length][];
     for (int ¢ = 0; ¢ < as.length; ++¢)
       Arrays.fill(length[¢] = new int[bs.length], -1);
   }
@@ -72,7 +70,7 @@ public class LCS {
   /** TODO:Document this method Instantiates this class.
    * @param as JD
    * @param bs JD */
-  public LCS( final String[] as,  final String[] bs) {
+  public LCS(final String[] as, final String[] bs) {
     this(hash(as), hash(bs));
   }
   private int compute(final int i, final int j) {
@@ -100,8 +98,8 @@ public class LCS {
   @SuppressWarnings({ "static-method", "synthetic-access" }) //
   public static class TEST {
     /** Dumb implementation, yeah, I know. --yg. */
-    private static String[] chars2Lines( final String s) {
-       final StringBuilder $ = new StringBuilder();
+    private static String[] chars2Lines(final String s) {
+      final StringBuilder $ = new StringBuilder();
       for (final char ¢ : s.toCharArray())
         $.append(¢).append('\n');
       return Lines.scatter(as.string($));
@@ -113,22 +111,22 @@ public class LCS {
       azzert.that(chars2Lines("ABC").length, is(3));
     }
     @Test public void length1StrgumentIsZero() {
-      azzert.that(length(new int  [0], new int  [10]), is(0));
+      azzert.that(length(new int[0], new int[10]), is(0));
     }
     @Test public void length2ndArgumentIsZero() {
-      azzert.that(length(new int  [10], new int  [0]), is(0));
+      azzert.that(length(new int[10], new int[0]), is(0));
     }
     @Test public void lengthArrayLengthOneDifferent() {
-      azzert.that(length(new int  [] { 12 }, new int  [] { 13 }), is(0));
+      azzert.that(length(new int[] { 12 }, new int[] { 13 }), is(0));
     }
     @Test public void lengthArrayLengthOneIdentical() {
-      azzert.that(length(new int  [] { 12 }, new int  [] { 12 }), is(1));
+      azzert.that(length(new int[] { 12 }, new int[] { 12 }), is(1));
     }
     @Test public void lengthExists() {
-      length(new int  [0], new int  [0]);
+      length(new int[0], new int[0]);
     }
     @Test public void lengthIdenticalIntegers() {
-       final int  [] is = new int  [] { 12, 13, 14, 8, 11, 60, 30 };
+      final int[] is = new int[] { 12, 13, 14, 8, 11, 60, 30 };
       azzert.that(length(is, is), is(is.length));
     }
     @Test public void lengthStringAbraCadabra() {
@@ -168,7 +166,7 @@ public class LCS {
     }
     @Test public void lengthStringSimpleA() {
       // Common string is: "A"
-       final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
+      final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
       assert lcs != null;
       azzert.that(lcs.A_s.length, is(1));
       azzert.that(lcs.B_s.length, is(1));
@@ -176,7 +174,7 @@ public class LCS {
     }
     @Test public void lengthStringSimpleB() {
       // Common string is: "A"
-       final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
+      final LCS lcs = new LCS(chars2Lines("A"), chars2Lines("A"));
       azzert.that(lcs.length(lcs.A_s.length - 1, lcs.B_s.length - 1), is(1));
     }
     @Test public void lengthStringSimpleC() {

@@ -3,9 +3,6 @@ package il.org.spartan.collections;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jdt.annotation.*;
-
 import fluent.ly.*;
 
 /** Provides, employing fluent API, a {@link Iterable} interface for iteration
@@ -45,38 +42,38 @@ public class FilesGenerator {
   }
   /** @param directory should be a directory, but we still need to account for
    *        weird creatures such as "System Volume Information" */
-   static Iterator<File> directoryIterator( final File directory) {
+  static Iterator<File> directoryIterator(final File directory) {
     if (directory == null || !directory.isDirectory() || directory.list() == null)
       return null;
-     final Iterator<String> $ = as.list(directory.list()).iterator();
+    final Iterator<String> $ = as.list(directory.list()).iterator();
     return new Iterator<File>() {
-       File next;
+      File next;
 
       @Override public boolean hasNext() {
         for (;;) {
           if (!$.hasNext())
             return false;
-          final  String name = $.next();
+          final String name = $.next();
           if (name == null)
             continue;
           next = new File(directory, name);
           return true;
         }
       }
-      @Override  public File next() {
+      @Override public File next() {
         return next;
       }
     };
   }
-   private static Iterable<File> asFiles( final Iterable<String> fileNames) {
-     final List<File> $ = new ArrayList<>();
-    for ( final String fileName : fileNames)
+  private static Iterable<File> asFiles(final Iterable<String> fileNames) {
+    final List<File> $ = new ArrayList<>();
+    for (final String fileName : fileNames)
       $.add(new File(fileName));
     return $;
   }
 
   /** Which extensions we search for */
-   final Iterable<String> extensions;
+  final Iterable<String> extensions;
 
   /** Instantiates this class. This instantiation makes the first step in the
    * call chain that makes the fluent API. The second (and last) such step is
@@ -96,7 +93,7 @@ public class FilesGenerator {
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code> */
-   public From from( final Iterable<String> from) {
+  public From from(final Iterable<String> from) {
     return new From(asFiles(from));
   }
   /** @param from an array of names of directories from which the traversal
@@ -104,7 +101,7 @@ public class FilesGenerator {
    * @return an instance of an internal (yet <code><b>public</b></code>)
    *         <code><b>class</b></code> which <code><b>implements</b></code> the
    *         {@link Iterable} <code><b>interface</b></code> */
-   public From from(final String... from) {
+  public From from(final String... from) {
     return from(as.list(from));
   }
 
@@ -119,7 +116,7 @@ public class FilesGenerator {
     From(final Iterable<File> from) {
       this.from = from;
     }
-    @Override  public Iterator<File> iterator() {
+    @Override public Iterator<File> iterator() {
       return new FilesIterator(from.iterator());
     }
 
@@ -134,7 +131,7 @@ public class FilesGenerator {
         for (;;) {
           if (stack.isEmpty())
             return false;
-          final  Iterator<File> currentIterator = stack.peek();
+          final Iterator<File> currentIterator = stack.peek();
           if (currentIterator == null || !currentIterator.hasNext()) {
             stack.pop();
             continue;
@@ -152,7 +149,7 @@ public class FilesGenerator {
         return next;
       }
       private boolean ofInterest() {
-        for ( final String extension : extensions)
+        for (final String extension : extensions)
           if (next.getName().endsWith(extension))
             return true;
         return false;

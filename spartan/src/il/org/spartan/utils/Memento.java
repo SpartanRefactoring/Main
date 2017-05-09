@@ -6,8 +6,6 @@ import static fluent.ly.___.*;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.streotypes.*;
 import fluent.ly.*;
 
@@ -30,11 +28,11 @@ public class Memento<T> {
   }
   /** Restore the saved snapshot
    * @return a copy of the saved object */
-   public T restore() {
+  public T restore() {
     try {
-       @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
+      @SuppressWarnings("unchecked") final T $ = (T) new ObjectInputStream(new ByteArrayInputStream(snapshot)).readObject();
       return $;
-    } catch ( final ClassNotFoundException | IOException ¢) {
+    } catch (final ClassNotFoundException | IOException ¢) {
       unreachable(¢.getMessage());
       throw new RuntimeException(¢);
     }
@@ -60,13 +58,13 @@ public class Memento<T> {
    * @throws Bug.Contract.Precondition in case object could not be serialized */
   private byte[] object2bytes(final T t) {
     try {
-       final ByteArrayOutputStream $ = new ByteArrayOutputStream();
+      final ByteArrayOutputStream $ = new ByteArrayOutputStream();
       new ObjectOutputStream($).writeObject(t);
       return $.toByteArray();
-    } catch ( final NotSerializableException ¢) {
+    } catch (final NotSerializableException ¢) {
       dump.go(¢);
       throw new Bug.Contract.Precondition("Cannot serialize object of class " + ¢.getMessage());
-    } catch ( final IOException ¢) {
+    } catch (final IOException ¢) {
       unreachable(¢.getMessage());
       throw new RuntimeException(¢);
     }

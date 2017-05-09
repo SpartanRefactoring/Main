@@ -1,35 +1,33 @@
 package fluent.ly;
 
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 /** @author Yossi Gil <Yossi.Gil@GMail.COM>
  * @param <T> JD
  * @since @{year}-@{month}-@{day} */
-public class maybe< T> {
-   public static < T> maybe<T> no() {
+public class maybe<T> {
+  public static <T> maybe<T> no() {
     return new maybe<>();
   }
-   public static < T> maybe<T> yes(final T ¢) {
+  public static <T> maybe<T> yes(final T ¢) {
     return new maybe<>(¢);
   }
 
-   private T inner;
+  private T inner;
 
   /** Instantiates this class.
    * @param inner JD */
-  public maybe(final  T inner) {
+  public maybe(final T inner) {
     this.inner = inner;
   }
   private maybe() {
     inner = null;
   }
-   public maybe< T> clear() {
+  public maybe<T> clear() {
     inner = null;
     return this;
   }
-   public T get() {
+  public T get() {
     return inner;
   }
   public boolean missing() {
@@ -39,7 +37,7 @@ public class maybe< T> {
     return inner != null;
   }
   /** @param inner TODO document this parameter */
-   public maybe< T> set(final T inner) {
+  public maybe<T> set(final T inner) {
     this.inner = inner;
     return this;
   }

@@ -1,8 +1,6 @@
 package il.org.spartan.bench.operations;
 
 import fluent.ly.*;
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.bench.*;
 
 /** @author Yossi Gil
@@ -31,7 +29,7 @@ public abstract class Bencheon extends NamedOperation {
     }
     return System.nanoTime() - $ - begin;
   }
-  @Override  public final Stopwatch netTime( final Stopwatch netTime) {
+  @Override public final Stopwatch netTime(final Stopwatch netTime) {
     beforeAllRuns();
     beforeEachRun();
     netTime.start();
@@ -39,7 +37,7 @@ public abstract class Bencheon extends NamedOperation {
     netTime.stop();
     return netTime;
   }
-  @Override public final Stopwatch netTime( final Stopwatch netTime, final int runs) {
+  @Override public final Stopwatch netTime(final Stopwatch netTime, final int runs) {
     beforeAllRuns();
     long $;
     do
@@ -86,7 +84,7 @@ public abstract class Bencheon extends NamedOperation {
     public Empty() {
       super("Empty", 1);
     }
-    @Override  public Void call() {
+    @Override public Void call() {
       return null;
     }
   }
@@ -138,7 +136,7 @@ public abstract class Bencheon extends NamedOperation {
     public Hash() {
       super("Hash", 1);
     }
-    @Override  public Void call() {
+    @Override public Void call() {
       a = hash(++a);
       return null;
     }

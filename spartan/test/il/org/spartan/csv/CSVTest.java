@@ -16,9 +16,8 @@ import il.org.spartan.streotypes.*;
   }
 
   @Test public void test1() {
-     final String s = "abc,def\r\n\tg\\m", t = CSV.escape(s);
-     final String u = CSV.unescape(t);
-    azzert.that(t, is("abc\\.def\\r\\n\\tg\\\\m"));
+     final String s = "abc,def\r\n\tg\\m", t = CSV.escape(s), u = CSV.unescape(t);
+     azzert.that(t, is("abc\\.def\\r\\n\\tg\\\\m"));
     azzert.that(u, is(s));
     assert !s.equals(t);
   }
@@ -45,17 +44,14 @@ import il.org.spartan.streotypes.*;
   }
 
   @Test public void testCombineSplitSingleNullElement() {
-     final String[] parts = { null };
-     final String[] t = CSV.split(CSV.combine(parts));
-    azzert.that(t.length, is(parts.length));
+     final String[] parts = { null }, t = CSV.split(CSV.combine(parts));
+     azzert.that(t.length, is(parts.length));
     assert Arrays.deepEquals(parts, t);
   }
 
   @Test public void testNull() {
-     final String s = null;
-     final String t = CSV.escape(s);
-     final String u = CSV.unescape(t);
-    azzert.isNull(s);
+     final String s = null, t = CSV.escape(s), u = CSV.unescape(t);
+     azzert.isNull(s);
     assert t != null;
     azzert.isNull(u);
   }

@@ -3,11 +3,8 @@ package il.org.spartan.strings;
 
 import static fluent.ly.azzert.*;
 import static il.org.spartan.strings.RE.*;
-import static fluent.ly.___.*;
-
 import java.util.regex.*;
 
-import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -50,23 +47,23 @@ public class Tag {
   /** Make a {@link String} of an HTML opening tag with a given name.
    * @param name the name of the given tag.
    * @return the name enclosed in angular brackets. */
-   public static String beginTag(final String name) {
+  public static String beginTag(final String name) {
     return "<" + name + ">";
   }
   /** Make a {@link String} of an HTML closing tag with a given name.
    * @param name the name of the given tag.
    * @return the name enclosed in angular brackets. */
-   public static String endTag(final String name) {
+  public static String endTag(final String name) {
     return beginTag("/" + name);
   }
-  public static String remove( final String text, final String tag) {
+  public static String remove(final String text, final String tag) {
     return text//
         .replaceAll(ignoreCase() + beginTag(tag), "") //
         .replaceAll(ignoreCase() + endTag(tag), "") //
         .replaceAll(ignoreCase() + selfClosing(tag), "") //
     ;
   }
-  public static String replace( final String text, final String from, final String to) {
+  public static String replace(final String text, final String from, final String to) {
     return text//
         .replaceAll(ignoreCase() + beginTag(from), beginTag(to)) //
         .replaceAll(ignoreCase() + endTag(from), endTag(to));
@@ -75,19 +72,19 @@ public class Tag {
    * @param name the name of the given tag.
    * @return the name parameter, followed by slash (/) and enclosed in angular
    *         brackets. */
-   public static String selfClosing(final String name) {
+  public static String selfClosing(final String name) {
     return beginTag(name + " /");
   }
 
   /** The opening {@link String} of this tag. */
-   public final String begin;
+  public final String begin;
   /** The closing {@link String} of this tag. */
-   public final String end;
+  public final String end;
 
   /** Instantiate a plain tag, i.e., a tag without any inner tags,
    * @param name the tag name, e.g., "font"
    * @param flags any number of HTML flags */
-  public Tag(final String name,  final String... flags) {
+  public Tag(final String name, final String... flags) {
     assert name != null;
     assert flags != null;
     begin = beginTag(name + (flags.length == 0 ? "" : " " + Separate.by(flags, " ")));
@@ -98,10 +95,10 @@ public class Tag {
    *        around this inner tag
    * @param name the tag name, e.g., "font"
    * @param flags any number of HTML flags */
-  public Tag( final Tag inner, final String name, final String... flags) {
-    notNull(name);
-    notNull(flags);
-     final Tag unnested = new Tag(name, flags);
+  public Tag(final Tag inner, final String name, final String... flags) {
+    assert name != null;
+    assert flags != null;
+    final Tag unnested = new Tag(name, flags);
     begin = unnested.begin + inner.begin;
     end = inner.end + unnested.end;
   }
@@ -118,7 +115,7 @@ public class Tag {
    * @param flags any number of HTML flags to be used with the newly created tag
    * @return A newly created tag with the specified name and flags, containing
    *         this tag */
-   public Tag inside(final String name, final String... flags) {
+  public Tag inside(final String name, final String... flags) {
     return new Tag(this, name, flags);
   }
   /** Make a {@link Matcher} of a given text, to capture the opening and closing
@@ -126,21 +123,21 @@ public class Tag {
    * @param ¢ where to look for this text?
    * @return {@link Matcher} of the parameter to capture the tag and its
    *         content. The content is in group number 1. */
-   public Matcher makeMatcher( final String ¢) {
+  public Matcher makeMatcher(final String ¢) {
     return makePattern().matcher(¢);
   }
   /** Make a {@link Pattern} to capture the opening and closing tag together
    * with the enclosed content.
    * @return a regular expression to capture the tag and its content. The
    *         content is in group number 1. */
-   public Pattern makePattern() {
+  public Pattern makePattern() {
     return Pattern.compile(makeRegularExpression());
   }
   /** Make a regular expression to capture the opening and closing tag together
    * with the enclosed content.
    * @return a regular expression to capture the tag and its content. The
    *         content is in group number 1. */
-   public String makeRegularExpression() {
+  public String makeRegularExpression() {
     return ignoreCase() + begin + group(anyNumberOfReluctant(".|[\r\n]")) + end;
   }
   /** Wrap a given string within this tag.
@@ -148,8 +145,8 @@ public class Tag {
    * @return the string <code>s</code> wrapped with the tag, e.g., if
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then <code>"<b>Hello"</b>"</code> is returned. */
-   public String wrap( final String ¢) {
-    notNull(¢);
+  public String wrap(final String ¢) {
+    assert ¢ != null;
     return ¢.length() == 0 ? ¢ : begin + ¢ + end;
   }
   /** Wrap a given string within newline characters and then within this tag.
@@ -158,8 +155,8 @@ public class Tag {
    *         <code>s</code> is <code>"Hello"</code> and the tag name is
    *         <code>"b"</code> then the string <code>"<b>\nHello\n</b>"</code> is
    *         returned. */
-   public String wrapNL(final String ¢) {
-    notNull(¢);
+  public String wrapNL(final String ¢) {
+    assert ¢ != null;
     return wrap("\n" + ¢ + "\n");
   }
 

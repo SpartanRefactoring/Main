@@ -134,12 +134,15 @@ public enum eclipse {
   /** @param u JD
    * @param m JD
    * @return node marked by the marker in the compilation unit */
-  static ASTNode getNodeByMarker(final ICompilationUnit $, final IMarker m) {
+  public static ASTNode getNodeByMarker(final ICompilationUnit $, final IMarker m) {
     try {
       return !m.exists() ? null : find($, int¢(m, IMarker.CHAR_START), int¢(m, IMarker.CHAR_END));
     } catch (final CoreException ¢) {
       return note.bug(¢);
     }
+  }
+  public static ASTNode getNodeByMarker(final ICompilationUnit $, final ITextSelection s) {
+    return s == null ? null : find($, s.getOffset(), s.getOffset() + s.getLength());
   }
   private static ASTNode find(final ICompilationUnit u, final int start, final int end) {
     return new NodeFinder(createAST(u), start, end - start).getCoveredNode();

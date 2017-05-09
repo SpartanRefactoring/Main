@@ -1,11 +1,9 @@
 package il.org.spartan.sequence;
 
-import org.eclipse.jdt.annotation.*;
-
 public abstract class Sequence implements Cloneable {
   protected static final int MAX_VALUE = Integer.MAX_VALUE / 3;
 
-   public static Sequence merge(final Sequence s1, final Sequence s2) {
+  public static Sequence merge(final Sequence s1, final Sequence s2) {
     return new Merged(s1, s2);
   }
 
@@ -18,16 +16,16 @@ public abstract class Sequence implements Cloneable {
   public Sequence(final int threshold) {
     this.threshold = threshold;
   }
-   public abstract Sequence advance();
-   public final Sequence advanceTo(final int ¢) {
+  public abstract Sequence advance();
+  public final Sequence advanceTo(final int ¢) {
     while (current() < ¢ && more())
       advance();
     return this;
   }
-  @Override  public final Sequence clone() {
+  @Override public final Sequence clone() {
     try {
       return (Sequence) super.clone();
-    } catch ( final CloneNotSupportedException ¢) {
+    } catch (final CloneNotSupportedException ¢) {
       throw new RuntimeException(¢);
     }
   }
@@ -43,8 +41,8 @@ public abstract class Sequence implements Cloneable {
   public final boolean more() {
     return current() <= threshold;
   }
-   public abstract Sequence reset();
-   public Sequence startAt(final int ¢) {
+  public abstract Sequence reset();
+  public Sequence startAt(final int ¢) {
     return reset().advanceTo(¢);
   }
   public final int[] toArray() {
@@ -68,11 +66,11 @@ public abstract class Sequence implements Cloneable {
       super(threshold);
       current = 1;
     }
-    @Override  public Sequence advance() {
+    @Override public Sequence advance() {
       current += current;
       return this;
     }
-    @Override  public Sequence reset() {
+    @Override public Sequence reset() {
       current = 1;
       return this;
     }
@@ -87,7 +85,7 @@ public abstract class Sequence implements Cloneable {
       s2 = __s2;
       current = Math.min(s1.current(), s2.current());
     }
-    @Override  public Sequence advance() {
+    @Override public Sequence advance() {
       if (current < s1.current())
         s2.advance();
       else {
@@ -98,7 +96,7 @@ public abstract class Sequence implements Cloneable {
       current = Math.min(s1.current(), s2.current());
       return this;
     }
-    @Override  public Sequence reset() {
+    @Override public Sequence reset() {
       s1.reset();
       s2.reset();
       return this;

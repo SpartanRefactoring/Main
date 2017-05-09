@@ -6,8 +6,6 @@ import static fluent.ly.box.*;
 import java.io.*;
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** Provides an encoding of an object (drawn from a given, predetermined, set of
  * objects) as an <code><b>int</b></code> value, and a representation of a set
  * of objects (which must be a subset of this given set) as a {@link BitSet}.
@@ -15,13 +13,13 @@ import org.eclipse.jdt.annotation.*;
  * @param <T> type of encoded elements */
 public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
   private static final long serialVersionUID = -0x54137EB6CCF2FDE7L;
-   private final Vector<T> int2objects;
-   private final Map<T, Integer> objects2ints;
+  private final Vector<T> int2objects;
+  private final Map<T, Integer> objects2ints;
 
   /** Constructs a translator for the specified set.
    * @param ts the set of objects/attributes that shall be translated. */
-  public IntCodex( final Iterable<T> ts) {
-    notNull(ts);
+  public IntCodex(final Iterable<T> ts) {
+    assert ts != null;
     int2objects = new Vector<>();
     objects2ints = new HashMap<>();
     int position = 0;
@@ -41,7 +39,7 @@ public class IntCodex<T> extends Codex.Anchored<T> implements Serializable {
   @Override public T decode(final int ¢) {
     return int2objects.get(¢);
   }
-  @Override  public Iterable<T> elements() {
+  @Override public Iterable<T> elements() {
     return int2objects;
   }
   /** Returns the <code><b>int</b></code> value of <code>c</code> as determined

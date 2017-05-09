@@ -1,7 +1,5 @@
 package il.org.spartan.fun.Dr.Seuss;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
 import fluent.ly.*;
 
@@ -23,7 +21,7 @@ public class Things {
   private static void doSomethingWithPair(final Object o1, final Object o2) {
     nothing(o1, o2);
   }
-  private static void nothing( final Object... os) {
+  private static void nothing(final Object... os) {
     if (os.length >= 2)
       for (final Object ¢ : os)
         nothing(¢);
@@ -49,8 +47,7 @@ public class Things {
   private static void nPattern4() {
     for (int i = 0; i <= things.length; ++i) {
       final int f = i - 1, t = i;
-       final Thing first = idiomatic.eval(() -> things[f]).unless(i == 0),
-          second = idiomatic.eval(() -> things[t]).unless(i == things.length);
+      final Thing first = idiomatic.eval(() -> things[f]).unless(i == 0), second = idiomatic.eval(() -> things[t]).unless(i == things.length);
       assert things.length == 0 == (first == null && second == null);
       doSomethingWithPair(first, second);
     }

@@ -3,8 +3,6 @@ package il.org.spartan.sequence;
 import static java.lang.Integer.*;
 import static java.lang.Math.max;
 
-import org.eclipse.jdt.annotation.*;
-
 public class Multiplicative2 extends Sequence {
   private static final double DEFAULT_STEP = 0.1;
   private final double step;
@@ -20,7 +18,7 @@ public class Multiplicative2 extends Sequence {
     reset();
     this.step = Math.pow(2, step);
   }
-  @Override  public Multiplicative2 advance() {
+  @Override public Multiplicative2 advance() {
     final int previous = current;
     current *= step;
     current = max(previous + 1, current);
@@ -28,7 +26,7 @@ public class Multiplicative2 extends Sequence {
       current = highestOneBit(current);
     return this;
   }
-  @Override  public Multiplicative2 reset() {
+  @Override public Multiplicative2 reset() {
     current = 1;
     return this;
   }

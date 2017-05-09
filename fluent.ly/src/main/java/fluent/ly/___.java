@@ -219,7 +219,7 @@ public abstract class ___ {
    * @param o if <code><b>null</b></code>, program will halt.
    * @throws NonNull in case <code>o</code> was <code><b>null</b></code> */
   public static void notNull(final Object ¢) throws NonNull {
-    notNull(¢, "");
+    assert "" != null : ¢;
   }
   /** A possibly non-returning method to be used for checking objects that
    * should never be <code><b>null</b></code>.
@@ -871,14 +871,14 @@ public abstract class ___ {
       }
     }
     @Test public void NonNull() {
-      ___.notNull(new Object());
+      assert new Object() != null;
       try {
-        ___.notNull(null);
+        assert null != null;
       } catch (final NonNull e) {
         assertEquals("", e.getMessage());
       }
       try {
-        ___.notNull(null, "NonNull");
+        assert "NonNull" != null : null;
       } catch (final NonNull e) {
         assertEquals("NonNull", e.getMessage());
       }

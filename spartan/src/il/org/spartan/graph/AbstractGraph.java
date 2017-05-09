@@ -5,8 +5,6 @@ import static fluent.ly.___.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.collections.*;
 import il.org.spatan.iteration.Iterables.*;
 
@@ -18,7 +16,7 @@ public abstract class AbstractGraph<E> {
   public abstract boolean contains(E d);
   public int countEdges() {
     int $ = 0;
-    for ( final Vertex<E> ¢ : vertices())
+    for (final Vertex<E> ¢ : vertices())
       $ += outDegree(¢);
     return $;
   }
@@ -29,30 +27,30 @@ public abstract class AbstractGraph<E> {
    * @param ¢ some Vertex<E>
    * @return if v has no incoming edges then <code><b>null</b></code>,
    *         otherwise, all vertices from which there an edge leading to v. */
-  public ImmutableArrayList<Vertex<E>> incoming( final Vertex<E> ¢) {
+  public ImmutableArrayList<Vertex<E>> incoming(final Vertex<E> ¢) {
     return ¢.incoming();
   }
-  public int inDegree( final Vertex<E> ¢) {
+  public int inDegree(final Vertex<E> ¢) {
     return incoming(¢).size();
   }
   /** Generates the inverse graph, in which all the direction of all edges is
    * inverted.
    * @return the graph obtained by inverting the direction of all edges in this
    *         graph */
-   public AbstractGraph<E> invert() {
+  public AbstractGraph<E> invert() {
     return InvertedGraph.make(this);
   }
   /** Determine whether a given Vertex<E> is a source
    * @param ¢ some Vertex<E>
    * @return <code><b>true</b></code> if and only if this Vertex<E> is a
    *         source */
-  public final boolean isSource( final Vertex<E> ¢) {
+  public final boolean isSource(final Vertex<E> ¢) {
     return inDegree(¢) == 0;
   }
   /** What is this graph's name?
    * @return the name, if known, of this graph, or the empty string. */
   public abstract String name();
-  public int outDegree( final Vertex<E> ¢) {
+  public int outDegree(final Vertex<E> ¢) {
     return ¢.outgoing().size();
   }
   /** Which edges emanate from a given Vertex<E>?
@@ -60,12 +58,12 @@ public abstract class AbstractGraph<E> {
    * @return if v has no outgoing edges then <code><b>null</b></code>,
    *         otherwise, all vertices u such that there is an edge emanating from
    *         v and leading to u */
-  public ImmutableArrayList<Vertex<E>> outgoing( final Vertex<E> ¢) {
+  public ImmutableArrayList<Vertex<E>> outgoing(final Vertex<E> ¢) {
     return ¢.outgoing();
   }
   /** A DFS pre-order iteration over the graph.
    * @return the vertices of the graph, in a pre-order, dfs scan. */
-   public Iterable<Vertex<E>> preOrder() {
+  public Iterable<Vertex<E>> preOrder() {
     return () -> new ReadonlyIterator<Vertex<E>>() {
       final Set<Vertex<E>> visited = new HashSet<>();
       final Set<Vertex<E>> unvisited = new HashSet<>();
@@ -76,13 +74,13 @@ public abstract class AbstractGraph<E> {
         for (final Vertex<E> ¢ : sources())
           stack.push(¢);
       }
-       Vertex<E> pending = findNext();
+      Vertex<E> pending = findNext();
 
       @Override public boolean hasNext() {
         return pending != null;
       }
-      @Override  public Vertex<E> next() {
-         final Vertex<E> $ = pending;
+      @Override public Vertex<E> next() {
+        final Vertex<E> $ = pending;
         pending = findNext();
         return $;
       }
@@ -141,9 +139,9 @@ public abstract class AbstractGraph<E> {
    * @param v an arbitrary Vertex<E> of this graph
    * @return a source of the parameter */
   public final Vertex<E> source(final Vertex<E> v) {
-     final Queue<Vertex<E>> q = new ArrayBlockingQueue<>(size() + 1);
+    final Queue<Vertex<E>> q = new ArrayBlockingQueue<>(size() + 1);
     q.add(v);
-     final Set<Vertex<E>> seen = new HashSet<>();
+    final Set<Vertex<E>> seen = new HashSet<>();
     seen.add(v);
     for (;;) {
       final Vertex<E> $ = q.poll();
@@ -174,7 +172,7 @@ public abstract class AbstractGraph<E> {
   /** Provides means for counting the number of sinks in the graph.
    * @return a non-negative integer representing the number of sinks. */
   public abstract int sourcesCount();
-  @Override  public String toString() {
+  @Override public String toString() {
     return name() + "<" + size() + ";" + countEdges() + "> ";
   }
   public abstract Vertex<E> vertex(E e);
