@@ -152,7 +152,7 @@ class UsesCollector extends HidingDepth {
     IBinding b = candidate.resolveBinding();
     if(b != null && b.getKind() != IBinding.VARIABLE)
       ingore(candidate);
-    if (hit(candidate))
+    else if (hit(candidate))
       result.add(candidate);
   }
   boolean declaredIn(final FieldDeclaration ¢) {
