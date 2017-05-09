@@ -37,4 +37,24 @@ public class Issue0883 {
     bloatingOf("a = b==0? (a==0? 1:2) : 4;")//
         .gives("if(b==0)a=a==0?1:2;else a=4;");
   }
+  
+  @Test public void t6() {
+    bloatingOf("a = a==0? 1:a;")//
+        .gives("if(a==0)a=1;");
+  }
+  
+  @Test public void t7() {
+    bloatingOf("a = a==0 ? a:2;")//
+    .gives("if(a!=0) a=2;");
+  }
+  
+  @Test public void t8() {
+    bloatingOf("a = a==0 && b==0 ? a:2;")//
+    .gives("if(a!=0 || b!=0) a=2;");
+  }
+  
+  @Test public void t9() {
+    bloatingOf("a = a==0 || b==0 ? a:2;")//
+    .gives("if(a!=0 && b!=0) a=2;");
+  }
 }
