@@ -102,7 +102,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     final String[][] labelAndValues = new String[][] { { "$", "$" }, { "result", "result" }, { "ret", "ret" } };
     /* TODO: Dor Maayan, Add more advanced options for naming { "typeCamelCase",
      * "typeCamelCase" }, { "Function name", "Function's name" }, { "Other",
-     * "Other" } };  -rr */
+     * "Other" } }; -rr */
     returnParameterRadio = new RadioGroupFieldEditor("Dollar", "Method return variable rename to:", 3, labelAndValues, getFieldEditorParent());
     addField(returnParameterRadio);
     // TODO: Add more advanced options for naming final StringFieldEditor other
@@ -209,7 +209,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       configureButton = new Button(buttonBox, SWT.PUSH);
       configureButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
       configureButton.setText("Configure tips");
-      configureButton.setEnabled(false);
+      configureButton.setEnabled(true);
       configureButton.setVisible(true);
       configureButton.addSelectionListener(new SelectionListener() {
         @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
@@ -231,7 +231,7 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
       getList().addSelectionListener(new SelectionListener() {
         @Override @SuppressWarnings("synthetic-access") public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
           final int i = getList().getSelectionIndex();
-          if (i >= 0)
+          if (i >= 0 && isAble != null)
             if (isAble.apply(elements.get(i).getValue()).booleanValue()) {
               ableButton.setText("Disable tips");
               configureButton.setEnabled(true);
