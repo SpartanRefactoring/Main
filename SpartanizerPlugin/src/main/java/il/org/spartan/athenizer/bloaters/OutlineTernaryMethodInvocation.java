@@ -32,12 +32,14 @@ public class OutlineTernaryMethodInvocation extends MethodInvocationPattern//
     andAlso("Parent is not a lambda lxpression", () -> !iz.lambdaExpression(current.getParent()));
     andAlso("There is at least one argument", () -> !arguments.isEmpty());
     andAlso("All conditions satisfy:", () -> {
-      for (final Expression argument : arguments)
-        if (($ = az.conditionalExpression(argument)) != null && (iz.nullLiteral(then($)) || iz.nullLiteral(elze($))) || haz.sideEffects(argument))
+      for (final Expression argument : arguments) {
+        if(haz.sideEffects(argument))
           return false;
-      return true;
+        if (($ = az.conditionalExpression(argument)) != null && !iz.nullLiteral(then($)) && !iz.nullLiteral(elze($)))
+          return true;
+      }
+      return false;
     });
-    andAlso("Some argument is conditional expression", () -> arguments.stream().anyMatch(iz::conditionalExpression));
   }
   @Override public Examples examples() {
     return null;
