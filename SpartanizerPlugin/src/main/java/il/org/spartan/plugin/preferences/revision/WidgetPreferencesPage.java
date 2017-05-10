@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.List;
 import java.util.Map.*;
 
-import org.eclipse.jface.dialogs.*;
+
 import org.eclipse.jface.preference.*;
 
 import org.eclipse.ui.*;
@@ -41,12 +41,12 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   public static Boolean isEnabled(WidgetOperation o) {
     return store().getBoolean("IS_ENABLED_"+ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID());
     
-    
   }
 
   
-  public static void onConfigure(@SuppressWarnings("unused") WidgetOperation __) {
-    (new InputDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "STUB FOR CONFIG DIALOG", "STUB FOR CONFIG DIALOG", "", null)).open();  
+  public static void onConfigure(WidgetOperation o) {
+    new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), o.description(), o.configurationComponents(),store())
+        .open();  
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
