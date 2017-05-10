@@ -59,8 +59,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     dataRes.horizontalAlignment = GridData.FILL;
     Text res = new Text(container, SWT.BORDER);
     res.setLayoutData(dataRes);
-    Label lblReq = new Label(container, SWT.NONE);
-    lblReq.setText(isRequired);
+    
     return res;
   }
   private static Button createBoolean(Composite container, String name, String isRequired) {
@@ -72,8 +71,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     Button checkBox = new Button(container, SWT.CHECK);
     checkBox.setText(name);
     checkBox.setLayoutData(dataRes);
-    Label lblReq = new Label(container, SWT.NONE);
-    lblReq.setText(isRequired);
+    
     return checkBox;
   }
   private static Button[] createList(Composite container, String[] options, String isRequired) {
@@ -89,8 +87,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
       radios[count].setBounds(10, 5+(25 * count), 75, 30);
       ++count;
     } 
-    Label lblReq = new Label(container, SWT.NONE);
-    lblReq.setText(isRequired);
+    
     return radios;
   }
   @Override protected void okPressed() {
