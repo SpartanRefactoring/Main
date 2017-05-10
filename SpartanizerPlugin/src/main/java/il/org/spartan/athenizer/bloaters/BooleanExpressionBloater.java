@@ -1,11 +1,14 @@
 package il.org.spartan.athenizer.bloaters;
 
+import static il.org.spartan.spartanizer.ast.navigate.step.*;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -27,15 +30,21 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     return ¢.getOperator() == Operator.CONDITIONAL_AND || ¢.getOperator() == Operator.AND || ¢.getOperator() == Operator.OR
         || ¢.getOperator() == Operator.CONDITIONAL_OR;
   }
+  /** [[SuppressWarningsSpartan]] */
   @Override public Tip tip(final InfixExpression ¢) {
-    subject.pair(getSeperate(¢.getLeftOperand()).getName(), getSeperate(¢.getRightOperand()).getName()).to(¢.getOperator());
+    SingleVariableDeclaration d1 = getSeperate(¢.getLeftOperand());
+    SingleVariableDeclaration d2 = getSeperate(¢.getRightOperand());
+    InfixExpression i = subject.pair(d1.getName(), d2.getName()).to(¢.getOperator());
+    System.out.println(d1);
+    System.out.println(d2);
+    System.out.println(i);
     return new Tip(description(¢), getClass(), ¢) {
-      @Override @SuppressWarnings("unused") public void go(final ASTRewrite __, final TextEditGroup g) {
-        // final ListRewrite l = r.getListRewrite(¢, Expression.);
-        // l.insertAfter(¢, x1, g);
-        // l.insertAfter(x1, x2, g);
-        // l.insertAfter(x2, e, g);
-        // l.remove(¢, g);
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
+        final ListRewrite l = r.getListRewrite(yieldAncestors.untilContainingBlock().from(¢), Block.STATEMENTS_PROPERTY);
+        l.insertAfter(d1, parent(¢), g);
+        l.insertAfter(d2, d1, g);
+        l.insertAfter(i, d2, g);
+        l.remove(¢, g);
       }
     };
   }
@@ -48,6 +57,6 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     return $;
   }
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
-    return null;
+    return "Expand boolean expression";
   }
 }
