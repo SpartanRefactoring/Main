@@ -17,4 +17,7 @@ public class GitPushOperation extends GitOperation {
   @Override protected void gitOperation(final Git ¢) throws Throwable {
     ¢.push().call();
   }
+  @Override protected String tooltip() {
+    return "Git push";
+  }
 }
