@@ -41,7 +41,4 @@ public class SpartanizationOperation extends WidgetOperation {
   @Override public String imageURL() {
     return "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/obj16/changelog_obj.gif";
   }
-  @Override protected String tooltip() {
-    return "Zoom out";
-  }
 }

@@ -17,7 +17,4 @@ public class GitPullOperation extends GitOperation {
   @Override protected void gitOperation(final Git ¢) throws Throwable {
     ¢.pull().call();
   }
-  @Override protected String tooltip() {
-    return "Git pull";
-  }
 }
