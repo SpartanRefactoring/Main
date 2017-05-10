@@ -70,7 +70,7 @@ public class OperationListEditor extends ListEditor {
     });
     configureButton = new Button(buttonBox, SWT.PUSH);
     configureButton.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
-    configureButton.setText("Configure tips");
+    configureButton.setText("Configure operation");
     configureButton.setEnabled(false);
     configureButton.setVisible(true);
     configureButton.addSelectionListener(new SelectionListener() {

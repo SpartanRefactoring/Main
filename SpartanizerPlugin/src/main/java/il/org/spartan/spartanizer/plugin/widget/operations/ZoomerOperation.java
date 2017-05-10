@@ -38,6 +38,6 @@ public class ZoomerOperation extends WidgetOperation {
     return "platform:/plugin/org.eclipse.team.cvs.ui/icons/full/obj16/menu.gif";
   }
   @Override public String description() {
-    return "zoom in current selection";
+    return "zoom in code";
   }
 }
