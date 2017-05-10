@@ -527,10 +527,7 @@ public enum extract {
       return as.list(az.simpleName(n));
     final List<SimpleName> $ = new LinkedList<>();
     for (Name q = n; q != null; q = !iz.qualifiedName(q) ? null : az.qualifiedName(q).getQualifier())
-      if (iz.qualifiedName(q))
-        $.add(0, az.qualifiedName(q).getName());
-      else
-        $.add(0, az.simpleName(q));
+      $.add(0, !iz.qualifiedName(q) ? az.simpleName(q) : az.qualifiedName(q).getName());
     return $;
   }
 }

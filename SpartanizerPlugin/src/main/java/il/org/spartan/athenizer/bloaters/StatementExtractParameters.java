@@ -71,9 +71,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       return null;
     }
     final ITypeBinding realType = !binding.isArray() ? binding : binding.getElementType();
-    final boolean samePackage = samePackage(types.get(), realType);
-    final boolean isTopLevel = binding.isTopLevel();
-    final boolean sameFile = sameFile(types.get(), realType);
+    final boolean samePackage = samePackage(types.get(), realType), isTopLevel = binding.isTopLevel(), sameFile = sameFile(types.get(), realType);
     // TODO Ori Roth: enable assignments extraction + check the
     // fixWildCardType(t), added it since when it returns null we get exception
     return t == null || //
