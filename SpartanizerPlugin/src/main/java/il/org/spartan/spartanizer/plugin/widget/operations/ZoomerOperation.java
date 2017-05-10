@@ -40,7 +40,4 @@ public class ZoomerOperation extends WidgetOperation {
   @Override public String description() {
     return "zoom in code";
   }
-  @Override protected String tooltip() {
-    return "Zoom in";
-  }
 }
