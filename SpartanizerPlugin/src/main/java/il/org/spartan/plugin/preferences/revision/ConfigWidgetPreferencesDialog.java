@@ -33,11 +33,11 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     List<Button[]> radioLists = new ArrayList<>();
     for (String[] comp : configurations) {
       if ("String".equals(comp[1]))
-        textLists.add(createString(container, comp[2], comp[3]));
+        textLists.add(createString(container, comp[2]));
       if ("Boolean".equals(comp[1]))
-        buttonLists.add(createBoolean(container, comp[2], comp[3]));
+        buttonLists.add(createBoolean(container, comp[2]));
       if("List".equals(comp[1])) 
-        radioLists.add(createList(container,Arrays.copyOfRange(comp, 2, comp.length-1),comp[comp.length-1]));
+        radioLists.add(createList(container,Arrays.copyOfRange(comp, 2, comp.length-1)));
         
     }
     return container;
@@ -51,7 +51,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
   @Override protected Point getInitialSize() {
     return new Point(450, 300);
   }
-  private static Text createString(Composite container, String name, String isRequired) {
+  private static Text createString(Composite container, String name) {
     Label lbl = new Label(container, SWT.NONE);
     lbl.setText(name);
     GridData dataRes = new GridData();
@@ -62,7 +62,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     
     return res;
   }
-  private static Button createBoolean(Composite container, String name, String isRequired) {
+  private static Button createBoolean(Composite container, String name) {
     Label lbl = new Label(container, SWT.NONE);
     lbl.setText(name);
     GridData dataRes = new GridData();
@@ -74,7 +74,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     
     return checkBox;
   }
-  private static Button[] createList(Composite container, String[] options, String isRequired) {
+  private static Button[] createList(Composite container, String[] options) {
     GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
