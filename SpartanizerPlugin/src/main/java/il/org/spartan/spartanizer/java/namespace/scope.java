@@ -36,7 +36,7 @@ public interface scope {
   }
   static Namespace getScopeNamespace(final ASTNode ¢) {
     Namespace $ = Environment.of(¢);
-    if ($ != null || ($ = (Namespace) ¢.getRoot().getProperty("Namspace")) != null)
+    if ($ != null ||  ($ = (Namespace) ¢.getRoot().getProperty("Namspace")) != null)
       return $;
     $ = new Namespace(null);
     ¢.getRoot().setProperty("Namspace", $);
@@ -57,7 +57,7 @@ public interface scope {
   /** returns whether identifier exists in the environment (does not include
    * nested scopes) */
   static boolean hasInScope(final ASTNode ¢, final String identifier) {
-    return getScopeNamespace(¢) != null && getScopeNamespace(¢).has(identifier);
+    return ¢ != null && ¢.getRoot() != null && getScopeNamespace(¢) != null && getScopeNamespace(¢).has(identifier);
   }
   /** returns whether identifier exists in the environment (includes nested
    * scopes) */
