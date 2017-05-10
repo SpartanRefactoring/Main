@@ -62,4 +62,8 @@ public abstract class WidgetOperation implements Serializable {
   protected Function<ImageData, ImageData> scale() {
     return λ -> λ;
   }
+  /** Tooltip for the operation */
+  protected String tooltip() {
+    return "No tip provided";
+  }
 }

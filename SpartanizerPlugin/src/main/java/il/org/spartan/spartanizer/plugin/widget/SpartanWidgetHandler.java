@@ -209,6 +209,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Region rg = s.getRegion();
     rg.add(circle(r, p.x, p.y));
     s.setRegion(rg);
+    $.setToolTipText(o != null ? o.tooltip() : "No operation provided");
     if (o == null)
       return $;
     final Listener l = new Listener() {
