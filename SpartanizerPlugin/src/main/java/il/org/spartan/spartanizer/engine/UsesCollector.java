@@ -9,7 +9,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.java.namespace.*;
 
 abstract class HidingDepth extends ScopeManager {
   private int depth;
