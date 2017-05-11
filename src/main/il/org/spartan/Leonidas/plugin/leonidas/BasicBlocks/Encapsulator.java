@@ -41,12 +41,12 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     public Encapsulator(Encapsulator n) {
-        this(n, null);
+        this(n, n.parent);
     }
 
     public Encapsulator(Encapsulator n, Encapsulator parent) {
         this.parent = parent;
-        inner = n.inner.copy();
+        inner = n.inner;
         children = n.getChildren().stream().map(c -> new Encapsulator(c, this)).collect(Collectors.toList());
     }
 
@@ -137,6 +137,10 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         return replacer;
     }
 
+    public boolean isGeneric() {
+        return false;
+    }
+
     /**
      * Iterator for iterating over the tree without considering white spaces.
      */
@@ -160,10 +164,12 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
             return e;
         }
 
+        public Encapsulator peekNext() {
+            return noSpaceChildren.get(location + 1);
+        }
+
         public Encapsulator value() {
             return noSpaceChildren.get(location);
         }
-
-
     }
 }

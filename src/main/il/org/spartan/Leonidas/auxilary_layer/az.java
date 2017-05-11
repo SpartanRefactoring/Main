@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.auxilary_layer;
 import com.intellij.psi.*;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Optional;
 
 /**
  * Utils class that helps converting Psi element to a specific Psi type
@@ -106,5 +107,9 @@ public enum az {
 
     public static PsiExpression expression(PsiElement e) {
         return e == null || !iz.expression(e) ? null : (PsiExpression) e;
+    }
+
+    public static Optional optional(Encapsulator e) {
+        return e != null ? (Optional) e : null;
     }
 }

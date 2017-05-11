@@ -29,11 +29,6 @@ public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {
     }
 
     @Override
-    protected boolean generalizes(PsiElement e) {
-        return false;
-    }
-
-    @Override
     public boolean conforms(PsiElement other) {
         return iz.methodCallExpression(other) &&
                 step.methodExpression(az.methodCallExpression(other)).getText()

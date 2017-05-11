@@ -3,11 +3,11 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 import com.intellij.psi.*;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Block;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericAnyBlock;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericExpression;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Expression;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.StubName;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericStatement;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Statement;
 
 import java.util.Optional;
 
@@ -84,9 +84,9 @@ public class StubNameTest extends PsiTypeHelper {
         assertTrue(iz.generic(StubName.BOOLEAN_EXPRESSION.getGenericElement(m2, 5)));
         assertTrue(iz.generic(StubName.ANY_BLOCK.getGenericElement(m3, 0)));
 
-        assertEquals(StubName.STATEMENT.getGenericElement(m1, 1).getClass(), GenericStatement.class);
-        assertEquals(StubName.BOOLEAN_EXPRESSION.getGenericElement(m2, 5).getClass(), GenericExpression.class);
-        assertEquals(StubName.ANY_BLOCK.getGenericElement(m3, 0).getClass(), GenericAnyBlock.class);
+        assertEquals(StubName.STATEMENT.getGenericElement(m1, 1).getClass(), Statement.class);
+        assertEquals(StubName.BOOLEAN_EXPRESSION.getGenericElement(m2, 5).getClass(), Expression.class);
+        assertEquals(StubName.ANY_BLOCK.getGenericElement(m3, 0).getClass(), Block.class);
 
         assert (StubName.STATEMENT.getGenericElement(m1, 1).getUserData(KeyDescriptionParameters.ID) == 1);
         assert (StubName.BOOLEAN_EXPRESSION.getGenericElement(m2, 5).getUserData(KeyDescriptionParameters.ID) == 5);

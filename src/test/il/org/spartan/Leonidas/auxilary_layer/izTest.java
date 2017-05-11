@@ -6,10 +6,10 @@ import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.impl.source.tree.java.PsiBinaryExpressionImpl;
 import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
 import il.org.spartan.Leonidas.PsiTypeHelper;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Block;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericAnyBlock;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericExpression;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericStatement;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Expression;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Statement;
 
 /**
  * @author michal cohen, Amir Sagiv
@@ -376,16 +376,16 @@ public class izTest extends PsiTypeHelper {
 
     public void testGeneric() {
         PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
-        GenericAnyBlock genericPsiBlock = new GenericAnyBlock(psiElement);
+        Block genericPsiBlock = new Block(psiElement);
         assert iz.generic(genericPsiBlock);
 
         psiElement = createTestStatementFromString("int x=0;");
-        GenericStatement genericPsiStatement = new GenericStatement(psiElement);
+        Statement genericPsiStatement = new Statement(psiElement);
         assert iz.generic(genericPsiStatement);
 
         psiElement = createTestExpressionFromString("x+y");
         PsiType psiType = createTestType("Integer");
-        GenericExpression genericPsiExpression = new GenericExpression(psiElement, psiType);
+        Expression genericPsiExpression = new Expression(psiElement, psiType);
         assert iz.generic(genericPsiExpression);
 
         assert !iz.generic(Encapsulator.buildTreeFromPsi(psiElement));
@@ -393,29 +393,29 @@ public class izTest extends PsiTypeHelper {
 
     public void testGenericExpression() {
         PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
-        GenericAnyBlock genericPsiBlock = new GenericAnyBlock(psiElement);
+        Block genericPsiBlock = new Block(psiElement);
         assert !iz.genericExpression(genericPsiBlock);
 
         psiElement = createTestExpressionFromString("x+y");
-        assert iz.genericExpression(new GenericExpression(psiElement, createTestType("Integer")));
+        assert iz.genericExpression(new Expression(psiElement, createTestType("Integer")));
     }
 
     public void testGenericStatement() {
         PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
-        GenericAnyBlock genericPsiBlock = new GenericAnyBlock(psiElement);
+        Block genericPsiBlock = new Block(psiElement);
         assert !iz.genericStatement(genericPsiBlock);
 
         psiElement = createTestStatementFromString("int x=0;");
-        assert iz.genericStatement(new GenericStatement(psiElement));
+        assert iz.genericStatement(new Statement(psiElement));
     }
 
     public void testGenericBlock() {
         PsiElement psiElement = createTestBlockStatementFromString("{int x=0;}");
-        GenericAnyBlock genericPsiBlock = new GenericAnyBlock(psiElement);
+        Block genericPsiBlock = new Block(psiElement);
         assert iz.genericBlock(genericPsiBlock);
 
         psiElement = createTestStatementFromString("int x=0;");
-        assert !iz.genericBlock(new GenericStatement(psiElement));
+        assert !iz.genericBlock(new Statement(psiElement));
     }
 
     public void testWhileStatement() throws Exception {

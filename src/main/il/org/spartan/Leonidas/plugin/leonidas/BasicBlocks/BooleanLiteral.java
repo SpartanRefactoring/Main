@@ -7,15 +7,15 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
  * @author Sharon KL & Michal Cohen & Oren Afek
  * @since 5/3/2017.
  */
-public class GenericBooleanLiteral extends GenericMethodCallBasedBlock {
+public class BooleanLiteral extends GenericMethodCallBasedBlock {
 
     private static final String TEMPLATE = "booleanLiteral";
 
-    public GenericBooleanLiteral(Encapsulator n) {
+    public BooleanLiteral(Encapsulator n) {
         super(n, TEMPLATE);
     }
 
-    public GenericBooleanLiteral(PsiElement e) {
+    public BooleanLiteral(PsiElement e) {
         super(e, TEMPLATE);
     }
 
@@ -23,7 +23,7 @@ public class GenericBooleanLiteral extends GenericMethodCallBasedBlock {
      * For reflection use DO NOT REMOVE!
      */
     @SuppressWarnings("unused")
-    protected GenericBooleanLiteral() {
+    protected BooleanLiteral() {
         super(TEMPLATE);
     }
 
@@ -38,8 +38,8 @@ public class GenericBooleanLiteral extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(PsiElement e) {
-        return new GenericBooleanLiteral(e);
+    public GenericEncapsulator create(Encapsulator e) {
+        return new BooleanLiteral(e);
     }
 
 

@@ -414,18 +414,22 @@ public enum iz {
     }
 
     public static boolean genericBlock(Encapsulator treeTemplate) {
-        return treeTemplate instanceof GenericAnyBlock;
+        return treeTemplate instanceof Block;
     }
 
     public static boolean genericExpression(Encapsulator e) {
-        return e instanceof GenericExpression;
+        return e instanceof Expression;
     }
 
     public static boolean genericStatement(Encapsulator e) {
-        return e instanceof GenericStatement;
+        return e instanceof Statement;
     }
 
     public static boolean genericBooleanLiteral(Encapsulator e) {
-        return e instanceof GenericBooleanLiteral;
+        return e instanceof BooleanLiteral;
+    }
+
+    public static boolean optional(Encapsulator e) {
+        return e instanceof Optional;
     }
 }

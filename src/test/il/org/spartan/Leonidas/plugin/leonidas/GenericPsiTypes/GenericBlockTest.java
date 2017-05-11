@@ -2,8 +2,8 @@ package il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Block;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericAnyBlock;
 
 /**
  * @author Anna Belozovsky
@@ -11,24 +11,24 @@ import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericAnyBlock;
  */
 public class GenericBlockTest extends PsiTypeHelper {
     PsiElement psiElement;
-    GenericAnyBlock genericAnyBlock;
+    Block block;
 
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         psiElement = createTestStatementFromString("int x;");
-        genericAnyBlock = new GenericAnyBlock(psiElement);
+        block = new Block(psiElement);
     }
 
     public void testGeneralizes() throws Exception {
         PsiElement e = createTestBlockStatementFromString("{int x=0;}");
-        assert genericAnyBlock.generalizes(Encapsulator.buildTreeFromPsi(e));
+        assert block.generalizes(Encapsulator.buildTreeFromPsi(e));
         e = createTestCodeBlockFromString("{int x=0;}");
-        assert genericAnyBlock.generalizes(Encapsulator.buildTreeFromPsi(e));
+        assert block.generalizes(Encapsulator.buildTreeFromPsi(e));
         e = createTestStatementFromString("int x=0;");
-        assert genericAnyBlock.generalizes(Encapsulator.buildTreeFromPsi(e));
+        assert block.generalizes(Encapsulator.buildTreeFromPsi(e));
         e = createTestExpression("x++");
-        assert !genericAnyBlock.generalizes(Encapsulator.buildTreeFromPsi(e));
+        assert !block.generalizes(Encapsulator.buildTreeFromPsi(e));
     }
 }

@@ -108,6 +108,15 @@ public class GenericPsiElementStub {
     }
 
     /**
+     * Method stub representing an optional element
+     *
+     * @param o - the optional element
+     * @return stub object (no real use)
+     */
+    public static Object optional(Object o) {
+        return new Object();
+    }
+    /**
      * An enum representing the different coding blocks.
      */
     public enum StubName {
@@ -221,16 +230,16 @@ public class GenericPsiElementStub {
             GenericEncapsulator x;
             switch (this) {
                 case BOOLEAN_EXPRESSION:
-                    x = new GenericExpression(inner);
+                    x = new Expression(inner);
                     break;
                 case STATEMENT:
-                    x = new GenericStatement(inner);
+                    x = new Statement(inner);
                     break;
                 case ANY_BLOCK:
-                    x = new GenericAnyBlock(inner);
+                    x = new Block(inner);
                     break;
                 case BOOLEAN_LITERAL:
-                    x = new GenericBooleanLiteral(inner);
+                    x = new BooleanLiteral(inner);
                     break;
                 default:
                     return null;

@@ -1,5 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.BooleanExpression;
+
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 
 /**
@@ -12,6 +14,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 @SuppressWarnings("DoubleNegation")
 public class IfDoubleNot implements LeonidasTipperDefinition {
 
+    BooleanExpression boolExp;
     /**
      * Write here additional constraints on the matcher tree.
      * The constraint are of the form:
@@ -19,15 +22,16 @@ public class IfDoubleNot implements LeonidasTipperDefinition {
      */
     @Override
     public void constraints() {
+
     }
 
     @Override
     public void matcher() {
-        new Template(() -> !(!(booleanExpression(0))));
+        new Template(() -> !(!(booleanExpression(1))));
     }
 
     @Override
     public void replacer() {
-        new Template(() -> booleanExpression(0));
+        new Template(() -> boolExp);
     }
 }

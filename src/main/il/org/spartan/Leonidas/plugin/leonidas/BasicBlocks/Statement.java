@@ -4,18 +4,18 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 
 /**
- * @author Roey Maor & Amir Sagiv & Michal Cohen & Oren Afek
+ * @author Oren Afek
  * @since 5/3/2017.
  */
-public class GenericAnyBlock extends GenericMethodCallBasedBlock {
+public class Statement extends GenericMethodCallBasedBlock {
 
-    private static final String TEMPLATE = "anyBlock";
+    private static final String TEMPLATE = "statement";
 
-    public GenericAnyBlock(PsiElement e) {
+    public Statement(PsiElement e) {
         super(e, TEMPLATE);
     }
 
-    public GenericAnyBlock(Encapsulator n) {
+    public Statement(Encapsulator n) {
         super(n, TEMPLATE);
     }
 
@@ -23,22 +23,24 @@ public class GenericAnyBlock extends GenericMethodCallBasedBlock {
      * For reflection use DO NOT REMOVE!
      */
     @SuppressWarnings("unused")
-    protected GenericAnyBlock() {
+    protected Statement() {
         super(TEMPLATE);
     }
 
     @Override
     protected boolean generalizes(PsiElement e) {
-        return iz.blockStatement(e) || iz.block(e) || iz.statement(e);
+        return iz.statement(e) && !iz.blockStatement(e);
     }
 
     @Override
     protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
-        return !iz.block(prev.getInner());
+        return prev.getText().equals(next.getText()) || next.getText().equals(prev.getText() + ";");
     }
 
     @Override
-    public GenericEncapsulator create(PsiElement e) {
-        return new GenericAnyBlock(e);
+    public GenericEncapsulator create(Encapsulator e) {
+        return new Statement(e);
     }
+
+
 }

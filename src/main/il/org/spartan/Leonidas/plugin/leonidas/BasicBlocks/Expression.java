@@ -8,22 +8,22 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
  * @author Oren Afek
  * @since 5/3/2017.
  */
-public class GenericExpression extends GenericMethodCallBasedBlock {
+public class Expression extends GenericMethodCallBasedBlock {
 
     //FIXME @michalcohen @orenafek change to expression
     private static final String TEMPLATE = "booleanExpression";
     PsiType type;
 
-    public GenericExpression(PsiElement e, PsiType type) {
+    public Expression(PsiElement e, PsiType type) {
         super(e, TEMPLATE);
         this.type = type;
     }
 
-    public GenericExpression(PsiElement e) {
+    public Expression(PsiElement e) {
         super(e, TEMPLATE);
     }
 
-    public GenericExpression(Encapsulator n) {
+    public Expression(Encapsulator n) {
         super(n, TEMPLATE);
     }
 
@@ -31,7 +31,7 @@ public class GenericExpression extends GenericMethodCallBasedBlock {
      * For reflection use DO NOT REMOVE!
      */
     @SuppressWarnings("unused")
-    protected GenericExpression() {
+    protected Expression() {
         super(TEMPLATE);
     }
 
@@ -46,8 +46,8 @@ public class GenericExpression extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(PsiElement e) {
-        return new GenericExpression(e);
+    public GenericEncapsulator create(Encapsulator e) {
+        return new Expression(e);
     }
 
     public PsiType evaluationType() {

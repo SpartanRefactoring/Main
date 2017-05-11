@@ -4,16 +4,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericExpression;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Expression;
 
 /**
  * @author Anna Belozovsky
  * @since 01/05/2017
  */
-public class GenericExpressionTest extends PsiTypeHelper {
+public class ExpressionTest extends PsiTypeHelper {
     PsiType psiType;
     PsiElement psiElement;
-    GenericExpression genericExpression;
+    Expression expression;
 
 
     @Override
@@ -21,15 +21,15 @@ public class GenericExpressionTest extends PsiTypeHelper {
         super.setUp();
         psiElement = createTestStatementFromString("int x;");
         psiType = createTestTypeFromString("int");
-        genericExpression = new GenericExpression(psiElement, psiType);
+        expression = new Expression(psiElement, psiType);
     }
 
     public void testEvaluationType() throws Exception {
-        assert genericExpression.evaluationType().equals(psiType);
+        assert expression.evaluationType().equals(psiType);
     }
 
     public void testGeneralizes() throws Exception {
-        assert genericExpression.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 1")));
-        assert !genericExpression.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x;")));
+        assert expression.generalizes(Encapsulator.buildTreeFromPsi(createTestExpressionFromString("x + 1")));
+        assert !expression.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x;")));
     }
 }

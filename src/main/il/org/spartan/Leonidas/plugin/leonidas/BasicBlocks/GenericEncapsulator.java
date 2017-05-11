@@ -5,6 +5,8 @@ import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 
 import java.util.Collections;
+import java.util.function.Supplier;
+
 
 /**
  * @author Oren Afek && Michal Cohen
@@ -70,10 +72,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public Encapsulator prune(Encapsulator e) {
         assert conforms(e.getInner());
         int id = extractId(e.getInner());
-        Encapsulator elementParent = getConcreteParent(e);
-        GenericEncapsulator ge = create(elementParent.getInner());
+        Encapsulator upperElement = getConcreteParent(e);
+        GenericEncapsulator ge = create(upperElement);
         ge.putUserData(KeyDescriptionParameters.ID, id);
-        return e.getParent() == null ? ge : elementParent.generalize(ge);
+        return ge.getParent() == null ? ge : upperElement.generalize(ge);
     }
 
     protected abstract boolean goUpwards(Encapsulator prev, Encapsulator next);
@@ -84,7 +86,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @param e element within.
      * @return new <B>Specific</B> GenericEncapsulator
      */
-    public abstract GenericEncapsulator create(PsiElement e);
+    public abstract GenericEncapsulator create(Encapsulator e);
 
     /**
      * Can I generalize a concrete element
@@ -119,6 +121,34 @@ public abstract class GenericEncapsulator extends Encapsulator {
         }
         return prev;
     }
+
+    @Override
+    public boolean isGeneric() {
+        return true;
+    }
+
+    GenericEncapsulator.EndThe is(Runnable template) {
+        return EndThe.END;
+    }
+
+    EndThe is(Supplier<?> template) {
+        return EndThe.END;
+    }
+
+    EndThe isNot(Runnable template) {
+        return EndThe.END;
+    }
+
+    EndThe isNot(Supplier<?> template) {
+        return EndThe.END;
+    }
+
+    static class EndThe {
+        static final EndThe END = new GenericEncapsulator.EndThe();
+
+        public <T> void ofType(Class<? extends T> __) {/**/}
+    }
+
 
 
 }
