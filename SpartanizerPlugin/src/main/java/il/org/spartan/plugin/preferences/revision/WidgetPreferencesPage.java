@@ -42,17 +42,15 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), o.description(), o.configurationComponents(),
         store()).open();
   }
-  @Override protected void createFieldEditors() {
+  @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
     addField(new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent()));
-    // addField(new OperationListEditor("X", "Configure operations for widget:",
-    // getFieldEditorParent(), getWidgetOperations(),
-    // λ -> onConfigure((WidgetOperation) λ), λ -> isEnabled((WidgetOperation)
-    // λ),
-    // λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ))));
+    addField(new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent(), getWidgetOperations(),
+        λ -> onConfigure((WidgetOperation) λ), λ -> isEnabled((WidgetOperation) λ),
+        λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ))));
   }
   /** @return all plugin widget operations */
-  @SuppressWarnings("unused") private static List<Entry<String, Object>> getWidgetOperations() {
+  private static List<Entry<String, Object>> getWidgetOperations() {
     final List<Entry<String, Object>> $ = an.empty.list();
     for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations)
       $.add(new AbstractMap.SimpleEntry<>(¢.description(), ¢));
