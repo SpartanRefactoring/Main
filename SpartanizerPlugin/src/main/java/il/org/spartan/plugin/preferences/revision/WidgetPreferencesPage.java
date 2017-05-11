@@ -38,11 +38,9 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   @SuppressWarnings("boxing") public static Boolean isEnabled(WidgetOperation o) {
     return store().getBoolean("IS_ENABLED_" + ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID());
   }
-  public static void onConfigure(@SuppressWarnings("unused") WidgetOperation o) {
-    // new
-    // ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-    // o.description(), o.configurationComponents(),store())
-    // .open();
+  public static void onConfigure(WidgetOperation o) {
+    new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), o.description(), o.configurationComponents(),
+        store()).open();
   }
   @Override protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
