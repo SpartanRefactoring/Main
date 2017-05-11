@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.*;
 /** A dialog to descrive a configuration of an operation widget
  * @author Raviv Rachmiel
  * @since 2017-05-10 */
+//TODO: Raviv Rachmiel, make use of the required column in configurations
 public class ConfigWidgetPreferencesDialog extends Dialog {
   String widgetName;
   String[][] configurations;
