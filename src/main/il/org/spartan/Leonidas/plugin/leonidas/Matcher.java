@@ -68,17 +68,10 @@ public class Matcher {
      */
     @SuppressWarnings("ConstantConditions")
     private boolean treeMatch(Encapsulator treeTemplate, Encapsulator treeToMatch) {
-        if (!iz.conforms(treeToMatch, treeTemplate)
-                || iz.block(treeToMatch.getInner()) && !iz.genericBlock(treeTemplate)
-                && treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS) != null
-                && treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS)
-                .notConforms(az.block(treeToMatch.getInner()).getStatements().length)
-                && treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS) != null
-                && treeTemplate.getInner().getUserData(KeyDescriptionParameters.NO_OF_STATEMENTS)
-                .notConforms(az.block(treeToMatch.getInner()).getStatements().length))
+        if (!iz.conforms(treeToMatch, treeTemplate))
             return false;
         boolean res = true;
-        if (treeTemplate.getAmountOfNoneWhiteSpaceChildren() < treeToMatch.getAmountOfNoneWhiteSpaceChildren()
+        if (treeTemplate.getAmountOfNoneWhiteSpaceChildren() != treeToMatch.getAmountOfNoneWhiteSpaceChildren()
                 && !iz.generic(treeTemplate))
             return false;
         for (Encapsulator.Iterator treeTemplateChild = treeTemplate.iterator(), treeToMatchChild = treeToMatch
