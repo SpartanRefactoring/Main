@@ -28,20 +28,20 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     this.store = store;
   }
   @Override protected Control createDialogArea(Composite parent) {
-    Composite container = (Composite) super.createDialogArea(parent);
+    Composite $ = (Composite) super.createDialogArea(parent);
     List<Text> textLists = new ArrayList<>();
     List<Button> buttonLists = new ArrayList<>();
     List<Button[]> radioLists = new ArrayList<>();
     for (String[] comp : configurations) {
       if ("String".equals(comp[1]))
-        textLists.add(createString(container, comp[2]));
+        textLists.add(createString($, comp[2]));
       if ("Boolean".equals(comp[1]))
-        buttonLists.add(createBoolean(container, comp[2]));
+        buttonLists.add(createBoolean($, comp[2]));
       if("List".equals(comp[1])) 
-        radioLists.add(createList(container,Arrays.copyOfRange(comp, 2, comp.length-1)));
+        radioLists.add(createList($,Arrays.copyOfRange(comp, 2, comp.length-1)));
         
     }
-    return container;
+    return $;
   }
   // overriding this methods allows you to set the
   // title of the custom dialog
@@ -58,10 +58,10 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
-    Text res = new Text(container, SWT.BORDER);
-    res.setLayoutData(dataRes);
+    Text $ = new Text(container, SWT.BORDER);
+    $.setLayoutData(dataRes);
     
-    return res;
+    return $;
   }
   private static Button createBoolean(Composite container, String name) {
     Label lbl = new Label(container, SWT.NONE);
@@ -69,27 +69,27 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
-    Button checkBox = new Button(container, SWT.CHECK);
-    checkBox.setText(name);
-    checkBox.setLayoutData(dataRes);
+    Button $ = new Button(container, SWT.CHECK);
+    $.setText(name);
+    $.setLayoutData(dataRes);
     
-    return checkBox;
+    return $;
   }
   private static Button[] createList(Composite container, String[] options) {
     GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
-    Button[] radios = new Button[options.length];
+    Button[] $ = new Button[options.length];
     int count = 0;
-    for(String n : options) {
-      radios[count] = new Button(container, SWT.RADIO);
-      radios[count].setSelection(false);
-      radios[count].setText(n);
-      radios[count].setBounds(10, 5+(25 * count), 75, 30);
+    for(String ¢ : options) {
+      $[count] = new Button(container, SWT.RADIO);
+      $[count].setSelection(false);
+      $[count].setText(¢);
+      $[count].setBounds(10, 25 * count + 5, 75, 30);
       ++count;
     } 
     
-    return radios;
+    return $;
   }
   @Override protected void okPressed() {
     //TODO: Raviv, add here the store preferences from the lists, change them to maps

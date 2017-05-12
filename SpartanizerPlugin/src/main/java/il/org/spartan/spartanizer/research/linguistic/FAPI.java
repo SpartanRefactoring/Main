@@ -25,26 +25,26 @@ public class FAPI {
     this.names = extract.names(name);
     this.invocations = invocations;
     this.arguments = new ArrayList<>();
-    for (Expression e : invocations)
-      if (iz.methodInvocation(e))
-        arguments.add(az.methodInvocation(e).arguments());
+    for (Expression ¢ : invocations)
+      if (iz.methodInvocation(¢))
+        arguments.add(az.methodInvocation(¢).arguments());
   }
   public FAPI solveBinding() {
     if (!ast.hasResolvedBindings())
       note.bug("no binding for AST");
     else {
-      for (final Name n : names)
-        if (!property.has(n, BINDING_PROPERTY))
-          property.set(n, BINDING_PROPERTY, n.resolveTypeBinding());
+      for (final Name ¢ : names)
+        if (!property.has(¢, BINDING_PROPERTY))
+          property.set(¢, BINDING_PROPERTY, ¢.resolveTypeBinding());
       if (invocations != null)
-        for (final Expression e : invocations)
-          if (!property.has(e, BINDING_PROPERTY))
-            property.set(e, BINDING_PROPERTY, e.resolveTypeBinding());
+        for (final Expression ¢ : invocations)
+          if (!property.has(¢, BINDING_PROPERTY))
+            property.set(¢, BINDING_PROPERTY, ¢.resolveTypeBinding());
       if (arguments != null)
         for (final List<Expression> es : arguments)
-          for (final Expression e : es)
-            if (!property.has(e, BINDING_PROPERTY))
-              property.set(e, BINDING_PROPERTY, e.resolveTypeBinding());
+          for (final Expression ¢ : es)
+            if (!property.has(¢, BINDING_PROPERTY))
+              property.set(¢, BINDING_PROPERTY, ¢.resolveTypeBinding());
     }
     return this;
   }
@@ -54,23 +54,23 @@ public class FAPI {
     return this;
   }
   @Override public String toString() {
-    final StringBuilder b = new StringBuilder("/* Fluent API information: */\n");
+    final StringBuilder $ = new StringBuilder("/* Fluent API information: */\n");
     if (!names.isEmpty())
-      b.append("/* Name: */\n").append(separate.these(names).by('.')).append("\n");
+      $.append("/* Name: */\n").append(separate.these(names).by('.')).append("\n");
     if (invocations != null) {
-      b.append("/* Invocations: */\n");
-      for (Expression e : invocations)
-        b.append(iz.fieldAccess(e) ? az.fieldAccess(e).getName()
-            : az.methodInvocation(e).getName() + "(...)" + (!property.has(e, BINDING_PROPERTY) ? "" : " (has binding)")).append("\n");
+      $.append("/* Invocations: */\n");
+      for (Expression ¢ : invocations)
+        $.append(iz.fieldAccess(¢) ? az.fieldAccess(¢).getName()
+            : az.methodInvocation(¢).getName() + "(...)" + (!property.has(¢, BINDING_PROPERTY) ? "" : " (has binding)")).append("\n");
     }
     if (arguments == null)
-      return b.toString();
-    b.append("/* Arguments: */\n");
+      return $ + "";
+    $.append("/* Arguments: */\n");
     for (List<Expression> es : arguments) {
-      for (Expression e : es)
-        b.append(e + (!property.has(e, BINDING_PROPERTY) ? "" : " (has binding)")).append(" ");
-      b.append("\n");
+      for (Expression ¢ : es)
+        $.append(¢ + (!property.has(¢, BINDING_PROPERTY) ? "" : " (has binding)")).append(" ");
+      $.append("\n");
     }
-    return b.toString();
+    return $ + "";
   }
 }

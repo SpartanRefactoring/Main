@@ -35,11 +35,11 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     // if (prefOpsMapConfs == null)
     // store().putValue(prefOpsMapConfs, "stub");
   }
-  @SuppressWarnings("boxing") public static Boolean isEnabled(WidgetOperation o) {
-    return store().getBoolean("IS_ENABLED_" + ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID());
+  @SuppressWarnings("boxing") public static Boolean isEnabled(WidgetOperation ¢) {
+    return store().getBoolean("IS_ENABLED_" + ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID());
   }
-  public static void onConfigure(WidgetOperation o) {
-    new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), o.description(), o.configurationComponents(),
+  public static void onConfigure(WidgetOperation ¢) {
+    new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢.description(), ¢.configurationComponents(),
         store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {

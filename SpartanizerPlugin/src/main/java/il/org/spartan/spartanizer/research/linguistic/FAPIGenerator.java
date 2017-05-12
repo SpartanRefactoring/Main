@@ -23,21 +23,21 @@ public class FAPIGenerator {
   protected FAPIGenerator(FAPI fapi) {
     this.fapi = Objects.requireNonNull(fapi);
   }
-  public static FAPIGenerator by(FAPI fapi) {
-    return new FAPIGenerator(fapi);
+  public static FAPIGenerator by(FAPI ¢) {
+    return new FAPIGenerator(¢);
   }
   public FAPIGenerator in(IJavaProject p) {
     if (p == null)
       return this;
     try {
-      for (IPackageFragmentRoot r : p.getAllPackageFragmentRoots())
-        if (r.getKind() == IPackageFragmentRoot.K_SOURCE) {
-          path = r.getPath().removeFirstSegments(1);
+      for (IPackageFragmentRoot ¢ : p.getAllPackageFragmentRoots())
+        if (¢.getKind() == IPackageFragmentRoot.K_SOURCE) {
+          path = ¢.getPath().removeFirstSegments(1);
           project = p.getProject();
           return this;
         }
-    } catch (JavaModelException x) {
-      note.bug(x);
+    } catch (JavaModelException ¢) {
+      note.bug(¢);
     }
     return this;
   }
@@ -48,14 +48,14 @@ public class FAPIGenerator {
     if (path == null || project == null)
       return false;
     IPath classPath = path.append(separate.these(fapi.names).by('/')).addFileExtension("java");
-    if (!Eclipse.recursiveCreateFolder(project.getFolder(classPath.removeLastSegments(1).toString()), monitor))
+    if (!Eclipse.recursiveCreateFolder(project.getFolder(classPath.removeLastSegments(1) + ""), monitor))
       return false;
     try {
-      classFile = project.getFile(classPath.toString());
+      classFile = project.getFile(classPath + "");
       if (!classFile.exists())
         classFile.create(new ByteArrayInputStream("".getBytes()), IResource.NONE, monitor);
-    } catch (CoreException x) {
-      note.bug(x);
+    } catch (CoreException ¢) {
+      note.bug(¢);
       return false;
     }
     return true;
