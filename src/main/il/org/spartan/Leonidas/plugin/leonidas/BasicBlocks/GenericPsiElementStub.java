@@ -168,6 +168,12 @@ public class GenericPsiElementStub {
                 }
 
                 @Override
+                public void visitReferenceExpression(PsiReferenceExpression x) {
+                    super.visitReferenceExpression(x);
+                    name.set(BOOLEAN_EXPRESSION);
+                }
+
+                @Override
                 public void visitExpression(PsiExpression x) {
                     super.visitExpression(x);
                     name.set(BOOLEAN_EXPRESSION);

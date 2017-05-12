@@ -20,7 +20,7 @@ class TipperCreator extends JFrame {
     private JPanel panel1;
     private JTextArea toCode;
     private JTextArea fromCode;
-    private JButton IgnoreContent;
+    private JButton Generalize;
     private JButton selectGenerics;
     private JButton matchGeneric;
     private PsiElement root;
@@ -43,20 +43,14 @@ class TipperCreator extends JFrame {
         toCode.setText(element.getText());
         pack();
         setVisible(true);
-        IgnoreContent.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                JTextArea focused = fromCode;
-                if (toCode.getSelectedText() != null)
-                    focused = toCode;
-                else if (fromCode.getSelectedText() == null)
-                    return;
-                PsiElement p = step.getHighestParent(element.findElementAt(focused.getSelectionStart()));
-                StubName givenType = StubName.getGeneralType(p);
-                focused.replaceSelection(givenType.stubMethodCallExpressionStatement());
-            }
-        });
+        Generalize.addActionListener(e -> generalizeClicked(element));
+//        Generalize.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                super.mouseClicked(e);
+//                generalizeClicked(element);
+//            }
+//        });
         selectGenerics.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -89,6 +83,18 @@ class TipperCreator extends JFrame {
                 ++genericElementIndex;
             }
         });
+    }
+
+    private void generalizeClicked(PsiElement element) {
+        JTextArea focused = fromCode;
+        if (toCode.getSelectedText() != null)
+            focused = toCode;
+        else if (fromCode.getSelectedText() == null)
+            return;
+        PsiElement p = step.getHighestParent(element.findElementAt(focused.getSelectionStart()));
+        //here is the issue
+        StubName givenType = StubName.getGeneralType(p);
+        focused.replaceSelection(givenType.stubMethodCallExpressionStatement());
     }
 
     public void createLeonidasTipper() {
@@ -146,12 +152,12 @@ class TipperCreator extends JFrame {
         panel1.add(panel3, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
         panel3.add(spacer2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        IgnoreContent = new JButton();
-        IgnoreContent.setText("Generalize Content");
-        IgnoreContent.setMnemonic('G');
-        IgnoreContent.setDisplayedMnemonicIndex(0);
-        IgnoreContent.setToolTipText("make a specific code represent a more generalized contents such as expressions, statements, blocks and many more.");
-        panel1.add(IgnoreContent, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        Generalize = new JButton();
+        Generalize.setText("Generalize Content");
+        Generalize.setMnemonic('G');
+        Generalize.setDisplayedMnemonicIndex(0);
+        Generalize.setToolTipText("make a specific code represent a more generalized contents such as expressions, statements, blocks and many more.");
+        panel1.add(Generalize, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
