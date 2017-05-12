@@ -150,8 +150,8 @@ public class Eclipse {
       return false;
     try {
       f.create(IResource.NONE, true, m);
-    } catch (CoreException x) {
-      note.bug(x);
+    } catch (CoreException ¢) {
+      note.bug(¢);
       return false;
     }
     return true;

@@ -274,9 +274,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   private static boolean samePackage(IType[] innerTypes, ITypeBinding outerType) {
     return (innerTypes.length != 0 && //
         Optional.ofNullable(innerTypes[0]) //
-            .map(x -> x.getPackageFragment()) //
-            .map(x -> x.getElementName()) //
-            .map(x -> box.it(x.equals(Optional.ofNullable(outerType.getPackage()).map(y -> y.getName()).orElse("~")))) //
+            .map(λ -> λ.getPackageFragment()) //
+            .map(λ -> λ.getElementName()) //
+            .map(x -> box.it(x.equals(Optional.ofNullable(outerType.getPackage()).map(λ -> λ.getName()).orElse("~")))) //
             .orElse(Boolean.FALSE).booleanValue());
   }
   private static boolean sameFile(IType[] ts, ITypeBinding realType) {
@@ -284,7 +284,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     for (; topBinding != null && !topBinding.isTopLevel(); topBinding = topBinding.getDeclaringClass())
       ;
     String tn = topBinding == null ? null : topBinding.getName();
-    return tn != null && Arrays.stream(ts).map(x -> x.getElementName()).anyMatch(n -> tn.equals(n));
+    return tn != null && Arrays.stream(ts).map(λ -> λ.getElementName()).anyMatch(λ -> tn.equals(λ));
   }
 
   // TODO Ori Roth: move class to utility file
