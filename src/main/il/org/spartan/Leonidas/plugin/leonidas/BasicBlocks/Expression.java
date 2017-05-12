@@ -36,8 +36,8 @@ public class Expression extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    protected boolean generalizes(PsiElement e) {
-        return iz.expression(e);
+    public boolean generalizes(Encapsulator e) {
+        return iz.expression(e.getInner());
     }
 
     @Override

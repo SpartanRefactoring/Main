@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 /**
  * @author Oren Afek && Michal Cohen
- * @since 5/3/2017
+ * @since 03-05-2017
  */
 public abstract class GenericEncapsulator extends Encapsulator {
 
@@ -35,14 +35,6 @@ public abstract class GenericEncapsulator extends Encapsulator {
     @SuppressWarnings("unused")
     protected GenericEncapsulator() {
     }
-
-    /**
-     * Can I generalizeWith a PsiElement.
-     *
-     * @param e PSI Element
-     * @return true iff I can generalizeWith e
-     */
-    protected abstract boolean generalizes(PsiElement e);
 
     /**
      * Do I represent a concrete PsiElement
@@ -94,8 +86,9 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @param e concrete element
      * @return true iff I can generalizeWith e
      */
+    @SuppressWarnings("InfiniteRecursion")
     public boolean generalizes(Encapsulator e) {
-        return generalizes(e.getInner());
+        return generalizes(e);
     }
 
     /**
@@ -149,7 +142,4 @@ public abstract class GenericEncapsulator extends Encapsulator {
 
         public <T> void ofType(Class<? extends T> __) {/**/}
     }
-
-
-
 }

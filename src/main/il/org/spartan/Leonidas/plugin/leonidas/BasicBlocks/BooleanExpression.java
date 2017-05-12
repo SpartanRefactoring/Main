@@ -4,7 +4,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
 
 /**
- * Created by melanyc on 5/8/2017.
+ * @author michalcohen
+ * @since 08-05-2017.
  */
 public class BooleanExpression extends Expression {
     private static final String TEMPLATE = "booleanExpression";

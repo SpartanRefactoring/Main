@@ -29,6 +29,5 @@ public class Pruning {
                 .anyMatch(ge -> ge.conforms(n.getInner())))
             return o.get();
         return n;
-
     }
 }

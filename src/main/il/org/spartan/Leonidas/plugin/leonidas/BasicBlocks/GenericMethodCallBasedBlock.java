@@ -40,6 +40,4 @@ public abstract class GenericMethodCallBasedBlock extends GenericEncapsulator {
         assert (conforms(e));
         return az.integer(step.firstParameterExpression(az.methodCallExpression(e)));
     }
-
-
 }

@@ -8,38 +8,26 @@ import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 
 /**
- * Created by  on 5/11/2017.
+ * @author Oren Afek, michalcohen
+ * @since 11-05-2017.
  */
 public class Optional extends GenericMethodCallBasedBlock {
     private static final String TEMPLATE = "optional";
-    private static int idGenerator = 0;
     Encapsulator internal;
     boolean active = true;
-    private int index;
 
     public Optional(PsiElement e, Encapsulator i) {
         super(e, TEMPLATE);
         internal = i;
-        index = idGenerator++;
     }
 
     public Optional() {
         super(TEMPLATE);
     }
 
-    public int getIndex() {
-        return index;
-    }
-
     @Override
     public boolean generalizes(Encapsulator e) {
         return iz.conforms(internal, e);
-    }
-
-    // !!!
-    @Override
-    protected boolean generalizes(PsiElement e) {
-        return false;
     }
 
     @Override

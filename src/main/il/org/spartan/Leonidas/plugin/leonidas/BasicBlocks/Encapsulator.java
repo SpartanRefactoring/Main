@@ -58,8 +58,6 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         return new Encapsulator(e);
     }
 
-
-
     public List<Encapsulator> getChildren() {
         return children;
     }
@@ -115,7 +113,6 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     public void forEach(Consumer<? super Encapsulator> action) {
         children.forEach(action);
     }
-
 
     public <T> void putUserData(Key<T> key, T id) {
         this.inner.putUserData(key, id);

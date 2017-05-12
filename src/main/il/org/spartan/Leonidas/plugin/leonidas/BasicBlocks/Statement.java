@@ -28,8 +28,8 @@ public class Statement extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    protected boolean generalizes(PsiElement e) {
-        return iz.statement(e) && !iz.blockStatement(e);
+    public boolean generalizes(Encapsulator e) {
+        return iz.statement(e.getInner()) && !iz.blockStatement(e.getInner());
     }
 
     @Override
