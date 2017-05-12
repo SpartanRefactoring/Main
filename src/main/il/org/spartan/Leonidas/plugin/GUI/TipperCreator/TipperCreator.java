@@ -17,12 +17,14 @@ import java.awt.event.MouseEvent;
  * @since 24-02-17
  */
 class TipperCreator extends JFrame {
+    public String tipperName = "";
     private JPanel panel1;
     private JTextArea toCode;
     private JTextArea fromCode;
     private JButton Generalize;
     private JButton selectGenerics;
     private JButton matchGeneric;
+    private JButton createTipperButton;
     private PsiElement root;
     private int genericElementIndex = 1;
     private int startOfMatchedFrom;
@@ -44,13 +46,6 @@ class TipperCreator extends JFrame {
         pack();
         setVisible(true);
         Generalize.addActionListener(e -> generalizeClicked(element));
-//        Generalize.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                super.mouseClicked(e);
-//                generalizeClicked(element);
-//            }
-//        });
         selectGenerics.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -83,6 +78,7 @@ class TipperCreator extends JFrame {
                 ++genericElementIndex;
             }
         });
+        createTipperButton.addActionListener(e -> createLeonidasTipper());
     }
 
     private void generalizeClicked(PsiElement element) {
@@ -91,14 +87,63 @@ class TipperCreator extends JFrame {
             focused = toCode;
         else if (fromCode.getSelectedText() == null)
             return;
+        // start of problematic code
         PsiElement p = step.getHighestParent(element.findElementAt(focused.getSelectionStart()));
-        //here is the issue
         StubName givenType = StubName.getGeneralType(p);
+        // end
         focused.replaceSelection(givenType.stubMethodCallExpressionStatement());
     }
 
     public void createLeonidasTipper() {
-
+        if (fromCode.getText().matches("\\s*")) {
+            JOptionPane.showMessageDialog(this, "Origin code cannot be empty.");
+            return;
+        }
+        new TipperNameCreator(this);
+        if (tipperName.equals("")) {
+            return;
+        }
+        String tipperTemplate = "package il.org.spartan.Leonidas.plugin.tippers.leonidas;\n" +
+                "\n" +
+                "import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;\n" +
+                "\n" +
+                "import static il.org.spartan.Leonidas.plugin.leonidas.GenericPsiElementStub.*;\n" +
+                "import static il.org.spartan.Leonidas.plugin.leonidas.The.the;\n" +
+                "\n" +
+                "public class " + tipperName +
+                " implements LeonidasTipperDefinition {\n" +
+                "\n" +
+                "    /**\n" +
+                "     * Write here additional constraints on the matcher tree.\n" +
+                "     * The constraint are of the form:\n" +
+                "     * the(<generic element>(<id>)).{is/isNot}(() - > <template>)[.ofType(Psi class)];\n" +
+                "     */\n" +
+                "    @Override\n" +
+                "    public void constraints() {\n" +
+                "    }\n" +
+                "\n" +
+                "    @Override\n" +
+                "    /* If clarification of the type of the tipper\n" +
+                "     * is needed, use the annotation @Leonidas(<Psi Class>)\n" +
+                "     * when psi class is the class of the element on which the tipper applied\n" +
+                "     */\n" +
+                "    public void matcher() {\n" +
+                "        new Template(() -> {\n" +
+                "            //<template>\n" + fromCode.getText() +
+                "        });\n" +
+                "    }\n" +
+                "\n" +
+                "    @Override\n" +
+                "    /* If clarificationof the type of the tipper\n" +
+                "     * is needed, use the annotation @Leonidas(<Psi Class>)\n" +
+                "     * when psi class is the class of the element on which the tipper applied\n" +
+                "     */\n" +
+                "    public void replacer() {\n" +
+                "        new Template(() -> {\n" +
+                "            //<template>\n" + toCode.getText() +
+                "        });\n" +
+                "    }\n" +
+                "}";
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
