@@ -49,7 +49,7 @@ public class InflaterListener implements KeyListener, Listener {
   private int editDirection;
   private final boolean compoundEditing;
   private ISourceViewer viewer;
-  @SuppressWarnings("boxing") private static final List<Integer> activating_keys = Arrays.asList(SWT.CTRL, SWT.ALT);
+  @SuppressWarnings("boxing") private static final List<Integer> activating_keys = Arrays.asList(SWT.CTRL);
   @SuppressWarnings("boxing") private final List<Boolean> active_keys = activating_keys.stream().map(λ -> false).collect(Collectors.toList());
   private static final List<Predicate<Event>> zoomer_keys = Arrays.asList(λ -> λ.keyCode == SWT.KEYPAD_ADD, λ -> λ.character == '=',
       λ -> λ.type == SWT.MouseWheel && λ.count > 0);
