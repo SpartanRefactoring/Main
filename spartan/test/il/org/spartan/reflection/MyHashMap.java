@@ -588,12 +588,14 @@ public final class MyHashMap<K, V> implements Map<K, V> {
     /** This method is invoked whenever the value in an entry is overwritten by
      * an invocation of put(k,v) for a key k that's already in the HashMap. */
     void recordAccess(final MyHashMap<K, V> ¢) {
-      unused(¢);
+      // TODO @OriRoth
+      // unused(¢);
     }
 
     /** This method is invoked whenever the entry is removed from the table. */
     void recordRemoval(final MyHashMap<K, V> ¢) {
-      unused(¢);
+      // TODO @OriRoth
+      // unused(¢);
     }
   }
 

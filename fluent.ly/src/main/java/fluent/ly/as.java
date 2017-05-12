@@ -32,6 +32,7 @@ public enum as {
    *        type is isomorphic to array parameters in Java
    * @return an {@link Iterable} over the array, which can then be used to to
    *         iterate over the parameter(s) */
+  // TODO @OriRoth as.asIterable? doesnt make sense
   public static Iterable<Integer> asIterable(final Integer... is) {
     // Create an object of a new <em>anonymous</em> class that
     // <code><b>implements</b></code> {@link Iterable}

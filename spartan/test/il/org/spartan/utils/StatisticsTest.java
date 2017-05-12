@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.streotypes.*;

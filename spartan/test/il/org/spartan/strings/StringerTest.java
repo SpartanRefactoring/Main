@@ -4,6 +4,7 @@ import static fluent.ly.azzert.*;
 
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 
 @SuppressWarnings("static-method") public class StringerTest {

@@ -1,0 +1,45 @@
+buildscript {
+	repositories {
+		// make it easy to test a snapshot version of goomph
+		maven {	url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		// grab dependencies from the gradle plugin portal
+		maven { url 'https://plugins.gradle.org/m2/' }
+		
+		mavenCentral()
+		// local eclipse maven (created by Goomph)
+		maven {
+			url rootProject.file('target.p2/build/p2asmaven/maven')
+		}
+	}
+	// make sure we don't cache stale snapshot versions
+	configurations.all {
+		resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+	}
+	dependencies {
+		// a bunch of eclipse stuff
+		classpath "com.diffplug.gradle:goomph:${VER_GOOMPH}"
+		// creates a targetplatform
+		classpath "org.standardout:bnd-platform:${VER_BND_PLATFORM}"
+	}
+}
+
+import com.diffplug.gradle.pde.EclipseRelease
+
+// Download from eclipse and put it into maven
+apply plugin: 'com.diffplug.gradle.p2.asmaven'
+p2AsMaven {
+    group 'eclipse-deps', {
+        repoEclipse GOOMPH_PDE_VER
+        feature 'org.eclipse.equinox.executable'
+        feature 'org.eclipse.rcp.configuration'
+        feature 'org.eclipse.jdt'
+        feature 'org.eclipse.platform'
+        feature 'org.eclipse.platform.source'
+        repo2runnable()
+    }
+    group 'eclipse-deps-jgit', {
+        repo 'http://download.eclipse.org/egit/updates'
+        feature 'org.eclipse.jgit'
+        repo2runnable()
+    }
+}

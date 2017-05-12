@@ -1,9 +1,12 @@
 buildscript {
 	repositories {
+        jcenter()
 		// make it easy to test a snapshot version of goomph
 		maven {	url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 		// grab dependencies from the gradle plugin portal
 		maven { url 'https://plugins.gradle.org/m2/' }
+		
+		mavenCentral()
 	}
 	// make sure we don't cache stale snapshot versions
 	configurations.all {
@@ -14,154 +17,147 @@ buildscript {
 		classpath "com.diffplug.gradle:goomph:${VER_GOOMPH}"
 		// creates a targetplatform
 		classpath "org.standardout:bnd-platform:${VER_BND_PLATFORM}"
+        // shadow, for creating a fat jar
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.0"
 	}
 }
 
-///////////
-// MAVEN //
-///////////
-subprojects {
-	repositories {
-		mavenCentral()
-		// SNAPSHOT versions are free to rely on other SNAPSHOT libraries
-		if (project.version.endsWith('SNAPSHOT')) {
-			maven {
-				url 'https://oss.sonatype.org/content/repositories/snapshots/'
-			}
-			configurations.all {
-				resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-			}
-		}
-		// local eclipse maven (created by Goomph)
-		maven {
-			url rootProject.file('SpartanizerPlugin/target.p2/build/p2asmaven/maven')
-		}
-
-        // jar collection directory
-        flatDir {
-            dirs rootProject.file('SpartanizerPlugin/libs').getPath()
-        }
-
-	}
+repositories {
+    mavenCentral()
+    // local eclipse maven (created by Goomph)
+    maven {
+        url rootProject.file('target.p2/build/p2asmaven/maven')
+    }
 }
+// we need the maven repo from p2
+evaluationDependsOn(':target.p2')
+
+//////////
+// JAVA //
+//////////
+apply plugin: 'java'
+compileJava.options.encoding = 'UTF-8'
+
+sourceSets {
+	main { java {
+		srcDir 'src'
+		srcDir 'test'
+	} }
+	test { java {
+		srcDir 'test'
+	} }
+}
+sourceCompatibility = VER_JAVA
+targetCompatibility = VER_JAVA
+
+dependencies {
+    // eclipse/p2 dependencies
+    compile "eclipse-deps:org.eclipse.ui:+"
+    compile "eclipse-deps:org.eclipse.jdt.core:+"
+    compile "eclipse-deps:org.eclipse.jface.text:+"
+    compile "eclipse-deps:org.eclipse.jface:+"
+    compile "eclipse-deps:org.eclipse.core.runtime:+"
+    compile "eclipse-deps:org.eclipse.core.resources:+"
+    compile "eclipse-deps:org.eclipse.ltk.core.refactoring:+"
+    compile "eclipse-deps:org.eclipse.ltk.ui.refactoring:+"
+    compile "eclipse-deps:org.eclipse.core.commands:+"
+    compile "eclipse-deps:org.eclipse.ui.editors:+"
+    compile "eclipse-deps:org.eclipse.ui.ide:+"
+    compile "eclipse-deps:org.eclipse.ui.monitoring:+"
+    compile "eclipse-deps:org.eclipse.ui.views:+"
+    compile "eclipse-deps:org.eclipse.ui.workbench:+"
+    compile "eclipse-deps:org.eclipse.ui.workbench.texteditor:+"
+    compile "eclipse-deps:org.eclipse.text:+"
+    compile "eclipse-deps:org.eclipse.core.jobs:+"
+    compile "eclipse-deps:org.eclipse.osgi:+"
+    compile "eclipse-deps:org.eclipse.equinox.app:+"
+    compile "eclipse-deps:org.eclipse.jdt.ui:+"
+    compile "eclipse-deps-jgit:org.eclipse.jgit:+"
+    compile "eclipse-deps:org.eclipse.equinox.preferences:+"
+    compile "eclipse-deps:org.eclipse.equinox.common:+"
+    compile "eclipse-deps:org.eclipse.equinox.util:+"
+    compile "eclipse-deps:org.eclipse.equinox.supplement:+"
+    compile "eclipse-deps:org.eclipse.equinox.security:+"
+    compile "eclipse-deps:org.eclipse.equinox.security.ui:+"
+    compile "eclipse-deps:org.eclipse.equinox.registry:+"
+    compile "eclipse-deps:org.eclipse.debug.core:+"
+    compile "eclipse-deps:org.eclipse.debug.ui:+"
+
+    // add SWT and the appropriate platform-native SWT for building and testing
+    compile "eclipse-deps:org.eclipse.swt:+"
+    compile "eclipse-deps:org.eclipse.swt.${com.diffplug.common.swt.os.SwtPlatform.getNative()}:+"
+
+    // project dependencies
+    compile project(':spartan')
+    compile project(':fluent.ly')
+
+    // maven dependencies
+    testCompile "junit:junit:${VER_JUNIT}"
+    compile "org.mockito:mockito-all:1.9.5"
+}
+
+apply plugin: 'osgi'
+// configure the OSGi bundle
+jar.manifest.attributes(
+		'-exportcontents': 'il.org.spartan.*',
+		'-removeheaders': 'Bnd-LastModified,Bundle-Name,Created-By,Tool,Private-Package,Require-Capability',
+		'-importcontents': '*',
+		'Bundle-SymbolicName': project.name,
+		'Bundle-RequiredExecutionEnvironment': 'JavaSE-1.8',
+		'Require-Capability': 'osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"',
+		'Bundle-Vendor': 'il.org.spartan',
+        'Bundle-Version': '1.0.0',
+		'Bundle-License': "http://www.apache.org/licenses/LICENSE-2.0"
+)
 
 /////////////
-// PLUGINS //
+// FAT JAR //
 /////////////
-// tasks to clean and jar all of the plugins
-Closure IS_PLUGIN = { it.name.equals("il.org.spartan.spartanizer") }
-configure(subprojects.findAll(IS_PLUGIN)) {
-	// we need the maven repo from p2
-	evaluationDependsOn(':SpartanizerPlugin:target.p2')
+apply plugin: 'com.github.johnrengelman.shadow'
 
-	def PROJECT_NAME = it.name
-
-    println PROJECT_NAME
-
-	//////////
-	// JAVA //
-	//////////
-	apply plugin: 'java'
-        compileJava.options.encoding = 'UTF-8'
-
-	sourceSets {
-		main { java {
-			srcDir 'src'
-			srcDir 'test'
-		} }
-		test { java {
-			srcDir 'test'
-		} }
-	}
-	sourceCompatibility = VER_JAVA
-	targetCompatibility = VER_JAVA
-
-	// add SWT and the appropriate platform-native SWT for building and testing
-	dependencies {
-		compile "eclipse-deps:org.eclipse.swt:+"
-		compile "eclipse-deps:org.eclipse.swt.${com.diffplug.common.swt.os.SwtPlatform.getNative()}:+"
-	}
-
-	//////////
-	// OSGI //
-	//////////
-	// create the manifest
-	apply plugin: 'com.diffplug.gradle.osgi.bndmanifest'
-	osgiBndManifest {
-		copyTo 'META-INF/MANIFEST.MF'
-	}
-//	// configure the OSGi bundle
-	jar.manifest.attributes(
-			'-exportcontents': 'il.org.spartan.*',
-			'-removeheaders': 'Bnd-LastModified,Bundle-Name,Created-By,Tool,Private-Package,Require-Capability',
-			'Import-Package': '!javax.annotation.*,*',
-			'Bundle-SymbolicName': project.name,
-			'Bundle-RequiredExecutionEnvironment': 'JavaSE-1.8',
-			'Require-Capability': 'osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"',
-			'Bundle-Vendor': 'il.org.spartan',
-            'Bundle-Version': '1.0.0',
-			'Bundle-License': "http://www.apache.org/licenses/LICENSE-2.0"
-	)
-//
-//	//////////////////////
-//	// ECLIPSE PROJECTS //
-//	//////////////////////
-	apply plugin: 'eclipse'
-	// remove the build folder
-	apply plugin: 'com.diffplug.gradle.eclipse.excludebuildfolder'
-	// improve the project deps
-	apply plugin: 'com.diffplug.gradle.eclipse.projectdeps'
-	// handle build.properties correctly
-	apply plugin: 'com.diffplug.gradle.eclipse.buildproperties'
-//
-	eclipse {
-		project {
-			natures 'org.eclipse.pde.PluginNature'
-			natures 'org.eclipse.jdt.core.javanature'
-
-			buildCommand 'org.eclipse.jdt.core.javabuilder'
-			buildCommand 'org.eclipse.pde.ManifestBuilder'
-			buildCommand 'org.eclipse.pde.SchemaBuilder'
-		}
-		classpath {
-			downloadSources true
-			downloadJavadoc true
-		}
-		jdt {
-			sourceCompatibility VER_JAVA
-			targetCompatibility VER_JAVA
-		}
-	}
-	// always create "fresh" projects
-	tasks.eclipse.dependsOn(cleanEclipse)
+def projectDependencies = project.configurations.runtime.getAllDependencies()
+shadowJar {
+    dependencies {
+        exclude(dependency("eclipse-deps:.*:.*"))
+    }
 }
 
-//////////////////////////////////////////////////
-// TARGET.MAVEN depends on every plugin project //
-//////////////////////////////////////////////////
-def pluginPaths = [':SpartanizerPlugin:il.org.spartan.spartanizer']
-project(':SpartanizerPlugin:target.maven') {
-	// the target platform will contain every jar
-	// which is added to the platform config, as
-	// well as all of its transitives, with OSGi
-	// metadata created automatically by bnd as
-	// required.
-	configurations {
-		platform
-		// no need to add the plugins from p2
-		all*.exclude group: 'eclipse-deps'
+//////////////////////
+// ECLIPSE PROJECTS //
+//////////////////////
+apply plugin: 'eclipse'
+// remove the build folder
+apply plugin: 'com.diffplug.gradle.eclipse.excludebuildfolder'
+// improve the project deps
+apply plugin: 'com.diffplug.gradle.eclipse.projectdeps'
+// handle build.properties correctly
+apply plugin: 'com.diffplug.gradle.eclipse.buildproperties'
+//
+eclipse {
+	project {
+		natures 'org.eclipse.pde.PluginNature'
+		natures 'org.eclipse.jdt.core.javanature'
+		buildCommand 'org.eclipse.jdt.core.javabuilder'
+		buildCommand 'org.eclipse.pde.ManifestBuilder'
+		buildCommand 'org.eclipse.pde.SchemaBuilder'
 	}
-	for (pluginPath in pluginPaths) {
-		it.evaluationDependsOn(pluginPath)
-		it.dependencies.add('platform', project(pluginPath))
+	classpath {
+		downloadSources true
+		downloadJavadoc true
 	}
-
+	jdt {
+		sourceCompatibility VER_JAVA
+		targetCompatibility VER_JAVA
+	}
 }
+// always create "fresh" projects
+tasks.eclipse.dependsOn(cleanEclipse)
+
 
 /////////////////////////////////////////////////////////
 // Root eclipse project for tinkering with build files //
 /////////////////////////////////////////////////////////
-apply plugin: 'com.diffplug.gradle.eclipse.resourcefilters'
-eclipseResourceFilters {
-	exclude().folders().name('SpartanizerPlugin/il.org.spartan.*')
-}
+//apply plugin: 'com.diffplug.gradle.eclipse.resourcefilters'
+//eclipseResourceFilters {
+//	exclude().folders().name('SpartanizerPlugin/plugin')
+//}

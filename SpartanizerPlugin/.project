@@ -2,13 +2,21 @@
 <projectDescription>
 	<name>SpartanizerPlugin</name>
 	<comment>Gradle and Eclipse RCP</comment>
-	<projects/>
-	<natures/>
-	<buildSpec/>
-	<linkedResources/>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+	</natures>
 	<filteredResources>
 		<filter>
-			<id>923922756</id>
+			<id>944018349</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
