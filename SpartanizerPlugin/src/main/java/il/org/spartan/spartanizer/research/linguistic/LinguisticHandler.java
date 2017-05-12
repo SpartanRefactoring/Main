@@ -22,7 +22,7 @@ public class LinguisticHandler extends AbstractHandler {
     FAPI i = fapi(s);
     if (i == null)
       return null;
-    System.out.println(i);
+    FAPIGenerator.by(i).in(s.inner.get(0).descriptor.getJavaProject()).generateAll();
     return null;
   }
   private static FAPI fapi(Selection s) {
