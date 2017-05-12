@@ -136,4 +136,24 @@ public class Eclipse {
   public static ASTNode coveringNodeByRange(final CompilationUnit u, final ITextSelection s) {
     return new NodeFinder(u, s.getOffset(), Math.max(1, s.getLength())).getCoveringNode();
   }
+  public static boolean recursiveCreateFolder(IFolder f, IProgressMonitor m) {
+    if (f == null)
+      return false;
+    if (f.exists())
+      return true;
+    IContainer parent = f.getParent();
+    if (parent == null)
+      return false;
+    if (!(parent instanceof IFolder))
+      return true;
+    if (!recursiveCreateFolder((IFolder) parent, m))
+      return false;
+    try {
+      f.create(IResource.NONE, true, m);
+    } catch (CoreException x) {
+      note.bug(x);
+      return false;
+    }
+    return true;
+  }
 }
