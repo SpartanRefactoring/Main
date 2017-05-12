@@ -4,6 +4,7 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
+import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 
 /**
@@ -20,6 +21,10 @@ public class Optional extends GenericMethodCallBasedBlock {
         super(e, TEMPLATE);
         internal = i;
         index = idGenerator++;
+    }
+
+    public Optional() {
+        super(TEMPLATE);
     }
 
     public int getIndex() {
@@ -49,7 +54,7 @@ public class Optional extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e) {
+    public Optional create(Encapsulator e) {
         PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
         return new Optional(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p)));
     }
@@ -61,5 +66,16 @@ public class Optional extends GenericMethodCallBasedBlock {
     @Override
     public boolean isGeneric() {
         return internal.isGeneric();
+    }
+
+    @Override
+    public Encapsulator prune(Encapsulator e) {
+        assert conforms(e.getInner());
+        Optional o = create(e);
+        Encapsulator upperElement = o.getConcreteParent(e);
+        o.inner = upperElement.inner;
+        if (o.isGeneric())
+            upperElement.putUserData(KeyDescriptionParameters.ID, o.extractId(e.getInner()));//o
+        return upperElement.getParent() == null ? upperElement : upperElement.generalizeWith(o);
     }
 }
