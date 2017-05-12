@@ -32,8 +32,8 @@ public final class ReturnDeadAssignment extends ReturnValue implements TipperCat
         () -> assignment = az.assignment(value) //
     ).notNil("Assigment is to a variable", //
         () -> to = az.simpleName(to(assignment)) //
-    ).andAlso("Variable is a local variable", //
-        () -> Environment.of(methodDeclaration).nest.doesntHave(to + "")//
+    ).andAlso("Variable is a local variable, didn't declared up", //
+        () -> !Environment.declaresUp(methodDeclaration).contains(to+"")//
     ).notNil("Extract from", //
         () -> from = from(assignment) //
     ).notNil("Extract operator", //
