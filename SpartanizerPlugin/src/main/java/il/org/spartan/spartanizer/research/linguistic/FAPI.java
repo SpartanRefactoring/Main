@@ -9,68 +9,75 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.utils.*;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-05-09 */
+@UnderConstruction
 public class FAPI {
   public static final String BINDING_PROPERTY = "binding";
   final AST ast;
-  final List<SimpleName> names;
+  final List<String> names;
+  final SimpleName className;
   final List<Expression> invocations;
   final List<List<Expression>> arguments;
 
   @SuppressWarnings("unchecked") public FAPI(final AST ast, final Name name, final List<Expression> invocations) {
     this.ast = requireNonNull(ast);
-    this.names = extract.names(name);
+    this.names = extract.identifiers(name);
+    this.className = the.lastOf(extract.names(name));
     this.invocations = invocations;
     this.arguments = new ArrayList<>();
-    for (Expression ¢ : invocations)
-      if (iz.methodInvocation(¢))
-        arguments.add(az.methodInvocation(¢).arguments());
+    for (Expression e : invocations)
+      if (iz.methodInvocation(e))
+        arguments.add(az.methodInvocation(e).arguments());
   }
   public FAPI solveBinding() {
     if (!ast.hasResolvedBindings())
       note.bug("no binding for AST");
     else {
-      for (final Name ¢ : names)
-        if (!property.has(¢, BINDING_PROPERTY))
-          property.set(¢, BINDING_PROPERTY, ¢.resolveTypeBinding());
+      if (className != null)
+        if (!property.has(className, BINDING_PROPERTY))
+          property.set(className, BINDING_PROPERTY, className.resolveTypeBinding());
       if (invocations != null)
-        for (final Expression ¢ : invocations)
-          if (!property.has(¢, BINDING_PROPERTY))
-            property.set(¢, BINDING_PROPERTY, ¢.resolveTypeBinding());
+        for (final Expression e : invocations)
+          if (!property.has(e, BINDING_PROPERTY))
+            property.set(e, BINDING_PROPERTY, e.resolveTypeBinding());
       if (arguments != null)
         for (final List<Expression> es : arguments)
-          for (final Expression ¢ : es)
-            if (!property.has(¢, BINDING_PROPERTY))
-              property.set(¢, BINDING_PROPERTY, ¢.resolveTypeBinding());
+          for (final Expression e : es)
+            if (!property.has(e, BINDING_PROPERTY))
+              property.set(e, BINDING_PROPERTY, e.resolveTypeBinding());
     }
     return this;
   }
   public FAPI fixPath() {
-    names.add(0, ast.newSimpleName("fluent"));
-    names.add(1, ast.newSimpleName("ly"));
+    ITypeBinding b = property.get(className, BINDING_PROPERTY);
+    if (b == null)
+      return this;
+    names.clear();
+    Collections.addAll(names, b.getQualifiedName().split("\\."));
     return this;
   }
   @Override public String toString() {
-    final StringBuilder $ = new StringBuilder("/* Fluent API information: */\n");
+    final StringBuilder b = new StringBuilder("/* Fluent API information: */\n");
     if (!names.isEmpty())
-      $.append("/* Name: */\n").append(separate.these(names).by('.')).append("\n");
+      b.append("/* Name: */\n").append(separate.these(names).by('.')).append("\n");
     if (invocations != null) {
-      $.append("/* Invocations: */\n");
-      for (Expression ¢ : invocations)
-        $.append(iz.fieldAccess(¢) ? az.fieldAccess(¢).getName()
-            : az.methodInvocation(¢).getName() + "(...)" + (!property.has(¢, BINDING_PROPERTY) ? "" : " (has binding)")).append("\n");
+      b.append("/* Invocations: */\n");
+      for (Expression e : invocations)
+        b.append(iz.fieldAccess(e) ? az.fieldAccess(e).getName()
+            : az.methodInvocation(e).getName() + "(...)" + (!property.has(e, BINDING_PROPERTY) ? "" : " (has binding)")).append("\n");
     }
     if (arguments == null)
-      return $ + "";
-    $.append("/* Arguments: */\n");
+      return b.toString();
+    b.append("/* Arguments: */\n");
     for (List<Expression> es : arguments) {
-      for (Expression ¢ : es)
-        $.append(¢ + (!property.has(¢, BINDING_PROPERTY) ? "" : " (has binding)")).append(" ");
-      $.append("\n");
+      for (Expression e : es)
+        b.append(e + (!property.has(e, BINDING_PROPERTY) ? "" : " (has binding)")).append(" ");
+      b.append("\n");
     }
-    return $ + "";
+    return b.toString();
   }
 }
