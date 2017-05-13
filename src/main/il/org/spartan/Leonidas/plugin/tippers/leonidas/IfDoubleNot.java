@@ -6,7 +6,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 
 /**
  * No two not operations are necessary.
- * IfDoubleNot
  *
  * @author melanyc
  * @since 30-04-2017

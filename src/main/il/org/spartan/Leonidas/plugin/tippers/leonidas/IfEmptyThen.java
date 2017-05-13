@@ -5,7 +5,6 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 
 /**
  * Replace if(b); else{s;} with if(!b){s;}
- * IfEmptyThen
  *
  * @author melanyc
  * @since 30-04-2017

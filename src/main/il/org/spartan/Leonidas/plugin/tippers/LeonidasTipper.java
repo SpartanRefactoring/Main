@@ -46,9 +46,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         description = file.getClasses()[0].getDocComment().getText()
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
-        name = file.getClasses()[0].getDocComment().getText()
-                .split("\\n")[2].trim()
-                .split("\\*")[1].trim();
+        name = tipperName;
         Map<Integer, List<Matcher.Constraint>> map = getConstraints();
         matcher = new Matcher(getMatcherRootTree(), map);
         Class<? extends PsiElement> t = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));

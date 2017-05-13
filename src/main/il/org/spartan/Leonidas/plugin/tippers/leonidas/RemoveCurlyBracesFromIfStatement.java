@@ -5,7 +5,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 
 /**
  * Remove redundant curly braces
- * RemoveCurlyBraces
+ *
  * author Oren Afek, Sharon Kuninin, michalcohen
  * since 06/01/17
  */

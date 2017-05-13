@@ -1,16 +1,19 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
+import com.intellij.psi.PsiWhileStatement;
+import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
+
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 
 /**
- * if while statement contains only one statement, its curly braces can be removed
+ * OptionalTestTipper1
  *
  * @author michalcohen
  * @since 30-04-2017
  */
 @SuppressWarnings("ConstantConditions")
-public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefinition {
+public class OptionalTestTipper1 implements LeonidasTipperDefinition {
 
     /**
      * Write here additional constraints on the matcher tree.
@@ -22,19 +25,25 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
     }
 
     @Override
+    @Leonidas(PsiWhileStatement.class)
     public void matcher() {
         new Template(() -> {
-            while (booleanExpression(0)) {
-                statement(1);
+            int x;
+            while (booleanExpression(0)){
+                x++;
+                optional(statement(1));
+                x--;
             }
         });
     }
 
     @Override
+    @Leonidas(PsiWhileStatement.class)
     public void replacer() {
         new Template(() -> {
-            while (booleanExpression(0))
-                statement(1);
+            while (booleanExpression(0)) {
+                optional(statement(1));
+            }
         });
     }
 }

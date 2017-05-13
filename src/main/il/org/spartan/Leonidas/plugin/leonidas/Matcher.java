@@ -87,17 +87,15 @@ public class Matcher {
         if (!iz.conforms(treeToMatch, treeTemplate))
             return false;
         boolean res = true;
-        if (treeTemplate.getAmountOfNoneWhiteSpaceChildren() != treeToMatch.getAmountOfNoneWhiteSpaceChildren()
+        if (treeTemplate.getAmountOfActualChildren() != treeToMatch.getAmountOfActualChildren()
                 && !iz.generic(treeTemplate))
             return false;
         for (Encapsulator.Iterator treeTemplateChild = treeTemplate.iterator(), treeToMatchChild = treeToMatch
                 .iterator(); treeTemplateChild.hasNext() && treeToMatchChild.hasNext();
              treeTemplateChild.next(), treeToMatchChild.next()) {
-            if (iz.optional(treeTemplateChild.value())) {
-                boolean res1 = treeMatch(treeTemplateChild.value(), treeToMatchChild.value());
-                boolean res2 = treeMatch(treeTemplateChild.peekNext(), treeToMatchChild.value());
-                res &= (res1 || res2);
-            }
+//            if (iz.optional(treeTemplateChild.value()) && !az.optional(treeTemplateChild.value()).isActive()) {
+//                treeTemplateChild.next();
+//            }
             res &= treeMatch(treeTemplateChild.value(), treeToMatchChild.value());
         }
         return res;

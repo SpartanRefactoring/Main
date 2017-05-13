@@ -66,4 +66,13 @@ public class Optional extends GenericMethodCallBasedBlock {
             upperElement.putUserData(KeyDescriptionParameters.ID, o.extractId(e.getInner()));//o
         return upperElement.getParent() == null ? upperElement : upperElement.generalizeWith(o);
     }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    public boolean exists() {
+        return active;
+    }
 }

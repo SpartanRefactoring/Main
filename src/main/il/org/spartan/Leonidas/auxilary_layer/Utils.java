@@ -112,9 +112,8 @@ public enum Utils {
             InputStream is = c.getClassLoader().getResourceAsStream(c.getName().replaceAll("\\.", "/") + ".java");
             return is != null ? IOUtils.toString(new BufferedReader(new InputStreamReader(is))) : "";
         } catch (IOException e) {
-            logger.error("", e);
+            logger.error("could not read file", e);
         }
-
         return "";
     }
 
