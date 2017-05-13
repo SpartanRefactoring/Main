@@ -120,6 +120,11 @@ public enum makeAST {
   public ASTNode from(final IFile ¢) {
     return make.from(this).parser(¢).createAST(wizard.nullProgressMonitor);
   }
+  /** @param function IFile
+   * @return ASTNode */
+  public ASTNode fromWithBinding(final IFile ¢) {
+    return make.from(this).parserWithBinding(¢).createAST(wizard.nullProgressMonitor);
+  }
   /** IMarker, SubProgressMonitor -> ASTNode converter
    * @param m Marker
    * @param pm ProgressMonitor

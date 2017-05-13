@@ -433,6 +433,9 @@ public enum make {
     $.setResolveBindings(true);
     return $;
   }
+  public ASTParser parserWithBinding(final IFile ¢) {
+    return parserWithBinding(makeAST.iCompilationUnit(¢));
+  }
   public static SimpleName newCent(final ASTNode ¢) {
     return from(¢).identifier(notation.cent);
   }

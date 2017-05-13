@@ -530,4 +530,7 @@ public enum extract {
       $.add(0, !iz.qualifiedName(q) ? az.simpleName(q) : az.qualifiedName(q).getName());
     return $;
   }
+  public static List<String> identifiers(Name n) {
+    return names(n).stream().map(x -> x.getIdentifier()).collect(toList());
+  }
 }
