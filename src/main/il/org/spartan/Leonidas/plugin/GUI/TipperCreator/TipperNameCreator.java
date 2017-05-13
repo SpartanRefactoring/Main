@@ -27,12 +27,17 @@ public class TipperNameCreator extends JFrame {
     }
 
     private void saveButtonClicked() {
-        if (nameField.getText().matches("[a-zA-Z][a-zA-Z0-9]*")) {
-            callee.tipperName = nameField.getText();
+        String name = nameField.getText();
+        if (name.matches("[a-zA-Z][a-zA-Z0-9]*")) {
+            if (getClass().getClassLoader().getResource("il/org/spartan/Leonidas/plugin/tippers/leonidas/" + name + ".java") != null) {
+                JOptionPane.showMessageDialog(this, "A tipper with that name already exists.");
+                return;
+            }
+            callee.tipperName = name;
             dispose();
-        } else if (nameField.getText().matches("[0-9][a-zA-Z0-9]*")) {
+        } else if (name.matches("[0-9][a-zA-Z0-9]*")) {
             JOptionPane.showMessageDialog(this, "A name cannot start with a number.");
-        } else if (nameField.getText().equals("")) {
+        } else if (name.equals("")) {
             JOptionPane.showMessageDialog(this, "Name cannot be empty");
         } else {
             JOptionPane.showMessageDialog(this, "Only letters and numbers are allowed.");
