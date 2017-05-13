@@ -429,6 +429,10 @@ public enum iz {
         return e instanceof BooleanLiteral;
     }
 
+    public static boolean genericMethod(Encapsulator e) {
+        return e instanceof Method;
+    }
+
     public static boolean optional(Encapsulator e) {
         return e instanceof Optional;
     }
