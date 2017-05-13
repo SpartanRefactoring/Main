@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 /**
  * @author Oren Afek && Michal Cohen
- * @since 5/3/2017
+ * @since 03-05-2017
  */
 public abstract class GenericEncapsulator extends Encapsulator {
 
@@ -35,14 +35,6 @@ public abstract class GenericEncapsulator extends Encapsulator {
     @SuppressWarnings("unused")
     protected GenericEncapsulator() {
     }
-
-    /**
-     * Can I generalize a PsiElement.
-     *
-     * @param e PSI Element
-     * @return true iff I can generalize e
-     */
-    protected abstract boolean generalizes(PsiElement e);
 
     /**
      * Do I represent a concrete PsiElement
@@ -71,11 +63,11 @@ public abstract class GenericEncapsulator extends Encapsulator {
      */
     public Encapsulator prune(Encapsulator e) {
         assert conforms(e.getInner());
-        int id = extractId(e.getInner());
         Encapsulator upperElement = getConcreteParent(e);
         GenericEncapsulator ge = create(upperElement);
-        ge.putUserData(KeyDescriptionParameters.ID, id);
-        return ge.getParent() == null ? ge : upperElement.generalize(ge);
+        if (isGeneric())
+            ge.putUserData(KeyDescriptionParameters.ID, ge.extractId(e.getInner()));
+        return ge.getParent() == null ? ge : upperElement.generalizeWith(ge);
     }
 
     protected abstract boolean goUpwards(Encapsulator prev, Encapsulator next);
@@ -89,13 +81,14 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public abstract GenericEncapsulator create(Encapsulator e);
 
     /**
-     * Can I generalize a concrete element
+     * Can I generalizeWith a concrete element
      *
      * @param e concrete element
-     * @return true iff I can generalize e
+     * @return true iff I can generalizeWith e
      */
+    @SuppressWarnings("InfiniteRecursion")
     public boolean generalizes(Encapsulator e) {
-        return generalizes(e.getInner());
+        return generalizes(e);
     }
 
     /**
@@ -114,6 +107,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @return the highest generic parent.
      */
     public Encapsulator getConcreteParent(Encapsulator n) {
+        if (n.parent == null) return n;
         Encapsulator prev = n, next = n.getParent();
         while (goUpwards(prev, next)) {
             prev = next;
@@ -148,7 +142,4 @@ public abstract class GenericEncapsulator extends Encapsulator {
 
         public <T> void ofType(Class<? extends T> __) {/**/}
     }
-
-
-
 }

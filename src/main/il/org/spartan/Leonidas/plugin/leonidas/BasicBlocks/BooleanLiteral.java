@@ -28,8 +28,8 @@ public class BooleanLiteral extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    protected boolean generalizes(PsiElement e) {
-        return iz.booleanLiteral(e);
+    public boolean generalizes(Encapsulator e) {
+        return iz.booleanLiteral(e.getInner());
     }
 
     @Override

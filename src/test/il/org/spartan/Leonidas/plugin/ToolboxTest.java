@@ -25,7 +25,7 @@ public class ToolboxTest extends PsiTypeHelper {
             assertTrue(names.contains("SafeReference"));
             assertTrue(names.contains("Unless"));
             assertTrue(names.contains("Delegator"));
-            assertTrue(names.contains("RemoveCurlyBraces"));
+            assertTrue(names.contains("RemoveCurlyBracesFromIfStatement"));
             assertTrue(names.contains("IfEmptyThen"));
             assertTrue(names.contains("RenameParameterToCent"));
             assertTrue(names.contains("LispLastElement"));
@@ -54,7 +54,7 @@ public class ToolboxTest extends PsiTypeHelper {
             assertFalse(currNames.contains("SafeReference"));
             assertFalse(currNames.contains("Unless"));
             assertTrue(currNames.contains("Delegator"));
-            assertTrue(currNames.contains("RemoveCurlyBraces"));
+            assertTrue(currNames.contains("RemoveCurlyBracesFromIfStatement"));
             assertTrue(currNames.contains("IfEmptyThen"));
             assertTrue(currNames.contains("RenameParameterToCent"));
             assertTrue(currNames.contains("LispLastElement"));
@@ -83,7 +83,7 @@ public class ToolboxTest extends PsiTypeHelper {
             assertFalse(currNames.contains("SafeReference"));
             assertFalse(currNames.contains("Unless"));
             assertTrue(currNames.contains("Delegator"));
-            assertTrue(currNames.contains("RemoveCurlyBraces"));
+            assertTrue(currNames.contains("RemoveCurlyBracesFromIfStatement"));
             assertTrue(currNames.contains("IfEmptyThen"));
 
             names.remove("SafeReference");
@@ -96,7 +96,7 @@ public class ToolboxTest extends PsiTypeHelper {
             assertFalse(finalNames.contains("SafeReference"));
             assertTrue(finalNames.contains("Unless"));
             assertTrue(finalNames.contains("Delegator"));
-            assertTrue(finalNames.contains("RemoveCurlyBraces"));
+            assertTrue(finalNames.contains("RemoveCurlyBracesFromIfStatement"));
             assertTrue(finalNames.contains("IfEmptyThen"));
 
             tb.disposeComponent();
@@ -124,7 +124,7 @@ public class ToolboxTest extends PsiTypeHelper {
 
         public void testGetTipper() throws Exception {
             tb.initComponent();
-            assertEquals(tb.getTipper(createTestStatementFromString("if(true){x++;}")).name(),"RemoveCurlyBraces");
+            assertEquals(tb.getTipper(createTestStatementFromString("if(true){x++;}")).name(), "RemoveCurlyBracesFromIfStatement");
             assertEquals(tb.getTipper(createTestStatementFromString("while(true){x++;}")).name(),"RemoveCurlyBracesFromWhileStatement");
 
             tb.disposeComponent();

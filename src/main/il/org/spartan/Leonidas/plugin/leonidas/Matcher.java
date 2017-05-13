@@ -5,7 +5,6 @@ import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.EncapsulatorVisitor;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Optional;
 
 import java.util.*;
@@ -32,31 +31,48 @@ public class Matcher {
         buildMatcherTree(this, map);
     }
 
-    private List<Optional> getIndices(Encapsulator treeTemplate) {
+    /**
+     * @param treeTemplate the template tree.
+     * @return a list of all optional elements in the tree.
+     */
+    private List<Optional> getOptionals(Encapsulator treeTemplate) {
         List<Optional> l = new ArrayList<>();
-        treeTemplate.accept(new EncapsulatorVisitor() {
-            @Override
-            public void visit(Encapsulator n) {
-                if (iz.optional(n)) {
-                    l.add(az.optional(n));
-                }
+        treeTemplate.accept(n -> {
+            if (iz.optional(n)) {
+                l.add(az.optional(n));
             }
         });
         return l;
     }
 
-    public Map<Optional, Boolean> scaryRecur(Encapsulator treeTemplate, Encapsulator treeToMatch, int i, List<Optional> l, Map<Optional, Boolean> m) {
+    /**
+     * DO NOT PANIC!
+     *
+     * @param treeTemplate template tree
+     * @param treeToMatch  the tree of the user
+     * @param i            the current index of the optional element
+     * @param l            a list of all optional elements
+     * @param m            an assignment of optional states
+     * @return an assignment of optional states that reached a match, or null if the tree of the user doesn't match
+     */
+    public Map<Optional, Boolean> matchMaker(Encapsulator treeTemplate, Encapsulator treeToMatch, int i, List<Optional> l, Map<Optional, Boolean> m) {
         if (i == l.size()) {
-            return banana(treeTemplate, treeToMatch, m) ? m : null;
+            return matchAssignmentTree(treeTemplate, treeToMatch, m) ? m : null;
         }
         m.put(l.get(i), true);
-        Map<Optional, Boolean> b1 = scaryRecur(treeTemplate, treeToMatch, i + 1, l, m);
+        Map<Optional, Boolean> b1 = matchMaker(treeTemplate, treeToMatch, i + 1, l, m);
         m.put(l.get(i), false);
-        Map<Optional, Boolean> b2 = scaryRecur(treeTemplate, treeToMatch, i + 1, l, m);
+        Map<Optional, Boolean> b2 = matchMaker(treeTemplate, treeToMatch, i + 1, l, m);
         return b1 != null ? b1 : b2;
     }
 
-    private boolean banana(Encapsulator treeTemplate, Encapsulator treeToMatch, Map<Optional, Boolean> m) {
+    /**
+     * @param treeTemplate template tree
+     * @param treeToMatch  the tree of the user
+     * @param m            an assignment of optional states
+     * @return true iff the treeTemplate under the assignment m matches treeToMatch
+     */
+    private boolean matchAssignmentTree(Encapsulator treeTemplate, Encapsulator treeToMatch, Map<Optional, Boolean> m) {
         m.forEach(Optional::setActivate);
         return treeMatch(treeTemplate, treeToMatch);
     }
@@ -71,17 +87,15 @@ public class Matcher {
         if (!iz.conforms(treeToMatch, treeTemplate))
             return false;
         boolean res = true;
-        if (treeTemplate.getAmountOfNoneWhiteSpaceChildren() != treeToMatch.getAmountOfNoneWhiteSpaceChildren()
+        if (treeTemplate.getAmountOfActualChildren() != treeToMatch.getAmountOfActualChildren()
                 && !iz.generic(treeTemplate))
             return false;
         for (Encapsulator.Iterator treeTemplateChild = treeTemplate.iterator(), treeToMatchChild = treeToMatch
                 .iterator(); treeTemplateChild.hasNext() && treeToMatchChild.hasNext();
              treeTemplateChild.next(), treeToMatchChild.next()) {
-            if (iz.optional(treeTemplateChild.value())) {
-                boolean res1 = treeMatch(treeTemplateChild.value(), treeToMatchChild.value());
-                boolean res2 = treeMatch(treeTemplateChild.peekNext(), treeToMatchChild.value());
-                res &= (res1 || res2);
-            }
+//            if (iz.optional(treeTemplateChild.value()) && !az.optional(treeTemplateChild.value()).isActive()) {
+//                treeTemplateChild.next();
+//            }
             res &= treeMatch(treeTemplateChild.value(), treeToMatchChild.value());
         }
         return res;
@@ -134,13 +148,13 @@ public class Matcher {
      * @return true iff the tree of the user matcher the root and holds through all the constraints.
      */
     public boolean match(PsiElement e) {
-        List<Optional> l = getIndices(root);
-        Map<Optional, Boolean> res = scaryRecur(root, Encapsulator.buildTreeFromPsi(e), 0, l, new HashMap<>());
+        List<Optional> l = getOptionals(root);
+        Map<Optional, Boolean> res = matchMaker(root, Encapsulator.buildTreeFromPsi(e), 0, l, new HashMap<>());
         if (res == null) return false;
         res.forEach(Optional::setActivate);
         Map<Integer, PsiElement> info = extractInfo(root, e);
 
-        return res != null && info.keySet().stream()
+        return info.keySet().stream()
                 .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> c.match(info.get(id))));
     }
 
@@ -166,6 +180,10 @@ public class Matcher {
      * @return a mapping between an ID to a PsiElement
      */
     public Map<Integer, PsiElement> extractInfo(PsiElement treeToMatch) {
+        List<Optional> l = getOptionals(root);
+        Map<Optional, Boolean> res = matchMaker(root, Encapsulator.buildTreeFromPsi(treeToMatch), 0, l, new HashMap<>());
+        assert res != null;
+        res.forEach(Optional::setActivate);
         return extractInfo(root, treeToMatch);
     }
 

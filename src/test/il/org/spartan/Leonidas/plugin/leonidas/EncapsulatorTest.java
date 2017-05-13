@@ -1,4 +1,4 @@
-package il.org.spartan.Leonidas.plugin;
+package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.PsiTypeHelper;

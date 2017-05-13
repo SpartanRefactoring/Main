@@ -85,7 +85,7 @@ public class Toolbox implements ApplicationComponent {
                     } catch (Exception ignored) { /**/ }
                     return null;
                 })
-                .filter(i -> i != null)
+                .filter(Objects::nonNull)
                 .map(i -> (GenericEncapsulator) i)
                 .collect(Collectors.toList()));
     }

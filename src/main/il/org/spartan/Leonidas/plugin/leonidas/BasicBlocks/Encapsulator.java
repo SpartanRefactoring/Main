@@ -58,8 +58,6 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         return new Encapsulator(e);
     }
 
-
-
     public List<Encapsulator> getChildren() {
         return children;
     }
@@ -87,12 +85,16 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     /**
      * @return the amount of children that are not white space Psi elements.
      */
-    public int getAmountOfNoneWhiteSpaceChildren() {
-        return children.stream().filter(child -> !iz.whiteSpace(child.getInner())).collect(Collectors.toList()).size();
+    public int getAmountOfActualChildren() {
+        return getActualChildren().size();
+    }
+
+    private List<Encapsulator> getActualChildren() {
+        return children.stream().filter(child -> !iz.whiteSpace(child.getInner()) && child.exists()).collect(Collectors.toList());
     }
 
     public String toString() {
-        return inner.toString();
+        return inner != null ? inner.toString() : "stub";
     }
 
     @NotNull
@@ -116,7 +118,6 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         children.forEach(action);
     }
 
-
     public <T> void putUserData(Key<T> key, T id) {
         this.inner.putUserData(key, id);
     }
@@ -131,7 +132,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
      * @param replacer the new Generalized element
      * @return the replacer
      */
-    public Encapsulator generalize(Encapsulator replacer) {
+    public Encapsulator generalizeWith(Encapsulator replacer) {
         parent.children.replaceAll(e -> e == Encapsulator.this ? replacer : e);
         replacer.parent = this.parent;
         return replacer;
@@ -141,35 +142,39 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         return false;
     }
 
+    public boolean exists() {
+        return true;
+    }
+
     /**
      * Iterator for iterating over the tree without considering white spaces.
      */
     public class Iterator implements java.util.Iterator<Encapsulator> {
         int location;
-        List<Encapsulator> noSpaceChildren;
+        List<Encapsulator> actualChildren;
 
         public Iterator() {
-            noSpaceChildren = children.stream().filter(child -> !iz.whiteSpace(child.getInner())).collect(Collectors.toList());
+            actualChildren = getActualChildren();
         }
 
         @Override
         public boolean hasNext() {
-            return location < noSpaceChildren.size();
+            return location < actualChildren.size();
         }
 
         @Override
         public Encapsulator next() {
-            Encapsulator e = noSpaceChildren.get(location);
+            Encapsulator e = actualChildren.get(location);
             ++location;
             return e;
         }
 
         public Encapsulator peekNext() {
-            return noSpaceChildren.get(location + 1);
+            return actualChildren.get(location + 1);
         }
 
         public Encapsulator value() {
-            return noSpaceChildren.get(location);
+            return actualChildren.get(location);
         }
     }
 }

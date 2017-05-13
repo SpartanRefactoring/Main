@@ -1,9 +1,7 @@
-package il.org.spartan.Leonidas.plugin.leonidas.GenericPsiTypes;
+package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Block;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 
 /**
  * @author Anna Belozovsky

@@ -228,7 +228,7 @@ public enum iz {
     }
 
     public static boolean generic(Encapsulator e) {
-        return e instanceof GenericEncapsulator;
+        return e instanceof GenericEncapsulator && e.isGeneric();
     }
 
     public static boolean whileStatement(PsiElement e) {
