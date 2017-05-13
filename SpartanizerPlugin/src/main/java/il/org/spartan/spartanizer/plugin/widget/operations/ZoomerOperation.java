@@ -24,13 +24,13 @@ public class ZoomerOperation extends WidgetOperation {
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext ¢) throws Throwable {
     switch (type) {
       case "Current file":
-        InflateHandler.applicator().manyPasses().selection(¢.currentCompilationUnit).go();
+        InflateHandler.applicator().manyPasses().selection(¢.currentCompilationUnit.setUseBinding()).go();
         break;
       case "Current project":
-        InflateHandler.applicator().manyPasses().selection(¢.allCompilationUnits).go();
+        InflateHandler.applicator().manyPasses().selection(¢.allCompilationUnits.setUseBinding()).go();
         break;
       case "Current selection":
-        InflateHandler.applicator().setPasses(¢.currentSelecetion.textSelection == null ? 1 : 20).selection(¢.currentSelecetion).go();
+        InflateHandler.applicator().setPasses(¢.currentSelecetion.textSelection == null ? 1 : 20).selection(¢.currentSelecetion.setUseBinding()).go();
         break;
     }
   }
