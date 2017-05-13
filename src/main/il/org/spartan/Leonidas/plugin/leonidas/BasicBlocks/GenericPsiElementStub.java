@@ -53,19 +53,19 @@ public class GenericPsiElementStub {
      * Method stub representing a method for leonidas tippers
      *
      * @param id the serial no to distinct between several statements in the same tipper
-     * @return arbitrary object, ignore it
+     * @return Method object that allows putting constraints on the method
      */
-    public static Object method(int id) {
-        return new Object();
+    public static Method method(int id) {
+        return new Method("");
     }
 
     /**
      * Method stub representing a method for leonidas tippers
      *
-     * @return arbitrary object, ignore it
+     * @return Method object that allows putting constraints on the method
      */
-    public static Object method() {
-        return new Object();
+    public static Method method() {
+        return new Method("");
     }
 
     /**

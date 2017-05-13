@@ -4,6 +4,7 @@ import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyBlock;
+import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.method;
 
 /**
  * @author Sharon
@@ -12,7 +13,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 public class FluentGetter implements LeonidasTipperDefinition {
     @Override
     public void constraints() {
-
+        method(0).startsWith("get");
     }
 
     @Override

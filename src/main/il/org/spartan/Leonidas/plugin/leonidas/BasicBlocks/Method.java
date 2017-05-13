@@ -44,4 +44,9 @@ public class Method extends GenericMethodCallBasedBlock {
     public GenericEncapsulator create(Encapsulator e) {
         return new Method(e);
     }
+
+    /* Constraints Methods */
+
+    public void startsWith(String _) {
+    }
 }
