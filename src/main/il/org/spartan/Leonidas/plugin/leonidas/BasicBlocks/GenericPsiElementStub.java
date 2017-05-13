@@ -125,7 +125,8 @@ public class GenericPsiElementStub {
         IDENTIFIER("identifier"),
         ARRAY_IDENTIFIER("arrayIdentifier"),
         ANY_BLOCK("anyBlock"),
-        BOOLEAN_LITERAL("booleanLiteral");
+        BOOLEAN_LITERAL("booleanLiteral"),
+        METHOD("method");
 
         private String stubName;
 
@@ -205,6 +206,12 @@ public class GenericPsiElementStub {
                         name.set(BOOLEAN_LITERAL);
                     }
                 }
+
+                @Override
+                public void visitMethod(PsiMethod method) {
+                    super.visitMethod(method);
+                    name.set(METHOD);
+                }
             });
             return name.get();
         }
@@ -246,6 +253,9 @@ public class GenericPsiElementStub {
                     break;
                 case BOOLEAN_LITERAL:
                     x = new BooleanLiteral(inner);
+                    break;
+                case METHOD:
+                    x = new Method(inner);
                     break;
                 default:
                     return null;
