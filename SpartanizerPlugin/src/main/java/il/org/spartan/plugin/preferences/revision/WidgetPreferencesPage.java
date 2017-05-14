@@ -40,7 +40,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   }
   public static void onConfigure(WidgetOperation ¢) {
     new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢.description(), ¢.configurationComponents(),
-        store()).open();
+        ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID(),store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
