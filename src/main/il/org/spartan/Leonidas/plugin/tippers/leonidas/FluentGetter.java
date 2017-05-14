@@ -13,31 +13,37 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 public class FluentGetter implements LeonidasTipperDefinition {
     @Override
     public void constraints() {
-        method(0).startsWith("get");
+        // method(0).startsWith("get"); TODO: fix
     }
 
     @Override
     @Leonidas(PsiMethod.class)
     public void matcher() {
-        new MatcherMethod() {
-            @Override
-            public void method0() {
-                anyBlock(1);
-            }
-        };
+        new Template(() -> {
+            new ReplacerMethod() {
+                @Override
+                public Object method0() {
+                    anyBlock(1);
+
+                    return this;
+                }
+            };
+        });
     }
 
     @Override
     @Leonidas(PsiMethod.class)
     public void replacer() {
-        new ReplacerMethod() {
-            @Override
-            public Object method0() {
-                anyBlock(1);
+        new Template(() -> {
+            new ReplacerMethod() {
+                @Override
+                public Object method0() {
+                    anyBlock(1);
 
-                return this;
-            }
-        };
+                    return this;
+                }
+            };
+        });
     }
 
     private abstract class MatcherMethod {
