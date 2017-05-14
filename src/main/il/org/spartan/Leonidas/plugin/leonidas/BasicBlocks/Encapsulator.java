@@ -5,16 +5,14 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
  * Encapsulating Psi elements so that non illegal transformation is done on the psi trees of Intellij.
+ *
  * @author michalcohen
  * @since 22-02-2017
  */
@@ -147,34 +145,76 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     /**
-     * Iterator for iterating over the tree without considering white spaces.
+     * <b>Linear Iterator</b> for iterating over the tree without considering white spaces.
      */
     public class Iterator implements java.util.Iterator<Encapsulator> {
-        int location;
-        List<Encapsulator> actualChildren;
+
+
+        Encapsulator parent;
+        Encapsulator current;
+        Stack<IterationContext> states;
+        private int location;
 
         public Iterator() {
-            actualChildren = getActualChildren();
+            children = getActualChildren();
+            states = new Stack<>();
         }
 
         @Override
         public boolean hasNext() {
-            return location < actualChildren.size();
+            //TODO: @orenafek implement
+            return true;
         }
 
         @Override
         public Encapsulator next() {
-            Encapsulator e = actualChildren.get(location);
-            ++location;
-            return e;
+            return linearNext();
+        }
+
+        private Encapsulator linearNext() {
+            assert hasNext();
+            IterationContext context = states.peek();
+            if (context.hasMoreChildren()) {
+                current = context.nextChild();
+            } else {
+                states.pop();
+                current = parent;
+                parent = parent.getParent();
+
+            }
+
+            return null;
+        }
+
+
+        private Encapsulator goLeft() {
+            return null;
         }
 
         public Encapsulator peekNext() {
-            return actualChildren.get(location + 1);
+            return children.get(location + 1);
         }
 
         public Encapsulator value() {
-            return actualChildren.get(location);
+            return children.get(location);
+        }
+
+        private class IterationContext {
+            int location;
+            List<Encapsulator> children;
+
+            public IterationContext(List<Encapsulator> children, int location) {
+                this.location = location;
+                this.children = children;
+            }
+
+            public Encapsulator nextChild() {
+                return children.get(++location);
+            }
+
+            private boolean hasMoreChildren() {
+                return location < children.size();
+            }
         }
     }
 }
