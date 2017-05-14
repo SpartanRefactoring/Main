@@ -439,4 +439,7 @@ public enum make {
   public static SimpleName newCent(final ASTNode ¢) {
     return from(¢).identifier(notation.cent);
   }
+  public static SimpleName newLowerCase(SimpleName old) {
+    return from(old).identifier(old.getIdentifier().toLowerCase());
+  }
 }
