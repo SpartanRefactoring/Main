@@ -43,6 +43,7 @@ public class InflaterProvider extends OperationsProvider {
             new ToStringExpander(), //
             new TernaryPushupStrings(), //
             new MultiplicationToCast(), //
+            new BooleanExpressionBloater(), //
             null) //
         .add(PrefixExpression.class, //
             new PrefixToInfix(), //
