@@ -152,6 +152,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     public class Iterator implements java.util.Iterator<Encapsulator> {
         int location;
         List<Encapsulator> actualChildren;
+        int occurrences = 0;
 
         public Iterator() {
             actualChildren = getActualChildren();
@@ -174,6 +175,11 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         }
 
         public Encapsulator value() {
+            return actualChildren.get(location);
+        }
+
+        public Encapsulator setNumberOfOccurrences(int i) {
+            occurrences = i;
             return actualChildren.get(location);
         }
     }
