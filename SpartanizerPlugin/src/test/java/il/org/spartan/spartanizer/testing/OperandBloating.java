@@ -11,7 +11,6 @@ import org.eclipse.jface.text.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -27,9 +26,10 @@ public class OperandBloating extends TestOperand {
 
   public OperandBloating(final String inner) {
     super(inner);
+    traversal.configuration = InflaterProvider.freshCopyOfAllExpanders();
   }
   public OperandBloating(final ASTNode inner, final String classText) {
-    super(classText);
+    this(classText);
     ast = inner;
   }
   public OperandBloating needRenaming(final boolean ¢) {
@@ -55,38 +55,8 @@ public class OperandBloating extends TestOperand {
       return note.bug(¢);
     }
   }
-  @Override public OperandBloating gives(final String $) {
-    assert $ != null;
-    final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    final String wrap = w.on(get());
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
-    final ASTRewrite r = ASTRewrite.create(u.getAST());
-    SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
-    try {
-      final IDocument doc = new Document(wrap);
-      r.rewriteAST(doc, null).apply(doc);
-      final String $1, peeled1;
-      if (!needRenaming) {
-        $1 = makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($)) + "";
-        peeled1 = w.off(makeAST.COMPILATION_UNIT.from(doc.get()) + "");
-      } else {
-        $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
-        peeled1 = w.off(rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(doc.get())) + "");
-      }
-      if (peeled1.equals(get()))
-        azzert.that("No Bloating of " + get(), peeled1, is(not(get())));
-      if (tide.clean(peeled1).equals(tide.clean(get())))
-        azzert.that("Bloatong of " + get() + "is just reformatting", tide.clean(get()), is(not(tide.clean(peeled1))));
-      if ($1.equals(peeled1) || Trivia.essence(peeled1).equals(Trivia.essence($1)))
-        return new OperandBloating($1);
-      copyPasteReformat("  .gives(\"%s\") //\nCompare with\n .gives(\"%s\") //\n", Trivia.escapeQuotes(Trivia.essence(peeled1)),
-          Trivia.escapeQuotes(Trivia.essence($1)));
-      azzert.that(Trivia.essence(peeled1), is(Trivia.essence($1)));
-      return new OperandBloating($1);
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      note.bug(this, ¢);
-    }
-    return null;
+  @Override public TestOperand gives(String $) {
+    return new OperandBloating(super.gives($).get());
   }
   public OperandBloating givesWithBinding(final String $) {
     assert $ != null;
@@ -170,29 +140,7 @@ public class OperandBloating extends TestOperand {
     $.setResolveBindings(true);
     return az.compilationUnit($.createAST(null));
   }
-  private void checkSame() {
-    if (get().isEmpty())
-      return;
-    final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
-    final String wrap = w.on(get());
-    final CompilationUnit u = (CompilationUnit) makeAST.COMPILATION_UNIT.from(wrap);
-    final ASTRewrite r = ASTRewrite.create(u.getAST());
-    SingleFlater.in(u).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
-    try {
-      final IDocument doc = new Document(wrap);
-      r.rewriteAST(doc, null).apply(doc);
-      final String unpeeled = doc.get(), peeled = w.off(unpeeled);
-      if (wrap.equals(peeled) || Trivia.essence(get()).equals(Trivia.essence(peeled)))
-        return;
-      copyPasteReformat("\n .gives(\"%s\") //\nCompare with\n  .gives(\"%s\") //\n", //
-          Trivia.escapeQuotes(Trivia.essence(peeled)), //
-          Trivia.escapeQuotes(Trivia.essence(get())));
-      azzert.that(Trivia.essence(peeled), is(Trivia.essence(get())));
-    } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
-      note.bug(this, ¢);
-    }
-  }
-  private void checkSameWithBinding() {
+  public void staysWithBinding() {
     final String wrap = get();
     final CompilationUnit u = az.compilationUnit(ast);
     final ASTRewrite r = ASTRewrite.create(u.getAST());
@@ -208,11 +156,5 @@ public class OperandBloating extends TestOperand {
     } catch (MalformedTreeException | IllegalArgumentException | BadLocationException ¢) {
       note.bug(this, ¢);
     }
-  }
-  @Override public void stays() {
-    checkSame();
-  }
-  public void staysWithBinding() {
-    checkSameWithBinding();
   }
 }

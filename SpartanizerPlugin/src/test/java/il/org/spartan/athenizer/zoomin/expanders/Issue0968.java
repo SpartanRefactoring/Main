@@ -17,15 +17,7 @@ public class Issue0968 {
             + "int b = 4, c = 5;")
         .gives("int a;" //
             + "a = 3;" //
-            + "int b = 4, c = 5;")
-        .gives("int a;" //
-            + "a = 3;" //
-            + "int b = 4;" //
-            + "int c = 5;")
-        .gives("int a;" //
-            + "a = 3;" //
-            + "int b;" //
-            + "b = 4;" //
+            + "int b = 4;"
             + "int c = 5;")
         .gives("int a;" //
             + "a = 3;" //
