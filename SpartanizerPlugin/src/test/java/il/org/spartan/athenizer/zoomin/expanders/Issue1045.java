@@ -15,13 +15,10 @@ public class Issue1045 {
    * generated automatically by {@link JUnitTestMethodFacotry}) */
   @Test public void ifa1b2cd3Return1() {
     bloatingOf("if (a > 1 || b > 2 || c + d > 3) { return 1; }") //
-        .gives("boolean b7=a>1||b>2;boolean b8=c+d>3;if(b7||b8){return 1;}") //
-        .gives("boolean b7;b7=a>1||b>2;boolean b8=c+d>3;if(b7||b8){return 1;}") //
-        .gives("boolean b7;boolean b5=a>1;boolean b6=b>2;b7=b5||b6;boolean b8=c+d>3;if(b7||b8){return 1;}") //
-        .gives("boolean b7;boolean b5;b5=a>1;boolean b6=b>2;b7=b5||b6;boolean b8=c+d>3;if(b7||b8){return 1;}") //
-        .gives("boolean b7;boolean b5;b5=a>1;boolean b6;b6=b>2;b7=b5||b6;boolean b8=c+d>3;if(b7||b8){return 1;}") //
-        .gives("boolean b7;boolean b5;b5=a>1;boolean b6;b6=b>2;b7=b5||b6;boolean b8;b8=c+d>3;if(b7||b8){return 1;}") //
-        .gives("boolean b7;boolean b5;b5=a>1;boolean b6;b6=b>2;b7=b5||b6;boolean b8;b8=(c+d)>3;if(b7||b8){return 1;}") //
+        .gives("boolean b3=a>1||b>2;boolean b4=c+d>3;if(b3||b4){return 1;}") //
+        .gives("boolean b3;b3=a>1||b>2;boolean b4;b4=c+d>3;if(b3||b4){return 1;}") //
+        .gives("boolean b3;boolean b5=a>1;boolean b6=b>2;b3=b5||b6;boolean b4;b4=(c+d)>3;if(b3||b4){return 1;}") //
+        .gives("boolean b3;boolean b5;b5=a>1;boolean b6;b6=b>2;b3=b5||b6;boolean b4;b4=(c+d)>3;if(b3||b4){return 1;}") //
         .stays() //
     ;
   }
@@ -37,12 +34,10 @@ public class Issue1045 {
    * generated automatically by {@link JUnitTestMethodFacotry}) */
   @Test public void whilea1a2b3() {
     bloatingOf("while (a > 1 && a < 2 || b > 3) { }") //
-        .gives("boolean b7=a>1&&a<2;boolean b8=b>3;while(b7||b8){}") //
-        .gives("boolean b7;b7=a>1&&a<2;boolean b8=b>3;while(b7||b8){}") //
-        .gives("boolean b7;boolean b5=a>1;boolean b6=a<2;b7=b5&&b6;boolean b8=b>3;while(b7||b8){}") //
-        .gives("boolean b7;boolean b5;b5=a>1;boolean b6=a<2;b7=b5&&b6;boolean b8=b>3;while(b7||b8){}") //
-        .gives("boolean b7;boolean b5;b5=a>1;boolean b6;b6=a<2;b7=b5&&b6;boolean b8=b>3;while(b7||b8){}") //
-        .gives("boolean b7;boolean b5;b5=a>1;boolean b6;b6=a<2;b7=b5&&b6;boolean b8;b8=b>3;while(b7||b8){}") //
+        .gives("boolean b3=a>1&&a<2;boolean b4=b>3;while(b3||b4){}") //
+        .gives("boolean b3;b3=a>1&&a<2;boolean b4;b4=b>3;while(b3||b4){}") //
+        .gives("boolean b3;boolean b5=a>1;boolean b6=a<2;b3=b5&&b6;boolean b4;b4=b>3;while(b3||b4){}") //
+        .gives("boolean b3;boolean b5;b5=a>1;boolean b6;b6=a<2;b3=b5&&b6;boolean b4;b4=b>3;while(b3||b4){}") //
         .stays() //
     ;
   }

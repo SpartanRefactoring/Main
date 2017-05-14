@@ -16,34 +16,41 @@ public class Issue0980 {
   }
   @Test public void test0() {
     bloatingOf("return x() && y();")//
-        .gives("boolean a = x(); boolean b = y(); return a && b;");
+        .gives("boolean b3=x();boolean b4=y();return b3&&b4;") //
+    ;
   }
   @Test public void test1() {
     bloatingOf("return true && y();")//
-        .gives("boolean a = true; boolean b = y(); return a&&b;");
+        .gives("boolean b3=true;boolean b4=y();return b3&&b4;") //
+    ;
   }
   @Test public void test2() {
     bloatingOf("boolean t = x && y();")//
         .gives("boolean t; t = x && y();")//
-        .gives("boolean t; boolean a = x; boolean b = y(); t = a&&b;");
+        .gives("boolean t;boolean b3=x;boolean b4=y();t=b3&&b4;") //
+        ;
   }
   @Test public void test3() {
     bloatingOf("return x || y();")//
-        .gives("boolean a = x; boolean b = y(); return a || b;");
+    .gives("boolean b3=x;boolean b4=y();return b3||b4;") //
+    ;
   }
   @Test public void test4() {
     bloatingOf("return true || y();")//
-        .gives("boolean a = true; boolean b = y(); return a || b;");
+        .gives("boolean b3=true;boolean b4=y();return b3||b4;") //
+    ;
   }
   @Test public void test5() {
     bloatingOf("boolean t =  x || y();")//
         .gives("boolean t; t =  x || y();")//
-        .gives("boolean t; boolean a = x; boolean b = y(); t = a || b;");
+        .gives("boolean t;boolean b3=x;boolean b4=y();t=b3||b4;") //
+        ;
   }
   @Test public void test6() {
     bloatingOf("return x && y() || z;")//
-        .gives("boolean a = x && y(); boolean b = z; return a || b;")//
-        .gives("boolean a; a = x && y(); boolean b = z; return a || b;")
-        .gives("boolean a; boolean a2 = x;boolean b2 = y(); a = a2 && b2; boolean b = z; return a || b;");
+    .gives("boolean b3=x&&y();boolean b4=z;return b3||b4;") //
+    .gives("boolean b3;b3=x&&y();boolean b4;b4=z;return b3||b4;") //
+    .gives("boolean b3;boolean b5=x;boolean b6=y();b3=b5&&b6;boolean b4;b4=z;return b3||b4;") //
+    ;
   }
 }
