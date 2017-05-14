@@ -40,12 +40,12 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
       if ("String".equals(comp[1]))
         comp[2] = createString($, comp[2]);
       if ("Boolean".equals(comp[1]))
-        comp[2] = createBoolean($, comp[2]).toString();
+        comp[2] = createBoolean($, comp[2]) + "";
       else{ //if("List".equals(comp[1])) 
         Button[] res= createList($,Arrays.copyOfRange(comp, 2, comp.length-1));
         int count = 2;
-        for(Button b : res) {
-          if(b.getSelection())
+        for(Button ¢ : res) {
+          if(¢.getSelection())
             comp[count] += "-V";
           ++count;             
         }

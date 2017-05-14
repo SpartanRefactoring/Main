@@ -531,6 +531,6 @@ public enum extract {
     return $;
   }
   public static List<String> identifiers(Name n) {
-    return names(n).stream().map(x -> x.getIdentifier()).collect(toList());
+    return names(n).stream().map(λ -> λ.getIdentifier()).collect(toList());
   }
 }
