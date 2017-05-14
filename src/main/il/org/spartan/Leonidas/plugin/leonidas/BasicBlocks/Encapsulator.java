@@ -145,76 +145,67 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     /**
-     * <b>Linear Iterator</b> for iterating over the tree without considering white spaces.
+     * <b>Linear Eager Iterator</b> for iterating over the tree without considering white spaces.
+     * This iterator can hold its advance for n {@link #next() next} calls by calling
+     * {@link #setNumberOfOccurrences(int) setNoOfOccurrences(int) }.
+     *
+     * @author Oren Afek
+     * @since 14/05/17
      */
-    public class Iterator implements java.util.Iterator<Encapsulator> {
+    public class Iterator implements java.util.Iterator<Encapsulator>, Cloneable {
 
-
-        Encapsulator parent;
         Encapsulator current;
-        Stack<IterationContext> states;
-        private int location;
+        Stack<Encapsulator> nodes;
+        private int skipCounter;
+        private int skipOverall;
+        private boolean shouldSkip;
 
-        public Iterator() {
-            children = getActualChildren();
-            states = new Stack<>();
+        private Iterator() {
+            nodes = new Stack<>();
+            initStack(Encapsulator.this);
         }
 
         @Override
         public boolean hasNext() {
-            //TODO: @orenafek implement
-            return true;
+            return !nodes.empty();
         }
 
         @Override
         public Encapsulator next() {
-            return linearNext();
+            if (shouldSkip && skipCounter < skipOverall) {
+                skipCounter++;
+                return current;
+            }
+            shouldSkip = false;
+            current = nodes.pop();
+
+            return current;
         }
 
-        private Encapsulator linearNext() {
-            assert hasNext();
-            IterationContext context = states.peek();
-            if (context.hasMoreChildren()) {
-                current = context.nextChild();
-            } else {
-                states.pop();
-                current = parent;
-                parent = parent.getParent();
+        @Override
+        public Object clone() {
 
+            try {
+                Iterator cloned = (Iterator) super.clone();
+                cloned.nodes = (Stack<Encapsulator>) this.nodes.clone();
+                return cloned;
+            } catch (CloneNotSupportedException e) {
+                return this;
             }
 
-            return null;
+        }
+
+        private void initStack(Encapsulator current) {
+            nodes.push(current);
+            current.getActualChildren().forEach(this::initStack);
         }
 
 
-        private Encapsulator goLeft() {
-            return null;
+        public Iterator setNumberOfOccurrences(int i) {
+            shouldSkip = true;
+            skipOverall = i;
+            return this;
         }
 
-        public Encapsulator peekNext() {
-            return children.get(location + 1);
-        }
-
-        public Encapsulator value() {
-            return children.get(location);
-        }
-
-        private class IterationContext {
-            int location;
-            List<Encapsulator> children;
-
-            public IterationContext(List<Encapsulator> children, int location) {
-                this.location = location;
-                this.children = children;
-            }
-
-            public Encapsulator nextChild() {
-                return children.get(++location);
-            }
-
-            private boolean hasMoreChildren() {
-                return location < children.size();
-            }
-        }
     }
 }
