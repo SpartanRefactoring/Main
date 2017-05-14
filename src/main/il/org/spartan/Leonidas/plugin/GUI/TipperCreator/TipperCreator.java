@@ -1,5 +1,6 @@
 package il.org.spartan.Leonidas.plugin.GUI.TipperCreator;
 
+
 import com.intellij.psi.PsiElement;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -9,11 +10,9 @@ import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
- * @author michalcohen
+ * @author michalcohen, Anna Belozovsky
  * @since 24-02-17
  */
 class TipperCreator extends JFrame {
@@ -46,39 +45,9 @@ class TipperCreator extends JFrame {
         pack();
         setVisible(true);
         Generalize.addActionListener(e -> generalizeClicked(element));
-        selectGenerics.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (fromCode.getSelectedText() == null || StubName.valueOfStringExpression(fromCode.getSelectedText()) == null)
-                    return;
-                startOfMatchedFrom = fromCode.getSelectionStart();
-                endOfMatchedFrom = fromCode.getSelectionEnd();
-                toCode.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            }
-        });
-        matchGeneric.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                if (toCode.getCursor().getType() != Cursor.HAND_CURSOR)
-                    return;
-                toCode.setCursor(new Cursor(Cursor.TEXT_CURSOR));
-                if (StubName.valueOfStringExpression(toCode.getSelectedText()) == null)
-                    return;
-                StubName stub1 = StubName
-                        .valueOfStringExpression(fromCode.getText().substring(startOfMatchedFrom, endOfMatchedFrom)),
-                        stub2 = StubName.valueOfStringExpression(toCode.getSelectedText());
-                if (!stub1.equals(stub2))
-                    return;
-                String toSelected = toCode.getSelectedText(),
-                        replaceString = toSelected.substring(0, toSelected.length() - 1) + genericElementIndex + ")";
-                toCode.replaceSelection(replaceString);
-                fromCode.replaceRange(replaceString, startOfMatchedFrom, endOfMatchedFrom);
-                ++genericElementIndex;
-            }
-        });
-        createTipperButton.addActionListener(e -> createLeonidasTipper());
+        selectGenerics.addActionListener(e -> selectClicked());
+        matchGeneric.addActionListener(e -> matchClicked());
+        createTipperButton.addActionListener(e -> createLeonidasTipper(element));
     }
 
     private void generalizeClicked(PsiElement element) {
@@ -94,7 +63,33 @@ class TipperCreator extends JFrame {
         focused.replaceSelection(givenType.stubMethodCallExpressionStatement());
     }
 
-    public void createLeonidasTipper() {
+    private void selectClicked() {
+        if (fromCode.getSelectedText() == null || StubName.valueOfStringExpression(fromCode.getSelectedText()) == null)
+            return;
+        startOfMatchedFrom = fromCode.getSelectionStart();
+        endOfMatchedFrom = fromCode.getSelectionEnd();
+        toCode.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    private void matchClicked() {
+        if (toCode.getCursor().getType() != Cursor.HAND_CURSOR)
+            return;
+        toCode.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+        if (StubName.valueOfStringExpression(toCode.getSelectedText()) == null)
+            return;
+        StubName stub1 = StubName
+                .valueOfStringExpression(fromCode.getText().substring(startOfMatchedFrom, endOfMatchedFrom)),
+                stub2 = StubName.valueOfStringExpression(toCode.getSelectedText());
+        if (!stub1.equals(stub2))
+            return;
+        String toSelected = toCode.getSelectedText(),
+                replaceString = toSelected.substring(0, toSelected.length() - 1) + genericElementIndex + ")";
+        toCode.replaceSelection(replaceString);
+        fromCode.replaceRange(replaceString, startOfMatchedFrom, endOfMatchedFrom);
+        ++genericElementIndex;
+    }
+
+    private void createLeonidasTipper(PsiElement element) {
         if (fromCode.getText().matches("\\s*")) {
             JOptionPane.showMessageDialog(this, "Origin code cannot be empty.");
             return;
@@ -144,6 +139,22 @@ class TipperCreator extends JFrame {
                 "        });\n" +
                 "    }\n" +
                 "}";
+
+//        URL is = getClass().getClassLoader().getResource("il/org/spartan/Leonidas/plugin/tippers/leonidas/nam");
+//        File file = new File(is.getPath());
+//        FileType type = FileTypeRegistry.getInstance().getFileTypeByFileName(file.getName());
+//        file.setReadable(true, false);
+//        String s = IOUtils.toString(new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/spartanizer/SpartanizerUtils.java"))));
+//        PsiFile pf = PsiFileFactory.getInstance(e.getProject()).createFileFromText("SpartanizerUtils.java", type, s);
+//        d.add(pf);
+//        Arrays.stream(d.getFiles()).filter(f -> "SpartanizerUtils.java".equals(f.getName())).findFirst().get().getVirtualFile().setWritable(false);
+//        Toolbox.getInstance().excludeFile(pf);
+//        return pf;
+
+
+//        URL is = getClass().getClassLoader().getResource("il/org/spartan/Leonidas/plugin/tippers/leonidas");
+//        PsiDirectory psiDirectory=
+
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
