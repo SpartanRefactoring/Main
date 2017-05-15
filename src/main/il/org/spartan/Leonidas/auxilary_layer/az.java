@@ -1,9 +1,7 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.*;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Optional;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
 
 /**
  * Utils class that helps converting Psi element to a specific Psi type
@@ -111,5 +109,13 @@ public enum az {
 
     public static Optional optional(Encapsulator e) {
         return e != null ? (Optional) e : null;
+    }
+
+    public static AnyNumberOf anyNumberOf(Encapsulator e) {
+        return e != null ? (AnyNumberOf) e : null;
+    }
+
+    public static Quantifier quantifier(Encapsulator e) {
+        return e != null ? (Quantifier) e : null;
     }
 }

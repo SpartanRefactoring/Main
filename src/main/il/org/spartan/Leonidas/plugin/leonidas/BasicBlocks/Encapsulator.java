@@ -149,7 +149,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     /**
      * Iterator for iterating over the tree without considering white spaces.
      */
-    public class Iterator implements java.util.Iterator<Encapsulator> {
+    public class Iterator implements java.util.Iterator<Encapsulator>, Cloneable {
         int location;
         List<Encapsulator> actualChildren;
         int occurrences = 0;
@@ -181,6 +181,11 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         public Encapsulator setNumberOfOccurrences(int i) {
             occurrences = i;
             return actualChildren.get(location);
+        }
+
+        @Override
+        public Encapsulator.Iterator clone() {
+            return this;
         }
     }
 }

@@ -433,6 +433,14 @@ public enum iz {
         return e instanceof Method;
     }
 
+    public static boolean anyNumberOf(Encapsulator e) {
+        return e instanceof AnyNumberOf;
+    }
+
+    public static boolean quantifier(Encapsulator e) {
+        return e instanceof Quantifier;
+    }
+
     public static boolean optional(Encapsulator e) {
         return e instanceof Optional;
     }
