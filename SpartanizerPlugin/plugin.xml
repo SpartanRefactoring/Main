@@ -507,7 +507,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
       <command commandId="il.org.spartan.SpartanizeAll" style="push" mnemonic="A"/>
     </menu>
     <menu label="Athenize..." mnemonic="A">
-	   <command commandId="il.org.spartan.AthensInflate" style="push" mnemonic="A"/>
+	  <command commandId="il.org.spartan.AthensInflate" style="push" mnemonic="A"/>
       <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="S"/>
       <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
       <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
