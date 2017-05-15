@@ -18,13 +18,11 @@ public class Issue1123 {
         .gives("while ( i.length() <s.length())i = \" \" + i;")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("c(N i){N p=i;int a=5;f(++a);for(;p<10;)p=p.e();return false;}")//
         .gives("c(N i){N p=i;int a=5;f(++a);while(p<10)p=p.e();return false;}")//
         .stays();
   }
-
   /** Introduced by Yossi on Sat-Mar-25-00:03:25-IDT-2017 (code automatically in
    * class 'TestCaseFacotry') */
   @Test public void test_aaAbIntc0d1WhilecdIfc0c7cReturnc() {

@@ -17,15 +17,12 @@ public class Issue0410 {
   @Test public void dealWithBothKindsOfComment() {
     similar("if (b) {\n", "if (b) {;} { throw new Exception(); }");
   }
-
   @Test public void findVariable() {
     azzert.that(find("i"), is(EXPRESSION_LOOK_ALIKE));
   }
-
   @Test public void removeCommentsTest() {
     similar(Trivia.removeComments("if (b) {\n"), "if (b) {} else { throw new Exception(); }");
   }
-
   private void similar(final String s1, final String s2) {
     azzert.that(Trivia.essence(s2), is(Trivia.essence(s1)));
   }

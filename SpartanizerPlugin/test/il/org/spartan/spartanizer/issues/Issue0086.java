@@ -27,93 +27,75 @@ public final class Issue0086 extends Issue____ {
     tipper = makeTipper();
     assert tipper != null;
   }
-
   @Test public void a02_CreateContext() {
     context = into.s(INPUT);
     assert context != null;
   }
-
   @Test public void a03_FindFocus() {
     a02_CreateContext();
     focus = findFirst.instanceOf(ThrowStatement.class).in(context);
     assert focus != null;
   }
-
   @Test public void a04_init() {
     a01_createTipper();
     a02_CreateContext();
     a03_FindFocus();
   }
-
   @Test public void b01init() {
     a04_init();
   }
-
   @Test public void b02findFirstThrow() {
     a04_init();
     azzert.that(findFirst.instanceOf(ThrowStatement.class).in(context), instanceOf(ThrowStatement.class));
   }
-
   @Test public void b03canSuggest() {
     a04_init();
     assert tipper.check(focus);
   }
-
   @Test public void b03demands() {
     a04_init();
     assert tipper.check(focus);
   }
-
-  @Test public void b04tipNotNull() {
+  @Test public void b04tipNonNull() {
     a04_init();
     assert tipper.tip(focus) != null;
   }
-
   @Test public void b05ConfigCanFindTipper() {
     a04_init();
     assert Configurations.all().firstTipper(focus) != null;
   }
-
   @Test public void b06ConfigCanFindFindCorrectTipper() {
     a04_init();
     azzert.that(Configurations.all().firstTipper(focus), instanceOf(tipper.getClass()));
   }
-
   @Test public void b07callSuggest() {
     a04_init();
     tipper.tip(focus);
   }
-
-  @Test public void b09descriptionNotNull() {
+  @Test public void b09descriptionNonNull() {
     a04_init();
     assert tipper.tip(focus).description != null;
   }
-
-  @Test public void b0suggestNotNull() {
+  @Test public void b0suggestNonNull() {
     a04_init();
     assert tipper.tip(focus) != null;
   }
-
   @Test public void b10descriptionContains() {
     a04_init();
     azzert.that(tipper.tip(focus).description, containsString(focus + ""));
   }
-
   @Test public void b12rangeNotEmpty() {
     a04_init();
     assert !tipper.tip(focus).highlight.isEmpty();
   }
-
   @Test public void b13applyTipper() {
     a04_init();
     tipper.tip(focus);
   }
-
   @Test public void b14applyTipper() {
     a04_init();
     Configurations.all().firstTipper(focus);
   }
-
   @Test public void doubleVanillaThrow() {
     a04_init();
     trimmingOf("int f() { if (false)    i++;  else {    g(i);    throw new RuntimeException();  }  f(); a = 3; return 2;}")//
@@ -122,11 +104,9 @@ public final class Issue0086 extends Issue____ {
         .gives("int f(){g(i);throw new RuntimeException();}")//
         .stays();
   }
-
   private SequencerNotLastInBlock<ThrowStatement> makeTipper() {
     return new SequencerNotLastInBlock<>();
   }
-
   @Test public void vanilla() {
     trimmingOf("{   throw Something();  f(); a = 3; return 2;}")//
         .gives("throw Something();f(); a=3; return 2;").gives("throw Something();a=3; return 2;")//
@@ -134,42 +114,36 @@ public final class Issue0086 extends Issue____ {
         .gives("throw Something();")//
         .stays();
   }
-
   @Test public void vanilla01() {
     trimmingOf("throw Something();a=3; return 2;")//
         .gives("throw Something(); return 2;")//
         .gives("throw Something();")//
         .stays();
   }
-
   @Test public void vanilla02() {
     trimmingOf("return Something();a=3; return 2;")//
         .gives("return Something(); return 2;")//
         .gives("return Something();")//
         .stays();
   }
-
   @Test public void vanilla03() {
     trimmingOf("continue a;a=3; return 2;")//
         .gives("continue a; return 2;")//
         .gives("continue a;")//
         .stays();
   }
-
   @Test public void vanilla04() {
     trimmingOf("break a;a=3; return 2;")//
         .gives("break a; return 2;")//
         .gives("break a;")//
         .stays();
   }
-
   @Test public void vanilla05() {
     trimmingOf("continue ;a=3; return 2;")//
         .gives("continue ; return 2;")//
         .gives("continue ;")//
         .stays();
   }
-
   @Test public void vanilla06() {
     trimmingOf("break;a=3; return 2;")//
         .gives("break; return 2;")//

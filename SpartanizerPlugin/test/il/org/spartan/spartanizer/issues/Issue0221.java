@@ -15,17 +15,14 @@ public final class Issue0221 {
     trimmingOf("class D { int a; }")//
         .stays();
   }
-
   @Test public void A$02() {
     trimmingOf("class D { int a = 3; }")//
         .stays();
   }
-
   @Test public void A$03() {
     trimmingOf("class D{int a=0;}")//
         .gives("class D{int a;}");
   }
-
   @Test public void A$04() {
     trimmingOf("class D{Integer a=0;}")//
         .stays();

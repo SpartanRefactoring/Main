@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static fluent.ly.is.*;
 
 import static org.eclipse.jdt.core.dom.PrefixExpression.Operator.*;
@@ -29,7 +30,6 @@ public final class PrefixIncrementDecrementReturn extends GoToNextStatement<Pref
   @Override public String description(final PrefixExpression ¢) {
     return "Consolidate " + ¢ + " with subsequent 'return' of " + operand(¢);
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final PrefixExpression x, final Statement nextStatement, final TextEditGroup g) {
     if (!in(x.getOperator(), INCREMENT, DECREMENT))
       return null;

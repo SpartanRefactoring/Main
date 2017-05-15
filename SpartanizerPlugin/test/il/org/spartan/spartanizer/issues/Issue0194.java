@@ -43,7 +43,6 @@ public final class Issue0194 {
                 + "return g();" //
                 + "return h();");
   }
-
   // TODO Ori convert to java doc --yg
   // Empty "else".
   // Similar to test01().
@@ -74,7 +73,6 @@ public final class Issue0194 {
                     + "x=13.5;"//
                     + "return b2 ? g() : h();");
   }
-
   // TODO Ori convert to java doc --yg
   // Empty Block.
   // Similar to test01() and test02().
@@ -89,7 +87,6 @@ public final class Issue0194 {
                 + "x=13.5;"//
                 + "return h();");
   }
-
   // TODO Ori convert to java doc --yg
   // Don'tipper do anything if there is more than return sideEffects after the
   // ifstatement.
@@ -106,7 +103,6 @@ public final class Issue0194 {
     )//
         .stays();
   }
-
   @Test public void test05() {
     trimmingOf("if(b1){ \n" //
         + "if(b2){ \n" //
@@ -132,7 +128,6 @@ public final class Issue0194 {
                 + "return g(); \n" //
     );
   }
-
   @Test public void test06() {
     trimmingOf("if(x> y){ \n" //
         + "x*=y; \n" //
@@ -149,7 +144,6 @@ public final class Issue0194 {
                 + "return z; \n" //
     );
   }
-
   @Test public void test07() {
     trimmingOf("if(x == y){ \n" //
         + "x*=y; \n" //
@@ -166,7 +160,6 @@ public final class Issue0194 {
                 + "return z; \n" //
     );
   }
-
   @Test public void test08() {
     trimmingOf("if(x != null){ \n" //
         + "x*=y; \n" //
@@ -183,7 +176,6 @@ public final class Issue0194 {
                 + "return z; \n" //
     );
   }
-
   @Test public void test09() {
     trimmingOf("if( x != null){"//
         + "x = f();"//
@@ -195,7 +187,6 @@ public final class Issue0194 {
                 + "x = f();"//
                 + "return g();");
   }
-
   @Test public void test10() {
     trimmingOf("if(b1){ \n" //
         + "x=8;\n"//
@@ -225,7 +216,6 @@ public final class Issue0194 {
                 + "}\n"//
                 + "}while(5==3);"); //
   }
-
   @Test public void test11() {
     trimmingOf("if(b1){ \n" //
         + "x=5; \n" //
@@ -239,7 +229,6 @@ public final class Issue0194 {
                 + "x=5; \n" //
                 + "return x; \n");
   }
-
   @Test public void test12() {
     trimmingOf("if(onoes() && omigod()){" //
         + "if(panic())" //
@@ -259,7 +248,6 @@ public final class Issue0194 {
             + "}" //
     );
   }
-
   @Test public void test13() {
     trimmingOf("if(b1){"//
         + "if(b2){"//
@@ -294,7 +282,6 @@ public final class Issue0194 {
                 + "}"//
                 + "while(!b3);");
   }
-
   @Test public void test14() {
     trimmingOf("if(b1){" //
         + "x=3;" //
@@ -318,7 +305,6 @@ public final class Issue0194 {
                 + "return g();" //
                 + "}");
   }
-
   @Test public void test15() {
     trimmingOf("/**/" //
         + "if (a != null) {\n" //

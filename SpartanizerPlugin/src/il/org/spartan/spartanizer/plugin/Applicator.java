@@ -35,17 +35,14 @@ public abstract class Applicator {
   public void stop() {
     shouldRun = false;
   }
-
   /** @return whether this applicator should run. */
   protected boolean shouldRun() {
     return shouldRun;
   }
-
   /** @return run context for this applicator. */
   protected Consumer<Runnable> runContext() {
     return runContext;
   }
-
   /** Determines run context for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
@@ -53,25 +50,21 @@ public abstract class Applicator {
     runContext = ¢;
     return this;
   }
-
   /** @return run misc for this applicator */
   protected Function<WrappedCompilationUnit, Integer> runAction() {
     return runAction;
   }
-
   /** Determines run misc for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
-  public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> ¢) {
-    runAction = ¢;
+  public Applicator setRunAction(final Function<WrappedCompilationUnit, Integer> x) {
+    runAction = x;
     return this;
   }
-
   /** @return number of iterations for this applicator */
   protected int passes() {
     return passes;
   }
-
   /** Determines number of iterations for this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
@@ -79,12 +72,10 @@ public abstract class Applicator {
     passes = ¢;
     return this;
   }
-
   /** @return selection of the applicator, ready to be configured. */
   protected Listener listener() {
     return listener;
   }
-
   /** Initialize the listener of this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
@@ -92,12 +83,10 @@ public abstract class Applicator {
     listener = ¢;
     return this;
   }
-
   /** @return selection of the applicator, ready to be configured. */
   public AbstractSelection<?> selection() {
     return selection;
   }
-
   /** Initialize the selection of this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
@@ -105,7 +94,6 @@ public abstract class Applicator {
     selection = ¢;
     return this;
   }
-
   /** Initialize the selection of this applicator using AbstractSelection.
    * @param ¢ JD
    * @author Matteo Orru'
@@ -114,12 +102,10 @@ public abstract class Applicator {
     selection = ¢;
     return this;
   }
-
   /** @return applicator's name */
   public String name() {
     return name;
   }
-
   /** Name this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
@@ -127,12 +113,10 @@ public abstract class Applicator {
     name = ¢;
     return this;
   }
-
   /** @return applicator's name */
   English.Inflection operationName() {
     return operationName;
   }
-
   /** Name this applicator.
    * @param ¢ JD
    * @return {@code this} applicator */
@@ -140,18 +124,14 @@ public abstract class Applicator {
     operationName = ¢;
     return this;
   }
-
   /** Main operation of this applicator. */
   public abstract void go();
-
   public Applicator defaultListenerNoisy() {
     return this;
   }
-
   public Applicator defaultSelection(@SuppressWarnings("unused") final AbstractSelection<?> of) {
     return this;
   }
-
   @SuppressWarnings("unused") public Applicator defaultRunAction(final CommandLine$Applicator __) {
     return this;
   }

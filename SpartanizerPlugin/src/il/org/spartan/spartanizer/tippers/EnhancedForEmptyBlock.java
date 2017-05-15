@@ -20,19 +20,16 @@ public class EnhancedForEmptyBlock extends ReplaceCurrentNode<EnhancedForStateme
     $.setBody($.getAST().newEmptyStatement());
     return $;
   }
-
   @Override protected boolean prerequisite(final EnhancedForStatement ¢) {
     final Block $ = az.block(¢.getBody());
     return $ != null && iz.emptyBlock($);
   }
-
   @Override public Examples examples() {
     return //
     convert("for(int x: xs){}").to("for(int x:xs);") //
         .ignores("for(int x:xs){y();z();}")//
     ;
   }
-
   @Override public String description(@SuppressWarnings("unused") final EnhancedForStatement __) {
     return "Replace 'for(?:?){}' with 'for(?:?);'";
   }

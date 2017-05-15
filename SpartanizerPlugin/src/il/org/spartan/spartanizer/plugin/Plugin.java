@@ -2,7 +2,6 @@ package il.org.spartan.spartanizer.plugin;
 
 import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
 import org.eclipse.core.resources.*;
@@ -35,20 +34,16 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   public static AbstractUIPlugin plugin() {
     return plugin;
   }
-
   private static void startSpartan() {
     RefreshAll.go();
   }
-
   public Plugin() {
     plugin = this;
   }
-
   /** Called whenever the plugin is first loaded into the workbench */
   @Override public void earlyStartup() {
     //
   }
-
   @Override public void start(final BundleContext c) throws Exception {
     super.start(c);
     note.logger.fine("START " + this);
@@ -61,28 +56,23 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       note.bug(¢);
     }
   }
-
   @Override public void stop(final BundleContext ¢) throws Exception {
     note.logger.fine("STOP " + this);
     plugin = null;
     super.stop(¢);
   }
-
   @Override protected void loadDialogSettings() {
     note.logger.finest(this + "");
     super.loadDialogSettings();
   }
-
   @Override protected void refreshPluginActions() {
     note.logger.finest(this + "");
     super.refreshPluginActions();
   }
-
   @Override protected void saveDialogSettings() {
     note.logger.finest(this + "");
     super.saveDialogSettings();
   }
-
   private static void addPartListener() {
     if (listening)
       return;
@@ -104,6 +94,18 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
           mp.type = NEW_PROJECT;
           return true;
         });
+        // TODO Ori Roth: please clean this up
+        if (mp.p != null)
+          Job.createSystem(pm -> {
+            try {
+              if (mp.type.equals(NEW_PROJECT)) {
+                eclipse.addNature(mp.p);
+                mp.p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+              }
+            } catch (final Exception ¢) {
+              note.bug(¢);
+            }
+          }).schedule(SAFETY_DELAY);
       } catch (final CoreException ¢) {
         note.bug(¢);
       }
@@ -126,11 +128,11 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       final IProject[] projects = getAllSpartanizerProjects();
       final Document doc = XMLSpartan.getXML(projects[0]);
       doc.getDocumentElement().normalize();
-      notation.cent = doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
+      notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
+          : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
       notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
-    } catch (NullPointerException e) {
-      // TODO Dor: should not happen!
-      note.bug(e);
+    } catch (final NullPointerException ¢) {
+      note.bug(¢);
     }
   }
 }

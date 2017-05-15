@@ -4,6 +4,8 @@ import static java.util.stream.Collectors.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.Map.*;
+import java.util.stream.*;
 
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
@@ -14,10 +16,10 @@ import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.dom.*;
 import org.w3c.dom.*;
+import org.w3c.dom.Node;
 import org.xml.sax.*;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.spartanizer.traversal.*;
@@ -82,21 +84,20 @@ public class XMLSpartan {
     $.removeIf(λ -> !ets.contains(λ.getSimpleName()));
     return $;
   }
-
   /** Computes enabled tippers by categories for the project. If some error
    * occur (such as a corrupted XML file), an empty map is returned.
    * @param p JD
    * @return enabled tippers for the project */
-  public static Map<SpartanCategory, SpartanTipper[]> getTippersByCategories(final IProject p) {
-    final Map<SpartanCategory, SpartanTipper[]> $ = new HashMap<>();
+  public static Map<SpartanCategory, SpartanElement[]> getTippersByCategories(final IProject p) {
+    final Map<SpartanCategory, SpartanElement[]> $ = new HashMap<>();
     final Document d = getFile(p);
     if (d == null)
       return $;
     final NodeList ns = d.getElementsByTagName(TIPPER);
     if (ns == null)
       return $;
-    final Map<TipperGroup, SpartanCategory> tcs = new HashMap<>();
-    final Map<TipperGroup, List<SpartanTipper>> tgs = new HashMap<>();
+    final Map<Class<? extends TipperCategory>, SpartanCategory> tcs = new HashMap<>();
+    final Map<Class<? extends TipperCategory>, List<SpartanTipper>> tgs = new HashMap<>();
     for (int i = 0; i < ns.getLength(); ++i) {
       final Element e = (Element) ns.item(i);
       final Class<?> tc = Tippers.cache.serivalVersionUIDToTipper.get(e.getAttribute(TIPPER_ID));
@@ -104,15 +105,15 @@ public class XMLSpartan {
         continue;
       final String description = Tippers.cache.tipperToDescription.get(tc);
       final Examples preview = Tippers.cache.tipperToExamples.get(tc);
-      final TipperGroup g = Tippers.cache.tipperClassToTipperInstance.get(tc).tipperGroup();
+      final Class<? extends TipperCategory> g = Tippers.cache.tipperClassToTipperInstance.get(tc).lowestCategory();
       if (!tgs.containsKey(g)) {
         tgs.put(g, an.empty.list());
-        tcs.put(g, new SpartanCategory(g.name(), false));
+        tcs.put(g, new SpartanCategory(g));
       }
       final SpartanTipper st = new SpartanTipper(//
           tc.getSimpleName(), //
           Boolean.parseBoolean(e.getAttribute(ENABLED)), //
-          tcs.get(g), description != null ? description : "No description available", //
+          description != null ? description : "No description available", //
           preview != null ? preview : EMPTY_PREVIEW);
       tcs.get(g).addChild(st);
       tgs.get(g).add(st);
@@ -120,7 +121,35 @@ public class XMLSpartan {
     tgs.forEach((key, value) -> $.put(tcs.get(key), value.toArray(new SpartanTipper[value.size()])));
     return $;
   }
-
+  /** TODO Roth: document. */
+  public static Map<SpartanCategory, SpartanElement[]> getElementsByCategories(final IProject p) {
+    final Map<SpartanCategory, SpartanElement[]> $ = getTippersByCategories(p);
+    final Map<String, SpartanCategory> existingCategories = anonymous.ly(() -> {
+      final Map<String, SpartanCategory> m = new HashMap<>();
+      for (final SpartanCategory ¢ : $.keySet())
+        m.put(¢.name(), ¢);
+      return m;
+    });
+    for (final Entry<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> e : TipperCategory.hierarchy.entrySet()) {
+      SpartanCategory parent;
+      if (existingCategories.containsKey(e.getKey().getSimpleName()))
+        parent = existingCategories.get(e.getKey().getSimpleName());
+      else {
+        parent = new SpartanCategory(e.getKey());
+        existingCategories.put(parent.name(), parent);
+      }
+      final List<SpartanCategory> children = e.getValue().stream().map(cc -> {
+        if (existingCategories.containsKey(cc.getSimpleName()))
+          return existingCategories.get(cc.getSimpleName());
+        final SpartanCategory c = new SpartanCategory(cc);
+        existingCategories.put(c.name(), c);
+        return c;
+      }).collect(Collectors.toList());
+      children.forEach(λ -> parent.addChild(λ));
+      $.put(parent, children.toArray(new SpartanElement[children.size()]));
+    }
+    return trimEmptyCategories($);
+  }
   /** Updates the project's XML file to enable given tippers.
    * @param p JD
    * @param ss enabled tippers by name */
@@ -139,7 +168,29 @@ public class XMLSpartan {
     }
     commit(p, d);
   }
-
+  /** Updates the project's XML file to enable given tippers.
+   * @param p JD
+   * @param ss enabled tippers by name */
+  public static void updateEnabledTippers(final Document d, final Collection<String> ss) {
+    if (d == null)
+      return;
+    final NodeList ns = d.getElementsByTagName(TIPPER);
+    if (ns != null)
+      for (int i = 0; i < ns.getLength(); ++i) {
+        final Element e = (Element) ns.item(i);
+        final String id = e.getAttribute(TIPPER_ID);
+        if (id != null)
+          e.setAttribute(ENABLED, ss.contains(id) ? "true" : "false");
+      }
+  }
+  public static Collection<String> createEnabledList(final Document d) {
+    final List<String> $ = new ArrayList<>();
+    final NodeList ns = d.getElementsByTagName(TIPPER);
+    for (int ¢ = 0; ¢ < ns.getLength(); ++¢)
+      if ("true".equals(((Element) ns.item(¢)).getAttribute(ENABLED)))
+        $.add(((Element) ns.item(¢)).getAttribute(TIPPER_ID));
+    return $;
+  }
   /** Writes XML dom object to file.
    * @param f JD
    * @param d JD
@@ -165,7 +216,6 @@ public class XMLSpartan {
       return false;
     }
   }
-
   /** Writes XML dom object to project.
    * @param p JD
    * @param d JD
@@ -174,7 +224,6 @@ public class XMLSpartan {
     final IFile $ = p.getFile(FILE_NAME);
     return $ != null && $.exists() && commit($, d);
   }
-
   /** Adds a new tipper to the XML document.
    * @param d JD
    * @param p JD
@@ -195,7 +244,6 @@ public class XMLSpartan {
     seen.add(n);
     e.appendChild($);
   }
-
   /** Adds a new notation to the XML document.
    * @param d JD
    * @param kind JD
@@ -214,11 +262,9 @@ public class XMLSpartan {
     seen.add(kind);
     n.appendChild($);
   }
-
   public static Document getXML(final IProject $) {
     return getFile($);
   }
-
   /** Return XML file for given project. Creates one if absent.
    * @param p JD
    * @return XML file for project */
@@ -229,7 +275,6 @@ public class XMLSpartan {
       return note.bug(¢);
     }
   }
-
   /** Return XML file for given project. Creates one if absent.
    * @param p JD
    * @return XML file for project
@@ -258,7 +303,7 @@ public class XMLSpartan {
       if (!commit(fl, i) || !fl.exists())
         return null;
     }
-    Document $ = b.parse(fl.getContents());
+    final Document $ = b.parse(fl.getContents());
     if ($ == null)
       return null;
     final Element e = $.getDocumentElement();
@@ -268,11 +313,13 @@ public class XMLSpartan {
     final NodeList ns = $.getElementsByTagName(BASE);
     if (ns != null && ns.getLength() == 1 && validate($, ((Element) ns.item(0)).getAttribute(VERSION)))
       return $;
-    $ = initialize(b.newDocument());
-    commit(fl, $);
-    return $;
+    final Collection<String> ls = createEnabledList($);
+    Document ret = b.newDocument();
+    ret = initialize(ret);
+    updateEnabledTippers(ret, ls);
+    commit(fl, ret);
+    return ret;
   }
-
   /** Initialize XML document. Enables all tippers, except declared non core
    * tippers, also, add to the document the default values for naming\notations
    * prefrences.
@@ -287,7 +334,7 @@ public class XMLSpartan {
     e.setAttribute(VERSION, CURRENT_VERSION);
     final Collection<String> seen = new HashSet<>();
     Configurations.allTippers().forEach(λ -> createEnabledNodeChild($, λ, seen, t));
-    createNotationChild($, "Cent", "¢", seen, n);
+    createNotationChild($, "Cent", "cent", seen, n);
     e.appendChild(n);
     createNotationChild($, "Dollar", "$", seen, n);
     e.appendChild(n);
@@ -296,18 +343,17 @@ public class XMLSpartan {
     $.setXmlStandalone(true); // TODO Roth: does not seem to work
     return $;
   }
-
   @SuppressWarnings("unchecked") private static Class<Tipper<?>> unchecked(@SuppressWarnings("rawtypes") final Class<? extends Tipper> λ) {
     return (Class<Tipper<?>>) λ;
   }
-
   /** Manipulates documents with different version / corrupted files.
    * @param $ plugin's XML document
    * @param version document's version
    * @return true iff the document is valid, and does not require
    *         initialization */
-  private static boolean validate(@SuppressWarnings("unused") final Document $, final String version) {
-    return version != null && Double.parseDouble(version) >= 3.0;
+  private static boolean validate(final Document $, final String version) {
+    return version != null && Double.parseDouble(version) >= 3.0 && $.getElementsByTagName(NOTATION).item(0) != null
+        && $.getElementsByTagName(NOTATION).item(1) != null;
   }
 
   /** Describes an XML category element for plugin's XML file. The category has
@@ -316,22 +362,29 @@ public class XMLSpartan {
    * @since 2017-02-25 */
   public static class SpartanCategory extends SpartanElement {
     private final List<SpartanElement> children;
+    private final Class<? extends TipperCategory> categoryClass;
 
-    public SpartanCategory(final String name, final boolean enabled) {
-      super(name, enabled);
+    public SpartanCategory(final Class<? extends TipperCategory> categoryClass) {
+      super(categoryClass.getSimpleName(), true, defaults.to(TipperCategory.descriptions.get(categoryClass), categoryClass.getSimpleName()));
       children = an.empty.list();
+      this.categoryClass = categoryClass;
     }
-
-    public void addChild(final SpartanTipper ¢) {
+    public void addChild(final SpartanElement ¢) {
       children.add(¢);
+      ¢.parent = this;
     }
-
+    public void removeChild(final SpartanElement ¢) {
+      children.remove(¢);
+      ¢.parent = null;
+    }
     @Override public SpartanElement[] getChildren() {
       return children.toArray(new SpartanElement[children.size()]);
     }
-
     @Override public boolean hasChildren() {
       return !children.isEmpty();
+    }
+    public Class<? extends TipperCategory> categoryClass() {
+      return categoryClass;
     }
   }
 
@@ -342,30 +395,34 @@ public class XMLSpartan {
     public static final SpartanElement[] EMPTY = new SpartanElement[0];
     private boolean enabled;
     private final String name;
+    private final String description;
+    protected SpartanElement parent;
 
-    public SpartanElement(final String name, final boolean enabled) {
+    public SpartanElement(final String name, final boolean enabled, final String description) {
       this.name = name;
       this.enabled = enabled;
+      this.description = description;
     }
-
     public void enable(final boolean enable) {
       enabled = enable;
     }
-
     public boolean enabled() {
       return enabled;
     }
-
     @SuppressWarnings("static-method") public SpartanElement[] getChildren() {
       return EMPTY;
     }
-
     @SuppressWarnings("static-method") public boolean hasChildren() {
       return false;
     }
-
+    public SpartanElement parent() {
+      return parent;
+    }
     public String name() {
       return name;
+    }
+    public String description() {
+      return description;
     }
   }
 
@@ -374,15 +431,34 @@ public class XMLSpartan {
    * @author Ori Roth {@code ori.rothh@gmail.com}
    * @since 2017-02-25 */
   public static class SpartanTipper extends SpartanElement {
-    final String description;
-    final SpartanCategory parent;
     final Examples preview;
 
-    public SpartanTipper(final String name, final boolean enabled, final SpartanCategory parent, final String description, final Examples preview) {
-      super(name, enabled);
-      this.parent = parent;
-      this.description = description;
+    public SpartanTipper(final String name, final boolean enabled, final String description, final Examples preview) {
+      super(name, enabled, description);
       this.preview = preview;
     }
+  }
+
+  private static Map<SpartanCategory, SpartanElement[]> trimEmptyCategories(final Map<SpartanCategory, SpartanElement[]> $) {
+    final Set<SpartanCategory> emptys = new HashSet<>();
+    for (final SpartanCategory ¢ : $.keySet())
+      if (empty(¢))
+        emptys.add(¢);
+    for (final SpartanCategory ¢ : emptys)
+      $.remove(¢);
+    return $;
+  }
+  private static boolean empty(final SpartanElement c) {
+    if (c instanceof SpartanTipper)
+      return false;
+    boolean nonEmptyChild = false;
+    for (final SpartanElement ¢ : c.getChildren())
+      if (!empty(¢))
+        nonEmptyChild = true;
+    if (nonEmptyChild)
+      return false;
+    if (c.parent instanceof SpartanCategory)
+      ((SpartanCategory) c.parent).removeChild(c);
+    return true;
   }
 }

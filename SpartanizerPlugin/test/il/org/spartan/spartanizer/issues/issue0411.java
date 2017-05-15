@@ -38,11 +38,9 @@ public class issue0411 {
     assert iz.expressionOfEnhancedFor(seriesA$step3.getParent(), seriesA$step1);
     assert !iz.expressionOfEnhancedFor(seriesA$step3, seriesA$step1);
   }
-
   @Test public void A$d() {
     assert iz.expressionOfEnhancedFor(seriesA$step3.getParent(), seriesA$step1);
   }
-
   @Test public void B01() {
     trimmingOf(" public static boolean checkVariableDecleration(VariableDeclarationStatement s) { "
         + "List<VariableDeclarationFragment> lst =  fragments(s); for (VariableDeclarationFragment ¢ : lst) "
@@ -52,7 +50,6 @@ public class issue0411 {
                 + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .stays();
   }
-
   @Test public void B02() {
     trimmingOf("void  f(V s) { List<U> lst =  fragments(s); for (U ¢ : lst) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
@@ -60,7 +57,6 @@ public class issue0411 {
                 + "    return false; return true; }")
             .stays();
   }
-
   @Test public void B03() {
     trimmingOf("void  f(V variableDeclarationFragment) { List<U> lst =  fragments(variableDeclarationFragment); for (U ¢ : lst) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
@@ -68,7 +64,6 @@ public class issue0411 {
                 + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .stays();
   }
-
   @Test public void B05() {
     trimmingOf("boolean  f(V variableDeclarationFragment) { V x=  fragments(variableDeclarationFragment); for (U ¢ : x) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
@@ -76,7 +71,6 @@ public class issue0411 {
                 + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .stays();
   }
-
   @Test public void B06() {
     trimmingOf("boolean f() { V x= g(variableDeclarationFragment); for (U ¢ : x) "
         + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
@@ -84,23 +78,19 @@ public class issue0411 {
                 + "  if (¢.getInitializer() != null && !sideEffects.free(¢.getInitializer()))     return false; return true; }")
             .stays();
   }
-
   @Test public void B07() {
     trimmingOf(INPUT1)//
         .gives(OUTPUT1)//
         .stays();
   }
-
   @Test public void B17() {
     assert tipper.check(variableDeclarationFragment) : fault.dump() + "\n variableDeclarationFragment = " + variableDeclarationFragment + "\n for = "
         + forr + fault.done();
   }
-
   @Test public void B20() {
     assert variableDeclarationFragment != null;
     azzert.that(tipper.tip(variableDeclarationFragment), iz("a"));
   }
-
   @Test public void B21() {
     assert tipper.prerequisite(variableDeclarationFragment) : fault.dump() + "\n variableDeclarationFragment = " + variableDeclarationFragment
         + "\n for = " + forr + fault.done();

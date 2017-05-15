@@ -29,11 +29,9 @@ public class InfixLessToLessEquals extends ReplaceCurrentNode<InfixExpression>//
         || iz.number(left(az.infixExpression(right(¢))))//
         || type.isDouble(left(¢)) ? null : subject.pair(left(¢), left(az.infixExpression(right(¢)))).to(Operator.LESS_EQUALS);
   }
-
   private static boolean isLegalOperation(final InfixExpression ¢) {
     return iz.infixLess(¢);
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "Convert Less Equals Operator to Less " + ¢;
   }

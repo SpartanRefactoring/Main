@@ -22,29 +22,24 @@ import il.org.spartan.spartanizer.tipping.*;
 public class Issue0835 {
   final Tipper<VariableDeclarationFragment> tipper = new LocalUninitializedDead();
 
-  @Test public void descriptionNotNull() {
+  @Test public void descriptionNonNull() {
     assert tipper.description() != null;
   }
-
   @Test public void emptyBlock1() {
     azzert.that(0, is(statements(az.block(make.ast("{}"))).size()));
   }
-
   @Test public void emptyBlock2() {
     azzert.that(0, is(statements(az.block(make.ast("\n{\n}\n"))).size()));
   }
-
   @Test public void emptyBlock3() {
     azzert.that(1, is(statements(az.block(make.ast("\n{int a;}\n"))).size()));
   }
-
-  @Test public void returnNotNullNonEmptyBlock() {
+  @Test public void returnNonNullNonEmptyBlock() {
     trimmingOf("{int x;}")//
         .gives("int x;")//
         .gives("")//
         .stays();
   }
-
   /** Introduced by Yossi on Sun-Mar-26-18:52:18-IDT-2017 (code automatically in
    * class 'JUnitTestMethodFacotry') */
   @Test public void test_whileTrue() {
@@ -57,15 +52,12 @@ public class Issue0835 {
         .stays() //
     ;
   }
-
   @Test public void returnNullIfBlockIfNotSingleVarDef2() {
     trimmingOf("{return 1;}").gives("return 1;").stays();
   }
-
   @Test public void returnNullOnEmptyBlock1() {
     trimmingOf("{}").gives("");
   }
-
   @Test public void returnNullOnEmptyBlock2() {
     trimmingOf("\n{}\n").gives("");
   }

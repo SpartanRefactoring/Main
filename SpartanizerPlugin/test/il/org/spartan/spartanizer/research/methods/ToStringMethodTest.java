@@ -12,23 +12,18 @@ public class ToStringMethodTest extends JavadocerTest {
   @BeforeClass public static void setUp() {
     setNano(new ToStringMethod());
   }
-
   @Test public void a() {
     assert is("String toString(){return foo;}");
   }
-
   @Test public void b() {
     assert not("boolean toString(){return foo();}");
   }
-
   @Test public void c() {
     assert not("@Override public String hashCode() {return b;}");
   }
-
   @Test public void d() {
     assert is("@Override public String toString(Par am){  return b}");
   }
-
   @Test public void e() {
     assert is("String toString(){return \"oh got\" + myVonderfull(bar);}");
   }

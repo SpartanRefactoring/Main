@@ -23,15 +23,12 @@ public enum makeAST {
     @Override public CompilationUnit from(final File ¢) {
       return from(string(¢));
     }
-
     @Override public CompilationUnit from(final IFile ¢) {
       return (CompilationUnit) make.COMPILATION_UNIT.parser(¢).createAST(wizard.nullProgressMonitor);
     }
-
     @Override public CompilationUnit from(final IMarker m, final IProgressMonitor pm) {
       return (CompilationUnit) make.COMPILATION_UNIT.parser(m).createAST(pm);
     }
-
     @Override public CompilationUnit from(final String ¢) {
       final char[] charArray = ¢.toCharArray();
       final ASTParser $ = wizard.parser(ASTParser.K_COMPILATION_UNIT);
@@ -45,15 +42,12 @@ public enum makeAST {
     @Override public Expression from(final File ¢) {
       return from(string(¢));
     }
-
     @Override public Expression from(final IFile ¢) {
       return (Expression) make.EXPRESSION.parser(¢).createAST(wizard.nullProgressMonitor);
     }
-
     @Override public Expression from(final IMarker m, final IProgressMonitor pm) {
       return (Expression) make.EXPRESSION.parser(m).createAST(pm);
     }
-
     @Override public Expression from(final String ¢) {
       return (Expression) makeParser(¢).createAST(wizard.nullProgressMonitor);
     }
@@ -71,14 +65,12 @@ public enum makeAST {
   public static ICompilationUnit iCompilationUnit(final IFile ¢) {
     return JavaCore.createCompilationUnitFrom(¢);
   }
-
   /** IMarker -> ICompilationUnit converter
    * @param marker IMarker
    * @return CompilationUnit */
   public static ICompilationUnit iCompilationUnit(final IMarker ¢) {
     return iCompilationUnit((IFile) ¢.getResource());
   }
-
   /** Convert file contents into a {@link String}
    * @param f JD
    * @return entire contents of this file, as one string */
@@ -97,7 +89,6 @@ public enum makeAST {
   makeAST(final int kind) {
     this.kind = kind;
   }
-
   /** Creates a {@link StringBuilder} object out of a file object.
    * @param f JD
    * @return {@link StringBuilder} whose content is the same as the contents of
@@ -112,27 +103,28 @@ public enum makeAST {
       return new StringBuilder();
     }
   }
-
   /** Parses a given {@link Document}.
    * @param d JD
    * @return {@link ASTNode} obtained by parsing */
   public ASTNode from(final IDocument ¢) {
     return from(¢.get());
   }
-
   /** File -> ASTNode converter
    * @param function File
    * @return ASTNode */
   public ASTNode from(final File ¢) {
     return from(string(¢));
   }
-
   /** @param function IFile
    * @return ASTNode */
   public ASTNode from(final IFile ¢) {
     return make.from(this).parser(¢).createAST(wizard.nullProgressMonitor);
   }
-
+  /** @param function IFile
+   * @return ASTNode */
+  public ASTNode fromWithBinding(final IFile ¢) {
+    return make.from(this).parserWithBinding(¢).createAST(wizard.nullProgressMonitor);
+  }
   /** IMarker, SubProgressMonitor -> ASTNode converter
    * @param m Marker
    * @param pm ProgressMonitor
@@ -140,14 +132,12 @@ public enum makeAST {
   public ASTNode from(final IMarker m, final IProgressMonitor pm) {
     return make.from(this).parser(m).createAST(pm);
   }
-
   /** String -> ASTNode converter
    * @param s String
    * @return ASTNode */
   public ASTNode from(final String ¢) {
     return makeParser(¢).createAST(wizard.nullProgressMonitor);
   }
-
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
@@ -156,7 +146,6 @@ public enum makeAST {
     $.setSource(text);
     return $;
   }
-
   /** Creates a no-binding parser for a given compilation unit
    * @param u what to parse
    * @return a newly created parser for the parameter */
@@ -165,14 +154,12 @@ public enum makeAST {
     $.setSource(¢);
     return $;
   }
-
   /** Creates a no-binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
   public ASTParser makeParser(final String text) {
     return makeParser(text.toCharArray());
   }
-
   /** Creates a binding parser for a given text
    * @param text what to parse
    * @return a newly created parser for the parameter */
@@ -181,7 +168,6 @@ public enum makeAST {
     $.setResolveBindings(true);
     return $;
   }
-
   public ASTParser makeParserWithBinding(final File ¢) {
     return makeParserWithBinding(string(¢));
   }

@@ -13,6 +13,7 @@ import java.util.stream.*;
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
+import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.swt.events.*;
@@ -36,25 +37,21 @@ public class Eclipse {
   public static String user() {
     return System.getProperty("user.name");
   }
-
   /** @return current date */
   public static String date() {
     return date("dd/MM/yyyy");
   }
-
   // TODO Roth: switch from system date to eclipse template date
   /** @param format date format
    * @return current date */
   public static String date(final String format) {
     return new SimpleDateFormat(format).format(new Date());
   }
-
   /** @return current mouse location */
   public static Point mouseLocation() {
     return Optional.ofNullable(Display.getCurrent()) //
         .map(λ -> λ.getCursorLocation()).orElse(new Point(0, 0));
   }
-
   /** @param mouseUp mouse up operation
    * @param mouseDown mouse down operation
    * @param mouseDoubleClick mouse double click operation
@@ -65,17 +62,14 @@ public class Eclipse {
       @Override public void mouseUp(final MouseEvent ¢) {
         mouseUp.accept(¢);
       }
-
       @Override public void mouseDown(final MouseEvent ¢) {
         mouseDown.accept(¢);
       }
-
       @Override public void mouseDoubleClick(final MouseEvent ¢) {
         mouseDoubleClick.accept(¢);
       }
     };
   }
-
   /** Refreshes project, while applying new configuration.
    * @param p JD
    * @throws CoreException
@@ -112,7 +106,6 @@ public class Eclipse {
         });
       }
   }
-
   /** @return current {@link IWorkbenchPage} */
   public static IWorkbenchPage getPage() {
     final IWorkbench w = PlatformUI.getWorkbench();
@@ -121,7 +114,6 @@ public class Eclipse {
     final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
     return $ == null ? null : $.getActivePage();
   }
-
   /** @return opened text editors */
   public static Iterable<ITextEditor> openedTextEditors() {
     final IWorkbenchPage $ = getPage();
@@ -129,15 +121,39 @@ public class Eclipse {
         : Stream.of($.getEditorReferences()).map(λ -> λ.getEditor(false)).filter(ITextEditor.class::isInstance).map(ITextEditor.class::cast)
             .collect(toList());
   }
-
   /** @return document for editor */
   public static IDocument document(final ITextEditor ¢) {
     return ¢.getDocumentProvider().getDocument(¢.getEditorInput());
   }
-
   /** Run asynchronously in UI thread.
    * @param ¢ JD */
   public static void runAsynchronouslyInUIThread(final Runnable ¢) {
     Display.getDefault().asyncExec(¢);
+  }
+  public static ASTNode coveredNodeByRange(final CompilationUnit u, final ITextSelection s) {
+    return new NodeFinder(u, s.getOffset(), Math.max(1, s.getLength())).getCoveredNode();
+  }
+  public static ASTNode coveringNodeByRange(final CompilationUnit u, final ITextSelection s) {
+    return new NodeFinder(u, s.getOffset(), Math.max(1, s.getLength())).getCoveringNode();
+  }
+  public static boolean recursiveCreateFolder(final IFolder f, final IProgressMonitor m) {
+    if (f == null)
+      return false;
+    if (f.exists())
+      return true;
+    final IContainer parent = f.getParent();
+    if (parent == null)
+      return false;
+    if (!(parent instanceof IFolder))
+      return true;
+    if (!recursiveCreateFolder((IFolder) parent, m))
+      return false;
+    try {
+      f.create(IResource.NONE, true, m);
+    } catch (final CoreException ¢) {
+      note.bug(¢);
+      return false;
+    }
+    return true;
   }
 }

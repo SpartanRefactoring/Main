@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static fluent.ly.is.*;
 
 import java.util.*;
@@ -21,7 +22,6 @@ public final class InfixAdditionSort extends InfixExpressionSortingFull//
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }
-
   @Override protected boolean suitable(final InfixExpression ¢) {
     return in(¢.getOperator(), il.org.spartan.spartanizer.ast.navigate.op.PLUS2) && type.isNotString(¢);
   }

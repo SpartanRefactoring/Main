@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static fluent.ly.is.*;
 
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -32,7 +33,6 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
   private static String description(final Expression ¢) {
     return "Use " + (¢ != null ? ¢ + "" : "isEmpty()");
   }
-
   private static ASTNode replacement(final Operator o, final Expression receiver, final int threshold) {
     assert receiver != null : fault.dump() + //
         "\n threshold='" + threshold + //
@@ -43,7 +43,6 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     assert $ != null : "All I know is that threshould=" + threshold + ", receiver = " + $ + ", and o=" + o;
     return replacement(o, threshold, $);
   }
-
   private static ASTNode replacement(final Operator o, final int threshold, final MethodInvocation $) {
     if (o == GREATER_EQUALS)
       return replacement(GREATER, threshold - 1, $);
@@ -64,11 +63,9 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
         fault.done();
     return null;
   }
-
   private static ASTNode replacement(final Operator o, final int sign, final NumberLiteral l, final Expression receiver) {
     return replacement(o, receiver, sign * Integer.parseInt(l.getToken()));
   }
-
   private static ASTNode replacement(final Operator o, final MethodInvocation i, final Expression x) {
     if (!"size".equals(name(i).getIdentifier()))
       return null;
@@ -94,17 +91,14 @@ public final class InfixComparisonSizeToZero extends ReplaceCurrentNode<InfixExp
     final ITypeBinding t = b.getReturnType();
     return !"boolean".equals(t + "") && !"java.lang.Boolean".equals(t.getBinaryName()) ? null : replacement(o, $, l, receiver);
   }
-
   private static boolean validTypes(final Expression ¢1, final Expression ¢2) {
     return iz.pseudoNumber(¢1) && iz.methodInvocation(¢2) //
         || iz.pseudoNumber(¢2) && iz.methodInvocation(¢1);
   }
-
   @Override public String description(final InfixExpression ¢) {
     final Expression $ = left(¢);
     return description(expression($ instanceof MethodInvocation ? $ : right(¢)));
   }
-
   @Override public ASTNode replacement(final InfixExpression x) {
     final Operator $ = x.getOperator();
     if (!iz.comparison($))

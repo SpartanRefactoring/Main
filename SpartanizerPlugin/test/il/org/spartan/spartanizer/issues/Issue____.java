@@ -46,7 +46,7 @@ import fluent.ly.*;
  * <li>Instead, use class {@link azzert} for anything else:
  * <ul>
  * <li>to check whether something is {@code null, use
- * {@code azzer.notNull(something)} which prints the content of this something
+ * {@code azzer.NonNull(something)} which prints the content of this something
  * if it is not {@code null</b></code<li>Test methods do not usually contain
  * the word test in them. There is no point in repeating ourselves.
  * <li>Naming convention here is that test methods begin with a capital letter
@@ -63,68 +63,55 @@ public class Issue____ {
   private static Object object() {
     return new Object();
   }
-
   private int $0() {
     return 0;
   }
-
   private int $1() {
     return 1;
   }
-
   private boolean $false() {
     return false;
   }
-
   private Object $null() {
     return null;
   }
-
   private boolean $true() {
     return true;
   }
-
   private Object sameSomeObject() {
     return this;
   }
-
   /** if fails, suite did not compile... */
   @Test public void Z$000() {
     new Object().hashCode();
   }
-
   /** if fails, assertions do not work */
   @Test public void Z$010() {
     assert null == null : "This assert must never fail";
   }
-
   /** if fails, enable assertions (flag '-va') to the JVM. --yg In Windows it
    * worked for me by adding '-ea' flag in the run configurations -> VM
    * arguments. --or */
   @Test(expected = AssertionError.class) public void Z$020() {
     assert null != null;
   }
-
   /** This is the incorrect way you should check for nulls, using {@link azzert}
    * makes sure we get more informative messages */
   @Test public void Z$030() {
     azzert.isNull($null());
   }
-
   /** Correct way of checking for nulls. {@link azzert} cannot provide further
    * information if the test fails, since failures give null which carries no
    * information informative messages */
   @Test public void Z$040() {
     assert new Object() != null : "Weird... I (" + this + ") never knew that new can return null";
   }
-
   /** Correct way of checking for nulls. {@link azzert} cannot provide further
    * information if the test fails, since failures give null which carries no
    * information informative messages */
   @Test public void Z$050() {
     assert new Object() != null;
   }
-
   /** Correct way of checking for true value. {@link azzert} cannot provide
    * further information if the test fails, since failures give nothing but
    * boolean value. */
@@ -132,7 +119,6 @@ public class Issue____ {
     assert $true();
     assert $true() : "Failure in " + object();
   }
-
   /** Correct way of checking for false value. {@link azzert} cannot provide
    * further information if the test fails, since failures give nothing but
    * boolean value. */
@@ -140,28 +126,23 @@ public class Issue____ {
     assert !$false();
     assert !$false() : "Failure in " + object();
   }
-
   /** Correct way of checking types */
   @Test public void Z$080() {
     azzert.that(an.empty.list(), instanceOf(List.class));
   }
-
   /** Correct way of checking for inequality of values */
   @Test public void Z$090() {
     azzert.that(object(), not(object()));
   }
-
   /** Correct way of checking for equality of values */
   @Test public void Z$100() {
     azzert.that(sameSomeObject(), is(sameSomeObject()));
   }
-
   /** Correct way of checking for equality of numbers */
   @Test public void Z$110() {
     azzert.that($0(), is($0()));
     azzert.that($0(), not(is($1())));
   }
-
   /** Correct ways of comparing numbers */
   @Test public void Z$120() {
     azzert.that($0(), greaterThanOrEqualTo($0()));
@@ -171,13 +152,11 @@ public class Issue____ {
     azzert.that($0(), lessThanOrEqualTo($0()));
     azzert.that($0(), lessThan($1()));
   }
-
   /** Correct way of trimming does not change */
   @Test public void Z$130() {
     trimmingOf("a")//
         .stays();
   }
-
   /** Correct way of trimming does not change */
   @Test public void Z$140() {
     trimmingOf("a")//

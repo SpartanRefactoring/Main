@@ -28,7 +28,6 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
     lastNode = ¢;
     return super.visit(¢);
   }
-
   /** TODO Matteo: Please add here more boolean metrics such as
    * {@link #isJohnDoeWithResepctTo1stParameter}, {@ link
    * #isJohnDoeWithResepctTo2ndParameter}, --yg
@@ -68,13 +67,11 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
     ;
     writer.nl();
   }
-
   @Override public void endVisit(final TypeDeclaration node) {
     --classNesting;
     consider(node);
     super.endVisit(node);
   }
-
   @Override protected void done(final String path) {
     dotter.end();
     System.err.println("Done processing: " + path);
@@ -89,7 +86,6 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
       throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     DeprecatedFolderASTVisitor.main(args);
   }
-
   @Override @SuppressWarnings({ "boxing", "unchecked" }) public NamedFunction<ASTNode, Object>[] functions() {
     return as.array(//
         m("length", λ -> (λ + "").length()), //
@@ -108,7 +104,6 @@ public class TypeFeaturesCollector extends DeprecatedFolderASTVisitor implements
         m("public", λ -> iz.public¢((BodyDeclaration) λ)), //
         m("static", λ -> iz.static¢((BodyDeclaration) λ)));
   }
-
   @Override public NamedFunction[] functions(@SuppressWarnings("unused") final String id) {
     // TODO Auto-generated method stub
     return null;

@@ -20,16 +20,15 @@ public class InflaterProvider extends OperationsProvider {
   public InflaterProvider() {
     configuration = InflaterProvider.freshCopyOfAllExpanders();
   }
-
   public InflaterProvider(final Configuration tb) {
     configuration = tb;
   }
-
   public static Configuration freshCopyOfAllExpanders() {
     return new Configuration()//
         .add(ReturnStatement.class, //
             new ReturnTernaryExpander(), //
             new ExtractExpressionFromReturn(), //
+            new StatementExtractParameters<>(), //
             null) //
         .add(ExpressionStatement.class, //
             new AssignmentAndAssignmentBloater(), //
@@ -44,6 +43,7 @@ public class InflaterProvider extends OperationsProvider {
             new ToStringExpander(), //
             new TernaryPushupStrings(), //
             new MultiplicationToCast(), //
+            new BooleanExpressionBloater(), //
             null) //
         .add(PrefixExpression.class, //
             new PrefixToInfix(), //
@@ -90,11 +90,9 @@ public class InflaterProvider extends OperationsProvider {
             null) //
     ;//
   }
-
   @Override public <N extends ASTNode> Tipper<N> getTipper(final N ¢) {
     return configuration.firstTipper(¢);
   }
-
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
     return λ -> Collections.singletonList(the.headOf(λ));
   }

@@ -23,56 +23,48 @@ public class Issue1132 {
         azzert.that(String.format("%d %% %d %% %d", box.it(a), box.it(b), box.it(c)), a % b % c, azzert.is(a % (b * c)));
     }).go();
   }
-
   @Test public void and() {
     trimmingOf("a &=2; a &= 3;")//
         .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
         .gives("a &= 2 & 3;")//
     ;
   }
-
   @Test public void divides() {
     trimmingOf("a /=2; a /= 3;")//
         .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
         .gives("a /= 2 * 3;")//
     ;
   }
-
   @Test public void dividesAssociativity() {
     ((Triples) (a, b, c) -> {
       if (b * c != 0)
         azzert.that(a / b / c, azzert.is(a / (b * c)));
     }).go();
   }
-
   @Test public void minus() {
     trimmingOf("a -=2; a -= 3;")//
         .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
         .gives("a -= 2 + 3;")//
     ;
   }
-
   @Test public void or() {
     trimmingOf("a |=2; a |= 3;")//
         .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
         .gives("a |= 2 | 3;")//
     ;
   }
-
   @Test public void plus() {
     trimmingOf("a +=2; a += 3;")//
         .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
         .gives("a += 2 + 3;")//
     ;
   }
-
   @Test public void times() {
     trimmingOf("a *=2; a *= 3;")//
         .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
         .gives("a *= 2 * 3;")//
     ;
   }
-
   @Test public void xor() {
     trimmingOf("a ^= 2; a ^= 3;")//
         .using(new AssignmentUpdateAndSameUpdate(), Assignment.class) //
@@ -85,7 +77,6 @@ public class Issue1132 {
     static long sign() {
       return RANDOM.nextLong() > 0 ? 1 : -1;
     }
-
     static long smaller(final long a) {
       return RANDOM.nextInt(abs((int) a));
     }
@@ -99,7 +90,6 @@ public class Issue1132 {
           go(a, smaller(a), smaller(a));
       }
     }
-
     void go(long a, long b, long c);
   }
 }

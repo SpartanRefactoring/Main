@@ -7,11 +7,11 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
@@ -25,27 +25,25 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
     implements TipperCategory.Collapse {
   private static final long serialVersionUID = 0x3B6B528C232B5CC8L;
 
-  @Override @NotNull public Examples examples() {
+  @Override public Examples examples() {
     return //
     convert("s=s.f();s=s.g();")//
         .to("s=s.f().g();") //
     ;
   }
-
-  @Override @NotNull public String description(final Assignment ¢) {
+  @Override public String description(final Assignment ¢) {
     return "Inline assignment to " + to(¢) + " into subsequent assignment";
   }
-
-  @Override protected ASTRewrite go(@NotNull final ASTRewrite $, @NotNull final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
+  @Override protected ASTRewrite go(final ASTRewrite $, final Assignment a1, final Statement nextStatement, final TextEditGroup g) {
     if (a1.getOperator() != ASSIGN || !iz.statement(parent(a1)))
       return null;
-    @Nullable final Assignment a2 = extract.assignment(nextStatement);
+    final Assignment a2 = extract.assignment(nextStatement);
     if (operator(a2) != ASSIGN)
       return null;
     final SimpleName to = az.simpleName(to(a1));
     if (!wizard.eq(to, to(a2)) || !sideEffects.free(to))
       return null;
-    @Nullable final Expression from1 = from(a1), from2 = from(a2);
+    final Expression from1 = from(a1), from2 = from(a2);
     switch (collect.usesOf(to).in(from2).size()) {
       case 0:
         return null;
@@ -57,9 +55,8 @@ public final class AssignmentAndAssignmentToSame extends GoToNextStatement<Assig
         return null;
     }
   }
-
-  @NotNull private static ASTRewrite go(@NotNull final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to,
-      final Expression from1, final Expression from2) {
+  private static ASTRewrite go(final ASTRewrite $, final Assignment a1, final TextEditGroup g, final SimpleName to, final Expression from1,
+      final Expression from2) {
     new Inliner(to, $, g).byValue(from1).inlineInto(from2);
     $.remove(a1.getParent(), g);
     return $;

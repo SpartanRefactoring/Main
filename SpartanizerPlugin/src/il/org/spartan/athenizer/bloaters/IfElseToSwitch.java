@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -46,7 +47,6 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     ss.add(create.newBreakStatement());
     return $;
   }
-
   private static boolean isMyCase(final List<Expression> xs) {
     if (xs == null || xs.isEmpty() || !iz.infixEquals(the.headOf(xs)))
       return false;
@@ -66,14 +66,12 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     }
     return true;
   }
-
   private static List<Expression> getAllExpressions(final IfStatement s) {
     final List<Expression> $ = an.empty.list();
     for (Statement p = s; iz.ifStatement(p); p = az.ifStatement(p).getElseStatement()) // TOUGH
       $.add(expression(az.ifStatement(p)));
     return $;
   }
-
   private static List<Block> getAllBlocks(final IfStatement s) {
     final List<Block> $ = an.empty.list();
     final Statement p = addAllBlocks(s, $);
@@ -88,7 +86,6 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     }
     return $;
   }
-
   private static Statement addAllBlocks(final IfStatement s, final Collection<Block> collectInto) {
     Statement $ = s;
     for (; iz.ifStatement($); $ = az.ifStatement($).getElseStatement()) {
@@ -102,7 +99,6 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     }
     return $;
   }
-
   @Override public String description(final IfStatement __) {
     return "Replace if-else statement with one parameter into switch-case";
   }

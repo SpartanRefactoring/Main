@@ -23,18 +23,15 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
   @Override public String description(final ExpressionStatement ¢) {
     return "Rewrite '" + expression(¢) + "' as assert command";
   }
-
   @Override public ASTNode replacement(final ExpressionStatement ¢) {
     return replacement(az.methodInvocation(expression(¢)));
   }
-
   private static ASTNode replacement(final MethodInvocation ¢) {
     if (¢ == null)
       return null;
     final List<Expression> $ = arguments(¢);
     return replacement(¢, the.headOf($), the.secondOf($));
   }
-
   public static ASTNode replacement(final MethodInvocation i, final Expression first, final Expression second) {
     final Expression message = second == null ? null : first, condition = second == null ? first : second;
     final AssertStatement $ = i.getAST().newAssertStatement();
@@ -42,21 +39,19 @@ public final class ExpressionStatementAssertTrueFalse extends ReplaceCurrentNode
       $.setMessage(copy.of(message));
     return replacement(i, condition, $);
   }
-
   private static ASTNode replacement(final MethodInvocation i, final Expression condition, final AssertStatement $) {
     switch (name(i) + "") {
       case "assertFalse":
         return setAssert($, make.notOf(condition));
       case "assertTrue":
         return setAssert($, copy.of(condition));
-      case "assertNotNull":
-      case "notNull":
+      case "assertNonNull":
+      case "NonNull":
         return setAssert($, subject.operands(condition, make.nullLiteral(i)).to(NOT_EQUALS));
       default:
         return null;
     }
   }
-
   private static AssertStatement setAssert(final AssertStatement $, final Expression x) {
     $.setExpression(x);
     return $;

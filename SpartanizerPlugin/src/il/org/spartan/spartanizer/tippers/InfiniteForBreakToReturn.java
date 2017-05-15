@@ -23,7 +23,6 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
   private static Statement handleIf(final IfStatement s, final ReturnStatement nextReturn) {
     return handleIf(then(s), elze(s), nextReturn);
   }
-
   private static Statement handleIf(final Statement then, final Statement elze, final ReturnStatement nextReturn) {
     if (iz.breakStatement(then))
       return then;
@@ -43,14 +42,12 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
     final Statement $ = handleBlock(az.block(elze), nextReturn);
     return $ != null ? $ : iz.ifStatement(elze) ? null : handleIf(elze, nextReturn);
   }
-
   private static Statement make(final Statement s, final ReturnStatement nextReturn) {
     return iz.breakStatement(s) ? s //
         : iz.ifStatement(s) ? handleIf(s, nextReturn) //
             : iz.block(s) ? handleBlock(az.block(s), nextReturn) //
                 : null;
   }
-
   private static Statement handleBlock(final Block b, final ReturnStatement nextReturn) {
     Statement $ = null;
     for (final Statement ¢ : statements(b)) {
@@ -61,19 +58,15 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
     }
     return $;
   }
-
   private static Statement handleIf(final Statement s, final ReturnStatement nextReturn) {
     return handleIf(az.ifStatement(s), nextReturn);
   }
-
   @Override public String description() {
     return "Convert the break inside 'for(;;)' to 'return'";
   }
-
   @Override public String description(final ForStatement ¢) {
     return "Convert the break inside 'for(" + initializers(¢) + "; " + ¢.getExpression() + ";" + updaters(¢) + " to return";
   }
-
   private Tip make(final ForStatement s, final ReturnStatement nextReturn) {
     final Statement $ = make(body(s), nextReturn);
     return $ == null ? null : new Tip(description(), getClass(), s) {
@@ -83,11 +76,9 @@ public final class InfiniteForBreakToReturn extends CarefulTipper<ForStatement>/
       }
     }.spanning(nextReturn);
   }
-
   @Override public boolean prerequisite(final ForStatement ¢) {
     return ¢ != null && extract.nextReturn(¢) != null && !iz.finiteLoop(¢);
   }
-
   @Override public Tip tip(final ForStatement vor) {
     if (vor == null || iz.finiteLoop(vor))
       return null;

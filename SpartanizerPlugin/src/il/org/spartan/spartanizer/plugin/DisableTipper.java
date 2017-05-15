@@ -27,7 +27,6 @@ public class DisableTipper {
         note.bug(¢);
       }
   }
-
   /** Disable tipper.
    * @param tipperClass JD
    * @param p current project */

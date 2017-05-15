@@ -4,6 +4,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.Prefix;
@@ -25,11 +26,9 @@ public class PrefixToInfix extends Prefix implements TipperCategory.Bloater {
   public PrefixToInfix() {
     andAlso("Can be changed", () -> (iz.expressionStatement(current.getParent()) || iz.forStatement(current.getParent())));
   }
-
   @Override public Examples examples() {
     return convert("++i;").to("i += 1;").convert("--i;").to("i-=1;");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final NumberLiteral one = current.getAST().newNumberLiteral();
     one.setToken("1");
@@ -39,7 +38,6 @@ public class PrefixToInfix extends Prefix implements TipperCategory.Bloater {
       $.replace(current, subject.pair(operand, one).to(Assignment.Operator.MINUS_ASSIGN), g);
     return $;
   }
-
   @Override public String description() {
     return "Convert PrefixExpression to Infix Expreesion";
   }

@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
@@ -45,7 +46,6 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
   @Override public String description() {
     return "Add 'else' clause to " + Trivia.gist(current);
   }
-
   @Override public Examples examples() {
     return //
     convert("if (a) {f(); g(); return;} a++; b++; return;}")//
@@ -61,7 +61,6 @@ public class IfStatementBlockSequencerBlockSameSequencer extends IfAbstractPatte
         convert("if (a) {f(); g(); continue ;} a++; b++; continue ;}")//
         .to("if (a) {f(); g(); } else {a++; b++;}  continue ;}");//
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final IfStatement $ = copy.of(current);
     r.replace(current, $, g);

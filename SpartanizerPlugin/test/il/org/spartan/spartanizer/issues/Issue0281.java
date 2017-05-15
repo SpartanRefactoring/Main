@@ -14,12 +14,10 @@ public class Issue0281 {
         + "$ = ((IfStatement) $).getElseStatement();return $;}")//
             .stays();
   }
-
   @Test public void test2() {
     trimmingOf("int a=0;while(a!=5){q=6+9;q--;a+=8;}a=3;")//
         .gives("int a=0;for(;a!=5;a+=8){q=6+9;q--;}a=3;");
   }
-
   @Test public void test3() {
     trimmingOf("int a=0;while(a!=5){q=6+9;q--;a+=8;}z+=8;a=3;")//
         .gives("int a=0;for(;a!=5;a+=8){q=6+9;q--;}z+=8;a=3;");

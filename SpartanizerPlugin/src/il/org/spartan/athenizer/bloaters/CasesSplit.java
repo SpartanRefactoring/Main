@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -30,7 +31,6 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "split cases within switch";
   }
-
   @Override public Tip tip(final SwitchStatement s) {
     final SwitchCase n = caseWithNoSequencer(s);
     final List<Statement> $ = getAdditionalStatements(statements(s), n);
@@ -44,11 +44,9 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
       }
     };
   }
-
   @Override protected boolean prerequisite(final SwitchStatement ¢) {
     return caseWithNoSequencer(¢) != null;
   }
-
   private static SwitchCase caseWithNoSequencer(final SwitchStatement x) {
     SwitchCase $ = null;
     for (final Statement ¢ : statements(x)) // TOUGH
@@ -61,7 +59,6 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
       }
     return null;
   }
-
   private static List<Statement> getAdditionalStatements(final List<Statement> ss, final SwitchCase c) {
     final List<Statement> $ = an.empty.list();
     boolean additionalStatements = false;
@@ -75,7 +72,6 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     }
     return $;
   }
-
   static Map<String, String> getMapOldToNewNames(final List<Statement> ss) {
     final Map<String, String> $ = new HashMap<>();
     ss.forEach(n -> {
@@ -85,7 +81,6 @@ public class CasesSplit extends CarefulTipper<SwitchStatement>//
     });
     return $;
   }
-
   static Statement replaceNames(final Statement target, final Map<String, String> m) {
     target.accept(new ASTVisitor() {
       @Override public void preVisit(final ASTNode ¢) {

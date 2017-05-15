@@ -27,9 +27,7 @@ public abstract class IfAbstractPattern extends NodePattern<IfStatement> {
       return true;
     });
   }
-
   @Override public abstract Examples examples();
-
   static boolean degenerateElse(final IfStatement ¢) {
     return elze(¢) != null && iz.vacuousElse(¢);
   }

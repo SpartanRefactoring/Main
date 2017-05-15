@@ -27,19 +27,17 @@ public interface theSpartanizer {
         @Override protected <N extends ASTNode> boolean go(final N ¢) {
           return searching && go(traversal.configuration.firstTipper(¢));
         }
-
         <N extends ASTNode> boolean go(final Tipper<N> ¢) {
           if (¢ == null)
             return true;
           $.set(¢);
-          return searching = false;
+          return false;
         }
 
         boolean searching = true;
       });
     return $.get();
   }
-
   /** Apply trimming once
    * @param from what to process
    * @return trimmed text, or null in case of error or no more applicable
@@ -60,9 +58,8 @@ public interface theSpartanizer {
           if ($ == null)
             return true;
           apply($, n);
-          return searching = false;
+          return false;
         }
-
         <N extends ASTNode> void apply(final Tip t, final N n) {
           final ASTRewrite r = ASTRewrite.create(n.getAST());
           t.go(r, null);
@@ -78,7 +75,6 @@ public interface theSpartanizer {
       });
     return $.get();
   }
-
   static String repetitively(final String from) {
     int n = 0;
     for (String $ = from, next;; $ = next) {
@@ -97,11 +93,9 @@ public interface theSpartanizer {
       return note.bug(¢);
     }
   }
-
   static String thrice(final String javaCode) {
     return once(twice(javaCode));
   }
-
   static String twice(final String javaCode) {
     return once(once(javaCode));
   }

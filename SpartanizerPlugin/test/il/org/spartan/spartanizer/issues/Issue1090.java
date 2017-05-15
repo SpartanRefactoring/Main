@@ -21,7 +21,6 @@ public class Issue1090 extends MetaFixture {
         intField = 0;
         charField = 0;
       }
-
       @Override protected void trimmingStopsAt() {
         intField = charField = 0;
       }
@@ -31,7 +30,6 @@ public class Issue1090 extends MetaFixture {
       @Override protected void startingWith() {
         intField++;
       }
-
       @Override protected void trimmingStopsAt() {
         ++intField;
       }
@@ -40,19 +38,15 @@ public class Issue1090 extends MetaFixture {
     byte getByteField() {
       return byteField;
     }
-
     char getCharField() {
       return charField;
     }
-
     int getIntField() {
       return intField;
     }
-
     short getShortField() {
       return shortField;
     }
-
     /** [[SuppressWarningsSpartan]] */
     void go() {
       byteField = getByteField();
@@ -105,12 +99,10 @@ public class Issue1090 extends MetaFixture {
       // shortField = 2* longField;
       shortField = getShortField();
     }
-
     byte setByteField(final byte byteField) {
       this.byteField = byteField;
       return byteField;
     }
-
     short setShortField(final short shortField) {
       this.shortField = shortField;
       return shortField;

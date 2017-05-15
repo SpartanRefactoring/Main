@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.utils.*;
 
 /** inline arithmetics into variable initialization tests in {@link Issue0187}
@@ -47,18 +48,15 @@ public class LocalInitializedArithmeticsInline extends LocalInitialized {
   @Override public String description() {
     return "Consolidate initialization of " + name + " with subsequent arithmetics assign";
   }
-
   @Override public Examples examples() {
     return //
     convert("int x = 1; x+=1;")//
         .to("int x = 1+1;")//
         .ignores("int x = 1, y = x; x*=3;");
   }
-
   @Override protected ASTNode[] span() {
     return as.array(current, nextStatement);
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final VariableDeclarationFragment $ = copy.of(current());
     $.setInitializer(subject.operands(subject.operand(initializer).parenthesis(), //

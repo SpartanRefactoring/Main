@@ -18,7 +18,6 @@ public final class AnnotationRemoveEmptyParentheses extends ReplaceCurrentNode<N
   @Override public String description(final NormalAnnotation ¢) {
     return "Remove redundant parenthesis from the @" + ¢.getTypeName().getFullyQualifiedName() + " annotation";
   }
-
   @Override public ASTNode replacement(final NormalAnnotation ¢) {
     if (!values(¢).isEmpty())
       return null;

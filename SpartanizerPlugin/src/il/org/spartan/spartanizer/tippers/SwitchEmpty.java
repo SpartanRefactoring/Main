@@ -13,6 +13,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -44,22 +45,18 @@ public final class SwitchEmpty extends CarefulTipper<SwitchStatement>//
       }
     };
   }
-
   static String statementsToString(final Iterable<Statement> ¢) {
     final StringBuilder $ = new StringBuilder();
     ¢.forEach($::append);
     return $ + "";
   }
-
   @Override protected boolean prerequisite(final SwitchStatement ¢) {
     final List<SwitchCase> $ = extract.switchCases(¢);
     return noSideEffectCommands(¢) || $.isEmpty() || $.size() == 1 && the.headOf($).isDefault();
   }
-
   static boolean noSideEffectCommands(final SwitchStatement s) {
     return statements(s).stream().allMatch(λ -> iz.switchCase(λ) || iz.breakStatement(λ));
   }
-
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove empty switch statement or switch statement with only default case";
   }

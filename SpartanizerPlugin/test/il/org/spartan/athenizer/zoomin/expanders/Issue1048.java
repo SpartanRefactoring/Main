@@ -13,6 +13,6 @@ import il.org.spartan.athenizer.bloaters.*;
 public class Issue1048 {
   @Test public void test() {
     bloatingOf("public static InDeclaration instance() {instance = instance != null ? instance : new InDeclaration();return instance;}")
-        .gives("public static InDeclaration instance(){if(instance!=null)instance=instance;else instance=new InDeclaration();return instance;}");
+        .gives("public static InDeclaration instance(){if(instance==null) instance=new InDeclaration();return instance;}");
   }
 }

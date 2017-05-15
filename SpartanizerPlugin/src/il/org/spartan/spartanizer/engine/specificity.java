@@ -20,7 +20,6 @@ public final class specificity implements Comparator<Expression> {
   public static boolean defined(final Expression ¢) {
     return Level.defined(¢);
   }
-
   /** A comparison of two {@link Expression} by their level of specificity.
    * @param e1 JD
    * @param e2 JD
@@ -100,18 +99,15 @@ public final class specificity implements Comparator<Expression> {
     static boolean defined(final Expression ¢) {
       return of(¢) != values().length;
     }
-
     static int of(final Expression ¢) {
       return ofCore(extract.core(¢));
     }
-
     private static int ofCore(final Expression ¢) {
       for (final Level $ : values())
         if ($.includes(¢))
           return $.ordinal();
       return values().length;
     }
-
     abstract boolean includes(ASTNode ¢);
   }
 }

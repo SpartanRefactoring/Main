@@ -17,7 +17,6 @@ public class SafeCastTest {
         .gives("if(a instanceof b) safeCast(a).g();")//
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("if(a.b.g() instanceof b && isGood.enough()) ((b)a.b.g()).g();")//
         .using(new SafeCast(), CastExpression.class)//
@@ -25,7 +24,6 @@ public class SafeCastTest {
         .gives("if(a.b.g() instanceof b && isGood.enough()) safeCast(a.b.g()).g();")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("if(a    instanceof      b) ((b)  a).g();")//
         .using(new SafeCast(), CastExpression.class)//

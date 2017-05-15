@@ -35,7 +35,6 @@ public final class SingleFlater {
 
   /** Suppresses default constructor, ensuring non-instantiability */
   private SingleFlater() {}
-
   /** Creates a new for a {@link CompilationUnit}.
    * @param ¢ JD
    * @return new */
@@ -44,7 +43,6 @@ public final class SingleFlater {
     $.root = ¢;
     return $;
   }
-
   /** Sets {@link OperationProvider} for this flater.
    * @param ¢ JD
    * @return {@code this} flater */
@@ -52,7 +50,6 @@ public final class SingleFlater {
     operationsProvider = ¢;
     return this;
   }
-
   /** Sets text selection limits of window to this flater.
    * @param ¢ JD
    * @return {@code this} flater */
@@ -60,14 +57,12 @@ public final class SingleFlater {
     windowInformation = ¢;
     return this;
   }
-
   /** Set disabling for this flater.
    * @return {@code this} flater */
   public SingleFlater usesDisabling(final boolean ¢) {
     usesDisabling = ¢;
     return this;
   }
-
   protected <N extends ASTNode> Tipper<N> getTipper(final N n) {
     return robust.lyNull(() -> {
       final Tipper<N> $ = operationsProvider.getTipper(n);
@@ -75,7 +70,6 @@ public final class SingleFlater {
       return $;
     }, λ -> note.bug(this, λ));
   }
-
   /** Main operation. Commit a single change to the {@link CompilationUnit}.
    * @param flaterChooser a {@link Function} to choose an {@link Operation} to
    *        make out of a collection of {@link Option}s.
@@ -107,7 +101,6 @@ public final class SingleFlater {
       perform(¢, g, touched);
     return true;
   }
-
   @SuppressWarnings({ "rawtypes", "unchecked" }) void perform(final Operation o, final TextEditGroup g, final Boxer<Range> touched) {
     robust.ly(() -> {
       setTipper(o.tipper);
@@ -121,10 +114,9 @@ public final class SingleFlater {
       notify.tipRewrite();
     }, λ -> note.bug(this, λ));
   }
-
   /** @param compoundEditing
    * @param wcu - the WrappedCompilationUnit which is worked on */
-  public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final StyledText t,
+  public static boolean commitChanges(final SingleFlater f, final ASTRewrite r, final WrappedCompilationUnit u, final ISourceViewer v,
       final ITextEditor e, final WindowInformation i, final boolean compoundEditing) {
     boolean $ = false;
     if (compoundEditing)
@@ -132,7 +124,7 @@ public final class SingleFlater {
         if (f.go(r, null)) {
           final TextEdit te = r.rewriteAST();
           if (te != null && te.getLength() > 0)
-            $ = changeNFocus(e, t, te, i);
+            $ = changeNFocus(e, v, te, i);
         }
       } catch (final CoreException | BadLocationException ¢) {
         note.bug(¢);
@@ -144,7 +136,7 @@ public final class SingleFlater {
         if (f.go(r, null)) {
           tfc.setEdit(r.rewriteAST());
           if (tfc.getEdit().getLength() != 0)
-            $ = changeNFocus(e, t, tfc, i);
+            $ = changeNFocus(e, v, tfc, i);
         }
       } catch (final CoreException ¢) {
         note.bug(¢);
@@ -152,7 +144,6 @@ public final class SingleFlater {
     u.dispose();
     return $;
   }
-
   /** @param from1 - starting char of first interval
    * @param lenth1 - length of first interval
    * @param from2 - starting char of second interval
@@ -162,33 +153,30 @@ public final class SingleFlater {
     return length1 != 0 && length2 != 0
         && (from1 < from2 ? from1 + length1 > from2 : from1 != from2 ? from2 + length2 > from1 : length1 > 0 && length2 > 0);
   }
-
-  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextEdit te, final WindowInformation i)
+  private static boolean changeNFocus(final ITextEditor e, final ISourceViewer v, final TextEdit te, final WindowInformation i)
       throws MalformedTreeException, BadLocationException {
-    if (i == null || t == null || e == null) {
+    if (i == null || v == null || e == null) {
       te.apply(Eclipse.document(e));
       return true;
     }
     te.apply(Eclipse.document(e));
     e.getSelectionProvider().setSelection(new TextSelection(te.getOffset(), te.getLength()));
     if (!i.invalid())
-      t.setTopIndex(i.startLine);
+      v.setTopIndex(i.startLine);
     return false;
   }
-
-  private static boolean changeNFocus(final ITextEditor e, final StyledText t, final TextFileChange c, final WindowInformation i)
+  private static boolean changeNFocus(final ITextEditor e, final ISourceViewer v, final TextFileChange c, final WindowInformation i)
       throws CoreException {
-    if (i == null || t == null || e == null) {
+    if (i == null || v == null || e == null) {
       c.perform(new NullProgressMonitor());
       return true;
     }
     c.perform(new NullProgressMonitor());
     e.getSelectionProvider().setSelection(new TextSelection(c.getEdit().getOffset(), c.getEdit().getLength()));
     if (!i.invalid())
-      t.setTopIndex(i.startLine);
+      v.setTopIndex(i.startLine);
     return false;
   }
-
   private boolean inWindow(final ASTNode ¢) {
     return windowInformation == null || windowInformation.invalid()
         || ¢ != null && ¢.getStartPosition() >= windowInformation.startChar && ¢.getLength() + ¢.getStartPosition() <= windowInformation.endChar;
@@ -207,7 +195,6 @@ public final class SingleFlater {
       node = n;
       tipper = t;
     }
-
     public static <N extends ASTNode> Operation<N> of(final N node, final Tipper<N> t) {
       return new Operation<>(node, t);
     }
@@ -238,26 +225,30 @@ public final class SingleFlater {
       startLine = v.getTopIndex();
       endLine = v.getBottomIndex();
     }
-
-    public WindowInformation(final StyledText ¢) {
+    @Deprecated public WindowInformation(final StyledText ¢) {
       startLine = ¢.getTopIndex();
       endLine = JFaceTextUtil.getBottomIndex(¢);
       startChar = ¢.getOffsetAtLine(startLine);
       endChar = ¢.getOffsetAtLine(endLine);
     }
-
+    public WindowInformation(final ISourceViewer ¢) {
+      startLine = ¢.getTopIndex();
+      endLine = ¢.getBottomIndex();
+      startChar = ¢.getTopIndexStartOffset();
+      endChar = ¢.getBottomIndexEndOffset();
+    }
     @Deprecated public static WindowInformation of(final ITextEditor ¢) {
-      return new WindowInformation(¢);
+      return ¢ == null ? null : new WindowInformation(¢);
     }
-
-    public static WindowInformation of(final StyledText ¢) {
-      return new WindowInformation(¢);
+    @Deprecated public static WindowInformation of(final StyledText ¢) {
+      return ¢ == null ? null : new WindowInformation(¢);
     }
-
+    public static WindowInformation of(final ISourceViewer ¢) {
+      return ¢ == null ? null : new WindowInformation(¢);
+    }
     public boolean invalid() {
       return startChar == INVALID;
     }
-
     public void invalidate() {
       startChar = INVALID;
     }
@@ -275,16 +266,13 @@ public final class SingleFlater {
     if (¢ != null)
       notify.tipperTip();
   }
-
   public void setNode(final ASTNode currentNode) {
     node = currentNode;
     notify.setNode();
   }
-
   public void setRewrite(final ASTRewrite currentRewrite) {
     rewrite = currentRewrite;
   }
-
   public void setTipper(final Tipper<?> currentTipper) {
     tipper = currentTipper;
     if (tipper() == null)
@@ -292,19 +280,15 @@ public final class SingleFlater {
     else
       notify.tipperAccepts();
   }
-
   public ASTRewrite rewrite() {
     return rewrite;
   }
-
   public Tip tip() {
     return tip;
   }
-
   public ASTNode node() {
     return node;
   }
-
   public Tipper<?> tipper() {
     return tipper;
   }
@@ -325,7 +309,6 @@ public final class SingleFlater {
     @Override public void noTipper() {
       inner.forEach(Tap::noTipper);
     }
-
     /** @formatter:off */
     public Taps pop() { inner.remove(inner.size()-1); return this; }
     public Taps push(final Tap ¢) { inner.add(¢); return this; }

@@ -18,7 +18,6 @@ public class Issue0909 {
         .gives("return 3;")//
         .stays();
   }
-
   @Test public void b$03() {
     trimmingOf("int a; try { } catch(Exception e) { return -1; }")//
         .gives("")//

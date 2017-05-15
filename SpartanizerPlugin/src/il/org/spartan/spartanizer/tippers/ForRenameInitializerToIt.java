@@ -34,7 +34,6 @@ public final class ForRenameInitializerToIt extends EagerTipper<VariableDeclarat
   @Override public String description(final VariableDeclarationExpression ¢) {
     return "Rename iteration variable '" + extract.onlyName(¢) + "' to '¢'";
   }
-
   @Override public Tip tip(final VariableDeclarationExpression x) {
     final ForStatement $ = az.forStatement(parent(x));
     if ($ == null)

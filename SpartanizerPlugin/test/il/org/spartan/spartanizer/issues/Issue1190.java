@@ -24,7 +24,6 @@ public class Issue1190 {
   @Before public void setUp() {
     trimmer = new TextualTraversals();
   }
-
   @Test(timeout = 30000) public void runTheSpartinizerOnItself() {
     new ASTInFilesVisitor(new String[] { "-i", ".", "." }) {
       @Override public void visitFile(final File f) {

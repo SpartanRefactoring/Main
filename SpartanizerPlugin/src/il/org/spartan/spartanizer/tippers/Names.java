@@ -21,7 +21,7 @@ public final class Names {
       "continue", "default", "do", "double", "else", "enum", "extends", "false", "final", "finally", "float", "for", "if", "goto", "implements",
       "import", "instanceof", "int", "interface", "long", "native", "new", "null", "package", "private", "protected", "public", "return", "short",
       "static", "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "true", "try", "void", "volatile", "while" };
-  public static String returnName =  notation.return$;
+  public static String returnName = notation.return$;
   public static ReturnNameSelect returnNameSelect = ReturnNameSelect.byConst;
   public static final BiFunction<Type, MethodDeclaration, String> methodReturnName = (x, y) -> {
     switch (returnNameSelect) {

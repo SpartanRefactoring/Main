@@ -41,11 +41,9 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
     }
     return $;
   }
-
   @Override public String description(@SuppressWarnings("unused") final IfStatement __) {
     return "Extract commmon suffix of then and else branches to just after if statement";
   }
-
   @Override public Tip tip(final IfStatement s) {
     final List<Statement> $ = extract.statements(then(s));
     if ($.isEmpty())
@@ -73,11 +71,9 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
           r.replace(s, subject.ss(commmonSuffix).toBlock(), g);
         }
       }
-
       IfStatement replacement() {
         return replacement(s.getExpression(), subject.ss($).toOneStatementOrNull(), subject.ss(elze).toOneStatementOrNull());
       }
-
       IfStatement replacement(final Expression condition, final Statement trimmedThen, final Statement trimmedElse) {
         return trimmedThen == null && trimmedElse == null ? null
             : trimmedThen == null ? subject.pair(trimmedElse, null).toNot(condition) : subject.pair(trimmedThen, trimmedElse).toIf(condition);
@@ -93,11 +89,9 @@ public final class IfFooBarElseBazBar extends EagerTipper<IfStatement>//
       allDefined = true;
       this.statements = statements.toArray(new Statement[statements.size()]);
     }
-
     public boolean notAllDefined() {
       return !allDefined;
     }
-
     @Override public boolean visit(final SimpleName ¢) {
       if (!collect.declarationsOf(¢).in(statements).isEmpty())
         allDefined = false;

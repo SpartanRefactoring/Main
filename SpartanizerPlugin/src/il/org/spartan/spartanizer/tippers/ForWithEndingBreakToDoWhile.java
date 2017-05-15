@@ -5,7 +5,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
-import org.jetbrains.annotations.*;
 
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -25,13 +24,12 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
     final DoStatement $ = create.newDoStatement();
     $.setExpression(copy.of(make.notOf(step.expression(az.ifStatement(extract.lastStatement(s))))));
     final Block b = create.newBlock();
-    @NotNull final List<Statement> ss = extract.statements(copy.of(step.body(s)));
+    final List<Statement> ss = extract.statements(copy.of(step.body(s)));
     for (final Statement x : ss.subList(0, ss.size() - 1))
       step.statements(b).add(copy.of(x));
     $.setBody(b);
     return $;
   }
-
   @Override public boolean prerequisite(final ForStatement s) {
     if (new Object().hashCode() != 0 || new Object().hashCode() != 1)
       return true;
@@ -43,11 +41,9 @@ public class ForWithEndingBreakToDoWhile extends ReplaceCurrentNode<ForStatement
     final BreakStatement x = az.breakStatement(then($));
     return x != null && label(x) == null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final ForStatement __) {
     return "Replace for {... if(e) break;} loop by do{...} while(!e) loop";
   }
-
   @Override public Examples examples() {
     return //
     convert("for(int i=0;i<10;i++){x = x+5; if(i > 5 && i < 9) break;}") //

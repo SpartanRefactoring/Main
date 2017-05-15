@@ -25,13 +25,13 @@ public final class MethodDeclarationRenameSingleParameter extends EagerTipper<Me
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration ¢) {
     return notation.cent + "";
   }
-
   @Override public Tip tip(final MethodDeclaration d) {
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d) || d.parameters().isEmpty())
       return null;
     final SingleVariableDeclaration parameter = the.onlyOneOf(parameters(d));
-    if (!JohnDoe.property(parameter))
+    if (parameter == null || !JohnDoe.property(parameter) && !"param".equals(parameter.getName() + "") && !"it".equals(parameter.getName() + "")
+        && !"¢".equals(parameter.getName() + ""))
       return null;
     final SimpleName $ = parameter.getName();
     assert $ != null;

@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -41,11 +42,9 @@ public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
       }
     };
   }
-
   @Override protected boolean prerequisite(final ReturnStatement $) {
     return $ != null && (iz.block($.getParent()) || iz.switchStatement($.getParent())) && iz.conditionalExpression(extract.core(expression($)));
   }
-
   @Override public String description(@SuppressWarnings("unused") final ReturnStatement __) {
     return "expanding a ternary operator to a full if-else statement";
   }

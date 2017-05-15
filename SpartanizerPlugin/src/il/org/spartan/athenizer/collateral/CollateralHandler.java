@@ -15,7 +15,6 @@ class CollateralHandler extends AbstractHandler {
     applicator().defaultSelection().go();
     return null;
   }
-
   private static BloaterGUIApplicator applicator() {
     final BloaterGUIApplicator $ = BloaterGUIApplicator.defaultApplicator();
     $.setRunAction(λ -> new Augmenter().commitChanges(λ, $.selection()));

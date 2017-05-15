@@ -33,11 +33,9 @@ public class HasEnvironmentTest extends MetaFixture {
         }));
     return $;
   }
-
   @Parameters(name = "{index}. {1}: {0} ") public static Collection<Object[]> data() {
     return collect(new NamespaceTest(), new definitionTest());
   }
-
   private static String signature(final ASTNode ¢) {
     return separate.these(wizard.nodeName(¢), wizard.nodeName(parent(¢)), wizard.nodeName(parent(parent(¢)))).by('/');
   }
@@ -47,8 +45,7 @@ public class HasEnvironmentTest extends MetaFixture {
   public HasEnvironmentTest(final ASTNode name, @SuppressWarnings("unused") final String signature) {
     this.name = name;
   }
-
-  @Test public void notNullNode() {
+  @Test public void NonNullNode() {
     assert Environment.of(name) != null : //
     "\n name = " + name + //
         MetaFixture.ancestry(name) + //

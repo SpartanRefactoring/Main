@@ -18,7 +18,6 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
   public Nanonizer() {
     addNanoPatterns();
   }
-
   /** Add our wonderful patterns (which are actually just special tippers) to
    * the instance. */
   private Nanonizer addNanoPatterns() {
@@ -59,7 +58,7 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
                 new NotNullAssumed(), //
                 new ExecuteUnless(), //
                 new WhenHoldsOn<>(), //
-                new NotNullRequired(), //
+                new NonNullRequired(), //
                 new ThrowOnFalse(), //
                 null) //
             .add(InfixExpression.class, //
@@ -77,7 +76,6 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
     ;
     return this;
   }
-
   public Nanonizer addRejected() {
     add(CatchClause.class, //
         new ReturnOnException(), // R.I.P
@@ -127,7 +125,6 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
         null);
     return this;
   }
-
   private Nanonizer addMethodPatterns() {
     add(MethodDeclaration.class, //
         new Adjuster(), //
@@ -151,7 +148,6 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
         null);
     return this;
   }
-
   protected Nanonizer addCharacteristicMethodPatterns() {
     add(MethodDeclaration.class, //
         new Fluenter(), // Uberlola
@@ -163,19 +159,16 @@ public class Nanonizer extends NoBrainDamagedTippersSpartanizer {
         null);
     return this;
   }
-
   @Override public String fixedPoint(final ASTNode ¢) {
     ¢.accept(new AnnotationCleanerVisitor());
     return super.fixedPoint(¢);
   }
-
   public Collection<NanoPatternTipper<? extends ASTNode>> allNanoPatterns() {
     final List<NanoPatternTipper<? extends ASTNode>> $ = an.empty.list();
     traversals.traversal.configuration.getAllTippers().stream().filter(NanoPatternTipper.class::isInstance)
         .forEach(λ -> $.add((NanoPatternTipper<? extends ASTNode>) λ));
     return $;
   }
-
   public Nanonizer removeSpartanizerTippers() {
     traversals.traversal.configuration.clear();
     addNanoPatterns();

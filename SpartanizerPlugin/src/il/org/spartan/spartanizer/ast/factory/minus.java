@@ -39,7 +39,6 @@ public enum minus {
       ss.remove(ss.size() - 1);
     return $;
   }
-
   public static int level(final Expression ¢) {
     return iz.nodeTypeEquals(¢, PREFIX_EXPRESSION) ? level((PrefixExpression) ¢)
         : iz.nodeTypeEquals(¢, PARENTHESIZED_EXPRESSION) ? level(core(¢)) //
@@ -47,19 +46,15 @@ public enum minus {
                 : iz.nodeTypeEquals(¢, NUMBER_LITERAL) ? az.bit(az.numberLiteral(¢).getToken().startsWith("-")) //
                     : 0;
   }
-
   public static int level(final InfixExpression ¢) {
     return is.out(operator(¢), TIMES, DIVIDE) ? 0 : level(hop.operands(¢));
   }
-
   @SuppressWarnings("boxing") public static int level(final Collection<Expression> xs) {
     return xs.stream().map(minus::level).reduce((x, y) -> x + y).get();
   }
-
   private static int level(final PrefixExpression ¢) {
     return az.bit(operator(¢) == op.MINUS1) + level(operand(¢));
   }
-
   public static Expression peel(final Expression $) {
     return iz.nodeTypeEquals($, PREFIX_EXPRESSION) ? peel((PrefixExpression) $)
         : iz.nodeTypeEquals($, PARENTHESIZED_EXPRESSION) ? peel(core($)) //
@@ -67,19 +62,15 @@ public enum minus {
                 : iz.nodeTypeEquals($, NUMBER_LITERAL) ? peel((NumberLiteral) $) //
                     : $;
   }
-
   public static Expression peel(final InfixExpression ¢) {
     return is.out(operator(¢), TIMES, DIVIDE) ? ¢ : subject.operands(peel(hop.operands(¢))).to(operator(¢));
   }
-
   private static List<Expression> peel(final Collection<Expression> ¢) {
     return ¢.stream().map(minus::peel).collect(toList());
   }
-
   public static Expression peel(final NumberLiteral $) {
     return !token($).startsWith("-") && !token($).startsWith("+") ? $ : $.getAST().newNumberLiteral(token($).substring(1));
   }
-
   public static Expression peel(final PrefixExpression $) {
     return is.out(operator($), op.MINUS1, op.PLUS1) ? $ : peel(operand($));
   }

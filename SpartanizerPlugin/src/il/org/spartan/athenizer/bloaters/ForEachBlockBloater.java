@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -25,7 +26,6 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
   @Override public Examples examples() {
     return convert("for(Double i : lili) a=5; b=7;").to("for(Double i : lili){a=5;}b=7;");
   }
-
   public ForEachBlockBloater() {
     andAlso("Valid when not a block", () -> {
       final Collection<Boolean> $ = an.empty.list();
@@ -40,7 +40,6 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
       return $.isEmpty();
     });
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final EnhancedForStatement $ = copy.of(current);
     final Block b = current.getAST().newBlock();
@@ -49,7 +48,6 @@ public class ForEachBlockBloater extends ForEachStatementPattern//
     r.replace(current, $, g);
     return r;
   }
-
   @Override public String description() {
     return "expand the single statement in the foreach to a block";
   }

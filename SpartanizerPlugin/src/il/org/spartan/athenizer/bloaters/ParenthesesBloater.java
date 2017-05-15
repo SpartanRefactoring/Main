@@ -2,6 +2,7 @@ package il.org.spartan.athenizer.bloaters;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -24,7 +25,6 @@ public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
     $.setExpression(copy.of(¢));
     return $;
   }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Add parentheses to InfixExpression who's parent is also InfixExpression";
   }

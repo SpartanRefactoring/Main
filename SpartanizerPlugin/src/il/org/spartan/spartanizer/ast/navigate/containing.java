@@ -17,11 +17,9 @@ public interface containing {
   static BodyDeclaration bodyDeclaration(final ASTNode ¢) {
     return yieldAncestors.untilClass(BodyDeclaration.class).from(¢);
   }
-
   static CompilationUnit compilationUnit(final ASTNode ¢) {
     return az.compilationUnit(yieldAncestors.untilNodeType(COMPILATION_UNIT).from(¢));
   }
-
   /** Extract the {@link MethodDeclaration} that contains a given node.
    * @param pattern JD
    * @return inner most {@link MethodDeclaration} in which the parameter is
@@ -33,11 +31,9 @@ public interface containing {
         return az.methodDeclaration($);
     return null;
   }
-
   static String package¢(final CastExpression ¢) {
     return yieldAncestors.untilContainingCompilationUnit().from(¢).getPackage().getName() + "";
   }
-
   /** extract the {@link Statement} that contains a given node.
    * @param pattern JD
    * @return inner most {@link Statement} in which the parameter is nested, or
@@ -48,7 +44,6 @@ public interface containing {
         return az.statement($);
     return null;
   }
-
   /** @param ¢ JD
    * @return ASTNode of the __ if one of ¢'s parent ancestors is a container __
    *         and null otherwise */

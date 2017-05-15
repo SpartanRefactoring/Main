@@ -21,7 +21,6 @@ public class PlusAssignToPostfix extends ReplaceCurrentNode<Assignment>//
         || !iz.numberLiteral($.getRightHandSide()) || !"1".equals(az.numberLiteral($.getRightHandSide()).getToken()) ? null
             : subject.operand($.getLeftHandSide()).to(PostfixExpression.Operator.INCREMENT);
   }
-
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return null;
   }

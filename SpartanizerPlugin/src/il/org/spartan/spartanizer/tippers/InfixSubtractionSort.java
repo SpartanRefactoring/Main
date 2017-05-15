@@ -21,7 +21,6 @@ public final class InfixSubtractionSort extends InfixExpressionSortingRest//
   @Override protected boolean sort(final List<Expression> ¢) {
     return ExpressionComparator.ADDITION.sort(¢);
   }
-
   @Override protected boolean suitable(final InfixExpression ¢) {
     return in(¢.getOperator(), il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }

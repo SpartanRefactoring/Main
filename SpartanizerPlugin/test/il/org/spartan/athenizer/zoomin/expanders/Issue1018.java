@@ -16,32 +16,26 @@ public class Issue1018 {
     bloatingOf("if(x==0) x+=1; else if(x==1) x+=2; else x+=10; ") //
         .gives("switch(x){case 0: x+=1; break; case 1: x+=2; break; default: x+=10; break;}");
   }
-
   @Test public void b1() {
     bloatingOf("if(x!=0) x+=1; else if(x==1) x+=2; else x+=10; ")//
         .gives("if(x!=0) x=x+1; else if(x==1) x+=2; else x+=10; ");
   }
-
   @Test public void b2() {
     bloatingOf("if(x==0) x+=1; else if(x>=1) x+=2; else x+=10; ")//
         .gives("if(x==0) x=x+1; else if(x>=1) x+=2; else x+=10; ");
   }
-
   @Test public void c() {
     bloatingOf("if(x==0){ x+=1;} else if(x==1) x+=2; else x+=10; ")
         .gives("switch(x){case 0: x+=1; break; case 1: x+=2; break; default: x+=10; break;}");
   }
-
   @Test public void d() {
     bloatingOf("if(x==0){ x+=1;} else if(x==1){ x+=2;} else x+=10; ")
         .gives("switch(x){case 0: x+=1; break; case 1: x+=2; break; default: x+=10; break;}");
   }
-
   @Test public void e() {
     bloatingOf("if(x==0){ x+=1;} else if(x==1){ x+=2;} else{ x+=10;} ")
         .gives("switch(x){case 0: x+=1; break; case 1: x+=2; break; default: x+=10; break;}");
   }
-
   @Test public void f() {
     bloatingOf("if(x==0){ x+=1;} else if(x==1){ x+=2;}")//
         .gives("switch(x){case 0: x+=1; break; case 1: x+=2; break;}");

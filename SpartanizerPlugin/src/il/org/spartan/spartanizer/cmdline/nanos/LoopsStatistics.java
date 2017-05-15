@@ -17,31 +17,24 @@ public class LoopsStatistics extends NanoPatternsOccurencesStatistics {
   public int total() {
     return wizard.loopTypes.stream().mapToInt(λ -> total(unbox.it(λ))).sum();
   }
-
   public int covered() {
     return wizard.loopTypes.stream().mapToInt(λ -> covered(unbox.it(λ))).sum();
   }
-
   public double coverage() {
     return format.perc(covered(), total());
   }
-
   @Override public void logNode(final ASTNode ¢) {
     countNode(¢);
   }
-
   public int totalDoWhile() {
     return total(DO_STATEMENT);
   }
-
   public int totalWhile() {
     return total(WHILE_STATEMENT);
   }
-
   public int totalFor() {
     return total(FOR_STATEMENT);
   }
-
   public int totalEnhanced() {
     return total(ENHANCED_FOR_STATEMENT);
   }

@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
@@ -27,7 +28,6 @@ public final class TernaryPushup extends Multiciary implements TipperCategory.Bl
   @Override public Examples examples() {
     return convert("x = a + (cond ? b : c);").to("x = cond ? a + b : a + c;").convert("x = (cond ? b : c) + a;").to("x = cond ? b + a : c + a;");
   }
-
   public TernaryPushup() {
     andAlso(OR("Right or left operand is ternary expression",
         () -> not.nil(operandConditional = az.conditionalExpression(extract.core(right))) //
@@ -40,7 +40,6 @@ public final class TernaryPushup extends Multiciary implements TipperCategory.Bl
     andAlso("Condition has no side effect", //
         () -> !haz.sideEffects(operandCondition));
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(current,
         (iz.conditionalExpression(extract.core(right)) ? pair(pair(left, operandThen).to(operator), pair(left, operandElze).to(operator))
@@ -48,7 +47,6 @@ public final class TernaryPushup extends Multiciary implements TipperCategory.Bl
         g);
     return r;
   }
-
   @Override public String description() {
     return "";
   }

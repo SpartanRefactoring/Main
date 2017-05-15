@@ -25,27 +25,21 @@ public final class ReturnPrevious extends NanoPatternTipper<ReturnStatement> {
   @Override public boolean canTip(final ReturnStatement x) {
     return anyTips(tippers, az.block(parent(x)));
   }
-
   @Override public Tip pattern(final ReturnStatement $) {
     return firstTip(tippers, az.block(parent($)));
   }
-
   @Override public Category category() {
     return Category.Field;
   }
-
   @Override public String description() {
     return "Update field and return old value";
   }
-
   @Override public String technicalName() {
     return "AssignXWithYReturnPreviousX";
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }

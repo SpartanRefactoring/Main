@@ -16,7 +16,6 @@ public class Issue1043 {
         .gives("try (File f = new File()) {++i;}") //
         .stays();
   }
-
   @Test public void test1() {
     trimmingOf("try (final File f = new File(); final B b = new B()){i++;}") //
         .gives("try (File f = new File(); B b = new B()) {++i;}") //

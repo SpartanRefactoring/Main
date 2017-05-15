@@ -51,7 +51,6 @@ public class ConstructorRenameParameters extends EagerTipper<MethodDeclaration> 
     }
     return null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "Rename constructor parameters to match fields names";
   }

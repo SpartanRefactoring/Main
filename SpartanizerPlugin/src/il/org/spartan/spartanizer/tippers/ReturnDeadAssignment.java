@@ -32,15 +32,14 @@ public final class ReturnDeadAssignment extends ReturnValue implements TipperCat
         () -> assignment = az.assignment(value) //
     ).notNil("Assigment is to a variable", //
         () -> to = az.simpleName(to(assignment)) //
-    ).andAlso("Variable is a local variable", //
-        () -> Environment.of(methodDeclaration).nest.doesntHave(to + "")//
+    ).andAlso("Variable is a local variable, didn't declared up", //
+        () -> !Environment.declaresUp(methodDeclaration).contains(to + "")//
     ).notNil("Extract from", //
         () -> from = from(assignment) //
     ).notNil("Extract operator", //
         () -> operator = assignment.getOperator() //
     );
   }
-
   @Override public Examples examples() {
     return convert("int f() {int a = 2; return a = 3;}")//
         .to("int f() {int a = 2; return 3;}")//
@@ -51,7 +50,6 @@ public final class ReturnDeadAssignment extends ReturnValue implements TipperCat
         .convert("int f() {int a = 2; return a = 3;}")//
         .to("int f() {int a = 2; return 3;}");
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     r.replace(assignment, operator == ASSIGN ? copy.of(from) : subject.pair(to, from).to(op.assign2infix(operator)), g);
     return r;

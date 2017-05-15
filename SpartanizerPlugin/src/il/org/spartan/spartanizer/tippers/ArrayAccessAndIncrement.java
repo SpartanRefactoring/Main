@@ -26,7 +26,6 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
   @Override public String description(final ArrayAccess ¢) {
     return "Inline next increment/decrement of " + ¢.getIndex() + " into array access";
   }
-
   @Override public Examples examples() {
     return convert("array[i] = 1; ++i;") //
         .to("array[i++] = 1;") //
@@ -34,7 +33,6 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
         .ignores("f(array[i]); ++i;") //
     ;
   }
-
   @Override public Tip tip(final ArrayAccess a) {
     return checkInput(a) || !prerequisite(a) ? null : new Tip(description(a), getClass(), a) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -46,7 +44,6 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
       }
     };
   }
-
   private static boolean checkInput(final ArrayAccess a) {
     if (a == null || extract.nextPrefix(a) == null || extract.nextPrefix(a).getOperand() == null
         || !wizard.eq(extract.nextPrefix(a).getOperand(), a.getIndex()))
@@ -63,7 +60,6 @@ public final class ArrayAccessAndIncrement extends EagerTipper<ArrayAccess>//
     xs.stream().filter(iz::arrayAccess).forEach(λ -> ++$.inner);
     return $.inner != 1;
   }
-
   protected static boolean prerequisite(final ArrayAccess a) {
     if (a == null)
       return false;

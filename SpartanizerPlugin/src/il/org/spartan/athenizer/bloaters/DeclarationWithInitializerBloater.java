@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -30,12 +31,11 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
   @Override @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {
     return "Split declaration with initialization into two statemenets";
   }
-
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
     return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer() != null
-        && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
+        && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER && (!iz.final¢(¢)
+            || collect.usesOf(the.headOf(fragments(¢)).getName()).in(¢.getParent()).stream().noneMatch(λ -> iz.switchCase(λ.getParent())));
   }
-
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢);
     ((VariableDeclaration) the.headOf(fragments($))).setInitializer(null);

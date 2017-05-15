@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** remove redundant continue in switch in loops. for example converts
@@ -38,7 +39,6 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
       }
     return null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Remove redundant switch case";
   }

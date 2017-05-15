@@ -25,14 +25,12 @@ public class Issue0072 {
         .gives("x")//
         .stays();
   }
-
   @Test public void a1() {
     trimmingOf("-(x-0)")//
         .gives("-(x)")//
         .gives("-x")//
         .stays();
   }
-
   @Test public void ma() {
     final String s = "0-x";
     final InfixExpression i = into.i(s);
@@ -47,36 +45,30 @@ public class Issue0072 {
     trimmingOf(s)//
         .gives("-x");
   }
-
   @Test public void mb() {
     trimmingOf("x-0")//
         .gives("x");
   }
-
   @Test public void mc() {
     trimmingOf("x-0-y")//
         .gives("x-y")//
         .stays();
   }
-
   @Test public void md1() {
     trimmingOf("0-x-0")//
         .gives("-x")//
         .stays();
   }
-
   @Test public void md2() {
     trimmingOf("0-x-0-y")//
         .gives("-x-y")//
         .stays();
   }
-
   @Test public void md3() {
     trimmingOf("0-x-0-y-0-z-0-0")//
         .gives("-x-y-z")//
         .stays();
   }
-
   @Test public void me() {
     trimmingOf("0-(x-0)")//
         .gives("-(x-0)")//
@@ -84,36 +76,30 @@ public class Issue0072 {
         .gives("-x")//
         .stays();
   }
-
   @Test public void me1() {
     assert !iz.negative(into.e("0"));
   }
-
   @Test public void me2() {
     assert iz.negative(into.e("-1"));
     assert !iz.negative(into.e("+1"));
     assert !iz.negative(into.e("1"));
   }
-
   @Test public void me3() {
     assert iz.negative(into.e("-x"));
     assert !iz.negative(into.e("+x"));
     assert !iz.negative(into.e("x"));
   }
-
   @Test public void meA() {
     trimmingOf("(x-0)")//
         .gives("(x)")//
         .gives("x")//
         .stays();
   }
-
   @Test public void mf1() {
     trimmingOf("0-(x-y)")//
         .gives("-(x-y)")//
         .stays();
   }
-
   @Test public void mf1A() {
     trimmingOf("0-(x-0)")//
         .gives("-(x-0)")//
@@ -121,7 +107,6 @@ public class Issue0072 {
         .gives("-x")//
         .stays();
   }
-
   @Test public void mf1B() {
     assert iz.simple(into.e("x"));
     trimmingOf("-(x-0)")//
@@ -129,75 +114,62 @@ public class Issue0072 {
         .gives("-x")//
         .stays();
   }
-
   @Test public void mh() {
     trimmingOf("x-0-y")//
         .gives("x-y")//
         .stays();
   }
-
   @Test public void mi() {
     trimmingOf("0-x-0-y-0-z-0")//
         .gives("-x-y-z")//
         .stays();
   }
-
   @Test public void mj() {
     trimmingOf("0-0")//
         .gives("0");
   }
-
   @Test public void mx() {
     trimmingOf("0-0")//
         .gives("0");
   }
-
   @Test public void pa() {
     trimmingOf("(int)x+0")//
         .gives("(int)x");
   }
-
   @Test public void pb() {
     trimmingOf("0+(int)x")//
         .gives("(int)x");
   }
-
   @Test public void pc() {
     trimmingOf("0-x")//
         .gives("-x");
   }
-
   @Test public void pd() {
     trimmingOf("0+(int)x+0")//
         .gives("(int)x")//
         .stays();
   }
-
   @Test public void pe() {
     trimmingOf("(int)x+0-x")//
         .gives("(int)x-x")//
         .stays();
   }
-
   @Test public void pf() {
     trimmingOf("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0+0")//
         .gives("(int)x+0+(int)x+0+0+(int)y+0+0+0+0+(int)z+0").gives("(int)x+(int)x+(int)y+(int)z")//
         .stays();
   }
-
   @Test public void pg() {
     trimmingOf("0+(x+y)")//
         .gives("0+x+y")//
         .stays();
   }
-
   @Test public void ph() {
     trimmingOf("0+((x+y)+0+(z+h))+0")//
         .gives("0 +(x+y) +0+(z+h)+0")//
         .gives("0 +x+y +0+(z+h)+0")//
         .stays();
   }
-
   @Test public void pi() {
     trimmingOf("0+(0+x+y+((int)x+0))")//
         .gives("0+x+y+(int)x +0")//

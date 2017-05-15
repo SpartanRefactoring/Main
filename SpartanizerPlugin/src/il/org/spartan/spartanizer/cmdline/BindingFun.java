@@ -28,14 +28,12 @@ final class BindingFun implements IApplication {
       }
     });
   }
-
   private static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setResolveBindings(true);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource($.createAST(null));
   }
-
   private static String getPackageNameFromSource(final ASTNode n) {
     final Wrapper<String> $ = new Wrapper<>("");
     // noinspection SameReturnValue
@@ -67,7 +65,7 @@ final class BindingFun implements IApplication {
         parser.setResolveBindings(true);
         parser.setSource(u);
         final CompilationUnit cu = (CompilationUnit) parser.createAST(null);
-        Object[] ____ = {};
+        final Object[] ____ = {};
         forget.em(____);
         iterateMethodInvocations(cu);
       } catch (final IOException ¢) {
@@ -77,11 +75,9 @@ final class BindingFun implements IApplication {
       }
     return IApplication.EXIT_OK;
   }
-
   @Override public void stop() {
     ___.nothing();
   }
-
   /** Discard compilation unit u
    * @param u */
   void discardCompilationUnit(final ICompilationUnit u) {
@@ -92,7 +88,6 @@ final class BindingFun implements IApplication {
       note.bug(this, ¢);
     }
   }
-
   void discardTempIProject() {
     try {
       javaProject.close();
@@ -101,13 +96,11 @@ final class BindingFun implements IApplication {
       note.bug(¢);
     }
   }
-
   private ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
-
   private void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("tempP");
     if (p.exists())
@@ -127,7 +120,6 @@ final class BindingFun implements IApplication {
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }
-
   private void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }

@@ -7,12 +7,10 @@ public class TraversalTappers implements TraversalTapper {
     inner.remove(inner.size() - 1);
     return this;
   }
-
   public TraversalTappers push(final TraversalTapper ¢) {
     inner.add(¢);
     return this;
   }
-
   /** @formatter:off */
   @Override public void noTipper() { inner.forEach(TraversalTapper::noTipper); }
   @Override public void begin() { inner.forEach(TraversalTapper::begin); }

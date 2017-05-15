@@ -25,23 +25,19 @@ public final class AnnotationDiscardValueName extends NodePattern<NormalAnnotati
   @Override protected ASTNode highlight() {
     return name;
   }
-
   public AnnotationDiscardValueName() {
     notNil("Has only one member", () -> member = the.onlyOneOf(values(current)));
     notNil("Extract member's name", () -> name = member.getName());
     andAlso("Name equals 'value'", () -> "value".equals(name + ""));
   }
-
   @Override public String description() {
     return "Remove 'value' tag preserving value contents in @annotation";
   }
-
   @Override public Examples examples() {
     return convert("@SuppressWarnings(value = \"unchecked\") void f();")//
         .to("@SuppressWarnings(\"unchecked\") void f();") //
     ;
   }
-
   @Override public ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final SingleMemberAnnotation a = current.getAST().newSingleMemberAnnotation();
     a.setTypeName(copy.of(current.getTypeName()));

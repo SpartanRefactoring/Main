@@ -18,21 +18,18 @@ public class LetInNextTest {
         .gives("return let(()->foo()).in(λ->bar(λ,λ));") //
         .stays();
   }
-
   @Test public void b() {
     trimmingOf("{{A x = foo(); return bar(x,x);} another();}")//
         .gives("A x = foo(); return bar(x,x); another();")//
         .gives("A x = foo(); return bar(x,x);")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf("{{A x = foo(); return bar(y,y);} another();}")//
         .gives("A x=foo();return bar(y,y);another();") //
         .gives("foo(); return bar(y,y);") //
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("{{A x = foo(); bar(x,x);} another();}")//
         .using(new LetInNext(), VariableDeclarationFragment.class)//
@@ -41,25 +38,21 @@ public class LetInNextTest {
         .gives("let(()->foo()).in(λ->bar(λ,λ));another();") //
         .stays();
   }
-
   @Test public void e() {
     trimmingOf("{{A y = bar(), x = foo(); bar(x,x); print(y);} another();}")//
         .using(new LetInNext(), VariableDeclarationFragment.class)//
         .stays();
   }
-
   @Test public void i() {
     trimmingOf("X x = foo(); bar1(x,x); bar2(x);")//
         .using(new LetInNext(), VariableDeclarationFragment.class)//
         .stays();
   }
-
   @Test public void f() {
     trimmingOf("{{A x = foo(); bar(x,x); print(x);} another();}")//
         .using(new LetInNext(), VariableDeclarationFragment.class)//
         .stays();
   }
-
   @Test public void g() {
     trimmingOf("{"//
         + "    final Object value=m.invoke(a);"//
@@ -70,7 +63,6 @@ public class LetInNextTest {
             .using(new LetInNext(), VariableDeclarationFragment.class)//
             .stays();
   }
-
   @Test public void h() {
     trimmingOf("{"//
         + "final AtmosphereInterceptor a=(AtmosphereInterceptor)f.newClassInstance(AtmosphereInterceptor.class,annotatedClass);"//

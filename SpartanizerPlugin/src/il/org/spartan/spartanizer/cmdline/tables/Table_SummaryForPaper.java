@@ -40,25 +40,21 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
     writer.close();
     System.err.println("Your output is in: " + system.tmp);
   }
-
   @Override public boolean visit(final CompilationUnit ¢) {
     compilationUnitRecords.add(foo(¢));
     ¢.accept(new CleanerVisitor());
     return true;
   }
-
   private CompilationUnitRecord foo(final CompilationUnit ¢) {
     final CompilationUnitRecord $ = new CompilationUnitRecord(¢);
     $.setPath(absolutePath);
     $.setRelativePath(relativePath);
     return $;
   }
-
   @Override public boolean visit(final PackageDeclaration ¢) {
     packages.add(¢.getName().getFullyQualifiedName());
     return true;
   }
-
   @Override @SuppressWarnings("unused") public boolean visit(final TypeDeclaration $) {
     // if (!excludeMethod($))
     try {
@@ -81,14 +77,12 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
     }
     return true; // super.visit($);
   }
-
   @Override protected void done(final String path) {
     if (writer == null)
       initializeWriter();
     writeSummary(path);
     System.err.println("Your output is in: " + outputFolder);
   }
-
   private void writeSummary(final String path) {
     writer//
         .col("Project", path)//
@@ -99,35 +93,27 @@ public class Table_SummaryForPaper extends DeprecatedFolderASTVisitor {
         .col("#Methods", countNoTestMethods())//
         .nl();
   }
-
   private int countTestClasses() {
     return compilationUnitRecords.stream().filter(λ -> !λ.noTests()).mapToInt(λ -> λ.numClasses).sum();
   }
-
   private int countNoTestClasses() {
     return productionCompilationUnits().mapToInt(λ -> λ.numClasses).sum();
   }
-
   private int countNoTestLOC() {
     return productionCompilationUnits().mapToInt(λ -> λ.linesOfCode).sum();
   }
-
   private boolean noTests(final CompilationUnitRecord ¢) {
     return ¢.noTests();
   }
-
   private int countNoTestMethods() {
     return productionCompilationUnits().mapToInt(λ -> λ.numMethods).sum();
   }
-
   private Stream<CompilationUnitRecord> productionCompilationUnits() {
     return compilationUnitRecords.stream().filter(this::noTests);
   }
-
   private int countNoTestPackages() {
     return productionCompilationUnits().map(λ -> λ.pakcage).collect(toSet()).size();
   }
-
   private static void initializeWriter() {
     writer = new Table(clazz);
   }

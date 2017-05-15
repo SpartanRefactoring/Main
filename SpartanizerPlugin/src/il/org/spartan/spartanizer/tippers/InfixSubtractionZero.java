@@ -29,12 +29,10 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
   private static List<Expression> minusFirst(final List<Expression> prune) {
     return cons(make.minus(the.headOf(prune)), chop(prune));
   }
-
   private static List<Expression> prune(final Collection<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
     return $.size() != ¢.size() ? $ : null;
   }
-
   private static ASTNode replacement(final List<Expression> xs) {
     final List<Expression> $ = prune(xs);
     if ($ == null)
@@ -48,11 +46,9 @@ public final class InfixSubtractionZero extends ReplaceCurrentNode<InfixExpressi
     assert $.size() >= 2;
     return subject.operands(!iz.literal0(first) ? $ : minusFirst($)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "Remove subtraction of 0 in " + ¢;
   }
-
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return ¢.getOperator() != MINUS ? null : replacement(operands(¢));
   }

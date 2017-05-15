@@ -14,41 +14,34 @@ public class Issue0193 {
         .gives("0")//
         .stays();
   }
-
   @Test public void t20() {
     trimmingOf("0*x")//
         .gives("0")//
         .stays();
   }
-
   @Test public void t30() {
     trimmingOf("(x+y)*0")//
         .gives("0")//
         .stays();
   }
-
   @Test public void t40() {
     trimmingOf("calc()*0")//
         .gives("0*calc()")//
         .stays();
   }
-
   @Test public void t50() {
     trimmingOf("0*(f())")//
         .stays();
   }
-
   @Test public void t60() {
     trimmingOf("0*(new int[f()])")//
         .stays();
   }
-
   @Test public void t70() {
     trimmingOf("x*0*new int[f()]")//
         .gives("0*x*new int[f()]")//
         .stays();
   }
-
   @Test public void t80() {
     trimmingOf("calc()*x*0")//
         .gives("0*x*calc()")//

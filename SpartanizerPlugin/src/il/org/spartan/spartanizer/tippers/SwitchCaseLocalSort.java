@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** sorts cases of a local branch {@code switch(x) { case 2: case 1: break; }}
@@ -32,7 +33,6 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
       }
     }.spanning($);
   }
-
   @Override protected boolean prerequisite(final SwitchCase n) {
     final SwitchCase $ = az.switchCase(extract.nextStatementInBlock(n));
     final List<SwitchCase> cases = extract.casesOnSameBranch(az.switchStatement(parent(n)), n);
@@ -40,7 +40,6 @@ public class SwitchCaseLocalSort extends CarefulTipper<SwitchCase>//
         && !n.isDefault() && (iz.intType(expression(n)) || (expression(n) + "").compareTo(expression($) + "") > 0)
         && (!iz.intType(expression(n)) || Integer.parseInt(expression(n) + "") > Integer.parseInt(expression($) + ""));
   }
-
   @Override @SuppressWarnings("unused") public String description(final SwitchCase n) {
     return "sort cases with same flow control";
   }

@@ -17,7 +17,6 @@ public final class WildcardTypeExtendsObjectTrim extends ReplaceCurrentNode<Wild
   @Override public String description(final WildcardType ¢) {
     return "Trim implicit extends " + Trivia.gist(¢);
   }
-
   @Override public WildcardType replacement(final WildcardType ¢) {
     if (!¢.isUpperBound() || !type.isObject(¢.getBound()))
       return null;

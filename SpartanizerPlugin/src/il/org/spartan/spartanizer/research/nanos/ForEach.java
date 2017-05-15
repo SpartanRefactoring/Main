@@ -41,23 +41,18 @@ public class ForEach extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, ¢)//
         && nonTips(rivals, ¢);
   }
-
   @Override public Tip pattern(final EnhancedForStatement ¢) {
     return firstTip(tippers, ¢);
   }
-
   @Override public String description() {
     return "Iterate a collection and apply a statement for each element";
   }
-
   @Override public String technicalName() {
     return "foreach C [s.t. P(·)] do S(·)";
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }

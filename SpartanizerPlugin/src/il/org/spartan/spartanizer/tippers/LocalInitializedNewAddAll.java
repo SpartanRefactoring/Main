@@ -39,11 +39,9 @@ public final class LocalInitializedNewAddAll extends LocalInitialized {
     needs("Single argument to 'addAll'", //
         () -> argument = the.onlyOneOf(arguments(methodInvocation)));
   }
-
   @Override public String description() {
     return "Inline variable '" + name + "' into next statement";
   }
-
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     $.getListRewrite(newExpression, ClassInstanceCreation.ARGUMENTS_PROPERTY).insertFirst(copy.of(argument), g);
     remove.statement(nextStatement, $, g);
@@ -58,6 +56,7 @@ public final class LocalInitializedNewAddAll extends LocalInitialized {
   @Override public Examples examples() {
     // TODO fix;
     return null;
-    // return convert("List<T> x = new ArrayList<>(); x.addAll(ys);").to("List<T> x = new ArrayList<>(ys);");
+    // return convert("List<T> x = new ArrayList<>();
+    // x.addAll(ys);").to("List<T> x = new ArrayList<>(ys);");
   }
 }

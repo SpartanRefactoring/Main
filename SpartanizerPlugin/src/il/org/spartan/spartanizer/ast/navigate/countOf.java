@@ -27,7 +27,6 @@ public interface countOf {
     });
     return $.get();
   }
-
   static int lines(final ASTNode n) {
     final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
@@ -35,7 +34,6 @@ public interface countOf {
         if (Statement.class.isAssignableFrom(child.getClass()))
           addWeight($, child);
       }
-
       /** @param a Accumulator
        * @param ¢ Node to check */
       void addWeight(final Int a, final ASTNode ¢) {
@@ -56,7 +54,6 @@ public interface countOf {
     });
     return $.inner;
   }
-
   /** Counts the number of nodes in a tree rooted at a given node
    * @param nodeTypeHolder JD
    * @return Number of abstract syntax tree nodes under the parameter. */
@@ -69,7 +66,6 @@ public interface countOf {
     });
     return $.get();
   }
-
   static int nodesOfClass(final ASTNode n, final Class<? extends ASTNode> c) {
     final Int $ = new Int();
     n.accept(new ASTVisitor(true) {
@@ -80,7 +76,6 @@ public interface countOf {
     });
     return $.get();
   }
-
   static int noimports(final CompilationUnit root) {
     final Int $ = new Int();
     root.accept(new ASTVisitor(true) {
@@ -91,7 +86,6 @@ public interface countOf {
     });
     return $.get();
   }
-
   /** Exclude comments and import package statement from the content.
    * @param root
    * @return */
@@ -105,14 +99,12 @@ public interface countOf {
     });
     return $.get();
   }
-
   /** Counts the number of non-space characters in a tree rooted at a given node
    * @param pattern JD
    * @return Number of abstract syntax tree nodes under the parameter. */
   static int nonWhiteCharacters(final ASTNode ¢) {
     return removeWhites(Trivia.cleanForm(¢)).length();
   }
-
   /** Counts the number of nodes in a tree rooted at a given node
    * @param nodeTypeHolder JD
    * @return Number of abstract syntax tree nodes under the parameter. */

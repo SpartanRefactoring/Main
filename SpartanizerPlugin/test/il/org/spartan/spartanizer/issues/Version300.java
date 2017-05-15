@@ -22,6 +22,8 @@ import il.org.spartan.utils.*;
 /** Misc unit tests with no better other place for version 3.00
  * @author Yossi Gil
  * @since 2017-03-09 */
+// TODO: Yossi Gil
+@Ignore
 @SuppressWarnings({ "static-method", "javadoc" })
 public class Version300 {
   @FunctionalInterface
@@ -29,31 +31,24 @@ public class Version300 {
     default void andAlso(final Find ¢) {
       note.bug(¢);
     }
-
     default void andIs(final Runnable __1, final Runnable __2) {
       note.bug(__1);
       note.bug(__2);
     }
-
     //@formatter:on
     default boolean B(final int ¢) {
       return fault.bool(note.bug(box.it(¢)));
     }
-
     default boolean B(final Object... __) {
       return fault.bool(note.bug(__));
     }
-
     default void butNot(final Find ¢) {
       note.bug(¢);
     }
-
     void find();
-
     default void orElse(final Find ¢) {
       note.bug(¢);
     }
-
     //@formatter:off
     default Find prerequisite() { return null; }
     default void S(final int ¢) { note.bug(box.it(¢)); }
@@ -316,7 +311,7 @@ public class Version300 {
     ;
   }
 
-  @Test public void overridePublicStatementreplacementNotNullFinalBlockbNotNullFinalListStatementssextractstatementsbIfidenticalssstatementsbhazhidingsssReturnNullNullableFinalASTNodeparentazstatementparentbIfparentNulliztryStatementparentReturnreorganizeStatementbSwitchsssizeCase0ReturnmakeemptyStatementbCase1FinalStatementfirstssIfizblockEssentialReturnsubjectstatementtoBlockReturncopyofDefaultReturnreorganizeNestedStatementb() {
+  @Test public void overridePublicStatementreplacementNonNullFinalBlockbNonNullFinalListStatementssextractstatementsbIfidenticalssstatementsbhazhidingsssReturnNullNullableFinalASTNodeparentazstatementparentbIfparentNulliztryStatementparentReturnreorganizeStatementbSwitchsssizeCase0ReturnmakeemptyStatementbCase1FinalStatementfirstssIfizblockEssentialReturnsubjectstatementtoBlockReturncopyofDefaultReturnreorganizeNestedStatementb() {
     trimmingOf("/**/" + //
         "@A public B a(@C D b) {" + //
         "    @C E<B> c = d.x;" + //

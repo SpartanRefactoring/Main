@@ -14,7 +14,6 @@ public abstract class ReplaceCurrentNode<N extends ASTNode> extends CarefulTippe
   private static final long serialVersionUID = 0x50940F8CD3D99328L;
 
   public abstract ASTNode replacement(N n);
-
   @Override public Tip tip(final N n) {
     assert prerequisite(n) : fault.dump() + "\n n = " + n + fault.done();
     final ASTNode $ = replacement(n);

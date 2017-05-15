@@ -17,13 +17,11 @@ public class AggregateTest {
         .using(new Aggregate(), EnhancedForStatement.class)//
         .gives("StatsAccumulator $=Create.a(StatsAccumulator.class).from(values);");
   }
-
   @Test public void b() {
     trimmingOf("for (final Object ¢ : os)  if (¢.better(best))   best = ¢;")//
         .using(new Aggregate(), EnhancedForStatement.class)//
         .gives("best=os.stream().reduce((¢,best)->¢.better(best)?¢:best).get();");
   }
-
   @Test public void c() {
     trimmingOf("int $ = 0; for(B d : bs) $ += f();")//
         .using(new Aggregate(), EnhancedForStatement.class)//
@@ -33,7 +31,6 @@ public class AggregateTest {
         .gives("bs.stream().map(λ->f()).reduce((x,y)->x+y).get();")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf("for(B d : (B)bs) $ += f();")//
         .using(new Aggregate(), EnhancedForStatement.class)//
@@ -41,7 +38,6 @@ public class AggregateTest {
         .using(new Aggregate(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void e() {
     trimmingOf("for(B d : omg ? yes : no) $ += f();")//
         .using(new Aggregate(), EnhancedForStatement.class)//
@@ -49,7 +45,6 @@ public class AggregateTest {
         .using(new Aggregate(), EnhancedForStatement.class)//
         .stays();
   }
-
   @Test public void f() {
     trimmingOf("for (final List<?> ¢ : implementation)    if (¢ != null)  $ += ¢.size();")//
         .using(new Aggregate(), EnhancedForStatement.class)//
@@ -57,7 +52,6 @@ public class AggregateTest {
         .gives("$+=implementation.stream().filter(λ->λ!=null).map(λ->λ.size()).reduce((x,y)->x+y).get();")//
         .stays();
   }
-
   @Test public void g() {
     trimmingOf("int $ = init; for (final Statement ¢ : ss)    $ += base + horizontalComplexity(¢);")//
         .using(new Aggregate(), EnhancedForStatement.class)//
@@ -65,7 +59,6 @@ public class AggregateTest {
         .gives("int $=init + ss.stream().map(¢->base+horizontalComplexity(¢)).reduce((x,y)->x+y).get();")//
     ;
   }
-
   @Test public void respect() {
     trimmingOf("for (final Object ¢ : os)  if (¢.better(best))   best = ¢;")//
         .using(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//

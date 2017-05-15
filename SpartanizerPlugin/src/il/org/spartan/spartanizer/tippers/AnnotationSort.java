@@ -44,7 +44,6 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
   private static int rankAnnotation(final IExtendedModifier ¢) {
     return rankAnnotation(identifier(typeName(az.annotation(¢))));
   }
-
   private static int rankAnnotation(final String annotationName) {
     int $ = 0;
     for (final HashSet<String> ¢ : rankTable) {
@@ -62,16 +61,13 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     return rankAnnotation(annotation1) - rankAnnotation(annotation2) == 0 ? annotation1.compareTo(annotation2)
         : rankAnnotation(annotation1) - rankAnnotation(annotation2);
   }
-
   public static <T> Predicate<T> distinctByKey(final Function<? super T, Object> keyExtractor) {
     final Map<Object, Boolean> $ = new ConcurrentHashMap<>();
     return λ -> $.putIfAbsent(keyExtractor.apply(λ), Boolean.TRUE) == null;
   }
-
   private static List<? extends IExtendedModifier> sort(final Collection<? extends IExtendedModifier> ¢) {
     return ¢.stream().filter(distinctByKey(λ -> identifier(typeName(az.annotation(λ))))).sorted(comp).collect(toList());
   }
-
   @Override public ASTNode replacement(final N d) {
     final N $ = copy.of(d);
     final List<IExtendedModifier> ies = as.list(sort(extract.annotations($))), ms = as.list(extract.modifiers($));
@@ -80,19 +76,16 @@ public class AnnotationSort<N extends BodyDeclaration> extends ReplaceCurrentNod
     extendedModifiers($).addAll(ms);
     return !wizard.eq($, d) ? $ : null;
   }
-
   @Override public String description(final N ¢) {
     return "Sort annotations of " + extract.category(¢) + " " + extract.name(¢) + " (" + extract.annotations(¢) + "->" + sort(extract.annotations(¢))
         + ")";
   }
-
   @Override public String description() {
     return "Sort annotations of declaration";
   }
-
   @Override public Examples examples() {
-    return convert("@NonNull @SuppressWarnings public @Override final void f() {}") //
-        .to("@Override @SuppressWarnings @NonNull public final void f() {}") //
+    return convert(" @SuppressWarnings public @Override final void f() {}") //
+        .to("@Override @SuppressWarnings  public final void f() {}") //
         .convert("@C @B @A class A {}") //
         .to("@A @B @C class A {}") //
     ;

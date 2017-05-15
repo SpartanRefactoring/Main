@@ -28,12 +28,10 @@ public class Issue0177 {
         Inner(final int i) {
           a = i;
         }
-
         int f(final int $) {
           azzert.that($, is(1));
           return g();
         }
-
         int g() {
           // noinspection SameReturnValue
           class C {
@@ -41,7 +39,6 @@ public class Issue0177 {
               h();
               ++a;
             }
-
             int h() {
               return 2;
             }
@@ -54,19 +51,16 @@ public class Issue0177 {
     trimmingOf("a=a & b")//
         .gives("a&=b");
   }
-
   @Test public void bitWiseOr_noSideEffects() {
     azzert.that(1 | 2, is(3));
     trimmingOf("a=a|b")//
         .gives("a|=b");
   }
-
   @Test @SuppressWarnings("unused") public void bitWiseOr_withSideEffects() {
     class Class {
       Class() {
         azzert.that(f(1) | 1, is(3));
       }
-
       int f(final int $) {
         azzert.that($, is(1));
         return $ + 1;
@@ -76,7 +70,6 @@ public class Issue0177 {
     trimmingOf("a=a|b")//
         .gives("a|=b");
   }
-
   @Test @SuppressWarnings("unused") public void BitWiseOr_withSideEffectsEXT() {
     class Class {
       final Inner in = new Inner(0);
@@ -92,12 +85,10 @@ public class Issue0177 {
         Inner(final int i) {
           a = i;
         }
-
         int f(final int $) {
           azzert.that($, is(1));
           return g();
         }
-
         int g() {
           // noinspection SameReturnValue
           class C {
@@ -105,7 +96,6 @@ public class Issue0177 {
               h();
               ++a;
             }
-
             int h() {
               return 2;
             }
@@ -118,7 +108,6 @@ public class Issue0177 {
     trimmingOf("a=a | b")//
         .gives("a|=b");
   }
-
   @Test @SuppressWarnings("unused") public void BitWiseXor_withSideEffectsEXT() {
     class Class {
       final Inner in = new Inner(0);
@@ -134,12 +123,10 @@ public class Issue0177 {
         Inner(final int i) {
           a = i;
         }
-
         int f(final int $) {
           azzert.that($, is(1));
           return g();
         }
-
         int g() {
           // noinspection SameReturnValue
           class C {
@@ -147,7 +134,6 @@ public class Issue0177 {
               h();
               ++a;
             }
-
             int h() {
               return 2;
             }
@@ -160,13 +146,11 @@ public class Issue0177 {
     trimmingOf("a = a ^ b ")//
         .gives("a ^= b");
   }
-
   @Test public void logicalAnd_noSideEffects() {
     azzert.nay(true & false);
     trimmingOf("a=a && b")//
         .gives("a&=b");
   }
-
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffects() {
     // noinspection SameReturnValue
     @SuppressWarnings("PointlessBooleanExpression")
@@ -178,7 +162,6 @@ public class Issue0177 {
         azzert.nay(f(true) & true);
         azzert.that(a, is(1));
       }
-
       boolean f(final boolean $) {
         azzert.aye($);
         ++a;
@@ -189,7 +172,6 @@ public class Issue0177 {
     trimmingOf("a=a && b")//
         .gives("a&=b");
   }
-
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEX() {
     // noinspection SameReturnValue
     @SuppressWarnings("PointlessBooleanExpression")
@@ -207,7 +189,6 @@ public class Issue0177 {
         Inner(final int i) {
           a = i;
         }
-
         boolean f(final boolean $) {
           azzert.aye($);
           ++a;
@@ -219,7 +200,6 @@ public class Issue0177 {
     trimmingOf("a=a && b")//
         .gives("a&=b");
   }
-
   @Test @SuppressWarnings("unused") public void logicalAnd_withSideEffectsEXT() {
     @SuppressWarnings("PointlessBooleanExpression")
     class Class {
@@ -236,12 +216,10 @@ public class Issue0177 {
         Inner(final int i) {
           a = i;
         }
-
         boolean f(final boolean $) {
           azzert.aye($);
           return g();
         }
-
         boolean g() {
           // noinspection SameReturnValue
           class C {
@@ -249,7 +227,6 @@ public class Issue0177 {
               h();
               ++a;
             }
-
             boolean h() {
               return false;
             }
@@ -262,13 +239,11 @@ public class Issue0177 {
     trimmingOf("a=a && b")//
         .gives("a&=b");
   }
-
   @Test public void logicalOr_noSideEffects() {
     azzert.aye(true | false);
     trimmingOf("a=a||b")//
         .gives("a|=b");
   }
-
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffects() {
     // noinspection SameReturnValue
     @SuppressWarnings("PointlessBooleanExpression")
@@ -280,7 +255,6 @@ public class Issue0177 {
         azzert.aye(f(false) | false);
         azzert.that(a, is(1));
       }
-
       boolean f(final boolean $) {
         azzert.nay($);
         ++a;
@@ -291,7 +265,6 @@ public class Issue0177 {
     trimmingOf("a=a||b")//
         .gives("a|=b");
   }
-
   @Test @SuppressWarnings("unused") public void logicalOr_withSideEffectsEX() {
     // noinspection SameReturnValue
     @SuppressWarnings("PointlessBooleanExpression")
@@ -309,7 +282,6 @@ public class Issue0177 {
         Inner(final int i) {
           a = i;
         }
-
         boolean f(final boolean $) {
           azzert.nay($);
           ++a;
@@ -321,7 +293,6 @@ public class Issue0177 {
     trimmingOf("a=a||b")//
         .gives("a|=b");
   }
-
   @Test @SuppressWarnings("unused") public void LogicalOr_withSideEffectsEXT() {
     class Class {
       final Inner in = new Inner(0);
@@ -337,12 +308,10 @@ public class Issue0177 {
         Inner(final int i) {
           a = i;
         }
-
         int f(final int $) {
           azzert.that($, is(1));
           return g();
         }
-
         int g() {
           // noinspection SameReturnValue
           class C {
@@ -350,7 +319,6 @@ public class Issue0177 {
               h();
               ++a;
             }
-
             int h() {
               return 2;
             }

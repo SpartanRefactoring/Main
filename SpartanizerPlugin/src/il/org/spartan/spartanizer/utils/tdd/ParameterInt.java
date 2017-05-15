@@ -9,29 +9,24 @@ public final class ParameterInt {
   private boolean hasDefault;
 
   public ParameterInt() {}
-
   public ParameterInt(final int defaultValue) {
     value = defaultValue;
     hasDefault = true;
   }
-
   public boolean hasValue() {
     return hasValue;
   }
-
   public int intValue() {
     if (!hasValue && !hasDefault)
       throw new IllegalArgumentException();
     return value;
   }
-
   public void set(final int v) {
     if (hasValue)
       throw new IllegalArgumentException();
     value = v;
     hasValue = true;
   }
-
   public boolean hasDefault() {
     return hasDefault;
   }

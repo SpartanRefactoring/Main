@@ -9,6 +9,9 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 
+import il.org.spartan.athenizer.zoomin.expanders.*;
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
@@ -28,16 +31,18 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
         .to("if(a==0) temp = b; else temp = c;") //
     ;
   }
-
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
     final ConditionalExpression $ = az.conditionalExpression(core(x));
-    return $ == null ? null
-        : pair(//
-            az.expressionStatement($.getAST().newExpressionStatement(pair(left, then($)).to(o))),
-            az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)))//
-        ).toIf($.getExpression());
+    if ($ == null)
+      return null;
+    final ExpressionStatement e1 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, then($)).to(o)));
+    ExpressionStatement e2 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)));
+    if (wizard.eq(left, then($)))
+      return pair(e2, null).toIf(make.notOf($.getExpression()));
+    if (wizard.eq(left, elze($)))
+      e2 = null;
+    return pair(e1, e2).toIf($.getExpression());
   }
-
   private static ASTNode replaceAssignment(final Statement ¢) {
     final ExpressionStatement expressionStatement = az.expressionStatement(¢);
     if (expressionStatement == null)
@@ -45,11 +50,9 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
     final Assignment $ = az.assignment(expressionStatement.getExpression());
     return $ == null ? null : innerAssignReplacement(right($), left($), $.getOperator());
   }
-
   @Override public ASTNode replacement(final ExpressionStatement ¢) {
     return replaceAssignment(¢);
   }
-
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {
     return "Expanding a ternary operator to a full if-else statement";
   }

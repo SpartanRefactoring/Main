@@ -18,7 +18,6 @@ public interface ancestors {
     Collections.reverse($);
     return $;
   }
-
   static Iterable<ASTNode> of(final ASTNode n) {
     return () -> new Iterator<ASTNode>() {
       ASTNode next = n;
@@ -26,7 +25,6 @@ public interface ancestors {
       @Override public boolean hasNext() {
         return next != null;
       }
-
       @Override public ASTNode next() {
         final ASTNode $ = next;
         next = parent($);
@@ -34,16 +32,13 @@ public interface ancestors {
       }
     };
   }
-
   static Until until(final Predicate<ASTNode> ¢) {
     return new Until(¢);
   }
-
   // previous node / current node
   static Until until(final BiPredicate<ASTNode, ASTNode> ¢) {
     return new Until(¢);
   }
-
   static Until whil(final Predicate<ASTNode> ¢) {
     return new Until(λ -> !¢.test(λ));
   }
@@ -56,19 +51,16 @@ public interface ancestors {
       this.predicate = predicate;
       bipredicate = null;
     }
-
     Until(final BiPredicate<ASTNode, ASTNode> bipredicate) {
       predicate = null;
       this.bipredicate = bipredicate;
     }
-
     public List<ASTNode> from(final ASTNode n) {
       final List<ASTNode> $ = an.empty.list();
       for (ASTNode current = n, previous = null; current != null && !test(previous, current); previous = current, current = current.getParent())
         $.add(current);
       return $;
     }
-
     private boolean test(final ASTNode previous, final ASTNode current) {
       return predicate != null ? predicate.test(current) : bipredicate != null && bipredicate.test(previous, current);
     }

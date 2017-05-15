@@ -19,7 +19,6 @@ public final class MethodExplorer {
   public MethodExplorer(final MethodDeclaration inner) {
     this.inner = inner;
   }
-
   /** Computes the list of all local variable declarations found in a method.
    * {@link MethodDeclaration}.
    * <p>
@@ -34,41 +33,33 @@ public final class MethodExplorer {
       @Override public boolean visit(final CatchClause ¢) {
         return add(¢.getException());
       }
-
       @Override public boolean visit(final EnhancedForStatement ¢) {
         return add(¢.getParameter());
       }
-
       @Override public boolean visit(final ForStatement ¢) {
         return add(initializers(¢));
       }
-
       @Override public boolean visit(final TryStatement ¢) {
         return add(resources(¢));
       }
-
       @Override public boolean visit(final VariableDeclarationStatement ¢) {
         addFragments(fragments(¢));
         return true;
       }
-
       boolean add(final Iterable<? extends Expression> xs) {
         xs.forEach(λ -> addFragments(fragments(az.variableDeclarationExpression(λ))));
         return true;
       }
-
       boolean add(final SingleVariableDeclaration ¢) {
         $.add(¢.getName());
         return true;
       }
-
       void addFragments(final Iterable<VariableDeclarationFragment> fs) {
         fs.forEach(λ -> $.add(λ.getName()));
       }
     });
     return $;
   }
-
   /** Computes the list of all return sideEffects found in a
    * {@link MethodDeclaration}.
    * <p>
@@ -91,15 +82,12 @@ public final class MethodExplorer {
     @Override public final boolean visit(final AnnotationTypeDeclaration __) {
       return false;
     }
-
     @Override public final boolean visit(final AnonymousClassDeclaration __) {
       return false;
     }
-
     @Override public final boolean visit(final EnumDeclaration __) {
       return false;
     }
-
     @Override public final boolean visit(final TypeDeclaration __) {
       return false;
     }

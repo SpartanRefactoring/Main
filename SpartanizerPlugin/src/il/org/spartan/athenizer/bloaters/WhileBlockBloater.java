@@ -36,7 +36,6 @@ public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
     $.setBody(b);
     return $;
   }
-
   @Override public String description(@SuppressWarnings("unused") final WhileStatement __) {
     return "expand to block";
   }

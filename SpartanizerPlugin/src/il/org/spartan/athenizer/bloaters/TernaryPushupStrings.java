@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -28,7 +29,6 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
         .to("s = condition ? \"abc123\" : \"abc456\";") //
     ;
   }
-
   @Override public ASTNode replacement(final InfixExpression x) {
     final InfixExpression nn = copy.of(x);
     final StringLiteral l;
@@ -50,12 +50,10 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     }
     return subject.pair(copy.of(n1), copy.of(n2)).toCondition(copy.of($.getExpression()));
   }
-
   @Override protected boolean prerequisite(final InfixExpression ¢) {
     return operator(¢) == InfixExpression.Operator.PLUS
         && (iz.stringLiteral(left(¢)) && isStringTernaryWithParenth(right(¢)) || iz.stringLiteral(right(¢)) && isStringTernaryWithParenth(left(¢)));
   }
-
   private static boolean isStringTernaryWithParenth(final Expression x) {
     if (!iz.parenthesizedExpression(x))
       return false;
@@ -65,7 +63,6 @@ public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
     final ConditionalExpression $ = az.conditionalExpression(r);
     return iz.stringLiteral(then($)) && iz.stringLiteral(elze($));
   }
-
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return null;
   }

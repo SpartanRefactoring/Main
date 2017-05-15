@@ -17,11 +17,9 @@ public class WhileDeadRemove extends ReplaceCurrentNode<WhileStatement>//
   @Override protected boolean prerequisite(final WhileStatement ¢) {
     return sideEffects.free(¢);
   }
-
   @Override public String description(final WhileStatement ¢) {
     return "Remove :" + Trivia.gist(¢);
   }
-
   @Override public ASTNode replacement(final WhileStatement ¢) {
     return ¢.getAST().newBlock();
   }

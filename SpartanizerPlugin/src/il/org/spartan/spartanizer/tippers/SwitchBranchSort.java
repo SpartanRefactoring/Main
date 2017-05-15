@@ -7,6 +7,7 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.navigate.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Sorts switch branches according to the metrics: 1. Depth - height of ast 2.
@@ -32,7 +33,6 @@ public class SwitchBranchSort extends ReplaceCurrentNode<SwitchStatement>//
       }
     return null;
   }
-
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {
     return "Sort switch branches";
   }

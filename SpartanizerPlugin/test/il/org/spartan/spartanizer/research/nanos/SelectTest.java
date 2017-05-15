@@ -18,14 +18,12 @@ public class SelectTest {
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).collect(toList()));")//
     ;
   }
-
   @Test public void b() {
     trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(peel(¢));")//
         .using(new Select(), EnhancedForStatement.class)//
         .gives("$.addAll(xs.stream().filter(¢ -> ¢.isNice() && awesomw(¢)).map(¢->peel(¢)).collect(toList()));")//
     ;
   }
-
   @Test public void respect() {
     trimmingOf("for (final Expression ¢ : xs) if(¢.isNice() && awesomw(¢))  $.add(¢);")//
         .using(EnhancedForStatement.class, new ForEach(), new Select(), new Aggregate())//

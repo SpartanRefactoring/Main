@@ -7,6 +7,7 @@ import org.eclipse.core.commands.*;
 
 import fluent.ly.*;
 import il.org.spartan.athenizer.*;
+import il.org.spartan.spartanizer.tippers.*;
 
 /** Some simple handlers to be used by the GUI.
  * @author Ori Roth
@@ -18,6 +19,8 @@ public class TopMenuHandlers extends AbstractHandler {
         final Selection s = Selection.Util.current();
         SpartanizationHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
       });
+      put("il.org.spartan.CentToIt", λ -> SpartanizationHandler.applicator().restrictTo(new MethodDeclarationRenameSingleParameter()).manyPasses()
+          .selection(Selection.Util.getAllCompilationUnits()).go());
       put("il.org.spartan.SpartanizeCurrent",
           λ -> SpartanizationHandler.applicator().manyPasses().selection(Selection.Util.getCurrentCompilationUnit()).go());
       put("il.org.spartan.SpartanizeAll",
@@ -50,7 +53,6 @@ public class TopMenuHandlers extends AbstractHandler {
       note.bug("Handler " + id + " is not registered in " + getClass().getName());
     return null;
   }
-
   protected static boolean showZoomToolMessage() {
     return Dialogs.ok(Dialogs.messageUnsafe(
         "You have just activate the Spartanizer's zooming tool!\nUsage instructions: click and hold CTRL, then use the mouse wheel to zoom in and out your code. Note that this service can be accessed using the menu button, or by the shourtcut CTRL+ALT+D. A second activition of this service would cancel it, until next activision."));

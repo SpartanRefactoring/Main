@@ -24,7 +24,6 @@ public enum TipperFactory {
       final Option... os) {
     return newSubBlockTipper(_pattern, _replacement, description, os);
   }
-
   private static UserDefinedTipper<Block> newSubBlockTipper(final String pattern, final String replacement, final String description,
       final Option... os) {
     final Matcher $ = Matcher.blockMatcher(pattern, replacement, os);
@@ -38,37 +37,29 @@ public enum TipperFactory {
           }
         };
       }
-
       @Override protected boolean prerequisite(final Block ¢) {
         return $.blockMatches(¢);
       }
-
       @Override public String description(@SuppressWarnings("unused") final Block __) {
         return description;
       }
-
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
         return $.getMatching(n, s);
       }
-
       @Override public ASTNode getMatching(final ASTNode ¢) {
         return $.replacement(¢);
       }
-
       @Override public String pattern() {
         return pattern;
       }
-
       @Override public String replacement() {
         return replacement;
       }
     };
   }
-
   public static <N extends ASTNode> UserDefinedTipper<N> patternTipper(final String pattern, final String replacement) {
     return patternTipper(pattern, replacement, String.format("[%s] => [%s]", pattern, replacement));
   }
-
   /** Creates a tipper that can tip ASTNodes that can be matched against
    * <b>_pattern</b>,<br>
    * and transforms them to match the pattern <b>_replacement</b>, using the
@@ -86,7 +77,6 @@ public enum TipperFactory {
       @Override public String description(@SuppressWarnings("unused") final N __) {
         return description;
       }
-
       @Override public Tip tip(final N n) {
         return new Tip(description(n), getClass(), n) {
           @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -94,23 +84,18 @@ public enum TipperFactory {
           }
         };
       }
-
       @Override protected boolean prerequisite(final N ¢) {
         return $.matches(¢);
       }
-
       @Override public ASTNode getMatching(final ASTNode n, final String s) {
         return $.getMatching(n, s);
       }
-
       @Override public ASTNode getMatching(final ASTNode ¢) {
         return $.replacement(¢);
       }
-
       @Override public String pattern() {
         return pattern;
       }
-
       @Override public String replacement() {
         return replacement;
       }

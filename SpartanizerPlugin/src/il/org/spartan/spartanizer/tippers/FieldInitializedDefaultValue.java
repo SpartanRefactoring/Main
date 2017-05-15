@@ -23,11 +23,9 @@ public final class FieldInitializedDefaultValue extends FieldPattern implements 
     andAlso("Not an initialization of a boxed __, e.g. public Integer a = 0;",
         () -> !il.org.spartan.spartanizer.engine.type.isBoxedType(declaration.getType() + "") || iz.nullLiteral(initializer));
   }
-
   @Override public String description() {
     return "Remove default initializer " + initializer() + " of field " + name;
   }
-
   // TODO: Ori Roth, example test not working, please fix and check this after
   // -rr
   @Override public Examples examples() {
@@ -36,7 +34,6 @@ public final class FieldInitializedDefaultValue extends FieldPattern implements 
     // .to("public int i;")//
     // .ignores("public Integer i=0;");
   }
-
   @Override public ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     final VariableDeclarationFragment f = copy.of(current);
     f.setInitializer(null);

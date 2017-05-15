@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.*;
 
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.List;
 import java.util.function.*;
 import java.util.stream.*;
 
@@ -28,6 +29,7 @@ import org.eclipse.ui.dialogs.*;
 import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Example.*;
 
@@ -45,20 +47,18 @@ public class ProjectPreferencesHandler extends AbstractHandler {
   @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent __) {
     return execute(Selection.Util.project());
   }
-
   /** Initiates configuration change for the project. This includes one dialog
    * opening.
    * @param p JD
    * @return null */
   public static Object execute(final IProject p) {
-    final Map<SpartanCategory, SpartanTipper[]> m = XMLSpartan.getTippersByCategories(p);
+    final Map<SpartanCategory, SpartanElement[]> m = XMLSpartan.getElementsByCategories(p);
     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
       return null;
     final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
     return $ == null ? null : commit(p, $);
   }
-
   /** Initiates configuration change for the project. This includes one dialog
    * opening. This method does not open the XML file, but uses given enabled
    * tippers collection. It also uses given commit method. This execution method
@@ -66,7 +66,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
    * * @param m enabled tippers to be used in dialog
    * @param commit what to do with the dialog's result
    * @return null */
-  public static Object execute(final IProject p, final Map<SpartanCategory, SpartanTipper[]> m,
+  public static Object execute(final IProject p, final Map<SpartanCategory, SpartanElement[]> m,
       final BiFunction<IProject, Set<String>, Void> commit) {
     final SpartanPreferencesDialog d = getDialog(m);
     if (d == null)
@@ -74,7 +74,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     final Set<String> $ = getPreferencesChanges(d, toEnabledSet(m));
     return $ == null ? null : commit.apply(p, $);
   }
-
   /** Commits enabled tippers for the project, see
    * {@link XMLSpartan#updateEnabledTippers}.
    * @param p JD
@@ -91,7 +90,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     }
     return null;
   }
-
   /** @param ¢ dialog
    * @param initialPreferences preferences at the start of the process
    * @return dialog's result: either enabled tippers, or null if the operation
@@ -107,63 +105,46 @@ public class ProjectPreferencesHandler extends AbstractHandler {
             .collect(toSet());
     return $ == null || $.containsAll(initialPreferences) && initialPreferences.containsAll($) ? null : $;
   }
-
   /** @param m enabled tippers collection
    * @return preferences configuration dialog for project, using given enabled
    *         tippers */
-  private static SpartanPreferencesDialog getDialog(final Map<SpartanCategory, SpartanTipper[]> m) {
+  private static SpartanPreferencesDialog getDialog(final Map<SpartanCategory, SpartanElement[]> m) {
     if (Display.getCurrent().getActiveShell() == null || m == null)
       return null;
-    final SpartanElement[] es = m.keySet().toArray(new SpartanElement[m.size()]);
+    final List<SpartanElement> _es = m.keySet().stream().filter(λ -> !TipperCategory.reversedHierarchy.containsKey(λ.categoryClass()))
+        .collect(Collectors.toList());
+    final SpartanElement[] es = _es.toArray(new SpartanElement[_es.size()]);
     final SpartanPreferencesDialog $ = new SpartanPreferencesDialog(Display.getDefault().getActiveShell(), new ILabelProvider() {
       @Override public void removeListener(@SuppressWarnings("unused") final ILabelProviderListener __) {
         //
       }
-
       @Override @SuppressWarnings("unused") public boolean isLabelProperty(final Object __, final String property) {
         return false;
       }
-
       @Override public void dispose() {
         //
       }
-
       @Override public void addListener(@SuppressWarnings("unused") final ILabelProviderListener __) {
         //
       }
-
       @Override public String getText(final Object ¢) {
         return ¢ == null ? "" : !(¢ instanceof SpartanElement) ? ¢ + "" : ((SpartanElement) ¢).name();
       }
-
       @Override public Image getImage(final Object ¢) {
         return ¢ instanceof SpartanTipper ? Dialogs.image(Dialogs.ICON) : ¢ instanceof SpartanCategory ? Dialogs.image(Dialogs.CATEGORY) : null;
       }
     }, new ITreeContentProvider() {
       @Override public boolean hasChildren(final Object ¢) {
-        return ¢ instanceof SpartanCategory && ((SpartanElement) ¢).hasChildren();
+        return ¢ instanceof SpartanElement && ((SpartanElement) ¢).hasChildren();
       }
-
       @Override public Object getParent(final Object ¢) {
-        return !(¢ instanceof SpartanTipper) ? null : ((SpartanTipper) ¢).parent;
+        return !(¢ instanceof SpartanElement) ? null : ((SpartanElement) ¢).parent;
       }
-
       @Override public Object[] getElements(@SuppressWarnings("unused") final Object __) {
         return es;
       }
-
       @Override public Object[] getChildren(final Object parentElement) {
-        return !(parentElement instanceof SpartanCategory) ? null : m.get(parentElement);
-      }
-
-      @Override
-      public void dispose() {
-
-      }
-
-      @Override
-      public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-
+        return !(parentElement instanceof SpartanCategory) ? null : ((SpartanCategory) parentElement).getChildren();
       }
     });
     $.setTitle("Spartanization Preferences");
@@ -172,19 +153,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     $.setContainerMode(true);
     $.setInput(new Object()); // vio: very important object
     final Collection<SpartanElement> et = an.empty.list();
-    for (final SpartanCategory c : m.keySet()) {
-      boolean enabled = true;
-      for (final SpartanTipper ¢ : m.get(c))
-        if (¢.enabled())
-          et.add(¢);
-        else
-          enabled = false;
-      if (enabled)
-        et.add(c);
-    }
+    for (final SpartanCategory ¢ : m.keySet())
+      collectEnabledTippersInto(¢, et);
     $.setInitialSelections(et.toArray(new SpartanElement[et.size()]));
     $.setHelpAvailable(false);
-    //$.setComparator(new ViewerComparator(String::compareToIgnoreCase));
+    $.setComparator(new ViewerComparator(String::compareToIgnoreCase));
     return $;
   }
 
@@ -195,7 +168,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     public SpartanPreferencesDialog(final Shell parent, final ILabelProvider labelProvider, final ITreeContentProvider contentProvider) {
       super(parent, labelProvider, contentProvider);
     }
-
     /* (non-Javadoc)
      *
      * @see
@@ -204,7 +176,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     @Override protected CheckboxTreeViewer createTreeViewer(final Composite parent) {
       final CheckboxTreeViewer $ = super.createTreeViewer(parent);
       // addSelectionListener($); // deprecated method- by click
-      final Map<SpartanTipper, ToolTip> tooltips = new HashMap<>();
+      final Map<SpartanElement, ToolTip> tooltips = new HashMap<>();
       final Map<ToolTip, Rectangle> bounds = new HashMap<>();
       $.getTree().addListener(SWT.MouseHover, new Listener() {
         @Override public void handleEvent(final Event e) {
@@ -218,22 +190,21 @@ public class ProjectPreferencesHandler extends AbstractHandler {
           if (i == null)
             return;
           final Object o = i.getData();
-          if (o instanceof SpartanTipper)
-            createTooltip((SpartanTipper) o, i.getBounds());
+          if (o instanceof SpartanElement)
+            createTooltip((SpartanElement) o, i.getBounds());
         }
-
-        void createTooltip(final SpartanTipper t, final Rectangle r) {
+        void createTooltip(final SpartanElement e, final Rectangle r) {
           tooltips.values().forEach(λ -> λ.setVisible(false));
-          if (!tooltips.containsKey(t)) {
+          if (!tooltips.containsKey(e)) {
             final ToolTip tt = new ToolTip(getShell(), SWT.ICON_INFORMATION);
-            tt.setMessage(t.description);
+            tt.setMessage(e.description());
             tt.setAutoHide(true);
-            tooltips.put(t, tt);
+            tooltips.put(e, tt);
           }
           final Rectangle tp = $.getTree().getBounds();
           final Point tl = Display.getCurrent().getActiveShell().toDisplay(tp.x + r.x, tp.y + r.y);
           final Rectangle tr = new Rectangle(tl.x, tl.y, r.width, r.height);
-          final ToolTip tt = tooltips.get(t);
+          final ToolTip tt = tooltips.get(e);
           bounds.put(tt, tr);
           tt.setLocation(tr.x + tr.width, tr.y);
           tt.setVisible(true);
@@ -266,18 +237,15 @@ public class ProjectPreferencesHandler extends AbstractHandler {
               @Override public String getName() {
                 return st.name();
               }
-
               @Override public Change createChange(@SuppressWarnings("unused") final IProgressMonitor pm) throws OperationCanceledException {
                 @SuppressWarnings("hiding") final DocumentChange $ = new DocumentChange(st.name(), d);
                 $.setEdit(new ReplaceEdit(0, before.length(), after));
                 return $;
               }
-
               @Override public RefactoringStatus checkInitialConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
                   throws OperationCanceledException {
                 return new RefactoringStatus();
               }
-
               @Override public RefactoringStatus checkFinalConditions(@SuppressWarnings("unused") final IProgressMonitor pm)
                   throws OperationCanceledException {
                 return new RefactoringStatus();
@@ -308,7 +276,6 @@ public class ProjectPreferencesHandler extends AbstractHandler {
         $.append("/* Example ").append(c++).append(" */\n").append(converter.apply(¢)).append("\n\n");
     return ($ + "").trim();
   }
-
   static String prettify(final String code) {
     final TextEdit e = formatter.get().format(CodeFormatter.K_UNKNOWN, code, 0, code.length(), 0, null);
     if (e == null)
@@ -321,8 +288,7 @@ public class ProjectPreferencesHandler extends AbstractHandler {
     }
     return $.get();
   }
-
-  private static Set<String> toEnabledSet(final Map<SpartanCategory, SpartanTipper[]> m) {
+  private static Set<String> toEnabledSet(final Map<SpartanCategory, SpartanElement[]> m) {
     return m.values().stream().reduce(new HashSet<String>(), (s, a) -> {
       s.addAll(Arrays.stream(a).filter(SpartanElement::enabled).map(SpartanElement::name).collect(toList()));
       return s;
@@ -330,5 +296,11 @@ public class ProjectPreferencesHandler extends AbstractHandler {
       s1.addAll(s2);
       return s1;
     });
+  }
+  private static void collectEnabledTippersInto(final SpartanElement c, final Collection<SpartanElement> et) {
+    if (c instanceof SpartanTipper && c.enabled())
+      et.add(c);
+    else
+      Arrays.stream(c.getChildren()).forEach(λ -> collectEnabledTippersInto(λ, et));
   }
 }

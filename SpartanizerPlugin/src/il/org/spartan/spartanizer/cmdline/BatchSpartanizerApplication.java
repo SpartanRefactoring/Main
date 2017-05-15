@@ -39,19 +39,16 @@ final class BatchSpartanizerApplication implements IApplication {
   @Override public Object start(@SuppressWarnings("unused") final IApplicationContext __) {
     return IApplication.EXIT_OK;
   }
-
   ICompilationUnit openCompilationUnit(final File ¢) throws JavaModelException, IOException {
     final String $ = FileUtils.read(¢);
     setPackage(getPackageNameFromSource($));
     return pack.createCompilationUnit(¢.getName(), $, false, null);
   }
-
   private static String getPackageNameFromSource(final String source) {
     final ASTParser $ = ASTParser.newParser(ASTParser.K_COMPILATION_UNIT);
     $.setSource(source.toCharArray());
     return getPackageNameFromSource(new Wrapper<>(""), $.createAST(null));
   }
-
   private static String getPackageNameFromSource(final Wrapper<String> $, final ASTNode n) {
     // noinspection SameReturnValue
     n.accept(new ASTVisitor(true) {
@@ -62,11 +59,9 @@ final class BatchSpartanizerApplication implements IApplication {
     });
     return $.get();
   }
-
   private void setPackage(final String name) throws JavaModelException {
     pack = srcRoot.createPackageFragment(name, false, null);
   }
-
   /** Discard compilation unit u
    * @param u */
   void discardCompilationUnit(final ICompilationUnit u) {
@@ -77,7 +72,6 @@ final class BatchSpartanizerApplication implements IApplication {
       note.bug(this, ¢);
     }
   }
-
   void prepareTempIJavaProject() throws CoreException {
     final IProject p = ResourcesPlugin.getWorkspace().getRoot().getProject("spartanTemp");
     if (p.exists())
@@ -97,14 +91,12 @@ final class BatchSpartanizerApplication implements IApplication {
     buildPath[0] = JavaCore.newSourceEntry(srcRoot.getPath());
     javaProject.setRawClasspath(buildPath, null);
   }
-
   /* (non-Javadoc)
    *
    * @see org.eclipse.equinox.app.IApplication#stop() */
   @Override public void stop() {
     ___.nothing();
   }
-
   // public static void main(final String[] args) {
   // if (args.length == 0)
   // printHelpPrompt();
@@ -137,7 +129,6 @@ final class BatchSpartanizerApplication implements IApplication {
     $.command(script, pathname);
     return $;
   }
-
   static void printHelpPrompt() {
     System.out.println(system.myShortClassName());
     System.out.println("Options:");
@@ -155,13 +146,11 @@ final class BatchSpartanizerApplication implements IApplication {
   private BatchSpartanizerApplication(final String path) {
     this(path, system.folder2File(path));
   }
-
   @SuppressWarnings("unused") private BatchSpartanizerApplication(final String presentSourcePath, final String name) {
     final File dir = new File(folder + outputDir);
     if (!dir.exists())
       System.out.println(dir.mkdir());
   }
-
   boolean collect(final AbstractTypeDeclaration in) {
     final int length = in.getLength(), tokens = metrics.tokens(in + ""), nodes = countOf.nodes(in), body = metrics.bodySize(in),
         tide = clean(in + "").length(), essence = Essence.of(in + "").length();

@@ -1,4 +1,5 @@
 package il.org.spartan.spartanizer.tippers;
+
 import static fluent.ly.is.*;
 import static fluent.ly.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
@@ -33,15 +34,12 @@ public final class InfixPlusRemoveParenthesis extends ReplaceCurrentNode<InfixEx
     return in(operator(x), TIMES, DIVIDE)
         || operator(x) == op.PLUS2 && extract.allOperands(x).stream().allMatch(λ -> type.of(λ) == type.Primitive.Certain.STRING);
   }
-
   @Override public String description() {
     return "Remove redundant parenthesis";
   }
-
   @Override public String description(final InfixExpression ¢) {
     return description() + " around " + Trivia.gist(¢);
   }
-
   @Override public Expression replacement(final InfixExpression x) {
     if (operator(x) != op.PLUS2)
       return null;

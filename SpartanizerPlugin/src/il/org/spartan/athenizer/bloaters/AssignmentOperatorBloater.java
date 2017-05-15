@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -25,11 +26,9 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {
     return "use simple assignment with binary operation";
   }
-
   @Override protected boolean prerequisite(final Assignment ¢) {
     return ¢.getAST().hasResolvedBindings() && validTypes(¢) && op.assign2infix(¢.getOperator()) != null;
   }
-
   @Override public Tip tip(final Assignment ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -46,7 +45,6 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
       }
     };
   }
-
   private static boolean validTypes(final Assignment ¢) {
     final ITypeBinding $ = left(¢).resolveTypeBinding(), br = right(¢).resolveTypeBinding();
     return $ != null && br != null && $.isPrimitive() && br.isPrimitive() && $.isEqualTo(br);

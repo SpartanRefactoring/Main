@@ -27,21 +27,17 @@ public class BloatersExamplesTests extends ExamplesTests {
     final Tipper<?>[] ¢1 = { tipper };
     wrap(() -> bloatingOf(¢.get()).using(¢1).stays());
   }
-
   @Override protected void converts(final Converts ¢) {
     final Tipper<?>[] ¢1 = { tipper };
     wrap(() -> bloatingOf(¢.from()).using(¢1).gives(¢.to()));
   }
-
   public BloatersExamplesTests(final Tipper<? extends ASTNode> tipper, final String name) {
     super(tipper, name);
   }
-
   @Parameters(name = "{index}. {1}") //
   public static Collection<Object[]> data() {
     return allTippers().stream().map(λ -> new Object[] { λ, English.name(λ) }).collect(toList());
   }
-
   /** Get all tippers from {@link Configuration}. Removes duplicate tippers
    * (same class, different templates).
    * @return all tippers to be tested */

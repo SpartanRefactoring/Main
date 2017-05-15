@@ -22,7 +22,6 @@ public final class TypeParameterExtendsObject extends ReplaceCurrentNode<TypePar
   @Override public String description(final TypeParameter ¢) {
     return "Trim implicit extends " + Trivia.gist(¢);
   }
-
   @Override public TypeParameter replacement(final TypeParameter p) {
     final TypeParameter $ = copy.of(p);
     final List<Type> ts = typeBounds($);

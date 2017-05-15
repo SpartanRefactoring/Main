@@ -18,7 +18,6 @@ public class FlatMapTest {
             .gives("other.addAll((willBeResumed?listeners:rImpl.atmosphereResourceEventListener()).stream().flatMap(λ->onBroadcast(e)));") //
             .stays();
   }
-
   @Test public void b() {
     trimmingOf(" for (AtmosphereResourceEventListener ¢ : rImpl)  other.addAll(onBroadcast(e));")//
         .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
@@ -26,7 +25,6 @@ public class FlatMapTest {
         .gives("other.addAll(rImpl.stream().flatMap(λ->onBroadcast(e)));")//
         .stays();
   }
-
   @Test public void c() {
     trimmingOf(" for (AtmosphereResourceEventListener ¢ : rImpl)  other.addAll(¢);")//
         .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
@@ -34,7 +32,6 @@ public class FlatMapTest {
         .gives("other.addAll(rImpl.stream().flatMap(λ->λ));")//
         .stays();
   }
-
   @Test public void d() {
     trimmingOf(" for (AtmosphereResourceEventListener ¢ : very.complicated(expression))  other.addAll(¢);")//
         .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
@@ -42,7 +39,6 @@ public class FlatMapTest {
         .gives("other.addAll(very.complicated(expression).stream().flatMap(λ->λ));")//
         .stays();
   }
-
   @Test public void e() {
     trimmingOf(" for (A a : B) for(C c : a) other.add(c);")//
         .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//
@@ -50,7 +46,6 @@ public class FlatMapTest {
         .gives("other.addAll(B.stream().flatMap(λ->λ));")//
         .stays();
   }
-
   @Test public void f() {
     trimmingOf(" for (A a : B.f.f()) for(C c : a) other.add(c);")//
         .using(EnhancedForStatement.class, new ForEach(), new FlatMap())//

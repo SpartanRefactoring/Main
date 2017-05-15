@@ -16,24 +16,20 @@ public class Issue0975 {
     bloatingOf("for(int i=0;i<5;i++) a=5; b=7;")//
         .gives("for(int i=0;i<5;i++){a=5;}b=7;");
   }
-
   @Test public void notSimpleShouldAddTestWhile() {
     bloatingOf("while(i<5) a=5; b=7;")//
         .gives("while(i<5){ a=5;}b=7;")//
         .stays();
   }
-
   @Test public void notSimpleShouldntAddTestWhile() {
     bloatingOf("while(i<5){ a=5;b=3;}")//
         .stays();
   }
-
   @Test public void simpleBlockTestWhile() {
     bloatingOf("while(i<5) a=5;")//
         .gives("while(i<5){a=5;}")//
         .stays();
   }
-
   @Test public void simpleShouldntAddTestWhile() {
     bloatingOf("while(i<5){ a=5;}")//
         .stays();
@@ -45,14 +41,12 @@ public class Issue0975 {
           .gives("for(int i=0;i<5;i=i+1){a=5;b=3;}")//
           .stays();
     }
-
     @Test public void simpleBlockTest() {
       bloatingOf("for(int i=0;i<5;i++) a=5;")//
           .gives("for(int i=0;i<5;i++){a=5;}")//
           .gives("for(int i=0;i<5;i=i+1){a=5;}")//
           .stays();
     }
-
     @Test public void simpleShouldntAddTest() {
       bloatingOf("for(int i=0;i<5;i++){ a=5;}")//
           .gives("for(int i=0;i<5;i=i+1){a=5;}")//

@@ -25,7 +25,6 @@ public class PercolateExceptionTest {
         .stays()//
     ;
   }
-
   @Test public void b() {
     trimmingOf("try{ thing(); } catch(A ¢){ throw ¢;}catch(B ¢){ throw ¢;}")//
         .gives("try{thing();}catch(B|A ¢){throw ¢;}")//

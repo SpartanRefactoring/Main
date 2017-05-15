@@ -38,16 +38,13 @@ public final class LambdaRenameSingleParameterToLambda extends NodePattern<Lambd
     andAlso("New name is free", () -> !namespace.has(notation.lambda));
     andAlso("No nested names", () -> !namespace.hasChildren());
   }
-
   @Override public String description() {
     return "Rename lambda parameter " + name + " to " + notation.lambda;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     misc.rename(name, current.getAST().newSimpleName(notation.lambda), current, r, g);
     return r;
   }
-
   @Override public Examples examples() {
     return null;
   }

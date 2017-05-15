@@ -20,7 +20,6 @@ public class Issue0456 {
                 "{ long q = (r & 1) != 0 ? d(x, r) : (x >>> 1) / (r >>> 1); long r = x - r * q; b[--i] = C.f((int) r, r); for (x=q; x > 0; x /= r)   b[--i] = C.f((int) (x % r), r);}")//
             .stays();
   }
-
   /** Automatically generated on Thu-Mar-16-12:17:27-IST-2017, copied by
    * Yossi */
   @Test public void b() {
@@ -33,7 +32,6 @@ public class Issue0456 {
             .stays() //
     ;
   }
-
   /** Automatically generated on Thu-Mar-16-12:22:45-IST-2017, copied by
    * Yossi */
   @Test public void c() {
@@ -44,7 +42,6 @@ public class Issue0456 {
             .stays() //
     ;
   }
-
   /** Automatically generated on Thu-Mar-16-12:25:21-IST-2017, copied by
    * Yossi */
   @Test public void d() {

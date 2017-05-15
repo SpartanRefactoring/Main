@@ -1,7 +1,6 @@
 package il.org.spartan.plugin.preferences.revision;
 
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
-import static il.org.spartan.plugin.preferences.revision.PreferencesResources.TipperGroup.*;
 
 import org.eclipse.jface.preference.*;
 import org.eclipse.ui.*;
@@ -20,7 +19,6 @@ public class ZoomerPreferencesPage extends FieldEditorPreferencePage implements 
         WIDGET_SHORTCUT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
-
   @Override protected void createFieldEditors() {
     addField(new BooleanFieldEditor(ZOOMER_REVERT_METHOD_ID, ZOOMER_REVERT_METHOD_TEXT, getFieldEditorParent()));
   }

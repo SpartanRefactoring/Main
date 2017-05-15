@@ -22,20 +22,17 @@ public class Issue1125 {
         .stays()//
     ;
   }
-
   @Test public void forLoop2() {
     trimmingOf("for(x();y();z()){f();g();}")//
         .stays()//
     ;
   }
-
   @Test public void whileLoop() {
     trimmingOf("while(x()){}")//
         .gives("while(x());")//
         .stays()//
     ;
   }
-
   @Test public void whileLoop2() {
     trimmingOf("while(x()){f();g();}")//
         .gives("for(;x(); g()){f();}")//
@@ -43,14 +40,12 @@ public class Issue1125 {
         .stays()//
     ;
   }
-
   @Test public void doLoop() {
     trimmingOf("do{}while(x());")//
         .gives("do;while(x());")//
         .stays()//
     ;
   }
-
   @Test public void doLoop2() {
     trimmingOf("do{f();g();}while(x());")//
         .stays()//

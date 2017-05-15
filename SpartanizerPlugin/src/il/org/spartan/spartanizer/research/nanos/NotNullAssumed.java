@@ -20,8 +20,8 @@ import il.org.spartan.spartanizer.research.nanos.common.*;
  * @since 2017-01-08 */
 public class NotNullAssumed extends NanoPatternTipper<IfStatement> {
   private static final long serialVersionUID = 0x36553BED8BDBAFF3L;
-  private static final String description = "replace with azzert.notNull(X)";
-  private static final lazy<NotNullRequired> rival = lazy.get(NotNullRequired::new);
+  private static final String description = "replace with azzert.NonNull(X)";
+  private static final lazy<NonNullRequired> rival = lazy.get(NonNullRequired::new);
 
   @Override public boolean canTip(final IfStatement ¢) {
     return nullCheck(expression(¢))//
@@ -29,19 +29,16 @@ public class NotNullAssumed extends NanoPatternTipper<IfStatement> {
         && rival.get().cantTip(¢)//
     ;
   }
-
   @Override public Tip pattern(final IfStatement ¢) {
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        r.replace(¢, extract.singleStatement(make.ast("azzert.notNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
+        r.replace(¢, extract.singleStatement(make.ast("azzert.NonNull(" + separate.these(nullCheckees(¢)).by(",") + ");")), g);
       }
     };
   }
-
   @Override public String description() {
     return description;
   }
-
   @Override public String tipperName() {
     return "NotNullAssumed";
   }

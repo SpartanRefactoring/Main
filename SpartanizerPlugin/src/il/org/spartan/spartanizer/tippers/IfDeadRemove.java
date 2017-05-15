@@ -16,7 +16,6 @@ public class IfDeadRemove extends ReplaceCurrentNode<IfStatement>//
   @Override public String description(final IfStatement ¢) {
     return "Remove empty cycles in: " + ¢;
   }
-
   @Override public ASTNode replacement(final IfStatement ¢) {
     return !sideEffects.free(¢) ? null : ¢.getAST().newBlock();
   }

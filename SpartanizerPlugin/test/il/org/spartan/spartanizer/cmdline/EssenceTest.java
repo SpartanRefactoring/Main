@@ -28,7 +28,6 @@ public class EssenceTest {
     azzert.that(Essence.of("\r\n"), is(""));
     azzert.that(Essence.of("\n\r"), is(""));
   }
-
   @Test public void simpleTest2() {
     azzert.that(Essence.of("a    b\r\n\n\r"), is("a b"));
     azzert.that(Essence.of("a  b\r\nc\n\r\td\r\n\r"), is("a b c d"));
@@ -38,7 +37,6 @@ public class EssenceTest {
     azzert.that(Essence.of("1\t0 3"), is("10 3"));
     azzert.that(Essence.of("1\t07\t\t\t8"), is("1078"));
   }
-
   @Test public void simpleTest3() {
     azzert.that(Essence.of("basic test"), is("basic test"));
     azzert.that(Essence.of("//////comment"), is(""));

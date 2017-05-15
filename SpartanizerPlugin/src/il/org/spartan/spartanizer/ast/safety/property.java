@@ -20,7 +20,6 @@ public enum property {
   public static Attached attach(final Object o) {
     return λ -> λ.setProperty(key(o.getClass()), o);
   }
-
   /** Get property from node.
    * @param n JD
    * @param key property name
@@ -29,7 +28,6 @@ public enum property {
   public static <T> T get(final ASTNode n, final String key) {
     return n == null ? null : (T) n.getProperty(key);
   }
-
   /** Checks node has a property.
    * @param n JD
    * @param key property name
@@ -37,22 +35,18 @@ public enum property {
   public static boolean has(final ASTNode n, final String key) {
     return n != null && n.properties().keySet().contains(key);
   }
-
   static <N> String key(final Class<N> ¢) {
     return ¢.getCanonicalName();
   }
-
   @SuppressWarnings("unchecked") public static <N> Obtainer<N> obtain(final Class<N> c) {
     return λ -> (N) λ.getProperty(key(c));
   }
-
   /** Sets a binary flag true.
    * @param n JD
    * @param key property name */
   public static void set(final ASTNode n, final String key) {
     set(n, key, Boolean.TRUE);
   }
-
   /** Sets a value under key for this node.
    * @param n JD
    * @param key property name
@@ -63,7 +57,6 @@ public enum property {
     n.setProperty(key, value);
     return value;
   }
-
   /** Unsets a key property for this node.
    * @param n an {@link ASTNode}
    * @param key property name */

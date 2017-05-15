@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -25,7 +26,6 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
   @Override public Examples examples() {
     return convert("for(int i=0;i<5;++i) continue;").to("for(int i=0;i<5;++i) { continue; }");
   }
-
   public ForBlockBloater() {
     andAlso("Valid not an only return", () -> {
       final Collection<Boolean> $ = an.empty.list();
@@ -40,7 +40,6 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
       return $.isEmpty();
     });
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final ForStatement $ = copy.of(current);
     final Block b = current.getAST().newBlock();
@@ -49,7 +48,6 @@ public class ForBlockBloater extends ForStatementPattern implements TipperCatego
     r.replace(current, $, g);
     return r;
   }
-
   @Override public String description() {
     return "expand the single statements in the for to a block";
   }

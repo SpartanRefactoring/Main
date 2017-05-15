@@ -29,11 +29,9 @@ public final class InfixTermsZero extends ReplaceCurrentNode<InfixExpression>//
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal0(λ)).collect(toList());
     return $.size() == ¢.size() ? null : $.isEmpty() ? copy.of(the.headOf(¢)) : $.size() == 1 ? copy.of(the.headOf($)) : subject.operands($).to(PLUS);
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "Remove all additions and substructions of 0 to and from " + ¢;
   }
-
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return (operator(¢) != PLUS && operator(¢) != MINUS || !(¢ == initializer(az.variableDeclrationFragment(parent(¢)))
         & iz.intType(type(az.variableDeclarationStatement(parent(az.variableDeclrationFragment(parent(¢))))))))

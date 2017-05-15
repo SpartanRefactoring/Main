@@ -21,8 +21,7 @@ public final class InitializerTest {
   static int c;
 
   static void print(final Object ¢) {
-    Object[] ____ = { ¢ };
-    forget.em(____);
+    forget.em(new Object[] { ¢ });
   }
 
   final int e;
@@ -41,7 +40,6 @@ public final class InitializerTest {
     azzert.that(InitializerTest.b, is(200));
     azzert.that(InitializerTest.c, is(300));
   }
-
   @Test public void T_01() {
     i = new InitializerTest();
     azzert.that(InitializerTest.a, is(0));

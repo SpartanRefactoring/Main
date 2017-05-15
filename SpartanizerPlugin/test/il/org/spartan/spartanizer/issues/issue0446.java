@@ -33,15 +33,12 @@ public class issue0446 {
             .stays() //
     ;
   }
-
   @Test public void t0() {
     trimmingOf("for (int a = 0; a < 100;) {f(a,b); if (x) break; a +=b;}").gives("for (int a = 0; a < 100;a +=b) {f(a,b); if (x) break;}");
   }
-
   @Test public void t1() {
     trimmingOf("for (int a = 0; a < 100;a++) {f(a,b); if (x) break; a +=b;}").gives("for (int a = 0; a < 100;a +=b, a++) {f(a,b); if (x) break;}");
   }
-
   @Test public void t2() {
     trimmingOf(
         "int a(A b,int c) {int d = 0; for (byte[] e = f(); d < c;) {int g = c - d;int h = i(b, g); if (h == 0 && (h = b.j(e, 0, ((int) C.k(g, l)))) == -1) break; d += h; } return d; }") //
@@ -54,7 +51,6 @@ public class issue0446 {
             .stays() //
     ;
   }
-
   @Test public void t3() {
     trimmingOf("int a(A b,int c) {" + //
         "int d = 0;" + //
@@ -88,37 +84,30 @@ public class issue0446 {
         )//
         .stays();
   }
-
   @Test public void t31() {
     trimmingOf("int a(A b,int c){int $=0;for(byte[] e=f();$<c;){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;$+=h;}return $;}")
         .gives("int a(A b,int c){int $=0;for(byte[] e=f();$<c;$+=h){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;}return $;}");
   }
-
   @Test public void t32() {
     trimmingOf("int $=0;for(byte[] e=f();$<c;){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;$+=h;}return $;")
         .gives("int a(A b,int c){int $=0;for(byte[] e=f();$<c;$+=h){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;}return $;");
   }
-
   @Test public void t33() {
     trimmingOf("for(byte[] e=f();$<c;){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;$+=h;}return $;")
         .gives("for(byte[] e=f();$<c;$+=h){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;}return $;");
   }
-
   @Test public void t34() {
     trimmingOf("for(byte[] e=f();$<c;){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;$+=h;}")
         .gives("for(byte[] e=f();$<c;$+=h){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;}");
   }
-
   @Test public void t35() {
     trimmingOf("for(byte[] e=f();$<c;){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;++$;}")
         .gives("for(byte[] e=f();$<c;++$){int g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;}");
   }
-
   @Test public void t36() {
     trimmingOf("for(int e=f();$<c;){g=c-$;h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;++$;}")
         .gives("for(int e=f();$<c;++$){g=c-$;h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;}");
   }
-
   @Test public void t4() {
     trimmingOf("L a(A b,L c){L $=0;for(byte[] e=f();$<c;){L g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;$+=h;}return $;}") //
         .gives("L a(A b,L c){L $=0;for(byte[] e=f();$<c; $+=h){L g=c-$,h=i(b,g);if(h==0&&(h=b.j(e,0,(int)C.k(g,l)))==-1)break;}return $;}") //

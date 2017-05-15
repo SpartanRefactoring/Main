@@ -85,7 +85,6 @@ public enum GuessedContext {
           "GuessContext error: \n Here are the attempts I made at literal [" + codeFragment + "]:,\n\n" + enumerateFailingAttempts(codeFragment));
     return $;
   }
-
   public static GuessedContext qfind(final String codeFragment) {
     for (final GuessedContext $ : alternativeContextsToConsiderInThisOrder)
       if ($.contains($.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper($, codeFragment))
@@ -94,15 +93,12 @@ public enum GuessedContext {
         .filter(λ -> λ.accurateContains(λ.intoCompilationUnit(codeFragment) + "", codeFragment) && wasActuallyInsertedToWrapper(λ, codeFragment))
         .findFirst().orElse(null);
   }
-
   private static boolean methodInvocationLookAlike(final String codeFragment) {
     return codeFragment.matches("[\\S]+\\(\\)");
   }
-
   private static boolean wasActuallyInsertedToWrapper(final GuessedContext $, final String codeFragment) {
     return !($.intoCompilationUnit("") + "").equals($.intoCompilationUnit(codeFragment) + "");
   }
-
   static String enumerateFailingAttempts(final String codeFragment) {
     final StringBuilder $ = new StringBuilder();
     int i = 0;
@@ -131,7 +127,6 @@ public enum GuessedContext {
     this.before = before;
     this.after = after;
   }
-
   /** Guess a given code fragment, and then parse it, converting it into a
    * {@link CompilationUnit}.
    * @param codeFragment JD
@@ -140,7 +135,6 @@ public enum GuessedContext {
   public CompilationUnit intoCompilationUnit(final String codeFragment) {
     return (CompilationUnit) makeAST.COMPILATION_UNIT.from(on(codeFragment));
   }
-
   /** Guess a given code fragment, and converts it into a {@link Document}
    * @param codeFragment JD
    * @return a newly created {@link CompilationUnit} representing the parsed AST
@@ -148,27 +142,23 @@ public enum GuessedContext {
   public Document intoDocument(final String codeFragment) {
     return new Document(on(codeFragment));
   }
-
   /** Remove a wrap from around a phrase
    * @param codeFragment a wrapped program phrase
    * @return unwrapped phrase */
   public String off(final String codeFragment) {
     return removeSuffix(removePrefix(codeFragment, before), after);
   }
-
   /** Place a wrap around a phrase
    * @param codeFragment some program phrase
    * @return wrapped phrase */
   public String on(final String codeFragment) {
     return before + codeFragment + after;
   }
-
   private boolean accurateContains(final String wrap, final String inner) {
     final String off = off(wrap), $ = Trivia.accurateEssence(inner), essence2 = Trivia.accurateEssence(off);
     assert essence2 != null;
     return essence2.contains($);
   }
-
   private boolean contains(final String wrap, final String inner) {
     final String off = off(wrap), $ = Trivia.essence(inner), essence2 = Trivia.essence(off);
     assert essence2 != null;

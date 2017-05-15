@@ -10,6 +10,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** Convert {@code ""+x} to {@code x+""} tests in {@link Issue0116}
@@ -25,11 +26,9 @@ public final class InfixConcatenationEmptyStringLeft extends ReplaceCurrentNode<
     lisp.swap($, 0, 1);
     return subject.operands($).to(op.PLUS2);
   }
-
   @Override public String description(final InfixExpression ¢) {
     return "Append, rather than prepend, \"\", to " + left(¢);
   }
-
   @Override public ASTNode replacement(final InfixExpression ¢) {
     return !iz.emptyStringLiteral(left(¢)) || !iz.infixPlus(¢) || iz.stringLiteral(right(¢)) ? null : replace(¢);
   }

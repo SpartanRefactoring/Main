@@ -1,5 +1,10 @@
 package il.org.spartan.spartanizer.tipping;
 
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.Map.*;
+
+import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
 /** Classification of tippers
@@ -8,7 +13,6 @@ import il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 @FunctionalInterface
 public interface TipperCategory {
   String description();
-
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
    * {@link TipperGroup}
@@ -16,6 +20,65 @@ public interface TipperCategory {
   default TipperGroup tipperGroup() {
     return TipperGroup.find(this);
   }
+  default Class<? extends TipperCategory> lowestCategory() {
+    Class<? extends TipperCategory> $ = TipperCategory.class;
+    for (final Class<? extends TipperCategory> ¢ : hierarchy.keySet())
+      if (¢.isInstance(this) && $.isAssignableFrom(¢))
+        $ = ¢;
+    return $;
+  }
+
+  Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> hierarchy = anonymous.ly(() -> {
+    final Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> $ = new HashMap<>();
+    $.put(Nominal.class, Arrays.asList(Abbreviation.class, Anonymization.class, Dollarization.class));
+    $.put(Structural.class, Arrays.asList(Collapse.class, Loops.class, Deadcode.class, EarlyReturn.class, NOP.class, ScopeReduction.class,
+        Shortcircuit.class, SyntacticBaggage.class));
+    $.put(Abbreviation.class, an.empty.list());
+    $.put(Anonymization.class, an.empty.list());
+    $.put(Arithmetics.class, an.empty.list());
+    $.put(Loops.class, an.empty.list());
+    $.put(Bloater.class, an.empty.list());
+    $.put(Centification.class, an.empty.list());
+    $.put(CommnonFactoring.class, Arrays.asList(Ternarization.class));
+    $.put(Deadcode.class, an.empty.list());
+    $.put(Dollarization.class, an.empty.list());
+    $.put(EarlyReturn.class, an.empty.list());
+    $.put(EmptyCycles.class, an.empty.list());
+    $.put(Idiomatic.class, Arrays.asList(Sorting.class));
+    $.put(Inlining.class, an.empty.list());
+    $.put(Modular.class, an.empty.list());
+    $.put(Nanos.class, an.empty.list());
+    $.put(NOP.class, Arrays.asList(NOP.onBooleans.class, NOP.onNumbers.class, NOP.onStrings.class));
+    $.put(NOP.onBooleans.class, an.empty.list());
+    $.put(NOP.onNumbers.class, an.empty.list());
+    $.put(NOP.onStrings.class, an.empty.list());
+    $.put(ScopeReduction.class, an.empty.list());
+    $.put(Shortcircuit.class, an.empty.list());
+    $.put(Sorting.class, an.empty.list());
+    $.put(SyntacticBaggage.class, an.empty.list());
+    $.put(Ternarization.class, an.empty.list());
+    $.put(Collapse.class, Arrays.asList(CommnonFactoring.class));
+    return $;
+  });
+  Map<Class<? extends TipperCategory>, Class<? extends TipperCategory>> reversedHierarchy = anonymous.ly(() -> {
+    final Map<Class<? extends TipperCategory>, Class<? extends TipperCategory>> $ = new HashMap<>();
+    for (final Entry<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> e : hierarchy.entrySet())
+      for (final Class<? extends TipperCategory> ¢ : e.getValue())
+        $.put(¢, e.getKey());
+    return $;
+  });
+  Map<Class<? extends TipperCategory>, String> descriptions = anonymous.ly(() -> {
+    final Map<Class<? extends TipperCategory>, String> $ = new HashMap<>();
+    for (final Class<? extends TipperCategory> c : hierarchy.keySet())
+      try {
+        for (final Field ¢ : c.getDeclaredFields())
+          if ("toString".equals(¢.getName()))
+            $.put(c, (String) ¢.get(null));
+      } catch (IllegalAccessException | IllegalArgumentException | SecurityException ¢) {
+        note.bug(¢);
+      }
+    return $;
+  });
 
   interface Abbreviation extends Nominal {
     String toString = "Abbreviation";

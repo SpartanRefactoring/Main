@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
@@ -24,7 +25,6 @@ public class IfElseBlockBloater extends IfAbstractPattern implements TipperCateg
     andAlso("At least the if or the elze are not in a block",
         () -> !iz.block(current.getThenStatement()) || current.getElseStatement() != null && !iz.block(current.getElseStatement()));
   }
-
   @Override public Examples examples() {
     return //
     convert("if(f()) g();")//
@@ -35,7 +35,6 @@ public class IfElseBlockBloater extends IfAbstractPattern implements TipperCateg
         .to("if(x) {a();b();} else {h();}")//
     ;
   }
-
   @Override protected ASTRewrite go(final ASTRewrite r, final TextEditGroup g) {
     final IfStatement $ = copy.of(current);
     if (!iz.block(then(current))) {

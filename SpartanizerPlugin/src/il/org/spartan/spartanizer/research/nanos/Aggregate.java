@@ -34,19 +34,15 @@ public final class Aggregate extends NanoPatternTipper<EnhancedForStatement> {
     return anyTips(tippers, x)//
         && rival.cantTip(x);
   }
-
   @Override public Tip pattern(final EnhancedForStatement x) {
     return firstTip(tippers, x);
   }
-
   @Override public String description() {
     return "Aggregate a collection into one element";
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }

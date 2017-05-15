@@ -19,27 +19,21 @@ public final class CopyCollection extends NanoPatternTipper<ClassInstanceCreatio
   @Override public String description(@SuppressWarnings("unused") final ClassInstanceCreation __) {
     return "";
   }
-
   @Override public boolean canTip(final ClassInstanceCreation x) {
     return tippers.canTip(az.block(parent(parent(parent(x)))));
   }
-
   @Override public Tip pattern(final ClassInstanceCreation x) {
     return tippers.firstTip(az.block(parent(parent(parent(x)))));
   }
-
   @Override public Category category() {
     return Category.Iterative;
   }
-
   @Override public String technicalName() {
     return "AssignXWithNewTAddCollectionToX";
   }
-
   @Override public String example() {
     return firstPattern(tippers);
   }
-
   @Override public String symbolycReplacement() {
     return firstReplacement(tippers);
   }
