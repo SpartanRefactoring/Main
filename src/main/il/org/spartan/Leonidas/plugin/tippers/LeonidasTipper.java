@@ -9,6 +9,7 @@ import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
@@ -94,7 +95,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @param treeToReplace - the given tree that matched the "from" tree.
      * @param r             - Rewrite object
      */
-    private void replace(PsiElement treeToReplace, Map<Integer, PsiElement> m, PsiRewrite r) {
+    private void replace(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         PsiElement n = getReplacingTree(m, r);
         r.replace(treeToReplace, n);
     }
@@ -104,11 +105,13 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @param r rewrite object
      * @return the template of the replacer with the concrete elements inside it.
      */
-    private PsiElement getReplacingTree(Map<Integer, PsiElement> m, PsiRewrite r) {
+    private PsiElement getReplacingTree(Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         Encapsulator rootCopy = getReplacerRootTree();
         m.keySet().forEach(d -> rootCopy.accept(e -> {
-            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && iz.generic(e))
-                az.generic(e).replace(new Encapsulator(m.get(e.getInner().getUserData(KeyDescriptionParameters.ID))), r);
+            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && e.isGeneric()) {
+                GenericEncapsulator ge = az.generic(e);
+                ge.replaceByRange(m.get(ge.getId()), r);
+            }
         }));
         return rootCopy.getInner();
     }

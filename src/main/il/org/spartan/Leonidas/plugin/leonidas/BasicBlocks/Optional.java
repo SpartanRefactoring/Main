@@ -11,14 +11,11 @@ import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
  * @author Oren Afek, michalcohen
  * @since 11-05-2017.
  */
-public class Optional extends GenericMethodCallBasedBlock {
+public class Optional extends Quantifier {
     private static final String TEMPLATE = "optional";
-    Encapsulator internal;
-    boolean active = true;
 
     public Optional(PsiElement e, Encapsulator i) {
-        super(e, TEMPLATE);
-        internal = i;
+        super(e, TEMPLATE, i);
     }
 
     public Optional() {
@@ -47,13 +44,14 @@ public class Optional extends GenericMethodCallBasedBlock {
         return new Optional(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p)));
     }
 
-    public void setActivate(boolean b) {
-        active = b;
-    }
-
     @Override
     public boolean isGeneric() {
         return internal.isGeneric();
+    }
+
+    @Override
+    public int getNumberOfOccurrences(Encapsulator.Iterator ignore) {
+        return 1;
     }
 
     @Override
@@ -65,14 +63,5 @@ public class Optional extends GenericMethodCallBasedBlock {
         if (o.isGeneric())
             upperElement.putUserData(KeyDescriptionParameters.ID, o.extractId(e.getInner()));//o
         return upperElement.getParent() == null ? upperElement : upperElement.generalizeWith(o);
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    @Override
-    public boolean exists() {
-        return active;
     }
 }

@@ -1,10 +1,12 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
+import com.google.common.collect.Lists;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Supplier;
 
 
@@ -94,12 +96,17 @@ public abstract class GenericEncapsulator extends Encapsulator {
     /**
      * @param newNode the concrete node that replaces the generic node.
      * @param r       rewrite
-     * @return this, for fluent API.
      */
     @SuppressWarnings("UnusedReturnValue")
-    public Encapsulator replace(Encapsulator newNode, PsiRewrite r) {
+    public void replace(Encapsulator newNode, PsiRewrite r) {
         inner = parent == null ? newNode.inner : r.replace(inner, newNode.inner);
-        return this;
+    }
+
+    public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
+        assert parent != null;
+        List<PsiElement> l = Lists.reverse(elements);
+        elements.forEach(e -> inner.getParent().addAfter(inner, e));
+        inner.getParent().deleteChildRange(inner, inner);
     }
 
     /**
@@ -119,6 +126,15 @@ public abstract class GenericEncapsulator extends Encapsulator {
     @Override
     public boolean isGeneric() {
         return true;
+    }
+
+    public int getId() {
+        return getUserData(KeyDescriptionParameters.ID);
+    }
+
+    public Encapsulator putId(int i) {
+        putUserData(KeyDescriptionParameters.ID, i);
+        return this;
     }
 
     GenericEncapsulator.EndThe is(Runnable template) {

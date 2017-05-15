@@ -182,9 +182,12 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
             return current;
         }
 
-        @Override
-        public Object clone() {
+        public Encapsulator value() {
+            return current;
+        }
 
+        @Override
+        public Encapsulator.Iterator clone() {
             try {
                 Iterator cloned = (Iterator) super.clone();
                 cloned.nodes = (Stack<Encapsulator>) this.nodes.clone();
@@ -192,7 +195,6 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
             } catch (CloneNotSupportedException e) {
                 return this;
             }
-
         }
 
         private void initStack(Encapsulator current) {
@@ -200,6 +202,9 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
             current.getActualChildren().forEach(this::initStack);
         }
 
+        public int getNumberOfOccurrences() {
+            return skipOverall;
+        }
 
         public Iterator setNumberOfOccurrences(int i) {
             shouldSkip = true;

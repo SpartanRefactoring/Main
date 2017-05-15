@@ -4,6 +4,7 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
+import il.org.spartan.Leonidas.plugin.leonidas.PreservesIterator;
 
 /**
  * @author Oren Afek
@@ -16,6 +17,10 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
     public Quantifier(PsiElement e, String template, Encapsulator i) {
         super(e, template);
         internal = i;
+    }
+
+    public Quantifier(String template) {
+        super(template);
     }
 
     @Override
@@ -39,5 +44,9 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
         return internal.isGeneric();
     }
 
+    @PreservesIterator
+    public int getNumberOfOccurrences(Encapsulator.Iterator i) {
+        return 0;
+    }
 
 }
