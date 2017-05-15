@@ -40,8 +40,7 @@ public class Issue0111 {
   }
   @Test public void A$c_2() {
     trimmingOf("public final class A{synchronized public void fun(final int __){} final private String s = \"Alex\";}")
-        .gives("public final class A{public synchronized void fun(final int __){} private final String s = \"Alex\";}")//
-        .stays();
+        .gives("public final class A{public synchronized void fun(final int __){} private final String s = \"Alex\";}");
   }
   @Test public void A$d() {
     trimmingOf("protected public final class A{}")//

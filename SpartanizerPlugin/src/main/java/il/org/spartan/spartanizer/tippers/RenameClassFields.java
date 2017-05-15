@@ -11,20 +11,20 @@ import il.org.spartan.spartanizer.tipping.*;
 
 /** Rename class field to the Type name in the following cases: - The type of
  * the field is unique in the class - The field is private and or the class is
- * private
+ * private Issue #1176
  * @author Dor Ma'ayan
  * @since 2017-05-14 */
 public final class RenameClassFields extends EagerTipper<FieldDeclaration>//
     implements TipperCategory.Centification {
-  private static final long serialVersionUID = 0x5583F2C8E00B4000L;
+  private static final long serialVersionUID = 0x5583F2CE00B4000L;
 
   @Override public String description(@SuppressWarnings("unused") final FieldDeclaration ¢) {
     return "rename class field";
   }
-  @Override @SuppressWarnings("boxing") public Tip tip(final FieldDeclaration d) {
+  @Override public Tip tip(final FieldDeclaration d) {
     assert d != null;
     TypeDeclaration wrapper = az.typeDeclaration(d.getParent());
-    if (!d.modifiers().contains(Modifier.PRIVATE) || wrapper == null || wrapper.modifiers().contains(Modifier.PRIVATE) || d.fragments().size() != 1)
+    if (wrapper == null || (!iz.private¢(d) && !iz.private¢(wrapper)) || d.fragments().size() != 1 || iz.primitiveType(d.getType()))
       return null;
     FieldDeclaration[] fields = wrapper.getFields();
     Type t = d.getType();
@@ -36,10 +36,10 @@ public final class RenameClassFields extends EagerTipper<FieldDeclaration>//
       return null;
     final SimpleName $ = az.variableDeclrationFragment((ASTNode) d.fragments().get(0)).getName();
     assert $ != null;
-    final SimpleName ¢ = make.newCent($);
-    return new Tip("Rename paraemter " + $ + " to  " + ¢, getClass(), $) {
+    final SimpleName ¢ = make.newLowerCamelCase($, d.getType());
+    return ¢.getIdentifier().equals($.getIdentifier()) ? null : new Tip("Rename paraemter " + $ + " to  " + ¢, getClass(), $) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        misc.rename($, ¢, d, r, g);
+        misc.rename($, ¢, wrapper, r, g);
       }
     }.spanning(d);
   }
