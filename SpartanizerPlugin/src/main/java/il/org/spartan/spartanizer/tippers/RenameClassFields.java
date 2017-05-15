@@ -23,14 +23,14 @@ public final class RenameClassFields extends EagerTipper<FieldDeclaration>//
   }
   @Override public Tip tip(final FieldDeclaration d) {
     assert d != null;
-    TypeDeclaration wrapper = az.typeDeclaration(d.getParent());
-    if (wrapper == null || (!iz.private¢(d) && !iz.private¢(wrapper)) || d.fragments().size() != 1 || iz.primitiveType(d.getType()))
+    final TypeDeclaration wrapper = az.typeDeclaration(d.getParent());
+    if (wrapper == null || !iz.private¢(d) && !iz.private¢(wrapper) || d.fragments().size() != 1 || iz.primitiveType(d.getType()))
       return null;
-    FieldDeclaration[] fields = wrapper.getFields();
-    Type t = d.getType();
+    final FieldDeclaration[] fields = wrapper.getFields();
+    final Type t = d.getType();
     int count = 0;
-    for (int ¢ = 0; ¢ < fields.length; ++¢)
-      if (t.equals(fields[¢].getType()))
+    for (final FieldDeclaration ¢ : fields)
+      if (t.equals(¢.getType()))
         ++count;
     if (count != 1)
       return null;

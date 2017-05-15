@@ -70,7 +70,7 @@ public class InflaterListener implements KeyListener, Listener {
       viewer = ((CompilationUnitEditor) editor).getViewer();
   }
   @Override public void handleEvent(final Event ¢) {
-    if(!active || !text.getBounds().contains(text.toControl(Eclipse.mouseLocation())))
+    if (!active || !text.getBounds().contains(text.toControl(Eclipse.mouseLocation())))
       return;
     final int t = checkEvent(¢);
     if (t == 0)
@@ -125,7 +125,7 @@ public class InflaterListener implements KeyListener, Listener {
   }
   @Override @SuppressWarnings("boxing") public void keyPressed(final KeyEvent ¢) {
     final int index = activating_keys.indexOf(¢.keyCode);
-    if(index < 0 || active)
+    if (index < 0 || active)
       return;
     active_keys.set(index, true);
     if (active_keys.stream().allMatch(λ -> λ))

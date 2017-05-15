@@ -36,7 +36,7 @@ public interface scope {
   }
   static Namespace getScopeNamespace(final ASTNode ¢) {
     Namespace $ = Environment.of(¢);
-    if ($ != null ||  ($ = (Namespace) ¢.getRoot().getProperty("Namspace")) != null)
+    if ($ != null || ($ = (Namespace) ¢.getRoot().getProperty("Namspace")) != null)
       return $;
     $ = new Namespace(null);
     ¢.getRoot().setProperty("Namspace", $);

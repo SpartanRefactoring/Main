@@ -33,7 +33,7 @@ public class OutlineTernaryMethodInvocation extends MethodInvocationPattern//
     andAlso("There is at least one argument", () -> !arguments.isEmpty());
     andAlso("All conditions satisfy:", () -> {
       for (final Expression argument : arguments) {
-        if(haz.sideEffects(argument))
+        if (haz.sideEffects(argument))
           return false;
         if (($ = az.conditionalExpression(argument)) != null && !iz.nullLiteral(then($)) && !iz.nullLiteral(elze($)))
           return true;

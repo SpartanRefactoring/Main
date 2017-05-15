@@ -55,7 +55,7 @@ public class OperandBloating extends TestOperand {
       return note.bug(¢);
     }
   }
-  @Override public TestOperand gives(String $) {
+  @Override public TestOperand gives(final String $) {
     return new OperandBloating(super.gives($).get());
   }
   public OperandBloating givesWithBinding(final String $) {

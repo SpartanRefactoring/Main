@@ -25,11 +25,11 @@ public class FAPI {
 
   @SuppressWarnings("unchecked") public FAPI(final AST ast, final Name name, final List<Expression> invocations) {
     this.ast = requireNonNull(ast);
-    this.names = extract.identifiers(name);
-    this.className = the.lastOf(extract.names(name));
+    names = extract.identifiers(name);
+    className = the.lastOf(extract.names(name));
     this.invocations = invocations;
-    this.arguments = new ArrayList<>();
-    for (Expression e : invocations)
+    arguments = new ArrayList<>();
+    for (final Expression e : invocations)
       if (iz.methodInvocation(e))
         arguments.add(az.methodInvocation(e).arguments());
   }
@@ -53,7 +53,7 @@ public class FAPI {
     return this;
   }
   public FAPI fixPath() {
-    ITypeBinding b = property.get(className, BINDING_PROPERTY);
+    final ITypeBinding b = property.get(className, BINDING_PROPERTY);
     if (b == null)
       return this;
     names.clear();
@@ -66,15 +66,15 @@ public class FAPI {
       b.append("/* Name: */\n").append(separate.these(names).by('.')).append("\n");
     if (invocations != null) {
       b.append("/* Invocations: */\n");
-      for (Expression e : invocations)
+      for (final Expression e : invocations)
         b.append(iz.fieldAccess(e) ? az.fieldAccess(e).getName()
             : az.methodInvocation(e).getName() + "(...)" + (!property.has(e, BINDING_PROPERTY) ? "" : " (has binding)")).append("\n");
     }
     if (arguments == null)
       return b.toString();
     b.append("/* Arguments: */\n");
-    for (List<Expression> es : arguments) {
-      for (Expression e : es)
+    for (final List<Expression> es : arguments) {
+      for (final Expression e : es)
         b.append(e + (!property.has(e, BINDING_PROPERTY) ? "" : " (has binding)")).append(" ");
       b.append("\n");
     }

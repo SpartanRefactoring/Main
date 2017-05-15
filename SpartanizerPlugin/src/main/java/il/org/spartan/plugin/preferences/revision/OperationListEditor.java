@@ -1,8 +1,8 @@
 package il.org.spartan.plugin.preferences.revision;
+
 import java.util.*;
 import java.util.Map.*;
 import java.util.function.*;
-
 
 import org.eclipse.jface.preference.ListEditor;
 import org.eclipse.swt.SWT;
@@ -11,18 +11,15 @@ import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
-
 import fluent.ly.*;
 
-
-/**  A widget containing a list of projects and some buttons. Used to configure
-   * specific operations. "configure" button is used to open a dialog, allowing the
-   * user to define configurations for the operation
-   * "en/disable" button allows the user to
-   * toggle spartanization operations to appear or disappear from the widget.
-   * @author Raviv Rachmiel
-   * @since 2017-05-10 
-*/
+/** A widget containing a list of projects and some buttons. Used to configure
+ * specific operations. "configure" button is used to open a dialog, allowing
+ * the user to define configurations for the operation "en/disable" button
+ * allows the user to toggle spartanization operations to appear or disappear
+ * from the widget.
+ * @author Raviv Rachmiel
+ * @since 2017-05-10 */
 public class OperationListEditor extends ListEditor {
   static final String DELIMETER = ",";
   final List<Map.Entry<String, Object>> elements_list;
@@ -32,7 +29,7 @@ public class OperationListEditor extends ListEditor {
   OperationListEditor(final String name, final String labelText, final Composite parent, final List<Map.Entry<String, Object>> elements,
       final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
     super(name, labelText, parent);
-    this.elements_list = as.list(elements);
+    elements_list = as.list(elements);
     final Composite buttonBox = new Composite(parent, SWT.NULL);
     final GridLayout layout = new GridLayout();
     layout.marginWidth = 0;
@@ -83,7 +80,9 @@ public class OperationListEditor extends ListEditor {
       @SuppressWarnings("synthetic-access") void onSelection() {
         final int i = getList().getSelectionIndex();
         if (i >= 0)
-          onConfigure.accept(elements_list.get(i).getValue()); //perform the on configure on widget op
+          onConfigure.accept(elements_list.get(i).getValue()); // perform the on
+                                                               // configure on
+                                                               // widget op
       }
     });
     parent.addDisposeListener(λ -> {
@@ -112,7 +111,8 @@ public class OperationListEditor extends ListEditor {
     getButtonBoxControl(parent).dispose();
   }
   @Override protected String[] parseString(final String stringList) {
-    return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER) : elements_list.stream().map(Entry::getKey).toArray(String[]::new);
+    return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER)
+        : elements_list.stream().map(Entry::getKey).toArray(String[]::new);
   }
   @Override protected String getNewInputObject() {
     return null;

@@ -170,7 +170,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
    * @param ilr
    * @param isTpLevel */
   static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> ts, final boolean samePackage,
-      final boolean isTopLevel, boolean sameFile, final TextEditGroup g, final ListRewrite ilr) {
+      final boolean isTopLevel, final boolean sameFile, final TextEditGroup g, final ListRewrite ilr) {
     if (sameFile || samePackage && isTopLevel)
       return;
     final Collection<String> idns = an.empty.list();
@@ -265,25 +265,25 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     }
     return false;
   }
-  private static boolean nonPublicImport(ITypeBinding outerType) {
+  private static boolean nonPublicImport(final ITypeBinding outerType) {
     return !Modifier.isPublic(outerType.getModifiers());
   }
-  private static boolean privateImport(ITypeBinding outerType) {
+  private static boolean privateImport(final ITypeBinding outerType) {
     return Modifier.isPrivate(outerType.getModifiers());
   }
-  private static boolean samePackage(IType[] innerTypes, ITypeBinding outerType) {
-    return (innerTypes.length != 0 && //
+  private static boolean samePackage(final IType[] innerTypes, final ITypeBinding outerType) {
+    return innerTypes.length != 0 && //
         Optional.ofNullable(innerTypes[0]) //
             .map(λ -> λ.getPackageFragment()) //
             .map(λ -> λ.getElementName()) //
             .map(x -> box.it(x.equals(Optional.ofNullable(outerType.getPackage()).map(λ -> λ.getName()).orElse("~")))) //
-            .orElse(Boolean.FALSE).booleanValue());
+            .orElse(Boolean.FALSE).booleanValue();
   }
-  private static boolean sameFile(IType[] ts, ITypeBinding realType) {
+  private static boolean sameFile(final IType[] ts, final ITypeBinding realType) {
     ITypeBinding topBinding = realType;
     for (; topBinding != null && !topBinding.isTopLevel(); topBinding = topBinding.getDeclaringClass())
       ;
-    String tn = topBinding == null ? null : topBinding.getName();
+    final String tn = topBinding == null ? null : topBinding.getName();
     return tn != null && Arrays.stream(ts).map(λ -> λ.getElementName()).anyMatch(λ -> tn.equals(λ));
   }
 
