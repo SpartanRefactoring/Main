@@ -38,38 +38,42 @@ evaluationDependsOn(':target.p2')
 apply plugin: 'java'
 compileJava.options.encoding = 'UTF-8'
 
-sourceSets {
-	main { java {
-		srcDir 'src'
-		srcDir 'test'
-	} }
-	test { java {
-		srcDir 'test'
-	} }
-}
+// we need this because classes from 'main' refer to classes from 'test'.
+// why? GOOD QUESTION
+sourceSets.main.java.srcDir 'src/test/java'
+
 sourceCompatibility = VER_JAVA
 targetCompatibility = VER_JAVA
 
-test {
-	beforeTest { testDesc ->
-		println "Running test: " + testDesc.getClassName() + " - " + testDesc.getName()
-	}
-}
+// If some test is stuck in a loop, and you can't tell which, uncomment the code
+// below to print the test class + method name before invocation.
+//test {
+//	beforeTest { testDesc ->
+//		println "Running test: " + testDesc.getClassName() + " - " + testDesc.getName()
+//	}
+//}
+
 dependencies {
-    // eclipse/p2 dependencies
+    // eclipse/p2 dependencies, imported with all the transitive dependencies
+	// as maven artifacts.
     def repoDir = project(':target.p2').buildDir.path + "/p2asmaven/maven"
 
+	// TODO this is not good! temporary solution
+	// Include all the dependencies imported from p2. exclude problematic ones.
+	// requires someone to maintain it.
     new File(repoDir + "/eclipse-deps").eachDir {d ->
         if (d.name.contains('tukaani.xz.source')) return // TODO maybe there is a better way to exclude source packages
-		if (d.name.contains('jasper.glassfish')) return
-		if (d.name.contains('compiler.batch')) return
+		if (d.name.contains('jasper.glassfish')) return // unwanted transitive dependency
+		if (d.name.contains('compiler.batch')) return // unwanted transitive dependency
 		compile "eclipse-deps:" + d.name + ":+"
     }
 
+	// TODO this is not good as well! temporary solution
     new File(repoDir + "/eclipse-deps-jgit").eachDir {d ->
         compile "eclipse-deps-jgit:" + d.name + ":+"
     }
 
+	// TODO do we need this?
     // add SWT and the appropriate platform-native SWT for building and testing
     compile "eclipse-deps:org.eclipse.swt:+"
     compile "eclipse-deps:org.eclipse.swt.${com.diffplug.common.swt.os.SwtPlatform.getNative()}:+"
@@ -83,6 +87,7 @@ dependencies {
     compile "org.mockito:mockito-all:1.9.5"
 }
 
+// Dump everything into the manifest
 apply plugin: 'osgi'
 // configure the OSGi bundle
 jar.manifest.attributes(
@@ -100,6 +105,7 @@ jar.manifest.attributes(
 /////////////
 // FAT JAR //
 /////////////
+// Make a jar that contains the maven dependencies
 apply plugin: 'com.github.johnrengelman.shadow'
 
 def projectDependencies = project.configurations.runtime.getAllDependencies()
@@ -108,43 +114,3 @@ shadowJar {
         exclude(dependency("eclipse-deps:.*:.*"))
     }
 }
-
-//////////////////////
-// ECLIPSE PROJECTS //
-//////////////////////
-apply plugin: 'eclipse'
-// remove the build folder
-apply plugin: 'com.diffplug.gradle.eclipse.excludebuildfolder'
-// improve the project deps
-apply plugin: 'com.diffplug.gradle.eclipse.projectdeps'
-// handle build.properties correctly
-apply plugin: 'com.diffplug.gradle.eclipse.buildproperties'
-//
-eclipse {
-	project {
-		natures 'org.eclipse.pde.PluginNature'
-		natures 'org.eclipse.jdt.core.javanature'
-		buildCommand 'org.eclipse.jdt.core.javabuilder'
-		buildCommand 'org.eclipse.pde.ManifestBuilder'
-		buildCommand 'org.eclipse.pde.SchemaBuilder'
-	}
-	classpath {
-		downloadSources true
-		downloadJavadoc true
-	}
-	jdt {
-		sourceCompatibility VER_JAVA
-		targetCompatibility VER_JAVA
-	}
-}
-// always create "fresh" projects
-tasks.eclipse.dependsOn(cleanEclipse)
-
-
-/////////////////////////////////////////////////////////
-// Root eclipse project for tinkering with build files //
-/////////////////////////////////////////////////////////
-//apply plugin: 'com.diffplug.gradle.eclipse.resourcefilters'
-//eclipseResourceFilters {
-//	exclude().folders().name('SpartanizerPlugin/plugin')
-//}
