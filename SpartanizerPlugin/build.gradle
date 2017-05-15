@@ -50,38 +50,25 @@ sourceSets {
 sourceCompatibility = VER_JAVA
 targetCompatibility = VER_JAVA
 
+test {
+	beforeTest { testDesc ->
+		println "Running test: " + testDesc.getClassName() + " - " + testDesc.getName()
+	}
+}
 dependencies {
     // eclipse/p2 dependencies
-    compile "eclipse-deps:org.eclipse.ui:+"
-    compile "eclipse-deps:org.eclipse.jdt.core:+"
-    compile "eclipse-deps:org.eclipse.jface.text:+"
-    compile "eclipse-deps:org.eclipse.jface:+"
-    compile "eclipse-deps:org.eclipse.core.runtime:+"
-    compile "eclipse-deps:org.eclipse.core.resources:+"
-    compile "eclipse-deps:org.eclipse.ltk.core.refactoring:+"
-    compile "eclipse-deps:org.eclipse.ltk.ui.refactoring:+"
-    compile "eclipse-deps:org.eclipse.core.commands:+"
-    compile "eclipse-deps:org.eclipse.ui.editors:+"
-    compile "eclipse-deps:org.eclipse.ui.ide:+"
-    compile "eclipse-deps:org.eclipse.ui.monitoring:+"
-    compile "eclipse-deps:org.eclipse.ui.views:+"
-    compile "eclipse-deps:org.eclipse.ui.workbench:+"
-    compile "eclipse-deps:org.eclipse.ui.workbench.texteditor:+"
-    compile "eclipse-deps:org.eclipse.text:+"
-    compile "eclipse-deps:org.eclipse.core.jobs:+"
-    compile "eclipse-deps:org.eclipse.osgi:+"
-    compile "eclipse-deps:org.eclipse.equinox.app:+"
-    compile "eclipse-deps:org.eclipse.jdt.ui:+"
-    compile "eclipse-deps-jgit:org.eclipse.jgit:+"
-    compile "eclipse-deps:org.eclipse.equinox.preferences:+"
-    compile "eclipse-deps:org.eclipse.equinox.common:+"
-    compile "eclipse-deps:org.eclipse.equinox.util:+"
-    compile "eclipse-deps:org.eclipse.equinox.supplement:+"
-    compile "eclipse-deps:org.eclipse.equinox.security:+"
-    compile "eclipse-deps:org.eclipse.equinox.security.ui:+"
-    compile "eclipse-deps:org.eclipse.equinox.registry:+"
-    compile "eclipse-deps:org.eclipse.debug.core:+"
-    compile "eclipse-deps:org.eclipse.debug.ui:+"
+    def repoDir = project(':target.p2').buildDir.path + "/p2asmaven/maven"
+
+    new File(repoDir + "/eclipse-deps").eachDir {d ->
+        if (d.name.contains('tukaani.xz.source')) return // TODO maybe there is a better way to exclude source packages
+		if (d.name.contains('jasper.glassfish')) return
+		if (d.name.contains('compiler.batch')) return
+		compile "eclipse-deps:" + d.name + ":+"
+    }
+
+    new File(repoDir + "/eclipse-deps-jgit").eachDir {d ->
+        compile "eclipse-deps-jgit:" + d.name + ":+"
+    }
 
     // add SWT and the appropriate platform-native SWT for building and testing
     compile "eclipse-deps:org.eclipse.swt:+"
@@ -92,7 +79,7 @@ dependencies {
     compile project(':fluent.ly')
 
     // maven dependencies
-    testCompile "junit:junit:${VER_JUNIT}"
+    compile "junit:junit:${VER_JUNIT}"
     compile "org.mockito:mockito-all:1.9.5"
 }
 
