@@ -499,6 +499,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
   <menu id="il.org.spartan" label="Spartanizer" mnemonic="Z">
     <menu label="Spartanize..." mnemonic="Z">
+      <command commandId="il.org.spartan.TipsToggleOnOff" style="push" mnemonic="S"/>
       <command commandId="il.org.spartan.SpartanizeSelection" style="push" mnemonic="S"/>
       <command commandId="il.org.spartan.SpartanizeCurrent" style="push" mnemonic="C"/>       
       <command commandId="il.org.spartan.SpartanizeAll" style="push" mnemonic="A"/>
