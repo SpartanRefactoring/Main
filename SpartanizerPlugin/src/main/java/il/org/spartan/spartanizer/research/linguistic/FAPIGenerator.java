@@ -32,29 +32,29 @@ public class FAPIGenerator {
   private ASTRewrite r;
   private TypeDeclaration baseType;
 
-  protected FAPIGenerator(FAPI fapi) {
+  protected FAPIGenerator(final FAPI fapi) {
     this.fapi = Objects.requireNonNull(fapi);
   }
-  public static FAPIGenerator by(FAPI i) {
+  public static FAPIGenerator by(final FAPI i) {
     return new FAPIGenerator(i);
   }
-  public FAPIGenerator in(IJavaProject p) {
+  public FAPIGenerator in(final IJavaProject p) {
     if (p == null)
       return this;
     try {
-      for (IPackageFragmentRoot fr : p.getAllPackageFragmentRoots())
+      for (final IPackageFragmentRoot fr : p.getAllPackageFragmentRoots())
         if (fr.getKind() == IPackageFragmentRoot.K_SOURCE) {
           path = fr.getPath().removeFirstSegments(1);
           project = p.getProject();
           return this;
         }
-    } catch (JavaModelException x) {
+    } catch (final JavaModelException x) {
       note.bug(x);
     }
     return this;
   }
-  public FAPIGenerator with(IProgressMonitor m) {
-    this.monitor = m;
+  public FAPIGenerator with(final IProgressMonitor m) {
+    monitor = m;
     return this;
   }
   public boolean generateAll() {
@@ -63,14 +63,14 @@ public class FAPIGenerator {
   private boolean generateFile() {
     if (path == null || project == null)
       return false;
-    IPath classPath = path.append(separate.these(fapi.names).by('/')).addFileExtension("java");
+    final IPath classPath = path.append(separate.these(fapi.names).by('/')).addFileExtension("java");
     if (!Eclipse.recursiveCreateFolder(project.getFolder(classPath.removeLastSegments(1).toString()), monitor))
       return false;
     try {
       classFile = project.getFile(classPath.toString());
       if (!classFile.exists())
         classFile.create(new ByteArrayInputStream("".getBytes()), IResource.NONE, monitor);
-    } catch (CoreException x) {
+    } catch (final CoreException x) {
       note.bug(x);
       return false;
     }
@@ -90,14 +90,14 @@ public class FAPIGenerator {
   private void generatePackageDeclaration() {
     if (cu.getPackage() != null)
       return;
-    PackageDeclaration $ = ast.newPackageDeclaration();
+    final PackageDeclaration $ = ast.newPackageDeclaration();
     $.setName(ast.newName(separate.these(lisp.chopLast(fapi.names)).by('.')));
     r.set(cu, CompilationUnit.PACKAGE_PROPERTY, $, null);
   }
   @SuppressWarnings("unchecked") private void generateBaseType() {
-    List<AbstractTypeDeclaration> ds = cu.types();
-    String baseName = fapi.className.getIdentifier();
-    for (AbstractTypeDeclaration d : ds)
+    final List<AbstractTypeDeclaration> ds = cu.types();
+    final String baseName = fapi.className.getIdentifier();
+    for (final AbstractTypeDeclaration d : ds)
       if (iz.typeDeclaration(d) && d.getName().getIdentifier().equals(baseName)) {
         baseType = az.typeDeclaration(d);
         return;
@@ -113,8 +113,8 @@ public class FAPIGenerator {
     outer: for (; i < fapi.invocations.size(); ++i) {
       if (!property.has(fapi.invocations.get(i), BINDING_PROPERTY))
         break;
-      ITypeBinding b = property.get(fapi.invocations.get(i), BINDING_PROPERTY);
-      for (TypeDeclaration t : d.getTypes())
+      final ITypeBinding b = property.get(fapi.invocations.get(i), BINDING_PROPERTY);
+      for (final TypeDeclaration t : d.getTypes())
         if (t.getName().getIdentifier().equals(b.getName())) {
           d = t;
           continue outer;

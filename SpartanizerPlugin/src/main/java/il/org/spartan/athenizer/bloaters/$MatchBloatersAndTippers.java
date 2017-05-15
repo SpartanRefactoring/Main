@@ -12,9 +12,7 @@ import il.org.spartan.spartanizer.traversal.*;
  * @author Yuval Simon
  * @since 2017-05-14 */
 public class $MatchBloatersAndTippers {
-  @SuppressWarnings("rawtypes")
-  static final Map<Class<? extends Tipper>, Class<? extends Tipper>> matching = new HashMap<>();
-  
+  @SuppressWarnings("rawtypes") static final Map<Class<? extends Tipper>, Class<? extends Tipper>> matching = new HashMap<>();
   /** Complete match */
   static {
     matching.put(AssignmentAndAssignmentBloater.class, AssignmentAndAssignmentOfSameValue.class);
@@ -36,23 +34,20 @@ public class $MatchBloatersAndTippers {
     matching.put(CasesSplit.class, MergeSwitchBranches.class);
     matching.put(ToStringExpander.class, MethodInvocationToStringToEmptyStringAddition.class);
   }
-  
   /** Close match */
   static {
     matching.put(ParenthesesBloater.class, ParenthesizedRemoveExtraParenthesis.class);
     matching.put(AssignmentTernaryBloater.class, IfAssignToFooElseAssignToFoo.class);
     matching.put(ClassInstanceIntoVariable.class, LocalInitializedUnusedRemove.class);
     matching.put(TernaryPushup.class, TernaryPushdown.class);
-    matching.put(OutlineTernaryMethodInvocation.class, TernaryPushdown.class); 
+    matching.put(OutlineTernaryMethodInvocation.class, TernaryPushdown.class);
     matching.put(StatementExtractParameters.class, LocalInitializedStatementTerminatingScope.class);
   }
-  
   /** Expanders that should be checked */
   static {
     matching.put(PostFixToInfixExpander.class, PlusAssignToPostfix.class);
     matching.put(PrefixToInfix.class, PlusAssignToPostfix.class);
   }
-  
   /** Non match */
   static {
     matching.put(BooleanExpressionBloater.class, null);
@@ -62,20 +57,20 @@ public class $MatchBloatersAndTippers {
     matching.put(SwitchMissingDefaultAdd.class, null);
     matching.put(VariableDeclarationStatementExpand.class, null);
   }
-  
+
   /** Prints non matched tippers (only of tippers in Configurations(toolbox)) */
   public static void printNonMatchedTippers() {
-    List< Class<?> > $ = new ArrayList<>();
+    final List<Class<?>> $ = new ArrayList<>();
     $.addAll(Configurations.all.get().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
     $.removeAll(matching.values());
-    $.forEach(λ->System.out.println(λ.getName()));
+    $.forEach(λ -> System.out.println(λ.getName()));
   }
-  
-  /** Prints bloaters that are not in "matching" map (only of bloaters in InflaterProvider) */
+  /** Prints bloaters that are not in "matching" map (only of bloaters in
+   * InflaterProvider) */
   public static void printBloatersNotInMatching() {
-    List< Class<?> > $ = new ArrayList<>();
+    final List<Class<?>> $ = new ArrayList<>();
     $.addAll(InflaterProvider.freshCopyOfAllExpanders().getAllTippers().stream().map(Object::getClass).collect(Collectors.toList()));
     $.removeAll(matching.keySet());
-    $.forEach(λ->System.out.println(λ.getName()));
+    $.forEach(λ -> System.out.println(λ.getName()));
   }
 }

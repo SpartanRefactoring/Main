@@ -136,12 +136,12 @@ public class Eclipse {
   public static ASTNode coveringNodeByRange(final CompilationUnit u, final ITextSelection s) {
     return new NodeFinder(u, s.getOffset(), Math.max(1, s.getLength())).getCoveringNode();
   }
-  public static boolean recursiveCreateFolder(IFolder f, IProgressMonitor m) {
+  public static boolean recursiveCreateFolder(final IFolder f, final IProgressMonitor m) {
     if (f == null)
       return false;
     if (f.exists())
       return true;
-    IContainer parent = f.getParent();
+    final IContainer parent = f.getParent();
     if (parent == null)
       return false;
     if (!(parent instanceof IFolder))
@@ -150,7 +150,7 @@ public class Eclipse {
       return false;
     try {
       f.create(IResource.NONE, true, m);
-    } catch (CoreException ¢) {
+    } catch (final CoreException ¢) {
       note.bug(¢);
       return false;
     }

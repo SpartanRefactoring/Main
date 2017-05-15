@@ -22,11 +22,11 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     setPreferenceStore(Plugin.plugin().getPreferenceStore());
     setDescription(WIDGET_PAGE_DESCRIPTION);
     store().addPropertyChangeListener(λ -> {
-      if ((λ != null && λ.getProperty() != null && λ.getProperty() == WIDGET_SHORTCUT_METHOD_ID) && λ.getNewValue() instanceof Boolean)
+      if (λ != null && λ.getProperty() != null && λ.getProperty() == WIDGET_SHORTCUT_METHOD_ID && λ.getNewValue() instanceof Boolean)
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
-  public static void onAble(WidgetOperation o, boolean valueNow) {
+  public static void onAble(final WidgetOperation o, final boolean valueNow) {
     store().setValue("IS_ENABLED_" + ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID(), !valueNow);
     // String prefOpsIDs = store().getString("prefOpsIDs"), prefOpsMapConfs =
     // store().getString("prefOpsMapConfs");
@@ -35,12 +35,12 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     // if (prefOpsMapConfs == null)
     // store().putValue(prefOpsMapConfs, "stub");
   }
-  @SuppressWarnings("boxing") public static Boolean isEnabled(WidgetOperation ¢) {
+  @SuppressWarnings("boxing") public static Boolean isEnabled(final WidgetOperation ¢) {
     return store().getBoolean("IS_ENABLED_" + ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID());
   }
-  public static void onConfigure(WidgetOperation ¢) {
+  public static void onConfigure(final WidgetOperation ¢) {
     new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢.description(), ¢.configurationComponents(),
-        ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID(),store()).open();
+        ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID(), store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));

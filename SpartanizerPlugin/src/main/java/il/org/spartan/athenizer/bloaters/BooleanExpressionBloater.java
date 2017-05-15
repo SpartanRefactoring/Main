@@ -33,8 +33,8 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
         || ¢.getOperator() == Operator.CONDITIONAL_OR) && (isComplicated(¢.getLeftOperand()) || isComplicated(¢.getRightOperand()));
   }
   @Override public Tip tip(final InfixExpression ¢) {
-    VariableDeclarationStatement $ = getSeperate(¢.getLeftOperand()), v2 = getSeperate(¢.getRightOperand());
-    InfixExpression i = subject.pair(step.fragments($).get(0).getName(), step.fragments(v2).get(0).getName()).to(¢.getOperator());
+    final VariableDeclarationStatement $ = getSeperate(¢.getLeftOperand()), v2 = getSeperate(¢.getRightOperand());
+    final InfixExpression i = subject.pair(step.fragments($).get(0).getName(), step.fragments(v2).get(0).getName()).to(¢.getOperator());
     return new Tip(description(¢), getClass(), ¢) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         final ListRewrite l = r.getListRewrite(yieldAncestors.untilContainingBlock().from(¢), Block.STATEMENTS_PROPERTY);

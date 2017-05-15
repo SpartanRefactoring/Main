@@ -526,7 +526,7 @@ public enum extract {
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
   }
-  public static List<SimpleName> names(Name n) {
+  public static List<SimpleName> names(final Name n) {
     if (n == null)
       return an.empty.list();
     if (iz.simpleName(n))
@@ -536,7 +536,7 @@ public enum extract {
       $.add(0, !iz.qualifiedName(q) ? az.simpleName(q) : az.qualifiedName(q).getName());
     return $;
   }
-  public static List<String> identifiers(Name n) {
+  public static List<String> identifiers(final Name n) {
     return names(n).stream().map(λ -> λ.getIdentifier()).collect(toList());
   }
 }

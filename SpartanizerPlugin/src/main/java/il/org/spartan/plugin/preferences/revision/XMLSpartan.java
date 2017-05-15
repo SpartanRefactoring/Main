@@ -183,8 +183,8 @@ public class XMLSpartan {
           e.setAttribute(ENABLED, ss.contains(id) ? "true" : "false");
       }
   }
-  public static Collection<String> createEnabledList(Document d) {
-    List<String> $ = new ArrayList<>();
+  public static Collection<String> createEnabledList(final Document d) {
+    final List<String> $ = new ArrayList<>();
     final NodeList ns = d.getElementsByTagName(TIPPER);
     for (int ¢ = 0; ¢ < ns.getLength(); ++¢)
       if ("true".equals(((Element) ns.item(¢)).getAttribute(ENABLED)))
@@ -303,7 +303,7 @@ public class XMLSpartan {
       if (!commit(fl, i) || !fl.exists())
         return null;
     }
-    Document $ = b.parse(fl.getContents());
+    final Document $ = b.parse(fl.getContents());
     if ($ == null)
       return null;
     final Element e = $.getDocumentElement();
@@ -313,7 +313,7 @@ public class XMLSpartan {
     final NodeList ns = $.getElementsByTagName(BASE);
     if (ns != null && ns.getLength() == 1 && validate($, ((Element) ns.item(0)).getAttribute(VERSION)))
       return $;
-    Collection<String> ls = createEnabledList($);
+    final Collection<String> ls = createEnabledList($);
     Document ret = b.newDocument();
     ret = initialize(ret);
     updateEnabledTippers(ret, ls);

@@ -88,7 +88,8 @@ public enum prune {
   public static class TEST1 {
     final String[] alternatingArray = new String[] { null, "A", null, null, "B", null, null, null, "C", null };
     final String[] NonNullArray = { "1", "2", "4" };
-    private final lazy<List<String>> sparseCollection = () -> as.list(null, null, null, null, null, "A", null, null, null, "B", null, "C", null, null, null, null, null);
+    private final lazy<List<String>> sparseCollection = () -> as.list(null, null, null, null, null, "A", null, null, null, "B", null, "C", null, null,
+        null, null, null);
 
     @Test public void nullsNonNullArrayLength() {
       assertEquals(NonNullArray.length, nulls(NonNullArray).length);
