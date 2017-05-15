@@ -390,7 +390,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.SpartanizeCurrent" name="Window"/>
      <command id="il.org.spartan.SpartanizeAll" name="Project"/>
      <command id="il.org.spartan.ZoomTool" name="Window"/>
-     <command id="il.org.spartan.ZoomAll" name="Project"/>
      <command id="il.org.spartan.ZoomSelection" name="Selection"/>
      <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off"/>
      <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
@@ -419,7 +418,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.ZoomSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
-   <handler commandId="il.org.spartan.ZoomAll" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.ZoomTool" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.spartanizer.plugin.TipsOnOffToggle" />
    <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.spartanizer.plugin.SpartanMovie2"/>
@@ -507,7 +505,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     <menu label="Athenize..." mnemonic="A">
       <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="C" label="Current Selection"/>
       <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="A" label="Active Window"/>
-      <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="E" label="Entire Project"/>
     </menu>
     <menu label="Zoomer" mnemonic="Z">
 	  <command commandId="il.org.spartan.AthensInflate" style="push" mnemonic="Z" label="Zoom On/Off"/>
