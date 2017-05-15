@@ -35,4 +35,8 @@ public class Issue0968 {
     bloatingOf("int a, b, c;")//
         .stays();
   }
+  @Test public void d() {
+    bloatingOf("final int a = 3, b = 4;")//
+        .gives("final int a = 3; final int b = 4;");
+  }
 }

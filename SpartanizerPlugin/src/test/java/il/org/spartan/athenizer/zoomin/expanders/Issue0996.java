@@ -31,4 +31,9 @@ public class Issue0996 {
     bloatingOf("@SuppressWarnings(\"unchecked\") int a = f();")//
         .stays();
   }
+  
+  @Test public void e() {
+    bloatingOf("final int a = 5; switch(x) { case a: return 1; default: }")//
+        .stays();
+  }
 }

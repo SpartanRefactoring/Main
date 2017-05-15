@@ -33,7 +33,8 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
   }
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
     return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer() != null
-        && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER;
+        && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER
+        && (!iz.final¢(¢) || collect.usesOf(the.headOf(fragments(¢)).getName()).in(¢.getParent()).stream().noneMatch(r->iz.switchCase(r.getParent())));
   }
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢);
