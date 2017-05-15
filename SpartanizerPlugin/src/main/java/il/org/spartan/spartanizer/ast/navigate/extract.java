@@ -331,6 +331,12 @@ public enum extract {
   public static Collection<Modifier> modifiers(final BodyDeclaration d) {
     return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
+  public static Collection<Modifier> modifiers(final TypeDeclaration d) {
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
+  }
+  public static Collection<Modifier> modifiers(final FieldDeclaration d) {
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
+  }
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
     return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
