@@ -5,16 +5,14 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
  * Encapsulating Psi elements so that non illegal transformation is done on the psi trees of Intellij.
+ *
  * @author michalcohen
  * @since 22-02-2017
  */
@@ -147,45 +145,67 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     /**
-     * Iterator for iterating over the tree without considering white spaces.
+     * <b>Linear Eager Iterator</b> for iterating over the tree without considering white spaces.
+     * This iterator can hold its advance for n {@link #next() next} calls by calling
+     * {@link #setNumberOfOccurrences(int) setNoOfOccurrences(int) }.
+     *
+     * @author Oren Afek
+     * @since 14/05/17
      */
     public class Iterator implements java.util.Iterator<Encapsulator>, Cloneable {
-        int location;
-        List<Encapsulator> actualChildren;
-        int occurrences = 0;
 
-        public Iterator() {
-            actualChildren = getActualChildren();
+        Encapsulator current;
+        Stack<Encapsulator> nodes;
+        private int skipCounter;
+        private int skipOverall;
+        private boolean shouldSkip;
+
+        private Iterator() {
+            nodes = new Stack<>();
+            initStack(Encapsulator.this);
         }
 
         @Override
         public boolean hasNext() {
-            return location < actualChildren.size();
+            return !nodes.empty();
         }
 
         @Override
         public Encapsulator next() {
-            Encapsulator e = actualChildren.get(location);
-            ++location;
-            return e;
-        }
+            if (shouldSkip && skipCounter < skipOverall) {
+                skipCounter++;
+                return current;
+            }
+            shouldSkip = false;
+            current = nodes.pop();
 
-        public Encapsulator peekNext() {
-            return actualChildren.get(location + 1);
-        }
-
-        public Encapsulator value() {
-            return actualChildren.get(location);
-        }
-
-        public Encapsulator setNumberOfOccurrences(int i) {
-            occurrences = i;
-            return actualChildren.get(location);
+            return current;
         }
 
         @Override
-        public Encapsulator.Iterator clone() {
+        public Object clone() {
+
+            try {
+                Iterator cloned = (Iterator) super.clone();
+                cloned.nodes = (Stack<Encapsulator>) this.nodes.clone();
+                return cloned;
+            } catch (CloneNotSupportedException e) {
+                return this;
+            }
+
+        }
+
+        private void initStack(Encapsulator current) {
+            nodes.push(current);
+            current.getActualChildren().forEach(this::initStack);
+        }
+
+
+        public Iterator setNumberOfOccurrences(int i) {
+            shouldSkip = true;
+            skipOverall = i;
             return this;
         }
+
     }
 }
