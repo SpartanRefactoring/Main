@@ -398,7 +398,8 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
      <command id="il.org.spartan.AthensInflate" name="Athenize" />
      <command id="il.org.spartan.PreferencesChooser" name="Preferences..." />
-     <command id="il.org.spartan.ItShortcut" name="'it' variable (¢)" />
+     <command id="il.org.spartan.ItShortcut" name="ItShortcut" />    
+     <command id="il.org.spartan.LambdaShortcut" name="LambdaShortcut" /> 
      <command id="il.org.spartan.CentificationShortcut" name="Centification Shortcut" />
      <command id="il.org.spartan.SpartanWidget" name="Launch spartan widget" />
      <command
@@ -428,6 +429,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.athenizer.InflateHandler" />
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
    <handler commandId="il.org.spartan.ItShortcut" class="il.org.spartan.spartanizer.plugin.KeyboardShortcuts" />
+   <handler commandId="il.org.spartan.LambdaShortcut" class="il.org.spartan.spartanizer.plugin.KeyboardShortcuts" />
    <handler commandId="il.org.spartan.CentificationShortcut" class="il.org.spartan.spartanizer.plugin.RenamingHandler" />
    <handler commandId="il.org.spartan.SpartanWidget" class="il.org.spartan.spartanizer.plugin.widget.SpartanWidgetHandler" />
    <handler
@@ -516,7 +518,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
     <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
     <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
     <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="C" label="¢" />
-    <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="L" label="λ" />
+    <command commandId="il.org.spartan.LambdaShortcut" style="push" mnemonic="L" label="λ" />
     <command commandId="il.org.spartan.SpartanMovie" style="push" mnemonic="M" label="The Spartan Movie" />
   </menu>
 </menuContribution>
@@ -583,9 +585,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<!--<key sequence="Ctrl+6"
 		commandId="il.org.spartan.AthensCollateral"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
-	<key sequence="Ctrl+8"
-		commandId="il.org.spartan.AthensInflate"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+S"
 		commandId="il.org.spartan.SpartanGlobal"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
@@ -601,9 +600,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+Alt+C"
 		commandId="il.org.spartan.ItShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<!--<key sequence="Ctrl+Alt+L"
+	<key sequence="Ctrl+Alt+L"
 		commandId="il.org.spartan.LambdaShortcut"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+I"
 		commandId="il.org.spartan.CentificationShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
@@ -620,7 +619,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
        sequence="Ctrl+]">
  </key>
-	<key sequence="Ctrl+Alt+L"
+	<key sequence="Ctrl+Alt+F"
 		commandId="il.org.spartan.Linguistic"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
