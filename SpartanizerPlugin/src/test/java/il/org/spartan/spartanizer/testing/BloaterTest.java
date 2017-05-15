@@ -41,11 +41,17 @@ public abstract class BloaterTest<N extends ASTNode> {
     @Override public BloaterTrimmingOperand<M> givesEither(final String... options) {
       return new BloaterTrimmingOperand<>(super.givesEither(options), bloater, tipsOn);
     }
-    @Override public OperandBloating givesWithBinding(String $) {
-      return new BloaterTrimmingOperand<>(super.givesWithBinding($), bloater, tipsOn);
+    @Override @SuppressWarnings("unused") public OperandBloating givesWithBinding(String $) {
+      throw new UnsupportedOperationException("Bloter test does not support binding yet, use TestUtilsBloating bloatingOf for now");
+      // TODO Niv: real code of the function, once givesWithBinding is fixed
+      // return new BloaterTrimmingOperand<>(super.givesWithBinding($), bloater,
+      // tipsOn);
     }
-    @Override public OperandBloating givesWithBinding(String $, String f) {
-      return new BloaterTrimmingOperand<>(super.givesWithBinding($,f), bloater, tipsOn);
+    @Override @SuppressWarnings("unused") public OperandBloating givesWithBinding(String $, String f) {
+      throw new UnsupportedOperationException("Bloter test does not support binding yet, use TestUtilsBloating bloatingOf for now");
+      // TODO Niv: real code of the function, once givesWithBinding is fixed
+      // return new BloaterTrimmingOperand<>(super.givesWithBinding($,f),
+      // bloater, tipsOn);
     }
   }
 }
