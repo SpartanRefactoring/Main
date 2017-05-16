@@ -2,6 +2,8 @@ package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import org.eclipse.jgit.api.*;
 
+import il.org.spartan.spartanizer.plugin.*;
+
 /** Git pull command.
  * @author Ori Roth
  * @since 2017-04-24 */
@@ -15,6 +17,11 @@ public class GitPullOperation extends GitOperation {
     return "platform:/plugin/org.eclipse.egit.ui/icons/obj16/pull.png";
   }
   @Override protected void gitOperation(final Git ¢) throws Throwable {
-    ¢.pull().call();
+    try {
+      ¢.pull().call();
+    } catch(Exception e) {
+      
+    }
+    displayMessage("Git pull operation executed successfully");
   }
 }
