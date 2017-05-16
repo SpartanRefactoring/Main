@@ -45,12 +45,47 @@ public class ComponentJList extends JList {
         });
     }
 
+    public int getNumOfElements() {
+        return numOfElements;
+    }
+
+    public void addComponent(Component component) {
+        numOfElements++;
+        ListModel currentList = this.getModel();
+        Component[] newList = new Component[currentList.getSize() + 1];
+        for (int i = 0; i < currentList.getSize(); i++) {
+            if (currentList.getElementAt(i) instanceof JCheckBox)
+                newList[i] = (JCheckBox) currentList.getElementAt(i);
+            else
+                newList[i] = (TextFieldComponent) currentList.getElementAt(i);
+        }
+        newList[newList.length - 1] = component;
+        setListData(newList);
+    }
+
 
     protected class CellRenderer implements ListCellRenderer {
 
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            return null;
+            if (value instanceof JCheckBox) {
+                JCheckBox checkbox = (JCheckBox) value;
+                checkbox.setBackground(isSelected ? getSelectionBackground() : getBackground());
+                checkbox.setForeground(isSelected ? getSelectionForeground() : getForeground());
+                checkbox.setEnabled(isEnabled());
+                checkbox.setFont(getFont());
+                checkbox.setFocusPainted(false);
+                checkbox.setBorderPainted(true);
+                checkbox.setBorder(isSelected ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder);
+                return checkbox;
+            } else {
+                TextFieldComponent field = (TextFieldComponent) value;
+                field.setBackground(isSelected ? getSelectionBackground() : getBackground());
+                field.setForeground(isSelected ? getSelectionForeground() : getForeground());
+                field.setEnabled(isEnabled());
+                field.setFont(getFont());
+                return field;
+            }
         }
     }
 
