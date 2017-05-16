@@ -30,6 +30,7 @@ public class AnyNumberOf extends Quantifier {
     @Override
     public int getNumberOfOccurrences(Encapsulator.Iterator i) {
         int s = 0;
+        //noinspection StatementWithEmptyBody
         for (Encapsulator.Iterator bgCursor = i.clone(); conforms(bgCursor.value().getInner()); bgCursor.next(), s++)
             ;
         return s;

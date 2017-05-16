@@ -10,7 +10,6 @@ import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
-import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
@@ -107,12 +106,12 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      */
     private PsiElement getReplacingTree(Map<Integer, List<PsiElement>> m, PsiRewrite r) {
         Encapsulator rootCopy = getReplacerRootTree();
-        m.keySet().forEach(d -> rootCopy.accept(e -> {
-            if (e.getInner().getUserData(KeyDescriptionParameters.ID) != null && e.isGeneric()) {
-                GenericEncapsulator ge = az.generic(e);
-                ge.replaceByRange(m.get(ge.getId()), r);
-            }
-        }));
+        if (rootCopy.isGeneric()) return m.get(az.generic(rootCopy).getId()).get(0);
+        rootCopy.accept(e -> {
+            if (!e.isGeneric()) return;
+            GenericEncapsulator ge = az.generic(e);
+            ge.replaceByRange(m.get(ge.getId()), r);
+        });
         return rootCopy.getInner();
     }
 

@@ -36,16 +36,21 @@ public class Matcher {
      * @return true iff the tree of the user matcher the root and holds through all the constraints.
      */
     public boolean match(PsiElement e) {
-        MatchingResult m = scaryRecur(root.iterator(), Encapsulator.buildTreeFromPsi(e).iterator());
+        MatchingResult m = matchingRecursion(root.iterator(), Encapsulator.buildTreeFromPsi(e).iterator());
         if (m.notMatches()) return false;
         Map<Integer, List<PsiElement>> info = m.getMap();
-
         return info.keySet().stream()
-                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(n -> c.match(n))));
+                .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)));
     }
 
+    /**
+     * Goes through each and every quantifier and tries all possible assignments for this quantifiers.
+     *
+     * @return MatchingResult false if the trees don't match and MatchingResult true with mapping between identifier
+     * of generic elements to its instances if the trees match.
+     */
     @UpdatesIterator
-    private MatchingResult scaryRecur(Encapsulator.Iterator needle, Encapsulator.Iterator cursor) {
+    private MatchingResult matchingRecursion(Encapsulator.Iterator needle, Encapsulator.Iterator cursor) {
         MatchingResult m = new MatchingResult(true);
         Encapsulator.Iterator bgNeedle = needle.clone(), bgCursor = cursor.clone(); // base ground iterators
         m.combineWith(matchBead(bgNeedle, bgCursor));
@@ -54,43 +59,59 @@ public class Matcher {
         Encapsulator.Iterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
         if (iz.quantifier(bgNeedle.value())) {
             int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor);
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i <= n; i++) {
                 varNeedle = bgNeedle.clone();
                 varCursor = bgCursor.clone();
                 varNeedle.setNumberOfOccurrences(i);
                 MatchingResult mq = matchQuantifier(varNeedle, varCursor);
-                MatchingResult sr = scaryRecur(varNeedle, varCursor);
-                if (!mq.matches() || !sr.matches()) continue;
+                if (mq.notMatches()) continue;
+                MatchingResult sr = matchingRecursion(varNeedle, varCursor);
+                if (sr.notMatches()) continue;
                 return m.combineWith(mq).combineWith(sr);
-
             }
         }
         return m.setNotMatches();
     }
 
+    /**
+     * Matches all the elements until the next quantifier or the end of the tree
+     * @return MatchingResult false if the sections don't match and MatchingResult true with mapping between identifier
+     * of generic elements in this section to its instances if the sections match.
+     */
     @UpdatesIterator
     private MatchingResult matchBead(Encapsulator.Iterator needle, Encapsulator.Iterator cursor) {
         MatchingResult m = new MatchingResult(true);
         for (; needle.hasNext() && cursor.hasNext() && !iz.quantifier(needle.value()); needle.next(), cursor.next()) {
-            if (!iz.conforms(needle.value(), cursor.value()) || (needle.hasNext() != cursor.hasNext()))
+            if (!iz.conforms(cursor.value(), needle.value()) || (needle.hasNext() != cursor.hasNext()))
                 return m.setNotMatches();
             if (needle.value().isGeneric()) {
                 m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
+                cursor.matchedWithGeneric();
             }
         }
         return m;
     }
 
+    /**
+     * Matches all the occurrences of a quantifier according to its NumberOfOccurrences.
+     * @return MatchingResult false if the sections don't match and MatchingResult true with mapping between identifier
+     * of generic elements in this section to its instances if the sections match.
+     */
     @UpdatesIterator
     private MatchingResult matchQuantifier(Encapsulator.Iterator needle, Encapsulator.Iterator cursor) {
         MatchingResult m = new MatchingResult(true);
         int n = needle.getNumberOfOccurrences();
+        if (n == 0) {
+            needle.next();
+            return m.setMatches();
+        }
         for (int i = 0; i < n; needle.next(), cursor.next(), i++) {
             if (!iz.conforms(needle.value(), cursor.value()) || (needle.hasNext() ^ cursor.hasNext())) {
                 return m.setNotMatches();
             }
             if (needle.value().isGeneric()) {
                 m.put(az.generic(needle.value()).getId(), cursor.value().getInner());
+                cursor.matchedWithGeneric();
             }
         }
         return m;
@@ -117,7 +138,6 @@ public class Matcher {
 
     /**
      * Adds a constraint on a generic element inside the tree of the root.
-     *
      * @param id - the id of the element that we constraint.
      * @param c  - the constraint
      */
@@ -143,7 +163,7 @@ public class Matcher {
      * @return a mapping between an ID to a PsiElement
      */
     public Map<Integer, List<PsiElement>> extractInfo(PsiElement treeToMatch) {
-        MatchingResult mr = scaryRecur(root.iterator(), Encapsulator.buildTreeFromPsi(treeToMatch).iterator());
+        MatchingResult mr = matchingRecursion(root.iterator(), Encapsulator.buildTreeFromPsi(treeToMatch).iterator());
         assert mr.matches();
         return mr.getMap();
     }
@@ -163,7 +183,6 @@ public class Matcher {
 
     /**
      * Represents a constraint on a generalized variable of the leonidas language.
-     *
      * @author michalcohen
      * @since 01-04-2017.
      */

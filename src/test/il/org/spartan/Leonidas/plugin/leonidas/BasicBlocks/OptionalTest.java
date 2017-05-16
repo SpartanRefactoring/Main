@@ -12,7 +12,8 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
 /**
- * Created by melanyc on 5/13/2017.
+ * @author michalcohen
+ * @since 13-05-2017.
  */
 public class OptionalTest extends PsiTypeHelper {
     public void testGeneralizes() throws Exception {

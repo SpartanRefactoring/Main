@@ -47,6 +47,6 @@ public class Method extends GenericMethodCallBasedBlock {
 
     /* Constraints Methods */
 
-    public void startsWith(String _) {
+    public void startsWith(String ignore) {
     }
 }

@@ -58,6 +58,9 @@ public class Playground extends JFrame {
     }
 
     private void spartanizeButtonClicked() {
+        //JavaPsiFacade.getElementFactory(Utils.getProject()).createDummyHolder(inputArea.getText(), new IJavaElementType("banana"), null);
+        // @TODO @AnnaBel7 the environment you've created will handle only tips apply to elements that can be inside a
+        // method. A tip for method, won't work in the play ground.
         PsiFile file = PsiFileFactory.getInstance(Utils.getProject())
                 .createFileFromText(JavaLanguage.INSTANCE, before + inputArea.getText() + after);
         Toolbox.getInstance().playground = true;

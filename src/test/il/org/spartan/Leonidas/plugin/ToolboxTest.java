@@ -6,6 +6,7 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Amir Sagiv
@@ -39,20 +40,11 @@ public class ToolboxTest extends PsiTypeHelper {
 
         public void testGetCurrentTippers() throws Exception {
             tb.initComponent();
-            List<Tipper> list = tb.getAllTippers();
-            List<String> names = new ArrayList<>();
-            list.forEach(tipper -> names.add(tipper.name()));
+            List<String> currNames = tb.getAllTippers().stream().map(Tipper::name).collect(Collectors.toList());
 
-            names.remove("SafeReference");
-            names.remove("Unless");
-            tb.updateTipperList(names);
-            list = tb.getCurrentTippers();
-            List<String> currNames = new ArrayList<>();
-            list.forEach(tipper -> currNames.add(tipper.name()));
-
-
-            assertFalse(currNames.contains("SafeReference"));
-            assertFalse(currNames.contains("Unless"));
+            assertFalse(currNames.contains("myOpt"));
+            assertTrue(currNames.contains("SafeReference"));
+            assertTrue(currNames.contains("Unless"));
             assertTrue(currNames.contains("Delegator"));
             assertTrue(currNames.contains("RemoveCurlyBracesFromIfStatement"));
             assertTrue(currNames.contains("IfEmptyThen"));

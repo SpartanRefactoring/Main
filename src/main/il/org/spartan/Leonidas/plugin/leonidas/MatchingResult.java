@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by  on 5/15/2017.
+ * Simple POJO for maintaining the result of the matching process. Alongside with a boolean result stating whether
+ * the matching process succeeded, we also like to maintain a mapping between the matched generic elements to
+ * their occurrences.
+ * @author michalcohen
+ * @since 15-05-2017.
  */
 public class MatchingResult {
     Map<Integer, List<PsiElement>> m = new HashMap<>();

@@ -73,30 +73,30 @@ public class MatcherTest extends PsiTypeHelper {
 
         Matcher m = new Matcher(n, constrains);
         PsiIfStatement tm1 = createTestIfStatement("x > 2", "\nx++; \nreturn null;");
-        Map<Integer, PsiElement> map = m.extractInfo(tm1);
-        assertEquals(map.get(0).getText(), "x > 2");
-        assertEquals(map.get(1).getText(), "x++;");
-        assertEquals(map.get(2).getText(), "return null;");
+        Map<Integer, List<PsiElement>> map = m.extractInfo(tm1);
+        assertEquals(map.get(0).get(0).getText(), "x > 2");
+        assertEquals(map.get(1).get(0).getText(), "x++;");
+        assertEquals(map.get(2).get(0).getText(), "return null;");
         PsiIfStatement tm2 = createTestIfStatement("x > 2", "\nif(!(x > 4)){x--;} \nreturn null;");
         map = m.extractInfo(tm2);
-        assertEquals(map.get(1).getText(), "if(!(x > 4)){x--;}");
-        assertEquals(map.get(2).getText(), "return null;");
+        assertEquals(map.get(1).get(0).getText(), "if(!(x > 4)){x--;}");
+        assertEquals(map.get(2).get(0).getText(), "return null;");
         PsiIfStatement tm3 = createTestIfStatement("x > 2", "\nx++; \nx--;");
         map = m.extractInfo(tm3);
-        assertEquals(map.get(1).getText(), "x++;");
-        assertEquals(map.get(2).getText(), "x--;");
+        assertEquals(map.get(1).get(0).getText(), "x++;");
+        assertEquals(map.get(2).get(0).getText(), "x--;");
         PsiIfStatement tm4 = createTestIfStatement("x > 2", "\nreturn null; \nreturn null;");
         map = m.extractInfo(tm4);
-        assertEquals(map.get(1).getText(), "return null;");
-        assertEquals(map.get(2).getText(), "return null;");
+        assertEquals(map.get(1).get(0).getText(), "return null;");
+        assertEquals(map.get(2).get(0).getText(), "return null;");
         PsiIfStatement tm5 = createTestIfStatement("x > 2", "\nif(x < 3){x--;} \nreturn null;");
         map = m.extractInfo(tm5);
-        assertEquals(map.get(1).getText(), "if(x < 3){x--;}");
-        assertEquals(map.get(2).getText(), "return null;");
+        assertEquals(map.get(1).get(0).getText(), "if(x < 3){x--;}");
+        assertEquals(map.get(2).get(0).getText(), "return null;");
         PsiIfStatement tm6 = createTestIfStatement("x > 2", "\nif(x > 4){x--;} \nreturn null;");
         map = m.extractInfo(tm6);
-        assertEquals(map.get(1).getText(), "if(x > 4){x--;}");
-        assertEquals(map.get(2).getText(), "return null;");
+        assertEquals(map.get(1).get(0).getText(), "if(x > 4){x--;}");
+        assertEquals(map.get(2).get(0).getText(), "return null;");
     }
 
     private void giveIdToStubMethodCalls(PsiElement innerTree) {

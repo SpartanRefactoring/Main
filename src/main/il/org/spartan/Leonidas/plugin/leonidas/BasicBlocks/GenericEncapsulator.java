@@ -105,7 +105,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
         assert parent != null;
         List<PsiElement> l = Lists.reverse(elements);
-        elements.forEach(e -> inner.getParent().addAfter(inner, e));
+        elements.forEach(e -> inner.getParent().addAfter(e, inner));
         inner.getParent().deleteChildRange(inner, inner);
     }
 
@@ -128,10 +128,17 @@ public abstract class GenericEncapsulator extends Encapsulator {
         return true;
     }
 
+    /**
+     * @return the ID of the generic element
+     */
     public int getId() {
         return getUserData(KeyDescriptionParameters.ID);
     }
 
+    /**
+     * @param i ID
+     * @return this, for fluent API
+     */
     public Encapsulator putId(int i) {
         putUserData(KeyDescriptionParameters.ID, i);
         return this;

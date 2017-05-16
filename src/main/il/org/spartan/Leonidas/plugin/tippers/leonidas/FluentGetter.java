@@ -4,7 +4,6 @@ import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyBlock;
-import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.method;
 
 /**
  * @author Sharon
@@ -19,30 +18,26 @@ public class FluentGetter implements LeonidasTipperDefinition {
     @Override
     @Leonidas(PsiMethod.class)
     public void matcher() {
-        new Template(() -> {
-            new ReplacerMethod() {
-                @Override
-                public Object method0() {
-                    anyBlock(1);
+        new Template(() -> new ReplacerMethod() {
+            @Override
+            public Object method0() {
+                anyBlock(1);
 
-                    return this;
-                }
-            };
+                return this;
+            }
         });
     }
 
     @Override
     @Leonidas(PsiMethod.class)
     public void replacer() {
-        new Template(() -> {
-            new ReplacerMethod() {
-                @Override
-                public Object method0() {
-                    anyBlock(1);
+        new Template(() -> new ReplacerMethod() {
+            @Override
+            public Object method0() {
+                anyBlock(1);
 
-                    return this;
-                }
-            };
+                return this;
+            }
         });
     }
 

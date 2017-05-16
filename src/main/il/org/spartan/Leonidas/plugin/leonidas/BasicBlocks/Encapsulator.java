@@ -5,7 +5,10 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -88,7 +91,7 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     }
 
     private List<Encapsulator> getActualChildren() {
-        return children.stream().filter(child -> !iz.whiteSpace(child.getInner()) && child.exists()).collect(Collectors.toList());
+        return children.stream().filter(child -> !iz.whiteSpace(child.getInner())).collect(Collectors.toList());
     }
 
     public String toString() {
@@ -154,52 +157,53 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
      */
     public class Iterator implements java.util.Iterator<Encapsulator>, Cloneable {
 
-        Encapsulator current;
-        Stack<Encapsulator> nodes;
+        int cursor = 0;
         private int skipCounter;
         private int skipOverall;
         private boolean shouldSkip;
+        private List<Encapsulator> elements = new LinkedList<>();
 
         private Iterator() {
-            nodes = new Stack<>();
-            initStack(Encapsulator.this);
+            initializeElements(Encapsulator.this, elements);
+        }
+
+        private void initializeElements(Encapsulator e, List<Encapsulator> l) {
+            l.add(e);
+            e.getActualChildren().forEach(c -> initializeElements(c, l));
         }
 
         @Override
         public boolean hasNext() {
-            return !nodes.empty();
+            return shouldSkip || cursor < elements.size();
         }
 
         @Override
         public Encapsulator next() {
             if (shouldSkip && skipCounter < skipOverall) {
                 skipCounter++;
-                return current;
+                return elements.get(cursor);
             }
             shouldSkip = false;
-            current = nodes.pop();
-
-            return current;
+            return elements.get(cursor++);
         }
 
         public Encapsulator value() {
-            return current;
+            return elements.get(cursor);
         }
 
         @Override
         public Encapsulator.Iterator clone() {
             try {
                 Iterator cloned = (Iterator) super.clone();
-                cloned.nodes = (Stack<Encapsulator>) this.nodes.clone();
+                cloned.elements = new LinkedList<>(elements);
+                cloned.cursor = cursor;
+                cloned.shouldSkip = shouldSkip;
+                cloned.skipCounter = skipCounter;
+                cloned.skipOverall = skipOverall;
                 return cloned;
             } catch (CloneNotSupportedException e) {
                 return this;
             }
-        }
-
-        private void initStack(Encapsulator current) {
-            nodes.push(current);
-            current.getActualChildren().forEach(this::initStack);
         }
 
         public int getNumberOfOccurrences() {
@@ -210,6 +214,23 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
             shouldSkip = true;
             skipOverall = i;
             return this;
+        }
+
+        /**
+         * Delete from the list of elements all the elements that were already matched by an higher level composite
+         * component, matched to a generic encapsulator.
+         */
+        public void matchedWithGeneric() {
+            Encapsulator current = elements.get(cursor);
+            current.accept(n -> {
+                if (n != current)
+                    elements.remove(n);
+            });
+        }
+
+        @Override
+        public String toString() {
+            return value().getText();
         }
 
     }
