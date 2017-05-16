@@ -11,10 +11,8 @@ import java.awt.*;
 public class ComponentJTable extends JTable {
 
     public ComponentJTable(){
-        String columnNames[] = new String[2];
-        columnNames[0] = "1";
-        columnNames[1] = "2";
-        DefaultTableModel model = new DefaultTableModel(columnNames, 4){
+
+        DefaultTableModel model = new DefaultTableModel(){
             private static final long serialVersionUID = 1L;
 
             @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -23,22 +21,25 @@ public class ComponentJTable extends JTable {
                 return getValueAt(0, column).getClass();
             }
 
+            public boolean isCellEditable(int row, int column) {
+                return column != 0;
+            }
+
+
 
         };
         this.setModel(model);
         this.getTableHeader().setResizingAllowed(false);
         this.getTableHeader().setReorderingAllowed(false);
-        model.setRowCount(4);
         model.setColumnCount(2);
+        Object [] headers = {"ID" , "Value"};
+        model.setColumnIdentifiers(headers);
         this.setRowHeight(20);
         for(int i = 0; i < 2; i++){
             this.getColumnModel().getColumn(i).setCellRenderer(new CellRenderer());
             this.getColumnModel().getColumn(i).setMinWidth(150);
             this.getColumnModel().getColumn(i).setCellEditor(new CellEditor());
         }
-        model.setValueAt(new JCheckBox("hi!"),0,1);
-        model.setValueAt(new JCheckBox("hi!"),1,1);
-        model.setValueAt(new JTextField("Bye"),2,1);
     }
 
     private class CellRenderer extends DefaultTableCellRenderer {
@@ -77,6 +78,17 @@ public class ComponentJTable extends JTable {
                 text.setFont(getFont());
                 return text;
             }
+
+            if( value instanceof JLabel){
+                JLabel text = (JLabel) value;
+                text.setBackground(isSelected ?
+                        getSelectionBackground() : getBackground());
+                text.setForeground(isSelected ?
+                        getSelectionForeground() : getForeground());
+                text.setEnabled(isEnabled());
+                text.setFont(getFont());
+                return text;
+            }
             return this;
         }
     }
@@ -93,6 +105,13 @@ public class ComponentJTable extends JTable {
                 JCheckBox checkbox = (JCheckBox) value;
                 c = checkbox;
                 return checkbox;
+            }
+
+            if( value instanceof JTextField){
+
+                JTextField tf = (JTextField) value;
+                c = tf;
+                return tf;
             }
             return null;
         }
