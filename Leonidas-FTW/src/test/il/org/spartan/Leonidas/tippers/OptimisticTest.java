@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.tippers;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.CompilationCenter;
 import il.org.spartan.Leonidas.auxilary_layer.haz;
+import il.org.spartan.spartanizer.ast.factory.make;
 
 /**
  * @author Roey Maor
@@ -13,6 +14,7 @@ public class OptimisticTest extends PsiTypeHelper {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        make.ast("void foo() {}");
         CompilationCenter.initialize();
     }
 

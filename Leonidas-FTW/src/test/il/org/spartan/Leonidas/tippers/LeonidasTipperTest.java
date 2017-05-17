@@ -7,6 +7,10 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
  * @since 20/01/17
  */
 public class LeonidasTipperTest extends PsiTypeHelper {
+
+    public void testPlaceholder() {
+
+    }
 /*
     private LeonidasTipper $;
     private PsiTreeTipperBuilder builderMock = Mockito.mock(PsiTreeTipperBuilder.class);

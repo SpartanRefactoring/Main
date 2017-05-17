@@ -7,4 +7,7 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
  */
 public class RemoveCurlyBracesFromIfStatementTest extends PsiTypeHelper {
 
+    public void testPlaceholder() {
+
+    }
 }
