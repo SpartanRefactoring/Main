@@ -32,6 +32,7 @@ public class FAPIGenerator {
   private AST ast;
   private CompilationUnit cu;
   private ASTRewrite r;
+  private ImportRewrite ir;
   private TypeDeclaration baseType;
   private TypeDeclaration lastKnownType;
 
@@ -61,7 +62,7 @@ public class FAPIGenerator {
     return this;
   }
   public boolean generateAll() {
-    return generateFile() && generateCode() && commit();
+    return generateFile() && generateCode() && generateImports() && commit();
   }
   private boolean generateFile() {
     if (path == null || project == null)
@@ -79,23 +80,46 @@ public class FAPIGenerator {
     }
     return true;
   }
-  private boolean generateCode() {
-    cu = az.compilationUnit(makeAST.COMPILATION_UNIT.fromWithBinding(classFile));
-    if (cu == null)
-      return false;
-    ast = cu.getAST();
-    r = ASTRewrite.create(cu.getAST());
-    generatePackageDeclaration();
-    generateBaseType();
-    generateDeclarations();
-    return true;
-  }
   private void generatePackageDeclaration() {
     if (cu.getPackage() != null)
       return;
     final PackageDeclaration $ = ast.newPackageDeclaration();
     $.setName(ast.newName(separate.these(lisp.chopLast(fapi.names)).by('.')));
     r.set(cu, CompilationUnit.PACKAGE_PROPERTY, $, null);
+  }
+  private boolean generateCode() {
+    cu = az.compilationUnit(makeAST.COMPILATION_UNIT.fromWithBinding(classFile));
+    if (cu == null)
+      return false;
+    ast = cu.getAST();
+    r = ASTRewrite.create(cu.getAST());
+    ir = ImportRewrite.create(cu, true);
+    ir.setUseContextToFilterImplicitImports(true);
+    ir.setFilterImplicitImports(true);
+    generatePackageDeclaration();
+    generateBaseType();
+    generateDeclarations();
+    return true;
+  }
+  private boolean generateImports() {
+    try {
+      ir.rewriteImports(new NullProgressMonitor());
+    } catch (final CoreException ¢) {
+      note.bug(¢);
+      return false;
+    }
+    final ListRewrite lr = r.getListRewrite(cu, CompilationUnit.IMPORTS_PROPERTY);
+    final Collection<String> idns = an.empty.list();
+    if (ir.getCreatedImports() != null)
+      idns.addAll(as.list(ir.getCreatedImports()));
+    if (ir.getCreatedStaticImports() != null)
+      idns.addAll(as.list(ir.getCreatedStaticImports()));
+    for (final String idn : idns) {
+      final ImportDeclaration id = ast.newImportDeclaration();
+      id.setName(ast.newName(idn));
+      lr.insertLast(id, null);
+    }
+    return true;
   }
   @SuppressWarnings("unchecked") private void generateBaseType() {
     final List<AbstractTypeDeclaration> ds = cu.types();
@@ -180,6 +204,14 @@ public class FAPIGenerator {
   @SuppressWarnings("unchecked") private MethodDeclaration getMethod(final MethodInvocation i, final TypeDeclaration lastType, String nextTypeName) {
     final MethodDeclaration md = ast.newMethodDeclaration();
     md.setName(ast.newSimpleName(i.getName().getIdentifier()));
+    int xx = 1; // TODO Roth: variables generation
+    for (Expression e : (List<Expression>) i.arguments()) {
+      final SingleVariableDeclaration d = ast.newSingleVariableDeclaration();
+      d.setName(ast.newSimpleName("arg" + xx++));
+      Type t = property.has(e, BINDING_PROPERTY) ? getType(property.get(e, BINDING_PROPERTY)) : ast.newSimpleType(ast.newSimpleName("Object"));
+      d.setType(t);
+      md.parameters().add(d);
+    }
     final AnnotatableType t = nextTypeName == null ? ast.newPrimitiveType(PrimitiveType.VOID) : ast.newSimpleType(ast.newName(nextTypeName));
     md.setReturnType2(t);
     md.modifiers().addAll(ast.newModifiers( //
@@ -200,6 +232,22 @@ public class FAPIGenerator {
   }
   private static String getAbleName(final String s) {
     return s + "Able";
+  }
+  private Type getType(ITypeBinding b) {
+    Type $ = getTypeInner(b);
+    if ($ != null)
+      ir.addImport(b, ast);
+    return $;
+  }
+  private Type getTypeInner(ITypeBinding b) {
+    if (b.isNullType())
+      return ast.newSimpleType(ast.newSimpleName("Object"));
+    if (b.isPrimitive())
+      return ast.newPrimitiveType(PrimitiveType.toCode(b.getName()));
+    if (b.isArray())
+      return ast.newArrayType(getType(b.getElementType()), b.getDimensions());
+    // TODO Roth: complete all cases
+    return ast.newSimpleType(ast.newSimpleName(b.getName()));
   }
   private boolean commit() {
     try {
