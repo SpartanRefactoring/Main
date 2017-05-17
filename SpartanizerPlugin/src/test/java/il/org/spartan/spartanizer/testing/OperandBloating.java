@@ -63,7 +63,7 @@ public class OperandBloating extends TestOperand {
     final CompilationUnit u = az.compilationUnit(ast);
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
-    SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
+    SingleFlater.in(u).usesDisabling(false).from(new InflaterProvider(traversal.configuration)).go(r, TestUtilsBloating.textEditGroup);
     try {
       final String $1 = rename((CompilationUnit) makeAST.COMPILATION_UNIT.from(WrapIntoComilationUnit.find($).on($))) + "";
       final IDocument doc = new Document(wrap);
@@ -89,7 +89,7 @@ public class OperandBloating extends TestOperand {
     final String wrap = get();
     final ASTRewrite r = ASTRewrite.create(u.getAST());
     MethodDeclaration m = getMethod(u, f);
-    SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider()).go(r, TestUtilsBloating.textEditGroup);
+    SingleFlater.in(m).usesDisabling(false).from(new InflaterProvider(traversal.configuration)).go(r, TestUtilsBloating.textEditGroup);
     try {
       final IDocument doc = new Document(wrap);
       r.rewriteAST(doc, null).apply(doc);
