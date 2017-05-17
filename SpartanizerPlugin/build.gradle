@@ -36,7 +36,10 @@ evaluationDependsOn(':target.p2')
 // JAVA //
 //////////
 apply plugin: 'java'
-compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
 
 // we need this because classes from 'main' refer to classes from 'test'.
 // why? GOOD QUESTION

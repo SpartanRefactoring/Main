@@ -14,8 +14,9 @@ plugins {
 }
 
 // Order the compiler to use UTF-8 encoding
-compileJava.options.encoding = 'UTF-8'
-compileTestJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
 
 // Decides the structure of the directory tree
 sourceSets {
@@ -71,11 +72,18 @@ jacocoTestReport {
 
 check.dependsOn jacocoTestReport
 
-repositories { jcenter() }
+repositories {
+    jcenter()
+
+    maven {
+        url rootProject.file('target.p2/build/p2asmaven/maven')
+    }
+}
 dependencies {
     testCompile "org.mockito:mockito-core:2.+"
     compile "org.reflections:reflections:0.9.10"
     compile "commons-io:commons-io:2.5"
     compile project(":spartan")
     compile project(":fluent.ly")
+    compile project(":SpartanizerPlugin")
 }
