@@ -13,9 +13,9 @@ public class TextFieldComponent extends JPanel {
 
 
     public TextFieldComponent() {
+        super(new FlowLayout(FlowLayout.LEFT));
         label = new JLabel("hi");
-        textField = new JTextField();
-        textField.setSize(new Dimension(300, 50));
+        textField = new JTextField("", 20);
 
         label.setVisible(true);
         textField.setVisible(true);
@@ -27,6 +27,6 @@ public class TextFieldComponent extends JPanel {
     }
 
     void pressed() {
-        textField.requestFocus();
+        textField.grabFocus();
     }
 }

@@ -22,7 +22,6 @@ public class ComponentJList extends JList {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-//                super.mousePressed(e);
                 int index = locationToIndex(e.getPoint());
                 Object component = getModel().getElementAt(index);
                 if (component instanceof JCheckBox) {
@@ -38,7 +37,6 @@ public class ComponentJList extends JList {
                     if (index != -1) {
                         TextFieldComponent field = (TextFieldComponent) component;
                         field.pressed();
-                        repaint();
                     }
                 }
             }
@@ -68,22 +66,19 @@ public class ComponentJList extends JList {
 
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            ((Component) value).setBackground(getBackground());
+            ((Component) value).setForeground(getForeground());
+            ((Component) value).setEnabled(isEnabled());
+            ((Component) value).setFont(getFont());
             if (value instanceof JCheckBox) {
                 JCheckBox checkbox = (JCheckBox) value;
-                checkbox.setBackground(isSelected ? getSelectionBackground() : getBackground());
-                checkbox.setForeground(isSelected ? getSelectionForeground() : getForeground());
-                checkbox.setEnabled(isEnabled());
-                checkbox.setFont(getFont());
                 checkbox.setFocusPainted(false);
                 checkbox.setBorderPainted(true);
                 checkbox.setBorder(isSelected ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder);
                 return checkbox;
             } else {
                 TextFieldComponent field = (TextFieldComponent) value;
-                field.setBackground(isSelected ? getSelectionBackground() : getBackground());
-                field.setForeground(isSelected ? getSelectionForeground() : getForeground());
-                field.setEnabled(isEnabled());
-                field.setFont(getFont());
+                field.setBorder(isSelected ? UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder);
                 return field;
             }
         }
