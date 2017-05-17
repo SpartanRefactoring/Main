@@ -390,15 +390,14 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
      <command id="il.org.spartan.SpartanizeCurrent" name="Window"/>
      <command id="il.org.spartan.SpartanizeAll" name="Project"/>
      <command id="il.org.spartan.ZoomTool" name="Window"/>
-     <command id="il.org.spartan.ZoomAll" name="Project"/>
      <command id="il.org.spartan.ZoomSelection" name="Selection"/>
      <command id="il.org.spartan.TipsToggleOnOff" name="Tips On/Off"/>
-     <command id="il.org.spartan.RefreshAll" name="Refresh all projects (slow)"  />
      <command id="il.org.spartan.SpartanMovie" name="Start Spartan movie" />
      <command id="il.org.spartan.SpartanGlobal" name="Global handler" />
      <command id="il.org.spartan.AthensInflate" name="Athenize" />
      <command id="il.org.spartan.PreferencesChooser" name="Preferences..." />
-     <command id="il.org.spartan.ItShortcut" name="'it' variable (¢)" />
+     <command id="il.org.spartan.ItShortcut" name="ItShortcut" />    
+     <command id="il.org.spartan.LambdaShortcut" name="LambdaShortcut" /> 
      <command id="il.org.spartan.CentificationShortcut" name="Centification Shortcut" />
      <command id="il.org.spartan.SpartanWidget" name="Launch spartan widget" />
      <command
@@ -419,15 +418,14 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
    <handler commandId="il.org.spartan.SpartanizeAll" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.SpartanizeCurrent" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.ZoomSelection" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
-   <handler commandId="il.org.spartan.ZoomAll" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.ZoomTool" class="il.org.spartan.spartanizer.plugin.TopMenuHandlers"/>
    <handler commandId="il.org.spartan.TipsToggleOnOff" class="il.org.spartan.spartanizer.plugin.TipsOnOffToggle" />
-   <handler commandId="il.org.spartan.RefreshAll" class="il.org.spartan.plugin.old.RefreshAll"/>
    <handler commandId="il.org.spartan.SpartanMovie" class="il.org.spartan.spartanizer.plugin.SpartanMovie2"/>
    <handler commandId="il.org.spartan.SpartanGlobal" class="il.org.spartan.spartanizer.plugin.SpartanizationHandler"/>
    <handler commandId="il.org.spartan.AthensInflate" class="il.org.spartan.athenizer.InflateHandler" />
    <handler commandId="il.org.spartan.PreferencesChooser" class="il.org.spartan.plugin.preferences.revision.ProjectPreferencesHandler" />
    <handler commandId="il.org.spartan.ItShortcut" class="il.org.spartan.spartanizer.plugin.KeyboardShortcuts" />
+   <handler commandId="il.org.spartan.LambdaShortcut" class="il.org.spartan.spartanizer.plugin.KeyboardShortcuts" />
    <handler commandId="il.org.spartan.CentificationShortcut" class="il.org.spartan.spartanizer.plugin.RenamingHandler" />
    <handler commandId="il.org.spartan.SpartanWidget" class="il.org.spartan.spartanizer.plugin.widget.SpartanWidgetHandler" />
    <handler
@@ -499,24 +497,29 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 <menuContribution locationURI="menu:org.eclipse.ui.main.menu?before=navigate">
   <menu id="il.org.spartan" label="Spartanizer" mnemonic="Z">
     <menu label="Spartanize..." mnemonic="Z">
-      <command commandId="il.org.spartan.SpartanizeSelection" style="push" mnemonic="S"/>
-      <command commandId="il.org.spartan.SpartanizeCurrent" style="push" mnemonic="C"/>       
-      <command commandId="il.org.spartan.SpartanizeAll" style="push" mnemonic="A"/>
+      <command commandId="il.org.spartan.SpartanizeSelection" style="push" mnemonic="C" label="Current Selection"/>
+      <command commandId="il.org.spartan.SpartanizeCurrent" style="push" mnemonic="A" label="Active Window"/>       
+      <command commandId="il.org.spartan.SpartanizeAll" style="push" mnemonic="E" label="Entire Project"/>
+      <command commandId="il.org.spartan.TipsToggleOnOff" style="push" mnemonic="T"/>
     </menu>
     <menu label="Athenize..." mnemonic="A">
-	   <command commandId="il.org.spartan.AthensInflate" style="push" mnemonic="A"/>
-      <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="S"/>
-      <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="T"/>
-      <command commandId="il.org.spartan.ZoomAll" style="push" mnemonic="A"/>
+      <command commandId="il.org.spartan.ZoomSelection" style="push" mnemonic="C" label="Current Selection"/>
+      <command commandId="il.org.spartan.ZoomTool" style="push" mnemonic="A" label="Active Window"/>
+    </menu>
+    <menu label="Zoomer" mnemonic="Z">
+	  <command commandId="il.org.spartan.AthensInflate" style="push" mnemonic="Z" label="Zoom On/Off"/>
+	  <command commandId="il.org.spartan.ZoomIn" style="push" mnemonic="I" label="Zoom In Once"/>
+	  <command commandId="il.org.spartan.ZoomOut" style="push" mnemonic="O" label="Zoom Out Once"/>
     </menu>
     <menu label="Widget" mnemonic="W">
 	  <command commandId="il.org.spartan.SpartanWidget" style="push" mnemonic="W"/>
     </menu>
-    <command commandId="il.org.spartan.RefreshAll" style="push" mnemonic="R"/>
-    <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences..."/>
-    <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="C" label="¢" />
-    <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="L" label="λ" />
+    <menu label="Unicode Shortcuts" mnemonic="U">
+	  <command commandId="il.org.spartan.ItShortcut" style="push" mnemonic="C" label="¢" />
+    <command commandId="il.org.spartan.LambdaShortcut" style="push" mnemonic="L" label="λ" />
+    </menu>
     <command commandId="il.org.spartan.SpartanMovie" style="push" mnemonic="M" label="The Spartan Movie" />
+    <command commandId="il.org.spartan.PreferencesChooser" style="push" mnemonic="P" label="Preferences"/>
   </menu>
 </menuContribution>
 
@@ -582,9 +585,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<!--<key sequence="Ctrl+6"
 		commandId="il.org.spartan.AthensCollateral"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
-	<key sequence="Ctrl+8"
-		commandId="il.org.spartan.AthensInflate"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+S"
 		commandId="il.org.spartan.SpartanGlobal"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
@@ -600,9 +600,9 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+Alt+C"
 		commandId="il.org.spartan.ItShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-	<!--<key sequence="Ctrl+Alt+L"
+	<key sequence="Ctrl+Alt+L"
 		commandId="il.org.spartan.LambdaShortcut"
-		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>-->
+		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+Alt+I"
 		commandId="il.org.spartan.CentificationShortcut"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
@@ -612,14 +612,14 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
  <key
        commandId="il.org.spartan.ZoomIn"
        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-       sequence="Ctrl+[">
+       sequence="Ctrl+=">
  </key>
  <key
        commandId="il.org.spartan.ZoomOut"
        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-       sequence="Ctrl+]">
+       sequence="Ctrl+-">
  </key>
-	<key sequence="Ctrl+Alt+L"
+	<key sequence="Ctrl+Alt+F"
 		commandId="il.org.spartan.Linguistic"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 </extension>
