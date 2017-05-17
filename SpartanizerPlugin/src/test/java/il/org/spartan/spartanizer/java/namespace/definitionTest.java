@@ -83,29 +83,29 @@ public class definitionTest extends MetaFixture {
         assert ¢ != null;
   }
 
-  @Test public void a10() {
+  @Ignore @Test public void a10() {
     for (@foreach final MarkerAnnotation ¢ : markers())
       assert annotations.containsKey(¢ + "") : "I did not see marker annotation:" + ¢;
   }
 
-  @Test public void a11() {
+  @Ignore @Test public void a11() {
     markers().forEach(λ -> annotations.put(λ + "", λ));
     for (final String ¢ : annotations.keySet())
       assert annotations.get(¢) != null : "Annotation " + ¢ + " not used; what I saw was: \n" + markers();
   }
 
-  @Test public void a12() {
+  @Ignore @Test public void a12() {
     for (@foreach final Annotation a : annotations())
       for ( @foreach final SimpleName ¢ : annotees.of(a))
         assert ¢ != null : a;
   }
 
-  @ScopeSize(41) @Test public void a13() {
+  @Ignore @ScopeSize(41) @Test public void a13() {
     markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@try¢") != null;
   }
 
-  @Test @method public void a14() {
+  @Ignore @Test @method public void a14() {
     markers().forEach(λ -> annotations.put(λ + "", λ));
     assert annotations.get("@catch¢") != null;
   }
