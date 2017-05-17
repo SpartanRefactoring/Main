@@ -44,7 +44,9 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
-    addField(new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent()));
+    IntegerFieldEditor ife = new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent());
+    ife.setValidRange(60, 100);
+    addField(ife);
     addField(new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent(), getWidgetOperations(),
         λ -> onConfigure((WidgetOperation) λ), λ -> isEnabled((WidgetOperation) λ),
         λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ))));
