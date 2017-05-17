@@ -1,22 +1,28 @@
 package il.org.spartan.athenizer.zoomin.expanders;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
-
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import il.org.spartan.athenizer.bloaters.*;
 import il.org.spartan.spartanizer.meta.*;
+import il.org.spartan.spartanizer.testing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Unit test for {@link AssignmentOperatorBloater}.
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-25 [[SuppressWarningsSpartan]] */
-@SuppressWarnings("static-method")
-public class Issue1001 {
+public class Issue1001 extends BloaterTest<Assignment> {
+  @Override public Tipper<Assignment> bloater() {
+    return new AssignmentOperatorBloater();
+  }
+  @Override public Class<Assignment> tipsOn() {
+    return Assignment.class;
+  }
+  
   @Test public void basic() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f1() {\n" //
-        + "  int a;\n" //
-        + "  a = 0;\n" //
+        + "  int a = 0;\n" //
         + "  a = a + 1;\n" //
         + "  x(a);" //
         + "}", "f1");
@@ -83,8 +89,7 @@ public class Issue1001 {
       return new Issue1001Aux();
     }
     void f1() {
-      int a;
-      a = 0;
+      int a = 0;
       a += 1;
       x(a);
     }
@@ -128,4 +133,6 @@ public class Issue1001 {
       //
     }
   }
+
+
 }
