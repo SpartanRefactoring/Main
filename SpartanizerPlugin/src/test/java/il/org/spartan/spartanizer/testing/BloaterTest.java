@@ -2,7 +2,10 @@ package il.org.spartan.spartanizer.testing;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.issues.*;
+import il.org.spartan.spartanizer.meta.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** A class used for testing a specific bloater. To use this class, inherit it
@@ -20,6 +23,9 @@ public abstract class BloaterTest<N extends ASTNode> {
   public BloaterTrimmingOperand<N> bloatingOf(final String from) {
     return new BloaterTrimmingOperand<>(from, bloater(), tipsOn());
   }
+  public OperandBloating bloatingOf(final MetaFixture ¢) {
+    return new BloaterTrimmingOperand<>(¢.reflectedCompilationUnit(), ¢.reflectedCompilationUnitText(), bloater(), tipsOn());
+  }
 
   // an inner class used to wrap usingTipper into gives and stays
   public class BloaterTrimmingOperand<M extends ASTNode> extends OperandBloating {
@@ -28,6 +34,12 @@ public abstract class BloaterTest<N extends ASTNode> {
 
     public BloaterTrimmingOperand(final String inner, final Tipper<M> bloater, final Class<M> tipsOn) {
       super(inner);
+      this.bloater = bloater;
+      this.tipsOn = tipsOn;
+      using(bloater, tipsOn);
+    }
+    public BloaterTrimmingOperand(final ASTNode inner, final String classText, final Tipper<M> bloater, final Class<M> tipsOn) {
+      super(inner, classText);
       this.bloater = bloater;
       this.tipsOn = tipsOn;
       using(bloater, tipsOn);
@@ -41,17 +53,17 @@ public abstract class BloaterTest<N extends ASTNode> {
     @Override public BloaterTrimmingOperand<M> givesEither(final String... options) {
       return new BloaterTrimmingOperand<>(super.givesEither(options), bloater, tipsOn);
     }
-    @Override @SuppressWarnings("unused") public OperandBloating givesWithBinding(String $) {
-      throw new UnsupportedOperationException("Bloter test does not support binding yet, use TestUtilsBloating bloatingOf for now");
-      // TODO Niv: real code of the function, once givesWithBinding is fixed
-      // return new BloaterTrimmingOperand<>(super.givesWithBinding($), bloater,
-      // tipsOn);
+    @Override public BloaterTrimmingOperand<M> givesWithBinding(String s) {
+      String $ = super.givesWithBinding(s).get();
+      final ASTParser p = make.COMPILATION_UNIT.parser($);
+      p.setResolveBindings(true);
+      return new BloaterTrimmingOperand<>(az.compilationUnit(p.createAST(null)), $, bloater, tipsOn);
     }
-    @Override @SuppressWarnings("unused") public OperandBloating givesWithBinding(String $, String f) {
-      throw new UnsupportedOperationException("Bloter test does not support binding yet, use TestUtilsBloating bloatingOf for now");
-      // TODO Niv: real code of the function, once givesWithBinding is fixed
-      // return new BloaterTrimmingOperand<>(super.givesWithBinding($,f),
-      // bloater, tipsOn);
+    @Override public BloaterTrimmingOperand<M> givesWithBinding(String s, String f) {
+      String $ = super.givesWithBinding(s,f).get();
+      final ASTParser p = make.COMPILATION_UNIT.parser($);
+      p.setResolveBindings(true);
+      return new BloaterTrimmingOperand<>(az.compilationUnit(p.createAST(null)), $, bloater, tipsOn);
     }
   }
 }

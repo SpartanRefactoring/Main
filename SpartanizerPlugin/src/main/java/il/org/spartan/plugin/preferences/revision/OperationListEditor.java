@@ -108,7 +108,7 @@ public class OperationListEditor extends ListEditor {
   }
   @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
     super.doFillIntoGrid(parent, numColumns);
-    getButtonBoxControl(parent).dispose();
+    //getButtonBoxControl(parent).dispose();
   }
   @Override protected String[] parseString(final String stringList) {
     return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER)
