@@ -62,6 +62,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     ir.setUseContextToFilterImplicitImports(true);
     ir.setFilterImplicitImports(true);
     final Type t = ir.addImport(binding, s.getAST());
+    if (containsHazardousTypeArgument(t))
+      return null;
     final Wrapper<IType[]> types = new Wrapper<>();
     try {
       ir.rewriteImports(new NullProgressMonitor());
@@ -285,6 +287,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       ;
     final String tn = topBinding == null ? null : topBinding.getName();
     return tn != null && Arrays.stream(ts).map(λ -> λ.getElementName()).anyMatch(λ -> tn.equals(λ));
+  }
+  private static boolean containsHazardousTypeArgument(final Type t) {
+    return (t + "").contains("<?>");
   }
 
   // TODO Ori Roth: move class to utility file

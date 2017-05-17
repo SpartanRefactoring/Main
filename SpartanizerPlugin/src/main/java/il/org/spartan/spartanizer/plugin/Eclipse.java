@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import javax.tools.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -155,5 +157,9 @@ public class Eclipse {
       return false;
     }
     return true;
+  }
+  public static boolean isCompiling(String filePath) {
+    JavaCompiler c = ToolProvider.getSystemJavaCompiler();
+    return c != null && c.run(null, null, null, Objects.requireNonNull(filePath)) == 0;
   }
 }
