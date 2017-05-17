@@ -141,12 +141,12 @@ public class FAPIGenerator {
       if (!property.has(fapi.invocations.get(i), BINDING_PROPERTY))
         break;
       final ITypeBinding b = property.get(fapi.invocations.get(i), BINDING_PROPERTY);
-      for (final TypeDeclaration t : lastKnownType.getTypes())
+      for (final TypeDeclaration t : baseType.getTypes())
         if (t.getName().getIdentifier().equals(b.getName())) {
           lastKnownType = t;
           continue outer;
         }
-      note.bug("FAPIGenerator#generateDeclarations: API not in class");
+      note.bug("FAPIGenerator#generateDeclarations: API not in class: " + b.getName());
     }
     if (i == fapi.invocations.size())
       return;
