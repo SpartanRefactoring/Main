@@ -46,23 +46,23 @@ public enum Utils {
 
     /**
      * @param root psi element that represents code blocks.
-     * @param id identifier
+     * @param id   identifier
      * @return list of all the appearance of the identifier.
      */
     public static List<PsiIdentifier> getAllReferences(PsiElement root, PsiIdentifier id) {
         List<PsiIdentifier> identifiers = new ArrayList<>();
         if (root != null && id != null)
             root.accept(new JavaRecursiveElementVisitor() {
-				@Override
-				public void visitIdentifier(PsiIdentifier i) {
-					super.visitIdentifier(i);
+                @Override
+                public void visitIdentifier(PsiIdentifier i) {
+                    super.visitIdentifier(i);
                     if (!id.getText().equals(i.getText()))
                         return;
-					PsiElement context = i.getContext();
-					if (iz.variable(context) || iz.referenceExpression(context))
-						identifiers.add(i);
-				}
-			});
+                    PsiElement context = i.getContext();
+                    if (iz.variable(context) || iz.referenceExpression(context))
+                        identifiers.add(i);
+                }
+            });
         return identifiers;
     }
 

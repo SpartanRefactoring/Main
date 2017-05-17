@@ -1,7 +1,9 @@
 package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
 import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import java.awt.*;
 
 /**
@@ -10,12 +12,12 @@ import java.awt.*;
  */
 public class ComponentJTable extends JTable {
 
-    public ComponentJTable(){
+    public ComponentJTable() {
 
-        DefaultTableModel model = new DefaultTableModel(){
+        DefaultTableModel model = new DefaultTableModel() {
             private static final long serialVersionUID = 1L;
 
-            @SuppressWarnings({ "unchecked", "rawtypes" })
+            @SuppressWarnings({"unchecked", "rawtypes"})
             @Override
             public Class getColumnClass(int column) {
                 return getValueAt(0, column).getClass();
@@ -26,16 +28,15 @@ public class ComponentJTable extends JTable {
             }
 
 
-
         };
         this.setModel(model);
         this.getTableHeader().setResizingAllowed(false);
         this.getTableHeader().setReorderingAllowed(false);
         model.setColumnCount(2);
-        Object [] headers = {"ID" , "Value"};
+        Object[] headers = {"ID", "Value"};
         model.setColumnIdentifiers(headers);
         this.setRowHeight(20);
-        for(int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             this.getColumnModel().getColumn(i).setCellRenderer(new CellRenderer());
             this.getColumnModel().getColumn(i).setMinWidth(150);
             this.getColumnModel().getColumn(i).setCellEditor(new CellEditor());
@@ -52,13 +53,11 @@ public class ComponentJTable extends JTable {
         public Component getTableCellRendererComponent(JTable table, Object value,
                                                        boolean isSelected, boolean hasFocus,
                                                        int row, int column) {
-            if( value instanceof JCheckBox){
+            if (value instanceof JCheckBox) {
 
                 JCheckBox checkbox = (JCheckBox) value;
-                checkbox.setBackground(isSelected ?
-                        getSelectionBackground() : getBackground());
-                checkbox.setForeground(isSelected ?
-                        getSelectionForeground() : getForeground());
+                checkbox.setBackground(getBackground());
+                checkbox.setForeground(getForeground());
                 checkbox.setEnabled(isEnabled());
                 checkbox.setFont(getFont());
                 checkbox.setFocusPainted(false);
@@ -68,23 +67,19 @@ public class ComponentJTable extends JTable {
                                 "List.focusCellHighlightBorder") : noFocusBorder);
                 return checkbox;
             }
-            if( value instanceof JTextField){
-                JTextField text = (JTextField)value;
-                text.setBackground(isSelected ?
-                        getSelectionBackground() : getBackground());
-                text.setForeground(isSelected ?
-                        getSelectionForeground() : getForeground());
+            if (value instanceof JTextField) {
+                JTextField text = (JTextField) value;
+                text.setBackground(getBackground());
+                text.setForeground(getForeground());
                 text.setEnabled(isEnabled());
                 text.setFont(getFont());
                 return text;
             }
 
-            if( value instanceof JLabel){
+            if (value instanceof JLabel) {
                 JLabel text = (JLabel) value;
-                text.setBackground(isSelected ?
-                        getSelectionBackground() : getBackground());
-                text.setForeground(isSelected ?
-                        getSelectionForeground() : getForeground());
+                text.setBackground(getBackground());
+                text.setForeground(getForeground());
                 text.setEnabled(isEnabled());
                 text.setFont(getFont());
                 return text;
@@ -97,17 +92,18 @@ public class ComponentJTable extends JTable {
     class CellEditor extends AbstractCellEditor implements TableCellEditor {
 
         Component c;
+
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
                                                      int rowIndex, int vColIndex) {
 
-            if( value instanceof JCheckBox){
+            if (value instanceof JCheckBox) {
 
                 JCheckBox checkbox = (JCheckBox) value;
                 c = checkbox;
                 return checkbox;
             }
 
-            if( value instanceof JTextField){
+            if (value instanceof JTextField) {
 
                 JTextField tf = (JTextField) value;
                 c = tf;
