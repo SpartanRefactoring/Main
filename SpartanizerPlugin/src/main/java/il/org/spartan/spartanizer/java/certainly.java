@@ -11,7 +11,9 @@ import il.org.spartan.spartanizer.engine.*;
 /** Fluent API, determines whether an expression must be a string.
  * @author Yossi Gil
  * @since 2017-02-08 */
-public interface certainly {
+public enum certainly {
+  DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
+  
   static boolean string(final ASTNode... ¢) {
     return Stream.of(¢).allMatch(certainly::string);
   }
