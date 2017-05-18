@@ -14,7 +14,8 @@ public class it<T> {
     stack.push($);
     return $;
   }
-  public it<T> is(final String __) {
+  public it<T> is(final T it) {
+    this.it =it;
     return this;
   }
 }

@@ -53,18 +53,18 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ))));
     ListEditor resLE = new ListEditor("X","enabled operations:", getFieldEditorParent()) {
       @Override protected String[] parseString(@SuppressWarnings("unused") String stringList) {
-        String[] res = new String[7];
+        String[] $ = new String[7];
         int count = 0;
         for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations)
           if (isEnabled(¢)) {
             if (count >= 7) {
               MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
                   "Cannot enable more than 7 widget operations. \n Taking the 7 first enabled widget operations ");
-              return res;
+              return $;
             }
-            res[count++] = ¢.description();
+            $[count++] = ¢.description();
           }
-        return Arrays.copyOfRange(res, 0,count);
+        return Arrays.copyOfRange($, 0,count);
       }
       @Override protected String getNewInputObject() {
         return null;
