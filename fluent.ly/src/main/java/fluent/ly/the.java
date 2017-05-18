@@ -123,7 +123,7 @@ public interface the {
    * @param ¢ JD
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */
-  @SuppressWarnings("null") static <T> T last(final List<T> ¢) {
+  static <T> T last(final List<T> ¢) {
     return eval(() -> ¢.get(¢.size() - 1)).unless(¢ == null || ¢.isEmpty());
   }
   /** Computes the square of a given integer
@@ -160,5 +160,5 @@ public interface the {
     }
   }
 
-  first first = new first() {};
+  first first = new first() {/* use default functions */};
 }

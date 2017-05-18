@@ -18,7 +18,6 @@ import let.*;
  * failure is issued.
  * @author Itay Maman Jul 9, 2007
  * @author Yossi Gil revised 2015-07-18 */
-@SuppressWarnings("null") //
 public class azzert extends org.junit.Assert {
   public static <T> Matcher<T> allOf(final java.lang.Iterable<Matcher<? super T>> ¢) {
     return AllOf.allOf(¢);
