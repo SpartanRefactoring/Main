@@ -8,12 +8,12 @@ import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 
-/** Fluent API
+/** Fluent API, determines whether an expression must be a string.
  * @author Yossi Gil
  * @since 2017-02-08 */
-public interface certain {
+public interface certainly {
   static boolean string(final ASTNode... ¢) {
-    return Stream.of(¢).allMatch(certain::string);
+    return Stream.of(¢).allMatch(certainly::string);
   }
   static boolean string(final ASTNode ¢) {
     return string(az.expression(¢));
