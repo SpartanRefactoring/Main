@@ -252,7 +252,7 @@ public enum string {
     return ¢ == 0 ? 0 : ¢ > 0 ? 1 : -1;
   }
   public static String sprintf(final String format, final Object... args) {
-    return new Formatter().format(format, args) + "";
+    return String.format(format, args) + "";
   }
   public static String sprintf(final String[] args) {
     switch (args.length) {

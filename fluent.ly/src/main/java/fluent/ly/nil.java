@@ -2,8 +2,6 @@ package fluent.ly;
 
 import java.util.function.*;
 
-import fluent.ly.nil.*;
-
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-10 */
