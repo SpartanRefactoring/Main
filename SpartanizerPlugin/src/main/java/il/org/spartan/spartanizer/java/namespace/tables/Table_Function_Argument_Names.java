@@ -4,8 +4,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.cmdline.ASTInFilesVisitor.*;
-import il.org.spartan.spartanizer.cmdline.tables.*;
 import il.org.spartan.tables.*;
 
 /** Generates a table, counting constants in repositories
@@ -39,11 +37,8 @@ public class Table_Function_Argument_Names extends NominalTables {
     }.visitAll(new ASTVisitor(true) {
       @Override public boolean visit(final CompilationUnit ¢) {
         ¢.accept(new ASTVisitor() {
-          @Override public boolean visit(final SimpleName x) {
-            if (namePrevelance.containsKey(x + ""))
-              namePrevelance.put(x + "", namePrevelance.get(x.toString()) + 1);
-            else
-              namePrevelance.put(x + "", 1);
+          @Override @SuppressWarnings("boxing") public boolean visit(final SimpleName x) {
+            namePrevelance.put(x + "", !namePrevelance.containsKey(x + "") ? 1 : namePrevelance.get(x + "") + 1);
             return true;
           }
         });
