@@ -4,11 +4,10 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.tables.*;
 
-/** Generates a table of funtion parameters
+/** Generates a table of all the names
  * @author Dor Ma'ayan
  * @since 2017-05-18 */
 public class Table_All_Names extends NominalTables {
