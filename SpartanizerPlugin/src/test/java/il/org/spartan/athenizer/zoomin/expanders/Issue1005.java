@@ -45,7 +45,7 @@ public class Issue1005 {
   }
   @Test public void t3() {
     bloatingOf("if(++i + i++ > ++i + y) { x = f(); }")//
-        .gives("if((++i + i++) > ++i + y) { x = f(); }");
+        .gives("if((++i+i++)>(++i+y)){x=f();}");
   }
   @Test public void t4() {
     bloatingOf("f(i++,--j,++x);")//

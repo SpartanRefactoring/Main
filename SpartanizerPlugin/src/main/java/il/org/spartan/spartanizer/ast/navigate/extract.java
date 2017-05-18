@@ -331,6 +331,12 @@ public enum extract {
   public static Collection<Modifier> modifiers(final BodyDeclaration d) {
     return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
+  public static Collection<Modifier> modifiers(final TypeDeclaration d) {
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
+  }
+  public static Collection<Modifier> modifiers(final FieldDeclaration d) {
+    return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
+  }
   public static List<Modifier> modifiers(final SingleVariableDeclaration d) {
     return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
@@ -520,7 +526,7 @@ public enum extract {
   public static ThrowStatement throwStatement(final ASTNode ¢) {
     return az.throwStatement(extract.singleStatement(¢));
   }
-  public static List<SimpleName> names(Name n) {
+  public static List<SimpleName> names(final Name n) {
     if (n == null)
       return an.empty.list();
     if (iz.simpleName(n))
@@ -529,5 +535,8 @@ public enum extract {
     for (Name q = n; q != null; q = !iz.qualifiedName(q) ? null : az.qualifiedName(q).getQualifier())
       $.add(0, !iz.qualifiedName(q) ? az.simpleName(q) : az.qualifiedName(q).getName());
     return $;
+  }
+  public static List<String> identifiers(final Name n) {
+    return names(n).stream().map(λ -> λ.getIdentifier()).collect(toList());
   }
 }

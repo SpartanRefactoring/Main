@@ -25,7 +25,7 @@ import il.org.spartan.spartanizer.utils.*;
 public class TestOperand extends Wrapper<String> {
   protected static final String QUICK = "Quick fix (MARK, COPY, PASTE, and REFORMAT):\n";
   protected static final String NEW_UNIT_TEST = "Quick fix (COPY & PASTE Junit @Test method):\n";
-  private final Traversal traversal = new TraversalImplementation();
+  final Traversal traversal = new TraversalImplementation();
   private static int rerunsLeft = 5;
 
   public TestOperand(final String inner) {

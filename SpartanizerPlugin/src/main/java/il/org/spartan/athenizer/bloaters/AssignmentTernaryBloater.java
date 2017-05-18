@@ -33,15 +33,15 @@ public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionState
   }
   private static ASTNode innerAssignReplacement(final Expression x, final Expression left, final Operator o) {
     final ConditionalExpression $ = az.conditionalExpression(core(x));
-    if($ == null)
+    if ($ == null)
       return null;
-    ExpressionStatement e1 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, then($)).to(o))),
-        e2 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)));
-    if(wizard.eq(left, then($)))
-      return pair(e2,null).toIf(make.notOf($.getExpression()));
-    if(wizard.eq(left, elze($)))
+    final ExpressionStatement e1 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, then($)).to(o)));
+    ExpressionStatement e2 = az.expressionStatement($.getAST().newExpressionStatement(pair(left, elze($)).to(o)));
+    if (wizard.eq(left, then($)))
+      return pair(e2, null).toIf(make.notOf($.getExpression()));
+    if (wizard.eq(left, elze($)))
       e2 = null;
-    return pair(e1,e2).toIf($.getExpression());
+    return pair(e1, e2).toIf($.getExpression());
   }
   private static ASTNode replaceAssignment(final Statement ¢) {
     final ExpressionStatement expressionStatement = az.expressionStatement(¢);

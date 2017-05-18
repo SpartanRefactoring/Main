@@ -822,6 +822,18 @@ public interface iz {
   static boolean private¢(final BodyDeclaration ¢) {
     return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
   }
+  /** Determine whether a Class Declaration is private
+   * @param ¢ JD
+   * @return whetherdeclaration is private */
+  static boolean private¢(final TypeDeclaration ¢) {
+    return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
+  }
+  /** Determine whether a field declaration is private
+   * @param ¢ JD
+   * @return whetherdeclaration is private */
+  static boolean private¢(final FieldDeclaration ¢) {
+    return (Modifier.PRIVATE & ¢.getModifiers()) != 0;
+  }
   static boolean protected¢(final BodyDeclaration ¢) {
     return (¢.getModifiers() & Modifier.PROTECTED) != 0;
   }

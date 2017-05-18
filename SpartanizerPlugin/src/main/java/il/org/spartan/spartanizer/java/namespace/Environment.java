@@ -27,7 +27,7 @@ public interface Environment {
   default boolean doesntHave(final String name) {
     return !has(name);
   }
-  /** Return true iff this instance is empty. */
+  /** @return true iff this instance is empty. */
   boolean empty();
   List<Entry<String, Binding>> entries();
   default Collection<Entry<String, Binding>> fullEntries() {

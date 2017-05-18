@@ -1,9 +1,8 @@
 package il.org.spartan.spartanizer.plugin;
 
 import java.util.*;
-import java.util.function.*;
-
 import org.eclipse.core.commands.*;
+import org.eclipse.core.commands.common.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jface.text.*;
@@ -20,26 +19,26 @@ import fluent.ly.*;
  * @since 2017-02-10 */
 @SuppressWarnings("boxing")
 public class KeyboardShortcuts extends AbstractHandler {
-  private static final Function<Character, Character> key = λ -> (char) ((int) λ - (int) 'a' + 1);
-  private static final Map<Character, Character> shortcutsMap = new HashMap<>();
+  private static final Map<String, Character> shortcutsMap = new HashMap<>();
   static {
-    shortcutsMap.put(key.apply('c'), '¢');
-    shortcutsMap.put(key.apply('l'), 'λ');
+    shortcutsMap.put("ItShortcut", '¢');
+    shortcutsMap.put("LambdaShortcut", 'λ');
   }
 
   @Override public Object execute(final ExecutionEvent e) {
-    if (e == null)
+    if (e == null || !(e.getTrigger() instanceof Event))
       return null;
-    final Object $ = e.getTrigger();
-    if (!($ instanceof Event))
-      return null;
-    final ISelection is = Selection.Util.getSelection();
+    final ISelection $ = Selection.Util.getSelection();
     final Selection s = Selection.Util.getCurrentCompilationUnit();
-    return !(is instanceof ITextSelection) || s == null || s.isEmpty() ? null
-        : insertCharacter(shortcutsMap.get(getCharacter((Event) $)), s.setTextSelection((ITextSelection) is));
+    return !($ instanceof ITextSelection) || s == null || s.isEmpty() ? null
+        : insertCharacter(shortcutsMap.get(getCharacter(e)), s.setTextSelection((ITextSelection) $));
   }
-  private static char getCharacter(final Event $) {
-    return $.type != 13 ? $.character : key.apply('c'); // Hack, obviously
+  private static String getCharacter(final ExecutionEvent $) {
+    try {
+      return $.getCommand().getName();
+    } catch (@SuppressWarnings("unused") NotDefinedException x) {
+      return null;
+    }
   }
   /** Insert a character at the given location. If the text selection contains a
    * range of characters, all of them would be replaced.

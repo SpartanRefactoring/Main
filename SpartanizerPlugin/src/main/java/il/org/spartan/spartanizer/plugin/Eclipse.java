@@ -10,6 +10,8 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import javax.tools.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -135,5 +137,29 @@ public class Eclipse {
   }
   public static ASTNode coveringNodeByRange(final CompilationUnit u, final ITextSelection s) {
     return new NodeFinder(u, s.getOffset(), Math.max(1, s.getLength())).getCoveringNode();
+  }
+  public static boolean recursiveCreateFolder(final IFolder f, final IProgressMonitor m) {
+    if (f == null)
+      return false;
+    if (f.exists())
+      return true;
+    final IContainer parent = f.getParent();
+    if (parent == null)
+      return false;
+    if (!(parent instanceof IFolder))
+      return true;
+    if (!recursiveCreateFolder((IFolder) parent, m))
+      return false;
+    try {
+      f.create(IResource.NONE, true, m);
+    } catch (final CoreException ¢) {
+      note.bug(¢);
+      return false;
+    }
+    return true;
+  }
+  public static boolean isCompiling(String filePath) {
+    JavaCompiler c = ToolProvider.getSystemJavaCompiler();
+    return c != null && c.run(null, null, null, Objects.requireNonNull(filePath)) == 0;
   }
 }
