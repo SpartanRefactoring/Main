@@ -18,9 +18,6 @@ public class MatchingResult {
     Map<Integer, List<PsiElement>> m = new HashMap<>();
     boolean b = false;
 
-    public MatchingResult() {
-    }
-
     public MatchingResult(boolean defaultRes) {
         b = defaultRes;
     }
@@ -42,12 +39,7 @@ public class MatchingResult {
         b = false;
         return this;
     }
-
-    public MatchingResult get(Integer i) {
-        m.get(i);
-        return this;
-    }
-
+    
     public MatchingResult put(Integer i, PsiElement e) {
         m.putIfAbsent(i, new LinkedList<>());
         m.get(i).add(e);

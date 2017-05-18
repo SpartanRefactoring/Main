@@ -198,4 +198,8 @@ public class Toolbox implements ApplicationComponent {
     public List<GenericEncapsulator> getGenericsBasicBlocks() {
         return this.blocks;
     }
+
+    public Optional<GenericEncapsulator> getGeneric(PsiElement e) {
+        return getGenericsBasicBlocks().stream().filter(g -> g.conforms(e)).findFirst();
+    }
 }

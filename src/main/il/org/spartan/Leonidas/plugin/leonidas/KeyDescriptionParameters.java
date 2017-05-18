@@ -11,11 +11,6 @@ import com.intellij.openapi.util.Key;
 public class KeyDescriptionParameters {
 
     /**
-     * The amount of statements in a code block.
-     */
-    public static Key<Amount> NO_OF_STATEMENTS = new Key<>(PsiDescriptionParameters.NO_OF_STATEMENTS.name());
-
-    /**
      * ID of a generic element.
      */
     public static Key<Integer> ID = new Key<>(PsiDescriptionParameters.ID.name());

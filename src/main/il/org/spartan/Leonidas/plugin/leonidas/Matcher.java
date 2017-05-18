@@ -197,10 +197,6 @@ public class Matcher {
             matcher.setRoot(e);
         }
 
-        public ConstraintType getType() {
-            return type;
-        }
-
         public Matcher getMatcher() {
             return matcher;
         }

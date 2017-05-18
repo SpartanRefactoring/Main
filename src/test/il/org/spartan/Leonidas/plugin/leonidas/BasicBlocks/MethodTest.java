@@ -6,7 +6,7 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
  * @author Sharon
  * @since 13.5.17
  */
-public class GenericMethodTest extends PsiTypeHelper {
+public class MethodTest extends PsiTypeHelper {
     protected Method method;
 
     @Override

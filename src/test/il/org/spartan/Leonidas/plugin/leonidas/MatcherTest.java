@@ -3,19 +3,14 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIfStatement;
-import com.intellij.psi.PsiMethodCallExpression;
 import il.org.spartan.Leonidas.PsiTypeHelper;
-import il.org.spartan.Leonidas.auxilary_layer.az;
-import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.auxilary_layer.step;
+import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
 
 /**
  * @author michalcohen
@@ -99,14 +94,18 @@ public class MatcherTest extends PsiTypeHelper {
         assertEquals(map.get(2).get(0).getText(), "return null;");
     }
 
-    private void giveIdToStubMethodCalls(PsiElement innerTree) {
-        innerTree.accept(new JavaRecursiveElementVisitor() {
+    /**
+     * Inserts the ID numbers into the user data of the generic method call expressions.
+     * For example 5 will be inserted to booleanExpression(5).
+     *
+     * @param tree the root of the tree for which we insert IDs.
+     */
+    private void giveIdToStubMethodCalls(PsiElement tree) {
+        tree.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                if (!iz.stubMethodCall(expression)) {
-                    return;
-                }
-                expression.putUserData(ID, az.integer(step.firstParameterExpression(expression)));
+            public void visitElement(PsiElement element) {
+                super.visitElement(element);
+                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(g -> g.conforms(element)).findFirst().ifPresent(g -> element.putUserData(KeyDescriptionParameters.ID, g.extractId(element)));
             }
         });
     }

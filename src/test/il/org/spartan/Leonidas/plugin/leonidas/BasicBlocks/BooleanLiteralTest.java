@@ -6,7 +6,7 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
  * @author Sharon
  * @since 14.5.17
  */
-public class GenericBooleanLiteralTest extends PsiTypeHelper {
+public class BooleanLiteralTest extends PsiTypeHelper {
     protected BooleanLiteral booleanLiteral;
 
     @Override

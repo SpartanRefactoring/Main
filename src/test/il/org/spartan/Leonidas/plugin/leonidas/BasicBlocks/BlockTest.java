@@ -7,7 +7,7 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
  * @author Anna Belozovsky
  * @since 01/05/2017
  */
-public class GenericBlockTest extends PsiTypeHelper {
+public class BlockTest extends PsiTypeHelper {
     PsiElement psiElement;
     Block block;
 

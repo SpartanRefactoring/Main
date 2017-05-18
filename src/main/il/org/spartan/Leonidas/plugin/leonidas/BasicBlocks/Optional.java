@@ -4,7 +4,6 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
-import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 
 /**
@@ -33,12 +32,6 @@ public class Optional extends Quantifier {
     }
 
     @Override
-    public int extractId(PsiElement e) {
-        assert iz.generic(internal);
-        return az.generic(internal).extractId(step.firstParameterExpression(az.methodCallExpression(e)));
-    }
-
-    @Override
     public Optional create(Encapsulator e) {
         PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
         return new Optional(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p)));
@@ -61,7 +54,7 @@ public class Optional extends Quantifier {
         Encapsulator upperElement = o.getConcreteParent(e);
         o.inner = upperElement.inner;
         if (o.isGeneric())
-            upperElement.putUserData(KeyDescriptionParameters.ID, o.extractId(e.getInner()));//o
+            upperElement.putId(o.extractId(e.getInner()));//o
         return upperElement.getParent() == null ? upperElement : upperElement.generalizeWith(o);
     }
 }

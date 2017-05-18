@@ -4,6 +4,7 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
+import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.leonidas.PreservesIterator;
 
 /**
@@ -35,8 +36,8 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
 
     @Override
     public int extractId(PsiElement e) {
-        assert iz.generic(internal);
-        return az.generic(internal).extractId(step.firstParameterExpression(az.methodCallExpression(e)));
+        PsiElement ie = step.firstParameterExpression(az.methodCallExpression(e));
+        return Toolbox.getInstance().getGeneric(ie).map(g -> g.extractId(ie)).orElse(null);
     }
 
     @Override

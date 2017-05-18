@@ -3,7 +3,6 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.google.common.collect.Lists;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
-import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 
 import java.util.Collections;
 import java.util.List;
@@ -39,10 +38,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
     }
 
     /**
-     * Do I represent a concrete PsiElement
+     * Does the given PsiElement is a stub representing the general form?
      *
      * @param other PSI Element
-     * @return true iff I'm to be switched with other.
+     * @return true iff other needs to be switched with this generic component.
      */
     public abstract boolean conforms(PsiElement other);
 
@@ -68,7 +67,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
         Encapsulator upperElement = getConcreteParent(e);
         GenericEncapsulator ge = create(upperElement);
         if (isGeneric())
-            ge.putUserData(KeyDescriptionParameters.ID, ge.extractId(e.getInner()));
+            ge.putId(ge.extractId(e.getInner()));
         return ge.getParent() == null ? ge : upperElement.generalizeWith(ge);
     }
 
@@ -126,22 +125,6 @@ public abstract class GenericEncapsulator extends Encapsulator {
     @Override
     public boolean isGeneric() {
         return true;
-    }
-
-    /**
-     * @return the ID of the generic element
-     */
-    public int getId() {
-        return getUserData(KeyDescriptionParameters.ID);
-    }
-
-    /**
-     * @param i ID
-     * @return this, for fluent API
-     */
-    public Encapsulator putId(int i) {
-        putUserData(KeyDescriptionParameters.ID, i);
-        return this;
     }
 
     GenericEncapsulator.EndThe is(Runnable template) {

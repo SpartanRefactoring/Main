@@ -8,7 +8,7 @@ import il.org.spartan.Leonidas.PsiTypeHelper;
  * @author Amir Sagiv
  * @since 03/05/2017
  */
-public class GenericPsiStatementTest extends PsiTypeHelper {
+public class StatementTest extends PsiTypeHelper {
 
     PsiElement psiElement;
     Statement statement;

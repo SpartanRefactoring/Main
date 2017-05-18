@@ -8,8 +8,10 @@ import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
 import com.intellij.testFramework.LightVirtualFile;
 import il.org.spartan.Leonidas.auxilary_layer.*;
+import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
@@ -17,8 +19,6 @@ import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 import java.util.*;
-
-import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
 
 /**
  * This class represents a tipper created by the leonidas language.
@@ -163,16 +163,14 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * Inserts the ID numbers into the user data of the generic method call expressions.
      * For example 5 will be inserted to booleanExpression(5).
      *
-     * @param innerTree the root of the tree for which we insert IDs.
+     * @param tree the root of the tree for which we insert IDs.
      */
-    private void giveIdToStubMethodCalls(PsiElement innerTree) {
-        innerTree.accept(new JavaRecursiveElementVisitor() {
+    private void giveIdToStubElements(PsiElement tree) {
+        tree.accept(new JavaRecursiveElementVisitor() {
             @Override
-            public void visitMethodCallExpression(PsiMethodCallExpression expression) {
-                if (!iz.stubMethodCall(expression)) {
-                    return;
-                }
-                expression.putUserData(ID, az.integer(step.firstParameterExpression(expression)));
+            public void visitElement(PsiElement element) {
+                super.visitElement(element);
+                Toolbox.getInstance().getGenericsBasicBlocks().stream().filter(g -> g.conforms(element)).findFirst().ifPresent(g -> element.putUserData(KeyDescriptionParameters.ID, g.extractId(element)));
             }
         });
     }
@@ -182,7 +180,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      */
     private Encapsulator getMatcherRootTree() {
         PsiMethod method = getInterfaceMethod("matcher");
-        giveIdToStubMethodCalls(method);
+        giveIdToStubElements(method);
 
         return Pruning.prune(Encapsulator.buildTreeFromPsi(getTreeFromRoot(method,
                 getPsiElementTypeFromAnnotation(method))));
@@ -193,7 +191,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      */
     private Encapsulator getReplacerRootTree() {
         PsiMethod replacer = (PsiMethod) getInterfaceMethod("replacer").copy();
-        giveIdToStubMethodCalls(replacer);
+        giveIdToStubElements(replacer);
         return Pruning.prune(Encapsulator.buildTreeFromPsi(getTreeFromRoot(replacer,
                 getPsiElementTypeFromAnnotation(replacer))));
     }
@@ -289,7 +287,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
             // y - root, key ID
             map.putIfAbsent(key, new LinkedList<>());
-            giveIdToStubMethodCalls(y);
+            giveIdToStubElements(y);
             map.get(key).add(new Matcher.Constraint(extractConstraintType(s), Pruning.prune(Encapsulator.buildTreeFromPsi(y))));
         });
         return map;
@@ -384,6 +382,4 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         }
         return null;
     }
-
-    //</editor-fold>
 }

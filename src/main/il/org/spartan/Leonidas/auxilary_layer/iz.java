@@ -9,9 +9,6 @@ import com.intellij.psi.impl.source.tree.java.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.tree.IElementType;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
-import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.StubName;
-
-import java.util.Arrays;
 
 import static com.intellij.psi.PsiModifier.PUBLIC;
 import static com.intellij.psi.PsiModifier.STATIC;
@@ -209,14 +206,6 @@ public enum iz {
 
     public static boolean ofType(PsiElement e, Class<? extends PsiElement> type) {
         return typeCheck(type, e);
-    }
-
-    public static boolean stubMethodCall(PsiElement e) {
-        return iz.methodCallExpression(e) &&
-                Arrays.stream(StubName.values())
-                        .map(StubName::stubName)
-                        .anyMatch(sn ->
-                                sn.equals(az.methodCallExpression(e).getMethodExpression().getText()));
     }
 
     public static boolean documentedElement(PsiElement e) {

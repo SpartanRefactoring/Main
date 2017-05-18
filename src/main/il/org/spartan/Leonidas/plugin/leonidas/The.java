@@ -2,41 +2,27 @@ package il.org.spartan.Leonidas.plugin.leonidas;
 
 import java.util.function.Supplier;
 
-import static il.org.spartan.Leonidas.plugin.leonidas.The.EndThe.END;
-
 /**
  * @author Oren Afek
  * @since 29-03-2017.
  */
-public interface The {
+public abstract class The {
 
-    static The the(Object... __) {
-        return InnerThe.THE;
+    static The the;
+
+    public static The the(Object... objects) {
+        return the;
     }
 
-    default EndThe is(Runnable template) {
-        return END;
-    }
+    abstract EndThe is(Runnable template);
 
-    default EndThe is(Supplier<?> template) {
-        return END;
-    }
+    abstract EndThe is(Supplier<?> template);
 
-    default EndThe isNot(Runnable template) {
-        return END;
-    }
+    abstract EndThe isNot(Runnable template);
 
-    default EndThe isNot(Supplier<?> template) {
-        return END;
-    }
+    abstract EndThe isNot(Supplier<?> template);
 
     class EndThe {
-        static final EndThe END = new EndThe();
-
         public <T> void ofType(Class<? extends T> __) {/**/}
-    }
-
-    class InnerThe implements The {
-        static final The THE = new InnerThe();
     }
 }

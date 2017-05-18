@@ -593,12 +593,6 @@ public class izTest extends PsiTypeHelper {
         assert !iz.interface¢(createEnumClassFromString("A"));
     }
 
-    public void testStubMethodCall() throws Exception {
-        PsiElement e1 = createTestMethodCallExpression("booleanExpression");
-        assert iz.stubMethodCall(e1);
-        assert !iz.stubMethodCall(createTestMethodCallExpression("foo"));
-    }
-
     public void testConforms() throws Exception {
         PsiElement _e1 = createTestExpression("1+5"), _e2 = createTestExpression("1 > 5"),
                 _e3 = createTestStatementFromString("return x"), _e4 = createTestStatementFromString("return y");
