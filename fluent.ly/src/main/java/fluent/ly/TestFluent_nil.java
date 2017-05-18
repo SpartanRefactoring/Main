@@ -4,9 +4,14 @@ import java.util.function.*;
 
 import org.junit.*;
 
+import fluent.ly.nil.*;
+
 public class TestFluent_nil {
   static String helloString = "Hello";
 
+  @Test public void t1() {
+    nil.g(State::getName).on(Address::getState).on(Customer::getAddress).on(californiaCustomer);
+  }
   @Test public void t() {
     final Integer i1 = nil.guardingly(String::length).on(helloString);
     azzert.that(i1, azzert.is(5));
@@ -19,6 +24,14 @@ public class TestFluent_nil {
     azzert.isNull(i3);
     nil.guardingly(State::getName).on(null);
     nil.guardingly(State::getName).on(californiaCustomer.getAddress().getState());
+    U<String, State> g = nil.g(State::getName);
+    Function<Address, State> f2 = Address::getState;
+    U<String, Address> g1 = g.on(f2);
+    U<String, Customer> g2 = g1.on(Customer::getAddress);
+    g2.on(californiaCustomer);
+    // Operand<String> operand =
+    // nil.guardingly(californiaCustomer).to(Customer::getAddress).to(Address::getState).to(State::getName);
+    // String s = operand.get();
   }
 
   String nullString;
