@@ -125,7 +125,8 @@ public class switchBranch {
   }
   // TODO Yuval Simon: please simplify this code. It is, to be honest, crappy
   // --yg
-  @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
+   @SuppressWarnings("null")
+  public static List<switchBranch> intoBranches(final SwitchStatement n) {
     final List<Statement> l = step.statements(n);
     assert iz.switchCase(the.headOf(l));
     List<SwitchCase> c = null;

@@ -48,7 +48,7 @@ public enum Log {
     endStage(ss);
   }
   public static void endStage(final Object... ss) {
-    @SuppressWarnings("null") final Stopwatch s = stack.pop().stop();
+     final Stopwatch s = stack.pop().stop();
     Log.ln("End:", s.name(), StringUtils.paren(s) + ";", Separate.by(ss, " "));
   }
   public static void f(final String format, final Object... os) {

@@ -63,7 +63,7 @@ public abstract class CSVLine extends AbstractStringProperties implements Clonea
       put(¢.getKey(), ¢.getValue());
     return $;
   }
-  @Override @SuppressWarnings("null") public String get(final String key) {
+  @Override  public String get(final String key) {
     return map.get(key);
   }
   @Override public Collection<String> keys() {
