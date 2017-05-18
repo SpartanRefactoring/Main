@@ -14,7 +14,7 @@ public class it<T> {
     stack.push($);
     return $;
   }
-  public it<T> is(final T it) {
+  public it<T> is(@SuppressWarnings("hiding") final T it) {
     this.it =it;
     return this;
   }

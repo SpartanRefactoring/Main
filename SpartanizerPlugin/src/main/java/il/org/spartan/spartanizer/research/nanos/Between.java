@@ -7,7 +7,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 import java.util.stream.*;
 
-import org.eclipse.core.internal.resources.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
@@ -54,7 +53,7 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
         && ((firstTipper(inEqualities, x1).getMatching(x1, "$X1") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X2") + "")
             || (firstTipper(inEqualities, x1).getMatching(x1, "$X2") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X1") + ""));
   }
-  @Override public Tip pattern(@SuppressWarnings("unused") final InfixExpression x) {
+  @Override public Tip pattern(final InfixExpression x) {
     List<Expression> xs = extract.allOperands(x);
     xs.set(xs.indexOf(left),replacement(left,right));
     xs.remove(right);
