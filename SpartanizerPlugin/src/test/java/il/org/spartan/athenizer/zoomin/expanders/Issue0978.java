@@ -22,7 +22,9 @@ public class Issue0978 {
         .gives("Integer i1 = new Integer(7);");
   }
   @Test public void d() {
-    bloatingOf("new Integer(5); new Integer(7);").gives("Integer i1 = new Integer(5); new Integer(7);")
-        .gives("Integer i1; i1 = new Integer(5); new Integer(7);").gives("Integer i1; i1 = new Integer(5); Integer i2 = new Integer(7);");
+    bloatingOf("new Integer(5); new Integer(7);")//
+        .gives("Integer i1=new Integer(5);Integer i2=new Integer(7);") //
+        .gives("Integer i1; i1 = new Integer(5); Integer i2; i2 = new Integer(7);")//
+    ;
   }
 }

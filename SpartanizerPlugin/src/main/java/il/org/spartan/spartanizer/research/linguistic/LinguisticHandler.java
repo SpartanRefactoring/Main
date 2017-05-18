@@ -9,23 +9,25 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.plugin.*;
+import il.org.spartan.utils.*;
 
 /** TODO Ori Roth: document class
  * @author Ori Roth
  * @since 2017-05-09 */
+@UnderConstruction
 public class LinguisticHandler extends AbstractHandler {
-  @Override public Object execute(@SuppressWarnings("unused") ExecutionEvent e) {
+  @Override public Object execute(@SuppressWarnings("unused") final ExecutionEvent e) {
     final Selection s = Selection.Util.current();
     if (s == null || !s.isTextSelection)
       return null;
     s.setUseBinding();
-    FAPI i = fapi(s);
+    final FAPI i = fapi(s);
     if (i == null)
       return null;
-    System.out.println(i);
+    FAPIGenerator.by(i).in(s.inner.get(0).descriptor.getJavaProject()).generateAll();
     return null;
   }
-  private static FAPI fapi(Selection s) {
+  private static FAPI fapi(final Selection s) {
     ASTNode n = Eclipse.coveringNodeByRange(s.inner.get(0).build().compilationUnit, s.textSelection);
     if (n == null) {
       n = Eclipse.coveredNodeByRange(s.inner.get(0).build().compilationUnit, s.textSelection);
@@ -39,7 +41,7 @@ public class LinguisticHandler extends AbstractHandler {
           StreamSupport.stream(descendants.of(n).spliterator(), false).filter(p -> p instanceof ExpressionStatement).findFirst().orElse(null));
     return es == null ? null : fapi(es);
   }
-  private static FAPI fapi(ExpressionStatement s) {
+  private static FAPI fapi(final ExpressionStatement s) {
     final Expression e = s.getExpression();
     if (!iz.methodInvocation(e) && !iz.fieldAccess(e))
       return null;
@@ -52,6 +54,7 @@ public class LinguisticHandler extends AbstractHandler {
           || iz.methodInvocation(x) && (name = az.name(az.methodInvocation(x).getExpression())) != null)
         break;
     }
-    return new FAPI(s.getAST(), name, invocations).solveBinding().fixPath();
+    return !invocations.stream().anyMatch(x -> iz.methodInvocation(x)) ? null //
+        : new FAPI(s.getAST(), name, invocations).solveBinding().fixPath();
   }
 }

@@ -122,7 +122,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   /** Load all the relevant prefrences from all resources (incliding the XML
    * file) */
   private static void loadPreferences() {
-    try {
+    robust.ly(() -> {
       NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(store().getBoolean(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID));
       ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
       final IProject[] projects = getAllSpartanizerProjects();
@@ -131,8 +131,6 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
           : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
       notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
-    } catch (final NullPointerException ¢) {
-      note.bug(¢);
-    }
+    }, λ -> note.bug(λ));
   }
 }
