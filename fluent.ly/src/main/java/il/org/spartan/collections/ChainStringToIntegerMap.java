@@ -15,7 +15,7 @@ public class ChainStringToIntegerMap {
   public Set<Entry<String, Integer>> entrySet() {
     return inner.entrySet();
   }
-  @SuppressWarnings("null") public int get(final Object key) {
+  public int get(final Object key) {
     return inner.get(key).intValue();
   }
   public boolean isEmpty() {

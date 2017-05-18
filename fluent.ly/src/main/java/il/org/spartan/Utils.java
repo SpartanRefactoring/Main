@@ -58,7 +58,7 @@ public interface Utils {
    * @param t an element
    * @return newly created array */
   static <T> T[] append(final T[] ts, final T t) {
-    @SuppressWarnings("null") final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
+    final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
     return $;
   }
@@ -166,7 +166,7 @@ public interface Utils {
    * @param i position of element to be deleted
    * @return newly created array */
   static <T> T[] delete(final T[] ts, final int i) {
-    @SuppressWarnings("null") final T[] $ = Arrays.copyOf(ts, ts.length - 1);
+    final T[] $ = Arrays.copyOf(ts, ts.length - 1);
     System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
   }
