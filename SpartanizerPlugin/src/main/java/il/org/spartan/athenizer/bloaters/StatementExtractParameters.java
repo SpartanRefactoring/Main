@@ -288,8 +288,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final String tn = topBinding == null ? null : topBinding.getName();
     return tn != null && Arrays.stream(ts).map(λ -> λ.getElementName()).anyMatch(λ -> tn.equals(λ));
   }
-  private static boolean containsHazardousTypeArgument(final Type t) {
-    return (t + "").contains("<?>");
+  private static boolean containsHazardousTypeArgument(final Type ¢) {
+    return (¢ + "").contains("<?>");
   }
 
   // TODO Ori Roth: move class to utility file
