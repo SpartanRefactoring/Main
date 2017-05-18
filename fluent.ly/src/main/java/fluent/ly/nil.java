@@ -2,6 +2,8 @@ package fluent.ly;
 
 import java.util.function.*;
 
+import fluent.ly.nil.*;
+
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-04-10 */
@@ -24,5 +26,47 @@ public interface nil {
   }
   @SuppressWarnings("unused") static <T> T ignoring(final long __) {
     return null;
+  }
+
+  interface Operand<T> extends Supplier<T> {
+    default <R> Operand<R> to(Function<T, R> f) {
+      T t = Operand.this.get();
+      R r = t == null ? null : f.apply(t);
+      return new Operand<R>() {
+        @Override public R get() {
+          return r;
+        }
+      };
+    }
+  }
+
+  static <T> Operand<T> guardingly(T t) {
+    return new Operand<T>() {
+      @Override public T get() {
+        return t;
+      }
+    };
+  }
+
+  interface U<END, T1> {
+    default <T2> U<END, T2> on(Function<T2, T1> f) {
+      return new U<END, T2>() {
+        @Override public Function<T2, END> lastOn() {
+          return f.andThen(U.this.lastOn());
+        }
+      };
+    }
+    default END on(T1 t) {
+      return lastOn().apply(t);
+    }
+    Function<T1, END> lastOn();
+  }
+
+  static <T, R> U<R, T> g(Function<T, R> f) {
+    return new U<R, T>() {
+      @Override public Function<T, R> lastOn() {
+        return f;
+      }
+    };
   }
 }
