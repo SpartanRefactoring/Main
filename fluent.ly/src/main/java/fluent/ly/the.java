@@ -6,6 +6,7 @@ import static fluent.ly.idiomatic.*;
 import java.util.*;
 
 import org.jetbrains.annotations.*;
+
 import let.*;
 
 /** TODO Yossi Gil: document class
@@ -93,6 +94,9 @@ public interface the {
   static <T> T onlyOneOf(final List<T> ¢) {
     return ¢ == null || ¢.size() != 1 ? null : headOf(¢);
   }
+  @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
+  }
   @Contract("null -> null") static <T> T secondOf(final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
@@ -161,4 +165,5 @@ public interface the {
   }
 
   first first = new first() {/* use default functions */};
+
 }
