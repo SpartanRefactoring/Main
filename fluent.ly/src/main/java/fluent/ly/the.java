@@ -96,6 +96,9 @@ public interface the {
   @Contract("null -> null") static <T> T secondOf(final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
+  @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
+  }
   /** Computes the maximum of two or more integers.
    * @param a some integer
    * @param is additional integers
