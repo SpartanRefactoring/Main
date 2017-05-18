@@ -36,6 +36,7 @@ public enum has {
    * @param os an unknown number of objects
    * @return <code><b>null</b></code> <i>iff</i> one of the parameters is
    *         <code><b>null</b></code> */
+  @SafeVarargs
   public static <T> boolean nil(final T o, final T... os) {
     if (o == null || os == null)
       return true;

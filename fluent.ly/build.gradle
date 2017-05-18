@@ -26,6 +26,7 @@ eclipse {
 		defaultOutputDir = file('target/classes')
 	}
 }
+
 eclipse.classpath.file {
     whenMerged { classpath ->
         classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.Output('bin-fluent.ly'))
