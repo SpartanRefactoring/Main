@@ -60,7 +60,7 @@ public interface nil {
     Function<T1, END> lastOn();
   }
 
-  static <T, R> U<R, T> g(Function<T, R> f) {
+  static <T, R> U<R, T> cautiously(Function<T, R> f) {
     return new U<R, T>() {
       @Override public Function<T, R> lastOn() {
         return f;
