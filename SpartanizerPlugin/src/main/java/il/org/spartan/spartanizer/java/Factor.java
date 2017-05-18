@@ -7,7 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 
-/** See class {@link Term}
+/** @see Term
  * @author Yossi Gil
  * @since 2017-02-02 */
 class Factor {
