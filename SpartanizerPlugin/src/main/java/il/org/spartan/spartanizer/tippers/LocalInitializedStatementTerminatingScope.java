@@ -57,7 +57,7 @@ public final class LocalInitializedStatementTerminatingScope extends $FragmentAn
     if (parent == null)
       return null;
     final List<Statement> ss = statements(parent);
-    if (!lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !collect.definitionsOf(n).in(nextStatement).isEmpty())
+    if (!is.lastIn(nextStatement, ss) || !penultimateIn(currentStatement, ss) || !collect.definitionsOf(n).in(nextStatement).isEmpty())
       return null;
     final List<SimpleName> uses = collect.usesOf(n).in(nextStatement);
     if (!sideEffects.free(initializer)) {

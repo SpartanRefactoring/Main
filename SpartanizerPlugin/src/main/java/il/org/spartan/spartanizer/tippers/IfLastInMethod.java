@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -34,7 +35,7 @@ public final class IfLastInMethod extends EagerTipper<IfStatement>//
     if (iz.vacuousThen(s) || !iz.vacuousElse(s) || extract.statements(then(s)).size() < 2)
       return null;
     final Block $ = az.block(parent(s));
-    return $ == null || !lastIn(s, statements($)) || !iz.methodDeclaration(parent($)) ? null : new Tip(description(s), getClass(), s) {
+    return $ == null || !is.lastIn(s, statements($)) || !iz.methodDeclaration(parent($)) ? null : new Tip(description(s), getClass(), s) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         misc.insertAfter(s, extract.statements(then(s)), r, g);
         final IfStatement newIf = copy.of(s);

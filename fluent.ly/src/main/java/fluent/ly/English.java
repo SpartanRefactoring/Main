@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
@@ -39,13 +38,7 @@ public interface English {
   String UNKNOWN = "???";
 
   static String indefinite(final Object ¢) {
-    return indefinite(English.name(¢));
-  }
-  static String indefinite(final String className) {
-    final String $ = cCamelCase.components(className)[0];
-    final char openingLetter = the.characterOf($);
-    return isAcronym($) ? indefinite(pronounce(openingLetter)) : //
-        (Utils.intIsIn(openingLetter, 'i', 'e', 'o', 'u', 'y') ? "an" : "a") + " " + className;
+    return is.indefinite(English.name(¢));
   }
   static boolean isAcronym(final String $) {
     return $.toUpperCase().equals($);
