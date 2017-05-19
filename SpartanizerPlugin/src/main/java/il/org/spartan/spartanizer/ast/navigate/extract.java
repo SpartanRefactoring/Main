@@ -195,7 +195,7 @@ public enum extract {
       case 0:
         return null;
       case 1:
-        return the.headOf($);
+        return the.firstOf($);
       default:
         return ¢;
     }

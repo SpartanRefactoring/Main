@@ -48,7 +48,7 @@ enum FactorsExpander {
   private static Expression base(final List<Factor> fs) {
     assert fs != null;
     assert !fs.isEmpty();
-    final Factor first = the.headOf(fs);
+    final Factor first = the.firstOf(fs);
     assert first != null;
     final Factor second = the.secondOf(fs);
     assert second != null;
@@ -77,7 +77,7 @@ enum FactorsExpander {
     final Operator o = $.getOperator();
     assert o != null;
     assert o == TIMES || o == DIVIDE;
-    final Factor first = the.headOf(fs);
+    final Factor first = the.firstOf(fs);
     assert first != null;
     return recurse(o == TIMES ? appendTimes($, first) : appendDivide($, first), chop(fs));
   }

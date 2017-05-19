@@ -496,7 +496,7 @@ public enum az {
     return !iz.nodeTypeEquals($, VARIABLE_DECLARATION_EXPRESSION) ? null : (VariableDeclarationExpression) $;
   }
   public static VariableDeclarationExpression variableDeclarationExpression(final ForStatement $) {
-    return az.variableDeclarationExpression(the.headOf(initializers($)));
+    return az.variableDeclarationExpression(the.firstOf(initializers($)));
   }
   /** @param ¢ JD
    * @return */

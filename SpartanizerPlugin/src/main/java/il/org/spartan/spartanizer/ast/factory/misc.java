@@ -90,7 +90,7 @@ public enum misc {
       return s;
     final Block $ = subject.statement(s).toBlock();
     r.replace(s, $, g);
-    return (IfStatement) the.headOf(statements($));
+    return (IfStatement) the.firstOf(statements($));
   }
   public static ListRewrite insertAfter(final Statement where, final List<Statement> what, final ASTRewrite r, final TextEditGroup g) {
     final ListRewrite $ = r.getListRewrite(where.getParent(), Block.STATEMENTS_PROPERTY);
@@ -154,7 +154,7 @@ public enum misc {
   }
   public static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = find.occurencesOf(s, id);
-    return $.size() != 1 ? null : the.headOf($);
+    return $.size() != 1 ? null : the.firstOf($);
   }
   /** As {@link elze(ConditionalExpression)} but returns the last else statement
    * in "if - else if - ... - else" statement

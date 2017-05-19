@@ -29,9 +29,9 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
   @Override int evaluateInt(final List<Expression> xs) throws IllegalArgumentException {
     int $ = 0;
     try {
-      if (type.of(the.headOf(xs)) == Certain.DOUBLE || type.of(the.headOf(xs)) == Certain.LONG)
+      if (type.of(the.firstOf(xs)) == Certain.DOUBLE || type.of(the.firstOf(xs)) == Certain.LONG)
         throw new NumberFormatException();
-      $ = az.throwing.int¢(the.headOf(xs));
+      $ = az.throwing.int¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
@@ -51,7 +51,7 @@ public final class InfixRemainderEvaluate extends $EvaluateInfixExpression {
         throw new NumberFormatException("Expected long or int in " + xs + " but found: " + ¢);
     long $ = 0;
     try {
-      $ = az.throwing.long¢(the.headOf(xs));
+      $ = az.throwing.long¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         final long long¢ = az.throwing.long¢(¢);
         if (long¢ == 0)

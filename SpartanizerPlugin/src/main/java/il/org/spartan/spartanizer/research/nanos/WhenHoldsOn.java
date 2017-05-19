@@ -45,9 +45,9 @@ public final class WhenHoldsOn<N extends ASTNode> extends NanoPatternTipper<N> {
         r.replace(¢,
             make.ast("holds(" + notation.cent + " ->"
                 + (differsInSingleAtomic(branchesExpressions(¢))
-                    ? replaceAll(the.headOf(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), notation.cent) + ")"
+                    ? replaceAll(the.firstOf(branchesExpressions) + "", singleAtomicDifference(branchesExpressions), notation.cent) + ")"
                         + createOns(singleAtomicDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢)
-                    : replaceAll(the.headOf(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", notation.cent) + ")"
+                    : replaceAll(the.firstOf(branchesExpressions) + "", singleExpressionDifference(branchesExpressions) + "", notation.cent) + ")"
                         + createExpressionOns(findSingleExpressionDifferences(branchesExpressions), (List<N>) branchesWrapper(¢)) + elseString(¢))),
             g);
       }

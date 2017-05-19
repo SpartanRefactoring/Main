@@ -113,13 +113,13 @@ public class InflaterListener implements KeyListener, Listener {
   }
   private void inflate() {
     text.setSelectionBackground(INFLATE_COLOR.apply(Display.getCurrent()));
-    final WrappedCompilationUnit wcu = the.headOf(selection.inner).build();
+    final WrappedCompilationUnit wcu = the.firstOf(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new InflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, viewer, editor, windowInformation, compoundEditing);
   }
   private void deflate() {
     text.setSelectionBackground(DEFLATE_COLOR.apply(Display.getCurrent()));
-    final WrappedCompilationUnit wcu = the.headOf(selection.inner).build();
+    final WrappedCompilationUnit wcu = the.firstOf(selection.inner).build();
     SingleFlater.commitChanges(SingleFlater.in(wcu.compilationUnit).from(new DeflaterProvider()).limit(windowInformation),
         ASTRewrite.create(wcu.compilationUnit.getAST()), wcu, viewer, editor, windowInformation, compoundEditing);
   }

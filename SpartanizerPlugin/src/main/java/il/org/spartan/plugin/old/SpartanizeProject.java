@@ -39,7 +39,7 @@ public final class SpartanizeProject extends BaseHandler {
     try {
       eclipse.progressMonitorDialog(true).run(true, true, λ -> {
         λ.beginTask("Looking for tips in " + javaProject.getElementName(), IProgressMonitor.UNKNOWN);
-        a.iCompilationUnit(the.headOf(todo));
+        a.iCompilationUnit(the.firstOf(todo));
         $.add(a.countTips());
         if (λ.isCanceled())
           $.set(0);

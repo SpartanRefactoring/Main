@@ -84,7 +84,7 @@ public enum LogToTest {
       nu.put(errorLocationFileClean, Integer.valueOf(nu.get(s[s.length - 1]).intValue() + 1));
       errorLocationFileClean += nu.get(errorLocationFileClean).intValue() + 1;
     }
-    buildTest(ts, errorLocationFileClean, errorLocationUnparsed.replaceFirst(".*:", "").replaceFirst("\\)", ""), the.headOf(ss),
+    buildTest(ts, errorLocationFileClean, errorLocationUnparsed.replaceFirst(".*:", "").replaceFirst("\\)", ""), the.firstOf(ss),
         ss.get(2).trim().equals(English.UNKNOWN) ? "some test file" : ss.get(2).trim(), ss.get(3), ss.get(4), errorLocationFile);
   }
   private static void buildTest(final Collection<String> ss, final String errorLocationFileClean, final String errorLocationLine,

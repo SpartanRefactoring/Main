@@ -32,14 +32,14 @@ public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDec
     return "Split declaration with initialization into two statemenets";
   }
   @Override protected boolean prerequisite(final VariableDeclarationStatement ¢) {
-    return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer() != null
-        && ((VariableDeclaration) the.headOf(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER && (!iz.final¢(¢)
-            || collect.usesOf(the.headOf(fragments(¢)).getName()).in(¢.getParent()).stream().noneMatch(λ -> iz.switchCase(λ.getParent())));
+    return !haz.annotation(¢) && ¢.fragments().size() == 1 && ((VariableDeclaration) the.firstOf(fragments(¢))).getInitializer() != null
+        && ((VariableDeclaration) the.firstOf(fragments(¢))).getInitializer().getNodeType() != ASTNode.ARRAY_INITIALIZER && (!iz.final¢(¢)
+            || collect.usesOf(the.firstOf(fragments(¢)).getName()).in(¢.getParent()).stream().noneMatch(λ -> iz.switchCase(λ.getParent())));
   }
   @Override public Tip tip(final VariableDeclarationStatement ¢) {
     final VariableDeclarationStatement $ = copy.of(¢);
-    ((VariableDeclaration) the.headOf(fragments($))).setInitializer(null);
-    final VariableDeclarationFragment f2 = the.headOf(fragments(¢));
+    ((VariableDeclaration) the.firstOf(fragments($))).setInitializer(null);
+    final VariableDeclarationFragment f2 = the.firstOf(fragments(¢));
     final Assignment a = subject.pair(copy.of(az.expression(f2.getName())), copy.of(az.expression(f2.getInitializer())))
         .to(Assignment.Operator.ASSIGN);
     return new Tip(description(¢), getClass(), ¢) {

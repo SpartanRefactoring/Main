@@ -68,22 +68,22 @@ public final class analyzeTest {
         .type(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{public void m(){ int x,y,z;} ")).get(1).getName())));
   }
   @Test public void testFindDeclarationInType0() {
-    azzert.that("int", is(analyze.type(the.headOf(descendants.whoseClassIs(VariableDeclaration.class).from(AST)).getName())));
+    azzert.that("int", is(analyze.type(the.firstOf(descendants.whoseClassIs(VariableDeclaration.class).from(AST)).getName())));
   }
   @Test public void testFindDeclarationInType1() {
     azzert.that("int", is(analyze.type(
-        the.headOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{int x;public void m(){ x=5;}} "))).getName())));
+        the.firstOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public class A{int x;public void m(){ x=5;}} "))).getName())));
   }
   @Test public void testFindDeclarationInType2() {
     azzert.that("int", is(analyze
-        .type(the.headOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(int y){ int z = 5; }"))).getName())));
+        .type(the.firstOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(int y){ int z = 5; }"))).getName())));
   }
   @Test public void testType0() {
     azzert.that("int",
-        is(analyze.type(the.headOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(){ int x; }"))).getName())));
+        is(analyze.type(the.firstOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast("public void m(){ int x; }"))).getName())));
   }
   @Test public void testType1() {
     azzert.that("int",
-        is(analyze.type(the.headOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast(" public class A{ int x;} "))).getName())));
+        is(analyze.type(the.firstOf(descendants.whoseClassIs(VariableDeclaration.class).from(make.ast(" public class A{ int x;} "))).getName())));
   }
 }

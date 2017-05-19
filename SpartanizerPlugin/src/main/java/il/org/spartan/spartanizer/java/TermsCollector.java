@@ -56,7 +56,7 @@ public final class TermsCollector {
     assert !isLeafTerm(¢);
     assert iz.infixMinus(¢);
     final List<Expression> $ = hop.operands(¢);
-    addPositiveTerm(core(the.headOf($)));
+    addPositiveTerm(core(the.firstOf($)));
     return collectNegativeTerms(the.tailOf($));
   }
   private Void addMinus(final Expression ¢) {
@@ -96,7 +96,7 @@ public final class TermsCollector {
   private Void collectMinusPrefixMinusExprssion(final InfixExpression ¢) {
     assert ¢ != null;
     final List<Expression> $ = hop.operands(¢);
-    collectNegativeTerm(core(the.headOf($)));
+    collectNegativeTerm(core(the.firstOf($)));
     return collectPositiveTerms(the.tailOf($));
   }
   private Void collectMinusPrefixPlusExpression(final InfixExpression ¢) {

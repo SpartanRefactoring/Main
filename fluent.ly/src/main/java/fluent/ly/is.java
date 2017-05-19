@@ -40,7 +40,7 @@ public interface is {
   }
   static String indefinite(final String className) {
     final String $ = cCamelCase.components(className)[0];
-    final char openingLetter = the.characterOf($);
+    final char openingLetter = the.firstOf($);
     return English.isAcronym($) ? indefinite(English.pronounce(openingLetter)) : //
         (is.intIsIn(openingLetter, 'i', 'e', 'o', 'u', 'y') ? "an" : "a") + " " + className;
   }

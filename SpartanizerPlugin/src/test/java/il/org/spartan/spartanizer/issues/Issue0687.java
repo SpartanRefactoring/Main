@@ -21,12 +21,12 @@ public class Issue0687 {
     assert true;
   }
   @Test public void testCheckActualName() {
-    assert "a".equals(the.headOf(getAll.names((Block) make.ast("{a=1+1;}"))) + "");
+    assert "a".equals(the.firstOf(getAll.names((Block) make.ast("{a=1+1;}"))) + "");
   }
   @Test public void testCheckNamesFineBlock() {
     // assuming we need to get all names in the block, including repetitions
     final List<Name> n = getAll.names((Block) make.ast("{a=1+1;b=2+3;System.out.println(a);c=2;c*=a;}"));
-    azzert.that(the.headOf(n), iz("a"));
+    azzert.that(the.firstOf(n), iz("a"));
     azzert.that(n.get(1), iz("b"));
     azzert.that(n.get(2), iz("System"));
     azzert.that(n.get(3), iz("out"));
@@ -38,7 +38,7 @@ public class Issue0687 {
   }
   @Test public void testCheckTwoNamesWithMoreThenOneLiteral() {
     final List<Name> names = getAll.names((Block) make.ast("{aba=1+1; ima = 787-9;}"));
-    assert "aba".equals(the.headOf(names) + "") && "ima".equals(names.get(1) + "");
+    assert "aba".equals(the.firstOf(names) + "") && "ima".equals(names.get(1) + "");
   }
   @Test public void testGetEmpty() {
     assert getAll.names((Block) make.ast("{}")).isEmpty();

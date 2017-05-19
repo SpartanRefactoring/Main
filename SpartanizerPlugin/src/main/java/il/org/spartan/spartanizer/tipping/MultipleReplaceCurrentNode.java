@@ -26,7 +26,7 @@ public abstract class MultipleReplaceCurrentNode<N extends ASTNode> extends Care
         final List<ASTNode> input = an.empty.list(), output = an.empty.list();
         MultipleReplaceCurrentNode.this.go(r, n, g, input, output);
         if (output.size() == 1)
-          input.forEach(λ -> r.replace(λ, the.headOf(output), g));
+          input.forEach(λ -> r.replace(λ, the.firstOf(output), g));
         else if (input.size() == output.size())
           range.to(input.size()).forEach(λ -> r.replace(input.get(λ), output.get(λ), g));
       }

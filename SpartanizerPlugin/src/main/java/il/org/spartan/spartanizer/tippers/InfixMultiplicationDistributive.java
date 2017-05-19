@@ -74,12 +74,12 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     assert $ != null;
     if (!$.isEmpty())
       different.remove($);
-    assert the.headOf($) != null;
-    assert the.headOf(different) != null;
+    assert the.firstOf($) != null;
+    assert the.firstOf(different) != null;
     assert the.secondOf(different) != null;
-    return subject.pair(the.headOf($), //
+    return subject.pair(the.firstOf($), //
         subject.pair(//
-            the.headOf(different), the.secondOf(different)//
+            the.firstOf(different), the.secondOf(different)//
         ).to(//
             op.PLUS2)//
     ).to(//
@@ -88,9 +88,9 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
   }
   @SuppressWarnings("boxing") private ASTNode replacement(final List<Expression> xs) {
     if (xs.size() == 1)
-      return az.infixExpression(the.headOf(xs)).getOperator() != TIMES ? null : the.headOf(xs);
+      return az.infixExpression(the.firstOf(xs)).getOperator() != TIMES ? null : the.firstOf(xs);
     if (xs.size() == 2)
-      return replacement(az.infixExpression(the.headOf(xs)), az.infixExpression(the.secondOf(xs)));
+      return replacement(az.infixExpression(the.firstOf(xs)), az.infixExpression(the.secondOf(xs)));
     final List<Expression> $ = an.empty.list(), different = an.empty.list();
     List<Expression> temp = as.list(xs);
     for (final Integer i : range.from(0).to(xs.size())) {
@@ -102,7 +102,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
           else
             addDifferent(op, different);
         if (temp.size() == 1)
-          extract.allOperands(az.infixExpression(the.headOf(temp))).stream().filter(λ -> !isIn(λ, $)).forEach(λ -> addDifferent(λ, different));
+          extract.allOperands(az.infixExpression(the.firstOf(temp))).stream().filter(λ -> !isIn(λ, $)).forEach(λ -> addDifferent(λ, different));
         lisp.removeFromList(different, $);
       }
     }
@@ -112,7 +112,7 @@ public final class InfixMultiplicationDistributive extends ReplaceCurrentNode<In
     if ($.isEmpty())
       return addition;
     if ($.size() == 1)
-      return subject.pair(the.headOf($), addition).to(TIMES);
+      return subject.pair(the.firstOf($), addition).to(TIMES);
     if ($.size() <= 1)
       return null;
     Expression multiplication = null;

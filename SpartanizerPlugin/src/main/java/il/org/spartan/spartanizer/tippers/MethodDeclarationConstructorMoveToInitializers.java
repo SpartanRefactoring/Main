@@ -30,7 +30,7 @@ public class MethodDeclarationConstructorMoveToInitializers extends CarefulTippe
     return "Match parameter names to fields in constructor '" + ¢ + "'";
   }
   @Override public Tip tip(final MethodDeclaration ¢) {
-    return tip(the.headOf(statements(¢)));
+    return tip(the.firstOf(statements(¢)));
   }
   private static Tip tip(final Statement s) {
     final Assignment x = az.assignment(expression(az.expressionStatement(s)));

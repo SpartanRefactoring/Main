@@ -17,7 +17,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -124,7 +123,7 @@ public interface iz {
       return false;
     final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
-        || !eq(s, az.astNode(the.headOf(statements(az.block(elze($))))))//
+        || !eq(s, az.astNode(the.firstOf(statements(az.block(elze($))))))//
         || misc.recursiveElse(s) != null//
         || elze($) == null)//
         && $ != null && (elze($) == null || misc.recursiveElse(s) == null)
