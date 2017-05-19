@@ -217,15 +217,21 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
    * list, or -1 if this list does not contain the element. More formally,
    * returns the lowest index <tt>i</tt> such that
    * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
-   * or -1 if there is no such index. */
+   * or -1 if there is no such index. [[SuppressSpartanizationTips]] */
   @Override public int indexOf(final Object o) {
     if (o == null)
       for (int $ = 0; $ < size(); ++$) {
+        // Spartanization bug here.Cannot remove the curly brackets.
+        assert o == null;
         if (data[$] == null)
           return $;
-        for (int ¢ = 0; ¢ < size(); ++¢)
-          if (o.equals(data[¢]))
-            return ¢;
+      }
+    else
+      for (int ¢ = 0; ¢ < size(); ++¢) {
+        // Spartanization bug here.Cannot remove the curly brackets.
+        assert o != null;
+        if (o.equals(data[¢]))
+          return ¢;
       }
     return -1;
   }
