@@ -38,6 +38,18 @@ public enum step {
         return x == null || x.getArgumentList().getExpressions().length < 1 ? null : x.getArgumentList().getExpressions()[0];
     }
 
+    /**
+     * Extracts a list of all the arguments present in method call. For example, calling with the
+     * following method call expression <code>test(1, "dsa", 3)</code> should return a list
+     * containing 1, "dsa" and 3.
+     *
+     * @param method method call expression from which the arguments should be extracted
+     * @return list of method call's arguments
+     */
+    public static List<PsiExpression> arguments(PsiMethodCallExpression method) {
+        return method == null ? null : Arrays.asList(method.getArgumentList().getExpressions());
+    }
+
     public static PsiStatement firstStatement(PsiCodeBlock b) {
         return b == null || statements(b).isEmpty() ? null : statements(b).get(0);
     }
