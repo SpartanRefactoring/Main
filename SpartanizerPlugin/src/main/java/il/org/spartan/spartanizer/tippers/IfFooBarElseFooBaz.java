@@ -35,8 +35,8 @@ public final class IfFooBarElseFooBaz extends EagerTipper<IfStatement>//
   private static List<Statement> commonPrefix(final List<Statement> ss1, final List<Statement> ss2) {
     final List<Statement> $ = an.empty.list();
     for (; !ss1.isEmpty() && !ss2.isEmpty(); ss2.remove(0)) {
-      final Statement s1 = the.headOf(ss1);
-      if (!wizard.eq(s1, the.headOf(ss2)))
+      final Statement s1 = the.firstOf(ss1);
+      if (!wizard.eq(s1, the.firstOf(ss2)))
         break;
       $.add(s1);
       ss1.remove(0);

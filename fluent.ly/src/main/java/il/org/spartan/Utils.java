@@ -193,7 +193,7 @@ public interface Utils {
    *         occurs as the penultimate element of the {@link List} parameter */
   static <T> boolean penultimateIn(final T o, final List<T> os) {
     assert os != null;
-    return the.penultimate(os) == o;
+    return the.penultimateOf(os) == o;
   }
   /** Prepend a given <code><b>char</b></code> to a {@link StringBuilder}
    * @param $ prepend to what

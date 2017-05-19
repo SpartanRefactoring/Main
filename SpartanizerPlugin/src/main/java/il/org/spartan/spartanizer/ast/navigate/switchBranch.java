@@ -46,7 +46,7 @@ public class switchBranch {
         .compare(lowestLexicoCase(o1), lowestLexicoCase(o2));
 
     private static Expression lowestLexicoCase(final switchBranch b) {
-      Expression $ = expression(the.headOf(b.cases()));
+      Expression $ = expression(the.firstOf(b.cases()));
       for (final SwitchCase ¢ : b.cases())
         if (numericOrder.compare(expression(¢), $) < 0)
           $ = expression(¢);
@@ -108,7 +108,7 @@ public class switchBranch {
   }
   public boolean compareTo(final switchBranch ¢) {
     final boolean $ = compare(¢);
-    return $ != ¢.compare(this) ? $ : (the.headOf(cases) + "").compareTo(the.headOf(¢.cases) + "") < 0;
+    return $ != ¢.compare(this) ? $ : (the.firstOf(cases) + "").compareTo(the.firstOf(¢.cases) + "") < 0;
   }
   private void addAll(final Collection<Statement> ¢) {
     ¢.addAll(cases.stream().map(copy::of).collect(toList()));
@@ -128,7 +128,7 @@ public class switchBranch {
    @SuppressWarnings("null")
   public static List<switchBranch> intoBranches(final SwitchStatement n) {
     final List<Statement> l = step.statements(n);
-    assert iz.switchCase(the.headOf(l));
+    assert iz.switchCase(the.firstOf(l));
     List<SwitchCase> c = null;
     List<Statement> s = null;
     final List<switchBranch> $ = an.empty.list();
@@ -177,6 +177,6 @@ public class switchBranch {
     return statements.stream().anyMatch(iz::switchCase);
   }
   public boolean hasStatements() {
-    return !statements.isEmpty() && !iz.breakStatement(the.headOf(statements));
+    return !statements.isEmpty() && !iz.breakStatement(the.firstOf(statements));
   }
 }

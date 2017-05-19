@@ -33,7 +33,7 @@ public enum TermsExpander {
   private static Expression base(final List<Term> ts) {
     assert ts != null;
     assert !ts.isEmpty();
-    final Term first = the.headOf(ts);
+    final Term first = the.firstOf(ts);
     assert first != null;
     final Term second = the.secondOf(ts);
     assert second != null;
@@ -75,7 +75,7 @@ public enum TermsExpander {
     final Operator o = operator($);
     assert o != null;
     assert o == il.org.spartan.spartanizer.ast.navigate.op.PLUS2 || o == il.org.spartan.spartanizer.ast.navigate.op.MINUS2;
-    final Term first = the.headOf(ts);
+    final Term first = the.firstOf(ts);
     assert first != null;
     return recurse(chop(ts), o == il.org.spartan.spartanizer.ast.navigate.op.PLUS2 ? appendPlus(first, $) : appendMinus(first, $));
   }

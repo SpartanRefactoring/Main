@@ -13,68 +13,38 @@ import let.*;
  * @author Yossi Gil
  * @since 2017-04-12 */
 public interface the {
+  first first = new first() {/* use default functions */};
+  static char beforeLastOf(final String s, final int i) {
+    return s.charAt(s.length() - i - 1);
+  }
+  static char characterOf(final String ¢) {
+    return the.beforeLastOf(¢, 0);
+  }
+  @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
+  }
+  static char firstOf(String $) {
+    return $.charAt(0);
+  }
+  static <T> T firstOf(final T[] ¢) {
+    return ¢[0];
+  }
+ 
   @SuppressWarnings("boxing") static int index(final int i, final int... is) {
     for (final Integer $ : range.from(0).to(is.length))
       if (is[$] == i)
         return $;
     return -1;
   }
-  static <T> T nil() {
-    return null;
-  }
-  static String nth(final int i, final Collection<?> os) {
-    return the.nth(i, os.size());
-  }
-  static String nth(final int i, final int n) {
-    return nth(i + "", n + "");
-  }
-  static String nth(final String s, final String n) {
-    return " #" + s + "/" + n;
-  }
-  static <T> T penultimateOf(final List<T> ¢) {
-    return ¢ == null || ¢.size() < 2 ? null : ¢.get(¢.size() - 2);
-  }
-  static <T> T previous(final T t, final List<T> ts) {
-    if (ts == null)
-      return null;
-    final int $ = ts.indexOf(t);
-    return $ < 1 ? null : ts.get($ - 1);
-  }
-  static <T> List<T> tailOf(final List<T> ¢) {
-    final List<T> $ = as.list(¢);
-    $.remove(the.headOf($));
-    return $;
-  }
-  static String tailOf(final String ¢) {
-    return ¢.substring(1);
-  }
-  static <T> List<T> rest(final T t, final Iterable<T> ts) {
-    boolean add = false;
-    final List<T> $ = an.empty.list();
-    for (final T x : ts)
-      if (add)
-        $.add(x);
-      else
-        add = x == t;
-    return $;
-  }
-  @Contract("null -> null") static <T> T headOf(final List<T> ¢) {
-    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
-  }
-  static char characterOf(final String ¢) {
-    return the.beforeLastOf(¢, 0);
-  }
   @Contract(pure = true) static char ith(final String s, final int i) {
     return s.charAt(i);
   }
-  @Contract("null -> null") static <T> T lastOf(final List<T> ¢) {
-    return ¢ == null || ¢.isEmpty() ? null : ¢.get(¢.size() - 1);
-  }
-  static char lastOf(final String ¢) {
-    return beforeLastOf(¢, 0);
-  }
-  static char beforeLastOf(final String s, final int i) {
-    return s.charAt(s.length() - i - 1);
+  /** @param <T> JD
+   * @param ¢ JD
+   * @return last item in a list or <code><b>null</b></code> if the parameter is
+   *         <code><b>null</b></code> or empty */
+  static <T> T last(final List<T> ¢) {
+    return eval(() -> ¢.get(¢.size() - 1)).unless(¢ == null || ¢.isEmpty());
   }
   static <T> Iterable<T> lastOf(final Iterable<T> ¢) {
     return () -> new Iterator<T>() {
@@ -91,14 +61,14 @@ public interface the {
       }
     };
   }
-  static <T> T onlyOneOf(final List<T> ¢) {
-    return ¢ == null || ¢.size() != 1 ? null : headOf(¢);
+  @Contract("null -> null") static <T> T lastOf(final List<T> ¢) {
+    return ¢ == null || ¢.isEmpty() ? null : ¢.get(¢.size() - 1);
   }
-  @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
-    return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
+  static char lastOf(final String ¢) {
+    return beforeLastOf(¢, 0);
   }
-  @Contract("null -> null") static <T> T secondOf(final List<T> ¢) {
-    return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
+  static <T> T lastOf(final T[] ¢) {
+    return ¢[¢.length - 1];
   }
   /** Computes the maximum of two or more integers.
    * @param a some integer
@@ -120,21 +90,33 @@ public interface the {
       $ = Math.min($, ¢);
     return $;
   }
-  static <T> T lastOf(final T[] ¢) {
-    return ¢[¢.length - 1];
+  static <T> T nil() {
+    return null;
+  }
+  static String nth(final int i, final Collection<?> os) {
+    return the.nth(i, os.size());
+  }
+  static String nth(final int i, final int n) {
+    return nth(i + "", n + "");
+  }
+  static String nth(final String s, final String n) {
+    return " #" + s + "/" + n;
+  }
+  static <T> T onlyOneOf(final List<T> ¢) {
+    return ¢ == null || ¢.size() != 1 ? null : firstOf(¢);
   }
   /** @param <T> JD
-   * @param ¢ JD
+   * @param ¢ a list
    * @return last item in a list or <code><b>null</b></code> if the parameter is
    *         <code><b>null</b></code> or empty */
-  static <T> T last(final List<T> ¢) {
-    return eval(() -> ¢.get(¢.size() - 1)).unless(¢ == null || ¢.isEmpty());
+  static <T> T penultimateOf(final List<T> ¢) {
+    return ¢ == null || ¢.size() < 2 ? null : ¢.get(¢.size() - 2);
   }
-  /** Computes the square of a given integer
-   * @param ¢ some integer
-   * @return square of the parameter */
-  static int sqr(final int ¢) {
-    return ¢ * ¢;
+  static <T> T previous(final T t, final List<T> ts) {
+    if (ts == null)
+      return null;
+    final int $ = ts.indexOf(t);
+    return $ < 1 ? null : ts.get($ - 1);
   }
   /** Chop the first character of a string.
    * @param ¢ a non-<code><b>null</b></code> string of length at least one
@@ -144,15 +126,37 @@ public interface the {
     positive(¢.length());
     return ¢.substring(1);
   }
+  static <T> List<T> rest(final T t, final Iterable<T> ts) {
+    boolean add = false;
+    final List<T> $ = an.empty.list();
+    for (final T x : ts)
+      if (add)
+        $.add(x);
+      else
+        add = x == t;
+    return $;
+  }
+  @Contract("null -> null") static <T> T secondOf(final List<T> ¢) {
+    return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
+  }
+  /** Computes the square of a given integer
+   * @param ¢ some integer
+   * @return square of the parameter */
+  static int sqr(final int ¢) {
+    return ¢ * ¢;
+  }
+  static <T> List<T> tailOf(final List<T> ¢) {
+    final List<T> $ = as.list(¢);
+    $.remove(the.firstOf($));
+    return $;
+  }
+
+  static String tailOf(final String ¢) {
+    return ¢.substring(1);
+  }
+
   static <T> T[] tailOf(final T[] ¢) {
     return Arrays.copyOfRange(¢, 1, ¢.length);
-  }
-  /** @param <T> JD
-   * @param ¢ a list
-   * @return last item in a list or <code><b>null</b></code> if the parameter is
-   *         <code><b>null</b></code> or empty */
-  static <T> T penultimate(final List<T> ¢) {
-    return eval(() -> ¢.get(¢.size() - 2)).unless(¢ == null || ¢.size() < 2);
   }
 
   interface first {
@@ -163,7 +167,5 @@ public interface the {
       return new it<>(¢[0]);
     }
   }
-
-  first first = new first() {/* use default functions */};
 
 }

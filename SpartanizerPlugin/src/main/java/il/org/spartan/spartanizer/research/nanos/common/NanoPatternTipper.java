@@ -33,13 +33,13 @@ public abstract class NanoPatternTipper<N extends ASTNode> extends Tipper<N>//
     return firstTipper(ts, n).tip(n);
   }
   public static <N extends ASTNode> String firstPattern(final List<UserDefinedTipper<N>> ¢) {
-    return the.headOf(¢).pattern().replaceAll("\\$", "");
+    return the.firstOf(¢).pattern().replaceAll("\\$", "");
   }
   public static <N extends ASTNode> String firstReplacement(final List<UserDefinedTipper<N>> ¢) {
-    return the.headOf(¢).replacement().replaceAll("\\$", "");
+    return the.firstOf(¢).replacement().replaceAll("\\$", "");
   }
   public static <N extends ASTNode> UserDefinedTipper<N> firstTipper(final List<UserDefinedTipper<N>> ¢) {
-    return the.headOf(¢);
+    return the.firstOf(¢);
   }
   protected static Block containingBlock(final ASTNode ¢) {
     return yieldAncestors.untilContainingBlock().from(¢);

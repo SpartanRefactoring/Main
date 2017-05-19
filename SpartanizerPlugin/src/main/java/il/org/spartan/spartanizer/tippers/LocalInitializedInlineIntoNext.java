@@ -118,7 +118,7 @@ public final class LocalInitializedInlineIntoNext extends GoToNextStatement<Vari
   }
   private static SimpleName peelIdentifier(final Statement s, final String id) {
     final List<SimpleName> $ = occurencesOf(s, id);
-    return $.size() != 1 ? null : the.headOf($);
+    return $.size() != 1 ? null : the.firstOf($);
   }
   static List<SimpleName> occurencesOf(final ASTNode $, final String id) {
     return descendants.whoseClassIs(SimpleName.class).suchThat(λ -> identifier(λ).equals(id)).from($);

@@ -64,17 +64,17 @@ public final class LocalInitializedStatementToForInitializers extends ReplaceToN
     final List<Expression> initializers = initializers(¢);
     if (initializers.isEmpty())
       return true;
-    if (!iz.variableDeclarationExpression(the.headOf(initializers)))
+    if (!iz.variableDeclarationExpression(the.firstOf(initializers)))
       return false;
-    final VariableDeclarationExpression $ = az.variableDeclarationExpression(the.headOf(initializers));
+    final VariableDeclarationExpression $ = az.variableDeclarationExpression(the.firstOf(initializers));
     assert $ != null : "FragmentToForInitializers -> for initializer is null and not empty?!?";
     return wizard.eq(s.getType(), $.getType()) && fittingModifiers(s, $);
   }
   public static void setInitializers(final ForStatement $, final VariableDeclarationStatement s) {
-    final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(the.headOf(initializers($)));
+    final VariableDeclarationExpression forInitializer = az.variableDeclarationExpression(the.firstOf(initializers($)));
     initializers($).clear();
     initializers($).add(make.variableDeclarationExpression(s));
-    fragments(az.variableDeclarationExpression(the.headOf(initializers($)))).addAll(copy.of(fragments(forInitializer)));
+    fragments(az.variableDeclarationExpression(the.firstOf(initializers($)))).addAll(copy.of(fragments(forInitializer)));
   }
   @Override public String description(final VariableDeclarationFragment ¢) {
     return "Convert 'while' into a 'for' loop, rewriting as 'for (" + ¢ + "; " + expression(az.forStatement(extract.nextStatement(¢))) + "; )' loop";

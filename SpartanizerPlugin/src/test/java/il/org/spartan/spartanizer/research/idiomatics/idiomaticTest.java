@@ -63,7 +63,7 @@ public class idiomaticTest {
     before.add("2");
     before.add("3");
     final List<String> after = idiomatic.on(before).map(this::mapper);
-    azzert.that(the.headOf(after), is("11"));
+    azzert.that(the.firstOf(after), is("11"));
     azzert.that(after.get(1), is("22"));
     azzert.that(after.get(2), is("33"));
   }
@@ -73,7 +73,7 @@ public class idiomaticTest {
     before.add(2);
     before.add(3);
     final List<String> after = idiomatic.on(before).map(this::mapper);
-    azzert.that(the.headOf(after), is("1"));
+    azzert.that(the.firstOf(after), is("1"));
     azzert.that(after.get(1), is("2"));
     azzert.that(after.get(2), is("3"));
   }
@@ -83,7 +83,7 @@ public class idiomaticTest {
     before.add(2);
     before.add(3);
     final List<Integer> after = idiomatic.on(before).filter(λ -> λ % 2 == 1);
-    azzert.that(the.headOf(after).intValue(), is(1));
+    azzert.that(the.firstOf(after).intValue(), is(1));
     azzert.that(after.get(1).intValue(), is(3));
   }
   @Test public void useReduce() {

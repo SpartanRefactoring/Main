@@ -22,7 +22,7 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
 
   @Override public ASTNode replacement(final InfixExpression x) {
     final List<Expression> es = hop.operands(x);
-    Expression prev = copy.of(the.headOf(es));
+    Expression prev = copy.of(the.firstOf(es));
     final CompilationUnit u = az.compilationUnit(x.getRoot());
     final List<Expression> es2 = new LinkedList<>();
     for (final Expression e : the.tailOf(es))
@@ -37,14 +37,14 @@ public class InfixStringLiteralsConcatenate extends ReplaceCurrentNode<InfixExpr
     if (es2.size() >= 2)
       return subject.operands(es2).to(op.PLUS2);
     final StringLiteral $ = x.getAST().newStringLiteral();
-    $.setLiteralValue(az.stringLiteral(the.headOf(es2)).getLiteralValue());
+    $.setLiteralValue(az.stringLiteral(the.firstOf(es2)).getLiteralValue());
     return $;
   }
   @Override protected boolean prerequisite(final InfixExpression x) {
     if (operator(x) != op.PLUS2)
       return false;
     final List<Expression> es = hop.operands(x);
-    Expression prev = the.headOf(es);
+    Expression prev = the.firstOf(es);
     if (!iz.compilationUnit(x.getRoot()))
       return false;
     final CompilationUnit u = az.compilationUnit(x.getRoot());

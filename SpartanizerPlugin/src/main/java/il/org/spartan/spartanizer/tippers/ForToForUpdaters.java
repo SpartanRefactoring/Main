@@ -64,7 +64,7 @@ public class ForToForUpdaters extends ReplaceCurrentNode<ForStatement>//
     updaters($).addAll(oldUpdaters);
   }
   private static boolean updaterDeclaredInFor(final ForStatement s, final SimpleName n) {
-    return fragments(az.variableDeclarationExpression(the.headOf(initializers(s)))).stream().anyMatch(λ -> (name(λ) + "").equals(n + ""));
+    return fragments(az.variableDeclarationExpression(the.firstOf(initializers(s)))).stream().anyMatch(λ -> (name(λ) + "").equals(n + ""));
   }
   private static Expression updaterFromBody(final ForStatement ¢) {
     return copy.of(expression(az.expressionStatement(lastStatement(¢))));

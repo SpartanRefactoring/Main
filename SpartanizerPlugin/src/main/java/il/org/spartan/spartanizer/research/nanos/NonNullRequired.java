@@ -17,6 +17,6 @@ public final class NonNullRequired extends NotNullAssumed {
 
   @Override public boolean canTip(final IfStatement ¢) {
     return nullCheck(expression(¢))//
-        && the.headOf(statements(az.methodDeclaration(parent(parent(¢))))) == ¢;
+        && the.firstOf(statements(az.methodDeclaration(parent(parent(¢))))) == ¢;
   }
 }
