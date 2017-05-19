@@ -32,14 +32,4 @@ public class Optional extends Quantifier {
         return iz.conforms(it.value(), internal) ? 1 : 0;
     }
 
-    @Override
-    public Encapsulator prune(Encapsulator e) {
-        assert conforms(e.getInner());
-        Optional o = create(e);
-        Encapsulator upperElement = o.getConcreteParent(e);
-        o.inner = upperElement.inner;
-        if (o.isGeneric())
-            upperElement.putId(o.extractId(e.getInner()));//o
-        return upperElement.getParent() == null ? upperElement : upperElement.generalizeWith(o);
-    }
 }

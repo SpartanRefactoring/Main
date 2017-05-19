@@ -13,23 +13,23 @@ import java.io.InputStreamReader;
 
 /**
  * @author michalcohen
- * @since 13-05-2017.
+ * @since 19-05-2017.
  */
-public class OptionalTest extends PsiTypeHelper {
-    
-    public void getNumberOfOccurrences() throws Exception {
-        Encapsulator n = Encapsulator.buildTreeFromPsi(createTestStatementFromString("optional(statement(1));"));
-        Optional ano = new Optional().create(n.getChildren().get(0));
-        Encapsulator e = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x--;}"));
+public class AnyNumberOfTest extends PsiTypeHelper {
+
+    public void testGetNumberOfOccurrences() throws Exception {
+        Encapsulator n = Encapsulator.buildTreeFromPsi(createTestStatementFromString("anyNumberOf(statement(1));"));
+        AnyNumberOf ano = new AnyNumberOf().create(n.getChildren().get(0));
+        Encapsulator e = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x++; x++; x++;}"));
         Encapsulator.Iterator it = e.iterator();
         assertEquals(ano.getNumberOfOccurrences(it), 1);
-        for (int i = 0; i < 10; i++) it.next();
-        assertEquals(ano.getNumberOfOccurrences(it), 0);
+        for (int i = 0; i < 13; i++) it.next();
+        assertEquals(ano.getNumberOfOccurrences(it), 4);
     }
 
-    public void testTip1() throws Exception {
-        File f = new File(Resources.getResource("OptionalTestTipper1.java").getPath());
-        LeonidasTipper lt = new LeonidasTipper("OptionalTestTipper1", IOUtils.toString(new BufferedReader(new InputStreamReader(new FileInputStream(f)))));
+    public void testTipper() throws Exception {
+        File f = new File(Resources.getResource("AnyNumberOfTipperTest.java").getPath());
+        LeonidasTipper lt = new LeonidasTipper("AnyNumberOfTipperTest", IOUtils.toString(new BufferedReader(new InputStreamReader(new FileInputStream(f)))));
         PsiWhileStatement pws1 = createTestWhileStatementFromString("while (x > 2) {\nx++; y--; x--;  \n}");
         assertTrue(lt.canTip(pws1));
         PsiWhileStatement pws2 = createTestWhileStatementFromString("while (x > 2) {\nx++; x--;  \n}");
@@ -40,6 +40,8 @@ public class OptionalTest extends PsiTypeHelper {
         assertTrue(lt.canTip(pws4));
         PsiWhileStatement pws5 = createTestWhileStatementFromString("while (x > 2) {\nx++; x++; x--;  \n}");
         assertTrue(lt.canTip(pws5));
+        PsiWhileStatement pws6 = createTestWhileStatementFromString("while (x > 2) {\nx++; y--; y++; x--;  \n}");
+        assertTrue(lt.canTip(pws6));
     }
 
 }

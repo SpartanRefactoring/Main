@@ -123,7 +123,8 @@ public class GenericPsiElementStub {
     public static Object optional(Object o) {
         return new Object();
     }
-    /**
-     * An enum representing the different coding blocks.
-     */
+
+    public static Object anyNumberOf(Object o) {
+        return new Object();
+    }
 }

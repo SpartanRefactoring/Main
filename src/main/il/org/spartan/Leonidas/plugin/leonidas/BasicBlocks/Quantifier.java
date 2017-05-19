@@ -40,7 +40,19 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
         return Toolbox.getInstance().getGeneric(ie).map(g -> g.extractId(ie)).orElse(null);
     }
 
+    public Encapsulator prune(Encapsulator e) {
+        assert conforms(e.getInner());
+        Quantifier o = create(e);
+        Encapsulator upperElement = o.getConcreteParent(e);
+        o.inner = upperElement.inner;
+        if (o.isGeneric())
+            upperElement.putId(o.extractId(e.getInner()));//o
+        return upperElement.getParent() == null ? upperElement : upperElement.generalizeWith(o);
+    }
+
     @PreservesIterator
     public abstract int getNumberOfOccurrences(Encapsulator.Iterator i);
+
+    public abstract Quantifier create(Encapsulator e);
 
 }

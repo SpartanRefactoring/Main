@@ -1,8 +1,10 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.auxilary_layer.az;
-import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.auxilary_layer.step;
+import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 
 /**
  * @author Oren Afek
@@ -10,7 +12,7 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
  */
 public class AnyNumberOf extends Quantifier {
 
-    private static final String TEMPLATE = "AnyNumberOf";
+    private static final String TEMPLATE = "anyNumberOf";
     Encapsulator internal;
 
     public AnyNumberOf(PsiElement e, Encapsulator i) {
@@ -21,23 +23,23 @@ public class AnyNumberOf extends Quantifier {
         super(TEMPLATE);
     }
 
-
-    @Override
-    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
-        return iz.generic(internal) && az.generic(internal).goUpwards(prev, next);
-    }
-
     @Override
     public int getNumberOfOccurrences(Encapsulator.Iterator i) {
-        int s = 0;
+        if (i.value().getParent() == null) return 1;
+        Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
-        for (Encapsulator.Iterator bgCursor = i.clone(); conforms(bgCursor.value().getInner()); bgCursor.next(), s++)
-            ;
-        return s;
+        i.value().getParent().accept(new EncapsulatorVisitor() {
+            @Override
+            public void visit(Encapsulator n) {
+                if (generalizes(n)) count.set(count.get() + 1);
+            }
+        });
+        return count.get();
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e) {
-        return null;
+    public AnyNumberOf create(Encapsulator e) {
+        PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
+        return new AnyNumberOf(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p)));
     }
 }
