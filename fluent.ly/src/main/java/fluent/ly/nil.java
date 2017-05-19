@@ -29,41 +29,41 @@ public interface nil {
   interface Operand<T> extends Supplier<T> {
     default <R> Operand<R> to(Function<T, R> f) {
       T t = Operand.this.get();
-      R r = t == null ? null : f.apply(t);
+      R $ = t == null ? null : f.apply(t);
       return new Operand<R>() {
         @Override public R get() {
-          return r;
+          return $;
         }
       };
     }
   }
 
-  static <T> Operand<T> guardingly(T t) {
+  static <T> Operand<T> guardingly(T ¢) {
     return new Operand<T>() {
       @Override public T get() {
-        return t;
+        return ¢;
       }
     };
   }
 
   interface U<END, T1> {
-    default <T2> U<END, T2> on(Function<T2, T1> f) {
+    default <T2> U<END, T2> on(Function<T2, T1> ¢) {
       return new U<END, T2>() {
         @Override public Function<T2, END> lastOn() {
-          return f.andThen(U.this.lastOn());
+          return ¢.andThen(U.this.lastOn());
         }
       };
     }
-    default END on(T1 t) {
-      return lastOn().apply(t);
+    default END on(T1 ¢) {
+      return lastOn().apply(¢);
     }
     Function<T1, END> lastOn();
   }
 
-  static <T, R> U<R, T> cautiously(Function<T, R> f) {
+  static <T, R> U<R, T> cautiously(Function<T, R> ¢) {
     return new U<R, T>() {
       @Override public Function<T, R> lastOn() {
-        return f;
+        return ¢;
       }
     };
   }

@@ -25,9 +25,10 @@ public class IfFooElseIfBarElseFoo extends IfElseIfAbstractPattern //
   private static final long serialVersionUID = -0x7B7B219B59AB5C5DL;
 
   public IfFooElseIfBarElseFoo() {
-    andAlso("if and final else must be the same", () -> wizard.eq(then, elzeElze));
-    andAlso("else if expression must have no side effects", () -> //
-    sideEffects.free(elzeIfCondition));
+    andAlso("if and final else must be the same", //
+        () -> wizard.eq(then, elzeElze));
+    andAlso("else if expression must have no side effects", //
+        () -> sideEffects.free(elzeIfCondition));
   }
   @Override public String description() {
     return "Merges if and else blocks when they are the same and there is an else if clause.";
