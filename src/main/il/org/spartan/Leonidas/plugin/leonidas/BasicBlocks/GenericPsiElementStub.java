@@ -57,6 +57,23 @@ public class GenericPsiElementStub {
     }
 
     /**
+     * Method stub representing a union of other blocks for leonidas tippers. Example usage:
+     * <p>
+     * <code>
+     * union(1, method(2), statement(3));
+     * </code>
+     * <p>
+     * The above code example represents a union of a method and a statement.
+     *
+     * @param id   the serial no to distinct between several statements in the same tipper
+     * @param objs list of objects this union represents
+     * @return Union object that allows putting constraints on the union
+     */
+    public static Union union(int id, Object... objs) {
+        return new Union();
+    }
+
+    /**
      * method stub representing an identifier for leonidas tippers
      *
      * @param id the serial no to distinct between several identifiers in the same tipper
