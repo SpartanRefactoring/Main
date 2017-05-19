@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -55,7 +56,7 @@ public class TwoDeclarationsIntoOne extends GoToNextStatement<VariableDeclaratio
   }
   private static boolean canTip(final VariableDeclarationStatement $, final Statement nextStatement) {
     final Block parent = az.block(parent($));
-    return (parent == null || !lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
+    return (parent == null || !is.lastIn(nextStatement, statements(parent))) && iz.variableDeclarationStatement(nextStatement)
         && (type(az.variableDeclarationStatement(nextStatement)) + "").equals(type($) + "")
         && az.variableDeclarationStatement(nextStatement).getModifiers() == $.getModifiers()
         && sameAnnotations(extract.annotations($), extract.annotations(az.variableDeclarationStatement(nextStatement)));

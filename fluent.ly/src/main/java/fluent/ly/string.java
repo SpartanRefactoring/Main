@@ -310,4 +310,11 @@ public enum string {
   private static String toup(final int ¢) {
     return ¢ == 0 ? "" : toup(¢ / 26) + (char) (¢ % 26 + 'A');
   }
+  /** Quote a given {@link String}
+   * @param $ some {@link String} to be quoted
+   * @return parameter, quoted */
+  public static String quote(final String $) {
+    return $ == null ? "<null reference>" : QUOTE + $ + string.QUOTE;
+  }
+  public static final String QUOTE = "'";
 }

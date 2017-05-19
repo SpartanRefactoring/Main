@@ -21,6 +21,15 @@ public interface is {
   static <T> boolean empty(final T[] ¢) {
     return ¢ == null || ¢.length == 0;
   }
+  /** @param ¢ JD */
+  static is.FoundHandleForInt found(final int ¢) {
+    return new FoundHandleForInt(¢);
+  }
+  /** @param <T> JD
+   * @param ¢ JD */
+  static <T> is.FoundHandleForT<T> found(final T ¢) {
+    return new is.FoundHandleForT<>(¢);
+  }
   /** Determine if an item can be found in a list of values
    * @param < T > JD
    * @param candidate what to search for
@@ -28,6 +37,12 @@ public interface is {
    * @return true if the the item is found in the list */
   @SafeVarargs static <T> boolean in(final T candidate, final T... ts) {
     return Stream.of(ts).anyMatch(λ -> λ != null && λ.equals(candidate));
+  }
+  static String indefinite(final String className) {
+    final String $ = cCamelCase.components(className)[0];
+    final char openingLetter = the.characterOf($);
+    return English.isAcronym($) ? indefinite(English.pronounce(openingLetter)) : //
+        (is.intIsIn(openingLetter, 'i', 'e', 'o', 'u', 'y') ? "an" : "a") + " " + className;
   }
   /** Determine whether an integer is a valid list index
    * @param <T> JD
@@ -38,6 +53,7 @@ public interface is {
   static <T> boolean inRange(final int i, final List<T> ts) {
     return i >= 0 && i < ts.size();
   }
+
   /** Determine if an integer can be found in a list of values
    * @param candidate what to search for
    * @param is where to search
@@ -48,9 +64,20 @@ public interface is {
         return true;
     return false;
   }
+
+  /** Determine whether an {@link Object} is the last in a {@link List} .
+   * @param o JD
+   * @param os JD
+   * @return <code><b>true</b></code> <i>iff</i> the {@link Object} parameter is
+   *         the same as the last element of the {@link List} parameter */
+  static boolean lastIn(final Object o, final List<?> os) {
+    return the.last(os) == o;
+  }
+
   static boolean nil(final Object ¢) {
     return ¢ == null;
   }
+
   /** Determine if an item is not included in a list of values
    * @param <T> JD
    * @param candidate what to search for
@@ -58,6 +85,49 @@ public interface is {
    * @return true if the the item is not found in the list */
   @SafeVarargs static <T> boolean out(final T candidate, final T... ts) {
     return !in(candidate, ts);
+  }
+
+  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @since 2016 */
+  class FoundHandleForInt {
+    final int candidate;
+  
+    /** Instantiates this class.
+     * @param candidate what to search for */
+    public FoundHandleForInt(final int candidate) {
+      this.candidate = candidate;
+    }
+    /** Determine if an integer can be found in a list of values
+     * @param is where to search
+     * @return true if the the item is found in the list */
+    @SafeVarargs public final boolean in(final int... is) {
+      for (final int ¢ : is)
+        if (¢ == candidate)
+          return true;
+      return false;
+    }
+  }
+
+  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
+   * @param <T> JD
+   * @since 2016 */
+  class FoundHandleForT<T> {
+    final T candidate;
+  
+    /** Instantiates this class.
+     * @param candidate what to search for */
+    public FoundHandleForT(final T candidate) {
+      this.candidate = candidate;
+    }
+    /** Determine if an integer can be found in a list of values
+     * @param ts where to search
+     * @return true if the the item is found in the list */
+    @SafeVarargs public final boolean in(final T... ts) {
+      for (final T ¢ : ts)
+        if (¢ != null && ¢.equals(candidate))
+          return true;
+      return false;
+    }
   }
 
   interface not {
