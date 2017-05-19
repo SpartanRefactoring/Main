@@ -1,6 +1,3 @@
-/**
- *
- */
 package il.org.spartan.collections;
 
 import static org.junit.Assert.*;
