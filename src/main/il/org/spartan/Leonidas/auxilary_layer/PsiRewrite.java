@@ -4,7 +4,6 @@ import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 
 /**
@@ -15,7 +14,6 @@ import il.org.spartan.Leonidas.plugin.Toolbox;
  * @since 03-12-2016
  */
 public class PsiRewrite {
-    private PsiFileFactory fileFactory;
     private PsiFile psiFile;
     private Project project;
 
@@ -26,11 +24,6 @@ public class PsiRewrite {
 
     public PsiRewrite project(Project ¢) {
         this.project = ¢;
-        return this;
-    }
-
-    public PsiRewrite fileFactory(PsiFileFactory ¢) {
-        this.fileFactory = ¢;
         return this;
     }
 
@@ -50,9 +43,5 @@ public class PsiRewrite {
 
         }.execute();
         return newElement.get();
-    }
-
-    public PsiFileFactory getFileFactory() {
-        return fileFactory;
     }
 }

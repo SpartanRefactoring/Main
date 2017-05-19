@@ -1,6 +1,5 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
 
 /**
@@ -9,12 +8,20 @@ import com.intellij.psi.PsiType;
  */
 public class BooleanExpression extends Expression {
     private static final String TEMPLATE = "booleanExpression";
-    public Boolean value;
-    PsiType type;
 
-    public BooleanExpression(PsiElement e, PsiType type) {
-        super(e, PsiType.BOOLEAN);
-        this.type = type;
+    public BooleanExpression(Encapsulator e) {
+        super(e, TEMPLATE, PsiType.BOOLEAN);
     }
 
+    /**
+     * For reflection use DO NOT REMOVE!
+     */
+    public BooleanExpression() {
+        super(TEMPLATE);
+    }
+
+    @Override
+    public GenericEncapsulator create(Encapsulator e) {
+        return new BooleanExpression(e);
+    }
 }

@@ -31,7 +31,7 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
 
     @Override
     public boolean generalizes(Encapsulator e) {
-        return iz.conforms(internal, e);
+        return (internal != null && iz.generic(internal)) && az.generic(internal).generalizes(e);
     }
 
     @Override
@@ -40,14 +40,7 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
         return Toolbox.getInstance().getGeneric(ie).map(g -> g.extractId(ie)).orElse(null);
     }
 
-    @Override
-    public boolean isGeneric() {
-        return internal.isGeneric();
-    }
-
     @PreservesIterator
-    public int getNumberOfOccurrences(Encapsulator.Iterator i) {
-        return 0;
-    }
+    public abstract int getNumberOfOccurrences(Encapsulator.Iterator i);
 
 }

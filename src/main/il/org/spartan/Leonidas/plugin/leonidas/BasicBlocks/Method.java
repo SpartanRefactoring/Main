@@ -1,6 +1,5 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
-import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 
 /**
@@ -10,24 +9,12 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 public class Method extends GenericMethodCallBasedBlock {
     public static final String TEMPLATE = "method";
 
-    public Method(PsiElement e, String template) {
-        super(e, template);
-    }
-
-    public Method(Encapsulator n, String template) {
-        super(n, template);
-    }
-
     public Method(Encapsulator e) {
-        this(e, TEMPLATE);
+        super(e, TEMPLATE);
     }
 
-    public Method(PsiElement e) {
-        this(e, TEMPLATE);
-    }
-
-    protected Method(String template) {
-        super(template);
+    public Method() {
+        super(TEMPLATE);
     }
 
     @Override
@@ -37,16 +24,11 @@ public class Method extends GenericMethodCallBasedBlock {
 
     @Override
     protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
-        return iz.method(next.getInner());
+        return next != null && iz.method(next.getInner());
     }
 
     @Override
     public GenericEncapsulator create(Encapsulator e) {
         return new Method(e);
-    }
-
-    /* Constraints Methods */
-
-    public void startsWith(String ignore) {
     }
 }

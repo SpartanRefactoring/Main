@@ -22,24 +22,9 @@ public class Optional extends Quantifier {
     }
 
     @Override
-    public boolean generalizes(Encapsulator e) {
-        return iz.conforms(internal, e);
-    }
-
-    @Override
-    protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
-        return iz.generic(internal) && az.generic(internal).goUpwards(prev, next);
-    }
-
-    @Override
     public Optional create(Encapsulator e) {
         PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
         return new Optional(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p)));
-    }
-
-    @Override
-    public boolean isGeneric() {
-        return internal.isGeneric();
     }
 
     @Override

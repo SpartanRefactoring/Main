@@ -15,8 +15,14 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -74,8 +80,7 @@ public class Toolbox implements ApplicationComponent {
     }
 
     private void initBasicBlocks() {
-        Reflections r = new Reflections(GenericEncapsulator.class.getPackage().getName());
-        blocks.addAll(r.getSubTypesOf(GenericEncapsulator.class).stream()
+        blocks.addAll(getAllSubTypes().stream()
                 .filter(c -> !isAbstract(c.getModifiers()))
                 .map(c -> {
                     try {
@@ -88,6 +93,22 @@ public class Toolbox implements ApplicationComponent {
                 .filter(Objects::nonNull)
                 .map(i -> (GenericEncapsulator) i)
                 .collect(Collectors.toList()));
+    }
+
+    private Set<Class<? extends GenericEncapsulator>> getAllSubTypes() {
+        List<ClassLoader> classLoadersList = new LinkedList<ClassLoader>();
+        classLoadersList.add(ClasspathHelper.contextClassLoader());
+        classLoadersList.add(ClasspathHelper.staticClassLoader());
+
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+                .setScanners(new SubTypesScanner(false /* don't exclude Object.class */), new ResourcesScanner())
+                .setUrls(ClasspathHelper.forClassLoader(classLoadersList.toArray(new ClassLoader[0])))
+                .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix("il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks"))));
+        Set<Class<?>> classes = reflections.getSubTypesOf(Object.class);
+
+
+        Reflections r = new Reflections(GenericEncapsulator.class.getPackage().getName());
+        return classes.stream().filter(c -> GenericEncapsulator.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers())).map(c -> (Class<? extends GenericEncapsulator>) c).collect(Collectors.toSet());
     }
 
     @SuppressWarnings("unchecked")

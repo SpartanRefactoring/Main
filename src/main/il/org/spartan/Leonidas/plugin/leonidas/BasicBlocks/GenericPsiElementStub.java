@@ -44,7 +44,7 @@ public class GenericPsiElementStub {
      * @return Method object that allows putting constraints on the method
      */
     public static Method method(int id) {
-        return new Method("");
+        return new Method();
     }
 
     /**
@@ -53,7 +53,7 @@ public class GenericPsiElementStub {
      * @return Method object that allows putting constraints on the method
      */
     public static Method method() {
-        return new Method("");
+        return new Method();
     }
 
     /**

@@ -11,7 +11,7 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 public class Expression extends GenericMethodCallBasedBlock {
 
     //FIXME @michalcohen @orenafek change to expression
-    private static final String TEMPLATE = "booleanExpression";
+    private static final String TEMPLATE = "expression";
     PsiType type;
 
     public Expression(PsiElement e, PsiType type) {
@@ -19,8 +19,13 @@ public class Expression extends GenericMethodCallBasedBlock {
         this.type = type;
     }
 
-    public Expression(PsiElement e) {
-        super(e, TEMPLATE);
+    protected Expression(Encapsulator n, String temp, PsiType t) {
+        super(n, temp);
+        type = t;
+    }
+
+    protected Expression(String template) {
+        super(template);
     }
 
     public Expression(Encapsulator n) {

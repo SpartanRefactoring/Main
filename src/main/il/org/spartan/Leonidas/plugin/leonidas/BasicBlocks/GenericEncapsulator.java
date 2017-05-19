@@ -6,7 +6,6 @@ import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 
 
 /**
@@ -88,18 +87,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @return true iff I can generalizeWith e
      */
     @SuppressWarnings("InfiniteRecursion")
-    public boolean generalizes(Encapsulator e) {
-        return generalizes(e);
-    }
-
-    /**
-     * @param newNode the concrete node that replaces the generic node.
-     * @param r       rewrite
-     */
-    @SuppressWarnings("UnusedReturnValue")
-    public void replace(Encapsulator newNode, PsiRewrite r) {
-        inner = parent == null ? newNode.inner : r.replace(inner, newNode.inner);
-    }
+    public abstract boolean generalizes(Encapsulator e);
 
     public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
         assert parent != null;
@@ -125,27 +113,5 @@ public abstract class GenericEncapsulator extends Encapsulator {
     @Override
     public boolean isGeneric() {
         return true;
-    }
-
-    GenericEncapsulator.EndThe is(Runnable template) {
-        return EndThe.END;
-    }
-
-    EndThe is(Supplier<?> template) {
-        return EndThe.END;
-    }
-
-    EndThe isNot(Runnable template) {
-        return EndThe.END;
-    }
-
-    EndThe isNot(Supplier<?> template) {
-        return EndThe.END;
-    }
-
-    static class EndThe {
-        static final EndThe END = new GenericEncapsulator.EndThe();
-
-        public <T> void ofType(Class<? extends T> __) {/**/}
     }
 }
