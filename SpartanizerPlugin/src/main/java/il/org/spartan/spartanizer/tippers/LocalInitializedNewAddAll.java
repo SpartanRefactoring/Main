@@ -40,7 +40,7 @@ public final class LocalInitializedNewAddAll extends LocalInitialized {
         () -> argument = the.onlyOneOf(arguments(methodInvocation)));
   }
   @Override public String description() {
-    return "Inline variable '" + name + "' into next statement";
+    return "Collapse addAll into constructor of '" + name + "'";
   }
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
     $.getListRewrite(newExpression, ClassInstanceCreation.ARGUMENTS_PROPERTY).insertFirst(copy.of(argument), g);
@@ -48,10 +48,10 @@ public final class LocalInitializedNewAddAll extends LocalInitialized {
     return $;
   }
 
-  private ClassInstanceCreation newExpression;
+  ClassInstanceCreation newExpression;
   @SuppressWarnings({ "unused", "FieldCanBeLocal" }) private Type type;
-  private Expression argument;
-  private MethodInvocation methodInvocation;
+  Expression argument;
+  MethodInvocation methodInvocation;
 
   @Override public Examples examples() {
     return convert("List<T> x = new ArrayList<>(); x.addAll(ys);").to("List<T> x = new ArrayList<>(ys);");
