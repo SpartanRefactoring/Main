@@ -31,7 +31,7 @@ public class TopMenuHandlers extends AbstractHandler {
       });
       put("il.org.spartan.ZoomSelection", e -> {
         final Selection s = Selection.Util.current().setUseBinding();
-        if (!s.isTextSelection)
+        if (s.isTextSelection)
           InflateHandler.applicator().setPasses(s.textSelection == null ? 1 : SpartanizationHandler.PASSES).selection(s).go();
         else if (InflateHandler.active.get() || showZoomToolMessage())
           InflateHandler.goWheelAction();

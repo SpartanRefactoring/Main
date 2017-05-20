@@ -44,7 +44,7 @@ public class GitPullOperation extends GitOperation {
       displayMessage("Git Error: Transport operation failed");
       return;
     } catch (Exception x) {
-      displayMessage("Git Error: Pull failed");
+      displayMessage("Git Error: Pull failed (check for conflicts)");
       return;
     }
     displayMessage("Git pull operation " + (!pr.isSuccessful() ? "failed" : "succeeded "));
