@@ -1,13 +1,12 @@
 package il.org.spartan.statistics;
 
-import static il.org.spatan.iteration.Iterables.*;
+import static fluent.ly.Iterables.*;
 
 import java.util.*;
 
+import fluent.ly.*;
 import il.org.spartan.external.*;
 import il.org.spartan.streotypes.*;
-import il.org.spatan.iteration.*;
-import fluent.ly.*;
 
 /** Provides services for computing the Kendall's tau metric for similarity
  * between rankings.

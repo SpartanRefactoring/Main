@@ -1,8 +1,8 @@
 package il.org.spartan.strings;
 
-import il.org.spartan.utils.*;
-import il.org.spatan.iteration.Iterables.*;
 import fluent.ly.*;
+import il.org.spartan.iterables.iterables.*;
+import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since Apr 27, 2012 */

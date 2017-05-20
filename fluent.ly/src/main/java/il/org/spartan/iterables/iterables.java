@@ -16,37 +16,6 @@ import fluent.ly.*;
  * @author Yossi Gil <Yossi.Gil@GMail.COM> */
 public enum iterables {
   ;
-  /** Counts the number of items in an {@link Iterable}.
-   * @param <T> some arbitrary type
-   * @param ts some iterable over items whose type is the type parameter
-   * @return number of items the given iterable yields. */
-  public static <T> int count(final Iterable<T> ts) {
-    int $ = 0;
-    if (ts != null)
-      for (final T ¢ : ts)
-        $ += as.bit(¢ != null);
-    return $;
-  }
-  /** @param <T> JD
-   * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
-  public static <T> Iterable<T> empty() {
-    return iterable.over();
-  }
-  /** @param os JD */
-  public static boolean isEmpty(final Iterable<?> os) {
-    for (final Object name2 : os)
-      if (name2 != null)
-        return false;
-    return true;
-  }
-  /** wraps a value in a singleton iterator form
-   * @param <T> JD
-   * @param $ JD
-   * @return parameter, but in a singleton iterator form */
-  public static <T> Iterator<T> singletonIterator(final T $) {
-    return iterable.singleton($).iterator();
-  }
-
   //
   /** A static nested class hosting unit tests for the nesting class Unit test
    * for the containing class. Note the naming convention: a) names of test
@@ -72,16 +41,77 @@ public enum iterables {
       azzert.aye("", contains("Hello", null, "a", "b", null, "c", "d", "e", "f", null));
     }
     @Test public void countDoesNotIncludeNull() {
-      assertEquals(3, count(iterable.over(null, "One", null, "Two", null, "Three")));
+      assertEquals(3, fluent.ly.count.count(iterable.over(null, "One", null, "Two", null, "Three")));
     }
     @Test public void countEmpty() {
-      assertEquals(0, count(iterables.<String> empty()));
+      assertEquals(0, fluent.ly.count.count(the.<String> empty()));
     }
     @Test public void countSingleton() {
-      assertEquals(1, count(iterable.singleton(new Object())));
+      assertEquals(1, fluent.ly.count.count(iterable.singleton(new Object())));
     }
     @Test public void countThree() {
-      assertEquals(3, count(iterable.over("One", "Two", "Three")));
+      assertEquals(3, fluent.ly.count.count(iterable.over("One", "Two", "Three")));
+    }
+  }
+
+  public abstract static class RangeIterator<T> extends ReadonlyIterator<T> {
+    private final int n;
+    private int i;
+  
+    public RangeIterator(final int n) {
+      this.n = n;
+    }
+    @Override public final boolean hasNext() {
+      return i < n;
+    }
+    @Override public T next() {
+      final T $ = value();
+      ++i;
+      return $;
+    }
+    protected int i() {
+      return i;
+    }
+    protected abstract T value();
+  }
+
+  public abstract static class ReadonlyIterator<T> implements Iterator<T> {
+    @Override public final void remove() {
+      throw new UnsupportedOperationException();
+    }
+  }
+
+  /** An {@linkplain "http://en.wikipedia.org/wiki/Adapter_pattern Adapter"} of
+   * a scalar object, adapting it to the {@link Iterable} interface whereby
+   * making it possible to iterate over this object in the following sense:. If
+   * the object is non-null, then the iteration will return the object and
+   * terminate. If the object is null, then the iteration is vacuous.
+   * @author Yossi Gil
+   * @since Oct 19, 2009
+   * @param <T> type of objects in the array */
+  public static class Singleton<T> implements Iterable<T> {
+    public static <T> Iterable<T> make(final T ¢) {
+      return ¢ == null ? null : new Singleton<>(¢);
+    }
+  
+    T t;
+  
+    /** Instantiate the adapter with an object
+     * @param t the object on which we can iterate. */
+    public Singleton(final T t) {
+      this.t = t;
+    }
+    @Override public Iterator<T> iterator() {
+      return new iterables.ReadonlyIterator<T>() {
+        @Override public boolean hasNext() {
+          return t != null;
+        }
+        @Override public T next() {
+          final T $ = t;
+          t = null;
+          return $;
+        }
+      };
     }
   }
 }

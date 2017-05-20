@@ -2,13 +2,14 @@ package il.org.spartan.xy;
 
 import static fluent.ly.azzert.*;
 import static il.org.spartan.misc.LinearAlgebra.*;
-import static il.org.spatan.iteration.Iterables.*;
+import static fluent.ly.Iterables.*;
 import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
+import an.*;
 import il.org.spartan.collections.*;
 import fluent.ly.*;
 
@@ -131,7 +132,7 @@ public interface XYProcessor {
     public static class TEST {
       @Test public void feed() {
         final RealsOnly p = new RealsOnly();
-        p.feed(doubles(Double.NaN, 1, 4, 3), doubles(0, Double.NEGATIVE_INFINITY, 5, 3), doubles(0, 1, 6, Double.NEGATIVE_INFINITY));
+        p.feed(array.of(Double.NaN, 1, 4, 3), array.of(0, Double.NEGATIVE_INFINITY, 5, 3), array.of(0, 1, 6, Double.NEGATIVE_INFINITY));
         azzert.that(p.xs().length, is(1));
         azzert.that(p.ys().length, is(1));
         azzert.that(p.dys().length, is(1));

@@ -81,7 +81,7 @@ public interface beginning {
         return new with(beginWith()).new C(as.list(prune.whites(as.strings(os))));
       }
       boolean nothing() {
-        return iterables.isEmpty(these());
+        return is.isEmpty(these());
       }
       Iterable<?> these() {
         return os;

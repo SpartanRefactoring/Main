@@ -1,12 +1,13 @@
 package il.org.spartan.misc;
 
 import static fluent.ly.azzert.*;
-import static il.org.spatan.iteration.Iterables.*;
+import static fluent.ly.Iterables.*;
 
 import java.util.*;
 
 import org.junit.*;
 
+import an.*;
 import fluent.ly.*;
 import il.org.spartan.statistics.*;
 
@@ -554,10 +555,10 @@ public enum LinearAlgebra {
         azzert.that("Inappropriate column length at row " + ¢, __[¢].length, is(columns));
     }
     @Test public void sqr() {
-      Assert.assertArrayEquals(doubles(1, 0, 1, 4), LinearAlgebra.sqr(doubles(-1, 0, 1, 2)), 1E-10);
+      Assert.assertArrayEquals(array.of(1., 0, 1, 4), LinearAlgebra.sqr(array.of(-1, 0., 1, 2)), 1E-10);
     }
     @Test public void sum() {
-      Assert.assertEquals(2, LinearAlgebra.sum(doubles(-1, 0, 1, 2)), 1E-10);
+      Assert.assertEquals(2, LinearAlgebra.sum(array.of(-1, 0, 1, 2)), 1E-10);
     }
     @Test public void transpose() {
       final int rows = 10, columns = 20;
