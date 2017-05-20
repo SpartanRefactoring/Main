@@ -1,10 +1,10 @@
-repositories {
-        jcenter()
+buildscript {	
+	repositories {
+	    jcenter()
 		// make it easy to test a snapshot version of goomph
 		maven {	url 'https://oss.sonatype.org/content/repositories/snapshots/' }
 		// grab dependencies from the gradle plugin portal
 		maven { url 'https://plugins.gradle.org/m2/' }
-		
 		mavenCentral()
 	}
 	// make sure we don't cache stale snapshot versions
@@ -89,6 +89,7 @@ eclipse.classpath.file {
     whenMerged { classpath ->
         classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.Container('org.eclipse.pde.core.requiredPlugins'))
         classpath.entries.removeAll{entry -> entry.kind=='src' && entry.path=='src/main/resources'}
+        classpath.entries.removeAll{entry -> entry.kind=='con' && entry.path=='org.eclipse.pde.core.requiredPlugins'}
     }
 }
 eclipse.project.file {
