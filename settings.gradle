@@ -1,2 +1,14 @@
-include 'SpartanizerPlugin', 'fluent.ly', 'spartan'
+// Eclipse plugin
+include 'SpartanizerPlugin'
 
+// Ori Roth's project
+include 'fluent.ly'
+
+// spartan project
+include 'spartan'
+
+// Team 8 project
+include 'Intellij-Spartanizer'
+
+// Collects all eclipse dependencies into a local maven-style repo
+include 'target.p2'
