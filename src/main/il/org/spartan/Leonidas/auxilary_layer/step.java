@@ -47,7 +47,7 @@ public enum step {
      * @return list of method call's arguments
      */
     public static List<PsiExpression> arguments(PsiMethodCallExpression method) {
-        return method == null ? null : Arrays.asList(method.getArgumentList().getExpressions());
+        return method == null ? null : new ArrayList<>(Arrays.asList(method.getArgumentList().getExpressions()));
     }
 
     public static PsiStatement firstStatement(PsiCodeBlock b) {
