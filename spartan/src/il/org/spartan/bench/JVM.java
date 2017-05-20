@@ -50,7 +50,7 @@ public final class JVM {
     System.out.println(ManagementFactory.getRuntimeMXBean().getUptime());
     System.out.println(ManagementFactory.getRuntimeMXBean().getInputArguments());
     System.out.println(ManagementFactory.getRuntimeMXBean().getSystemProperties());
-    dump.go(ManagementFactory.getRuntimeMXBean());
+    dump.of(ManagementFactory.getRuntimeMXBean());
   }
   public static String status() {
     return TotalMemory.format() + "\n" + MemoryManagement.format() + "\n" + GarbageCollectionSystem.format();

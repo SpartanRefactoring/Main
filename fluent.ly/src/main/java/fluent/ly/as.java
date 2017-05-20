@@ -17,6 +17,14 @@ import il.org.spartan.*;
  * @since Jul 8, 2014 */
 public enum as {
   ;
+  /** Converts a sequence of values into an array.
+   * @param <T> some arbitrary type
+   * @param $ some sequence of values of the type parameter
+   * @return parameter, organized as an array with entries whose type is the
+   *         type parameter */
+  @SafeVarargs public static <T> T[] array(final T... $) {
+    return $;
+  }
   /** Convert an array of {@link Integer}s into an {@link Iterable}. For
    * example, to print the first Fibonacci numbers multiplied by the first prime
    * numbers, write:
@@ -71,17 +79,6 @@ public enum as {
   public static int bit(final Object ¢) {
     return ¢ == null ? 0 : 1;
   }
-  /** Converts a sequence of <code><b>int</b></code> values into a {@link List}
-   * of non-<code><b>null</b></code> {@link Integer}s.
-   * @param is what to covert
-   * @return parameter, converted to the {@link List} of non-
-   *         <code><b>int</b></code> {@link Integer}s form. */
-  public static List<Integer> ingeterList(final int... is) {
-    final List<Integer> $ = new ArrayList<>();
-    for (final int ¢ : is)
-      $.add(fluent.ly.box.it(¢));
-    return $;
-  }
   /** Converts a sequence of integer values into an array.
    * @param $ some sequence of values of the type parameter
    * @return parameters, organized as an array with entries whose type is the
@@ -94,7 +91,7 @@ public enum as {
    * @param is the list to be converted, none of the elements in it can be
    *        <code><b>null</b></code>
    * @return an array of <code><b>int</b></code>. representing the input. */
-  public static int[] intArray(final List<Integer> is) {
+  public static int[] ints(final List<Integer> is) {
     final int[] $ = new int[is.size()];
     for (int ¢ = 0; ¢ < $.length; ++¢)
       $[¢] = is.get(¢).intValue();
@@ -107,13 +104,16 @@ public enum as {
   @SafeVarargs public static <T> Iterator<T> iterator(final T... ¢) {
     return as.list(¢).iterator();
   }
-  /** Converts a list of <code><b>int</b></code>s into a {@link List} of
-   * {@link Integer}s
-   * @param ¢ what to convert
-   * @return a {@link List} of of all <code><b>int</b></code>s in the
-   *         parameter */
-  public static List<Integer> list(final int... ¢) {
-    return as.list(box.it(¢));
+  /** Converts an array of <code><b>int</b></code> values into a {@link List}
+   * of non-<code><b>null</b></code> {@link Integer}s.
+   * @param is what to covert
+   * @return parameter, converted to the {@link List} of non-
+   *         <code><b>int</b></code> {@link Integer}s form. */
+  public static List<Integer> list(final int... is) {
+    final List<Integer> $ = new ArrayList<>();
+    for (final int ¢ : is)
+      $.add(fluent.ly.box.it(¢));
+    return $;
   }
   /** Converts an {@link Iterable} of a given type into a {@link List} of values
    * of this type.
@@ -164,6 +164,7 @@ public enum as {
         $.add(¢ + "");
     return Utils.cantBeNull($.toArray(new String[$.size()]));
   }
+
   static Iterable<Integer> asIterableEssence(final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current;
@@ -195,7 +196,7 @@ public enum as {
     }
     @Test public void asIntArraySimple() {
       final int[] is = as.intArray(100, 200, 200, 12, 13, 0);
-      assertArrayEquals(is, as.intArray(as.ingeterList(is)));
+      assertArrayEquals(is, as.ints(as.list(is)));
     }
     @Test public void asListSimple() {
       // direct call `as.list(12, 13, 14)` kills Travis --or
@@ -215,14 +216,5 @@ public enum as {
         }
       }), is("null"));
     }
-  }
-
-  /** Converts a sequence of values into an array.
-   * @param <T> some arbitrary type
-   * @param $ some sequence of values of the type parameter
-   * @return parameter, organized as an array with entries whose type is the
-   *         type parameter */
-  @SafeVarargs public static <T> T[] array(final T... $) {
-    return $;
   }
 }

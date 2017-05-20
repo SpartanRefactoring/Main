@@ -63,8 +63,16 @@ public class TestOperand extends Wrapper<String> {
     final String wrap = w.on(get()), unpeeled = trim.apply(traversal, wrap);
     if (wrap.equals(unpeeled)) {
       copyPasteReformat("  .stays()//\n  ;\n");
+      copyPasteReformat(
+    		  "trimming.of(" + get() + ")//\n" + //
+    		  "  .stays()//\n  ;\n");
+      
+      for (Tipper<? extends ASTNode> t: traversal.configuration.getAllTippers()) {
+        note.logger.finest(dump.of(t,t.description()));
+      }
       azzert.fail("Nothing done on " + get());
     }
+
     final String peeled = w.off(unpeeled);
     if (peeled.equals(get()))
       azzert.that("No trimming of " + get(), peeled, is(not(get())));

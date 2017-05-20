@@ -21,14 +21,14 @@ public enum ReflectionAnalyzer {
     class LocalClass {
       // Nothing here.
     }
-    dump.go(int[].class);
-    dump.go(void.class);
-    dump.go(Object[].class);
-    dump.go(ReflectionAnalyzer.class);
-    dump.go(InnerClass.class);
-    dump.go(StaticInnerClass.class);
-    dump.go(LocalClass.class);
-    dump.go(new Object() {
+    dump.of(int[].class);
+    dump.of(void.class);
+    dump.of(Object[].class);
+    dump.of(ReflectionAnalyzer.class);
+    dump.of(InnerClass.class);
+    dump.of(StaticInnerClass.class);
+    dump.of(LocalClass.class);
+    dump.of(new Object() {
       @Override public boolean equals(final Object other) {
         return super.equals(other);
       }
