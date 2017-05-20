@@ -9,21 +9,4 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LeonidasUtils {
-
-    String displayName();
-
-    boolean Public() default true;
-
-    boolean Protected() default true;
-
-    boolean Private() default true;
-
-    boolean Default() default true;
-
-    boolean Static() default true;
-
-    boolean Final() default true;
-
-    String symbol() default ""; //TODO: IS THIS GOOD ENOUGH?
-}
+public @interface LeonidasUtils {}

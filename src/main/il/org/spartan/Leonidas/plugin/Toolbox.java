@@ -45,6 +45,7 @@ public class Toolbox implements ApplicationComponent {
     public boolean replaced = false;
     private Map<Class<? extends PsiElement>, List<Tipper>> allTipperMap = new ConcurrentHashMap<>();
     private List<GenericEncapsulator> blocks = new ArrayList<>();
+    private List<Object> tipperInstances = new ArrayList<>();
 
     public static Toolbox getInstance() {
         return (Toolbox) ApplicationManager.getApplication().getComponent(Toolbox.auxGetComponentName());
@@ -77,6 +78,22 @@ public class Toolbox implements ApplicationComponent {
                 .add(new Delegator());
         initBasicBlocks();
         createLeonidasTippers();
+        initializeAllTipperClassesInstances();
+    }
+
+    private void initializeAllTipperClassesInstances() {
+        (new Reflections(LeonidasTipperDefinition.class)).getSubTypesOf(LeonidasTipperDefinition.class)
+                .forEach(c -> {
+                    try {
+                        tipperInstances.add(c.newInstance());
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    public List<Object> getAllTipperInstances(){
+        return tipperInstances;
     }
 
     private void initBasicBlocks() {
