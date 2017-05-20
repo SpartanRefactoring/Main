@@ -1,20 +1,21 @@
 package il.org.spartan.statistics;
 
 import static fluent.ly.azzert.*;
-import static il.org.spatan.iteration.Iterables.*;
+import static fluent.ly.Iterables.*;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
+import an.*;
 import fluent.ly.*;
 
 @SuppressWarnings("static-method")
 public class KendallTest {
   @Test public void test10() {
-    assertEquals(0.6, Kendall.tau(doubles(15, 20, 100, 70, 98)), 1E-6);
+    assertEquals(0.6, Kendall.tau(array.of(15, 20, 100, 70., 98)), 1E-6);
   }
   @Test public void test10tauB() {
-    assertEquals(0.6, Kendall.tauB(doubles(15, 20, 100, 70, 98)), 1E-6);
+    assertEquals(0.6, Kendall.tauB(array.of(15, 20, 100., 70, 98)), 1E-6);
   }
   @Test public void testMinorityVsChi2() {
     final double[]//

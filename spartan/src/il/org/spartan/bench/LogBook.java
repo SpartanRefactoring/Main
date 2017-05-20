@@ -272,7 +272,7 @@ public abstract class LogBook implements Serializable {
     private static final long serialVersionUID = 1;
 
     @Override public String toString() {
-      return size() != 1 ? super.toString() : Iterables.first(this) + "";
+      return size() != 1 ? super.toString() : the.firstOf(this) + "";
     }
   }
 
@@ -582,7 +582,7 @@ public abstract class LogBook implements Serializable {
     private static final long serialVersionUID = 1;
 
     @Override public String toString() {
-      return size() != 1 ? super.toString() : Iterables.first(this) + "";
+      return size() != 1 ? super.toString() : the.firstOf(this) + "";
     }
   }
 
@@ -599,7 +599,7 @@ public abstract class LogBook implements Serializable {
     }
     public final LogBook go(final Collection<Entry> $) {
       if (!stagger.isEmpty())
-        return go($, Iterables.first(stagger));
+        return go($, the.firstOf(stagger));
       if (mode == LIST || mode == BOTH)
         for (final Entry ¢ : $)
           println(prefix(removeKeys(¢, exclude)) + ¢.format());
@@ -634,14 +634,14 @@ public abstract class LogBook implements Serializable {
       return LogBook.this;
     }
     private Entry max(final Collection<Entry> es) {
-      Entry $ = Iterables.first(es);
+      Entry $ = the.firstOf(es);
       for (final Entry ¢ : es)
         if (¢.records.median() > $.records.median())
           $ = ¢;
       return $;
     }
     private Entry min(final Collection<Entry> es) {
-      Entry $ = Iterables.first(es);
+      Entry $ = the.firstOf(es);
       for (final Entry ¢ : es)
         if (¢.records.median() < $.records.median())
           $ = ¢;

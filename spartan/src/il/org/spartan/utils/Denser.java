@@ -1,11 +1,11 @@
 package il.org.spartan.utils;
 
 import static fluent.ly.azzert.*;
-import static il.org.spatan.iteration.Iterables.*;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
+import an.*;
 import fluent.ly.*;
 import il.org.spartan.xy.*;
 
@@ -95,42 +95,42 @@ public class Denser {
       azzert.that(g[2], is(4));
     }
     @Test public void gatherDoubles() {
-      final double[] g = new Denser(14, 0, 12, 13).gather(doubles(11, 1, 2, 4));
+      final double[] g = new Denser(14, 0, 12, 13).gather(array.of(11., 1, 2, 4));
       assertEquals(11, g[0], 1E-5);
       assertEquals(2, g[1], 1E-5);
       assertEquals(4, g[2], 1E-5);
     }
     @Test(expected = IllegalArgumentException.class) //
     public void gatherDoublesIllegalSize() {
-      new Denser(14, 0, 12, 13).gather(doubles(11, 1, 2));
+      new Denser(14, 0, 12, 13).gather(array.of(11, 1, 2));
     }
     @Test(expected = IllegalArgumentException.class) //
     public void gatherIllegalSize() {
       new Denser(14, 0, 12, 13).gather(11, 1, 2);
     }
     @Test public void gatherMatrix() {
-      final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
-          ints(11, 12, 13, 14), //
-          ints(15, 16, 17, 18), //
-          ints(18, 19, 20, 21), //
-          ints(21, 22, 23, 24), //
-          ints(0, 11, 12, 13) //
+      final int[][] g = new Denser(14, 0, 12, 13).gather(array.of( //
+          the.ints(11, 12, 13, 14), //
+          the.ints(15, 16, 17, 18), //
+          the.ints(18, 19, 20, 21), //
+          the.ints(21, 22, 23, 24), //
+          the.ints(0, 11, 12, 13) //
       ));
-      Assert.assertArrayEquals(ints(11, 13, 14), g[0]);
-      Assert.assertArrayEquals(ints(15, 17, 18), g[1]);
-      Assert.assertArrayEquals(ints(18, 20, 21), g[2]);
-      Assert.assertArrayEquals(ints(21, 23, 24), g[3]);
-      Assert.assertArrayEquals(ints(0, 12, 13), g[4]);
+      Assert.assertArrayEquals(the.ints(11, 13, 14), g[0]);
+      Assert.assertArrayEquals(the.ints(15, 17, 18), g[1]);
+      Assert.assertArrayEquals(the.ints(18, 20, 21), g[2]);
+      Assert.assertArrayEquals(the.ints(21, 23, 24), g[3]);
+      Assert.assertArrayEquals(the.ints(0, 12, 13), g[4]);
     }
     @Test public void gatherMatrixNonNull() {
-      final int[][] g = new Denser(14, 0, 12, 13).gather(array( //
-          ints(11, 12, 13, 14), //
-          ints(15, 16, 17, 18)));
+      final int[][] g = new Denser(14, 0, 12, 13).gather(array.of( //
+          the.ints(11, 12, 13, 14), //
+          the.ints(15, 16, 17, 18)));
       assert g != null;
       azzert.that(g.length, is(2));
     }
     @Test public void gatherMatrixSize() {
-      azzert.that(new Denser(14, 0, 12, 13).gather(array(ints(11, 12, 13, 14), ints(15, 16, 17, 18))).length, is(2));
+      azzert.that(new Denser(14, 0, 12, 13).gather(array.of(the.ints(11, 12, 13, 14), the.ints(15, 16, 17, 18))).length, is(2));
     }
     @Test public void gatherSize() {
       azzert.that(new Denser(14, 0, 12, 13).gather(11, 1, 2, 4).length, is(3));
@@ -151,7 +151,7 @@ public class Denser {
       azzert.that(s[3], is(2));
     }
     @Test public void scatterDoubles() {
-      final double[] s = new Denser(14, 0, 12, 13).scatter(doubles(11., 1., 2.));
+      final double[] s = new Denser(14, 0, 12, 13).scatter(array.of(11., 1., 2.));
       assertEquals(11, s[0], 1E-5);
       assertEquals(0, s[1], 1E-5);
       assertEquals(1, s[2], 1E-5);
@@ -159,7 +159,7 @@ public class Denser {
     }
     @Test(expected = IllegalArgumentException.class) //
     public void scatterDoublesIllegalSize() {
-      new Denser(14, 0, 12, 13).scatter(doubles(11, 1, 5, 1));
+      new Denser(14, 0, 12, 13).scatter(array.of(11, 1, 5, 1));
     }
     @Test(expected = IllegalArgumentException.class) //
     public void scatterIllegalSize() {

@@ -2,6 +2,7 @@ package il.org.spartan.classfiles.reify;
 
 import java.lang.reflect.*;
 
+import fluent.ly.*;
 import il.org.spartan.classfiles.reify.TypeInfo.*;
 import il.org.spartan.utils.*;
 import il.org.spatan.iteration.*;

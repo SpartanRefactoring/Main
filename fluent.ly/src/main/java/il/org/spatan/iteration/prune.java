@@ -1,8 +1,6 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spatan.iteration;
 
-import il.org.spartan.streotypes.*;
-
 /** import il.org.spartan.stereotypes.Utility; /** A <b>Utility class</b>
  * providing functions to remove <code><b>null</b></code> elements from arrays
  * and iterable collections. For example, to process the
@@ -17,7 +15,6 @@ import il.org.spartan.streotypes.*;
  *
  * @author Yossi Gil, the Technion.
  * @since 27/08/2008 */
-@Utility
 public enum prune {
   //
 }

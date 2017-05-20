@@ -1,7 +1,5 @@
 package il.org.spartan.java;
 
-import static il.org.spatan.iteration.Iterables.*;
-
 import java.io.*;
 
 import fluent.ly.*;
@@ -16,7 +14,7 @@ public class TokenAsIs extends TokenProcessor {
     return new TokenFeeder(new Tokenizer(fileName), new TokenAsIs()).go().processor + "";
   }
   public static void main(final String argv[]) throws IOException {
-    System.out.println(fileToString(first(argv)));
+    System.out.println(fileToString(the.first(argv)));
   }
   public static String stringToString(final String text) {
     return new TokenFeeder(new StringReader(text), new TokenAsIs()).go().processor + "";

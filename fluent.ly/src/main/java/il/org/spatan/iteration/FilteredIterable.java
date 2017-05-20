@@ -1,17 +1,15 @@
 package il.org.spatan.iteration;
 
 import java.util.*;
-
-import il.org.spartan.iteration.closures.*;
-import il.org.spatan.iteration.Iterables.*;
+import java.util.function.*;
 
 /** Makes a filtered version of a stream (realized by the {@link Iterable}
  * interface). Only those elements of the stream which satisfy a given boolean
- * condition are passed through.
+ * Predicate are passed through.
  * @author Yossi Gil
  * @since Oct 22, 2009
  * @param <T> type of objects in the stream. */
-public abstract class FilteredIterable<T> implements Condition<T>, Iterable<T> {
+public abstract class FilteredIterable<T> implements Predicate<T>, Iterable<T> {
   /** The encapsulated stream. */
   Iterable<? extends T> iterable;
 
@@ -22,9 +20,9 @@ public abstract class FilteredIterable<T> implements Condition<T>, Iterable<T> {
    * which should extend this class.
    * @param t an element to be examined
    * @return true, if and only if, this element is to be passed through. */
-  @Override public abstract boolean holds(T t);
+  @Override public abstract boolean test(T t);
   @Override public final Iterator<T> iterator() {
-    return new ReadonlyIterator<T>() {
+    return new Iterator<T>() {
       T pending;
       boolean hasNext = true;
       final Iterator<? extends T> iterator = iterable.iterator();
@@ -42,7 +40,7 @@ public abstract class FilteredIterable<T> implements Condition<T>, Iterable<T> {
       }
       void advance() {
         while (iterator.hasNext())
-          if (holds(pending = iterator.next()))
+          if (test(pending = iterator.next()))
             return;
         hasNext = false;
       }
