@@ -1,12 +1,20 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
 
 repositories {
 	mavenCentral()
 	jcenter()
+	// local eclipse maven (created by Goomph)
+    maven {
+        url rootProject.file('target.p2/build/p2asmaven/maven')
+	}
 }
+// we need the maven repo from p2
+evaluationDependsOn(':target.p2')
 
 repositories {
 	flatDir {
@@ -15,6 +23,31 @@ repositories {
 }
 
 dependencies {
+    // eclipse/p2 dependencies, imported with all the transitive dependencies
+	// as maven artifacts.
+    def repoDir = project(':target.p2').buildDir.path + "/p2asmaven/maven"
+
+	// TODO this is not good! temporary solution
+	// Include all the dependencies imported from p2. exclude problematic ones.
+	// requires someone to maintain it.
+    new File(repoDir + "/eclipse-deps").eachDir {d ->
+        if (d.name.contains('tukaani.xz.source')) return // TODO maybe there is a better way to exclude source packages
+		if (d.name.contains('jasper.glassfish')) return // unwanted transitive dependency
+		if (d.name.contains('compiler.batch')) return // unwanted transitive dependency
+		compile "eclipse-deps:" + d.name + ":+"
+    }
+
+	// TODO this is not good as well! temporary solution
+    new File(repoDir + "/eclipse-deps-jgit").eachDir {d ->
+        compile "eclipse-deps-jgit:" + d.name + ":+"
+    }
+
+	// TODO do we need this?
+    // add SWT and the appropriate platform-native SWT for building and testing
+    compile "eclipse-deps:org.eclipse.swt:+"
+	compile "eclipse-deps:org.eclipse.swt.${com.diffplug.common.swt.os.SwtPlatform.getNative()}:+"
+
+
 	compile project(':spartan')
 	compile project(':fluent.ly')
 	compile files('lib/cli-1.02.jar')
