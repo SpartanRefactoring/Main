@@ -12,6 +12,7 @@ import il.org.spartan.spartanizer.tippers.*;
 /** TODO Yossi Gil: document class
  * @author Yossi Gil
  * @since 2017-05-21 */
+@Ignore("Bugs") //
 @SuppressWarnings("static-method")
 public class Issue1314 {
   @Test public void a() {

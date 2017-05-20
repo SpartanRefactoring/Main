@@ -126,6 +126,7 @@ public class dump {
     $ += "\n\n--BEGIN " + c.getSimpleName() + " object: " + o + "\n";
     $ += entry("Class canonical name", c.getCanonicalName());
     $ += entry("Class name", c.getName());
+    $ += entry("Class simple name", c.getSimpleName());
     for (final Method m : c.getMethods()) {
       if (m.getParameterTypes().length != 0)
         continue;
@@ -159,6 +160,13 @@ public class dump {
         $ += entry(name, m.getName() + " THROWS " + ¢);
       }
     }
+    for (final Field f : c.getFields())
+      try {
+        $ += entry(f + "", f.get(o));
+      } catch (IllegalArgumentException | IllegalAccessException e) {
+        $ += entry(f + "", "???");
+        continue;
+      }
     return $ + "--END OBJECT--\n\n";
   }
 }

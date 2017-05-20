@@ -35,7 +35,7 @@ public class TestOperand extends Wrapper<String> {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(new TraversalImplementation(), wrap);
     if (wrap.equals(unpeeled))
-      azzert.fail("Nothing done on " + get());
+      nothing();
     final String peeled = w.off(unpeeled);
     if (peeled.equals(get()))
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
@@ -61,18 +61,8 @@ public class TestOperand extends Wrapper<String> {
   public TestOperand gives(final String $) {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(traversal, wrap);
-    if (wrap.equals(unpeeled)) {
-      copyPasteReformat("  .stays()//\n  ;\n");
-      copyPasteReformat(
-    		  "trimming.of(" + get() + ")//\n" + //
-    		  "  .stays()//\n  ;\n");
-      
-      for (Tipper<? extends ASTNode> t: traversal.configuration.getAllTippers()) {
-        note.logger.finest(dump.of(t,t.description()));
-      }
-      azzert.fail("Nothing done on " + get());
-    }
-
+    if (wrap.equals(unpeeled))
+      nothing();
     final String peeled = w.off(unpeeled);
     if (peeled.equals(get()))
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
@@ -100,7 +90,7 @@ public class TestOperand extends Wrapper<String> {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
     final String wrap = w.on(get()), unpeeled = trim.apply(traversal, wrap);
     if (wrap.equals(unpeeled))
-      azzert.fail("Nothing done on " + get());
+      nothing();
     final String peeled = w.off(unpeeled);
     if (peeled.equals(get()))
       azzert.that("No trimming of " + get(), peeled, is(not(get())));
@@ -111,6 +101,14 @@ public class TestOperand extends Wrapper<String> {
         return new TestOperand($);
     azzert.fail("Expects: " + peeled + " But none of the given options match");
     return null;
+  }
+  private void nothing() {
+    copyPasteReformat("  .stays()//\n  ;\n");
+    copyPasteReformat("trimming.of(" + get() + ")//\n" + //
+        "  .stays()//\n  ;\n");
+    for (Tipper<? extends ASTNode> ¢ : traversal.configuration.getAllTippers())
+      note.logger.severe(dump.of(¢, ¢.description()));
+    azzert.fail("Nothing done on " + get());
   }
   public void stays() {
     final WrapIntoComilationUnit w = WrapIntoComilationUnit.find(get());
