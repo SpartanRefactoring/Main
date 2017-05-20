@@ -11,6 +11,7 @@ plugins {
     id "idea"
     id "java"
     id "jacoco"
+    id "eclipse"
 }
 
 // Order the compiler to use UTF-8 encoding
@@ -78,4 +79,12 @@ dependencies {
     testCompile "org.mockito:mockito-core:2.+"
     compile "org.reflections:reflections:0.9.10"
     compile "commons-io:commons-io:2.5"
+}
+
+// Eclipse exclude resources from source
+
+eclipse.classpath.file {
+    whenMerged { classpath ->
+        classpath.entries.removeAll{entry -> entry.kind=='src' && (entry.path=='resources' || entry.path=='testResources')}
+    }
 }
