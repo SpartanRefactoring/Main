@@ -94,6 +94,6 @@ public class InflaterProvider extends OperationsProvider {
     return configuration.firstTipper(¢);
   }
   @Override public Function<List<Operation<?>>, List<Operation<?>>> getFunction() {
-    return λ -> Collections.singletonList(the.headOf(λ));
+    return λ -> Collections.singletonList(the.firstOf(λ));
   }
 }

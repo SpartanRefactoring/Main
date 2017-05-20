@@ -40,7 +40,7 @@ public class Issue0831 {
     assert new MethodScannerIExt((MethodDeclaration) make.ast("public int a(String a){}")).availableStatements().isEmpty();
   }
   @Test public void oneStatementInScanner() {
-    assert "int a;\n".equals(the.headOf(new MethodScannerIExt(oneStatMethod).availableStatements()) + "");
+    assert "int a;\n".equals(the.firstOf(new MethodScannerIExt(oneStatMethod).availableStatements()) + "");
   }
   @Test public void statementsInScannerAreUndefinedWhenMethodDoesNotHaveBody() {
     assert new MethodScannerIExt((MethodDeclaration) make.ast("public int a(String a);")).availableStatements() == null;

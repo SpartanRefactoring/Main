@@ -50,7 +50,7 @@ public final class MultiMap<K, V> implements Iterable<K> {
    * @return A non-<code><b>null</b></code> representing the set of images
    *         associated with <code>k</code> */
   public Set<V> get(final K ¢) {
-    @SuppressWarnings("null") final Set<V> $ = implementation.get(¢);
+     final Set<V> $ = implementation.get(¢);
     return $ != null ? $ : clear(¢);
   }
   /** Return an iterator over all keys

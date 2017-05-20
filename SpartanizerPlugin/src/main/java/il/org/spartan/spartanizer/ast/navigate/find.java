@@ -20,7 +20,7 @@ public enum find {
   public static <N extends ASTNode> Operand<N> first(final Class<N> c) {
     return new Operand<N>() {
       @Override public N under(final ASTNode ¢) {
-        return the.headOf(descendants.whoseClassIs(c).from(¢));
+        return the.firstOf(descendants.whoseClassIs(c).from(¢));
       }
     };
   }
@@ -37,10 +37,10 @@ public enum find {
 
   public static <N extends ASTNode> Expression singleExpressionDifference(final List<N> ns) {
     final Expression $;
-    if (ns.size() < 2 || ($ = singleExpressionDifference(the.headOf(ns), ns.get(1))) == null)
+    if (ns.size() < 2 || ($ = singleExpressionDifference(the.firstOf(ns), ns.get(1))) == null)
       return null;
     for (int ¢ = 2; ¢ < ns.size(); ++¢)
-      if (!$.equals(singleExpressionDifference(the.headOf(ns), ns.get(¢))))
+      if (!$.equals(singleExpressionDifference(the.firstOf(ns), ns.get(¢))))
         return null;
     return $;
   }
@@ -54,7 +54,7 @@ public enum find {
       return az.expression(n1);
     if (children1.isEmpty())
       return eq(n1, n2) ? null : az.expression(n1);
-    Expression $ = singleExpressionDifference(the.headOf(children1), the.headOf(children2));
+    Expression $ = singleExpressionDifference(the.firstOf(children1), the.firstOf(children2));
     for (int i = 1; i < children1.size(); ++i) {
       final Expression diff = singleExpressionDifference(children1.get(i), children2.get(i));
       // If two children aren't the same and not with same expression, the whole
@@ -67,13 +67,13 @@ public enum find {
   }
   public static <N extends ASTNode> List<String> singleAtomicDifferences(final List<N> ¢) {
     final List<String> $ = an.empty.list();
-    ¢.forEach(λ -> $.add(λ != the.headOf(¢) ? singleAtomicDifference(λ, the.headOf(¢)) : singleAtomicDifference(the.headOf(¢), the.secondOf(¢))));
+    ¢.forEach(λ -> $.add(λ != the.firstOf(¢) ? singleAtomicDifference(λ, the.firstOf(¢)) : singleAtomicDifference(the.firstOf(¢), the.secondOf(¢))));
     return $;
   }
   public static <N extends ASTNode> List<Expression> findSingleExpressionDifferences(final List<N> ¢) {
     final List<Expression> $ = an.empty.list();
     ¢.forEach(
-        λ -> $.add(λ != the.headOf(¢) ? singleExpressionDifference(λ, the.headOf(¢)) : singleExpressionDifference(the.headOf(¢), the.secondOf(¢))));
+        λ -> $.add(λ != the.firstOf(¢) ? singleExpressionDifference(λ, the.firstOf(¢)) : singleExpressionDifference(the.firstOf(¢), the.secondOf(¢))));
     return $;
   }
   /** Gets two nodes and returns the identifier of the only name i n1 which is
@@ -91,7 +91,7 @@ public enum find {
     final List<ASTNode> ns1 = Recurser.allChildren(n1), ns2 = Recurser.allChildren(n2);
     if (ns1.size() != ns2.size())
       return null;
-    String $ = singleAtomicDifference(the.headOf(ns1), the.headOf(ns2));
+    String $ = singleAtomicDifference(the.firstOf(ns1), the.firstOf(ns2));
     $ = $ != null ? $ : "";
     for (int i = 1; i < ns1.size(); ++i) {
       final String diff = singleAtomicDifference(ns1.get(i), ns2.get(i));
@@ -110,11 +110,11 @@ public enum find {
   public static <N extends ASTNode> String singleAtomicDifference(final List<N> ns) {
     if (ns.size() < 2)
       return null;
-    String $ = singleAtomicDifference(the.headOf(ns), the.secondOf(ns));
+    String $ = singleAtomicDifference(the.firstOf(ns), the.secondOf(ns));
     if ($ == null)
       return null;
     for (int i = 2; i < ns.size(); ++i) {
-      final String diff = singleAtomicDifference(the.headOf(ns), ns.get(i));
+      final String diff = singleAtomicDifference(the.firstOf(ns), ns.get(i));
       $ = !Objects.equals($, "") || diff == null ? $ : diff;
       if (!$.equals(diff) && diff != null && !diff.isEmpty())
         return null;

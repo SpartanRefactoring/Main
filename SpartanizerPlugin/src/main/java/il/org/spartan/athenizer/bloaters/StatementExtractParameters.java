@@ -249,7 +249,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     return iz.nodeTypeIn(¢, CLASS_INSTANCE_CREATION, METHOD_INVOCATION, INFIX_EXPRESSION, ASSIGNMENT, CONDITIONAL_EXPRESSION, LAMBDA_EXPRESSION);
   }
   private static Expression choose(final List<Expression> ¢) {
-    return the.headOf(¢);
+    return the.firstOf(¢);
   }
   private static boolean captureRisk(final ITypeBinding binding) {
     if (binding == null)

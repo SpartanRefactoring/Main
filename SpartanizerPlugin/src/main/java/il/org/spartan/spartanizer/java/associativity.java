@@ -1,8 +1,8 @@
 package il.org.spartan.spartanizer.java;
 
-import static il.org.spartan.Utils.*;
-
 import org.eclipse.jdt.core.dom.*;
+
+import fluent.ly.*;
 
 /** An empty {@code enum} for fluent programming. The name should say it all:
  * The name, followed by a dot, followed by a method name, should read like a
@@ -28,6 +28,6 @@ public enum associativity {
     return !isRightToLeft(precedence.of(¢));
   }
   private static boolean isRightToLeft(final int precedence) {
-    return intIsIn(precedence, 2, 3, 14, 15);
+    return is.intIsIn(precedence, 2, 3, 14, 15);
   }
 }

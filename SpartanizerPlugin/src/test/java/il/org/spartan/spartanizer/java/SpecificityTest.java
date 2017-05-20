@@ -3,7 +3,7 @@
  * @author Yossi Gil
  *
  * @since Sep 8, 2016 */
-package il.org.spartan.spartanizer.engine;
+package il.org.spartan.spartanizer.java;
 
 import static fluent.ly.azzert.*;
 import static il.org.spartan.spartanizer.engine.into.*;

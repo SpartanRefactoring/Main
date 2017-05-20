@@ -5,7 +5,6 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-import il.org.spartan.*;
 import il.org.spartan.utils.*;
 
 /** Utility class for linguistic issues. Used by GUI dialogs.
@@ -39,13 +38,7 @@ public interface English {
   String UNKNOWN = "???";
 
   static String indefinite(final Object ¢) {
-    return indefinite(English.name(¢));
-  }
-  static String indefinite(final String className) {
-    final String $ = cCamelCase.components(className)[0];
-    final char openingLetter = the.characterOf($);
-    return isAcronym($) ? indefinite(pronounce(openingLetter)) : //
-        (Utils.intIsIn(openingLetter, 'i', 'e', 'o', 'u', 'y') ? "an" : "a") + " " + className;
+    return is.indefinite(English.name(¢));
   }
   static boolean isAcronym(final String $) {
     return $.toUpperCase().equals($);
@@ -55,7 +48,7 @@ public interface English {
    * @return a linguistic list of the items */
   static String list(final List<String> ¢) {
     return ¢ == null || ¢.isEmpty() ? "nothing"
-        : ¢.size() == 1 ? the.headOf(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + the.lastOf(¢);
+        : ¢.size() == 1 ? the.firstOf(¢) : separate.these(¢.subList(0, ¢.size() - 1)).by(SEPARATOR) + " and " + the.lastOf(¢);
   }
   static String lowerFirstLetter(final String input) {
     return input.isEmpty() ? "genererated" + new Random().nextInt(100) : input.substring(0, 1).toLowerCase() + input.substring(1);

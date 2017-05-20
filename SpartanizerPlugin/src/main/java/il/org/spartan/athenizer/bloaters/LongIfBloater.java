@@ -34,7 +34,7 @@ public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
     return "Replace an if statement that contains && with two ifs";
   }
   private static Expression getReducedIEFromIEWithExtOp(final InfixExpression ¢) {
-    final InfixExpression $ = subject.pair(¢.getRightOperand(), the.headOf(extendedOperands(¢))).to(¢.getOperator());
+    final InfixExpression $ = subject.pair(¢.getRightOperand(), the.firstOf(extendedOperands(¢))).to(¢.getOperator());
     subject.append($, step.extendedOperands(¢));
     if (!$.extendedOperands().isEmpty())
       $.extendedOperands().remove(0);

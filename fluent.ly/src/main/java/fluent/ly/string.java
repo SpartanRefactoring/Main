@@ -252,7 +252,7 @@ public enum string {
     return ¢ == 0 ? 0 : ¢ > 0 ? 1 : -1;
   }
   public static String sprintf(final String format, final Object... args) {
-    return new Formatter().format(format, args) + "";
+    return String.format(format, args) + "";
   }
   public static String sprintf(final String[] args) {
     switch (args.length) {
@@ -310,4 +310,11 @@ public enum string {
   private static String toup(final int ¢) {
     return ¢ == 0 ? "" : toup(¢ / 26) + (char) (¢ % 26 + 'A');
   }
+  /** Quote a given {@link String}
+   * @param $ some {@link String} to be quoted
+   * @return parameter, quoted */
+  public static String quote(final String $) {
+    return $ == null ? "<null reference>" : QUOTE + $ + string.QUOTE;
+  }
+  public static final String QUOTE = "'";
 }

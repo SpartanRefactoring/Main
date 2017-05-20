@@ -30,7 +30,7 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
     return set(az.methodInvocation((expressionStatement = ¢).getExpression())) //
         && set(methodInvocation.getName()) //
         && set(arguments(methodInvocation)) //
-        && setFirst(the.headOf(arguments)) //
+        && setFirst(the.firstOf(arguments)) //
         && setSecond(the.secondOf(arguments));
   }
   @Override public AssertStatement replacement(final ExpressionStatement ¢) {
@@ -51,6 +51,6 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   }
   boolean setSecond(final Expression ¢) {
     final MethodInvocation $ = az.methodInvocation(¢);
-    return as.set("is").contains($.getName() + "") && (booleanLiteral = az.booleanLiteral(the.headOf(arguments($)))) != null;
+    return as.set("is").contains($.getName() + "") && (booleanLiteral = az.booleanLiteral(the.firstOf(arguments($)))) != null;
   }
 }

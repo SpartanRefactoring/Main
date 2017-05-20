@@ -24,7 +24,7 @@ public final class InfixMultiplicationByOne extends ReplaceCurrentNode<InfixExpr
   private static ASTNode replacement(final List<Expression> ¢) {
     final List<Expression> $ = ¢.stream().filter(λ -> !iz.literal1(λ)).collect(toList());
     return $.size() == ¢.size() ? null
-        : $.isEmpty() ? copy.of(the.headOf(¢)) : $.size() == 1 ? copy.of(the.headOf($)) : subject.operands($).to(TIMES);
+        : $.isEmpty() ? copy.of(the.firstOf(¢)) : $.size() == 1 ? copy.of(the.firstOf($)) : subject.operands($).to(TIMES);
   }
   @Override public String description(final InfixExpression ¢) {
     return "Remove all multiplications by 1 from " + ¢;

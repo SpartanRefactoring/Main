@@ -35,7 +35,7 @@ public class CompilationUnitRecord {
     linesOfCode = countLines(inner + "");
     numMethods = descendants.whoseClassIs(MethodDeclaration.class).from(inner).size();
     numClasses = descendants.whoseClassIs(AbstractTypeDeclaration.class).from(inner).size();
-    final PackageDeclaration p = the.headOf(descendants.whoseClassIs(PackageDeclaration.class).from(inner));
+    final PackageDeclaration p = the.firstOf(descendants.whoseClassIs(PackageDeclaration.class).from(inner));
     pakcage = p == null ? "" : p.getName() + "";
     countTestAnnotation(inner);
     // testCount = Int.valueOf(countTestAnnotation(inner));

@@ -30,7 +30,7 @@ public enum TermsReorganizer {
     return subject.operands(rest).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS2);
   }
   private static Expression buildMinus(final List<Expression> ¢) {
-    final Expression $ = subject.operand(the.headOf(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
+    final Expression $ = subject.operand(the.firstOf(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.MINUS1);
     if (¢.size() == 1)
       return $;
     ¢.remove(0);
@@ -42,9 +42,9 @@ public enum TermsReorganizer {
       case 0:
         return null;
       case 1:
-        return the.headOf(¢);
+        return the.firstOf(¢);
       case 2:
-        return subject.pair(the.headOf(¢), the.secondOf(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
+        return subject.pair(the.firstOf(¢), the.secondOf(¢)).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
       default:
         return subject.operands(¢).to(il.org.spartan.spartanizer.ast.navigate.op.PLUS2);
     }

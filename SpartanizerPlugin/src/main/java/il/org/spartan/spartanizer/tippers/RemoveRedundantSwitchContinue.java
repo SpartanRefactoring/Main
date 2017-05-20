@@ -33,7 +33,7 @@ public class RemoveRedundantSwitchContinue extends ReplaceCurrentNode<SwitchStat
       return null;
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (final switchBranch ¢ : $)
-      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.continueStatement(the.headOf(¢.statements))) {
+      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.continueStatement(the.firstOf(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());
       }

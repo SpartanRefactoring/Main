@@ -32,7 +32,7 @@ public class LambdaRemoveRedundantCurlyBraces extends CarefulTipper<LambdaExpres
   public static ASTNode replacement(final LambdaExpression x, final ASTRewrite r, final TextEditGroup g) {
     if (the.onlyOneOf(statements(body(x))) == null)
       return null;
-    final Statement s = the.headOf(statements(x));
+    final Statement s = the.firstOf(statements(x));
     final LambdaExpression $ = x.getAST().newLambdaExpression();
     parameters(x).forEach(λ -> r.getListRewrite($, LambdaExpression.PARAMETERS_PROPERTY).insertLast(λ, g));
     r.replace(body($), iz.expressionStatement(s) ? expression(s)

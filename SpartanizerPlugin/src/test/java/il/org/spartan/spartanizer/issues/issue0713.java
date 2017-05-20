@@ -19,16 +19,16 @@ import il.org.spartan.spartanizer.utils.tdd.*;
  * @author Elia Traore
  * @since 2016-11-06 */
 public class issue0713 {
-  final TypeDeclaration noPublic = (TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class noPublic {   } "))));
+  final TypeDeclaration noPublic = (TypeDeclaration) the.firstOf(types(az.compilationUnit(make.ast("public class noPublic {   } "))));
   final TypeDeclaration onlyPrivates = (TypeDeclaration) the
-      .headOf(types(az.compilationUnit(make.ast("public class onlyPrivates { private int z,y,x;  private boolean aflag; } "))));
-  final TypeDeclaration onePublic = (TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class onePublic {  public int x; } "))));
+      .firstOf(types(az.compilationUnit(make.ast("public class onlyPrivates { private int z,y,x;  private boolean aflag; } "))));
+  final TypeDeclaration onePublic = (TypeDeclaration) the.firstOf(types(az.compilationUnit(make.ast("public class onePublic {  public int x; } "))));
   final TypeDeclaration notOnlyPublic = (TypeDeclaration) the
-      .headOf(types(az.compilationUnit(make.ast("public class notOnlyPublic {  public int x; private boolean flag; public char ch; } "))));
+      .firstOf(types(az.compilationUnit(make.ast("public class notOnlyPublic {  public int x; private boolean flag; public char ch; } "))));
   final TypeDeclaration listOfPublicFields = (TypeDeclaration) the
-      .headOf(types(az.compilationUnit(make.ast("public class foo {  public int x, y, z; protected boolean flag; public char ch; } "))));
+      .firstOf(types(az.compilationUnit(make.ast("public class foo {  public int x, y, z; protected boolean flag; public char ch; } "))));
   final TypeDeclaration notCountingMethods = (TypeDeclaration) the
-      .headOf(types(az.compilationUnit(make.ast("public class foo {  public int x, y; public void func(){ int pi;} } "))));
+      .firstOf(types(az.compilationUnit(make.ast("public class foo {  public int x, y; public void func(){ int pi;} } "))));
 
   @Test @SuppressWarnings("static-method") public void doesCompile() {
     assert true;

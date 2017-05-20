@@ -8,9 +8,12 @@ import java.util.*;
 import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.*;
+import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.research.*;
@@ -27,13 +30,19 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
       patternTipper("$X2 > $X1", "", ""), //
       patternTipper("$X2 >= $X1", "", "")//
   );
+  private Expression left;
+  private Expression right;
 
   @Override public String description(@SuppressWarnings("unused") final InfixExpression __) {
     return "Go fluent: Between pattern";
   }
   @Override public boolean canTip(final InfixExpression $) {
-    final List<Expression> os = extendedOperands($);
-    return os.isEmpty() ? between(left($), right($)) : IntStream.range(0, os.size() - 1).anyMatch(λ -> between(os.get(λ), os.get(λ + 1)));
+    final List<Expression> os = extract.allOperands($);
+    return IntStream.range(0, os.size() - 1).anyMatch(λ -> {
+      left = os.get(λ);
+      right = os.get(λ + 1);
+      return between(os.get(λ), os.get(λ + 1));
+    });
   }
   private static boolean between(final Expression x1, final Expression x2) {
     return between(az.infixExpression(x1), az.infixExpression(x2));
@@ -44,8 +53,28 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
         && ((firstTipper(inEqualities, x1).getMatching(x1, "$X1") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X2") + "")
             || (firstTipper(inEqualities, x1).getMatching(x1, "$X2") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X1") + ""));
   }
-  @Override public Tip pattern(@SuppressWarnings("unused") final InfixExpression $) {
-    return null;
+  @Override public Tip pattern(final InfixExpression x) {
+    List<Expression> xs = extract.allOperands(x);
+    xs.set(xs.indexOf(left),replacement(left,right));
+    xs.remove(right);
+    int size = xs.size();
+    if (size == 1)
+      return replaceBy(the.onlyOneOf(xs));
+    if (size == 2)
+      return replaceBy(subject.pair(the.firstOf(xs), the.secondOf(xs)).to(step.operator(x)));
+    InfixExpression $ = copy.of(x);
+    $.setLeftOperand(copy.of(xs.get(0)));
+    $.setRightOperand(copy.of(xs.get(1)));
+    $.extendedOperands().clear();
+    extendedOperands($).addAll(xs.subList(2, size));
+    return replaceBy($);
+  }
+  private Tip replaceBy(Expression replacement) {
+    return new Tip("Use a between expression", this.getClass(), null) {
+      @Override public void go(ASTRewrite r, TextEditGroup g) {
+        r.replace(current, replacement, g);
+      }
+    };
   }
   protected static MethodInvocation replacement(final Expression x1, final Expression x2) {
     return replacement(az.infixExpression(x1), az.infixExpression(x2));

@@ -11,14 +11,12 @@ import java.util.function.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.Utils.FoundHandleForT.*;
 
 /** An empty <code><b>interface</b></code> with a variety of <code>public
  * static</code> utility functions of reasonably wide use.
  * @author Yossi Gil <code><yossi.gil [at] gmail.com></code>
  * @since 2013/07/01 */
 public interface Utils {
-  String QUOTE = "'";
   String WHITES = "(?m)\\s+";
 
   static <T, C extends Collection<T>> C add(final C $, final Iterable<? extends T> ts) {
@@ -58,7 +56,7 @@ public interface Utils {
    * @param t an element
    * @return newly created array */
   static <T> T[] append(final T[] ts, final T t) {
-    @SuppressWarnings("null") final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
+    final T[] $ = Arrays.copyOf(ts, 1 + ts.length);
     $[ts.length] = t;
     return $;
   }
@@ -166,36 +164,9 @@ public interface Utils {
    * @param i position of element to be deleted
    * @return newly created array */
   static <T> T[] delete(final T[] ts, final int i) {
-    @SuppressWarnings("null") final T[] $ = Arrays.copyOf(ts, ts.length - 1);
+    final T[] $ = Arrays.copyOf(ts, ts.length - 1);
     System.arraycopy(ts, i + 1, $, i, $.length - i);
     return $;
-  }
-  /** @param ¢ JD */
-  static FoundHandleForInt found(final int ¢) {
-    return new FoundHandleForInt(¢);
-  }
-  /** @param <T> JD
-   * @param ¢ JD */
-  static <T> FoundHandleForT<T> found(final T ¢) {
-    return new FoundHandleForT<>(¢);
-  }
-  /** Determine if an integer can be found in a list of values
-   * @param candidate what to search for
-   * @param is where to search
-   * @return true if the the item is found in the list */
-  @SafeVarargs static boolean intIsIn(final int candidate, final int... is) {
-    for (final int ¢ : is)
-      if (¢ == candidate)
-        return true;
-    return false;
-  }
-  /** Determine whether an {@link Object} is the last in a {@link List} .
-   * @param o JD
-   * @param os JD
-   * @return <code><b>true</b></code> <i>iff</i> the {@link Object} parameter is
-   *         the same as the last element of the {@link List} parameter */
-  static boolean lastIn(final Object o, final List<?> os) {
-    return the.last(os) == o;
   }
   /** Aborts in case a given value is <code><b>null</b></code>.
    * <p>
@@ -222,7 +193,7 @@ public interface Utils {
    *         occurs as the penultimate element of the {@link List} parameter */
   static <T> boolean penultimateIn(final T o, final List<T> os) {
     assert os != null;
-    return the.penultimate(os) == o;
+    return the.penultimateOf(os) == o;
   }
   /** Prepend a given <code><b>char</b></code> to a {@link StringBuilder}
    * @param $ prepend to what
@@ -239,12 +210,6 @@ public interface Utils {
    *         prepended to it */
   static StringBuilder prepend(final StringBuilder $, final String s) {
     return cantBeNull($.insert(0, s));
-  }
-  /** Quote a given {@link String}
-   * @param $ some {@link String} to be quoted
-   * @return parameter, quoted */
-  static String quote(final String $) {
-    return $ != null ? QUOTE + $ + QUOTE : "<null reference>";
   }
   /** Remove any duplicates that may be present in a given {@link List}
    * @param <T> JD
@@ -369,49 +334,6 @@ public interface Utils {
         if (¢ != null)
           $.add(function.apply(¢));
       return $;
-    }
-  }
-
-  /** @author Yossi Gil <Yossi.Gil@GMail.COM>
-   * @param <T> JD
-   * @since 2016 */
-  class FoundHandleForT<T> {
-    final T candidate;
-
-    /** Instantiates this class.
-     * @param candidate what to search for */
-    public FoundHandleForT(final T candidate) {
-      this.candidate = candidate;
-    }
-    /** Determine if an integer can be found in a list of values
-     * @param ts where to search
-     * @return true if the the item is found in the list */
-    @SafeVarargs public final boolean in(final T... ts) {
-      for (final T ¢ : ts)
-        if (¢ != null && ¢.equals(candidate))
-          return true;
-      return false;
-    }
-
-    /** @author Yossi Gil <Yossi.Gil@GMail.COM>
-     * @since 2016 */
-    public static class FoundHandleForInt {
-      final int candidate;
-
-      /** Instantiates this class.
-       * @param candidate what to search for */
-      public FoundHandleForInt(final int candidate) {
-        this.candidate = candidate;
-      }
-      /** Determine if an integer can be found in a list of values
-       * @param is where to search
-       * @return true if the the item is found in the list */
-      @SafeVarargs public final boolean in(final int... is) {
-        for (final int ¢ : is)
-          if (¢ == candidate)
-            return true;
-        return false;
-      }
     }
   }
 
