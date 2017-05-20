@@ -22,18 +22,15 @@ public class Namer {
    * </ol>
    * @author Yossi Gil
    * @since 2017-05-20 */
-  public interface Simplifier extends Function<Type, Simplification> {
-    @Override default Simplification apply(@SuppressWarnings("unused") Type __) {
-      return null;
-    }
-  }
+  @FunctionalInterface
+  public interface Simplifier extends Function<Type, Simplification> {}
 
   /** This is the actual simplification.
    * @author Yossi Gil
    * @since 2017-05-20 */
   public interface Simplification extends UnaryOperator<String>, Supplier<Type> {
     /** This is how to change the result of further simplifications */
-    @Override default String apply(String ¢) {
+    @Override default String apply(final String ¢) {
       return ¢;
     }
     /** This is the result of this simplification, guaranteed to be
@@ -44,17 +41,14 @@ public class Namer {
   }
 
   static final String PLURALS = "s";
-  public static Simplifier array = new Simplifier() {
-    @Override public Simplification apply(Type t) {
-      return new Simplification() {
-        @Override public String apply(String ¢) {
-          return ¢ + PLURALS;
-        }
-        @Override public Type get() {
-          // TODO: Dor Maayan - this could be int[][][]; add as many s as needed.
-          return !t.isArrayType() ? null : az.arrayType(t).getElementType();
-        }
-      };
+  public static Simplifier array = λ -> new Simplification() {
+    @Override public String apply(final String ¢) {
+      return ¢ + PLURALS;
+    }
+    @Override public Type get() {
+      // TODO: Dor Maayan - this could be int[][][]; add as many s as
+      // needed --yg
+      return !λ.isArrayType() ? null : az.arrayType(λ).getElementType();
     }
   };
 }
