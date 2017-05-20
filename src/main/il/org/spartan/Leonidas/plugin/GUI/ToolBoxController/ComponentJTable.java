@@ -35,7 +35,7 @@ public class ComponentJTable extends JTable {
         model.setColumnCount(2);
         Object[] headers = {"ID", "Value"};
         model.setColumnIdentifiers(headers);
-        this.setRowHeight(20);
+        this.setRowHeight(30);
         for (int i = 0; i < 2; i++) {
             this.getColumnModel().getColumn(i).setCellRenderer(new CellRenderer());
             this.getColumnModel().getColumn(i).setMinWidth(150);
