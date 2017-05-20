@@ -50,10 +50,6 @@ public abstract class GitOperation extends WidgetOperation {
           try (Git git = new Git(repo)) {
             gitOperation(git);
           }
-//          } catch (Throwable e) {
-//            Dialogs.message("Git Error: ...").open();
-//            return;
-//          }
       } catch (Throwable e) {
         Dialogs.message("Git Error: No git directory was found").open();
         return;
@@ -61,6 +57,6 @@ public abstract class GitOperation extends WidgetOperation {
   }
   protected void displayMessage(String ¢) {
     if (popup.booleanValue())
-      Dialogs.message(¢).open();
+      Dialogs.messageOnTheRun(¢).open();
   }
 }

@@ -31,7 +31,9 @@ public class Table_Function_Argument_Names extends NominalTables {
       public void summarize() {
         initializeWriter();
         namePrevelance.entrySet().stream().sorted(Map.Entry.<String, Integer> comparingByValue().reversed())
-            .forEachOrdered(λ -> table.col("Name", λ.getKey()).col("Prev", λ.getValue()).nl());
+            .forEachOrdered(λ -> table.col("Name", λ.getKey().split("--")[0]).col("Type", λ.getKey().split("--")[1])
+                .col("Strategy", λ.getKey().split("--")[0].toLowerCase().equals(λ.getKey().split("--")[1].toLowerCase()) ? "Type" : "Unkown")
+                .col("Prev", λ.getValue()).nl());
       }
       void initializeWriter() {
         if (table == null)
@@ -42,8 +44,9 @@ public class Table_Function_Argument_Names extends NominalTables {
         ¢.accept(new ASTVisitor() {
           @Override @SuppressWarnings({ "boxing", "unchecked" }) public boolean visit(final MethodDeclaration x) {
             x.parameters().stream().forEach(p -> {
-              String n = az.singleVariableDeclaration(az.astNode(p)).getName() + "";
-              namePrevelance.put(n, !namePrevelance.containsKey(n) ? 1 : namePrevelance.get(n) + 1);
+              String n1 = az.singleVariableDeclaration(az.astNode(p)).getName() + "",
+                  n2 = az.singleVariableDeclaration(az.astNode(p)).getType().toString();
+              namePrevelance.put(n1 + "--" + n2, !namePrevelance.containsKey(n1 + "--" + n2) ? 1 : namePrevelance.get(n1 + "--" + n2) + 1);
             });
             return true;
           }

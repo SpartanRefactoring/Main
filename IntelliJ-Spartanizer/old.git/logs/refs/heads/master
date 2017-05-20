@@ -1,0 +1,25 @@
+0000000000000000000000000000000000000000 f34cdd39d0f379124c8db5c3b68a444d8daf67c6 Roei Rosenzweig <roei@linux-7p60.suse> 1490341073 +0300	clone: from https://github.com/TechnionYP5777/IntelliJ-Spartanizer.git
+f34cdd39d0f379124c8db5c3b68a444d8daf67c6 ded969053391d48072e41aec9793b3a5b6a32be1 Roei Rosenzweig <roei@linux-7p60.suse> 1490450324 +0300	pull: Fast-forward
+ded969053391d48072e41aec9793b3a5b6a32be1 956c290aa1f70e52fbd14badb767f4b32c17158e Roei Rosenzweig <roei@linux-7p60.suse> 1490450617 +0300	commit: added initial .travis.yml
+956c290aa1f70e52fbd14badb767f4b32c17158e 5facff1022ab8203eb247069a97ba993092d8f32 Roei Rosenzweig <roei@linux-7p60.suse> 1490450826 +0300	commit: permission access for travis
+5facff1022ab8203eb247069a97ba993092d8f32 7fee66bfc917c4ead80496745217766db8d306ee Roei Rosenzweig <roei@linux-7p60.suse> 1490450845 +0300	commit: permission access for travis
+7fee66bfc917c4ead80496745217766db8d306ee 956c290aa1f70e52fbd14badb767f4b32c17158e Roei Rosenzweig <roei@linux-7p60.suse> 1490451013 +0300	reset: moving to origin/master
+956c290aa1f70e52fbd14badb767f4b32c17158e 45cf4265bc31999e4f6bc5a08a9f79914540a900 Roei Rosenzweig <roei@linux-7p60.suse> 1490451205 +0300	commit: changed .travis.yml
+45cf4265bc31999e4f6bc5a08a9f79914540a900 9336f792a679ae02e9b8ce8b456404de07dd9e9e Roei Rosenzweig <roei@linux-7p60.suse> 1490452158 +0300	pull: Fast-forward
+9336f792a679ae02e9b8ce8b456404de07dd9e9e 44d192d95e47f3706d47bdcbe7cdbc9440c90a61 Roei Rosenzweig <roei@linux-7p60.suse> 1490452366 +0300	commit: updated .travis.yml
+44d192d95e47f3706d47bdcbe7cdbc9440c90a61 09f48d4a26fd621e434547d852473efba4448afb Roei Rosenzweig <roei@linux-7p60.suse> 1490875207 +0300	merge origin/master: Fast-forward
+09f48d4a26fd621e434547d852473efba4448afb c2c66974a58e2c7328944a27274111425611d849 RoeiRaz <m.roei.raz@gmail.com> 1490994625 +0300	commit: initial skeleton for the logging tool #116
+c2c66974a58e2c7328944a27274111425611d849 1d3b26ae7bfaec993585aad695ce5989ad06da84 RoeiRaz <m.roei.raz@gmail.com> 1490994861 +0300	commit: LogFileUtils small fix #116
+1d3b26ae7bfaec993585aad695ce5989ad06da84 fa5c013fa60c7c6ac093413785f7fb49716a80e0 RoeiRaz <m.roei.raz@gmail.com> 1491035693 +0300	commit: - simplified the logging tool (ready for use now) #116,
+fa5c013fa60c7c6ac093413785f7fb49716a80e0 fbfa086e94d7e6258136311d0e3375cf40ecd8a3 RoeiRaz <m.roei.raz@gmail.com> 1491036538 +0300	commit: updated gradle-intellij-plugin version
+fbfa086e94d7e6258136311d0e3375cf40ecd8a3 c7bff02ef082e4ca5fd4b8306f11ca65adc62d33 RoeiRaz <m.roei.raz@gmail.com> 1491144283 +0300	merge origin/master: Fast-forward
+c7bff02ef082e4ca5fd4b8306f11ca65adc62d33 31393892ef366a86e252b4eaf7ecd25b6577ab73 RoeiRaz <m.roei.raz@gmail.com> 1491145677 +0300	commit: #149
+31393892ef366a86e252b4eaf7ecd25b6577ab73 7a9d683eb3fff2ae839f4a4e21d2dee0b1f80b48 RoeiRaz <m.roei.raz@gmail.com> 1491153560 +0300	commit: #149
+7a9d683eb3fff2ae839f4a4e21d2dee0b1f80b48 fee445fc2bec09d02082514ba8e1bf4b7e7f8fdd RoeiRaz <m.roei.raz@gmail.com> 1491153592 +0300	merge origin/master: Merge made by the 'recursive' strategy.
+fee445fc2bec09d02082514ba8e1bf4b7e7f8fdd f63439a1cb53198a55b67329ae9989d084b24f26 RoeiRaz <m.roei.raz@gmail.com> 1491158074 +0300	commit: enabled multiline logs
+f63439a1cb53198a55b67329ae9989d084b24f26 8719b3f926ebb57363fd17aafbc65e6b7ba610d0 RoeiRaz <m.roei.raz@gmail.com> 1491328694 +0300	merge origin/master: Fast-forward
+8719b3f926ebb57363fd17aafbc65e6b7ba610d0 ceefbb5ab0af5339e96a122c823bf26d82e1a137 RoeiRaz <m.roei.raz@gmail.com> 1493358955 +0300	merge origin/master: Fast-forward
+ceefbb5ab0af5339e96a122c823bf26d82e1a137 c194f47c5a52ce41b5a85074016c9657680b47bf RoeiRaz <m.roei.raz@gmail.com> 1493472824 +0300	merge origin/master: Fast-forward
+c194f47c5a52ce41b5a85074016c9657680b47bf 4ca9627598869a550f71f463aaff692b9d8cf983 RoeiRaz <m.roei.raz@gmail.com> 1493473114 +0300	commit: #190
+4ca9627598869a550f71f463aaff692b9d8cf983 e654c6a1e97adb7dca1480d06a0a205114e00efa RoeiRaz <m.roei.raz@gmail.com> 1493474696 +0300	commit: #190
+e654c6a1e97adb7dca1480d06a0a205114e00efa 00211876ea874d19ca91b7fc4bbc2151389e40d7 RoeiRaz <m.roei.raz@gmail.com> 1495287728 +0300	pull: Fast-forward
