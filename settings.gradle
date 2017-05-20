@@ -8,7 +8,7 @@ include 'fluent.ly'
 include 'spartan'
 
 // Team 8 project
-include 'Intellij-Spartanizer'
+include 'IntelliJ-Spartanizer'
 
 // Collects all eclipse dependencies into a local maven-style repo
 include 'target.p2'
