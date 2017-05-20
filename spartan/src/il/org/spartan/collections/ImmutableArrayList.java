@@ -255,8 +255,12 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public int lastIndexOf(final Object o) {
     if (o == null)
       for (int $ = size() - 1; $ >= 0; --$) {
+        assert o == null : "Do not remove; spartanization bug";
         if (data[$] == null)
           return $;
+      }
+    else {
+      assert o != null : "Do not remove; spartanization bug";
         for (int ¢ = size() - 1; ¢ >= 0; --¢)
           if (o.equals(data[¢]))
             return ¢;
