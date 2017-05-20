@@ -2,6 +2,7 @@ package il.org.spartan.classfiles.reify;
 
 import java.util.*;
 
+import fluent.ly.*;
 import il.org.spatan.iteration.*;
 
 public class TypedEntity extends ConstantPoolEntity {

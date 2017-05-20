@@ -6,7 +6,6 @@ import java.util.*;
 import java.util.concurrent.*;
 
 import il.org.spartan.collections.*;
-import il.org.spatan.iteration.Iterables.*;
 
 /** An abstract representation of an immutable directed graph
  * @param <E> type of elements stored in this graph
@@ -64,7 +63,7 @@ public abstract class AbstractGraph<E> {
   /** A DFS pre-order iteration over the graph.
    * @return the vertices of the graph, in a pre-order, dfs scan. */
   public Iterable<Vertex<E>> preOrder() {
-    return () -> new ReadonlyIterator<Vertex<E>>() {
+    return () -> new Iterator<Vertex<E>>() {
       final Set<Vertex<E>> visited = new HashSet<>();
       final Set<Vertex<E>> unvisited = new HashSet<>();
       final Stack<Vertex<E>> stack = new Stack<>();

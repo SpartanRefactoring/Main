@@ -1,5 +1,6 @@
 package il.org.spartan.classfiles;
 
+import fluent.ly.*;
 import java.io.*;
 import java.net.*;
 
@@ -31,7 +32,7 @@ public class CLASSPATH {
   /** Retrieves the system's CLASSPATH in an {@link Iterable}
    * @return the content of the CLASSPATH, broken into array entries */
   public static Iterable<String> asIterable() {
-    return Iterables.make(asArray());
+    return as.list(asArray());
   }
   public static ClassLoader classLoader() {
     return classLoader != null ? classLoader : (classLoader = computeClassLoader());

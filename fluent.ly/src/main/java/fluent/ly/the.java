@@ -4,9 +4,11 @@ import static fluent.ly.___.*;
 import static fluent.ly.idiomatic.*;
 
 import java.util.*;
+import java.util.function.*;
 
 import org.jetbrains.annotations.*;
 
+import an.*;
 import let.*;
 
 /** TODO Yossi Gil: document class
@@ -17,8 +19,47 @@ public interface the {
   static char beforeLastOf(final String s, final int i) {
     return s.charAt(s.length() - i - 1);
   }
-  static char characterOf(final String ¢) {
-    return the.beforeLastOf(¢, 0);
+  /** Retrieves the first element of a stream
+   * @param <T> type of elements iterated over
+   * @param ¢ an arbitrary iterable over this type
+   * @return the first element of the parameter, supposing there is one. If
+   *         there is not such element, the results are unpredictable. */
+  static <T> T firstOf(final Iterable<T> ¢) {
+    return ¢.iterator().next();
+  }
+  /** Retrieves a prefix of a specified size of a stream
+   * @param <T> type of elements iterated over
+   * @param ts an arbitrary iterable over this type
+   * @param n a non-negative integer
+   * @return an array containing the first */
+  static <T> ArrayList<T> first(final Iterable<T> ts, final int n) {
+    final ArrayList<T> $ = new ArrayList<>();
+    int i = 0;
+    for (final T ¢ : ts) {
+      $.add(¢);
+      if (++i == n)
+        break;
+    }
+    return $;
+  }
+  static <T> T first(final Iterable<T> ts, final Predicate<T> p) {
+    return the.first(ts.iterator(), p);
+  }
+  static <T> T first(final Iterator<T> t, final Predicate<T> p) {
+    while (t.hasNext()) {
+      final T $ = t.next();
+      if (p.test($))
+        return $;
+    }
+    return null;
+  }
+  /** Retrieves the first element of an array
+   * @param <T> type of elements in the array
+   * @param ¢ an arbitrary array of this type
+   * @return the first element of the array if the array is of non-zero length,
+   *         otherwise <code><b>null</b></code> */
+  static <T> T first(final T[] ¢) {
+    return ¢.length > 0 ? ¢[0] : null;
   }
   @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
@@ -29,12 +70,14 @@ public interface the {
   static <T> T firstOf(final T[] ¢) {
     return ¢[0];
   }
- 
   @SuppressWarnings("boxing") static int index(final int i, final int... is) {
     for (final Integer $ : range.from(0).to(is.length))
       if (is[$] == i)
         return $;
     return -1;
+  }
+  static int[] ints(final int... ¢) {
+    return ¢;
   }
   @Contract(pure = true) static char ith(final String s, final int i) {
     return s.charAt(i);
@@ -70,6 +113,7 @@ public interface the {
   static <T> T lastOf(final T[] ¢) {
     return ¢[¢.length - 1];
   }
+
   /** Computes the maximum of two or more integers.
    * @param a some integer
    * @param is additional integers
@@ -90,21 +134,27 @@ public interface the {
       $ = Math.min($, ¢);
     return $;
   }
+
   static <T> T nil() {
     return null;
   }
+
   static String nth(final int i, final Collection<?> os) {
     return the.nth(i, os.size());
   }
+
   static String nth(final int i, final int n) {
     return nth(i + "", n + "");
   }
+
   static String nth(final String s, final String n) {
     return " #" + s + "/" + n;
   }
+
   static <T> T onlyOneOf(final List<T> ¢) {
     return ¢ == null || ¢.size() != 1 ? null : firstOf(¢);
   }
+
   /** @param <T> JD
    * @param ¢ a list
    * @return last item in a list or <code><b>null</b></code> if the parameter is
@@ -112,12 +162,14 @@ public interface the {
   static <T> T penultimateOf(final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(¢.size() - 2);
   }
+
   static <T> T previous(final T t, final List<T> ts) {
     if (ts == null)
       return null;
     final int $ = ts.indexOf(t);
     return $ < 1 ? null : ts.get($ - 1);
   }
+
   /** Chop the first character of a string.
    * @param ¢ a non-<code><b>null</b></code> string of length at least one
    * @return <code>s</code> but without its first character. */
@@ -126,6 +178,7 @@ public interface the {
     positive(¢.length());
     return ¢.substring(1);
   }
+
   static <T> List<T> rest(final T t, final Iterable<T> ts) {
     boolean add = false;
     final List<T> $ = an.empty.list();
@@ -136,15 +189,18 @@ public interface the {
         add = x == t;
     return $;
   }
+
   @Contract("null -> null") static <T> T secondOf(final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
+
   /** Computes the square of a given integer
    * @param ¢ some integer
    * @return square of the parameter */
   static int sqr(final int ¢) {
     return ¢ * ¢;
   }
+
   static <T> List<T> tailOf(final List<T> ¢) {
     final List<T> $ = as.list(¢);
     $.remove(the.firstOf($));
@@ -159,12 +215,29 @@ public interface the {
     return Arrays.copyOfRange(¢, 1, ¢.length);
   }
 
+  /** @param <T> JD
+   * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
+  static <T> Iterable<T> empty() {
+    return iterable.over();
+  }
+
+  /** wraps a value in a singleton iterator form
+   * @param <T> JD
+   * @param $ JD
+   * @return parameter, but in a singleton iterator form */
+  static <T> Iterator<T> singletonIterator(final T $) {
+    return iterable.singleton($).iterator();
+  }
+
   interface first {
     default it<String> of(final String ¢) {
       return new it<>(¢.substring(0, 1));
     }
     default <T> it<T> of(final T[] ¢) {
       return new it<>(¢[0]);
+    }
+    static char characterOf(final String ¢) {
+      return the.beforeLastOf(¢, 0);
     }
   }
 

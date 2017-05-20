@@ -240,11 +240,11 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public boolean isEmpty() {
     return size() == 0;
   }
-  /** Returns an iterator over the elements in this list in proper sequence.
-   * <p>
-   * The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
-   * @return an iterator over the elements in this list in proper sequence */
-  @Override public Iterator<E> iterator() {
+  /**
+   * Returns an iterator over the elements in this list in proper sequence. <p> The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
+   * @return  an iterator over the elements in this list in proper sequence 
+   */
+  @Override @SuppressWarnings("synthetic-access") public Iterator<E> iterator() {
     return new InternalIterator();
   }
   /** Returns the index of the last occurrence of the specified element in this
@@ -261,10 +261,10 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
       }
     else {
       assert o != null : "Do not remove; spartanization bug";
-        for (int ¢ = size() - 1; ¢ >= 0; --¢)
-          if (o.equals(data[¢]))
-            return ¢;
-      }
+      for (int ¢ = size() - 1; ¢ >= 0; --¢)
+        if (o.equals(data[¢]))
+          return ¢;
+    }
     return -1;
   }
   /** Returns a list iterator over the elements in this list (in proper

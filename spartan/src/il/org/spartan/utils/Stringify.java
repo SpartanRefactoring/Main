@@ -48,7 +48,7 @@ public enum Stringify {
   public static <T> ArrayList<String> apply(final F<T> f, final Iterable<? extends T> ts) {
     final ArrayList<String> $ = new ArrayList<>();
     for (final T ¢ : ts)
-      $.add(f.__(¢));
+      $.add(f.apply(¢));
     return $;
   }
   /** Create an option object with default setting, except for a specified
