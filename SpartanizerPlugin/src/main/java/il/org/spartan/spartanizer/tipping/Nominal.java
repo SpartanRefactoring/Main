@@ -5,7 +5,7 @@ package il.org.spartan.spartanizer.tipping;
  * @author Yossi Gil
  * @since Sep 28, 2016 */
 public interface Nominal extends TipperCategory {
-  String ____ = "Spartanizing code by using more spartan names";
+  String ____ = "Short, idiomatic (some say cryptic) names";
 
   @Override default String description() {
     return ____;

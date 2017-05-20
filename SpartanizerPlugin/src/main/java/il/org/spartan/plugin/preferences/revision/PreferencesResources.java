@@ -57,7 +57,7 @@ public enum PreferencesResources {
     CommonFactoring(TipperCategory.CommnonFactoring.class), //
     Centification(TipperCategory.Centification.class), //
     Deadcode(TipperCategory.Deadcode.class), //
-    Dollarization(TipperCategory.Dollarization.class), //
+    Dollarization(TipperCategory.NameOfResult.class), //
     EarlyReturn(TipperCategory.EarlyReturn.class), //
     Idiomatic(TipperCategory.Idiomatic.class), //
     Inlining(TipperCategory.Inlining.class), //
