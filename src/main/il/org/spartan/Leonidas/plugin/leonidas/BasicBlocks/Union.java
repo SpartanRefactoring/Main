@@ -77,6 +77,14 @@ public class Union extends GenericMethodCallBasedBlock {
                 encapsulators.add(new Method());
             } else if (arg.getText().startsWith("statement")) {
                 encapsulators.add(new Statement());
+            } else if (arg.getText().startsWith("anyBlock")) {
+                encapsulators.add(new Block());
+            } else if (arg.getText().startsWith("booleanExpression")) {
+                encapsulators.add(new BooleanExpression());
+            } else if (arg.getText().startsWith("booleanLiteral")) {
+                encapsulators.add(new BooleanLiteral());
+            } else if (arg.getText().startsWith("expression")) {
+                encapsulators.add(new Expression());
             }
         });
     }

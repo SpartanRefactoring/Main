@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiType;
+import il.org.spartan.Leonidas.auxilary_layer.az;
 
 /**
  * @author michalcohen
@@ -18,6 +19,11 @@ public class BooleanExpression extends Expression {
      */
     public BooleanExpression() {
         super(TEMPLATE);
+    }
+
+    @Override
+    public boolean generalizes(Encapsulator e) {
+        return super.generalizes(e) && az.expression(e.getInner()).getType() == PsiType.BOOLEAN;
     }
 
     @Override
