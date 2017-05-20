@@ -256,5 +256,5 @@ Untitled*
 
 # User defined (add below this line) // vim: +,$!sort -u
 # User defined (add below this line) // vim: +,$!sort -u# Prefixes // vim: +,/^\s*$/-1!sort -u
-sort: invalid option -- 'a'
-Try 'sort --help' for more information.
+.classpath
+.project
