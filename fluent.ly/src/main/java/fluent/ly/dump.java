@@ -1,6 +1,5 @@
 package fluent.ly;
 
-import java.lang.management.*;
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -12,83 +11,121 @@ import il.org.spartan.*;
  * @author Yossi Gil
  * @since 24/07/2007 */
 public class dump {
-  /** Dump a class object
-   * @param ¢ JD */
-  public static void go(final Class<?> ¢) {
-    out.out("\n\n--IDENTIFICATION--\n");
-    out.out("Simple Name", ¢.getSimpleName());
-    out.out("Canonical Name", ¢.getCanonicalName());
-    out.out("Name", ¢.getName());
-    out.out("toString", ¢ + "");
-    out.out("super class", ¢.getSuperclass());
-    out.out("generic super class", ¢.getGenericSuperclass());
-    out.out("class", ¢.getClass());
-    out.out("component type", ¢.getComponentType());
-    // out("protection domain", c.getProtectionDomain());
-    out.out("class loader", ¢.getClassLoader());
-    out.out("--MODIFIERS--\n");
-    final int flags = ¢.getModifiers();
-    out.out("Package", ¢.getPackage());
-    out.out("Modifiers (decimal form)", flags);
-    out.out("Modifiers (binary form)", ReflectionAnalyzer.toBinary(flags));
-    out.out("IsSynthetic", ¢.isSynthetic());
-    out.out("IsPrimitive", ¢.isPrimitive());
-    out.out("IsFinal", Modifier.isFinal(flags));
-    out.out("IsAbstract", Modifier.isAbstract(flags));
-    out.out("IsStatic", Modifier.isStatic(flags));
-    out.out("IsStrictfp", Modifier.isStrict(flags));
-    out.out("--Visibility--\n");
-    out.out("IsPublic", Modifier.isPublic(flags));
-    out.out("IsPrivate", Modifier.isPrivate(flags));
-    out.out("IsProtected", Modifier.isProtected(flags));
-    out.out("--MEMBERS\n");
-    out.out("fields", ¢.getFields());
-    out.out("methods", ¢.getMethods());
-    out.out("constructors", ¢.getConstructors());
-    out.out("declared fields", ¢.getDeclaredFields());
-    out.out("declared methods", ¢.getDeclaredMethods());
-    out.out("declared constructors", ¢.getDeclaredConstructors());
-    out.out("--CLASS SIGNATURE--\n");
-    out.out("interfaces", ¢.getInterfaces());
-    out.out("annotations", ¢.getAnnotations());
-    out.out("type parameters", ¢.getTypeParameters());
-    out.out("declared annotations", ¢.getDeclaredAnnotations());
-    out.out("generic interfaces", ¢.getGenericInterfaces());
-    out.out("--CONTAINERS--\n");
-    out.out("declared classes", ¢.getDeclaredClasses());
-    out.out("declaring class", ¢.getDeclaringClass());
-    out.out("enclosing class", ¢.getEnclosingClass());
-    out.out("enclosing constructor", ¢.getEnclosingConstructor());
-    out.out("enclosing method", ¢.getEnclosingMethod());
-    out.out("--CLASS MEMBERS--\n");
-    out.out("public classes", ¢.getClasses());
-    out.out("declared classes", ¢.getDeclaredClasses());
-    out.out("declared annotations", ¢.getDeclaredAnnotations());
-    out.out("---------------------------\n");
+  static final int MAX_FIRST = 20;
+  static final int MAX_LAST = 10;
+  public static String entry(final String name, final boolean b) {
+    return String.format("%s = %b\n", name, Boolean.valueOf(b));
   }
-  public static <T> void go(final List<T> ts, final String... ss) {
-    out.out("Exploring list");
-    for (final String ¢ : ss)
-      out.out(¢);
-    for (final T ¢ : ts)
-      dump.go(¢);
-  }
-  public static void go(final Object os[], final String... ss) {
-    for (final String ¢ : ss)
-      out.out(¢);
-    out.out("elements", os);
-  }
-  public static void go(final Object o, final String... ss) {
-    for (final String ¢ : ss)
-      out.out(¢);
-    if (o == null) {
-      out.out("NULL");
-      return;
+  public static String entry(final String name, final Collection<Object> os) {
+    assert name != null;
+    if (os == null || os.isEmpty())
+      return String.format("No %s\n", name);
+    if (os.size() == 1)
+      return String.format("Only 1 %s: %s\n", name, os.iterator().next());
+    String $ = String.format("Total of %d %s:\n", Integer.valueOf(os.size()), name);
+    int n = 0;
+    for (final Object ¢ : os) {
+      if (++n > MAX_FIRST && n <= os.size() - MAX_LAST)
+        $ += ("\t...\n");
+      $ += String.format("\t%2d) %s\n", Integer.valueOf(n), ¢);
     }
+    return $;
+  }
+  public static String entry(final String name, final int i) {
+    return String.format("%s = %d\n", name, Integer.valueOf(i));
+  }
+  public static String entry(String name, Object value) {
+    return String.format((value == null ? "No" : "%s =") + " %s\n", name, value);
+  }
+  public static String entry(final String name, final Object[] os) {
+    assert name != null;
+    return os == null || os.length <= 0 ? String.format("No %s\n", name)
+        : os.length == 1 ? String.format("Only one %s: %s\n", name, os[0])
+            : String.format("Total of %d %s:\n\t%s\n", Integer.valueOf(os.length), name, separate.these(os).by("\n\t"));
+  }
+  /** Dump a class object
+   * @param ¢ JD
+   * @return */
+  public static String of(final Class<?> ¢) {
+    String $ = "";
+    $ += "\n\n--IDENTIFICATION--\n";
+    $ += entry("Simple Name", ¢.getSimpleName());
+    $ += entry("Canonical Name", ¢.getCanonicalName());
+    $ += entry("Name", ¢.getName());
+    $ += entry("toString", ¢ + "");
+    $ += entry("super class", ¢.getSuperclass());
+    $ += entry("generic super class", ¢.getGenericSuperclass());
+    $ += entry("class", ¢.getClass());
+    $ += entry("component type", ¢.getComponentType());
+    // out("protection domain", c.getProtectionDomain());
+    $ += entry("class loader", ¢.getClassLoader());
+    $ += "--MODIFIERS--\n";
+    final int flags = ¢.getModifiers();
+    $ += entry("Package", ¢.getPackage());
+    $ += entry("Modifiers (decimal form)", flags);
+    $ += entry("Modifiers (binary form)", ReflectionAnalyzer.toBinary(flags));
+    $ += entry("IsSynthetic", ¢.isSynthetic());
+    $ += entry("IsPrimitive", ¢.isPrimitive());
+    $ += entry("IsFinal", Modifier.isFinal(flags));
+    $ += entry("IsAbstract", Modifier.isAbstract(flags));
+    $ += entry("IsStatic", Modifier.isStatic(flags));
+    $ += entry("IsStrictfp", Modifier.isStrict(flags));
+    $ += "--Visibility--\n";
+    $ += entry("IsPublic", Modifier.isPublic(flags));
+    $ += entry("IsPrivate", Modifier.isPrivate(flags));
+    $ += entry("IsProtected", Modifier.isProtected(flags));
+    $ += "--MEMBERS\n";
+    $ += entry("fields", ¢.getFields());
+    $ += entry("methods", ¢.getMethods());
+    $ += entry("constructors", ¢.getConstructors());
+    $ += entry("declared fields", ¢.getDeclaredFields());
+    $ += entry("declared methods", ¢.getDeclaredMethods());
+    $ += entry("declared constructors", ¢.getDeclaredConstructors());
+    $ += "--CLASS SIGNATURE--\n";
+    $ += entry("interfaces", ¢.getInterfaces());
+    $ += entry("annotations", ¢.getAnnotations());
+    $ += entry("type parameters", ¢.getTypeParameters());
+    $ += entry("declared annotations", ¢.getDeclaredAnnotations());
+    $ += entry("generic interfaces", ¢.getGenericInterfaces());
+    $ += "--CONTAINERS--\n";
+    $ += entry("declared classes", ¢.getDeclaredClasses());
+    $ += entry("declaring class", ¢.getDeclaringClass());
+    $ += entry("enclosing class", ¢.getEnclosingClass());
+    $ += entry("enclosing constructor", ¢.getEnclosingConstructor());
+    $ += entry("enclosing method", ¢.getEnclosingMethod());
+    $ += "--CLASS MEMBERS--\n";
+    $ += entry("public classes", ¢.getClasses());
+    $ += entry("declared classes", ¢.getDeclaredClasses());
+    $ += entry("declared annotations", ¢.getDeclaredAnnotations());
+    $ += "---------------------------\n";
+    return $;
+  }
+
+  public static <T> String of(final List<T> ts, final String... ss) {
+    String $ = "Exploring list";
+    for (final String ¢ : ss)
+      $ += ¢;
+    for (final T ¢ : ts)
+      $ += dump.of(¢);
+    return $;
+  }
+  public static String of(final Object os[], final String... ss) {
+    String $ = "";
+    for (final String ¢ : ss)
+      $ += ¢;
+    return $ + entry("elements", os);
+  }
+  @SuppressWarnings("unchecked")
+  public static String of(final Object o, final String... ss) {
+    String $ = "";
+    for (final String ¢ : ss)
+      $ += ¢;
+    if (o == null)
+      return $ + "NULL";
     final Class<?> c = o.getClass();
-    out.out("\n\n--BEGIN " + c.getSimpleName() + " object: " + o + "\n");
-    out.out("Class canonical name", c.getCanonicalName());
-    out.out("Class name", c.getName());
+    $ += "\n\n--BEGIN " + c.getSimpleName() + " object: " + o + "\n";
+    $ += entry("Class canonical name", c.getCanonicalName());
+    $ += entry("Class name", c.getName());
     for (final Method m : c.getMethods()) {
       if (m.getParameterTypes().length != 0)
         continue;
@@ -104,42 +141,24 @@ public class dump {
       else if (!name.matches("^to[A-Z].*$"))
         continue;
       try {
-        final Object $ = m.invoke(o);
-        if ($ == null) {
-          out.out(name, "null");
+        final Object oo = m.invoke(o);
+        if (oo == null) {
+          $ += entry(name, "null");
           continue;
         }
-        if ($ instanceof Object[])
-          out.out(name, (Object[]) $);
-        out.out(name, !($ instanceof Collection) ? $ : (Collection<Object>) $);
+        if (oo instanceof Object[])
+          $ += entry(name, (Object[]) oo);
+        else if (o instanceof Collection)
+          $ += entry(name, (Collection<Object>) oo);
+        else
+          $ += entry(name, oo);
       } catch (final Throwable ¢) {
         // For some reason, a reflection call to method
         // getContent() in URL objects throws this exception.
         // We do not have much to do in this and other similar cases.
-        out.out(name, m.getName() + " THROWS " + ¢);
+        $ += entry(name, m.getName() + " THROWS " + ¢);
       }
     }
-    out.out("--END OBJECT--\n\n");
-    System.out.flush();
-  }
-  public static void main(final String[] args) {
-    // Explore.go(Package.class);
-    final ClassLoadingMXBean a = ManagementFactory.getClassLoadingMXBean();
-    System.out.println(a.getLoadedClassCount());
-    System.out.println(a.getTotalLoadedClassCount());
-    System.out.println(a.getUnloadedClassCount());
-    dump.go(ManagementFactory.getClassLoadingMXBean());
-    final CompilationMXBean b = ManagementFactory.getCompilationMXBean();
-    System.out.println(b.getTotalCompilationTime());
-    System.out.println(b.getName());
-    System.out.println(b.isCompilationTimeMonitoringSupported());
-    System.exit(1);
-    dump.go(ManagementFactory.getGarbageCollectorMXBeans());
-    dump.go(ManagementFactory.getMemoryManagerMXBeans());
-    dump.go(ManagementFactory.getMemoryPoolMXBeans());
-    dump.go(ManagementFactory.getOperatingSystemMXBean());
-    dump.go(ManagementFactory.getPlatformMBeanServer());
-    dump.go(ManagementFactory.getRuntimeMXBean());
-    dump.go(ManagementFactory.getThreadMXBean());
+    return $ + "--END OBJECT--\n\n";
   }
 }

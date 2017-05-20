@@ -3,9 +3,6 @@ package fluent.ly;
 import java.util.*;
 
 public class out {
-  static final int MAX_FIRST = 20;
-  static final int MAX_LAST = 10;
-
   public static void out(final String ¢) {
     System.out.print(¢);
   }
@@ -25,7 +22,7 @@ public class out {
     System.out.printf("Total of %d %s:\n", Integer.valueOf(os.size()), name);
     int n = 0;
     for (final Object ¢ : os) {
-      if (++n > MAX_FIRST && n <= os.size() - MAX_LAST) {
+      if (++n > dump.MAX_FIRST && n <= os.size() - dump.MAX_LAST) {
         System.out.print("\t...\n");
         return;
       }

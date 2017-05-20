@@ -62,7 +62,7 @@ public class Memento<T> {
       new ObjectOutputStream($).writeObject(t);
       return $.toByteArray();
     } catch (final NotSerializableException ¢) {
-      dump.go(¢);
+      dump.of(¢);
       throw new Bug.Contract.Precondition("Cannot serialize object of class " + ¢.getMessage());
     } catch (final IOException ¢) {
       unreachable(¢.getMessage());

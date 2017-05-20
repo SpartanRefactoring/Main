@@ -31,17 +31,17 @@ public class fluentTraverasalApplication extends TraversalImplementation {
   public fluentTraverasalApplication(final String codeFragment) {
     this.codeFragment = codeFragment;
     assert codeFragment != null;
-    dump.go(codeFragment);
+    dump.of(codeFragment);
     guessedContext = GuessedContext.find(codeFragment);
     assert guessedContext != null;
-    dump.go(guessedContext);
+    dump.of(guessedContext);
     wrappedFragment = guessedContext.on(codeFragment);
-    dump.go(wrappedFragment, "wrappedFragment");
+    dump.of(wrappedFragment, "wrappedFragment");
     assert wrappedFragment != null;
     document = new Document(wrappedFragment);
     assert document != null;
-    dump.go(document, "This is the document");
-    dump.go(document.get(), "and this is its content");
+    dump.of(document, "This is the document");
+    dump.of(document.get(), "and this is its content");
     compilationUnit = guessedContext.intoCompilationUnit(document.get());
     assert compilationUnit != null;
     createRewrite = go(compilationUnit);
@@ -51,7 +51,7 @@ public class fluentTraverasalApplication extends TraversalImplementation {
     try {
       undoEdit = textEdit.apply(document);
       assert undoEdit != null;
-      dump.go(document.get(), "DOC Content now");
+      dump.of(document.get(), "DOC Content now");
     } catch (MalformedTreeException | BadLocationException ¢) {
       throw new AssertionError("MISSING_CASE", ¢);
     }
@@ -132,7 +132,7 @@ public class fluentTraverasalApplication extends TraversalImplementation {
   }
   public fluentTraverasalApplication gives(final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {
-      dump.go(this);
+      dump.of(this);
       azzert.fail(//
           "no CHNAGE\n" //
               + "I guessed the context of " + guessedContext //
@@ -145,9 +145,9 @@ public class fluentTraverasalApplication extends TraversalImplementation {
       );
     }
     if (common(codeFragment) != null) {
-      dump.go(codeFragment);
-      dump.go(compilationUnit);
-      dump.go(document);
+      dump.of(codeFragment);
+      dump.of(compilationUnit);
+      dump.of(document);
       azzert.fail(//
           "no CHNAGE\n" //
               + "\n Guessing the context of " + guessedContext //
