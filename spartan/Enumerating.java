@@ -1,5 +1,5 @@
 package il.org.spatan.iteration;
-
+import il.org.spartan.itertion.Codex;
 /** A codex recording a given <i>enumeration</i>, i;.e., fixed mapping of a set
  * of n elements of a specified type into the integers 0,..., n-1.
  * @author Yossi Gil

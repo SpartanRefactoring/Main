@@ -9,9 +9,17 @@ import org.jetbrains.annotations.*;
 /** @author Yossi Gil <tt>yogi@cs.technion.ac.il</tt>
  * @since 2017-04-23 */
 public interface is {
+  static <T> Iterable<T> empty(@SuppressWarnings("unused") final Class<T> __) {
+    return new ArrayList<>();
+  }
   static <T> boolean empty(final Collection<T> ¢) {
     return ¢ == null || ¢.isEmpty();
   }
+  /** Determines whether an iterable has any values.
+   * @param <T> type of elements iterated over
+   * @param ¢ an arbitrary iterable over this type
+   * @return <code><b>true</b></code> <em>if an only if</em> the iterable is
+   *         empty. */
   static <T> boolean empty(final Iterable<T> ¢) {
     return ¢ == null || !¢.iterator().hasNext();
   }
@@ -38,12 +46,14 @@ public interface is {
   @SafeVarargs static <T> boolean in(final T candidate, final T... ts) {
     return Stream.of(ts).anyMatch(λ -> λ != null && λ.equals(candidate));
   }
+
   static String indefinite(final String className) {
     final String $ = cCamelCase.components(className)[0];
     final char openingLetter = the.firstOf($);
     return English.isAcronym($) ? indefinite(English.pronounce(openingLetter)) : //
         (is.intIsIn(openingLetter, 'i', 'e', 'o', 'u', 'y') ? "an" : "a") + " " + className;
   }
+
   /** Determine whether an integer is a valid list index
    * @param <T> JD
    * @param i some integer
@@ -63,6 +73,14 @@ public interface is {
       if (¢ == candidate)
         return true;
     return false;
+  }
+
+  /** @param os JD */
+  static boolean isEmpty(final Iterable<?> os) {
+    for (final Object name2 : os)
+      if (name2 != null)
+        return false;
+    return true;
   }
 
   /** Determine whether an {@link Object} is the last in a {@link List} .

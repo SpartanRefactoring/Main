@@ -5,6 +5,7 @@ import static il.org.spartan.strings.StringUtils.*;
 import static fluent.ly.box.*;
 
 import java.util.*;
+import java.util.function.*;
 
 import il.org.spartan.streotypes.*;
 import fluent.ly.*;
@@ -117,7 +118,7 @@ public enum Separate {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
-      $.append(s).append(f.__(¢));
+      $.append(s).append(f.apply(¢));
     return $ + "";
   }
   /** Separate elements of a given {{@link Iterable}} collection of objects by a
@@ -163,7 +164,7 @@ public enum Separate {
     final Separator s = new Separator(between);
     final StringBuffer $ = new StringBuffer();
     for (final T ¢ : ts)
-      $.append(s).append(f.__(¢));
+      $.append(s).append(f.apply(¢));
     return $ + "";
   }
   /** Separate elements of a given array of <code><b>float</b></code>s by a
@@ -377,10 +378,10 @@ public enum Separate {
    * @author Yossi Gil, the Technion.
    * @since 07/08/2008
    * @param <T> type of values that the function takes */
-  public interface F<T> {
+  public interface F<T> extends Function<T, String> {
     /** Anonymous function for translating an object into text
      * @param t an object of type <code>T</code>
      * @return a textual */
-    String __(T t);
+    String apply(T t);
   }
 }

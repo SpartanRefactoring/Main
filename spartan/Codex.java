@@ -4,6 +4,8 @@ import java.util.*;
 import java.util.BitSet;
 
 import il.org.spartan.collections.*;
+import il.org.spartan.collections.Contains;
+import il.org.spartan.iterables.*;
 
 /** An abstract encoding of an object (drawn from a given, predetermined, set of
  * objects) as an <code><b>int</b></code> value, and a representation of a set
@@ -11,7 +13,7 @@ import il.org.spartan.collections.*;
  * @author Yossi Gil
  * @param <T> Type of encoded objects
  * @param <U> An upper bound on the type of encoded objects */
-public abstract class Codex<U, T extends U> implements Container<U, T> {
+public abstract class Codex<T> implements Contains<T> {
   public final Set<T> decode(final BitSet s) {
     final Set<T> $ = new HashSet<>();
     for (int ¢ = s.nextSetBit(0); ¢ >= 0; ¢ = s.nextSetBit(¢ + 1))
