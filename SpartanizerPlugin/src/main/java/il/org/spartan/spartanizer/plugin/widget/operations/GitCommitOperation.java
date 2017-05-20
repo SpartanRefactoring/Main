@@ -3,6 +3,7 @@ package il.org.spartan.spartanizer.plugin.widget.operations;
 import java.util.*;
 
 import org.eclipse.jgit.api.*;
+import org.eclipse.jgit.api.errors.*;
 
 /** Git pull command.
  * @author Ori Roth
@@ -11,7 +12,7 @@ public class GitCommitOperation extends GitOperation {
   private static final long serialVersionUID = 0x307DC629152310CFL;
   public static final String MESSAGE = "message";
   public static final String DEFAULT_MESSAGE = "Sync";
-  private String message;
+  private String message = DEFAULT_MESSAGE;
 
   @Override public String description() {
     return "Git commit";
@@ -30,7 +31,25 @@ public class GitCommitOperation extends GitOperation {
       message = DEFAULT_MESSAGE;
     return true;
   }
-  @Override protected void gitOperation(final Git ¢) throws Throwable {
-    ¢.commit().setMessage(message).setAll(true).call();
+  @Override @SuppressWarnings("unused") protected void gitOperation(final Git g) {
+    try {
+      g.commit().setMessage(message).setAll(true).call();
+    } catch (NoHeadException x) {
+      displayMessage("Git Error: Couldn't find the HEAD reference");
+      return;
+    } catch (UnmergedPathsException x) {
+      displayMessage("Git Error: Commit failed due to unmerged data");
+      return;
+    } catch (ConcurrentRefUpdateException x) {
+      displayMessage("Git Error: Commit failed due to concurrent access");
+      return;
+    } catch (WrongRepositoryStateException x) {
+      displayMessage("Git Error: Commit failed due to wrong repository state");
+      return;
+    } catch (Exception x) {
+      displayMessage("Git Error: Commit failed");
+      return;
+    }
+    displayMessage("Git commit operation succeeded");
   }
 }
