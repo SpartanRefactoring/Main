@@ -1144,4 +1144,7 @@ public interface iz {
       return false;
     }
   }
+  static boolean hexaDecimal(Expression e) {
+    return iz.numberLiteral(e) && az.numberLiteral(e).getToken().startsWith("0x");
+  }
 }
