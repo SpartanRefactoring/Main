@@ -40,16 +40,29 @@ public class UnionTest extends PsiTypeHelper {
         assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestClassFromString("class XX {}"))));
     }
 
-    public void testUnionOfBooleanExpressionAndBooleanLiteral() {
-        PsiElement element = methodCallExpression("union(0, booleanExpression(1), booleanLiteral(2))");
+    public void testUnionOfStatementAndBooleanLiteral() {
+        PsiElement element = methodCallExpression("union(0, statement(1), booleanLiteral(2))");
         Union union = new Union(element);
 
         assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("true")));
-        assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("3 > 5")));
-        assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("false && x <= 10")));
+        assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("false")));
+        assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x, y;")));
+        assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("someMethod();")));
 
         assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("3"))));
         assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("41.4"))));
-        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x;"))));
+    }
+
+    public void testMultipleUnionsOfSameThingWorkAsExpected() {
+        PsiElement element = methodCallExpression("union(0, statement(1), booleanLiteral(3), statement(1), booleanLiteral(4), booleanLiteral(5))");
+        Union union = new Union(element);
+
+        assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("true")));
+        assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("false")));
+        assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("int x, y;")));
+        assert union.generalizes(Encapsulator.buildTreeFromPsi(createTestStatementFromString("someMethod();")));
+
+        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("3"))));
+        assertFalse(union.generalizes(Encapsulator.buildTreeFromPsi(createTestExpression("41.4"))));
     }
 }
