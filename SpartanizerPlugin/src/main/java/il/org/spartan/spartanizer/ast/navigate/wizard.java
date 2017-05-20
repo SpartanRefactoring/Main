@@ -141,7 +141,7 @@ public interface wizard {
       case STATEMENTS_LOOK_ALIKE:
         return into.s(javaSnippet);
       case BLOCK_LOOK_ALIKE:
-        return az.astNode(the.headOf(statements(az.block(into.s(javaSnippet)))));
+        return az.astNode(the.firstOf(statements(az.block(into.s(javaSnippet)))));
       default:
         for (final int guess : as.intArray(ASTParser.K_EXPRESSION, ASTParser.K_STATEMENTS, ASTParser.K_CLASS_BODY_DECLARATIONS,
             ASTParser.K_COMPILATION_UNIT)) {
@@ -319,7 +319,7 @@ public interface wizard {
         $.set($.indexOf(x), x.getAST().newSimpleName(var + ""));
       });
     });
-    return subject.append(subject.pair(the.headOf($), $.get(1)).to(from.getOperator()), chop(chop($)));
+    return subject.append(subject.pair(the.firstOf($), $.get(1)).to(from.getOperator()), chop(chop($)));
   }
   static String intToClassName(final int $) {
     try {

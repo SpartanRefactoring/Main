@@ -26,7 +26,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) {
     double $ = 0;
     try {
-      $ = az.throwing.double¢(the.headOf(xs)) - az.stream(the.tailOf(xs)).mapToDouble(az.throwing::double¢).sum();
+      $ = az.throwing.double¢(the.firstOf(xs)) - az.stream(the.tailOf(xs)).mapToDouble(az.throwing::double¢).sum();
     } catch (final NumberFormatException ¢) {
       note.bug(this, ¢);
     }
@@ -35,7 +35,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
   @Override int evaluateInt(final List<Expression> xs) {
     int $ = 0;
     try {
-      $ = az.throwing.int¢(the.headOf(xs));
+      $ = az.throwing.int¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
@@ -49,7 +49,7 @@ public final class InfixSubtractionEvaluate extends $EvaluateInfixExpression {
   @Override long evaluateLong(final List<Expression> xs) {
     long $ = 0;
     try {
-      $ = az.throwing.long¢(the.headOf(xs));
+      $ = az.throwing.long¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();

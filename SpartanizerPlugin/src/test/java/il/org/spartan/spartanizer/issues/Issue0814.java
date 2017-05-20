@@ -22,7 +22,7 @@ public class Issue0814 {
   }
   @Test @SuppressWarnings("static-method") public void simpleTest() {
     final MethodDeclaration m = into.m("public int p(){ int a;a = 3; return a; }");
-    final ReturnStatement s = the.headOf(new MethodExplorer(m).returnStatements());
+    final ReturnStatement s = the.firstOf(new MethodExplorer(m).returnStatements());
     // noinspection SameReturnValue
     m.accept(new ASTVisitor(true) {
       @Override public boolean visit(final Assignment a) {

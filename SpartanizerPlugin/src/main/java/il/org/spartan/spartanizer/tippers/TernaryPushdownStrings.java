@@ -104,7 +104,7 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
   private static InfixExpression replacePrefix(final InfixExpression x, final int i) {
     assert x.getOperator() == op.PLUS2;
     final List<Expression> $ = extract.allOperands(x);
-    final StringLiteral l = az.stringLiteral(the.headOf($));
+    final StringLiteral l = az.stringLiteral(the.firstOf($));
     assert l != null;
     assert l.getLiteralValue().length() >= i;
     replaceFirst($, getSuffix(l.getLiteralValue(), i, x));
@@ -141,8 +141,8 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     final String $ = then.getLiteralValue();
     assert elze.getOperator() == op.PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
-    if (iz.stringLiteral(the.headOf(elzeOperands))) {
-      final int commonPrefixIndex = firstDifference($, az.stringLiteral(the.headOf(elzeOperands)).getLiteralValue());
+    if (iz.stringLiteral(the.firstOf(elzeOperands))) {
+      final int commonPrefixIndex = firstDifference($, az.stringLiteral(the.firstOf(elzeOperands)).getLiteralValue());
       if (commonPrefixIndex != 0)
         return subject.pair(getPrefix($, commonPrefixIndex, condition), subject.pair(getSuffix($, commonPrefixIndex, condition), //
             replacePrefix(elze, commonPrefixIndex)).toCondition(condition)).to(op.PLUS2);
@@ -169,9 +169,9 @@ public final class TernaryPushdownStrings extends ReplaceCurrentNode<Conditional
     final List<Expression> thenOperands = extract.allOperands(then);
     assert elze.getOperator() == op.PLUS2;
     final List<Expression> elzeOperands = extract.allOperands(elze);
-    if (iz.stringLiteral(the.headOf(thenOperands)) && iz.stringLiteral(the.headOf(elzeOperands))) {
-      final String $ = az.stringLiteral(the.headOf(thenOperands)).getLiteralValue();
-      final int commonPrefixIndex = firstDifference($, az.stringLiteral(the.headOf(elzeOperands)).getLiteralValue());
+    if (iz.stringLiteral(the.firstOf(thenOperands)) && iz.stringLiteral(the.firstOf(elzeOperands))) {
+      final String $ = az.stringLiteral(the.firstOf(thenOperands)).getLiteralValue();
+      final int commonPrefixIndex = firstDifference($, az.stringLiteral(the.firstOf(elzeOperands)).getLiteralValue());
       if (commonPrefixIndex != 0)
         return subject.pair(getPrefix($, commonPrefixIndex, condition),
             subject

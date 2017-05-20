@@ -874,8 +874,8 @@ public abstract class ___ {
       assert new Object() != null;
       try {
         assert null != null;
-      } catch (final NonNull e) {
-        assertEquals("", e.getMessage());
+      } catch (final AssertionError ¢) {
+        assertEquals(null, ¢.getMessage());
       }
       try {
         assert "NonNull" != null : null;

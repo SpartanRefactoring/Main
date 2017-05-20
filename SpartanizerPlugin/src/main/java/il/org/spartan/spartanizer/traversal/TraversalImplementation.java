@@ -143,6 +143,7 @@ public class TraversalImplementation extends Traversal {
       final Tipper<N> $ = findTipper(¢);
       if ($ == null)
         return;
+      assert $.tip(¢) != null;
       setTip($.tip(¢));
     }, (Consumer<Exception>) note::bug);
   }

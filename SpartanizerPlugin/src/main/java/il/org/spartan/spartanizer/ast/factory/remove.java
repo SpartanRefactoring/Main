@@ -41,7 +41,7 @@ public enum remove {
     remove.removeAll(b, $);
     switch ($.size()) {
       case 1:
-        return copy.of(the.headOf($));
+        return copy.of(the.firstOf($));
       case 0:
         return x.getAST().newBooleanLiteral(b);
       default:

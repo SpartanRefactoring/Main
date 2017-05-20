@@ -36,7 +36,7 @@ public class Misc {
   public static int[] ensureIndex(final int[] as, final int i) {
     return i < as.length ? as : Arrays.copyOf(as, 1 + Math.max(i, as.length + (as.length >> 1)));
   }
-  @SuppressWarnings("null") public static boolean[] toArray(final List<Boolean> bs) {
+   public static boolean[] toArray(final List<Boolean> bs) {
     final boolean[] $ = new boolean[bs.size()];
     for (int ¢ = 0; ¢ < bs.size(); ++¢)
       $[¢] = bs.get(¢).booleanValue();

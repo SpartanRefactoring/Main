@@ -127,7 +127,7 @@ public class FilesGenerator {
       public FilesIterator(final Iterator<File> i) {
         stack.push(i);
       }
-      @Override @SuppressWarnings("null") public boolean hasNext() {
+      @Override public boolean hasNext() {
         for (;;) {
           if (stack.isEmpty())
             return false;

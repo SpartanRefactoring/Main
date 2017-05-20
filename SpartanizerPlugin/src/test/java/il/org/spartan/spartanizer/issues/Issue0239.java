@@ -88,7 +88,7 @@ public class Issue0239 {
     assert statements != null;
     assert statements.size() == 2;
     final ExpressionStatement nextStatement = findFirst.instanceOf(ExpressionStatement.class).in(block);
-    assert lastIn(nextStatement, statements);
+    assert is.lastIn(nextStatement, statements);
     final VariableDeclarationFragment f = findFirst.instanceOf(VariableDeclarationFragment.class).in(block);
     assert f != null;
     final Statement currentStatement = containing.statement(f);

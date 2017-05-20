@@ -12,6 +12,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
+import il.org.spartan.spartanizer.java.*;
 
 /** Various methods for comparing
  * @author Yossi Gil

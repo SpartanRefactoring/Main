@@ -54,7 +54,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
   public CSVLine in(final Object innerTableName) {
     return in(innerTableName + "");
   }
-  @SuppressWarnings("null") public CSVLine in(final String innerTableName) {
+  public CSVLine in(final String innerTableName) {
     ensure(inner, innerTableName, new CSVLine.Ordered());
     return inner.get(innerTableName);
   }

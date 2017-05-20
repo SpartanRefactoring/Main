@@ -37,11 +37,11 @@ public final class AssignmentToFromInfixIncludingTo extends ReplaceCurrentNode<A
     return null;
   }
   private static List<Expression> dropFirstIfSame(final Expression ¢, final List<Expression> xs) {
-    return !eq(¢, the.headOf(xs)) ? null : chop(new ArrayList<>(xs));
+    return !eq(¢, the.firstOf(xs)) ? null : chop(new ArrayList<>(xs));
   }
   private static Expression reduce(final InfixExpression x, final Expression deleteMe) {
     final List<Expression> es = hop.operands(x), $ = !op.nonAssociative(x) ? dropAnyIfSame(es, deleteMe) : dropFirstIfSame(deleteMe, es);
-    return $ == null ? null : $.size() == 1 ? copy.of(the.headOf($)) : subject.operands($).to(operator(x));
+    return $ == null ? null : $.size() == 1 ? copy.of(the.firstOf($)) : subject.operands($).to(operator(x));
   }
   private static ASTNode replacement(final Expression to, final InfixExpression from) {
     if (iz.arrayAccess(to) || !sideEffects.free(to))

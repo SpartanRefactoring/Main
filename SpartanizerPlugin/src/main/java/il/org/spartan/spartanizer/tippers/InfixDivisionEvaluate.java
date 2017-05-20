@@ -28,7 +28,7 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
   @Override double evaluateDouble(final List<Expression> xs) throws IllegalArgumentException {
     double $ = 0;
     try {
-      $ = az.throwing.double¢(the.headOf(xs));
+      $ = az.throwing.double¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (az.throwing.double¢(¢) == 0)
           throw new IllegalArgumentException("Cannot evaluate division by zero");
@@ -42,9 +42,9 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
   @Override int evaluateInt(final List<Expression> xs) throws IllegalArgumentException {
     int $ = 0;
     try {
-      if (type.of(the.headOf(xs)) == Certain.DOUBLE || type.of(the.headOf(xs)) == Certain.LONG)
+      if (type.of(the.firstOf(xs)) == Certain.DOUBLE || type.of(the.firstOf(xs)) == Certain.LONG)
         throw new NumberFormatException();
-      $ = az.throwing.int¢(the.headOf(xs));
+      $ = az.throwing.int¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE || type.of(¢) == Certain.LONG)
           throw new NumberFormatException();
@@ -60,9 +60,9 @@ public final class InfixDivisionEvaluate extends $EvaluateInfixExpression {
   @Override long evaluateLong(final List<Expression> xs) throws IllegalArgumentException {
     long $ = 0;
     try {
-      if (type.of(the.headOf(xs)) == Certain.DOUBLE)
+      if (type.of(the.firstOf(xs)) == Certain.DOUBLE)
         throw new NumberFormatException();
-      $ = az.throwing.long¢(the.headOf(xs));
+      $ = az.throwing.long¢(the.firstOf(xs));
       for (final Expression ¢ : the.tailOf(xs)) {
         if (type.of(¢) == Certain.DOUBLE)
           throw new NumberFormatException();

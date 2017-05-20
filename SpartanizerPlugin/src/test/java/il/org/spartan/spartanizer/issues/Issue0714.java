@@ -36,7 +36,7 @@ public class Issue0714 {
         .isImmutable(typeConvert("public class A {final static int x; static final double y; public final String a; private final Object o;}"));
   }
   @Test public void testNoFinal() {
-    assert !determineIf.isImmutable((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class A {int x;}")))));
+    assert !determineIf.isImmutable((TypeDeclaration) the.firstOf(types(az.compilationUnit(make.ast("public class A {int x;}")))));
   }
   @Test public void testNull() {
     auxBool(determineIf.isImmutable(null));
@@ -48,9 +48,9 @@ public class Issue0714 {
     (determineIf.isImmutable(null) + "").hashCode();
   }
   @Test public void testSimpleTypeDecleration() {
-    assert determineIf.isImmutable((TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast("public class A {}")))));
+    assert determineIf.isImmutable((TypeDeclaration) the.firstOf(types(az.compilationUnit(make.ast("public class A {}")))));
   }
   private TypeDeclaration typeConvert(final String $) {
-    return (TypeDeclaration) the.headOf(types(az.compilationUnit(make.ast($))));
+    return (TypeDeclaration) the.firstOf(types(az.compilationUnit(make.ast($))));
   }
 }

@@ -14,13 +14,8 @@ import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Separate.*;
 
-/** import static il.org.spartan.utils.Box.*; import
- * il.org.spartan.streotypes.*; import il.org.spartan.statistics.*; import
- * il.org.spartan.utils.*; import static il.org.spartan.utils.Box.*; import
- * java.util.*; import java.util.Map.*; import il.org.spartan.utils.*; /**
- * import java.util.*; import java.util.Map.*; import il.org.spartan.utils.*;
- * /** Create a line in an "Comma Separated Values" format from a sequence of
- * named values.
+/** Create a line in an "Comma Separated Values" format from a sequence of named
+ * values.
  * @author Yossi Gil */
 @Instantiable
 public abstract class CSVLine extends AbstractStringProperties implements Cloneable {
@@ -63,7 +58,7 @@ public abstract class CSVLine extends AbstractStringProperties implements Clonea
       put(¢.getKey(), ¢.getValue());
     return $;
   }
-  @Override @SuppressWarnings("null") public String get(final String key) {
+  @Override public String get(final String key) {
     return map.get(key);
   }
   @Override public Collection<String> keys() {
@@ -104,18 +99,18 @@ public abstract class CSVLine extends AbstractStringProperties implements Clonea
     return put(key, value + "");
   }
   /** Add a key and a <code><b>double</b><code> value to this instance
-                                *
-                                * &#64;param key
-                                *          The key to be added; must not be <code><b>null</b></code>
+                                  *
+                                  * &#64;param key
+                                  *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public CSVLine put(final String key, final double value) {
     return put(key, value, new FormatSpecifier[0]);
   }
   /** Add a key and a <code><b>double</b><code> value to this instance
-                                *
-                                * &#64;param key
-                                *          The key to be added; must not be <code><b>null</b></code>
+                                  *
+                                  * &#64;param key
+                                  *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @param ss Which (if any) aggregate statistics should be produced for this
    *        column
@@ -125,9 +120,9 @@ public abstract class CSVLine extends AbstractStringProperties implements Clonea
     return put(key, value + "");
   }
   /** Add a key and a <code><b>double</b><code> value to this instance
-                                *
-                                * &#64;param key
-                                *          The key to be added; must not be <code><b>null</b></code>
+                                  *
+                                  * &#64;param key
+                                  *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @param format How should the value be formatted
    * @param ss Which (if any) aggregate statistics should be produced for this
@@ -139,9 +134,9 @@ public abstract class CSVLine extends AbstractStringProperties implements Clonea
     return put(key, String.format(format, box(value)));
   }
   /** Add a key and a general <code><b>float</b><code> value to this instance
-                                *
-                                * &#64;param key
-                                *          The key to be added; must not be <code><b>null</b></code>
+                                  *
+                                  * &#64;param key
+                                  *          The key to be added; must not be <code><b>null</b></code>
    * @param value The value associated with the key
    * @return this */
   public final CSVLine put(final String key, final float value) {

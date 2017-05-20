@@ -31,7 +31,7 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
   }
   public SwitchWithOneCaseToIf() {
     andAlso(Proposition.that("Exactly two cases", () -> (cases.size() == 2)));
-    andAlso(Proposition.that("Has default case", () -> (the.headOf(cases).isDefault() || the.lastOf(cases).isDefault())));
+    andAlso(Proposition.that("Has default case", () -> (the.firstOf(cases).isDefault() || the.lastOf(cases).isDefault())));
     andAlso(Proposition.that("Different branches", () -> {
       assert cases.size() == 2; // I assume this proposition is checked only if
                                 // the first propositions is true
@@ -39,8 +39,8 @@ public class SwitchWithOneCaseToIf extends SwitchStatementAbstractPattern//
     }));
   }
   @Override protected ASTRewrite go(final ASTRewrite $, final TextEditGroup g) {
-    final boolean firstDefault = the.headOf(cases()).isDefault();
-    final SwitchCase thenCase = firstDefault ? the.lastOf(cases()) : the.headOf(cases());
+    final boolean firstDefault = the.firstOf(cases()).isDefault();
+    final SwitchCase thenCase = firstDefault ? the.lastOf(cases()) : the.firstOf(cases());
     List<Statement> l1 = removeBreaks(statements.subList(1, statements.indexOf(the.lastOf(cases())))),
         l2 = removeBreaks(statements.subList(statements.indexOf(the.lastOf(cases())) + 1, statements.size()));
     if (firstDefault) {

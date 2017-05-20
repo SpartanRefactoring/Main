@@ -17,7 +17,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -124,7 +123,7 @@ public interface iz {
       return false;
     final IfStatement $ = az.ifStatement(parent(b));
     return ($ == null//
-        || !eq(s, az.astNode(the.headOf(statements(az.block(elze($))))))//
+        || !eq(s, az.astNode(the.firstOf(statements(az.block(elze($))))))//
         || misc.recursiveElse(s) != null//
         || elze($) == null)//
         && $ != null && (elze($) == null || misc.recursiveElse(s) == null)
@@ -643,7 +642,7 @@ public interface iz {
   /** @param pattern Expression node
    * @return whether the Expression is literal */
   static boolean literal(final ASTNode ¢) {
-    return ¢ != null && Utils.intIsIn(nodeType(¢), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
+    return ¢ != null && is.intIsIn(nodeType(¢), NULL_LITERAL, CHARACTER_LITERAL, NUMBER_LITERAL, STRING_LITERAL, BOOLEAN_LITERAL);
   }
   static boolean literal(final ASTNode ¢, final boolean b) {
     return ¢ != null && literal(az.booleanLiteral(¢), b);
@@ -747,7 +746,7 @@ public interface iz {
    * @return whether function #ASTNode.getNodeType returns one of the types
    *         provided as parameters */
   static boolean nodeTypeIn(final ASTNode n, final int... types) {
-    return n != null && Utils.intIsIn(n.getNodeType(), types);
+    return n != null && is.intIsIn(n.getNodeType(), types);
   }
   /** Determine whether an {@link Expression} is so basic that it never needs to
    * be placed in parenthesis.

@@ -50,6 +50,6 @@ public final class InfixPlusEmptyString extends ReplaceCurrentNode<InfixExpressi
         }
       }
     }
-    return $.size() == es.size() ? null : $.size() == 1 ? the.headOf($) : subject.operands($).to(op.PLUS2);
+    return $.size() == es.size() ? null : $.size() == 1 ? the.firstOf($) : subject.operands($).to(op.PLUS2);
   }
 }

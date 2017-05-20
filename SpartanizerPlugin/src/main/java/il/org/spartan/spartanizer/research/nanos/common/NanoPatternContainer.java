@@ -42,9 +42,9 @@ public class NanoPatternContainer<N extends ASTNode> extends ArrayList<UserDefin
     return stream().filter(λ -> λ.check(¢)).findFirst().get();
   }
   public String firstPattern() {
-    return the.headOf(this).pattern().replaceAll("\\$", "");
+    return the.firstOf(this).pattern().replaceAll("\\$", "");
   }
   public String firstReplacement() {
-    return the.headOf(this).replacement().replaceAll("\\$", "");
+    return the.firstOf(this).replacement().replaceAll("\\$", "");
   }
 }

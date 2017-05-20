@@ -80,13 +80,13 @@ public final class StringFromStringBuilder extends ClassInstanceCreationPattern 
     }));
     if (needPreliminaryStringSafe($))
       $.add(0, make.emptyString(current));
-    return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(the.headOf($)) : subject.operands($).to(Operator.PLUS);
+    return $.isEmpty() ? make.emptyString(current) : $.size() == 1 ? copy.of(the.firstOf($)) : subject.operands($).to(Operator.PLUS);
   }
   public static boolean needPreliminaryStringUnsafe(final List<Expression> ¢) {
-    return ¢.isEmpty() || !iz.stringLiteral(the.headOf(¢)) && !iz.name(the.headOf(¢)) && !iz.methodInvocation(the.headOf(¢));
+    return ¢.isEmpty() || !iz.stringLiteral(the.firstOf(¢)) && !iz.name(the.firstOf(¢)) && !iz.methodInvocation(the.firstOf(¢));
   }
   public static boolean needPreliminaryStringSafe(final List<Expression> ¢) {
-    return ¢.isEmpty() || !iz.stringLiteral(the.headOf(¢));
+    return ¢.isEmpty() || !iz.stringLiteral(the.firstOf(¢));
   }
   private static List<Expression> arguments(final List<?> argumentz) {
     return argumentz.stream().filter(λ -> λ instanceof Expression).map(λ -> addParenthesisIfNeeded((Expression) λ)).collect(toList());

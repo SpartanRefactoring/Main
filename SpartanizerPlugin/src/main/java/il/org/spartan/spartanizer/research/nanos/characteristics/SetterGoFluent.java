@@ -27,13 +27,13 @@ public class SetterGoFluent extends NanoPatternTipper<MethodDeclaration> {
     if (step.parameters(¢).size() != 1 || step.body(¢) == null || iz.static¢(¢) || ¢.isConstructor() || !iz.voidType(step.returnType(¢)))
       return false;
     final List<Statement> ss = statements(¢.getBody());
-    if (ss.size() != 1 || !iz.expressionStatement(the.headOf(ss)))
+    if (ss.size() != 1 || !iz.expressionStatement(the.firstOf(ss)))
       return false;
-    final Expression e = az.expressionStatement(the.headOf(ss)).getExpression();
+    final Expression e = az.expressionStatement(the.firstOf(ss)).getExpression();
     if (!iz.assignment(e))
       return false;
     final Assignment $ = az.assignment(e);
-    return (iz.name(left($)) || tipper.check(left($))) && wizard.eq(right($), the.headOf(parameters(¢)).getName());
+    return (iz.name(left($)) || tipper.check(left($))) && wizard.eq(right($), the.firstOf(parameters(¢)).getName());
   }
   @Override public Tip pattern(final MethodDeclaration d) {
     return new Tip(description(d), getClass(), d) {

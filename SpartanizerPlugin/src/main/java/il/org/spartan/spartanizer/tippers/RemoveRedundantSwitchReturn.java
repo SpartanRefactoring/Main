@@ -30,7 +30,7 @@ public class RemoveRedundantSwitchReturn extends ReplaceCurrentNode<SwitchStatem
       return null;
     final List<switchBranch> $ = switchBranch.intoBranches(s);
     for (final switchBranch ¢ : $)
-      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.returnStatement(the.headOf(¢.statements))) {
+      if (¢.hasDefault() && ¢.statements.size() == 1 && iz.returnStatement(the.firstOf(¢.statements))) {
         $.remove(¢);
         return switchBranch.makeSwitchStatement($, s.getExpression(), s.getAST());
       }

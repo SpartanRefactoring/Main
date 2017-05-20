@@ -31,7 +31,7 @@ interface FactorsReorganizer {
     return subject.operands(rest).to(DIVIDE);
   }
   static Expression buildDividers(final List<Expression> ¢) {
-    final Expression $ = subject.pair(the.headOf(¢).getAST().newNumberLiteral("1"), the.headOf(¢)).to(DIVIDE);
+    final Expression $ = subject.pair(the.firstOf(¢).getAST().newNumberLiteral("1"), the.firstOf(¢)).to(DIVIDE);
     if (¢.size() == 1)
       return $;
     ¢.remove(0);
@@ -43,9 +43,9 @@ interface FactorsReorganizer {
       case 0:
         return null;
       case 1:
-        return the.headOf(¢);
+        return the.firstOf(¢);
       case 2:
-        return subject.pair(the.headOf(¢), the.secondOf(¢)).to(TIMES);
+        return subject.pair(the.firstOf(¢), the.secondOf(¢)).to(TIMES);
       default:
         return subject.operands(¢).to(TIMES);
     }

@@ -1,13 +1,12 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.Utils.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -31,7 +30,7 @@ public final class IfLastInMethodThenEndingWithEmptyReturn extends EagerTipper<I
   }
   @Override public Tip tip(final IfStatement s) {
     final Block b = az.block(s.getParent());
-    if (b == null || !(b.getParent() instanceof MethodDeclaration) || !lastIn(s, statements(b)))
+    if (b == null || !(b.getParent() instanceof MethodDeclaration) || !is.lastIn(s, statements(b)))
       return null;
     final ReturnStatement $ = az.returnStatement(hop.lastStatement(then(s)));
     return $ == null || $.getExpression() != null ? null : new Tip(description(s), getClass(), $) {

@@ -91,7 +91,7 @@ public interface MethodPatternUtilitiesTrait {
     return identifier(name(yieldAncestors.untilContainingType().from(¢))).equals(returnType(¢) + "");
   }
   default Statement firstStatement(final MethodDeclaration ¢) {
-    return the.headOf(statements(¢));
+    return the.firstOf(statements(¢));
   }
   default Statement secondStatement(final MethodDeclaration ¢) {
     return the.secondOf(statements(¢));

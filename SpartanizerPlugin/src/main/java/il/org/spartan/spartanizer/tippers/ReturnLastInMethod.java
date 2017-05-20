@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static il.org.spartan.Utils.*;
-
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -23,6 +22,6 @@ public final class ReturnLastInMethod extends RemovingTipper<ReturnStatement>//
     if (¢.getExpression() != null)
       return false;
     final Block $ = az.block(¢.getParent());
-    return $ != null && lastIn(¢, statements($)) && iz.methodDeclaration(parent($));
+    return $ != null && is.lastIn(¢, statements($)) && iz.methodDeclaration(parent($));
   }
 }

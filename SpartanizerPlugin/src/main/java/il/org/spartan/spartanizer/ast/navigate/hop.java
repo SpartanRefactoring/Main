@@ -117,7 +117,7 @@ public interface hop {
     return penultimate(body(¢));
   }
   static VariableDeclarationFragment previous(final Statement ¢) {
-    return the.headOf(fragments(az.variableDeclrationStatement(previousStatementInBody(¢))));
+    return the.firstOf(fragments(az.variableDeclrationStatement(previousStatementInBody(¢))));
   }
   static SimpleName simpleName(final Type ¢) {
     return lastName(hop.name(¢));

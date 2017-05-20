@@ -26,7 +26,7 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
       return null;
     final AST create = ¢.getAST();
     final SwitchStatement $ = create.newSwitchStatement();
-    $.setExpression(copy.of(az.simpleName(left(az.comparison(the.headOf(xs))))));
+    $.setExpression(copy.of(az.simpleName(left(az.comparison(the.firstOf(xs))))));
     final List<Statement> ss = statements($);
     final List<Block> bs = getAllBlocks(¢);
     int i = 0;
@@ -48,9 +48,9 @@ public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
     return $;
   }
   private static boolean isMyCase(final List<Expression> xs) {
-    if (xs == null || xs.isEmpty() || !iz.infixEquals(the.headOf(xs)))
+    if (xs == null || xs.isEmpty() || !iz.infixEquals(the.firstOf(xs)))
       return false;
-    InfixExpression px = az.comparison(the.headOf(xs));
+    InfixExpression px = az.comparison(the.firstOf(xs));
     if (!iz.infixEquals(px))
       return false;
     final SimpleName switchVariable = !iz.simpleName(left(px)) ? null : az.simpleName(left(px));
