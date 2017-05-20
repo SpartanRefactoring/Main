@@ -1,3 +1,26 @@
+repositories {
+        jcenter()
+		// make it easy to test a snapshot version of goomph
+		maven {	url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+		// grab dependencies from the gradle plugin portal
+		maven { url 'https://plugins.gradle.org/m2/' }
+		
+		mavenCentral()
+	}
+	// make sure we don't cache stale snapshot versions
+	configurations.all {
+		resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+	}
+	dependencies {
+		// a bunch of eclipse stuff
+		classpath "com.diffplug.gradle:goomph:${VER_GOOMPH}"
+		// creates a targetplatform
+		classpath "org.standardout:bnd-platform:${VER_BND_PLATFORM}"
+        // shadow, for creating a fat jar
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.0"
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
