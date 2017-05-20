@@ -74,6 +74,25 @@ public class GenericPsiElementStub {
     }
 
     /**
+     * Method stub representing a field declaration.
+     *
+     * @param id the serial no to distinct between several statements in the same tipper
+     * @return field declaration dummy object that allows putting constraints on the object
+     */
+    public static FieldDeclaration fieldDeclaration(int id) {
+        return new FieldDeclaration();
+    }
+
+    /**
+     * Method stub representing a field declaration.
+     *
+     * @return field declaration dummy object that allows putting constraints on the object
+     */
+    public static FieldDeclaration fieldDeclaration() {
+        return new FieldDeclaration();
+    }
+
+    /**
      * method stub representing an identifier for leonidas tippers
      *
      * @param id the serial no to distinct between several identifiers in the same tipper
