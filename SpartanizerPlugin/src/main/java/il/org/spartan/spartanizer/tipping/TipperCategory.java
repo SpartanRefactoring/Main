@@ -30,7 +30,7 @@ public interface TipperCategory {
 
   Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> hierarchy = anonymous.ly(() -> {
     final Map<Class<? extends TipperCategory>, List<Class<? extends TipperCategory>>> $ = new HashMap<>();
-    $.put(Nominal.class, Arrays.asList(Abbreviation.class, Anonymization.class, Dollarization.class));
+    $.put(Nominal.class, Arrays.asList(Abbreviation.class, Anonymization.class, NameOfResult.class));
     $.put(Structural.class, Arrays.asList(Collapse.class, Loops.class, Deadcode.class, EarlyReturn.class, NOP.class, ScopeReduction.class,
         Shortcircuit.class, SyntacticBaggage.class));
     $.put(Abbreviation.class, an.empty.list());
@@ -41,7 +41,7 @@ public interface TipperCategory {
     $.put(Centification.class, an.empty.list());
     $.put(CommnonFactoring.class, Arrays.asList(Ternarization.class));
     $.put(Deadcode.class, an.empty.list());
-    $.put(Dollarization.class, an.empty.list());
+    $.put(NameOfResult.class, an.empty.list());
     $.put(EarlyReturn.class, an.empty.list());
     $.put(EmptyCycles.class, an.empty.list());
     $.put(Idiomatic.class, Arrays.asList(Sorting.class));
@@ -81,7 +81,7 @@ public interface TipperCategory {
   });
 
   interface Abbreviation extends Nominal {
-    String toString = "Abbreviation";
+    String toString = "One letter convention for locals";
 
     @Override default String description() {
       return toString;
@@ -89,7 +89,7 @@ public interface TipperCategory {
   }
 
   interface Anonymization extends Nominal {
-    String toString = "Unused arguments";
+    String toString = "Naming convention for anonymizing unused parameters";
 
     @Override default String description() {
       return toString;
@@ -97,7 +97,7 @@ public interface TipperCategory {
   }
 
   interface Arithmetics extends TipperCategory {
-    String toString = "Change expression to a more familiar structure (often shorter)";
+    String toString = "Rewrite expressions in a more canonical form";
 
     @Override default String description() {
       return toString;
@@ -105,7 +105,7 @@ public interface TipperCategory {
   }
 
   interface Loops extends Structural {
-    String toString = "More efficient use of Java loop structures";
+    String toString = "Spartan use of Java loop syntax";
 
     @Override default String description() {
       return toString;
@@ -113,7 +113,7 @@ public interface TipperCategory {
   }
 
   interface Bloater extends TipperCategory {
-    String toString = "Make the code as verbose as possible";
+    String toString = "Make code as verbose as possible";
 
     @Override default String description() {
       return toString;
@@ -146,8 +146,8 @@ public interface TipperCategory {
     }
   }
 
-  interface Dollarization extends Nominal {
-    String toString = "Dollarization";
+  interface NameOfResult extends Nominal {
+    String toString = "Naming convention for the result variable";
 
     @Override default String description() {
       return toString;
@@ -162,7 +162,6 @@ public interface TipperCategory {
     }
   }
 
-  @FunctionalInterface
   interface EmptyCycles extends TipperCategory {
     String toString = "churn";
   }
