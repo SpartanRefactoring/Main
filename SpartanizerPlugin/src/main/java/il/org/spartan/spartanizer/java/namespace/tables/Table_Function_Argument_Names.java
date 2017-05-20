@@ -45,7 +45,7 @@ public class Table_Function_Argument_Names extends NominalTables {
           @Override @SuppressWarnings({ "boxing", "unchecked" }) public boolean visit(final MethodDeclaration x) {
             x.parameters().stream().forEach(p -> {
               String n1 = az.singleVariableDeclaration(az.astNode(p)).getName() + "",
-                  n2 = az.singleVariableDeclaration(az.astNode(p)).getType().toString();
+                  n2 = az.singleVariableDeclaration(az.astNode(p)).getType() + "";
               namePrevelance.put(n1 + "--" + n2, !namePrevelance.containsKey(n1 + "--" + n2) ? 1 : namePrevelance.get(n1 + "--" + n2) + 1);
             });
             return true;
