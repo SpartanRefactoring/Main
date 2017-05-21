@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
  * @author Anna Belozovsky
  * @since 15/05/2017
  */
+@SuppressWarnings("unchecked")
 public class ComponentJList extends JList {
     protected static Border noFocusBorder =
             new EmptyBorder(1, 1, 1, 1);
@@ -33,7 +34,7 @@ public class ComponentJList extends JList {
                         repaint();
                     }
                 } else {
-                    //if there is a textfield
+                    //if there is a textField
                     if (index != -1) {
                         TextFieldComponent field = (TextFieldComponent) component;
                         field.pressed();

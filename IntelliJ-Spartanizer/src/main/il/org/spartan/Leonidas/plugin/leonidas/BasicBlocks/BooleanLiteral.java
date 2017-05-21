@@ -1,6 +1,5 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
-import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 
 /**
@@ -13,10 +12,6 @@ public class BooleanLiteral extends GenericMethodCallBasedBlock {
 
     public BooleanLiteral(Encapsulator n) {
         super(n, TEMPLATE);
-    }
-
-    public BooleanLiteral(PsiElement e) {
-        super(e, TEMPLATE);
     }
 
     /**
@@ -41,6 +36,4 @@ public class BooleanLiteral extends GenericMethodCallBasedBlock {
     public GenericEncapsulator create(Encapsulator e) {
         return new BooleanLiteral(e);
     }
-
-
 }

@@ -130,6 +130,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
       notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
           : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();
       notation.return$ = doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).getNodeValue();
+      WidgetPreferences.setDefaults();
     }, λ -> note.bug(λ));
   }
 }

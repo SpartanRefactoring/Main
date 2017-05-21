@@ -52,7 +52,7 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * @param e PsiElement
      * @return the id.
      */
-    public abstract int extractId(PsiElement e);
+    public abstract Integer extractId(PsiElement e);
 
     /**
      * Prunes the irrelevant concrete PsiElements and replaces with a new Generic Encapsulator

@@ -129,7 +129,7 @@ public enum as {
    * @param $ what to covert
    * @return result parameter, converted into a {@link List} */
   @SafeVarargs public static <T> List<T> list(final T... $) {
-    return accumulate.to(new ArrayList<T>()).add($).elements();
+    return Arrays.asList($);
   }
   /** Converts a sequence of objects of a given type into a {@link Set} of
    * values
