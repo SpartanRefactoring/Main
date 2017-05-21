@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -29,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO Raviv Rachmiel take care of single var decleration, tests
 public class VariableDeclarationStatementExpand extends EagerTipper<VariableDeclarationStatement>//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Nominal {
   private static final long serialVersionUID = 0x6416089F84E63B0EL;
 
   @Override public String description(final VariableDeclarationStatement ¢) {

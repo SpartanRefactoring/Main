@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.Assignment.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2016-12-28 */
 public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Unshortcut {
   private static final long serialVersionUID = 0x4501859892D5B1C9L;
 
   @Override public String description(@SuppressWarnings("unused") final Assignment __) {

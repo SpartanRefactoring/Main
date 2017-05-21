@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -25,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yuval Simon
  * @since 2016-12-28 */
 public class CasesSplit extends CarefulTipper<SwitchStatement>//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Splitting {
   private static final long serialVersionUID = 0x47C7172BFCDFA467L;
 
   @Override public String description(@SuppressWarnings("unused") final SwitchStatement __) {

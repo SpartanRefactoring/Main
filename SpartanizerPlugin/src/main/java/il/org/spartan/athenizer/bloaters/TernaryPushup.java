@@ -8,18 +8,18 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** Example in {@link #examples} Test case is {@link Issue1049}
  * @author Yuval Simon <tt>siyuval@campus.technion.ac.il</tt>
  * @since 2017-03-30 */
-public final class TernaryPushup extends Multiciary implements TipperCategory.Bloater {
+public final class TernaryPushup extends Multiciary implements BloaterCategory.Ternarization {
   private static final long serialVersionUID = 0x711512B65712ADF4L;
   Expression operandCondition, operandThen, operandElze;
   private ConditionalExpression leftConditional;

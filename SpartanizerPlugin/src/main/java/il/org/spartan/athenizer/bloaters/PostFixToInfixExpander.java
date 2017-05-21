@@ -4,11 +4,11 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** Chage prfix expression to infix expression when possible toList Expand :
@@ -21,7 +21,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel
  * @since 2017-01-09 */
 public class PostFixToInfixExpander extends Postfix//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Splitting {
   private static final long serialVersionUID = 0x2039A31D98B2AA4CL;
 
   public PostFixToInfixExpander() {

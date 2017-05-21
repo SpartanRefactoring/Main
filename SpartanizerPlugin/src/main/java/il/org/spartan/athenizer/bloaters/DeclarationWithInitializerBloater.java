@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -25,7 +26,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan
  * @since 23-12-2016 */
 public class DeclarationWithInitializerBloater extends CarefulTipper<VariableDeclarationStatement>//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Splitting {
   private static final long serialVersionUID = 0xF445D29A172AE7CL;
 
   @Override @SuppressWarnings("unused") public String description(final VariableDeclarationStatement __) {

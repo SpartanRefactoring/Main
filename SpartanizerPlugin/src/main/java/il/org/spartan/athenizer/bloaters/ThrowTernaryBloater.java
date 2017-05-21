@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -13,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-26 */
 public class ThrowTernaryBloater extends ReplaceCurrentNode<ThrowStatement>//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Ternarization {
   private static final long serialVersionUID = 0x6F38EBD99BF2A49EL;
 
   private static ASTNode innerThrowReplacement(final Expression x, final Statement s) {

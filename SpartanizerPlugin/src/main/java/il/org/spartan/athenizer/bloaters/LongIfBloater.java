@@ -5,6 +5,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -16,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-09 */
 public class LongIfBloater extends ReplaceCurrentNode<IfStatement>//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Splitting {
   private static final long serialVersionUID = -0x1470E408344718CBL;
 
   @Override public ASTNode replacement(final IfStatement ¢) {
