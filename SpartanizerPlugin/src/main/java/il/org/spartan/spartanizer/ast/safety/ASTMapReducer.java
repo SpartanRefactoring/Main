@@ -14,15 +14,14 @@ import il.org.spartan.utils.*;
 
 public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   public R map(final ASTNode ¢) {
-    return iz.nodeTypeIn(¢, protect()) ? reduce()//
-        : iz.statement(¢) ? map(az.statement(¢))//
-            : iz.expression(¢) ? map(az.expression(¢))//
-                : ¢.getNodeType() == ANONYMOUS_CLASS_DECLARATION ? map((AnonymousClassDeclaration) ¢)//
-                    : ¢.getNodeType() == MODIFIER ? map((Modifier) ¢) //
-                        : ¢.getNodeType() == CATCH_CLAUSE ? map((CatchClause) ¢)//
+    return ¢ == null || iz.nodeTypeIn(¢, protect()) ? reduce()
+        : iz.statement(¢) ? map(az.statement(¢))
+            : iz.expression(¢) ? map(az.expression(¢))
+                : ¢.getNodeType() == ANONYMOUS_CLASS_DECLARATION ? map((AnonymousClassDeclaration) ¢)
+                    : ¢.getNodeType() == MODIFIER ? map((Modifier) ¢)
+                        : ¢.getNodeType() == CATCH_CLAUSE ? map((CatchClause) ¢)
                             : ¢.getNodeType() == METHOD_REF ? map((MethodRef) ¢)
-                                : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢) //
-                                    : reduce();
+                                : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢) : reduce();
   }
   protected R composite(final List<? extends ASTNode> ns) {
     R $ = reduce();
