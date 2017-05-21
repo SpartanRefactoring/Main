@@ -19,6 +19,7 @@ import il.org.spartan.spartanizer.plugin.widget.*;
  * @author Raviv Rachmiel
  * @since 2017-04-30 */
 public class WidgetPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+  
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(Plugin.plugin().getPreferenceStore());
     setDescription(WIDGET_PAGE_DESCRIPTION);
@@ -46,7 +47,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     addField(new BooleanFieldEditor(WIDGET_SHORTCUT_METHOD_ID, WIDGET_SHORTCUT_METHOD_TEXT, getFieldEditorParent()));
     IntegerFieldEditor ife = new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent());
-    ife.setValidRange(60, 100);
+    ife.setValidRange(WIDGET_MIN_SIZE, WIDGET_MAX_SIZE);
     addField(ife);
     addField(new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent(), getWidgetOperations(),
         λ -> onConfigure((WidgetOperation) λ), λ -> isEnabled((WidgetOperation) λ),
@@ -57,9 +58,9 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         int count = 0;
         for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations)
           if (isEnabled(¢)) {
-            if (count >= 7) {
+            if (count >= WIDGET_MAX_OPS) {
               MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
-                  "Cannot enable more than 7 widget operations. \n Taking the 7 first enabled widget operations ");
+                  "Cannot enable more than " + WIDGET_MAX_OPS +" widget operations. \n Taking the "+ WIDGET_MAX_OPS + " first enabled widget operations ");
               return $;
             }
             $[count++] = ¢.description();
