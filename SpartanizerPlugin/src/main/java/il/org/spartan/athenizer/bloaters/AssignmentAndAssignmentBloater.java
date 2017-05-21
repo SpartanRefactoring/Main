@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -18,7 +17,7 @@ import il.org.spartan.utils.*;
  * @author Doron Meshulam {@code doronmmm@hotmail.com}
  * @since 2016-12-24 */
 public class AssignmentAndAssignmentBloater extends CarefulTipper<ExpressionStatement>//
-    implements BloaterCategory.Splitting {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x1AF05236BEDFD45L;
 
   @Override public String description(@SuppressWarnings("unused") final ExpressionStatement __) {

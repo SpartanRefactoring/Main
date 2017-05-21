@@ -5,7 +5,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -22,7 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2017-01-11 */
 public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
-    implements BloaterCategory.Explanation {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x57EAC7C1A6BFDD34L;
 
   @Override public ASTNode replacement(final InfixExpression x) {
@@ -32,7 +31,7 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     boolean found = false;
     final CastExpression $ = x.getAST().newCastExpression();
     for (final Expression e : extract.allOperands(x)) {
-      if (iz.hexaDecimal(e))
+      if(iz.hexaDecimal(e))
         continue;
       if (iz.literal(e, 1.)) {
         $.setType(x.getAST().newPrimitiveType(PrimitiveType.DOUBLE));

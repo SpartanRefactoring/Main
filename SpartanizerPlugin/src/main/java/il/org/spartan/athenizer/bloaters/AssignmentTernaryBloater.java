@@ -9,7 +9,6 @@ import static il.org.spartan.spartanizer.ast.navigate.extract.*;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.Assignment.*;
 
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -23,7 +22,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel
  * @since 23-12-16 */
 public class AssignmentTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
-    implements BloaterCategory.Ternarization {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x7D806FC1C854EF52L;
 
   @Override public Examples examples() {

@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -31,7 +30,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
 // TODO Raviv Rachmiel take care of single var declaration, tests
 public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclaration>//
-    implements BloaterCategory.Nominal {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x3523CE8186A3EAECL;
 
   @Override public String description(final MethodDeclaration ¢) {

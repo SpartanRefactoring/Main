@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -20,7 +19,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Yuval Simon
  * @since 03-12-16 */
 public class ReturnTernaryExpander extends CarefulTipper<ReturnStatement>//
-    implements BloaterCategory.Ternarization {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x3A172046EB702ADAL;
 
   @Override public Tip tip(final ReturnStatement x) {
