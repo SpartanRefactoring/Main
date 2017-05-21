@@ -298,7 +298,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         @Override public void preVisit(ASTNode n) {
           if (!iz.type(n) || n.getParent() instanceof QualifiedType)
             return;
-          final String s = extract.name(az.type(n));
+          final String s = extract.leftName(az.type(n));
           if (s != null)
             usedNames.add(s);
         }
