@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
-import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -11,6 +10,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
+
+import static il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters.ID;
 
 /**
  * Encapsulating Psi elements so that non illegal transformation is done on the psi trees of Intellij.
@@ -102,12 +103,6 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
         return inner.getText() != null ? inner.getText() : "";
     }
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
-    @Override
-    public Encapsulator clone() {
-        return new Encapsulator(this);
-    }
-
     @Override
     public Encapsulator.Iterator iterator() {
         return new Encapsulator.Iterator();
@@ -132,16 +127,16 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
     /**
      * @return the ID of the generic element
      */
-    public int getId() {
-        return inner.getUserData(KeyDescriptionParameters.ID);
+    public Integer getId() {
+        return inner.getUserData(ID);
     }
 
     /**
      * @param i ID
      * @return this, for fluent API
      */
-    public Encapsulator putId(int i) {
-        inner.putUserData(KeyDescriptionParameters.ID, i);
+    public Encapsulator putId(Integer i) {
+        inner.putUserData(ID, i);
         return this;
     }
 
@@ -225,11 +220,5 @@ public class Encapsulator implements Cloneable, VisitableNode, Iterable<Encapsul
                     elements.remove(n);
             });
         }
-
-        @Override
-        public String toString() {
-            return value().getText();
-        }
-
     }
 }

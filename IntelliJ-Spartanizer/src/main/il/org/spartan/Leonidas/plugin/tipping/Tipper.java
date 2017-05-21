@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.tipping;
 
 import com.intellij.psi.PsiElement;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,5 +26,5 @@ public interface Tipper<T extends PsiElement> {
 
     Class<? extends T> getPsiClass();
 
-    default Map<String,String> getExamples() {return null;}
+    default Map<String,String> getExamples() {return new HashMap<String,String>();}
 }

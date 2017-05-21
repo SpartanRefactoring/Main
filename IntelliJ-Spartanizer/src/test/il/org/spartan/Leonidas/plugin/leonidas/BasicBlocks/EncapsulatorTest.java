@@ -101,7 +101,7 @@ public class EncapsulatorTest extends PsiTypeHelper {
 
     public void testPutAndGetId() {
         node.putId(3);
-        assertEquals(node.getId(), 3);
+        assertTrue(node.getId().compareTo(3) == 0);
     }
 
     public void testGeneralizeWith() {

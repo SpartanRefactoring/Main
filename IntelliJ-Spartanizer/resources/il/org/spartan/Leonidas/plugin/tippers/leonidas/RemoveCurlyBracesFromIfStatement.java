@@ -4,7 +4,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 
 /**
- * Remove redundant curly braces
+ * RemoveCurlyBracesFromIfStatement
  *
  * author Oren Afek, Sharon Kuninin, michalcohen
  * since 06/01/17
