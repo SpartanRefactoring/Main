@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import static fluent.ly.azzert.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.junit.*;
 
@@ -129,7 +130,7 @@ public enum as {
    * @param $ what to covert
    * @return result parameter, converted into a {@link List} */
   @SafeVarargs public static <T> List<T> list(final T... $) {
-    return Arrays.asList($);
+    return Arrays.asList($).stream().collect(Collectors.toList());
   }
   /** Converts a sequence of objects of a given type into a {@link Set} of
    * values
