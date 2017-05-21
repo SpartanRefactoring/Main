@@ -113,8 +113,9 @@ public class Eclipse {
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return null;
-    final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
-    return $ == null ? null : $.getActivePage();
+    final IWorkbenchWindow wd = w.getActiveWorkbenchWindow();
+    final IWorkbenchWindow[] wds = w.getWorkbenchWindows();
+    return wd != null ? wd.getActivePage() : wds != null && wds.length > 0 ? wds[0].getActivePage() : null;
   }
   /** @return opened text editors */
   public static Iterable<ITextEditor> openedTextEditors() {
