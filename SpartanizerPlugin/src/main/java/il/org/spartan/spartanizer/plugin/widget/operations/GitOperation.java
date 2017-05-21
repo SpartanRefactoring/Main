@@ -25,7 +25,7 @@ public abstract class GitOperation extends WidgetOperation {
     };
   }
   @Override public boolean register(final Map<?, ?> configuration) {
-    return (popup = ((Boolean) configuration.get(POPUP))) != null;
+    return (popup = (Boolean) configuration.get(POPUP)) != null;
   }
   protected abstract void gitOperation(Git g) throws Throwable;
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext c) throws Throwable {
@@ -50,12 +50,12 @@ public abstract class GitOperation extends WidgetOperation {
           try (Git git = new Git(repo)) {
             gitOperation(git);
           }
-      } catch (Throwable e) {
+      } catch (final Throwable e) {
         Dialogs.message("Git Error: No git directory was found").open();
         return;
       }
   }
-  protected void displayMessage(String ¢) {
+  protected void displayMessage(final String ¢) {
     if (popup.booleanValue())
       Dialogs.messageOnTheRun(¢).open();
   }

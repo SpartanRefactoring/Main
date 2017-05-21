@@ -27,6 +27,7 @@ public class OperationListEditor extends ListEditor {
   List<Map.Entry<String, Object>> elements_list;
   Button configureButton;
   Button ableButton;
+
   public OperationListEditor(final String name, final String labelText, final Composite parent) {
     super(name, labelText, parent);
     final Composite buttonBox = new Composite(parent, SWT.NULL);
@@ -128,11 +129,9 @@ public class OperationListEditor extends ListEditor {
       }
     });
   }
-  public OperationListEditor lazyConstruct(final Composite parent, final List<Map.Entry<String, Object>> elements,
-      final Consumer<Object> onConfigure, final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
+  public OperationListEditor lazyConstruct(final Composite parent, final List<Map.Entry<String, Object>> elements, final Consumer<Object> onConfigure,
+      final Function<Object, Boolean> isAble, final Consumer<Object> onAble) {
     elements_list = as.list(elements);
-    
-    
     ableButton.addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
         onSelection();
@@ -154,7 +153,6 @@ public class OperationListEditor extends ListEditor {
         }
       }
     });
-    
     configureButton.setVisible(true);
     configureButton.addSelectionListener(new SelectionListener() {
       @Override public void widgetSelected(@SuppressWarnings("unused") final SelectionEvent __) {
@@ -195,17 +193,17 @@ public class OperationListEditor extends ListEditor {
   }
   @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
     super.doFillIntoGrid(parent, numColumns);
-    //getButtonBoxControl(parent).dispose();
+    // getButtonBoxControl(parent).dispose();
   }
   @Override protected String[] parseString(final String stringList) {
     return stringList != null && !stringList.isEmpty() ? stringList.split(DELIMETER)
         : elements_list.stream().map(Entry::getKey).toArray(String[]::new);
   }
   @Override protected String getNewInputObject() {
-    AddNewWidgetPreferencesDialog dialog = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+    final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
         WidgetOperationPoint.allOperations);
-    dialog.open();
-    return dialog.getResult() == null ? null : dialog.getResult().description();
+    $.open();
+    return $.getResult() == null ? null : $.getResult().description();
   }
   @Override protected String createList(final String[] items) {
     return separate.these(items).by(DELIMETER);

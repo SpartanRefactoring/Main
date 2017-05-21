@@ -383,8 +383,8 @@ class UsesCollectorIgnoreDefinitions extends UsesCollector {
   @Override public boolean visit(final Assignment ¢) {
     return recurse(from(¢));
   }
-  @Override public boolean visit(final PostfixExpression it) {
-    return !is.in(it.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
+  @Override public boolean visit(final PostfixExpression ¢) {
+    return !is.in(¢.getOperator(), PostfixExpression.Operator.INCREMENT, PostfixExpression.Operator.DECREMENT);
   }
   @Override public boolean visit(@SuppressWarnings("unused") final PrefixExpression __) {
     return false;

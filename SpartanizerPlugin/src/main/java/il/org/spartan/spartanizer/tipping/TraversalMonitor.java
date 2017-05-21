@@ -83,6 +83,7 @@ public class TraversalMonitor extends TraversalImplementation.__ implements Trav
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");
   }
+  /** [[SuppressWarningsSpartan]] */
   private static CSVStatistics init() {
     return output = new CSVStatistics(outputDir, "Tips");
   }

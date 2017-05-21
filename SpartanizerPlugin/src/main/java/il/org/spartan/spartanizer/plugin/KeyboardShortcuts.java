@@ -36,7 +36,7 @@ public class KeyboardShortcuts extends AbstractHandler {
   private static String getCharacter(final ExecutionEvent $) {
     try {
       return $.getCommand().getName();
-    } catch (@SuppressWarnings("unused") NotDefinedException x) {
+    } catch (@SuppressWarnings("unused") final NotDefinedException x) {
       return null;
     }
   }

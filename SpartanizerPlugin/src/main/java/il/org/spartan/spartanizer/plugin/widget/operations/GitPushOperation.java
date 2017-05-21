@@ -18,13 +18,13 @@ public class GitPushOperation extends GitOperation {
   @Override @SuppressWarnings("unused") protected void gitOperation(final Git g) {
     try {
       g.push().call();
-    } catch (InvalidRemoteException ¢) {
+    } catch (final InvalidRemoteException ¢) {
       displayMessage("Git Error: Push failed due to an invalid remote");
       return;
-    } catch (TransportException ¢) {
+    } catch (final TransportException ¢) {
       displayMessage("Git Error: Transport operation failed");
       return;
-    } catch (Exception ¢) {
+    } catch (final Exception ¢) {
       displayMessage("Git Error: Pull failed");
       return;
     }

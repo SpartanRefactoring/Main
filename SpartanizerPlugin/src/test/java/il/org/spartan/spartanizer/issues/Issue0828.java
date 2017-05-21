@@ -30,7 +30,8 @@ public class Issue0828 {
     assert description().equals(forTrueConditionRemove.description(strEqualTrueStatement));
   }
   @Before public void initialize() {
-    simpleFor = (ForStatement) the.firstOf(statements(((MethodDeclaration) make.ast("public void foo(int x){for(int i=0;i<5;i++){x=7;}}")).getBody()));
+    simpleFor = (ForStatement) the
+        .firstOf(statements(((MethodDeclaration) make.ast("public void foo(int x){for(int i=0;i<5;i++){x=7;}}")).getBody()));
     trueFor = (ForStatement) the.firstOf(statements(((MethodDeclaration) make.ast("public void foo(int x){for(int i=0;true;i++){x=7;}}")).getBody()));
     trueStatementFor = (ForStatement) statements(((MethodDeclaration) make.ast("public void foo(int x){x=7; for(int i=0;x==7;i++){x=7;}}")).getBody())
         .get(1);

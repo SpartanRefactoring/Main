@@ -31,7 +31,7 @@ public class MultiplicationToCast extends ReplaceCurrentNode<InfixExpression>//
     boolean found = false;
     final CastExpression $ = x.getAST().newCastExpression();
     for (final Expression e : extract.allOperands(x)) {
-      if(iz.hexaDecimal(e))
+      if (iz.hexaDecimal(e))
         continue;
       if (iz.literal(e, 1.)) {
         $.setType(x.getAST().newPrimitiveType(PrimitiveType.DOUBLE));

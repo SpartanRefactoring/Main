@@ -84,6 +84,7 @@ public class SingleFlaterMonitor extends SingleFlater.With implements SingleFlat
     else if (maxVisitations == 0)
       System.out.println("Stopped logging visitations");
   }
+  /** [[SuppressWarningsSpartan]] */
   private static CSVStatistics init() {
     return output = new CSVStatistics(outputDir, "Tips");
   }
