@@ -167,7 +167,7 @@ public class azzert extends org.junit.Assert {
     assertThat("", o1, CoreMatchers.not(o2));
   }
   public static void assertNotEquals(final String message, final Object o1, final Object o2) {
-    assert !o1.equals(o2);
+    assertThat(message, o1, CoreMatchers.not(o2));
   }
   public static void assertNotEquals(final String s1, final String s2) {
     assertNotEquals(null, s1, s2);

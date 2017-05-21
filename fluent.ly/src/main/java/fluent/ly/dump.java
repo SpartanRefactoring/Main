@@ -26,7 +26,7 @@ public class dump {
     int n = 0;
     for (final Object ¢ : os) {
       if (++n > MAX_FIRST && n <= os.size() - MAX_LAST)
-        $ += ("\t...\n");
+        $ += "\t...\n";
       $ += String.format("\t%2d) %s\n", Integer.valueOf(n), ¢);
     }
     return $;
