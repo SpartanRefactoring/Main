@@ -3,7 +3,6 @@ package il.org.spartan.athenizer.bloaters;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.*;
 
-import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.tipping.*;
@@ -17,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @since 2016-12-20 */
 public class ToStringExpander extends ReplaceCurrentNode<InfixExpression>//
-    implements BloaterCategory.Explanation {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x1F5C3A50D08EA75BL;
 
   @Override public ASTNode replacement(final InfixExpression ¢) {

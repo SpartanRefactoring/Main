@@ -7,7 +7,6 @@ import java.util.*;
 import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -18,7 +17,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @since 2016-12-26 */
 @SuppressWarnings("unused")
 public class IfElseToSwitch extends ReplaceCurrentNode<IfStatement>//
-    implements BloaterCategory.Structural {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x62C675CD2B1FCA22L;
 
   @Override public ASTNode replacement(final IfStatement ¢) {

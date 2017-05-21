@@ -4,7 +4,6 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2017-01-08 */
 public class TernaryPushupStrings extends ReplaceCurrentNode<InfixExpression>//
-    implements BloaterCategory.Ternarization {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x4DC0060CE8FDAAC0L;
 
   @Override public Examples examples() {

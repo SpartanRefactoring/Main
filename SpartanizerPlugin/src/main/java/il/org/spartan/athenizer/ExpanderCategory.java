@@ -11,29 +11,27 @@ import il.org.spartan.spartanizer.plugin.*;
  * @author Raviv Rachmiel
  * @since 24-12-16 */
 @FunctionalInterface
-public interface BloaterCategory {
+public interface ExpanderCategory {
   String description();
   /** Returns the preference group to which the tipper belongs to. This method
    * should be overridden for each tipper and should return one of the values of
-   * ExpanderGroup TODO Roth, add - {@link BloaterGroup} when you make the
+   * ExpanderGroup TODO Roth, add - {@link ExpanderGroup} when you make the
    * expander preferencesResources
    * @return preference group this tipper belongs to */
-  default BloaterGroup ExpanderGroup() {
-    return BloaterGroup.find(this);
+  default ExpanderGroup tipperGroup() {
+    return ExpanderGroup.find(this);
   }
-  static String getLabel(final Class<? extends BloaterCategory> ¢) {
+  default ExpanderGroup ExpanderGroup() {
+    return ExpanderGroup.find(this);
+  }
+  static String getLabel(final Class<? extends ExpanderCategory> ¢) {
     return English.name(¢);
   }
 
   // TODO Roth, to preferences?
   @FunctionalInterface
-  interface Nominal extends BloaterCategory {
+  interface Nominal extends ExpanderCategory {
     String label = "Nominal";
-  }
-  
-  @FunctionalInterface
-  interface Common extends BloaterCategory {
-    String label = "Common code";
   }
 
   interface Clearification extends Nominal {
@@ -59,64 +57,32 @@ public interface BloaterCategory {
       return label;
     }
   }
-  
-  interface Splitting extends Common {
-    String label = "split statement";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-  
-  interface Unshortcut extends BloaterCategory {
-    String label = "unshortcut";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-  
-  interface Clarity extends BloaterCategory {
-    String label = "clarify";
-
-    @Override default String description() {
-      return label;
-    }
-  }
-  
-  interface Structural extends BloaterCategory {
-    String label = "structural";
-
-    @Override default String description() {
-      return label;
-    }
-  }
 
   /** An enum holding together all the "enabled expanders" options */
   // TODO Roth, please make a preferencesResources file for the expanders
-  enum BloaterGroup {
-    Abbreviation(BloaterCategory.Clearification.class), //
-    Explanation(BloaterCategory.Explanation.class), //
-    Ternarization(BloaterCategory.Ternarization.class), //
+  enum ExpanderGroup {
+    Abbreviation(ExpanderCategory.Clearification.class), //
+    Explanation(ExpanderCategory.Explanation.class), //
+    Ternarization(ExpanderCategory.Ternarization.class), //
     ;
-    public static BloaterGroup find(final BloaterCategory ¢) {
+    public static ExpanderGroup find(final ExpanderCategory ¢) {
       return find(¢.getClass());
     }
     static IPreferenceStore store() {
       return Plugin.plugin().getPreferenceStore();
     }
-    private static BloaterGroup find(final Class<? extends BloaterCategory> ¢) {
-      return Stream.of(BloaterGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
+    private static ExpanderGroup find(final Class<? extends ExpanderCategory> ¢) {
+      return Stream.of(ExpanderGroup.values()).filter(λ -> λ.clazz.isAssignableFrom(¢)).findFirst().orElse(null);
     }
 
-    private final Class<? extends BloaterCategory> clazz;
+    private final Class<? extends ExpanderCategory> clazz;
     final String id;
     final String label;
 
-    BloaterGroup(final Class<? extends BloaterCategory> clazz) {
+    ExpanderGroup(final Class<? extends ExpanderCategory> clazz) {
       this.clazz = clazz;
       id = clazz.getCanonicalName();
-      label = BloaterCategory.getLabel(clazz);
+      label = ExpanderCategory.getLabel(clazz);
     }
     public boolean isEnabled() {
       return Plugin.plugin() == null || store().getBoolean(id);

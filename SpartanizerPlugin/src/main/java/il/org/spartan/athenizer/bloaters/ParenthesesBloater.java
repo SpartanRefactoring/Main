@@ -2,7 +2,6 @@ package il.org.spartan.athenizer.bloaters;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -16,7 +15,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author tomerdragucki {@code tomerd@campus.technion.ac.il}
  * @since 2017-01-11 */
 public class ParenthesesBloater extends ReplaceCurrentNode<InfixExpression>//
-    implements BloaterCategory.Clarity {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x3B51DC170DB9CF0DL;
 
   @Override public ASTNode replacement(final InfixExpression ¢) {

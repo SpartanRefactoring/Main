@@ -9,10 +9,10 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** converts foreach statement to foreach {statement} Test case
@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel
  * @since 10-01-17 */
 public class ForEachBlockBloater extends ForEachStatementPattern//
-    implements BloaterCategory.Clarity {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x38C70470EE42ECEBL;
 
   @Override public Examples examples() {

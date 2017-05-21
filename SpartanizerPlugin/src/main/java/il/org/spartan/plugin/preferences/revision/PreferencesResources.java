@@ -39,7 +39,7 @@ public enum PreferencesResources {
   public static final Bool ZOOMER_REVERT_METHOD_VALUE = new Bool(false);
   public static final Bool WIDGET_SHORTCUT_METHOD_VALUE = new Bool(true);
 
-  public static String getLabel(final Class<? extends BloaterCategory> $) {
+  public static String getLabel(final Class<? extends ExpanderCategory> $) {
     return English.name($);
   }
   public static IPreferenceStore store() {

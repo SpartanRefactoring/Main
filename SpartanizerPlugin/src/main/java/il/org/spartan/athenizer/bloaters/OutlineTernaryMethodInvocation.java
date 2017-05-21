@@ -6,12 +6,12 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.java.*;
 import il.org.spartan.spartanizer.tippers.*;
+import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
@@ -24,7 +24,7 @@ import il.org.spartan.utils.*;
  * @author Dor Maayan
  * @since 2017-01-18 */
 public class OutlineTernaryMethodInvocation extends MethodInvocationPattern//
-    implements BloaterCategory.Ternarization {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x54464757E1B1C1A1L;
   ConditionalExpression $;
 

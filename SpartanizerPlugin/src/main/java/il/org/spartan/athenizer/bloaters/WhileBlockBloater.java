@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 
-import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tipping.*;
 
@@ -15,7 +14,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Raviv Rachmiel
  * @since 26-12-16 */
 public class WhileBlockBloater extends ReplaceCurrentNode<WhileStatement>//
-    implements BloaterCategory.Clarity {
+    implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x1DFF4C2FE0A6606BL;
 
   @Override public ASTNode replacement(final WhileStatement s) {
