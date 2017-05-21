@@ -100,6 +100,7 @@ public final class Recurser<T> {
     current = index == 0 ? current : rs.get(index - 1).getCurrent();
     f.accept(this);
   }
+  /** [[SuppressWarningsSpartan]] */
   public T postVisit(final Function<Recurser<T>, T> $) {
     final List<? extends ASTNode> children = children(root);
     if (children == null || children.isEmpty())
