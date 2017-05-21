@@ -28,6 +28,12 @@ tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }
 
+// we need this because classes from 'main' refer to classes from 'test'.
+sourceSets.main.java.srcDir 'src/test/java'
+
+sourceCompatibility = VER_JAVA
+targetCompatibility = VER_JAVA
+
 repositories {
 	mavenCentral()
 	jcenter()

@@ -159,7 +159,7 @@ public class EventMapper<E extends Enum<?>> extends EventListener<E> {
     @SuppressWarnings("unchecked") public EventMapperFunctor<E, Int, Int> counter() {
       return ((EventMapperFunctor<E, Int, Int>) this) //
           .startWith(new Int()) //
-          .does(λ -> λ.step());
+          .does((Consumer<Int>)λ -> λ.step());
     }
     /** Setting biconsumer for this functor. May join with existing biconsumer.
      * @param ¢ JD
