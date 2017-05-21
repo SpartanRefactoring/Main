@@ -45,14 +45,13 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
       }
     };
   }
-  static Expression fix(InfixExpression e, ITypeBinding b) {
-    if("byte".equals(b.getName())) {
-      CastExpression c = e.getAST().newCastExpression();
-      c.setType(e.getAST().newPrimitiveType(PrimitiveType.BYTE));
-      c.setExpression(make.parethesized(e));
-      return c;
-    }
-    return e;
+  static Expression fix(InfixExpression x, ITypeBinding b) {
+    if (!"byte".equals(b.getName()))
+      return x;
+    CastExpression $ = x.getAST().newCastExpression();
+    $.setType(x.getAST().newPrimitiveType(PrimitiveType.BYTE));
+    $.setExpression(make.parethesized(x));
+    return $;
   }
   private static boolean validTypes(final Assignment ¢) {
     final ITypeBinding $ = left(¢).resolveTypeBinding(), br = right(¢).resolveTypeBinding();
