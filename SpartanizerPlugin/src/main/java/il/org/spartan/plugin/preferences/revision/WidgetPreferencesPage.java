@@ -43,6 +43,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     IntegerFieldEditor ife = new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent());
     ife.setValidRange(WIDGET_MIN_SIZE, WIDGET_MAX_SIZE);
     addField(ife);
+    OperationListEditor ole = new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent());
     ListEditor resLE = new ListEditor("X","enabled operations:", getFieldEditorParent()) {
       @Override protected String[] parseString(@SuppressWarnings("unused") String stringList) {
         String[] $ = new String[7];
@@ -69,10 +70,10 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         getButtonBoxControl(parent).dispose();
       }
     };
-    resLE.getButtonBoxControl(getFieldEditorParent());
-    addField(new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent(), getWidgetOperations(),
+    addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(),
         λ -> onConfigure((WidgetOperation) λ), λ -> isEnabled((WidgetOperation) λ),
         λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ),resLE)));
+    resLE.getButtonBoxControl(getFieldEditorParent());
     addField(resLE);
   }
   /** @return all plugin widget operations */
