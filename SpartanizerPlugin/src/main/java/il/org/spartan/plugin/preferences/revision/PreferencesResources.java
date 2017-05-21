@@ -31,8 +31,6 @@ public enum PreferencesResources {
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
   public static final String ZOOMER_REVERT_METHOD_ID = "ZOOMER_REVERT_METHOD";
   public static final String ZOOMER_REVERT_METHOD_TEXT = "Compund zoom text edits";
-  public static final String WIDGET_SHORTCUT_METHOD_ID = "WIDGET_SHORTCUT_METHOD";
-  public static final String WIDGET_SHORTCUT_METHOD_TEXT = "Enable widget shorcut - ctrl+alt+w";
   public static final int WIDGET_MIN_SIZE = 60;
   public static final int WIDGET_MAX_SIZE = 100;
   public static final int WIDGET_MAX_OPS = 7;
