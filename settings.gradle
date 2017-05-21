@@ -1,2 +1,14 @@
-include 'SpartanizerPlugin', 'fluent.ly', 'spartan'
+// *Note that there should be only one 'settings.gradle' file, and
+// it should be in the root project directory.
+
+
+// Definitions of sub-projects appear here.
+// Eclipse plugin.
+include 'SpartanizerPlugin'
+
+// Fluent APIs
+include 'fluent.ly'
+
+// Spartan
+include 'spartan'
 

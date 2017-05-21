@@ -35,4 +35,8 @@ abstract class MapOfLeaves<R> extends Reduce<R> {
   protected R map(final StringLiteral ¢) {
     return leaf(¢);
   }
+  // TODO yossi gil: check if it's alright
+  protected R map(final TypeLiteral ¢) {
+    return leaf(¢);
+  }
 }
