@@ -50,9 +50,10 @@ public class Issue0686 {
     azzert.that(getAll.stringVariables(az.methodDeclaration(make.ast("static void foobar(NotAString<String> s1);"))).size(), is(0));
   }
   @Test public void k() {
-    azzert
-        .that(the.firstOf(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
-            .getName().getIdentifier(), is("s1"));
+    azzert.that(
+        the.firstOf(getAll.stringVariables(az.methodDeclaration(make.ast("static void bar(NotAString<String> s2, String s1, int i1, int s3);"))))
+            .getName().getIdentifier(),
+        is("s1"));
   }
 
   public static class NotAString<T> extends ArrayList<T> {

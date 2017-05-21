@@ -9,5 +9,5 @@ import il.org.spartan.tables.*;
 public class NominalTables {
   static Table table;
   static String tableName;
-  static Map<String,Integer> namePrevelance;
+  static Map<String, Integer> namePrevelance;
 }

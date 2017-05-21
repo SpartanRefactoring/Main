@@ -158,8 +158,8 @@ public class Eclipse {
     }
     return true;
   }
-  public static boolean isCompiling(String filePath) {
-    JavaCompiler c = ToolProvider.getSystemJavaCompiler();
+  public static boolean isCompiling(final String filePath) {
+    final JavaCompiler c = ToolProvider.getSystemJavaCompiler();
     return c != null && c.run(null, null, null, Objects.requireNonNull(filePath)) == 0;
   }
 }

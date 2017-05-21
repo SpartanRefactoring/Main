@@ -53,14 +53,14 @@ public abstract class BloaterTest<N extends ASTNode> {
     @Override public BloaterTrimmingOperand<M> givesEither(final String... options) {
       return new BloaterTrimmingOperand<>(super.givesEither(options), bloater, tipsOn);
     }
-    @Override public BloaterTrimmingOperand<M> givesWithBinding(String s) {
-      String $ = super.givesWithBinding(s).get();
+    @Override public BloaterTrimmingOperand<M> givesWithBinding(final String s) {
+      final String $ = super.givesWithBinding(s).get();
       final ASTParser p = make.COMPILATION_UNIT.parser($);
       p.setResolveBindings(true);
       return new BloaterTrimmingOperand<>(az.compilationUnit(p.createAST(null)), $, bloater, tipsOn);
     }
-    @Override public BloaterTrimmingOperand<M> givesWithBinding(String s, String f) {
-      String $ = super.givesWithBinding(s,f).get();
+    @Override public BloaterTrimmingOperand<M> givesWithBinding(final String s, final String f) {
+      final String $ = super.givesWithBinding(s, f).get();
       final ASTParser p = make.COMPILATION_UNIT.parser($);
       p.setResolveBindings(true);
       return new BloaterTrimmingOperand<>(az.compilationUnit(p.createAST(null)), $, bloater, tipsOn);

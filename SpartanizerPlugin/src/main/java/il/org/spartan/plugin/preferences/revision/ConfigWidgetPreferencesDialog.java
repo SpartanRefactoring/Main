@@ -25,7 +25,8 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
   IPreferenceStore store;
   long widgetSerialID;
 
-  public ConfigWidgetPreferencesDialog(final Shell parentShell, final String widgetName, final String[][] configurations, final long widgetSerialID, final IPreferenceStore store) {
+  public ConfigWidgetPreferencesDialog(final Shell parentShell, final String widgetName, final String[][] configurations, final long widgetSerialID,
+      final IPreferenceStore store) {
     super(parentShell);
     this.widgetName = widgetName;
     this.configurations = configurations;

@@ -23,7 +23,9 @@ public class Namer {
    * @author Yossi Gil
    * @since 2017-05-20 */
   @FunctionalInterface
-  public interface Simplifier extends Function<Type, Simplification> {}
+  public interface Simplifier extends Function<Type, Simplification> {
+    // TODO Dor Maayan
+  }
 
   /** This is the actual simplification.
    * @author Yossi Gil
@@ -41,6 +43,7 @@ public class Namer {
   }
 
   static final String PLURALS = "s";
+  // An example of simplification
   public static Simplifier array = λ -> new Simplification() {
     @Override public String apply(final String ¢) {
       return ¢ + PLURALS;

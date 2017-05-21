@@ -17,8 +17,7 @@ import il.org.spartan.spartanizer.tippers.*;
 public class Issue1314 {
   @Test public void a() {
     trimmingOf("List<T> x = new ArrayList<>(); x.addAll(ys);") //
-    .using(new LocalInitializedNewAddAll())
-        .gives("List<T> x = new ArrayList<>(ys);")//
+        .using(new LocalInitializedNewAddAll()).gives("List<T> x = new ArrayList<>(ys);")//
     ;
   }
   @Test public void b() {

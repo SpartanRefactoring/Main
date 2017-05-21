@@ -54,24 +54,24 @@ public final class Between extends NotImplementedNanoPattern<InfixExpression> {
             || (firstTipper(inEqualities, x1).getMatching(x1, "$X2") + "").equals(firstTipper(inEqualities, x2).getMatching(x2, "$X1") + ""));
   }
   @Override public Tip pattern(final InfixExpression x) {
-    List<Expression> xs = extract.allOperands(x);
-    xs.set(xs.indexOf(left),replacement(left,right));
+    final List<Expression> xs = extract.allOperands(x);
+    xs.set(xs.indexOf(left), replacement(left, right));
     xs.remove(right);
-    int size = xs.size();
+    final int size = xs.size();
     if (size == 1)
       return replaceBy(the.onlyOneOf(xs));
     if (size == 2)
       return replaceBy(subject.pair(the.firstOf(xs), the.secondOf(xs)).to(step.operator(x)));
-    InfixExpression $ = copy.of(x);
+    final InfixExpression $ = copy.of(x);
     $.setLeftOperand(copy.of(xs.get(0)));
     $.setRightOperand(copy.of(xs.get(1)));
     $.extendedOperands().clear();
     extendedOperands($).addAll(xs.subList(2, size));
     return replaceBy($);
   }
-  private Tip replaceBy(Expression replacement) {
+  private Tip replaceBy(final Expression replacement) {
     return new Tip("Use a between expression", this.getClass(), null) {
-      @Override public void go(ASTRewrite r, TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         r.replace(current, replacement, g);
       }
     };

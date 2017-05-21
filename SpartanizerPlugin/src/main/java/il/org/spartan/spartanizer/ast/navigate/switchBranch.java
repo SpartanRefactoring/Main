@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.ast.safety.*;
 /** TODO YuvalSimon <yuvaltechnion@gmail.com> , this class is duplicate also
  * please add a description
  * @author YuvalSimon <yuvaltechnion@gmail.com>
- * @since Jan 15, 2017 */
+ * @since Jan 15, 2017 [[SuppressWarningsSpartan]] */
 public class switchBranch {
   public final List<SwitchCase> cases;
   public final List<Statement> statements;
@@ -96,8 +96,8 @@ public class switchBranch {
     return sequencerLevel = sum > $ && sum > re && sum > br && sum > co ? 0 : $ > 0 ? 1 : re > 0 ? 2 : br > 0 ? 3 : 4;
   }
   /** @param ¢
-   * @return returns 1 if _this_ has better metrics than b (i.e should come
-   *         before b in the switch), -1 otherwise */
+   * @return returns 1 if _this_ has better metrics than b (i.e should
+   *         comebefore b in the switch), -1 otherwise */
   private boolean compare(final switchBranch ¢) {
     for (final Comparator<switchBranch> c : priorityOrder) {
       final int $ = c.compare(this, ¢);
@@ -125,8 +125,7 @@ public class switchBranch {
   }
   // TODO Yuval Simon: please simplify this code. It is, to be honest, crappy
   // --yg
-   @SuppressWarnings("null")
-  public static List<switchBranch> intoBranches(final SwitchStatement n) {
+  @SuppressWarnings("null") public static List<switchBranch> intoBranches(final SwitchStatement n) {
     final List<Statement> l = step.statements(n);
     assert iz.switchCase(the.firstOf(l));
     List<SwitchCase> c = null;
