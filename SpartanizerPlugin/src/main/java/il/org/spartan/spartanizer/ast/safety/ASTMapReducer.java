@@ -5,6 +5,7 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -14,6 +15,7 @@ import il.org.spartan.utils.*;
 
 public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   public R map(final ASTNode ¢) {
+    assert ¢ != null;
     return iz.nodeTypeIn(¢, protect()) ? reduce()//
         : iz.statement(¢) ? map(az.statement(¢))//
             : iz.expression(¢) ? map(az.expression(¢))//
@@ -31,7 +33,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return $;
   }
   protected R compound(final Expression... ¢) {
-    return foldl(as.list(¢));
+    return foldl(as.list(¢).stream().filter(λ -> λ != null).collect(Collectors.toList()));
   }
   protected final R foldl(final Iterable<? extends ASTNode> ns) {
     R $ = reduce();
@@ -161,6 +163,8 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return map((FieldAccess) ¢);
       case EXPRESSION_METHOD_REFERENCE:
         return map((ExpressionMethodReference) ¢);
+      case VARIABLE_DECLARATION_EXPRESSION:
+        return map((VariableDeclarationExpression) ¢);
       default:
         return note.bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
