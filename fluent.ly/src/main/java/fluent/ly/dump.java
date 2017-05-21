@@ -13,6 +13,7 @@ import il.org.spartan.*;
 public class dump {
   static final int MAX_FIRST = 20;
   static final int MAX_LAST = 10;
+
   public static String entry(final String name, final boolean b) {
     return String.format("%s = %b\n", name, Boolean.valueOf(b));
   }
@@ -34,7 +35,7 @@ public class dump {
   public static String entry(final String name, final int i) {
     return String.format("%s = %d\n", name, Integer.valueOf(i));
   }
-  public static String entry(String name, Object value) {
+  public static String entry(final String name, final Object value) {
     return String.format((value == null ? "No" : "%s =") + " %s\n", name, value);
   }
   public static String entry(final String name, final Object[] os) {
@@ -100,7 +101,6 @@ public class dump {
     $ += "---------------------------\n";
     return $;
   }
-
   public static <T> String of(final List<T> ts, final String... ss) {
     String $ = "Exploring list";
     for (final String ¢ : ss)
@@ -115,8 +115,7 @@ public class dump {
       $ += ¢;
     return $ + entry("elements", os);
   }
-  @SuppressWarnings("unchecked")
-  public static String of(final Object o, final String... ss) {
+  @SuppressWarnings("unchecked") public static String of(final Object o, final String... ss) {
     String $ = "";
     for (final String ¢ : ss)
       $ += ¢;
@@ -160,8 +159,12 @@ public class dump {
         $ += entry(name, m.getName() + " THROWS " + ¢);
       }
     }
-    for (final Field f : c.getFields())
+    final List<Field> fieldList = new ArrayList<>();
+    for (Class<?> ¢ = c; ¢ != null; ¢ = ¢.getSuperclass())
+      fieldList.addAll(Arrays.asList(¢.getDeclaredFields()));
+    for (final Field f : fieldList)
       try {
+        f.setAccessible(true);
         $ += entry(f + "", f.get(o));
       } catch (IllegalArgumentException | IllegalAccessException e) {
         $ += entry(f + "", "???");
