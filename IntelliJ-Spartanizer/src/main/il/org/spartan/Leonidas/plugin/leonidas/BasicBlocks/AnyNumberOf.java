@@ -28,11 +28,8 @@ public class AnyNumberOf extends Quantifier {
         if (i.value().getParent() == null) return 1;
         Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody
-        i.value().getParent().accept(new EncapsulatorVisitor() {
-            @Override
-            public void visit(Encapsulator n) {
-                if (generalizes(n)) count.set(count.get() + 1);
-            }
+        i.value().getParent().accept(n -> {
+            if (generalizes(n)) count.set(count.get() + 1);
         });
         return count.get();
     }
