@@ -202,10 +202,10 @@ public class OperationListEditor extends ListEditor {
         : elements_list.stream().map(Entry::getKey).toArray(String[]::new);
   }
   @Override protected String getNewInputObject() {
-    AddNewWidgetPreferencesDialog dialog = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+    AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
         WidgetOperationPoint.allOperations);
-    dialog.open();
-    return dialog.getResult() == null ? null : dialog.getResult().description();
+    $.open();
+    return $.getResult() == null ? null : $.getResult().description();
   }
   @Override protected String createList(final String[] items) {
     return separate.these(items).by(DELIMETER);

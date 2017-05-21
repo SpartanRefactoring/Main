@@ -61,8 +61,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     return new Point(450, 300);
   }
   private static String createString(final Composite container, final String name) {
-    final Label lbl = new Label(container, SWT.NONE);
-    lbl.setText(name);
+    new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
@@ -71,8 +70,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     return $.getText();
   }
   @SuppressWarnings("boxing") private static Boolean createBoolean(final Composite container, final String name) {
-    final Label lbl = new Label(container, SWT.NONE);
-    lbl.setText(name);
+    new Label(container, SWT.NONE).setText(name);
     final GridData dataRes = new GridData();
     dataRes.grabExcessHorizontalSpace = true;
     dataRes.horizontalAlignment = GridData.FILL;
@@ -103,8 +101,7 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
     } catch (@SuppressWarnings("unused") final IOException x) {
       note.bug();
     }
-    final String new_conf = String.valueOf(Base64.getEncoder().encode(out.toByteArray()));
-    store().setValue("CONF_" + widgetSerialID, new_conf);
+    store().setValue("CONF_" + widgetSerialID, String.valueOf(Base64.getEncoder().encode(out.toByteArray())));
     // TODO: Niv, in order to read, use - ByteArrayInputStream in = new
     // ByteArrayInputStream(Base64.getDecoder().decode(yourString.toCharArray()));
     super.okPressed();

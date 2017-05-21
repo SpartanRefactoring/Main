@@ -28,21 +28,21 @@ public class AddNewWidgetPreferencesDialog extends Dialog {
   
   @Override
   protected Control createDialogArea(Composite parent) {
-      Composite container = (Composite) super.createDialogArea(parent);
+      Composite $ = (Composite) super.createDialogArea(parent);
       final GridData dataRes = new GridData();
       dataRes.grabExcessHorizontalSpace = true;
       dataRes.horizontalAlignment = GridData.FILL;
       radioButtons = new Button[widgetOps.size()];
       int count = 0;
       for (final WidgetOperation ¢ : widgetOps) {
-        radioButtons[count] = new Button(container, SWT.RADIO);
+        radioButtons[count] = new Button($, SWT.RADIO);
         radioButtons[count].setSelection(false);
         radioButtons[count].setText(¢.description());
         radioButtons[count].setBounds(10, 25 * count + 5, 75, 30);
         ++count;
       }
 
-      return container;
+      return $;
   }
 
   // overriding this methods allows you to set the
