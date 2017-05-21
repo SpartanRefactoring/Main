@@ -17,6 +17,7 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.*;
+import il.org.spartan.athenizer.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
@@ -36,7 +37,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @since 2017-01-10 */
 public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Splitting {
   private static final long serialVersionUID = 0x1A06EDFC5CBC0D5EL;
 
   @Override public String description(@SuppressWarnings("unused") final Statement __) {

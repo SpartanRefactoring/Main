@@ -4,6 +4,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import org.eclipse.jdt.core.dom.*;
 
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -15,7 +16,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author Tomer Dragucki
  * @since 23-12-2016 */
 public class MethodInvocationTernaryBloater extends ReplaceCurrentNode<ExpressionStatement>//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Ternarization {
   private static final long serialVersionUID = -0x52FB02854C2113AL;
 
   @Override public ASTNode replacement(final ExpressionStatement s) {

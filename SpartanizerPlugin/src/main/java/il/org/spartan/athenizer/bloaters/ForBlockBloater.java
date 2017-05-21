@@ -9,10 +9,10 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.tippers.*;
-import il.org.spartan.spartanizer.tipping.*;
 import il.org.spartan.utils.*;
 
 /** converts for(condition)statement to for(condition){statement} Issue #975
@@ -20,7 +20,7 @@ import il.org.spartan.utils.*;
  * @author Raviv Rachmiel
  * @author Dor Ma'ayan
  * @since 22-12-16 */
-public class ForBlockBloater extends ForStatementPattern implements TipperCategory.Bloater {
+public class ForBlockBloater extends ForStatementPattern implements BloaterCategory.Clarity {
   private static final long serialVersionUID = 0x1228AEDBE97C1F8DL;
 
   @Override public Examples examples() {

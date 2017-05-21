@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
@@ -26,7 +27,7 @@ import il.org.spartan.spartanizer.tipping.*;
  * @author YuvalSimon {@code yuvaltechnion@gmail.com}
  * @since 2016-12-25 */
 public class OutlineArrayAccess extends CarefulTipper<ArrayAccess>//
-    implements TipperCategory.Bloater {
+    implements BloaterCategory.Splitting {
   private static final long serialVersionUID = 0x3480EA693440B5ABL;
 
   @Override @SuppressWarnings("unused") public String description(final ArrayAccess n) {
