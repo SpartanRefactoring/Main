@@ -12,3 +12,9 @@ include 'fluent.ly'
 // Spartan
 include 'spartan'
 
+// target.p2, imports remote p2 dependencies (eclipse and jgit plugins).
+// the main villian of long loading times.
+include 'target.p2'
+
+// IntellJ-Spartanizer, Team 8 project
+include 'IntelliJ-Spartanizer'
