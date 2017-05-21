@@ -5,11 +5,9 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
-/**
- * Between nano
- * @author  Ori Marcovitch
- * @since  2016 
- */
+/** Between nano
+ * @author Ori Marcovitch
+ * @since 2016 */
 @Ignore("Ori Marcovitch please fix")
 @SuppressWarnings("static-method")
 public class BetweenTest {

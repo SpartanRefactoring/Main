@@ -40,7 +40,7 @@ public class Table_All_Names extends NominalTables {
       @Override public boolean visit(final CompilationUnit ¢) {
         ¢.accept(new ASTVisitor() {
           @Override @SuppressWarnings("boxing") public boolean visit(final SimpleName x) {
-            String n = x.getIdentifier();
+            final String n = x.getIdentifier();
             namePrevelance.put(n, !namePrevelance.containsKey(n) ? 1 : namePrevelance.get(n) + 1);
             return true;
           }

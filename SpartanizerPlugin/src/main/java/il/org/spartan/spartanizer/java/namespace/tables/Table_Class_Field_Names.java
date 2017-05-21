@@ -42,7 +42,7 @@ public class Table_Class_Field_Names extends NominalTables {
         ¢.accept(new ASTVisitor() {
           @Override @SuppressWarnings({ "boxing", "unchecked" }) public boolean visit(final FieldDeclaration x) {
             x.fragments().stream().forEach(p -> {
-              String n = (az.variableDeclrationFragment(az.astNode(p)).getName().getIdentifier());
+              final String n = az.variableDeclrationFragment(az.astNode(p)).getName().getIdentifier();
               namePrevelance.put(n, !namePrevelance.containsKey(n) ? 1 : namePrevelance.get(n) + 1);
             });
             return true;

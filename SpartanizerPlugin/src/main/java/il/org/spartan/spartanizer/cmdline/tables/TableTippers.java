@@ -29,7 +29,8 @@ public class TableTippers {
                   .col("Tipper", Tippers.name(¢))//
                   .col("Node Type Number", i) //
                   .col("Node Class", wizard.intToClassName(i))//
-               //   .col("Actual class", wizard.nodeName(¢.myActualOperandsClass()))//
+                  // .col("Actual class",
+                  // wizard.nodeName(¢.myActualOperandsClass()))//
                   .col("Abstract class", wizard.nodeName(¢.getAbstractOperandClass())) //
                   .nl();
       System.err.println("Output found in " + t.description());

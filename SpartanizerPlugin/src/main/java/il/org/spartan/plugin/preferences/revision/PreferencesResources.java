@@ -48,7 +48,6 @@ public enum PreferencesResources {
   public static IPreferenceStore store() {
     return Plugin.plugin().getPreferenceStore();
   }
-  
 
   /** An enum holding together all the "enabled spartanizations" options, also
    * allowing to get the set preference value for each of them */

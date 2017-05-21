@@ -18,7 +18,6 @@ public class Issue1001 extends BloaterTest<Assignment> {
   @Override public Class<Assignment> tipsOn() {
     return Assignment.class;
   }
-  
   @Test public void basic() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "void f1() {\n" //
@@ -133,6 +132,4 @@ public class Issue1001 extends BloaterTest<Assignment> {
       //
     }
   }
-
-
 }
