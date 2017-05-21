@@ -105,17 +105,6 @@ public enum as {
   @SafeVarargs public static <T> Iterator<T> iterator(final T... ¢) {
     return as.list(¢).iterator();
   }
-  /** Converts an array of <code><b>int</b></code> values into a {@link List}
-   * of non-<code><b>null</b></code> {@link Integer}s.
-   * @param is what to covert
-   * @return parameter, converted to the {@link List} of non-
-   *         <code><b>int</b></code> {@link Integer}s form. */
-  public static List<Integer> list(final int... is) {
-    final List<Integer> $ = new ArrayList<>();
-    for (final int ¢ : is)
-      $.add(fluent.ly.box.it(¢));
-    return $;
-  }
   /** Converts an {@link Iterable} of a given type into a {@link List} of values
    * of this type.
    * @param <T> type of items to be converted
@@ -201,7 +190,8 @@ public enum as {
     }
     @Test public void asListSimple() {
       // direct call `as.list(12, 13, 14)` kills Travis --or
-      final List<Integer> is = as.list(new int[] { 12, 13, 14 });
+      // i fixed this -- @RoeiRaz
+      final List<Integer> is = as.list(12, 13, 14);
       azzert.that(is.get(0), is(fluent.ly.box.it(12)));
       azzert.that(is.get(1), is(fluent.ly.box.it(13)));
       azzert.that(is.get(2), is(fluent.ly.box.it(14)));
