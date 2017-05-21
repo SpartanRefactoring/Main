@@ -19,7 +19,6 @@ import il.org.spartan.spartanizer.plugin.widget.*;
  * @author Raviv Rachmiel
  * @since 2017-04-30 */
 public class WidgetPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-  
   @Override public void init(@SuppressWarnings("unused") final IWorkbench __) {
     setPreferenceStore(Plugin.plugin().getPreferenceStore());
     setDescription(WIDGET_PAGE_DESCRIPTION);
@@ -28,14 +27,9 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
-  public static void onAble(final WidgetOperation o, final boolean valueNow) {
+  public static void onAble(final WidgetOperation o, final boolean valueNow, ListEditor resLE) {
     store().setValue("IS_ENABLED_" + ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID(), !valueNow);
-    // String prefOpsIDs = store().getString("prefOpsIDs"), prefOpsMapConfs =
-    // store().getString("prefOpsMapConfs");
-    // if (prefOpsIDs == null)
-    // store().putValue(prefOpsIDs, "stub");
-    // if (prefOpsMapConfs == null)
-    // store().putValue(prefOpsMapConfs, "stub");
+    resLE.loadDefault();
   }
   @SuppressWarnings("boxing") public static Boolean isEnabled(final WidgetOperation ¢) {
     return store().getBoolean("IS_ENABLED_" + ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID());
@@ -49,9 +43,6 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     IntegerFieldEditor ife = new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent());
     ife.setValidRange(WIDGET_MIN_SIZE, WIDGET_MAX_SIZE);
     addField(ife);
-    addField(new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent(), getWidgetOperations(),
-        λ -> onConfigure((WidgetOperation) λ), λ -> isEnabled((WidgetOperation) λ),
-        λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ))));
     ListEditor resLE = new ListEditor("X","enabled operations:", getFieldEditorParent()) {
       @Override protected String[] parseString(@SuppressWarnings("unused") String stringList) {
         String[] $ = new String[7];
@@ -79,6 +70,9 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
       }
     };
     resLE.getButtonBoxControl(getFieldEditorParent());
+    addField(new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent(), getWidgetOperations(),
+        λ -> onConfigure((WidgetOperation) λ), λ -> isEnabled((WidgetOperation) λ),
+        λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ),resLE)));
     addField(resLE);
   }
   /** @return all plugin widget operations */
