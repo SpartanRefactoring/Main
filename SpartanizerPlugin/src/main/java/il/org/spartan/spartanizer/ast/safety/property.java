@@ -10,7 +10,6 @@ public enum property {
   public static Attached attach(final Object o) {
     return λ -> λ.setProperty(key(o.getClass()), o);
   }
-
   /** Get property from node.
    * @param n JD
    * @param key property name
@@ -19,7 +18,6 @@ public enum property {
   public static <T> T get(final ASTNode n, final String key) {
     return n == null ? null : (T) n.getProperty(key);
   }
-
   /** Checks node has a property.
    * @param n JD
    * @param key property name
@@ -56,10 +54,12 @@ public enum property {
   static <N> String key(final Class<N> ¢) {
     return ¢.getCanonicalName();
   }
+
   @FunctionalInterface
   public interface Attached {
     void to(ASTNode n);
   }
+
   @FunctionalInterface
   public interface Obtainer<N> {
     N from(ASTNode n);

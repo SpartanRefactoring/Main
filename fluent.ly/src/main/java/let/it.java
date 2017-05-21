@@ -9,13 +9,13 @@ public class it<T> {
   public it(final T it) {
     this.it = it;
   }
-  public static <T> it<T> be(final T it) {
-    final let.it<T> $ = new it<>(it);
+  public static <T> it<T> be(final T ¢) {
+    final let.it<T> $ = new it<>(¢);
     stack.push($);
     return $;
   }
-  public it<T> is(@SuppressWarnings("hiding") final T it) {
-    this.it =it;
+  public it<T> is(final T ¢) {
+    this.it =¢;
     return this;
   }
 }

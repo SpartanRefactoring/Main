@@ -306,7 +306,7 @@ public interface Iterables {
       $ += ¢ + sep;
     return $;
   }
-  static <T> List<T> union(final List<T>... tss) {
+  @SafeVarargs static <T> List<T> union(final List<T>... tss) {
     final List<T> $ = new ArrayList<>();
     for (final List<T> ¢ : tss)
       $.addAll(¢);

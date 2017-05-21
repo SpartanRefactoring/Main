@@ -26,8 +26,7 @@ public class WidgetContext {
     final WidgetContext $ = new WidgetContext();
     $.project = Selection.Util.project();
     $.javaProject = Selection.Util.getJavaProject();
-    final IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-    $.allProjects = Arrays.asList(workspaceRoot.getProjects());
+    $.allProjects = Arrays.asList(ResourcesPlugin.getWorkspace().getRoot().getProjects());
     $.currentSelecetion = Selection.Util.current();
     $.currentCompilationUnit = Selection.Util.getCurrentCompilationUnit();
     $.allCompilationUnits = Selection.Util.getAllCompilationUnits();

@@ -440,7 +440,7 @@ public abstract class ___ {
    * @param args a list of strings in a <code>printf</code> like format
    *        describing the task to be done. */
   public static void todo(final String... args) {
-    note.bug("Feature unsupported. ", args);
+    note.bug("Feature unsupported. ", (Object[])args);
   }
   /** A never-returning method to be used in points of code which should never
    * be reached.

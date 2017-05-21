@@ -13,7 +13,6 @@ import il.org.spartan.spartanizer.engine.*;
  * @since 2017-02-08 */
 public enum certainly {
   DUMMY_ENUM_INSTANCE_INTRODUCING_SINGLETON_WITH_STATIC_METHODS;
-  
   static boolean string(final ASTNode... ¢) {
     return Stream.of(¢).allMatch(certainly::string);
   }

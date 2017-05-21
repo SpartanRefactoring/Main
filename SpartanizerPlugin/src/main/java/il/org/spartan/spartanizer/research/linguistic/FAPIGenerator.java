@@ -166,10 +166,10 @@ public class FAPIGenerator {
     }
     // TODO Roth: smart insert
     r.getListRewrite(lastKnownType, TypeDeclaration.BODY_DECLARATIONS_PROPERTY).insertFirst(addedDeclaration, null);
-    for (TypeDeclaration t : addedTypes)
+    for (final TypeDeclaration t : addedTypes)
       r.getListRewrite(baseType, TypeDeclaration.BODY_DECLARATIONS_PROPERTY).insertLast(t, null);
   }
-  @SuppressWarnings("unchecked") private TypeDeclaration addField(final FieldAccess a, String curTypeName, String nextTypeName,
+  @SuppressWarnings("unchecked") private TypeDeclaration addField(final FieldAccess a, final String curTypeName, final String nextTypeName,
       final List<TypeDeclaration> addedTypes) {
     final TypeDeclaration $ = ast.newTypeDeclaration();
     $.setName(ast.newSimpleName(curTypeName));
@@ -179,7 +179,7 @@ public class FAPIGenerator {
     addedTypes.add($);
     return $;
   }
-  @SuppressWarnings("unchecked") private TypeDeclaration addMethod(final MethodInvocation i, String curTypeName, String nextTypeName,
+  @SuppressWarnings("unchecked") private TypeDeclaration addMethod(final MethodInvocation i, final String curTypeName, final String nextTypeName,
       final List<TypeDeclaration> addedTypes) {
     final TypeDeclaration $ = ast.newTypeDeclaration();
     $.setName(ast.newSimpleName(curTypeName));
@@ -189,7 +189,7 @@ public class FAPIGenerator {
     addedTypes.add($);
     return $;
   }
-  @SuppressWarnings("unchecked") private FieldDeclaration getField(final FieldAccess a, String nextTypeName) {
+  @SuppressWarnings("unchecked") private FieldDeclaration getField(final FieldAccess a, final String nextTypeName) {
     final VariableDeclarationFragment df = ast.newVariableDeclarationFragment();
     df.setName(ast.newSimpleName(a.getName().getIdentifier()));
     final AnnotatableType t = ast.newSimpleType(ast.newName(nextTypeName != null ? nextTypeName : "Object"));
@@ -201,14 +201,14 @@ public class FAPIGenerator {
     fd.modifiers().addAll(ast.newModifiers(Modifier.PUBLIC));
     return fd;
   }
-  @SuppressWarnings("unchecked") private MethodDeclaration getMethod(final MethodInvocation i, final TypeDeclaration lastType, String nextTypeName) {
+  @SuppressWarnings("unchecked") private MethodDeclaration getMethod(final MethodInvocation i, final TypeDeclaration lastType, final String nextTypeName) {
     final MethodDeclaration md = ast.newMethodDeclaration();
     md.setName(ast.newSimpleName(i.getName().getIdentifier()));
     int xx = 1; // TODO Roth: variables generation
-    for (Expression e : (List<Expression>) i.arguments()) {
+    for (final Expression e : (List<Expression>) i.arguments()) {
       final SingleVariableDeclaration d = ast.newSingleVariableDeclaration();
       d.setName(ast.newSimpleName("arg" + xx++));
-      Type t = property.has(e, BINDING_PROPERTY) ? getType(property.get(e, BINDING_PROPERTY)) : ast.newSimpleType(ast.newSimpleName("Object"));
+      final Type t = property.has(e, BINDING_PROPERTY) ? getType(property.get(e, BINDING_PROPERTY)) : ast.newSimpleType(ast.newSimpleName("Object"));
       d.setType(t);
       md.parameters().add(d);
     }
@@ -233,13 +233,13 @@ public class FAPIGenerator {
   private static String getAbleName(final String s) {
     return s + "Able";
   }
-  private Type getType(ITypeBinding b) {
-    Type $ = getTypeInner(b);
+  private Type getType(final ITypeBinding b) {
+    final Type $ = getTypeInner(b);
     if ($ != null)
       ir.addImport(b, ast);
     return $;
   }
-  private Type getTypeInner(ITypeBinding b) {
+  private Type getTypeInner(final ITypeBinding b) {
     if (b.isNullType())
       return ast.newSimpleType(ast.newSimpleName("Object"));
     if (b.isPrimitive())

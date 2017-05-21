@@ -19,31 +19,31 @@ public class GitPullOperation extends GitOperation {
     PullResult pr = null;
     try {
       pr = g.pull().call();
-    } catch (WrongRepositoryStateException x) {
+    } catch (final WrongRepositoryStateException x) {
       displayMessage("Git Error: Pull failed due to wrong repository state");
       return;
-    } catch (InvalidConfigurationException x) {
+    } catch (final InvalidConfigurationException x) {
       displayMessage("Git Error: Pull failed due to invalid configuration");
       return;
-    } catch (DetachedHeadException x) {
+    } catch (final DetachedHeadException x) {
       displayMessage("Git Error: Pull failed because a non-detached HEAD reference eas expected");
       return;
-    } catch (InvalidRemoteException x) {
+    } catch (final InvalidRemoteException x) {
       displayMessage("Git Error: Pull failed due to an invalid remote");
       return;
-    } catch (CanceledException x) {
+    } catch (final CanceledException x) {
       displayMessage("Git Error: Pull failed due to operation cancelation");
       return;
-    } catch (RefNotFoundException x) {
+    } catch (final RefNotFoundException x) {
       displayMessage("Git Error: Pull failed because Ref not found");
       return;
-    } catch (NoHeadException x) {
+    } catch (final NoHeadException x) {
       displayMessage("Git Error: Couldn't find the HEAD reference");
       return;
-    } catch (TransportException x) {
+    } catch (final TransportException x) {
       displayMessage("Git Error: Transport operation failed");
       return;
-    } catch (Exception x) {
+    } catch (final Exception x) {
       displayMessage("Git Error: Pull failed (check for conflicts)");
       return;
     }

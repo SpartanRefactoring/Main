@@ -27,7 +27,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
-  public static void onAble(final WidgetOperation o, final boolean valueNow, ListEditor resLE) {
+  public static void onAble(final WidgetOperation o, final boolean valueNow, final ListEditor resLE) {
     store().setValue("IS_ENABLED_" + ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID(), !valueNow);
     resLE.loadDefault();
   }
@@ -39,29 +39,30 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID(), store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
-    IntegerFieldEditor ife = new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent());
+
+    final IntegerFieldEditor ife = new IntegerFieldEditor("WIDGET_SIZE", "Change widget size by radius - ", getFieldEditorParent());
     ife.setValidRange(WIDGET_MIN_SIZE, WIDGET_MAX_SIZE);
     addField(ife);
-    OperationListEditor ole = new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent());
-    ListEditor resLE = new ListEditor("X","enabled operations:", getFieldEditorParent()) {
-      @Override protected String[] parseString(@SuppressWarnings("unused") String stringList) {
-        String[] $ = new String[7];
+    final OperationListEditor ole = new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent());
+    final ListEditor resLE = new ListEditor("X", "enabled operations:", getFieldEditorParent()) {
+      @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
+        final String[] $ = new String[7];
         int count = 0;
         for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations)
           if (isEnabled(¢)) {
             if (count >= WIDGET_MAX_OPS) {
-              MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error",
-                  "Cannot enable more than " + WIDGET_MAX_OPS +" widget operations. \n Taking the "+ WIDGET_MAX_OPS + " first enabled widget operations ");
+              MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", "Cannot enable more than "
+                  + WIDGET_MAX_OPS + " widget operations. \n Taking the " + WIDGET_MAX_OPS + " first enabled widget operations ");
               return $;
             }
             $[count++] = ¢.description();
           }
-        return Arrays.copyOfRange($, 0,count);
+        return Arrays.copyOfRange($, 0, count);
       }
       @Override protected String getNewInputObject() {
         return null;
       }
-      @Override protected String createList(@SuppressWarnings("unused") String[] items) {
+      @Override protected String createList(@SuppressWarnings("unused") final String[] items) {
         return null;
       }
       @Override protected void doFillIntoGrid(final Composite parent, final int numColumns) {
@@ -69,9 +70,8 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         getButtonBoxControl(parent).dispose();
       }
     };
-    addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(),
-        λ -> onConfigure((WidgetOperation) λ), λ -> isEnabled((WidgetOperation) λ),
-        λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ),resLE)));
+    addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(), λ -> onConfigure((WidgetOperation) λ),
+        λ -> isEnabled((WidgetOperation) λ), λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ), resLE)));
     resLE.getButtonBoxControl(getFieldEditorParent());
     addField(resLE);
   }
@@ -82,6 +82,4 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
       $.add(new AbstractMap.SimpleEntry<>(¢.description(), ¢));
     return $;
   }
-  
-  
 }

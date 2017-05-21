@@ -106,7 +106,7 @@ public class TestOperand extends Wrapper<String> {
     copyPasteReformat("  .stays()//\n  ;\n");
     copyPasteReformat("trimming.of(" + get() + ")//\n" + //
         "  .stays()//\n  ;\n");
-    for (Tipper<? extends ASTNode> ¢ : traversal.configuration.getAllTippers())
+    for (final Tipper<? extends ASTNode> ¢ : traversal.configuration.getAllTippers())
       note.logger.severe(dump.of(¢, ¢.description()));
     azzert.fail("Nothing done on " + get());
   }

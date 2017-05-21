@@ -1,0 +1,74 @@
+<!--suppress XmlUnboundNsPrefix -->
+<idea-plugin>
+    <!-- Important notice:
+        Please make sure the 'name' appears as the last element in the 'id', otherwise there
+    is a problem retrieving the plugin descriptor during runtime -->
+    <id>il.ac.technion.yearlyproject2016.team8.Spartanizer</id>
+    <name>Spartanizer</name>
+    <version>0.4</version>
+    <vendor email="oren.afek@cs.technion.ac.il" url="http://www.cs.technion.ac.il">Team 8</vendor>
+
+    <description><![CDATA[
+      Spartanizer plugin for IntelliJ
+    ]]></description>
+
+    <change-notes><![CDATA[
+
+    ]]>
+    </change-notes>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="141.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to email.org.spartan.Leonidas.plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <annotator language="JAVA" implementationClass="il.org.spartan.Leonidas.plugin.SpartanizerAnnotator"/>
+    </extensions>
+
+    <application-components>
+        <component>
+            <implementation-class>
+                il.org.spartan.Leonidas.plugin.Toolbox
+            </implementation-class>
+        </component>
+    </application-components>
+
+    <actions>
+        <group  id="LeonidasGroup" text="Leonidas" description="Group For Leonidas Services" >
+            <add-to-group group-id="MainMenu" relative-to-action="RefactoringMenu" anchor="after"/>
+        </group>
+        <action class="il.org.spartan.Leonidas.plugin.SpartanizerEnableAction" id="myPlugin2"
+                text="Disable Spartanization">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+        <action class="il.org.spartan.Leonidas.plugin.SpartanizerAction" id="myPlugin3"
+                text="Spartanize">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+        <!--<action class="il.org.spartan.Leonidas.plugin.GUI.TipperCreator.TipperCreatorAction" id="myPlugin4"-->
+                <!--text="Create new tipper">-->
+            <!--<keyboard-shortcut first-keystroke="ctrl m" keymap="$default"/>-->
+            <!--<add-to-group group-id="LeonidasGroup" anchor="last"/>-->
+        <!--</action>-->
+        <action class="il.org.spartan.Leonidas.plugin.GUI.PlaygroundController.PlaygroundControllerAction"
+                id="myPlugin5"
+                text="Playground">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+        <action class="il.org.spartan.Leonidas.plugin.GUI.ToolBoxController.ToolBoxControllerAction"
+                id="myPlugin6"
+                text="ToolBox Controller">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+        <action class="il.org.spartan.Leonidas.plugin.GUI.About.AboutAction"
+                id="myPlugin7"
+                text="About">
+            <add-to-group group-id="LeonidasGroup" anchor="last"/>
+        </action>
+    </actions>
+
+</idea-plugin>

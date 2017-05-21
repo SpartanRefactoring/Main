@@ -42,8 +42,8 @@ public class Issue0753 {
   @Test public void f() {
     final List<MethodDeclaration> res2 = getAll.methods(az.compilationUnit(
         make.ast("public class B { double elite(int arg1){ class InnerElite{ void innerfunc(){} } return 0.0; }  int anotherFunc(){} }")));
-    azzert.that("foo", is(
-        the.firstOf(getAll.methods(az.compilationUnit(make.ast("public class A {void foo(/*lololo*/ ){            } }")))).getName().getIdentifier()));
+    azzert.that("foo", is(the.firstOf(getAll.methods(az.compilationUnit(make.ast("public class A {void foo(/*lololo*/ ){            } }")))).getName()
+        .getIdentifier()));
     azzert.that("elite", is(the.firstOf(res2).getName().getIdentifier()));
     azzert.that("innerfunc", is(res2.get(1).getName().getIdentifier()));
     azzert.that("anotherFunc", is(res2.get(2).getName().getIdentifier()));

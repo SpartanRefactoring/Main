@@ -125,8 +125,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     robust.ly(() -> {
       NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(store().getBoolean(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID));
       ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
-      final IProject[] projects = getAllSpartanizerProjects();
-      final Document doc = XMLSpartan.getXML(projects[0]);
+      final Document doc = XMLSpartan.getXML(getAllSpartanizerProjects()[0]);
       doc.getDocumentElement().normalize();
       notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"
           : doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue();

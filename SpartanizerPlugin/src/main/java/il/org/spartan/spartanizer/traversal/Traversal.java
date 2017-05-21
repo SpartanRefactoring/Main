@@ -154,6 +154,7 @@ public abstract class Traversal implements Selfie<Traversal> {
   protected Tip getTip() {
     return tip;
   }
+  /** [[SuppressWarningsSpartan]] */
   protected Tip setAuxiliaryTip(final Tip auxiliaryTip) {
     return otherTip = auxiliaryTip;
   }
