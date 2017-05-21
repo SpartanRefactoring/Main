@@ -39,11 +39,20 @@ public class AssignmentOperatorBloater extends CarefulTipper<Assignment>//
         e.setOperator(op.assign2infix(¢.getOperator()));
         final Assignment a = ¢.getAST().newAssignment();
         a.setLeftHandSide(copy.of(left(¢)));
-        a.setRightHandSide(e);
+        a.setRightHandSide(fix(e, left(¢).resolveTypeBinding()));
         a.setOperator(Operator.ASSIGN);
         r.replace(¢, a, g);
       }
     };
+  }
+  static Expression fix(InfixExpression e, ITypeBinding b) {
+    if("byte".equals(b.getName())) {
+      CastExpression c = e.getAST().newCastExpression();
+      c.setType(e.getAST().newPrimitiveType(PrimitiveType.BYTE));
+      c.setExpression(make.parethesized(e));
+      return c;
+    }
+    return e;
   }
   private static boolean validTypes(final Assignment ¢) {
     final ITypeBinding $ = left(¢).resolveTypeBinding(), br = right(¢).resolveTypeBinding();
