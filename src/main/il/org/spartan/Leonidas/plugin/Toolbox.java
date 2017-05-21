@@ -15,11 +15,6 @@ import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -96,19 +91,10 @@ public class Toolbox implements ApplicationComponent {
     }
 
     private Set<Class<? extends GenericEncapsulator>> getAllSubTypes() {
-        List<ClassLoader> classLoadersList = new LinkedList<ClassLoader>();
-        classLoadersList.add(ClasspathHelper.contextClassLoader());
-        classLoadersList.add(ClasspathHelper.staticClassLoader());
-
-        Reflections reflections = new Reflections(new ConfigurationBuilder()
-                .setScanners(new SubTypesScanner(false /* don't exclude Object.class */), new ResourcesScanner())
-                .setUrls(ClasspathHelper.forClassLoader(classLoadersList.toArray(new ClassLoader[0])))
-                .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix("il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks"))));
-        Set<Class<?>> classes = reflections.getSubTypesOf(Object.class);
-
-
-        Reflections r = new Reflections(GenericEncapsulator.class.getPackage().getName());
-        return classes.stream().filter(c -> GenericEncapsulator.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers())).map(c -> (Class<? extends GenericEncapsulator>) c).collect(Collectors.toSet());
+        Set<Class<? extends GenericEncapsulator>> allClasses =
+                new Reflections(GenericEncapsulator.class.getPackage().getName()).getSubTypesOf(GenericEncapsulator.class);
+        //noinspection unchecked
+        return allClasses.stream().filter(c -> GenericEncapsulator.class.isAssignableFrom(c) && !Modifier.isAbstract(c.getModifiers())).map(c -> (Class<? extends GenericEncapsulator>) c).collect(Collectors.toSet());
     }
 
     @SuppressWarnings("unchecked")

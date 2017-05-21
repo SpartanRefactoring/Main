@@ -35,7 +35,7 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public int extractId(PsiElement e) {
+    public Integer extractId(PsiElement e) {
         PsiElement ie = step.firstParameterExpression(az.methodCallExpression(e));
         return Toolbox.getInstance().getGeneric(ie).map(g -> g.extractId(ie)).orElse(null);
     }
