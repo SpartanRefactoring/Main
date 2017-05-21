@@ -23,7 +23,7 @@ public interface idiomatic {
   /** an ignoring trigger */
   Trigger ignore = new Trigger() {
     @Override public <T> T eval(final Supplier<T> ____) {
-      return null;
+      return nil.forgetting(____);
     }
   };
 
