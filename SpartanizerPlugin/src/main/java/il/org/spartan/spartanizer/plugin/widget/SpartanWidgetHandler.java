@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.*;
 
 import fluent.ly.*;
+import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.plugin.widget.operations.*;
 
@@ -20,28 +21,20 @@ import il.org.spartan.spartanizer.plugin.widget.operations.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @author Niv Shalmon
  * @since 2017-03-21 */
-public class SpartanWidgetHandler extends AbstractHandler {
-  private static final int R = 70;
+public class SpartanWidgetHandler extends AbstractHandler { 
+  private static int R = 70;
   private static final int r = 20;
   private static final int TRANSPERACY = 100;
   private static final Point MINIMAL_BUTTON_SIZE = new Point(9 * R / 10, R / 2 - R / 20);
   private static final String IMAGE_ID = "widget";
-  private static final Point[] circles = { //
-      new Point(2 * r, 2 * R)//
-      , new Point(r, R + r)//
-      , new Point(2 * r, 2 * r)//
-      , new Point(R + r, r)//
-      , new Point(2 * R, 2 * r)//
-      , new Point(2 * R + r, R + r)//
-      , new Point(2 * R, 2 * R)//
-  };
+  private static Point[] circles;
   private static WidgetOperation[] operations = { new GitPullOperation()//
-      , new GitPullOperation()//
       , new GitPushOperation()//
+      , new GitCommitOperation()//
       , new SpartanizationOperation()//
       , new ZoomerOperation()//
-      , new GitCommitOperation()//
       , new CleanOperation()//
+      , null//
   };
   static final int OPERATION_HOLD_INTERVAL = 500;
   static final AtomicBoolean active = new AtomicBoolean(false);
@@ -61,7 +54,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     if (display == null)
       return;
     final Shell originalShell = display.getActiveShell();
-    if (originalShell == null || originalShell.isDisposed())
+    if (originalShell == null || originalShell.isDisposed() || !setUpR() /*|| !setUpOperations()*/)
       return;
     final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
     final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
@@ -126,6 +119,51 @@ public class SpartanWidgetHandler extends AbstractHandler {
       }
     });
   }
+  private static boolean setUpOperations() {
+    Map<WidgetOperation,Map<String,String>> m = WidgetPreferences.readOperationsConfiguration();
+    WidgetOperation[] order = WidgetPreferences.readOperationsOrder();
+    if (m == null || order == null){
+      note.bug();
+      return false;
+    }
+    for (int i = 0; i < 7 ; ++i){
+      if (order[i] == null){
+        operations[i] = null;
+        continue;
+      }
+      final Class<?> current = order[i].getClass();
+      Optional<WidgetOperation> o = m.keySet().stream().filter(λ -> λ.getClass().equals(current)).findFirst();
+      if (!o.isPresent()){
+        note.bug();
+        return false;
+      }
+      operations[i] = o.get();
+      if (!operations[i].register(m.get(operations[i]))){
+        note.bug();
+        return false;
+      }
+    }
+    return true;
+  }
+  private static boolean setUpR() {
+    final int widgetSize = WidgetPreferences.readSize();
+    if (widgetSize < 60 || widgetSize > 100){
+      note.bug();
+      return false;
+    }
+    R = widgetSize;
+    circles = new Point[]{ //
+        new Point(2 * r, 2 * R)//
+        , new Point(r, R + r)//
+        , new Point(2 * r, 2 * r)//
+        , new Point(R + r, r)//
+        , new Point(2 * R, 2 * r)//
+        , new Point(2 * R + r, R + r)//
+        , new Point(2 * R, 2 * R)//
+    };
+    return true;
+  }
+  
   private static void setControl(final Control c, final Listener onEnter, final Listener onExit) {
     c.addListener(SWT.MouseEnter, onEnter);
     c.addListener(SWT.MouseExit, onExit);
@@ -176,7 +214,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   }
   static Canvas createImage(final Shell s) {
     final int w = R, h = R, fixX = -10 * R / 100;
-    final Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID, λ -> λ.scaledTo(-w, h));
+    final Image i = Dialogs.image(Dialogs.ICON, IMAGE_ID + R, λ -> λ.scaledTo(-w, h));
     final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
     $.addPaintListener((final PaintEvent ¢) -> {
       ¢.gc.drawImage(i, 0, 0);

@@ -1,5 +1,6 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
+import java.util.HashMap;
 import java.util.function.Supplier;
 import java.util.Map;
 
@@ -47,5 +48,6 @@ public interface LeonidasTipperDefinition {
     /*
     Defines code examples and results after applying the tipper. This is used to test the tipper.
      */
-    default Map<String,String> getExamples() {return null;}
+
+    default Map<String,String> getExamples() {return new HashMap<String,String>();}
 }

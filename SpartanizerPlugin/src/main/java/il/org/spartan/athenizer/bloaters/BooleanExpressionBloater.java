@@ -7,6 +7,7 @@ import org.eclipse.jdt.core.dom.InfixExpression.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
+import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
@@ -21,6 +22,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *  boolean b = y();
  *  a && b
  * }
+ * Test case is {@link Issue0980}
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @author tomerdragucki
  * @since 2017-01-13 */

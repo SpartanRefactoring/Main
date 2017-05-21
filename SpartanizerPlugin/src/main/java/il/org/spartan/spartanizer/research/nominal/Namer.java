@@ -5,6 +5,7 @@ import java.util.function.*;
 import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.utils.*;
 
 /** Explore ways to give meaningful names to identifiers according using
  * different strategies.
@@ -30,7 +31,7 @@ public class Namer {
   /** This is the actual simplification.
    * @author Yossi Gil
    * @since 2017-05-20 */
-  public interface Simplification extends UnaryOperator<String>, Supplier<Type> {
+  public interface Simplification extends UnaryOperator<String>, Supplier<Type>{
     /** This is how to change the result of further simplifications */
     @Override default String apply(final String ¢) {
       return ¢;
@@ -41,17 +42,41 @@ public class Namer {
       return null;
     }
   }
+  
+  public interface AtomicSimplification extends Simplification, Duplo.Atomic<Simplification>{
+    //Empty
+  }
+  
+  public interface CompundSimplification extends Simplification, Duplo.Compound<Simplification>{
+    //Empty
+  }
 
   static final String PLURALS = "s";
   // An example of simplification
-  public static Simplifier array = λ -> new Simplification() {
+  public static Simplifier arrayAtomic = λ -> new AtomicSimplification() {
     @Override public String apply(final String ¢) {
       return ¢ + PLURALS;
     }
     @Override public Type get() {
-      // TODO: Dor Maayan - this could be int[][][]; add as many s as
-      // needed --yg
       return !λ.isArrayType() ? null : az.arrayType(λ).getElementType();
+    }
+    @Override public Simplification self() {
+      return this;
+    }
+  };
+  
+  public static Simplifier arrayCompund = λ -> new CompundSimplification() {
+    @Override public String apply(final String ¢) {
+      return ¢ + PLURALS;
+    }
+    @Override public Type get() {
+      return !λ.isArrayType() ? null : az.arrayType(λ).getElementType();
+    }
+    @Override public Simplification self() {
+      return this;
+    }
+    @Override public Iterable<? extends Duplo<Simplification>> neighbors() {
+      return null;
     }
   };
 }
