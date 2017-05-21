@@ -44,7 +44,7 @@ public abstract class MethodScanner {
       @Override public Statement next() {
         final Statement $ = i.next();
         ++currentIndex;
-        return currentStatement = $;
+        return $;
       }
     };
   }

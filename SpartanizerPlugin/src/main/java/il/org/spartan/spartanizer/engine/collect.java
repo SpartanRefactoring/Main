@@ -190,17 +190,17 @@ public enum collect {
         return consider(initializers(¢));
       }
       /** {@link PostfixExpression} can be only INCREMENT OR DECREMENT.
-       * @param it JD
+       * @param ¢ JD
        * @return identifier of the operand. */
-      @Override public boolean visit(final PostfixExpression it) {
-        return consider(it.getOperand());
+      @Override public boolean visit(final PostfixExpression ¢) {
+        return consider(¢.getOperand());
       }
       /** {@link PrefixExpression} can be more then only INCREMENT OR DECREMENT,
        * but only on that cases it is a definition.
-       * @param it JD
+       * @param ¢ JD
        * @return identifier of the operand. */
-      @Override public boolean visit(final PrefixExpression it) {
-        return !is.in(it.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(it.getOperand());
+      @Override public boolean visit(final PrefixExpression ¢) {
+        return !is.in(¢.getOperator(), PrefixExpression.Operator.INCREMENT, PrefixExpression.Operator.DECREMENT) || consider(¢.getOperand());
       }
       @Override public boolean visit(final TryStatement ¢) {
         return consider(resources(¢));
