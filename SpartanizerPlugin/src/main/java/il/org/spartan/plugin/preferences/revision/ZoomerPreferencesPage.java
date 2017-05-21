@@ -21,5 +21,6 @@ public class ZoomerPreferencesPage extends FieldEditorPreferencePage implements 
   }
   @Override protected void createFieldEditors() {
     addField(new BooleanFieldEditor(ZOOMER_REVERT_METHOD_ID, ZOOMER_REVERT_METHOD_TEXT, getFieldEditorParent()));
+    addField(new BooleanFieldEditor(ZOOMER_AUTO_ACTIVISION_ID, ZOOMER_AUTO_ACTIVISION_ID_TEXT, getFieldEditorParent()));
   }
 }

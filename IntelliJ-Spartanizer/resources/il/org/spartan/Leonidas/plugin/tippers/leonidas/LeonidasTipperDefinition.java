@@ -1,7 +1,6 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import java.util.function.Supplier;
-import java.util.Map;
 
 /**
  * @author Sharon Kuninin, Oren Afek
@@ -43,9 +42,4 @@ public interface LeonidasTipperDefinition {
          */
         public Template(Supplier<?> __) {/**/}
     }
-
-    /*
-    Defines code examples and results after applying the tipper. This is used to test the tipper.
-     */
-    default Map<String,String> getExamples() {return null;}
 }

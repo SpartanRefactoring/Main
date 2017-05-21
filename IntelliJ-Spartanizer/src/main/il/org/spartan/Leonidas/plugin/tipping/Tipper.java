@@ -2,6 +2,8 @@ package il.org.spartan.Leonidas.plugin.tipping;
 
 import com.intellij.psi.PsiElement;
 
+import java.util.Map;
+
 /**
  * @author Oren Afek
  * @author Michal Cohen
@@ -23,4 +25,5 @@ public interface Tipper<T extends PsiElement> {
 
     Class<? extends T> getPsiClass();
 
+    default Map<String,String> getExamples() {return null;}
 }
