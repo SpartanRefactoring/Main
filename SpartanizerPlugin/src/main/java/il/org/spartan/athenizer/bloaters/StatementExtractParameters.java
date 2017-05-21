@@ -18,6 +18,7 @@ import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
@@ -39,6 +40,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x1A06EDFC5CBC0D5EL;
+  private static final String KNOWN_TYPES_NAMES = "KNOWN_TYPES_NAMES";
 
   @Override public String description(@SuppressWarnings("unused") final Statement __) {
     return "Extract complex parameter from statement";
@@ -77,8 +79,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     IType[] topTypes = null;
     try {
       ir.rewriteImports(new NullProgressMonitor());
-      types = ir.getCompilationUnit().getAllTypes();
-      topTypes = ir.getCompilationUnit().getTypes();
+      final ICompilationUnit iu = ir.getCompilationUnit();
+      types = iu.getAllTypes();
+      topTypes = iu.getTypes();
     } catch (final CoreException ¢) {
       note.bug(¢);
       return null;
@@ -89,7 +92,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final Collection<String> sameFile = getSameFile(createdImports, types);
     final Collection<String> samePackage = getSamePackage(createdImports, types[0]);
     final Collection<String> topLevel = getTopLevel(createdImports, topTypes);
-    return privateImportHazard(allBindings, sameFile) || //
+    return ambiguousImports(createdImports, u) || //
+        privateImportHazard(allBindings, sameFile) || //
         nonPublicImportHazard(allBindings, samePackage) ? null : //
             new Tip(description(s), myClass(), s) {
               @Override public void go(final ASTRewrite r, final TextEditGroup g) {
@@ -284,6 +288,29 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   private static Collection<String> getTopLevel(Collection<String> createdImports, IType[] ts) {
     final List<String> $ = Arrays.stream(ts).map(λ -> λ.getFullyQualifiedName()).collect(Collectors.toList());
     return createdImports.stream().filter(λ -> $.contains(λ)).collect(Collectors.toList());
+  }
+  private static boolean ambiguousImports(Collection<String> createdImports, CompilationUnit u) {
+    final List<String> usedNames = an.empty.list();
+    if (property.has(u, KNOWN_TYPES_NAMES))
+      usedNames.addAll(property.get(u, KNOWN_TYPES_NAMES));
+    else {
+      u.accept(new ASTVisitor() {
+        @Override public void preVisit(ASTNode n) {
+          if (!iz.type(n) || n.getParent() instanceof QualifiedType)
+            return;
+          final String s = extract.name(az.type(n));
+          if (s != null)
+            usedNames.add(s);
+        }
+        @Override public boolean visit(SimpleName n) {
+          if (iz.bodyDeclaration(n.getParent()))
+            usedNames.add(n.getIdentifier());
+          return false;
+        }
+      });
+      property.set(u, KNOWN_TYPES_NAMES, usedNames);
+    }
+    return !Collections.disjoint(createdImports.stream().map(λ -> λ.split("\\.")).map(λ -> λ[λ.length - 1]).collect(Collectors.toList()), usedNames);
   }
   private static boolean privateImportHazard(List<ITypeBinding> allBindings, Collection<String> sameFile) {
     return allBindings.stream().anyMatch(λ -> sameFile.contains(λ.getQualifiedName()) && Modifier.isPrivate(λ.getModifiers()));
