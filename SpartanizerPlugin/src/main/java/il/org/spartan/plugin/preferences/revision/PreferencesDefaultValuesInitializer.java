@@ -13,5 +13,6 @@ public final class PreferencesDefaultValuesInitializer extends AbstractPreferenc
   @Override public void initializeDefaultPreferences() {
     PreferencesResources.store().setDefault(PreferencesResources.NEW_PROJECTS_ENABLE_BY_DEFAULT_ID, true);
     PreferencesResources.store().setDefault(PreferencesResources.ZOOMER_REVERT_METHOD_ID, false);
+    PreferencesResources.store().setDefault(PreferencesResources.ZOOMER_AUTO_ACTIVISION_ID, true);
   }
 }

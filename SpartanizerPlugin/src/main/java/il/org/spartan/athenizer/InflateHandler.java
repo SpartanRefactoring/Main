@@ -84,12 +84,14 @@ public class InflateHandler extends AbstractHandler {
         }), ASTRewrite.create(¢.compilationUnit.getAST()), ¢, null, null, null, false)))).name(OPERATION_ACTIVITY.getIng())
         .operationName(OPERATION_ACTIVITY);
   }
+  // TODO Roth: multiple windows support
   private static IPartService getPartService() {
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return null;
-    final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
-    return $ == null ? null : $.getPartService();
+    final IWorkbenchWindow wd = w.getActiveWorkbenchWindow();
+    final IWorkbenchWindow[] wds = w.getWorkbenchWindows();
+    return wd != null ? wd.getPartService() : wds != null && wds.length != 0 ? wds[0].getPartService() : null;
   }
   @SuppressWarnings("unused") private static IPartListener pageListener() {
     return new IPartListener() {
@@ -126,13 +128,14 @@ public class InflateHandler extends AbstractHandler {
     if (!(i instanceof FileEditorInput))
       return;
     final IFile f = ((IFileEditorInput) i).getFile();
-    if (f == null)
-      return;
-    final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
-    text.getDisplay().addFilter(SWT.MouseWheel, l);
-    text.getDisplay().addFilter(SWT.KeyDown, l);
-    text.getDisplay().addFilter(SWT.KeyUp, l);
-    text.addKeyListener(l);
+    if (f != null)
+      Eclipse.runAsynchronouslyInUIThread(() -> {
+        final InflaterListener l = new InflaterListener(text, ¢, Selection.of(JavaCore.createCompilationUnitFrom(f)).setUseBinding());
+        text.getDisplay().addFilter(SWT.MouseWheel, l);
+        text.getDisplay().addFilter(SWT.KeyDown, l);
+        text.getDisplay().addFilter(SWT.KeyUp, l);
+        text.addKeyListener(l);
+      });
   }
   private static void removeListener(final ITextEditor e) {
     final StyledText text = getText(e);
