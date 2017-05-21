@@ -161,6 +161,8 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return map((FieldAccess) ¢);
       case EXPRESSION_METHOD_REFERENCE:
         return map((ExpressionMethodReference) ¢);
+      case VARIABLE_DECLARATION_EXPRESSION:
+        return map((VariableDeclarationExpression) ¢);
       default:
         return note.bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
