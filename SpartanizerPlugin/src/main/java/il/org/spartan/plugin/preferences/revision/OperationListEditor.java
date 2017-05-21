@@ -10,8 +10,10 @@ import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.*;
 
 import fluent.ly.*;
+import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** A widget containing a list of projects and some buttons. Used to configure
  * specific operations. "configure" button is used to open a dialog, allowing
@@ -200,7 +202,10 @@ public class OperationListEditor extends ListEditor {
         : elements_list.stream().map(Entry::getKey).toArray(String[]::new);
   }
   @Override protected String getNewInputObject() {
-    return null;
+    AddNewWidgetPreferencesDialog dialog = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+        WidgetOperationPoint.allOperations);
+    dialog.open();
+    return dialog.getResult() == null ? null : dialog.getResult().description();
   }
   @Override protected String createList(final String[] items) {
     return separate.these(items).by(DELIMETER);
