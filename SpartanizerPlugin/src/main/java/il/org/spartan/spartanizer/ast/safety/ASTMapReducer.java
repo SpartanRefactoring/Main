@@ -165,6 +165,10 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return map((ExpressionMethodReference) ¢);
       case VARIABLE_DECLARATION_EXPRESSION:
         return map((VariableDeclarationExpression) ¢);
+      case TYPE_LITERAL:
+        return map((TypeLiteral) ¢);
+      case CREATION_REFERENCE:
+        return map((CreationReference) ¢);
       default:
         return note.bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
@@ -267,7 +271,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
       case SYNCHRONIZED_STATEMENT:
         return map((SynchronizedStatement) ¢);
       case THROW_STATEMENT:
-        return map((SuperConstructorInvocation) ¢);
+        return map((ThrowStatement) ¢);
       case TRY_STATEMENT:
         return map((TryStatement) ¢);
       case TYPE_DECLARATION_STATEMENT:
@@ -312,6 +316,13 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   }
   protected R map(final VariableDeclarationStatement ¢) {
     return reduce(fragments(¢));
+  }
+  protected R map(final ThrowStatement ¢) {
+    return map(expression(¢));
+  }
+  //TODO yossi gil: check if it's alright
+  protected R map(@SuppressWarnings("unused") final CreationReference ¢) {
+    return reduce();
   }
   protected R map(final WhileStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));
