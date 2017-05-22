@@ -211,7 +211,8 @@ public class Matcher {
 
         public enum ConstraintType {
             IS,
-            IS_NOT
+            IS_NOT,
+            SPECIFIC
         }
     }
 }

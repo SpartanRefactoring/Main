@@ -220,17 +220,24 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return "is" if the(index).is(constraint) and "isNot" if the(index).isNot(constraint).
      */
     private Matcher.Constraint.ConstraintType extractConstraintType(PsiStatement s) {
-        Wrapper<Boolean> r = new Wrapper<>(Boolean.TRUE);
+        Wrapper<Matcher.Constraint.ConstraintType> constraintType = new Wrapper<>();
+
         s.accept(new JavaRecursiveElementVisitor() {
             @Override
             public void visitReferenceExpression(PsiReferenceExpression expression) {
                 super.visitReferenceExpression(expression);
-                if (expression.getText().endsWith("isNot")) {
-                    r.set(false);
+
+                if (expression.getText().startsWith("is")) {
+                    constraintType.set(Matcher.Constraint.ConstraintType.IS);
+                } else if (expression.getText().startsWith("isNot")) {
+                    constraintType.set(Matcher.Constraint.ConstraintType.IS_NOT);
+                } else {
+                    constraintType.set(Matcher.Constraint.ConstraintType.SPECIFIC);
                 }
             }
         });
-        return r.get() ? Matcher.Constraint.ConstraintType.IS : Matcher.Constraint.ConstraintType.IS_NOT;
+
+        return constraintType.get();
     }
 
     /**
@@ -280,14 +287,20 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         }
 
         Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
-            Integer key = extractIdFromConstraint(s);
-            PsiElement y = getLambdaExpressionBody(s);
-            Optional<Class<? extends PsiElement>> q = getTypeOf(s);
-            y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
-            // y - root, key ID
-            map.putIfAbsent(key, new LinkedList<>());
-            giveIdToStubElements(y);
-            map.get(key).add(new Matcher.Constraint(extractConstraintType(s), Pruning.prune(Encapsulator.buildTreeFromPsi(y))));
+            Integer elementId = extractIdFromConstraint(s);
+            Matcher.Constraint.ConstraintType constraintType = extractConstraintType(s);
+
+            if (constraintType == Matcher.Constraint.ConstraintType.SPECIFIC) {
+                // TODO
+            } else {
+                PsiElement y = getLambdaExpressionBody(s);
+                Optional<Class<? extends PsiElement>> q = getTypeOf(s);
+                y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
+                // y - root, key ID
+                map.putIfAbsent(elementId, new LinkedList<>());
+                giveIdToStubElements(y);
+                map.get(elementId).add(new Matcher.Constraint(constraintType, Pruning.prune(Encapsulator.buildTreeFromPsi(y))));
+            }
         });
         return map;
     }
@@ -306,7 +319,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @param element the root of the template.
+     * @param element         the root of the template.
      * @param rootElementType the type of the inner element to extract
      * @return the inner element derived by its type
      */
