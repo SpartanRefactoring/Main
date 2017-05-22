@@ -137,27 +137,31 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final List<Expression> $ = an.empty.list();
     s.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
-        if (¢ instanceof Expression)
-          consider($, (Expression) ¢);
-        switch (¢.getNodeType()) {
-          case ASTNode.ANONYMOUS_CLASS_DECLARATION:
-          case ASTNode.BLOCK:
-          case ASTNode.DO_STATEMENT:
-          case ASTNode.LAMBDA_EXPRESSION:
-          case ASTNode.SUPER_CONSTRUCTOR_INVOCATION:
-          case ASTNode.TYPE_DECLARATION_STATEMENT:
-          case ASTNode.VARIABLE_DECLARATION_STATEMENT:
-          case ASTNode.WHILE_STATEMENT:
+        if (¢ instanceof Expression) {
+          final InfixExpression p = az.infixExpression(¢.getParent());
+          if (p != null && (iz.conditionalAnd(p) || iz.conditionalOr(p)) && ¢ == p.getRightOperand())
             return false;
-          case ASTNode.ENHANCED_FOR_STATEMENT:
+          consider($, (Expression) ¢);
+        }
+        switch (¢.getNodeType()) {
+          case ANONYMOUS_CLASS_DECLARATION:
+          case BLOCK:
+          case DO_STATEMENT:
+          case LAMBDA_EXPRESSION:
+          case SUPER_CONSTRUCTOR_INVOCATION:
+          case TYPE_DECLARATION_STATEMENT:
+          case VARIABLE_DECLARATION_STATEMENT:
+          case WHILE_STATEMENT:
+            return false;
+          case ENHANCED_FOR_STATEMENT:
             final EnhancedForStatement efs = (EnhancedForStatement) ¢;
             consider($, efs.getExpression());
             return false;
-          case ASTNode.FOR_STATEMENT:
+          case FOR_STATEMENT:
             final ForStatement fs = (ForStatement) ¢;
             consider($, fs.initializers());
             return false;
-          case ASTNode.EXPRESSION_STATEMENT:
+          case EXPRESSION_STATEMENT:
             if (((ExpressionStatement) ¢).getExpression() instanceof Assignment)
               excludedParents.add(((ExpressionStatement) ¢).getExpression());
             return true;
