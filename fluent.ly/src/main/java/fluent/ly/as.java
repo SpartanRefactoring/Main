@@ -121,6 +121,9 @@ public enum as {
   @SafeVarargs public static <T> List<T> list(final T... $) {
     return Arrays.asList($).stream().collect(Collectors.toList());
   }
+  @SafeVarargs public static List<Integer> list(final int... $) {
+    return Arrays.stream($).collect(() -> an.empty.list(), (l, i) -> l.add(Integer.valueOf(i)), (l1, l2) -> l1.addAll(l2));
+  }
   /** Converts a sequence of objects of a given type into a {@link Set} of
    * values
    * @param <T> type of objects to be converted
@@ -154,7 +157,6 @@ public enum as {
         $.add(¢ + "");
     return Utils.cantBeNull($.toArray(new String[$.size()]));
   }
-
   static Iterable<Integer> asIterableEssence(final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current;
@@ -189,8 +191,6 @@ public enum as {
       assertArrayEquals(is, as.ints(as.list(is)));
     }
     @Test public void asListSimple() {
-      // direct call `as.list(12, 13, 14)` kills Travis --or
-      // i fixed this -- @RoeiRaz
       final List<Integer> is = as.list(12, 13, 14);
       azzert.that(is.get(0), is(fluent.ly.box.it(12)));
       azzert.that(is.get(1), is(fluent.ly.box.it(13)));
