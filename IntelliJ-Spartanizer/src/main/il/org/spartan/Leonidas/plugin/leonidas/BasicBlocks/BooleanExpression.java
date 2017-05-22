@@ -24,4 +24,10 @@ public class BooleanExpression extends Expression {
     public GenericEncapsulator create(Encapsulator e) {
         return new BooleanExpression(e);
     }
+
+    /* Constraints */
+
+    public void mustBeLiteral() {
+        // TODO
+    }
 }

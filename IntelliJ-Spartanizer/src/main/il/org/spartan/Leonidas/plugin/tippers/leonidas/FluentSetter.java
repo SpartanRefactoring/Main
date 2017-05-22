@@ -14,7 +14,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 public class FluentSetter implements LeonidasTipperDefinition {
     @Override
     public void constraints() {
-        element(0).is(() -> {});
+        // element(0).asMethod.startsWith("set");
         element(1).is(() -> {});
     }
 

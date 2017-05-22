@@ -18,6 +18,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -47,8 +48,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
         name = tipperName;
-        Map<Integer, List<Matcher.Constraint>> map = getConstraints();
+        Map<Integer, List<Matcher.Constraint>> map = getStructuralConstraints();
         matcher = new Matcher(getMatcherRootTree(), map);
+        injectLogicalConstraints();
         Class<? extends PsiElement> t = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));
         //noinspection unchecked
         rootType = t != null ? t : (Class<? extends PsiElement>) matcher.getRoot().getInner().getClass().getInterfaces()[0];
@@ -279,7 +281,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     /**
      * @return a mapping between the ID of a generic element to a list of all the constraint that apply on it.
      */
-    private Map<Integer, List<Matcher.Constraint>> getConstraints() {
+    private Map<Integer, List<Matcher.Constraint>> getStructuralConstraints() {
         Map<Integer, List<Matcher.Constraint>> map = new HashMap<>();
         PsiMethod constrainsMethod = getInterfaceMethod("constraints");
         if (!haz.body(constrainsMethod)) {
@@ -290,9 +292,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             Integer elementId = extractIdFromConstraint(s);
             Matcher.Constraint.ConstraintType constraintType = extractConstraintType(s);
 
-            if (constraintType == Matcher.Constraint.ConstraintType.SPECIFIC) {
-                // TODO
-            } else {
+            if (constraintType == Matcher.Constraint.ConstraintType.IS || constraintType == Matcher.Constraint.ConstraintType.IS_NOT) {
                 PsiElement y = getLambdaExpressionBody(s);
                 Optional<Class<? extends PsiElement>> q = getTypeOf(s);
                 y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
@@ -303,6 +303,66 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             }
         });
         return map;
+    }
+
+    /**
+     * Searches for logical constraints inside the "constraints" method in a tipper, and injects the relevant
+     * constraints inside the relevant encapsulators.
+     */
+    private void injectLogicalConstraints() {
+        PsiMethod constrainsMethod = getInterfaceMethod("constraints");
+        if (!haz.body(constrainsMethod)) {
+            return;
+        }
+
+        Encapsulator root = matcher.getRoot();
+
+        Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
+            if (extractConstraintType(s) != Matcher.Constraint.ConstraintType.SPECIFIC) {
+                return;
+            }
+
+            Encapsulator element = getElementById(root, extractIdFromConstraint(s));
+            String constraintName = az.methodCallExpression(s.getFirstChild()).getMethodExpression().getReferenceName();
+
+            Arrays.stream(element.getClass().getDeclaredMethods())
+                    .filter(m -> m.getName().equals(constraintName))
+                    .forEach(m -> {
+                        try {
+                            m.invoke(element);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    });
+        });
+    }
+
+    /**
+     * Returns the encapsulators matching the given id. This is done by starting the search from the root element, and
+     * recursively searching for a child with the given id.
+     *
+     * @param root root element, the search begins with it
+     * @param id   id of the element to be searched
+     * @return element matching the given id, or <Code>null</Code> if none was found
+     */
+    private Encapsulator getElementById(Encapsulator root, int id) {
+        if (root == null) {
+            return null;
+        }
+
+        if (root.getId() != null && root.getId().equals(id)) {
+            return root;
+        }
+
+        for (Encapsulator encapsulator : root.getChildren()) {
+            Encapsulator $ = getElementById(encapsulator, id);
+
+            if ($ != null) {
+                return $;
+            }
+        }
+
+        return null;
     }
 
     /**
