@@ -227,9 +227,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             public void visitReferenceExpression(PsiReferenceExpression expression) {
                 super.visitReferenceExpression(expression);
 
-                if (expression.getText().startsWith("is")) {
+                if (expression.getText().endsWith("is")) {
                     constraintType.set(Matcher.Constraint.ConstraintType.IS);
-                } else if (expression.getText().startsWith("isNot")) {
+                } else if (expression.getText().endsWith("isNot")) {
                     constraintType.set(Matcher.Constraint.ConstraintType.IS_NOT);
                 } else {
                     constraintType.set(Matcher.Constraint.ConstraintType.SPECIFIC);
