@@ -77,7 +77,10 @@ eclipse.project.file {
 			'org.eclipse.pde.PluginNature',
 			'org.eclipse.jdt.core.javanature',
 			'org.eclipse.jdt.core.javanature',
-			'org.springframework.ide.eclipse.core.springnature'
+			'org.springframework.ide.eclipse.core.springnature',
+			
+			// we get "ClassDefNotFound" when omitting this line -- @RoeiRaz
+			'il.org.spartan'
 		]
 		project.natures.unique()
 	}
