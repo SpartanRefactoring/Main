@@ -260,5 +260,6 @@ Untitled*
 .idea/
 build/
 
-# ignore .project in target.p2, eclipse creates it automatically
+target.p2/.classpath
 target.p2/.project
+target.p2/.settings/
