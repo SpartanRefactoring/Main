@@ -14,6 +14,11 @@ repositories {
 	}
 }
 
+// the are references to symbols from 'test' directory all over the place (in 'main').
+// to "solve" this, we add the test directory as a src folder for the compilation scope.
+// -- @RoeiRaz
+sourceSets.main.java.srcDir "src/test/java"
+
 // we need the maven repo from p2
 evaluationDependsOn(':target.p2')
 
