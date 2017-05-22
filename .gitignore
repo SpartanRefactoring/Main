@@ -259,3 +259,6 @@ Untitled*
 .gradle/
 .idea/
 build/
+
+# ignore .project in target.p2, eclipse creates it automatically
+target.p2/.project
