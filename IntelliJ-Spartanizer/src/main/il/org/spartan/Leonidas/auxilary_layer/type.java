@@ -12,6 +12,12 @@ public class type {
         Wrapper<Class<? extends PsiElement>> myClass = new Wrapper<>(PsiElement.class);
         x.accept(new JavaElementVisitor() {
             @Override
+            public void visitClass(PsiClass aClass) {
+                super.visitClass(aClass);
+                myClass.set(PsiClass.class);
+            }
+
+            @Override
             public void visitCallExpression(PsiCallExpression x) {
                 super.visitCallExpression(x);
                 myClass.set(PsiCallExpression.class);

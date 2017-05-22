@@ -1,5 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Method;
+
 import java.util.function.Supplier;
 
 /**
@@ -7,8 +9,9 @@ import java.util.function.Supplier;
  * @since 29-03-2017.
  */
 public abstract class The {
-
     static The the;
+
+    public Method method;
 
     public static The the(Object... objects) {
         return the;
