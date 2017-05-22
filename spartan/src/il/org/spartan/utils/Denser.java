@@ -95,14 +95,14 @@ public class Denser {
       azzert.that(g[2], is(4));
     }
     @Test public void gatherDoubles() {
-      final double[] g = new Denser(14, 0, 12, 13).gather(array.of(11., 1, 2, 4));
+      final double[] g = new Denser(14, 0, 12, 13).gather(array.ofDoubles(11., 1, 2, 4));
       assertEquals(11, g[0], 1E-5);
       assertEquals(2, g[1], 1E-5);
       assertEquals(4, g[2], 1E-5);
     }
     @Test(expected = IllegalArgumentException.class) //
     public void gatherDoublesIllegalSize() {
-      new Denser(14, 0, 12, 13).gather(array.of(11, 1, 2));
+      new Denser(14, 0, 12, 13).gather(array.ofInts(11, 1, 2));
     }
     @Test(expected = IllegalArgumentException.class) //
     public void gatherIllegalSize() {
@@ -151,7 +151,7 @@ public class Denser {
       azzert.that(s[3], is(2));
     }
     @Test public void scatterDoubles() {
-      final double[] s = new Denser(14, 0, 12, 13).scatter(array.of(11., 1., 2.));
+      final double[] s = new Denser(14, 0, 12, 13).scatter(array.ofDoubles(11., 1., 2.));
       assertEquals(11, s[0], 1E-5);
       assertEquals(0, s[1], 1E-5);
       assertEquals(1, s[2], 1E-5);
@@ -159,7 +159,7 @@ public class Denser {
     }
     @Test(expected = IllegalArgumentException.class) //
     public void scatterDoublesIllegalSize() {
-      new Denser(14, 0, 12, 13).scatter(array.of(11, 1, 5, 1));
+      new Denser(14, 0, 12, 13).scatter(array.ofInts(11, 1, 5, 1));
     }
     @Test(expected = IllegalArgumentException.class) //
     public void scatterIllegalSize() {

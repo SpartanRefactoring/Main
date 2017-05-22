@@ -47,7 +47,7 @@ public interface system {
    * @author Sharon Kuninin
    * @since 2016 Returns the essence of this code fragment, removing
    *        non-executable code parts and formatting whitespace characters.
-   * @deprecated since Nov 14, 2016, replaced by {@link Essence#of(String)}
+   * @deprecated since Nov 14, 2016, replaced by {@link Essence#ofBooleans(String)}
    * @param codeFragment code fragment represented as a string
    * @return essence of the code fragment */
   @Deprecated static String essence(final String codeFragment) {
