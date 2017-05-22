@@ -121,7 +121,7 @@ public enum as {
   @SafeVarargs public static <T> List<T> list(final T... $) {
     return Arrays.asList($).stream().collect(Collectors.toList());
   }
-  @SafeVarargs public static List<Integer> list(final int... $) {
+  @SafeVarargs public static List<Integer> ilist(final int... $) {
     return Arrays.stream($).collect(() -> an.empty.list(), (l, i) -> l.add(Integer.valueOf(i)), (l1, l2) -> l1.addAll(l2));
   }
   /** Converts a sequence of objects of a given type into a {@link Set} of
@@ -188,10 +188,10 @@ public enum as {
     }
     @Test public void asIntArraySimple() {
       final int[] is = as.intArray(100, 200, 200, 12, 13, 0);
-      assertArrayEquals(is, as.ints(as.list(is)));
+      assertArrayEquals(is, as.ints(as.ilist(is)));
     }
     @Test public void asListSimple() {
-      final List<Integer> is = as.list(12, 13, 14);
+      final List<Integer> is = as.ilist(12, 13, 14);
       azzert.that(is.get(0), is(fluent.ly.box.it(12)));
       azzert.that(is.get(1), is(fluent.ly.box.it(13)));
       azzert.that(is.get(2), is(fluent.ly.box.it(14)));
