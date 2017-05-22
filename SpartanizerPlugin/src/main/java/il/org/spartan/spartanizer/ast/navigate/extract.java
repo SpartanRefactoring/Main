@@ -1,11 +1,10 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
 import static fluent.ly.idiomatic.*;
+import static fluent.ly.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static java.util.stream.Collectors.*;
-
-import static fluent.ly.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
@@ -367,6 +366,49 @@ public enum extract {
   }
   public static String name(final Name ¢) {
     return iz.simpleName(¢) ? az.simpleName(¢).getIdentifier() : iz.qualifiedName(¢) ? az.qualifiedName(¢).getName().getIdentifier() : null;
+  }
+  public static String leftName(final Name ¢) {
+    return iz.simpleName(¢) ? az.simpleName(¢).getIdentifier() : iz.qualifiedName(¢) ? leftName(az.qualifiedName(¢).getQualifier()) : null;
+  }
+  public static String name(final Type ¢) {
+    if (¢ == null)
+      return null;
+    switch (¢.getNodeType()) {
+      case QUALIFIED_TYPE:
+        return extract.name(az.qualifiedType(¢).getName());
+      case PRIMITIVE_TYPE:
+        return ¢ + "";
+      case NAME_QUALIFIED_TYPE:
+        return extract.name(az.nameQualifiedType(¢).getName());
+      case SIMPLE_TYPE:
+        return extract.name(az.simpleType(¢).getName());
+      case WILDCARD_TYPE:
+        return extract.name(az.wildcardType(¢).getBound());
+      case ARRAY_TYPE:
+        return extract.name(az.arrayType(¢).getElementType());
+      case INTERSECTION_TYPE:
+        return null; // !
+      case PARAMETERIZED_TYPE:
+        return extract.name(az.parameterizedType(¢).getType());
+      case UNION_TYPE:
+        return null; // !
+      default:
+        assert fault.unreachable() : fault.dump() + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() + "\n d.getNodeType() = " + ¢.getNodeType()
+            + fault.done();
+        return null;
+    }
+  }
+  public static String leftName(final Type ¢) {
+    if (¢ == null)
+      return null;
+    switch (¢.getNodeType()) {
+      case QUALIFIED_TYPE:
+        return extract.leftName(az.qualifiedType(¢).getQualifier());
+      case NAME_QUALIFIED_TYPE:
+        return extract.leftName(az.nameQualifiedType(¢).getQualifier());
+      default:
+        return name(¢);
+    }
   }
   @SuppressWarnings("boxing") private static Statement next(final Statement s, final List<Statement> ss) {
     return range.to(ss.size() - 1).stream().filter(λ -> ss.get(λ) == s).map(λ -> ss.get(λ + 1)).findFirst().orElse(null);
