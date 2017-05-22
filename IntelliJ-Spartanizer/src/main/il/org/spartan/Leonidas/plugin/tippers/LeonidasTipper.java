@@ -323,13 +323,16 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             }
 
             Encapsulator element = getElementById(root, extractIdFromConstraint(s));
-            String constraintName = az.methodCallExpression(s.getFirstChild()).getMethodExpression().getReferenceName();
+
+            PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
+            List<PsiExpression> arguments = step.arguments(method);
+            String constraintName = method.getMethodExpression().getReferenceName();
 
             Arrays.stream(element.getClass().getDeclaredMethods())
                     .filter(m -> m.getName().equals(constraintName))
                     .forEach(m -> {
                         try {
-                            m.invoke(element);
+                            m.invoke(element, arguments.toArray());
                         } catch (IllegalAccessException | InvocationTargetException e) {
                             e.printStackTrace();
                         }

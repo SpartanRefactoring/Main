@@ -27,7 +27,7 @@ public class BooleanExpression extends Expression {
 
     /* Constraints */
 
-    public void mustBeLiteral() {
-        // TODO
+    public void mustBeLiteral(Object o) {
+        System.out.println(o);
     }
 }

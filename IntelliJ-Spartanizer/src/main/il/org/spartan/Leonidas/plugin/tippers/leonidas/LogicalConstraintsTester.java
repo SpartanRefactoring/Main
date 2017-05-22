@@ -10,7 +10,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 public class LogicalConstraintsTester implements LeonidasTipperDefinition {
     @Override
     public void constraints() {
-        element(1).asBooleanExpression.mustBeLiteral();
+        element(1).asBooleanExpression.mustBeLiteral("something");
     }
 
     @Override
@@ -18,6 +18,8 @@ public class LogicalConstraintsTester implements LeonidasTipperDefinition {
         new Template(() -> {
             if (booleanExpression(1)) {
                 statement(2);
+                statement(3);
+                statement(4);
             }
         });
     }
@@ -25,8 +27,11 @@ public class LogicalConstraintsTester implements LeonidasTipperDefinition {
     @Override
     public void replacer() {
         new Template(() -> {
-            if (booleanExpression(1))
+            if (booleanExpression(1)) {
                 statement(2);
+                statement(2);
+                statement(3);
+            }
         });
     }
 }
