@@ -197,7 +197,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @param s the statement of the constraint. For example: the(booleanExpression(3)).isNot(!booleanExpression(4))
+     * @param s the statement of the constraint. For example: the(3).isNot(!booleanExpression(4))
      * @return the ID on which the constraint applies. The previous example will return 3.
      */
     private Integer extractIdFromConstraint(PsiStatement s) {
@@ -206,14 +206,13 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 super.visitMethodCallExpression(expression);
-                if (expression.getMethodExpression().getText().equals("the")) {
-                    x.set(az.methodCallExpression(expression.getArgumentList().getExpressions()[0]));
+                if (expression.getMethodExpression().getText().equals("element")) {
+                    x.set(expression);
                 }
             }
         });
         PsiMethodCallExpression m = x.get();
-        return Integer.parseInt(m.getArgumentList().getExpressions()[0].getText());
-
+        return Integer.parseInt(step.arguments(m).get(0).getText());
     }
 
     /**

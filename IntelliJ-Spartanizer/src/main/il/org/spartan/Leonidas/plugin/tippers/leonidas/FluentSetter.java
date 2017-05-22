@@ -5,6 +5,7 @@ import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.anyNumberOf;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 
 /**
  * @author Sharon
@@ -13,7 +14,8 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
 public class FluentSetter implements LeonidasTipperDefinition {
     @Override
     public void constraints() {
-        // the(method(0)).method.startsWith("set");
+        element(0).is(() -> {});
+        element(1).is(() -> {});
     }
 
     @Override
