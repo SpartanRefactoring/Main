@@ -34,7 +34,15 @@ public enum WidgetPreferences {
   public static int readSize() {
     return store().getInt(PreferencesResources.WIDGET_SIZE);
   }
+  public static void storeEntries(final List<WidgetOperationEntry> es){
+    //TODO: serialize and store here
+  }
+  public static List<WidgetOperationEntry> readEntries(){
+    //TODO: read and deserialize here
+    return null;
+  }
   public static void setDefaults() {
     store().setDefault(PreferencesResources.WIDGET_SIZE,defaultWidgetSize);
+    //TODO: add defualt List of entries here
   }
 }
