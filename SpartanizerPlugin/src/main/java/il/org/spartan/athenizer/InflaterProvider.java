@@ -66,6 +66,9 @@ public class InflaterProvider extends OperationsProvider {
         .add(MethodInvocation.class, //
             new OutlineTernaryMethodInvocation(), //
             null) //
+        .add(MethodDeclaration.class, //
+            //new AddModifiersToMethodDeclaration(), //
+            null) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryBloater(), //
             null) //
