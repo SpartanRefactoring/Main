@@ -27,44 +27,28 @@ public interface nil {
   }
 
   interface Operand<T> extends Supplier<T> {
-    default <R> Operand<R> to(Function<T, R> f) {
-      T t = Operand.this.get();
-      R $ = t == null ? null : f.apply(t);
-      return new Operand<R>() {
-        @Override public R get() {
-          return $;
-        }
-      };
+    default <R> Operand<R> to(final Function<T, R> f) {
+      final T t = Operand.this.get();
+      final R $ = t == null ? null : f.apply(t);
+      return () -> $;
     }
   }
 
-  static <T> Operand<T> guardingly(T ¢) {
-    return new Operand<T>() {
-      @Override public T get() {
-        return ¢;
-      }
-    };
+  static <T> Operand<T> guardingly(final T ¢) {
+    return () -> ¢;
   }
 
   interface U<END, T1> {
-    default <T2> U<END, T2> on(Function<T2, T1> ¢) {
-      return new U<END, T2>() {
-        @Override public Function<T2, END> lastOn() {
-          return ¢.andThen(U.this.lastOn());
-        }
-      };
+    default <T2> U<END, T2> on(final Function<T2, T1> ¢) {
+      return () -> ¢.andThen(U.this.lastOn());
     }
-    default END on(T1 ¢) {
+    default END on(final T1 ¢) {
       return lastOn().apply(¢);
     }
     Function<T1, END> lastOn();
   }
 
-  static <T, R> U<R, T> cautiously(Function<T, R> ¢) {
-    return new U<R, T>() {
-      @Override public Function<T, R> lastOn() {
-        return ¢;
-      }
-    };
+  static <T, R> U<R, T> cautiously(final Function<T, R> ¢) {
+    return () -> ¢;
   }
 }

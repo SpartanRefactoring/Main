@@ -18,7 +18,7 @@ import il.org.spartan.spartanizer.traversal.*;
 /** TODO Yossi Gil Document Class
  * @author Yossi Gil
  * @since Sep 25, 2016 */
-public class fluentTraverasalApplication extends TraversalImplementation {
+public class fluentTraversalApplication extends TraversalImplementation {
   public final String codeFragment;
   public final GuessedContext guessedContext;
   public final String wrappedFragment;
@@ -28,7 +28,7 @@ public class fluentTraverasalApplication extends TraversalImplementation {
   public final TextEdit textEdit;
   public final UndoEdit undoEdit;
 
-  public fluentTraverasalApplication(final String codeFragment) {
+  public fluentTraversalApplication(final String codeFragment) {
     this.codeFragment = codeFragment;
     assert codeFragment != null;
     dump.of(codeFragment);
@@ -130,7 +130,7 @@ public class fluentTraverasalApplication extends TraversalImplementation {
     });
     return $.get();
   }
-  public fluentTraverasalApplication gives(final String expected) {
+  public fluentTraversalApplication gives(final String expected) {
     if (aboutTheSame(expected, codeFragment) != null) {
       dump.of(this);
       azzert.fail(//
@@ -168,7 +168,7 @@ public class fluentTraverasalApplication extends TraversalImplementation {
               + "\n   to '" + expected + "', but for it converted instead" //
               + "\n   to '" + difference + "'!" //
       );
-    return new fluentTraverasalApplication(document.get());
+    return new fluentTraversalApplication(document.get());
   }
   public void stays() {
     final String difference = common(codeFragment);

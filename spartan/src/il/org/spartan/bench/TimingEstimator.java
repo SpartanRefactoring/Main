@@ -1,8 +1,8 @@
 package il.org.spartan.bench;
 
+import static fluent.ly.___.*;
 import static il.org.spartan.bench.Unit.*;
 import static il.org.spartan.strings.StringUtils.*;
-import static fluent.ly.___.*;
 
 import java.util.*;
 

@@ -1,10 +1,11 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.text;
 
-import static il.org.spartan.Utils.*;
 import static fluent.ly.azzert.*;
+import static il.org.spartan.Utils.*;
 
 import org.junit.*;
+
 import fluent.ly.*;
 
 /** A trivial utility module with functions to scatter a text into an array of

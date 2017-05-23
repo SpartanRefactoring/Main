@@ -48,58 +48,32 @@ public class dump {
    * @param ¢ JD
    * @return */
   public static String of(final Class<?> ¢) {
-    String $ = "";
-    $ += "\n\n--IDENTIFICATION--\n";
-    $ += entry("Simple Name", ¢.getSimpleName());
-    $ += entry("Canonical Name", ¢.getCanonicalName());
-    $ += entry("Name", ¢.getName());
-    $ += entry("toString", ¢ + "");
-    $ += entry("super class", ¢.getSuperclass());
-    $ += entry("generic super class", ¢.getGenericSuperclass());
-    $ += entry("class", ¢.getClass());
-    $ += entry("component type", ¢.getComponentType());
-    // out("protection domain", c.getProtectionDomain());
-    $ += entry("class loader", ¢.getClassLoader());
-    $ += "--MODIFIERS--\n";
+    String $ = "\n\n--IDENTIFICATION--\n" + entry("Simple Name", ¢.getSimpleName()) + entry("Canonical Name", ¢.getCanonicalName())
+        + entry("Name", ¢.getName()) + entry("toString", ¢ + "")
+            + entry("super class", ¢.getSuperclass()) + entry("generic super class", ¢.getGenericSuperclass())
+        + entry("class", ¢.getClass()) + entry("component type", ¢.getComponentType())
+            + entry("class loader", ¢.getClassLoader()) + "--MODIFIERS--\n";
     final int flags = ¢.getModifiers();
-    $ += entry("Package", ¢.getPackage());
-    $ += entry("Modifiers (decimal form)", flags);
-    $ += entry("Modifiers (binary form)", ReflectionAnalyzer.toBinary(flags));
-    $ += entry("IsSynthetic", ¢.isSynthetic());
-    $ += entry("IsPrimitive", ¢.isPrimitive());
-    $ += entry("IsFinal", Modifier.isFinal(flags));
-    $ += entry("IsAbstract", Modifier.isAbstract(flags));
-    $ += entry("IsStatic", Modifier.isStatic(flags));
-    $ += entry("IsStrictfp", Modifier.isStrict(flags));
-    $ += "--Visibility--\n";
-    $ += entry("IsPublic", Modifier.isPublic(flags));
-    $ += entry("IsPrivate", Modifier.isPrivate(flags));
-    $ += entry("IsProtected", Modifier.isProtected(flags));
-    $ += "--MEMBERS\n";
-    $ += entry("fields", ¢.getFields());
-    $ += entry("methods", ¢.getMethods());
-    $ += entry("constructors", ¢.getConstructors());
-    $ += entry("declared fields", ¢.getDeclaredFields());
-    $ += entry("declared methods", ¢.getDeclaredMethods());
-    $ += entry("declared constructors", ¢.getDeclaredConstructors());
-    $ += "--CLASS SIGNATURE--\n";
-    $ += entry("interfaces", ¢.getInterfaces());
-    $ += entry("annotations", ¢.getAnnotations());
-    $ += entry("type parameters", ¢.getTypeParameters());
-    $ += entry("declared annotations", ¢.getDeclaredAnnotations());
-    $ += entry("generic interfaces", ¢.getGenericInterfaces());
-    $ += "--CONTAINERS--\n";
-    $ += entry("declared classes", ¢.getDeclaredClasses());
-    $ += entry("declaring class", ¢.getDeclaringClass());
-    $ += entry("enclosing class", ¢.getEnclosingClass());
-    $ += entry("enclosing constructor", ¢.getEnclosingConstructor());
-    $ += entry("enclosing method", ¢.getEnclosingMethod());
-    $ += "--CLASS MEMBERS--\n";
-    $ += entry("public classes", ¢.getClasses());
-    $ += entry("declared classes", ¢.getDeclaredClasses());
-    $ += entry("declared annotations", ¢.getDeclaredAnnotations());
-    $ += "---------------------------\n";
-    return $;
+    $ += entry("Package", ¢.getPackage()) + entry("Modifiers (decimal form)", flags)
+        + entry("Modifiers (binary form)", ReflectionAnalyzer.toBinary(flags)) + entry("IsSynthetic", ¢.isSynthetic())
+        + entry("IsPrimitive", ¢.isPrimitive()) + entry("IsFinal", Modifier.isFinal(flags))
+            + entry("IsAbstract", Modifier.isAbstract(flags)) + entry("IsStatic", Modifier.isStatic(flags))
+        + entry("IsStrictfp", Modifier.isStrict(flags)) + "--Visibility--\n"
+            + entry("IsPublic", Modifier.isPublic(flags)) + entry("IsPrivate", Modifier.isPrivate(flags))
+            + entry("IsProtected", Modifier.isProtected(flags)) + "--MEMBERS\n"
+                + entry("fields", ¢.getFields()) + entry("methods", ¢.getMethods())
+        + entry("constructors", ¢.getConstructors()) + entry("declared fields", ¢.getDeclaredFields())
+            + entry("declared methods", ¢.getDeclaredMethods()) + entry("declared constructors", ¢.getDeclaredConstructors())
+            + "--CLASS SIGNATURE--\n" + entry("interfaces", ¢.getInterfaces())
+            + entry("annotations", ¢.getAnnotations()) + entry("type parameters", ¢.getTypeParameters())
+            + entry("declared annotations", ¢.getDeclaredAnnotations()) + entry("generic interfaces", ¢.getGenericInterfaces()) + "--CONTAINERS--\n"
+                + entry("declared classes",
+                    ¢.getDeclaredClasses())
+                + entry("declaring class", ¢.getDeclaringClass()) + entry("enclosing class", ¢.getEnclosingClass())
+                    + entry("enclosing constructor", ¢.getEnclosingConstructor()) + entry("enclosing method", ¢.getEnclosingMethod())
+        + "--CLASS MEMBERS--\n" + entry("public classes", ¢.getClasses())
+        + entry("declared classes", ¢.getDeclaredClasses()) + entry("declared annotations", ¢.getDeclaredAnnotations());
+    return $ + "---------------------------\n";
   }
   public static <T> String of(final List<T> ts, final String... ss) {
     String $ = "Exploring list";
@@ -122,10 +96,8 @@ public class dump {
     if (o == null)
       return $ + "NULL";
     final Class<?> c = o.getClass();
-    $ += "\n\n--BEGIN " + c.getSimpleName() + " object: " + o + "\n";
-    $ += entry("Class canonical name", c.getCanonicalName());
-    $ += entry("Class name", c.getName());
-    $ += entry("Class simple name", c.getSimpleName());
+    $ += "\n\n--BEGIN " + c.getSimpleName() + " object: " + o + "\n" + entry("Class canonical name", c.getCanonicalName())
+        + entry("Class name", c.getName()) + entry("Class simple name", c.getSimpleName());
     for (final Method m : c.getMethods()) {
       if (m.getParameterTypes().length != 0)
         continue;
@@ -146,12 +118,7 @@ public class dump {
           $ += entry(name, "null");
           continue;
         }
-        if (oo instanceof Object[])
-          $ += entry(name, (Object[]) oo);
-        else if (o instanceof Collection)
-          $ += entry(name, (Collection<Object>) oo);
-        else
-          $ += entry(name, oo);
+        $ += entry(name, oo instanceof Object[] ? (Object[]) oo : o instanceof Collection ? (Collection<Object>) oo : oo);
       } catch (final Throwable ¢) {
         // For some reason, a reflection call to method
         // getContent() in URL objects throws this exception.

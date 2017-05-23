@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.engine;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
-import static il.org.spartan.spartanizer.ast.navigate.step.name;
 
 import java.util.*;
 

@@ -2,10 +2,9 @@ package il.org.spartan.sequence;
 
 import java.util.*;
 
+import fluent.ly.*;
 import il.org.spartan.external.*;
 import il.org.spartan.utils.*;
-import il.org.spatan.iteration.*;
-import fluent.ly.*;
 
 /** @author Yossi Gil
  * @since 24 ביול 2011 */

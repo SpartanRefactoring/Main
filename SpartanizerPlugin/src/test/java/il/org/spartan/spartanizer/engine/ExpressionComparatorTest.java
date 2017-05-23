@@ -9,7 +9,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.ast.navigate.countOf;
+import il.org.spartan.spartanizer.ast.navigate.*;
 
 /** Test class for {@link ExpressionComparator}
  * @author Yossi Gil

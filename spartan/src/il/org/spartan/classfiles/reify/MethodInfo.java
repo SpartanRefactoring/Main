@@ -5,7 +5,6 @@ import java.lang.reflect.*;
 import fluent.ly.*;
 import il.org.spartan.classfiles.reify.TypeInfo.*;
 import il.org.spartan.utils.*;
-import il.org.spatan.iteration.*;
 
 /** @author Yossi Gil
  * @since 21 November 2011 */

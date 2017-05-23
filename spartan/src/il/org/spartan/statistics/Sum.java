@@ -6,7 +6,6 @@ import static il.org.spartan.statistics.MomentUtils.*;
 import org.junit.*;
 
 import an.*;
-import fluent.ly.*;
 import il.org.spartan.streotypes.*;
 
 /** @author Yossi Gil

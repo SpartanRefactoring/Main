@@ -1,15 +1,15 @@
 package il.org.spartan.bench;
 
+import static fluent.ly.___.*;
 import static fluent.ly.azzert.*;
+import static fluent.ly.box.*;
 import static il.org.spartan.bench.LogBook.Consolidation.*;
 import static il.org.spartan.bench.Unit.*;
 import static il.org.spartan.strings.StringUtils.*;
-import static fluent.ly.___.*;
-import static fluent.ly.box.*;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import org.junit.*;
 
@@ -17,7 +17,6 @@ import fluent.ly.*;
 import il.org.spartan.statistics.*;
 import il.org.spartan.utils.*;
 import il.org.spartan.utils.Accumulator.Counter;
-import il.org.spatan.iteration.*;
 
 /** Represents an experiments log-book, that is a repository which stores a
  * collection of measurements carried out in a scientific experiment, or a

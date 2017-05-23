@@ -12,7 +12,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
-import il.org.spartan.spartanizer.plugin.Plugin;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** The preferences page for the Athenizer Widget

@@ -1,7 +1,7 @@
 package il.org.spartan.bench;
 
-import il.org.spartan.*;
 import fluent.ly.*;
+import il.org.spartan.*;
 
 public class RunRecord extends AbstractRunRecord {
   public RunRecord(final int runs, final Stopwatch grossTime, final Stopwatch netTime) {

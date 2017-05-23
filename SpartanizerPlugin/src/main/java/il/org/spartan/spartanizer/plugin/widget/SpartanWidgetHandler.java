@@ -21,7 +21,7 @@ import il.org.spartan.spartanizer.plugin.widget.operations.*;
  * @author Ori Roth {@code ori.rothh@gmail.com}
  * @author Niv Shalmon
  * @since 2017-03-21 */
-public class SpartanWidgetHandler extends AbstractHandler { 
+public class SpartanWidgetHandler extends AbstractHandler {
   private static int R = 70;
   private static final int r = 20;
   private static final int TRANSPERACY = 100;
@@ -54,7 +54,8 @@ public class SpartanWidgetHandler extends AbstractHandler {
     if (display == null)
       return;
     final Shell originalShell = display.getActiveShell();
-    if (originalShell == null || originalShell.isDisposed() || !setUpR() /*|| !setUpOperations()*/)
+    if (originalShell == null || originalShell.isDisposed()
+        || !setUpR() /* || !setUpOperations() */)
       return;
     final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
     final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
@@ -119,40 +120,14 @@ public class SpartanWidgetHandler extends AbstractHandler {
       }
     });
   }
-  private static boolean setUpOperations() {
-    Map<WidgetOperation,Map<String,String>> m = WidgetPreferences.readOperationsConfiguration();
-    WidgetOperation[] order = WidgetPreferences.readOperationsOrder();
-    if (m == null || order == null){
-      note.bug();
-      return false;
-    }
-    for (int i = 0; i < 7 ; ++i){
-      if (order[i] == null){
-        operations[i] = null;
-        continue;
-      }
-      final Class<?> current = order[i].getClass();
-      Optional<WidgetOperation> o = m.keySet().stream().filter(λ -> λ.getClass().equals(current)).findFirst();
-      if (!o.isPresent()){
-        note.bug();
-        return false;
-      }
-      operations[i] = o.get();
-      if (!operations[i].register(m.get(operations[i]))){
-        note.bug();
-        return false;
-      }
-    }
-    return true;
-  }
   private static boolean setUpR() {
     final int widgetSize = WidgetPreferences.readSize();
-    if (widgetSize < 60 || widgetSize > 100){
+    if (widgetSize < 60 || widgetSize > 100) {
       note.bug();
       return false;
     }
     R = widgetSize;
-    circles = new Point[]{ //
+    circles = new Point[] { //
         new Point(2 * r, 2 * R)//
         , new Point(r, R + r)//
         , new Point(2 * r, 2 * r)//
@@ -163,7 +138,6 @@ public class SpartanWidgetHandler extends AbstractHandler {
     };
     return true;
   }
-  
   private static void setControl(final Control c, final Listener onEnter, final Listener onExit) {
     c.addListener(SWT.MouseEnter, onEnter);
     c.addListener(SWT.MouseExit, onExit);

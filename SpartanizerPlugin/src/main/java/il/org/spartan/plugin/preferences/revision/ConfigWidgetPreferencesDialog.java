@@ -8,7 +8,6 @@ import java.util.*;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.preference.*;
 import org.eclipse.swt.*;
-
 import org.eclipse.swt.graphics.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.*;

@@ -3,8 +3,10 @@ package il.org.spartan.athenizer.zoomin.expanders;
 import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
 
 import java.util.*;
-import org.junit.*;
+
 import org.eclipse.jdt.core.dom.*;
+import org.junit.*;
+
 import il.org.spartan.athenizer.bloaters.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.safety.*;

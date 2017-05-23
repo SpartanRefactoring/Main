@@ -262,7 +262,7 @@ public interface Configurations {
           new LocalInitializedStatementToForInitializers(), //
           new LocalInitializedUnusedRemove(), //
           new LocalInitializedIncrementDecrementInline(), //
-//          new LocalInitializedNewAddAll(), //
+          // new LocalInitializedNewAddAll(), //
           new LocalInitializedArithmeticsInline(), //
           null) //
   );

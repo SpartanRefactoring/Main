@@ -201,7 +201,8 @@ public class FAPIGenerator {
     fd.modifiers().addAll(ast.newModifiers(Modifier.PUBLIC));
     return fd;
   }
-  @SuppressWarnings("unchecked") private MethodDeclaration getMethod(final MethodInvocation i, final TypeDeclaration lastType, final String nextTypeName) {
+  @SuppressWarnings("unchecked") private MethodDeclaration getMethod(final MethodInvocation i, final TypeDeclaration lastType,
+      final String nextTypeName) {
     final MethodDeclaration md = ast.newMethodDeclaration();
     md.setName(ast.newSimpleName(i.getName().getIdentifier()));
     int xx = 1; // TODO Roth: variables generation

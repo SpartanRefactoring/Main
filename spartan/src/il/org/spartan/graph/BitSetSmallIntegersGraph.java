@@ -2,6 +2,7 @@ package il.org.spartan.graph;
 
 import static fluent.ly.azzert.*;
 import static java.util.Arrays.*;
+
 import java.util.*;
 
 import org.junit.*;

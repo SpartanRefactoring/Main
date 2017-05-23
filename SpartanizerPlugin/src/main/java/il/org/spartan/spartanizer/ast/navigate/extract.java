@@ -387,11 +387,10 @@ public enum extract {
       case ARRAY_TYPE:
         return extract.name(az.arrayType(¢).getElementType());
       case INTERSECTION_TYPE:
-        return null; // !
+      case UNION_TYPE:
+        return null;
       case PARAMETERIZED_TYPE:
         return extract.name(az.parameterizedType(¢).getType());
-      case UNION_TYPE:
-        return null; // !
       default:
         assert fault.unreachable() : fault.dump() + "\n d = " + ¢ + "\n d.getClass() = " + ¢.getClass() + "\n d.getNodeType() = " + ¢.getNodeType()
             + fault.done();
