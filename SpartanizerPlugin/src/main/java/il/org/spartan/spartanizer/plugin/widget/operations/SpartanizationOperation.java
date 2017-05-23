@@ -21,8 +21,8 @@ public class SpartanizationOperation extends WidgetOperation {
         { TYPE, "List", "Current selection", "Current file", "Current project", "REQUIRED" } //
     };
   }
-  @Override public boolean register(final Map<?, ?> configuration) {
-    return (type = (String) configuration.get(TYPE)) != null;
+  @Override public boolean register(final ConfigurationsMap configuration) {
+    return (type = configuration.getString(TYPE)) != null;
   }
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext ¢) throws Throwable {
     switch (type) {

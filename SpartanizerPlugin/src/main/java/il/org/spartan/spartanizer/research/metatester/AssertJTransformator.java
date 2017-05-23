@@ -15,7 +15,7 @@ public class AssertJTransformator {
         .sorted(Comparator.comparingInt(λ -> λ.getAnnotation(AssertJTransformations.Order.class).value())).map(λ -> (String) safeInvoke(λ, s))
         .filter(λ -> !λ.equals(s)).findFirst().orElse(s);
   }
-  private static Object safeInvoke(final Method $, final Object o, final Object... args) {
+  private static Object safeInvoke(final Method $, final Object o, @SuppressWarnings("unused") final Object... args) {
     try {
       $.setAccessible(true);
       return $.invoke(null, o);
@@ -64,7 +64,7 @@ public class AssertJTransformator {
       $[¢] = original[order[¢]];
     return $;
   }
-  private static String replace(final String s, final String matchPattern, final String replacePattern, final int[] orderOfTemplatedValues) {
+  static String replace(final String s, final String matchPattern, final String replacePattern, final int[] orderOfTemplatedValues) {
     try {
       final String[] a = getTemplatedValues(s, matchPattern);
       String[] $ = new String[orderOfTemplatedValues.length];

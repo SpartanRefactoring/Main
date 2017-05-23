@@ -24,8 +24,8 @@ public abstract class GitOperation extends WidgetOperation {
         { POPUP, "Boolean", "true", "false", "REQUIRED" } //
     };
   }
-  @Override public boolean register(final Map<?, ?> configuration) {
-    return (popup = (Boolean) configuration.get(POPUP)) != null;
+  @Override public boolean register(final ConfigurationsMap configuration) {
+    return (popup = configuration.getBoolean(POPUP)) != null;
   }
   protected abstract void gitOperation(Git g) throws Throwable;
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext c) throws Throwable {
