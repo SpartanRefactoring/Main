@@ -33,4 +33,8 @@ public class ConfigurationsMap {
   public String getString(String key){
     return configurations.get(key);
   }
+  
+  public boolean isEmpty(){
+    return configurations.isEmpty();
+  }
 }
