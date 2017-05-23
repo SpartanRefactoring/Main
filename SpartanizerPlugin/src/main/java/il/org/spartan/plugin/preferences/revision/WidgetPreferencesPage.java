@@ -39,7 +39,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID(), store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
-    final IntegerFieldEditor ife = new IntegerFieldEditor(WidgetPreferences.WIDGET_SIZE, "Change widget size by radius - ", getFieldEditorParent());
+    final IntegerFieldEditor ife = new IntegerFieldEditor(PreferencesResources.WIDGET_SIZE, "Change widget size by radius - ", getFieldEditorParent());
     ife.setValidRange(WIDGET_MIN_SIZE, WIDGET_MAX_SIZE);
     addField(ife);
     final OperationListEditor ole = new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent());
