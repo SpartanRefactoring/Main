@@ -30,8 +30,8 @@ public class CleanOperation extends WidgetOperation {
         { MODE, "List", current, all, "Required" },//
     };
   }
-  @Override public boolean register(final Map<?, ?> configuration) {
-    return is.in(mode = (String) configuration.get(MODE), current, all);
+  @Override public boolean register(final ConfigurationsMap configuration) {
+    return is.in(mode = configuration.getString(MODE), current, all);
   }
   @Override public void onMouseUp(final WidgetContext c) throws Throwable {
     switch (mode) {
