@@ -1,7 +1,6 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
 import java.io.*;
-import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.swt.graphics.*;
@@ -41,23 +40,22 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
     return new String[][] {};
   }
   /** Configure this operation.
-   * @param configuration user configuration
+   * @param m user configuration
    * @return true iff the configuration is valid
    * @see #configurationComponents */
-  protected boolean register(final ConfigurationsMap configuration) {
+  protected boolean register(final ConfigurationsMap __) {
     return true;
   }
-  /** Configure this operation, if needed. 
-   * @param configuration user configuration
+  /** Configure this operation, if needed.
+   * @param ¢ user configuration
    * @return true iff the configuration is valid
    * @see #configurationComponents, #register, #hasDefaultConfiguration() */
-  public final boolean configure(final ConfigurationsMap configuration){
-    return (hasDefaultConfiguration() && configuration.isEmpty()) || register(configuration);
+  public final boolean configure(final ConfigurationsMap ¢) {
+    return hasDefaultConfiguration() && ¢.isEmpty() || register(¢);
   }
   /** Tells whether the operation can be used without calling register
-   * @return true iff the operation has a default configuration
-   */
-  protected boolean hasDefaultConfiguration(){
+   * @return true iff the operation has a default configuration */
+  protected boolean hasDefaultConfiguration() {
     return true;
   }
   /** @return URL of image of this operation. */
@@ -76,14 +74,12 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
   protected Function<ImageData, ImageData> scale() {
     return λ -> λ;
   }
-  
-  @Override
-  public WidgetOperation clone(){
+  @Override public WidgetOperation clone() {
     try {
       return (WidgetOperation) super.clone();
-    } catch (CloneNotSupportedException x) {
-      //should never happen
-      note.bug(x);
+    } catch (final CloneNotSupportedException ¢) {
+      // should never happen
+      note.bug(¢);
     }
     return null;
   }

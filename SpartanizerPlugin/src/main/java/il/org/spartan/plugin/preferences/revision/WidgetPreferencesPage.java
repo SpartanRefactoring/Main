@@ -39,7 +39,8 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         WidgetPreferences.getWidgetOpUID(¢), store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
-    final IntegerFieldEditor ife = new IntegerFieldEditor(PreferencesResources.WIDGET_SIZE, "Change widget size by radius - ", getFieldEditorParent());
+    final IntegerFieldEditor ife = new IntegerFieldEditor(PreferencesResources.WIDGET_SIZE, "Change widget size by radius - ",
+        getFieldEditorParent());
     ife.setValidRange(WIDGET_MIN_SIZE, WIDGET_MAX_SIZE);
     addField(ife);
     final OperationListEditor ole = new OperationListEditor("X", "Configure operations for widget:", getFieldEditorParent());
@@ -47,7 +48,13 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
       @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
         final String[] $ = new String[7];
         int count = 0;
-        for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries()) //TODO: change this to load from store
+        for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries()) // TODO:
+                                                                             // change
+                                                                             // this
+                                                                             // to
+                                                                             // load
+                                                                             // from
+                                                                             // store
           if (¢.isEnabled()) {
             if (count >= WIDGET_MAX_OPS) {
               MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", "Cannot enable more than "
@@ -78,10 +85,9 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   private static List<Entry<String, Object>> getWidgetOperations() {
     final List<Entry<String, Object>> $ = an.empty.list();
     for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries())
-      for (WidgetOperation wo : WidgetOperationPoint.allOperations)
+      for (final WidgetOperation wo : WidgetOperationPoint.allOperations)
         if (¢.widgetSUID == ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID())
           $.add(new AbstractMap.SimpleEntry<>(¢.getName(), wo));
-      
     return $;
   }
 }

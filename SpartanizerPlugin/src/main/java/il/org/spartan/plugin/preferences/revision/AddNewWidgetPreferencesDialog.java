@@ -1,6 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-
 import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;

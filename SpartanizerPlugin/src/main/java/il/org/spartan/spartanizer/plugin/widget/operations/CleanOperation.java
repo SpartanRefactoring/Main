@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import java.util.*;
-
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 
@@ -30,8 +28,8 @@ public class CleanOperation extends WidgetOperation {
         { MODE, "List", current, all, "Required" },//
     };
   }
-  @Override public boolean register(final ConfigurationsMap configuration) {
-    return is.in(mode = configuration.getString(MODE), current, all);
+  @Override public boolean register(final ConfigurationsMap ¢) {
+    return is.in(mode = ¢.getString(MODE), current, all);
   }
   @Override public void onMouseUp(final WidgetContext c) throws Throwable {
     switch (mode) {
