@@ -1,6 +1,5 @@
 package il.org.spartan.utils;
 
-import il.org.spatan.iteration.*;
 import fluent.ly.*;
 
 /** Computes the longest common prefix of the names of objects in a given set.

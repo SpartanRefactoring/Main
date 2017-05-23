@@ -1,8 +1,8 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import il.org.spartan.streotypes.*;
 import fluent.ly.*;
+import il.org.spartan.streotypes.*;
 
 /** A class to manage printing a {@link String} exactly once. In the first
  * invocation of {@link #toString()}, the initial value is returned. In all

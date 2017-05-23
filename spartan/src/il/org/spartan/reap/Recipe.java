@@ -1,8 +1,8 @@
 /* Part of the "Spartan Blog"; mutate the rest, but leave this line as is */
 package il.org.spartan.reap;
 
-import static il.org.spartan.Utils.*;
 import static fluent.ly.idiomatic.*;
+import static il.org.spartan.Utils.*;
 
 import java.util.*;
 import java.util.function.*;

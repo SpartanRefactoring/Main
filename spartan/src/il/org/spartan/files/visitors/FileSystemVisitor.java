@@ -9,7 +9,6 @@ import fluent.ly.*;
 import il.org.spartan.files.visitors.FileSystemVisitor.Action.*;
 import il.org.spartan.files.visitors.FindClassFile.*;
 import il.org.spartan.strings.*;
-import il.org.spatan.iteration.*;
 
 /** A class realizing a file system traversal algorithm, including delving into
  * archives such as ZIP and JAR files.

@@ -3,6 +3,7 @@ package il.org.spartan.strings;
 
 import static fluent.ly.azzert.*;
 import static il.org.spartan.strings.RE.*;
+
 import java.util.regex.*;
 
 import org.junit.*;

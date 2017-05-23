@@ -1,8 +1,7 @@
 package il.org.spartan.spartanizer.tippers;
 
-import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
-
 import static fluent.ly.lisp.*;
+import static org.eclipse.jdt.core.dom.Assignment.Operator.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 

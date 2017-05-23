@@ -2,6 +2,8 @@ package il.org.spartan.utils;
 
 import java.util.stream.*;
 
+import org.omg.CORBA.*;
+
 /** Organizes objects of the __ parameter in a tree, supplying a
  * {@link #descendants()} of all objects contained in a sub-tree. Object of the
  * __ parameter may present on all nodes on of this tree, including inner nodes.

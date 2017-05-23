@@ -1,7 +1,8 @@
 package il.org.spartan.spartanizer.research.nanos.methods;
 
-import java.util.*;
 import static il.org.spartan.spartanizer.research.TipperFactory.*;
+
+import java.util.*;
 
 import org.eclipse.jdt.core.dom.*;
 

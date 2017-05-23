@@ -15,7 +15,7 @@ public class it<T> {
     return $;
   }
   public it<T> is(final T ¢) {
-    this.it =¢;
+    this.it = ¢;
     return this;
   }
 }

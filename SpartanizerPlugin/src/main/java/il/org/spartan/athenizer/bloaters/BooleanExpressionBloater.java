@@ -21,8 +21,7 @@ import il.org.spartan.spartanizer.tipping.*;
  *  boolean a = x;
  *  boolean b = y();
  *  a && b
- * }
- * Test case is {@link Issue0980}
+ * } Test case is {@link Issue0980}
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @author tomerdragucki
  * @since 2017-01-13 */

@@ -2,7 +2,6 @@ package il.org.spartan.xy;
 
 import static fluent.ly.azzert.*;
 import static il.org.spartan.misc.LinearAlgebra.*;
-import static fluent.ly.Iterables.*;
 import static java.lang.Math.log;
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
@@ -10,8 +9,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.*;
 
 import an.*;
-import il.org.spartan.collections.*;
 import fluent.ly.*;
+import il.org.spartan.collections.*;
 
 /** An interface for processing a sequence of X-Y points
  * @author Yossi Gil
@@ -132,7 +131,8 @@ public interface XYProcessor {
     public static class TEST {
       @Test public void feed() {
         final RealsOnly p = new RealsOnly();
-        p.feed(array.ofDoubles(Double.NaN, 1, 4, 3), array.ofDoubles(0, Double.NEGATIVE_INFINITY, 5, 3), array.ofDoubles(0, 1, 6, Double.NEGATIVE_INFINITY));
+        p.feed(array.ofDoubles(Double.NaN, 1, 4, 3), array.ofDoubles(0, Double.NEGATIVE_INFINITY, 5, 3),
+            array.ofDoubles(0, 1, 6, Double.NEGATIVE_INFINITY));
         azzert.that(p.xs().length, is(1));
         azzert.that(p.ys().length, is(1));
         azzert.that(p.dys().length, is(1));

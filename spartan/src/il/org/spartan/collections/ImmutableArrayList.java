@@ -240,10 +240,10 @@ public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, 
   @Override public boolean isEmpty() {
     return size() == 0;
   }
-  /**
-   * Returns an iterator over the elements in this list in proper sequence. <p> The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
-   * @return  an iterator over the elements in this list in proper sequence 
-   */
+  /** Returns an iterator over the elements in this list in proper sequence.
+   * <p>
+   * The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
+   * @return an iterator over the elements in this list in proper sequence */
   @Override @SuppressWarnings("synthetic-access") public Iterator<E> iterator() {
     return new InternalIterator();
   }
