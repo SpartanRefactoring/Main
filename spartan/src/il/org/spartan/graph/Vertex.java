@@ -1,12 +1,14 @@
 package il.org.spartan.graph;
 
+import org.eclipse.jdt.annotation.*;
+
 import il.org.spartan.collections.*;
 
 /** A representation of an immutable vertex in an immutable graph
  * @author Yossi Gil
  * @since Dec 9, 2011
  * @param <E> type of elements stored in each vertex */
-public class Vertex<E> {
+public class Vertex<@Nullable E> {
   private final E e;
   private final ImmutableArrayList<Vertex<E>> incoming;
   private final ImmutableArrayList<Vertex<E>> outgoing;
