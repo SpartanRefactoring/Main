@@ -83,7 +83,7 @@ public class Issue1001 extends BloaterTest<Assignment> {
   @Test public void byteTypeBug() {
     bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
         + "static byte f5() {\n" //
-        + "byte a = 1;" + "byte b = 2;" + "a = (byte) (a + b);" + "return a;" + "}", "f5");
+        + "byte a = 1;" + "final byte b = 2;" + "a = (byte) (a + b);" + "return a;" + "}", "f5");
   }
 
   /** [[SuppressWarningsSpartan]] */
