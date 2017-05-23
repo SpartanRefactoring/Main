@@ -10,11 +10,11 @@ import java.util.*;
 public class WidgetOperationEntry implements Serializable {
   private static final long serialVersionUID = -0x295E9D34CC34A530L;
   public final long widgetSUID;
-  public final Map<?, ?> configuration;
+  public final Map<String, String> configuration;
   private String name;
   private boolean isEnabled;
 
-  public WidgetOperationEntry(final long widgetSUID, final Map<?, ?> configuration, final String name) {
+  public WidgetOperationEntry(final long widgetSUID, final Map<String, String> configuration, final String name) {
     this.widgetSUID = widgetSUID;
     this.configuration = configuration;
     this.name = name;
