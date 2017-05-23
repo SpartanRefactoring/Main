@@ -47,7 +47,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
       @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
         final String[] $ = new String[7];
         int count = 0;
-        for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations)
+        for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations) //TODO: change this to load from store
           if (isEnabled(¢)) {
             if (count >= WIDGET_MAX_OPS) {
               MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", "Cannot enable more than "
