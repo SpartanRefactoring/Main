@@ -1,6 +1,5 @@
 package il.org.spartan.plugin.preferences.revision;
 
-import java.util.*;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -15,13 +14,12 @@ import il.org.spartan.spartanizer.plugin.widget.*;
  * @author Raviv Rachmiel
  * @since 2017-05-21 */
 public class AddNewWidgetPreferencesDialog extends Dialog {
-  private final List<WidgetOperation> widgetOps;
+  private final List<WidgetOperation> widgetOps = WidgetOperationPoint.allOperations;
   Button[] radioButtons;
   private WidgetOperation result;
 
-  protected AddNewWidgetPreferencesDialog(final Shell parentShell, final List<WidgetOperation> widgetOps) {
+  protected AddNewWidgetPreferencesDialog(final Shell parentShell) {
     super(parentShell);
-    this.widgetOps = new ArrayList<>(widgetOps);
   }
   @Override protected Control createDialogArea(final Composite parent) {
     final Composite $ = (Composite) super.createDialogArea(parent);

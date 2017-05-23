@@ -5,6 +5,8 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.regex.*;
 
+import fluent.ly.*;
+
 /** @author Oren Afek
  * @since 19.5.17 */
 public class AssertJTransformator {
@@ -13,12 +15,13 @@ public class AssertJTransformator {
         .sorted(Comparator.comparingInt(λ -> λ.getAnnotation(AssertJTransformations.Order.class).value())).map(λ -> (String) safeInvoke(λ, s))
         .filter(λ -> !λ.equals(s)).findFirst().orElse(s);
   }
-  private static Object safeInvoke(final Method $, final Object o, final Object... args) {
+  private static Object safeInvoke(final Method $, final Object o, @SuppressWarnings("unused") final Object... args) {
     try {
       $.setAccessible(true);
       return $.invoke(null, o);
-    } catch (IllegalAccessException | InvocationTargetException ignore) {/**/}
-    return null;
+    } catch (IllegalAccessException | InvocationTargetException ignore) {
+      return nil.forgetting(ignore);
+    }
   }
   private static String getReplacerString(final String replacePattern, final String[] args) {
     return String.format(replacePattern, (Object[]) args);
@@ -31,11 +34,12 @@ public class AssertJTransformator {
       $.add(m.group(¢));
     return $.toArray(new String[$.size()]);
   }
-  private static String replace(final String $, final String matchPattern, final String replacePattern) {
+  static String replace(final String $, final String matchPattern, final String replacePattern) {
     try {
       return replace($, matchPattern, replacePattern, naturalsByTemplateString(replacePattern));
-    } catch (final Exception ignore) {/**/}
-    return $;
+    } catch (@SuppressWarnings("unused") final Exception ignore) {
+      return $;
+    }
   }
   private static int[] naturalsByTemplateString(final String template) {
     final String findStr = "%s";
@@ -60,14 +64,15 @@ public class AssertJTransformator {
       $[¢] = original[order[¢]];
     return $;
   }
-  private static String replace(final String s, final String matchPattern, final String replacePattern, final int[] orderOfTemplatedValues) {
+  static String replace(final String s, final String matchPattern, final String replacePattern, final int[] orderOfTemplatedValues) {
     try {
       final String[] a = getTemplatedValues(s, matchPattern);
       String[] $ = new String[orderOfTemplatedValues.length];
       $ = rearange(a, $, orderOfTemplatedValues);
       return s.replaceAll(matchPattern, getReplacerString(replacePattern, $));
-    } catch (final Exception e) {/**/}
-    return s;
+    } catch (@SuppressWarnings("unused") final Exception e) {
+      return s;
+    }
   }
 
   private static class AssertJTransformations {

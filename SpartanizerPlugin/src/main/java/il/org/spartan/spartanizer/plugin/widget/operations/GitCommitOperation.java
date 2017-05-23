@@ -1,9 +1,9 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import java.util.*;
-
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
+
+import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** Git pull command.
  * @author Ori Roth
@@ -25,8 +25,8 @@ public class GitCommitOperation extends GitOperation {
         { MESSAGE, "String", "Commit message" }, //
     };
   }
-  @Override public boolean register(final Map<?, ?> configuration) {
-    message = (String) configuration.get(MESSAGE);
+  @Override public boolean register(final ConfigurationsMap ¢) {
+    message = ¢.getString(MESSAGE);
     if (message == null)
       message = DEFAULT_MESSAGE;
     return true;

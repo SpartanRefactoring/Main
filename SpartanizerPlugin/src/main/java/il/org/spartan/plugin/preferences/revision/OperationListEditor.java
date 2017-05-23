@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import fluent.ly.*;
-import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** A widget containing a list of projects and some buttons. Used to configure
  * specific operations. "configure" button is used to open a dialog, allowing
@@ -200,8 +199,7 @@ public class OperationListEditor extends ListEditor {
         : elements_list.stream().map(Entry::getKey).toArray(String[]::new);
   }
   @Override protected String getNewInputObject() {
-    final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-        WidgetOperationPoint.allOperations);
+    final AddNewWidgetPreferencesDialog $ = new AddNewWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
     $.open();
     return $.getResult() == null ? null : $.getResult().description();
   }

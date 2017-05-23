@@ -7,6 +7,7 @@ import java.util.*;
 import org.junit.*;
 
 import an.*;
+import an.array.*;
 import fluent.ly.*;
 import il.org.spartan.statistics.*;
 
@@ -554,10 +555,10 @@ public enum LinearAlgebra {
         azzert.that("Inappropriate column length at row " + ¢, __[¢].length, is(columns));
     }
     @Test public void sqr() {
-      Assert.assertArrayEquals(array.ofDoubles(1., 0, 1, 4), LinearAlgebra.sqr(array.ofDoubles(-1, 0., 1, 2)), 1E-10);
+      Assert.assertArrayEquals(of.doubles(1., 0, 1, 4), LinearAlgebra.sqr(of.doubles(-1, 0., 1, 2)), 1E-10);
     }
     @Test public void sum() {
-      Assert.assertEquals(2, LinearAlgebra.sum(array.ofInts(-1, 0, 1, 2)), 1E-10);
+      Assert.assertEquals(2, LinearAlgebra.sum(of.ints(-1, 0, 1, 2)), 1E-10);
     }
     @Test public void transpose() {
       final int rows = 10, columns = 20;

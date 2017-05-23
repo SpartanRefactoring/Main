@@ -103,4 +103,7 @@ public enum PreferencesResources {
       return true;
     }
   }
+
+  public static final String WIDGET_SIZE = "WIDGET_SIZE";
+  static final String WIDGET_OPERATION_CONFIGURATION = "WIDGET_OPERATION_CONFIGURATION";
 }

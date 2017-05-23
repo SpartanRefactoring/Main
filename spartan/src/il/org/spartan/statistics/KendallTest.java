@@ -6,15 +6,16 @@ import static org.junit.Assert.assertEquals;
 import org.junit.*;
 
 import an.*;
+import an.array.*;
 import fluent.ly.*;
 
 @SuppressWarnings("static-method")
 public class KendallTest {
   @Test public void test10() {
-    assertEquals(0.6, Kendall.tau(array.ofDoubles(15, 20, 100, 70., 98)), 1E-6);
+    assertEquals(0.6, Kendall.tau(of.doubles(15, 20, 100, 70., 98)), 1E-6);
   }
   @Test public void test10tauB() {
-    assertEquals(0.6, Kendall.tauB(array.ofDoubles(15, 20, 100., 70, 98)), 1E-6);
+    assertEquals(0.6, Kendall.tauB(of.doubles(15, 20, 100., 70, 98)), 1E-6);
   }
   @Test public void testMinorityVsChi2() {
     final double[]//

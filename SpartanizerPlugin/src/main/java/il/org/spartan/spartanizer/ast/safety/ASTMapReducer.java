@@ -5,7 +5,6 @@ import static org.eclipse.jdt.core.dom.ASTNode.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 
 import java.util.*;
-import java.util.stream.*;
 
 import org.eclipse.jdt.core.dom.*;
 
@@ -15,16 +14,14 @@ import il.org.spartan.utils.*;
 
 public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   public R map(final ASTNode ¢) {
-    assert ¢ != null;
-    return iz.nodeTypeIn(¢, protect()) ? reduce()//
-        : iz.statement(¢) ? map(az.statement(¢))//
-            : iz.expression(¢) ? map(az.expression(¢))//
-                : ¢.getNodeType() == ANONYMOUS_CLASS_DECLARATION ? map((AnonymousClassDeclaration) ¢)//
-                    : ¢.getNodeType() == MODIFIER ? map((Modifier) ¢) //
-                        : ¢.getNodeType() == CATCH_CLAUSE ? map((CatchClause) ¢)//
+    return ¢ == null || iz.nodeTypeIn(¢, protect()) ? reduce()
+        : iz.statement(¢) ? map(az.statement(¢))
+            : iz.expression(¢) ? map(az.expression(¢))
+                : ¢.getNodeType() == ANONYMOUS_CLASS_DECLARATION ? map((AnonymousClassDeclaration) ¢)
+                    : ¢.getNodeType() == MODIFIER ? map((Modifier) ¢)
+                        : ¢.getNodeType() == CATCH_CLAUSE ? map((CatchClause) ¢)
                             : ¢.getNodeType() == METHOD_REF ? map((MethodRef) ¢)
-                                : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢) //
-                                    : reduce();
+                                : ¢.getNodeType() == METHOD_REF_PARAMETER ? map((MethodRefParameter) ¢) : reduce();
   }
   protected R composite(final List<? extends ASTNode> ns) {
     R $ = reduce();
@@ -33,7 +30,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
     return $;
   }
   protected R compound(final Expression... ¢) {
-    return foldl(as.list(¢).stream().filter(λ -> λ != null).collect(Collectors.toList()));
+    return foldl(as.list(¢));
   }
   protected final R foldl(final Iterable<? extends ASTNode> ns) {
     R $ = reduce();
@@ -163,12 +160,6 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
         return map((FieldAccess) ¢);
       case EXPRESSION_METHOD_REFERENCE:
         return map((ExpressionMethodReference) ¢);
-      case VARIABLE_DECLARATION_EXPRESSION:
-        return map((VariableDeclarationExpression) ¢);
-      case TYPE_LITERAL:
-        return map((TypeLiteral) ¢);
-      case CREATION_REFERENCE:
-        return map((CreationReference) ¢);
       default:
         return note.bug("Unrecognized Node %s NodeType= %d %s", ¢.getClass(), box.it(¢.getNodeType()), ¢);
     }
@@ -271,7 +262,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
       case SYNCHRONIZED_STATEMENT:
         return map((SynchronizedStatement) ¢);
       case THROW_STATEMENT:
-        return map((ThrowStatement) ¢);
+        return map((SuperConstructorInvocation) ¢);
       case TRY_STATEMENT:
         return map((TryStatement) ¢);
       case TYPE_DECLARATION_STATEMENT:
@@ -316,13 +307,6 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   }
   protected R map(final VariableDeclarationStatement ¢) {
     return reduce(fragments(¢));
-  }
-  protected R map(final ThrowStatement ¢) {
-    return map(expression(¢));
-  }
-  // TODO yossi gil: check if it's alright
-  protected R map(@SuppressWarnings("unused") final CreationReference ¢) {
-    return reduce();
   }
   protected R map(final WhileStatement ¢) {
     return reduce(map(¢.getExpression()), map(¢.getBody()));

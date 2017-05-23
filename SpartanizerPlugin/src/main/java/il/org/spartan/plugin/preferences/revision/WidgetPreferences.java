@@ -4,6 +4,7 @@ import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
@@ -15,10 +16,8 @@ import il.org.spartan.spartanizer.plugin.widget.operations.*;
  * @since 2017-05-20 */
 public enum WidgetPreferences {
   ;
-  private static final String OPERATIONS_CONFIGURATION = "WIDGET_OPERATIONS_CONFIGURATION";
-  public static final String WIDGET_SIZE = "WIDGET_SIZE";
-  private static final String OPERATIONS_ORDER = "WIDGET_OPERATIONS_ORDER";
-  private static final WidgetOperation[] defaultOrder = { new GitPullOperation()//
+  private static final WidgetOperation[] defaultOrder = { //
+      new GitPullOperation()//
       , new GitPushOperation()//
       , new GitCommitOperation()//
       , new SpartanizationOperation()//
@@ -26,76 +25,57 @@ public enum WidgetPreferences {
       , new CleanOperation()//
       , null//
   };
+  private static final int defaultWidgetSize = 70;
 
-  /** @param m - map from WidgetOperation to a configuration of that operation.
-   *        calling key.register(value) should set the WidgetOperation for
-   *        running */
-  public static void storeOperationsConfiguration(final Map<WidgetOperation, Map<String, String>> m) {
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    try {
-      new ObjectOutputStream(out).writeObject(m);
-    } catch (final IOException ¢) {
-      note.bug(¢);
-    }
-    store().setValue(OPERATIONS_CONFIGURATION, String.valueOf(Base64.getEncoder().encode(out.toByteArray())));
-  }
-  /** @return map from WidgetOperation to a configuration of that operation.
-   *         calling key.register(value) should set the WidgetOperation for
-   *         running If an exception was throws, returns null. */
-  @SuppressWarnings("unchecked") public static Map<WidgetOperation, Map<String, String>> readOperationsConfiguration() {
-    final ByteArrayInputStream $ = new ByteArrayInputStream(Base64.getDecoder().decode(store().getString(OPERATIONS_CONFIGURATION).getBytes()));
-    try {
-      return (Map<WidgetOperation, Map<String, String>>) new ObjectInputStream($).readObject();
-    } catch (final ClassNotFoundException ¢) {
-      note.bug(¢);
-    } catch (@SuppressWarnings("unused") final IOException x) {
-      // not a bug in initial start
-    }
-    return null;
-  }
   /** @param ¢ - the size of the widget */
   public static void storeSize(final int ¢) {
-    store().setValue(WIDGET_SIZE, ¢);
+    store().setValue(PreferencesResources.WIDGET_SIZE, ¢);
   }
   /** @return the size of the widget or null if an exception occurred */
   public static int readSize() {
-    return store().getInt(WIDGET_SIZE);
+    return store().getInt(PreferencesResources.WIDGET_SIZE);
   }
-  /** @param os - array of the widget operations, ordered by the order of
-   *        buttons. Null if no button is set to that location. Must be an array
-   *        of size 7 or less logically, but that is not enforced here. */
-  public static void storeOperationsOrder(final WidgetOperation[] os) {
+  public static void storeEntries(final List<WidgetOperationEntry> es) {
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     try {
-      new ObjectOutputStream(out).writeObject(os);
+      new ObjectOutputStream(out).writeObject(es);
     } catch (final IOException ¢) {
       note.bug(¢);
     }
-    store().setValue(OPERATIONS_ORDER, String.valueOf(Base64.getEncoder().encode(out.toByteArray())));
+    store().setValue(PreferencesResources.WIDGET_OPERATION_CONFIGURATION, Base64.getEncoder().encodeToString(out.toByteArray()));
   }
-  /** @return array of WidgetOperations or nulls if no operation is set for that
-   *         location */
-  public static WidgetOperation[] readOperationsOrder() {
-    final ByteArrayInputStream $ = new ByteArrayInputStream(Base64.getDecoder().decode(store().getString(OPERATIONS_ORDER).getBytes()));
+  @SuppressWarnings("unchecked") public static List<WidgetOperationEntry> readEntries() {
+    final String forString = store().getString(PreferencesResources.WIDGET_OPERATION_CONFIGURATION);
+    final byte[] theOutBarr = Base64.getDecoder().decode(forString);
+    final ByteArrayInputStream in = new ByteArrayInputStream(Base64.getDecoder().decode(Base64.getEncoder().encode(theOutBarr)));
+    List<WidgetOperationEntry> $ = null;
     try {
-      return (WidgetOperation[]) new ObjectInputStream($).readObject();
-    } catch (final ClassNotFoundException ¢) {
-      note.bug(¢);
-    } catch (@SuppressWarnings("unused") final IOException x) {
-      // not a bug in initial start
+      $ = (List<WidgetOperationEntry>) new ObjectInputStream(in).readObject();
+    } catch (@SuppressWarnings("unused") final IOException | ClassNotFoundException x) {
+      note.bug();
     }
-    return null;
+    return $;
   }
   public static void setDefaults() {
-    if (readSize() < 60 || readSize() > 100)
-      storeSize(70);
-    if (readOperationsOrder() == null)
-      storeOperationsOrder(defaultOrder);
-    if (readOperationsConfiguration() != null)
-      return;
-    final Map<WidgetOperation, Map<String, String>> defaultConfigurations = new HashMap<>();
-    for (final WidgetOperation ¢ : defaultOrder)
-      defaultConfigurations.put(¢, new HashMap<>());
-    storeOperationsConfiguration(defaultConfigurations);
+    store().setDefault(PreferencesResources.WIDGET_SIZE, defaultWidgetSize);
+    // new Gson().toJson(object).getBytes("UTF-8"));
+    final List<WidgetOperationEntry> entries = new ArrayList<>();
+    for (final WidgetOperation wo : defaultOrder) {
+      if (wo == null)
+        continue;
+      final WidgetOperationEntry woe = new WidgetOperationEntry(getWidgetOpUID(wo), new HashMap<>(), wo.description() + " the name");
+      woe.enable();
+      entries.add(woe);
+    }
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    try {
+      new ObjectOutputStream(out).writeObject(entries);
+    } catch (final IOException ¢) {
+      note.bug(¢);
+    }
+    store().setDefault(PreferencesResources.WIDGET_OPERATION_CONFIGURATION, Base64.getEncoder().encodeToString(out.toByteArray()));
+  }
+  public static long getWidgetOpUID(final WidgetOperation ¢) {
+    return ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID();
   }
 }

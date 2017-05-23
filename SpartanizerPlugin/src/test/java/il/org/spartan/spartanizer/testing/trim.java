@@ -23,8 +23,8 @@ public interface trim {
   static int countOpportunities(final GUITraversal t, final CompilationUnit u) {
     return t.traversal.collectTips(u).size();
   }
-  static fluentTraverasalApplication of(final String codeFragment) {
-    return new fluentTraverasalApplication(codeFragment);
+  static fluentTraversalApplication of(final String codeFragment) {
+    return new fluentTraversalApplication(codeFragment);
   }
   @SafeVarargs //
   static <N extends ASTNode> fluentTraversal with(final Class<N> clazz, final Tipper<N>... ts) {
@@ -50,14 +50,14 @@ public interface trim {
   /** Starting point of fluent API for @Testing:
    * {@code trimming.repeatedly.of("a+(b-c)")//
   .gives("a+b-c")}, or <code>trimming // See {@link trim} 
-                                                                                                                                               * .repeatedly //  See {@link trim.repeatedely} 
-                                                                                                                                               * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
-                                                                                                                                               * .of("a+(b-c)") //  See {@link #of(String)} 
-                                                                                                                                               * .gives("a+b-c")</code> */
+                                                                                                                                                 * .repeatedly //  See {@link trim.repeatedely} 
+                                                                                                                                                 * .withTipper(new InfixTermsExpand() // See {@link #withTipper(Tipper)} 
+                                                                                                                                                 * .of("a+(b-c)") //  See {@link #of(String)} 
+                                                                                                                                                 * .gives("a+b-c")</code> */
   interface repeatedly {
-    static fluentTraverasalApplication of(final String codeFragment) {
-      return new fluentTraverasalApplication(codeFragment) {
-        @Override public fluentTraverasalApplication gives(final String expected) {
+    static fluentTraversalApplication of(final String codeFragment) {
+      return new fluentTraversalApplication(codeFragment) {
+        @Override public fluentTraversalApplication gives(final String expected) {
           return super.gives(new InteractiveSpartanizer().fixedPoint(expected));
         }
         @Override public void stays() {
@@ -67,7 +67,7 @@ public interface trim {
     }
     @SafeVarargs static <N extends ASTNode> fluentTraversal with(final Class<N> clazz, final Tipper<N>... ts) {
       return new fluentTraversal(clazz, ts) {
-        @Override public fluentTraverasalApplication of(final String codeFragment) {
+        @Override public fluentTraversalApplication of(final String codeFragment) {
           return super.of(codeFragment);
         }
       };
@@ -110,8 +110,8 @@ public interface trim {
     @SafeVarargs public <N extends ASTNode> fluentTraversal(final Class<N> clazz, final Tipper<N>... ts) {
       configuration.setTo(clazz, ts);
     }
-    @SuppressWarnings("static-method") public fluentTraverasalApplication of(final String codeFragment) {
-      return new fluentTraverasalApplication(codeFragment);
+    @SuppressWarnings("static-method") public fluentTraversalApplication of(final String codeFragment) {
+      return new fluentTraversalApplication(codeFragment);
     }
   }
 }

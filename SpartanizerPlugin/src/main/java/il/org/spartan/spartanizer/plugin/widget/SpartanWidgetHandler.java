@@ -1,6 +1,8 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
+import java.io.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.*;
 import java.util.function.*;
 
@@ -15,7 +17,6 @@ import org.eclipse.ui.*;
 import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.plugin.widget.operations.*;
 
 /** Spartanizer widget.
  * @author Ori Roth {@code ori.rothh@gmail.com}
@@ -28,14 +29,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static final Point MINIMAL_BUTTON_SIZE = new Point(9 * R / 10, R / 2 - R / 20);
   private static final String IMAGE_ID = "widget";
   private static Point[] circles;
-  private static WidgetOperation[] operations = { new GitPullOperation()//
-      , new GitPushOperation()//
-      , new GitCommitOperation()//
-      , new SpartanizationOperation()//
-      , new ZoomerOperation()//
-      , new CleanOperation()//
-      , null//
-  };
+  private static WidgetOperation[] operations = new WidgetOperation[7];
   static final int OPERATION_HOLD_INTERVAL = 500;
   static final AtomicBoolean active = new AtomicBoolean(false);
 
@@ -54,8 +48,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     if (display == null)
       return;
     final Shell originalShell = display.getActiveShell();
-    if (originalShell == null || originalShell.isDisposed()
-        || !setUpR() /* || !setUpOperations() */)
+    if (originalShell == null || originalShell.isDisposed() || !setUpR() || !setUpOperations())
       return;
     final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
     final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
@@ -136,6 +129,39 @@ public class SpartanWidgetHandler extends AbstractHandler {
         , new Point(2 * R + r, R + r)//
         , new Point(2 * R, 2 * R)//
     };
+    return true;
+  }
+  private static boolean setUpOperations() {
+    final List<WidgetOperationEntry> es = WidgetPreferences.readEntries();
+    if (es == null) {
+      note.bug();
+      return false;
+    }
+    int i = 0;
+    for (final WidgetOperationEntry e : es) {
+      if (i >= operations.length)
+        break;
+      if (!e.isEnabled())
+        continue;
+      boolean found = false;
+      for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations)
+        if (e.widgetSUID == ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID()) {
+          operations[i] = ¢.clone();
+          if (!operations[i].configure(new ConfigurationsMap(e.configuration))) {
+            note.bug();
+            return false;
+          }
+          ++i;
+          found = true;
+          break;
+        }
+      if (!found) {
+        note.bug();
+        return false;
+      }
+    }
+    for (; i < operations.length; ++i)
+      operations[i] = null;
     return true;
   }
   private static void setControl(final Control c, final Listener onEnter, final Listener onExit) {
