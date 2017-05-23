@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiType;
+import il.org.spartan.Leonidas.auxilary_layer.iz;
 
 /**
  * @author michalcohen
@@ -25,9 +26,17 @@ public class BooleanExpression extends Expression {
         return new BooleanExpression(e);
     }
 
+    @Override
+    public boolean generalizes(Encapsulator e) {
+        return super.generalizes(e);
+    }
+
     /* Constraints */
 
-    public void mustBeLiteral(Object o) {
-        System.out.println(o);
+    /**
+     * Will accept only literal expressions.
+     */
+    public void mustBeLiteral() {
+        addConstraint(e -> iz.literal(e.inner));
     }
 }

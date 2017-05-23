@@ -42,7 +42,7 @@ public class Expression extends GenericMethodCallBasedBlock {
 
     @Override
     public boolean generalizes(Encapsulator e) {
-        return iz.expression(e.getInner());
+        return super.generalizes(e) && iz.expression(e.getInner());
     }
 
     @Override
