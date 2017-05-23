@@ -1,5 +1,7 @@
 package il.org.spartan.graph;
 
+import org.eclipse.jdt.annotation.*;
+
 import il.org.spartan.collections.*;
 
 /** A basic graph decorator, which does nothing except for delegating all its
@@ -8,7 +10,7 @@ import il.org.spartan.collections.*;
  * @param <E> type of elements stored in this graph
  * @author Yossi Gil
  * @since 2011-11-11 */
-public class GraphDecorator<E> extends AbstractGraph<E> {
+public class GraphDecorator<@Nullable E> extends AbstractGraph<E> {
   /** The encapsulated decorated graph. */
   public final AbstractGraph<E> inner;
 

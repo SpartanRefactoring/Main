@@ -272,26 +272,26 @@ public interface Cookbook {
       /** Can, and often should be made private; package is OK */
       final Cell<Integer> a = new Cookbook.Ingredient<>();
       /** Can, and often should be made private; package is OK */
-      @SuppressWarnings("null") final Cell<Integer> aPower02 = new Recipe<>(() -> {
+      final Cell<Integer> aPower02 = new Recipe<>(() -> {
         ++__aPower02Calls;
         return a() * a();
       }).ingredients(a);
       /** Can, and often should be made private; package is OK */
-      @SuppressWarnings("null") final Cell<Integer> aPower03 = new Recipe<>(() -> {
+      final Cell<Integer> aPower03 = new Recipe<>(() -> {
         ++__aPower03Calls;
         return a() * aPower02();
       }).ingredients(aPower02, a);
       /** the actual cell behind {@link #aPower05()} */
-      @SuppressWarnings("null") final Cell<Integer> aPower05 = new Recipe<>(() -> aPower02() * aPower03()).ingredients(aPower02, aPower03);
+      final Cell<Integer> aPower05 = new Recipe<>(() -> aPower02() * aPower03()).ingredients(aPower02, aPower03);
       /** the actual cell behind {@link #b()} */
-      @SuppressWarnings("null") final Cell<Integer> aPower17NullSafe = new Recipe.NullRobust<>(
+      final Cell<Integer> aPower17NullSafe = new Recipe.NullRobust<>(
           () -> a() * a() * a() * a() * aPower02() * aPower02() * aPower03() * aPower03() * aPower03()).ingredients(a, aPower02, aPower03);
       /** the actual cell behind {@link #b()} */
       final Cell<Integer> b = new Cookbook.Ingredient<>(3);
       /** the actual cell behind {@link #c()} */
       final Cell<Integer> c = new Cookbook.Ingredient<>(5);
       /** the actual cell behind {@link #d()} */
-      @SuppressWarnings("null") final Cell<Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
+      final Cell<Integer> d = Cookbook.from(a, b, c).make(() -> a() + b() + c());
 
       /** @return contents of cell a */
       public final Integer a() {
@@ -328,7 +328,7 @@ public interface Cookbook {
 
       /** @author Yossi Gil <Yossi.Gil@GMail.COM>
        * @since 2016 */
-      @SuppressWarnings("null")
+
       public static class TEST extends Z {
         @Test public void sessionA01() {
           azzert.isNull(a());
