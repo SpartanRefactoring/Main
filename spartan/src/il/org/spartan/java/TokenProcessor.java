@@ -3,8 +3,6 @@ package il.org.spartan.java;
 import static fluent.ly.___.*;
 
 import fluent.ly.*;
-import il.org.spatan.iteration.*;
-import static fluent.ly.Iterables.*;
 
 public abstract class TokenProcessor {
   @SuppressWarnings("static-method") protected void after() {

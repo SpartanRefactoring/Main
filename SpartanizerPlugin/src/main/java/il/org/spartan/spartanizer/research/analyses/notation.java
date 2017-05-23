@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.research.analyses;
 
 import static fluent.ly.is.*;
+
 import org.eclipse.jdt.core.dom.*;
 
 /** TODO Yossi Gil: document class

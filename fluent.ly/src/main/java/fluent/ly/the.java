@@ -16,6 +16,7 @@ import let.*;
  * @since 2017-04-12 */
 public interface the {
   first first = new first() {/* use default functions */};
+
   static char beforeLastOf(final String s, final int i) {
     return s.charAt(s.length() - i - 1);
   }
@@ -64,7 +65,7 @@ public interface the {
   @Contract("null -> null") static <T> T firstOf(final List<T> ¢) {
     return ¢ == null || ¢.isEmpty() ? null : ¢.get(0);
   }
-  static char firstOf(String $) {
+  static char firstOf(final String $) {
     return $.charAt(0);
   }
   static <T> T firstOf(final T[] ¢) {
@@ -113,7 +114,6 @@ public interface the {
   static <T> T lastOf(final T[] ¢) {
     return ¢[¢.length - 1];
   }
-
   /** Computes the maximum of two or more integers.
    * @param a some integer
    * @param is additional integers
@@ -134,27 +134,21 @@ public interface the {
       $ = Math.min($, ¢);
     return $;
   }
-
   static <T> T nil() {
     return null;
   }
-
   static String nth(final int i, final Collection<?> os) {
     return the.nth(i, os.size());
   }
-
   static String nth(final int i, final int n) {
     return nth(i + "", n + "");
   }
-
   static String nth(final String s, final String n) {
     return " #" + s + "/" + n;
   }
-
   static <T> T onlyOneOf(final List<T> ¢) {
     return ¢ == null || ¢.size() != 1 ? null : firstOf(¢);
   }
-
   /** @param <T> JD
    * @param ¢ a list
    * @return last item in a list or <code><b>null</b></code> if the parameter is
@@ -162,14 +156,12 @@ public interface the {
   static <T> T penultimateOf(final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(¢.size() - 2);
   }
-
   static <T> T previous(final T t, final List<T> ts) {
     if (ts == null)
       return null;
     final int $ = ts.indexOf(t);
     return $ < 1 ? null : ts.get($ - 1);
   }
-
   /** Chop the first character of a string.
    * @param ¢ a non-<code><b>null</b></code> string of length at least one
    * @return <code>s</code> but without its first character. */
@@ -178,7 +170,6 @@ public interface the {
     positive(¢.length());
     return ¢.substring(1);
   }
-
   static <T> List<T> rest(final T t, final Iterable<T> ts) {
     boolean add = false;
     final List<T> $ = an.empty.list();
@@ -189,38 +180,31 @@ public interface the {
         add = x == t;
     return $;
   }
-
   @Contract("null -> null") static <T> T secondOf(final List<T> ¢) {
     return ¢ == null || ¢.size() < 2 ? null : ¢.get(1);
   }
-
   /** Computes the square of a given integer
    * @param ¢ some integer
    * @return square of the parameter */
   static int sqr(final int ¢) {
     return ¢ * ¢;
   }
-
   static <T> List<T> tailOf(final List<T> ¢) {
     final List<T> $ = as.list(¢);
     $.remove(the.firstOf($));
     return $;
   }
-
   static String tailOf(final String ¢) {
     return ¢.substring(1);
   }
-
   static <T> T[] tailOf(final T[] ¢) {
     return Arrays.copyOfRange(¢, 1, ¢.length);
   }
-
   /** @param <T> JD
    * @return <code><b>true</b></code> <i>iff</i> the receive is empty */
   static <T> Iterable<T> empty() {
     return iterable.over();
   }
-
   /** wraps a value in a singleton iterator form
    * @param <T> JD
    * @param $ JD
@@ -240,5 +224,4 @@ public interface the {
       return the.beforeLastOf(¢, 0);
     }
   }
-
 }

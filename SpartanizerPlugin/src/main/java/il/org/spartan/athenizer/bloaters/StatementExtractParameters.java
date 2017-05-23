@@ -73,10 +73,9 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final Type tw = fixWildCardType(t);
     if (tw == null)
       return null;
-    for (ITypeBinding b : allBindings)
-      ir.addImport(b, s.getAST());
-    IType[] types = null;
-    IType[] topTypes = null;
+    for (final ITypeBinding ¢ : allBindings)
+      ir.addImport(¢, s.getAST());
+    IType[] types = null, topTypes = null;
     try {
       ir.rewriteImports(new NullProgressMonitor());
       final ICompilationUnit iu = ir.getCompilationUnit();
@@ -88,10 +87,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     }
     if (types == null || types.length == 0)
       return null;
-    final Collection<String> createdImports = getCreatedImports(ir);
-    final Collection<String> sameFile = getSameFile(createdImports, types);
-    final Collection<String> samePackage = getSamePackage(createdImports, types[0]);
-    final Collection<String> topLevel = getTopLevel(createdImports, topTypes);
+    final Collection<String> createdImports = getCreatedImports(ir), sameFile = getSameFile(createdImports, types),
+        samePackage = getSamePackage(createdImports, types[0]), topLevel = getTopLevel(createdImports, topTypes);
     return ambiguousImports(createdImports, u) || //
         privateImportHazard(allBindings, sameFile) || //
         nonPublicImportHazard(allBindings, samePackage) ? null : //
@@ -257,8 +254,8 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   }
   private static boolean captureRisk(final List<ITypeBinding> allBindings) {
     final Set<String> seenCaptures = new HashSet<>();
-    for (ITypeBinding b : allBindings)
-      for (ITypeBinding bb : b.getTypeArguments()) {
+    for (final ITypeBinding b : allBindings)
+      for (final ITypeBinding bb : b.getTypeArguments()) {
         final Matcher matcher = Pattern.compile("capture#(.*?)-of").matcher(bb + "");
         if (matcher.find())
           for (int i = 1; i <= matcher.groupCount(); ++i) {
@@ -273,7 +270,7 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   private static boolean containsHazardousTypeArgument(final Type ¢) {
     return (¢ + "").contains("<?>");
   }
-  private static List<String> getCreatedImports(ImportRewrite ¢) {
+  private static List<String> getCreatedImports(final ImportRewrite ¢) {
     final List<String> $ = an.empty.list();
     if (¢.getCreatedImports() != null)
       $.addAll(as.list(¢.getCreatedImports()));
@@ -281,34 +278,34 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
       $.addAll(as.list(¢.getCreatedStaticImports()));
     return $;
   }
-  private static Collection<String> getSameFile(Collection<String> createdImports, IType[] ts) {
+  private static Collection<String> getSameFile(final Collection<String> createdImports, final IType[] ts) {
     final List<String> $ = Arrays.stream(ts).map(λ -> λ.getFullyQualifiedName()).collect(Collectors.toList());
     return createdImports.stream().filter(λ -> $.contains(λ)).collect(Collectors.toList());
   }
-  private static Collection<String> getSamePackage(Collection<String> createdImports, IType rep) {
+  private static Collection<String> getSamePackage(final Collection<String> createdImports, final IType rep) {
     final String $ = rep.getPackageFragment().getElementName();
     return createdImports.stream().filter(λ -> λ.startsWith($)).collect(Collectors.toList());
   }
-  private static Collection<String> getTopLevel(Collection<String> createdImports, IType[] ts) {
+  private static Collection<String> getTopLevel(final Collection<String> createdImports, final IType[] ts) {
     final List<String> $ = Arrays.stream(ts).map(λ -> λ.getFullyQualifiedName()).collect(Collectors.toList());
     return createdImports.stream().filter(λ -> $.contains(λ)).collect(Collectors.toList());
   }
-  private static boolean ambiguousImports(Collection<String> createdImports, CompilationUnit u) {
+  private static boolean ambiguousImports(final Collection<String> createdImports, final CompilationUnit u) {
     final List<String> usedNames = an.empty.list();
     if (property.has(u, KNOWN_TYPES_NAMES))
       usedNames.addAll(property.get(u, KNOWN_TYPES_NAMES));
     else {
       u.accept(new ASTVisitor() {
-        @Override public void preVisit(ASTNode n) {
+        @Override public void preVisit(final ASTNode n) {
           if (!iz.type(n) || n.getParent() instanceof QualifiedType)
             return;
           final String s = extract.leftName(az.type(n));
           if (s != null)
             usedNames.add(s);
         }
-        @Override public boolean visit(SimpleName n) {
-          if (iz.bodyDeclaration(n.getParent()))
-            usedNames.add(n.getIdentifier());
+        @Override public boolean visit(final SimpleName ¢) {
+          if (iz.bodyDeclaration(¢.getParent()))
+            usedNames.add(¢.getIdentifier());
           return false;
         }
       });
@@ -316,10 +313,10 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     }
     return !Collections.disjoint(createdImports.stream().map(λ -> λ.split("\\.")).map(λ -> λ[λ.length - 1]).collect(Collectors.toList()), usedNames);
   }
-  private static boolean privateImportHazard(List<ITypeBinding> allBindings, Collection<String> sameFile) {
+  private static boolean privateImportHazard(final List<ITypeBinding> allBindings, final Collection<String> sameFile) {
     return allBindings.stream().anyMatch(λ -> sameFile.contains(λ.getQualifiedName()) && Modifier.isPrivate(λ.getModifiers()));
   }
-  private static boolean nonPublicImportHazard(List<ITypeBinding> allBindings, Collection<String> samePackage) {
+  private static boolean nonPublicImportHazard(final List<ITypeBinding> allBindings, final Collection<String> samePackage) {
     return allBindings.stream().anyMatch(λ -> samePackage.contains(λ.getQualifiedName()) && !Modifier.isPublic(λ.getModifiers()));
   }
 

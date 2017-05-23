@@ -1,8 +1,7 @@
 package il.org.spartan.spartanizer.java;
 
-import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
-
 import static fluent.ly.lisp.*;
+import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import java.util.*;
 

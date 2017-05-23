@@ -24,13 +24,13 @@ public class TestFluent_nil {
     azzert.isNull(i3);
     nil.guardingly(State::getName).on(null);
     nil.guardingly(State::getName).on(californiaCustomer.getAddress().getState());
-    U<String, State> g = nil.cautiously(State::getName);
-    assert g!=null;
-    Function<Address, State> f2 = Address::getState;
+    final U<String, State> g = nil.cautiously(State::getName);
+    assert g != null;
+    final Function<Address, State> f2 = Address::getState;
     assert f2 != null;
-    U<String, Address> g1 = g.on(f2);
+    final U<String, Address> g1 = g.on(f2);
     assert g1 != null;
-    U<String, Customer> g2 = g1.on(Customer::getAddress);
+    final U<String, Customer> g2 = g1.on(Customer::getAddress);
     assert g2 != null;
     g2.on(californiaCustomer);
     // Operand<String> operand =

@@ -4,10 +4,10 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
+import fluent.ly.*;
 import il.org.spartan.bench.*;
 import il.org.spartan.strings.*;
 import il.org.spartan.utils.*;
-import fluent.ly.*;
 
 /** @author Yossi Gil
  * @since 04/06/2011 */
@@ -48,7 +48,7 @@ public enum Log {
     endStage(ss);
   }
   public static void endStage(final Object... ss) {
-     final Stopwatch s = stack.pop().stop();
+    final Stopwatch s = stack.pop().stop();
     Log.ln("End:", s.name(), StringUtils.paren(s) + ";", Separate.by(ss, " "));
   }
   public static void f(final String format, final Object... os) {

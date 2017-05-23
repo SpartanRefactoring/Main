@@ -2,11 +2,12 @@
 package il.org.spartan.misc;
 
 import static fluent.ly.azzert.*;
-import static java.lang.Math.max;
+import static java.lang.Math.*;
 
 import java.util.*;
 
 import org.junit.*;
+
 import fluent.ly.*;
 import il.org.spartan.text.*;
 

@@ -57,7 +57,7 @@ public enum iterables {
   public abstract static class RangeIterator<T> extends ReadonlyIterator<T> {
     private final int n;
     private int i;
-  
+
     public RangeIterator(final int n) {
       this.n = n;
     }
@@ -93,9 +93,9 @@ public enum iterables {
     public static <T> Iterable<T> make(final T ¢) {
       return ¢ == null ? null : new Singleton<>(¢);
     }
-  
+
     T t;
-  
+
     /** Instantiate the adapter with an object
      * @param t the object on which we can iterate. */
     public Singleton(final T t) {
