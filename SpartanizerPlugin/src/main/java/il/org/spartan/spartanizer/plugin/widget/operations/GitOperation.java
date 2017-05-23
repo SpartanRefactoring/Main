@@ -1,8 +1,6 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
 import java.io.*;
-import java.util.*;
-
 import org.eclipse.core.runtime.*;
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.lib.*;
@@ -24,8 +22,8 @@ public abstract class GitOperation extends WidgetOperation {
         { POPUP, "Boolean", "true", "false", "REQUIRED" } //
     };
   }
-  @Override public boolean register(final Map<?, ?> configuration) {
-    return (popup = (Boolean) configuration.get(POPUP)) != null;
+  @Override public boolean register(final ConfigurationsMap ¢) {
+    return (popup = ¢.getBoolean(POPUP)) != null;
   }
   protected abstract void gitOperation(Git g) throws Throwable;
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext c) throws Throwable {

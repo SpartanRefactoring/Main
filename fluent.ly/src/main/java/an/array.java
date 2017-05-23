@@ -1,17 +1,22 @@
 package an;
 
-/** @author Yossi Gil
+/** We don't simply overload because it makes some compilers fail apparently.
+ * @author Yossi Gil
  * @since 2017-05-20 */
 public interface array {
-  // We don't simply overload because it makes some compilers fail apparently.
-  static boolean[] ofBooleans(final boolean... ¢) {
-    return ¢;
-  }
-  static double[] ofDoubles(final double... ¢) {
-    return ¢;
-  }
-  static int[] ofInts(final int... ¢) {
-    return ¢;
+  interface of {
+
+    static boolean[] booleans(final boolean... ¢) {
+      return ¢;
+    }
+
+    static double[] doubles(final double... ¢) {
+      return ¢;
+    }
+
+    static int[] ints(final int... ¢) {
+      return ¢;
+    }
   }
   @SafeVarargs static <T> T[] of(final T... ¢) {
     return ¢;

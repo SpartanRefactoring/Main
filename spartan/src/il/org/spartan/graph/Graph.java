@@ -2,6 +2,8 @@ package il.org.spartan.graph;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
+
 import il.org.spartan.collections.*;
 import il.org.spartan.streotypes.*;
 
@@ -10,7 +12,7 @@ import il.org.spartan.streotypes.*;
  * @param <E> type of elements stored in this graph
  * @author Yossi Gil
  * @since 2011-11-11 */
-public class Graph<E> extends AbstractGraph<E> {
+public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
   private static <E> ImmutableArrayList<Vertex<E>> makeSinks(final ImmutableArrayList<Vertex<E>> v) {
     final ArrayList<Vertex<E>> $ = new ArrayList<>();
     for (final Vertex<E> ¢ : v)

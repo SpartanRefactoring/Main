@@ -28,9 +28,12 @@ public class RunOperation extends WidgetOperation {
         { DEBUG, "Boolean", "Debug", "REQUIRED" }, //
     };
   }
-  @Override public boolean register(@SuppressWarnings("hiding") final Map<?, ?> configuration) {
-    return (configurationName = (String) configuration.get(NAME)) != null //
-        && (debug = (Boolean) configuration.get(DEBUG)) != null //
+  @Override protected boolean hasDefaultConfiguration() {
+    return false;
+  }
+  @Override public boolean register(final ConfigurationsMap ¢) {
+    return (configurationName = ¢.getString(NAME)) != null //
+        && (debug = ¢.getBoolean(DEBUG)) != null //
         && load();
   }
   @Override public void onMouseUp(@SuppressWarnings("unused") final WidgetContext __) throws CoreException {

@@ -6,6 +6,7 @@ import static il.org.spartan.statistics.MomentUtils.*;
 import org.junit.*;
 
 import an.*;
+import an.array.*;
 import il.org.spartan.streotypes.*;
 
 /** @author Yossi Gil
@@ -41,10 +42,10 @@ public enum Sum {
   @SuppressWarnings("static-method")
   public static class TEST {
     @Test public void fullSum() {
-      Assert.assertEquals(21, sum(array.ofDoubles(0.0, 1, 2, 3, 4, 5, 6)), 1E-5);
+      Assert.assertEquals(21, sum(of.doubles(0.0, 1, 2, 3, 4, 5, 6)), 1E-5);
     }
     @Test public void partialSum() {
-      Assert.assertEquals(9.0, sum(array.ofDoubles(0, 1, 2, 3, 4, 5, 6.000000), 2, 3), 1E-5);
+      Assert.assertEquals(9.0, sum(of.doubles(0, 1, 2, 3, 4, 5, 6.000000), 2, 3), 1E-5);
     }
     @Test public void sum1() {
       final double vs[] = { 5, 20, 40, 80, 100 };
