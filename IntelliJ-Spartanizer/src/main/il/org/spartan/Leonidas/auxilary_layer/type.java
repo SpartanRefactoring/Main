@@ -88,6 +88,12 @@ public class type {
                 super.visitPrefixExpression(expression);
                 myClass.set(PsiPrefixExpression.class);
             }
+
+            @Override
+            public void visitDeclarationStatement(PsiDeclarationStatement statement) {
+                super.visitDeclarationStatement(statement);
+                myClass.set(PsiDeclarationStatement.class);
+            }
         });
         return myClass.get();
     }
