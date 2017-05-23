@@ -3,8 +3,8 @@ package il.org.spartan.tables;
 import java.io.*;
 import java.util.*;
 
-import il.org.spartan.*;
 import fluent.ly.*;
+import il.org.spartan.*;
 
 /** TODO Yossi Gil Document Classn
  * @author Yossi Gil

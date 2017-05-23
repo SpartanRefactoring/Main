@@ -9,9 +9,8 @@ import java.util.zip.*;
 
 import org.junit.*;
 
-import il.org.spartan.utils.*;
-import il.org.spatan.iteration.*;
 import fluent.ly.*;
+import il.org.spartan.utils.*;
 
 /** A data structure representing a Java-like CLASSPATH, i.e., a collection of
  * names of folders and archive files. Tacit is the convention that Java class

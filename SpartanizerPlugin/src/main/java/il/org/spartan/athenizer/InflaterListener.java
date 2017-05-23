@@ -52,9 +52,9 @@ public class InflaterListener implements KeyListener, Listener {
   @SuppressWarnings("boxing") private static final List<Integer> activating_keys = Arrays.asList(SWT.CTRL);
   @SuppressWarnings("boxing") private final List<Boolean> active_keys = activating_keys.stream().map(λ -> false).collect(Collectors.toList());
   private static final List<Predicate<Event>> zoomer_keys = Arrays.asList(λ -> λ.keyCode == SWT.KEYPAD_ADD, λ -> λ.keyCode == '=',
-      λ -> λ.type == SWT.MouseWheel && λ.count > 0, λ -> λ.keyCode == ']', λ -> λ.character == '2', λ -> λ.keyCode == SWT.KEYPAD_2);
+      λ -> λ.type == SWT.MouseWheel && λ.count > 0, λ -> λ.keyCode == ']' && λ.type == SWT.KeyUp);
   private static final List<Predicate<Event>> spartan_keys = Arrays.asList(λ -> λ.keyCode == SWT.KEYPAD_SUBTRACT, λ -> λ.keyCode == '-',
-      λ -> λ.type == SWT.MouseWheel && λ.count < 0, λ -> λ.keyCode == '[', λ -> λ.character == '1', λ -> λ.keyCode == SWT.KEYPAD_1);
+      λ -> λ.type == SWT.MouseWheel && λ.count < 0, λ -> λ.keyCode == '[' && λ.type == SWT.KeyUp);
 
   @SuppressWarnings("restriction") public InflaterListener(final StyledText text, final ITextEditor editor, final Selection selection) {
     this.text = text;

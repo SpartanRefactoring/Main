@@ -80,6 +80,11 @@ public class Issue1001 extends BloaterTest<Assignment> {
         + "  x(a = a % (b = b | 1));\n" //
         + "}", "f44");
   }
+  @Test public void byteTypeBug() {
+    bloatingOf(Issue1001Aux.instance()).givesWithBinding("" //
+        + "static byte f5() {\n" //
+        + "byte a = 1;" + "final byte b = 2;" + "a = (byte) (a + b);" + "return a;" + "}", "f5");
+  }
 
   /** [[SuppressWarningsSpartan]] */
   @SuppressWarnings({ "unused", "TooBroadScope" })
@@ -130,6 +135,12 @@ public class Issue1001 extends BloaterTest<Assignment> {
     }
     void x(final int y) {
       //
+    }
+    static byte f5() {
+      byte a = 1;
+      final byte b = 2;
+      a += b;
+      return a;
     }
   }
 }

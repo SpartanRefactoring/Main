@@ -3,6 +3,9 @@ apply plugin: 'eclipse'
 
 compileJava.options.encoding = 'UTF-8'
 
+// un-orthodox directory tree structure
+sourceSets.main.java.srcDir 'src/'
+
 repositories {
 	mavenCentral()
 }

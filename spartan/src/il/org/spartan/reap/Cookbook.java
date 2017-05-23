@@ -1,19 +1,20 @@
 /* Part of the "Spartan Blog"; mutate the rest / but leave this line as is */
 package il.org.spartan.reap;
 
-import static il.org.spartan.Utils.*;
 import static fluent.ly.azzert.*;
-import static java.lang.Math.max;
 import static fluent.ly.idiomatic.*;
+import static il.org.spartan.Utils.*;
+import static java.lang.Math.*;
 
 import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.junit.*;
+
+import fluent.ly.*;
 import il.org.spartan.reap.Cookbook.Internal.*;
 import il.org.spartan.reap.Cookbook.Recipe.*;
-import fluent.ly.*;
 
 /** This interface represents the concept of a <i>lazy symbolic spreadsheet</i>,
  * made by DAG of interdependent {@link Cell}s. A {@link Cell} is either an

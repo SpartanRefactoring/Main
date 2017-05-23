@@ -6,6 +6,7 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
+import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.tables.*;
 
 /** Generates a table of funtion arguments
@@ -32,6 +33,7 @@ public class Table_Function_Argument_Names extends NominalTables {
         initializeWriter();
         namePrevelance.entrySet().stream().sorted(Map.Entry.<String, Integer> comparingByValue().reversed())
             .forEachOrdered(λ -> table.col("Name", λ.getKey().split("--")[0]).col("Type", λ.getKey().split("--")[1])
+                .col("Suggestion", abbreviate.it(λ.getKey().split("--")[1]))
                 .col("Strategy", λ.getKey().split("--")[0].toLowerCase().equals(λ.getKey().split("--")[1].toLowerCase()) ? "Type" : "Unkown")
                 .col("Prev", λ.getValue()).nl());
       }
@@ -44,7 +46,8 @@ public class Table_Function_Argument_Names extends NominalTables {
         ¢.accept(new ASTVisitor() {
           @Override @SuppressWarnings({ "boxing", "unchecked" }) public boolean visit(final MethodDeclaration x) {
             x.parameters().stream().forEach(p -> {
-              final String n1 = az.singleVariableDeclaration(az.astNode(p)).getName() + "", n2 = az.singleVariableDeclaration(az.astNode(p)).getType() + "";
+              final String n1 = az.singleVariableDeclaration(az.astNode(p)).getName() + "",
+                  n2 = az.singleVariableDeclaration(az.astNode(p)).getType() + "";
               namePrevelance.put(n1 + "--" + n2, !namePrevelance.containsKey(n1 + "--" + n2) ? 1 : namePrevelance.get(n1 + "--" + n2) + 1);
             });
             return true;

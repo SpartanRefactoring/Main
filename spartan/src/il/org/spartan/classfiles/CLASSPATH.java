@@ -1,12 +1,11 @@
 package il.org.spartan.classfiles;
 
-import fluent.ly.*;
 import java.io.*;
 import java.net.*;
 
+import fluent.ly.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.*;
-import il.org.spatan.iteration.*;
 
 /** A representation of the system global CLASSPATH.
  * @author Yossi Gil

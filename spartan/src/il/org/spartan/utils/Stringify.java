@@ -2,13 +2,14 @@
 package il.org.spartan.utils;
 
 import static fluent.ly.azzert.*;
+
 import java.util.*;
 
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.streotypes.*;
 import il.org.spartan.utils.Separate.*;
-import fluent.ly.*;
 
 /** A <b>Utility Class</b> providing services of converting a collection or an
  * array into a {@link String}, with means for omitting <code><b>null</b></code>

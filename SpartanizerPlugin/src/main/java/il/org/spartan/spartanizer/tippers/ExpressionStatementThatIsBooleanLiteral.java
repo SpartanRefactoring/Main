@@ -51,6 +51,6 @@ public final class ExpressionStatementThatIsBooleanLiteral extends ReplaceCurren
   }
   boolean setSecond(final Expression ¢) {
     final MethodInvocation $ = az.methodInvocation(¢);
-    return as.set("is").contains($.getName() + "") && (booleanLiteral = az.booleanLiteral(the.firstOf(arguments($)))) != null;
+    return $ != null && as.set("is").contains($.getName() + "") && (booleanLiteral = az.booleanLiteral(the.firstOf(arguments($)))) != null;
   }
 }
