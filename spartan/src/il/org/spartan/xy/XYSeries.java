@@ -1,7 +1,7 @@
 package il.org.spartan.xy;
 
-import static il.org.spartan.misc.LinearAlgebra.*;
 import static fluent.ly.Iterables.*;
+import static il.org.spartan.misc.LinearAlgebra.*;
 
 import il.org.spartan.misc.*;
 import il.org.spartan.xy.XYProcessor.*;

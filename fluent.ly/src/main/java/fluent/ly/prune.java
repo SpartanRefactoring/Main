@@ -73,8 +73,7 @@ public enum prune {
   private static <T> T[] shrink(final T[] ¢) {
     return Arrays.copyOf(¢, 0);
   }
-    @SafeVarargs
-  public static <T> String[] whites(final T... ts) {
+  @SafeVarargs public static <T> String[] whites(final T... ts) {
     final List<String> $ = new ArrayList<>();
     for (final T ¢ : ts)
       if (¢ != null)

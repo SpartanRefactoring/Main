@@ -89,9 +89,9 @@ public class InflateHandler extends AbstractHandler {
     final IWorkbench w = PlatformUI.getWorkbench();
     if (w == null)
       return null;
-    final IWorkbenchWindow wd = w.getActiveWorkbenchWindow();
+    final IWorkbenchWindow $ = w.getActiveWorkbenchWindow();
     final IWorkbenchWindow[] wds = w.getWorkbenchWindows();
-    return wd != null ? wd.getPartService() : wds != null && wds.length != 0 ? wds[0].getPartService() : null;
+    return $ != null ? $.getPartService() : wds != null && wds.length != 0 ? wds[0].getPartService() : null;
   }
   @SuppressWarnings("unused") private static IPartListener pageListener() {
     return new IPartListener() {

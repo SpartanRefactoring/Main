@@ -1,7 +1,7 @@
 package il.org.spartan.fun.Dr.Seuss;
 
-import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
 import fluent.ly.*;
+import il.org.spartan.fun.Dr.Seuss.Cat.in.the.Hat.*;
 
 /** Dr. Seuss Nonsense
  * @author Yossi Gil

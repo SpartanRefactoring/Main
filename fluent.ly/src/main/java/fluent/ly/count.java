@@ -7,7 +7,6 @@ public interface count {
       ++$;
     return $;
   }
-
   /** Counts the number of items in an {@link Iterable}.
    * @param <T> some arbitrary type
    * @param ts some iterable over items whose type is the type parameter

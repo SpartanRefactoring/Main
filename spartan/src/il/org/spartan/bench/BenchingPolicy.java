@@ -4,11 +4,11 @@ import static il.org.spartan.bench.Unit.*;
 
 import org.junit.*;
 
+import fluent.ly.*;
 import il.org.spartan.*;
 import il.org.spartan.bench.LogBook.*;
 import il.org.spartan.bench.operations.*;
 import il.org.spartan.sequence.*;
-import fluent.ly.*;
 
 /** Defines a set of policies for timing an operation.
  * @author Yossi Gil

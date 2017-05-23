@@ -7,6 +7,7 @@ import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.regex.*;
+import java.util.stream.*;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.jdt.core.*;
@@ -16,11 +17,12 @@ import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
 import fluent.ly.*;
-import il.org.spartan.*;
 import il.org.spartan.spartanizer.ast.factory.*;
+import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.java.namespace.*;
+import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.tipping.*;
 
 /** An expander to extract complex arguments from {@link Statement}: {@code
@@ -38,6 +40,7 @@ import il.org.spartan.spartanizer.tipping.*;
 public class StatementExtractParameters<S extends Statement> extends CarefulTipper<S>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = 0x1A06EDFC5CBC0D5EL;
+  private static final String KNOWN_TYPES_NAMES = "KNOWN_TYPES_NAMES";
 
   @Override public String description(@SuppressWarnings("unused") final Statement __) {
     return "Extract complex parameter from statement";
@@ -48,10 +51,13 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
         || !(((CompilationUnit) root).getTypeRoot() instanceof ICompilationUnit))
       return null;
     final Expression $ = choose(candidates(s));
-    if ($ == null)
+    if ($ == null || iz.assignment($))
       return null;
     final ITypeBinding binding = $.resolveTypeBinding();
-    if (binding == null || captureRisk(binding))
+    if (binding == null)
+      return null;
+    final List<ITypeBinding> allBindings = Bindings.getAllFrom(binding);
+    if (captureRisk(allBindings))
       return null;
     final CompilationUnit u = az.compilationUnit(root);
     if (u == null)
@@ -64,27 +70,32 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final Type t = ir.addImport(binding, s.getAST());
     if (containsHazardousTypeArgument(t))
       return null;
-    final Wrapper<IType[]> types = new Wrapper<>();
+    final Type tw = fixWildCardType(t);
+    if (tw == null)
+      return null;
+    for (final ITypeBinding ¢ : allBindings)
+      ir.addImport(¢, s.getAST());
+    IType[] types = null, topTypes = null;
     try {
       ir.rewriteImports(new NullProgressMonitor());
-      types.set(ir.getCompilationUnit().getAllTypes());
+      final ICompilationUnit iu = ir.getCompilationUnit();
+      types = iu.getAllTypes();
+      topTypes = iu.getTypes();
     } catch (final CoreException ¢) {
       note.bug(¢);
       return null;
     }
-    final ITypeBinding realType = !binding.isArray() ? binding : binding.getElementType();
-    final boolean samePackage = samePackage(types.get(), realType), isTopLevel = binding.isTopLevel(), sameFile = sameFile(types.get(), realType);
-    // TODO Ori Roth: enable assignments extraction + check the
-    // fixWildCardType(t), added it since when it returns null we get exception
-    return t == null || //
-        samePackage && privateImport(realType) || //
-        !samePackage && nonPublicImport(realType) || //
-        fixWildCardType(t) == null || //
-        $ instanceof Assignment ? null : //
+    if (types == null || types.length == 0)
+      return null;
+    final Collection<String> createdImports = getCreatedImports(ir), sameFile = getSameFile(createdImports, types),
+        samePackage = getSamePackage(createdImports, types[0]), topLevel = getTopLevel(createdImports, topTypes);
+    return ambiguousImports(createdImports, u) || //
+        privateImportHazard(allBindings, sameFile) || //
+        nonPublicImportHazard(allBindings, samePackage) ? null : //
             new Tip(description(s), myClass(), s) {
               @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-                fixAddedImports(s, ir, types, samePackage, isTopLevel, sameFile, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
-                final Type tt = fixWildCardType(t);
+                fixAddedImports(s, createdImports, sameFile, samePackage, topLevel, g, r.getListRewrite(u, CompilationUnit.IMPORTS_PROPERTY));
+                final Type tt = fixWildCardType(tw);
                 final VariableDeclarationFragment f = s.getAST().newVariableDeclarationFragment();
                 final String nn = scope.newName(s, tt);
                 f.setName(make.from(s).identifier(nn));
@@ -123,27 +134,31 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     final List<Expression> $ = an.empty.list();
     s.accept(new ASTVisitor(true) {
       @Override @SuppressWarnings("unchecked") public boolean preVisit2(final ASTNode ¢) {
-        if (¢ instanceof Expression)
-          consider($, (Expression) ¢);
-        switch (¢.getNodeType()) {
-          case ASTNode.ANONYMOUS_CLASS_DECLARATION:
-          case ASTNode.BLOCK:
-          case ASTNode.DO_STATEMENT:
-          case ASTNode.LAMBDA_EXPRESSION:
-          case ASTNode.SUPER_CONSTRUCTOR_INVOCATION:
-          case ASTNode.TYPE_DECLARATION_STATEMENT:
-          case ASTNode.VARIABLE_DECLARATION_STATEMENT:
-          case ASTNode.WHILE_STATEMENT:
+        if (¢ instanceof Expression) {
+          final InfixExpression p = az.infixExpression(¢.getParent());
+          if (p != null && (iz.conditionalAnd(p) || iz.conditionalOr(p)) && ¢ == p.getRightOperand())
             return false;
-          case ASTNode.ENHANCED_FOR_STATEMENT:
+          consider($, (Expression) ¢);
+        }
+        switch (¢.getNodeType()) {
+          case ANONYMOUS_CLASS_DECLARATION:
+          case BLOCK:
+          case DO_STATEMENT:
+          case LAMBDA_EXPRESSION:
+          case SUPER_CONSTRUCTOR_INVOCATION:
+          case TYPE_DECLARATION_STATEMENT:
+          case VARIABLE_DECLARATION_STATEMENT:
+          case WHILE_STATEMENT:
+            return false;
+          case ENHANCED_FOR_STATEMENT:
             final EnhancedForStatement efs = (EnhancedForStatement) ¢;
             consider($, efs.getExpression());
             return false;
-          case ASTNode.FOR_STATEMENT:
+          case FOR_STATEMENT:
             final ForStatement fs = (ForStatement) ¢;
             consider($, fs.initializers());
             return false;
-          case ASTNode.EXPRESSION_STATEMENT:
+          case EXPRESSION_STATEMENT:
             if (((ExpressionStatement) ¢).getExpression() instanceof Assignment)
               excludedParents.add(((ExpressionStatement) ¢).getExpression());
             return true;
@@ -162,33 +177,19 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
     });
     return $;
   }
-  /** Manual addition of imports recorded in the {@link ImportRewrite} object.
-   * @param s
-   * @param r
-   * @param ts
-   * @param samePackage
-   * @param sameFile
-   * @param g
-   * @param ilr
-   * @param isTpLevel */
-  static void fixAddedImports(final Statement s, final ImportRewrite r, final Wrapper<IType[]> ts, final boolean samePackage,
-      final boolean isTopLevel, final boolean sameFile, final TextEditGroup g, final ListRewrite ilr) {
-    if (sameFile || samePackage && isTopLevel)
-      return;
-    final Collection<String> idns = an.empty.list();
-    if (r.getCreatedImports() != null)
-      idns.addAll(as.list(r.getCreatedImports()));
-    if (r.getCreatedStaticImports() != null)
-      idns.addAll(as.list(r.getCreatedStaticImports()));
-    for (final String idn : idns) {
-      if (isTopLevel && Arrays.stream(ts.get()).anyMatch(λ -> idn.equals(λ.getFullyQualifiedName('.'))))
+  /** Manual addition of imports recorded in the {@link ImportRewrite}
+   * object. */
+  static void fixAddedImports(final Statement s, final Collection<String> createdImports, final Collection<String> sameFile,
+      final Collection<String> samePackage, final Collection<String> topLevel, final TextEditGroup g, final ListRewrite ilr) {
+    for (final String ci : createdImports) {
+      if (sameFile.contains(ci) || samePackage.contains(ci) && topLevel.contains(ci))
         continue;
       final ImportDeclaration id = s.getAST().newImportDeclaration();
-      id.setName(s.getAST().newName(idn));
+      id.setName(s.getAST().newName(ci));
       ilr.insertLast(id, g);
     }
   }
-  /** Required due to bug in eclipse (seams so). Given
+  /** Required due to bug in eclipse (seems so). Given
    * {@code T extends MyObject}, {@code T[]} turns with binding into
    * {@code ? extends E[]}. The problem is this __ is considered as
    * {@link ArrayType} rather than {@link WildcardType}! Thus the manual fix.
@@ -251,45 +252,72 @@ public class StatementExtractParameters<S extends Statement> extends CarefulTipp
   private static Expression choose(final List<Expression> ¢) {
     return the.firstOf(¢);
   }
-  private static boolean captureRisk(final ITypeBinding binding) {
-    if (binding == null)
-      return true;
+  private static boolean captureRisk(final List<ITypeBinding> allBindings) {
     final Set<String> seenCaptures = new HashSet<>();
-    for (final ITypeBinding b : binding.getTypeArguments()) {
-      final Matcher matcher = Pattern.compile("capture#(.*?)-of").matcher(b + "");
-      if (matcher.find())
-        for (int i = 1; i <= matcher.groupCount(); ++i) {
-          final String capture = matcher.group(i);
-          if (seenCaptures.contains(capture))
-            return true;
-          seenCaptures.add(capture);
-        }
-    }
+    for (final ITypeBinding b : allBindings)
+      for (final ITypeBinding bb : b.getTypeArguments()) {
+        final Matcher matcher = Pattern.compile("capture#(.*?)-of").matcher(bb + "");
+        if (matcher.find())
+          for (int i = 1; i <= matcher.groupCount(); ++i) {
+            final String capture = matcher.group(i);
+            if (seenCaptures.contains(capture))
+              return true;
+            seenCaptures.add(capture);
+          }
+      }
     return false;
-  }
-  private static boolean nonPublicImport(final ITypeBinding outerType) {
-    return !Modifier.isPublic(outerType.getModifiers());
-  }
-  private static boolean privateImport(final ITypeBinding outerType) {
-    return Modifier.isPrivate(outerType.getModifiers());
-  }
-  private static boolean samePackage(final IType[] innerTypes, final ITypeBinding outerType) {
-    return innerTypes.length != 0 && //
-        Optional.ofNullable(innerTypes[0]) //
-            .map(λ -> λ.getPackageFragment()) //
-            .map(λ -> λ.getElementName()) //
-            .map(x -> box.it(x.equals(Optional.ofNullable(outerType.getPackage()).map(λ -> λ.getName()).orElse("~")))) //
-            .orElse(Boolean.FALSE).booleanValue();
-  }
-  private static boolean sameFile(final IType[] ts, final ITypeBinding realType) {
-    ITypeBinding topBinding = realType;
-    for (; topBinding != null && !topBinding.isTopLevel(); topBinding = topBinding.getDeclaringClass())
-      ;
-    final String tn = topBinding == null ? null : topBinding.getName();
-    return tn != null && Arrays.stream(ts).map(λ -> λ.getElementName()).anyMatch(λ -> tn.equals(λ));
   }
   private static boolean containsHazardousTypeArgument(final Type ¢) {
     return (¢ + "").contains("<?>");
+  }
+  private static List<String> getCreatedImports(final ImportRewrite ¢) {
+    final List<String> $ = an.empty.list();
+    if (¢.getCreatedImports() != null)
+      $.addAll(as.list(¢.getCreatedImports()));
+    if (¢.getCreatedStaticImports() != null)
+      $.addAll(as.list(¢.getCreatedStaticImports()));
+    return $;
+  }
+  private static Collection<String> getSameFile(final Collection<String> createdImports, final IType[] ts) {
+    final List<String> $ = Arrays.stream(ts).map(λ -> λ.getFullyQualifiedName()).collect(Collectors.toList());
+    return createdImports.stream().filter(λ -> $.contains(λ)).collect(Collectors.toList());
+  }
+  private static Collection<String> getSamePackage(final Collection<String> createdImports, final IType rep) {
+    final String $ = rep.getPackageFragment().getElementName();
+    return createdImports.stream().filter(λ -> λ.startsWith($)).collect(Collectors.toList());
+  }
+  private static Collection<String> getTopLevel(final Collection<String> createdImports, final IType[] ts) {
+    final List<String> $ = Arrays.stream(ts).map(λ -> λ.getFullyQualifiedName()).collect(Collectors.toList());
+    return createdImports.stream().filter(λ -> $.contains(λ)).collect(Collectors.toList());
+  }
+  private static boolean ambiguousImports(final Collection<String> createdImports, final CompilationUnit u) {
+    final List<String> usedNames = an.empty.list();
+    if (property.has(u, KNOWN_TYPES_NAMES))
+      usedNames.addAll(property.get(u, KNOWN_TYPES_NAMES));
+    else {
+      u.accept(new ASTVisitor() {
+        @Override public void preVisit(final ASTNode n) {
+          if (!iz.type(n) || n.getParent() instanceof QualifiedType)
+            return;
+          final String s = extract.leftName(az.type(n));
+          if (s != null)
+            usedNames.add(s);
+        }
+        @Override public boolean visit(final SimpleName ¢) {
+          if (iz.bodyDeclaration(¢.getParent()))
+            usedNames.add(¢.getIdentifier());
+          return false;
+        }
+      });
+      property.set(u, KNOWN_TYPES_NAMES, usedNames);
+    }
+    return !Collections.disjoint(createdImports.stream().map(λ -> λ.split("\\.")).map(λ -> λ[λ.length - 1]).collect(Collectors.toList()), usedNames);
+  }
+  private static boolean privateImportHazard(final List<ITypeBinding> allBindings, final Collection<String> sameFile) {
+    return allBindings.stream().anyMatch(λ -> sameFile.contains(λ.getQualifiedName()) && Modifier.isPrivate(λ.getModifiers()));
+  }
+  private static boolean nonPublicImportHazard(final List<ITypeBinding> allBindings, final Collection<String> samePackage) {
+    return allBindings.stream().anyMatch(λ -> samePackage.contains(λ.getQualifiedName()) && !Modifier.isPublic(λ.getModifiers()));
   }
 
   // TODO Ori Roth: move class to utility file

@@ -14,7 +14,6 @@ import fluent.ly.*;
 import il.org.spartan.collections.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.cmdline.*;
 import il.org.spartan.spartanizer.cmdline.report.*;
 import il.org.spartan.spartanizer.cmdline.report.ConfigurableReport.*;

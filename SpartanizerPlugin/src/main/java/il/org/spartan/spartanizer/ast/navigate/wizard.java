@@ -1,10 +1,9 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static fluent.ly.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static java.util.stream.Collectors.*;
-
-import static fluent.ly.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
@@ -115,7 +114,7 @@ public interface wizard {
   Class<?>[] np = { InfixExpression.class };
   IProgressMonitor nullProgressMonitor = new NullProgressMonitor();
   Bool resolveBinding = Bool.valueOf(false);
-  List<Integer> loopTypes = as.list(WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT);
+  List<Integer> loopTypes = as.ilist(WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT, DO_STATEMENT);
 
   static Expression addParenthesisIfNeeded(final Expression ¢) {
     return !isParethesisNeeded(¢) ? ¢ : make.parethesized(¢);

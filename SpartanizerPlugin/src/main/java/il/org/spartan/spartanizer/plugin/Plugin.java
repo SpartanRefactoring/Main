@@ -4,6 +4,8 @@ import static il.org.spartan.plugin.old.eclipse.*;
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 import static il.org.spartan.plugin.preferences.revision.XMLSpartan.*;
 
+import java.util.concurrent.atomic.*;
+
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.*;
@@ -13,6 +15,7 @@ import org.osgi.framework.*;
 import org.w3c.dom.*;
 
 import fluent.ly.*;
+import il.org.spartan.athenizer.*;
 import il.org.spartan.plugin.old.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
@@ -30,6 +33,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   private static Plugin plugin;
   private static boolean listening;
   private static final int SAFETY_DELAY = 100;
+  private static final AtomicBoolean earlyStartupGuard = new AtomicBoolean(true);
 
   public static AbstractUIPlugin plugin() {
     return plugin;
@@ -42,7 +46,8 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
   }
   /** Called whenever the plugin is first loaded into the workbench */
   @Override public void earlyStartup() {
-    //
+    if (earlyStartupGuard.getAndSet(false) && ZOOMER_AUTO_ACTIVISION_VALUE.get())
+      InflateHandler.goWheelAction();
   }
   @Override public void start(final BundleContext c) throws Exception {
     super.start(c);
@@ -125,6 +130,7 @@ public final class Plugin extends AbstractUIPlugin implements IStartup {
     robust.ly(() -> {
       NEW_PROJECTS_ENABLE_BY_DEFAULT_VALUE.set(store().getBoolean(NEW_PROJECTS_ENABLE_BY_DEFAULT_ID));
       ZOOMER_REVERT_METHOD_VALUE.set(store().getBoolean(ZOOMER_REVERT_METHOD_ID));
+      ZOOMER_AUTO_ACTIVISION_VALUE.set(store().getBoolean(ZOOMER_AUTO_ACTIVISION_ID));
       final Document doc = XMLSpartan.getXML(getAllSpartanizerProjects()[0]);
       doc.getDocumentElement().normalize();
       notation.cent = "cent".equals(doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).getNodeValue()) ? "¢"

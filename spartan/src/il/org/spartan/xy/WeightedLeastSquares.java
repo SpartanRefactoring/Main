@@ -1,13 +1,11 @@
 package il.org.spartan.xy;
 
 import static il.org.spartan.statistics.MomentUtils.*;
-import static fluent.ly.Iterables.*;
 import static java.lang.Double.*;
 
 import org.junit.*;
 
 import an.*;
-import fluent.ly.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
@@ -73,7 +71,7 @@ public class WeightedLeastSquares extends XYProcessor.Vacuous {
   public static class TEST {
     final WeightedLeastSquares l = new WeightedLeastSquares();
     {
-      l.feed(array.of(1., 2, 3), array.of(5., 7, 9), array.of(1., 1, 1));
+      l.feed(array.ofDoubles(1., 2, 3), array.ofDoubles(5., 7, 9), array.ofDoubles(1., 1, 1));
     }
 
     @Test public void alpha() {

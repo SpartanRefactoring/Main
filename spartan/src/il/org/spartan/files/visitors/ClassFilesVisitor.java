@@ -2,6 +2,7 @@
 package il.org.spartan.files.visitors;
 
 import java.io.*;
+import java.util.*;
 
 /** A class realizing a traversal of the file system, where the traversal is
  * restricted to <code>.class</code> files only

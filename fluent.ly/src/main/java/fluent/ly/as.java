@@ -105,17 +105,6 @@ public enum as {
   @SafeVarargs public static <T> Iterator<T> iterator(final T... ¢) {
     return as.list(¢).iterator();
   }
-  /** Converts an array of <code><b>int</b></code> values into a {@link List}
-   * of non-<code><b>null</b></code> {@link Integer}s.
-   * @param is what to covert
-   * @return parameter, converted to the {@link List} of non-
-   *         <code><b>int</b></code> {@link Integer}s form. */
-  public static List<Integer> list(final int... is) {
-    final List<Integer> $ = new ArrayList<>();
-    for (final int ¢ : is)
-      $.add(fluent.ly.box.it(¢));
-    return $;
-  }
   /** Converts an {@link Iterable} of a given type into a {@link List} of values
    * of this type.
    * @param <T> type of items to be converted
@@ -131,6 +120,9 @@ public enum as {
    * @return result parameter, converted into a {@link List} */
   @SafeVarargs public static <T> List<T> list(final T... $) {
     return Arrays.asList($).stream().collect(Collectors.toList());
+  }
+  @SafeVarargs public static List<Integer> ilist(final int... $) {
+    return Arrays.stream($).collect(() -> an.empty.list(), (l, i) -> l.add(Integer.valueOf(i)), (l1, l2) -> l1.addAll(l2));
   }
   /** Converts a sequence of objects of a given type into a {@link Set} of
    * values
@@ -165,7 +157,6 @@ public enum as {
         $.add(¢ + "");
     return Utils.cantBeNull($.toArray(new String[$.size()]));
   }
-
   static Iterable<Integer> asIterableEssence(final Integer... is) {
     return () -> new Iterator<Integer>() {
       int current;
@@ -197,11 +188,10 @@ public enum as {
     }
     @Test public void asIntArraySimple() {
       final int[] is = as.intArray(100, 200, 200, 12, 13, 0);
-      assertArrayEquals(is, as.ints(as.list(is)));
+      assertArrayEquals(is, as.ints(as.ilist(is)));
     }
     @Test public void asListSimple() {
-      // direct call `as.list(12, 13, 14)` kills Travis --or
-      final List<Integer> is = as.list(new int[] { 12, 13, 14 });
+      final List<Integer> is = as.ilist(12, 13, 14);
       azzert.that(is.get(0), is(fluent.ly.box.it(12)));
       azzert.that(is.get(1), is(fluent.ly.box.it(13)));
       azzert.that(is.get(2), is(fluent.ly.box.it(14)));

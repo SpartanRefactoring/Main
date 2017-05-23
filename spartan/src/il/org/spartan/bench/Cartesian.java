@@ -1,12 +1,12 @@
 package il.org.spartan.bench;
 
-import static fluent.ly.azzert.*;
 import static fluent.ly.___.*;
+import static fluent.ly.azzert.*;
 
 import org.junit.*;
 
-import il.org.spartan.utils.*;
 import fluent.ly.*;
+import il.org.spartan.utils.*;
 
 /** @author Yossi Gil
  * @since 29/05/2011 */

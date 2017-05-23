@@ -1,13 +1,11 @@
 package il.org.spartan.statistics;
 
-import static il.org.spartan.statistics.MomentUtils.*;
-
 import static fluent.ly.box.*;
+import static il.org.spartan.statistics.MomentUtils.*;
 
 import java.util.*;
 
 import fluent.ly.*;
-import il.org.spatan.iteration.*;
 
 /** @author Yossi Gil
  * @since 30/04/2011 */
