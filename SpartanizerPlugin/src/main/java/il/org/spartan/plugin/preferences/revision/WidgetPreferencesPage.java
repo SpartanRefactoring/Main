@@ -28,15 +28,15 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     });
   }
   public static void onAble(final WidgetOperation o, final boolean valueNow, final ListEditor resLE) {
-    store().setValue("IS_ENABLED_" + ObjectStreamClass.lookup(o.getClass()).getSerialVersionUID(), !valueNow);
+    store().setValue("IS_ENABLED_" + WidgetPreferences.getWidgetOpUID(o), !valueNow);
     resLE.loadDefault();
   }
   @SuppressWarnings("boxing") public static Boolean isEnabled(final WidgetOperation ¢) {
-    return store().getBoolean("IS_ENABLED_" + ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID());
+    return store().getBoolean("IS_ENABLED_" + WidgetPreferences.getWidgetOpUID(¢));
   }
   public static void onConfigure(final WidgetOperation ¢) {
     new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢.description(), ¢.configurationComponents(),
-        ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID(), store()).open();
+        WidgetPreferences.getWidgetOpUID(¢), store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     final IntegerFieldEditor ife = new IntegerFieldEditor(PreferencesResources.WIDGET_SIZE, "Change widget size by radius - ", getFieldEditorParent());
@@ -47,14 +47,14 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
       @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
         final String[] $ = new String[7];
         int count = 0;
-        for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations) //TODO: change this to load from store
-          if (isEnabled(¢)) {
+        for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries()) //TODO: change this to load from store
+          if (¢.isEnabled()) {
             if (count >= WIDGET_MAX_OPS) {
               MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", "Cannot enable more than "
                   + WIDGET_MAX_OPS + " widget operations. \n Taking the " + WIDGET_MAX_OPS + " first enabled widget operations ");
               return $;
             }
-            $[count++] = ¢.description();
+            $[count++] = ¢.getName();
           }
         return Arrays.copyOfRange($, 0, count);
       }
@@ -77,8 +77,11 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   /** @return all plugin widget operations */
   private static List<Entry<String, Object>> getWidgetOperations() {
     final List<Entry<String, Object>> $ = an.empty.list();
-    for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations)
-      $.add(new AbstractMap.SimpleEntry<>(¢.description(), ¢));
+    for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries())
+      for (WidgetOperation wo : WidgetOperationPoint.allOperations)
+        if (¢.widgetSUID == ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID())
+          $.add(new AbstractMap.SimpleEntry<>(¢.getName(), wo));
+      
     return $;
   }
 }
