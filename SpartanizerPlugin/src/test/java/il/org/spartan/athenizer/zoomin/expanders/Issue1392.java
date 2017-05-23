@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** TODO dormaayn: document class
  * @author dormaayn
  * @since 2017-05-23 */
+@Ignore
 public class Issue1392 extends BloaterTest<MethodDeclaration> {
   @Override public Tipper<MethodDeclaration> bloater() {
     return new AddModifiersToMethodDeclaration();
