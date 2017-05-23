@@ -279,7 +279,16 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @return a mapping between the ID of a generic element to a list of all the constraint that apply on it.
+     * Searches for all the structural constraints found in the "constraints" method and returns a mapping between
+     * element ids and their structural constraints. For example, if the following is present in the constraints method:
+     * <p>
+     * <code>element(1).is(() -> return null;);</code>
+     * <p>
+     * It will search for the element with id 1, and put a structural constraint on it, requiring it look like:
+     * <p>
+     * <code>return null;</code>.
+     *
+     * @return a mapping between the ID of generic elements to a list of all the constraint that apply on them.
      */
     private Map<Integer, List<Matcher.Constraint>> getStructuralConstraints() {
         Map<Integer, List<Matcher.Constraint>> map = new HashMap<>();
@@ -308,6 +317,12 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     /**
      * Searches for logical constraints inside the "constraints" method in a tipper, and injects the relevant
      * constraints inside the relevant encapsulators.
+     * <p>
+     * For example if the following is present in the constraints method:
+     * <p>
+     * <code>element(0).asMethod.startsWith("set");</code>
+     * <p>
+     * it will take the element with ID 0 and call its <code>startsWith</code> method, passing it the argument "set".
      */
     private void injectLogicalConstraints() {
         PsiMethod constrainsMethod = getInterfaceMethod("constraints");
@@ -315,19 +330,19 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             return;
         }
 
-        Encapsulator root = matcher.getRoot();
-
         Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
             if (extractConstraintType(s) != Matcher.Constraint.ConstraintType.SPECIFIC) {
                 return;
             }
 
-            Encapsulator element = getElementById(root, extractIdFromConstraint(s));
+            // Retrieve the element with the given id
+            Encapsulator element = getElementById(matcher.getRoot(), extractIdFromConstraint(s));
 
             PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
             List<PsiExpression> arguments = step.arguments(method);
             String constraintName = method.getMethodExpression().getReferenceName();
 
+            // Iterate through all the methods of this generic block, and call the wanted one with the given arguments
             Arrays.stream(element.getClass().getDeclaredMethods())
                     .filter(m -> m.getName().equals(constraintName))
                     .forEach(m -> {
@@ -341,12 +356,12 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * Returns the encapsulators matching the given id. This is done by starting the search from the root element, and
-     * recursively searching for a child with the given id.
+     * Returns the encapsulator matching the given id. The search starts from the given root encapsulator and continues
+     * to its children if the id is not found.
      *
      * @param root root element, the search begins with it
      * @param id   id of the element to be searched
-     * @return element matching the given id, or <Code>null</Code> if none was found
+     * @return element matching the given id, or <code>null</code> if none was found
      */
     private Encapsulator getElementById(Encapsulator root, int id) {
         if (root == null) {
