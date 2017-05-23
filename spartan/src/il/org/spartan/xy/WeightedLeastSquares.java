@@ -1,13 +1,11 @@
 package il.org.spartan.xy;
 
 import static il.org.spartan.statistics.MomentUtils.*;
-import static fluent.ly.Iterables.*;
 import static java.lang.Double.*;
 
 import org.junit.*;
 
 import an.*;
-import fluent.ly.*;
 import il.org.spartan.utils.*;
 
 /** @author Yossi Gil

@@ -320,7 +320,7 @@ public abstract class ASTMapReducer<R> extends MapOfLeaves<R> {
   protected R map(final ThrowStatement ¢) {
     return map(expression(¢));
   }
-  //TODO yossi gil: check if it's alright
+  // TODO yossi gil: check if it's alright
   protected R map(@SuppressWarnings("unused") final CreationReference ¢) {
     return reduce();
   }

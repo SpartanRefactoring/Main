@@ -4,7 +4,7 @@ package il.org.spartan;
 import static fluent.ly.azzert.*;
 
 import org.junit.*;
-import il.org.spartan.iterables.*;
+
 import fluent.ly.*;
 
 public interface beginning {

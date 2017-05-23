@@ -1,7 +1,7 @@
 package il.org.spartan.strings;
 
-import static il.org.spartan.strings.StringUtils.*;
 import static fluent.ly.box.*;
+import static il.org.spartan.strings.StringUtils.*;
 
 import java.util.*;
 

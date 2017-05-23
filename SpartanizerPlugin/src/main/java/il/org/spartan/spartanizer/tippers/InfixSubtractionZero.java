@@ -1,10 +1,9 @@
 package il.org.spartan.spartanizer.tippers;
 
+import static fluent.ly.lisp.*;
 import static org.eclipse.jdt.core.dom.InfixExpression.Operator.*;
 
 import static java.util.stream.Collectors.*;
-
-import static fluent.ly.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.hop.*;
 

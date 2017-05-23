@@ -1,7 +1,6 @@
 package il.org.spartan.statistics;
 
 import static fluent.ly.azzert.*;
-import static fluent.ly.Iterables.*;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.*;

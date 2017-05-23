@@ -31,8 +31,6 @@ public enum PreferencesResources {
   public static final String NEW_PROJECTS_ENABLE_BY_DEFAULT_TEXT = "Enable by default for newly created projects";
   public static final String ZOOMER_REVERT_METHOD_ID = "ZOOMER_REVERT_METHOD";
   public static final String ZOOMER_REVERT_METHOD_TEXT = "Compund zoom text edits";
-
-
   public static final String ZOOMER_AUTO_ACTIVISION_ID = "ZOOMER_AUTO_ACTIVISION";
   public static final String ZOOMER_AUTO_ACTIVISION_ID_TEXT = "Activate zommer on startup";
   public static final String WIDGET_SHORTCUT_METHOD_ID = "WIDGET_SHORTCUT_METHOD";

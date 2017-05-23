@@ -3,9 +3,8 @@ package il.org.spartan.bench;
 import java.lang.management.*;
 import java.util.*;
 
-import il.org.spartan.utils.*;
-import il.org.spartan.utils.Separator;
 import fluent.ly.*;
+import il.org.spartan.utils.*;
 
 /* Records some characteristics of the JVM state.
  *

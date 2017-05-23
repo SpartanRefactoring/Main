@@ -8,7 +8,7 @@ import org.junit.*;
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @author tomerdragucki
  * @since 2017-01-13 */
-//TODO: Tomer Dragucki
+// TODO: Tomer Dragucki
 @Ignore
 @SuppressWarnings("static-method")
 public class Issue0980 {

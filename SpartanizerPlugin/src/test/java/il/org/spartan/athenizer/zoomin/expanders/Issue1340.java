@@ -1,7 +1,10 @@
 package il.org.spartan.athenizer.zoomin.expanders;
 
-import org.junit.*;
 import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
+
+import org.junit.*;
+
+import il.org.spartan.athenizer.bloaters.*;
 
 /** Bug in {@link MultiplicationToCast} test case
  * @author Yuval Simon

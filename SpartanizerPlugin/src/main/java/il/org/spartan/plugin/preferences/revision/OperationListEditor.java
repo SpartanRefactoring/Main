@@ -1,15 +1,15 @@
 package il.org.spartan.plugin.preferences.revision;
 
 import java.util.*;
+import java.util.List;
 import java.util.Map.*;
 import java.util.function.*;
 
-import org.eclipse.jface.preference.ListEditor;
-import org.eclipse.swt.SWT;
+import org.eclipse.jface.preference.*;
+import org.eclipse.swt.*;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.*;
 
 import fluent.ly.*;

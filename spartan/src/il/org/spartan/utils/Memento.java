@@ -6,8 +6,8 @@ import static fluent.ly.___.*;
 import java.io.*;
 import java.util.*;
 
-import il.org.spartan.streotypes.*;
 import fluent.ly.*;
+import il.org.spartan.streotypes.*;
 
 /** A general purpose implementation of the <b>Memento Design Pattern</b> using
  * object serialization

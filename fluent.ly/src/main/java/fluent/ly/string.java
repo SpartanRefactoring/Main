@@ -316,5 +316,6 @@ public enum string {
   public static String quote(final String $) {
     return $ == null ? "<null reference>" : QUOTE + $ + string.QUOTE;
   }
+
   public static final String QUOTE = "'";
 }

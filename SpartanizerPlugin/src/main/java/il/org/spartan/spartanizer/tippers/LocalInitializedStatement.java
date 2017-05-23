@@ -8,7 +8,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
-import il.org.spartan.spartanizer.ast.navigate.countOf;
 import il.org.spartan.spartanizer.engine.*;
 
 /** TODO dormaayn: document class

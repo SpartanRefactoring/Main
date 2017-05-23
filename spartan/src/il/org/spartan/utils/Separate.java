@@ -1,14 +1,14 @@
 // <a href=http://ssdl-linux.cs.technion.ac.il/wiki/index.php>SSDLPedia</a>
 package il.org.spartan.utils;
 
-import static il.org.spartan.strings.StringUtils.*;
 import static fluent.ly.box.*;
+import static il.org.spartan.strings.StringUtils.*;
 
 import java.util.*;
 import java.util.function.*;
 
-import il.org.spartan.streotypes.*;
 import fluent.ly.*;
+import il.org.spartan.streotypes.*;
 
 /** A utility class providing library functions that take an array or a
  * collection, and return a {@link String} composed by the elements of this
@@ -382,6 +382,7 @@ public enum Separate {
     /** Anonymous function for translating an object into text
      * @param t an object of type <code>T</code>
      * @return a textual */
+    @Override
     String apply(T t);
   }
 }

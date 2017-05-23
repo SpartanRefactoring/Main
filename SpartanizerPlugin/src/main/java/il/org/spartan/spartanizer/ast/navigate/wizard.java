@@ -1,10 +1,9 @@
 package il.org.spartan.spartanizer.ast.navigate;
 
+import static fluent.ly.lisp.*;
 import static org.eclipse.jdt.core.dom.ASTNode.*;
 
 import static java.util.stream.Collectors.*;
-
-import static fluent.ly.lisp.*;
 
 import static il.org.spartan.spartanizer.ast.navigate.step.*;
 import static il.org.spartan.spartanizer.ast.navigate.step.fragments;
