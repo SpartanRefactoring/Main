@@ -34,11 +34,12 @@ public class AssertJTransformator {
       $.add(m.group(¢));
     return $.toArray(new String[$.size()]);
   }
-  private static String replace(final String $, final String matchPattern, final String replacePattern) {
+  static String replace(final String $, final String matchPattern, final String replacePattern) {
     try {
       return replace($, matchPattern, replacePattern, naturalsByTemplateString(replacePattern));
-    } catch (final Exception ignore) {/**/}
-    return $;
+    } catch (@SuppressWarnings("unused") final Exception ignore) {
+      return $;
+    }
   }
   private static int[] naturalsByTemplateString(final String template) {
     final String findStr = "%s";
@@ -69,8 +70,9 @@ public class AssertJTransformator {
       String[] $ = new String[orderOfTemplatedValues.length];
       $ = rearange(a, $, orderOfTemplatedValues);
       return s.replaceAll(matchPattern, getReplacerString(replacePattern, $));
-    } catch (final Exception e) {/**/}
-    return s;
+    } catch (@SuppressWarnings("unused") final Exception e) {
+      return s;
+    }
   }
 
   private static class AssertJTransformations {

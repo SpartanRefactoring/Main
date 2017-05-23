@@ -7,6 +7,7 @@ import org.junit.*;
 
 /** @author Oren Afek
  * @since 5/19/2017. */
+  @SuppressWarnings("static-method")
 public class AssertJTransformatorTest {
   @Test public void testTransformations() {
     assertEquals("assertThat(listy).isEmpty();", transformIfPossible("assertEquals(0,listy.size());"));
