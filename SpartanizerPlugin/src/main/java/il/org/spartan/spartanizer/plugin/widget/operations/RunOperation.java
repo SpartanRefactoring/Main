@@ -28,6 +28,9 @@ public class RunOperation extends WidgetOperation {
         { DEBUG, "Boolean", "Debug", "REQUIRED" }, //
     };
   }
+  @Override protected boolean hasDefaultConfiguration() {
+    return false;
+  }
   @Override public boolean register(@SuppressWarnings("hiding") final ConfigurationsMap configuration) {
     return (configurationName = configuration.getString(NAME)) != null //
         && (debug = configuration.getBoolean(DEBUG)) != null //
