@@ -4,6 +4,7 @@ import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
@@ -16,8 +17,9 @@ import il.org.spartan.spartanizer.plugin.widget.operations.*;
 public enum WidgetPreferences {
   ;
   
-  @SuppressWarnings("unused")
-  private static final WidgetOperation[] defaultOrder = { new GitPullOperation()//
+  
+  private static final WidgetOperation[] defaultOrder = { //
+      new GitPullOperation()//
       , new GitPushOperation()//
       , new GitCommitOperation()//
       , new SpartanizationOperation()//
@@ -60,6 +62,24 @@ public enum WidgetPreferences {
   }
   public static void setDefaults() {
     store().setDefault(PreferencesResources.WIDGET_SIZE,defaultWidgetSize);
-    //TODO: add defualt List of entries here
+    //new Gson().toJson(object).getBytes("UTF-8"));
+    List<WidgetOperationEntry> entries = new ArrayList<>();
+    for(WidgetOperation wo : defaultOrder) {
+      if(wo == null)
+        continue;
+      WidgetOperationEntry woe = new WidgetOperationEntry(getWidgetOpUID(wo), new HashMap<>(), wo.description()+" the name");
+      woe.enable();
+      entries.add(woe);
+    }
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    try {
+      new ObjectOutputStream(out).writeObject(entries); 
+    } catch (final IOException x) {
+      note.bug(x);
+    }
+    store().setDefault(PreferencesResources.WIDGET_OPERATION_CONFIGURATION, Base64.getEncoder().encodeToString(out.toByteArray()));
+  }
+  public static long getWidgetOpUID(final WidgetOperation ¢) {
+    return ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID();
   }
 }
