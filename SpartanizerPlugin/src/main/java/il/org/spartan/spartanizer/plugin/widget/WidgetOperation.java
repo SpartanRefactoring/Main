@@ -6,13 +6,14 @@ import java.util.function.*;
 
 import org.eclipse.swt.graphics.*;
 
+import fluent.ly.*;
 import il.org.spartan.spartanizer.plugin.*;
 
 /** Operation, image, description etc. of a widget button.
  * @author Ori Roth <tt>ori.rothh@gmail.com</tt>
  * @since 2017-04-06 */
 @SuppressWarnings({ "unused", "static-method" })
-public abstract class WidgetOperation implements Serializable {
+public abstract class WidgetOperation implements Serializable, Cloneable {
   private static final long serialVersionUID = 0x5DEE331D4A6A17CEL;
 
   /** Operation on mouse down. */
@@ -39,11 +40,24 @@ public abstract class WidgetOperation implements Serializable {
   public String[][] configurationComponents() {
     return new String[][] {};
   }
-  /** Configure this operation, if needed.
+  /** Configure this operation.
    * @param configuration user configuration
    * @return true iff the configuration is valid
    * @see #configurationComponents */
-  public boolean register(final ConfigurationsMap configuration) {
+  protected boolean register(final ConfigurationsMap configuration) {
+    return true;
+  }
+  /** Configure this operation, if needed. 
+   * @param configuration user configuration
+   * @return true iff the configuration is valid
+   * @see #configurationComponents, #register, #hasDefaultConfiguration() */
+  public final boolean configure(final ConfigurationsMap configuration){
+    return (hasDefaultConfiguration() && configuration.isEmpty()) || register(configuration);
+  }
+  /** Tells whether the operation can be used without calling register
+   * @return true iff the operation has a default configuration
+   */
+  protected boolean hasDefaultConfiguration(){
     return true;
   }
   /** @return URL of image of this operation. */
@@ -61,5 +75,16 @@ public abstract class WidgetOperation implements Serializable {
    * @return scaler for SWT image of this operation. */
   protected Function<ImageData, ImageData> scale() {
     return λ -> λ;
+  }
+  
+  @Override
+  public WidgetOperation clone(){
+    try {
+      return (WidgetOperation) super.clone();
+    } catch (CloneNotSupportedException x) {
+      //should never happen
+      note.bug(x);
+    }
+    return null;
   }
 }
