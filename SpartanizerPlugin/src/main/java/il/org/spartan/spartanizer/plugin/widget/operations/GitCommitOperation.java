@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import java.util.*;
-
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.*;
 
@@ -27,8 +25,8 @@ public class GitCommitOperation extends GitOperation {
         { MESSAGE, "String", "Commit message" }, //
     };
   }
-  @Override public boolean register(final ConfigurationsMap configuration) {
-    message = configuration.getString(MESSAGE);
+  @Override public boolean register(final ConfigurationsMap ¢) {
+    message = ¢.getString(MESSAGE);
     if (message == null)
       message = DEFAULT_MESSAGE;
     return true;

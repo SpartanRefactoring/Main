@@ -14,7 +14,6 @@ import org.eclipse.ui.*;
 
 import fluent.ly.*;
 
-
 /** A widget containing a list of projects and some buttons. Used to configure
  * specific operations. "configure" button is used to open a dialog, allowing
  * the user to define configurations for the operation "en/disable" button

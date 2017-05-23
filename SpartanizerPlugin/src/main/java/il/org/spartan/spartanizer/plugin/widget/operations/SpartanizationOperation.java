@@ -1,7 +1,5 @@
 package il.org.spartan.spartanizer.plugin.widget.operations;
 
-import java.util.*;
-
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 
@@ -21,8 +19,8 @@ public class SpartanizationOperation extends WidgetOperation {
         { TYPE, "List", "Current selection", "Current file", "Current project", "REQUIRED" } //
     };
   }
-  @Override public boolean register(final ConfigurationsMap configuration) {
-    return (type = configuration.getString(TYPE)) != null;
+  @Override public boolean register(final ConfigurationsMap ¢) {
+    return (type = ¢.getString(TYPE)) != null;
   }
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext ¢) throws Throwable {
     switch (type) {

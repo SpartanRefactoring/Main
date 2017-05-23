@@ -17,7 +17,6 @@ import org.eclipse.ui.*;
 import fluent.ly.*;
 import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.*;
-import il.org.spartan.spartanizer.plugin.widget.operations.*;
 
 /** Spartanizer widget.
  * @author Ori Roth {@code ori.rothh@gmail.com}
@@ -49,8 +48,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     if (display == null)
       return;
     final Shell originalShell = display.getActiveShell();
-    if (originalShell == null || originalShell.isDisposed()
-        || !setUpR()  || !setUpOperations())
+    if (originalShell == null || originalShell.isDisposed() || !setUpR() || !setUpOperations())
       return;
     final Shell shell = new Shell(display, SWT.ON_TOP | SWT.NO_TRIM);
     final Button closeButton = new Button(shell, SWT.PUSH | SWT.WRAP);
@@ -133,36 +131,36 @@ public class SpartanWidgetHandler extends AbstractHandler {
     };
     return true;
   }
-  private static boolean setUpOperations(){
+  private static boolean setUpOperations() {
     final List<WidgetOperationEntry> es = WidgetPreferences.readEntries();
-    if (es == null){
+    if (es == null) {
       note.bug();
       return false;
     }
     int i = 0;
-    for (WidgetOperationEntry e : es){
+    for (final WidgetOperationEntry e : es) {
       if (i >= operations.length)
         break;
       if (!e.isEnabled())
         continue;
       boolean found = false;
-      for (WidgetOperation ¢ : WidgetOperationPoint.allOperations)
+      for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations)
         if (e.widgetSUID == ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID()) {
           operations[i] = ¢.clone();
-          if (!operations[i].configure(new ConfigurationsMap(e.configuration))){
-           note.bug();
-           return false;
+          if (!operations[i].configure(new ConfigurationsMap(e.configuration))) {
+            note.bug();
+            return false;
           }
           ++i;
           found = true;
           break;
         }
-      if (!found){
+      if (!found) {
         note.bug();
         return false;
       }
     }
-    for (;i<operations.length;++i)
+    for (; i < operations.length; ++i)
       operations[i] = null;
     return true;
   }
