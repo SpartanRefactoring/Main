@@ -5,6 +5,8 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.regex.*;
 
+import fluent.ly.*;
+
 /** @author Oren Afek
  * @since 19.5.17 */
 public class AssertJTransformator {
@@ -17,8 +19,9 @@ public class AssertJTransformator {
     try {
       $.setAccessible(true);
       return $.invoke(null, o);
-    } catch (IllegalAccessException | InvocationTargetException ignore) {/**/}
-    return null;
+    } catch (IllegalAccessException | InvocationTargetException ignore) {
+      return nil.forgetting(ignore);
+    }
   }
   private static String getReplacerString(final String replacePattern, final String[] args) {
     return String.format(replacePattern, (Object[]) args);
