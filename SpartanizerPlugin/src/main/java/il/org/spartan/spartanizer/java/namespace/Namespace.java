@@ -340,8 +340,9 @@ public final class Namespace implements Environment {
     children.forEach(n::fillScope);
     return false;
   }
-  public boolean allows(final String identifier) {
-    return has(identifier) || children.stream().anyMatch(λ -> λ.allows(identifier));
+  // Returns true if the current namespace contains the identifier
+  public boolean contains(final String identifier) {
+    return has(identifier) || children.stream().anyMatch(λ -> λ.contains(identifier));
   }
   public static Iterable<String> namesGenerator(final SimpleType t) {
     return () -> new Iterator<String>() {
@@ -366,8 +367,13 @@ public final class Namespace implements Environment {
       $ = ¢ + "" + ++postface;
     return $;
   }
+  // Add new Name to the namespace
   public Namespace addNewName(final String s, final Type t) {
     return put(s, t);
+  }
+  // Add new Name to the namespace
+  public void removeNameFromCurrentScope(final String ¢) {
+    flat.remove(¢);
   }
   public boolean hasChildren() {
     return !children.isEmpty();
