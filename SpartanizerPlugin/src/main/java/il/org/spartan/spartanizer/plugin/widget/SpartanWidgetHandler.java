@@ -29,7 +29,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
   private static final Point MINIMAL_BUTTON_SIZE = new Point(9 * R / 10, R / 2 - R / 20);
   private static final String IMAGE_ID = "widget";
   private static Point[] circles;
-  private static WidgetOperation[] operations = new WidgetOperation[7];
+  private static List<WidgetOperationEntry> operations;
   static final int OPERATION_HOLD_INTERVAL = 500;
   static final AtomicBoolean active = new AtomicBoolean(false);
 
@@ -80,9 +80,12 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Rectangle size = region.getBounds();
     shell.setSize(size.width, size.height);
     shell.setRegion(region);
-    for (int ¢ = 0; ¢ < circles.length; ++¢)
-      if (operations[¢] != null)
-        setControl(createButton(shell, circles[¢], operations[¢]), setSolid, setTransparent);
+    for (int ¢ = 0; ¢ < circles.length && ¢ < operations.size(); ++¢){
+      WidgetOperationEntry e = operations.get(¢);
+      WidgetOperation o = e.getWidgetOp();
+      o.configure(e.getConfigurationMap());
+      setControl(createButton(shell, circles[¢], o, e.getName()), setSolid, setTransparent);
+    }
     shell.setLocation(startLocation.apply(Eclipse.mouseLocation()));
     shell.open();
     originalShell.forceFocus();
@@ -137,31 +140,13 @@ public class SpartanWidgetHandler extends AbstractHandler {
       note.bug();
       return false;
     }
-    int i = 0;
+    operations = an.empty.list();
     for (final WidgetOperationEntry e : es) {
-      if (i >= operations.length)
+      if (operations.size() >= 7)
         break;
-      if (!e.isEnabled())
-        continue;
-      boolean found = false;
-      for (final WidgetOperation ¢ : WidgetOperationPoint.allOperations)
-        if (e.widgetSUID == ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID()) {
-          operations[i] = ¢.clone();
-          if (!operations[i].configure(new ConfigurationsMap(e.configuration))) {
-            note.bug();
-            return false;
-          }
-          ++i;
-          found = true;
-          break;
-        }
-      if (!found) {
-        note.bug();
-        return false;
-      }
+      if (e.isEnabled())
+        operations.add(e);
     }
-    for (; i < operations.length; ++i)
-      operations[i] = null;
     return true;
   }
   private static void setControl(final Control c, final Listener onEnter, final Listener onExit) {
@@ -234,7 +219,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
    * @param o The widget operation assigned to this button. Calling with null
    *        creates an empty button that does nothing when pressed.
    * @return the canvas created. */
-  private static Canvas createButton(final Shell s, final Point p, final WidgetOperation o) {
+  private static Canvas createButton(final Shell s, final Point p, final WidgetOperation o,final String tooltip) {
     final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
     final Image i = o == null ? null : o.image();
     $.addPaintListener((final PaintEvent ¢) -> {
@@ -247,7 +232,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Region rg = s.getRegion();
     rg.add(circle(r, p.x, p.y));
     s.setRegion(rg);
-    $.setToolTipText(o != null ? o.description() : "No operation provided");
+    $.setToolTipText(o != null ? tooltip : "No operation provided");
     if (o == null)
       return $;
     final Listener l = new Listener() {

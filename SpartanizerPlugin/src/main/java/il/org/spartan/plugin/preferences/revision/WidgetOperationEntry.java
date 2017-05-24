@@ -47,28 +47,26 @@ public class WidgetOperationEntry implements Serializable {
   }
   
   public WidgetOperation getWidgetOp() {
-    for (final WidgetOperation wo : WidgetOperationPoint.allOperations)
-      if (widgetSUID == ObjectStreamClass.lookup(wo.getClass()).getSerialVersionUID())
-        return wo;
+    for (final WidgetOperation $ : WidgetOperationPoint.allOperations)
+      if (widgetSUID == ObjectStreamClass.lookup($.getClass()).getSerialVersionUID())
+        return $.clone();
     return null;
   }
   
-  @Override public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((configuration == null) ? 0 : configuration.hashCode());
-    result = prime * result + ((name == null) ? 0 : name.hashCode());
-    result = prime * result + (int) (widgetSUID ^ (widgetSUID >>> 32));
-    return result;
+  public ConfigurationsMap getConfigurationMap() {
+    return new ConfigurationsMap(configuration);
   }
-  @Override public boolean equals(Object obj) {
-    if (this == obj)
+  
+  @Override public int hashCode() {
+    return (int) (widgetSUID ^ (widgetSUID >>> 32))
+        + 31 * (((name == null) ? 0 : name.hashCode()) + 31 * (((configuration == null) ? 0 : configuration.hashCode()) + 31));
+  }
+  @Override public boolean equals(Object o) {
+    if (o == this)
       return true;
-    if (obj == null)
+    if (o == null || getClass() != o.getClass())
       return false;
-    if (getClass() != obj.getClass())
-      return false;
-    WidgetOperationEntry other = (WidgetOperationEntry) obj;
+    WidgetOperationEntry other = (WidgetOperationEntry) o;
     if (configuration == null) {
       if (other.configuration != null)
         return false;
@@ -79,8 +77,6 @@ public class WidgetOperationEntry implements Serializable {
         return false;
     } else if (!name.equals(other.name))
       return false;
-    if (widgetSUID != other.widgetSUID)
-      return false;
-    return true;
+    return widgetSUID == other.widgetSUID;
   }
 }
