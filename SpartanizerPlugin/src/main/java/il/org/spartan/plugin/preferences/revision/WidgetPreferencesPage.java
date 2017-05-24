@@ -2,7 +2,6 @@ package il.org.spartan.plugin.preferences.revision;
 
 import static il.org.spartan.plugin.preferences.revision.PreferencesResources.*;
 
-import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.Map.*;
@@ -16,6 +15,8 @@ import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 
 /** The preferences page for the Athenizer Widget
+ * We read from store only at listEditor creation time
+ * We write on every change both in the listEditor and the store
  * @author Raviv Rachmiel
  * @since 2017-04-30 */
 public class WidgetPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
@@ -27,16 +28,23 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         ZOOMER_REVERT_METHOD_VALUE.set(((Boolean) λ.getNewValue()).booleanValue());
     });
   }
-  public static void onAble(final WidgetOperation o, final boolean valueNow, final ListEditor resLE) {
-    store().setValue("IS_ENABLED_" + WidgetPreferences.getWidgetOpUID(o), !valueNow);
+  public static void onAble(final WidgetOperationEntry e, final boolean valueNow, final ListEditor resLE) {
+    List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+    l.get(l.indexOf(e)).setEnabled(!valueNow);
+    e.setEnabled(!valueNow);
+    WidgetPreferences.storeEntries(l);   
     resLE.loadDefault();
   }
-  @SuppressWarnings("boxing") public static Boolean isEnabled(final WidgetOperation ¢) {
-    return store().getBoolean("IS_ENABLED_" + WidgetPreferences.getWidgetOpUID(¢));
+  @SuppressWarnings("boxing") public static Boolean isEnabled(final WidgetOperationEntry ¢) {
+    return ¢.isEnabled();
   }
-  public static void onConfigure(final WidgetOperation ¢) {
-    new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢.description(), ¢.configurationComponents(),
-        WidgetPreferences.getWidgetOpUID(¢), store()).open();
+  
+  
+  public static void onConfigure(final WidgetOperationEntry ¢) {
+    WidgetOperation wo = ¢.getWidgetOp();
+    if (wo != null)
+      new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢.getName(), wo.configurationComponents(),
+          ¢.widgetSUID, store()).open();
   }
   @Override @SuppressWarnings("boxing") protected void createFieldEditors() {
     final IntegerFieldEditor ife = new IntegerFieldEditor(PreferencesResources.WIDGET_SIZE, "Change widget size by radius - ",
@@ -48,13 +56,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
       @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
         final String[] $ = new String[7];
         int count = 0;
-        for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries()) // TODO:
-                                                                             // change
-                                                                             // this
-                                                                             // to
-                                                                             // load
-                                                                             // from
-                                                                             // store
+        for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries())                                                                      // store
           if (¢.isEnabled()) {
             if (count >= WIDGET_MAX_OPS) {
               MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", "Cannot enable more than "
@@ -76,8 +78,8 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         getButtonBoxControl(parent).dispose();
       }
     };
-    addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(), λ -> onConfigure((WidgetOperation) λ),
-        λ -> isEnabled((WidgetOperation) λ), λ -> onAble((WidgetOperation) λ, isEnabled((WidgetOperation) λ), resLE)));
+    addField(ole.lazyConstruct(getFieldEditorParent(), getWidgetOperations(), λ -> onConfigure((WidgetOperationEntry) λ),
+        λ -> isEnabled((WidgetOperationEntry) λ), λ -> onAble((WidgetOperationEntry) λ, isEnabled((WidgetOperationEntry) λ), resLE)));
     resLE.getButtonBoxControl(getFieldEditorParent());
     addField(resLE);
   }
@@ -85,9 +87,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   private static List<Entry<String, Object>> getWidgetOperations() {
     final List<Entry<String, Object>> $ = an.empty.list();
     for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries())
-      for (final WidgetOperation wo : WidgetOperationPoint.allOperations)
-        if (¢.widgetSUID == ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID())
-          $.add(new AbstractMap.SimpleEntry<>(¢.getName(), wo));
+          $.add(new AbstractMap.SimpleEntry<>(¢.getName(), ¢));
     return $;
   }
 }
