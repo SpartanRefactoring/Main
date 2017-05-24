@@ -5,7 +5,6 @@ import static java.lang.Double.*;
 
 import org.junit.*;
 
-import an.*;
 import an.array.*;
 import il.org.spartan.utils.*;
 

@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.junit.*;
 
-import an.*;
 import an.array.*;
 import fluent.ly.*;
 import il.org.spartan.statistics.*;

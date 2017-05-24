@@ -8,7 +8,7 @@ import org.junit.*;
 
 import fluent.ly.*;
 
-@SuppressWarnings({ "boxing", "null" }) //
+@SuppressWarnings("boxing")
 public class Hamlet implements Environment {
   private final Property<Boolean> $ = function(init());
   private final Function0<Boolean> permanent = () -> !$.get();

@@ -71,14 +71,11 @@ public class IO {
    * @param ss Strings to write
    * @throws IOException If an I/O error occur */
   public static void writeLines(final File outputFile, final String... ss) throws IOException {
-    final FileWriter fw = new FileWriter(outputFile);
-    try {
+    try (FileWriter fw = new FileWriter(outputFile)) {
       for (final String ¢ : ss) {
         fw.append(¢);
         fw.append("\n");
       }
-    } finally {
-      fw.close();
     }
   }
 }

@@ -27,6 +27,7 @@ public class Vertex<@Nullable E> {
   public E e() {
     return e;
   }
+
   @Override public boolean equals(final Object o) {
     if (o == this)
       return true;

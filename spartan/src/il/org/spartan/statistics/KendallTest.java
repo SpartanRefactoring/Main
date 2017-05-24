@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.*;
 
-import an.*;
 import an.array.*;
 import fluent.ly.*;
 
