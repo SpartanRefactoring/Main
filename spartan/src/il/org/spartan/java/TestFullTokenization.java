@@ -29,17 +29,15 @@ public class TestFullTokenization {
     }).go();
     return Iterables.toArray($, File.class);
   }
-  public static String read(final File f) throws IOException {
-    final char[] $ = new char[(int) f.length()];
-    final FileReader fileReader = new FileReader(f);
-    final int n = fileReader.read($);
-    fileReader.close();
-    return String.valueOf(Arrays.copyOf($, n));
+  public static String read(final File ¢) throws IOException {
+    try (FileReader $ = new FileReader(¢);) {
+      return String.valueOf($.read(new char[(int) ¢.length()]));
+    }
   }
   public static void write(final File f, final String text) throws IOException {
-    final Writer w = new FileWriter(f);
-    w.write(text);
-    w.close();
+    try (Writer w = new FileWriter(f)) {
+      w.write(text);
+    }
   }
 
   private final File fin = new File("test/data/UnicodeFile");

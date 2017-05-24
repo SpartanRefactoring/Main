@@ -89,7 +89,7 @@ public class LaTeXTableWriter extends CSVLineWriter {
     $.add(String.format("\\multicolumn{%d}{c}{\\mbox{}}", box(column)));
     for (final String nestedTableName : inner.keySet()) {
       f.format("\\cmidrule(lr){%d-", box(column + 1));
-      @SuppressWarnings("null") final int size = inner.get(nestedTableName).size();
+       final int size = inner.get(nestedTableName).size();
       $.add(String.format("\\multicolumn{%d}{c}{%s}", box(size), nestedTableName));
       f.format("%d} ", box(column += size));
     }

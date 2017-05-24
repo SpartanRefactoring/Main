@@ -14,7 +14,7 @@ public class MapUtil {
       @Override public boolean hasNext() {
         return inner.hasNext();
       }
-      @Override @SuppressWarnings("null") public K next() {
+      @Override  public K next() {
         return inner.next().getKey();
       }
       @Override public void remove() {

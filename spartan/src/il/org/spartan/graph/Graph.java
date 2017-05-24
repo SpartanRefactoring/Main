@@ -170,13 +170,13 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
         newEdge(from, to);
       return this;
     }
-    /** Records a unidirectional association between two data elements- later to
-     * be shown as an edge of the graph. This function also records the
-     * existence of the these two data elements.
-     * @param from association starts here
-     * @param to association ends here
-     * @return <code><b>this</b></code> */
-    public Builder<E> newEdge(final E from, final E to) {
+    /**
+     * Records a unidirectional association between two data elements- later to be shown as an edge of the graph. This function also records the existence of the these two data elements.
+     * @param from  association starts here
+     * @param to  association ends here
+     * @return  <code><b>this</b></code> 
+     */
+    @NonNull public Builder<E> newEdge(final E from, final E to) {
       newVertex(from).newVertex(to);
       edges.add(new BuildingEdge<>(from, to));
       return this;
