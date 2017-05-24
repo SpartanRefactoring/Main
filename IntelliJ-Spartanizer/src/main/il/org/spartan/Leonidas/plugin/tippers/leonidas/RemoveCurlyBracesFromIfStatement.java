@@ -1,5 +1,8 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
 
@@ -30,5 +33,12 @@ public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinitio
             if (booleanExpression(0))
                 statement(1);
         });
+    }
+
+    @Override
+    public Map<String,String> getExamples(){
+        Map<String,String> examples = new HashMap<>();
+        examples.put("int x=5; Object a,b; if(a.hashCode()!=x){x = b.hashCode();}","int x=5; Object a,b; if(a.hashCode()!=x) x = b.hashCode();");
+        return examples;
     }
 }
