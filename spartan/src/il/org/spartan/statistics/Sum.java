@@ -5,7 +5,6 @@ import static il.org.spartan.statistics.MomentUtils.*;
 
 import org.junit.*;
 
-import an.*;
 import an.array.*;
 import il.org.spartan.streotypes.*;
 

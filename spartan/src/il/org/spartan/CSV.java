@@ -84,9 +84,9 @@ public enum CSV {
     return $.toArray(new String[$.size()][]);
   }
   public static void save(final File f, final String[][] data) throws IOException {
-    final PrintWriter pw = new PrintWriter(new FileWriter(f));
-    pw.print(toCsv(data));
-    pw.close();
+    try (PrintWriter pw = new PrintWriter(new FileWriter(f))) {
+      pw.print(toCsv(data));
+    }
   }
   /** Split a comma separated string into an array of enum values.
    * @param <T> Type of enum class

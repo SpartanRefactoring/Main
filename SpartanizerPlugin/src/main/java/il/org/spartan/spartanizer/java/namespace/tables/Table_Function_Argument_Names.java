@@ -6,7 +6,6 @@ import org.eclipse.jdt.core.dom.*;
 
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.cmdline.*;
-import il.org.spartan.spartanizer.engine.nominal.*;
 import il.org.spartan.spartanizer.utils.tdd.*;
 import il.org.spartan.tables.*;
 

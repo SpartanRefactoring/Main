@@ -1,6 +1,5 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
-import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.*;
@@ -80,9 +79,9 @@ public class SpartanWidgetHandler extends AbstractHandler {
     final Rectangle size = region.getBounds();
     shell.setSize(size.width, size.height);
     shell.setRegion(region);
-    for (int ¢ = 0; ¢ < circles.length && ¢ < operations.size(); ++¢){
-      WidgetOperationEntry e = operations.get(¢);
-      WidgetOperation o = e.getWidgetOp();
+    for (int ¢ = 0; ¢ < circles.length && ¢ < operations.size(); ++¢) {
+      final WidgetOperationEntry e = operations.get(¢);
+      final WidgetOperation o = e.getWidgetOp();
       o.configure(e.getConfigurationMap());
       setControl(createButton(shell, circles[¢], o, e.getName()), setSolid, setTransparent);
     }
@@ -219,7 +218,7 @@ public class SpartanWidgetHandler extends AbstractHandler {
    * @param o The widget operation assigned to this button. Calling with null
    *        creates an empty button that does nothing when pressed.
    * @return the canvas created. */
-  private static Canvas createButton(final Shell s, final Point p, final WidgetOperation o,final String tooltip) {
+  private static Canvas createButton(final Shell s, final Point p, final WidgetOperation o, final String tooltip) {
     final Canvas $ = new Canvas(s, SWT.NO_REDRAW_RESIZE);
     final Image i = o == null ? null : o.image();
     $.addPaintListener((final PaintEvent ¢) -> {

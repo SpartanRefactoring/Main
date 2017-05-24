@@ -17,8 +17,7 @@ public class Issue1397 extends TipperTest<VariableDeclarationFragment> {
   @Override public Class<VariableDeclarationFragment> tipsOn() {
     return VariableDeclarationFragment.class;
   }
-  @Test
-  public void test01(){
+  @Test public void test01() {
     trimmingOf("int x = 1; o.y += 1;").stays();
   }
 }

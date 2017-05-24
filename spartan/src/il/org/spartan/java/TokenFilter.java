@@ -12,10 +12,6 @@ public abstract class TokenFilter extends TokenProcessor {
   @SuppressWarnings("static-method") protected boolean ok(@SuppressWarnings("unused") final Token __) {
     return true;
   }
-  /* (non-Javadoc)
-   *
-   * @see il.org.spartan.java.TokenProcessor#process(il.org.spartan
-   * .java.Token) */
   @Override protected final void process(final Token t, final String text) {
     if (ok(t))
       __process(t, text);
