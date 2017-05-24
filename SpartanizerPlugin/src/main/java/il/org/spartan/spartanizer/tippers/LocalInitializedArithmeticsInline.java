@@ -33,11 +33,8 @@ public class LocalInitializedArithmeticsInline extends LocalInitialized {
         return false;
       o = $.getOperator();
       rightHandSide = $.getRightHandSide();
-      return o != ASSIGN //
-          && az.simpleName($.getLeftHandSide()).getIdentifier().equals(name.getIdentifier())
+      return o != ASSIGN && iz.simpleName($.getLeftHandSide()) && az.simpleName($.getLeftHandSide()).getIdentifier().equals(name.getIdentifier())
           && collect.usesOf(name).in(extract.fragments(declaration)).size() == 1 && collect.usesOf(name).in(rightHandSide).isEmpty()
-      // check whether any variable declared in the current declaration is used
-      // in the next statement, for safety
           && extract.fragments(declaration).stream()
               .allMatch((final VariableDeclarationFragment f) -> collect.usesOf(f.getName()).in(rightHandSide).isEmpty());
     });
