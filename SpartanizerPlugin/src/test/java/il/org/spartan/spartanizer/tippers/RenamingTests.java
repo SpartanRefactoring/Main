@@ -4,7 +4,7 @@ import static il.org.spartan.spartanizer.testing.TestsUtilsSpartanizer.*;
 
 import org.junit.*;
 
-/** TODO dormaayn: document class
+/** TODO dormaayn: All tests regrading renaming (in the spartnizer)
  * @author Dor Ma'ayan
  * @since 2017-05-14 */
 @SuppressWarnings("static-method")
@@ -28,5 +28,26 @@ public class RenamingTests {
     trimmingOf("private class Classes{private Namer a; CheckerTest t;public Classes(Namer n){a=n;}}")//
         .gives("private class Classes{private Namer namer;CheckerTest checkerTest;public Classes(Namer n){namer=n;}}")//
         .stays();
+  }
+  @Ignore @Test public void test4() {
+    trimmingOf("void f(int a,int b, int c) {}").gives("void f(int _1, int _2, int _3) {}").stays();
+  }
+  @Ignore @Test public void test5() {
+    trimmingOf("void f(int a,int b, int c) {return b;}").gives("void f(int _1, int b, int _2) {return b;}").stays();
+  }
+  @Ignore @Test public void test6() {
+    trimmingOf("void f(int a,int _2, int c) {return _2;}").gives("void f(int _1, int b, int _2) {return b;}").stays();
+  }
+  @Ignore @Test public void test7() {
+    trimmingOf("void f(int __1,int __2, int __3) {return __1+__2+__3;}").gives("void f(int a, int b, int c) {return a+b+c;}").stays();
+  }
+  @Ignore @Test public void test8() {
+    trimmingOf("void f(List a) {}").gives("void f(List _1) {}").stays();
+  }
+  @Test public void test9() {
+    trimmingOf("void f(List a) {return a;}").stays();
+  }
+  @Test public void test10() {
+    trimmingOf("void f(int a,int b,int c) {return a+b+c;}").stays();
   }
 }
