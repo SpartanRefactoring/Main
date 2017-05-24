@@ -43,8 +43,8 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
         getFieldEditorParent());
     ife.setValidRange(WIDGET_MIN_SIZE, WIDGET_MAX_SIZE);
     addField(ife);
-    final OperationListEditor ole = new OperationListEditor("XX", "Configure operations for widget:", getFieldEditorParent());
-    final ListEditor resLE = new ListEditor("XXX", "enabled operations:", getFieldEditorParent()) {
+    final OperationListEditor ole = new OperationListEditor("ListOps", "Configure operations for widget:", getFieldEditorParent());
+    final ListEditor resLE = new ListEditor("EnabledOps", "enabled operations:", getFieldEditorParent()) {
       @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
         final String[] $ = new String[7];
         int count = 0;
