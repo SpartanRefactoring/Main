@@ -120,7 +120,7 @@ public class InflateHandler extends AbstractHandler {
     if (¢ instanceof ITextEditor)
       addListener((ITextEditor) ¢);
   }
-  private static void addListener(final ITextEditor ¢) {
+  @SuppressWarnings("unused") private static void addListener(final ITextEditor ¢) {
     final StyledText text = getText(¢);
     if (text == null)
       return;
@@ -135,6 +135,20 @@ public class InflateHandler extends AbstractHandler {
         text.getDisplay().addFilter(SWT.KeyDown, l);
         text.getDisplay().addFilter(SWT.KeyUp, l);
         text.addKeyListener(l);
+        text.addDisposeListener(new DisposeListener() {
+          @Override public void widgetDisposed(DisposeEvent __) {
+            text.getDisplay().removeFilter(SWT.MouseWheel, l);
+            text.getDisplay().removeFilter(SWT.KeyDown, l);
+            text.getDisplay().removeFilter(SWT.KeyUp, l);
+            text.removeKeyListener(l);
+          }
+        });
+        text.addFocusListener(new FocusListener() {
+          @Override public void focusLost(FocusEvent __) {
+            l.finilize();
+          }
+          @Override public void focusGained(FocusEvent __) {/**/}
+        });
       });
   }
   private static void removeListener(final ITextEditor e) {
