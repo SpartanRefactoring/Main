@@ -382,7 +382,6 @@ public enum Separate {
     /** Anonymous function for translating an object into text
      * @param t an object of type <code>T</code>
      * @return a textual */
-    @Override
-    String apply(T t);
+    @Override String apply(T t);
   }
 }
