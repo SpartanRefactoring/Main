@@ -46,14 +46,14 @@ public final class ConstantPool {
   public String[] getReferencedClasses() {
     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
-      if (¢ instanceof ClassConstant && ¢ + "" != null)
+      if (¢ instanceof ClassConstant)
         $.add(¢ + "");
     return $.toArray(new String[$.size()]);
   }
   public int[] getReferencedClassesIndices() {
     final IntsArray $ = new IntsArray();
     for (int ¢ = 0; ¢ < pool.length; ++¢)
-      if (pool[¢] instanceof ClassConstant && pool[¢] + "" != null)
+      if (pool[¢] instanceof ClassConstant && pool[¢] != null)
         $.push(¢);
     return $.toArray();
   }
@@ -98,7 +98,7 @@ public final class ConstantPool {
   public String[] getReferencedMethods() {
     final ArrayList<String> $ = new ArrayList<>();
     for (final Constant ¢ : pool)
-      if (¢ instanceof MethodReference && !"<init>".equals(((MethodReference) ¢).getNameAndType().getName()) && ¢ + "" != null)
+      if (¢ instanceof MethodReference && !"<init>".equals(((MethodReference) ¢).getNameAndType().getName()))
         $.add(((MethodReference) ¢).getClassConstant().getClassName() + ":" + ((MethodReference) ¢).getNameAndType().getName());
     return $.toArray(new String[$.size()]);
   }

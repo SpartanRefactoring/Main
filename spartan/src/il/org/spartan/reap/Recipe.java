@@ -84,7 +84,7 @@ public class Recipe<T> extends Cell<T> {
    * @param <T> JD
    * @author Yossi Gil <Yossi.Gil@GMail.COM>
    * @since 2016 */
-  @SuppressWarnings("null")
+  
   public static class NonNull<T> extends Recipe<T> {
     private final List<Cell<?>> prerequisites = new ArrayList<>();
     private Supplier<? extends T> supplier;

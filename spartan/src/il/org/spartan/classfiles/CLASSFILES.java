@@ -132,13 +132,10 @@ public enum CLASSFILES {
     }
   }
   private static InputStream searchZip(final File where, final String fileName) {
-    try {
-      final ZipFile $ = new ZipFile(where.getAbsoluteFile());
+    try (ZipFile $ = new ZipFile(where.getAbsoluteFile());) {
       final ZipEntry e = $.getEntry(fileName);
-      if (e == null) {
-        $.close();
+      if (e == null)
         return null;
-      }
       zipsInUse.add($);
       return $.getInputStream(e);
       /* for (final ZipEntry e : IterableAdapter.make(z.entries())) if
@@ -146,7 +143,7 @@ public enum CLASSFILES {
        * z.getInputStream(e); } z.close(); */
     } catch (final IOException __) {
       // Absorb (we do not care about errors)
+      return null;
     }
-    return null;
   }
 }

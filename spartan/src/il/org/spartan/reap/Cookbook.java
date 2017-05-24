@@ -209,7 +209,7 @@ public interface Cookbook {
       }
     }
 
-    @SuppressWarnings({ "static-method", "null" })
+    @SuppressWarnings("static-method")
     public static class C {
       @Test public void sessionA01() {
         azzert.that(compute((final Integer ¢) -> "(" + ¢ + ")").from(value(Integer.valueOf(12))).get(), is("(12)"));
@@ -785,7 +785,7 @@ public interface Cookbook {
    * @since 2016
    * @see Ingredient
    * @see Recipe */
-  @SuppressWarnings("null")
+  
   abstract class Cell<T> implements Supplier<T>, Cloneable {
     public static Set<Cell<?>> trace;
     /** The last value computed for this cell */
@@ -1012,7 +1012,7 @@ public interface Cookbook {
      * @param <T> JD
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
      * @since 2016 */
-    @SuppressWarnings("null")
+    
     public static class NonNull<T> extends Cookbook.Recipe<T> {
       private final List<Cookbook.Cell<?>> prerequisites = new ArrayList<>();
       private Supplier<? extends T> supplier;
