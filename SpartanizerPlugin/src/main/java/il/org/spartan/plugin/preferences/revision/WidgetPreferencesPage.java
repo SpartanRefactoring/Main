@@ -14,9 +14,9 @@ import org.eclipse.ui.*;
 import il.org.spartan.spartanizer.plugin.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 
-/** The preferences page for the Athenizer Widget
- * We read from store only at listEditor creation time
- * We write on every change both in the listEditor and the store
+/** The preferences page for the Athenizer Widget We read from store only at
+ * listEditor creation time We write on every change both in the listEditor and
+ * the store
  * @author Raviv Rachmiel
  * @since 2017-04-30 */
 public class WidgetPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
@@ -29,19 +29,17 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
     });
   }
   public static void onAble(final WidgetOperationEntry e, final boolean valueNow, final ListEditor resLE) {
-    List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
+    final List<WidgetOperationEntry> l = WidgetPreferences.readEntries();
     l.get(l.indexOf(e)).setEnabled(!valueNow);
     e.setEnabled(!valueNow);
-    WidgetPreferences.storeEntries(l);   
+    WidgetPreferences.storeEntries(l);
     resLE.loadDefault();
   }
   @SuppressWarnings("boxing") public static Boolean isEnabled(final WidgetOperationEntry ¢) {
     return ¢.isEnabled();
   }
-  
-  
   public static void onConfigure(final WidgetOperationEntry ¢) {
-    WidgetOperation wo = ¢.getWidgetOp();
+    final WidgetOperation wo = ¢.getWidgetOp();
     if (wo != null)
       new ConfigWidgetPreferencesDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), ¢.getName(), wo.configurationComponents(),
           ¢.widgetSUID, store()).open();
@@ -56,7 +54,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
       @Override protected String[] parseString(@SuppressWarnings("unused") final String stringList) {
         final String[] $ = new String[7];
         int count = 0;
-        for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries())                                                                      // store
+        for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries()) // store
           if (¢.isEnabled()) {
             if (count >= WIDGET_MAX_OPS) {
               MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error", "Cannot enable more than "
@@ -87,7 +85,7 @@ public class WidgetPreferencesPage extends FieldEditorPreferencePage implements 
   private static List<Entry<String, Object>> getWidgetOperations() {
     final List<Entry<String, Object>> $ = an.empty.list();
     for (final WidgetOperationEntry ¢ : WidgetPreferences.readEntries())
-          $.add(new AbstractMap.SimpleEntry<>(¢.getName(), ¢));
+      $.add(new AbstractMap.SimpleEntry<>(¢.getName(), ¢));
     return $;
   }
 }
