@@ -328,7 +328,6 @@ public interface Cookbook {
 
       /** @author Yossi Gil <Yossi.Gil@GMail.COM>
        * @since 2016 */
-
       public static class TEST extends Z {
         @Test public void sessionA01() {
           azzert.isNull(a());
@@ -785,7 +784,6 @@ public interface Cookbook {
    * @since 2016
    * @see Ingredient
    * @see Recipe */
-  
   abstract class Cell<T> implements Supplier<T>, Cloneable {
     public static Set<Cell<?>> trace;
     /** The last value computed for this cell */
@@ -1012,7 +1010,6 @@ public interface Cookbook {
      * @param <T> JD
      * @author Yossi Gil <Yossi.Gil@GMail.COM>
      * @since 2016 */
-    
     public static class NonNull<T> extends Cookbook.Recipe<T> {
       private final List<Cookbook.Cell<?>> prerequisites = new ArrayList<>();
       private Supplier<? extends T> supplier;

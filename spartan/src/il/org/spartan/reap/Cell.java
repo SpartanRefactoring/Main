@@ -16,7 +16,7 @@ import java.util.function.*;
  * @since 2016
  * @see Ingredient
  * @see Recipe */
- //
+//
 public abstract class Cell<T> implements Supplier<T>, Cloneable {
   public static Set<Cell<?>> trace;
   /** The last value computed for this cell */
