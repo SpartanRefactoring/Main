@@ -580,7 +580,7 @@ public enum extract {
   public static List<String> identifiers(final Name n) {
     return names(n).stream().map(λ -> λ.getIdentifier()).collect(toList());
   }
-  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> methodArguments(MethodDeclaration n) {
+  @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> methodArguments(final MethodDeclaration n) {
     return n.parameters();
   }
 }

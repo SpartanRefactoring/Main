@@ -125,7 +125,7 @@ public class switchBranch {
   }
   // TODO Yuval Simon: please simplify this code. It is, to be honest, crappy
   // --yg
-   public static List<switchBranch> intoBranches(final SwitchStatement n) {
+  public static List<switchBranch> intoBranches(final SwitchStatement n) {
     final List<Statement> l = step.statements(n);
     assert iz.switchCase(the.firstOf(l));
     List<SwitchCase> c = null;

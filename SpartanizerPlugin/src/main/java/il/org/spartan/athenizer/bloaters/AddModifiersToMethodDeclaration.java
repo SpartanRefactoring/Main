@@ -16,14 +16,14 @@ import il.org.spartan.spartanizer.tipping.*;
 public class AddModifiersToMethodDeclaration extends CarefulTipper<MethodDeclaration> implements TipperCategory.Bloater {
   static final long serialVersionUID = 1;
 
-  @Override public String description(@SuppressWarnings("unused") MethodDeclaration __) {
+  @Override public String description(@SuppressWarnings("unused") final MethodDeclaration __) {
     return "Add as much modifiers as possible to the type declaration";
   }
-  @Override @SuppressWarnings({ "boxing", "unchecked" }) public Tip tip(MethodDeclaration d) {
-    BodyDeclaration wrap = az.bodyDeclaration(d.getParent());
+  @Override @SuppressWarnings({ "boxing", "unchecked" }) public Tip tip(final MethodDeclaration d) {
+    final BodyDeclaration wrap = az.bodyDeclaration(d.getParent());
     if (wrap == null)
       return null;
-    MethodDeclaration $ = copy.of(d);
+    final MethodDeclaration $ = copy.of(d);
     if (iz.interface¢(wrap)) {
       if (!wrap.modifiers().contains(Modifier.ABSTRACT))
         $.modifiers().add(Modifier.ABSTRACT);
@@ -36,7 +36,7 @@ public class AddModifiersToMethodDeclaration extends CarefulTipper<MethodDeclara
         $.modifiers().add($.getAST().newModifier(Modifier.ModifierKeyword.FINAL_KEYWORD));
     }
     return new Tip(description(d), getClass(), d) {
-      @Override public void go(ASTRewrite r, TextEditGroup g) {
+      @Override public void go(final ASTRewrite r, final TextEditGroup g) {
         if (d.modifiers().size() != $.modifiers().size())
           r.replace(d, $, g);
       }
