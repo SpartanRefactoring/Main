@@ -155,6 +155,7 @@ public interface Configurations {
           new ConstructorEmptyRemove(), //
           new MethodDeclarationConstructorMoveToInitializers(), //
           new MethodDeclarationOverrideDegenerateRemove(), //
+         // new AnonymizeAllParameters(), //
           null)
       .add(MethodInvocation.class, //
           new MethodInvocationEqualsWithLiteralString(), //
