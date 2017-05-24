@@ -245,15 +245,13 @@ public class FileSystemVisitor {
     try (ZipFile Z = new ZipFile(f.getAbsoluteFile())) {
       for (final Enumeration<? extends ZipEntry> es = Z.entries(); es.hasMoreElements();) {
         final ZipEntry e = es.nextElement();
-        try {
-          final InputStream is = Z.getInputStream(e);
+        try (InputStream is = Z.getInputStream(e);) {
           if (e.isDirectory()) {
             visitor.visitZipDirectory(Z.getName(), e.getName(), is);
             continue;
           }
           if (Suffixed.by(e.getName(), extensions))
             visitor.visitZipEntry(Z.getName(), e.getName(), is);
-          is.close();
         } catch (final StopTraversal x) {
           System.out.println("Found at ZIP!!!");
           throw x;

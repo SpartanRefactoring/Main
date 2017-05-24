@@ -30,43 +30,37 @@ public class WidgetOperationEntry implements Serializable {
   public boolean isEnabled() {
     return isEnabled;
   }
-  
   public void toggleEnabled() {
     isEnabled = !isEnabled;
   }
-  
-  public void setEnabled(boolean flag) {
+  public void setEnabled(final boolean flag) {
     isEnabled = flag;
   }
-  
   public void setName(final String name) {
     this.name = name;
   }
   public String getName() {
     return name;
   }
-  
   public WidgetOperation getWidgetOp() {
     for (final WidgetOperation $ : WidgetOperationPoint.allOperations)
       if (widgetSUID == ObjectStreamClass.lookup($.getClass()).getSerialVersionUID())
         return $.clone();
     return null;
   }
-  
   public ConfigurationsMap getConfigurationMap() {
     return new ConfigurationsMap(configuration);
   }
-  
   @Override public int hashCode() {
-    return (int) (widgetSUID ^ (widgetSUID >>> 32))
-        + 31 * (((name == null) ? 0 : name.hashCode()) + 31 * (((configuration == null) ? 0 : configuration.hashCode()) + 31));
+    return (int) (widgetSUID ^ widgetSUID >>> 32)
+        + 31 * ((name == null ? 0 : name.hashCode()) + 31 * ((configuration == null ? 0 : configuration.hashCode()) + 31));
   }
-  @Override public boolean equals(Object o) {
+  @Override public boolean equals(final Object o) {
     if (o == this)
       return true;
     if (o == null || getClass() != o.getClass())
       return false;
-    WidgetOperationEntry other = (WidgetOperationEntry) o;
+    final WidgetOperationEntry other = (WidgetOperationEntry) o;
     if (configuration == null) {
       if (other.configuration != null)
         return false;

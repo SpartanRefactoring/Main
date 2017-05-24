@@ -5,19 +5,17 @@ package an;
  * @since 2017-05-20 */
 public interface array {
   interface of {
-
     static boolean[] booleans(final boolean... ¢) {
       return ¢;
     }
-
     static double[] doubles(final double... ¢) {
       return ¢;
     }
-
     static int[] ints(final int... ¢) {
       return ¢;
     }
   }
+
   @SafeVarargs static <T> T[] of(final T... ¢) {
     return ¢;
   }

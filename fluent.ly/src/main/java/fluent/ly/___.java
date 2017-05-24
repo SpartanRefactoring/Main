@@ -7,6 +7,7 @@ import static fluent.ly.string.*;
 
 import org.junit.*;
 
+import fluent.ly.___.*;
 import fluent.ly.___.Bug.*;
 import fluent.ly.___.Bug.Assertion.*;
 import fluent.ly.___.Bug.Assertion.Value.*;

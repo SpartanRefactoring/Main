@@ -135,19 +135,17 @@ public class InflateHandler extends AbstractHandler {
         text.getDisplay().addFilter(SWT.KeyDown, l);
         text.getDisplay().addFilter(SWT.KeyUp, l);
         text.addKeyListener(l);
-        text.addDisposeListener(new DisposeListener() {
-          @Override public void widgetDisposed(DisposeEvent __) {
-            text.getDisplay().removeFilter(SWT.MouseWheel, l);
-            text.getDisplay().removeFilter(SWT.KeyDown, l);
-            text.getDisplay().removeFilter(SWT.KeyUp, l);
-            text.removeKeyListener(l);
-          }
+        text.addDisposeListener(__ -> {
+          text.getDisplay().removeFilter(SWT.MouseWheel, l);
+          text.getDisplay().removeFilter(SWT.KeyDown, l);
+          text.getDisplay().removeFilter(SWT.KeyUp, l);
+          text.removeKeyListener(l);
         });
         text.addFocusListener(new FocusListener() {
-          @Override public void focusLost(FocusEvent __) {
+          @Override public void focusLost(final FocusEvent __) {
             l.finilize();
           }
-          @Override public void focusGained(FocusEvent __) {/**/}
+          @Override public void focusGained(final FocusEvent __) {/**/}
         });
       });
   }

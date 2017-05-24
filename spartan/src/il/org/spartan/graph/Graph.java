@@ -176,7 +176,7 @@ public class Graph<@Nullable E> extends AbstractGraph<@Nullable E> {
      * @param from association starts here
      * @param to association ends here
      * @return <code><b>this</b></code> */
-    public Builder<E> newEdge(final E from, final E to) {
+    @NonNull public Builder<E> newEdge(final E from, final E to) {
       newVertex(from).newVertex(to);
       edges.add(new BuildingEdge<>(from, to));
       return this;

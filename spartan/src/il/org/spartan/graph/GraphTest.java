@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.*;
 
+import org.eclipse.jdt.annotation.*;
 import org.junit.*;
 
 import fluent.ly.*;
@@ -126,7 +127,7 @@ public class GraphTest {
     azzert.that(s, hasItem(u));
   }
   @Test public void builderAddGraph() {
-    final Graph<String> src = new Graph.Builder<String>() //
+    final Graph<@Nullable String> src = new Graph.Builder<String>() //
         .newEdge("A", "C").newEdge("B", "C").newEdge("C", "D")//
         .newEdge("C", "E").newEdge("F", "G").newEdge("H", "I")//
         .newEdge("I", "H").newVertex("J")//

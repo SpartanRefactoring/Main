@@ -113,7 +113,7 @@ public interface Environment {
     return new Property<>(¢);
   }
 
-  @SuppressWarnings({ "static-method" })
+  @SuppressWarnings("static-method")
   interface ____META {
     class TEST {
       private static final String EMPTY = "";

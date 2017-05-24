@@ -47,7 +47,7 @@ public class Aggregator {
   public void record(final String key, final double value, final FormatSpecifier... ss) {
     record(key, value, toMap(ss));
   }
-  @SuppressWarnings("null") public void record(final String key, final double value, final Map<Aggregation, String> m) {
+  public void record(final String key, final double value, final Map<Aggregation, String> m) {
     ensure(realStatistics, key, new RealStatistics());
     force(columnSpecificAggregation, key, m);
     merge(m);
@@ -71,10 +71,10 @@ public class Aggregator {
   private void addAggregate(final String key, final AbstractStringProperties to, final Aggregation a) {
     to.put(key, key.equals(markColumn) ? a + "" : missing(key, a) ? "" : get(key, a));
   }
-  @SuppressWarnings("null") private String get(final String key, final Aggregation a) {
+  private String get(final String key, final Aggregation a) {
     return a.retreive(realStatistics.get(key), columnSpecificAggregation.get(key).get(a));
   }
-  @SuppressWarnings("null") private boolean missing(final String key, final Aggregation a) {
+  private boolean missing(final String key, final Aggregation a) {
     return !columnSpecificAggregation.containsKey(key) || !columnSpecificAggregation.get(key).containsKey(a);
   }
 

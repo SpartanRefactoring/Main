@@ -37,9 +37,9 @@ public class TestNoOther {
     return String.valueOf(Arrays.copyOf($, n));
   }
   public static void write(final File f, final String text) throws IOException {
-    final Writer w = new FileWriter(f);
-    w.write(text);
-    w.close();
+    try (Writer w = new FileWriter(f)) {
+      w.write(text);
+    }
   }
 
   private final File fin = new File("test/data/UnicodeFile");

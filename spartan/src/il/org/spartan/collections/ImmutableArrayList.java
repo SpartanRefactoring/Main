@@ -18,8 +18,6 @@ package il.org.spartan.collections;
 
 import java.util.*;
 
-import org.eclipse.jdt.annotation.*;
-
 /** Resizable-array implementation of the <tt>List</tt> interface. Implements
  * all optional list operations, and permits all elements, including
  * <tt>null</tt>. In addition to implementing the <tt>List</tt> interface, this
@@ -91,19 +89,19 @@ import org.eclipse.jdt.annotation.*;
  * @see ArrayList
  * @see Vector
  * @since 1.2 */
-public class ImmutableArrayList<@Nullable E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
+public class ImmutableArrayList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable {
   private static final long serialVersionUID = 1;
 
-  public static <@Nullable E> ImmutableArrayList<E> make(final Collection<? extends E> ¢) {
+  public static <E> ImmutableArrayList<E> make(final Collection<? extends E> ¢) {
     return new ImmutableArrayList<>(¢);
   }
-  public static <@Nullable E> ImmutableArrayList<E> make(final E[] ¢) {
+  public static <E> ImmutableArrayList<E> make(final E[] ¢) {
     return new ImmutableArrayList<>(¢);
   }
   static boolean fail() {
     throw new UnsupportedOperationException();
   }
-  private static <@Nullable E> E[] asArray(final Collection<? extends E> ¢) {
+  private static <E> E[] asArray(final Collection<? extends E> ¢) {
     @SuppressWarnings("unchecked") final E[] $ = (E[]) ¢.toArray();
     return $.getClass() == Object[].class ? $ : recopy($);
   }

@@ -49,29 +49,23 @@ public class dump {
    * @return */
   public static String of(final Class<?> ¢) {
     String $ = "\n\n--IDENTIFICATION--\n" + entry("Simple Name", ¢.getSimpleName()) + entry("Canonical Name", ¢.getCanonicalName())
-        + entry("Name", ¢.getName()) + entry("toString", ¢ + "")
-            + entry("super class", ¢.getSuperclass()) + entry("generic super class", ¢.getGenericSuperclass())
-        + entry("class", ¢.getClass()) + entry("component type", ¢.getComponentType())
-            + entry("class loader", ¢.getClassLoader()) + "--MODIFIERS--\n";
+        + entry("Name", ¢.getName()) + entry("toString", ¢ + "") + entry("super class", ¢.getSuperclass())
+        + entry("generic super class", ¢.getGenericSuperclass()) + entry("class", ¢.getClass()) + entry("component type", ¢.getComponentType())
+        + entry("class loader", ¢.getClassLoader()) + "--MODIFIERS--\n";
     final int flags = ¢.getModifiers();
     $ += entry("Package", ¢.getPackage()) + entry("Modifiers (decimal form)", flags)
         + entry("Modifiers (binary form)", ReflectionAnalyzer.toBinary(flags)) + entry("IsSynthetic", ¢.isSynthetic())
-        + entry("IsPrimitive", ¢.isPrimitive()) + entry("IsFinal", Modifier.isFinal(flags))
-            + entry("IsAbstract", Modifier.isAbstract(flags)) + entry("IsStatic", Modifier.isStatic(flags))
-        + entry("IsStrictfp", Modifier.isStrict(flags)) + "--Visibility--\n"
-            + entry("IsPublic", Modifier.isPublic(flags)) + entry("IsPrivate", Modifier.isPrivate(flags))
-            + entry("IsProtected", Modifier.isProtected(flags)) + "--MEMBERS\n"
-                + entry("fields", ¢.getFields()) + entry("methods", ¢.getMethods())
+        + entry("IsPrimitive", ¢.isPrimitive()) + entry("IsFinal", Modifier.isFinal(flags)) + entry("IsAbstract", Modifier.isAbstract(flags))
+        + entry("IsStatic", Modifier.isStatic(flags)) + entry("IsStrictfp", Modifier.isStrict(flags)) + "--Visibility--\n"
+        + entry("IsPublic", Modifier.isPublic(flags)) + entry("IsPrivate", Modifier.isPrivate(flags))
+        + entry("IsProtected", Modifier.isProtected(flags)) + "--MEMBERS\n" + entry("fields", ¢.getFields()) + entry("methods", ¢.getMethods())
         + entry("constructors", ¢.getConstructors()) + entry("declared fields", ¢.getDeclaredFields())
-            + entry("declared methods", ¢.getDeclaredMethods()) + entry("declared constructors", ¢.getDeclaredConstructors())
-            + "--CLASS SIGNATURE--\n" + entry("interfaces", ¢.getInterfaces())
-            + entry("annotations", ¢.getAnnotations()) + entry("type parameters", ¢.getTypeParameters())
-            + entry("declared annotations", ¢.getDeclaredAnnotations()) + entry("generic interfaces", ¢.getGenericInterfaces()) + "--CONTAINERS--\n"
-                + entry("declared classes",
-                    ¢.getDeclaredClasses())
-                + entry("declaring class", ¢.getDeclaringClass()) + entry("enclosing class", ¢.getEnclosingClass())
-                    + entry("enclosing constructor", ¢.getEnclosingConstructor()) + entry("enclosing method", ¢.getEnclosingMethod())
-        + "--CLASS MEMBERS--\n" + entry("public classes", ¢.getClasses())
+        + entry("declared methods", ¢.getDeclaredMethods()) + entry("declared constructors", ¢.getDeclaredConstructors()) + "--CLASS SIGNATURE--\n"
+        + entry("interfaces", ¢.getInterfaces()) + entry("annotations", ¢.getAnnotations()) + entry("type parameters", ¢.getTypeParameters())
+        + entry("declared annotations", ¢.getDeclaredAnnotations()) + entry("generic interfaces", ¢.getGenericInterfaces()) + "--CONTAINERS--\n"
+        + entry("declared classes", ¢.getDeclaredClasses()) + entry("declaring class", ¢.getDeclaringClass())
+        + entry("enclosing class", ¢.getEnclosingClass()) + entry("enclosing constructor", ¢.getEnclosingConstructor())
+        + entry("enclosing method", ¢.getEnclosingMethod()) + "--CLASS MEMBERS--\n" + entry("public classes", ¢.getClasses())
         + entry("declared classes", ¢.getDeclaredClasses()) + entry("declared annotations", ¢.getDeclaredAnnotations());
     return $ + "---------------------------\n";
   }
