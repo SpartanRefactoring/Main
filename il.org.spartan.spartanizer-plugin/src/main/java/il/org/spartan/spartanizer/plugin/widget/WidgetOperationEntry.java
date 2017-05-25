@@ -3,8 +3,6 @@ package il.org.spartan.spartanizer.plugin.widget;
 import java.io.*;
 import java.util.*;
 
-import il.org.spartan.spartanizer.plugin.widget.*;
-
 
 /** A widget operation with it's configuration
  * @author Niv Shalmon
