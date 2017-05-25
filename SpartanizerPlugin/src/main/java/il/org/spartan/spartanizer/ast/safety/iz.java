@@ -111,28 +111,38 @@ public interface iz {
   static boolean block(final ASTNode ¢) {
     return iz.nodeTypeEquals(¢, BLOCK);
   }
-  /** Determine whether the curly brackets of an {@link IfStatement} are
-   * vacuous.
-   * @param s JD
-   * @return whether the curly brackets are essential */
-  static boolean blockEssential(final IfStatement s) {
-    if (s == null)
-      return false;
-    final Block b = az.block(parent(s));
-    if (b == null)
-      return false;
-    final IfStatement $ = az.ifStatement(parent(b));
-    return ($ == null//
-        || !eq(s, az.astNode(the.firstOf(statements(az.block(elze($))))))//
-        || misc.recursiveElse(s) != null//
-        || elze($) == null)//
-        && $ != null && (elze($) == null || misc.recursiveElse(s) == null)
-        && (elze($) != null || misc.recursiveElse(s) != null || blockRequiredInReplacement($, s));
-  }
   /** @param subject JD
    * @return whether the parameter is an essential block or false otherwise */
   static boolean blockEssential(final Statement ¢) {
-    return blockEssential(az.ifStatement(¢));
+    final Block b = az.block(parent(¢));
+    if (b == null)
+      return false;
+    final IfStatement parent = az.ifStatement(parent(b));
+    if (parent == null)
+      return false;
+    for (Statement current = ¢; current != null;)
+      switch (current.getNodeType()) {
+        case IF_STATEMENT:
+          IfStatement s = az.ifStatement(current);
+          if (elze(s) == null)
+            return (!eq(s, az.astNode(the.firstOf(statements(az.block(elze(parent)))))) || misc.recursiveElse(s) != null || elze(parent) == null)
+                && (elze(parent) == null || misc.recursiveElse(s) == null)
+                && (elze(parent) != null || misc.recursiveElse(s) != null || blockRequiredInReplacement(parent, s));
+          current = elze(s);
+          break;
+        case WHILE_STATEMENT:
+          current = az.whileStatement(current).getBody();
+          break;
+        case FOR_STATEMENT:
+          current = az.forStatement(current).getBody();
+          break;
+        case ENHANCED_FOR_STATEMENT:
+          current = az.enhancedFor(current).getBody();
+          break;
+        default:
+          return false;
+      }
+    return false;
   }
   /** @param subject JD
    * @return */
