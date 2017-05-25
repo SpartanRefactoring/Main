@@ -1,6 +1,7 @@
 package il.org.spartan.spartanizer.plugin.widget;
 
 import java.io.*;
+import java.util.*;
 import java.util.function.*;
 
 import org.eclipse.swt.graphics.*;
@@ -46,17 +47,20 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
   protected boolean register(final ConfigurationsMap __) {
     return true;
   }
-  /** Configures the operation to its default configuration, if possible
-   * @return true iff the operation has a default configuration */
-  protected boolean defaultConfiguration() {
-    return true;
+  /** 
+   * @return the default configuration of the operation, or null if there is none*/
+  protected ConfigurationsMap defaultConfiguration() {
+    return new ConfigurationsMap();
   }
   /** Configure this operation, if needed.
    * @param ¢ user configuration
    * @return true iff the configuration is valid
    * @see #configurationComponents, #register, #defaultConfiguration */
   public boolean configure(final ConfigurationsMap ¢) {
-    return !¢.isEmpty() ? register(¢) : defaultConfiguration();
+    if (!¢.isEmpty())
+      return register(¢);
+    ConfigurationsMap m = defaultConfiguration();
+    return m != null && register(m);
   }
   /** @return URL of image of this operation. */
   public abstract String imageURL();

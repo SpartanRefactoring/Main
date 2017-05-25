@@ -8,6 +8,10 @@ import java.util.*;
 public class ConfigurationsMap {
   private final Map<String, String> configurations;
 
+  public ConfigurationsMap(){
+    configurations = new HashMap<>();
+  }
+  
   public ConfigurationsMap(final Map<String, String> configurations) {
     this.configurations = configurations;
   }
@@ -25,5 +29,14 @@ public class ConfigurationsMap {
    */
   public boolean isEmpty() {
     return configurations.isEmpty();
+  }
+  
+  public ConfigurationsMap put(final String key, final String value){
+    configurations.put(key, value);
+    return this;
+  }
+  public ConfigurationsMap put(final String key, final boolean value){
+    configurations.put(key, value + "");
+    return this;
   }
 }

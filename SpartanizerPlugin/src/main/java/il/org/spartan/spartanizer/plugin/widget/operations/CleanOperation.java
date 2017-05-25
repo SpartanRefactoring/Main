@@ -28,9 +28,8 @@ public class CleanOperation extends WidgetOperation {
         { MODE, "List", current, all, "Required" },//
     };
   }
-  @Override protected boolean defaultConfiguration() {
-    mode = current;
-    return true;
+  @Override protected ConfigurationsMap defaultConfiguration() {
+    return new ConfigurationsMap().put(MODE, current);
   }
   @Override public boolean register(final ConfigurationsMap ¢) {
     return is.in(mode = ¢.getString(MODE), current, all);
