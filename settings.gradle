@@ -17,4 +17,4 @@ include 'spartan'
 include 'target.p2'
 
 // IntellJ-Spartanizer, Team 8 project
-include 'IntelliJ-Spartanizer'
+include 'il.org.spartan.intellij-spartanizer'
