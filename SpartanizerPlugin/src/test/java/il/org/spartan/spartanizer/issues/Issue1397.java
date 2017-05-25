@@ -7,7 +7,7 @@ import il.org.spartan.spartanizer.testing.*;
 import il.org.spartan.spartanizer.tippers.*;
 import il.org.spartan.spartanizer.tipping.*;
 
-/** TODO Niv Shalmon: document class
+/** see issue 1397 on github for more info
  * @author Niv Shalmon
  * @since 2017-05-24 */
 public class Issue1397 extends TipperTest<VariableDeclarationFragment> {

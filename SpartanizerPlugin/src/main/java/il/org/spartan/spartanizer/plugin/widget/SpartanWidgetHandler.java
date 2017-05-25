@@ -140,11 +140,11 @@ public class SpartanWidgetHandler extends AbstractHandler {
       return false;
     }
     operations = an.empty.list();
-    for (final WidgetOperationEntry e : es) {
+    for (final WidgetOperationEntry ¢ : es) {
       if (operations.size() >= 7)
         break;
-      if (e.isEnabled())
-        operations.add(e);
+      if (¢.isEnabled())
+        operations.add(¢);
     }
     return true;
   }

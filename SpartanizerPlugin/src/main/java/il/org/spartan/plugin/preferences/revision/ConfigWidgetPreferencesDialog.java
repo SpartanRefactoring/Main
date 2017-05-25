@@ -102,8 +102,6 @@ public class ConfigWidgetPreferencesDialog extends Dialog {
       note.bug();
     }
     store().setValue("CONF_" + widgetSerialID, String.valueOf(Base64.getEncoder().encode(out.toByteArray())));
-    // TODO: Niv, in order to read, use - ByteArrayInputStream in = new
-    // ByteArrayInputStream(Base64.getDecoder().decode(yourString.toCharArray()));
     super.okPressed();
   }
 }
