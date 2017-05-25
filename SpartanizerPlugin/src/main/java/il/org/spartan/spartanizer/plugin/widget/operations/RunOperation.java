@@ -28,8 +28,8 @@ public class RunOperation extends WidgetOperation {
         { DEBUG, "Boolean", "Debug", "REQUIRED" }, //
     };
   }
-  @Override protected boolean defaultConfiguration() {
-    return false;
+  @Override protected ConfigurationsMap defaultConfiguration() {
+    return null;
   }
   @Override public boolean register(final ConfigurationsMap ¢) {
     return (configurationName = ¢.getString(NAME)) != null //

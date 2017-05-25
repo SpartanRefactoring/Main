@@ -7,7 +7,6 @@ import java.util.*;
 import java.util.List;
 
 import fluent.ly.*;
-import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 import il.org.spartan.spartanizer.plugin.widget.operations.*;
 
@@ -69,7 +68,7 @@ public enum WidgetPreferences {
     for (final WidgetOperation wo : defaultOrder) {
       if (wo == null)
         continue;
-      final WidgetOperationEntry woe = new WidgetOperationEntry(getWidgetOpUID(wo), new HashMap<>(), wo.description() + " the name");
+      final WidgetOperationEntry woe = new WidgetOperationEntry(getWidgetOpUID(wo), new HashMap<>(), wo.description());
       woe.enable();
       entries.add(woe);
     }
