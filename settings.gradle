@@ -4,17 +4,21 @@
 
 // Definitions of sub-projects appear here.
 // Eclipse plugin.
-include 'SpartanizerPlugin'
+include 'il.org.spartan.spartanizer-plugin'
+include 'il.org.spartan.spartanizer-plugin.test'
 
 // Fluent APIs
-include 'fluent.ly'
+include 'il.org.spartan.fluent.ly'
+include 'il.org.spartan.fluent.ly.test'
 
 // Spartan
-include 'spartan'
+include 'il.org.spartan.spartan'
+include 'il.org.spartan.spartan.test'
+
+// IntellJ-Spartanizer, Team 8 project
+include 'il.org.spartan.intellij-spartanizer'
+include 'il.org.spartan.intellij-spartanizer.test'
 
 // target.p2, imports remote p2 dependencies (eclipse and jgit plugins).
 // the main villian of long loading times.
 include 'target.p2'
-
-// IntellJ-Spartanizer, Team 8 project
-include 'IntelliJ-Spartanizer'
