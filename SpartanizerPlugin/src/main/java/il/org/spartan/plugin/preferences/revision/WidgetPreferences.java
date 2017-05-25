@@ -57,8 +57,8 @@ public enum WidgetPreferences {
     List<WidgetOperationEntry> $ = null;
     try {
       $ = (List<WidgetOperationEntry>) new ObjectInputStream(in).readObject();
-    } catch (@SuppressWarnings("unused") final IOException | ClassNotFoundException x) {
-      note.bug();
+    } catch (final IOException | ClassNotFoundException x) {
+      note.bug(x);
     }
     return $;
   }
