@@ -46,17 +46,17 @@ public abstract class WidgetOperation implements Serializable, Cloneable {
   protected boolean register(final ConfigurationsMap __) {
     return true;
   }
+  /** Configures the operation to its default configuration, if possible
+   * @return true iff the operation has a default configuration */
+  protected boolean defaultConfiguration() {
+    return true;
+  }
   /** Configure this operation, if needed.
    * @param ¢ user configuration
    * @return true iff the configuration is valid
-   * @see #configurationComponents, #register, #hasDefaultConfiguration() */
-  public final boolean configure(final ConfigurationsMap ¢) {
-    return hasDefaultConfiguration() && ¢.isEmpty() || register(¢);
-  }
-  /** Tells whether the operation can be used without calling register
-   * @return true iff the operation has a default configuration */
-  protected boolean hasDefaultConfiguration() {
-    return true;
+   * @see #configurationComponents, #register, #defaultConfiguration */
+  public boolean configure(final ConfigurationsMap ¢) {
+    return !¢.isEmpty() ? register(¢) : defaultConfiguration();
   }
   /** @return URL of image of this operation. */
   public abstract String imageURL();

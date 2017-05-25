@@ -19,6 +19,10 @@ public class ZoomerOperation extends WidgetOperation {
   @Override public boolean register(final ConfigurationsMap ¢) {
     return (type = ¢.getString(TYPE)) != null;
   }
+  @Override protected boolean defaultConfiguration() {
+    type = "Current file";
+    return true;
+  }
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext ¢) throws Throwable {
     switch (type) {
       case "Current file":
