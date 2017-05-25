@@ -12,6 +12,12 @@ public class type {
         Wrapper<Class<? extends PsiElement>> myClass = new Wrapper<>(PsiElement.class);
         x.accept(new JavaElementVisitor() {
             @Override
+            public void visitClass(PsiClass aClass) {
+                super.visitClass(aClass);
+                myClass.set(PsiClass.class);
+            }
+
+            @Override
             public void visitCallExpression(PsiCallExpression x) {
                 super.visitCallExpression(x);
                 myClass.set(PsiCallExpression.class);
@@ -81,6 +87,18 @@ public class type {
             public void visitPrefixExpression(PsiPrefixExpression expression) {
                 super.visitPrefixExpression(expression);
                 myClass.set(PsiPrefixExpression.class);
+            }
+
+            @Override
+            public void visitDeclarationStatement(PsiDeclarationStatement statement) {
+                super.visitDeclarationStatement(statement);
+                myClass.set(PsiDeclarationStatement.class);
+            }
+
+            @Override
+            public void visitForStatement(PsiForStatement statement) {
+                super.visitForStatement(statement);
+                myClass.set(PsiForStatement.class);
             }
         });
         return myClass.get();

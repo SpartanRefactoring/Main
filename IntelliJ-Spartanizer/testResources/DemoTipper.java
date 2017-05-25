@@ -13,19 +13,16 @@ import static il.org.spartan.Leonidas.plugin.leonidas.The.the;
  * @since 29-04-2017.
  */
 public class DemoTipper implements LeonidasTipperDefinition {
-    Statement first, second;
-    GenericExpression cond, ;
 
     @Override
     public void constraints() {
-        first.isNot(() -> {
+        the(0).isNot(() -> {
             if(booleanExpression(3)){
                 statement(4);
             }
         }).ofType(PsiIfStatement.class);
-        second.is(() -> {return null;});
-        third.isNot(() -> !booleanExpression(5));
-        first.isNot(() -> return null;});
+        the(0).nameStartsWith("get");
+        the(0).isPublic();
     }
 
     @Override
@@ -43,9 +40,9 @@ public class DemoTipper implements LeonidasTipperDefinition {
     @Leonidas(PsiIfStatement.class)
     public void replacer() {
         new Template(() -> {
-            if (booleanExpression(0))
-                statement(2);
-                statement(1);
+            void method0() {
+              anyNumberOf(statement(1));
+            }
         });
     }
 }

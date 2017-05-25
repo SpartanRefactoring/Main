@@ -5,51 +5,45 @@ import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 
 /**
- * @author Sharon
- * @since 13.5.17
+ * @author Amir Sagiv
+ * @Date 24-05-2017
  */
-public class Method extends GenericEncapsulator {
-    public static final String TEMPLATE = "method";
+public class Identifier extends GenericEncapsulator {
+    public static final String TEMPLATE = "identifier";
 
-    public Method(Encapsulator e) {
+    public Identifier(Encapsulator e) {
         super(e, TEMPLATE);
     }
 
     /**
      * For reflection use DO NOT REMOVE!
      */
-    public Method() {
+    public Identifier() {
         super();
     }
 
     @Override
     public boolean conforms(PsiElement other) {
-        return iz.method(other) && az.method(other).getName().startsWith(TEMPLATE);
+        return iz.identifier(other) && az.identifier(other).getText().startsWith(TEMPLATE);
     }
 
     @Override
     public Integer extractId(PsiElement e) {
-        return Integer.parseInt(az.method(e).getName().substring(TEMPLATE.length()));
+        return Integer.parseInt(az.identifier(e).getText().substring(TEMPLATE.length()));
     }
 
     @Override
     public boolean generalizes(Encapsulator e) {
-        return iz.method(e.getInner());
+        return iz.identifier(e.getInner());
     }
 
     @Override
     protected boolean goUpwards(Encapsulator prev, Encapsulator next) {
-        return next != null && iz.method(next.getInner());
+        return false;
     }
 
     @Override
     public GenericEncapsulator create(Encapsulator e) {
-        return new Method(e);
-    }
-
-    /* Constraints Methods */
-
-    public void startsWith(String s) {
-        // TODO
+        return new Identifier(e);
     }
 }
