@@ -31,6 +31,9 @@ public enum WidgetPreferences {
   public static void storeSize(final int ¢) {
     store().setValue(PreferencesResources.WIDGET_SIZE, ¢);
   }
+  public static void storeDefaultSize(){
+    store().setToDefault(PreferencesResources.WIDGET_SIZE);
+  }
   /** @return the size of the widget or null if an exception occurred */
   public static int readSize() {
     return store().getInt(PreferencesResources.WIDGET_SIZE);
@@ -43,6 +46,9 @@ public enum WidgetPreferences {
       note.bug(¢);
     }
     store().setValue(PreferencesResources.WIDGET_OPERATION_CONFIGURATION, Base64.getEncoder().encodeToString(out.toByteArray()));
+  }
+  public static void storeDefaultEntries(){
+    store().setToDefault(PreferencesResources.WIDGET_OPERATION_CONFIGURATION);
   }
   @SuppressWarnings("unchecked") public static List<WidgetOperationEntry> readEntries() {
     final String forString = store().getString(PreferencesResources.WIDGET_OPERATION_CONFIGURATION);
@@ -58,7 +64,6 @@ public enum WidgetPreferences {
   }
   public static void setDefaults() {
     store().setDefault(PreferencesResources.WIDGET_SIZE, defaultWidgetSize);
-    // new Gson().toJson(object).getBytes("UTF-8"));
     final List<WidgetOperationEntry> entries = new ArrayList<>();
     for (final WidgetOperation wo : defaultOrder) {
       if (wo == null)
@@ -75,7 +80,7 @@ public enum WidgetPreferences {
     }
     store().setDefault(PreferencesResources.WIDGET_OPERATION_CONFIGURATION, Base64.getEncoder().encodeToString(out.toByteArray()));
   }
-  public static long getWidgetOpUID(final WidgetOperation ¢) {
+  private static long getWidgetOpUID(final WidgetOperation ¢) {
     return ObjectStreamClass.lookup(¢.getClass()).getSerialVersionUID();
   }
 }

@@ -11,11 +11,6 @@ public class ConfigurationsMap {
   public ConfigurationsMap(final Map<String, String> configurations) {
     this.configurations = configurations;
   }
-  public ConfigurationsMap(final String[][] configurations) {
-    this.configurations = new HashMap<>();
-    for (final String[] configuration : configurations)
-      this.configurations.put(configuration[0], configuration[1]);
-  }
   /** @return the boolean value saved under key, or null if such key doesn't
    *         exist */
   @SuppressWarnings("boxing") public Boolean getBoolean(final String key) {
@@ -26,6 +21,8 @@ public class ConfigurationsMap {
   public String getString(final String key) {
     return configurations.get(key);
   }
+  /**@return true iff the configuration is empty
+   */
   public boolean isEmpty() {
     return configurations.isEmpty();
   }
