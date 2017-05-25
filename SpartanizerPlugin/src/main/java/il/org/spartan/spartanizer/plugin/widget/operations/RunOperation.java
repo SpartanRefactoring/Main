@@ -28,7 +28,7 @@ public class RunOperation extends WidgetOperation {
         { DEBUG, "Boolean", "Debug", "REQUIRED" }, //
     };
   }
-  @Override protected boolean hasDefaultConfiguration() {
+  @Override protected boolean defaultConfiguration() {
     return false;
   }
   @Override public boolean register(final ConfigurationsMap ¢) {
