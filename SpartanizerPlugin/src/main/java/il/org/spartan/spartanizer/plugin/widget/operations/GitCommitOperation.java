@@ -31,6 +31,10 @@ public class GitCommitOperation extends GitOperation {
       message = DEFAULT_MESSAGE;
     return true;
   }
+  @Override protected boolean defaultConfiguration() {
+    message = DEFAULT_MESSAGE;
+    return true;
+  }
   @Override @SuppressWarnings("unused") protected void gitOperation(final Git g) {
     try {
       g.commit().setMessage(message).setAll(true).call();

@@ -25,6 +25,10 @@ public abstract class GitOperation extends WidgetOperation {
   @Override public boolean register(final ConfigurationsMap ¢) {
     return (popup = ¢.getBoolean(POPUP)) != null;
   }
+  @Override protected boolean defaultConfiguration() {
+   popup = Boolean.TRUE;
+   return true;
+  }
   protected abstract void gitOperation(Git g) throws Throwable;
   @Override @SuppressWarnings("unused") public void onMouseUp(final WidgetContext c) throws Throwable {
     if (c.project == null || !c.project.exists()) {
