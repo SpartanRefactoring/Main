@@ -10,7 +10,7 @@ include 'SpartanizerPlugin'
 include 'fluent.ly'
 
 // Spartan
-include 'spartan'
+include 'il.org.spartan.spartan'
 
 // target.p2, imports remote p2 dependencies (eclipse and jgit plugins).
 // the main villian of long loading times.

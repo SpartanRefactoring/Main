@@ -43,7 +43,7 @@ dependencies {
         compile "eclipse-deps-jgit:" + d.name + ":+"
 	}
 
-	compile project(':spartan')
+	compile project(':il.org.spartan.spartan')
 	compile project(':fluent.ly')
 	compile files('lib/cli-1.02.jar')
 	compile group: 'org.jetbrains', name: 'annotations', version: '13.0'
