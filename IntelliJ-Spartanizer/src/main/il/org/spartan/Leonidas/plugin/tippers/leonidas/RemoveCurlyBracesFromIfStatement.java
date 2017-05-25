@@ -1,5 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
+import il.org.spartan.Leonidas.plugin.leonidas.LeonidasUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElem
  */
 @SuppressWarnings("ConstantConditions")
 public class RemoveCurlyBracesFromIfStatement implements LeonidasTipperDefinition {
+
     @Override
     public void constraints() {
     }

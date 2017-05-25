@@ -94,6 +94,12 @@ public class type {
                 super.visitDeclarationStatement(statement);
                 myClass.set(PsiDeclarationStatement.class);
             }
+
+            @Override
+            public void visitForStatement(PsiForStatement statement) {
+                super.visitForStatement(statement);
+                myClass.set(PsiForStatement.class);
+            }
         });
         return myClass.get();
     }

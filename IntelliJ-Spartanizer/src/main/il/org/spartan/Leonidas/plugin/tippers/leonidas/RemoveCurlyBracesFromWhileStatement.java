@@ -16,8 +16,7 @@ public class RemoveCurlyBracesFromWhileStatement implements LeonidasTipperDefini
      * Write here additional constraints on the matcher tree.
      * The constraint are of the form:
      * the(<generic element>(<id>)).{is/isNot}(() - > <template>)[.ofType(Psi class)];
-     */
-    @Override
+     */    @Override
     public void constraints() {
     }
 
