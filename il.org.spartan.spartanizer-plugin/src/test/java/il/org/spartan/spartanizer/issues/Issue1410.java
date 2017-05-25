@@ -32,4 +32,60 @@ public class Issue1410 extends TipperTest<Block> {
         + "  }")//
             .stays();
   }
+  @Test public void test02() {
+    trimmingOf("int size = list.size();" //
+        + "    if (element == null) {"//
+        + "      while (f(¢++))"//
+        + "    if (list.get(¢) == null)"//
+        + "      return ¢;"//
+        + "    } else"//
+        + "    for (int ¢ = 0; ¢ < size; ++¢)"//
+        + "      if (element.equals(list.get(¢)))"//
+        + "        return ¢;"//
+        + "    return -1;"//
+        + "  }")//
+            .stays();
+  }
+  @Test public void test03() {
+    trimmingOf("int size = list.size();" //
+        + "    if (element == null) {"//
+        + "      for (Object e : list)"//
+        + "    if (e == null)"//
+        + "      return ¢;"//
+        + "    } else"//
+        + "    for (Object e : list)"//
+        + "      if (element.equals(e))"//
+        + "        return ¢;"//
+        + "    return -1;"//
+        + "  }")//
+            .stays();
+  }
+  @Test public void test04(){
+    trimmingOf("int size = list.size();" //
+        + "    if (element == null) {"//
+        + "      for (Object e : list)"//
+        + "        if (e == null)"//
+        + "         return ¢;"
+        + "        else"
+        + "         return a;"//
+        + "    } else"//
+        + "       for (Object e : list)"//
+        + "          if (element.equals(e))"//
+        + "            return ¢;"//
+        + "    return -1;"//
+        + "  }")//
+    .gives("int size = list.size();" //
+        + "    if (element == null) "//
+        + "      for (Object e : list)"//
+        + "         if (e == null)"//
+        + "           return ¢;"
+        + "         else"
+        + "           return a;"//
+        + "    else"//
+        + "     for (Object e : list)"//
+        + "        if (element.equals(e))"//
+        + "          return ¢;"//
+        + "    return -1;"//
+        + "  }");
+  }
 }
