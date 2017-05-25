@@ -7,6 +7,9 @@ import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author michal cohen
  * @since 22-12-2016
@@ -58,4 +61,12 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
         return "Unless";
     }
 
+    @Override
+    public Map<String,String> getExamples(){
+        Map<String,String> examples = new HashMap<>();
+        examples.put("x>6 ? null : x;","eval(x).unless(x>6);");
+        examples.put("x>6 ? x : null",null);
+        examples.put("6==6 ? null : x","eval(x).unless(6==6);");
+        return examples;
+    }
 }

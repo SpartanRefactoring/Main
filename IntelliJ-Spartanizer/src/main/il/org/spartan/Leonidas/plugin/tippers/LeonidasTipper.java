@@ -14,11 +14,14 @@ import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.leonidas.KeyDescriptionParameters;
 import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher.Constraint;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class represents a tipper created by the leonidas language.
@@ -47,7 +50,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 .split("\\n")[1].trim()
                 .split("\\*")[1].trim();
         name = tipperName;
-        Map<Integer, List<Matcher.Constraint>> map = getConstraints();
+        Map<Integer, List<Constraint>> map = getConstraints();
         matcher = new Matcher(getMatcherRootTree(), map);
         Class<? extends PsiElement> t = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));
         //noinspection unchecked
@@ -197,7 +200,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @param s the statement of the constraint. For example: the(booleanExpression(3)).isNot(!booleanExpression(4))
+     * @param s the statement of the constraint. For example: the(3).isNot(!booleanExpression(4))
      * @return the ID on which the constraint applies. The previous example will return 3.
      */
     private Integer extractIdFromConstraint(PsiStatement s) {
@@ -206,32 +209,27 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void visitMethodCallExpression(PsiMethodCallExpression expression) {
                 super.visitMethodCallExpression(expression);
-                if (expression.getMethodExpression().getText().equals("the")) {
-                    x.set(az.methodCallExpression(expression.getArgumentList().getExpressions()[0]));
+                if (expression.getMethodExpression().getText().equals("element")) {
+                    x.set(expression);
                 }
             }
         });
         PsiMethodCallExpression m = x.get();
-        return Integer.parseInt(m.getArgumentList().getExpressions()[0].getText());
-
+        return Integer.parseInt(step.arguments(m).get(0).getText());
     }
 
     /**
      * @param s constraint statement.
      * @return "is" if the(index).is(constraint) and "isNot" if the(index).isNot(constraint).
      */
-    private Matcher.Constraint.ConstraintType extractConstraintType(PsiStatement s) {
-        Wrapper<Boolean> r = new Wrapper<>(Boolean.TRUE);
-        s.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitReferenceExpression(PsiReferenceExpression expression) {
-                super.visitReferenceExpression(expression);
-                if (expression.getText().endsWith("isNot")) {
-                    r.set(false);
-                }
-            }
-        });
-        return r.get() ? Matcher.Constraint.ConstraintType.IS : Matcher.Constraint.ConstraintType.IS_NOT;
+    private Constraint.ConstraintType extractConstraintType(PsiStatement s) {
+        PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
+        String constraintName = method.getMethodExpression().getReferenceName();
+        try {
+            return Constraint.ConstraintType.valueOf(constraintName.toUpperCase());
+        } catch (Exception ignore){
+        }
+        return Constraint.ConstraintType.SPECIFIC;
     }
 
     /**
@@ -271,24 +269,41 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @return a mapping between the ID of a generic element to a list of all the constraint that apply on it.
+     * Searches for all the structural constraints found in the "constraints" method and returns a mapping between
+     * element ids and their structural constraints. For example, if the following is present in the constraints method:
+     * <p>
+     * <code>element(1).is(() -> return null;);</code>
+     * <p>
+     * It will search for the element with id 1, and put a structural constraint on it, requiring it look like:
+     * <p>
+     * <code>return null;</code>.
+     *
+     * @return a mapping between the ID of generic elements to a list of all the constraint that apply on them.
      */
-    private Map<Integer, List<Matcher.Constraint>> getConstraints() {
-        Map<Integer, List<Matcher.Constraint>> map = new HashMap<>();
+    private Map<Integer, List<Constraint>> getConstraints() {
+        Map<Integer, List<Constraint>> map = new HashMap<>();
         PsiMethod constrainsMethod = getInterfaceMethod("constraints");
         if (!haz.body(constrainsMethod)) {
             return map;
         }
-
         Arrays.stream(constrainsMethod.getBody().getStatements()).forEach(s -> {
-            Integer key = extractIdFromConstraint(s);
-            PsiElement y = getLambdaExpressionBody(s);
-            Optional<Class<? extends PsiElement>> q = getTypeOf(s);
-            y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
-            // y - root, key ID
-            map.putIfAbsent(key, new LinkedList<>());
-            giveIdToStubElements(y);
-            map.get(key).add(new Matcher.Constraint(extractConstraintType(s), Pruning.prune(Encapsulator.buildTreeFromPsi(y))));
+            Integer elementId = extractIdFromConstraint(s);
+            Constraint.ConstraintType constraintType = extractConstraintType(s);
+
+            if (constraintType == Constraint.ConstraintType.IS || constraintType == Constraint.ConstraintType.ISNOT) {
+                PsiElement y = getLambdaExpressionBody(s);
+                Optional<Class<? extends PsiElement>> q = getTypeOf(s);
+                y = q.isPresent() ? getRealRootByType(y, q.get()) : y;
+                giveIdToStubElements(y);
+                // y - root, key ID
+                map.putIfAbsent(elementId, new LinkedList<>());
+                map.get(elementId).add(new Matcher.StructuralConstraint(constraintType, Pruning.prune(Encapsulator.buildTreeFromPsi(y))));
+            } else {
+                PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
+                List<Object> arguments = step.arguments(method).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
+                map.putIfAbsent(elementId, new LinkedList<>());
+                map.get(elementId).add(new Matcher.NonStructuralConstraint(method.getMethodExpression().getReferenceName(), arguments.toArray()));
+            }
         });
         return map;
     }
@@ -307,7 +322,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
-     * @param element the root of the template.
+     * @param element         the root of the template.
      * @param rootElementType the type of the inner element to extract
      * @return the inner element derived by its type
      */
