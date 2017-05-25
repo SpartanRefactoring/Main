@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.List;
 
 import fluent.ly.*;
+import il.org.spartan.plugin.preferences.revision.*;
 import il.org.spartan.spartanizer.plugin.widget.*;
 import il.org.spartan.spartanizer.plugin.widget.operations.*;
 
@@ -57,8 +58,8 @@ public enum WidgetPreferences {
     List<WidgetOperationEntry> $ = null;
     try {
       $ = (List<WidgetOperationEntry>) new ObjectInputStream(in).readObject();
-    } catch (final IOException | ClassNotFoundException x) {
-      note.bug(x);
+    } catch (final IOException | ClassNotFoundException ¢) {
+      note.bug(¢);
     }
     return $;
   }

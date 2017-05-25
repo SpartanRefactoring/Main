@@ -1,4 +1,4 @@
-package il.org.spartan.plugin.preferences.revision;
+package il.org.spartan.spartanizer.plugin.widget;
 
 import java.io.*;
 import java.util.*;
