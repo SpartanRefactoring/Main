@@ -46,4 +46,18 @@ public class Identifier extends GenericEncapsulator {
     public GenericEncapsulator create(Encapsulator e) {
         return new Identifier(e);
     }
+
+    /* Constraints Methods */
+
+    public void startsWith(String s) {
+        addConstraint(e -> az.identifier(e.inner).getText().startsWith(s));
+    }
+
+    public void contains(String s) {
+        addConstraint(e -> az.identifier(e.inner).getText().contains(s));
+    }
+
+    public void endWith(String s) {
+        addConstraint(e -> az.identifier(e.inner).getText().endsWith(s));
+    }
 }
