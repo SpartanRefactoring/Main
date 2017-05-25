@@ -4,7 +4,8 @@
 
 // Definitions of sub-projects appear here.
 // Eclipse plugin.
-include 'SpartanizerPlugin'
+include 'il.org.spartan.spartanizer-plugin'
+include 'il.org.spartan.spartanizer-plugin.test'
 
 // Fluent APIs
 include 'il.org.spartan.fluent.ly'
