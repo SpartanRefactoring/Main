@@ -4,7 +4,9 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -14,15 +16,16 @@ import java.util.stream.Collectors;
  * correct information of the tree of the user for the sake of future replacing.
  * It is based on the algorithm of SNOBOL4 language pattern matching, and is consistent with the definitions of the bead
  * diagram.
+ *
  * @author michalcohen
  * @since 31-03-2017.
  */
 public class Matcher {
 
-    private final Map<Integer, List<Constraint>> constrains = new HashMap<>();
+    private final Map<Integer, List<StructuralConstraint>> constrains = new HashMap<>();
     private Encapsulator root;
 
-    public Matcher() {
+    Matcher() {
         root = null;
     }
 
@@ -75,6 +78,7 @@ public class Matcher {
 
     /**
      * Matches all the elements until the next quantifier or the end of the tree
+     *
      * @return MatchingResult false if the sections don't match and MatchingResult true with mapping between identifier
      * of generic elements in this section to its instances if the sections match.
      */
@@ -94,6 +98,7 @@ public class Matcher {
 
     /**
      * Matches all the occurrences of a quantifier according to its NumberOfOccurrences.
+     *
      * @return MatchingResult false if the sections don't match and MatchingResult true with mapping between identifier
      * of generic elements in this section to its instances if the sections match.
      */
@@ -119,12 +124,22 @@ public class Matcher {
 
     /**
      * @param matcher builds recursively the matchers for the constraints that are relevant to the current matcher.
-     * @param map a mapping between id of generic elements and lists of constraints.
+     * @param map     a mapping between id of generic elements and lists of constraints.
      */
     private void buildMatcherTree(Matcher matcher, Map<Integer, List<Constraint>> map) {
-        Set<Integer> l = matcher.getGenericElements();
-        l.forEach(i -> java.util.Optional.ofNullable(map.get(i)).ifPresent(z -> z.forEach(j ->
-                matcher.addConstraint(i, j))));
+        matcher.getGenericElements()
+                .forEach((i, e) -> java.util.Optional.ofNullable(map.get(i)).ifPresent(z -> z.forEach(j -> {
+                    if (j instanceof StructuralConstraint)
+                        matcher.addConstraint(i, (StructuralConstraint) j);
+                    else {
+                        NonStructuralConstraint nsc = (NonStructuralConstraint) j;
+                        try {
+                            e.getClass().getDeclaredMethod(nsc.methodName).invoke(e, nsc.objects);
+                        } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                })));
         matcher.getConstraintsMatchers().forEach(im -> buildMatcherTree(im, map));
     }
 
@@ -138,10 +153,11 @@ public class Matcher {
 
     /**
      * Adds a constraint on a generic element inside the tree of the root.
+     *
      * @param id - the id of the element that we constraint.
      * @param c  - the constraint
      */
-    private void addConstraint(Integer id, Constraint c) {
+    private void addConstraint(Integer id, StructuralConstraint c) {
         constrains.putIfAbsent(id, new LinkedList<>());
         constrains.get(id).add(c);
     }
@@ -154,7 +170,7 @@ public class Matcher {
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList())
                 .stream()
-                .map(Constraint::getMatcher)
+                .map(StructuralConstraint::getMatcher)
                 .collect(Collectors.toList());
     }
 
@@ -171,28 +187,42 @@ public class Matcher {
     /**
      * @return list of Ids of all the generic elements in the tipper.
      */
-    private Set<Integer> getGenericElements() {
-        final Set<Integer> tmp = new HashSet<>();
+    private Map<Integer, GenericEncapsulator> getGenericElements() {
+        final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
         root.accept(e -> {
             if (e.isGeneric()) {
-                tmp.add(az.generic(e).getId());
+                tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
             }
         });
         return tmp;
     }
 
+    public static abstract class Constraint {
+        protected final ConstraintType type;
+
+        Constraint(ConstraintType t) {
+            type = t;
+        }
+
+        public enum ConstraintType {
+            IS,
+            ISNOT,
+            SPECIFIC,
+        }
+    }
+
     /**
      * Represents a constraint on a generalized variable of the leonidas language.
+     *
      * @author michalcohen
      * @since 01-04-2017.
      */
-    public static class Constraint {
+    public static class StructuralConstraint extends Constraint {
 
-        private final ConstraintType type;
         private final Matcher matcher;
 
-        public Constraint(ConstraintType t, Encapsulator e) {
-            type = t;
+        public StructuralConstraint(ConstraintType t, Encapsulator e) {
+            super(t);
             matcher = new Matcher();
             matcher.setRoot(e);
         }
@@ -205,14 +235,26 @@ public class Matcher {
          * @param e the users tree to match.
          * @return indication of e being matched recursively to the matcher, when taking in consideration the type of the constraint.
          */
-        public boolean match(PsiElement e) {
-            return (type == ConstraintType.IS && matcher.match(e)) || (type == ConstraintType.IS_NOT && !matcher.match(e));
-        }
-
-        public enum ConstraintType {
-            IS,
-            IS_NOT
+        boolean match(PsiElement e) {
+            return (type == ConstraintType.IS && matcher.match(e)) || (type == ConstraintType.ISNOT && !matcher.match(e));
         }
     }
+
+    public static class NonStructuralConstraint extends Constraint {
+        Object[] objects;
+        Encapsulator element;
+        String methodName;
+
+        public NonStructuralConstraint(String methodName, Object[] o) {
+            super(ConstraintType.SPECIFIC);
+            this.methodName = methodName;
+            objects = o;
+        }
+
+        public void setElement(Encapsulator e) {
+            element = e;
+        }
+    }
+
 }
 

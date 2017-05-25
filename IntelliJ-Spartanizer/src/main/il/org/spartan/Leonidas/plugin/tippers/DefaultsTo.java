@@ -8,6 +8,9 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Replace X != null ? X : Y with defaults(X).to(Y) <br>
  * Replace X == null ? Y : X with defaults(X).to(Y) <br>
@@ -78,5 +81,23 @@ public class DefaultsTo extends NanoPatternTipper<PsiConditionalExpression> {
     @Override
     public Class<PsiConditionalExpression> getPsiClass() {
         return PsiConditionalExpression.class;
+    }
+
+    @Override
+    public Map<String,String> getExamples(){
+        Map<String,String> examples = new HashMap<>();
+        examples.put("x != null ? x : y","defaults(x).to(y)");
+        examples.put("x == null ? y : x","defaults(x).to(y)");
+        examples.put("null == x ? y : x","defaults(x).to(y)");
+        examples.put("null != x ? x : y","defaults(x).to(y)");
+        examples.put("null == null ? x : y",null); //<should not be able to tip
+        examples.put("null != null ? x : y",null);
+        examples.put("x == y ? x : y",null);
+        examples.put("x != null ? y : z",null);
+        examples.put("x != null ? y : x",null);
+        examples.put("x == null ? x : y",null);
+        examples.put("null == x ? x : y",null);
+        examples.put("null != x ? y : x",null);
+        return examples;
     }
 }

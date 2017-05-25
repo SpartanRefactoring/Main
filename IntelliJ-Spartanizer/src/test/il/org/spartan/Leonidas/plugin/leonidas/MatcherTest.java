@@ -29,10 +29,10 @@ public class MatcherTest extends PsiTypeHelper {
         Encapsulator thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
         Encapsulator forthConstraint = buildTemplate(createTestReturnStatement("null"));
 
-        constrains.get(1).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS_NOT, firstConstraint));
-        constrains.get(2).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS, secondConstraint));
-        constrains.get(3).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS_NOT, thirdConstraint));
-        constrains.get(1).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS_NOT, forthConstraint));
+        constrains.get(1).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, firstConstraint));
+        constrains.get(2).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.IS, secondConstraint));
+        constrains.get(3).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, thirdConstraint));
+        constrains.get(1).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, forthConstraint));
 
         Matcher m = new Matcher(n, constrains);
         PsiIfStatement tm1 = createTestIfStatement("x > 2", "\nx++; \nreturn null;");
@@ -61,10 +61,10 @@ public class MatcherTest extends PsiTypeHelper {
         Encapsulator thirdConstraint = buildTemplate(createTestExpression("!booleanExpression(5)"));
         Encapsulator forthConstraint = buildTemplate(createTestReturnStatement("null"));
 
-        constrains.get(1).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS_NOT, firstConstraint));
-        constrains.get(2).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS, secondConstraint));
-        constrains.get(3).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS_NOT, thirdConstraint));
-        constrains.get(1).add(new Matcher.Constraint(Matcher.Constraint.ConstraintType.IS_NOT, forthConstraint));
+        constrains.get(1).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, firstConstraint));
+        constrains.get(2).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.IS, secondConstraint));
+        constrains.get(3).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, thirdConstraint));
+        constrains.get(1).add(new Matcher.StructuralConstraint(Matcher.StructuralConstraint.ConstraintType.ISNOT, forthConstraint));
 
         Matcher m = new Matcher(n, constrains);
         PsiIfStatement tm1 = createTestIfStatement("x > 2", "\nx++; \nreturn null;");
