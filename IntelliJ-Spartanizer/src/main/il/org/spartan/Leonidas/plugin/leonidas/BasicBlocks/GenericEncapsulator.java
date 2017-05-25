@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,9 +14,8 @@ import java.util.List;
  * @since 03-05-2017
  */
 public abstract class GenericEncapsulator extends Encapsulator {
-
+    private List<Constraint> constraints = new ArrayList<>();
     protected String template;
-
 
     public GenericEncapsulator(PsiElement e, String template) {
         super(e);
@@ -81,13 +81,18 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public abstract GenericEncapsulator create(Encapsulator e);
 
     /**
-     * Can I generalizeWith a concrete element
+     * Can I generalize with a concrete element
      *
      * @param e concrete element
-     * @return true iff I can generalizeWith e
+     * @return true iff I can generalize with e
      */
     @SuppressWarnings("InfiniteRecursion")
-    public abstract boolean generalizes(Encapsulator e);
+    public boolean generalizes(Encapsulator e) {
+        // Check if there is any constraint that cannot be accepted with the given element
+        return constraints.stream()
+                .filter(c -> !c.accept(e))
+                .count() == 0;
+    }
 
     public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
         assert parent != null;
@@ -113,5 +118,13 @@ public abstract class GenericEncapsulator extends Encapsulator {
     @Override
     public boolean isGeneric() {
         return true;
+    }
+
+    protected void addConstraint(Constraint c) {
+        constraints.add(c);
+    }
+
+    protected interface Constraint {
+        boolean accept(Encapsulator encapsulator);
     }
 }

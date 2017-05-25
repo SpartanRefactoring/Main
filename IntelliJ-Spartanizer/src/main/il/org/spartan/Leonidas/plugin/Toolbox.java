@@ -158,7 +158,11 @@ public class Toolbox implements ApplicationComponent {
     public void executeAllTippers(PsiElement e) {
         if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
             return;
-        tipperMap.get(type.of(e)).stream().filter(tipper -> tipper.canTip(e)).findFirst()
+
+        tipperMap.get(type.of(e))
+                .stream()
+                .filter(tipper -> tipper.canTip(e))
+                .findFirst()
                 .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
     }
 
