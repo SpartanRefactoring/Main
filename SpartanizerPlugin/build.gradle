@@ -44,7 +44,7 @@ dependencies {
 	}
 
 	compile project(':il.org.spartan.spartan')
-	compile project(':fluent.ly')
+	compile project(':il.org.spartan.fluent.ly')
 	compile files('lib/cli-1.02.jar')
 	compile group: 'org.jetbrains', name: 'annotations', version: '13.0'
 	compile 'junit:junit:4.12'

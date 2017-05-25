@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
 	compile files('lib/cli-1.01.jar')
-	compile project(':fluent.ly')
+	compile project(':il.org.spartan.fluent.ly')
 	compile group: 'org.jetbrains', name: 'annotations', version: '13.0'
 	compile 'org.eclipse.jdt:org.eclipse.jdt.annotation:2.0.0'
 	compile 'junit:junit:4.12'
