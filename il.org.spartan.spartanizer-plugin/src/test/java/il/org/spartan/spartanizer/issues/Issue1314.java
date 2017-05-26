@@ -25,4 +25,15 @@ public class Issue1314 extends TipperTest<VariableDeclarationFragment>{
     trimmingOf("List<T> x = new ArrayList<>(); x.addAll(ys);").gives("List<T> x = new ArrayList<>(ys);");
   }
   
+  @Test public void test01() {
+    trimmingOf("List<T> x = new ArrayList<>(); x.addAll(ys); y(x); return x;") //
+      .gives("List<T> x = new ArrayList<>(ys); y(x); return x;")//
+    ;
+  }
+  
+  @Test public void test02() {
+    trimmingOf("List<T> x = new LinkedList<>(); f(x); x.addAll(ys);")//
+    .stays();
+  }
+  
 }
