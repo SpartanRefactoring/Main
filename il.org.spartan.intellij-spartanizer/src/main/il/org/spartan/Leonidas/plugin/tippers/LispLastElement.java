@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl;
 import com.intellij.psi.util.PsiTreeUtil;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
@@ -58,8 +59,8 @@ public class LispLastElement extends NanoPatternTipper<PsiMethodCallExpression> 
     }
 
     @Override
-    public Class<PsiMethodCallExpression> getPsiClass() {
-        return PsiMethodCallExpression.class;
+    public Class<? extends PsiMethodCallExpression> getPsiClass() {
+        return PsiMethodCallExpressionImpl.class;
     }
 
     @Override

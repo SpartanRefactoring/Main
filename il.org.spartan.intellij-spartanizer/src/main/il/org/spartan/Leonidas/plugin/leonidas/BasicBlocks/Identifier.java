@@ -34,7 +34,7 @@ public class Identifier extends GenericEncapsulator {
 
     @Override
     public boolean generalizes(Encapsulator e) {
-        return iz.identifier(e.getInner());
+        return super.generalizes(e) && iz.identifier(e.getInner());
     }
 
     @Override

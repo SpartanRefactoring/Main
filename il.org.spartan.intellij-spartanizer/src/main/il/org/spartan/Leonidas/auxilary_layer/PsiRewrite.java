@@ -44,4 +44,50 @@ public class PsiRewrite {
         }.execute();
         return newElement.get();
     }
+
+    /**
+     * @param parent the tree to replace.
+     * @param first the replacing tree.
+     * @return the new tree that was inserted to the path of the tree that was replaced.
+     */
+    public void deleteByRange(PsiElement parent, PsiElement first, PsiElement last) {
+        Toolbox.getInstance().replaced = true;
+        new WriteCommandAction.Simple(project, psiFile) {
+            @Override
+            protected void run() throws Throwable {
+                parent.deleteChildRange(first, last);
+            }
+
+        }.execute();
+    }
+
+    /**
+     * @param prev the replacing tree.
+     * @return the new tree that was inserted to the path of the tree that was replaced.
+     */
+    public void addAfter(PsiElement parent, PsiElement prev, PsiElement element) {
+        Toolbox.getInstance().replaced = true;
+        new WriteCommandAction.Simple(project, psiFile) {
+            @Override
+            protected void run() throws Throwable {
+                parent.addAfter(element, prev);
+            }
+
+        }.execute();
+    }
+
+    /**
+     * @param next the replacing tree.
+     * @return the new tree that was inserted to the path of the tree that was replaced.
+     */
+    public void addBefore(PsiElement parent, PsiElement next, PsiElement element) {
+        Toolbox.getInstance().replaced = true;
+        new WriteCommandAction.Simple(project, psiFile) {
+            @Override
+            protected void run() throws Throwable {
+                parent.addBefore(element, next);
+            }
+
+        }.execute();
+    }
 }

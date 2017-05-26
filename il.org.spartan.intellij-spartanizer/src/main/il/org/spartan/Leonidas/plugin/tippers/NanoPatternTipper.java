@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * Represents a tipper that changes the code of the user to a code that need the creation of
@@ -29,22 +28,6 @@ import java.util.Collection;
  * @since 26-12-2016
  */
 public abstract class NanoPatternTipper<N extends PsiElement> implements Tipper<N>, TipperCategory.Nanos {
-    protected static <N extends PsiElement> boolean anyTips(final Collection<Tipper<N>> ts, final N n) {
-        return n != null && ts.stream().anyMatch(t -> t.canTip(n));
-    }
-
-    @SuppressWarnings("OptionalGetWithoutIsPresent")
-    protected static <N extends PsiElement> Tipper<N> firstTipperThatCanTip(final Collection<Tipper<N>> ts, final N n) {
-        return ts.stream().filter(t -> t.canTip(n)).findFirst().get();
-    }
-
-    public static <N extends PsiElement> Tip firstTip(final Collection<Tipper<N>> ts, final N n) {
-        return firstTipperThatCanTip(ts, n).tip(n);
-    }
-
-    String className() {
-        return this.getClass().getSimpleName();
-    }
 
     /**
      * @param e the PsiElement on which the tip will be applied

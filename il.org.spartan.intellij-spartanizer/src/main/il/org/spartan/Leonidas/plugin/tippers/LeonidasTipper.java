@@ -19,7 +19,6 @@ import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,10 +30,6 @@ import java.util.stream.Collectors;
  */
 @SuppressWarnings("ConstantConditions")
 public class LeonidasTipper implements Tipper<PsiElement> {
-
-    private static final String LEONIDAS_ANNOTATION_NAME = Leonidas.class.getTypeName();
-    private static final String SHORT_LEONIDAS_ANNOTATION_NAME = Leonidas.class.getSimpleName();
-    private static final String LEONIDAS_ANNOTATION_VALUE = "value";
 
     private String description;
     private String name;
@@ -52,9 +47,6 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         name = tipperName;
         Map<Integer, List<Constraint>> map = getConstraints();
         matcher = new Matcher(getMatcherRootTree(), map);
-        Class<? extends PsiElement> t = getPsiElementTypeFromAnnotation(getInterfaceMethod("matcher"));
-        //noinspection unchecked
-        rootType = t != null ? t : (Class<? extends PsiElement>) matcher.getRoot().getInner().getClass().getInterfaces()[0];
     }
 
     @Override
@@ -78,7 +70,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             @Override
             public void go(PsiRewrite r) {
                 if (canTip(node)) {
-                    replace(node, matcher.extractInfo(node), r);
+                    Wrapper<Integer> i = new Wrapper<>(0);
+                    Map<Integer, List<PsiElement>> map = matcher.extractInfo(node, i);
+                    replace(node, map, i.get(), r);
                 }
             }
         };
@@ -89,17 +83,36 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         return rootType;
     }
 
-    //<editor-fold desc="Private Methods">
-
     /**
      * This method replaces the given element by the corresponding tree built by PsiTreeTipperBuilder
      *
      * @param treeToReplace - the given tree that matched the "from" tree.
      * @param r             - Rewrite object
      */
-    private void replace(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        PsiElement n = getReplacingTree(m, r);
-        r.replace(treeToReplace, n);
+    private void replace(PsiElement treeToReplace, Map<Integer, List<PsiElement>> m, Integer numberOfRoots, PsiRewrite r) {
+        List<PsiElement> elements = getReplacingForest(m, r);
+        PsiElement prev = treeToReplace.getPrevSibling();
+        while(prev != null && iz.whiteSpace(prev)){
+            prev = prev.getPrevSibling();
+        }
+        PsiElement last = treeToReplace;
+        for (int i = 1; i < numberOfRoots; i++){
+            last = last.getNextSibling();
+        }
+        PsiElement parent = treeToReplace.getParent();
+        r.deleteByRange(parent, treeToReplace, last);
+        //parent.deleteChildRange(treeToReplace, last);
+        if (prev == null){
+            prev = parent.getFirstChild();
+            for (PsiElement element : elements){
+                r.addBefore(parent, prev, element);
+            }
+        } else {
+            for (PsiElement element : elements){
+                r.addAfter(parent, prev, element);
+            }
+        }
+
     }
 
     /**
@@ -107,59 +120,49 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @param r rewrite object
      * @return the template of the replacer with the concrete elements inside it.
      */
-    private PsiElement getReplacingTree(Map<Integer, List<PsiElement>> m, PsiRewrite r) {
-        Encapsulator rootCopy = getReplacerRootTree();
-        if (rootCopy.isGeneric()) return m.get(az.generic(rootCopy).getId()).get(0);
-        rootCopy.accept(e -> {
-            if (!e.isGeneric()) return;
-            GenericEncapsulator ge = az.generic(e);
-            ge.replaceByRange(m.get(ge.getId()), r);
-        });
-        return rootCopy.getInner();
-    }
-
-    /**
-     * @param x the template method
-     * @return extract the first PsiElement of the type described in the Leonidas annotation
-     */
-    private Class<? extends PsiElement> getPsiElementTypeFromAnnotation(PsiMethod x) {
-        return Arrays.stream(x.getModifierList().getAnnotations()) //
-                .filter(a -> LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName()) //
-                        || SHORT_LEONIDAS_ANNOTATION_NAME.equals(a.getQualifiedName())) //
-                .map(a -> getAnnotationClass(a.findDeclaredAttributeValue(LEONIDAS_ANNOTATION_VALUE) //
-                        .getText().replace(".class", ""))) //
-                .findFirst().orElse(null);
-    }
-
-    /**
-     * @param method          the template method
-     * @param rootElementType the type of the first PsiElement in the wanted tree
-     * @return the first PsiElement of the type rootElementType
-     */
-    private PsiElement getTreeFromRoot(PsiMethod method, Class<? extends PsiElement> rootElementType) {
-        PsiNewExpression ne = az.newExpression(az.expressionStatement(method.getBody().getStatements()[0]).getExpression());
-        PsiElement firstElement;
-        if (iz.codeBlock(((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody())) {
-            firstElement = Utils.getFirstElementInsideBody((PsiCodeBlock) (((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody()));
-        } else {
-            firstElement = ((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody();
-        }
-
-        if (rootElementType == null)
-            return firstElement;
-        Wrapper<PsiElement> result = new Wrapper<>();
-        Wrapper<Boolean> stop = new Wrapper<>(false);
-        method.accept(new JavaRecursiveElementVisitor() {
-            @Override
-            public void visitElement(PsiElement element) {
-                super.visitElement(element);
-                if (!stop.get() && iz.ofType(element, rootElementType)) {
-                    result.set(element);
-                    stop.set(true);
-                }
+    private List<PsiElement> getReplacingForest(Map<Integer, List<PsiElement>> m, PsiRewrite r) {
+        List<Encapsulator> rootsCopy = getReplacerRootTree();
+        List<PsiElement> elements = new LinkedList<>();
+        rootsCopy.forEach(rootCopy -> {
+            if (rootCopy.isGeneric())
+                elements.addAll(m.get(az.generic(rootCopy).getId())); //TODO
+            else {
+                rootCopy.accept(e -> {
+                    if (!e.isGeneric()) return;
+                    GenericEncapsulator ge = az.generic(e);
+                    ge.replaceByRange(m.get(ge.getId()), r);
+                });
+                elements.add(rootCopy.getInner());
             }
         });
-        return result.get();
+        return elements;
+    }
+
+    /**
+     * @param method the template method
+     * @return the first PsiElement of the type rootElementType
+     */
+    private List<Encapsulator> getForestFromMethod(PsiMethod method) {
+        PsiNewExpression ne = az.newExpression(az.expressionStatement(method.getBody().getStatements()[0]).getExpression());
+        PsiElement current;
+        if (iz.codeBlock(((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody())) {
+            current = Utils.getFirstElementInsideBody((PsiCodeBlock) (((PsiLambdaExpression) ne.getArgumentList().getExpressions()[0]).getBody()));
+        } else {
+            current = ne.getArgumentList().getExpressions()[0].getFirstChild();
+            current = Utils.getNextActualSibling(current);
+            current = Utils.getNextActualSibling(current);
+        }
+        while (current != null && (!iz.javadoc(current) || !az.javadoc(current).getText().contains("start"))) {
+            current = current.getNextSibling();
+        }
+        current = Utils.getNextActualSibling(current);
+        List<Encapsulator> roots = new ArrayList<>();
+        rootType = current.getClass();
+        while (current != null && (!iz.javadoc(current) || !az.javadoc(current).getText().contains("end"))) {
+            roots.add(Pruning.prune(Encapsulator.buildTreeFromPsi(current)));
+            current = Utils.getNextActualSibling(current);
+        }
+        return roots;
     }
 
     /**
@@ -181,22 +184,20 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     /**
      * @return the generic tree representing the "from" template
      */
-    private Encapsulator getMatcherRootTree() {
+    private List<Encapsulator> getMatcherRootTree() {
         PsiMethod method = getInterfaceMethod("matcher");
         giveIdToStubElements(method);
 
-        return Pruning.prune(Encapsulator.buildTreeFromPsi(getTreeFromRoot(method,
-                getPsiElementTypeFromAnnotation(method))));
+        return getForestFromMethod(method);
     }
 
     /**
      * @return the generic tree representing the "from" template
      */
-    private Encapsulator getReplacerRootTree() {
+    private List<Encapsulator> getReplacerRootTree() {
         PsiMethod replacer = (PsiMethod) getInterfaceMethod("replacer").copy();
         giveIdToStubElements(replacer);
-        return Pruning.prune(Encapsulator.buildTreeFromPsi(getTreeFromRoot(replacer,
-                getPsiElementTypeFromAnnotation(replacer))));
+        return getForestFromMethod(replacer);
     }
 
     /**
@@ -227,7 +228,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
         String constraintName = method.getMethodExpression().getReferenceName();
         try {
             return Constraint.ConstraintType.valueOf(constraintName.toUpperCase());
-        } catch (Exception ignore){
+        } catch (Exception ignore) {
         }
         return Constraint.ConstraintType.SPECIFIC;
     }
@@ -269,6 +270,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
     }
 
     /**
+     * TODO assuming constraints has only one tree
      * Searches for all the structural constraints found in the "constraints" method and returns a mapping between
      * element ids and their structural constraints. For example, if the following is present in the constraints method:
      * <p>
@@ -297,7 +299,9 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 giveIdToStubElements(y);
                 // y - root, key ID
                 map.putIfAbsent(elementId, new LinkedList<>());
-                map.get(elementId).add(new Matcher.StructuralConstraint(constraintType, Pruning.prune(Encapsulator.buildTreeFromPsi(y))));
+                List<Encapsulator> l = new LinkedList<>();
+                l.add(Pruning.prune(Encapsulator.buildTreeFromPsi(y)));
+                map.get(elementId).add(new Matcher.StructuralConstraint(constraintType, l));
             } else {
                 PsiMethodCallExpression method = az.methodCallExpression(s.getFirstChild());
                 List<Object> arguments = step.arguments(method).stream().map(e -> az.literal(e).getValue()).collect(Collectors.toList());
@@ -358,19 +362,6 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             }
         });
         return x.get();
-    }
-
-    /**
-     * @param s the name of the PsiElement inherited class
-     * @return the .class of s.
-     */
-    private Class<? extends PsiElement> getAnnotationClass(String s) {
-        try {
-            //noinspection unchecked
-            return (Class<? extends PsiElement>) Class.forName("com.intellij.psi." + s);
-        } catch (ClassNotFoundException ignore) {
-        }
-        return PsiElement.class;
     }
 
     /**

@@ -24,21 +24,23 @@ public class BooleanLiteralTestTip implements LeonidasTipperDefinition {
     }
 
     @Override
-    @Leonidas(PsiWhileStatement.class)
     public void matcher() {
         new Template(() -> {
+            /** start */
             while (booleanLiteral(0)){
                 statement(1);
             }
+            /** end */
         });
     }
 
     @Override
-    @Leonidas(PsiWhileStatement.class)
     public void replacer() {
         new Template(() -> {
+            /** start */
             while (booleanLiteral(0))
                 statement(1);
+            /** end */
         });
     }
 }

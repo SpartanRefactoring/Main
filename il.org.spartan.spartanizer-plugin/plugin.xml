@@ -460,7 +460,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
        <command
        tooltip="Inflate"
          commandId="il.org.spartan.AthensInflate" 
-         icon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/etool16/segment_edit.png" 
+         icon="plugin/pictures/athenizer.png"
          id="il.org.spartan.plugin.toolbars.TextButton">
        </command>
        <command
@@ -633,7 +633,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitPushOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.GitCommitOperation" />
 	<widget-operation class="il.org.spartan.spartanizer.plugin.widget.operations.CleanOperation" />
-
 </extension>
 
 </plugin>
