@@ -113,13 +113,17 @@ public interface iz {
   }
   /** @param subject JD
    * @return whether the parameter is an essential block or false otherwise */
-  static boolean blockEssential(final Statement ¢) {
+  @SuppressWarnings("boxing") static boolean blockEssential(final Statement ¢) {
     final Block b = az.block(parent(¢));
     if (b == null)
       return false;
-    final IfStatement parent = az.ifStatement(parent(b));
-    if (parent == null)
-      return false;
+    Statement p = az.statement(parent(b));
+    while (!iz.ifStatement(p)) {
+      if (p == null || !is.in(p.getNodeType(), WHILE_STATEMENT, FOR_STATEMENT, ENHANCED_FOR_STATEMENT))
+        return false;
+      p = az.statement(p.getParent());
+    }
+    final IfStatement parent = az.ifStatement(p);
     for (Statement current = ¢; current != null;)
       switch (current.getNodeType()) {
         case IF_STATEMENT:

@@ -19,7 +19,7 @@ public class Issue1354 extends TipperTest<Block> {
   @Override public Class<Block> tipsOn() {
     return Block.class;
   }
-  @Ignore @Test public void test01() {
+  @Test public void test01() {
     trimmingOf("if (o == null)"//
         + "      for (int $ = 0; $ < size(); ++$) {"//
         + "        if (data[$] == null)"//
