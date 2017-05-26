@@ -24,6 +24,7 @@ public class LogicalConstraintsTester implements LeonidasTipperDefinition {
     @Leonidas(PsiForStatement.class)
     public void matcher() {
         new Template(() -> {
+            /** start */
             for (int i = 0; i < 1 ; i++){
                 if(booleanExpression(1)){
                     x++;
@@ -31,6 +32,7 @@ public class LogicalConstraintsTester implements LeonidasTipperDefinition {
                     x++;
                 }
             }
+            /** end */
         });
     }
 
@@ -38,11 +40,13 @@ public class LogicalConstraintsTester implements LeonidasTipperDefinition {
     @Leonidas(PsiIfStatement.class)
     public void replacer() {
         new Template(() -> {
+            /** start */
             if(booleanExpression(1)){
                 x++;
                 x--;
                 x++;
             }
+            /** end */
         });
     }
 }

@@ -5,7 +5,6 @@ import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import fluent.ly.note;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
@@ -82,7 +81,7 @@ public class Toolbox implements ApplicationComponent {
                     try {
                         tipperInstances.add(c.newInstance());
                     } catch (InstantiationException | IllegalAccessException e) {
-            note.bug(e);
+                        e.printStackTrace();
                     }
                 });
     }

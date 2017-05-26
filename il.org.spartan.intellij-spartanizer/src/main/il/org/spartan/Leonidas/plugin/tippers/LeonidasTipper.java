@@ -127,12 +127,12 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             if (rootCopy.isGeneric())
                 elements.addAll(m.get(az.generic(rootCopy).getId())); //TODO
             else {
-                 rootCopy.accept(e -> {
+                rootCopy.accept(e -> {
                     if (!e.isGeneric()) return;
                     GenericEncapsulator ge = az.generic(e);
                     ge.replaceByRange(m.get(ge.getId()), r);
                 });
-                 elements.add(rootCopy.getInner());
+                elements.add(rootCopy.getInner());
             }
         });
         return elements;
