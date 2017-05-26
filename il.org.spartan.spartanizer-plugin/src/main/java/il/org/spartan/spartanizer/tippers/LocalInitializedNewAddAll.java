@@ -10,6 +10,7 @@ import fluent.ly.*;
 import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
+import il.org.spartan.spartanizer.issues.*;
 import il.org.spartan.utils.*;
 
 /** convert {@code
@@ -18,6 +19,9 @@ import il.org.spartan.utils.*;
  * } to {@code
  * T a = as.list(x)
  * }
+ * 
+ * tests in {@link Issue1314}
+ * 
  * @author Yossi Gil
  * @since 2017-03-02 */
 public final class LocalInitializedNewAddAll extends LocalInitialized {
