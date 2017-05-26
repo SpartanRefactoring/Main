@@ -152,6 +152,7 @@ public enum Utils {
     }
 
     public static PsiElement getNextActualSibling(PsiElement e){
+        if (e == null) return null;
         PsiElement current = e.getNextSibling();
         while (current != null && iz.whiteSpace(current)){
             current = current.getNextSibling();
