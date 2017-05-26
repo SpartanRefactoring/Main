@@ -259,6 +259,7 @@ Untitled*
 .gradle/
 .idea/
 build/
+*.iml
 
 target.p2/.classpath
 target.p2/.project
