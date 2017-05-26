@@ -45,7 +45,7 @@ public abstract class NodePattern<N extends ASTNode> extends CarefulTipper<N> {
     return prerequisite(¢) ? null : super.explain(¢);
   }
   @Override public final boolean prerequisite(final N ¢) {
-    assert current() == ¢ : "class = " + getClass() + "n = " + ¢;
+    assert current() == ¢ : "class = " + this.getClass() + "n = " + ¢;
     return prerequisite.eval();
   }
   public final void setCurrent(final N c) {
