@@ -82,7 +82,7 @@ public class Toolbox implements ApplicationComponent {
                     try {
                         tipperInstances.add(c.newInstance());
                     } catch (InstantiationException | IllegalAccessException e) {
-                        e.printStackTrace();
+            note.bug(e);
                     }
                 });
     }

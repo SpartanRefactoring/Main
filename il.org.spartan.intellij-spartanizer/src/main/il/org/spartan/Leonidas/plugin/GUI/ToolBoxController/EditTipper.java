@@ -78,7 +78,7 @@ public class EditTipper extends JFrame {
                     table.getModel().setValueAt(new JTextField((String) field.get(currentTip)), i++, 1);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+    note.bug(e);
             }
         }
 
@@ -106,14 +106,14 @@ public class EditTipper extends JFrame {
                     try {
                         field.set(currentTip, ((JCheckBox) this.table.getModel().getValueAt(i, 1)).isSelected());
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+            note.bug(e);
                     }
                 }
                 if (this.table.getModel().getValueAt(i, 1) instanceof JTextField) {
                     try {
                         field.set(currentTip, ((JTextField) this.table.getModel().getValueAt(i, 1)).getText());
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+            note.bug(e);
                     }
                 }
 
