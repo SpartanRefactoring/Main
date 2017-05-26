@@ -74,7 +74,7 @@ public interface idiomatic {
 			return $.λ();
 		} catch (final Exception ¢) {
 			return note.bug(¢);
-			return null;
+			//return null; // who did this? unreachable statement cause compilation error
 		}
 	}
 
