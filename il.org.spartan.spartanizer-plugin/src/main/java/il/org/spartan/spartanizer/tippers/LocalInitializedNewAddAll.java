@@ -30,8 +30,10 @@ public final class LocalInitializedNewAddAll extends LocalInitialized {
         () -> newExpression.arguments().isEmpty()); //
     needs("Type", //
         () -> type = newExpression.getType());
+    needs("next statement is an expression statement", //
+        () -> nextExpressionStatement = az.expressionStatement(nextStatement));
     needs("Next statement is a method invocation", //
-        () -> methodInvocation = az.methodInvocation(nextStatement));
+        () -> methodInvocation = az.methodInvocation(nextExpressionStatement.getExpression()));
     andAlso("Receiver of invocation is current variable", //
         () -> wizard.eq(name, methodInvocation.getExpression()));
     andAlso("Method name is 'addAll'", //
@@ -52,6 +54,7 @@ public final class LocalInitializedNewAddAll extends LocalInitialized {
   @SuppressWarnings({ "unused", "FieldCanBeLocal" }) private Type type;
   Expression argument;
   MethodInvocation methodInvocation;
+  ExpressionStatement nextExpressionStatement;
 
   @Override public Examples examples() {
     return convert("List<T> x = new ArrayList<>(); x.addAll(ys);").to("List<T> x = new ArrayList<>(ys);");
