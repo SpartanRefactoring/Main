@@ -36,7 +36,7 @@ public class PluginDescriptorReader {
             document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
 					.parse(new InputSource(pluginXmlBuffer));
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+note.bug(e);
         }
     }
 
