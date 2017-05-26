@@ -78,5 +78,10 @@ dependencies {
     testCompile "org.mockito:mockito-core:2.+"
     compile "org.reflections:reflections:0.9.10"
     compile "commons-io:commons-io:2.5"
-    compile project(":il.org.spartan.spartanizer-plugin")
+    compile (project(":il.org.spartan.spartanizer-plugin")) {
+        exclude group: 'eclipse-deps', module:'javax.annotation'
+        exclude group: 'eclipse-deps', module: 'javax.inject'
+        exclude group: 'eclipse-deps', module: 'javax.xml'
+        exclude group: 'eclipse-deps', module: 'javax.servlet'
+    }
 }
