@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import fluent.ly.note;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 import il.org.spartan.Leonidas.plugin.leonidas.LeonidasUtils;
