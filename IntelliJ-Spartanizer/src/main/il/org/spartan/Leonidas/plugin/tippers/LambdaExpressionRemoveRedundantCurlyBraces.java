@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.tree.java.PsiLambdaExpressionImpl;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
@@ -63,8 +64,8 @@ public class LambdaExpressionRemoveRedundantCurlyBraces implements Tipper<PsiLam
     }
 
     @Override
-    public Class<PsiLambdaExpression> getPsiClass() {
-        return PsiLambdaExpression.class;
+    public Class<? extends PsiLambdaExpression> getPsiClass() {
+        return PsiLambdaExpressionImpl.class;
     }
 
 }

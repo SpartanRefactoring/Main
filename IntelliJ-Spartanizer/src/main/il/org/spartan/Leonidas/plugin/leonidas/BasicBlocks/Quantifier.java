@@ -51,7 +51,7 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
     }
 
     @PreservesIterator
-    public abstract int getNumberOfOccurrences(Encapsulator.Iterator i);
+    public abstract int getNumberOfOccurrences(EncapsulatorIterator i);
 
     public abstract Quantifier create(Encapsulator e);
 

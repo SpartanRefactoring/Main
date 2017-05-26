@@ -7,7 +7,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
-import il.org.spartan.Leonidas.auxilary_layer.type;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
@@ -159,7 +158,7 @@ public class Toolbox implements ApplicationComponent {
         if (checkExcluded(e.getContainingFile()) || !isElementOfOperableType(e))
             return;
 
-        tipperMap.get(type.of(e))
+        tipperMap.get(e.getClass())
                 .stream()
                 .filter(tipper -> tipper.canTip(e))
                 .findFirst()
@@ -173,15 +172,15 @@ public class Toolbox implements ApplicationComponent {
      * @return true iff there exists a tip that tip.canTip(element) is true
      */
     public boolean canTip(PsiElement e) {
-        return (!checkExcluded(e.getContainingFile()) && canTipType(type.of(e)) && tipperMap.get(type.of(e)).stream().anyMatch(tip -> tip.canTip(e)));
+        return (!checkExcluded(e.getContainingFile()) && canTipType(e.getClass()) && tipperMap.get(e.getClass()).stream().anyMatch(tip -> tip.canTip(e)));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public Tipper getTipper(PsiElement e) {
         try {
-            if (!checkExcluded(e.getContainingFile()) && canTipType(type.of(e)) &&
-                    tipperMap.get(type.of(e)).stream().anyMatch(tip -> tip.canTip(e)))
-                return tipperMap.get(type.of(e)).stream().filter(tip -> tip.canTip(e)).findFirst().get();
+            if (!checkExcluded(e.getContainingFile()) && canTipType(e.getClass()) &&
+                    tipperMap.get(e.getClass()).stream().anyMatch(tip -> tip.canTip(e)))
+                return tipperMap.get(e.getClass()).stream().filter(tip -> tip.canTip(e)).findFirst().get();
         } catch (Exception ignore) {
         }
         return new NoTip<>();

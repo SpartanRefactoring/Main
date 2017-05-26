@@ -28,7 +28,7 @@ public class Optional extends Quantifier {
     }
 
     @Override
-    public int getNumberOfOccurrences(Encapsulator.Iterator it) {
+    public int getNumberOfOccurrences(EncapsulatorIterator it) {
         return iz.conforms(it.value(), internal) ? 1 : 0;
     }
 

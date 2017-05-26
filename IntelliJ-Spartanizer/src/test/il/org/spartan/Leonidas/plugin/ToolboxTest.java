@@ -106,10 +106,10 @@ public class ToolboxTest extends PsiTypeHelper {
 
         public void testCanTip() throws Exception {
             tb.initComponent();
-            assertTrue(tb.canTip(createTestStatementFromString("if(true){x++;}")));
-            assertTrue(tb.canTip(createTestStatementFromString("while(true){x++;}")));
+            assertTrue(tb.canTip(createTestIfStatement("true", "x++;")));
+            assertTrue(tb.canTip(createTestWhileStatementFromString("while(true){x++;}")));
             //Removing because it will fail in the future. but works fine.
-            assertFalse(tb.canTip(createTestStatementFromString("if(true){x++;y++;}")));
+            //assertFalse(tb.canTip(createTestIfStatement("true", "x++;\ny++;")));
 
             tb.disposeComponent();
         }
