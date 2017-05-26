@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.auxilary_layer;
 
 import com.intellij.psi.*;
+import com.intellij.psi.javadoc.PsiDocComment;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.*;
 
 /**
@@ -117,5 +118,9 @@ public enum az {
 
     public static Quantifier quantifier(Encapsulator e) {
         return e != null ? (Quantifier) e : null;
+    }
+
+    public static PsiDocComment javadoc(PsiElement e){
+        return e == null || !iz.javadoc(e) ? null : (PsiDocComment) e;
     }
 }

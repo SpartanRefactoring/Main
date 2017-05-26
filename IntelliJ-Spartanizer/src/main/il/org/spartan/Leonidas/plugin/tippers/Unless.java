@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.tippers;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiConditionalExpression;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.impl.source.tree.java.PsiConditionalExpressionImpl;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
@@ -47,8 +48,8 @@ public class Unless extends NanoPatternTipper<PsiConditionalExpression> {
 	}
 
     @Override
-    public Class<PsiConditionalExpression> getPsiClass() {
-        return PsiConditionalExpression.class;
+    public Class<? extends PsiConditionalExpression> getPsiClass() {
+        return PsiConditionalExpressionImpl.class;
     }
 
     @Override

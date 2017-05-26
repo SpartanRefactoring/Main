@@ -27,12 +27,12 @@ public class IfDoubleNot implements LeonidasTipperDefinition {
 
     @Override
     public void matcher() {
-        new Template(() -> !(!(booleanExpression(0))));
+        new Template(() -> /** start */ !(!(booleanExpression(0))) /** end */);
     }
 
     @Override
     public void replacer() {
-        new Template(() -> booleanExpression(0));
+        new Template(() -> /** start */ booleanExpression(0) /** end */);
     }
 
     @Override

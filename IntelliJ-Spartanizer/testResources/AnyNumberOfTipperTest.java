@@ -26,25 +26,27 @@ public class AnyNumberOfTipperTest implements LeonidasTipperDefinition {
     }
 
     @Override
-    @Leonidas(PsiWhileStatement.class)
     public void matcher() {
         new Template(() -> {
             int x;
+            /** start */
             while (booleanExpression(0)){
                 x++;
                 anyNumberOf(statement(1));
                 x--;
             }
+            /** end */
         });
     }
 
     @Override
-    @Leonidas(PsiWhileStatement.class)
     public void replacer() {
         new Template(() -> {
+            /** start */
             while (booleanExpression(0)) {
                 anyNumberOf(statement(1));
             }
+            /** end */
         });
     }
 }

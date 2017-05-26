@@ -4,6 +4,7 @@ import com.intellij.psi.JavaElementVisitor;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.impl.source.PsiMethodImpl;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
@@ -55,6 +56,10 @@ public abstract class JavadocMarkerNanoPattern extends NanoPatternTipper<PsiMeth
         return step.docCommentString(m).contains(tag());
     }
 
+    @Override
+    public Class<? extends PsiMethod> getPsiClass() {
+        return PsiMethodImpl.class;
+    }
 
     @Override
     public String name() {
