@@ -1,9 +1,12 @@
 package il.org.spartan.Leonidas.plugin.leonidas;
 
 import com.intellij.psi.PsiElement;
+import il.org.spartan.Leonidas.auxilary_layer.Utils;
+import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.EncapsulatorIterator;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * A class responsible for the logic of matching the tree of the user to the definition of the tipper and extracting the
  * correct information of the tree of the user for the sake of future replacing.
- * It is based on the algorithm of SNOBOL4 language pattern matching, and is consistent with the definitions of the bead
+ * It is based on the algorithm of SNOBOL4 language pattern matching, and is consistent with the definitions of the beads
  * diagram.
  *
  * @author michalcohen
@@ -23,25 +26,40 @@ import java.util.stream.Collectors;
 public class Matcher {
 
     private final Map<Integer, List<StructuralConstraint>> constrains = new HashMap<>();
-    private Encapsulator root;
+    private List<Encapsulator> roots;
 
     Matcher() {
-        root = null;
+        roots = null;
     }
 
-    public Matcher(Encapsulator r, Map<Integer, List<Constraint>> map) {
-        root = r;
+    public Matcher(List<Encapsulator> r, Map<Integer, List<Constraint>> map) {
+        roots = r;
         buildMatcherTree(this, map);
     }
 
     /**
-     * @param e the tree of the user
-     * @return true iff the tree of the user matcher the root and holds through all the constraints.
+     * @param treeToMatch the tree of the user
+     * @return true iff the tree of the user matcher the roots and holds through all the constraints.
      */
-    public boolean match(PsiElement e) {
-        MatchingResult m = matchingRecursion(root.iterator(), Encapsulator.buildTreeFromPsi(e).iterator());
-        if (m.notMatches()) return false;
-        Map<Integer, List<PsiElement>> info = m.getMap();
+    public boolean match(PsiElement treeToMatch) {
+        MatchingResult mr = new MatchingResult(false);
+        for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); i++){
+            List<Encapsulator> potentialRoots = new ArrayList<>();
+            PsiElement c = treeToMatch;
+            MatchingResult m = new MatchingResult(true);
+            for (int j = 0; j < i; j++){
+                potentialRoots.add(Encapsulator.buildTreeFromPsi(c));
+                c = c.getNextSibling();
+            }
+            m.combineWith(matchingRecursion(new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots)));
+            if (m.matches()){
+                mr.combineWith(m);
+                mr.setMatches();
+                break;
+            }
+        }
+        if (mr.notMatches()) return false;
+        Map<Integer, List<PsiElement>> info = mr.getMap();
         return info.keySet().stream()
                 .allMatch(id -> constrains.getOrDefault(id, new LinkedList<>()).stream().allMatch(c -> info.get(id).stream().allMatch(c::match)));
     }
@@ -53,13 +71,13 @@ public class Matcher {
      * of generic elements to its instances if the trees match.
      */
     @UpdatesIterator
-    private MatchingResult matchingRecursion(Encapsulator.Iterator needle, Encapsulator.Iterator cursor) {
+    private MatchingResult matchingRecursion(EncapsulatorIterator needle, EncapsulatorIterator cursor) {
         MatchingResult m = new MatchingResult(true);
-        Encapsulator.Iterator bgNeedle = needle.clone(), bgCursor = cursor.clone(); // base ground iterators
+        EncapsulatorIterator bgNeedle = needle.clone(), bgCursor = cursor.clone(); // base ground iterators
         m.combineWith(matchBead(bgNeedle, bgCursor));
         if (m.notMatches()) return m;
         if (!bgNeedle.hasNext() && !bgCursor.hasNext()) return m.setMatches();
-        Encapsulator.Iterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
+        EncapsulatorIterator varNeedle, varCursor; // variant iterator for each attempt to match quantifier
         if (iz.quantifier(bgNeedle.value())) {
             int n = az.quantifier(bgNeedle.value()).getNumberOfOccurrences(bgCursor);
             for (int i = 0; i <= n; i++) {
@@ -83,7 +101,7 @@ public class Matcher {
      * of generic elements in this section to its instances if the sections match.
      */
     @UpdatesIterator
-    private MatchingResult matchBead(Encapsulator.Iterator needle, Encapsulator.Iterator cursor) {
+    private MatchingResult matchBead(EncapsulatorIterator needle, EncapsulatorIterator cursor) {
         MatchingResult m = new MatchingResult(true);
         for (; needle.hasNext() && cursor.hasNext() && !iz.quantifier(needle.value()); needle.next(), cursor.next()) {
             if (!iz.conforms(cursor.value(), needle.value()) || (needle.hasNext() != cursor.hasNext()))
@@ -103,7 +121,7 @@ public class Matcher {
      * of generic elements in this section to its instances if the sections match.
      */
     @UpdatesIterator
-    private MatchingResult matchQuantifier(Encapsulator.Iterator needle, Encapsulator.Iterator cursor) {
+    private MatchingResult matchQuantifier(EncapsulatorIterator needle, EncapsulatorIterator cursor) {
         MatchingResult m = new MatchingResult(true);
         int n = needle.getNumberOfOccurrences();
         if (n == 0) {
@@ -143,16 +161,12 @@ public class Matcher {
         matcher.getConstraintsMatchers().forEach(im -> buildMatcherTree(im, map));
     }
 
-    public Encapsulator getRoot() {
-        return root;
-    }
-
-    private void setRoot(Encapsulator n) {
-        root = n;
+    private void setRoots(List<Encapsulator> n) {
+        roots = n;
     }
 
     /**
-     * Adds a constraint on a generic element inside the tree of the root.
+     * Adds a constraint on a generic element inside the tree of the roots.
      *
      * @param id - the id of the element that we constraint.
      * @param c  - the constraint
@@ -163,7 +177,7 @@ public class Matcher {
     }
 
     /**
-     * @return the matcher elements in all the constraints applicable on the root of this matcher.
+     * @return the matcher elements in all the constraints applicable on the roots of this matcher.
      */
     private List<Matcher> getConstraintsMatchers() {
         return constrains.values().stream()
@@ -178,10 +192,22 @@ public class Matcher {
      * @param treeToMatch - The patterns from which we extract the IDs
      * @return a mapping between an ID to a PsiElement
      */
-    public Map<Integer, List<PsiElement>> extractInfo(PsiElement treeToMatch) {
-        MatchingResult mr = matchingRecursion(root.iterator(), Encapsulator.buildTreeFromPsi(treeToMatch).iterator());
-        assert mr.matches();
-        return mr.getMap();
+    public Map<Integer, List<PsiElement>> extractInfo(PsiElement treeToMatch, Wrapper<Integer> numberOfNeighbors) {
+        for (int i = 1; i <= Utils.getNumberOfRootsPossible(treeToMatch); i++){
+            List<Encapsulator> potentialRoots = new ArrayList<>();
+            PsiElement c = treeToMatch;
+            MatchingResult m = new MatchingResult(true);
+            for (int j = 0; j < i; j++){
+                potentialRoots.add(Encapsulator.buildTreeFromPsi(c));
+                c = c.getNextSibling();
+            }
+            m.combineWith(matchingRecursion(new EncapsulatorIterator(roots), new EncapsulatorIterator(potentialRoots)));
+            if (m.matches()){
+                numberOfNeighbors.set(i);
+                return m.getMap();
+            }
+        }
+        return null;
     }
 
     /**
@@ -189,11 +215,11 @@ public class Matcher {
      */
     private Map<Integer, GenericEncapsulator> getGenericElements() {
         final Map<Integer, GenericEncapsulator> tmp = new HashMap<>();
-        root.accept(e -> {
+        roots.forEach(root -> root.accept(e -> {
             if (e.isGeneric()) {
                 tmp.put(az.generic(e).getId(), (GenericEncapsulator) e);
             }
-        });
+        }));
         return tmp;
     }
 
@@ -221,10 +247,10 @@ public class Matcher {
 
         private final Matcher matcher;
 
-        public StructuralConstraint(ConstraintType t, Encapsulator e) {
+        public StructuralConstraint(ConstraintType t, List<Encapsulator> e) {
             super(t);
             matcher = new Matcher();
-            matcher.setRoot(e);
+            matcher.setRoots(e);
         }
 
         public Matcher getMatcher() {

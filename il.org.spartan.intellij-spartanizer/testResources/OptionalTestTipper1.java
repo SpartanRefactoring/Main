@@ -25,25 +25,27 @@ public class OptionalTestTipper1 implements LeonidasTipperDefinition {
     }
 
     @Override
-    @Leonidas(PsiWhileStatement.class)
     public void matcher() {
         new Template(() -> {
             int x;
+            /** start */
             while (booleanExpression(0)){
                 x++;
                 optional(statement(1));
                 x--;
             }
+            /** end */
         });
     }
 
     @Override
-    @Leonidas(PsiWhileStatement.class)
     public void replacer() {
         new Template(() -> {
+            /** start */
             while (booleanExpression(0)) {
                 optional(statement(1));
             }
+            /** end */
         });
     }
 }

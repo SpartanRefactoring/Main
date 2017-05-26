@@ -1,6 +1,7 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiMethodImpl;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
@@ -77,7 +78,7 @@ public class Delegator extends JavadocMarkerNanoPattern {
     }
 
     @Override
-    public Class<PsiMethod> getPsiClass() {
-        return PsiMethod.class;
+    public Class<PsiMethodImpl> getPsiClass() {
+        return PsiMethodImpl.class;
     }
 }
