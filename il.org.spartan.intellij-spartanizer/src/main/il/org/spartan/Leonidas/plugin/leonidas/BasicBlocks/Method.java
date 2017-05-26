@@ -34,7 +34,7 @@ public class Method extends GenericEncapsulator {
 
     @Override
     public boolean generalizes(Encapsulator e) {
-        return iz.method(e.getInner());
+        return super.generalizes(e) && iz.method(e.getInner());
     }
 
     @Override
