@@ -1,0 +1,88 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+repositories {
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+// the are references to symbols from 'test' directory all over the place (in 'main').
+// to "solve" this, we add the test directory as a src folder for the compilation scope.
+// -- @RoeiRaz
+sourceSets.main.java.srcDir "src/test/java"
+
+// we need the maven repo from p2
+evaluationDependsOn(':target.p2')
+
+dependencies {
+
+    // eclipse/p2 dependencies, imported with all the transitive dependencies
+	// as maven artifacts.
+    def repoDir = project(':target.p2').buildDir.path + "/p2asmaven/maven"
+
+	// TODO optimize & cleanup
+	// Include all the dependencies imported from p2. exclude problematic ones.
+	// requires someone to maintain it.
+    new File(repoDir + "/eclipse-deps").eachDir {d ->
+        if (d.name.contains('tukaani.xz.source')) return // TODO maybe there is a better way to exclude source packages
+		if (d.name.contains('jasper.glassfish')) return // unwanted transitive dependency
+		if (d.name.contains('compiler.batch')) return // unwanted transitive dependency
+		compile "eclipse-deps:" + d.name + ":+"
+    }
+
+	// TODO optimize & cleanup
+    new File(repoDir + "/eclipse-deps-jgit").eachDir {d ->
+        compile "eclipse-deps-jgit:" + d.name + ":+"
+	}
+
+	compile project(':il.org.spartan.spartan')
+	compile project(':il.org.spartan.fluent.ly')
+	compile files('lib/cli-1.02.jar')
+	compile group: 'org.jetbrains', name: 'annotations', version: '13.0'
+	compile 'junit:junit:4.12'
+	compile 'org.hamcrest:hamcrest-junit:2.0.0.0'
+	compile "org.mockito:mockito-core:1.+"
+        
+}
+
+eclipse {
+	classpath {
+		defaultOutputDir = file('target/classes')
+	}
+}
+eclipse.classpath.file {
+    whenMerged { classpath ->
+        classpath.entries.add(new org.gradle.plugins.ide.eclipse.model.Container('org.eclipse.pde.core.requiredPlugins'))
+        classpath.entries.removeAll{entry -> entry.kind=='src' && entry.path=='src/main/resources'}
+    }
+}
+eclipse.project.file {
+	whenMerged { project ->
+		project.buildCommands += [
+			new org.gradle.plugins.ide.eclipse.model.BuildCommand('org.eclipse.jdt.core.javabuilder'),
+			new org.gradle.plugins.ide.eclipse.model.BuildCommand('org.eclipse.pde.ManifestBuilder'),
+			new org.gradle.plugins.ide.eclipse.model.BuildCommand('org.eclipse.pde.SchemaBuilder'),
+			new org.gradle.plugins.ide.eclipse.model.BuildCommand('org.eclipse.buildship.core.gradleprojectbuilder')
+		]
+		project.buildCommands.unique()
+		project.natures += [
+			'org.eclipse.buildship.core.gradleprojectnature',
+			'org.eclipse.pde.PluginNature',
+			'org.eclipse.jdt.core.javanature',
+			'org.eclipse.jdt.core.javanature',
+			'org.springframework.ide.eclipse.core.springnature',
+			
+			// we get "ClassDefNotFound" when omitting this line -- @RoeiRaz
+			'il.org.spartan'
+		]
+		project.natures.unique()
+	}
+}

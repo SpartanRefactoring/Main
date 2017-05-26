@@ -15,16 +15,22 @@ import com.diffplug.gradle.pde.EclipseRelease
 // Download from eclipse and put it into maven
 apply plugin: 'com.diffplug.gradle.p2.asmaven'
 p2AsMaven {
+    // Keep it up to date with the MANIFEST.MF
     group 'eclipse-deps', {
         repoEclipse GOOMPH_PDE_VER
-        feature 'org.eclipse.equinox.executable'
-        feature 'org.eclipse.rcp.configuration'
-        feature 'org.eclipse.jdt'
-        feature 'org.eclipse.platform'
-        feature 'org.eclipse.platform.source'
+        iu 'org.eclipse.ui'
+        iu 'org.eclipse.core.runtime'
+        iu 'org.eclipse.ltk.core.refactoring'
+        iu 'org.eclipse.ltk.ui.refactoring'
+        iu 'org.eclipse.jdt.core'
+        iu 'org.eclipse.jdt.ui'
+        iu 'org.eclipse.jface.text'
+        iu 'org.eclipse.ui.ide'
+        iu 'org.eclipse.debug.core'
+        iu 'org.eclipse.ui.workbench.texteditor'
     }
     group 'eclipse-deps-jgit', {
         repo 'http://download.eclipse.org/egit/updates'
-        feature 'org.eclipse.jgit'
+        iu 'org.eclipse.jgit'
     }
 }
