@@ -52,6 +52,19 @@ public class TipperTest{
 
     public boolean testExample(String input, String output){
         if(!setup) {this.setUp();}
+        if(leonidasMode){
+            return testLeonidasExample(input,output);
+        }
+        else{
+            return testRegularTipperExample(input,output);
+        }
+    }
+
+    private boolean testLeonidasExample(String input,String output){
+        return false;
+    }
+
+    private boolean testRegularTipperExample(String input, String output){
         return false;
     }
 }
