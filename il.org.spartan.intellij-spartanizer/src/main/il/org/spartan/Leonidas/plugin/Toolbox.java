@@ -165,6 +165,10 @@ public class Toolbox implements ApplicationComponent {
                 .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
     }
 
+    public void executeSingleTipper(PsiElement e, String tipperName){
+        return;
+    }
+
     /**
      * Can element by spartanized
      *
@@ -184,6 +188,14 @@ public class Toolbox implements ApplicationComponent {
         } catch (Exception ignore) {
         }
         return new NoTip<>();
+    }
+
+    public Tipper getTipperByName(String name){
+        Optional<Tipper> res = getAllTippers().stream().filter(tipper -> tipper.name()==name).findFirst();
+        if(res.isPresent()){
+            return res.get();
+        }
+        return null;
     }
 
     public boolean checkExcluded(PsiFile f) {
