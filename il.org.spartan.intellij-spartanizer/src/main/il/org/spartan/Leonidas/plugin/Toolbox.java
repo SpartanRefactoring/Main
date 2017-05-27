@@ -39,7 +39,7 @@ public class Toolbox implements ApplicationComponent {
     public boolean replaced = false;
     private Map<Class<? extends PsiElement>, List<Tipper>> allTipperMap = new ConcurrentHashMap<>();
     private List<GenericEncapsulator> blocks = new ArrayList<>();
-    private List<Object> tipperInstances = new ArrayList<>();
+    private List<LeonidasTipperDefinition> tipperInstances = new ArrayList<>();
 
     public static Toolbox getInstance() {
         return (Toolbox) ApplicationManager.getApplication().getComponent(Toolbox.auxGetComponentName());
@@ -86,7 +86,7 @@ public class Toolbox implements ApplicationComponent {
                 });
     }
 
-    public List<Object> getAllTipperInstances(){
+    public List<LeonidasTipperDefinition> getAllTipperInstances(){
         return tipperInstances;
     }
 

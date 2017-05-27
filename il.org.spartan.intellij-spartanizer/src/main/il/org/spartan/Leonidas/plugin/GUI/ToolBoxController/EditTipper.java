@@ -43,8 +43,8 @@ public class EditTipper extends JFrame {
         super("Edit Tipper");
         nameLabel.setText(tipperName);
         currentTip = null;
-        List<Object> tipperInstances = Toolbox.getInstance().getAllTipperInstances();
-        for (Object tip : tipperInstances) {
+        List<LeonidasTipperDefinition> tipperInstances = Toolbox.getInstance().getAllTipperInstances();
+        for (LeonidasTipperDefinition tip : tipperInstances) {
             //           JOptionPane.showMessageDialog(this, tip.getClass().getSimpleName() + ", " + tipperName);
             if (tip.getClass().getSimpleName().equals(tipperName)) {
                 currentTip = tip;
