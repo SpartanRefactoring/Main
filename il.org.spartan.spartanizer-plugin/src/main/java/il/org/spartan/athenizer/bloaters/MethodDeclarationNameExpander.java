@@ -9,15 +9,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.*;
 import org.eclipse.text.edits.*;
 
-import fluent.ly.*;
 import il.org.spartan.athenizer.zoomin.expanders.*;
 import il.org.spartan.spartanizer.ast.factory.*;
-import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.engine.*;
 import il.org.spartan.spartanizer.engine.nominal.*;
-import il.org.spartan.spartanizer.java.namespace.*;
 import il.org.spartan.spartanizer.tipping.*;
+import il.org.spartan.spartanizer.utils.tdd.*;
 
 /** An expander to rename short or unnecessarily understandable variable names
  * in a method dec to more common or intuitive names (s.e i for an integer
@@ -27,8 +25,8 @@ import il.org.spartan.spartanizer.tipping.*;
  * {@code int f(int ¢) { int $ = ¢; x($); return $; } } ==> {@code int f(int i)
  * { int res = i; x(res); return res; } }
  * @author Raviv Rachmiel {@code  raviv.rachmiel@gmail.com }
+ * @author Dor Ma'ayan
  * @since 2017-01-10 Issue #979, {@link Issue0979} */
-// TODO Raviv Rachmiel take care of single var declaration, tests
 public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclaration>//
     implements TipperCategory.Bloater {
   private static final long serialVersionUID = -0x3523CE8186A3EAECL;
@@ -40,21 +38,19 @@ public class MethodDeclarationNameExpander extends CarefulTipper<MethodDeclarati
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d) || d.getBody() == null)
       return null;
-    final List<SingleVariableDeclaration> $ = parameters(d).stream()
-        .filter(λ -> (!is.in(λ.getName().getIdentifier(), "$") || !scope.hasInScope(body(d), "result"))
-            && !is.in(λ.getName().getIdentifier(), "result") && !nameMatch(λ.getName().getIdentifier(), step.type(λ)))
+    final List<SingleVariableDeclaration> $ = parameters(d).stream().filter(λ -> λ.getName().getIdentifier().length() == 1)
         .collect(Collectors.toList());
     return $.isEmpty() ? null : new Tip("Rename paraemters", getClass(), d) {
       @Override public void go(final ASTRewrite r, final TextEditGroup g) {
-        for (final SingleVariableDeclaration ¢ : $)
-          misc.rename(¢.getName(), make.from(d)
-              .identifier(is.in(¢.getName().getIdentifier(), "$") ? "result" : scope.newName(body(d), step.type(¢), prefix(step.type(¢)))), d, r, g);
+        int i = 0;
+        for (final SingleVariableDeclaration ¢ : $) {
+          SimpleName n = d.getAST().newSimpleName(¢.getType().toString() + i++);
+          while (getAll.names(d.getBody()).contains(n))
+            n.setIdentifier(¢.getType().toString() + i++);
+          misc.rename(¢.getName(), n, d, r, g);
+        }
       }
     }.spanning(d);
-  }
-  private static boolean nameMatch(final String s, final Type t) {
-    final String $ = prefix(t);
-    return s.length() >= $.length() && s.substring(0, $.length()).equals($) && s.substring($.length(), s.length()).matches("[0-9]*");
   }
   static String prefix(final Type ¢) {
     return abbreviate.it(¢);

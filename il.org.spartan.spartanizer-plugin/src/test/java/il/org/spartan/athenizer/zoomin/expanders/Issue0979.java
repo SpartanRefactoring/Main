@@ -14,16 +14,14 @@ import il.org.spartan.athenizer.bloaters.*;
 @SuppressWarnings("static-method")
 public class Issue0979 {
   @Test public void Assign2() {
-    bloatingOf("double r;r = 2;")//
-        .needRenaming(false).gives("double d1; d1 = 2;");
+    bloatingOf("double r;r = 2;").stays();
   }
   @Test public void basicAss() {
-    bloatingOf("int a; a = 5;")//
-        .needRenaming(false).gives("int i1; i1 = 5;");
+    bloatingOf("int a; a = 5;").stays();
   }
   @Test public void basicRenameShortVar() {
     bloatingOf("class a{void foo(int ¢){ ¢ = 1;}}")//
-        .needRenaming(false).gives("class a{void foo(int i1){ i1=1;}}");
+        .needRenaming(false).gives("class a{void foo(int int0){ int0=1;}}");
   }
   @Test public void basicRet() {
     bloatingOf("class a{int foo(int $){ return $;}}")//
@@ -42,7 +40,7 @@ public class Issue0979 {
         .needRenaming(false).gives("class a{void foo(double d1,int i1,String s1){ d1=1.1; i1 = 4;}}");
   }
   @Test public void RenameShortVar2() {
-    bloatingOf("class a{void foo(double b){ b = 1.1;}}")//
+    bloatingOf("class a{void foo(double doubled1){ b = 1.1;}}")//
         .needRenaming(false).gives("class a{void foo(double d1){ d1=1.1;}}");
   }
   @Test public void twoOfSame() {
@@ -56,6 +54,6 @@ public class Issue0979 {
   @Test public void isNameSpaceBug2() {
     bloatingOf("void foo() {A a1; a1 = new A() { void foo2(ASTNode input, ASTNode output) {} }; ReportGenerator.write((n1, n2) -> (n1 - n2));}")//
         .needRenaming(false)
-        .gives("void foo() {A a1; a1 = new A() { void foo2(ASTNode n1, ASTNode n2) {} }; ReportGenerator.write((n1, n2) -> (n1 - n2));}");
+        .gives("void foo() {A a1; a1 = new A() { void foo2(ASTNode n3, ASTNode n4) {} }; ReportGenerator.write((n1, n2) -> (n1 - n2));}");
   }
 }
