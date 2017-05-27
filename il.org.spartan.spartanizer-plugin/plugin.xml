@@ -609,16 +609,6 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 	<key sequence="Ctrl+Alt+W"
 		commandId="il.org.spartan.SpartanWidget"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
- <key
-       commandId="il.org.spartan.ZoomIn"
-       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-       sequence="Ctrl+=">
- </key>
- <key
-       commandId="il.org.spartan.ZoomOut"
-       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-       sequence="Ctrl+-">
- </key>
 	<key sequence="Ctrl+Alt+F"
 		commandId="il.org.spartan.Linguistic"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
