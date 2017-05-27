@@ -31,7 +31,8 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
 
   @Override protected boolean prerequisite(final InfixExpression ¢) {
     return (¢.getOperator() == Operator.CONDITIONAL_AND || ¢.getOperator() == Operator.AND || ¢.getOperator() == Operator.OR
-        || ¢.getOperator() == Operator.CONDITIONAL_OR) && (isComplicated(¢.getLeftOperand()) || isComplicated(¢.getRightOperand()));
+        || ¢.getOperator() == Operator.CONDITIONAL_OR) && (isComplicated(¢.getLeftOperand()) || isComplicated(¢.getRightOperand()))
+        && !(iz.lambdaExpression(¢.getParent()));
   }
   @Override public Tip tip(final InfixExpression ¢) {
     final VariableDeclarationStatement $ = getSeperate(¢.getLeftOperand()), v2 = getSeperate(¢.getRightOperand());
@@ -58,6 +59,6 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
     return "Expand boolean expression";
   }
   private static boolean isComplicated(final Expression ¢) {
-    return iz.nodeTypeIn(¢, METHOD_INVOCATION, INFIX_EXPRESSION, ASSIGNMENT, LAMBDA_EXPRESSION);
+    return iz.nodeTypeIn(¢, METHOD_INVOCATION, INFIX_EXPRESSION, ASSIGNMENT);
   }
 }
