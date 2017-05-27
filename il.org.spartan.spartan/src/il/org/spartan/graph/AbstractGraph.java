@@ -5,15 +5,13 @@ import static fluent.ly.___.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-import org.eclipse.jdt.annotation.*;
-
 import il.org.spartan.collections.*;
 
 /** An abstract representation of an immutable directed graph
  * @param <E> type of elements stored in this graph
  * @author Yossi Gil
  * @since 2011-11-11 */
-public abstract class AbstractGraph<@Nullable E> {
+public abstract class AbstractGraph<E> {
   public abstract boolean contains(E d);
   public int countEdges() {
     int $ = 0;
