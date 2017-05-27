@@ -3,6 +3,7 @@ package il.org.spartan.Leonidas.plugin.GUI.About;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import il.org.spartan.Leonidas.plugin.GUI.LeonidasIcon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +27,7 @@ class AboutLeonidas extends JFrame {
 
     public AboutLeonidas() {
         super("About Leonidas Plugin");
+        LeonidasIcon.apply(this);
         setContentPane(panel1);
         setPreferredSize(new Dimension(1000, 600));
         setResizable(false);

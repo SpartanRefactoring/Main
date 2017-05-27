@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>spartan</name>
-	<comment>Project spartan created by Buildship.</comment>
+	<name>fluent.ly</name>
+	<comment>Project fluent.ly created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -22,15 +22,15 @@
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>il.org.spartan.nature</nature>
 	</natures>
 	<linkedResources>
 		<link>
-			<name>bin-spartan</name>
+			<name>bin-fluent.ly</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/SpartanizerPlugin/lib/spartan.jar</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/SpartanizerPlugin/lib/fluent.ly.jar</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
