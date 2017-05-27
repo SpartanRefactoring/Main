@@ -72,7 +72,7 @@ public final class Inliner {
     final VariableDeclarationStatement parent = az.variableDeclarationStatement(parent(parent(initializer)));
     assert parent != null;
     final ArrayCreation $ = initializer.getAST().newArrayCreation();
-    $.setType(az.arrayType(copy.of(type(parent))));
+    $.setType(az.arrayType(copy.of(type(az.variableDeclrationFragment(parent(initializer))))));
     $.setInitializer(copy.of(az.arrayInitializer(initializer)));
     // TODO // causes // IllegalArgumentException // (--om)
     return $;
