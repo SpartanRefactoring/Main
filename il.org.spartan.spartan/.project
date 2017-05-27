@@ -26,4 +26,11 @@
 			<value>$%7BPARENT-3-PROJECT_LOC%7D/Yearly-Project/Main</value>
 		</variable>
 	</variableList>
+	<linkedResources>
+		<link>
+			<name>bin-spartan</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/il.org.spartan.spartanizer-plugin/lib/spartan.jar</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
