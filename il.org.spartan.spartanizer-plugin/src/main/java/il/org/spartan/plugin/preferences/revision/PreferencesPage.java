@@ -75,6 +75,8 @@ public class PreferencesPage extends FieldEditorPreferencePage implements IWorkb
     final IProject[] projects = getAllSpartanizerProjects();
     for (final IProject p : projects) {
       final Document doc = XMLSpartan.getXML(p);
+      if(doc == null)
+        continue;
       doc.getDocumentElement().normalize();
       doc.getElementsByTagName(NOTATION).item(0).getAttributes().item(1).setNodeValue(singleParameterRadio.getPreferenceStore().getString("Cent"));
       doc.getElementsByTagName(NOTATION).item(1).getAttributes().item(1).setNodeValue(returnParameterRadio.getPreferenceStore().getString("Dollar"));
