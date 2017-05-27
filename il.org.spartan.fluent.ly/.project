@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>fluent.ly</name>
+	<name>il.org.spartan.fluent.ly</name>
 	<comment>Project fluent.ly created by Buildship.</comment>
 	<projects>
 	</projects>
@@ -20,11 +20,10 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>bin-fluent.ly</name>
-			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/il.org.spartan.spartanizer-plugin/lib/fluent.ly.jar</locationURI>
-		</link>
-	</linkedResources>
+	<variableList>
+		<variable>
+			<name>copy_PARENT</name>
+			<value>$%7BPARENT-3-PROJECT_LOC%7D/Yearly-Project/Main</value>
+		</variable>
+	</variableList>
 </projectDescription>
