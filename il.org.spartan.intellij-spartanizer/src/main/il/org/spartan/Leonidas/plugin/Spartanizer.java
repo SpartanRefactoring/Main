@@ -3,9 +3,10 @@ package il.org.spartan.Leonidas.plugin;
 import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import il.org.spartan.Leonidas.plugin.tipping.Tipper;
 
 /**
- * @author Oren Afek
+ * @author Oren Afek, Roey Maor
  * @since 09-12-2016
  */
 public enum Spartanizer {
@@ -34,6 +35,13 @@ public enum Spartanizer {
                     toolbox.executeAllTippers(e);
                 }
             });
+        }
+    }
+
+    public static void spartanizeElementWithTipper(PsiElement e, String tipperName){
+        Toolbox toolbox = Toolbox.getInstance();
+        for(Tipper t : toolbox.getAllTippers()){
+            System.out.println(t.name());
         }
     }
 }

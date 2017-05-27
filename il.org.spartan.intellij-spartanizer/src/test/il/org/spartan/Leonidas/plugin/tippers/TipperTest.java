@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.tippers;
 
 
 import com.intellij.lang.java.JavaLanguage;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
@@ -10,6 +11,7 @@ import il.org.spartan.Leonidas.plugin.Spartanizer;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
+import org.junit.Test;
 
 /**
  * @author @roey maor
@@ -26,6 +28,7 @@ examples can be in one of two forms:
 2) String -> null : The tipper should not affect the former.
 
  */
+
 public class TipperTest{
 
     private static final String before = "";
@@ -50,21 +53,23 @@ public class TipperTest{
         return;
     }
 
-    public boolean testExample(String input, String output){
+    public boolean byExample(String input, String output){
         if(!setup) {this.setUp();}
         if(leonidasMode){
-            return testLeonidasExample(input,output);
+            return leonidasTipperByExample(input,output);
         }
         else{
-            return testRegularTipperExample(input,output);
+            return regularTipperByExample(input,output);
         }
     }
 
-    private boolean testLeonidasExample(String input,String output){
+    private boolean leonidasTipperByExample(String input,String output){
         return false;
     }
 
-    private boolean testRegularTipperExample(String input, String output){
+    private boolean regularTipperByExample(String input, String output){
         return false;
     }
+
+
 }
