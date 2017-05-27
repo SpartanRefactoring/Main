@@ -3,10 +3,13 @@ package il.org.spartan.Leonidas.plugin;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.JavaRecursiveElementVisitor;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiMethod;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
+import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericEncapsulator;
 import il.org.spartan.Leonidas.plugin.tippers.*;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
@@ -164,9 +167,19 @@ public class Toolbox implements ApplicationComponent {
                 .findFirst()
                 .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
     }
-
+    /*This should work on any tree!*/
     public void executeSingleTipper(PsiElement e, String tipperName){
-        return;
+        Tipper tipper = getTipperByName(tipperName);
+        if(tipper == null) {return;}
+        e.accept(new JavaRecursiveElementVisitor() {
+            @Override
+            public void visitElement(PsiElement e) {
+                super.visitElement(e);
+                if(tipper.canTip(e)){
+                    tipper.tip(e).go(new PsiRewrite());
+                }
+            }
+        });
     }
 
     /**
