@@ -42,7 +42,7 @@ public abstract class Tip extends Range {
     public Tip(final String description, final PsiElement n, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass,
                final PsiElement... ns) {
         this(description, range(n, ns), tipperClass);
-        lineNumber = Utils.getDocumentFromPsiElement(n).getLineNumber(n.getTextOffset());
+        //lineNumber = Utils.getDocumentFromPsiElement(n).getLineNumber(n.getTextOffset());
     }
 
     Tip(final String description, final Range other, @SuppressWarnings("rawtypes") final Class<? extends Tipper> tipperClass) {

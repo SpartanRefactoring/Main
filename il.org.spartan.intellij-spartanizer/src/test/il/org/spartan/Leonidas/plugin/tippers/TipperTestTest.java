@@ -17,8 +17,8 @@ public class TipperTestTest extends PsiTypeHelper {
 
     @Test
     public void testTipperTest(){
-        IfDoubleNot sr = new IfDoubleNot();
-        TipperTest ts = new TipperTest(sr,this);
+        SafeReference sr = new SafeReference();
+        TipperTest ts = new TipperTest(sr,this,true);
         ts.check();
     }
 }
