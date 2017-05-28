@@ -4,7 +4,11 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Oren Afek, michalcohen
@@ -22,9 +26,9 @@ public class Optional extends Quantifier {
     }
 
     @Override
-    public Optional create(Encapsulator e) {
+    public Optional create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
-        return new Optional(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p)));
+        return new Optional(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p), map));
     }
 
     @Override

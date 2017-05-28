@@ -2,6 +2,10 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Roey Maor & Amir Sagiv & Michal Cohen & Oren Afek
@@ -38,7 +42,7 @@ public class Block extends GenericMethodCallBasedBlock {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         return new Block(e);
     }
 }

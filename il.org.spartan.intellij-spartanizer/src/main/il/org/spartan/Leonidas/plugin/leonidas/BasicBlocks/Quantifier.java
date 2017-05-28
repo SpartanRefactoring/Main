@@ -5,7 +5,11 @@ import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
 import il.org.spartan.Leonidas.auxilary_layer.step;
 import il.org.spartan.Leonidas.plugin.Toolbox;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.PreservesIterator;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Oren Afek
@@ -40,19 +44,20 @@ public abstract class Quantifier extends GenericMethodCallBasedBlock {
         return Toolbox.getInstance().getGeneric(ie).map(g -> g.extractId(ie)).orElse(null);
     }
 
-    public Encapsulator prune(Encapsulator e) {
+    @Override
+    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         assert conforms(e.getInner());
-        Quantifier o = create(e);
+        Quantifier o = create(e, map);
         Encapsulator upperElement = o.getConcreteParent(e);
         o.inner = upperElement.inner;
         if (o.isGeneric())
-            upperElement.putId(o.extractId(e.getInner()));//o
+            upperElement.putId(o.extractId(e.getInner()));
         return upperElement.getParent() == null ? upperElement : upperElement.generalizeWith(o);
     }
 
     @PreservesIterator
     public abstract int getNumberOfOccurrences(EncapsulatorIterator i);
 
-    public abstract Quantifier create(Encapsulator e);
+    public abstract Quantifier create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
 
 }
