@@ -40,6 +40,7 @@ public class Toolbox implements ApplicationComponent {
     private final Set<VirtualFile> excludedFiles = new HashSet<>();
     private final Set<Class<? extends PsiElement>> operableTypes = new HashSet<>();
     public boolean playground = false;
+    public boolean testing = true;
     public boolean replaced = false;
     private Map<Class<? extends PsiElement>, List<Tipper>> allTipperMap = new ConcurrentHashMap<>();
     private List<GenericEncapsulator> blocks = new ArrayList<>();
@@ -168,11 +169,14 @@ public class Toolbox implements ApplicationComponent {
                 .findFirst()
                 .ifPresent(t -> t.tip(e).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject())));
     }
-    /*This should work on any tree!*/
-    public void executeSingleTipper(PsiElement e, String tipperName){
+    /*This should work on any tree!
+    * Returns true if the tipper changed anything.
+    * false otherwise.
+    * */
+    public boolean executeSingleTipper(PsiElement e, String tipperName){
         Tipper tipper = getTipperByName(tipperName);
-        if(tipper == null) {System.out.println("\nNull tipper!\n"); return;}
-        if(e == null) {System.out.println("\nNull element!\n"); return;}
+        if(tipper == null) {System.out.println("\nNull tipper!\n"); return false;}
+        if(e == null) {System.out.println("\nNull element!\n"); return false;}
 
         Wrapper<PsiElement> toReplace = new Wrapper<>(null);
         Wrapper<Boolean> modified = new Wrapper<>(false);
@@ -187,8 +191,9 @@ public class Toolbox implements ApplicationComponent {
                 }
             }
         });
-        assert(modified.get());
-        tipper.tip(toReplace.get()).go(new PsiRewrite());
+        if(!modified.get()) {return false;}
+        tipper.tip(toReplace.get()).go(new PsiRewrite().psiFile(e.getContainingFile()).project(e.getProject()));
+        return true;
     }
 
     /**

@@ -2,10 +2,10 @@ package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import com.intellij.psi.PsiIfStatement;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Statement;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
+import static il.org.spartan.Leonidas.plugin.leonidas.The.element;
 import static il.org.spartan.Leonidas.plugin.leonidas.The.the;
 
 /**
@@ -16,32 +16,33 @@ public class DemoTipper implements LeonidasTipperDefinition {
 
     @Override
     public void constraints() {
-        the(0).isNot(() -> {
-            if(booleanExpression(3)){
-                statement(4);
-            }
-        }).ofType(PsiIfStatement.class);
-        the(0).nameStartsWith("get");
-        the(0).isPublic();
+       element("innrer").asMethod.stratsWith("set");
+       element(3).asBooleanExpression.mustBeLiteral();
+       element(4).isNot(() - {
+           return;
+       })
+
     }
 
     @Override
-    @Leonidas(PsiIfStatement.class)
-    public void matcher() {
+     public void matcher() {
         new Template(() -> {
-            if (cond) {
-                statement(first);
-                statement(second);
+            class Type0 {
+                void method1$method$(Type2 id3){
+                    anyNumberOf(Statement(4));
+                }
             }
         });
     }
 
     @Override
-    @Leonidas(PsiIfStatement.class)
     public void replacer() {
         new Template(() -> {
-            void method0() {
-              anyNumberOf(statement(1));
+            class Type0 {
+                Type0 method1(Type2 id3){
+                    anyNumberOf(Statement(4));
+                    return this;
+                }
             }
         });
     }
