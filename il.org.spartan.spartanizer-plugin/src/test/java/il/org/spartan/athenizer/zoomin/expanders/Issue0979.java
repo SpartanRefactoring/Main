@@ -48,6 +48,9 @@ public class Issue0979 extends BloaterTest<MethodDeclaration> {
   @Test public void isNameSpaceBug() {
     bloatingOf("void foo(ASTNode input, ASTNode output) { ReportGenerator.write((n1, n2) -> (n1 - n2));}").stays();
   }
+  @Test public void checkComplex() {
+    bloatingOf("void foo(List<ASTNode> a) { return a;}").gives("void foo(List<ASTNode> list0) { return list0;}");
+  }
   @Test public void isNameSpaceBug2() {
     bloatingOf("void foo() {A a1; a1 = new A() { void foo2(ASTNode input, ASTNode output) {} }; ReportGenerator.write((n1, n2) -> (n1 - n2));}")//
         .stays();
