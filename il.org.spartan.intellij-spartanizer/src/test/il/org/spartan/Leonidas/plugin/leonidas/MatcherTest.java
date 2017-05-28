@@ -141,6 +141,6 @@ public class MatcherTest extends PsiTypeHelper {
 
     private Encapsulator buildTemplate(PsiElement e) {
         giveIdToStubMethodCalls(e);
-        return Pruning.prune(Encapsulator.buildTreeFromPsi(e));
+        return Pruning.prune(Encapsulator.buildTreeFromPsi(e), new HashMap<>());
     }
 }

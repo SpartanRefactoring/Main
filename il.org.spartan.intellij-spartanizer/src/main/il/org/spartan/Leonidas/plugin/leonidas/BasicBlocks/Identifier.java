@@ -3,6 +3,10 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Amir Sagiv
@@ -43,7 +47,7 @@ public class Identifier extends GenericEncapsulator {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e) {
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         return new Identifier(e);
     }
 

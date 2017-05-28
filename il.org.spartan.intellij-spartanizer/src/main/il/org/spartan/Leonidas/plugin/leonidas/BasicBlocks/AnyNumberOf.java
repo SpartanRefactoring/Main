@@ -4,7 +4,11 @@ import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.Wrapper;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.step;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 import il.org.spartan.Leonidas.plugin.leonidas.Pruning;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Oren Afek
@@ -35,8 +39,8 @@ public class AnyNumberOf extends Quantifier {
     }
 
     @Override
-    public AnyNumberOf create(Encapsulator e) {
+    public AnyNumberOf create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         PsiElement p = step.firstParameterExpression(az.methodCallExpression(e.getInner()));
-        return new AnyNumberOf(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p)));
+        return new AnyNumberOf(e.getInner(), Pruning.prune(Encapsulator.buildTreeFromPsi(p), map));
     }
 }

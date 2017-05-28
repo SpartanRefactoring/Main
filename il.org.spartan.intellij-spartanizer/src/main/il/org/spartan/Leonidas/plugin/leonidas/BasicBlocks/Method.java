@@ -1,8 +1,14 @@
 package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
+import il.org.spartan.Leonidas.auxilary_layer.Utils;
 import il.org.spartan.Leonidas.auxilary_layer.az;
 import il.org.spartan.Leonidas.auxilary_layer.iz;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Sharon
@@ -10,6 +16,8 @@ import il.org.spartan.Leonidas.auxilary_layer.iz;
  */
 public class Method extends GenericEncapsulator {
     public static final String TEMPLATE = "method";
+    Matcher matcherReturnType, matcherParameters, matcherCodeBlock;
+
 
     public Method(Encapsulator e) {
         super(e, TEMPLATE);
@@ -34,7 +42,11 @@ public class Method extends GenericEncapsulator {
 
     @Override
     public boolean generalizes(Encapsulator e) {
-        return super.generalizes(e) && iz.method(e.getInner());
+        if (!super.generalizes(e) || !iz.method(e.getInner())) return false;
+        PsiMethod m = az.method(e.getInner());
+        return matcherReturnType.match(m.getReturnTypeElement()) &&
+                matcherParameters.match(m.getParameterList()) &&
+                matcherCodeBlock.match(m.getBody());
     }
 
     @Override
@@ -43,13 +55,19 @@ public class Method extends GenericEncapsulator {
     }
 
     @Override
-    public GenericEncapsulator create(Encapsulator e) {
-        return new Method(e);
+    public GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
+        Method m = new Method(e);
+        m.matcherReturnType = new Matcher(Utils.wrapWithList(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getReturnTypeElement())), map);
+        m.matcherParameters = new Matcher(Utils.wrapWithList(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getParameterList())), map);
+        m.matcherCodeBlock = new Matcher(Utils.wrapWithList(Encapsulator.buildTreeFromPsi(az.method(e.getInner()).getBody())), map);
+        return m;
     }
 
     /* Constraints Methods */
 
-    public void startsWith(String s) {
-        // TODO
+    public void startsWith(Object o) {
+        if (o instanceof String) {
+            addConstraint(e -> az.method(e.inner).getName().startsWith((String) o));
+        }
     }
 }
