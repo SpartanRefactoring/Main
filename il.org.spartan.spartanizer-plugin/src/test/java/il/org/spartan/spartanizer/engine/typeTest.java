@@ -677,32 +677,44 @@ public final class typeTest {
     @Test public void methods4() {
       azzert.that(of(into.e("toString(x,y)")), is(NOTHING));
     }
-    @Test public void UnaryPlusMinusSemantics01() {
+    @Test public void unaryPlusMinusSemantics01() {
       azzert.that(Axiom.type(i), is(INT));
     }
-    @Test public void UnaryPlusMinusSemantics02() {
+    @Test public void unaryPlusMinusSemantics02() {
       azzert.that(Axiom.type(-l), is(LONG));
     }
-    @Test public void UnaryPlusMinusSemantics03() {
+    @Test public void unaryPlusMinusSemantics03() {
       azzert.that(Axiom.type(i), is(INT));
     }
-    @Test public void UnaryPlusMinusSemantics04() {
+    @Test public void unaryPlusMinusSemantics04() {
       azzert.that(Axiom.type(d), is(DOUBLE));
     }
-    @Test public void UnaryPlusMinusSemantics05() {
+    @Test public void unaryPlusMinusSemantics05() {
       azzert.that(Axiom.type(-f), is(FLOAT));
     }
-    @Test public void UnaryPlusMinusSemantics06() {
+    @Test public void unaryPlusMinusSemantics06() {
       azzert.that(Axiom.type(b), is(BYTE));
     }
-    @Test public void UnaryPlusMinusSemantics07() {
+    @Test public void unaryPlusMinusSemantics07() {
       azzert.that(Axiom.type(-b), is(INT));
     }
-    @Test public void UnaryPlusMinusSemantics08() {
+    @Test public void unaryPlusMinusSemantics08() {
       azzert.that(Axiom.type(-0), is(INT));
     }
-    @Test public void UnaryPlusMinusSemantics09() {
+    @Test public void unaryPlusMinusSemantics09() {
       azzert.that(Axiom.type(-c1), is(INT));
+    }
+    @Test public void variableDeclarationStatement01() {
+      final Statement e = into.s("int x = f();");
+      azzert.that(of(extract.fragments(e).get(0).getInitializer()), is(INT));
+    }
+    @Test public void variableDeclarationStatement02() {
+      final Statement e = into.s("Long x = 3.0;");
+      azzert.that(of(extract.fragments(e).get(0).getInitializer()), is(DOUBLE));
+    }
+    @Test public void variableDeclarationStatement03() {
+      final Statement e = into.s("Long x = 3.0;");
+      azzert.that(of(extract.fragments(e).get(0).getInitializer()), is(DOUBLE));
     }
   }
 }
