@@ -100,8 +100,8 @@ public abstract class GenericEncapsulator extends Encapsulator {
     public void replaceByRange(List<PsiElement> elements, PsiRewrite r) {
         assert parent != null;
         List<PsiElement> l = Lists.reverse(elements);
-        elements.forEach(e -> inner.getParent().addAfter(e, inner));
-        inner.getParent().deleteChildRange(inner, inner);
+        l.forEach(e -> r.addAfter(inner.getParent(), inner, e));
+        r.deleteByRange(inner.getParent(), inner, inner);
     }
 
     /**
