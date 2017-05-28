@@ -35,6 +35,7 @@ public class MethodDeclarationNameExpander extends EagerTipper<MethodDeclaration
     return ¢.getName() + "";
   }
   @Override public Tip tip(final MethodDeclaration d) {
+    
     assert d != null;
     if (d.isConstructor() || iz.abstract¢(d) || d.getBody() == null)
       return null;
