@@ -1,13 +1,12 @@
 package il.org.spartan.spartanizer.research.metatester;
 
+import static il.org.spartan.spartanizer.research.metatester.MetaTesterStringUtils.*;
+
 import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.regex.*;
 
 import fluent.ly.*;
-
-import static il.org.spartan.spartanizer.research.metatester.MetaTesterStringUtils.getTemplatedValues;
 
 /** @author Oren Afek
  * @since 19.5.17 */
