@@ -10,6 +10,7 @@ import il.org.spartan.spartanizer.tipping.*;
 /** Unit test for {@link MethodDeclarationNameExpander} also Unit test for
  * {@link VariableDeclarationStatementExpand}
  * @author Raviv Rachmiel
+ * @author Dor Ma'ayan
  * @since 15-01-2017 */
 public class Issue0979 extends BloaterTest<MethodDeclaration> {
   @Test public void Assign2() {
