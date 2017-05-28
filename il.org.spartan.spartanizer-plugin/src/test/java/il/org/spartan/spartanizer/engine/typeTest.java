@@ -10,6 +10,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
 
 import fluent.ly.*;
+import il.org.spartan.spartanizer.ast.factory.*;
 import il.org.spartan.spartanizer.ast.navigate.*;
 import il.org.spartan.spartanizer.ast.safety.*;
 import il.org.spartan.spartanizer.traversal.Traversal.*;
@@ -584,7 +585,7 @@ public final class typeTest {
       final ForStatement fs = findFirst.forStatement(into.s("for(int i = 0;x;++i) somthing();"));
       azzert.that(of(fs.getExpression()), is(BOOLEAN));
       azzert.that(of((Expression) the.firstOf(fs.initializers())), is(INT));
-      azzert.that(of((Expression) the.firstOf(fs.updaters())), is(NUMERIC));
+      azzert.that(of((Expression) the.firstOf(fs.updaters())), is(INT));
     }
     @Test public void context22() {
       final AssertStatement as = findFirst.assertStatement(into.s("assert x : \"message\";"));
@@ -727,6 +728,9 @@ public final class typeTest {
     }
     @Test public void variableDeclarationStatement03() {
       azzert.that(of(extract.fragments(into.s("Long x = 3.0;")).get(0).getInitializer()), is(DOUBLE));
+    }
+    @Test public void namespace01() {
+      azzert.that(of(az.returnStatement(extract.statements(into.s("int x = 3; return x+7;")).get(1)).getExpression()), is(INT));
     }
   }
 }
