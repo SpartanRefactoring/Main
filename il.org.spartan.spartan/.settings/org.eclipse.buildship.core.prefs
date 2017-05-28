@@ -8,4 +8,4 @@ containers=org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debu
 derived.resources=.gradle,build
 eclipse.preferences.version=1
 natures=org.eclipse.jdt.core.javanature
-project.path=\:spartan
+project.path=\:il.org.spartan.spartan
