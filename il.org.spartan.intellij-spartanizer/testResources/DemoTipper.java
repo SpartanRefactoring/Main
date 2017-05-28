@@ -16,7 +16,7 @@ public class DemoTipper implements LeonidasTipperDefinition {
 
     @Override
     public void constraints() {
-       element(1).asMethod.stratsWith("set");
+       element("innrer").asMethod.stratsWith("set");
        element(3).asBooleanExpression.mustBeLiteral();
        element(4).isNot(() - {
            return;
@@ -28,7 +28,7 @@ public class DemoTipper implements LeonidasTipperDefinition {
      public void matcher() {
         new Template(() -> {
             class Type0 {
-                void method1(Type2 id3){
+                void method1$method$(Type2 id3){
                     anyNumberOf(Statement(4));
                 }
             }
