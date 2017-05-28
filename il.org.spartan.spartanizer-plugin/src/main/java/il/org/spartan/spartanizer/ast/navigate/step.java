@@ -721,12 +721,7 @@ public enum step {
   /** @param ¢ JD
    * @return */
   public static Type type(final VariableDeclarationFragment ¢) {
-    if(¢ == null || ¢.getParent() == null)
-      return null;
-    Type t = type(az.variableDeclarationStatement(¢.getParent()));
-    if(¢.getExtraDimensions() > 0)
-      return ¢.getAST().newArrayType(copy.of(t), ¢.getExtraDimensions());
-    return t;
+	  return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
   }
   public static Type type(final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.getType();
