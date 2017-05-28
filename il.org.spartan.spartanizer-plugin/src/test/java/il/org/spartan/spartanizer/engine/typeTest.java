@@ -591,6 +591,21 @@ public final class typeTest {
       azzert.that(of(as.getExpression()), is(BOOLEAN));
       azzert.that(of(as.getMessage()), is(STRING));
     }
+  //see issue 888
+    @Test public void context23() {
+      final InfixExpression e = az.infixExpression(into.e("b+2-5"));
+      azzert.that(of(e.getLeftOperand()), is(NUMERIC));
+      azzert.that(of(e.getRightOperand()), is(INT));
+      azzert.that(of(az.infixExpression(e.getLeftOperand()).getLeftOperand()), is(NUMERIC));
+    }
+    @Test public void context24() {
+      final InfixExpression e = az.infixExpression(into.e("(b+2)+f()-5"));
+      azzert.that(of(e.getLeftOperand()), is(NUMERIC));
+      azzert.that(of(e.getRightOperand()), is(INT));
+      final InfixExpression e2 = az.infixExpression(e.getLeftOperand());
+      azzert.that(of(e2.getRightOperand()), is(NUMERIC));
+      azzert.that(of(az.infixExpression(az.parenthesizedExpression(e2.getLeftOperand()).getExpression()).getLeftOperand()),is(NUMERIC));
+    }
     @Test public void InDecreamentSemantics01() {
       azzert.that(Axiom.type(i++), is(INT));
     }
@@ -705,16 +720,13 @@ public final class typeTest {
       azzert.that(Axiom.type(-c1), is(INT));
     }
     @Test public void variableDeclarationStatement01() {
-      final Statement e = into.s("int x = f();");
-      azzert.that(of(extract.fragments(e).get(0).getInitializer()), is(INT));
+      azzert.that(of(extract.fragments(into.s("int x = f();")).get(0).getInitializer()), is(INT));
     }
     @Test public void variableDeclarationStatement02() {
-      final Statement e = into.s("Long x = 3.0;");
-      azzert.that(of(extract.fragments(e).get(0).getInitializer()), is(DOUBLE));
+      azzert.that(of(extract.fragments(into.s("Long x = 3.0;")).get(0).getInitializer()), is(DOUBLE));
     }
     @Test public void variableDeclarationStatement03() {
-      final Statement e = into.s("Long x = 3.0;");
-      azzert.that(of(extract.fragments(e).get(0).getInitializer()), is(DOUBLE));
+      azzert.that(of(extract.fragments(into.s("Long x = 3.0;")).get(0).getInitializer()), is(DOUBLE));
     }
   }
 }
