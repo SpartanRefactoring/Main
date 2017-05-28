@@ -578,7 +578,7 @@ http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Fg
 
 <!-- Shortcuts -->
 <extension point="org.eclipse.ui.bindings">
-	<key sequence="Ctrl+Alt+G"
+	<key sequence="Ctrl+Alt+Y"
 		commandId="il.org.spartan.LongNames"
 		schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 	<key sequence="Ctrl+4"
