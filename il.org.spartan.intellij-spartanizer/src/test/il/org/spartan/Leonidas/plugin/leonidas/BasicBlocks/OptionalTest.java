@@ -21,7 +21,7 @@ public class OptionalTest extends PsiTypeHelper {
         Encapsulator n = Encapsulator.buildTreeFromPsi(createTestStatementFromString("optional(statement(1));"));
         Optional ano = new Optional().create(n.getChildren().get(0));
         Encapsulator e = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x--;}"));
-        Encapsulator.Iterator it = e.iterator();
+        EncapsulatorIterator it = e.iterator();
         assertEquals(ano.getNumberOfOccurrences(it), 1);
         for (int i = 0; i < 10; i++) it.next();
         assertEquals(ano.getNumberOfOccurrences(it), 0);

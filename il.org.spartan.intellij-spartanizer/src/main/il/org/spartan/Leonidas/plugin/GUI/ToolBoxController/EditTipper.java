@@ -2,6 +2,7 @@ package il.org.spartan.Leonidas.plugin.GUI.ToolBoxController;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import fluent.ly.note;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 import il.org.spartan.Leonidas.plugin.leonidas.LeonidasUtils;
@@ -42,8 +43,8 @@ public class EditTipper extends JFrame {
         super("Edit Tipper");
         nameLabel.setText(tipperName);
         currentTip = null;
-        List<Object> tipperInstances = Toolbox.getInstance().getAllTipperInstances();
-        for (Object tip : tipperInstances) {
+        List<LeonidasTipperDefinition> tipperInstances = Toolbox.getInstance().getAllTipperInstances();
+        for (LeonidasTipperDefinition tip : tipperInstances) {
             //           JOptionPane.showMessageDialog(this, tip.getClass().getSimpleName() + ", " + tipperName);
             if (tip.getClass().getSimpleName().equals(tipperName)) {
                 currentTip = tip;

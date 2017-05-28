@@ -24,7 +24,7 @@ public class AnyNumberOf extends Quantifier {
     }
 
     @Override
-    public int getNumberOfOccurrences(Encapsulator.Iterator i) {
+    public int getNumberOfOccurrences(EncapsulatorIterator i) {
         if (i.value().getParent() == null) return 1;
         Wrapper<Integer> count = new Wrapper<>(0);
         //noinspection StatementWithEmptyBody

@@ -21,7 +21,7 @@ public class AnyNumberOfTest extends PsiTypeHelper {
         Encapsulator n = Encapsulator.buildTreeFromPsi(createTestStatementFromString("anyNumberOf(statement(1));"));
         AnyNumberOf ano = new AnyNumberOf().create(n.getChildren().get(0));
         Encapsulator e = Encapsulator.buildTreeFromPsi(createTestWhileStatementFromString("while (2 > 3) {x++; x++; x++; x++;}"));
-        Encapsulator.Iterator it = e.iterator();
+        EncapsulatorIterator it = e.iterator();
         assertEquals(ano.getNumberOfOccurrences(it), 1);
         for (int i = 0; i < 13; i++) it.next();
         assertEquals(ano.getNumberOfOccurrences(it), 4);

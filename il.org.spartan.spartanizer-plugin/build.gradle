@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
 repositories {
 	mavenCentral()
@@ -50,7 +51,8 @@ dependencies {
 	compile 'junit:junit:4.12'
 	compile 'org.hamcrest:hamcrest-junit:2.0.0.0'
 	compile "org.mockito:mockito-core:1.+"
-        
+	// added by @orenafek on 25.5.17
+	compile 'org.assertj:assertj-core:3.8.0'
 }
 
 eclipse {

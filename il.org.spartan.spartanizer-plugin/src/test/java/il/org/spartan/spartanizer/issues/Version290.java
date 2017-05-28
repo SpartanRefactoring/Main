@@ -80,6 +80,7 @@ public class Version290 {
         .gives("int a=6;new A(a);int c=2+d;c(c+a);c(c*a);") //
         .using(new InfixMultiplicationSort(), InfixExpression.class) //
         .gives("int a=6;new A(a);int c=2+d;c(c+a);c(a*c);") //
+        .gives("int a=6;new A(a);int c=d+2;c(c+a);c(a*c);") //
         .stays() //
     ;
   }

@@ -4,6 +4,7 @@ import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.impl.source.PsiMethodImpl;
 import il.org.spartan.Leonidas.auxilary_layer.*;
 import il.org.spartan.Leonidas.plugin.tipping.Tip;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
@@ -62,8 +63,8 @@ public class MethodDeclarationRenameSingleParameterToCent implements Tipper<PsiM
     }
 
     @Override
-    public Class<PsiMethod> getPsiClass() {
-        return PsiMethod.class;
+    public Class<? extends PsiMethod> getPsiClass() {
+        return PsiMethodImpl.class;
     }
 
 

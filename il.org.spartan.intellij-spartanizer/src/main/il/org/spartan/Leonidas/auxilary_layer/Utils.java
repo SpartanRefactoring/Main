@@ -4,6 +4,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManager;
 import com.intellij.psi.*;
+import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Encapsulator;
 import il.org.spartan.Leonidas.plugin.utils.logging.Logger;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
@@ -72,7 +73,8 @@ public enum Utils {
      */
     public static Document getDocumentFromPsiElement(PsiElement e) {
         PsiFile associatedFile = e.getContainingFile();
-        return PsiDocumentManager.getInstance(associatedFile.getProject()).getDocument(associatedFile);
+        Document res = PsiDocumentManager.getInstance(associatedFile.getProject()).getDocument(associatedFile);
+        return res;
     }
 
     /**
@@ -142,5 +144,30 @@ public enum Utils {
         PsiElement c;
         for (c = cb.getFirstBodyElement(); c != null && iz.whiteSpace(c); c = c.getNextSibling()) ;
         return c;
+    }
+
+    public static List<Encapsulator> wrapWithList(Encapsulator e){
+        List<Encapsulator> l = new LinkedList<>();
+        l.add(e);
+        return l;
+    }
+
+    public static PsiElement getNextActualSibling(PsiElement e){
+        if (e == null) return null;
+        PsiElement current = e.getNextSibling();
+        while (current != null && iz.whiteSpace(current)){
+            current = current.getNextSibling();
+        }
+        return current;
+    }
+
+    public static int getNumberOfRootsPossible(PsiElement e){
+        int i = 0;
+        PsiElement current = e;
+        while (current != null){
+            i++;
+            current = getNextActualSibling(current);
+        }
+        return i;
     }
 }

@@ -583,4 +583,11 @@ public enum extract {
   @SuppressWarnings("unchecked") public static List<SingleVariableDeclaration> methodArguments(final MethodDeclaration n) {
     return n.parameters();
   }
+  /** extract VariableDeclarationFragment type, including fixing array type for statement such as <code> double[] dd[]; <code> */
+  public static Type type(final VariableDeclarationFragment ¢) {
+    if (¢ == null || ¢.getParent() == null)
+      return null;
+    Type $ = step.type(az.variableDeclarationStatement(¢.getParent()));
+    return ¢.getExtraDimensions() <= 0 ? $ : ¢.getAST().newArrayType(copy.of($), ¢.getExtraDimensions());
+  }
 }

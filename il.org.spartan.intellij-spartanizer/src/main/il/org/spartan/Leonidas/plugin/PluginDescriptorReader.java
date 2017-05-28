@@ -1,5 +1,6 @@
 package il.org.spartan.Leonidas.plugin;
 
+import fluent.ly.note;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
