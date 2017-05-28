@@ -30,9 +30,8 @@ public class BooleanExpressionBloater extends CarefulTipper<InfixExpression>//
   private static final long serialVersionUID = 0x6593D58F0DEFC96AL;
 
   @Override protected boolean prerequisite(final InfixExpression ¢) {
-    return (¢.getOperator() == Operator.CONDITIONAL_AND || ¢.getOperator() == Operator.AND || ¢.getOperator() == Operator.OR
-        || ¢.getOperator() == Operator.CONDITIONAL_OR) && (isComplicated(¢.getLeftOperand()) || isComplicated(¢.getRightOperand()))
-        && !(iz.lambdaExpression(¢.getParent()));
+    return (¢.getOperator() == Operator.CONDITIONAL_AND || ¢.getOperator() == Operator.CONDITIONAL_OR)
+        && (isComplicated(¢.getLeftOperand()) || isComplicated(¢.getRightOperand())) && !(iz.lambdaExpression(¢.getParent()));
   }
   @Override public Tip tip(final InfixExpression ¢) {
     final VariableDeclarationStatement $ = getSeperate(¢.getLeftOperand()), v2 = getSeperate(¢.getRightOperand());
