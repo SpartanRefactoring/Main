@@ -327,7 +327,7 @@ public enum extract {
   public static MethodInvocation methodInvocation(final ASTNode ¢) {
     return az.methodInvocation(extract.expressionStatement(¢).getExpression());
   }
-  public static Collection<Modifier> modifiers(final BodyDeclaration d) {
+  public static List<Modifier> modifiers(final BodyDeclaration d) {
     return extendedModifiers(d).stream().map(λ -> az.modifier((ASTNode) λ)).filter(Objects::nonNull).collect(toList());
   }
   public static Collection<Modifier> modifiers(final TypeDeclaration d) {
