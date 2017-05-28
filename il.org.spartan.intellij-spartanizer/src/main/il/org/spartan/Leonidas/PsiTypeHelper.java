@@ -192,7 +192,7 @@ public class PsiTypeHelper extends PsiTestCase {
         return getTestFactory().createCodeBlockFromText(s, getTestFile());
     }
 
-    protected PsiFile createTestFileFromString(String s) {
+    public PsiFile createTestFileFromString(String s) {
         return createDummyFile(dummyTestFileName, s);
     }
 
@@ -294,5 +294,10 @@ public class PsiTypeHelper extends PsiTestCase {
 
     protected PsiArrayAccessExpression createTestArrayAccess(String arrayName, String accessContent) {
         return (PsiArrayAccessExpression) getTestFactory().createExpressionFromText(arrayName + "[" + accessContent + "]", getTestFile());
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
     }
 }

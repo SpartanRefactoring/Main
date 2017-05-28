@@ -5,6 +5,7 @@ import com.intellij.lang.java.JavaLanguage;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
+import com.intellij.psi.PsiType;
 import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
 import il.org.spartan.Leonidas.PsiTypeHelper;
 import il.org.spartan.Leonidas.auxilary_layer.Utils;
@@ -12,7 +13,6 @@ import il.org.spartan.Leonidas.plugin.Spartanizer;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
-import org.junit.Test;
 
 import java.util.Map;
 
@@ -32,29 +32,30 @@ examples can be in one of two forms:
 
  */
 
-public class TipperTest extends PsiTypeHelper{
+public class TipperTest{
 
     private static final String before = "package test;\n public class Foo\n{\n public void Bar(){\n";
     private static final String after = "\n }\n}";
     Tipper tipper = null;
     LeonidasTipperDefinition leonidasTipper = null;
     Boolean leonidasMode; //whether we are testing a leonidas or non-leonidas tipper
+    PsiTypeHelper junitTest;
     private Boolean setup = false;
 
-    TipperTest(Tipper t){
+    TipperTest(Tipper t, PsiTypeHelper test){
         this.tipper = t;
         this.leonidasMode = false;
+        this.junitTest = test;
+
     }
 
-    TipperTest(LeonidasTipperDefinition l){
+    TipperTest(LeonidasTipperDefinition l,PsiTypeHelper test){
         this.leonidasTipper = l;
         this.leonidasMode = true;
+        this.junitTest = test;
     }
 
-    protected void setUp(){
-        setup = true;
-        return;
-    }
+
 
     private Map<String,String> getExamples(){
         if(leonidasMode){
@@ -63,21 +64,39 @@ public class TipperTest extends PsiTypeHelper{
         return tipper.getExamples();
     }
 
-    public void test(){
+    private void setUp(){
+        if(setup) return;
+        setup = true;
+    }
+
+    public void check(){
+        if(!setup) {
+            try {
+                this.setUp();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         Map<String,String> examples = getExamples();
         for (Map.Entry<String,String> entry : examples.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             String beforeFileString = before+key+after;
             System.out.println(beforeFileString);
-            //PsiElement beforeElement = createTestFileFromString(Beforefile);
+            PsiElement beforeElement = junitTest.createTestFileFromString(beforeFileString);
             //System.out.println(beforeElement.getText());
 
         }
         //Spartanizer.spartanizeElementWithTipper(null,"lala");
     }
     private boolean byExample(String input, String output){
-        if(!setup) {this.setUp();}
+        if(!setup) {
+            try {
+                this.setUp();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         if(leonidasMode){
             return leonidasTipperByExample(input,output);
         }
