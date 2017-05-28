@@ -2,7 +2,6 @@ package il.org.spartan.Leonidas.plugin.tippers.leonidas;
 
 import com.intellij.psi.PsiIfStatement;
 import il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.Statement;
-import il.org.spartan.Leonidas.plugin.leonidas.Leonidas;
 
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.booleanExpression;
 import static il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks.GenericPsiElementStub.statement;
