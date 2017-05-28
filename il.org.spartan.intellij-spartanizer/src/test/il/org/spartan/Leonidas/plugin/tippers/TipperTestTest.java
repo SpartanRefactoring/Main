@@ -1,16 +1,24 @@
 package il.org.spartan.Leonidas.plugin.tippers;
-
-import com.intellij.testFramework.PsiTestCase;
-import il.org.spartan.Leonidas.plugin.Spartanizer;
+import il.org.spartan.Leonidas.PsiTypeHelper;
+import il.org.spartan.Leonidas.plugin.tippers.leonidas.IfDoubleNot;
 import org.junit.Test;
 
+
 /**
- * Created by roym on 27/05/17.
+ * @author @roey maor
+ * @since 27-05-2017.
  */
-public class TipperTestTest extends PsiTestCase{
+public class TipperTestTest extends PsiTypeHelper {
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+    }
 
     @Test
     public void testTipperTest(){
-        return;
+        IfDoubleNot sr = new IfDoubleNot();
+        TipperTest ts = new TipperTest(sr,this);
+        ts.check();
     }
 }

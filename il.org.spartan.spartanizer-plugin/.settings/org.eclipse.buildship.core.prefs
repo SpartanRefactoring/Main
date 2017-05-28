@@ -8,4 +8,4 @@ containers=org.eclipse.pde.core.requiredPlugins,org.eclipse.jdt.launching.JRE_CO
 derived.resources=.gradle,build
 eclipse.preferences.version=1
 natures=org.eclipse.jdt.core.javanature
-project.path=\:SpartanizerPlugin
+project.path=\:il.org.spartan.spartanizer-plugin

@@ -721,7 +721,7 @@ public enum step {
   /** @param ¢ JD
    * @return */
   public static Type type(final VariableDeclarationFragment ¢) {
-    return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
+	  return ¢ == null || ¢.getParent() == null ? null : type(az.variableDeclarationStatement(¢.getParent()));
   }
   public static Type type(final VariableDeclarationStatement ¢) {
     return ¢ == null ? null : ¢.getType();

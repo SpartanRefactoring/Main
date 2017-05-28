@@ -3,10 +3,12 @@ package il.org.spartan.Leonidas.plugin.leonidas.BasicBlocks;
 import com.google.common.collect.Lists;
 import com.intellij.psi.PsiElement;
 import il.org.spartan.Leonidas.auxilary_layer.PsiRewrite;
+import il.org.spartan.Leonidas.plugin.leonidas.Matcher;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -14,8 +16,8 @@ import java.util.List;
  * @since 03-05-2017
  */
 public abstract class GenericEncapsulator extends Encapsulator {
-    private List<Constraint> constraints = new ArrayList<>();
     protected String template;
+    private List<Constraint> constraints = new ArrayList<>();
 
     public GenericEncapsulator(PsiElement e, String template) {
         super(e);
@@ -61,10 +63,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
      *          for example: the methodCallExpression: statement(0).
      * @return The replacer of the syntactic generic element with the GenericEncapsulator
      */
-    public Encapsulator prune(Encapsulator e) {
+    public Encapsulator prune(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map) {
         assert conforms(e.getInner());
         Encapsulator upperElement = getConcreteParent(e);
-        GenericEncapsulator ge = create(upperElement);
+        GenericEncapsulator ge = create(upperElement, map);
         if (isGeneric())
             ge.putId(ge.extractId(e.getInner()));
         return ge.getParent() == null ? ge : upperElement.generalizeWith(ge);
@@ -76,9 +78,10 @@ public abstract class GenericEncapsulator extends Encapsulator {
      * Creates another one like me, with concrete PsiElement within
      *
      * @param e element within.
+     * @param map
      * @return new <B>Specific</B> GenericEncapsulator
      */
-    public abstract GenericEncapsulator create(Encapsulator e);
+    public abstract GenericEncapsulator create(Encapsulator e, Map<Integer, List<Matcher.Constraint>> map);
 
     /**
      * Can I generalize with a concrete element

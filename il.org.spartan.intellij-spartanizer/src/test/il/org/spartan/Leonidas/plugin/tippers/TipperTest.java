@@ -1,17 +1,14 @@
 package il.org.spartan.Leonidas.plugin.tippers;
 
-
-import com.intellij.lang.java.JavaLanguage;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
-import il.org.spartan.Leonidas.auxilary_layer.Utils;
-import il.org.spartan.Leonidas.plugin.Spartanizer;
+import il.org.spartan.Leonidas.PsiTypeHelper;;
 import il.org.spartan.Leonidas.plugin.Toolbox;
 import il.org.spartan.Leonidas.plugin.tippers.leonidas.LeonidasTipperDefinition;
 import il.org.spartan.Leonidas.plugin.tipping.Tipper;
-import org.junit.Test;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author @roey maor
@@ -31,30 +28,78 @@ examples can be in one of two forms:
 
 public class TipperTest{
 
-    private static final String before = "";
-    private static final String after = "";
+    private static final String before = "package test;\n public class Foo\n{\n public void Bar(){\n";
+    private static final String after = "\n }\n}";
     Tipper tipper = null;
     LeonidasTipperDefinition leonidasTipper = null;
     Boolean leonidasMode; //whether we are testing a leonidas or non-leonidas tipper
+    PsiTypeHelper junitTest; //The junit class instance that is being tested (the one that creates a TipperTest object)
     private Boolean setup = false;
 
-    TipperTest(Tipper t){
+    TipperTest(Tipper t, PsiTypeHelper test){
         this.tipper = t;
         this.leonidasMode = false;
+        this.junitTest = test;
+
     }
 
-    TipperTest(LeonidasTipperDefinition l){
+    TipperTest(LeonidasTipperDefinition l,PsiTypeHelper test){
         this.leonidasTipper = l;
         this.leonidasMode = true;
+        this.junitTest = test;
     }
 
-    protected void setUp(){
+
+
+    private Map<String,String> getExamples(){
+        if(leonidasMode){
+            return leonidasTipper.getExamples();
+        }
+        return tipper.getExamples();
+    }
+
+    private String getTipperName(){
+        if(leonidasMode){
+            return leonidasTipper.getClass().getSimpleName();
+        }
+        return tipper.name();
+    }
+
+    private void setUp(){
+        if(setup) return;
         setup = true;
-        return;
     }
 
-    public boolean byExample(String input, String output){
-        if(!setup) {this.setUp();}
+    public void check(){
+        if(!setup) {
+            try {
+                this.setUp();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        Map<String,String> examples = getExamples();
+        Toolbox toolbox = Toolbox.getInstance();
+        System.out.println(toolbox.getAllTippers().stream().map(t -> t.name()).collect(Collectors.toList()));
+        for (Map.Entry<String,String> entry : examples.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            String beforeFileString = before+key+after;
+            PsiFile file = junitTest.createTestFileFromString(beforeFileString);
+            System.out.println("before: \n"+file.getText()+"\n");
+            //toolbox.executeSingleTipper(file,getTipperName());
+            System.out.println("after: \n"+file.getText()+"\n");
+
+        }
+    }
+    private boolean byExample(String input, String output){
+        if(!setup) {
+            try {
+                this.setUp();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         if(leonidasMode){
             return leonidasTipperByExample(input,output);
         }

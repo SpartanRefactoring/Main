@@ -58,5 +58,28 @@ public enum haz {
         return m != null && m.getBody() != null;
     }
 
+    public static boolean publicModifier(PsiModifierListOwner mlo){
+        return mlo != null && mlo.getModifierList().hasExplicitModifier("public");
+    }
+
+    public static boolean privateModifier(PsiModifierListOwner mlo){
+        return mlo != null && mlo.getModifierList().hasExplicitModifier("private");
+    }
+
+    public static boolean protectedModifier(PsiModifierListOwner mlo){
+        return mlo != null && mlo.getModifierList().hasExplicitModifier("protected");
+    }
+
+    public static boolean staticModifier(PsiModifierListOwner mlo){
+        return mlo != null && mlo.getModifierList().hasExplicitModifier("static");
+    }
+
+    public static boolean finalModifier(PsiModifierListOwner mlo){
+        return mlo != null && mlo.getModifierList().hasExplicitModifier("final");
+    }
+
+    public static boolean abstractModifier(PsiModifierListOwner mlo){
+        return mlo != null && mlo.getModifierList().hasExplicitModifier("abstract");
+    }
 
 }

@@ -1,17 +1,24 @@
 package il.org.spartan.athenizer.zoomin.expanders;
 
-import static il.org.spartan.spartanizer.testing.TestUtilsBloating.*;
-
+import org.eclipse.jdt.core.dom.*;
 import org.junit.*;
+
+import il.org.spartan.athenizer.bloaters.*;
+import il.org.spartan.spartanizer.testing.*;
+import il.org.spartan.spartanizer.tipping.*;
 
 /** Test Class for Expand boolean expressions
  * @author Dor Ma'ayan {@code dor.d.ma@gmail.com}
  * @author tomerdragucki
  * @since 2017-01-13 */
-// TODO: Tomer Dragucki
 @Ignore
-@SuppressWarnings("static-method")
-public class Issue0980 {
+public class Issue0980 extends BloaterTest<InfixExpression> {
+  @Override public Tipper<InfixExpression> bloater() {
+    return new BooleanExpressionBloater();
+  }
+  @Override public Class<InfixExpression> tipsOn() {
+    return InfixExpression.class;
+  }
   @Test public void test00() {
     bloatingOf("return a && b;")//
         .stays();
@@ -53,6 +60,11 @@ public class Issue0980 {
         .gives("boolean b3=x&&y();boolean b4=z;return b3||b4;") //
         .gives("boolean b3;b3=x&&y();boolean b4;b4=z;return b3||b4;") //
         .gives("boolean b3;boolean b5=x;boolean b6=y();b3=b5&&b6;boolean b4;b4=z;return b3||b4;") //
+    ;
+  }
+  @Test public void test7() {
+    bloatingOf("return λ -> c1.holds(λ) || c2.holds(λ);")//
+        .stays()//
     ;
   }
 }

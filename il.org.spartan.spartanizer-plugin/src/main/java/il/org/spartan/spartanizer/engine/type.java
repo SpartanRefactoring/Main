@@ -340,6 +340,8 @@ public interface type {
               return $.getLocationInParent() != ForStatement.EXPRESSION_PROPERTY ? i : BOOLEAN;
             case PARENTHESIZED_EXPRESSION:
               continue;
+            case VARIABLE_DECLARATION_FRAGMENT:
+              return baptize(step.type(az.variableDeclrationFragment(context)) + "");
             default:
               return i;
           }
