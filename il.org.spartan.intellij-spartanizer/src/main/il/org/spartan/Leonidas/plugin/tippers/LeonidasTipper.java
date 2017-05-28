@@ -71,8 +71,10 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             public void go(PsiRewrite r) {
                 if (canTip(node)) {
                     Wrapper<Integer> i = new Wrapper<>(0);
+                    PsiJavaFile f = getPsiTreeFromString(file.getName(), file.getText());
                     Map<Integer, List<PsiElement>> map = matcher.extractInfo(node, i);
                     replace(node, map, i.get(), r);
+                    file = f;
                 }
             }
         };
@@ -100,8 +102,6 @@ public class LeonidasTipper implements Tipper<PsiElement> {
             last = last.getNextSibling();
         }
         PsiElement parent = treeToReplace.getParent();
-        r.deleteByRange(parent, treeToReplace, last);
-        //parent.deleteChildRange(treeToReplace, last);
         if (prev == null){
             prev = parent.getFirstChild();
             for (PsiElement element : elements){
@@ -112,7 +112,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
                 r.addAfter(parent, prev, element);
             }
         }
-
+        r.deleteByRange(parent, treeToReplace, last);
     }
 
     /**
@@ -195,7 +195,7 @@ public class LeonidasTipper implements Tipper<PsiElement> {
      * @return the generic tree representing the "from" template
      */
     private List<Encapsulator> getReplacerRootTree() {
-        PsiMethod replacer = (PsiMethod) getInterfaceMethod("replacer").copy();
+        PsiMethod replacer = getInterfaceMethod("replacer");
         giveIdToStubElements(replacer);
         return getForestFromMethod(replacer);
     }
