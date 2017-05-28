@@ -70,9 +70,9 @@ public class InflaterProvider extends OperationsProvider {
 //            // new MethodDeclarationNameExpander(),
 //            // new AddModifiersToMethodDeclaration(), //
 //            null) //
-        .add(EnumDeclaration.class, //
-            new AddModifiersToEnums(), //
-            null) //
+//        .add(EnumDeclaration.class, //
+//            new AddModifiersToEnums(), //
+//            null) //
         .add(ExpressionStatement.class, //
             new MethodInvocationTernaryBloater(), //
             null) //
